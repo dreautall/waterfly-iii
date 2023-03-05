@@ -738,7 +738,77 @@ class _TransactionPageState extends State<TransactionPage>
                   return;
                 }
               } else {
-                // :TODO: new transaction
+                List<TransactionSplitStore> txS = [];
+                for (int i = 0; i < _localAmounts.length; i++) {
+                  late String sourceName, destinationName;
+                  String? sourceId, destinationId;
+                  if (_transactionType == TransactionTypeProperty.withdrawal ||
+                      _transactionType == TransactionTypeProperty.transfer) {
+                    sourceName = _ownAccountTextController.text;
+                    sourceId = _ownAccountId;
+                    destinationName = _otherAccountTextControllers[i].text;
+                    if (destinationName.isEmpty) {
+                      destinationName = _otherAccountTextController.text;
+                    }
+                  } else {
+                    destinationName = _ownAccountTextController.text;
+                    destinationId = _ownAccountId;
+                    sourceName = _otherAccountTextControllers[i].text;
+                    if (sourceName.isEmpty) {
+                      sourceName = _otherAccountTextController.text;
+                    }
+                  }
+                  txS.add(TransactionSplitStore(
+                    type: _transactionType,
+                    date: _date,
+                    amount: _localAmounts[i].toString(),
+                    description: _split
+                        ? _titleTextControllers[i].text
+                        : _titleTextController.text,
+                    categoryName: _categoryTextControllers[i].text,
+                    destinationId: destinationId,
+                    destinationName: destinationName,
+                    foreignAmount: _split
+                        ? _foreignCurrencies[i] != null
+                            ? _foreignAmounts[i].toString()
+                            : "0"
+                        : _foreignCurrency != null
+                            ? _foreignAmounts[i].toString()
+                            : "0",
+                    foreignCurrencyId: _split
+                        ? _foreignCurrencies[i]?.id
+                        : _foreignCurrency?.id,
+                    notes: _noteTextControllers[i].text,
+                    order: i,
+                    sourceId: sourceId,
+                    sourceName: sourceName,
+                    tags: _tags[i].tags,
+                    reconciled: false,
+                  ));
+                }
+                final newTx = TransactionStore(
+                    groupTitle: _split ? _titleTextController.text : null,
+                    transactions: txS,
+                    applyRules: true,
+                    fireWebhooks: true,
+                    errorIfDuplicateHash: true);
+                final resp = await api!.apiV1TransactionsPost(body: newTx);
+                if (!resp.isSuccessful || resp.body == null) {
+                  print(resp.error);
+                  try {
+                    ValidationError valError = ValidationError.fromJson(
+                        json.decode(resp.error.toString()));
+                    error = valError.message ?? "Unknown error.";
+                  } catch (e) {
+                    error = "Unknown error.";
+                  }
+
+                  msg.showSnackBar(SnackBar(
+                    content: Text(error),
+                    behavior: SnackBarBehavior.floating,
+                  ));
+                  return;
+                }
               }
               nav.pop(true);
             },

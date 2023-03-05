@@ -379,7 +379,8 @@ class _TransactionPageState extends State<TransactionPage>
     /// foreign amount & currency
     _foreignCurrency = _foreignCurrencies.first;
     if (_foreignCurrency != null &&
-        _foreignCurrencies.every((CurrencyRead? e) => e == _foreignCurrency)) {
+        _foreignCurrencies.every(
+            (CurrencyRead? e) => e != null && e.id == _foreignCurrency!.id)) {
       // all same foreign currency --> ok to show in summary
       _foreignAmountTextController.text = _foreignAmounts.sum
           .toStringAsFixed(_foreignCurrency?.attributes.decimalPlaces ?? 2);

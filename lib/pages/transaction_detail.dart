@@ -1135,10 +1135,6 @@ class _TransactionPageState extends State<TransactionPage>
                     error = valError.message ?? "Unknown error.";
                   } catch (e) {
                     error = "Unknown error.";
-                    msg.showSnackBar(const SnackBar(
-                      content: Text("Unknown error."),
-                      behavior: SnackBarBehavior.floating,
-                    ));
                   }
 
                   msg.showSnackBar(SnackBar(
@@ -2402,8 +2398,11 @@ class _AttachmentDialogState extends State<AttachmentDialog>
         subtitle = "$subtitle (${filesize(attachment.attributes.size)})";
       }
       childs.add(ListTile(
+        enabled: (_dlProgress[i] != null && _dlProgress[i]! < 0) ? false : true,
         leading: MaterialIconButton(
-          icon: Icons.download,
+          icon: (_dlProgress[i] != null && _dlProgress[i]! < 0)
+              ? Icons.upload
+              : Icons.download,
           onPressed: _dlProgress[i] == null
               ? () async {
                   final msg = ScaffoldMessenger.of(context);
@@ -2462,44 +2461,46 @@ class _AttachmentDialogState extends State<AttachmentDialog>
         isThreeLine: false,
         trailing: MaterialIconButton(
           icon: Icons.delete,
-          onPressed: () async {
-            final api = FireflyProvider.of(context).api;
-            if (api == null) {
-              throw Exception("API unavailable");
-            }
-            bool? ok = await showDialog<bool>(
-              context: context,
-              builder: (context) => AlertDialog(
-                icon: const Icon(Icons.delete),
-                title: const Text("Delete Attachment"),
-                clipBehavior: Clip.hardEdge,
-                actions: <Widget>[
-                  TextButton(
-                    child: const Text('Cancel'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  FilledButton(
-                    child: const Text('Delete'),
-                    onPressed: () {
-                      Navigator.of(context).pop(true);
-                    },
-                  ),
-                ],
-                content: const Text(
-                    "Are you sure you want to delete this attachment?"),
-              ),
-            );
-            if (ok == null || !ok) {
-              return;
-            }
+          onPressed: (_dlProgress[i] != null && _dlProgress[i]! < 0)
+              ? null
+              : () async {
+                  final api = FireflyProvider.of(context).api;
+                  if (api == null) {
+                    throw Exception("API unavailable");
+                  }
+                  bool? ok = await showDialog<bool>(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      icon: const Icon(Icons.delete),
+                      title: const Text("Delete Attachment"),
+                      clipBehavior: Clip.hardEdge,
+                      actions: <Widget>[
+                        TextButton(
+                          child: const Text('Cancel'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        FilledButton(
+                          child: const Text('Delete'),
+                          onPressed: () {
+                            Navigator.of(context).pop(true);
+                          },
+                        ),
+                      ],
+                      content: const Text(
+                          "Are you sure you want to delete this attachment?"),
+                    ),
+                  );
+                  if (ok == null || !ok) {
+                    return;
+                  }
 
-            await api.apiV1AttachmentsIdDelete(id: attachment.id);
-            setState(() {
-              widget.attachments.removeAt(i);
-            });
-          },
+                  await api.apiV1AttachmentsIdDelete(id: attachment.id);
+                  setState(() {
+                    widget.attachments.removeAt(i);
+                  });
+                },
         ),
       ));
       final divTheme = DividerTheme.of(context);
@@ -2510,7 +2511,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
             child: _dlProgress[i] == null
                 ? const Divider(height: 0)
                 : LinearProgressIndicator(
-                    value: _dlProgress[i],
+                    value: _dlProgress[i]!.abs(),
                     //minHeight: divTheme.thickness ?? 4,
                     //backgroundColor: divTheme.color ?? theme.colorScheme.outlineVariant,
                   ),
@@ -2550,17 +2551,32 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                 ),
               );
               if (!respAttachment.isSuccessful || respAttachment.body == null) {
-                print("couldn't store attachment");
-                // :TODO: Error handling
+                late String error;
+                try {
+                  ValidationError valError = ValidationError.fromJson(
+                      json.decode(respAttachment.error.toString()));
+                  error = valError.message ?? "Unknown error.";
+                } catch (e) {
+                  error = "Unknown error.";
+                }
+                msg.showSnackBar(SnackBar(
+                  content: Text("Could not add attachment: $error"),
+                  behavior: SnackBarBehavior.floating,
+                ));
                 return;
               }
               final AttachmentRead newAttachment = respAttachment.body!.data;
+              int newAttachmentIndex = widget
+                  .attachments.length; // Will be added later, no -1 needed.
+
+              setState(() {
+                widget.attachments.add(newAttachment);
+                _dlProgress[newAttachmentIndex] = -0.0001;
+              });
 
               Directory tmpPath = await getTemporaryDirectory();
               String newPath = "${tmpPath.path}/${file.files.first.name}";
               await File(file.files.first.path!).rename(newPath);
-
-              print("Uploading $newPath");
 
               final task = UploadTask(
                 url: newAttachment.attributes.uploadUrl!,
@@ -2573,23 +2589,34 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                 task,
                 onProgress: (progress) {
                   print("Upload progress: $progress");
-                  // :TODO: Progress, maybe an indicator somewhere
+                  setState(() {
+                    _dlProgress[newAttachmentIndex] = progress * -1;
+                  });
                 },
               );
 
-              print("huhu");
+              _dlProgress.remove(newAttachmentIndex);
 
               if (result != TaskStatus.complete) {
-                print("error");
-                msg.showSnackBar(const SnackBar(
-                  content: Text("Could not upload file."),
+                late String error;
+                print(result);
+                try {
+                  ValidationError valError = ValidationError.fromJson(
+                      json.decode(respAttachment.error.toString()));
+                  error = valError.message ?? "Unknown error.";
+                } catch (e) {
+                  error = "Unknown error.";
+                }
+                print("error: $error");
+                msg.showSnackBar(SnackBar(
+                  content: Text("Could not upload file: $error"),
                   behavior: SnackBarBehavior.floating,
                 ));
+                widget.attachments.removeAt(newAttachmentIndex);
+                await api.apiV1AttachmentsIdDelete(id: newAttachment.id);
+
                 return;
               }
-              setState(() {
-                widget.attachments.add(newAttachment);
-              });
             },
             child: const Text("Upload"),
           )

@@ -1314,171 +1314,165 @@ class _TransactionPageState extends State<TransactionPage>
     childs.add(hDivider);
     // Source Account, Type, Destination Account
     childs.add(
-      SizedBox(
-        height: 56,
-        child: Row(
-          children: <Widget>[
-            const Icon(Icons.account_balance),
-            vDivider,
-            Expanded(
-              child: AutoCompleteText(
-                labelText: "Foreign account",
-                //labelIcon: Icons.account_balance,
-                textController: _otherAccountTextController,
-                disabled: showAccountSelection,
-                focusNode: _otherAccountFocusNode,
-                onChanged: (String text) {
-                  for (TextEditingController e
-                      in _otherAccountTextControllers) {
-                    e.text = text;
+      Row(
+        children: <Widget>[
+          const Icon(Icons.account_balance),
+          vDivider,
+          Expanded(
+            child: AutoCompleteText(
+              labelText: "Foreign account",
+              //labelIcon: Icons.account_balance,
+              textController: _otherAccountTextController,
+              disabled: showAccountSelection,
+              focusNode: _otherAccountFocusNode,
+              onChanged: (String text) {
+                for (TextEditingController e in _otherAccountTextControllers) {
+                  e.text = text;
+                }
+              },
+              onSelected: (AutocompleteAccount option) {
+                for (TextEditingController e in _otherAccountTextControllers) {
+                  e.text = option.name;
+                }
+              },
+              displayStringForOption: (AutocompleteAccount option) =>
+                  option.name,
+              optionsBuilder: (textEditingValue) async {
+                try {
+                  final api = FireflyProvider.of(context).api;
+                  if (api == null) {
+                    throw Exception("API not ready.");
+                  } else {
+                    final response = await api.apiV1AutocompleteAccountsGet(
+                      query: textEditingValue.text,
+                      types:
+                          _transactionType == TransactionTypeProperty.withdrawal
+                              ? _transactionType.destinationAccountTypes
+                              : _transactionType.sourceAccountTypes,
+                    );
+                    if (!response.isSuccessful || response.body == null) {
+                      throw Exception("Invalid Response from API");
+                    }
+                    return response.body!;
                   }
-                },
-                onSelected: (AutocompleteAccount option) {
-                  for (TextEditingController e
-                      in _otherAccountTextControllers) {
-                    e.text = option.name;
-                  }
-                },
-                displayStringForOption: (AutocompleteAccount option) =>
-                    option.name,
-                optionsBuilder: (textEditingValue) async {
-                  try {
-                    final api = FireflyProvider.of(context).api;
-                    if (api == null) {
-                      throw Exception("API not ready.");
-                    } else {
-                      final response = await api.apiV1AutocompleteAccountsGet(
-                        query: textEditingValue.text,
-                        types: _transactionType ==
-                                TransactionTypeProperty.withdrawal
-                            ? _transactionType.destinationAccountTypes
-                            : _transactionType.sourceAccountTypes,
-                      );
-                      if (!response.isSuccessful || response.body == null) {
-                        throw Exception("Invalid Response from API");
-                      }
-                      return response.body!;
-                    }
-                  } catch (e) {
-                    print("Error while fetching autocomplete from API: $e");
-                    return const Iterable<AutocompleteAccount>.empty();
-                  }
-                },
-              ),
-            ),
-            vDivider,
-            MenuAnchor(
-              childFocusNode: _typeFocusNode,
-              menuChildren: <Widget>[
-                MenuItemButton(
-                  leadingIcon: const Icon(Icons.arrow_back),
-                  child: const Text("Withdrawal"),
-                  onPressed: () {
-                    if (_transactionType ==
-                        TransactionTypeProperty.withdrawal) {
-                      return;
-                    }
-                    setState(() {
-                      _transactionType = TransactionTypeProperty.withdrawal;
-                      //checkNewTransactionType();
-                    });
-                  },
-                ),
-                MenuItemButton(
-                  leadingIcon: const Icon(Icons.arrow_forward),
-                  child: const Text("Deposit"),
-                  onPressed: () {
-                    if (_transactionType == TransactionTypeProperty.deposit) {
-                      return;
-                    }
-                    setState(() {
-                      _transactionType = TransactionTypeProperty.deposit;
-                      //checkNewTransactionType();
-                    });
-                  },
-                ),
-                MenuItemButton(
-                  leadingIcon: const Icon(Icons.swap_horiz),
-                  child: const Text("Transfer"),
-                  onPressed: () {
-                    if (_transactionType == TransactionTypeProperty.transfer) {
-                      return;
-                    }
-                    setState(() {
-                      _transactionType = TransactionTypeProperty.transfer;
-                      //checkNewTransactionType();
-                    });
-                  },
-                ),
-              ],
-              builder: (BuildContext context, MenuController controller,
-                  Widget? child) {
-                return MaterialIconButton(
-                  icon: _transactionType.icon,
-                  //iconSize: Theme.of(context).textTheme.headlineLarge!.fontSize!,
-                  focusNode: _typeFocusNode,
-                  foregroundColor: Colors.white,
-                  backgroundColor: _transactionType.color,
-                  // Disable when editing existing transaction --> not allowed
-                  onPressed: (widget.transaction != null)
-                      ? null
-                      : () {
-                          if (controller.isOpen) {
-                            controller.close();
-                          } else {
-                            controller.open();
-                          }
-                        },
-                );
+                } catch (e) {
+                  print("Error while fetching autocomplete from API: $e");
+                  return const Iterable<AutocompleteAccount>.empty();
+                }
               },
             ),
-            vDivider,
-            Expanded(
-              child: AutoCompleteText(
-                labelText: "Own account",
-                //labelIcon: Icons.account_balance,
-                textController: _ownAccountTextController,
-                focusNode: _ownAccountFocusNode,
-                errorText: _ownAccountId == null ? 'Invalid Account' : null,
-                errorIconOnly: true,
-                displayStringForOption: (AutocompleteAccount option) =>
-                    option.name,
-                onSelected: (AutocompleteAccount option) {
-                  setState(() {
-                    _ownAccountId = option.id;
-                  });
-                  print("selected account $_ownAccountId");
-                  checkAccountCurrency(option);
-                },
-                optionsBuilder: (textEditingValue) async {
-                  try {
-                    final api = FireflyProvider.of(context).api;
-                    if (api == null) {
-                      throw Exception("API not ready.");
-                    } else {
-                      final response = await api.apiV1AutocompleteAccountsGet(
-                        query: textEditingValue.text,
-                        types: <AccountTypeFilter>[
-                          AccountTypeFilter.assetAccount,
-                          AccountTypeFilter.loan,
-                          AccountTypeFilter.debt,
-                          AccountTypeFilter.mortgage,
-                        ],
-                      );
-                      if (!response.isSuccessful || response.body == null) {
-                        throw Exception("Invalid Response from API");
-                      }
-                      return response.body!;
-                    }
-                  } catch (e) {
-                    print("Error while fetching autocomplete from API: $e");
-                    return const Iterable<AutocompleteAccount>.empty();
+          ),
+          vDivider,
+          MenuAnchor(
+            childFocusNode: _typeFocusNode,
+            menuChildren: <Widget>[
+              MenuItemButton(
+                leadingIcon: const Icon(Icons.arrow_back),
+                child: const Text("Withdrawal"),
+                onPressed: () {
+                  if (_transactionType == TransactionTypeProperty.withdrawal) {
+                    return;
                   }
+                  setState(() {
+                    _transactionType = TransactionTypeProperty.withdrawal;
+                    //checkNewTransactionType();
+                  });
                 },
               ),
+              MenuItemButton(
+                leadingIcon: const Icon(Icons.arrow_forward),
+                child: const Text("Deposit"),
+                onPressed: () {
+                  if (_transactionType == TransactionTypeProperty.deposit) {
+                    return;
+                  }
+                  setState(() {
+                    _transactionType = TransactionTypeProperty.deposit;
+                    //checkNewTransactionType();
+                  });
+                },
+              ),
+              MenuItemButton(
+                leadingIcon: const Icon(Icons.swap_horiz),
+                child: const Text("Transfer"),
+                onPressed: () {
+                  if (_transactionType == TransactionTypeProperty.transfer) {
+                    return;
+                  }
+                  setState(() {
+                    _transactionType = TransactionTypeProperty.transfer;
+                    //checkNewTransactionType();
+                  });
+                },
+              ),
+            ],
+            builder: (BuildContext context, MenuController controller,
+                Widget? child) {
+              return MaterialIconButton(
+                icon: _transactionType.icon,
+                //iconSize: Theme.of(context).textTheme.headlineLarge!.fontSize!,
+                focusNode: _typeFocusNode,
+                foregroundColor: Colors.white,
+                backgroundColor: _transactionType.color,
+                // Disable when editing existing transaction --> not allowed
+                onPressed: (widget.transaction != null)
+                    ? null
+                    : () {
+                        if (controller.isOpen) {
+                          controller.close();
+                        } else {
+                          controller.open();
+                        }
+                      },
+              );
+            },
+          ),
+          vDivider,
+          Expanded(
+            child: AutoCompleteText(
+              labelText: "Own account",
+              //labelIcon: Icons.account_balance,
+              textController: _ownAccountTextController,
+              focusNode: _ownAccountFocusNode,
+              errorText: _ownAccountId == null ? 'Invalid Account' : null,
+              errorIconOnly: true,
+              displayStringForOption: (AutocompleteAccount option) =>
+                  option.name,
+              onSelected: (AutocompleteAccount option) {
+                setState(() {
+                  _ownAccountId = option.id;
+                });
+                print("selected account $_ownAccountId");
+                checkAccountCurrency(option);
+              },
+              optionsBuilder: (textEditingValue) async {
+                try {
+                  final api = FireflyProvider.of(context).api;
+                  if (api == null) {
+                    throw Exception("API not ready.");
+                  } else {
+                    final response = await api.apiV1AutocompleteAccountsGet(
+                      query: textEditingValue.text,
+                      types: <AccountTypeFilter>[
+                        AccountTypeFilter.assetAccount,
+                        AccountTypeFilter.loan,
+                        AccountTypeFilter.debt,
+                        AccountTypeFilter.mortgage,
+                      ],
+                    );
+                    if (!response.isSuccessful || response.body == null) {
+                      throw Exception("Invalid Response from API");
+                    }
+                    return response.body!;
+                  }
+                } catch (e) {
+                  print("Error while fetching autocomplete from API: $e");
+                  return const Iterable<AutocompleteAccount>.empty();
+                }
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
     childs.add(hDivider);
@@ -1497,7 +1491,7 @@ class _TransactionPageState extends State<TransactionPage>
               child: TextFormField(
                 controller: _dateTextController,
                 decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.calendar_month),
+                  //prefixIcon: Icon(Icons.calendar_month),
                   border: OutlineInputBorder(),
                 ),
                 readOnly: true,

@@ -71,14 +71,14 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
         optionsViewBuilder: (context, onOptionSelected, options) => Align(
           alignment: Alignment.topLeft,
           child: Padding(
-            padding: const EdgeInsets.only(left: 40),
+            padding: EdgeInsets.only(left: labelIcon == null ? 0 : 40),
             child: Material(
               elevation: 4.0,
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                     maxHeight: 200,
                     maxWidth: constraints.biggest.width -
-                        ((labelIcon == null) ? 0 : 40)),
+                        (labelIcon == null ? 0 : 40)),
                 child: ListView.builder(
                   padding: EdgeInsets.zero,
                   itemCount: options.length,

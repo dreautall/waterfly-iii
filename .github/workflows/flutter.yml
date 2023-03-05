@@ -1,0 +1,70 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  JAVA_VERSION: "12.x"
+  FLUTTER_CHANNEL: "stable"
+  PROPERTIES_PATH: "./android/key.properties"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Setup Java environment in order to build the Android app.
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{env.JAVA_VERSION}}
+          cache: "gradle"
+
+      # Gradle cache for faster builds
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      # Setup the flutter environment.
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: ${{env.FLUTTER_CHANNEL}}
+          cache: true
+
+      # Get flutter dependencies.
+      - run: flutter pub get
+
+      # Check for any formatting issues in the code.
+      - run: flutter format --set-exit-if-changed .
+
+      # Statically analyze the Dart code for any errors.
+      - run: flutter analyze .
+
+      # Run widget tests for our flutter project.
+      # - run: flutter test
+
+      # Build apk.
+      - run: flutter build apk --release --split-per-abi
+
+      # Upload generated apk to the artifacts.
+      - uses: actions/upload-artifact@v2
+        with:
+          name: app-arm64-v8a-release.apk
+          path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: app-armeabi-v7a-release.apk
+          path: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: app-x86_64-release.apk
+          path: build/app/outputs/flutter-apk/app-x86_64-release.apk

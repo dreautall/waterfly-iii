@@ -947,12 +947,15 @@ class CategoryChart extends StatelessWidget {
     data.sort((LabelAmountChart a, LabelAmountChart b) =>
         a.amount.compareTo(b.amount));
 
-    LabelAmountChart otherData = data.skip(5).reduce(
-        (LabelAmountChart v, LabelAmountChart e) =>
-            LabelAmountChart("Other", v.amount + e.amount));
-    data = data.take(5).toList();
-    if (otherData.amount != 0) {
-      data.add(otherData);
+    if (data.length > 5) {
+      LabelAmountChart otherData = data.skip(5).reduce(
+          (LabelAmountChart v, LabelAmountChart e) =>
+              LabelAmountChart("Other", v.amount + e.amount));
+      data = data.take(5).toList();
+
+      if (otherData.amount != 0) {
+        data.add(otherData);
+      }
     }
 
     return Padding(

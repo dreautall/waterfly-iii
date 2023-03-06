@@ -67,6 +67,8 @@ class _TransactionPageState extends State<TransactionPage>
   // Always in card view
   final List<TextEditingController> _categoryTextControllers = [];
   final List<FocusNode> _categoryFocusNodes = [];
+  final List<TextEditingController> _budgetTextControllers = [];
+  final List<FocusNode> _budgetFocusNodes = [];
   final List<Tags> _tags = [];
   final List<TextEditingController> _tagsTextControllers = [];
   final List<TextEditingController> _noteTextControllers = [];
@@ -164,6 +166,11 @@ class _TransactionPageState extends State<TransactionPage>
         _categoryTextControllers
             .add(TextEditingController(text: trans.categoryName));
         _categoryFocusNodes.add(FocusNode());
+
+        //// Budget
+        _budgetTextControllers
+            .add(TextEditingController(text: trans.budgetName));
+        _budgetFocusNodes.add(FocusNode());
 
         /// Tags
         _tags.add(Tags(trans.tags ?? []));
@@ -343,6 +350,12 @@ class _TransactionPageState extends State<TransactionPage>
     for (FocusNode f in _categoryFocusNodes) {
       f.dispose();
     }
+    for (TextEditingController t in _budgetTextControllers) {
+      t.dispose();
+    }
+    for (FocusNode f in _budgetFocusNodes) {
+      f.dispose();
+    }
     for (TextEditingController t in _tagsTextControllers) {
       t.dispose();
     }
@@ -409,9 +422,11 @@ class _TransactionPageState extends State<TransactionPage>
     FocusNode f1 = _otherAccountFocusNodes.removeAt(i);
     TextEditingController t2 = _categoryTextControllers.removeAt(i);
     FocusNode f2 = _categoryFocusNodes.removeAt(i);
+    TextEditingController t3 = _budgetTextControllers.removeAt(i);
+    FocusNode f3 = _budgetFocusNodes.removeAt(i);
     _tags.removeAt(i);
-    TextEditingController t3 = _tagsTextControllers.removeAt(i);
-    TextEditingController t4 = _noteTextControllers.removeAt(i);
+    TextEditingController t4 = _tagsTextControllers.removeAt(i);
+    TextEditingController t5 = _noteTextControllers.removeAt(i);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       t1.dispose();
@@ -419,7 +434,9 @@ class _TransactionPageState extends State<TransactionPage>
       t2.dispose();
       f2.dispose();
       t3.dispose();
+      f3.dispose();
       t4.dispose();
+      t5.dispose();
     });
 
     _titleTextControllers.removeAt(i).dispose();
@@ -476,6 +493,8 @@ class _TransactionPageState extends State<TransactionPage>
     _otherAccountFocusNodes.add(FocusNode());
     _categoryTextControllers.add(TextEditingController());
     _categoryFocusNodes.add(FocusNode());
+    _budgetTextControllers.add(TextEditingController());
+    _budgetFocusNodes.add(FocusNode());
     _tags.add(Tags());
     _tagsTextControllers.add(TextEditingController());
     _noteTextControllers.add(TextEditingController());
@@ -681,6 +700,7 @@ class _TransactionPageState extends State<TransactionPage>
                   }
                   txS.add(TransactionSplitUpdate(
                     amount: _localAmounts[i].toString(),
+                    budgetName: _budgetTextControllers[i].text,
                     categoryName: _categoryTextControllers[i].text,
                     date: _date,
                     description: _split
@@ -766,6 +786,7 @@ class _TransactionPageState extends State<TransactionPage>
                     description: _split
                         ? _titleTextControllers[i].text
                         : _titleTextController.text,
+                    budgetName: _budgetTextControllers[i].text,
                     categoryName: _categoryTextControllers[i].text,
                     destinationId: destinationId,
                     destinationName: destinationName,
@@ -1113,7 +1134,7 @@ class _TransactionPageState extends State<TransactionPage>
                 print("selected account $_ownAccountId");
                 checkAccountCurrency(option);
               },
-              optionsBuilder: (textEditingValue) async {
+              optionsBuilder: (TextEditingValue textEditingValue) async {
                 try {
                   final api = FireflyProvider.of(context).api;
                   if (api == null) {
@@ -1333,10 +1354,16 @@ class _TransactionPageState extends State<TransactionPage>
                       )
                     : const SizedBox()),
                 animatedHeightCard(
-                    showAccountSelection ? hDivider : const SizedBox()),
+                  showAccountSelection ? hDivider : const SizedBox(),
+                ),
                 TransactionCategory(
                   textController: _categoryTextControllers[i],
                   focusNode: _categoryFocusNodes[i],
+                ),
+                hDivider,
+                TransactionBudget(
+                  textController: _budgetTextControllers[i],
+                  focusNode: _budgetFocusNodes[i],
                 ),
                 hDivider,
                 animatedHeightCard((_split)
@@ -1701,7 +1728,8 @@ class TransactionCategory extends StatelessWidget {
                   throw Exception("API not ready.");
                 } else {
                   final response = await api.apiV1AutocompleteCategoriesGet(
-                      query: textEditingValue.text);
+                    query: textEditingValue.text,
+                  );
                   if (!response.isSuccessful || response.body == null) {
                     throw Exception("Invalid Response from API");
                   }
@@ -1710,6 +1738,113 @@ class TransactionCategory extends StatelessWidget {
               } catch (e) {
                 print("Error while fetching autocomplete from API: $e");
                 return const Iterable<String>.empty();
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class TransactionBudget extends StatefulWidget {
+  const TransactionBudget({
+    super.key,
+    required this.textController,
+    required this.focusNode,
+  });
+
+  final TextEditingController textController;
+  final FocusNode focusNode;
+
+  @override
+  State<TransactionBudget> createState() => _TransactionBudgetState();
+}
+
+class _TransactionBudgetState extends State<TransactionBudget> {
+  // Initial string is empty, as we expect it to be ok
+  // (either empty or loaded from db)
+  String? _budgetId = "";
+
+  @override
+  void initState() {
+    super.initState();
+
+    widget.focusNode.addListener(() async {
+      if (widget.focusNode.hasFocus) {
+        return;
+      }
+      if (widget.textController.text.isEmpty) {
+        setState(() {
+          _budgetId = "";
+        });
+        return;
+      }
+      try {
+        final api = FireflyProvider.of(context).api;
+        if (api == null) {
+          throw Exception("API not ready.");
+        } else {
+          final response = await api.apiV1AutocompleteBudgetsGet(
+            query: widget.textController.text,
+          );
+          if (!response.isSuccessful || response.body == null) {
+            throw Exception("Invalid Response from API");
+          }
+          if (response.body!.isEmpty ||
+              (response.body!.length > 1 &&
+                  response.body!.first.name != widget.textController.text)) {
+            setState(() {
+              _budgetId = null;
+            });
+          } else {
+            widget.textController.text = response.body!.first.name;
+            setState(() {
+              _budgetId = response.body!.first.id;
+            });
+          }
+        }
+      } catch (e) {
+        print("Error while fetching autocomplete from API: $e");
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: AutoCompleteText(
+            labelText: "Budget",
+            labelIcon: Icons.payments,
+            textController: widget.textController,
+            focusNode: widget.focusNode,
+            errorText: _budgetId == null ? 'Invalid Budget' : null,
+            errorIconOnly: true,
+            displayStringForOption: (AutocompleteBudget option) => option.name,
+            onSelected: (AutocompleteBudget option) {
+              setState(() {
+                _budgetId = option.id;
+              });
+            },
+            optionsBuilder: (TextEditingValue textEditingValue) async {
+              try {
+                final api = FireflyProvider.of(context).api;
+                if (api == null) {
+                  throw Exception("API not ready.");
+                } else {
+                  final response = await api.apiV1AutocompleteBudgetsGet(
+                    query: textEditingValue.text,
+                  );
+                  if (!response.isSuccessful || response.body == null) {
+                    throw Exception("Invalid Response from API");
+                  }
+                  return response.body!;
+                }
+              } catch (e) {
+                print("Error while fetching autocomplete from API: $e");
+                return const Iterable<AutocompleteBudget>.empty();
               }
             },
           ),

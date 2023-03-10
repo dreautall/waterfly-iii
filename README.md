@@ -17,16 +17,25 @@ The app is still pretty much work in progress, but basic features already do wor
 - Balance Sheet
   - List invididual balances
 
-Still not ready but planned:
+### Planned Features
 - Piggy Banks
 - Dark Mode
 - Detailed Accounts page
 - Settings page
 - Notification Listener
+- ... and many more.
 
 ## Screenshots
 
-tbc
+*All made with a Google Pixel 5.*
+
+Dashboard | Transactions | Balance Sheet |
+| :-: | :-: | :-: |
+<img src=".github/assets/screen_dashboard.png" width="250" />|<img src=".github/assets/screen_transactions_overview.png" width="250" />|<img src=".github/assets/screen_balance.png" width="250" />
+
+Transaction Edit | Split Transaction | Transaction Attachments
+| :-: | :-: | :-: |
+<img src=".github/assets/screen_transaction.png" width="250" />|<img src=".github/assets/screen_transaction_split.png" width="250" />|<img src=".github/assets/screen_transaction_attachments.png" width="250" />
 
 ## Technology
 

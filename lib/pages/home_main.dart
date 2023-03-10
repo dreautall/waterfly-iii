@@ -1020,6 +1020,11 @@ class CategoryChart extends StatelessWidget {
                 fontSize:
                     Theme.of(context).textTheme.labelSmall!.fontSize!.round(),
               ),
+              outsideLabelStyleSpec: charts.TextStyleSpec(
+                fontSize: 12,
+                color: charts.ColorUtil.fromDartColor(
+                    Theme.of(context).colorScheme.onSurfaceVariant),
+              ),
             )
           ],
         ),

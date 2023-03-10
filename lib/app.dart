@@ -55,17 +55,28 @@ class _WaterflyAppState extends State<WaterflyApp> {
     print("WaterflyApp() building, _loggedIn: $_loggedIn, _loading: $_loading");
 
     // This is only called if the state refreshes, so let's always pop back to the beginning
-    // :TODO: enable again
-    //_navigator.currentState?.popUntil((route) => route.isFirst);
+    _navigator.currentState?.popUntil((route) => route.isFirst);
 
     return FireflyProvider(
       fireflyService: _firefly,
       child: MaterialApp(
         title: 'Waterfly III',
         theme: ThemeData(
+          brightness: Brightness.light,
           colorSchemeSeed: Colors.blue,
           useMaterial3: true,
         ),
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          colorScheme: ColorScheme.fromSeed(
+                  seedColor: Colors.blue, brightness: Brightness.dark)
+              .copyWith(
+            surfaceVariant: Colors.blueGrey.shade900,
+            onSurfaceVariant: Colors.white,
+          ),
+          useMaterial3: true,
+        ).copyWith(),
+        themeMode: ThemeMode.system,
         navigatorKey: _navigator,
         home: _loading
             ? const SplashPage()

@@ -765,16 +765,30 @@ class SummaryChart extends StatelessWidget {
       child: charts.TimeSeriesChart(
         chartData,
         animate: true,
-        primaryMeasureAxis: const charts.NumericAxisSpec(
-          tickProviderSpec:
-              charts.BasicNumericTickProviderSpec(desiredTickCount: 6),
-          renderSpec: charts.SmallTickRendererSpec(),
+        primaryMeasureAxis: charts.NumericAxisSpec(
+          tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+            //desiredTickCount: 6,
+            desiredMaxTickCount: 6,
+            desiredMinTickCount: 4,
+          ),
+          renderSpec: charts.SmallTickRendererSpec(
+            labelStyle: charts.TextStyleSpec(
+              color: charts.ColorUtil.fromDartColor(
+                  Theme.of(context).colorScheme.onSurfaceVariant),
+            ),
+          ),
         ),
         domainAxis: charts.DateTimeAxisSpec(
           tickFormatterSpec:
               charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
                   DateFormat(DateFormat.ABBR_STANDALONE_MONTH)),
           tickProviderSpec: charts.StaticDateTimeTickProviderSpec(ticks),
+          renderSpec: charts.SmallTickRendererSpec(
+            labelStyle: charts.TextStyleSpec(
+              color: charts.ColorUtil.fromDartColor(
+                  Theme.of(context).colorScheme.onSurfaceVariant),
+            ),
+          ),
         ),
       ),
     );
@@ -836,12 +850,25 @@ class LastDaysChart extends StatelessWidget {
               : charts.MaterialPalette.red.shadeDefault,
           labelAccessorFn: (LabelAmountChart entry, _) =>
               '${defaultCurrency.attributes.symbol}${entry.amount.abs().round().toString()}',
+          outsideLabelStyleAccessorFn: (_, __) => charts.TextStyleSpec(
+            color: charts.ColorUtil.fromDartColor(
+                Theme.of(context).colorScheme.onSurfaceVariant),
+          ),
         ),
       ],
       animate: true,
       barRendererDecorator: charts.BarLabelDecorator<String>(),
-      primaryMeasureAxis:
-          const charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
+      primaryMeasureAxis: const charts.NumericAxisSpec(
+        renderSpec: charts.NoneRenderSpec(),
+      ),
+      domainAxis: charts.AxisSpec<String>(
+        renderSpec: charts.SmallTickRendererSpec(
+          labelStyle: charts.TextStyleSpec(
+            color: charts.ColorUtil.fromDartColor(
+                Theme.of(context).colorScheme.onSurfaceVariant),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -900,10 +927,23 @@ class NetEarningsChart extends StatelessWidget {
           ),
         ],
         animate: true,
-        primaryMeasureAxis: const charts.NumericAxisSpec(
+        primaryMeasureAxis: charts.NumericAxisSpec(
           tickProviderSpec:
-              charts.BasicNumericTickProviderSpec(desiredTickCount: 5),
-          renderSpec: charts.SmallTickRendererSpec(),
+              const charts.BasicNumericTickProviderSpec(desiredTickCount: 5),
+          renderSpec: charts.SmallTickRendererSpec(
+            labelStyle: charts.TextStyleSpec(
+              color: charts.ColorUtil.fromDartColor(
+                  Theme.of(context).colorScheme.onSurfaceVariant),
+            ),
+          ),
+        ),
+        domainAxis: charts.AxisSpec<String>(
+          renderSpec: charts.SmallTickRendererSpec(
+            labelStyle: charts.TextStyleSpec(
+              color: charts.ColorUtil.fromDartColor(
+                  Theme.of(context).colorScheme.onSurfaceVariant),
+            ),
+          ),
         ),
       ),
     );
@@ -968,7 +1008,7 @@ class CategoryChart extends StatelessWidget {
             measureFn: (LabelAmountChart entry, _) => entry.amount.abs(),
             data: data,
             labelAccessorFn: (LabelAmountChart entry, _) =>
-                "${entry.amount.abs()}",
+                "${entry.amount.abs().round()}",
             colorFn: (_, int? i) => possibleChartColors[i ?? 5],
           ),
         ],

@@ -60,10 +60,8 @@ class _HomeMainState extends State<HomeMain>
     for (DateTime e in lastDays) {
       final respInsightExpense = await api.apiV1InsightExpenseTotalGet(
         start: DateFormat('yyyy-MM-dd').format(e),
-        end: DateFormat('yyyy-MM-dd').format(e.add(const Duration(days: 1))),
+        end: DateFormat('yyyy-MM-dd').format(e),
       );
-      // :TODO: bug in Firefly, will be fixed in 6.0.0 - see https://github.com/firefly-iii/firefly-iii/issues/7020
-      // then start = end will work!
       if (!respInsightExpense.isSuccessful || respInsightExpense.body == null) {
         throw Exception("Invalid Response from API");
       }
@@ -72,10 +70,8 @@ class _HomeMainState extends State<HomeMain>
           : InsightTotalEntry(differenceFloat: 0);
       final respInsightIncome = await api.apiV1InsightIncomeTotalGet(
         start: DateFormat('yyyy-MM-dd').format(e),
-        end: DateFormat('yyyy-MM-dd').format(e.add(const Duration(days: 1))),
+        end: DateFormat('yyyy-MM-dd').format(e),
       );
-      // :TODO: bug in Firefly, will be fixed in 6.0.0 - see https://github.com/firefly-iii/firefly-iii/issues/7020
-      // then start = end will work!
       if (!respInsightIncome.isSuccessful || respInsightIncome.body == null) {
         throw Exception("Invalid Response from API");
       }

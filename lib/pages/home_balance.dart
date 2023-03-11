@@ -101,10 +101,12 @@ class _HomeBalanceState extends State<HomeBalance>
                             ),
                             const TextSpan(text: "\n"),
                             TextSpan(
-                              text: account.attributes.updatedAt != null
-                                  ? DateFormat.yMd().add_Hms().format(
-                                      account.attributes.updatedAt!.toLocal())
-                                  : "never",
+                              text:
+                                  account.attributes.currentBalanceDate != null
+                                      ? DateFormat.yMd().add_Hms().format(
+                                          account.attributes.currentBalanceDate!
+                                              .toLocal())
+                                      : "never",
                             ),
                           ],
                         ),

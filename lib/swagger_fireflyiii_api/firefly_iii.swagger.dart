@@ -2191,7 +2191,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all piggy banks.
   ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/piggy_banks')
+  @Get(path: '/api/v1/piggy-banks')
   Future<chopper.Response<PiggyBankArray>> _apiV1PiggyBanksGet(
       {@Query('page') int? page});
 
@@ -2206,7 +2206,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Store a new piggy bank
   @Post(
-    path: '/api/v1/piggy_banks',
+    path: '/api/v1/piggy-banks',
     optionalBody: true,
   )
   Future<chopper.Response<PiggyBankSingle>> _apiV1PiggyBanksPost(
@@ -2224,7 +2224,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Get a single piggy bank.
   ///@param id The ID of the piggy bank.
-  @Get(path: '/api/v1/piggy_banks/{id}')
+  @Get(path: '/api/v1/piggy-banks/{id}')
   Future<chopper.Response<PiggyBankSingle>> _apiV1PiggyBanksIdGet(
       {@Path('id') required String? id});
 
@@ -2243,7 +2243,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing piggy bank.
   ///@param id The ID of the piggy bank
   @Put(
-    path: '/api/v1/piggy_banks/{id}',
+    path: '/api/v1/piggy-banks/{id}',
     optionalBody: true,
   )
   Future<chopper.Response<PiggyBankSingle>> _apiV1PiggyBanksIdPut({
@@ -2259,7 +2259,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Delete a piggy bank.
   ///@param id The ID of the piggy bank.
-  @Delete(path: '/api/v1/piggy_banks/{id}')
+  @Delete(path: '/api/v1/piggy-banks/{id}')
   Future<chopper.Response> _apiV1PiggyBanksIdDelete(
       {@Path('id') required String? id});
 
@@ -3190,7 +3190,7 @@ abstract class FireflyIii extends ChopperService {
   ///List all events linked to a piggy bank.
   ///@param id The ID of the piggy bank
   ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/piggy_banks/{id}/events')
+  @Get(path: '/api/v1/piggy-banks/{id}/events')
   Future<chopper.Response<PiggyBankEventArray>> _apiV1PiggyBanksIdEventsGet({
     @Path('id') required String? id,
     @Query('page') int? page,
@@ -3212,7 +3212,7 @@ abstract class FireflyIii extends ChopperService {
   ///Lists all attachments.
   ///@param id The ID of the piggy bank.
   ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/piggy_banks/{id}/attachments')
+  @Get(path: '/api/v1/piggy-banks/{id}/attachments')
   Future<chopper.Response<AttachmentArray>> _apiV1PiggyBanksIdAttachmentsGet({
     @Path('id') required String? id,
     @Query('page') int? page,

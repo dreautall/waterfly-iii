@@ -1710,7 +1710,7 @@ class _$FireflyIii extends FireflyIii {
 
   @override
   Future<Response<PiggyBankArray>> _apiV1PiggyBanksGet({int? page}) {
-    final Uri $url = Uri.parse('/api/v1/piggy_banks');
+    final Uri $url = Uri.parse('/api/v1/piggy-banks');
     final Map<String, dynamic> $params = <String, dynamic>{'page': page};
     final Request $request = Request(
       'GET',
@@ -1724,7 +1724,7 @@ class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<PiggyBankSingle>> _apiV1PiggyBanksPost(
       {required PiggyBankStore? body}) {
-    final Uri $url = Uri.parse('/api/v1/piggy_banks');
+    final Uri $url = Uri.parse('/api/v1/piggy-banks');
     final $body = body;
     final Request $request = Request(
       'POST',
@@ -1738,7 +1738,7 @@ class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<PiggyBankSingle>> _apiV1PiggyBanksIdGet(
       {required String? id}) {
-    final Uri $url = Uri.parse('/api/v1/piggy_banks/${id}');
+    final Uri $url = Uri.parse('/api/v1/piggy-banks/${id}');
     final Request $request = Request(
       'GET',
       $url,
@@ -1752,7 +1752,7 @@ class _$FireflyIii extends FireflyIii {
     required String? id,
     required PiggyBankUpdate? body,
   }) {
-    final Uri $url = Uri.parse('/api/v1/piggy_banks/${id}');
+    final Uri $url = Uri.parse('/api/v1/piggy-banks/${id}');
     final $body = body;
     final Request $request = Request(
       'PUT',
@@ -1765,7 +1765,7 @@ class _$FireflyIii extends FireflyIii {
 
   @override
   Future<Response<dynamic>> _apiV1PiggyBanksIdDelete({required String? id}) {
-    final Uri $url = Uri.parse('/api/v1/piggy_banks/${id}');
+    final Uri $url = Uri.parse('/api/v1/piggy-banks/${id}');
     final Request $request = Request(
       'DELETE',
       $url,
@@ -2469,7 +2469,7 @@ class _$FireflyIii extends FireflyIii {
     required String? id,
     int? page,
   }) {
-    final Uri $url = Uri.parse('/api/v1/piggy_banks/${id}/events');
+    final Uri $url = Uri.parse('/api/v1/piggy-banks/${id}/events');
     final Map<String, dynamic> $params = <String, dynamic>{'page': page};
     final Request $request = Request(
       'GET',
@@ -2485,7 +2485,7 @@ class _$FireflyIii extends FireflyIii {
     required String? id,
     int? page,
   }) {
-    final Uri $url = Uri.parse('/api/v1/piggy_banks/${id}/attachments');
+    final Uri $url = Uri.parse('/api/v1/piggy-banks/${id}/attachments');
     final Map<String, dynamic> $params = <String, dynamic>{'page': page};
     final Request $request = Request(
       'GET',

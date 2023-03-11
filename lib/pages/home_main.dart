@@ -44,9 +44,6 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastDays() async {
-    if (lastDaysExpense.isNotEmpty && lastDaysIncome.isNotEmpty) {
-      return true;
-    }
     final api = FireflyProvider.of(context).api;
     if (api == null) {
       throw Exception("API unavailable");
@@ -91,9 +88,6 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchOverviewChart() async {
-    if (overviewChartData.isNotEmpty) {
-      return true;
-    }
     final api = FireflyProvider.of(context).api;
     if (api == null) {
       throw Exception("API unavailable");
@@ -117,9 +111,6 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastMonths() async {
-    if (lastMonthsExpense.isNotEmpty && lastMonthsIncome.isNotEmpty) {
-      return true;
-    }
     final api = FireflyProvider.of(context).api;
     if (api == null) {
       throw Exception("API unavailable");
@@ -169,9 +160,6 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchCategories() async {
-    if (catChartData.isNotEmpty) {
-      return true;
-    }
     final api = FireflyProvider.of(context).api;
     if (api == null) {
       throw Exception("API unavailable");

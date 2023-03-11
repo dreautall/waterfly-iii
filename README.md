@@ -8,21 +8,22 @@ The app design is heavily influenced by [Bluecoins](https://play.google.com/stor
 
 The app is still pretty much work in progress, but basic features already do work:
 
+- General
+ - Dark Mode switch according to system settings
 - Dashboard
   - Multiple charts for the current balance & recent history
-  - Budget overview for last 30 days.
+  - Budget overview for last 30 days
 - Transactions
-  - List transactions by date, including (basic) filters.
+  - List transactions by date, including (basic) filters
   - Add & edit transactions with autocomplete, including attachments, split transactions & multi currency support
 - Balance Sheet
   - List invididual balances
 
 ### Planned Features
-- Piggy Banks
-- Dark Mode
 - Detailed Accounts page
 - Settings page
 - Notification Listener
+- More filter options
 - ... and many more.
 
 ## Screenshots

@@ -59,6 +59,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           widget.key!,
           <Widget>[
             IconButton(
+              // :TODO: turn blue when filter is set.. if feasible
               icon: const Icon(Icons.tune),
               tooltip: 'Filter List',
               onPressed: () async {

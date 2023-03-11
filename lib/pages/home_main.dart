@@ -506,7 +506,9 @@ class _HomeMainState extends State<HomeMain>
                           ),
                         ),
                         BudgetList(
-                            budgetInfos: budgetInfos, snapshot: snapshot),
+                          budgetInfos: budgetInfos,
+                          snapshot: snapshot,
+                        ),
                       ],
                     );
                   } else if (snapshot.hasError) {

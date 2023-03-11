@@ -4,6 +4,7 @@ import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/home_main.dart';
 import 'package:waterflyiii/pages/home_transactions.dart';
 import 'package:waterflyiii/pages/home_balance.dart';
+import 'package:waterflyiii/pages/home_piggybank.dart';
 import 'package:waterflyiii/pages/transaction_detail.dart';
 
 class HomePage extends StatefulWidget {
@@ -98,23 +99,26 @@ class HomePageState extends State<HomePage>
     Tab(text: 'Main'),
     Tab(text: 'Transactions'),
     Tab(text: 'Balance Sheet'),
+    Tab(text: 'Piggy Banks'),
   ];
 
   static const List<Widget> tabPages = <Widget>[
     HomeMain(key: Key("HomeMain")),
     HomeTransactions(key: Key("HomeTransactions")),
     HomeBalance(key: Key("HomeBalance")),
+    HomePiggybank(key: Key("HomePiggybanks")),
   ];
 
   @override
   Widget build(BuildContext context) {
     print("home build(), tab ${_tabController.index}");
     return HomePageInheritedState(
-        data: this,
-        child: TabBarView(
-          controller: _tabController,
-          children: tabPages,
-        ));
+      data: this,
+      child: TabBarView(
+        controller: _tabController,
+        children: tabPages,
+      ),
+    );
   }
 }
 

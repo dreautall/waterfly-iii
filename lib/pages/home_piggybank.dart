@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:waterflyiii/auth.dart';
-import 'package:waterflyiii/transactions.dart';
+import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
 import 'package:waterflyiii/swagger_fireflyiii_api/firefly_iii.swagger.dart';

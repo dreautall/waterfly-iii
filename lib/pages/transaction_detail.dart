@@ -8,7 +8,7 @@ import 'package:collection/collection.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 
 import 'package:waterflyiii/auth.dart';
-import 'package:waterflyiii/transactions.dart';
+import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/widgets/animatedheightcard.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 import 'package:waterflyiii/widgets/input_number.dart';

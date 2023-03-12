@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:ui';
-import 'package:chopper/chopper.dart';
+import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:waterflyiii/auth.dart';
-import 'package:waterflyiii/transactions.dart';
+import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/transaction_detail.dart';
 import 'package:waterflyiii/swagger_fireflyiii_api/firefly_iii.swagger.dart';
@@ -186,7 +186,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
         if (notes.isNotEmpty) {
           notes += "\n";
         }
-        notes += trans.notes!.strip();
+        notes += trans.notes!.trim();
       }
       if (trans.hasAttachments != null && trans.hasAttachments!) {
         hasAttachments = true;

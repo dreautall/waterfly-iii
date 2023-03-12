@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 import 'package:waterflyiii/auth.dart';
-import 'package:waterflyiii/transactions.dart';
+import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/widgets/animatedheightcard.dart';
 import 'package:waterflyiii/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 

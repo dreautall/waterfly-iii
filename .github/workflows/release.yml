@@ -1,9 +1,8 @@
 name: Build
 
 on:
-  push:
-    tags:
-      - '*'
+  release:
+    types: [created]
 
 env:
   JAVA_VERSION: "12.x"
@@ -15,13 +14,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Setup Java environment in order to build the Android app.
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v3
         with:
+          distribution: 'zulu'
           java-version: ${{env.JAVA_VERSION}}
-          cache: "gradle"
+          cache: 'gradle'
 
       # Gradle cache for faster builds
       - uses: actions/cache@v2
@@ -32,6 +32,7 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
       # Setup the flutter environment.
       - uses: subosito/flutter-action@v2
         with:
@@ -45,7 +46,7 @@ jobs:
       - run: flutter format --set-exit-if-changed .
 
       # Statically analyze the Dart code for any errors.
-      - run: flutter analyze .
+      - run: dart analyze .
 
       # Run widget tests for our flutter project.
       # - run: flutter test
@@ -54,17 +55,43 @@ jobs:
       - run: flutter build apk --release --split-per-abi
 
       # Upload generated apk to the artifacts.
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: app-arm64-v8a-release.apk
           path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: app-armeabi-v7a-release.apk
           path: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: app-x86_64-release.apk
           path: build/app/outputs/flutter-apk/app-x86_64-release.apk
+
+  upload-to-github:
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: app-arm64-v8a-release.apk
+          path: ./artifacts
+      - uses: actions/download-artifact@v3
+        with:
+          name: app-armeabi-v7a-release.apk
+          path: ./artifacts
+      - uses: actions/download-artifact@v3
+        with:
+          name: app-x86_64-release.apk
+          path: ./artifcats
+      
+      - uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            ./artifcats/app-arm64-v8a-release.apk
+            ./artifcats/app-armeabi-v7a-release.apk
+            ./artifcats/app-x86_64-release.apk

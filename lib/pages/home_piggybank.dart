@@ -10,7 +10,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
-import 'package:waterflyiii/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;

@@ -13,7 +13,7 @@ import 'package:waterflyiii/widgets/animatedheightcard.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
-import 'package:waterflyiii/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 import 'package:badges/badges.dart' as badges;
 import 'package:filesize/filesize.dart';

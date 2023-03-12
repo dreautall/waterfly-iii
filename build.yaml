@@ -6,7 +6,7 @@ targets:
       swagger_dart_code_generator:
         options:
           input_folder: "swagger_input/"
-          output_folder: "lib/swagger_fireflyiii_api/"
+          output_folder: "lib/generated/swagger_fireflyiii_api/"
           with_base_url: false
           separate_models: true
           cut_from_model_names: v1

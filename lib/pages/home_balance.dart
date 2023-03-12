@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/pages/home_transactions.dart';
-import 'package:waterflyiii/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 class HomeBalance extends StatefulWidget {
   const HomeBalance({

@@ -8,7 +8,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/transaction_detail.dart';
-import 'package:waterflyiii/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 

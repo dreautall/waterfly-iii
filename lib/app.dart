@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:waterflyiii/pages/login.dart';
 import 'package:waterflyiii/pages/navigation.dart';
@@ -78,6 +79,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
           useMaterial3: true,
         ).copyWith(),
         themeMode: ThemeMode.system,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         navigatorKey: _navigator,
         home: _loading
             ? const SplashPage()

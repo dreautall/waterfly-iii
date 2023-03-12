@@ -601,50 +601,49 @@ class _TransactionPageState extends State<TransactionPage>
         title: Text(
             "${(widget.transaction == null) ? "Add" : "Edit"} Transaction"),
         actions: <Widget>[
-          !(widget.transactionId == null && widget.transaction == null)
-              ? IconButton(
-                  icon: const Icon(Icons.delete),
-                  tooltip: 'Delete',
-                  onPressed: () async {
-                    final api = FireflyProvider.of(context).api;
-                    final nav = Navigator.of(context);
-                    if (api == null) {
-                      throw Exception("API unavailable");
-                    }
-                    bool? ok = await showDialog<bool>(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        icon: const Icon(Icons.delete),
-                        title: const Text("Delete Transaction"),
-                        clipBehavior: Clip.hardEdge,
-                        actions: <Widget>[
-                          TextButton(
-                            child: const Text('Cancel'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          FilledButton(
-                            child: const Text('Delete'),
-                            onPressed: () {
-                              Navigator.of(context).pop(true);
-                            },
-                          ),
-                        ],
-                        content: const Text(
-                            "Are you sure you want to delete this transaction?"),
+          if (!(widget.transactionId == null && widget.transaction == null))
+            IconButton(
+              icon: const Icon(Icons.delete),
+              tooltip: 'Delete',
+              onPressed: () async {
+                final api = FireflyProvider.of(context).api;
+                final nav = Navigator.of(context);
+                if (api == null) {
+                  throw Exception("API unavailable");
+                }
+                bool? ok = await showDialog<bool>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    icon: const Icon(Icons.delete),
+                    title: const Text("Delete Transaction"),
+                    clipBehavior: Clip.hardEdge,
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Cancel'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
                       ),
-                    );
-                    if (ok == null || !ok) {
-                      return;
-                    }
+                      FilledButton(
+                        child: const Text('Delete'),
+                        onPressed: () {
+                          Navigator.of(context).pop(true);
+                        },
+                      ),
+                    ],
+                    content: const Text(
+                        "Are you sure you want to delete this transaction?"),
+                  ),
+                );
+                if (ok == null || !ok) {
+                  return;
+                }
 
-                    await api.v1TransactionsIdDelete(
-                        id: widget.transaction?.id ?? widget.transactionId);
-                    nav.pop();
-                  },
-                )
-              : const SizedBox.shrink(),
+                await api.v1TransactionsIdDelete(
+                    id: widget.transaction?.id ?? widget.transactionId);
+                nav.pop();
+              },
+            ),
           const SizedBox(width: 8),
           FilledButton(
             child: const Text('Save'),
@@ -978,19 +977,18 @@ class _TransactionPageState extends State<TransactionPage>
                 _localCurrency!.attributes.code),
           ),
           vDivider,
-          (_foreignCurrency != null)
-              ? Expanded(
-                  child: NumberInput(
-                    controller: _localAmountTextController,
-                    disabled: _split,
-                    hintText: "0.00",
-                    decimals: _localCurrency!.attributes.decimalPlaces ?? 2,
-                    prefixText: "${_localCurrency!.attributes.code} ",
-                    onChanged: (string) =>
-                        _localAmounts[0] = double.tryParse(string) ?? 0,
-                  ),
-                )
-              : const SizedBox.shrink(),
+          if (_foreignCurrency != null)
+            Expanded(
+              child: NumberInput(
+                controller: _localAmountTextController,
+                disabled: _split,
+                hintText: "0.00",
+                decimals: _localCurrency!.attributes.decimalPlaces ?? 2,
+                prefixText: "${_localCurrency!.attributes.code} ",
+                onChanged: (string) =>
+                    _localAmounts[0] = double.tryParse(string) ?? 0,
+              ),
+            ),
         ],
       ),
     );
@@ -1476,25 +1474,21 @@ class _TransactionPageState extends State<TransactionPage>
                           tooltip: (_split) ? "Change Split Currency" : null,
                         ),
                         hDivider,
-                        !showAccountSelection
-                            ? IconButton(
-                                icon: const Icon(Icons.add_business),
-                                onPressed: _split && !showAccountSelection
-                                    ? () {
-                                        print("adding separate account for $i");
-                                        _otherAccountTextControllers[i].text =
-                                            "";
-                                        splitTransactionCheckAccounts();
-                                      }
-                                    : null,
-                                tooltip: (_split)
-                                    ? "Change Split Target Account"
-                                    : null,
-                              )
-                            : const SizedBox.shrink(),
-                        !showAccountSelection
-                            ? hDivider
-                            : const SizedBox.shrink(),
+                        if (!showAccountSelection) ...[
+                          IconButton(
+                            icon: const Icon(Icons.add_business),
+                            onPressed: _split && !showAccountSelection
+                                ? () {
+                                    print("adding separate account for $i");
+                                    _otherAccountTextControllers[i].text = "";
+                                    splitTransactionCheckAccounts();
+                                  }
+                                : null,
+                            tooltip:
+                                (_split) ? "Change Split Target Account" : null,
+                          ),
+                          hDivider,
+                        ],
                         IconButton(
                           icon: const Icon(Icons.delete),
                           onPressed: _split

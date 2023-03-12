@@ -291,33 +291,31 @@ class _TransactionPageState extends State<TransactionPage>
         final api = FireflyProvider.of(context).api;
         if (api == null) {
           throw Exception("API not ready.");
+        }
+        final response = await api.apiV1AutocompleteAccountsGet(
+          query: _ownAccountTextController.text,
+          types: <AccountTypeFilter>[
+            AccountTypeFilter.assetAccount,
+            AccountTypeFilter.loan,
+            AccountTypeFilter.debt,
+            AccountTypeFilter.mortgage,
+          ],
+        );
+        if (!response.isSuccessful || response.body == null) {
+          throw Exception("Invalid Response from API");
+        }
+        if (response.body!.isEmpty ||
+            (response.body!.length > 1 &&
+                response.body!.first.name != _ownAccountTextController.text)) {
+          setState(() {
+            _ownAccountId = null;
+          });
         } else {
-          final response = await api.apiV1AutocompleteAccountsGet(
-            query: _ownAccountTextController.text,
-            types: <AccountTypeFilter>[
-              AccountTypeFilter.assetAccount,
-              AccountTypeFilter.loan,
-              AccountTypeFilter.debt,
-              AccountTypeFilter.mortgage,
-            ],
-          );
-          if (!response.isSuccessful || response.body == null) {
-            throw Exception("Invalid Response from API");
-          }
-          if (response.body!.isEmpty ||
-              (response.body!.length > 1 &&
-                  response.body!.first.name !=
-                      _ownAccountTextController.text)) {
-            setState(() {
-              _ownAccountId = null;
-            });
-          } else {
-            _ownAccountTextController.text = response.body!.first.name;
-            setState(() {
-              _ownAccountId = response.body!.first.id;
-            });
-            checkAccountCurrency(response.body!.first);
-          }
+          _ownAccountTextController.text = response.body!.first.name;
+          setState(() {
+            _ownAccountId = response.body!.first.id;
+          });
+          checkAccountCurrency(response.body!.first);
         }
       } catch (e) {
         print("Error while fetching autocomplete from API: $e");
@@ -573,18 +571,17 @@ class _TransactionPageState extends State<TransactionPage>
       final api = FireflyProvider.of(context).api;
       if (api == null) {
         throw Exception("API not ready.");
-      } else {
-        final response = await api.apiV1TransactionsIdAttachmentsGet(
-          id: widget.transaction?.id ?? widget.transactionId,
-        );
-        if (!response.isSuccessful || response.body == null) {
-          throw Exception("Invalid Response from API");
-        }
-        _attachments = response.body!.data;
-        setState(() {
-          _hasAttachments = _attachments?.isNotEmpty ?? false;
-        });
       }
+      final response = await api.apiV1TransactionsIdAttachmentsGet(
+        id: widget.transaction?.id ?? widget.transactionId,
+      );
+      if (!response.isSuccessful || response.body == null) {
+        throw Exception("Invalid Response from API");
+      }
+      _attachments = response.body!.data;
+      setState(() {
+        _hasAttachments = _attachments?.isNotEmpty ?? false;
+      });
     } catch (e) {
       print("Error while fetching autocomplete from API: $e");
     }
@@ -1028,19 +1025,18 @@ class _TransactionPageState extends State<TransactionPage>
                   final api = FireflyProvider.of(context).api;
                   if (api == null) {
                     throw Exception("API not ready.");
-                  } else {
-                    final response = await api.apiV1AutocompleteAccountsGet(
-                      query: textEditingValue.text,
-                      types:
-                          _transactionType == TransactionTypeProperty.withdrawal
-                              ? _transactionType.destinationAccountTypes
-                              : _transactionType.sourceAccountTypes,
-                    );
-                    if (!response.isSuccessful || response.body == null) {
-                      throw Exception("Invalid Response from API");
-                    }
-                    return response.body!;
                   }
+                  final response = await api.apiV1AutocompleteAccountsGet(
+                    query: textEditingValue.text,
+                    types:
+                        _transactionType == TransactionTypeProperty.withdrawal
+                            ? _transactionType.destinationAccountTypes
+                            : _transactionType.sourceAccountTypes,
+                  );
+                  if (!response.isSuccessful || response.body == null) {
+                    throw Exception("Invalid Response from API");
+                  }
+                  return response.body!;
                 } catch (e) {
                   print("Error while fetching autocomplete from API: $e");
                   return const Iterable<AutocompleteAccount>.empty();
@@ -1139,21 +1135,20 @@ class _TransactionPageState extends State<TransactionPage>
                   final api = FireflyProvider.of(context).api;
                   if (api == null) {
                     throw Exception("API not ready.");
-                  } else {
-                    final response = await api.apiV1AutocompleteAccountsGet(
-                      query: textEditingValue.text,
-                      types: <AccountTypeFilter>[
-                        AccountTypeFilter.assetAccount,
-                        AccountTypeFilter.loan,
-                        AccountTypeFilter.debt,
-                        AccountTypeFilter.mortgage,
-                      ],
-                    );
-                    if (!response.isSuccessful || response.body == null) {
-                      throw Exception("Invalid Response from API");
-                    }
-                    return response.body!;
                   }
+                  final response = await api.apiV1AutocompleteAccountsGet(
+                    query: textEditingValue.text,
+                    types: <AccountTypeFilter>[
+                      AccountTypeFilter.assetAccount,
+                      AccountTypeFilter.loan,
+                      AccountTypeFilter.debt,
+                      AccountTypeFilter.mortgage,
+                    ],
+                  );
+                  if (!response.isSuccessful || response.body == null) {
+                    throw Exception("Invalid Response from API");
+                  }
+                  return response.body!;
                 } catch (e) {
                   print("Error while fetching autocomplete from API: $e");
                   return const Iterable<AutocompleteAccount>.empty();
@@ -1324,23 +1319,22 @@ class _TransactionPageState extends State<TransactionPage>
                                   final api = FireflyProvider.of(context).api;
                                   if (api == null) {
                                     throw Exception("API not ready.");
-                                  } else {
-                                    final response =
-                                        await api.apiV1AutocompleteAccountsGet(
-                                      query: textEditingValue.text,
-                                      types: _transactionType ==
-                                              TransactionTypeProperty.withdrawal
-                                          ? _transactionType
-                                              .destinationAccountTypes
-                                          : _transactionType.sourceAccountTypes,
-                                    );
-                                    if (!response.isSuccessful ||
-                                        response.body == null) {
-                                      throw Exception(
-                                          "Invalid Response from API");
-                                    }
-                                    return response.body!;
                                   }
+                                  final response =
+                                      await api.apiV1AutocompleteAccountsGet(
+                                    query: textEditingValue.text,
+                                    types: _transactionType ==
+                                            TransactionTypeProperty.withdrawal
+                                        ? _transactionType
+                                            .destinationAccountTypes
+                                        : _transactionType.sourceAccountTypes,
+                                  );
+                                  if (!response.isSuccessful ||
+                                      response.body == null) {
+                                    throw Exception(
+                                        "Invalid Response from API");
+                                  }
+                                  return response.body!;
                                 } catch (e) {
                                   print(
                                       "Error while fetching autocomplete from API: $e");
@@ -1545,14 +1539,13 @@ class TransactionTitle extends StatelessWidget {
             final api = FireflyProvider.of(context).api;
             if (api == null) {
               throw Exception("API not ready.");
-            } else {
-              final response = await api.apiV1AutocompleteTransactionsGet(
-                  query: textEditingValue.text);
-              if (!response.isSuccessful || response.body == null) {
-                throw Exception("Invalid Response from API");
-              }
-              return response.body!.map((e) => e.name);
             }
+            final response = await api.apiV1AutocompleteTransactionsGet(
+                query: textEditingValue.text);
+            if (!response.isSuccessful || response.body == null) {
+              throw Exception("Invalid Response from API");
+            }
+            return response.body!.map((e) => e.name);
           } catch (e) {
             print("Error while fetching autocomplete from API: $e");
             return const Iterable<String>.empty();
@@ -1726,15 +1719,14 @@ class TransactionCategory extends StatelessWidget {
                 final api = FireflyProvider.of(context).api;
                 if (api == null) {
                   throw Exception("API not ready.");
-                } else {
-                  final response = await api.apiV1AutocompleteCategoriesGet(
-                    query: textEditingValue.text,
-                  );
-                  if (!response.isSuccessful || response.body == null) {
-                    throw Exception("Invalid Response from API");
-                  }
-                  return response.body!.map((e) => e.name);
                 }
+                final response = await api.apiV1AutocompleteCategoriesGet(
+                  query: textEditingValue.text,
+                );
+                if (!response.isSuccessful || response.body == null) {
+                  throw Exception("Invalid Response from API");
+                }
+                return response.body!.map((e) => e.name);
               } catch (e) {
                 print("Error while fetching autocomplete from API: $e");
                 return const Iterable<String>.empty();
@@ -1784,25 +1776,24 @@ class _TransactionBudgetState extends State<TransactionBudget> {
         final api = FireflyProvider.of(context).api;
         if (api == null) {
           throw Exception("API not ready.");
+        }
+        final response = await api.apiV1AutocompleteBudgetsGet(
+          query: widget.textController.text,
+        );
+        if (!response.isSuccessful || response.body == null) {
+          throw Exception("Invalid Response from API");
+        }
+        if (response.body!.isEmpty ||
+            (response.body!.length > 1 &&
+                response.body!.first.name != widget.textController.text)) {
+          setState(() {
+            _budgetId = null;
+          });
         } else {
-          final response = await api.apiV1AutocompleteBudgetsGet(
-            query: widget.textController.text,
-          );
-          if (!response.isSuccessful || response.body == null) {
-            throw Exception("Invalid Response from API");
-          }
-          if (response.body!.isEmpty ||
-              (response.body!.length > 1 &&
-                  response.body!.first.name != widget.textController.text)) {
-            setState(() {
-              _budgetId = null;
-            });
-          } else {
-            widget.textController.text = response.body!.first.name;
-            setState(() {
-              _budgetId = response.body!.first.id;
-            });
-          }
+          widget.textController.text = response.body!.first.name;
+          setState(() {
+            _budgetId = response.body!.first.id;
+          });
         }
       } catch (e) {
         print("Error while fetching autocomplete from API: $e");
@@ -1833,15 +1824,14 @@ class _TransactionBudgetState extends State<TransactionBudget> {
                 final api = FireflyProvider.of(context).api;
                 if (api == null) {
                   throw Exception("API not ready.");
-                } else {
-                  final response = await api.apiV1AutocompleteBudgetsGet(
-                    query: textEditingValue.text,
-                  );
-                  if (!response.isSuccessful || response.body == null) {
-                    throw Exception("Invalid Response from API");
-                  }
-                  return response.body!;
                 }
+                final response = await api.apiV1AutocompleteBudgetsGet(
+                  query: textEditingValue.text,
+                );
+                if (!response.isSuccessful || response.body == null) {
+                  throw Exception("Invalid Response from API");
+                }
+                return response.body!;
               } catch (e) {
                 print("Error while fetching autocomplete from API: $e");
                 return const Iterable<AutocompleteBudget>.empty();

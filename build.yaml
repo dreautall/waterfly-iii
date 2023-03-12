@@ -1,18 +1,17 @@
 targets:
   $default:
-    #sources:
-    #  - swagger_input/firefly-iii.yaml
+    sources:
+      - swagger_input/firefly-iii.yaml
     builders:
-#      swagger_dart_code_generator:
-#        options:
-#          input_folder: "swagger_input/"
-#          output_folder: "lib/swagger_fireflyiii_api/"
-#          with_base_url: false
-#          separate_models: true
-#          overriden_models:
-#          #  - "ObjectLink"
-#          cut_from_model_names: "apiV1"
-#          override_equals_and_hashcode: false
-      json_serializable:
-        generate_for:
-          - "lib/swagger_fireflyiii_api/firefly_iii.models.swagger.dart"
+      swagger_dart_code_generator:
+        options:
+          input_folder: "swagger_input/"
+          output_folder: "lib/swagger_fireflyiii_api/"
+          with_base_url: false
+          separate_models: true
+          cut_from_model_names: v1
+          override_equals_and_hashcode: false
+          include_if_null: false
+#      json_serializable:
+#        generate_for:
+#          - "lib/swagger_fireflyiii_api/firefly_iii.models.swagger.dart"

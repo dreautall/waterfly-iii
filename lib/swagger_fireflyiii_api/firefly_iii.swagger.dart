@@ -31,306 +31,19 @@ abstract class FireflyIii extends ChopperService {
       converter: $JsonSerializableConverter(),
       interceptors: interceptors ?? [],
       authenticator: authenticator,
-      /*baseUrl: YOUR_BASE_URL*/
       baseUrl: baseUrl,
     );
     return _$FireflyIii(newClient);
   }
 
-  ///Returns all rule groups of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  Future<chopper.Response<AutocompleteRuleGroupArray>>
-      apiV1AutocompleteRuleGroupsGet({
-    String? query,
-    int? limit,
-  }) {
-    generatedMapping.putIfAbsent(
-        AutocompleteRuleGroup, () => AutocompleteRuleGroup.fromJsonFactory);
-
-    return _apiV1AutocompleteRuleGroupsGet(query: query, limit: limit);
-  }
-
-  ///Returns all rule groups of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  @Get(path: '/api/v1/autocomplete/rule-groups')
-  Future<chopper.Response<AutocompleteRuleGroupArray>>
-      _apiV1AutocompleteRuleGroupsGet({
-    @Query('query') String? query,
-    @Query('limit') int? limit,
-  });
-
-  ///Returns all categories of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  Future<chopper.Response<AutocompleteCategoryArray>>
-      apiV1AutocompleteCategoriesGet({
-    String? query,
-    int? limit,
-  }) {
-    generatedMapping.putIfAbsent(
-        AutocompleteCategory, () => AutocompleteCategory.fromJsonFactory);
-
-    return _apiV1AutocompleteCategoriesGet(query: query, limit: limit);
-  }
-
-  ///Returns all categories of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  @Get(path: '/api/v1/autocomplete/categories')
-  Future<chopper.Response<AutocompleteCategoryArray>>
-      _apiV1AutocompleteCategoriesGet({
-    @Query('query') String? query,
-    @Query('limit') int? limit,
-  });
-
-  ///Returns all transaction types returned in a basic auto-complete array. English only.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  Future<chopper.Response<AutocompleteTransactionTypeArray>>
-      apiV1AutocompleteTransactionTypesGet({
-    String? query,
-    int? limit,
-  }) {
-    generatedMapping.putIfAbsent(AutocompleteTransactionType,
-        () => AutocompleteTransactionType.fromJsonFactory);
-
-    return _apiV1AutocompleteTransactionTypesGet(query: query, limit: limit);
-  }
-
-  ///Returns all transaction types returned in a basic auto-complete array. English only.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  @Get(path: '/api/v1/autocomplete/transaction-types')
-  Future<chopper.Response<AutocompleteTransactionTypeArray>>
-      _apiV1AutocompleteTransactionTypesGet({
-    @Query('query') String? query,
-    @Query('limit') int? limit,
-  });
-
-  ///Returns all object groups of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  Future<chopper.Response<AutocompleteObjectGroupArray>>
-      apiV1AutocompleteObjectGroupsGet({
-    String? query,
-    int? limit,
-  }) {
-    generatedMapping.putIfAbsent(
-        AutocompleteObjectGroup, () => AutocompleteObjectGroup.fromJsonFactory);
-
-    return _apiV1AutocompleteObjectGroupsGet(query: query, limit: limit);
-  }
-
-  ///Returns all object groups of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  @Get(path: '/api/v1/autocomplete/object-groups')
-  Future<chopper.Response<AutocompleteObjectGroupArray>>
-      _apiV1AutocompleteObjectGroupsGet({
-    @Query('query') String? query,
-    @Query('limit') int? limit,
-  });
-
-  ///Returns all rules of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  Future<chopper.Response<AutocompleteRuleArray>> apiV1AutocompleteRulesGet({
-    String? query,
-    int? limit,
-  }) {
-    generatedMapping.putIfAbsent(
-        AutocompleteRule, () => AutocompleteRule.fromJsonFactory);
-
-    return _apiV1AutocompleteRulesGet(query: query, limit: limit);
-  }
-
-  ///Returns all rules of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  @Get(path: '/api/v1/autocomplete/rules')
-  Future<chopper.Response<AutocompleteRuleArray>> _apiV1AutocompleteRulesGet({
-    @Query('query') String? query,
-    @Query('limit') int? limit,
-  });
-
-  ///Returns all transaction descriptions of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  Future<chopper.Response<AutocompleteTransactionArray>>
-      apiV1AutocompleteTransactionsGet({
-    String? query,
-    int? limit,
-  }) {
-    generatedMapping.putIfAbsent(
-        AutocompleteTransaction, () => AutocompleteTransaction.fromJsonFactory);
-
-    return _apiV1AutocompleteTransactionsGet(query: query, limit: limit);
-  }
-
-  ///Returns all transaction descriptions of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  @Get(path: '/api/v1/autocomplete/transactions')
-  Future<chopper.Response<AutocompleteTransactionArray>>
-      _apiV1AutocompleteTransactionsGet({
-    @Query('query') String? query,
-    @Query('limit') int? limit,
-  });
-
-  ///Returns all transactions, complemented with their ID, of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  Future<chopper.Response<AutocompleteTransactionIDArray>>
-      apiV1AutocompleteTransactionsWithIdGet({
-    String? query,
-    int? limit,
-  }) {
-    generatedMapping.putIfAbsent(AutocompleteTransactionID,
-        () => AutocompleteTransactionID.fromJsonFactory);
-
-    return _apiV1AutocompleteTransactionsWithIdGet(query: query, limit: limit);
-  }
-
-  ///Returns all transactions, complemented with their ID, of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  @Get(path: '/api/v1/autocomplete/transactions-with-id')
-  Future<chopper.Response<AutocompleteTransactionIDArray>>
-      _apiV1AutocompleteTransactionsWithIdGet({
-    @Query('query') String? query,
-    @Query('limit') int? limit,
-  });
-
-  ///Returns all budgets of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned
-  Future<chopper.Response<AutocompleteBudgetArray>>
-      apiV1AutocompleteBudgetsGet({
-    String? query,
-    int? limit,
-  }) {
-    generatedMapping.putIfAbsent(
-        AutocompleteBudget, () => AutocompleteBudget.fromJsonFactory);
-
-    return _apiV1AutocompleteBudgetsGet(query: query, limit: limit);
-  }
-
-  ///Returns all budgets of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned
-  @Get(path: '/api/v1/autocomplete/budgets')
-  Future<chopper.Response<AutocompleteBudgetArray>>
-      _apiV1AutocompleteBudgetsGet({
-    @Query('query') String? query,
-    @Query('limit') int? limit,
-  });
-
-  ///Returns all piggy banks of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  Future<chopper.Response<AutocompletePiggyArray>>
-      apiV1AutocompletePiggyBanksGet({
-    String? query,
-    int? limit,
-  }) {
-    generatedMapping.putIfAbsent(
-        AutocompletePiggy, () => AutocompletePiggy.fromJsonFactory);
-
-    return _apiV1AutocompletePiggyBanksGet(query: query, limit: limit);
-  }
-
-  ///Returns all piggy banks of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  @Get(path: '/api/v1/autocomplete/piggy-banks')
-  Future<chopper.Response<AutocompletePiggyArray>>
-      _apiV1AutocompletePiggyBanksGet({
-    @Query('query') String? query,
-    @Query('limit') int? limit,
-  });
-
-  ///Returns all piggy banks of the user returned in a basic auto-complete array complemented with balance information.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  Future<chopper.Response<AutocompletePiggyBalanceArray>>
-      apiV1AutocompletePiggyBanksWithBalanceGet({
-    String? query,
-    int? limit,
-  }) {
-    generatedMapping.putIfAbsent(AutocompletePiggyBalance,
-        () => AutocompletePiggyBalance.fromJsonFactory);
-
-    return _apiV1AutocompletePiggyBanksWithBalanceGet(
-        query: query, limit: limit);
-  }
-
-  ///Returns all piggy banks of the user returned in a basic auto-complete array complemented with balance information.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  @Get(path: '/api/v1/autocomplete/piggy-banks-with-balance')
-  Future<chopper.Response<AutocompletePiggyBalanceArray>>
-      _apiV1AutocompletePiggyBanksWithBalanceGet({
-    @Query('query') String? query,
-    @Query('limit') int? limit,
-  });
-
-  ///Returns all currencies of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  Future<chopper.Response<AutocompleteCurrencyArray>>
-      apiV1AutocompleteCurrenciesGet({
-    String? query,
-    int? limit,
-  }) {
-    generatedMapping.putIfAbsent(
-        AutocompleteCurrency, () => AutocompleteCurrency.fromJsonFactory);
-
-    return _apiV1AutocompleteCurrenciesGet(query: query, limit: limit);
-  }
-
-  ///Returns all currencies of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  @Get(path: '/api/v1/autocomplete/currencies')
-  Future<chopper.Response<AutocompleteCurrencyArray>>
-      _apiV1AutocompleteCurrenciesGet({
-    @Query('query') String? query,
-    @Query('limit') int? limit,
-  });
-
-  ///Returns all currencies of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  Future<chopper.Response<AutocompleteCurrencyCodeArray>>
-      apiV1AutocompleteCurrenciesWithCodeGet({
-    String? query,
-    int? limit,
-  }) {
-    generatedMapping.putIfAbsent(AutocompleteCurrencyCode,
-        () => AutocompleteCurrencyCode.fromJsonFactory);
-
-    return _apiV1AutocompleteCurrenciesWithCodeGet(query: query, limit: limit);
-  }
-
-  ///Returns all currencies of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  @Get(path: '/api/v1/autocomplete/currencies-with-code')
-  Future<chopper.Response<AutocompleteCurrencyCodeArray>>
-      _apiV1AutocompleteCurrenciesWithCodeGet({
-    @Query('query') String? query,
-    @Query('limit') int? limit,
-  });
-
   ///Returns all accounts of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query for accounts.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
   ///@param date If the account is an asset account or a liability, the autocomplete will also return the balance of the account on this date.
-  ///@param type Optional filter on the account type(s) used in the autocomplete.
-  Future<chopper.Response<AutocompleteAccountArray>>
-      apiV1AutocompleteAccountsGet({
+  ///@param types Optional filter on the account type(s) used in the autocomplete.
+  Future<chopper.Response<AutocompleteAccountArray>> v1AutocompleteAccountsGet({
+    String? xTraceId,
     String? query,
     int? limit,
     String? date,
@@ -339,230 +52,694 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         AutocompleteAccount, () => AutocompleteAccount.fromJsonFactory);
 
-    return _apiV1AutocompleteAccountsGet(
-        query: query, limit: limit, date: date, types: types);
+    return _v1AutocompleteAccountsGet(
+        xTraceId: xTraceId,
+        query: query,
+        limit: limit,
+        date: date,
+        types: accountTypeFilterListToJson(types));
   }
 
   ///Returns all accounts of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query for accounts.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
   ///@param date If the account is an asset account or a liability, the autocomplete will also return the balance of the account on this date.
-  ///@param type Optional filter on the account type(s) used in the autocomplete.
-  @Get(path: '/api/v1/autocomplete/accounts')
+  ///@param types Optional filter on the account type(s) used in the autocomplete.
+  @Get(path: '/v1/autocomplete/accounts')
   Future<chopper.Response<AutocompleteAccountArray>>
-      _apiV1AutocompleteAccountsGet({
+      _v1AutocompleteAccountsGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
     @Query('date') String? date,
-    @Query('types') List<enums.AccountTypeFilter>? types,
-  });
-
-  ///Returns all tags of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  Future<chopper.Response<AutocompleteTagArray>> apiV1AutocompleteTagsGet({
-    String? query,
-    int? limit,
-  }) {
-    generatedMapping.putIfAbsent(
-        AutocompleteTag, () => AutocompleteTag.fromJsonFactory);
-
-    return _apiV1AutocompleteTagsGet(query: query, limit: limit);
-  }
-
-  ///Returns all tags of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query.
-  ///@param limit The number of items returned.
-  @Get(path: '/api/v1/autocomplete/tags')
-  Future<chopper.Response<AutocompleteTagArray>> _apiV1AutocompleteTagsGet({
-    @Query('query') String? query,
-    @Query('limit') int? limit,
+    @Query('types') List<String?>? types,
   });
 
   ///Returns all bills of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query for bills.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  Future<chopper.Response<AutocompleteBillArray>> apiV1AutocompleteBillsGet({
+  Future<chopper.Response<AutocompleteBillArray>> v1AutocompleteBillsGet({
+    String? xTraceId,
     String? query,
     int? limit,
   }) {
     generatedMapping.putIfAbsent(
         AutocompleteBill, () => AutocompleteBill.fromJsonFactory);
 
-    return _apiV1AutocompleteBillsGet(query: query, limit: limit);
+    return _v1AutocompleteBillsGet(
+        xTraceId: xTraceId, query: query, limit: limit);
   }
 
   ///Returns all bills of the user returned in a basic auto-complete array.
-  ///@param query The autocomplete search query for bills.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/api/v1/autocomplete/bills')
-  Future<chopper.Response<AutocompleteBillArray>> _apiV1AutocompleteBillsGet({
+  @Get(path: '/v1/autocomplete/bills')
+  Future<chopper.Response<AutocompleteBillArray>> _v1AutocompleteBillsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('query') String? query,
+    @Query('limit') int? limit,
+  });
+
+  ///Returns all budgets of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  Future<chopper.Response<AutocompleteBudgetArray>> v1AutocompleteBudgetsGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(
+        AutocompleteBudget, () => AutocompleteBudget.fromJsonFactory);
+
+    return _v1AutocompleteBudgetsGet(
+        xTraceId: xTraceId, query: query, limit: limit);
+  }
+
+  ///Returns all budgets of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  @Get(path: '/v1/autocomplete/budgets')
+  Future<chopper.Response<AutocompleteBudgetArray>> _v1AutocompleteBudgetsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('query') String? query,
+    @Query('limit') int? limit,
+  });
+
+  ///Returns all categories of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  Future<chopper.Response<AutocompleteCategoryArray>>
+      v1AutocompleteCategoriesGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(
+        AutocompleteCategory, () => AutocompleteCategory.fromJsonFactory);
+
+    return _v1AutocompleteCategoriesGet(
+        xTraceId: xTraceId, query: query, limit: limit);
+  }
+
+  ///Returns all categories of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  @Get(path: '/v1/autocomplete/categories')
+  Future<chopper.Response<AutocompleteCategoryArray>>
+      _v1AutocompleteCategoriesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('query') String? query,
+    @Query('limit') int? limit,
+  });
+
+  ///Returns all currencies of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  Future<chopper.Response<AutocompleteCurrencyArray>>
+      v1AutocompleteCurrenciesGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(
+        AutocompleteCurrency, () => AutocompleteCurrency.fromJsonFactory);
+
+    return _v1AutocompleteCurrenciesGet(
+        xTraceId: xTraceId, query: query, limit: limit);
+  }
+
+  ///Returns all currencies of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  @Get(path: '/v1/autocomplete/currencies')
+  Future<chopper.Response<AutocompleteCurrencyArray>>
+      _v1AutocompleteCurrenciesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('query') String? query,
+    @Query('limit') int? limit,
+  });
+
+  ///Returns all currencies of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  Future<chopper.Response<AutocompleteCurrencyCodeArray>>
+      v1AutocompleteCurrenciesWithCodeGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(AutocompleteCurrencyCode,
+        () => AutocompleteCurrencyCode.fromJsonFactory);
+
+    return _v1AutocompleteCurrenciesWithCodeGet(
+        xTraceId: xTraceId, query: query, limit: limit);
+  }
+
+  ///Returns all currencies of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  @Get(path: '/v1/autocomplete/currencies-with-code')
+  Future<chopper.Response<AutocompleteCurrencyCodeArray>>
+      _v1AutocompleteCurrenciesWithCodeGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('query') String? query,
+    @Query('limit') int? limit,
+  });
+
+  ///Returns all object groups of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  Future<chopper.Response<AutocompleteObjectGroupArray>>
+      v1AutocompleteObjectGroupsGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(
+        AutocompleteObjectGroup, () => AutocompleteObjectGroup.fromJsonFactory);
+
+    return _v1AutocompleteObjectGroupsGet(
+        xTraceId: xTraceId, query: query, limit: limit);
+  }
+
+  ///Returns all object groups of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  @Get(path: '/v1/autocomplete/object-groups')
+  Future<chopper.Response<AutocompleteObjectGroupArray>>
+      _v1AutocompleteObjectGroupsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('query') String? query,
+    @Query('limit') int? limit,
+  });
+
+  ///Returns all piggy banks of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  Future<chopper.Response<AutocompletePiggyArray>> v1AutocompletePiggyBanksGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(
+        AutocompletePiggy, () => AutocompletePiggy.fromJsonFactory);
+
+    return _v1AutocompletePiggyBanksGet(
+        xTraceId: xTraceId, query: query, limit: limit);
+  }
+
+  ///Returns all piggy banks of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  @Get(path: '/v1/autocomplete/piggy-banks')
+  Future<chopper.Response<AutocompletePiggyArray>>
+      _v1AutocompletePiggyBanksGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('query') String? query,
+    @Query('limit') int? limit,
+  });
+
+  ///Returns all piggy banks of the user returned in a basic auto-complete array complemented with balance information.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  Future<chopper.Response<AutocompletePiggyBalanceArray>>
+      v1AutocompletePiggyBanksWithBalanceGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(AutocompletePiggyBalance,
+        () => AutocompletePiggyBalance.fromJsonFactory);
+
+    return _v1AutocompletePiggyBanksWithBalanceGet(
+        xTraceId: xTraceId, query: query, limit: limit);
+  }
+
+  ///Returns all piggy banks of the user returned in a basic auto-complete array complemented with balance information.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  @Get(path: '/v1/autocomplete/piggy-banks-with-balance')
+  Future<chopper.Response<AutocompletePiggyBalanceArray>>
+      _v1AutocompletePiggyBanksWithBalanceGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
   });
 
   ///Returns all recurring transactions of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
   Future<chopper.Response<AutocompleteRecurrenceArray>>
-      apiV1AutocompleteRecurringGet({
+      v1AutocompleteRecurringGet({
+    String? xTraceId,
     String? query,
     int? limit,
   }) {
     generatedMapping.putIfAbsent(
         AutocompleteRecurrence, () => AutocompleteRecurrence.fromJsonFactory);
 
-    return _apiV1AutocompleteRecurringGet(query: query, limit: limit);
+    return _v1AutocompleteRecurringGet(
+        xTraceId: xTraceId, query: query, limit: limit);
   }
 
   ///Returns all recurring transactions of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/api/v1/autocomplete/recurring')
+  @Get(path: '/v1/autocomplete/recurring')
   Future<chopper.Response<AutocompleteRecurrenceArray>>
-      _apiV1AutocompleteRecurringGet({
+      _v1AutocompleteRecurringGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('query') String? query,
+    @Query('limit') int? limit,
+  });
+
+  ///Returns all rule groups of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  Future<chopper.Response<AutocompleteRuleGroupArray>>
+      v1AutocompleteRuleGroupsGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(
+        AutocompleteRuleGroup, () => AutocompleteRuleGroup.fromJsonFactory);
+
+    return _v1AutocompleteRuleGroupsGet(
+        xTraceId: xTraceId, query: query, limit: limit);
+  }
+
+  ///Returns all rule groups of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  @Get(path: '/v1/autocomplete/rule-groups')
+  Future<chopper.Response<AutocompleteRuleGroupArray>>
+      _v1AutocompleteRuleGroupsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('query') String? query,
+    @Query('limit') int? limit,
+  });
+
+  ///Returns all rules of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  Future<chopper.Response<AutocompleteRuleArray>> v1AutocompleteRulesGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(
+        AutocompleteRule, () => AutocompleteRule.fromJsonFactory);
+
+    return _v1AutocompleteRulesGet(
+        xTraceId: xTraceId, query: query, limit: limit);
+  }
+
+  ///Returns all rules of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  @Get(path: '/v1/autocomplete/rules')
+  Future<chopper.Response<AutocompleteRuleArray>> _v1AutocompleteRulesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('query') String? query,
+    @Query('limit') int? limit,
+  });
+
+  ///Returns all tags of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  Future<chopper.Response<AutocompleteTagArray>> v1AutocompleteTagsGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(
+        AutocompleteTag, () => AutocompleteTag.fromJsonFactory);
+
+    return _v1AutocompleteTagsGet(
+        xTraceId: xTraceId, query: query, limit: limit);
+  }
+
+  ///Returns all tags of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  @Get(path: '/v1/autocomplete/tags')
+  Future<chopper.Response<AutocompleteTagArray>> _v1AutocompleteTagsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('query') String? query,
+    @Query('limit') int? limit,
+  });
+
+  ///Returns all transaction types returned in a basic auto-complete array. English only.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  Future<chopper.Response<AutocompleteTransactionTypeArray>>
+      v1AutocompleteTransactionTypesGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(AutocompleteTransactionType,
+        () => AutocompleteTransactionType.fromJsonFactory);
+
+    return _v1AutocompleteTransactionTypesGet(
+        xTraceId: xTraceId, query: query, limit: limit);
+  }
+
+  ///Returns all transaction types returned in a basic auto-complete array. English only.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  @Get(path: '/v1/autocomplete/transaction-types')
+  Future<chopper.Response<AutocompleteTransactionTypeArray>>
+      _v1AutocompleteTransactionTypesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('query') String? query,
+    @Query('limit') int? limit,
+  });
+
+  ///Returns all transaction descriptions of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  Future<chopper.Response<AutocompleteTransactionArray>>
+      v1AutocompleteTransactionsGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(
+        AutocompleteTransaction, () => AutocompleteTransaction.fromJsonFactory);
+
+    return _v1AutocompleteTransactionsGet(
+        xTraceId: xTraceId, query: query, limit: limit);
+  }
+
+  ///Returns all transaction descriptions of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  @Get(path: '/v1/autocomplete/transactions')
+  Future<chopper.Response<AutocompleteTransactionArray>>
+      _v1AutocompleteTransactionsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('query') String? query,
+    @Query('limit') int? limit,
+  });
+
+  ///Returns all transactions, complemented with their ID, of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  Future<chopper.Response<AutocompleteTransactionIDArray>>
+      v1AutocompleteTransactionsWithIdGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(AutocompleteTransactionID,
+        () => AutocompleteTransactionID.fromJsonFactory);
+
+    return _v1AutocompleteTransactionsWithIdGet(
+        xTraceId: xTraceId, query: query, limit: limit);
+  }
+
+  ///Returns all transactions, complemented with their ID, of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  @Get(path: '/v1/autocomplete/transactions-with-id')
+  Future<chopper.Response<AutocompleteTransactionIDArray>>
+      _v1AutocompleteTransactionsWithIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
   });
 
   ///Dashboard chart with asset account balance information.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  Future<chopper.Response<ChartLine>> apiV1ChartAccountOverviewGet({
+  Future<chopper.Response<ChartLine>> v1ChartAccountOverviewGet({
+    String? xTraceId,
     required String? start,
     required String? end,
   }) {
     generatedMapping.putIfAbsent(
         ChartDataSet, () => ChartDataSet.fromJsonFactory);
 
-    return _apiV1ChartAccountOverviewGet(start: start, end: end);
+    return _v1ChartAccountOverviewGet(
+        xTraceId: xTraceId, start: start, end: end);
   }
 
   ///Dashboard chart with asset account balance information.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  @Get(path: '/api/v1/chart/account/overview')
-  Future<chopper.Response<ChartLine>> _apiV1ChartAccountOverviewGet({
+  @Get(path: '/v1/chart/account/overview')
+  Future<chopper.Response<ChartLine>> _v1ChartAccountOverviewGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
   });
 
+  ///Bulk update transaction properties. For more information, see https://docs.firefly-iii.org/firefly-iii/api/specials
+  ///@param query The JSON query.
+  Future<chopper.Response> v1DataBulkTransactionsPost(
+      {required String? query}) {
+    return _v1DataBulkTransactionsPost(query: query);
+  }
+
+  ///Bulk update transaction properties. For more information, see https://docs.firefly-iii.org/firefly-iii/api/specials
+  ///@param query The JSON query.
+  @Post(
+    path: '/v1/data/bulk/transactions',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _v1DataBulkTransactionsPost(
+      {@Query('query') required String? query});
+
+  ///Endpoint to destroy user data
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param objects The type of data that you wish to destroy. You can only use one at a time.
+  Future<chopper.Response> v1DataDestroyDelete({
+    String? xTraceId,
+    required enums.DataDestroyObject? objects,
+  }) {
+    return _v1DataDestroyDelete(
+        xTraceId: xTraceId, objects: objects?.value?.toString());
+  }
+
+  ///Endpoint to destroy user data
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param objects The type of data that you wish to destroy. You can only use one at a time.
+  @Delete(path: '/v1/data/destroy')
+  Future<chopper.Response> _v1DataDestroyDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('objects') required String? objects,
+  });
+
   ///Export account data from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  Future<chopper.Response<String>> apiV1DataExportAccountsGet(
-      {enums.ExportFileFilter? type}) {
-    return _apiV1DataExportAccountsGet(type: type?.value?.toString());
+  Future<chopper.Response<String>> v1DataExportAccountsGet({
+    String? xTraceId,
+    enums.ExportFileFilter? type,
+  }) {
+    return _v1DataExportAccountsGet(
+        xTraceId: xTraceId, type: type?.value?.toString());
   }
 
   ///Export account data from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/api/v1/data/export/accounts')
-  Future<chopper.Response<String>> _apiV1DataExportAccountsGet(
-      {@Query('type') String? type});
+  @Get(path: '/v1/data/export/accounts')
+  Future<chopper.Response<String>> _v1DataExportAccountsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('type') String? type,
+  });
 
   ///Export bills from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  Future<chopper.Response<String>> apiV1DataExportBillsGet(
-      {enums.ExportFileFilter? type}) {
-    return _apiV1DataExportBillsGet(type: type?.value?.toString());
+  Future<chopper.Response<String>> v1DataExportBillsGet({
+    String? xTraceId,
+    enums.ExportFileFilter? type,
+  }) {
+    return _v1DataExportBillsGet(
+        xTraceId: xTraceId, type: type?.value?.toString());
   }
 
   ///Export bills from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/api/v1/data/export/bills')
-  Future<chopper.Response<String>> _apiV1DataExportBillsGet(
-      {@Query('type') String? type});
+  @Get(path: '/v1/data/export/bills')
+  Future<chopper.Response<String>> _v1DataExportBillsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('type') String? type,
+  });
 
   ///Export budgets and budget amount data from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  Future<chopper.Response<String>> apiV1DataExportBudgetsGet(
-      {enums.ExportFileFilter? type}) {
-    return _apiV1DataExportBudgetsGet(type: type?.value?.toString());
+  Future<chopper.Response<String>> v1DataExportBudgetsGet({
+    String? xTraceId,
+    enums.ExportFileFilter? type,
+  }) {
+    return _v1DataExportBudgetsGet(
+        xTraceId: xTraceId, type: type?.value?.toString());
   }
 
   ///Export budgets and budget amount data from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/api/v1/data/export/budgets')
-  Future<chopper.Response<String>> _apiV1DataExportBudgetsGet(
-      {@Query('type') String? type});
+  @Get(path: '/v1/data/export/budgets')
+  Future<chopper.Response<String>> _v1DataExportBudgetsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('type') String? type,
+  });
 
   ///Export category data from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  Future<chopper.Response<String>> apiV1DataExportCategoriesGet(
-      {enums.ExportFileFilter? type}) {
-    return _apiV1DataExportCategoriesGet(type: type?.value?.toString());
+  Future<chopper.Response<String>> v1DataExportCategoriesGet({
+    String? xTraceId,
+    enums.ExportFileFilter? type,
+  }) {
+    return _v1DataExportCategoriesGet(
+        xTraceId: xTraceId, type: type?.value?.toString());
   }
 
   ///Export category data from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/api/v1/data/export/categories')
-  Future<chopper.Response<String>> _apiV1DataExportCategoriesGet(
-      {@Query('type') String? type});
+  @Get(path: '/v1/data/export/categories')
+  Future<chopper.Response<String>> _v1DataExportCategoriesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('type') String? type,
+  });
 
   ///Export piggy banks from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  Future<chopper.Response<String>> apiV1DataExportPiggyBanksGet(
-      {enums.ExportFileFilter? type}) {
-    return _apiV1DataExportPiggyBanksGet(type: type?.value?.toString());
+  Future<chopper.Response<String>> v1DataExportPiggyBanksGet({
+    String? xTraceId,
+    enums.ExportFileFilter? type,
+  }) {
+    return _v1DataExportPiggyBanksGet(
+        xTraceId: xTraceId, type: type?.value?.toString());
   }
 
   ///Export piggy banks from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/api/v1/data/export/piggy-banks')
-  Future<chopper.Response<String>> _apiV1DataExportPiggyBanksGet(
-      {@Query('type') String? type});
+  @Get(path: '/v1/data/export/piggy-banks')
+  Future<chopper.Response<String>> _v1DataExportPiggyBanksGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('type') String? type,
+  });
 
   ///Export recurring transaction data from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  Future<chopper.Response<String>> apiV1DataExportRecurringGet(
-      {enums.ExportFileFilter? type}) {
-    return _apiV1DataExportRecurringGet(type: type?.value?.toString());
+  Future<chopper.Response<String>> v1DataExportRecurringGet({
+    String? xTraceId,
+    enums.ExportFileFilter? type,
+  }) {
+    return _v1DataExportRecurringGet(
+        xTraceId: xTraceId, type: type?.value?.toString());
   }
 
   ///Export recurring transaction data from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/api/v1/data/export/recurring')
-  Future<chopper.Response<String>> _apiV1DataExportRecurringGet(
-      {@Query('type') String? type});
+  @Get(path: '/v1/data/export/recurring')
+  Future<chopper.Response<String>> _v1DataExportRecurringGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('type') String? type,
+  });
 
   ///Export rule groups and rule data from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  Future<chopper.Response<String>> apiV1DataExportRulesGet(
-      {enums.ExportFileFilter? type}) {
-    return _apiV1DataExportRulesGet(type: type?.value?.toString());
+  Future<chopper.Response<String>> v1DataExportRulesGet({
+    String? xTraceId,
+    enums.ExportFileFilter? type,
+  }) {
+    return _v1DataExportRulesGet(
+        xTraceId: xTraceId, type: type?.value?.toString());
   }
 
   ///Export rule groups and rule data from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/api/v1/data/export/rules')
-  Future<chopper.Response<String>> _apiV1DataExportRulesGet(
-      {@Query('type') String? type});
+  @Get(path: '/v1/data/export/rules')
+  Future<chopper.Response<String>> _v1DataExportRulesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('type') String? type,
+  });
 
   ///Export tag data from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  Future<chopper.Response<String>> apiV1DataExportTagsGet(
-      {enums.ExportFileFilter? type}) {
-    return _apiV1DataExportTagsGet(type: type?.value?.toString());
+  Future<chopper.Response<String>> v1DataExportTagsGet({
+    String? xTraceId,
+    enums.ExportFileFilter? type,
+  }) {
+    return _v1DataExportTagsGet(
+        xTraceId: xTraceId, type: type?.value?.toString());
   }
 
   ///Export tag data from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/api/v1/data/export/tags')
-  Future<chopper.Response<String>> _apiV1DataExportTagsGet(
-      {@Query('type') String? type});
+  @Get(path: '/v1/data/export/tags')
+  Future<chopper.Response<String>> _v1DataExportTagsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('type') String? type,
+  });
 
   ///Export transaction data from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts Limit the export of transactions to these accounts only. Only asset accounts will be accepted. Other types will be silently dropped.
   ///@param type The file type the export file (CSV is currently the only option).
-  Future<chopper.Response<String>> apiV1DataExportTransactionsGet({
+  Future<chopper.Response<String>> v1DataExportTransactionsGet({
+    String? xTraceId,
     required String? start,
     required String? end,
     String? accounts,
     enums.ExportFileFilter? type,
   }) {
-    return _apiV1DataExportTransactionsGet(
+    return _v1DataExportTransactionsGet(
+        xTraceId: xTraceId,
         start: start,
         end: end,
         accounts: accounts,
@@ -570,53 +747,195 @@ abstract class FireflyIii extends ChopperService {
   }
 
   ///Export transaction data from Firefly III
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts Limit the export of transactions to these accounts only. Only asset accounts will be accepted. Other types will be silently dropped.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/api/v1/data/export/transactions')
-  Future<chopper.Response<String>> _apiV1DataExportTransactionsGet({
+  @Get(path: '/v1/data/export/transactions')
+  Future<chopper.Response<String>> _v1DataExportTransactionsGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts') String? accounts,
     @Query('type') String? type,
   });
 
-  ///Endpoint to destroy user data
-  ///@param objects The type of data that you wish to destroy. You can only use one at a time.
-  Future<chopper.Response> apiV1DataDestroyDelete(
-      {required enums.DataDestroyObject? objects}) {
-    return _apiV1DataDestroyDelete(objects: objects?.value?.toString());
+  ///Endpoint to purge user data
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response> v1DataPurgeDelete({String? xTraceId}) {
+    return _v1DataPurgeDelete(xTraceId: xTraceId);
   }
 
-  ///Endpoint to destroy user data
-  ///@param objects The type of data that you wish to destroy. You can only use one at a time.
-  @Delete(path: '/api/v1/data/destroy')
-  Future<chopper.Response> _apiV1DataDestroyDelete(
-      {@Query('objects') required String? objects});
+  ///Endpoint to purge user data
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Delete(path: '/v1/data/purge')
+  Future<chopper.Response> _v1DataPurgeDelete(
+      {@Header('X-Trace-Id') String? xTraceId});
 
-  ///Bulk update transaction properties. For more information, see https://docs.firefly-iii.org/firefly-iii/api/specials
-  ///@param query The JSON query.
-  Future<chopper.Response> apiV1DataBulkTransactionsPost(
-      {required String? query}) {
-    return _apiV1DataBulkTransactionsPost(query: query);
+  ///Insight into expenses, grouped by expense account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you add the accounts ID's of expense accounts, only those accounts are included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. You can combine both asset / liability and expense account ID's. Other account ID's will be ignored.
+  Future<chopper.Response<InsightGroup>> v1InsightExpenseExpenseGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
+
+    return _v1InsightExpenseExpenseGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
   }
 
-  ///Bulk update transaction properties. For more information, see https://docs.firefly-iii.org/firefly-iii/api/specials
-  ///@param query The JSON query.
-  @Post(
-    path: '/api/v1/data/bulk/transactions',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _apiV1DataBulkTransactionsPost(
-      {@Query('query') required String? query});
+  ///Insight into expenses, grouped by expense account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you add the accounts ID's of expense accounts, only those accounts are included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. You can combine both asset / liability and expense account ID's. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/expense/expense')
+  Future<chopper.Response<InsightGroup>> _v1InsightExpenseExpenseGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into expenses, grouped by asset account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightGroup>> v1InsightExpenseAssetGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
+
+    return _v1InsightExpenseAssetGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
+  }
+
+  ///Insight into expenses, grouped by asset account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/expense/asset')
+  Future<chopper.Response<InsightGroup>> _v1InsightExpenseAssetGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into income, grouped by revenue account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you add the accounts ID's of revenue accounts, only those accounts are included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. You can combine both asset / liability and deposit account ID's. Other account ID's will be ignored.
+  Future<chopper.Response<InsightGroup>> v1InsightIncomeRevenueGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
+
+    return _v1InsightIncomeRevenueGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
+  }
+
+  ///Insight into income, grouped by revenue account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you add the accounts ID's of revenue accounts, only those accounts are included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. You can combine both asset / liability and deposit account ID's. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/income/revenue')
+  Future<chopper.Response<InsightGroup>> _v1InsightIncomeRevenueGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into income, grouped by asset account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightGroup>> v1InsightIncomeAssetGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
+
+    return _v1InsightIncomeAssetGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
+  }
+
+  ///Insight into income, grouped by asset account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/income/asset')
+  Future<chopper.Response<InsightGroup>> _v1InsightIncomeAssetGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into transfers, grouped by account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightTransfer>> v1InsightTransferAssetGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightTransferEntry, () => InsightTransferEntry.fromJsonFactory);
+
+    return _v1InsightTransferAssetGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
+  }
+
+  ///Insight into transfers, grouped by account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/transfer/asset')
+  Future<chopper.Response<InsightTransfer>> _v1InsightTransferAssetGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
 
   ///Insight into expenses, grouped by bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param bills[] The bills to be included in the results.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightGroup>> apiV1InsightExpenseBillGet({
+  Future<chopper.Response<InsightGroup>> v1InsightExpenseBillGet({
+    String? xTraceId,
     required String? start,
     required String? end,
     List<int>? bills,
@@ -625,17 +944,23 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
 
-    return _apiV1InsightExpenseBillGet(
-        start: start, end: end, bills: bills, accounts: accounts);
+    return _v1InsightExpenseBillGet(
+        xTraceId: xTraceId,
+        start: start,
+        end: end,
+        bills: bills,
+        accounts: accounts);
   }
 
   ///Insight into expenses, grouped by bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param bills[] The bills to be included in the results.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/expense/bill')
-  Future<chopper.Response<InsightGroup>> _apiV1InsightExpenseBillGet({
+  @Get(path: '/v1/insight/expense/bill')
+  Future<chopper.Response<InsightGroup>> _v1InsightExpenseBillGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('bills[]') List<int>? bills,
@@ -643,10 +968,12 @@ abstract class FireflyIii extends ChopperService {
   });
 
   ///Insight into expenses, without bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightTotal>> apiV1InsightExpenseNoBillGet({
+  Future<chopper.Response<InsightTotal>> v1InsightExpenseNoBillGet({
+    String? xTraceId,
     required String? start,
     required String? end,
     List<int>? accounts,
@@ -654,417 +981,31 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
 
-    return _apiV1InsightExpenseNoBillGet(
-        start: start, end: end, accounts: accounts);
+    return _v1InsightExpenseNoBillGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
   }
 
   ///Insight into expenses, without bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/expense/no-bill')
-  Future<chopper.Response<InsightTotal>> _apiV1InsightExpenseNoBillGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into total expenses.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightTotal>> apiV1InsightExpenseTotalGet({
-    required String? start,
-    required String? end,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
-
-    return _apiV1InsightExpenseTotalGet(
-        start: start, end: end, accounts: accounts);
-  }
-
-  ///Insight into total expenses.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/expense/total')
-  Future<chopper.Response<InsightTotal>> _apiV1InsightExpenseTotalGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into total income.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightTotal>> apiV1InsightIncomeTotalGet({
-    required String? start,
-    required String? end,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
-
-    return _apiV1InsightIncomeTotalGet(
-        start: start, end: end, accounts: accounts);
-  }
-
-  ///Insight into total income.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/income/total')
-  Future<chopper.Response<InsightTotal>> _apiV1InsightIncomeTotalGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into total transfers.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightTotal>> apiV1InsightTransferTotalGet({
-    required String? start,
-    required String? end,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
-
-    return _apiV1InsightTransferTotalGet(
-        start: start, end: end, accounts: accounts);
-  }
-
-  ///Insight into total transfers.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/transfer/total')
-  Future<chopper.Response<InsightTotal>> _apiV1InsightTransferTotalGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into expenses, grouped by category.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param categories[] The categories to be included in the results.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightGroup>> apiV1InsightExpenseCategoryGet({
-    required String? start,
-    required String? end,
-    List<int>? categories,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
-
-    return _apiV1InsightExpenseCategoryGet(
-        start: start, end: end, categories: categories, accounts: accounts);
-  }
-
-  ///Insight into expenses, grouped by category.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param categories[] The categories to be included in the results.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/expense/category')
-  Future<chopper.Response<InsightGroup>> _apiV1InsightExpenseCategoryGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('categories[]') List<int>? categories,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into expenses, without category.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightTotal>> apiV1InsightExpenseNoCategoryGet({
-    required String? start,
-    required String? end,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
-
-    return _apiV1InsightExpenseNoCategoryGet(
-        start: start, end: end, accounts: accounts);
-  }
-
-  ///Insight into expenses, without category.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/expense/no-category')
-  Future<chopper.Response<InsightTotal>> _apiV1InsightExpenseNoCategoryGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into income, grouped by category.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param categories[] The categories to be included in the results.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightGroup>> apiV1InsightIncomeCategoryGet({
-    required String? start,
-    required String? end,
-    List<int>? categories,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
-
-    return _apiV1InsightIncomeCategoryGet(
-        start: start, end: end, categories: categories, accounts: accounts);
-  }
-
-  ///Insight into income, grouped by category.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param categories[] The categories to be included in the results.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/income/category')
-  Future<chopper.Response<InsightGroup>> _apiV1InsightIncomeCategoryGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('categories[]') List<int>? categories,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into income, without category.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightTotal>> apiV1InsightIncomeNoCategoryGet({
-    required String? start,
-    required String? end,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
-
-    return _apiV1InsightIncomeNoCategoryGet(
-        start: start, end: end, accounts: accounts);
-  }
-
-  ///Insight into income, without category.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/income/no-category')
-  Future<chopper.Response<InsightTotal>> _apiV1InsightIncomeNoCategoryGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into transfers, grouped by category.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param categories[] The categories to be included in the results.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightGroup>> apiV1InsightTransferCategoryGet({
-    required String? start,
-    required String? end,
-    List<int>? categories,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
-
-    return _apiV1InsightTransferCategoryGet(
-        start: start, end: end, categories: categories, accounts: accounts);
-  }
-
-  ///Insight into transfers, grouped by category.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param categories[] The categories to be included in the results.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/transfer/category')
-  Future<chopper.Response<InsightGroup>> _apiV1InsightTransferCategoryGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('categories[]') List<int>? categories,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into transfers, without category.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightTotal>> apiV1InsightTransferNoCategoryGet({
-    required String? start,
-    required String? end,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
-
-    return _apiV1InsightTransferNoCategoryGet(
-        start: start, end: end, accounts: accounts);
-  }
-
-  ///Insight into transfers, without category.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/transfer/no-category')
-  Future<chopper.Response<InsightTotal>> _apiV1InsightTransferNoCategoryGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into expenses, grouped by expense account.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you add the accounts ID's of expense accounts, only those accounts are included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. You can combine both asset / liability and expense account ID's. Other account ID's will be ignored.
-  Future<chopper.Response<InsightGroup>> apiV1InsightExpenseExpenseGet({
-    required String? start,
-    required String? end,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
-
-    return _apiV1InsightExpenseExpenseGet(
-        start: start, end: end, accounts: accounts);
-  }
-
-  ///Insight into expenses, grouped by expense account.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you add the accounts ID's of expense accounts, only those accounts are included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. You can combine both asset / liability and expense account ID's. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/expense/expense')
-  Future<chopper.Response<InsightGroup>> _apiV1InsightExpenseExpenseGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into expenses, grouped by asset account.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightGroup>> apiV1InsightExpenseAssetGet({
-    required String? start,
-    required String? end,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
-
-    return _apiV1InsightExpenseAssetGet(
-        start: start, end: end, accounts: accounts);
-  }
-
-  ///Insight into expenses, grouped by asset account.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/expense/asset')
-  Future<chopper.Response<InsightGroup>> _apiV1InsightExpenseAssetGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into income, grouped by revenue account.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you add the accounts ID's of revenue accounts, only those accounts are included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. You can combine both asset / liability and deposit account ID's. Other account ID's will be ignored.
-  Future<chopper.Response<InsightGroup>> apiV1InsightIncomeRevenueGet({
-    required String? start,
-    required String? end,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
-
-    return _apiV1InsightIncomeRevenueGet(
-        start: start, end: end, accounts: accounts);
-  }
-
-  ///Insight into income, grouped by revenue account.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you add the accounts ID's of revenue accounts, only those accounts are included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. You can combine both asset / liability and deposit account ID's. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/income/revenue')
-  Future<chopper.Response<InsightGroup>> _apiV1InsightIncomeRevenueGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into income, grouped by asset account.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightGroup>> apiV1InsightIncomeAssetGet({
-    required String? start,
-    required String? end,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
-
-    return _apiV1InsightIncomeAssetGet(
-        start: start, end: end, accounts: accounts);
-  }
-
-  ///Insight into income, grouped by asset account.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/income/asset')
-  Future<chopper.Response<InsightGroup>> _apiV1InsightIncomeAssetGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into transfers, grouped by account.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightTransfer>> apiV1InsightTransferAssetGet({
-    required String? start,
-    required String? end,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightTransferEntry, () => InsightTransferEntry.fromJsonFactory);
-
-    return _apiV1InsightTransferAssetGet(
-        start: start, end: end, accounts: accounts);
-  }
-
-  ///Insight into transfers, grouped by account.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/transfer/asset')
-  Future<chopper.Response<InsightTransfer>> _apiV1InsightTransferAssetGet({
+  @Get(path: '/v1/insight/expense/no-bill')
+  Future<chopper.Response<InsightTotal>> _v1InsightExpenseNoBillGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
   });
 
   ///Insight into expenses, grouped by budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param budgets[] The budgets to be included in the results.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightGroup>> apiV1InsightExpenseBudgetGet({
+  Future<chopper.Response<InsightGroup>> v1InsightExpenseBudgetGet({
+    String? xTraceId,
     required String? start,
     required String? end,
     List<int>? budgets,
@@ -1073,17 +1014,23 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
 
-    return _apiV1InsightExpenseBudgetGet(
-        start: start, end: end, budgets: budgets, accounts: accounts);
+    return _v1InsightExpenseBudgetGet(
+        xTraceId: xTraceId,
+        start: start,
+        end: end,
+        budgets: budgets,
+        accounts: accounts);
   }
 
   ///Insight into expenses, grouped by budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param budgets[] The budgets to be included in the results.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/expense/budget')
-  Future<chopper.Response<InsightGroup>> _apiV1InsightExpenseBudgetGet({
+  @Get(path: '/v1/insight/expense/budget')
+  Future<chopper.Response<InsightGroup>> _v1InsightExpenseBudgetGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('budgets[]') List<int>? budgets,
@@ -1091,10 +1038,12 @@ abstract class FireflyIii extends ChopperService {
   });
 
   ///Insight into expenses, without budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightTotal>> apiV1InsightExpenseNoBudgetGet({
+  Future<chopper.Response<InsightTotal>> v1InsightExpenseNoBudgetGet({
+    String? xTraceId,
     required String? start,
     required String? end,
     List<int>? accounts,
@@ -1102,862 +1051,549 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
 
-    return _apiV1InsightExpenseNoBudgetGet(
-        start: start, end: end, accounts: accounts);
+    return _v1InsightExpenseNoBudgetGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
   }
 
   ///Insight into expenses, without budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/expense/no-budget')
-  Future<chopper.Response<InsightTotal>> _apiV1InsightExpenseNoBudgetGet({
+  @Get(path: '/v1/insight/expense/no-budget')
+  Future<chopper.Response<InsightTotal>> _v1InsightExpenseNoBudgetGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
   });
 
-  ///Insight into expenses, grouped by tag.
+  ///Insight into expenses, grouped by category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  ///@param tags[] The tags to be included in the results.
+  ///@param categories[] The categories to be included in the results.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightGroup>> apiV1InsightExpenseTagGet({
+  Future<chopper.Response<InsightGroup>> v1InsightExpenseCategoryGet({
+    String? xTraceId,
     required String? start,
     required String? end,
-    List<int>? tags,
+    List<int>? categories,
     List<int>? accounts,
   }) {
     generatedMapping.putIfAbsent(
         InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
 
-    return _apiV1InsightExpenseTagGet(
-        start: start, end: end, tags: tags, accounts: accounts);
-  }
-
-  ///Insight into expenses, grouped by tag.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param tags[] The tags to be included in the results.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/expense/tag')
-  Future<chopper.Response<InsightGroup>> _apiV1InsightExpenseTagGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('tags[]') List<int>? tags,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into expenses, without tag.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightTotal>> apiV1InsightExpenseNoTagGet({
-    required String? start,
-    required String? end,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
-
-    return _apiV1InsightExpenseNoTagGet(
-        start: start, end: end, accounts: accounts);
-  }
-
-  ///Insight into expenses, without tag.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/expense/no-tag')
-  Future<chopper.Response<InsightTotal>> _apiV1InsightExpenseNoTagGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into income, grouped by tag.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param tags[] The tags to be included in the results.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightGroup>> apiV1InsightIncomeTagGet({
-    required String? start,
-    required String? end,
-    List<int>? tags,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
-
-    return _apiV1InsightIncomeTagGet(
-        start: start, end: end, tags: tags, accounts: accounts);
-  }
-
-  ///Insight into income, grouped by tag.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param tags[] The tags to be included in the results.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/income/tag')
-  Future<chopper.Response<InsightGroup>> _apiV1InsightIncomeTagGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('tags[]') List<int>? tags,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into income, without tag.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightTotal>> apiV1InsightIncomeNoTagGet({
-    required String? start,
-    required String? end,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
-
-    return _apiV1InsightIncomeNoTagGet(
-        start: start, end: end, accounts: accounts);
-  }
-
-  ///Insight into income, without tag.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/income/no-tag')
-  Future<chopper.Response<InsightTotal>> _apiV1InsightIncomeNoTagGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into transfers, grouped by tag.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param tags[] The tags to be included in the results.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightGroup>> apiV1InsightTransferTagGet({
-    required String? start,
-    required String? end,
-    List<int>? tags,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
-
-    return _apiV1InsightTransferTagGet(
-        start: start, end: end, tags: tags, accounts: accounts);
-  }
-
-  ///Insight into transfers, grouped by tag.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param tags[] The tags to be included in the results.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/transfer/tag')
-  Future<chopper.Response<InsightGroup>> _apiV1InsightTransferTagGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('tags[]') List<int>? tags,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Insight into expenses, without tag.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  Future<chopper.Response<InsightTotal>> apiV1InsightTransferNoTagGet({
-    required String? start,
-    required String? end,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
-
-    return _apiV1InsightTransferNoTagGet(
-        start: start, end: end, accounts: accounts);
-  }
-
-  ///Insight into expenses, without tag.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/api/v1/insight/transfer/no-tag')
-  Future<chopper.Response<InsightTotal>> _apiV1InsightTransferNoTagGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Returns basic sums of the users data.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param currency_code A currency code like EUR or USD, to filter the result.
-  Future<chopper.Response<BasicSummary>> apiV1SummaryBasicGet({
-    required String? start,
-    required String? end,
-    String? currencyCode,
-  }) {
-    generatedMapping.putIfAbsent(
-        BasicSummary, () => BasicSummary.fromJsonFactory);
-
-    return _apiV1SummaryBasicGet(
-        start: start, end: end, currencyCode: currencyCode);
-  }
-
-  ///Returns basic sums of the users data.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param currency_code A currency code like EUR or USD, to filter the result.
-  @Get(path: '/api/v1/summary/basic')
-  Future<chopper.Response<BasicSummary>> _apiV1SummaryBasicGet({
-    @Query('start') required String? start,
-    @Query('end') required String? end,
-    @Query('currency_code') String? currencyCode,
-  });
-
-  ///List all attachments.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<AttachmentArray>> apiV1AttachmentsGet({int? page}) {
-    generatedMapping.putIfAbsent(
-        AttachmentArray, () => AttachmentArray.fromJsonFactory);
-
-    return _apiV1AttachmentsGet(page: page);
-  }
-
-  ///List all attachments.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/attachments')
-  Future<chopper.Response<AttachmentArray>> _apiV1AttachmentsGet(
-      {@Query('page') int? page});
-
-  ///Store a new attachment.
-  Future<chopper.Response<AttachmentSingle>> apiV1AttachmentsPost(
-      {required AttachmentStore? body}) {
-    generatedMapping.putIfAbsent(
-        AttachmentSingle, () => AttachmentSingle.fromJsonFactory);
-
-    return _apiV1AttachmentsPost(body: body);
-  }
-
-  ///Store a new attachment.
-  @Post(
-    path: '/api/v1/attachments',
-    optionalBody: true,
-  )
-  Future<chopper.Response<AttachmentSingle>> _apiV1AttachmentsPost(
-      {@Body() required AttachmentStore? body});
-
-  ///Get a single attachment.
-  ///@param id The ID of the attachment.
-  Future<chopper.Response<AttachmentSingle>> apiV1AttachmentsIdGet(
-      {required String? id}) {
-    generatedMapping.putIfAbsent(
-        AttachmentSingle, () => AttachmentSingle.fromJsonFactory);
-
-    return _apiV1AttachmentsIdGet(id: id);
-  }
-
-  ///Get a single attachment.
-  ///@param id The ID of the attachment.
-  @Get(path: '/api/v1/attachments/{id}')
-  Future<chopper.Response<AttachmentSingle>> _apiV1AttachmentsIdGet(
-      {@Path('id') required String? id});
-
-  ///Update existing attachment.
-  ///@param id The ID of the attachment.
-  Future<chopper.Response<AttachmentSingle>> apiV1AttachmentsIdPut({
-    required String? id,
-    required AttachmentUpdate? body,
-  }) {
-    generatedMapping.putIfAbsent(
-        AttachmentSingle, () => AttachmentSingle.fromJsonFactory);
-
-    return _apiV1AttachmentsIdPut(id: id, body: body);
-  }
-
-  ///Update existing attachment.
-  ///@param id The ID of the attachment.
-  @Put(
-    path: '/api/v1/attachments/{id}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<AttachmentSingle>> _apiV1AttachmentsIdPut({
-    @Path('id') required String? id,
-    @Body() required AttachmentUpdate? body,
-  });
-
-  ///Delete an attachment.
-  ///@param id The ID of the single.
-  Future<chopper.Response> apiV1AttachmentsIdDelete({required String? id}) {
-    return _apiV1AttachmentsIdDelete(id: id);
-  }
-
-  ///Delete an attachment.
-  ///@param id The ID of the single.
-  @Delete(path: '/api/v1/attachments/{id}')
-  Future<chopper.Response> _apiV1AttachmentsIdDelete(
-      {@Path('id') required String? id});
-
-  ///Download a single attachment.
-  ///@param id The ID of the attachment.
-  Future<chopper.Response<String>> apiV1AttachmentsIdDownloadGet(
-      {required String? id}) {
-    return _apiV1AttachmentsIdDownloadGet(id: id);
-  }
-
-  ///Download a single attachment.
-  ///@param id The ID of the attachment.
-  @Get(path: '/api/v1/attachments/{id}/download')
-  Future<chopper.Response<String>> _apiV1AttachmentsIdDownloadGet(
-      {@Path('id') required String? id});
-
-  ///Upload an attachment.
-  ///@param id The ID of the attachment.
-  Future<chopper.Response> apiV1AttachmentsIdUploadPost({
-    required String? id,
-    required Object? body,
-  }) {
-    return _apiV1AttachmentsIdUploadPost(id: id, body: body);
-  }
-
-  ///Upload an attachment.
-  ///@param id The ID of the attachment.
-  @Post(
-    path: '/api/v1/attachments/{id}/upload',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _apiV1AttachmentsIdUploadPost({
-    @Path('id') required String? id,
-    @Body() required Object? body,
-  });
-
-  ///Test which transactions would be hit by the rule. No changes will be made.
-  ///@param id The ID of the rule.
-  ///@param start A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
-  ///@param end A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
-  ///@param accounts[] Limit the testing of the rule to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
-  Future<chopper.Response<TransactionArray>> apiV1RulesIdTestGet({
-    required String? id,
-    String? start,
-    String? end,
-    List<int>? accounts,
-  }) {
-    generatedMapping.putIfAbsent(
-        TransactionArray, () => TransactionArray.fromJsonFactory);
-
-    return _apiV1RulesIdTestGet(
-        id: id, start: start, end: end, accounts: accounts);
-  }
-
-  ///Test which transactions would be hit by the rule. No changes will be made.
-  ///@param id The ID of the rule.
-  ///@param start A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
-  ///@param end A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
-  ///@param accounts[] Limit the testing of the rule to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
-  @Get(path: '/api/v1/rules/{id}/test')
-  Future<chopper.Response<TransactionArray>> _apiV1RulesIdTestGet({
-    @Path('id') required String? id,
-    @Query('start') String? start,
-    @Query('end') String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///Fire the rule on your transactions.
-  ///@param id The ID of the rule.
-  ///@param start A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. If the start date is not present, it will be set to one year ago. If you use this field, both the start date and the end date must be present.
-  ///@param end A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. If the end date is not present, it will be set to today. If you use this field, both the start date and the end date must be present.
-  ///@param accounts[] Limit the triggering of the rule to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
-  Future<chopper.Response> apiV1RulesIdTriggerPost({
-    required String? id,
-    String? start,
-    String? end,
-    List<int>? accounts,
-  }) {
-    return _apiV1RulesIdTriggerPost(
-        id: id, start: start, end: end, accounts: accounts);
-  }
-
-  ///Fire the rule on your transactions.
-  ///@param id The ID of the rule.
-  ///@param start A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. If the start date is not present, it will be set to one year ago. If you use this field, both the start date and the end date must be present.
-  ///@param end A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. If the end date is not present, it will be set to today. If you use this field, both the start date and the end date must be present.
-  ///@param accounts[] Limit the triggering of the rule to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
-  @Post(
-    path: '/api/v1/rules/{id}/trigger',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _apiV1RulesIdTriggerPost({
-    @Path('id') required String? id,
-    @Query('start') String? start,
-    @Query('end') String? end,
-    @Query('accounts[]') List<int>? accounts,
-  });
-
-  ///List all attachments uploaded to the bill.
-  ///@param id The ID of the bill.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<AttachmentArray>> apiV1BillsIdAttachmentsGet({
-    required String? id,
-    int? page,
-  }) {
-    generatedMapping.putIfAbsent(
-        AttachmentArray, () => AttachmentArray.fromJsonFactory);
-
-    return _apiV1BillsIdAttachmentsGet(id: id, page: page);
-  }
-
-  ///List all attachments uploaded to the bill.
-  ///@param id The ID of the bill.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/bills/{id}/attachments')
-  Future<chopper.Response<AttachmentArray>> _apiV1BillsIdAttachmentsGet({
-    @Path('id') required String? id,
-    @Query('page') int? page,
-  });
-
-  ///List all rules associated with the bill.
-  ///@param id The ID of the bill.
-  Future<chopper.Response<RuleArray>> apiV1BillsIdRulesGet(
-      {required String? id}) {
-    generatedMapping.putIfAbsent(RuleArray, () => RuleArray.fromJsonFactory);
-
-    return _apiV1BillsIdRulesGet(id: id);
-  }
-
-  ///List all rules associated with the bill.
-  ///@param id The ID of the bill.
-  @Get(path: '/api/v1/bills/{id}/rules')
-  Future<chopper.Response<RuleArray>> _apiV1BillsIdRulesGet(
-      {@Path('id') required String? id});
-
-  ///List all transactions associated with the  bill.
-  ///@param id The ID of the bill.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param type Optional filter on the transaction type(s) returned
-  Future<chopper.Response<TransactionArray>> apiV1BillsIdTransactionsGet({
-    required String? id,
-    String? start,
-    String? end,
-    enums.TransactionTypeFilter? type,
-  }) {
-    generatedMapping.putIfAbsent(
-        TransactionArray, () => TransactionArray.fromJsonFactory);
-
-    return _apiV1BillsIdTransactionsGet(
-        id: id, start: start, end: end, type: type?.value?.toString());
-  }
-
-  ///List all transactions associated with the  bill.
-  ///@param id The ID of the bill.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param type Optional filter on the transaction type(s) returned
-  @Get(path: '/api/v1/bills/{id}/transactions')
-  Future<chopper.Response<TransactionArray>> _apiV1BillsIdTransactionsGet({
-    @Path('id') required String? id,
-    @Query('start') String? start,
-    @Query('end') String? end,
-    @Query('type') String? type,
-  });
-
-  ///List all bills.
-  ///@param page Page number. The default pagination is 50.
-  ///@param start A date formatted YYYY-MM-DD. If it is are added to the request, Firefly III will calculate the appropriate payment and paid dates.
-  ///@param end A date formatted YYYY-MM-DD. If it is added to the request, Firefly III will calculate the appropriate payment and paid dates.
-  Future<chopper.Response<BillArray>> apiV1BillsGet({
-    int? page,
-    String? start,
-    String? end,
-  }) {
-    generatedMapping.putIfAbsent(BillArray, () => BillArray.fromJsonFactory);
-
-    return _apiV1BillsGet(page: page, start: start, end: end);
-  }
-
-  ///List all bills.
-  ///@param page Page number. The default pagination is 50.
-  ///@param start A date formatted YYYY-MM-DD. If it is are added to the request, Firefly III will calculate the appropriate payment and paid dates.
-  ///@param end A date formatted YYYY-MM-DD. If it is added to the request, Firefly III will calculate the appropriate payment and paid dates.
-  @Get(path: '/api/v1/bills')
-  Future<chopper.Response<BillArray>> _apiV1BillsGet({
-    @Query('page') int? page,
-    @Query('start') String? start,
-    @Query('end') String? end,
-  });
-
-  ///Store a new bill
-  Future<chopper.Response<BillSingle>> apiV1BillsPost(
-      {required BillStore? body}) {
-    generatedMapping.putIfAbsent(BillSingle, () => BillSingle.fromJsonFactory);
-
-    return _apiV1BillsPost(body: body);
-  }
-
-  ///Store a new bill
-  @Post(
-    path: '/api/v1/bills',
-    optionalBody: true,
-  )
-  Future<chopper.Response<BillSingle>> _apiV1BillsPost(
-      {@Body() required BillStore? body});
-
-  ///Get a single bill.
-  ///@param id The ID of the bill.
-  ///@param start A date formatted YYYY-MM-DD. If it is are added to the request, Firefly III will calculate the appropriate payment and paid dates.
-  ///@param end A date formatted YYYY-MM-DD. If it is added to the request, Firefly III will calculate the appropriate payment and paid dates.
-  Future<chopper.Response<BillSingle>> apiV1BillsIdGet({
-    required String? id,
-    String? start,
-    String? end,
-  }) {
-    generatedMapping.putIfAbsent(BillSingle, () => BillSingle.fromJsonFactory);
-
-    return _apiV1BillsIdGet(id: id, start: start, end: end);
-  }
-
-  ///Get a single bill.
-  ///@param id The ID of the bill.
-  ///@param start A date formatted YYYY-MM-DD. If it is are added to the request, Firefly III will calculate the appropriate payment and paid dates.
-  ///@param end A date formatted YYYY-MM-DD. If it is added to the request, Firefly III will calculate the appropriate payment and paid dates.
-  @Get(path: '/api/v1/bills/{id}')
-  Future<chopper.Response<BillSingle>> _apiV1BillsIdGet({
-    @Path('id') required String? id,
-    @Query('start') String? start,
-    @Query('end') String? end,
-  });
-
-  ///Update existing bill.
-  ///@param id The ID of the bill.
-  Future<chopper.Response<BillSingle>> apiV1BillsIdPut({
-    required String? id,
-    required BillUpdate? body,
-  }) {
-    generatedMapping.putIfAbsent(BillSingle, () => BillSingle.fromJsonFactory);
-
-    return _apiV1BillsIdPut(id: id, body: body);
-  }
-
-  ///Update existing bill.
-  ///@param id The ID of the bill.
-  @Put(
-    path: '/api/v1/bills/{id}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<BillSingle>> _apiV1BillsIdPut({
-    @Path('id') required String? id,
-    @Body() required BillUpdate? body,
-  });
-
-  ///Delete a bill.
-  ///@param id The ID of the bill.
-  Future<chopper.Response> apiV1BillsIdDelete({required String? id}) {
-    return _apiV1BillsIdDelete(id: id);
-  }
-
-  ///Delete a bill.
-  ///@param id The ID of the bill.
-  @Delete(path: '/api/v1/bills/{id}')
-  Future<chopper.Response> _apiV1BillsIdDelete(
-      {@Path('id') required String? id});
-
-  ///List all rules.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<RuleArray>> apiV1RulesGet({int? page}) {
-    generatedMapping.putIfAbsent(RuleArray, () => RuleArray.fromJsonFactory);
-
-    return _apiV1RulesGet(page: page);
-  }
-
-  ///List all rules.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/rules')
-  Future<chopper.Response<RuleArray>> _apiV1RulesGet(
-      {@Query('page') int? page});
-
-  ///Store a new rule
-  Future<chopper.Response<RuleSingle>> apiV1RulesPost(
-      {required RuleStore? body}) {
-    generatedMapping.putIfAbsent(RuleSingle, () => RuleSingle.fromJsonFactory);
-
-    return _apiV1RulesPost(body: body);
-  }
-
-  ///Store a new rule
-  @Post(
-    path: '/api/v1/rules',
-    optionalBody: true,
-  )
-  Future<chopper.Response<RuleSingle>> _apiV1RulesPost(
-      {@Body() required RuleStore? body});
-
-  ///Get a single rule.
-  ///@param id The ID of the object.X
-  Future<chopper.Response<RuleSingle>> apiV1RulesIdGet({required String? id}) {
-    generatedMapping.putIfAbsent(RuleSingle, () => RuleSingle.fromJsonFactory);
-
-    return _apiV1RulesIdGet(id: id);
-  }
-
-  ///Get a single rule.
-  ///@param id The ID of the object.X
-  @Get(path: '/api/v1/rules/{id}')
-  Future<chopper.Response<RuleSingle>> _apiV1RulesIdGet(
-      {@Path('id') required String? id});
-
-  ///Update existing rule.
-  ///@param id The ID of the object.X
-  Future<chopper.Response<RuleSingle>> apiV1RulesIdPut({
-    required String? id,
-    required RuleUpdate? body,
-  }) {
-    generatedMapping.putIfAbsent(RuleSingle, () => RuleSingle.fromJsonFactory);
-
-    return _apiV1RulesIdPut(id: id, body: body);
-  }
-
-  ///Update existing rule.
-  ///@param id The ID of the object.X
-  @Put(
-    path: '/api/v1/rules/{id}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<RuleSingle>> _apiV1RulesIdPut({
-    @Path('id') required String? id,
-    @Body() required RuleUpdate? body,
-  });
-
-  ///Delete an rule.
-  ///@param id The ID of the rule.
-  Future<chopper.Response> apiV1RulesIdDelete({required String? id}) {
-    return _apiV1RulesIdDelete(id: id);
-  }
-
-  ///Delete an rule.
-  ///@param id The ID of the rule.
-  @Delete(path: '/api/v1/rules/{id}')
-  Future<chopper.Response> _apiV1RulesIdDelete(
-      {@Path('id') required String? id});
-
-  ///List all the user's transactions.
-  ///
-  ///@param page Page number. The default pagination is 50.
-  ///@param start A date formatted YYYY-MM-DD. This is the start date of the selected range (inclusive).
-  ///@param end A date formatted YYYY-MM-DD. This is the end date of the selected range (inclusive).
-  ///@param type Optional filter on the transaction type(s) returned.
-  Future<chopper.Response<TransactionArray>> apiV1TransactionsGet({
-    int? page,
-    String? start,
-    String? end,
-    enums.TransactionTypeFilter? type,
-  }) {
-    generatedMapping.putIfAbsent(
-        TransactionArray, () => TransactionArray.fromJsonFactory);
-
-    return _apiV1TransactionsGet(
-        page: page, start: start, end: end, type: type?.value?.toString());
-  }
-
-  ///List all the user's transactions.
-  ///
-  ///@param page Page number. The default pagination is 50.
-  ///@param start A date formatted YYYY-MM-DD. This is the start date of the selected range (inclusive).
-  ///@param end A date formatted YYYY-MM-DD. This is the end date of the selected range (inclusive).
-  ///@param type Optional filter on the transaction type(s) returned.
-  @Get(path: '/api/v1/transactions')
-  Future<chopper.Response<TransactionArray>> _apiV1TransactionsGet({
-    @Query('page') int? page,
-    @Query('start') String? start,
-    @Query('end') String? end,
-    @Query('type') String? type,
-  });
-
-  ///Store a new transaction
-  Future<chopper.Response<TransactionSingle>> apiV1TransactionsPost(
-      {required TransactionStore? body}) {
-    generatedMapping.putIfAbsent(
-        TransactionSingle, () => TransactionSingle.fromJsonFactory);
-
-    return _apiV1TransactionsPost(body: body);
-  }
-
-  ///Store a new transaction
-  @Post(
-    path: '/api/v1/transactions',
-    optionalBody: true,
-  )
-  Future<chopper.Response<TransactionSingle>> _apiV1TransactionsPost(
-      {@Body() required TransactionStore? body});
-
-  ///Get a single transaction.
-  ///@param id The ID of the transaction.
-  Future<chopper.Response<TransactionSingle>> apiV1TransactionsIdGet(
-      {required String? id}) {
-    generatedMapping.putIfAbsent(
-        TransactionSingle, () => TransactionSingle.fromJsonFactory);
-
-    return _apiV1TransactionsIdGet(id: id);
-  }
-
-  ///Get a single transaction.
-  ///@param id The ID of the transaction.
-  @Get(path: '/api/v1/transactions/{id}')
-  Future<chopper.Response<TransactionSingle>> _apiV1TransactionsIdGet(
-      {@Path('id') required String? id});
-
-  ///Update existing transaction. For more information, see https://docs.firefly-iii.org/firefly-iii/api/specials
-  ///@param id The ID of the transaction.
-  Future<chopper.Response<TransactionSingle>> apiV1TransactionsIdPut({
-    required String? id,
-    required TransactionUpdate? body,
-  }) {
-    generatedMapping.putIfAbsent(
-        TransactionSingle, () => TransactionSingle.fromJsonFactory);
-
-    return _apiV1TransactionsIdPut(id: id, body: body);
-  }
-
-  ///Update existing transaction. For more information, see https://docs.firefly-iii.org/firefly-iii/api/specials
-  ///@param id The ID of the transaction.
-  @Put(
-    path: '/api/v1/transactions/{id}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<TransactionSingle>> _apiV1TransactionsIdPut({
-    @Path('id') required String? id,
-    @Body() required TransactionUpdate? body,
-  });
-
-  ///Delete a transaction.
-  ///@param id The ID of the transaction.
-  Future<chopper.Response> apiV1TransactionsIdDelete({required String? id}) {
-    return _apiV1TransactionsIdDelete(id: id);
-  }
-
-  ///Delete a transaction.
-  ///@param id The ID of the transaction.
-  @Delete(path: '/api/v1/transactions/{id}')
-  Future<chopper.Response> _apiV1TransactionsIdDelete(
-      {@Path('id') required String? id});
-
-  ///List all oject groups.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<ObjectGroupArray>> apiV1ObjectGroupsGet({int? page}) {
-    generatedMapping.putIfAbsent(
-        ObjectGroupArray, () => ObjectGroupArray.fromJsonFactory);
-
-    return _apiV1ObjectGroupsGet(page: page);
-  }
-
-  ///List all oject groups.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/object_groups')
-  Future<chopper.Response<ObjectGroupArray>> _apiV1ObjectGroupsGet(
-      {@Query('page') int? page});
-
-  ///Get a single object group.
-  ///@param id The ID of the object group.
-  Future<chopper.Response<ObjectGroupSingle>> apiV1ObjectGroupsIdGet(
-      {required String? id}) {
-    generatedMapping.putIfAbsent(
-        ObjectGroupSingle, () => ObjectGroupSingle.fromJsonFactory);
-
-    return _apiV1ObjectGroupsIdGet(id: id);
-  }
-
-  ///Get a single object group.
-  ///@param id The ID of the object group.
-  @Get(path: '/api/v1/object_groups/{id}')
-  Future<chopper.Response<ObjectGroupSingle>> _apiV1ObjectGroupsIdGet(
-      {@Path('id') required String? id});
-
-  ///Update existing object group.
-  ///@param id The ID of the object group
-  Future<chopper.Response<ObjectGroupSingle>> apiV1ObjectGroupsIdPut({
-    required String? id,
-    required ObjectGroupUpdate? body,
-  }) {
-    generatedMapping.putIfAbsent(
-        ObjectGroupSingle, () => ObjectGroupSingle.fromJsonFactory);
-
-    return _apiV1ObjectGroupsIdPut(id: id, body: body);
-  }
-
-  ///Update existing object group.
-  ///@param id The ID of the object group
-  @Put(
-    path: '/api/v1/object_groups/{id}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<ObjectGroupSingle>> _apiV1ObjectGroupsIdPut({
-    @Path('id') required String? id,
-    @Body() required ObjectGroupUpdate? body,
-  });
-
-  ///Delete a object group.
-  ///@param id The ID of the object group.
-  Future<chopper.Response> apiV1ObjectGroupsIdDelete({required String? id}) {
-    return _apiV1ObjectGroupsIdDelete(id: id);
-  }
-
-  ///Delete a object group.
-  ///@param id The ID of the object group.
-  @Delete(path: '/api/v1/object_groups/{id}')
-  Future<chopper.Response> _apiV1ObjectGroupsIdDelete(
-      {@Path('id') required String? id});
-
-  ///List all transactions in a category.
-  ///@param id The ID of the category.
-  ///@param page Page number. The default pagination is per 50.
-  ///@param start A date formatted YYYY-MM-DD, to limit the result list.
-  ///@param end A date formatted YYYY-MM-DD, to limit the result list.
-  ///@param type Optional filter on the transaction type(s) returned
-  Future<chopper.Response<TransactionArray>> apiV1CategoriesIdTransactionsGet({
-    required String? id,
-    int? page,
-    String? start,
-    String? end,
-    enums.TransactionTypeFilter? type,
-  }) {
-    generatedMapping.putIfAbsent(
-        TransactionArray, () => TransactionArray.fromJsonFactory);
-
-    return _apiV1CategoriesIdTransactionsGet(
-        id: id,
-        page: page,
+    return _v1InsightExpenseCategoryGet(
+        xTraceId: xTraceId,
         start: start,
         end: end,
-        type: type?.value?.toString());
+        categories: categories,
+        accounts: accounts);
   }
 
-  ///List all transactions in a category.
-  ///@param id The ID of the category.
-  ///@param page Page number. The default pagination is per 50.
-  ///@param start A date formatted YYYY-MM-DD, to limit the result list.
-  ///@param end A date formatted YYYY-MM-DD, to limit the result list.
-  ///@param type Optional filter on the transaction type(s) returned
-  @Get(path: '/api/v1/categories/{id}/transactions')
-  Future<chopper.Response<TransactionArray>> _apiV1CategoriesIdTransactionsGet({
-    @Path('id') required String? id,
-    @Query('page') int? page,
-    @Query('start') String? start,
-    @Query('end') String? end,
-    @Query('type') String? type,
-  });
-
-  ///All transactions without a category.
-  ///@param limit Limits the number of results on one page.
-  ///@param page Page number. The default pagination is 50.
+  ///Insight into expenses, grouped by category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  ///@param type Optional filter on the transaction type(s) returned
-  Future<chopper.Response<TransactionArray>>
-      apiV1CategoriesTransactionsWithoutCategoryGet({
+  ///@param categories[] The categories to be included in the results.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/expense/category')
+  Future<chopper.Response<InsightGroup>> _v1InsightExpenseCategoryGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('categories[]') List<int>? categories,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into expenses, without category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightTotal>> v1InsightExpenseNoCategoryGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
+
+    return _v1InsightExpenseNoCategoryGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
+  }
+
+  ///Insight into expenses, without category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/expense/no-category')
+  Future<chopper.Response<InsightTotal>> _v1InsightExpenseNoCategoryGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into income, grouped by category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param categories[] The categories to be included in the results.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightGroup>> v1InsightIncomeCategoryGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? categories,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
+
+    return _v1InsightIncomeCategoryGet(
+        xTraceId: xTraceId,
+        start: start,
+        end: end,
+        categories: categories,
+        accounts: accounts);
+  }
+
+  ///Insight into income, grouped by category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param categories[] The categories to be included in the results.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/income/category')
+  Future<chopper.Response<InsightGroup>> _v1InsightIncomeCategoryGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('categories[]') List<int>? categories,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into income, without category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightTotal>> v1InsightIncomeNoCategoryGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
+
+    return _v1InsightIncomeNoCategoryGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
+  }
+
+  ///Insight into income, without category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/income/no-category')
+  Future<chopper.Response<InsightTotal>> _v1InsightIncomeNoCategoryGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into transfers, grouped by category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param categories[] The categories to be included in the results.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightGroup>> v1InsightTransferCategoryGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? categories,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
+
+    return _v1InsightTransferCategoryGet(
+        xTraceId: xTraceId,
+        start: start,
+        end: end,
+        categories: categories,
+        accounts: accounts);
+  }
+
+  ///Insight into transfers, grouped by category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param categories[] The categories to be included in the results.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/transfer/category')
+  Future<chopper.Response<InsightGroup>> _v1InsightTransferCategoryGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('categories[]') List<int>? categories,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into transfers, without category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightTotal>> v1InsightTransferNoCategoryGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
+
+    return _v1InsightTransferNoCategoryGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
+  }
+
+  ///Insight into transfers, without category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/transfer/no-category')
+  Future<chopper.Response<InsightTotal>> _v1InsightTransferNoCategoryGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into expenses, grouped by tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param tags[] The tags to be included in the results.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightGroup>> v1InsightExpenseTagGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? tags,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
+
+    return _v1InsightExpenseTagGet(
+        xTraceId: xTraceId,
+        start: start,
+        end: end,
+        tags: tags,
+        accounts: accounts);
+  }
+
+  ///Insight into expenses, grouped by tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param tags[] The tags to be included in the results.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/expense/tag')
+  Future<chopper.Response<InsightGroup>> _v1InsightExpenseTagGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('tags[]') List<int>? tags,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into expenses, without tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightTotal>> v1InsightExpenseNoTagGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
+
+    return _v1InsightExpenseNoTagGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
+  }
+
+  ///Insight into expenses, without tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/expense/no-tag')
+  Future<chopper.Response<InsightTotal>> _v1InsightExpenseNoTagGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into income, grouped by tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param tags[] The tags to be included in the results.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightGroup>> v1InsightIncomeTagGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? tags,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
+
+    return _v1InsightIncomeTagGet(
+        xTraceId: xTraceId,
+        start: start,
+        end: end,
+        tags: tags,
+        accounts: accounts);
+  }
+
+  ///Insight into income, grouped by tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param tags[] The tags to be included in the results.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/income/tag')
+  Future<chopper.Response<InsightGroup>> _v1InsightIncomeTagGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('tags[]') List<int>? tags,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into income, without tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightTotal>> v1InsightIncomeNoTagGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
+
+    return _v1InsightIncomeNoTagGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
+  }
+
+  ///Insight into income, without tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/income/no-tag')
+  Future<chopper.Response<InsightTotal>> _v1InsightIncomeNoTagGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into transfers, grouped by tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param tags[] The tags to be included in the results.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightGroup>> v1InsightTransferTagGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? tags,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightGroupEntry, () => InsightGroupEntry.fromJsonFactory);
+
+    return _v1InsightTransferTagGet(
+        xTraceId: xTraceId,
+        start: start,
+        end: end,
+        tags: tags,
+        accounts: accounts);
+  }
+
+  ///Insight into transfers, grouped by tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param tags[] The tags to be included in the results.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/transfer/tag')
+  Future<chopper.Response<InsightGroup>> _v1InsightTransferTagGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('tags[]') List<int>? tags,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into expenses, without tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers from those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightTotal>> v1InsightTransferNoTagGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
+
+    return _v1InsightTransferNoTagGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
+  }
+
+  ///Insight into expenses, without tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers from those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/transfer/no-tag')
+  Future<chopper.Response<InsightTotal>> _v1InsightTransferNoTagGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into total expenses.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightTotal>> v1InsightExpenseTotalGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
+
+    return _v1InsightExpenseTotalGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
+  }
+
+  ///Insight into total expenses.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/expense/total')
+  Future<chopper.Response<InsightTotal>> _v1InsightExpenseTotalGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into total income.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightTotal>> v1InsightIncomeTotalGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
+
+    return _v1InsightIncomeTotalGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
+  }
+
+  ///Insight into total income.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/income/total')
+  Future<chopper.Response<InsightTotal>> _v1InsightIncomeTotalGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Insight into total transfers.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  Future<chopper.Response<InsightTotal>> v1InsightTransferTotalGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        InsightTotalEntry, () => InsightTotalEntry.fromJsonFactory);
+
+    return _v1InsightTransferTotalGet(
+        xTraceId: xTraceId, start: start, end: end, accounts: accounts);
+  }
+
+  ///Insight into total transfers.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
+  @Get(path: '/v1/insight/transfer/total')
+  Future<chopper.Response<InsightTotal>> _v1InsightTransferTotalGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///List all transactions related to the account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the account.
+  ///@param page Page number. The default pagination is per 50 items.
+  ///@param limit Limits the number of results on one page.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param type Optional filter on the transaction type(s) returned.
+  Future<chopper.Response<TransactionArray>> v1AccountsIdTransactionsGet({
+    String? xTraceId,
+    required String? id,
+    int? page,
     int? limit,
-    int? page,
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
@@ -1965,682 +1601,94 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         TransactionArray, () => TransactionArray.fromJsonFactory);
 
-    return _apiV1CategoriesTransactionsWithoutCategoryGet(
-        limit: limit,
-        page: page,
-        start: start,
-        end: end,
-        type: type?.value?.toString());
-  }
-
-  ///All transactions without a category.
-  ///@param limit Limits the number of results on one page.
-  ///@param page Page number. The default pagination is 50.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param type Optional filter on the transaction type(s) returned
-  @Get(path: '/api/v1/categories/transactions-without-category')
-  Future<chopper.Response<TransactionArray>>
-      _apiV1CategoriesTransactionsWithoutCategoryGet({
-    @Query('limit') int? limit,
-    @Query('page') int? page,
-    @Query('start') String? start,
-    @Query('end') String? end,
-    @Query('type') String? type,
-  });
-
-  ///Lists all attachments.
-  ///@param id The ID of the category.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<AttachmentArray>> apiV1CategoriesIdAttachmentsGet({
-    required String? id,
-    int? page,
-  }) {
-    generatedMapping.putIfAbsent(
-        AttachmentArray, () => AttachmentArray.fromJsonFactory);
-
-    return _apiV1CategoriesIdAttachmentsGet(id: id, page: page);
-  }
-
-  ///Lists all attachments.
-  ///@param id The ID of the category.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/categories/{id}/attachments')
-  Future<chopper.Response<AttachmentArray>> _apiV1CategoriesIdAttachmentsGet({
-    @Path('id') required String? id,
-    @Query('page') int? page,
-  });
-
-  ///List all recurring transactions.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<RecurrenceArray>> apiV1RecurrencesGet({int? page}) {
-    generatedMapping.putIfAbsent(
-        RecurrenceArray, () => RecurrenceArray.fromJsonFactory);
-
-    return _apiV1RecurrencesGet(page: page);
-  }
-
-  ///List all recurring transactions.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/recurrences')
-  Future<chopper.Response<RecurrenceArray>> _apiV1RecurrencesGet(
-      {@Query('page') int? page});
-
-  ///Store a new recurring transaction
-  Future<chopper.Response<RecurrenceSingle>> apiV1RecurrencesPost(
-      {required RecurrenceStore? body}) {
-    generatedMapping.putIfAbsent(
-        RecurrenceSingle, () => RecurrenceSingle.fromJsonFactory);
-
-    return _apiV1RecurrencesPost(body: body);
-  }
-
-  ///Store a new recurring transaction
-  @Post(
-    path: '/api/v1/recurrences',
-    optionalBody: true,
-  )
-  Future<chopper.Response<RecurrenceSingle>> _apiV1RecurrencesPost(
-      {@Body() required RecurrenceStore? body});
-
-  ///Get a single recurring transaction.
-  ///@param id The ID of the recurring transaction.
-  Future<chopper.Response<RecurrenceSingle>> apiV1RecurrencesIdGet(
-      {required String? id}) {
-    generatedMapping.putIfAbsent(
-        RecurrenceSingle, () => RecurrenceSingle.fromJsonFactory);
-
-    return _apiV1RecurrencesIdGet(id: id);
-  }
-
-  ///Get a single recurring transaction.
-  ///@param id The ID of the recurring transaction.
-  @Get(path: '/api/v1/recurrences/{id}')
-  Future<chopper.Response<RecurrenceSingle>> _apiV1RecurrencesIdGet(
-      {@Path('id') required String? id});
-
-  ///Update existing recurring transaction.
-  ///@param id The ID of the recurring transaction.
-  Future<chopper.Response<RecurrenceSingle>> apiV1RecurrencesIdPut({
-    required String? id,
-    required RecurrenceUpdate? body,
-  }) {
-    generatedMapping.putIfAbsent(
-        RecurrenceSingle, () => RecurrenceSingle.fromJsonFactory);
-
-    return _apiV1RecurrencesIdPut(id: id, body: body);
-  }
-
-  ///Update existing recurring transaction.
-  ///@param id The ID of the recurring transaction.
-  @Put(
-    path: '/api/v1/recurrences/{id}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<RecurrenceSingle>> _apiV1RecurrencesIdPut({
-    @Path('id') required String? id,
-    @Body() required RecurrenceUpdate? body,
-  });
-
-  ///Delete a recurring transaction.
-  ///@param id The ID of the recurring transaction.
-  Future<chopper.Response> apiV1RecurrencesIdDelete({required String? id}) {
-    return _apiV1RecurrencesIdDelete(id: id);
-  }
-
-  ///Delete a recurring transaction.
-  ///@param id The ID of the recurring transaction.
-  @Delete(path: '/api/v1/recurrences/{id}')
-  Future<chopper.Response> _apiV1RecurrencesIdDelete(
-      {@Path('id') required String? id});
-
-  ///Lists all attachments.
-  ///@param id The ID of the transaction.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<AttachmentArray>> apiV1TransactionsIdAttachmentsGet({
-    required String? id,
-    int? page,
-  }) {
-    generatedMapping.putIfAbsent(
-        AttachmentArray, () => AttachmentArray.fromJsonFactory);
-
-    return _apiV1TransactionsIdAttachmentsGet(id: id, page: page);
-  }
-
-  ///Lists all attachments.
-  ///@param id The ID of the transaction.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/transactions/{id}/attachments')
-  Future<chopper.Response<AttachmentArray>> _apiV1TransactionsIdAttachmentsGet({
-    @Path('id') required String? id,
-    @Query('page') int? page,
-  });
-
-  ///Lists all piggy bank events.
-  ///@param id The ID of the transaction.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<PiggyBankEventArray>>
-      apiV1TransactionsIdPiggyBankEventsGet({
-    required String? id,
-    int? page,
-  }) {
-    generatedMapping.putIfAbsent(
-        PiggyBankEventArray, () => PiggyBankEventArray.fromJsonFactory);
-
-    return _apiV1TransactionsIdPiggyBankEventsGet(id: id, page: page);
-  }
-
-  ///Lists all piggy bank events.
-  ///@param id The ID of the transaction.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/transactions/{id}/piggy_bank_events')
-  Future<chopper.Response<PiggyBankEventArray>>
-      _apiV1TransactionsIdPiggyBankEventsGet({
-    @Path('id') required String? id,
-    @Query('page') int? page,
-  });
-
-  ///List all transactions created by a recurring transaction.
-  ///@param id The ID of the recurring transaction.
-  ///@param page Page number. The default pagination is 50.
-  ///@param start A date formatted YYYY-MM-DD. Both the start and end date must be present.
-  ///@param end A date formatted YYYY-MM-DD. Both the start and end date must be present.
-  ///@param type Optional filter on the transaction type(s) returned
-  Future<chopper.Response<TransactionArray>> apiV1RecurrencesIdTransactionsGet({
-    required String? id,
-    int? page,
-    String? start,
-    String? end,
-    enums.TransactionTypeFilter? type,
-  }) {
-    generatedMapping.putIfAbsent(
-        TransactionArray, () => TransactionArray.fromJsonFactory);
-
-    return _apiV1RecurrencesIdTransactionsGet(
+    return _v1AccountsIdTransactionsGet(
+        xTraceId: xTraceId,
         id: id,
         page: page,
+        limit: limit,
         start: start,
         end: end,
         type: type?.value?.toString());
   }
 
-  ///List all transactions created by a recurring transaction.
-  ///@param id The ID of the recurring transaction.
-  ///@param page Page number. The default pagination is 50.
-  ///@param start A date formatted YYYY-MM-DD. Both the start and end date must be present.
-  ///@param end A date formatted YYYY-MM-DD. Both the start and end date must be present.
-  ///@param type Optional filter on the transaction type(s) returned
-  @Get(path: '/api/v1/recurrences/{id}/transactions')
-  Future<chopper.Response<TransactionArray>>
-      _apiV1RecurrencesIdTransactionsGet({
+  ///List all transactions related to the account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the account.
+  ///@param page Page number. The default pagination is per 50 items.
+  ///@param limit Limits the number of results on one page.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param type Optional filter on the transaction type(s) returned.
+  @Get(path: '/v1/accounts/{id}/transactions')
+  Future<chopper.Response<TransactionArray>> _v1AccountsIdTransactionsGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Query('page') int? page,
+    @Query('limit') int? limit,
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
   });
 
-  ///List all piggy banks.
+  ///Lists all attachments.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the account.
   ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<PiggyBankArray>> apiV1PiggyBanksGet({int? page}) {
+  Future<chopper.Response<AttachmentArray>> v1AccountsIdAttachmentsGet({
+    String? xTraceId,
+    required String? id,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        AttachmentArray, () => AttachmentArray.fromJsonFactory);
+
+    return _v1AccountsIdAttachmentsGet(xTraceId: xTraceId, id: id, page: page);
+  }
+
+  ///Lists all attachments.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the account.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/accounts/{id}/attachments')
+  Future<chopper.Response<AttachmentArray>> _v1AccountsIdAttachmentsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('page') int? page,
+  });
+
+  ///List all piggy banks related to the account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the account.
+  ///@param page Page number. The default pagination is per 50 items.
+  Future<chopper.Response<PiggyBankArray>> v1AccountsIdPiggyBanksGet({
+    String? xTraceId,
+    required String? id,
+    int? page,
+  }) {
     generatedMapping.putIfAbsent(
         PiggyBankArray, () => PiggyBankArray.fromJsonFactory);
 
-    return _apiV1PiggyBanksGet(page: page);
+    return _v1AccountsIdPiggyBanksGet(xTraceId: xTraceId, id: id, page: page);
   }
 
-  ///List all piggy banks.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/piggy-banks')
-  Future<chopper.Response<PiggyBankArray>> _apiV1PiggyBanksGet(
-      {@Query('page') int? page});
-
-  ///Store a new piggy bank
-  Future<chopper.Response<PiggyBankSingle>> apiV1PiggyBanksPost(
-      {required PiggyBankStore? body}) {
-    generatedMapping.putIfAbsent(
-        PiggyBankSingle, () => PiggyBankSingle.fromJsonFactory);
-
-    return _apiV1PiggyBanksPost(body: body);
-  }
-
-  ///Store a new piggy bank
-  @Post(
-    path: '/api/v1/piggy-banks',
-    optionalBody: true,
-  )
-  Future<chopper.Response<PiggyBankSingle>> _apiV1PiggyBanksPost(
-      {@Body() required PiggyBankStore? body});
-
-  ///Get a single piggy bank.
-  ///@param id The ID of the piggy bank.
-  Future<chopper.Response<PiggyBankSingle>> apiV1PiggyBanksIdGet(
-      {required String? id}) {
-    generatedMapping.putIfAbsent(
-        PiggyBankSingle, () => PiggyBankSingle.fromJsonFactory);
-
-    return _apiV1PiggyBanksIdGet(id: id);
-  }
-
-  ///Get a single piggy bank.
-  ///@param id The ID of the piggy bank.
-  @Get(path: '/api/v1/piggy-banks/{id}')
-  Future<chopper.Response<PiggyBankSingle>> _apiV1PiggyBanksIdGet(
-      {@Path('id') required String? id});
-
-  ///Update existing piggy bank.
-  ///@param id The ID of the piggy bank
-  Future<chopper.Response<PiggyBankSingle>> apiV1PiggyBanksIdPut({
-    required String? id,
-    required PiggyBankUpdate? body,
-  }) {
-    generatedMapping.putIfAbsent(
-        PiggyBankSingle, () => PiggyBankSingle.fromJsonFactory);
-
-    return _apiV1PiggyBanksIdPut(id: id, body: body);
-  }
-
-  ///Update existing piggy bank.
-  ///@param id The ID of the piggy bank
-  @Put(
-    path: '/api/v1/piggy-banks/{id}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<PiggyBankSingle>> _apiV1PiggyBanksIdPut({
-    @Path('id') required String? id,
-    @Body() required PiggyBankUpdate? body,
-  });
-
-  ///Delete a piggy bank.
-  ///@param id The ID of the piggy bank.
-  Future<chopper.Response> apiV1PiggyBanksIdDelete({required String? id}) {
-    return _apiV1PiggyBanksIdDelete(id: id);
-  }
-
-  ///Delete a piggy bank.
-  ///@param id The ID of the piggy bank.
-  @Delete(path: '/api/v1/piggy-banks/{id}')
-  Future<chopper.Response> _apiV1PiggyBanksIdDelete(
-      {@Path('id') required String? id});
-
-  ///List all currencies.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<CurrencyArray>> apiV1CurrenciesGet({int? page}) {
-    generatedMapping.putIfAbsent(
-        CurrencyArray, () => CurrencyArray.fromJsonFactory);
-
-    return _apiV1CurrenciesGet(page: page);
-  }
-
-  ///List all currencies.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/currencies')
-  Future<chopper.Response<CurrencyArray>> _apiV1CurrenciesGet(
-      {@Query('page') int? page});
-
-  ///Store a new currency
-  Future<chopper.Response<CurrencySingle>> apiV1CurrenciesPost(
-      {required CurrencyStore? body}) {
-    generatedMapping.putIfAbsent(
-        CurrencySingle, () => CurrencySingle.fromJsonFactory);
-
-    return _apiV1CurrenciesPost(body: body);
-  }
-
-  ///Store a new currency
-  @Post(
-    path: '/api/v1/currencies',
-    optionalBody: true,
-  )
-  Future<chopper.Response<CurrencySingle>> _apiV1CurrenciesPost(
-      {@Body() required CurrencyStore? body});
-
-  ///Enable a single currency.
-  ///@param code The currency code.
-  Future<chopper.Response> apiV1CurrenciesCodeEnablePost(
-      {required String? code}) {
-    return _apiV1CurrenciesCodeEnablePost(code: code);
-  }
-
-  ///Enable a single currency.
-  ///@param code The currency code.
-  @Post(
-    path: '/api/v1/currencies/{code}/enable',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _apiV1CurrenciesCodeEnablePost(
-      {@Path('code') required String? code});
-
-  ///Disable a currency.
-  ///@param code The currency code.
-  Future<chopper.Response> apiV1CurrenciesCodeDisablePost(
-      {required int? code}) {
-    return _apiV1CurrenciesCodeDisablePost(code: code);
-  }
-
-  ///Disable a currency.
-  ///@param code The currency code.
-  @Post(
-    path: '/api/v1/currencies/{code}/disable',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _apiV1CurrenciesCodeDisablePost(
-      {@Path('code') required int? code});
-
-  ///Make currency default currency.
-  ///@param code The currency code.
-  Future<chopper.Response> apiV1CurrenciesCodeDefaultPost(
-      {required String? code}) {
-    return _apiV1CurrenciesCodeDefaultPost(code: code);
-  }
-
-  ///Make currency default currency.
-  ///@param code The currency code.
-  @Post(
-    path: '/api/v1/currencies/{code}/default',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _apiV1CurrenciesCodeDefaultPost(
-      {@Path('code') required String? code});
-
-  ///Get a single currency.
-  ///@param code The currency code.
-  Future<chopper.Response<CurrencySingle>> apiV1CurrenciesCodeGet(
-      {required String? code}) {
-    generatedMapping.putIfAbsent(
-        CurrencySingle, () => CurrencySingle.fromJsonFactory);
-
-    return _apiV1CurrenciesCodeGet(code: code);
-  }
-
-  ///Get a single currency.
-  ///@param code The currency code.
-  @Get(path: '/api/v1/currencies/{code}')
-  Future<chopper.Response<CurrencySingle>> _apiV1CurrenciesCodeGet(
-      {@Path('code') required String? code});
-
-  ///Update existing currency.
-  ///@param code The currency code.
-  Future<chopper.Response<CurrencySingle>> apiV1CurrenciesCodePut({
-    required String? code,
-    required CurrencyUpdate? body,
-  }) {
-    generatedMapping.putIfAbsent(
-        CurrencySingle, () => CurrencySingle.fromJsonFactory);
-
-    return _apiV1CurrenciesCodePut(code: code, body: body);
-  }
-
-  ///Update existing currency.
-  ///@param code The currency code.
-  @Put(
-    path: '/api/v1/currencies/{code}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<CurrencySingle>> _apiV1CurrenciesCodePut({
-    @Path('code') required String? code,
-    @Body() required CurrencyUpdate? body,
-  });
-
-  ///Delete a currency.
-  ///@param code The currency code.
-  Future<chopper.Response> apiV1CurrenciesCodeDelete({required String? code}) {
-    return _apiV1CurrenciesCodeDelete(code: code);
-  }
-
-  ///Delete a currency.
-  ///@param code The currency code.
-  @Delete(path: '/api/v1/currencies/{code}')
-  Future<chopper.Response> _apiV1CurrenciesCodeDelete(
-      {@Path('code') required String? code});
-
-  ///Get the user's default currency.
-  Future<chopper.Response<CurrencySingle>> apiV1CurrenciesDefaultGet() {
-    generatedMapping.putIfAbsent(
-        CurrencySingle, () => CurrencySingle.fromJsonFactory);
-
-    return _apiV1CurrenciesDefaultGet();
-  }
-
-  ///Get the user's default currency.
-  @Get(path: '/api/v1/currencies/default')
-  Future<chopper.Response<CurrencySingle>> _apiV1CurrenciesDefaultGet();
-
-  ///List all categories.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<CategoryArray>> apiV1CategoriesGet({int? page}) {
-    generatedMapping.putIfAbsent(
-        CategoryArray, () => CategoryArray.fromJsonFactory);
-
-    return _apiV1CategoriesGet(page: page);
-  }
-
-  ///List all categories.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/categories')
-  Future<chopper.Response<CategoryArray>> _apiV1CategoriesGet(
-      {@Query('page') int? page});
-
-  ///Store a new category
-  Future<chopper.Response<CategorySingle>> apiV1CategoriesPost(
-      {required Category? body}) {
-    generatedMapping.putIfAbsent(
-        CategorySingle, () => CategorySingle.fromJsonFactory);
-
-    return _apiV1CategoriesPost(body: body);
-  }
-
-  ///Store a new category
-  @Post(
-    path: '/api/v1/categories',
-    optionalBody: true,
-  )
-  Future<chopper.Response<CategorySingle>> _apiV1CategoriesPost(
-      {@Body() required Category? body});
-
-  ///Get a single category.
-  ///@param id The ID of the category.
-  ///@param start A date formatted YYYY-MM-DD, to show spent and earned info.
-  ///@param end A date formatted YYYY-MM-DD, to show spent and earned info.
-  Future<chopper.Response<CategorySingle>> apiV1CategoriesIdGet({
-    required String? id,
-    String? start,
-    String? end,
-  }) {
-    generatedMapping.putIfAbsent(
-        CategorySingle, () => CategorySingle.fromJsonFactory);
-
-    return _apiV1CategoriesIdGet(id: id, start: start, end: end);
-  }
-
-  ///Get a single category.
-  ///@param id The ID of the category.
-  ///@param start A date formatted YYYY-MM-DD, to show spent and earned info.
-  ///@param end A date formatted YYYY-MM-DD, to show spent and earned info.
-  @Get(path: '/api/v1/categories/{id}')
-  Future<chopper.Response<CategorySingle>> _apiV1CategoriesIdGet({
-    @Path('id') required String? id,
-    @Query('start') String? start,
-    @Query('end') String? end,
-  });
-
-  ///Update existing category.
-  ///@param id The ID of the category.
-  Future<chopper.Response<CategorySingle>> apiV1CategoriesIdPut({
-    required String? id,
-    required CategoryUpdate? body,
-  }) {
-    generatedMapping.putIfAbsent(
-        CategorySingle, () => CategorySingle.fromJsonFactory);
-
-    return _apiV1CategoriesIdPut(id: id, body: body);
-  }
-
-  ///Update existing category.
-  ///@param id The ID of the category.
-  @Put(
-    path: '/api/v1/categories/{id}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<CategorySingle>> _apiV1CategoriesIdPut({
-    @Path('id') required String? id,
-    @Body() required CategoryUpdate? body,
-  });
-
-  ///Delete a category.
-  ///@param id The ID of the category.
-  Future<chopper.Response> apiV1CategoriesIdDelete({required String? id}) {
-    return _apiV1CategoriesIdDelete(id: id);
-  }
-
-  ///Delete a category.
-  ///@param id The ID of the category.
-  @Delete(path: '/api/v1/categories/{id}')
-  Future<chopper.Response> _apiV1CategoriesIdDelete(
-      {@Path('id') required String? id});
-
-  ///List all tags.
-  ///@param page Page number
-  Future<chopper.Response<TagArray>> apiV1TagsGet({int? page}) {
-    generatedMapping.putIfAbsent(TagArray, () => TagArray.fromJsonFactory);
-
-    return _apiV1TagsGet(page: page);
-  }
-
-  ///List all tags.
-  ///@param page Page number
-  @Get(path: '/api/v1/tags')
-  Future<chopper.Response<TagArray>> _apiV1TagsGet({@Query('page') int? page});
-
-  ///Store a new tag
-  Future<chopper.Response<TagSingle>> apiV1TagsPost(
-      {required TagModelStore? body}) {
-    generatedMapping.putIfAbsent(TagSingle, () => TagSingle.fromJsonFactory);
-
-    return _apiV1TagsPost(body: body);
-  }
-
-  ///Store a new tag
-  @Post(
-    path: '/api/v1/tags',
-    optionalBody: true,
-  )
-  Future<chopper.Response<TagSingle>> _apiV1TagsPost(
-      {@Body() required TagModelStore? body});
-
-  ///Get a single tag.
-  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
-  ///@param page Page number
-  Future<chopper.Response<TagSingle>> apiV1TagsTagGet({
-    required String? tag,
-    int? page,
-  }) {
-    generatedMapping.putIfAbsent(TagSingle, () => TagSingle.fromJsonFactory);
-
-    return _apiV1TagsTagGet(tag: tag, page: page);
-  }
-
-  ///Get a single tag.
-  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
-  ///@param page Page number
-  @Get(path: '/api/v1/tags/{tag}')
-  Future<chopper.Response<TagSingle>> _apiV1TagsTagGet({
-    @Path('tag') required String? tag,
-    @Query('page') int? page,
-  });
-
-  ///Update existing tag.
-  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
-  Future<chopper.Response<TagSingle>> apiV1TagsTagPut({
-    required String? tag,
-    required TagModelUpdate? body,
-  }) {
-    generatedMapping.putIfAbsent(TagSingle, () => TagSingle.fromJsonFactory);
-
-    return _apiV1TagsTagPut(tag: tag, body: body);
-  }
-
-  ///Update existing tag.
-  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
-  @Put(
-    path: '/api/v1/tags/{tag}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<TagSingle>> _apiV1TagsTagPut({
-    @Path('tag') required String? tag,
-    @Body() required TagModelUpdate? body,
-  });
-
-  ///Delete an tag.
-  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
-  Future<chopper.Response> apiV1TagsTagDelete({required String? tag}) {
-    return _apiV1TagsTagDelete(tag: tag);
-  }
-
-  ///Delete an tag.
-  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
-  @Delete(path: '/api/v1/tags/{tag}')
-  Future<chopper.Response> _apiV1TagsTagDelete(
-      {@Path('tag') required String? tag});
-
-  ///Lists all the transaction links for an individual journal (individual split).
-  ///@param id The ID of the transaction journal / the split.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<TransactionLinkArray>>
-      apiV1TransactionJournalsIdLinksGet({
-    required String? id,
-    int? page,
-  }) {
-    generatedMapping.putIfAbsent(
-        TransactionLinkArray, () => TransactionLinkArray.fromJsonFactory);
-
-    return _apiV1TransactionJournalsIdLinksGet(id: id, page: page);
-  }
-
-  ///Lists all the transaction links for an individual journal (individual split).
-  ///@param id The ID of the transaction journal / the split.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/transaction-journals/{id}/links')
-  Future<chopper.Response<TransactionLinkArray>>
-      _apiV1TransactionJournalsIdLinksGet({
+  ///List all piggy banks related to the account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the account.
+  ///@param page Page number. The default pagination is per 50 items.
+  @Get(path: '/v1/accounts/{id}/piggy-banks')
+  Future<chopper.Response<PiggyBankArray>> _v1AccountsIdPiggyBanksGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Query('page') int? page,
   });
-
-  ///Get a single transaction, based on one of the underlying transaction journals (transaction splits).
-  ///@param id The ID of the transaction journal (split).
-  Future<chopper.Response<TransactionSingle>> apiV1TransactionJournalsIdGet(
-      {required String? id}) {
-    generatedMapping.putIfAbsent(
-        TransactionSingle, () => TransactionSingle.fromJsonFactory);
-
-    return _apiV1TransactionJournalsIdGet(id: id);
-  }
-
-  ///Get a single transaction, based on one of the underlying transaction journals (transaction splits).
-  ///@param id The ID of the transaction journal (split).
-  @Get(path: '/api/v1/transaction-journals/{id}')
-  Future<chopper.Response<TransactionSingle>> _apiV1TransactionJournalsIdGet(
-      {@Path('id') required String? id});
-
-  ///Delete split from transaction
-  ///@param id The ID of the transaction journal (the split) you wish to delete.
-  Future<chopper.Response> apiV1TransactionJournalsIdDelete(
-      {required String? id}) {
-    return _apiV1TransactionJournalsIdDelete(id: id);
-  }
-
-  ///Delete split from transaction
-  ///@param id The ID of the transaction journal (the split) you wish to delete.
-  @Delete(path: '/api/v1/transaction-journals/{id}')
-  Future<chopper.Response> _apiV1TransactionJournalsIdDelete(
-      {@Path('id') required String? id});
 
   ///List all accounts.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
   ///@param type Optional filter on the account type(s) returned
-  Future<chopper.Response<AccountArray>> apiV1AccountsGet({
+  Future<chopper.Response<AccountArray>> v1AccountsGet({
+    String? xTraceId,
     int? page,
     String? date,
     enums.AccountTypeFilter? type,
@@ -2648,257 +1696,386 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         AccountArray, () => AccountArray.fromJsonFactory);
 
-    return _apiV1AccountsGet(
-        page: page, date: date, type: type?.value?.toString());
+    return _v1AccountsGet(
+        xTraceId: xTraceId,
+        page: page,
+        date: date,
+        type: type?.value?.toString());
   }
 
   ///List all accounts.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
   ///@param type Optional filter on the account type(s) returned
-  @Get(path: '/api/v1/accounts')
-  Future<chopper.Response<AccountArray>> _apiV1AccountsGet({
+  @Get(path: '/v1/accounts')
+  Future<chopper.Response<AccountArray>> _v1AccountsGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('page') int? page,
     @Query('date') String? date,
     @Query('type') String? type,
   });
 
   ///Create new account.
-  Future<chopper.Response<AccountSingle>> apiV1AccountsPost(
-      {required AccountStore? body}) {
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<AccountSingle>> v1AccountsPost({
+    String? xTraceId,
+    required AccountStore? body,
+  }) {
     generatedMapping.putIfAbsent(
         AccountSingle, () => AccountSingle.fromJsonFactory);
 
-    return _apiV1AccountsPost(body: body);
+    return _v1AccountsPost(xTraceId: xTraceId, body: body);
   }
 
   ///Create new account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   @Post(
-    path: '/api/v1/accounts',
+    path: '/v1/accounts',
     optionalBody: true,
   )
-  Future<chopper.Response<AccountSingle>> _apiV1AccountsPost(
-      {@Body() required AccountStore? body});
+  Future<chopper.Response<AccountSingle>> _v1AccountsPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required AccountStore? body,
+  });
 
   ///Get single account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the account.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
-  Future<chopper.Response<AccountSingle>> apiV1AccountsIdGet({
+  Future<chopper.Response<AccountSingle>> v1AccountsIdGet({
+    String? xTraceId,
     required String? id,
     String? date,
   }) {
     generatedMapping.putIfAbsent(
         AccountSingle, () => AccountSingle.fromJsonFactory);
 
-    return _apiV1AccountsIdGet(id: id, date: date);
+    return _v1AccountsIdGet(xTraceId: xTraceId, id: id, date: date);
   }
 
   ///Get single account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the account.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
-  @Get(path: '/api/v1/accounts/{id}')
-  Future<chopper.Response<AccountSingle>> _apiV1AccountsIdGet({
+  @Get(path: '/v1/accounts/{id}')
+  Future<chopper.Response<AccountSingle>> _v1AccountsIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Query('date') String? date,
   });
 
   ///Update existing account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the account.
-  Future<chopper.Response<AccountSingle>> apiV1AccountsIdPut({
+  Future<chopper.Response<AccountSingle>> v1AccountsIdPut({
+    String? xTraceId,
     required String? id,
     required AccountUpdate? body,
   }) {
     generatedMapping.putIfAbsent(
         AccountSingle, () => AccountSingle.fromJsonFactory);
 
-    return _apiV1AccountsIdPut(id: id, body: body);
+    return _v1AccountsIdPut(xTraceId: xTraceId, id: id, body: body);
   }
 
   ///Update existing account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the account.
   @Put(
-    path: '/api/v1/accounts/{id}',
+    path: '/v1/accounts/{id}',
     optionalBody: true,
   )
-  Future<chopper.Response<AccountSingle>> _apiV1AccountsIdPut({
+  Future<chopper.Response<AccountSingle>> _v1AccountsIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required AccountUpdate? body,
   });
 
   ///Permanently delete account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the account.
-  Future<chopper.Response> apiV1AccountsIdDelete({required String? id}) {
-    return _apiV1AccountsIdDelete(id: id);
+  Future<chopper.Response> v1AccountsIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1AccountsIdDelete(xTraceId: xTraceId, id: id);
   }
 
   ///Permanently delete account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the account.
-  @Delete(path: '/api/v1/accounts/{id}')
-  Future<chopper.Response> _apiV1AccountsIdDelete(
-      {@Path('id') required String? id});
-
-  ///List all accounts with this currency.
-  ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50.
-  ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
-  ///@param type Optional filter on the account type(s) returned
-  Future<chopper.Response<AccountArray>> apiV1CurrenciesCodeAccountsGet({
-    required String? code,
-    int? page,
-    String? date,
-    enums.AccountTypeFilter? type,
-  }) {
-    generatedMapping.putIfAbsent(
-        AccountArray, () => AccountArray.fromJsonFactory);
-
-    return _apiV1CurrenciesCodeAccountsGet(
-        code: code, page: page, date: date, type: type?.value?.toString());
-  }
-
-  ///List all accounts with this currency.
-  ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50.
-  ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
-  ///@param type Optional filter on the account type(s) returned
-  @Get(path: '/api/v1/currencies/{code}/accounts')
-  Future<chopper.Response<AccountArray>> _apiV1CurrenciesCodeAccountsGet({
-    @Path('code') required String? code,
-    @Query('page') int? page,
-    @Query('date') String? date,
-    @Query('type') String? type,
+  @Delete(path: '/v1/accounts/{id}')
+  Future<chopper.Response> _v1AccountsIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
   });
 
-  ///List all available budgets with this currency.
-  ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50
-  Future<chopper.Response<AvailableBudgetArray>>
-      apiV1CurrenciesCodeAvailableBudgetsGet({
-    required String? code,
+  ///List all attachments.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<AttachmentArray>> v1AttachmentsGet({
+    String? xTraceId,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
-        AvailableBudgetArray, () => AvailableBudgetArray.fromJsonFactory);
+        AttachmentArray, () => AttachmentArray.fromJsonFactory);
 
-    return _apiV1CurrenciesCodeAvailableBudgetsGet(code: code, page: page);
+    return _v1AttachmentsGet(xTraceId: xTraceId, page: page);
   }
 
-  ///List all available budgets with this currency.
-  ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50
-  @Get(path: '/api/v1/currencies/{code}/available_budgets')
-  Future<chopper.Response<AvailableBudgetArray>>
-      _apiV1CurrenciesCodeAvailableBudgetsGet({
-    @Path('code') required String? code,
+  ///List all attachments.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/attachments')
+  Future<chopper.Response<AttachmentArray>> _v1AttachmentsGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('page') int? page,
   });
 
-  ///List all bills with this currency.
-  ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<BillArray>> apiV1CurrenciesCodeBillsGet({
-    required String? code,
-    int? page,
+  ///Store a new attachment.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<AttachmentSingle>> v1AttachmentsPost({
+    String? xTraceId,
+    required AttachmentStore? body,
   }) {
-    generatedMapping.putIfAbsent(BillArray, () => BillArray.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+        AttachmentSingle, () => AttachmentSingle.fromJsonFactory);
 
-    return _apiV1CurrenciesCodeBillsGet(code: code, page: page);
+    return _v1AttachmentsPost(xTraceId: xTraceId, body: body);
   }
 
-  ///List all bills with this currency.
-  ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/currencies/{code}/bills')
-  Future<chopper.Response<BillArray>> _apiV1CurrenciesCodeBillsGet({
-    @Path('code') required String? code,
-    @Query('page') int? page,
+  ///Store a new attachment.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Post(
+    path: '/v1/attachments',
+    optionalBody: true,
+  )
+  Future<chopper.Response<AttachmentSingle>> _v1AttachmentsPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required AttachmentStore? body,
   });
 
-  ///List all budget limits with this currency
-  ///@param code The currency code.
+  ///Get a single attachment.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the attachment.
+  Future<chopper.Response<AttachmentSingle>> v1AttachmentsIdGet({
+    String? xTraceId,
+    required String? id,
+  }) {
+    generatedMapping.putIfAbsent(
+        AttachmentSingle, () => AttachmentSingle.fromJsonFactory);
+
+    return _v1AttachmentsIdGet(xTraceId: xTraceId, id: id);
+  }
+
+  ///Get a single attachment.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the attachment.
+  @Get(path: '/v1/attachments/{id}')
+  Future<chopper.Response<AttachmentSingle>> _v1AttachmentsIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Update existing attachment.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the attachment.
+  Future<chopper.Response<AttachmentSingle>> v1AttachmentsIdPut({
+    String? xTraceId,
+    required String? id,
+    required AttachmentUpdate? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        AttachmentSingle, () => AttachmentSingle.fromJsonFactory);
+
+    return _v1AttachmentsIdPut(xTraceId: xTraceId, id: id, body: body);
+  }
+
+  ///Update existing attachment.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the attachment.
+  @Put(
+    path: '/v1/attachments/{id}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<AttachmentSingle>> _v1AttachmentsIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Body() required AttachmentUpdate? body,
+  });
+
+  ///Delete an attachment.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the single attachment.
+  Future<chopper.Response> v1AttachmentsIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1AttachmentsIdDelete(xTraceId: xTraceId, id: id);
+  }
+
+  ///Delete an attachment.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the single attachment.
+  @Delete(path: '/v1/attachments/{id}')
+  Future<chopper.Response> _v1AttachmentsIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Download a single attachment.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the attachment.
+  Future<chopper.Response<String>> v1AttachmentsIdDownloadGet({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1AttachmentsIdDownloadGet(xTraceId: xTraceId, id: id);
+  }
+
+  ///Download a single attachment.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the attachment.
+  @Get(path: '/v1/attachments/{id}/download')
+  Future<chopper.Response<String>> _v1AttachmentsIdDownloadGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Upload an attachment.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the attachment.
+  Future<chopper.Response> v1AttachmentsIdUploadPost({
+    String? xTraceId,
+    required String? id,
+    required Object? body,
+  }) {
+    return _v1AttachmentsIdUploadPost(xTraceId: xTraceId, id: id, body: body);
+  }
+
+  ///Upload an attachment.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the attachment.
+  @Post(
+    path: '/v1/attachments/{id}/upload',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _v1AttachmentsIdUploadPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Body() required Object? body,
+  });
+
+  ///List all available budget amounts.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param page Page number. The default pagination is 50.
-  ///@param start Start date for the budget limit list.
-  ///@param end End date for the budget limit list.
-  Future<chopper.Response<BudgetLimitArray>>
-      apiV1CurrenciesCodeBudgetLimitsGet({
-    required String? code,
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  Future<chopper.Response<AvailableBudgetArray>> v1AvailableBudgetsGet({
+    String? xTraceId,
     int? page,
     String? start,
     String? end,
   }) {
     generatedMapping.putIfAbsent(
-        BudgetLimitArray, () => BudgetLimitArray.fromJsonFactory);
+        AvailableBudgetArray, () => AvailableBudgetArray.fromJsonFactory);
 
-    return _apiV1CurrenciesCodeBudgetLimitsGet(
-        code: code, page: page, start: start, end: end);
+    return _v1AvailableBudgetsGet(
+        xTraceId: xTraceId, page: page, start: start, end: end);
   }
 
-  ///List all budget limits with this currency
-  ///@param code The currency code.
+  ///List all available budget amounts.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param page Page number. The default pagination is 50.
-  ///@param start Start date for the budget limit list.
-  ///@param end End date for the budget limit list.
-  @Get(path: '/api/v1/currencies/{code}/budget_limits')
-  Future<chopper.Response<BudgetLimitArray>>
-      _apiV1CurrenciesCodeBudgetLimitsGet({
-    @Path('code') required String? code,
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  @Get(path: '/v1/available-budgets')
+  Future<chopper.Response<AvailableBudgetArray>> _v1AvailableBudgetsGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('page') int? page,
     @Query('start') String? start,
     @Query('end') String? end,
   });
 
-  ///List all recurring transactions with this currency.
-  ///@param code The currency code.
+  ///Get a single available budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the available budget.
+  Future<chopper.Response<AvailableBudgetSingle>> v1AvailableBudgetsIdGet({
+    String? xTraceId,
+    required String? id,
+  }) {
+    generatedMapping.putIfAbsent(
+        AvailableBudgetSingle, () => AvailableBudgetSingle.fromJsonFactory);
+
+    return _v1AvailableBudgetsIdGet(xTraceId: xTraceId, id: id);
+  }
+
+  ///Get a single available budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the available budget.
+  @Get(path: '/v1/available-budgets/{id}')
+  Future<chopper.Response<AvailableBudgetSingle>> _v1AvailableBudgetsIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///List all attachments uploaded to the bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the bill.
   ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<RecurrenceArray>> apiV1CurrenciesCodeRecurrencesGet({
-    required String? code,
+  Future<chopper.Response<AttachmentArray>> v1BillsIdAttachmentsGet({
+    String? xTraceId,
+    required String? id,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
-        RecurrenceArray, () => RecurrenceArray.fromJsonFactory);
+        AttachmentArray, () => AttachmentArray.fromJsonFactory);
 
-    return _apiV1CurrenciesCodeRecurrencesGet(code: code, page: page);
+    return _v1BillsIdAttachmentsGet(xTraceId: xTraceId, id: id, page: page);
   }
 
-  ///List all recurring transactions with this currency.
-  ///@param code The currency code.
+  ///List all attachments uploaded to the bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the bill.
   ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/currencies/{code}/recurrences')
-  Future<chopper.Response<RecurrenceArray>> _apiV1CurrenciesCodeRecurrencesGet({
-    @Path('code') required String? code,
+  @Get(path: '/v1/bills/{id}/attachments')
+  Future<chopper.Response<AttachmentArray>> _v1BillsIdAttachmentsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
     @Query('page') int? page,
   });
 
-  ///List all rules with this currency.
-  ///@param code The currency code.
-  ///@param page Page number. The default pagination per 50.
-  Future<chopper.Response<RuleArray>> apiV1CurrenciesCodeRulesGet({
-    required String? code,
-    int? page,
+  ///List all rules associated with the bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the bill.
+  Future<chopper.Response<RuleArray>> v1BillsIdRulesGet({
+    String? xTraceId,
+    required String? id,
   }) {
     generatedMapping.putIfAbsent(RuleArray, () => RuleArray.fromJsonFactory);
 
-    return _apiV1CurrenciesCodeRulesGet(code: code, page: page);
+    return _v1BillsIdRulesGet(xTraceId: xTraceId, id: id);
   }
 
-  ///List all rules with this currency.
-  ///@param code The currency code.
-  ///@param page Page number. The default pagination per 50.
-  @Get(path: '/api/v1/currencies/{code}/rules')
-  Future<chopper.Response<RuleArray>> _apiV1CurrenciesCodeRulesGet({
-    @Path('code') required String? code,
-    @Query('page') int? page,
+  ///List all rules associated with the bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the bill.
+  @Get(path: '/v1/bills/{id}/rules')
+  Future<chopper.Response<RuleArray>> _v1BillsIdRulesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
   });
 
-  ///List all transactions with this currency.
-  ///@param code The currency code.
-  ///@param page Page number. The default pagination is per 50.
-  ///@param start A date formatted YYYY-MM-DD, to limit the list of transactions.
-  ///@param end A date formatted YYYY-MM-DD, to limit the list of transactions.
+  ///List all transactions associated with the  bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the bill.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
   ///@param type Optional filter on the transaction type(s) returned
-  Future<chopper.Response<TransactionArray>>
-      apiV1CurrenciesCodeTransactionsGet({
-    required String? code,
-    int? page,
+  Future<chopper.Response<TransactionArray>> v1BillsIdTransactionsGet({
+    String? xTraceId,
+    required String? id,
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
@@ -2906,35 +2083,202 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         TransactionArray, () => TransactionArray.fromJsonFactory);
 
-    return _apiV1CurrenciesCodeTransactionsGet(
-        code: code,
-        page: page,
+    return _v1BillsIdTransactionsGet(
+        xTraceId: xTraceId,
+        id: id,
         start: start,
         end: end,
         type: type?.value?.toString());
   }
 
-  ///List all transactions with this currency.
-  ///@param code The currency code.
-  ///@param page Page number. The default pagination is per 50.
-  ///@param start A date formatted YYYY-MM-DD, to limit the list of transactions.
-  ///@param end A date formatted YYYY-MM-DD, to limit the list of transactions.
+  ///List all transactions associated with the  bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the bill.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
   ///@param type Optional filter on the transaction type(s) returned
-  @Get(path: '/api/v1/currencies/{code}/transactions')
-  Future<chopper.Response<TransactionArray>>
-      _apiV1CurrenciesCodeTransactionsGet({
-    @Path('code') required String? code,
-    @Query('page') int? page,
+  @Get(path: '/v1/bills/{id}/transactions')
+  Future<chopper.Response<TransactionArray>> _v1BillsIdTransactionsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
   });
 
+  ///List all bills.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  ///@param start A date formatted YYYY-MM-DD. If it is are added to the request, Firefly III will calculate the appropriate payment and paid dates.
+  ///@param end A date formatted YYYY-MM-DD. If it is added to the request, Firefly III will calculate the appropriate payment and paid dates.
+  Future<chopper.Response<BillArray>> v1BillsGet({
+    String? xTraceId,
+    int? page,
+    String? start,
+    String? end,
+  }) {
+    generatedMapping.putIfAbsent(BillArray, () => BillArray.fromJsonFactory);
+
+    return _v1BillsGet(xTraceId: xTraceId, page: page, start: start, end: end);
+  }
+
+  ///List all bills.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  ///@param start A date formatted YYYY-MM-DD. If it is are added to the request, Firefly III will calculate the appropriate payment and paid dates.
+  ///@param end A date formatted YYYY-MM-DD. If it is added to the request, Firefly III will calculate the appropriate payment and paid dates.
+  @Get(path: '/v1/bills')
+  Future<chopper.Response<BillArray>> _v1BillsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('page') int? page,
+    @Query('start') String? start,
+    @Query('end') String? end,
+  });
+
+  ///Store a new bill
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<BillSingle>> v1BillsPost({
+    String? xTraceId,
+    required BillStore? body,
+  }) {
+    generatedMapping.putIfAbsent(BillSingle, () => BillSingle.fromJsonFactory);
+
+    return _v1BillsPost(xTraceId: xTraceId, body: body);
+  }
+
+  ///Store a new bill
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Post(
+    path: '/v1/bills',
+    optionalBody: true,
+  )
+  Future<chopper.Response<BillSingle>> _v1BillsPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required BillStore? body,
+  });
+
+  ///Get a single bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the bill.
+  ///@param start A date formatted YYYY-MM-DD. If it is are added to the request, Firefly III will calculate the appropriate payment and paid dates.
+  ///@param end A date formatted YYYY-MM-DD. If it is added to the request, Firefly III will calculate the appropriate payment and paid dates.
+  Future<chopper.Response<BillSingle>> v1BillsIdGet({
+    String? xTraceId,
+    required String? id,
+    String? start,
+    String? end,
+  }) {
+    generatedMapping.putIfAbsent(BillSingle, () => BillSingle.fromJsonFactory);
+
+    return _v1BillsIdGet(xTraceId: xTraceId, id: id, start: start, end: end);
+  }
+
+  ///Get a single bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the bill.
+  ///@param start A date formatted YYYY-MM-DD. If it is are added to the request, Firefly III will calculate the appropriate payment and paid dates.
+  ///@param end A date formatted YYYY-MM-DD. If it is added to the request, Firefly III will calculate the appropriate payment and paid dates.
+  @Get(path: '/v1/bills/{id}')
+  Future<chopper.Response<BillSingle>> _v1BillsIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('start') String? start,
+    @Query('end') String? end,
+  });
+
+  ///Update existing bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the bill.
+  Future<chopper.Response<BillSingle>> v1BillsIdPut({
+    String? xTraceId,
+    required String? id,
+    required BillUpdate? body,
+  }) {
+    generatedMapping.putIfAbsent(BillSingle, () => BillSingle.fromJsonFactory);
+
+    return _v1BillsIdPut(xTraceId: xTraceId, id: id, body: body);
+  }
+
+  ///Update existing bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the bill.
+  @Put(
+    path: '/v1/bills/{id}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<BillSingle>> _v1BillsIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Body() required BillUpdate? body,
+  });
+
+  ///Delete a bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the bill.
+  Future<chopper.Response> v1BillsIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1BillsIdDelete(xTraceId: xTraceId, id: id);
+  }
+
+  ///Delete a bill.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the bill.
+  @Delete(path: '/v1/bills/{id}')
+  Future<chopper.Response> _v1BillsIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///List all transactions by a budget limit ID.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
+  ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
+  ///@param page Page number. The default pagination is 50.
+  ///@param type Optional filter on the transaction type(s) returned
+  Future<chopper.Response<TransactionArray>>
+      v1BudgetsIdLimitsLimitIdTransactionsGet({
+    String? xTraceId,
+    required String? id,
+    required String? limitId,
+    int? page,
+    enums.TransactionTypeFilter? type,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionArray, () => TransactionArray.fromJsonFactory);
+
+    return _v1BudgetsIdLimitsLimitIdTransactionsGet(
+        xTraceId: xTraceId,
+        id: id,
+        limitId: limitId,
+        page: page,
+        type: type?.value?.toString());
+  }
+
+  ///List all transactions by a budget limit ID.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
+  ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
+  ///@param page Page number. The default pagination is 50.
+  ///@param type Optional filter on the transaction type(s) returned
+  @Get(path: '/v1/budgets/{id}/limits/{limitId}/transactions')
+  Future<chopper.Response<TransactionArray>>
+      _v1BudgetsIdLimitsLimitIdTransactionsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Path('limitId') required String? limitId,
+    @Query('page') int? page,
+    @Query('type') String? type,
+  });
+
   ///Get all limits for a budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the requested budget.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  Future<chopper.Response<BudgetLimitArray>> apiV1BudgetsIdLimitsGet({
+  Future<chopper.Response<BudgetLimitArray>> v1BudgetsIdLimitsGet({
+    String? xTraceId,
     required String? id,
     String? start,
     String? end,
@@ -2942,69 +2286,83 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         BudgetLimitArray, () => BudgetLimitArray.fromJsonFactory);
 
-    return _apiV1BudgetsIdLimitsGet(id: id, start: start, end: end);
+    return _v1BudgetsIdLimitsGet(
+        xTraceId: xTraceId, id: id, start: start, end: end);
   }
 
   ///Get all limits for a budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the requested budget.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  @Get(path: '/api/v1/budgets/{id}/limits')
-  Future<chopper.Response<BudgetLimitArray>> _apiV1BudgetsIdLimitsGet({
+  @Get(path: '/v1/budgets/{id}/limits')
+  Future<chopper.Response<BudgetLimitArray>> _v1BudgetsIdLimitsGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Query('start') String? start,
     @Query('end') String? end,
   });
 
   ///Store new budget limit.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget.
-  Future<chopper.Response<BudgetLimitSingle>> apiV1BudgetsIdLimitsPost({
+  Future<chopper.Response<BudgetLimitSingle>> v1BudgetsIdLimitsPost({
+    String? xTraceId,
     required String? id,
     required BudgetLimitStore? body,
   }) {
     generatedMapping.putIfAbsent(
         BudgetLimitSingle, () => BudgetLimitSingle.fromJsonFactory);
 
-    return _apiV1BudgetsIdLimitsPost(id: id, body: body);
+    return _v1BudgetsIdLimitsPost(xTraceId: xTraceId, id: id, body: body);
   }
 
   ///Store new budget limit.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget.
   @Post(
-    path: '/api/v1/budgets/{id}/limits',
+    path: '/v1/budgets/{id}/limits',
     optionalBody: true,
   )
-  Future<chopper.Response<BudgetLimitSingle>> _apiV1BudgetsIdLimitsPost({
+  Future<chopper.Response<BudgetLimitSingle>> _v1BudgetsIdLimitsPost({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required BudgetLimitStore? body,
   });
 
   ///Get single budget limit.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
   ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
-  Future<chopper.Response<BudgetLimitSingle>> apiV1BudgetsIdLimitsLimitIdGet({
+  Future<chopper.Response<BudgetLimitSingle>> v1BudgetsIdLimitsLimitIdGet({
+    String? xTraceId,
     required String? id,
     required int? limitId,
   }) {
     generatedMapping.putIfAbsent(
         BudgetLimitSingle, () => BudgetLimitSingle.fromJsonFactory);
 
-    return _apiV1BudgetsIdLimitsLimitIdGet(id: id, limitId: limitId);
+    return _v1BudgetsIdLimitsLimitIdGet(
+        xTraceId: xTraceId, id: id, limitId: limitId);
   }
 
   ///Get single budget limit.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
   ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
-  @Get(path: '/api/v1/budgets/{id}/limits/{limitId}')
-  Future<chopper.Response<BudgetLimitSingle>> _apiV1BudgetsIdLimitsLimitIdGet({
+  @Get(path: '/v1/budgets/{id}/limits/{limitId}')
+  Future<chopper.Response<BudgetLimitSingle>> _v1BudgetsIdLimitsLimitIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Path('limitId') required int? limitId,
   });
 
   ///Update existing budget limit.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
   ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
-  Future<chopper.Response<BudgetLimitSingle>> apiV1BudgetsIdLimitsLimitIdPut({
+  Future<chopper.Response<BudgetLimitSingle>> v1BudgetsIdLimitsLimitIdPut({
+    String? xTraceId,
     required String? id,
     required String? limitId,
     required BudgetLimit? body,
@@ -3012,69 +2370,157 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         BudgetLimitSingle, () => BudgetLimitSingle.fromJsonFactory);
 
-    return _apiV1BudgetsIdLimitsLimitIdPut(
-        id: id, limitId: limitId, body: body);
+    return _v1BudgetsIdLimitsLimitIdPut(
+        xTraceId: xTraceId, id: id, limitId: limitId, body: body);
   }
 
   ///Update existing budget limit.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
   ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
   @Put(
-    path: '/api/v1/budgets/{id}/limits/{limitId}',
+    path: '/v1/budgets/{id}/limits/{limitId}',
     optionalBody: true,
   )
-  Future<chopper.Response<BudgetLimitSingle>> _apiV1BudgetsIdLimitsLimitIdPut({
+  Future<chopper.Response<BudgetLimitSingle>> _v1BudgetsIdLimitsLimitIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Path('limitId') required String? limitId,
     @Body() required BudgetLimit? body,
   });
 
   ///Delete a budget limit.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
   ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
-  Future<chopper.Response> apiV1BudgetsIdLimitsLimitIdDelete({
+  Future<chopper.Response> v1BudgetsIdLimitsLimitIdDelete({
+    String? xTraceId,
     required String? id,
     required String? limitId,
   }) {
-    return _apiV1BudgetsIdLimitsLimitIdDelete(id: id, limitId: limitId);
+    return _v1BudgetsIdLimitsLimitIdDelete(
+        xTraceId: xTraceId, id: id, limitId: limitId);
   }
 
   ///Delete a budget limit.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
   ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
-  @Delete(path: '/api/v1/budgets/{id}/limits/{limitId}')
-  Future<chopper.Response> _apiV1BudgetsIdLimitsLimitIdDelete({
+  @Delete(path: '/v1/budgets/{id}/limits/{limitId}')
+  Future<chopper.Response> _v1BudgetsIdLimitsLimitIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Path('limitId') required String? limitId,
   });
 
   ///Get list of budget limits by date
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  Future<chopper.Response<BudgetLimitArray>> apiV1BudgetLimitsGet({
+  Future<chopper.Response<BudgetLimitArray>> v1BudgetLimitsGet({
+    String? xTraceId,
     required String? start,
     required String? end,
   }) {
     generatedMapping.putIfAbsent(
         BudgetLimitArray, () => BudgetLimitArray.fromJsonFactory);
 
-    return _apiV1BudgetLimitsGet(start: start, end: end);
+    return _v1BudgetLimitsGet(xTraceId: xTraceId, start: start, end: end);
   }
 
   ///Get list of budget limits by date
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  @Get(path: '/api/v1/budget-limits')
-  Future<chopper.Response<BudgetLimitArray>> _apiV1BudgetLimitsGet({
+  @Get(path: '/v1/budget-limits')
+  Future<chopper.Response<BudgetLimitArray>> _v1BudgetLimitsGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
   });
 
+  ///All transactions to a budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the budget.
+  ///@param limit Limits the number of results on one page.
+  ///@param page Page number. The default pagination is 50.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param type Optional filter on the transaction type(s) returned
+  Future<chopper.Response<TransactionArray>> v1BudgetsIdTransactionsGet({
+    String? xTraceId,
+    required String? id,
+    int? limit,
+    int? page,
+    String? start,
+    String? end,
+    enums.TransactionTypeFilter? type,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionArray, () => TransactionArray.fromJsonFactory);
+
+    return _v1BudgetsIdTransactionsGet(
+        xTraceId: xTraceId,
+        id: id,
+        limit: limit,
+        page: page,
+        start: start,
+        end: end,
+        type: type?.value?.toString());
+  }
+
+  ///All transactions to a budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the budget.
+  ///@param limit Limits the number of results on one page.
+  ///@param page Page number. The default pagination is 50.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param type Optional filter on the transaction type(s) returned
+  @Get(path: '/v1/budgets/{id}/transactions')
+  Future<chopper.Response<TransactionArray>> _v1BudgetsIdTransactionsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('limit') int? limit,
+    @Query('page') int? page,
+    @Query('start') String? start,
+    @Query('end') String? end,
+    @Query('type') String? type,
+  });
+
+  ///Lists all attachments of a budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the budget.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<AttachmentArray>> v1BudgetsIdAttachmentsGet({
+    String? xTraceId,
+    required String? id,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        AttachmentArray, () => AttachmentArray.fromJsonFactory);
+
+    return _v1BudgetsIdAttachmentsGet(xTraceId: xTraceId, id: id, page: page);
+  }
+
+  ///Lists all attachments of a budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the budget.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/budgets/{id}/attachments')
+  Future<chopper.Response<AttachmentArray>> _v1BudgetsIdAttachmentsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('page') int? page,
+  });
+
   ///List all budgets.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param page Page number. The default pagination is 50.
   ///@param start A date formatted YYYY-MM-DD, to get info on how much the user has spent. You must submit both start and end.
   ///@param end A date formatted YYYY-MM-DD, to get info on how much the user has spent. You must submit both start and end.
-  Future<chopper.Response<BudgetArray>> apiV1BudgetsGet({
+  Future<chopper.Response<BudgetArray>> v1BudgetsGet({
+    String? xTraceId,
     int? page,
     String? start,
     String? end,
@@ -3082,42 +2528,53 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         BudgetArray, () => BudgetArray.fromJsonFactory);
 
-    return _apiV1BudgetsGet(page: page, start: start, end: end);
+    return _v1BudgetsGet(
+        xTraceId: xTraceId, page: page, start: start, end: end);
   }
 
   ///List all budgets.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param page Page number. The default pagination is 50.
   ///@param start A date formatted YYYY-MM-DD, to get info on how much the user has spent. You must submit both start and end.
   ///@param end A date formatted YYYY-MM-DD, to get info on how much the user has spent. You must submit both start and end.
-  @Get(path: '/api/v1/budgets')
-  Future<chopper.Response<BudgetArray>> _apiV1BudgetsGet({
+  @Get(path: '/v1/budgets')
+  Future<chopper.Response<BudgetArray>> _v1BudgetsGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('page') int? page,
     @Query('start') String? start,
     @Query('end') String? end,
   });
 
   ///Store a new budget
-  Future<chopper.Response<BudgetSingle>> apiV1BudgetsPost(
-      {required BudgetStore? body}) {
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<BudgetSingle>> v1BudgetsPost({
+    String? xTraceId,
+    required BudgetStore? body,
+  }) {
     generatedMapping.putIfAbsent(
         BudgetSingle, () => BudgetSingle.fromJsonFactory);
 
-    return _apiV1BudgetsPost(body: body);
+    return _v1BudgetsPost(xTraceId: xTraceId, body: body);
   }
 
   ///Store a new budget
+  ///@param X-Trace-Id Unique identifier associated with this request.
   @Post(
-    path: '/api/v1/budgets',
+    path: '/v1/budgets',
     optionalBody: true,
   )
-  Future<chopper.Response<BudgetSingle>> _apiV1BudgetsPost(
-      {@Body() required BudgetStore? body});
+  Future<chopper.Response<BudgetSingle>> _v1BudgetsPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required BudgetStore? body,
+  });
 
   ///Get a single budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the requested budget.
   ///@param start A date formatted YYYY-MM-DD, to get info on how much the user has spent.
   ///@param end A date formatted YYYY-MM-DD, to get info on how much the user has spent.
-  Future<chopper.Response<BudgetSingle>> apiV1BudgetsIdGet({
+  Future<chopper.Response<BudgetSingle>> v1BudgetsIdGet({
+    String? xTraceId,
     required String? id,
     String? start,
     String? end,
@@ -3125,210 +2582,77 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         BudgetSingle, () => BudgetSingle.fromJsonFactory);
 
-    return _apiV1BudgetsIdGet(id: id, start: start, end: end);
+    return _v1BudgetsIdGet(xTraceId: xTraceId, id: id, start: start, end: end);
   }
 
   ///Get a single budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the requested budget.
   ///@param start A date formatted YYYY-MM-DD, to get info on how much the user has spent.
   ///@param end A date formatted YYYY-MM-DD, to get info on how much the user has spent.
-  @Get(path: '/api/v1/budgets/{id}')
-  Future<chopper.Response<BudgetSingle>> _apiV1BudgetsIdGet({
+  @Get(path: '/v1/budgets/{id}')
+  Future<chopper.Response<BudgetSingle>> _v1BudgetsIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Query('start') String? start,
     @Query('end') String? end,
   });
 
   ///Update existing budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget.
-  Future<chopper.Response<BudgetSingle>> apiV1BudgetsIdPut({
+  Future<chopper.Response<BudgetSingle>> v1BudgetsIdPut({
+    String? xTraceId,
     required String? id,
     required BudgetUpdate? body,
   }) {
     generatedMapping.putIfAbsent(
         BudgetSingle, () => BudgetSingle.fromJsonFactory);
 
-    return _apiV1BudgetsIdPut(id: id, body: body);
+    return _v1BudgetsIdPut(xTraceId: xTraceId, id: id, body: body);
   }
 
   ///Update existing budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget.
   @Put(
-    path: '/api/v1/budgets/{id}',
+    path: '/v1/budgets/{id}',
     optionalBody: true,
   )
-  Future<chopper.Response<BudgetSingle>> _apiV1BudgetsIdPut({
+  Future<chopper.Response<BudgetSingle>> _v1BudgetsIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required BudgetUpdate? body,
   });
 
   ///Delete a budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget.
-  Future<chopper.Response> apiV1BudgetsIdDelete({required String? id}) {
-    return _apiV1BudgetsIdDelete(id: id);
+  Future<chopper.Response> v1BudgetsIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1BudgetsIdDelete(xTraceId: xTraceId, id: id);
   }
 
   ///Delete a budget.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget.
-  @Delete(path: '/api/v1/budgets/{id}')
-  Future<chopper.Response> _apiV1BudgetsIdDelete(
-      {@Path('id') required String? id});
-
-  ///List all events linked to a piggy bank.
-  ///@param id The ID of the piggy bank
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<PiggyBankEventArray>> apiV1PiggyBanksIdEventsGet({
-    required String? id,
-    int? page,
-  }) {
-    generatedMapping.putIfAbsent(
-        PiggyBankEventArray, () => PiggyBankEventArray.fromJsonFactory);
-
-    return _apiV1PiggyBanksIdEventsGet(id: id, page: page);
-  }
-
-  ///List all events linked to a piggy bank.
-  ///@param id The ID of the piggy bank
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/piggy-banks/{id}/events')
-  Future<chopper.Response<PiggyBankEventArray>> _apiV1PiggyBanksIdEventsGet({
+  @Delete(path: '/v1/budgets/{id}')
+  Future<chopper.Response> _v1BudgetsIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
-    @Query('page') int? page,
   });
 
-  ///Lists all attachments.
-  ///@param id The ID of the piggy bank.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<AttachmentArray>> apiV1PiggyBanksIdAttachmentsGet({
-    required String? id,
-    int? page,
-  }) {
-    generatedMapping.putIfAbsent(
-        AttachmentArray, () => AttachmentArray.fromJsonFactory);
-
-    return _apiV1PiggyBanksIdAttachmentsGet(id: id, page: page);
-  }
-
-  ///Lists all attachments.
-  ///@param id The ID of the piggy bank.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/piggy-banks/{id}/attachments')
-  Future<chopper.Response<AttachmentArray>> _apiV1PiggyBanksIdAttachmentsGet({
-    @Path('id') required String? id,
-    @Query('page') int? page,
-  });
-
-  ///List rules in this rule group.
-  ///@param id The ID of the rule group.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<RuleArray>> apiV1RuleGroupsIdRulesGet({
-    required String? id,
-    int? page,
-  }) {
-    generatedMapping.putIfAbsent(RuleArray, () => RuleArray.fromJsonFactory);
-
-    return _apiV1RuleGroupsIdRulesGet(id: id, page: page);
-  }
-
-  ///List rules in this rule group.
-  ///@param id The ID of the rule group.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/rule_groups/{id}/rules')
-  Future<chopper.Response<RuleArray>> _apiV1RuleGroupsIdRulesGet({
-    @Path('id') required String? id,
-    @Query('page') int? page,
-  });
-
-  ///List all rule groups.
-  ///@param page Page number. The default pagination is 50
-  Future<chopper.Response<RuleGroupArray>> apiV1RuleGroupsGet({int? page}) {
-    generatedMapping.putIfAbsent(
-        RuleGroupArray, () => RuleGroupArray.fromJsonFactory);
-
-    return _apiV1RuleGroupsGet(page: page);
-  }
-
-  ///List all rule groups.
-  ///@param page Page number. The default pagination is 50
-  @Get(path: '/api/v1/rule_groups')
-  Future<chopper.Response<RuleGroupArray>> _apiV1RuleGroupsGet(
-      {@Query('page') int? page});
-
-  ///Store a new rule group.
-  Future<chopper.Response<RuleGroupSingle>> apiV1RuleGroupsPost(
-      {required RuleGroupStore? body}) {
-    generatedMapping.putIfAbsent(
-        RuleGroupSingle, () => RuleGroupSingle.fromJsonFactory);
-
-    return _apiV1RuleGroupsPost(body: body);
-  }
-
-  ///Store a new rule group.
-  @Post(
-    path: '/api/v1/rule_groups',
-    optionalBody: true,
-  )
-  Future<chopper.Response<RuleGroupSingle>> _apiV1RuleGroupsPost(
-      {@Body() required RuleGroupStore? body});
-
-  ///Get a single rule group.
-  ///@param id The ID of the rule group.
-  Future<chopper.Response<RuleGroupSingle>> apiV1RuleGroupsIdGet(
-      {required String? id}) {
-    generatedMapping.putIfAbsent(
-        RuleGroupSingle, () => RuleGroupSingle.fromJsonFactory);
-
-    return _apiV1RuleGroupsIdGet(id: id);
-  }
-
-  ///Get a single rule group.
-  ///@param id The ID of the rule group.
-  @Get(path: '/api/v1/rule_groups/{id}')
-  Future<chopper.Response<RuleGroupSingle>> _apiV1RuleGroupsIdGet(
-      {@Path('id') required String? id});
-
-  ///Update existing rule group.
-  ///@param id The ID of the rule group.
-  Future<chopper.Response<RuleGroupSingle>> apiV1RuleGroupsIdPut({
-    required String? id,
-    required RuleGroupUpdate? body,
-  }) {
-    generatedMapping.putIfAbsent(
-        RuleGroupSingle, () => RuleGroupSingle.fromJsonFactory);
-
-    return _apiV1RuleGroupsIdPut(id: id, body: body);
-  }
-
-  ///Update existing rule group.
-  ///@param id The ID of the rule group.
-  @Put(
-    path: '/api/v1/rule_groups/{id}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<RuleGroupSingle>> _apiV1RuleGroupsIdPut({
-    @Path('id') required String? id,
-    @Body() required RuleGroupUpdate? body,
-  });
-
-  ///Delete a rule group.
-  ///@param id The ID of the rule group.
-  Future<chopper.Response> apiV1RuleGroupsIdDelete({required String? id}) {
-    return _apiV1RuleGroupsIdDelete(id: id);
-  }
-
-  ///Delete a rule group.
-  ///@param id The ID of the rule group.
-  @Delete(path: '/api/v1/rule_groups/{id}')
-  Future<chopper.Response> _apiV1RuleGroupsIdDelete(
-      {@Path('id') required String? id});
-
-  ///List all transactions under this link type.
-  ///@param id The ID of the link type.
-  ///@param page Page number. The default pagination is per 50 items.
-  ///@param start A date formatted YYYY-MM-DD, to limit the results.
-  ///@param end A date formatted YYYY-MM-DD, to limit the results.
-  ///@param type Optional filter on the transaction type(s) returned.
-  Future<chopper.Response<TransactionArray>> apiV1LinkTypesIdTransactionsGet({
+  ///List all transactions in a category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the category.
+  ///@param page Page number. The default pagination is per 50.
+  ///@param start A date formatted YYYY-MM-DD, to limit the result list.
+  ///@param end A date formatted YYYY-MM-DD, to limit the result list.
+  ///@param type Optional filter on the transaction type(s) returned
+  Future<chopper.Response<TransactionArray>> v1CategoriesIdTransactionsGet({
+    String? xTraceId,
     required String? id,
     int? page,
     String? start,
@@ -3338,7 +2662,201 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         TransactionArray, () => TransactionArray.fromJsonFactory);
 
-    return _apiV1LinkTypesIdTransactionsGet(
+    return _v1CategoriesIdTransactionsGet(
+        xTraceId: xTraceId,
+        id: id,
+        page: page,
+        start: start,
+        end: end,
+        type: type?.value?.toString());
+  }
+
+  ///List all transactions in a category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the category.
+  ///@param page Page number. The default pagination is per 50.
+  ///@param start A date formatted YYYY-MM-DD, to limit the result list.
+  ///@param end A date formatted YYYY-MM-DD, to limit the result list.
+  ///@param type Optional filter on the transaction type(s) returned
+  @Get(path: '/v1/categories/{id}/transactions')
+  Future<chopper.Response<TransactionArray>> _v1CategoriesIdTransactionsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('page') int? page,
+    @Query('start') String? start,
+    @Query('end') String? end,
+    @Query('type') String? type,
+  });
+
+  ///Lists all attachments.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the category.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<AttachmentArray>> v1CategoriesIdAttachmentsGet({
+    String? xTraceId,
+    required String? id,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        AttachmentArray, () => AttachmentArray.fromJsonFactory);
+
+    return _v1CategoriesIdAttachmentsGet(
+        xTraceId: xTraceId, id: id, page: page);
+  }
+
+  ///Lists all attachments.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the category.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/categories/{id}/attachments')
+  Future<chopper.Response<AttachmentArray>> _v1CategoriesIdAttachmentsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('page') int? page,
+  });
+
+  ///List all categories.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<CategoryArray>> v1CategoriesGet({
+    String? xTraceId,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        CategoryArray, () => CategoryArray.fromJsonFactory);
+
+    return _v1CategoriesGet(xTraceId: xTraceId, page: page);
+  }
+
+  ///List all categories.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/categories')
+  Future<chopper.Response<CategoryArray>> _v1CategoriesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('page') int? page,
+  });
+
+  ///Store a new category
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<CategorySingle>> v1CategoriesPost({
+    String? xTraceId,
+    required Category? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        CategorySingle, () => CategorySingle.fromJsonFactory);
+
+    return _v1CategoriesPost(xTraceId: xTraceId, body: body);
+  }
+
+  ///Store a new category
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Post(
+    path: '/v1/categories',
+    optionalBody: true,
+  )
+  Future<chopper.Response<CategorySingle>> _v1CategoriesPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required Category? body,
+  });
+
+  ///Get a single category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the category.
+  ///@param start A date formatted YYYY-MM-DD, to show spent and earned info.
+  ///@param end A date formatted YYYY-MM-DD, to show spent and earned info.
+  Future<chopper.Response<CategorySingle>> v1CategoriesIdGet({
+    String? xTraceId,
+    required String? id,
+    String? start,
+    String? end,
+  }) {
+    generatedMapping.putIfAbsent(
+        CategorySingle, () => CategorySingle.fromJsonFactory);
+
+    return _v1CategoriesIdGet(
+        xTraceId: xTraceId, id: id, start: start, end: end);
+  }
+
+  ///Get a single category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the category.
+  ///@param start A date formatted YYYY-MM-DD, to show spent and earned info.
+  ///@param end A date formatted YYYY-MM-DD, to show spent and earned info.
+  @Get(path: '/v1/categories/{id}')
+  Future<chopper.Response<CategorySingle>> _v1CategoriesIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('start') String? start,
+    @Query('end') String? end,
+  });
+
+  ///Update existing category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the category.
+  Future<chopper.Response<CategorySingle>> v1CategoriesIdPut({
+    String? xTraceId,
+    required String? id,
+    required CategoryUpdate? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        CategorySingle, () => CategorySingle.fromJsonFactory);
+
+    return _v1CategoriesIdPut(xTraceId: xTraceId, id: id, body: body);
+  }
+
+  ///Update existing category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the category.
+  @Put(
+    path: '/v1/categories/{id}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<CategorySingle>> _v1CategoriesIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Body() required CategoryUpdate? body,
+  });
+
+  ///Delete a category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the category.
+  Future<chopper.Response> v1CategoriesIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1CategoriesIdDelete(xTraceId: xTraceId, id: id);
+  }
+
+  ///Delete a category.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the category.
+  @Delete(path: '/v1/categories/{id}')
+  Future<chopper.Response> _v1CategoriesIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///List all transactions under this link type.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the link type.
+  ///@param page Page number. The default pagination is per 50 items.
+  ///@param start A date formatted YYYY-MM-DD, to limit the results.
+  ///@param end A date formatted YYYY-MM-DD, to limit the results.
+  ///@param type Optional filter on the transaction type(s) returned.
+  Future<chopper.Response<TransactionArray>> v1LinkTypesIdTransactionsGet({
+    String? xTraceId,
+    required String? id,
+    int? page,
+    String? start,
+    String? end,
+    enums.TransactionTypeFilter? type,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionArray, () => TransactionArray.fromJsonFactory);
+
+    return _v1LinkTypesIdTransactionsGet(
+        xTraceId: xTraceId,
         id: id,
         page: page,
         start: start,
@@ -3347,528 +2865,740 @@ abstract class FireflyIii extends ChopperService {
   }
 
   ///List all transactions under this link type.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the link type.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param start A date formatted YYYY-MM-DD, to limit the results.
   ///@param end A date formatted YYYY-MM-DD, to limit the results.
   ///@param type Optional filter on the transaction type(s) returned.
-  @Get(path: '/api/v1/link_types/{id}/transactions')
-  Future<chopper.Response<TransactionArray>> _apiV1LinkTypesIdTransactionsGet({
+  @Get(path: '/v1/link-types/{id}/transactions')
+  Future<chopper.Response<TransactionArray>> _v1LinkTypesIdTransactionsGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Query('page') int? page,
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
-  });
-
-  ///List all available budget amounts.
-  ///@param page Page number. The default pagination is 50.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  Future<chopper.Response<AvailableBudgetArray>> apiV1AvailableBudgetsGet({
-    int? page,
-    String? start,
-    String? end,
-  }) {
-    generatedMapping.putIfAbsent(
-        AvailableBudgetArray, () => AvailableBudgetArray.fromJsonFactory);
-
-    return _apiV1AvailableBudgetsGet(page: page, start: start, end: end);
-  }
-
-  ///List all available budget amounts.
-  ///@param page Page number. The default pagination is 50.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  @Get(path: '/api/v1/available_budgets')
-  Future<chopper.Response<AvailableBudgetArray>> _apiV1AvailableBudgetsGet({
-    @Query('page') int? page,
-    @Query('start') String? start,
-    @Query('end') String? end,
-  });
-
-  ///Store a new available budget
-  Future<chopper.Response<AvailableBudgetSingle>> apiV1AvailableBudgetsPost(
-      {required AvailableBudgetStore? body}) {
-    generatedMapping.putIfAbsent(
-        AvailableBudgetSingle, () => AvailableBudgetSingle.fromJsonFactory);
-
-    return _apiV1AvailableBudgetsPost(body: body);
-  }
-
-  ///Store a new available budget
-  @Post(
-    path: '/api/v1/available_budgets',
-    optionalBody: true,
-  )
-  Future<chopper.Response<AvailableBudgetSingle>> _apiV1AvailableBudgetsPost(
-      {@Body() required AvailableBudgetStore? body});
-
-  ///Get a single available budget.
-  ///@param id The ID of the available budget.
-  Future<chopper.Response<AvailableBudgetSingle>> apiV1AvailableBudgetsIdGet(
-      {required String? id}) {
-    generatedMapping.putIfAbsent(
-        AvailableBudgetSingle, () => AvailableBudgetSingle.fromJsonFactory);
-
-    return _apiV1AvailableBudgetsIdGet(id: id);
-  }
-
-  ///Get a single available budget.
-  ///@param id The ID of the available budget.
-  @Get(path: '/api/v1/available_budgets/{id}')
-  Future<chopper.Response<AvailableBudgetSingle>> _apiV1AvailableBudgetsIdGet(
-      {@Path('id') required String? id});
-
-  ///Update existing available budget, to change for example the date range of the amount or the amount itself.
-  ///@param id The ID of the object.X
-  Future<chopper.Response<AvailableBudgetSingle>> apiV1AvailableBudgetsIdPut({
-    required String? id,
-    required AvailableBudgetUpdate? body,
-  }) {
-    generatedMapping.putIfAbsent(
-        AvailableBudgetSingle, () => AvailableBudgetSingle.fromJsonFactory);
-
-    return _apiV1AvailableBudgetsIdPut(id: id, body: body);
-  }
-
-  ///Update existing available budget, to change for example the date range of the amount or the amount itself.
-  ///@param id The ID of the object.X
-  @Put(
-    path: '/api/v1/available_budgets/{id}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<AvailableBudgetSingle>> _apiV1AvailableBudgetsIdPut({
-    @Path('id') required String? id,
-    @Body() required AvailableBudgetUpdate? body,
-  });
-
-  ///Delete an available budget.
-  ///@param id The ID of the available budget.
-  Future<chopper.Response> apiV1AvailableBudgetsIdDelete(
-      {required String? id}) {
-    return _apiV1AvailableBudgetsIdDelete(id: id);
-  }
-
-  ///Delete an available budget.
-  ///@param id The ID of the available budget.
-  @Delete(path: '/api/v1/available_budgets/{id}')
-  Future<chopper.Response> _apiV1AvailableBudgetsIdDelete(
-      {@Path('id') required String? id});
-
-  ///List all transactions by a budget limit ID.
-  ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
-  ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
-  ///@param page Page number. The default pagination is 50.
-  ///@param type Optional filter on the transaction type(s) returned
-  Future<chopper.Response<TransactionArray>>
-      apiV1BudgetsIdLimitsLimitIdTransactionsGet({
-    required String? id,
-    required String? limitId,
-    int? page,
-    enums.TransactionTypeFilter? type,
-  }) {
-    generatedMapping.putIfAbsent(
-        TransactionArray, () => TransactionArray.fromJsonFactory);
-
-    return _apiV1BudgetsIdLimitsLimitIdTransactionsGet(
-        id: id, limitId: limitId, page: page, type: type?.value?.toString());
-  }
-
-  ///List all transactions by a budget limit ID.
-  ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
-  ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
-  ///@param page Page number. The default pagination is 50.
-  ///@param type Optional filter on the transaction type(s) returned
-  @Get(path: '/api/v1/budgets/{id}/limits/{limitId}/transactions')
-  Future<chopper.Response<TransactionArray>>
-      _apiV1BudgetsIdLimitsLimitIdTransactionsGet({
-    @Path('id') required String? id,
-    @Path('limitId') required String? limitId,
-    @Query('page') int? page,
-    @Query('type') String? type,
-  });
-
-  ///Lists all attachments.
-  ///@param tag Either the tag itself or the tag ID.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<AttachmentArray>> apiV1TagsTagAttachmentsGet({
-    required String? tag,
-    int? page,
-  }) {
-    generatedMapping.putIfAbsent(
-        AttachmentArray, () => AttachmentArray.fromJsonFactory);
-
-    return _apiV1TagsTagAttachmentsGet(tag: tag, page: page);
-  }
-
-  ///Lists all attachments.
-  ///@param tag Either the tag itself or the tag ID.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/tags/{tag}/attachments')
-  Future<chopper.Response<AttachmentArray>> _apiV1TagsTagAttachmentsGet({
-    @Path('tag') required String? tag,
-    @Query('page') int? page,
-  });
-
-  ///List all transactions with this tag.
-  ///@param tag Either the tag itself or the tag ID.
-  ///@param page Page number. The default pagination is 50.
-  ///@param start A date formatted YYYY-MM-DD. This is the start date of the selected range (inclusive).
-  ///@param end A date formatted YYYY-MM-DD. This is the end date of the selected range (inclusive).
-  ///@param type Optional filter on the transaction type(s) returned.
-  Future<chopper.Response<TransactionArray>> apiV1TagsTagTransactionsGet({
-    required String? tag,
-    int? page,
-    String? start,
-    String? end,
-    enums.TransactionTypeFilter? type,
-  }) {
-    generatedMapping.putIfAbsent(
-        TransactionArray, () => TransactionArray.fromJsonFactory);
-
-    return _apiV1TagsTagTransactionsGet(
-        tag: tag,
-        page: page,
-        start: start,
-        end: end,
-        type: type?.value?.toString());
-  }
-
-  ///List all transactions with this tag.
-  ///@param tag Either the tag itself or the tag ID.
-  ///@param page Page number. The default pagination is 50.
-  ///@param start A date formatted YYYY-MM-DD. This is the start date of the selected range (inclusive).
-  ///@param end A date formatted YYYY-MM-DD. This is the end date of the selected range (inclusive).
-  ///@param type Optional filter on the transaction type(s) returned.
-  @Get(path: '/api/v1/tags/{tag}/transactions')
-  Future<chopper.Response<TransactionArray>> _apiV1TagsTagTransactionsGet({
-    @Path('tag') required String? tag,
-    @Query('page') int? page,
-    @Query('start') String? start,
-    @Query('end') String? end,
-    @Query('type') String? type,
-  });
-
-  ///All transactions to a budget.
-  ///@param id The ID of the budget.
-  ///@param limit Limits the number of results on one page.
-  ///@param page Page number. The default pagination is 50.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param type Optional filter on the transaction type(s) returned
-  Future<chopper.Response<TransactionArray>> apiV1BudgetsIdTransactionsGet({
-    required String? id,
-    int? limit,
-    int? page,
-    String? start,
-    String? end,
-    enums.TransactionTypeFilter? type,
-  }) {
-    generatedMapping.putIfAbsent(
-        TransactionArray, () => TransactionArray.fromJsonFactory);
-
-    return _apiV1BudgetsIdTransactionsGet(
-        id: id,
-        limit: limit,
-        page: page,
-        start: start,
-        end: end,
-        type: type?.value?.toString());
-  }
-
-  ///All transactions to a budget.
-  ///@param id The ID of the budget.
-  ///@param limit Limits the number of results on one page.
-  ///@param page Page number. The default pagination is 50.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param type Optional filter on the transaction type(s) returned
-  @Get(path: '/api/v1/budgets/{id}/transactions')
-  Future<chopper.Response<TransactionArray>> _apiV1BudgetsIdTransactionsGet({
-    @Path('id') required String? id,
-    @Query('limit') int? limit,
-    @Query('page') int? page,
-    @Query('start') String? start,
-    @Query('end') String? end,
-    @Query('type') String? type,
-  });
-
-  ///All transactions without a budget.
-  ///@param limit Limits the number of results on one page.
-  ///@param page Page number. The default pagination is 50.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param type Optional filter on the transaction type(s) returned
-  Future<chopper.Response<TransactionArray>>
-      apiV1BudgetsTransactionsWithoutBudgetGet({
-    int? limit,
-    int? page,
-    String? start,
-    String? end,
-    enums.TransactionTypeFilter? type,
-  }) {
-    generatedMapping.putIfAbsent(
-        TransactionArray, () => TransactionArray.fromJsonFactory);
-
-    return _apiV1BudgetsTransactionsWithoutBudgetGet(
-        limit: limit,
-        page: page,
-        start: start,
-        end: end,
-        type: type?.value?.toString());
-  }
-
-  ///All transactions without a budget.
-  ///@param limit Limits the number of results on one page.
-  ///@param page Page number. The default pagination is 50.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param type Optional filter on the transaction type(s) returned
-  @Get(path: '/api/v1/budgets/transactions-without-budget')
-  Future<chopper.Response<TransactionArray>>
-      _apiV1BudgetsTransactionsWithoutBudgetGet({
-    @Query('limit') int? limit,
-    @Query('page') int? page,
-    @Query('start') String? start,
-    @Query('end') String? end,
-    @Query('type') String? type,
-  });
-
-  ///Lists all attachments of a budget.
-  ///@param id The ID of the budget.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<AttachmentArray>> apiV1BudgetsIdAttachmentsGet({
-    required String? id,
-    int? page,
-  }) {
-    generatedMapping.putIfAbsent(
-        AttachmentArray, () => AttachmentArray.fromJsonFactory);
-
-    return _apiV1BudgetsIdAttachmentsGet(id: id, page: page);
-  }
-
-  ///Lists all attachments of a budget.
-  ///@param id The ID of the budget.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/budgets/{id}/attachments')
-  Future<chopper.Response<AttachmentArray>> _apiV1BudgetsIdAttachmentsGet({
-    @Path('id') required String? id,
-    @Query('page') int? page,
-  });
-
-  ///List all piggy banks related to the object group.
-  ///@param id The ID of the account.
-  ///@param page Page number. The default pagination is per 50 items.
-  Future<chopper.Response<PiggyBankArray>> apiV1ObjectGroupsIdPiggyBanksGet({
-    required String? id,
-    int? page,
-  }) {
-    generatedMapping.putIfAbsent(
-        PiggyBankArray, () => PiggyBankArray.fromJsonFactory);
-
-    return _apiV1ObjectGroupsIdPiggyBanksGet(id: id, page: page);
-  }
-
-  ///List all piggy banks related to the object group.
-  ///@param id The ID of the account.
-  ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/api/v1/object_groups/{id}/piggy_banks')
-  Future<chopper.Response<PiggyBankArray>> _apiV1ObjectGroupsIdPiggyBanksGet({
-    @Path('id') required String? id,
-    @Query('page') int? page,
-  });
-
-  ///List all bills with this object group.
-  ///@param id The ID of the account.
-  ///@param page Page number. The default pagination is per 50 items.
-  Future<chopper.Response<BillArray>> apiV1ObjectGroupsIdBillsGet({
-    required String? id,
-    int? page,
-  }) {
-    generatedMapping.putIfAbsent(BillArray, () => BillArray.fromJsonFactory);
-
-    return _apiV1ObjectGroupsIdBillsGet(id: id, page: page);
-  }
-
-  ///List all bills with this object group.
-  ///@param id The ID of the account.
-  ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/api/v1/object_groups/{id}/bills')
-  Future<chopper.Response<BillArray>> _apiV1ObjectGroupsIdBillsGet({
-    @Path('id') required String? id,
-    @Query('page') int? page,
-  });
-
-  ///List all transaction links.
-  ///@param page Page number. The default pagination is per 50 items.
-  Future<chopper.Response<TransactionLinkArray>> apiV1TransactionLinksGet(
-      {int? page}) {
-    generatedMapping.putIfAbsent(
-        TransactionLinkArray, () => TransactionLinkArray.fromJsonFactory);
-
-    return _apiV1TransactionLinksGet(page: page);
-  }
-
-  ///List all transaction links.
-  ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/api/v1/transaction_links')
-  Future<chopper.Response<TransactionLinkArray>> _apiV1TransactionLinksGet(
-      {@Query('page') int? page});
-
-  ///Create a new link between transactions
-  Future<chopper.Response<TransactionLinkSingle>> apiV1TransactionLinksPost(
-      {required TransactionLinkStore? body}) {
-    generatedMapping.putIfAbsent(
-        TransactionLinkSingle, () => TransactionLinkSingle.fromJsonFactory);
-
-    return _apiV1TransactionLinksPost(body: body);
-  }
-
-  ///Create a new link between transactions
-  @Post(
-    path: '/api/v1/transaction_links',
-    optionalBody: true,
-  )
-  Future<chopper.Response<TransactionLinkSingle>> _apiV1TransactionLinksPost(
-      {@Body() required TransactionLinkStore? body});
-
-  ///Get a single link.
-  ///@param id The ID of the transaction link.
-  Future<chopper.Response<TransactionLinkSingle>> apiV1TransactionLinksIdGet(
-      {required String? id}) {
-    generatedMapping.putIfAbsent(
-        TransactionLinkSingle, () => TransactionLinkSingle.fromJsonFactory);
-
-    return _apiV1TransactionLinksIdGet(id: id);
-  }
-
-  ///Get a single link.
-  ///@param id The ID of the transaction link.
-  @Get(path: '/api/v1/transaction_links/{id}')
-  Future<chopper.Response<TransactionLinkSingle>> _apiV1TransactionLinksIdGet(
-      {@Path('id') required String? id});
-
-  ///Permanently delete link between transactions.
-  ///@param id The ID of the transaction link.
-  Future<chopper.Response> apiV1TransactionLinksIdDelete(
-      {required String? id}) {
-    return _apiV1TransactionLinksIdDelete(id: id);
-  }
-
-  ///Permanently delete link between transactions.
-  ///@param id The ID of the transaction link.
-  @Delete(path: '/api/v1/transaction_links/{id}')
-  Future<chopper.Response> _apiV1TransactionLinksIdDelete(
-      {@Path('id') required String? id});
-
-  ///Update an existing link between transactions.
-  ///@param id The ID of the transaction link.
-  Future<chopper.Response<TransactionLinkSingle>> apiV1TransactionLinksIdPut({
-    required String? id,
-    required TransactionLinkUpdate? body,
-  }) {
-    generatedMapping.putIfAbsent(
-        TransactionLinkSingle, () => TransactionLinkSingle.fromJsonFactory);
-
-    return _apiV1TransactionLinksIdPut(id: id, body: body);
-  }
-
-  ///Update an existing link between transactions.
-  ///@param id The ID of the transaction link.
-  @Put(
-    path: '/api/v1/transaction_links/{id}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<TransactionLinkSingle>> _apiV1TransactionLinksIdPut({
-    @Path('id') required String? id,
-    @Body() required TransactionLinkUpdate? body,
   });
 
   ///List all types of links.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param page Page number. The default pagination is 50 items.
-  Future<chopper.Response<LinkTypeArray>> apiV1LinkTypesGet({int? page}) {
+  Future<chopper.Response<LinkTypeArray>> v1LinkTypesGet({
+    String? xTraceId,
+    int? page,
+  }) {
     generatedMapping.putIfAbsent(
         LinkTypeArray, () => LinkTypeArray.fromJsonFactory);
 
-    return _apiV1LinkTypesGet(page: page);
+    return _v1LinkTypesGet(xTraceId: xTraceId, page: page);
   }
 
   ///List all types of links.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param page Page number. The default pagination is 50 items.
-  @Get(path: '/api/v1/link_types')
-  Future<chopper.Response<LinkTypeArray>> _apiV1LinkTypesGet(
-      {@Query('page') int? page});
+  @Get(path: '/v1/link-types')
+  Future<chopper.Response<LinkTypeArray>> _v1LinkTypesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('page') int? page,
+  });
 
   ///Create a new link type
-  Future<chopper.Response<LinkTypeSingle>> apiV1LinkTypesPost(
-      {required LinkType? body}) {
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<LinkTypeSingle>> v1LinkTypesPost({
+    String? xTraceId,
+    required LinkType? body,
+  }) {
     generatedMapping.putIfAbsent(
         LinkTypeSingle, () => LinkTypeSingle.fromJsonFactory);
 
-    return _apiV1LinkTypesPost(body: body);
+    return _v1LinkTypesPost(xTraceId: xTraceId, body: body);
   }
 
   ///Create a new link type
+  ///@param X-Trace-Id Unique identifier associated with this request.
   @Post(
-    path: '/api/v1/link_types',
+    path: '/v1/link-types',
     optionalBody: true,
   )
-  Future<chopper.Response<LinkTypeSingle>> _apiV1LinkTypesPost(
-      {@Body() required LinkType? body});
+  Future<chopper.Response<LinkTypeSingle>> _v1LinkTypesPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required LinkType? body,
+  });
 
   ///Get single a link type.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the link type.
-  Future<chopper.Response<LinkTypeSingle>> apiV1LinkTypesIdGet(
-      {required String? id}) {
+  Future<chopper.Response<LinkTypeSingle>> v1LinkTypesIdGet({
+    String? xTraceId,
+    required String? id,
+  }) {
     generatedMapping.putIfAbsent(
         LinkTypeSingle, () => LinkTypeSingle.fromJsonFactory);
 
-    return _apiV1LinkTypesIdGet(id: id);
+    return _v1LinkTypesIdGet(xTraceId: xTraceId, id: id);
   }
 
   ///Get single a link type.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the link type.
-  @Get(path: '/api/v1/link_types/{id}')
-  Future<chopper.Response<LinkTypeSingle>> _apiV1LinkTypesIdGet(
-      {@Path('id') required String? id});
+  @Get(path: '/v1/link-types/{id}')
+  Future<chopper.Response<LinkTypeSingle>> _v1LinkTypesIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
 
   ///Update existing link type.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the link type.
-  Future<chopper.Response<LinkTypeSingle>> apiV1LinkTypesIdPut({
+  Future<chopper.Response<LinkTypeSingle>> v1LinkTypesIdPut({
+    String? xTraceId,
     required String? id,
     required LinkTypeUpdate? body,
   }) {
     generatedMapping.putIfAbsent(
         LinkTypeSingle, () => LinkTypeSingle.fromJsonFactory);
 
-    return _apiV1LinkTypesIdPut(id: id, body: body);
+    return _v1LinkTypesIdPut(xTraceId: xTraceId, id: id, body: body);
   }
 
   ///Update existing link type.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the link type.
   @Put(
-    path: '/api/v1/link_types/{id}',
+    path: '/v1/link-types/{id}',
     optionalBody: true,
   )
-  Future<chopper.Response<LinkTypeSingle>> _apiV1LinkTypesIdPut({
+  Future<chopper.Response<LinkTypeSingle>> _v1LinkTypesIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required LinkTypeUpdate? body,
   });
 
   ///Permanently delete link type.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the link type.
-  Future<chopper.Response> apiV1LinkTypesIdDelete({required String? id}) {
-    return _apiV1LinkTypesIdDelete(id: id);
+  Future<chopper.Response> v1LinkTypesIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1LinkTypesIdDelete(xTraceId: xTraceId, id: id);
   }
 
   ///Permanently delete link type.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the link type.
-  @Delete(path: '/api/v1/link_types/{id}')
-  Future<chopper.Response> _apiV1LinkTypesIdDelete(
-      {@Path('id') required String? id});
+  @Delete(path: '/v1/link-types/{id}')
+  Future<chopper.Response> _v1LinkTypesIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///List all transaction links.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is per 50 items.
+  Future<chopper.Response<TransactionLinkArray>> v1TransactionLinksGet({
+    String? xTraceId,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionLinkArray, () => TransactionLinkArray.fromJsonFactory);
+
+    return _v1TransactionLinksGet(xTraceId: xTraceId, page: page);
+  }
+
+  ///List all transaction links.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is per 50 items.
+  @Get(path: '/v1/transaction-links')
+  Future<chopper.Response<TransactionLinkArray>> _v1TransactionLinksGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('page') int? page,
+  });
+
+  ///Create a new link between transactions
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<TransactionLinkSingle>> v1TransactionLinksPost({
+    String? xTraceId,
+    required TransactionLinkStore? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionLinkSingle, () => TransactionLinkSingle.fromJsonFactory);
+
+    return _v1TransactionLinksPost(xTraceId: xTraceId, body: body);
+  }
+
+  ///Create a new link between transactions
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Post(
+    path: '/v1/transaction-links',
+    optionalBody: true,
+  )
+  Future<chopper.Response<TransactionLinkSingle>> _v1TransactionLinksPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required TransactionLinkStore? body,
+  });
+
+  ///Get a single link.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction link.
+  Future<chopper.Response<TransactionLinkSingle>> v1TransactionLinksIdGet({
+    String? xTraceId,
+    required String? id,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionLinkSingle, () => TransactionLinkSingle.fromJsonFactory);
+
+    return _v1TransactionLinksIdGet(xTraceId: xTraceId, id: id);
+  }
+
+  ///Get a single link.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction link.
+  @Get(path: '/v1/transaction-links/{id}')
+  Future<chopper.Response<TransactionLinkSingle>> _v1TransactionLinksIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Permanently delete link between transactions.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction link.
+  Future<chopper.Response> v1TransactionLinksIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1TransactionLinksIdDelete(xTraceId: xTraceId, id: id);
+  }
+
+  ///Permanently delete link between transactions.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction link.
+  @Delete(path: '/v1/transaction-links/{id}')
+  Future<chopper.Response> _v1TransactionLinksIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Update an existing link between transactions.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction link.
+  Future<chopper.Response<TransactionLinkSingle>> v1TransactionLinksIdPut({
+    String? xTraceId,
+    required String? id,
+    required TransactionLinkUpdate? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionLinkSingle, () => TransactionLinkSingle.fromJsonFactory);
+
+    return _v1TransactionLinksIdPut(xTraceId: xTraceId, id: id, body: body);
+  }
+
+  ///Update an existing link between transactions.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction link.
+  @Put(
+    path: '/v1/transaction-links/{id}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<TransactionLinkSingle>> _v1TransactionLinksIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Body() required TransactionLinkUpdate? body,
+  });
+
+  ///List all piggy banks related to the object group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the account.
+  ///@param page Page number. The default pagination is per 50 items.
+  Future<chopper.Response<PiggyBankArray>> v1ObjectGroupsIdPiggyBanksGet({
+    String? xTraceId,
+    required String? id,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        PiggyBankArray, () => PiggyBankArray.fromJsonFactory);
+
+    return _v1ObjectGroupsIdPiggyBanksGet(
+        xTraceId: xTraceId, id: id, page: page);
+  }
+
+  ///List all piggy banks related to the object group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the account.
+  ///@param page Page number. The default pagination is per 50 items.
+  @Get(path: '/v1/object-groups/{id}/piggy-banks')
+  Future<chopper.Response<PiggyBankArray>> _v1ObjectGroupsIdPiggyBanksGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('page') int? page,
+  });
+
+  ///List all bills with this object group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the account.
+  ///@param page Page number. The default pagination is per 50 items.
+  Future<chopper.Response<BillArray>> v1ObjectGroupsIdBillsGet({
+    String? xTraceId,
+    required String? id,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(BillArray, () => BillArray.fromJsonFactory);
+
+    return _v1ObjectGroupsIdBillsGet(xTraceId: xTraceId, id: id, page: page);
+  }
+
+  ///List all bills with this object group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the account.
+  ///@param page Page number. The default pagination is per 50 items.
+  @Get(path: '/v1/object-groups/{id}/bills')
+  Future<chopper.Response<BillArray>> _v1ObjectGroupsIdBillsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('page') int? page,
+  });
+
+  ///List all oject groups.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<ObjectGroupArray>> v1ObjectGroupsGet({
+    String? xTraceId,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        ObjectGroupArray, () => ObjectGroupArray.fromJsonFactory);
+
+    return _v1ObjectGroupsGet(xTraceId: xTraceId, page: page);
+  }
+
+  ///List all oject groups.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/object-groups')
+  Future<chopper.Response<ObjectGroupArray>> _v1ObjectGroupsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('page') int? page,
+  });
+
+  ///Get a single object group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the object group.
+  Future<chopper.Response<ObjectGroupSingle>> v1ObjectGroupsIdGet({
+    String? xTraceId,
+    required String? id,
+  }) {
+    generatedMapping.putIfAbsent(
+        ObjectGroupSingle, () => ObjectGroupSingle.fromJsonFactory);
+
+    return _v1ObjectGroupsIdGet(xTraceId: xTraceId, id: id);
+  }
+
+  ///Get a single object group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the object group.
+  @Get(path: '/v1/object-groups/{id}')
+  Future<chopper.Response<ObjectGroupSingle>> _v1ObjectGroupsIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Update existing object group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the object group
+  Future<chopper.Response<ObjectGroupSingle>> v1ObjectGroupsIdPut({
+    String? xTraceId,
+    required String? id,
+    required ObjectGroupUpdate? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        ObjectGroupSingle, () => ObjectGroupSingle.fromJsonFactory);
+
+    return _v1ObjectGroupsIdPut(xTraceId: xTraceId, id: id, body: body);
+  }
+
+  ///Update existing object group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the object group
+  @Put(
+    path: '/v1/object-groups/{id}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<ObjectGroupSingle>> _v1ObjectGroupsIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Body() required ObjectGroupUpdate? body,
+  });
+
+  ///Delete a object group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the object group.
+  Future<chopper.Response> v1ObjectGroupsIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1ObjectGroupsIdDelete(xTraceId: xTraceId, id: id);
+  }
+
+  ///Delete a object group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the object group.
+  @Delete(path: '/v1/object-groups/{id}')
+  Future<chopper.Response> _v1ObjectGroupsIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///List all events linked to a piggy bank.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the piggy bank
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<PiggyBankEventArray>> v1PiggyBanksIdEventsGet({
+    String? xTraceId,
+    required String? id,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        PiggyBankEventArray, () => PiggyBankEventArray.fromJsonFactory);
+
+    return _v1PiggyBanksIdEventsGet(xTraceId: xTraceId, id: id, page: page);
+  }
+
+  ///List all events linked to a piggy bank.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the piggy bank
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/piggy-banks/{id}/events')
+  Future<chopper.Response<PiggyBankEventArray>> _v1PiggyBanksIdEventsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('page') int? page,
+  });
+
+  ///Lists all attachments.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the piggy bank.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<AttachmentArray>> v1PiggyBanksIdAttachmentsGet({
+    String? xTraceId,
+    required String? id,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        AttachmentArray, () => AttachmentArray.fromJsonFactory);
+
+    return _v1PiggyBanksIdAttachmentsGet(
+        xTraceId: xTraceId, id: id, page: page);
+  }
+
+  ///Lists all attachments.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the piggy bank.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/piggy-banks/{id}/attachments')
+  Future<chopper.Response<AttachmentArray>> _v1PiggyBanksIdAttachmentsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('page') int? page,
+  });
+
+  ///List all piggy banks.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<PiggyBankArray>> v1PiggyBanksGet({
+    String? xTraceId,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        PiggyBankArray, () => PiggyBankArray.fromJsonFactory);
+
+    return _v1PiggyBanksGet(xTraceId: xTraceId, page: page);
+  }
+
+  ///List all piggy banks.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/piggy-banks')
+  Future<chopper.Response<PiggyBankArray>> _v1PiggyBanksGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('page') int? page,
+  });
+
+  ///Store a new piggy bank
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<PiggyBankSingle>> v1PiggyBanksPost({
+    String? xTraceId,
+    required PiggyBankStore? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        PiggyBankSingle, () => PiggyBankSingle.fromJsonFactory);
+
+    return _v1PiggyBanksPost(xTraceId: xTraceId, body: body);
+  }
+
+  ///Store a new piggy bank
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Post(
+    path: '/v1/piggy-banks',
+    optionalBody: true,
+  )
+  Future<chopper.Response<PiggyBankSingle>> _v1PiggyBanksPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required PiggyBankStore? body,
+  });
+
+  ///Get a single piggy bank.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the piggy bank.
+  Future<chopper.Response<PiggyBankSingle>> v1PiggyBanksIdGet({
+    String? xTraceId,
+    required String? id,
+  }) {
+    generatedMapping.putIfAbsent(
+        PiggyBankSingle, () => PiggyBankSingle.fromJsonFactory);
+
+    return _v1PiggyBanksIdGet(xTraceId: xTraceId, id: id);
+  }
+
+  ///Get a single piggy bank.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the piggy bank.
+  @Get(path: '/v1/piggy-banks/{id}')
+  Future<chopper.Response<PiggyBankSingle>> _v1PiggyBanksIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Update existing piggy bank.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the piggy bank
+  Future<chopper.Response<PiggyBankSingle>> v1PiggyBanksIdPut({
+    String? xTraceId,
+    required String? id,
+    required PiggyBankUpdate? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        PiggyBankSingle, () => PiggyBankSingle.fromJsonFactory);
+
+    return _v1PiggyBanksIdPut(xTraceId: xTraceId, id: id, body: body);
+  }
+
+  ///Update existing piggy bank.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the piggy bank
+  @Put(
+    path: '/v1/piggy-banks/{id}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<PiggyBankSingle>> _v1PiggyBanksIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Body() required PiggyBankUpdate? body,
+  });
+
+  ///Delete a piggy bank.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the piggy bank.
+  Future<chopper.Response> v1PiggyBanksIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1PiggyBanksIdDelete(xTraceId: xTraceId, id: id);
+  }
+
+  ///Delete a piggy bank.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the piggy bank.
+  @Delete(path: '/v1/piggy-banks/{id}')
+  Future<chopper.Response> _v1PiggyBanksIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///List all transactions created by a recurring transaction.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the recurring transaction.
+  ///@param page Page number. The default pagination is 50.
+  ///@param start A date formatted YYYY-MM-DD. Both the start and end date must be present.
+  ///@param end A date formatted YYYY-MM-DD. Both the start and end date must be present.
+  ///@param type Optional filter on the transaction type(s) returned
+  Future<chopper.Response<TransactionArray>> v1RecurrencesIdTransactionsGet({
+    String? xTraceId,
+    required String? id,
+    int? page,
+    String? start,
+    String? end,
+    enums.TransactionTypeFilter? type,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionArray, () => TransactionArray.fromJsonFactory);
+
+    return _v1RecurrencesIdTransactionsGet(
+        xTraceId: xTraceId,
+        id: id,
+        page: page,
+        start: start,
+        end: end,
+        type: type?.value?.toString());
+  }
+
+  ///List all transactions created by a recurring transaction.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the recurring transaction.
+  ///@param page Page number. The default pagination is 50.
+  ///@param start A date formatted YYYY-MM-DD. Both the start and end date must be present.
+  ///@param end A date formatted YYYY-MM-DD. Both the start and end date must be present.
+  ///@param type Optional filter on the transaction type(s) returned
+  @Get(path: '/v1/recurrences/{id}/transactions')
+  Future<chopper.Response<TransactionArray>> _v1RecurrencesIdTransactionsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('page') int? page,
+    @Query('start') String? start,
+    @Query('end') String? end,
+    @Query('type') String? type,
+  });
+
+  ///List all recurring transactions.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<RecurrenceArray>> v1RecurrencesGet({
+    String? xTraceId,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        RecurrenceArray, () => RecurrenceArray.fromJsonFactory);
+
+    return _v1RecurrencesGet(xTraceId: xTraceId, page: page);
+  }
+
+  ///List all recurring transactions.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/recurrences')
+  Future<chopper.Response<RecurrenceArray>> _v1RecurrencesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('page') int? page,
+  });
+
+  ///Store a new recurring transaction
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<RecurrenceSingle>> v1RecurrencesPost({
+    String? xTraceId,
+    required RecurrenceStore? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        RecurrenceSingle, () => RecurrenceSingle.fromJsonFactory);
+
+    return _v1RecurrencesPost(xTraceId: xTraceId, body: body);
+  }
+
+  ///Store a new recurring transaction
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Post(
+    path: '/v1/recurrences',
+    optionalBody: true,
+  )
+  Future<chopper.Response<RecurrenceSingle>> _v1RecurrencesPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required RecurrenceStore? body,
+  });
+
+  ///Get a single recurring transaction.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the recurring transaction.
+  Future<chopper.Response<RecurrenceSingle>> v1RecurrencesIdGet({
+    String? xTraceId,
+    required String? id,
+  }) {
+    generatedMapping.putIfAbsent(
+        RecurrenceSingle, () => RecurrenceSingle.fromJsonFactory);
+
+    return _v1RecurrencesIdGet(xTraceId: xTraceId, id: id);
+  }
+
+  ///Get a single recurring transaction.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the recurring transaction.
+  @Get(path: '/v1/recurrences/{id}')
+  Future<chopper.Response<RecurrenceSingle>> _v1RecurrencesIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Update existing recurring transaction.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the recurring transaction.
+  Future<chopper.Response<RecurrenceSingle>> v1RecurrencesIdPut({
+    String? xTraceId,
+    required String? id,
+    required RecurrenceUpdate? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        RecurrenceSingle, () => RecurrenceSingle.fromJsonFactory);
+
+    return _v1RecurrencesIdPut(xTraceId: xTraceId, id: id, body: body);
+  }
+
+  ///Update existing recurring transaction.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the recurring transaction.
+  @Put(
+    path: '/v1/recurrences/{id}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<RecurrenceSingle>> _v1RecurrencesIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Body() required RecurrenceUpdate? body,
+  });
+
+  ///Delete a recurring transaction.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the recurring transaction.
+  Future<chopper.Response> v1RecurrencesIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1RecurrencesIdDelete(xTraceId: xTraceId, id: id);
+  }
+
+  ///Delete a recurring transaction.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the recurring transaction.
+  @Delete(path: '/v1/recurrences/{id}')
+  Future<chopper.Response> _v1RecurrencesIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///List rules in this rule group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the rule group.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<RuleArray>> v1RuleGroupsIdRulesGet({
+    String? xTraceId,
+    required String? id,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(RuleArray, () => RuleArray.fromJsonFactory);
+
+    return _v1RuleGroupsIdRulesGet(xTraceId: xTraceId, id: id, page: page);
+  }
+
+  ///List rules in this rule group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the rule group.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/rule-groups/{id}/rules')
+  Future<chopper.Response<RuleArray>> _v1RuleGroupsIdRulesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('page') int? page,
+  });
 
   ///Test which transactions would be hit by the rule group. No changes will be made.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the rule group.
   ///@param page Page number. The default pagination is 50 items.
   ///@param start A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
@@ -3876,7 +3606,8 @@ abstract class FireflyIii extends ChopperService {
   ///@param search_limit Maximum number of transactions Firefly III will try. Don't set this too high, or it will take Firefly III very long to run the test. I suggest a max of 200.
   ///@param triggered_limit Maximum number of transactions the rule group can actually trigger on, before Firefly III stops. I would suggest setting this to 10 or 15. Don't go above the user's page size, because browsing to page 2 or 3 of a test result would fire the test again, making any navigation efforts very slow.
   ///@param accounts[] Limit the testing of the rule group to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
-  Future<chopper.Response<TransactionArray>> apiV1RuleGroupsIdTestGet({
+  Future<chopper.Response<TransactionArray>> v1RuleGroupsIdTestGet({
+    String? xTraceId,
     required String? id,
     int? page,
     String? start,
@@ -3888,7 +3619,8 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         TransactionArray, () => TransactionArray.fromJsonFactory);
 
-    return _apiV1RuleGroupsIdTestGet(
+    return _v1RuleGroupsIdTestGet(
+        xTraceId: xTraceId,
         id: id,
         page: page,
         start: start,
@@ -3899,6 +3631,7 @@ abstract class FireflyIii extends ChopperService {
   }
 
   ///Test which transactions would be hit by the rule group. No changes will be made.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the rule group.
   ///@param page Page number. The default pagination is 50 items.
   ///@param start A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
@@ -3906,8 +3639,9 @@ abstract class FireflyIii extends ChopperService {
   ///@param search_limit Maximum number of transactions Firefly III will try. Don't set this too high, or it will take Firefly III very long to run the test. I suggest a max of 200.
   ///@param triggered_limit Maximum number of transactions the rule group can actually trigger on, before Firefly III stops. I would suggest setting this to 10 or 15. Don't go above the user's page size, because browsing to page 2 or 3 of a test result would fire the test again, making any navigation efforts very slow.
   ///@param accounts[] Limit the testing of the rule group to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
-  @Get(path: '/api/v1/rule_groups/{id}/test')
-  Future<chopper.Response<TransactionArray>> _apiV1RuleGroupsIdTestGet({
+  @Get(path: '/v1/rule-groups/{id}/test')
+  Future<chopper.Response<TransactionArray>> _v1RuleGroupsIdTestGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Query('page') int? page,
     @Query('start') String? start,
@@ -3918,47 +3652,369 @@ abstract class FireflyIii extends ChopperService {
   });
 
   ///Fire the rule group on your transactions.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the rule group.
   ///@param start A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. Both the start date and the end date must be present.
   ///@param end A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. Both the start date and the end date must be present.
   ///@param accounts[] Limit the triggering of the rule group to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
-  Future<chopper.Response> apiV1RuleGroupsIdTriggerPost({
+  Future<chopper.Response> v1RuleGroupsIdTriggerPost({
+    String? xTraceId,
     required String? id,
     String? start,
     String? end,
     List<int>? accounts,
   }) {
-    return _apiV1RuleGroupsIdTriggerPost(
-        id: id, start: start, end: end, accounts: accounts);
+    return _v1RuleGroupsIdTriggerPost(
+        xTraceId: xTraceId, id: id, start: start, end: end, accounts: accounts);
   }
 
   ///Fire the rule group on your transactions.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the rule group.
   ///@param start A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. Both the start date and the end date must be present.
   ///@param end A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. Both the start date and the end date must be present.
   ///@param accounts[] Limit the triggering of the rule group to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
   @Post(
-    path: '/api/v1/rule_groups/{id}/trigger',
+    path: '/v1/rule-groups/{id}/trigger',
     optionalBody: true,
   )
-  Future<chopper.Response> _apiV1RuleGroupsIdTriggerPost({
+  Future<chopper.Response> _v1RuleGroupsIdTriggerPost({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('accounts[]') List<int>? accounts,
   });
 
-  ///List all transactions related to the account.
-  ///@param id The ID of the account.
-  ///@param page Page number. The default pagination is per 50 items.
-  ///@param limit Limits the number of results on one page.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
-  ///@param type Optional filter on the transaction type(s) returned.
-  Future<chopper.Response<TransactionArray>> apiV1AccountsIdTransactionsGet({
-    required String? id,
+  ///List all rule groups.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50
+  Future<chopper.Response<RuleGroupArray>> v1RuleGroupsGet({
+    String? xTraceId,
     int? page,
-    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(
+        RuleGroupArray, () => RuleGroupArray.fromJsonFactory);
+
+    return _v1RuleGroupsGet(xTraceId: xTraceId, page: page);
+  }
+
+  ///List all rule groups.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50
+  @Get(path: '/v1/rule-groups')
+  Future<chopper.Response<RuleGroupArray>> _v1RuleGroupsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('page') int? page,
+  });
+
+  ///Store a new rule group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<RuleGroupSingle>> v1RuleGroupsPost({
+    String? xTraceId,
+    required RuleGroupStore? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        RuleGroupSingle, () => RuleGroupSingle.fromJsonFactory);
+
+    return _v1RuleGroupsPost(xTraceId: xTraceId, body: body);
+  }
+
+  ///Store a new rule group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Post(
+    path: '/v1/rule-groups',
+    optionalBody: true,
+  )
+  Future<chopper.Response<RuleGroupSingle>> _v1RuleGroupsPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required RuleGroupStore? body,
+  });
+
+  ///Get a single rule group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the rule group.
+  Future<chopper.Response<RuleGroupSingle>> v1RuleGroupsIdGet({
+    String? xTraceId,
+    required String? id,
+  }) {
+    generatedMapping.putIfAbsent(
+        RuleGroupSingle, () => RuleGroupSingle.fromJsonFactory);
+
+    return _v1RuleGroupsIdGet(xTraceId: xTraceId, id: id);
+  }
+
+  ///Get a single rule group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the rule group.
+  @Get(path: '/v1/rule-groups/{id}')
+  Future<chopper.Response<RuleGroupSingle>> _v1RuleGroupsIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Update existing rule group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the rule group.
+  Future<chopper.Response<RuleGroupSingle>> v1RuleGroupsIdPut({
+    String? xTraceId,
+    required String? id,
+    required RuleGroupUpdate? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        RuleGroupSingle, () => RuleGroupSingle.fromJsonFactory);
+
+    return _v1RuleGroupsIdPut(xTraceId: xTraceId, id: id, body: body);
+  }
+
+  ///Update existing rule group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the rule group.
+  @Put(
+    path: '/v1/rule-groups/{id}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<RuleGroupSingle>> _v1RuleGroupsIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Body() required RuleGroupUpdate? body,
+  });
+
+  ///Delete a rule group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the rule group.
+  Future<chopper.Response> v1RuleGroupsIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1RuleGroupsIdDelete(xTraceId: xTraceId, id: id);
+  }
+
+  ///Delete a rule group.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the rule group.
+  @Delete(path: '/v1/rule-groups/{id}')
+  Future<chopper.Response> _v1RuleGroupsIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Test which transactions would be hit by the rule. No changes will be made.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the rule.
+  ///@param start A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
+  ///@param end A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
+  ///@param accounts[] Limit the testing of the rule to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
+  Future<chopper.Response<TransactionArray>> v1RulesIdTestGet({
+    String? xTraceId,
+    required String? id,
+    String? start,
+    String? end,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionArray, () => TransactionArray.fromJsonFactory);
+
+    return _v1RulesIdTestGet(
+        xTraceId: xTraceId, id: id, start: start, end: end, accounts: accounts);
+  }
+
+  ///Test which transactions would be hit by the rule. No changes will be made.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the rule.
+  ///@param start A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
+  ///@param end A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
+  ///@param accounts[] Limit the testing of the rule to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
+  @Get(path: '/v1/rules/{id}/test')
+  Future<chopper.Response<TransactionArray>> _v1RulesIdTestGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('start') String? start,
+    @Query('end') String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Fire the rule on your transactions.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the rule.
+  ///@param start A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. If the start date is not present, it will be set to one year ago. If you use this field, both the start date and the end date must be present.
+  ///@param end A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. If the end date is not present, it will be set to today. If you use this field, both the start date and the end date must be present.
+  ///@param accounts[] Limit the triggering of the rule to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
+  Future<chopper.Response> v1RulesIdTriggerPost({
+    String? xTraceId,
+    required String? id,
+    String? start,
+    String? end,
+    List<int>? accounts,
+  }) {
+    return _v1RulesIdTriggerPost(
+        xTraceId: xTraceId, id: id, start: start, end: end, accounts: accounts);
+  }
+
+  ///Fire the rule on your transactions.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the rule.
+  ///@param start A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. If the start date is not present, it will be set to one year ago. If you use this field, both the start date and the end date must be present.
+  ///@param end A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. If the end date is not present, it will be set to today. If you use this field, both the start date and the end date must be present.
+  ///@param accounts[] Limit the triggering of the rule to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
+  @Post(
+    path: '/v1/rules/{id}/trigger',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _v1RulesIdTriggerPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('start') String? start,
+    @Query('end') String? end,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///List all rules.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<RuleArray>> v1RulesGet({
+    String? xTraceId,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(RuleArray, () => RuleArray.fromJsonFactory);
+
+    return _v1RulesGet(xTraceId: xTraceId, page: page);
+  }
+
+  ///List all rules.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/rules')
+  Future<chopper.Response<RuleArray>> _v1RulesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('page') int? page,
+  });
+
+  ///Store a new rule
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<RuleSingle>> v1RulesPost({
+    String? xTraceId,
+    required RuleStore? body,
+  }) {
+    generatedMapping.putIfAbsent(RuleSingle, () => RuleSingle.fromJsonFactory);
+
+    return _v1RulesPost(xTraceId: xTraceId, body: body);
+  }
+
+  ///Store a new rule
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Post(
+    path: '/v1/rules',
+    optionalBody: true,
+  )
+  Future<chopper.Response<RuleSingle>> _v1RulesPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required RuleStore? body,
+  });
+
+  ///Get a single rule.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the object.
+  Future<chopper.Response<RuleSingle>> v1RulesIdGet({
+    String? xTraceId,
+    required String? id,
+  }) {
+    generatedMapping.putIfAbsent(RuleSingle, () => RuleSingle.fromJsonFactory);
+
+    return _v1RulesIdGet(xTraceId: xTraceId, id: id);
+  }
+
+  ///Get a single rule.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the object.
+  @Get(path: '/v1/rules/{id}')
+  Future<chopper.Response<RuleSingle>> _v1RulesIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Update existing rule.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the object.
+  Future<chopper.Response<RuleSingle>> v1RulesIdPut({
+    String? xTraceId,
+    required String? id,
+    required RuleUpdate? body,
+  }) {
+    generatedMapping.putIfAbsent(RuleSingle, () => RuleSingle.fromJsonFactory);
+
+    return _v1RulesIdPut(xTraceId: xTraceId, id: id, body: body);
+  }
+
+  ///Update existing rule.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the object.
+  @Put(
+    path: '/v1/rules/{id}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<RuleSingle>> _v1RulesIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Body() required RuleUpdate? body,
+  });
+
+  ///Delete an rule.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the rule.
+  Future<chopper.Response> v1RulesIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1RulesIdDelete(xTraceId: xTraceId, id: id);
+  }
+
+  ///Delete an rule.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the rule.
+  @Delete(path: '/v1/rules/{id}')
+  Future<chopper.Response> _v1RulesIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Lists all attachments.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param tag Either the tag itself or the tag ID.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<AttachmentArray>> v1TagsTagAttachmentsGet({
+    String? xTraceId,
+    required String? tag,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        AttachmentArray, () => AttachmentArray.fromJsonFactory);
+
+    return _v1TagsTagAttachmentsGet(xTraceId: xTraceId, tag: tag, page: page);
+  }
+
+  ///Lists all attachments.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param tag Either the tag itself or the tag ID.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/tags/{tag}/attachments')
+  Future<chopper.Response<AttachmentArray>> _v1TagsTagAttachmentsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('tag') required String? tag,
+    @Query('page') int? page,
+  });
+
+  ///List all transactions with this tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param tag Either the tag itself or the tag ID.
+  ///@param page Page number. The default pagination is 50.
+  ///@param start A date formatted YYYY-MM-DD. This is the start date of the selected range (inclusive).
+  ///@param end A date formatted YYYY-MM-DD. This is the end date of the selected range (inclusive).
+  ///@param type Optional filter on the transaction type(s) returned.
+  Future<chopper.Response<TransactionArray>> v1TagsTagTransactionsGet({
+    String? xTraceId,
+    required String? tag,
+    int? page,
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
@@ -3966,82 +4022,832 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         TransactionArray, () => TransactionArray.fromJsonFactory);
 
-    return _apiV1AccountsIdTransactionsGet(
-        id: id,
+    return _v1TagsTagTransactionsGet(
+        xTraceId: xTraceId,
+        tag: tag,
         page: page,
-        limit: limit,
         start: start,
         end: end,
         type: type?.value?.toString());
   }
 
-  ///List all transactions related to the account.
-  ///@param id The ID of the account.
-  ///@param page Page number. The default pagination is per 50 items.
-  ///@param limit Limits the number of results on one page.
-  ///@param start A date formatted YYYY-MM-DD.
-  ///@param end A date formatted YYYY-MM-DD.
+  ///List all transactions with this tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param tag Either the tag itself or the tag ID.
+  ///@param page Page number. The default pagination is 50.
+  ///@param start A date formatted YYYY-MM-DD. This is the start date of the selected range (inclusive).
+  ///@param end A date formatted YYYY-MM-DD. This is the end date of the selected range (inclusive).
   ///@param type Optional filter on the transaction type(s) returned.
-  @Get(path: '/api/v1/accounts/{id}/transactions')
-  Future<chopper.Response<TransactionArray>> _apiV1AccountsIdTransactionsGet({
-    @Path('id') required String? id,
+  @Get(path: '/v1/tags/{tag}/transactions')
+  Future<chopper.Response<TransactionArray>> _v1TagsTagTransactionsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('tag') required String? tag,
     @Query('page') int? page,
-    @Query('limit') int? limit,
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
   });
 
-  ///Lists all attachments.
-  ///@param id The ID of the account.
+  ///List all tags.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number
+  Future<chopper.Response<TagArray>> v1TagsGet({
+    String? xTraceId,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(TagArray, () => TagArray.fromJsonFactory);
+
+    return _v1TagsGet(xTraceId: xTraceId, page: page);
+  }
+
+  ///List all tags.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number
+  @Get(path: '/v1/tags')
+  Future<chopper.Response<TagArray>> _v1TagsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('page') int? page,
+  });
+
+  ///Store a new tag
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<TagSingle>> v1TagsPost({
+    String? xTraceId,
+    required TagModelStore? body,
+  }) {
+    generatedMapping.putIfAbsent(TagSingle, () => TagSingle.fromJsonFactory);
+
+    return _v1TagsPost(xTraceId: xTraceId, body: body);
+  }
+
+  ///Store a new tag
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Post(
+    path: '/v1/tags',
+    optionalBody: true,
+  )
+  Future<chopper.Response<TagSingle>> _v1TagsPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required TagModelStore? body,
+  });
+
+  ///Get a single tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
+  ///@param page Page number
+  Future<chopper.Response<TagSingle>> v1TagsTagGet({
+    String? xTraceId,
+    required String? tag,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(TagSingle, () => TagSingle.fromJsonFactory);
+
+    return _v1TagsTagGet(xTraceId: xTraceId, tag: tag, page: page);
+  }
+
+  ///Get a single tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
+  ///@param page Page number
+  @Get(path: '/v1/tags/{tag}')
+  Future<chopper.Response<TagSingle>> _v1TagsTagGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('tag') required String? tag,
+    @Query('page') int? page,
+  });
+
+  ///Update existing tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
+  Future<chopper.Response<TagSingle>> v1TagsTagPut({
+    String? xTraceId,
+    required String? tag,
+    required TagModelUpdate? body,
+  }) {
+    generatedMapping.putIfAbsent(TagSingle, () => TagSingle.fromJsonFactory);
+
+    return _v1TagsTagPut(xTraceId: xTraceId, tag: tag, body: body);
+  }
+
+  ///Update existing tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
+  @Put(
+    path: '/v1/tags/{tag}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<TagSingle>> _v1TagsTagPut({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('tag') required String? tag,
+    @Body() required TagModelUpdate? body,
+  });
+
+  ///Delete an tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
+  Future<chopper.Response> v1TagsTagDelete({
+    String? xTraceId,
+    required String? tag,
+  }) {
+    return _v1TagsTagDelete(xTraceId: xTraceId, tag: tag);
+  }
+
+  ///Delete an tag.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
+  @Delete(path: '/v1/tags/{tag}')
+  Future<chopper.Response> _v1TagsTagDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('tag') required String? tag,
+  });
+
+  ///List all accounts with this currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
   ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<AttachmentArray>> apiV1AccountsIdAttachmentsGet({
+  ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
+  ///@param type Optional filter on the account type(s) returned
+  Future<chopper.Response<AccountArray>> v1CurrenciesCodeAccountsGet({
+    String? xTraceId,
+    required String? code,
+    int? page,
+    String? date,
+    enums.AccountTypeFilter? type,
+  }) {
+    generatedMapping.putIfAbsent(
+        AccountArray, () => AccountArray.fromJsonFactory);
+
+    return _v1CurrenciesCodeAccountsGet(
+        xTraceId: xTraceId,
+        code: code,
+        page: page,
+        date: date,
+        type: type?.value?.toString());
+  }
+
+  ///List all accounts with this currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  ///@param page Page number. The default pagination is 50.
+  ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
+  ///@param type Optional filter on the account type(s) returned
+  @Get(path: '/v1/currencies/{code}/accounts')
+  Future<chopper.Response<AccountArray>> _v1CurrenciesCodeAccountsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('code') required String? code,
+    @Query('page') int? page,
+    @Query('date') String? date,
+    @Query('type') String? type,
+  });
+
+  ///List all available budgets with this currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  ///@param page Page number. The default pagination is 50
+  Future<chopper.Response<AvailableBudgetArray>>
+      v1CurrenciesCodeAvailableBudgetsGet({
+    String? xTraceId,
+    required String? code,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        AvailableBudgetArray, () => AvailableBudgetArray.fromJsonFactory);
+
+    return _v1CurrenciesCodeAvailableBudgetsGet(
+        xTraceId: xTraceId, code: code, page: page);
+  }
+
+  ///List all available budgets with this currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  ///@param page Page number. The default pagination is 50
+  @Get(path: '/v1/currencies/{code}/available-budgets')
+  Future<chopper.Response<AvailableBudgetArray>>
+      _v1CurrenciesCodeAvailableBudgetsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('code') required String? code,
+    @Query('page') int? page,
+  });
+
+  ///List all bills with this currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<BillArray>> v1CurrenciesCodeBillsGet({
+    String? xTraceId,
+    required String? code,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(BillArray, () => BillArray.fromJsonFactory);
+
+    return _v1CurrenciesCodeBillsGet(
+        xTraceId: xTraceId, code: code, page: page);
+  }
+
+  ///List all bills with this currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/currencies/{code}/bills')
+  Future<chopper.Response<BillArray>> _v1CurrenciesCodeBillsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('code') required String? code,
+    @Query('page') int? page,
+  });
+
+  ///List all budget limits with this currency
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  ///@param page Page number. The default pagination is 50.
+  ///@param start Start date for the budget limit list.
+  ///@param end End date for the budget limit list.
+  Future<chopper.Response<BudgetLimitArray>> v1CurrenciesCodeBudgetLimitsGet({
+    String? xTraceId,
+    required String? code,
+    int? page,
+    String? start,
+    String? end,
+  }) {
+    generatedMapping.putIfAbsent(
+        BudgetLimitArray, () => BudgetLimitArray.fromJsonFactory);
+
+    return _v1CurrenciesCodeBudgetLimitsGet(
+        xTraceId: xTraceId, code: code, page: page, start: start, end: end);
+  }
+
+  ///List all budget limits with this currency
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  ///@param page Page number. The default pagination is 50.
+  ///@param start Start date for the budget limit list.
+  ///@param end End date for the budget limit list.
+  @Get(path: '/v1/currencies/{code}/budget_limits')
+  Future<chopper.Response<BudgetLimitArray>> _v1CurrenciesCodeBudgetLimitsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('code') required String? code,
+    @Query('page') int? page,
+    @Query('start') String? start,
+    @Query('end') String? end,
+  });
+
+  ///List all recurring transactions with this currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<RecurrenceArray>> v1CurrenciesCodeRecurrencesGet({
+    String? xTraceId,
+    required String? code,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        RecurrenceArray, () => RecurrenceArray.fromJsonFactory);
+
+    return _v1CurrenciesCodeRecurrencesGet(
+        xTraceId: xTraceId, code: code, page: page);
+  }
+
+  ///List all recurring transactions with this currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/currencies/{code}/recurrences')
+  Future<chopper.Response<RecurrenceArray>> _v1CurrenciesCodeRecurrencesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('code') required String? code,
+    @Query('page') int? page,
+  });
+
+  ///List all rules with this currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  ///@param page Page number. The default pagination per 50.
+  Future<chopper.Response<RuleArray>> v1CurrenciesCodeRulesGet({
+    String? xTraceId,
+    required String? code,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(RuleArray, () => RuleArray.fromJsonFactory);
+
+    return _v1CurrenciesCodeRulesGet(
+        xTraceId: xTraceId, code: code, page: page);
+  }
+
+  ///List all rules with this currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  ///@param page Page number. The default pagination per 50.
+  @Get(path: '/v1/currencies/{code}/rules')
+  Future<chopper.Response<RuleArray>> _v1CurrenciesCodeRulesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('code') required String? code,
+    @Query('page') int? page,
+  });
+
+  ///List all transactions with this currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  ///@param page Page number. The default pagination is per 50.
+  ///@param start A date formatted YYYY-MM-DD, to limit the list of transactions.
+  ///@param end A date formatted YYYY-MM-DD, to limit the list of transactions.
+  ///@param type Optional filter on the transaction type(s) returned
+  Future<chopper.Response<TransactionArray>> v1CurrenciesCodeTransactionsGet({
+    String? xTraceId,
+    required String? code,
+    int? page,
+    String? start,
+    String? end,
+    enums.TransactionTypeFilter? type,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionArray, () => TransactionArray.fromJsonFactory);
+
+    return _v1CurrenciesCodeTransactionsGet(
+        xTraceId: xTraceId,
+        code: code,
+        page: page,
+        start: start,
+        end: end,
+        type: type?.value?.toString());
+  }
+
+  ///List all transactions with this currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  ///@param page Page number. The default pagination is per 50.
+  ///@param start A date formatted YYYY-MM-DD, to limit the list of transactions.
+  ///@param end A date formatted YYYY-MM-DD, to limit the list of transactions.
+  ///@param type Optional filter on the transaction type(s) returned
+  @Get(path: '/v1/currencies/{code}/transactions')
+  Future<chopper.Response<TransactionArray>> _v1CurrenciesCodeTransactionsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('code') required String? code,
+    @Query('page') int? page,
+    @Query('start') String? start,
+    @Query('end') String? end,
+    @Query('type') String? type,
+  });
+
+  ///List all currencies.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<CurrencyArray>> v1CurrenciesGet({
+    String? xTraceId,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        CurrencyArray, () => CurrencyArray.fromJsonFactory);
+
+    return _v1CurrenciesGet(xTraceId: xTraceId, page: page);
+  }
+
+  ///List all currencies.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/currencies')
+  Future<chopper.Response<CurrencyArray>> _v1CurrenciesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('page') int? page,
+  });
+
+  ///Store a new currency
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<CurrencySingle>> v1CurrenciesPost({
+    String? xTraceId,
+    required CurrencyStore? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        CurrencySingle, () => CurrencySingle.fromJsonFactory);
+
+    return _v1CurrenciesPost(xTraceId: xTraceId, body: body);
+  }
+
+  ///Store a new currency
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Post(
+    path: '/v1/currencies',
+    optionalBody: true,
+  )
+  Future<chopper.Response<CurrencySingle>> _v1CurrenciesPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required CurrencyStore? body,
+  });
+
+  ///Enable a single currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  Future<chopper.Response> v1CurrenciesCodeEnablePost({
+    String? xTraceId,
+    required String? code,
+  }) {
+    return _v1CurrenciesCodeEnablePost(xTraceId: xTraceId, code: code);
+  }
+
+  ///Enable a single currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  @Post(
+    path: '/v1/currencies/{code}/enable',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _v1CurrenciesCodeEnablePost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('code') required String? code,
+  });
+
+  ///Disable a currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  Future<chopper.Response> v1CurrenciesCodeDisablePost({
+    String? xTraceId,
+    required int? code,
+  }) {
+    return _v1CurrenciesCodeDisablePost(xTraceId: xTraceId, code: code);
+  }
+
+  ///Disable a currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  @Post(
+    path: '/v1/currencies/{code}/disable',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _v1CurrenciesCodeDisablePost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('code') required int? code,
+  });
+
+  ///Make currency default currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  Future<chopper.Response> v1CurrenciesCodeDefaultPost({
+    String? xTraceId,
+    required String? code,
+  }) {
+    return _v1CurrenciesCodeDefaultPost(xTraceId: xTraceId, code: code);
+  }
+
+  ///Make currency default currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  @Post(
+    path: '/v1/currencies/{code}/default',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _v1CurrenciesCodeDefaultPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('code') required String? code,
+  });
+
+  ///Get a single currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  Future<chopper.Response<CurrencySingle>> v1CurrenciesCodeGet({
+    String? xTraceId,
+    required String? code,
+  }) {
+    generatedMapping.putIfAbsent(
+        CurrencySingle, () => CurrencySingle.fromJsonFactory);
+
+    return _v1CurrenciesCodeGet(xTraceId: xTraceId, code: code);
+  }
+
+  ///Get a single currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  @Get(path: '/v1/currencies/{code}')
+  Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodeGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('code') required String? code,
+  });
+
+  ///Update existing currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  Future<chopper.Response<CurrencySingle>> v1CurrenciesCodePut({
+    String? xTraceId,
+    required String? code,
+    required CurrencyUpdate? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        CurrencySingle, () => CurrencySingle.fromJsonFactory);
+
+    return _v1CurrenciesCodePut(xTraceId: xTraceId, code: code, body: body);
+  }
+
+  ///Update existing currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  @Put(
+    path: '/v1/currencies/{code}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodePut({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('code') required String? code,
+    @Body() required CurrencyUpdate? body,
+  });
+
+  ///Delete a currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  Future<chopper.Response> v1CurrenciesCodeDelete({
+    String? xTraceId,
+    required String? code,
+  }) {
+    return _v1CurrenciesCodeDelete(xTraceId: xTraceId, code: code);
+  }
+
+  ///Delete a currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param code The currency code.
+  @Delete(path: '/v1/currencies/{code}')
+  Future<chopper.Response> _v1CurrenciesCodeDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('code') required String? code,
+  });
+
+  ///Get the user's default currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<CurrencySingle>> v1CurrenciesDefaultGet(
+      {String? xTraceId}) {
+    generatedMapping.putIfAbsent(
+        CurrencySingle, () => CurrencySingle.fromJsonFactory);
+
+    return _v1CurrenciesDefaultGet(xTraceId: xTraceId);
+  }
+
+  ///Get the user's default currency.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Get(path: '/v1/currencies/default')
+  Future<chopper.Response<CurrencySingle>> _v1CurrenciesDefaultGet(
+      {@Header('X-Trace-Id') String? xTraceId});
+
+  ///Lists all the transaction links for an individual journal (individual split).
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction journal / the split.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<TransactionLinkArray>>
+      v1TransactionJournalsIdLinksGet({
+    String? xTraceId,
+    required String? id,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionLinkArray, () => TransactionLinkArray.fromJsonFactory);
+
+    return _v1TransactionJournalsIdLinksGet(
+        xTraceId: xTraceId, id: id, page: page);
+  }
+
+  ///Lists all the transaction links for an individual journal (individual split).
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction journal / the split.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/transaction-journals/{id}/links')
+  Future<chopper.Response<TransactionLinkArray>>
+      _v1TransactionJournalsIdLinksGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('page') int? page,
+  });
+
+  ///Get a single transaction, based on one of the underlying transaction journals (transaction splits).
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction journal (split).
+  Future<chopper.Response<TransactionSingle>> v1TransactionJournalsIdGet({
+    String? xTraceId,
+    required String? id,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionSingle, () => TransactionSingle.fromJsonFactory);
+
+    return _v1TransactionJournalsIdGet(xTraceId: xTraceId, id: id);
+  }
+
+  ///Get a single transaction, based on one of the underlying transaction journals (transaction splits).
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction journal (split).
+  @Get(path: '/v1/transaction-journals/{id}')
+  Future<chopper.Response<TransactionSingle>> _v1TransactionJournalsIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Delete split from transaction
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction journal (the split) you wish to delete.
+  Future<chopper.Response> v1TransactionJournalsIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1TransactionJournalsIdDelete(xTraceId: xTraceId, id: id);
+  }
+
+  ///Delete split from transaction
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction journal (the split) you wish to delete.
+  @Delete(path: '/v1/transaction-journals/{id}')
+  Future<chopper.Response> _v1TransactionJournalsIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Lists all attachments.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<AttachmentArray>> v1TransactionsIdAttachmentsGet({
+    String? xTraceId,
     required String? id,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
         AttachmentArray, () => AttachmentArray.fromJsonFactory);
 
-    return _apiV1AccountsIdAttachmentsGet(id: id, page: page);
+    return _v1TransactionsIdAttachmentsGet(
+        xTraceId: xTraceId, id: id, page: page);
   }
 
   ///Lists all attachments.
-  ///@param id The ID of the account.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction.
   ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/accounts/{id}/attachments')
-  Future<chopper.Response<AttachmentArray>> _apiV1AccountsIdAttachmentsGet({
+  @Get(path: '/v1/transactions/{id}/attachments')
+  Future<chopper.Response<AttachmentArray>> _v1TransactionsIdAttachmentsGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Query('page') int? page,
   });
 
-  ///List all piggy banks related to the account.
-  ///@param id The ID of the account.
-  ///@param page Page number. The default pagination is per 50 items.
-  Future<chopper.Response<PiggyBankArray>> apiV1AccountsIdPiggyBanksGet({
+  ///Lists all piggy bank events.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<PiggyBankEventArray>>
+      v1TransactionsIdPiggyBankEventsGet({
+    String? xTraceId,
     required String? id,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
-        PiggyBankArray, () => PiggyBankArray.fromJsonFactory);
+        PiggyBankEventArray, () => PiggyBankEventArray.fromJsonFactory);
 
-    return _apiV1AccountsIdPiggyBanksGet(id: id, page: page);
+    return _v1TransactionsIdPiggyBankEventsGet(
+        xTraceId: xTraceId, id: id, page: page);
   }
 
-  ///List all piggy banks related to the account.
-  ///@param id The ID of the account.
-  ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/api/v1/accounts/{id}/piggy_banks')
-  Future<chopper.Response<PiggyBankArray>> _apiV1AccountsIdPiggyBanksGet({
+  ///Lists all piggy bank events.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/transactions/{id}/piggy-bank-events')
+  Future<chopper.Response<PiggyBankEventArray>>
+      _v1TransactionsIdPiggyBankEventsGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Query('page') int? page,
   });
 
+  ///List all the user's transactions.
+  ///
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  ///@param start A date formatted YYYY-MM-DD. This is the start date of the selected range (inclusive).
+  ///@param end A date formatted YYYY-MM-DD. This is the end date of the selected range (inclusive).
+  ///@param type Optional filter on the transaction type(s) returned.
+  Future<chopper.Response<TransactionArray>> v1TransactionsGet({
+    String? xTraceId,
+    int? page,
+    String? start,
+    String? end,
+    enums.TransactionTypeFilter? type,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionArray, () => TransactionArray.fromJsonFactory);
+
+    return _v1TransactionsGet(
+        xTraceId: xTraceId,
+        page: page,
+        start: start,
+        end: end,
+        type: type?.value?.toString());
+  }
+
+  ///List all the user's transactions.
+  ///
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  ///@param start A date formatted YYYY-MM-DD. This is the start date of the selected range (inclusive).
+  ///@param end A date formatted YYYY-MM-DD. This is the end date of the selected range (inclusive).
+  ///@param type Optional filter on the transaction type(s) returned.
+  @Get(path: '/v1/transactions')
+  Future<chopper.Response<TransactionArray>> _v1TransactionsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('page') int? page,
+    @Query('start') String? start,
+    @Query('end') String? end,
+    @Query('type') String? type,
+  });
+
+  ///Store a new transaction
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<TransactionSingle>> v1TransactionsPost({
+    String? xTraceId,
+    required TransactionStore? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionSingle, () => TransactionSingle.fromJsonFactory);
+
+    return _v1TransactionsPost(xTraceId: xTraceId, body: body);
+  }
+
+  ///Store a new transaction
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Post(
+    path: '/v1/transactions',
+    optionalBody: true,
+  )
+  Future<chopper.Response<TransactionSingle>> _v1TransactionsPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required TransactionStore? body,
+  });
+
+  ///Get a single transaction.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction.
+  Future<chopper.Response<TransactionSingle>> v1TransactionsIdGet({
+    String? xTraceId,
+    required String? id,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionSingle, () => TransactionSingle.fromJsonFactory);
+
+    return _v1TransactionsIdGet(xTraceId: xTraceId, id: id);
+  }
+
+  ///Get a single transaction.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction.
+  @Get(path: '/v1/transactions/{id}')
+  Future<chopper.Response<TransactionSingle>> _v1TransactionsIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Update existing transaction. For more information, see https://docs.firefly-iii.org/firefly-iii/api/specials
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction.
+  Future<chopper.Response<TransactionSingle>> v1TransactionsIdPut({
+    String? xTraceId,
+    required String? id,
+    required TransactionUpdate? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        TransactionSingle, () => TransactionSingle.fromJsonFactory);
+
+    return _v1TransactionsIdPut(xTraceId: xTraceId, id: id, body: body);
+  }
+
+  ///Update existing transaction. For more information, see https://docs.firefly-iii.org/firefly-iii/api/specials
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction.
+  @Put(
+    path: '/v1/transactions/{id}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<TransactionSingle>> _v1TransactionsIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Body() required TransactionUpdate? body,
+  });
+
+  ///Delete a transaction.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction.
+  Future<chopper.Response> v1TransactionsIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1TransactionsIdDelete(xTraceId: xTraceId, id: id);
+  }
+
+  ///Delete a transaction.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the transaction.
+  @Delete(path: '/v1/transactions/{id}')
+  Future<chopper.Response> _v1TransactionsIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
   ///Search for accounts
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param page Page number. The default pagination is 50
   ///@param query The query you wish to search for.
   ///@param type The type of accounts you wish to limit the search to.
   ///@param field The account field(s) you want to search in.
-  Future<chopper.Response<AccountArray>> apiV1SearchAccountsGet({
+  Future<chopper.Response<AccountArray>> v1SearchAccountsGet({
+    String? xTraceId,
     int? page,
     required String? query,
     enums.AccountTypeFilter? type,
@@ -4050,7 +4856,8 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         AccountArray, () => AccountArray.fromJsonFactory);
 
-    return _apiV1SearchAccountsGet(
+    return _v1SearchAccountsGet(
+        xTraceId: xTraceId,
         page: page,
         query: query,
         type: type?.value?.toString(),
@@ -4058,12 +4865,14 @@ abstract class FireflyIii extends ChopperService {
   }
 
   ///Search for accounts
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param page Page number. The default pagination is 50
   ///@param query The query you wish to search for.
   ///@param type The type of accounts you wish to limit the search to.
   ///@param field The account field(s) you want to search in.
-  @Get(path: '/api/v1/search/accounts')
-  Future<chopper.Response<AccountArray>> _apiV1SearchAccountsGet({
+  @Get(path: '/v1/search/accounts')
+  Future<chopper.Response<AccountArray>> _v1SearchAccountsGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('page') int? page,
     @Query('query') required String? query,
     @Query('type') String? type,
@@ -4071,367 +4880,474 @@ abstract class FireflyIii extends ChopperService {
   });
 
   ///Search for transactions
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The query you wish to search for.
   ///@param page Page number. The default pagination is 50
-  Future<chopper.Response<TransactionArray>> apiV1SearchTransactionsGet({
+  Future<chopper.Response<TransactionArray>> v1SearchTransactionsGet({
+    String? xTraceId,
     required String? query,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
         TransactionArray, () => TransactionArray.fromJsonFactory);
 
-    return _apiV1SearchTransactionsGet(query: query, page: page);
+    return _v1SearchTransactionsGet(
+        xTraceId: xTraceId, query: query, page: page);
   }
 
   ///Search for transactions
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The query you wish to search for.
   ///@param page Page number. The default pagination is 50
-  @Get(path: '/api/v1/search/transactions')
-  Future<chopper.Response<TransactionArray>> _apiV1SearchTransactionsGet({
+  @Get(path: '/v1/search/transactions')
+  Future<chopper.Response<TransactionArray>> _v1SearchTransactionsGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Query('query') required String? query,
     @Query('page') int? page,
   });
 
-  ///Cron job endpoint
-  ///@param cliToken The CLI token of any user in Firefly III, required to run the cron job.
-  ///@param date A date formatted YYYY-MM-DD. This can be used to make the cron job pretend it's running on another day.
-  ///@param force Forces the cron job to fire, regardless of whether it has fired before. This may result in double transactions or weird budgets, so be careful.
-  Future<chopper.Response<CronResult>> apiV1CronCliTokenGet({
-    required String? cliToken,
-    String? date,
-    bool? force,
+  ///Returns basic sums of the users data.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param currency_code A currency code like EUR or USD, to filter the result.
+  Future<chopper.Response<BasicSummary>> v1SummaryBasicGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    String? currencyCode,
   }) {
-    generatedMapping.putIfAbsent(CronResult, () => CronResult.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+        BasicSummary, () => BasicSummary.fromJsonFactory);
 
-    return _apiV1CronCliTokenGet(cliToken: cliToken, date: date, force: force);
+    return _v1SummaryBasicGet(
+        xTraceId: xTraceId, start: start, end: end, currencyCode: currencyCode);
   }
 
-  ///Cron job endpoint
-  ///@param cliToken The CLI token of any user in Firefly III, required to run the cron job.
-  ///@param date A date formatted YYYY-MM-DD. This can be used to make the cron job pretend it's running on another day.
-  ///@param force Forces the cron job to fire, regardless of whether it has fired before. This may result in double transactions or weird budgets, so be careful.
-  @Get(path: '/api/v1/cron/{cliToken}')
-  Future<chopper.Response<CronResult>> _apiV1CronCliTokenGet({
-    @Path('cliToken') required String? cliToken,
-    @Query('date') String? date,
-    @Query('force') bool? force,
+  ///Returns basic sums of the users data.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param currency_code A currency code like EUR or USD, to filter the result.
+  @Get(path: '/v1/summary/basic')
+  Future<chopper.Response<BasicSummary>> _v1SummaryBasicGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('currency_code') String? currencyCode,
   });
 
+  ///System information end point.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<SystemInfo>> v1AboutGet({String? xTraceId}) {
+    generatedMapping.putIfAbsent(SystemInfo, () => SystemInfo.fromJsonFactory);
+
+    return _v1AboutGet(xTraceId: xTraceId);
+  }
+
+  ///System information end point.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Get(path: '/v1/about')
+  Future<chopper.Response<SystemInfo>> _v1AboutGet(
+      {@Header('X-Trace-Id') String? xTraceId});
+
+  ///Currently authenticated user endpoint.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<UserSingle>> v1AboutUserGet({String? xTraceId}) {
+    generatedMapping.putIfAbsent(UserSingle, () => UserSingle.fromJsonFactory);
+
+    return _v1AboutUserGet(xTraceId: xTraceId);
+  }
+
+  ///Currently authenticated user endpoint.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Get(path: '/v1/about/user')
+  Future<chopper.Response<UserSingle>> _v1AboutUserGet(
+      {@Header('X-Trace-Id') String? xTraceId});
+
   ///Get Firefly III system configuration values.
-  Future<chopper.Response<ConfigurationArray>> apiV1ConfigurationGet() {
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<ConfigurationArray>> v1ConfigurationGet(
+      {String? xTraceId}) {
     generatedMapping.putIfAbsent(
         Configuration, () => Configuration.fromJsonFactory);
 
-    return _apiV1ConfigurationGet();
+    return _v1ConfigurationGet(xTraceId: xTraceId);
   }
 
   ///Get Firefly III system configuration values.
-  @Get(path: '/api/v1/configuration')
-  Future<chopper.Response<ConfigurationArray>> _apiV1ConfigurationGet();
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Get(path: '/v1/configuration')
+  Future<chopper.Response<ConfigurationArray>> _v1ConfigurationGet(
+      {@Header('X-Trace-Id') String? xTraceId});
 
   ///Get a single Firefly III system configuration value
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param name The name of the configuration value you want to know.
-  Future<chopper.Response<ConfigurationSingle>> apiV1ConfigurationNameGet(
-      {required enums.ConfigValueFilter? name}) {
+  Future<chopper.Response<ConfigurationSingle>> v1ConfigurationNameGet({
+    String? xTraceId,
+    required enums.ConfigValueFilter? name,
+  }) {
     generatedMapping.putIfAbsent(
         ConfigurationSingle, () => ConfigurationSingle.fromJsonFactory);
 
-    return _apiV1ConfigurationNameGet(name: name?.value?.toString());
+    return _v1ConfigurationNameGet(
+        xTraceId: xTraceId, name: name?.value?.toString());
   }
 
   ///Get a single Firefly III system configuration value
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param name The name of the configuration value you want to know.
-  @Get(path: '/api/v1/configuration/{name}')
-  Future<chopper.Response<ConfigurationSingle>> _apiV1ConfigurationNameGet(
-      {@Path('name') required String? name});
+  @Get(path: '/v1/configuration/{name}')
+  Future<chopper.Response<ConfigurationSingle>> _v1ConfigurationNameGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('name') required String? name,
+  });
 
   ///Update configuration value
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param name The name of the configuration value you want to update.
-  Future<chopper.Response<ConfigurationSingle>> apiV1ConfigurationNamePut({
+  Future<chopper.Response<ConfigurationSingle>> v1ConfigurationNamePut({
+    String? xTraceId,
     required enums.ConfigValueUpdateFilter? name,
     required ConfigurationUpdate? body,
   }) {
     generatedMapping.putIfAbsent(
         ConfigurationSingle, () => ConfigurationSingle.fromJsonFactory);
 
-    return _apiV1ConfigurationNamePut(
-        name: name?.value?.toString(), body: body);
+    return _v1ConfigurationNamePut(
+        xTraceId: xTraceId, name: name?.value?.toString(), body: body);
   }
 
   ///Update configuration value
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param name The name of the configuration value you want to update.
   @Put(
-    path: '/api/v1/configuration/{name}',
+    path: '/v1/configuration/{name}',
     optionalBody: true,
   )
-  Future<chopper.Response<ConfigurationSingle>> _apiV1ConfigurationNamePut({
+  Future<chopper.Response<ConfigurationSingle>> _v1ConfigurationNamePut({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('name') required String? name,
     @Body() required ConfigurationUpdate? body,
   });
 
+  ///Cron job endpoint
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param cliToken The CLI token of any user in Firefly III, required to run the cron job.
+  ///@param date A date formatted YYYY-MM-DD. This can be used to make the cron job pretend it's running on another day.
+  ///@param force Forces the cron job to fire, regardless of whether it has fired before. This may result in double transactions or weird budgets, so be careful.
+  Future<chopper.Response<CronResult>> v1CronCliTokenGet({
+    String? xTraceId,
+    required String? cliToken,
+    String? date,
+    bool? force,
+  }) {
+    generatedMapping.putIfAbsent(CronResult, () => CronResult.fromJsonFactory);
+
+    return _v1CronCliTokenGet(
+        xTraceId: xTraceId, cliToken: cliToken, date: date, force: force);
+  }
+
+  ///Cron job endpoint
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param cliToken The CLI token of any user in Firefly III, required to run the cron job.
+  ///@param date A date formatted YYYY-MM-DD. This can be used to make the cron job pretend it's running on another day.
+  ///@param force Forces the cron job to fire, regardless of whether it has fired before. This may result in double transactions or weird budgets, so be careful.
+  @Get(path: '/v1/cron/{cliToken}')
+  Future<chopper.Response<CronResult>> _v1CronCliTokenGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('cliToken') required String? cliToken,
+    @Query('date') String? date,
+    @Query('force') bool? force,
+  });
+
   ///List all users.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param page The page number, if necessary. The default pagination is 50, so 50 users per page.
-  Future<chopper.Response<UserArray>> apiV1UsersGet({int? page}) {
+  Future<chopper.Response<UserArray>> v1UsersGet({
+    String? xTraceId,
+    int? page,
+  }) {
     generatedMapping.putIfAbsent(UserArray, () => UserArray.fromJsonFactory);
 
-    return _apiV1UsersGet(page: page);
+    return _v1UsersGet(xTraceId: xTraceId, page: page);
   }
 
   ///List all users.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param page The page number, if necessary. The default pagination is 50, so 50 users per page.
-  @Get(path: '/api/v1/users')
-  Future<chopper.Response<UserArray>> _apiV1UsersGet(
-      {@Query('page') int? page});
+  @Get(path: '/v1/users')
+  Future<chopper.Response<UserArray>> _v1UsersGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('page') int? page,
+  });
 
   ///Store a new user
-  Future<chopper.Response<UserSingle>> apiV1UsersPost({required User? body}) {
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<UserSingle>> v1UsersPost({
+    String? xTraceId,
+    required User? body,
+  }) {
     generatedMapping.putIfAbsent(UserSingle, () => UserSingle.fromJsonFactory);
 
-    return _apiV1UsersPost(body: body);
+    return _v1UsersPost(xTraceId: xTraceId, body: body);
   }
 
   ///Store a new user
+  ///@param X-Trace-Id Unique identifier associated with this request.
   @Post(
-    path: '/api/v1/users',
+    path: '/v1/users',
     optionalBody: true,
   )
-  Future<chopper.Response<UserSingle>> _apiV1UsersPost(
-      {@Body() required User? body});
+  Future<chopper.Response<UserSingle>> _v1UsersPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required User? body,
+  });
 
   ///Get a single user.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The user ID.
-  Future<chopper.Response<UserSingle>> apiV1UsersIdGet({required String? id}) {
+  Future<chopper.Response<UserSingle>> v1UsersIdGet({
+    String? xTraceId,
+    required String? id,
+  }) {
     generatedMapping.putIfAbsent(UserSingle, () => UserSingle.fromJsonFactory);
 
-    return _apiV1UsersIdGet(id: id);
+    return _v1UsersIdGet(xTraceId: xTraceId, id: id);
   }
 
   ///Get a single user.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The user ID.
-  @Get(path: '/api/v1/users/{id}')
-  Future<chopper.Response<UserSingle>> _apiV1UsersIdGet(
-      {@Path('id') required String? id});
+  @Get(path: '/v1/users/{id}')
+  Future<chopper.Response<UserSingle>> _v1UsersIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
 
   ///Update an existing user's information.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The user ID.
-  Future<chopper.Response<UserSingle>> apiV1UsersIdPut({
+  Future<chopper.Response<UserSingle>> v1UsersIdPut({
+    String? xTraceId,
     required String? id,
     required User? body,
   }) {
     generatedMapping.putIfAbsent(UserSingle, () => UserSingle.fromJsonFactory);
 
-    return _apiV1UsersIdPut(id: id, body: body);
+    return _v1UsersIdPut(xTraceId: xTraceId, id: id, body: body);
   }
 
   ///Update an existing user's information.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The user ID.
   @Put(
-    path: '/api/v1/users/{id}',
+    path: '/v1/users/{id}',
     optionalBody: true,
   )
-  Future<chopper.Response<UserSingle>> _apiV1UsersIdPut({
+  Future<chopper.Response<UserSingle>> _v1UsersIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required User? body,
   });
 
   ///Delete a user.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The user ID.
-  Future<chopper.Response> apiV1UsersIdDelete({required String? id}) {
-    return _apiV1UsersIdDelete(id: id);
+  Future<chopper.Response> v1UsersIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1UsersIdDelete(xTraceId: xTraceId, id: id);
   }
 
   ///Delete a user.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The user ID.
-  @Delete(path: '/api/v1/users/{id}')
-  Future<chopper.Response> _apiV1UsersIdDelete(
-      {@Path('id') required String? id});
-
-  ///System information end point.
-  Future<chopper.Response<SystemInfo>> apiV1AboutGet() {
-    generatedMapping.putIfAbsent(SystemInfo, () => SystemInfo.fromJsonFactory);
-
-    return _apiV1AboutGet();
-  }
-
-  ///System information end point.
-  @Get(path: '/api/v1/about')
-  Future<chopper.Response<SystemInfo>> _apiV1AboutGet();
-
-  ///Currently authenticated user endpoint.
-  Future<chopper.Response<UserSingle>> apiV1AboutUserGet() {
-    generatedMapping.putIfAbsent(UserSingle, () => UserSingle.fromJsonFactory);
-
-    return _apiV1AboutUserGet();
-  }
-
-  ///Currently authenticated user endpoint.
-  @Get(path: '/api/v1/about/user')
-  Future<chopper.Response<UserSingle>> _apiV1AboutUserGet();
-
-  ///List all webhooks.
-  ///@param page The page number, if necessary. The default pagination is 50, so 50 webhooks per page.
-  Future<chopper.Response<WebhookArray>> apiV1WebhooksGet({int? page}) {
-    generatedMapping.putIfAbsent(
-        WebhookArray, () => WebhookArray.fromJsonFactory);
-
-    return _apiV1WebhooksGet(page: page);
-  }
-
-  ///List all webhooks.
-  ///@param page The page number, if necessary. The default pagination is 50, so 50 webhooks per page.
-  @Get(path: '/api/v1/webhooks')
-  Future<chopper.Response<WebhookArray>> _apiV1WebhooksGet(
-      {@Query('page') int? page});
-
-  ///Store a new webhook
-  Future<chopper.Response<WebhookSingle>> apiV1WebhooksPost(
-      {required WebhookStore? body}) {
-    generatedMapping.putIfAbsent(
-        WebhookSingle, () => WebhookSingle.fromJsonFactory);
-
-    return _apiV1WebhooksPost(body: body);
-  }
-
-  ///Store a new webhook
-  @Post(
-    path: '/api/v1/webhooks',
-    optionalBody: true,
-  )
-  Future<chopper.Response<WebhookSingle>> _apiV1WebhooksPost(
-      {@Body() required WebhookStore? body});
-
-  ///Get a single webhook.
-  ///@param id The webhook ID.
-  Future<chopper.Response<WebhookSingle>> apiV1WebhooksIdGet(
-      {required String? id}) {
-    generatedMapping.putIfAbsent(
-        WebhookSingle, () => WebhookSingle.fromJsonFactory);
-
-    return _apiV1WebhooksIdGet(id: id);
-  }
-
-  ///Get a single webhook.
-  ///@param id The webhook ID.
-  @Get(path: '/api/v1/webhooks/{id}')
-  Future<chopper.Response<WebhookSingle>> _apiV1WebhooksIdGet(
-      {@Path('id') required String? id});
-
-  ///Update existing webhook.
-  ///@param id The webhook ID.
-  Future<chopper.Response<WebhookSingle>> apiV1WebhooksIdPut({
-    required String? id,
-    required WebhookUpdate? body,
-  }) {
-    generatedMapping.putIfAbsent(
-        WebhookSingle, () => WebhookSingle.fromJsonFactory);
-
-    return _apiV1WebhooksIdPut(id: id, body: body);
-  }
-
-  ///Update existing webhook.
-  ///@param id The webhook ID.
-  @Put(
-    path: '/api/v1/webhooks/{id}',
-    optionalBody: true,
-  )
-  Future<chopper.Response<WebhookSingle>> _apiV1WebhooksIdPut({
+  @Delete(path: '/v1/users/{id}')
+  Future<chopper.Response> _v1UsersIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
-    @Body() required WebhookUpdate? body,
   });
 
-  ///Delete a webhook.
-  ///@param id The webhook ID.
-  Future<chopper.Response> apiV1WebhooksIdDelete({required String? id}) {
-    return _apiV1WebhooksIdDelete(id: id);
+  ///List all users preferences.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  Future<chopper.Response<PreferenceArray>> v1PreferencesGet({
+    String? xTraceId,
+    int? page,
+  }) {
+    generatedMapping.putIfAbsent(
+        PreferenceArray, () => PreferenceArray.fromJsonFactory);
+
+    return _v1PreferencesGet(xTraceId: xTraceId, page: page);
   }
 
-  ///Delete a webhook.
-  ///@param id The webhook ID.
-  @Delete(path: '/api/v1/webhooks/{id}')
-  Future<chopper.Response> _apiV1WebhooksIdDelete(
-      {@Path('id') required String? id});
+  ///List all users preferences.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page Page number. The default pagination is 50.
+  @Get(path: '/v1/preferences')
+  Future<chopper.Response<PreferenceArray>> _v1PreferencesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('page') int? page,
+  });
 
-  ///Submit messages for a webhook.
-  ///@param id The webhook ID.
-  Future<chopper.Response> apiV1WebhooksIdSubmitPost({required String? id}) {
-    return _apiV1WebhooksIdSubmitPost(id: id);
+  ///Store a new preference for this user.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<PreferenceSingle>> v1PreferencesPost({
+    String? xTraceId,
+    required Preference? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        PreferenceSingle, () => PreferenceSingle.fromJsonFactory);
+
+    return _v1PreferencesPost(xTraceId: xTraceId, body: body);
   }
 
-  ///Submit messages for a webhook.
-  ///@param id The webhook ID.
+  ///Store a new preference for this user.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   @Post(
-    path: '/api/v1/webhooks/{id}/submit',
+    path: '/v1/preferences',
     optionalBody: true,
   )
-  Future<chopper.Response> _apiV1WebhooksIdSubmitPost(
-      {@Path('id') required String? id});
+  Future<chopper.Response<PreferenceSingle>> _v1PreferencesPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required Preference? body,
+  });
+
+  ///Return a single preference.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param name The name of the preference.
+  Future<chopper.Response<PreferenceSingle>> v1PreferencesNameGet({
+    String? xTraceId,
+    required String? name,
+  }) {
+    generatedMapping.putIfAbsent(
+        PreferenceSingle, () => PreferenceSingle.fromJsonFactory);
+
+    return _v1PreferencesNameGet(xTraceId: xTraceId, name: name);
+  }
+
+  ///Return a single preference.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param name The name of the preference.
+  @Get(path: '/v1/preferences/{name}')
+  Future<chopper.Response<PreferenceSingle>> _v1PreferencesNameGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('name') required String? name,
+  });
+
+  ///Update preference
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param name The name of the preference. Will always overwrite. Will be created if it does not exist.
+  Future<chopper.Response<PreferenceSingle>> v1PreferencesNamePut({
+    String? xTraceId,
+    required String? name,
+    required PreferenceUpdate? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        PreferenceSingle, () => PreferenceSingle.fromJsonFactory);
+
+    return _v1PreferencesNamePut(xTraceId: xTraceId, name: name, body: body);
+  }
+
+  ///Update preference
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param name The name of the preference. Will always overwrite. Will be created if it does not exist.
+  @Put(
+    path: '/v1/preferences/{name}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<PreferenceSingle>> _v1PreferencesNamePut({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('name') required String? name,
+    @Body() required PreferenceUpdate? body,
+  });
 
   ///Get all the messages of a single webhook.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
-  Future<chopper.Response<WebhookMessageArray>> apiV1WebhooksIdMessagesGet(
-      {required String? id}) {
+  Future<chopper.Response<WebhookMessageArray>> v1WebhooksIdMessagesGet({
+    String? xTraceId,
+    required String? id,
+  }) {
     generatedMapping.putIfAbsent(
         WebhookMessageArray, () => WebhookMessageArray.fromJsonFactory);
 
-    return _apiV1WebhooksIdMessagesGet(id: id);
+    return _v1WebhooksIdMessagesGet(xTraceId: xTraceId, id: id);
   }
 
   ///Get all the messages of a single webhook.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
-  @Get(path: '/api/v1/webhooks/{id}/messages')
-  Future<chopper.Response<WebhookMessageArray>> _apiV1WebhooksIdMessagesGet(
-      {@Path('id') required String? id});
+  @Get(path: '/v1/webhooks/{id}/messages')
+  Future<chopper.Response<WebhookMessageArray>> _v1WebhooksIdMessagesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
 
   ///Get a single message from a webhook.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
   Future<chopper.Response<WebhookMessageSingle>>
-      apiV1WebhooksIdMessagesMessageIdGet({
+      v1WebhooksIdMessagesMessageIdGet({
+    String? xTraceId,
     required String? id,
     required int? messageId,
   }) {
     generatedMapping.putIfAbsent(
         WebhookMessageSingle, () => WebhookMessageSingle.fromJsonFactory);
 
-    return _apiV1WebhooksIdMessagesMessageIdGet(id: id, messageId: messageId);
+    return _v1WebhooksIdMessagesMessageIdGet(
+        xTraceId: xTraceId, id: id, messageId: messageId);
   }
 
   ///Get a single message from a webhook.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
-  @Get(path: '/api/v1/webhooks/{id}/messages/{messageId}')
+  @Get(path: '/v1/webhooks/{id}/messages/{messageId}')
   Future<chopper.Response<WebhookMessageSingle>>
-      _apiV1WebhooksIdMessagesMessageIdGet({
+      _v1WebhooksIdMessagesMessageIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Path('messageId') required int? messageId,
   });
 
   ///Delete a webhook message.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
-  Future<chopper.Response> apiV1WebhooksIdMessagesMessageIdDelete({
+  Future<chopper.Response> v1WebhooksIdMessagesMessageIdDelete({
+    String? xTraceId,
     required String? id,
     required int? messageId,
   }) {
-    return _apiV1WebhooksIdMessagesMessageIdDelete(
-        id: id, messageId: messageId);
+    return _v1WebhooksIdMessagesMessageIdDelete(
+        xTraceId: xTraceId, id: id, messageId: messageId);
   }
 
   ///Delete a webhook message.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
-  @Delete(path: '/api/v1/webhooks/{id}/messages/{messageId}')
-  Future<chopper.Response> _apiV1WebhooksIdMessagesMessageIdDelete({
+  @Delete(path: '/v1/webhooks/{id}/messages/{messageId}')
+  Future<chopper.Response> _v1WebhooksIdMessagesMessageIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Path('messageId') required int? messageId,
   });
 
   ///Get all the failed attempts of a single webhook message.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
   ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<WebhookAttemptArray>>
-      apiV1WebhooksIdMessagesMessageIdAttemptsGet({
+      v1WebhooksIdMessagesMessageIdAttemptsGet({
+    String? xTraceId,
     required String? id,
     required int? messageId,
     int? page,
@@ -4439,28 +5355,32 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         WebhookAttemptArray, () => WebhookAttemptArray.fromJsonFactory);
 
-    return _apiV1WebhooksIdMessagesMessageIdAttemptsGet(
-        id: id, messageId: messageId, page: page);
+    return _v1WebhooksIdMessagesMessageIdAttemptsGet(
+        xTraceId: xTraceId, id: id, messageId: messageId, page: page);
   }
 
   ///Get all the failed attempts of a single webhook message.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/api/v1/webhooks/{id}/messages/{messageId}/attempts')
+  @Get(path: '/v1/webhooks/{id}/messages/{messageId}/attempts')
   Future<chopper.Response<WebhookAttemptArray>>
-      _apiV1WebhooksIdMessagesMessageIdAttemptsGet({
+      _v1WebhooksIdMessagesMessageIdAttemptsGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Path('messageId') required int? messageId,
     @Query('page') int? page,
   });
 
   ///Get a single failed attempt from a single webhook message.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
   ///@param attemptId The webhook attempt ID.
   Future<chopper.Response<WebhookAttemptSingle>>
-      apiV1WebhooksIdMessagesMessageIdAttemptsAttemptIdGet({
+      v1WebhooksIdMessagesMessageIdAttemptsAttemptIdGet({
+    String? xTraceId,
     required String? id,
     required int? messageId,
     required int? attemptId,
@@ -4468,118 +5388,187 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(
         WebhookAttemptSingle, () => WebhookAttemptSingle.fromJsonFactory);
 
-    return _apiV1WebhooksIdMessagesMessageIdAttemptsAttemptIdGet(
-        id: id, messageId: messageId, attemptId: attemptId);
+    return _v1WebhooksIdMessagesMessageIdAttemptsAttemptIdGet(
+        xTraceId: xTraceId, id: id, messageId: messageId, attemptId: attemptId);
   }
 
   ///Get a single failed attempt from a single webhook message.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
   ///@param attemptId The webhook attempt ID.
-  @Get(path: '/api/v1/webhooks/{id}/messages/{messageId}/attempts/{attemptId}')
+  @Get(path: '/v1/webhooks/{id}/messages/{messageId}/attempts/{attemptId}')
   Future<chopper.Response<WebhookAttemptSingle>>
-      _apiV1WebhooksIdMessagesMessageIdAttemptsAttemptIdGet({
+      _v1WebhooksIdMessagesMessageIdAttemptsAttemptIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Path('messageId') required int? messageId,
     @Path('attemptId') required int? attemptId,
   });
 
   ///Delete a webhook attempt.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
   ///@param attemptId The webhook message attempt ID.
   Future<chopper.Response>
-      apiV1WebhooksIdMessagesMessageIdAttemptsAttemptIdDelete({
+      v1WebhooksIdMessagesMessageIdAttemptsAttemptIdDelete({
+    String? xTraceId,
     required String? id,
     required int? messageId,
     required int? attemptId,
   }) {
-    return _apiV1WebhooksIdMessagesMessageIdAttemptsAttemptIdDelete(
-        id: id, messageId: messageId, attemptId: attemptId);
+    return _v1WebhooksIdMessagesMessageIdAttemptsAttemptIdDelete(
+        xTraceId: xTraceId, id: id, messageId: messageId, attemptId: attemptId);
   }
 
   ///Delete a webhook attempt.
+  ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
   ///@param attemptId The webhook message attempt ID.
-  @Delete(
-      path: '/api/v1/webhooks/{id}/messages/{messageId}/attempts/{attemptId}')
+  @Delete(path: '/v1/webhooks/{id}/messages/{messageId}/attempts/{attemptId}')
   Future<chopper.Response>
-      _apiV1WebhooksIdMessagesMessageIdAttemptsAttemptIdDelete({
+      _v1WebhooksIdMessagesMessageIdAttemptsAttemptIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Path('messageId') required int? messageId,
     @Path('attemptId') required int? attemptId,
   });
 
-  ///List all users preferences.
-  ///@param page Page number. The default pagination is 50.
-  Future<chopper.Response<PreferenceArray>> apiV1PreferencesGet({int? page}) {
-    generatedMapping.putIfAbsent(
-        PreferenceArray, () => PreferenceArray.fromJsonFactory);
-
-    return _apiV1PreferencesGet(page: page);
+  ///Submit messages for a webhook.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The webhook ID.
+  Future<chopper.Response> v1WebhooksIdSubmitPost({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1WebhooksIdSubmitPost(xTraceId: xTraceId, id: id);
   }
 
-  ///List all users preferences.
-  ///@param page Page number. The default pagination is 50.
-  @Get(path: '/api/v1/preferences')
-  Future<chopper.Response<PreferenceArray>> _apiV1PreferencesGet(
-      {@Query('page') int? page});
-
-  ///Store a new preference for this user.
-  Future<chopper.Response<PreferenceSingle>> apiV1PreferencesPost(
-      {required Preference? body}) {
-    generatedMapping.putIfAbsent(
-        PreferenceSingle, () => PreferenceSingle.fromJsonFactory);
-
-    return _apiV1PreferencesPost(body: body);
-  }
-
-  ///Store a new preference for this user.
+  ///Submit messages for a webhook.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The webhook ID.
   @Post(
-    path: '/api/v1/preferences',
+    path: '/v1/webhooks/{id}/submit',
     optionalBody: true,
   )
-  Future<chopper.Response<PreferenceSingle>> _apiV1PreferencesPost(
-      {@Body() required Preference? body});
+  Future<chopper.Response> _v1WebhooksIdSubmitPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
 
-  ///Return a single preference.
-  ///@param name The name of the preference.
-  Future<chopper.Response<PreferenceSingle>> apiV1PreferencesNameGet(
-      {required String? name}) {
-    generatedMapping.putIfAbsent(
-        PreferenceSingle, () => PreferenceSingle.fromJsonFactory);
-
-    return _apiV1PreferencesNameGet(name: name);
-  }
-
-  ///Return a single preference.
-  ///@param name The name of the preference.
-  @Get(path: '/api/v1/preferences/{name}')
-  Future<chopper.Response<PreferenceSingle>> _apiV1PreferencesNameGet(
-      {@Path('name') required String? name});
-
-  ///Update preference
-  ///@param name The name of the preference. Will always overwrite. Will be created if it does not exist.
-  Future<chopper.Response<PreferenceSingle>> apiV1PreferencesNamePut({
-    required String? name,
-    required PreferenceUpdate? body,
+  ///List all webhooks.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page The page number, if necessary. The default pagination is 50, so 50 webhooks per page.
+  Future<chopper.Response<WebhookArray>> v1WebhooksGet({
+    String? xTraceId,
+    int? page,
   }) {
     generatedMapping.putIfAbsent(
-        PreferenceSingle, () => PreferenceSingle.fromJsonFactory);
+        WebhookArray, () => WebhookArray.fromJsonFactory);
 
-    return _apiV1PreferencesNamePut(name: name, body: body);
+    return _v1WebhooksGet(xTraceId: xTraceId, page: page);
   }
 
-  ///Update preference
-  ///@param name The name of the preference. Will always overwrite. Will be created if it does not exist.
-  @Put(
-    path: '/api/v1/preferences/{name}',
+  ///List all webhooks.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param page The page number, if necessary. The default pagination is 50, so 50 webhooks per page.
+  @Get(path: '/v1/webhooks')
+  Future<chopper.Response<WebhookArray>> _v1WebhooksGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('page') int? page,
+  });
+
+  ///Store a new webhook
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<WebhookSingle>> v1WebhooksPost({
+    String? xTraceId,
+    required WebhookStore? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        WebhookSingle, () => WebhookSingle.fromJsonFactory);
+
+    return _v1WebhooksPost(xTraceId: xTraceId, body: body);
+  }
+
+  ///Store a new webhook
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @Post(
+    path: '/v1/webhooks',
     optionalBody: true,
   )
-  Future<chopper.Response<PreferenceSingle>> _apiV1PreferencesNamePut({
-    @Path('name') required String? name,
-    @Body() required PreferenceUpdate? body,
+  Future<chopper.Response<WebhookSingle>> _v1WebhooksPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required WebhookStore? body,
+  });
+
+  ///Get a single webhook.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The webhook ID.
+  Future<chopper.Response<WebhookSingle>> v1WebhooksIdGet({
+    String? xTraceId,
+    required String? id,
+  }) {
+    generatedMapping.putIfAbsent(
+        WebhookSingle, () => WebhookSingle.fromJsonFactory);
+
+    return _v1WebhooksIdGet(xTraceId: xTraceId, id: id);
+  }
+
+  ///Get a single webhook.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The webhook ID.
+  @Get(path: '/v1/webhooks/{id}')
+  Future<chopper.Response<WebhookSingle>> _v1WebhooksIdGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+  });
+
+  ///Update existing webhook.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The webhook ID.
+  Future<chopper.Response<WebhookSingle>> v1WebhooksIdPut({
+    String? xTraceId,
+    required String? id,
+    required WebhookUpdate? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        WebhookSingle, () => WebhookSingle.fromJsonFactory);
+
+    return _v1WebhooksIdPut(xTraceId: xTraceId, id: id, body: body);
+  }
+
+  ///Update existing webhook.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The webhook ID.
+  @Put(
+    path: '/v1/webhooks/{id}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<WebhookSingle>> _v1WebhooksIdPut({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Body() required WebhookUpdate? body,
+  });
+
+  ///Delete a webhook.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The webhook ID.
+  Future<chopper.Response> v1WebhooksIdDelete({
+    String? xTraceId,
+    required String? id,
+  }) {
+    return _v1WebhooksIdDelete(xTraceId: xTraceId, id: id);
+  }
+
+  ///Delete a webhook.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The webhook ID.
+  @Delete(path: '/v1/webhooks/{id}')
+  Future<chopper.Response> _v1WebhooksIdDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
   });
 }
 

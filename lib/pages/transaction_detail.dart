@@ -2318,9 +2318,9 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     }
     childs.add(
       OverflowBar(
-        alignment: MainAxisAlignment.center,
+        alignment: MainAxisAlignment.end,
         children: <Widget>[
-          OutlinedButton(
+          TextButton(
             onPressed: () async {
               Navigator.of(context).pop();
             },
@@ -2416,7 +2416,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
               }
             },
             child: const Text("Upload"),
-          )
+          ),
+          const SizedBox(width: 12),
         ],
       ),
     );

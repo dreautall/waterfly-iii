@@ -31,8 +31,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _hostTextController = TextEditingController();
-  final _keyTextController = TextEditingController();
+  final TextEditingController _hostTextController = TextEditingController();
+  final TextEditingController _keyTextController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _uriScheme = UriScheme.https;
@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("login build()");
+    debugPrint("login build()");
     return Scaffold(
       body: SafeArea(
         child: Form(
@@ -127,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                       _hostFocusNode.requestFocus();
                       if (!UriScheme.valid(newSelection.first) ||
                           _uriScheme == newSelection.first) return;
-                      var currentUrl = _hostTextController.text;
+                      String currentUrl = _hostTextController.text;
                       String oldScheme, newScheme;
                       if (UriScheme.isHttp(newSelection.first)) {
                         oldScheme = UriScheme.https;
@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                       } else {
                         _hostTextController.text = "$newScheme$currentUrl";
                       }
-                      var error = _hostTextController.text.isNotEmpty &&
+                      bool error = _hostTextController.text.isNotEmpty &&
                           !_hostValid(_hostTextController.text);
                       setState(() {
                         _uriScheme = newScheme;
@@ -168,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                         errorText: _hostError,
                       ),
                       onChanged: (String value) {
-                        var newUriScheme = _uriScheme;
+                        String newUriScheme = _uriScheme;
 
                         if (!UriScheme.valid(value)) {
                           newUriScheme = "";
@@ -183,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                           });
                         }
 
-                        var error = value.isNotEmpty &&
+                        bool error = value.isNotEmpty &&
                             (!UriScheme.valid(value) || !_hostValid(value));
                         if (error != _hostErrorIcon.isError ||
                             (_hostError != null &&
@@ -254,9 +254,9 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
                       OutlinedButton(
                         onPressed: () async {
-                          const url =
+                          const String url =
                               "https://docs.firefly-iii.org/firefly-iii/api/#personal-access-token";
-                          final uri = Uri.parse(url);
+                          final Uri uri = Uri.parse(url);
                           if (await canLaunchUrl(uri)) {
                             await launchUrl(uri);
                           } else {
@@ -278,8 +278,8 @@ class _LoginPageState extends State<LoginPage> {
                           }
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => SplashPage(
+                            MaterialPageRoute<Widget>(
+                              builder: (BuildContext context) => SplashPage(
                                 host: _hostTextController.text,
                                 apiKey: _keyTextController.text,
                               ),

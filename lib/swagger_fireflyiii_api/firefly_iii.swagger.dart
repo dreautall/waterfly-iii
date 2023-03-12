@@ -1,3 +1,5 @@
+// ignore_for_file: always_use_package_imports, always_specify_types
+
 import 'firefly_iii.models.swagger.dart';
 import 'package:chopper/chopper.dart';
 

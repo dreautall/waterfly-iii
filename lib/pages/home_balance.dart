@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -20,19 +21,19 @@ class HomeBalance extends StatefulWidget {
 class _HomeBalanceState extends State<HomeBalance>
     with AutomaticKeepAliveClientMixin {
   Future<AccountArray> _fetchAccounts() async {
-    final api = FireflyProvider.of(context).api;
+    final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
       throw Exception("API unavailable");
     }
 
-    final respAccounts =
+    final Response<AccountArray> respAccounts =
         await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
 
     if (!respAccounts.isSuccessful || respAccounts.body == null) {
       throw Exception("Invalid Response from API");
     }
 
-    return Future.value(respAccounts.body);
+    return Future<AccountArray>.value(respAccounts.body);
   }
 
   Future<void> _refreshStats() async {
@@ -45,11 +46,11 @@ class _HomeBalanceState extends State<HomeBalance>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    print("home_balance build()");
+    debugPrint("home_balance build()");
 
     return RefreshIndicator(
       onRefresh: _refreshStats,
-      child: FutureBuilder(
+      child: FutureBuilder<AccountArray>(
         future: _fetchAccounts(),
         builder: (BuildContext context, AsyncSnapshot<AccountArray> snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
@@ -112,7 +113,7 @@ class _HomeBalanceState extends State<HomeBalance>
                         ),
                       ),
                       onTap: () {
-                        showDialog(
+                        showDialog<void>(
                           context: context,
                           builder: (BuildContext context) => Dialog.fullscreen(
                             child: Scaffold(

@@ -26,13 +26,13 @@ const List<NavDestination> navDestinations = <NavDestination>[
   ),
   NavDestination(
     'Accounts',
-    Placeholder(color: Colors.red, key: ValueKey("accounts")),
+    Placeholder(color: Colors.red, key: ValueKey<String>("accounts")),
     Icon(Icons.account_balance_outlined),
     Icon(Icons.account_balance),
   ),
   NavDestination(
     'Settings',
-    Placeholder(color: Colors.green, key: ValueKey("settings")),
+    Placeholder(color: Colors.green, key: ValueKey<String>("settings")),
     Icon(Icons.settings_outlined),
     Icon(Icons.settings),
   ),
@@ -69,8 +69,8 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final currentPage = navDestinations[screenIndex];
-    print("nav build(), page $screenIndex");
+    final NavDestination currentPage = navDestinations[screenIndex];
+    debugPrint("nav build(), page $screenIndex");
 
     return NavPageScaffold(
       data: this,

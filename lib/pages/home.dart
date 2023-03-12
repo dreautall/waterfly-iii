@@ -19,7 +19,7 @@ class HomePageState extends State<HomePage>
   late TabController _tabController;
   late Widget _newTransactionFab;
 
-  final Map<Key, List<Widget>> _actionsMap = {};
+  final Map<Key, List<Widget>> _actionsMap = <Key, List<Widget>>{};
 
   List<Widget>? getActions(Key key) => _actionsMap[key];
 
@@ -47,14 +47,12 @@ class HomePageState extends State<HomePage>
     _tabController.addListener(_handleTabChange);
 
     _newTransactionFab = FloatingActionButton(
-      onPressed: () {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) => const Dialog.fullscreen(
-            child: TransactionPage(),
-          ),
-        );
-      },
+      onPressed: () => showDialog<void>(
+        context: context,
+        builder: (BuildContext context) => const Dialog.fullscreen(
+          child: TransactionPage(),
+        ),
+      ),
       tooltip: 'Add Transaction',
       child: const Icon(Icons.add),
     );
@@ -84,7 +82,7 @@ class HomePageState extends State<HomePage>
 
   void _handleTabChange() {
     if (!_tabController.indexIsChanging) {
-      print("_handleTabChange()");
+      debugPrint("_handleTabChange()");
       NavPageScaffold navScaffold = NavPageScaffold.of(context);
       navScaffold.data.setState(() {
         navScaffold.data.fab =
@@ -111,7 +109,7 @@ class HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    print("home build(), tab ${_tabController.index}");
+    debugPrint("home build(), tab ${_tabController.index}");
     return HomePageInheritedState(
       data: this,
       child: TabBarView(

@@ -25,28 +25,29 @@ class _SplashPageState extends State<SplashPage> {
   Object? _loginError;
 
   void _login(String? host, String? apiKey) async {
-    print("SplashPage->_login()");
+    debugPrint("SplashPage->_login()");
 
-    var success = false;
+    bool success = false;
 
     try {
       if (host == null || apiKey == null) {
-        print("SplashPage->_login() from storage");
+        debugPrint("SplashPage->_login() from storage");
         success = await FireflyProvider.of(context).signInFromStorage();
       } else {
-        print("SplashPage->_login() with credentials: $host, $apiKey");
+        debugPrint("SplashPage->_login() with credentials: $host, $apiKey");
         success = await FireflyProvider.of(context).signIn(host, apiKey);
       }
     } catch (e) {
-      print("SplashPage->_login got exception $e, assigning to _loginError");
+      debugPrint(
+          "SplashPage->_login got exception $e, assigning to _loginError");
       setState(() {
         _loginError = e;
       });
     }
 
-    print("SplashPage->_login() returning $success");
+    debugPrint("SplashPage->_login() returning $success");
     /*if (success) {
-      print("popping");
+      debugPrint("popping");
       if (Navigator.of(context).canPop()) Navigator.of(context).pop();
     }*/
 
@@ -58,14 +59,14 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      print("initState() scheduling login");
+      debugPrint("initState() scheduling login");
       _login(widget.host, widget.apiKey);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    print("splash build(), current _loginError: $_loginError");
+    debugPrint("splash build(), current _loginError: $_loginError");
     if (FireflyProvider.of(context).signedIn) {
       return const Text("");
     }
@@ -73,13 +74,13 @@ class _SplashPageState extends State<SplashPage> {
     Widget page;
 
     if (_loginError == null) {
-      print("_loginError null --> show spinner");
+      debugPrint("_loginError null --> show spinner");
       page = Container(
         alignment: const Alignment(0, 0),
         child: const CircularProgressIndicator(),
       );
     } else {
-      print("_loginError available --> show error");
+      debugPrint("_loginError available --> show error");
       String errorDetails =
           "Host: ${FireflyProvider.of(context).lastTriedHost}";
       final String errorDescription = () {
@@ -87,10 +88,10 @@ class _SplashPageState extends State<SplashPage> {
           case AuthErrorHost:
           case AuthErrorApiKey:
           case AuthErrorNoInstance:
-            var errorType = _loginError as AuthError;
+            AuthError errorType = _loginError as AuthError;
             return errorType.cause;
           case AuthErrorStatusCode:
-            var errorType = _loginError as AuthErrorStatusCode;
+            AuthErrorStatusCode errorType = _loginError as AuthErrorStatusCode;
             errorDetails += "\nStatus Code: ${errorType.code}";
             return errorType.cause;
           case HandshakeException:

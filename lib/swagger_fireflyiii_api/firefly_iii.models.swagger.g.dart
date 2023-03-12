@@ -1,5 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: always_specify_types
+
 part of 'firefly_iii.models.swagger.dart';
 
 // **************************************************************************

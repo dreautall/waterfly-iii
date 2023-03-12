@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'app.dart';
+import 'package:waterflyiii/app.dart';
 
 void main() => runApp(const WaterflyApp());

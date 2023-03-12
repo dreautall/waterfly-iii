@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:chopper/chopper.dart' show Response;
 import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -21,13 +22,17 @@ class HomeMain extends StatefulWidget {
 
 class _HomeMainState extends State<HomeMain>
     with AutomaticKeepAliveClientMixin {
-  final Map<DateTime, InsightTotalEntry> lastDaysExpense = {};
-  final Map<DateTime, InsightTotalEntry> lastDaysIncome = {};
-  final Map<DateTime, InsightTotalEntry> lastMonthsExpense = {};
-  final Map<DateTime, InsightTotalEntry> lastMonthsIncome = {};
-  List<ChartDataSet> overviewChartData = [];
-  final Map<String, Category> catChartData = {};
-  final Map<String, Budget> budgetInfos = {};
+  final Map<DateTime, InsightTotalEntry> lastDaysExpense =
+      <DateTime, InsightTotalEntry>{};
+  final Map<DateTime, InsightTotalEntry> lastDaysIncome =
+      <DateTime, InsightTotalEntry>{};
+  final Map<DateTime, InsightTotalEntry> lastMonthsExpense =
+      <DateTime, InsightTotalEntry>{};
+  final Map<DateTime, InsightTotalEntry> lastMonthsIncome =
+      <DateTime, InsightTotalEntry>{};
+  List<ChartDataSet> overviewChartData = <ChartDataSet>[];
+  final Map<String, Category> catChartData = <String, Category>{};
+  final Map<String, Budget> budgetInfos = <String, Budget>{};
 
   final List<charts.Color> possibleChartColors = <charts.Color>[
     charts.MaterialPalette.blue.shadeDefault,
@@ -44,13 +49,13 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastDays() async {
-    final api = FireflyProvider.of(context).api;
+    final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
       throw Exception("API unavailable");
     }
 
     final DateTime now = DateTime.now().toLocal().clearTime();
-    final List<DateTime> lastDays = [];
+    final List<DateTime> lastDays = <DateTime>[];
     for (int i = 0; i < 7; i++) {
       lastDays.add(now.subtract(Duration(days: i)));
     }
@@ -58,7 +63,8 @@ class _HomeMainState extends State<HomeMain>
     lastDaysExpense.clear();
     lastDaysIncome.clear();
     for (DateTime e in lastDays) {
-      final respInsightExpense = await api.v1InsightExpenseTotalGet(
+      final Response<InsightTotal> respInsightExpense =
+          await api.v1InsightExpenseTotalGet(
         start: DateFormat('yyyy-MM-dd').format(e),
         end: DateFormat('yyyy-MM-dd').format(e),
       );
@@ -68,7 +74,8 @@ class _HomeMainState extends State<HomeMain>
       lastDaysExpense[e] = respInsightExpense.body!.isNotEmpty
           ? respInsightExpense.body!.first
           : InsightTotalEntry(differenceFloat: 0);
-      final respInsightIncome = await api.v1InsightIncomeTotalGet(
+      final Response<InsightTotal> respInsightIncome =
+          await api.v1InsightIncomeTotalGet(
         start: DateFormat('yyyy-MM-dd').format(e),
         end: DateFormat('yyyy-MM-dd').format(e),
       );
@@ -84,14 +91,15 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchOverviewChart() async {
-    final api = FireflyProvider.of(context).api;
+    final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
       throw Exception("API unavailable");
     }
 
     final DateTime now = DateTime.now().toLocal().clearTime();
 
-    final respChartData = await api.v1ChartAccountOverviewGet(
+    final Response<ChartLine> respChartData =
+        await api.v1ChartAccountOverviewGet(
       start:
           DateFormat('yyyy-MM-dd').format(now.copyWith(month: now.month - 12)),
       end: DateFormat('yyyy-MM-dd').format(now),
@@ -107,13 +115,13 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastMonths() async {
-    final api = FireflyProvider.of(context).api;
+    final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
       throw Exception("API unavailable");
     }
 
     final DateTime now = DateTime.now().toLocal().clearTime();
-    final List<DateTime> lastMonths = [];
+    final List<DateTime> lastMonths = <DateTime>[];
     for (int i = 0; i < 3; i++) {
       lastMonths.add(DateTime(now.year, now.month - i, (i == 0) ? now.day : 1));
     }
@@ -130,7 +138,8 @@ class _HomeMainState extends State<HomeMain>
         start = e;
         end = e.copyWith(month: e.month + 1, day: 0);
       }
-      final respInsightExpense = await api.v1InsightExpenseTotalGet(
+      final Response<InsightTotal> respInsightExpense =
+          await api.v1InsightExpenseTotalGet(
         start: DateFormat('yyyy-MM-dd').format(start),
         end: DateFormat('yyyy-MM-dd').format(end),
       );
@@ -140,7 +149,8 @@ class _HomeMainState extends State<HomeMain>
       lastMonthsExpense[e] = respInsightExpense.body!.isNotEmpty
           ? respInsightExpense.body!.first
           : InsightTotalEntry(differenceFloat: 0);
-      final respInsightIncome = await api.v1InsightIncomeTotalGet(
+      final Response<InsightTotal> respInsightIncome =
+          await api.v1InsightIncomeTotalGet(
         start: DateFormat('yyyy-MM-dd').format(start),
         end: DateFormat('yyyy-MM-dd').format(end),
       );
@@ -156,20 +166,20 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchCategories() async {
-    final api = FireflyProvider.of(context).api;
+    final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
       throw Exception("API unavailable");
     }
 
     final DateTime now = DateTime.now().toLocal().clearTime();
 
-    final respCatData = await api.v1CategoriesGet();
+    final Response<CategoryArray> respCatData = await api.v1CategoriesGet();
     if (!respCatData.isSuccessful || respCatData.body == null) {
       throw Exception("Invalid Response from API");
     }
 
     for (CategoryRead e in respCatData.body!.data) {
-      final respCat = await api.v1CategoriesIdGet(
+      final Response<CategorySingle> respCat = await api.v1CategoriesIdGet(
         id: e.id,
         start: DateFormat('yyyy-MM-dd').format(now.copyWith(day: 1)),
         end: DateFormat('yyyy-MM-dd').format(now),
@@ -186,12 +196,12 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<List<BudgetLimitRead>> _fetchBudgets() async {
-    final api = FireflyProvider.of(context).api;
+    final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
       throw Exception("API unavailable");
     }
 
-    final respBudgetInfos = await api.v1BudgetsGet();
+    final Response<BudgetArray> respBudgetInfos = await api.v1BudgetsGet();
     if (!respBudgetInfos.isSuccessful || respBudgetInfos.body == null) {
       throw Exception("Invalid Response from API");
     }
@@ -201,7 +211,7 @@ class _HomeMainState extends State<HomeMain>
     }
 
     final DateTime now = DateTime.now().toLocal().clearTime();
-    final respBudgets = await api.v1BudgetLimitsGet(
+    final Response<BudgetLimitArray> respBudgets = await api.v1BudgetLimitsGet(
       start: DateFormat('yyyy-MM-dd').format(now.copyWith(day: 1)),
       end: DateFormat('yyyy-MM-dd').format(now),
     );
@@ -241,7 +251,7 @@ class _HomeMainState extends State<HomeMain>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    print("home_main build()");
+    debugPrint("home_main build()");
 
     CurrencyRead defaultCurrency = FireflyProvider.of(context).defaultCurrency;
 
@@ -485,7 +495,7 @@ class _HomeMainState extends State<HomeMain>
           AnimatedHeightCard(
             child: Card(
               clipBehavior: Clip.hardEdge,
-              child: FutureBuilder(
+              child: FutureBuilder<List<BudgetLimitRead>>(
                 future: _fetchBudgets(),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<BudgetLimitRead>> snapshot) {
@@ -545,7 +555,7 @@ class BudgetList extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-            final List<Widget> widgets = [];
+            final List<Widget> widgets = <Widget>[];
             for (BudgetLimitRead budget in snapshot.data!) {
               final double spent =
                   double.parse(budget.attributes.spent ?? "0").abs();
@@ -586,7 +596,7 @@ class BudgetList extends StatelessWidget {
               );
               widgets.add(Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: <Widget>[
                   Text(
                     "${(spent / available * 100).round()}%",
                     style: Theme.of(context)
@@ -642,7 +652,7 @@ class ChartCard extends StatelessWidget {
     return AnimatedHeightCard(
       child: Card(
         clipBehavior: Clip.hardEdge,
-        child: FutureBuilder(
+        child: FutureBuilder<bool>(
           future: future,
           builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
             if (snapshot.connectionState == ConnectionState.done &&
@@ -714,18 +724,20 @@ class SummaryChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<charts.Series<TimeSeriesChart, DateTime>> chartData = [];
-    final List<charts.TickSpec<DateTime>> ticks = [];
+    final List<charts.Series<TimeSeriesChart, DateTime>> chartData =
+        <charts.Series<TimeSeriesChart, DateTime>>[];
+    final List<charts.TickSpec<DateTime>> ticks = <charts.TickSpec<DateTime>>[];
 
-    for (var e in overviewChartData) {
-      final List<TimeSeriesChart> data = [];
+    for (ChartDataSet e in overviewChartData) {
+      final List<TimeSeriesChart> data = <TimeSeriesChart>[];
 
       final Map<String, dynamic> entries = e.entries! as Map<String, dynamic>;
       DateTime? prevDate;
-      entries.forEach((key, value) {
+      entries.forEach((String key, dynamic value) {
         final DateTime date = DateTime.parse(key);
         if (prevDate != null && date.month != prevDate!.month) {
-          ticks.add(charts.TickSpec(DateTime(date.year, date.month, 1)));
+          ticks.add(
+              charts.TickSpec<DateTime>(DateTime(date.year, date.month, 1)));
         }
         data.add(TimeSeriesChart(
           date,
@@ -757,7 +769,7 @@ class SummaryChart extends StatelessWidget {
             desiredMaxTickCount: 6,
             desiredMinTickCount: 4,
           ),
-          renderSpec: charts.SmallTickRendererSpec(
+          renderSpec: charts.SmallTickRendererSpec<num>(
             labelStyle: charts.TextStyleSpec(
               color: charts.ColorUtil.fromDartColor(
                   Theme.of(context).colorScheme.onSurfaceVariant),
@@ -769,7 +781,7 @@ class SummaryChart extends StatelessWidget {
               charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
                   DateFormat(DateFormat.ABBR_STANDALONE_MONTH)),
           tickProviderSpec: charts.StaticDateTimeTickProviderSpec(ticks),
-          renderSpec: charts.SmallTickRendererSpec(
+          renderSpec: charts.SmallTickRendererSpec<DateTime>(
             labelStyle: charts.TextStyleSpec(
               color: charts.ColorUtil.fromDartColor(
                   Theme.of(context).colorScheme.onSurfaceVariant),
@@ -801,13 +813,13 @@ class LastDaysChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DateTime now = DateTime.now().toLocal().clearTime();
-    final List<DateTime> lastDays = [];
+    final List<DateTime> lastDays = <DateTime>[];
     for (int i = 0; i < 7; i++) {
       lastDays.add(now.subtract(Duration(days: i)));
     }
     CurrencyRead defaultCurrency = FireflyProvider.of(context).defaultCurrency;
 
-    final List<LabelAmountChart> chartData = [];
+    final List<LabelAmountChart> chartData = <LabelAmountChart>[];
 
     for (DateTime e in lastDays.reversed) {
       if (!lastDaysExpense.containsKey(e) || !lastDaysIncome.containsKey(e)) {
@@ -825,7 +837,7 @@ class LastDaysChart extends StatelessWidget {
     }
 
     return charts.BarChart(
-      [
+      <charts.Series<LabelAmountChart, String>>[
         charts.Series<LabelAmountChart, String>(
           id: 'LastDays',
           domainFn: (LabelAmountChart entry, _) => entry.label,
@@ -845,10 +857,10 @@ class LastDaysChart extends StatelessWidget {
       animate: true,
       barRendererDecorator: charts.BarLabelDecorator<String>(),
       primaryMeasureAxis: const charts.NumericAxisSpec(
-        renderSpec: charts.NoneRenderSpec(),
+        renderSpec: charts.NoneRenderSpec<num>(),
       ),
       domainAxis: charts.AxisSpec<String>(
-        renderSpec: charts.SmallTickRendererSpec(
+        renderSpec: charts.SmallTickRendererSpec<String>(
           labelStyle: charts.TextStyleSpec(
             color: charts.ColorUtil.fromDartColor(
                 Theme.of(context).colorScheme.onSurfaceVariant),
@@ -871,8 +883,8 @@ class NetEarningsChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<LabelAmountChart> incomeChartData = [];
-    List<LabelAmountChart> expenseChartData = [];
+    List<LabelAmountChart> incomeChartData = <LabelAmountChart>[];
+    List<LabelAmountChart> expenseChartData = <LabelAmountChart>[];
 
     lastMonthsIncome.forEach((DateTime key, InsightTotalEntry value) {
       incomeChartData.add(
@@ -896,7 +908,7 @@ class NetEarningsChart extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 12),
       child: charts.BarChart(
-        [
+        <charts.Series<LabelAmountChart, String>>[
           charts.Series<LabelAmountChart, String>(
             id: 'Income',
             domainFn: (LabelAmountChart entry, _) => entry.label,
@@ -916,7 +928,7 @@ class NetEarningsChart extends StatelessWidget {
         primaryMeasureAxis: charts.NumericAxisSpec(
           tickProviderSpec:
               const charts.BasicNumericTickProviderSpec(desiredTickCount: 5),
-          renderSpec: charts.SmallTickRendererSpec(
+          renderSpec: charts.SmallTickRendererSpec<num>(
             labelStyle: charts.TextStyleSpec(
               color: charts.ColorUtil.fromDartColor(
                   Theme.of(context).colorScheme.onSurfaceVariant),
@@ -924,7 +936,7 @@ class NetEarningsChart extends StatelessWidget {
           ),
         ),
         domainAxis: charts.AxisSpec<String>(
-          renderSpec: charts.SmallTickRendererSpec(
+          renderSpec: charts.SmallTickRendererSpec<String>(
             labelStyle: charts.TextStyleSpec(
               color: charts.ColorUtil.fromDartColor(
                   Theme.of(context).colorScheme.onSurfaceVariant),
@@ -948,7 +960,7 @@ class CategoryChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<LabelAmountChart> data = [];
+    List<LabelAmountChart> data = <LabelAmountChart>[];
     CurrencyRead defaultCurrency = FireflyProvider.of(context).defaultCurrency;
 
     catChartData.forEach((_, Category e) {
@@ -987,7 +999,7 @@ class CategoryChart extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 12),
       child: charts.PieChart<String>(
-        [
+        <charts.Series<LabelAmountChart, String>>[
           charts.Series<LabelAmountChart, String>(
             id: 'Categories',
             domainFn: (LabelAmountChart entry, _) => entry.label,
@@ -999,9 +1011,9 @@ class CategoryChart extends StatelessWidget {
           ),
         ],
         animate: true,
-        defaultRenderer: charts.ArcRendererConfig(
-          arcRendererDecorators: [
-            charts.ArcLabelDecorator(
+        defaultRenderer: charts.ArcRendererConfig<String>(
+          arcRendererDecorators: <charts.ArcLabelDecorator<String>>[
+            charts.ArcLabelDecorator<String>(
               insideLabelStyleSpec: charts.TextStyleSpec(
                 fontSize:
                     Theme.of(context).textTheme.labelSmall!.fontSize!.round(),
@@ -1014,8 +1026,8 @@ class CategoryChart extends StatelessWidget {
             )
           ],
         ),
-        behaviors: [
-          charts.DatumLegend(
+        behaviors: <charts.ChartBehavior<String>>[
+          charts.DatumLegend<String>(
             position: charts.BehaviorPosition.end,
             horizontalFirst: false,
             cellPadding: const EdgeInsets.only(right: 4, bottom: 4),

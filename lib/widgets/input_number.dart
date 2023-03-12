@@ -41,7 +41,8 @@ class NumberInput extends StatelessWidget {
       inputFormatters: <TextInputFormatter>[
         FilteringTextInputFormatter.allow(RegExp(_getRegexString())),
         TextInputFormatter.withFunction(
-          (oldValue, newValue) => newValue.copyWith(
+          (TextEditingValue oldValue, TextEditingValue newValue) =>
+              newValue.copyWith(
             text: newValue.text.replaceAll(',', '.'),
           ),
         ),

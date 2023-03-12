@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:collection/collection.dart';
@@ -65,26 +66,34 @@ class _TransactionPageState extends State<TransactionPage>
   CurrencyRead? _foreignCurrency;
 
   // Always in card view
-  final List<TextEditingController> _categoryTextControllers = [];
-  final List<FocusNode> _categoryFocusNodes = [];
-  final List<TextEditingController> _budgetTextControllers = [];
-  final List<FocusNode> _budgetFocusNodes = [];
-  final List<Tags> _tags = [];
-  final List<TextEditingController> _tagsTextControllers = [];
-  final List<TextEditingController> _noteTextControllers = [];
+  final List<TextEditingController> _categoryTextControllers =
+      <TextEditingController>[];
+  final List<FocusNode> _categoryFocusNodes = <FocusNode>[];
+  final List<TextEditingController> _budgetTextControllers =
+      <TextEditingController>[];
+  final List<FocusNode> _budgetFocusNodes = <FocusNode>[];
+  final List<Tags> _tags = <Tags>[];
+  final List<TextEditingController> _tagsTextControllers =
+      <TextEditingController>[];
+  final List<TextEditingController> _noteTextControllers =
+      <TextEditingController>[];
 
   // Individual for split transactions
-  final List<TextEditingController> _titleTextControllers = [];
-  final List<FocusNode> _titleFocusNodes = [];
-  final List<TextEditingController> _otherAccountTextControllers = [];
-  final List<FocusNode> _otherAccountFocusNodes = [];
-  final List<double> _localAmounts = [];
-  final List<TextEditingController> _localAmountTextControllers = [];
-  final List<double> _foreignAmounts = [];
-  final List<TextEditingController> _foreignAmountTextControllers = [];
-  final List<CurrencyRead?> _foreignCurrencies = [];
-  final List<String?> _transactionJournalIDs = [];
-  final List<String> _deletedSplitIDs = [];
+  final List<TextEditingController> _titleTextControllers =
+      <TextEditingController>[];
+  final List<FocusNode> _titleFocusNodes = <FocusNode>[];
+  final List<TextEditingController> _otherAccountTextControllers =
+      <TextEditingController>[];
+  final List<FocusNode> _otherAccountFocusNodes = <FocusNode>[];
+  final List<double> _localAmounts = <double>[];
+  final List<TextEditingController> _localAmountTextControllers =
+      <TextEditingController>[];
+  final List<double> _foreignAmounts = <double>[];
+  final List<TextEditingController> _foreignAmountTextControllers =
+      <TextEditingController>[];
+  final List<CurrencyRead?> _foreignCurrencies = <CurrencyRead?>[];
+  final List<String?> _transactionJournalIDs = <String?>[];
+  final List<String> _deletedSplitIDs = <String>[];
 
   bool _split = false;
   bool _hasAttachments = false;
@@ -92,8 +101,9 @@ class _TransactionPageState extends State<TransactionPage>
 
   // Magic moving!
   // https://m3.material.io/styles/motion/easing-and-duration/applying-easing-and-duration
-  final List<AnimationController> _cardsAnimationController = [];
-  final List<Animation<double>> _cardsAnimation = [];
+  final List<AnimationController> _cardsAnimationController =
+      <AnimationController>[];
+  final List<Animation<double>> _cardsAnimation = <Animation<double>>[];
   // on screen
   static const Duration animationDurationEmphasized =
       Duration(milliseconds: 500);
@@ -173,7 +183,7 @@ class _TransactionPageState extends State<TransactionPage>
         _budgetFocusNodes.add(FocusNode());
 
         /// Tags
-        _tags.add(Tags(trans.tags ?? []));
+        _tags.add(Tags(trans.tags ?? <String>[]));
         _tagsTextControllers.add(TextEditingController(
           text: (_tags.last.tags.isNotEmpty) ? " " : "",
         ));
@@ -252,8 +262,8 @@ class _TransactionPageState extends State<TransactionPage>
           vsync: this,
         ));
         int i = _cardsAnimationController.length - 1;
-        _cardsAnimationController.last
-            .addStatusListener((status) => deleteCardAnimated(i)(status));
+        _cardsAnimationController.last.addStatusListener(
+            (AnimationStatus status) => deleteCardAnimated(i)(status));
         _cardsAnimation.add(CurvedAnimation(
           parent: _cardsAnimationController.last,
           curve: animationCurveDecelerate,
@@ -288,11 +298,12 @@ class _TransactionPageState extends State<TransactionPage>
         return;
       }
       try {
-        final api = FireflyProvider.of(context).api;
+        final FireflyIii? api = FireflyProvider.of(context).api;
         if (api == null) {
           throw Exception("API not ready.");
         }
-        final response = await api.v1AutocompleteAccountsGet(
+        final Response<AutocompleteAccountArray> response =
+            await api.v1AutocompleteAccountsGet(
           query: _ownAccountTextController.text,
           types: <AccountTypeFilter>[
             AccountTypeFilter.assetAccount,
@@ -318,7 +329,7 @@ class _TransactionPageState extends State<TransactionPage>
           checkAccountCurrency(response.body!.first);
         }
       } catch (e) {
-        print("Error while fetching autocomplete from API: $e");
+        debugPrint("Error while fetching autocomplete from API: $e");
       }
     });
   }
@@ -400,8 +411,8 @@ class _TransactionPageState extends State<TransactionPage>
     }
   }
 
-  Function(AnimationStatus) deleteCardAnimated(int i) {
-    return (status) {
+  void Function(AnimationStatus) deleteCardAnimated(int i) {
+    return (AnimationStatus status) {
       if (status == AnimationStatus.dismissed) {
         splitTransactionRemove(i);
       }
@@ -409,9 +420,9 @@ class _TransactionPageState extends State<TransactionPage>
   }
 
   void splitTransactionRemove(int i) {
-    print("removing split $i");
+    debugPrint("removing split $i");
     if (_localAmounts.length < i || _localAmounts.length == 1) {
-      print("can't remove, last item");
+      debugPrint("can't remove, last item");
       return;
     }
 
@@ -426,7 +437,7 @@ class _TransactionPageState extends State<TransactionPage>
     TextEditingController t4 = _tagsTextControllers.removeAt(i);
     TextEditingController t5 = _noteTextControllers.removeAt(i);
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       t1.dispose();
       f1.dispose();
       t2.dispose();
@@ -464,11 +475,11 @@ class _TransactionPageState extends State<TransactionPage>
     for (int i = 0; i < _cardsAnimationController.length; i++) {
       // ignore: invalid_use_of_protected_member
       _cardsAnimationController[i].clearStatusListeners();
-      _cardsAnimationController[i]
-          .addStatusListener((status) => deleteCardAnimated(i)(status));
+      _cardsAnimationController[i].addStatusListener(
+          (AnimationStatus status) => deleteCardAnimated(i)(status));
     }
 
-    print("remaining split #: ${_localAmounts.length}");
+    debugPrint("remaining split #: ${_localAmounts.length}");
 
     setState(() {
       _split = (_localAmounts.length > 1);
@@ -476,7 +487,7 @@ class _TransactionPageState extends State<TransactionPage>
   }
 
   void splitTransactionAdd() {
-    print("adding split");
+    debugPrint("adding split");
     // Update from summary to first when first split is added
     if (_localAmounts.length == 1) {
       _localAmountTextControllers.first.text = _localAmountTextController.text;
@@ -514,21 +525,21 @@ class _TransactionPageState extends State<TransactionPage>
       vsync: this,
     ));
     int i = _cardsAnimationController.length - 1;
-    _cardsAnimationController.last
-        .addStatusListener((status) => deleteCardAnimated(i)(status));
+    _cardsAnimationController.last.addStatusListener(
+        (AnimationStatus status) => deleteCardAnimated(i)(status));
     _cardsAnimation.add(CurvedAnimation(
       parent: _cardsAnimationController.last,
       curve: animationCurveDecelerate,
       reverseCurve: animationCurveAccelerate,
     ));
 
-    print("new split #: ${_localAmounts.length}");
+    debugPrint("new split #: ${_localAmounts.length}");
 
     setState(() {
       _split = (_localAmounts.length > 1);
     });
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       _cardsAnimationController.last.forward();
     });
   }
@@ -568,11 +579,12 @@ class _TransactionPageState extends State<TransactionPage>
 
   void updateAttachmentCount() async {
     try {
-      final api = FireflyProvider.of(context).api;
+      final FireflyIii? api = FireflyProvider.of(context).api;
       if (api == null) {
         throw Exception("API not ready.");
       }
-      final response = await api.v1TransactionsIdAttachmentsGet(
+      final Response<AttachmentArray> response =
+          await api.v1TransactionsIdAttachmentsGet(
         id: widget.transaction?.id ?? widget.transactionId,
       );
       if (!response.isSuccessful || response.body == null) {
@@ -583,13 +595,13 @@ class _TransactionPageState extends State<TransactionPage>
         _hasAttachments = _attachments?.isNotEmpty ?? false;
       });
     } catch (e) {
-      print("Error while fetching autocomplete from API: $e");
+      debugPrint("Error while fetching autocomplete from API: $e");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    print("TransactionDetail build()");
+    debugPrint("TransactionDetail build()");
     _localCurrency ??= FireflyProvider.of(context).defaultCurrency;
 
     if (_hasAttachments && _attachments == null) {
@@ -606,14 +618,14 @@ class _TransactionPageState extends State<TransactionPage>
               icon: const Icon(Icons.delete),
               tooltip: 'Delete',
               onPressed: () async {
-                final api = FireflyProvider.of(context).api;
-                final nav = Navigator.of(context);
+                final FireflyIii? api = FireflyProvider.of(context).api;
+                final NavigatorState nav = Navigator.of(context);
                 if (api == null) {
                   throw Exception("API unavailable");
                 }
                 bool? ok = await showDialog<bool>(
                   context: context,
-                  builder: (context) => AlertDialog(
+                  builder: (BuildContext context) => AlertDialog(
                     icon: const Icon(Icons.delete),
                     title: const Text("Delete Transaction"),
                     clipBehavior: Clip.hardEdge,
@@ -648,9 +660,9 @@ class _TransactionPageState extends State<TransactionPage>
           FilledButton(
             child: const Text('Save'),
             onPressed: () async {
-              final msg = ScaffoldMessenger.of(context);
-              final api = FireflyProvider.of(context).api;
-              final nav = Navigator.of(context);
+              final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
+              final FireflyIii? api = FireflyProvider.of(context).api;
+              final NavigatorState nav = Navigator.of(context);
 
               // Sanity checks
               String? error;
@@ -674,7 +686,7 @@ class _TransactionPageState extends State<TransactionPage>
               // Do stuff
               if (widget.transaction != null) {
                 String id = widget.transaction!.id;
-                List<TransactionSplitUpdate> txS = [];
+                List<TransactionSplitUpdate> txS = <TransactionSplitUpdate>[];
                 for (int i = 0; i < _localAmounts.length; i++) {
                   late String sourceName, destinationName;
                   String? sourceId, destinationId;
@@ -733,13 +745,13 @@ class _TransactionPageState extends State<TransactionPage>
                   if (id.isEmpty) {
                     continue;
                   }
-                  print("deleting split $id");
+                  debugPrint("deleting split $id");
                   await api!.v1TransactionJournalsIdDelete(id: id);
                 }
-                final resp =
+                final Response<TransactionSingle> resp =
                     await api!.v1TransactionsIdPut(id: id, body: txUpdate);
                 if (!resp.isSuccessful || resp.body == null) {
-                  print(resp.error);
+                  debugPrint(resp.error.toString());
                   try {
                     ValidationError valError = ValidationError.fromJson(
                         json.decode(resp.error.toString()));
@@ -755,7 +767,7 @@ class _TransactionPageState extends State<TransactionPage>
                   return;
                 }
               } else {
-                List<TransactionSplitStore> txS = [];
+                List<TransactionSplitStore> txS = <TransactionSplitStore>[];
                 for (int i = 0; i < _localAmounts.length; i++) {
                   late String sourceName, destinationName;
                   String? sourceId, destinationId;
@@ -804,15 +816,16 @@ class _TransactionPageState extends State<TransactionPage>
                     reconciled: false,
                   ));
                 }
-                final newTx = TransactionStore(
+                final TransactionStore newTx = TransactionStore(
                     groupTitle: _split ? _titleTextController.text : null,
                     transactions: txS,
                     applyRules: true,
                     fireWebhooks: true,
                     errorIfDuplicateHash: true);
-                final resp = await api!.v1TransactionsPost(body: newTx);
+                final Response<TransactionSingle> resp =
+                    await api!.v1TransactionsPost(body: newTx);
                 if (!resp.isSuccessful || resp.body == null) {
-                  print(resp.error);
+                  debugPrint(resp.error.toString());
                   try {
                     ValidationError valError = ValidationError.fromJson(
                         json.decode(resp.error.toString()));
@@ -851,14 +864,14 @@ class _TransactionPageState extends State<TransactionPage>
   }
 
   List<Widget> _transactionDetailBuilder(BuildContext context) {
-    print("transactionDetailBuilder()");
-    print("splits: ${_localAmounts.length}, split? $_split");
+    debugPrint("transactionDetailBuilder()");
+    debugPrint("splits: ${_localAmounts.length}, split? $_split");
     bool showAccountSelection =
         _transactionType != TransactionTypeProperty.transfer &&
             _otherAccountTextControllers.every((TextEditingController e) =>
                 e.text != _otherAccountTextController.text);
 
-    List<Widget> childs = [];
+    List<Widget> childs = <Widget>[];
     const Widget hDivider = SizedBox(height: 16);
     const Widget vDivider = SizedBox(width: 16);
 
@@ -891,7 +904,7 @@ class _TransactionPageState extends State<TransactionPage>
               tooltip: "Attachments",
               onPressed: () async {
                 String? txId = _transactionJournalIDs
-                    .firstWhereOrNull((element) => element != null);
+                    .firstWhereOrNull((String? element) => element != null);
                 if (txId == null) {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text("Please save the transaction first."),
@@ -899,10 +912,11 @@ class _TransactionPageState extends State<TransactionPage>
                   ));
                   return;
                 }
-                List<AttachmentRead> dialogAttachments = _attachments ?? [];
+                List<AttachmentRead> dialogAttachments =
+                    _attachments ?? <AttachmentRead>[];
                 await showDialog<List<AttachmentRead>>(
                   context: context,
-                  builder: (context) => AttachmentDialog(
+                  builder: (BuildContext context) => AttachmentDialog(
                     attachments: dialogAttachments,
                     transactionId: txId,
                   ),
@@ -935,7 +949,7 @@ class _TransactionPageState extends State<TransactionPage>
                   ? _foreignAmountTextController
                   : _localAmountTextController,
               disabled: _split,
-              onChanged: (string) => (_foreignCurrency != null)
+              onChanged: (String string) => (_foreignCurrency != null)
                   ? _foreignAmounts[0] = double.tryParse(string) ?? 0
                   : _localAmounts[0] = double.tryParse(string) ?? 0,
             ),
@@ -943,9 +957,9 @@ class _TransactionPageState extends State<TransactionPage>
           vDivider,
           FilledButton(
             onPressed: () async {
-              var newCurrency = await showDialog<CurrencyRead>(
+              CurrencyRead? newCurrency = await showDialog<CurrencyRead>(
                 context: context,
-                builder: (context) => CurrencyDialog(
+                builder: (BuildContext context) => CurrencyDialog(
                   currentCurrency: _foreignCurrency ?? _localCurrency!,
                 ),
               );
@@ -958,7 +972,7 @@ class _TransactionPageState extends State<TransactionPage>
                     _foreignCurrencies[i] = null;
                   } else {
                     _foreignCurrencies[i] = newCurrency;
-                    print(
+                    debugPrint(
                         "foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
                     if (_foreignAmounts[i] == 0) {
                       _foreignAmounts[i] = _localAmounts[i];
@@ -985,7 +999,7 @@ class _TransactionPageState extends State<TransactionPage>
                 hintText: "0.00",
                 decimals: _localCurrency!.attributes.decimalPlaces ?? 2,
                 prefixText: "${_localCurrency!.attributes.code} ",
-                onChanged: (string) =>
+                onChanged: (String string) =>
                     _localAmounts[0] = double.tryParse(string) ?? 0,
               ),
             ),
@@ -1000,7 +1014,7 @@ class _TransactionPageState extends State<TransactionPage>
           const Icon(Icons.account_balance),
           vDivider,
           Expanded(
-            child: AutoCompleteText(
+            child: AutoCompleteText<AutocompleteAccount>(
               labelText: "Foreign account",
               //labelIcon: Icons.account_balance,
               textController: _otherAccountTextController,
@@ -1018,13 +1032,14 @@ class _TransactionPageState extends State<TransactionPage>
               },
               displayStringForOption: (AutocompleteAccount option) =>
                   option.name,
-              optionsBuilder: (textEditingValue) async {
+              optionsBuilder: (TextEditingValue textEditingValue) async {
                 try {
-                  final api = FireflyProvider.of(context).api;
+                  final FireflyIii? api = FireflyProvider.of(context).api;
                   if (api == null) {
                     throw Exception("API not ready.");
                   }
-                  final response = await api.v1AutocompleteAccountsGet(
+                  final Response<AutocompleteAccountArray> response =
+                      await api.v1AutocompleteAccountsGet(
                     query: textEditingValue.text,
                     types:
                         _transactionType == TransactionTypeProperty.withdrawal
@@ -1036,7 +1051,7 @@ class _TransactionPageState extends State<TransactionPage>
                   }
                   return response.body!;
                 } catch (e) {
-                  print("Error while fetching autocomplete from API: $e");
+                  debugPrint("Error while fetching autocomplete from API: $e");
                   return const Iterable<AutocompleteAccount>.empty();
                 }
               },
@@ -1112,7 +1127,7 @@ class _TransactionPageState extends State<TransactionPage>
           ),
           vDivider,
           Expanded(
-            child: AutoCompleteText(
+            child: AutoCompleteText<AutocompleteAccount>(
               labelText: "Own account",
               //labelIcon: Icons.account_balance,
               textController: _ownAccountTextController,
@@ -1125,16 +1140,17 @@ class _TransactionPageState extends State<TransactionPage>
                 setState(() {
                   _ownAccountId = option.id;
                 });
-                print("selected account $_ownAccountId");
+                debugPrint("selected account $_ownAccountId");
                 checkAccountCurrency(option);
               },
               optionsBuilder: (TextEditingValue textEditingValue) async {
                 try {
-                  final api = FireflyProvider.of(context).api;
+                  final FireflyIii? api = FireflyProvider.of(context).api;
                   if (api == null) {
                     throw Exception("API not ready.");
                   }
-                  final response = await api.v1AutocompleteAccountsGet(
+                  final Response<AutocompleteAccountArray> response =
+                      await api.v1AutocompleteAccountsGet(
                     query: textEditingValue.text,
                     types: <AccountTypeFilter>[
                       AccountTypeFilter.assetAccount,
@@ -1148,7 +1164,7 @@ class _TransactionPageState extends State<TransactionPage>
                   }
                   return response.body!;
                 } catch (e) {
-                  print("Error while fetching autocomplete from API: $e");
+                  debugPrint("Error while fetching autocomplete from API: $e");
                   return const Iterable<AutocompleteAccount>.empty();
                 }
               },
@@ -1304,7 +1320,7 @@ class _TransactionPageState extends State<TransactionPage>
                         ? Row(
                             children: <Widget>[
                               Expanded(
-                                child: AutoCompleteText(
+                                child: AutoCompleteText<AutocompleteAccount>(
                                   labelText: "Foreign account",
                                   labelIcon: Icons.account_balance,
                                   textController:
@@ -1319,14 +1335,16 @@ class _TransactionPageState extends State<TransactionPage>
                                   displayStringForOption:
                                       (AutocompleteAccount option) =>
                                           option.name,
-                                  optionsBuilder: (textEditingValue) async {
+                                  optionsBuilder: (TextEditingValue
+                                      textEditingValue) async {
                                     try {
-                                      final api =
+                                      final FireflyIii? api =
                                           FireflyProvider.of(context).api;
                                       if (api == null) {
                                         throw Exception("API not ready.");
                                       }
-                                      final response =
+                                      final Response<AutocompleteAccountArray>
+                                          response =
                                           await api.v1AutocompleteAccountsGet(
                                         query: textEditingValue.text,
                                         types: _transactionType ==
@@ -1344,7 +1362,7 @@ class _TransactionPageState extends State<TransactionPage>
                                       }
                                       return response.body!;
                                     } catch (e) {
-                                      print(
+                                      debugPrint(
                                           "Error while fetching autocomplete from API: $e");
                                       return const Iterable<
                                           AutocompleteAccount>.empty();
@@ -1390,7 +1408,7 @@ class _TransactionPageState extends State<TransactionPage>
                                         2,
                                     prefixText:
                                         "${_foreignCurrencies[i]?.attributes.code ?? _localCurrency!.attributes.code} ",
-                                    onChanged: (string) {
+                                    onChanged: (String string) {
                                       if (_foreignCurrencies[i] != null) {
                                         _foreignAmounts[i] =
                                             double.tryParse(string) ?? 0;
@@ -1422,7 +1440,7 @@ class _TransactionPageState extends State<TransactionPage>
                                       2,
                                   prefixText:
                                       "${_localCurrency!.attributes.code} ",
-                                  onChanged: (string) {
+                                  onChanged: (String string) {
                                     _localAmounts[i] =
                                         double.tryParse(string) ?? 0;
                                     splitTransactionCalculateAmount();
@@ -1467,10 +1485,11 @@ class _TransactionPageState extends State<TransactionPage>
                           icon: const Icon(Icons.currency_exchange),
                           onPressed: _split
                               ? () async {
-                                  var newCurrency =
+                                  CurrencyRead? newCurrency =
                                       await showDialog<CurrencyRead>(
                                     context: context,
-                                    builder: (context) => CurrencyDialog(
+                                    builder: (BuildContext context) =>
+                                        CurrencyDialog(
                                       currentCurrency: _foreignCurrencies[i] ??
                                           _localCurrency!,
                                     ),
@@ -1498,12 +1517,13 @@ class _TransactionPageState extends State<TransactionPage>
                           tooltip: (_split) ? "Change Split Currency" : null,
                         ),
                         hDivider,
-                        if (!showAccountSelection) ...[
+                        if (!showAccountSelection) ...<Widget>[
                           IconButton(
                             icon: const Icon(Icons.add_business),
                             onPressed: _split && !showAccountSelection
                                 ? () {
-                                    print("adding separate account for $i");
+                                    debugPrint(
+                                        "adding separate account for $i");
                                     _otherAccountTextControllers[i].text = "";
                                     splitTransactionCheckAccounts();
                                   }
@@ -1517,7 +1537,7 @@ class _TransactionPageState extends State<TransactionPage>
                           icon: const Icon(Icons.delete),
                           onPressed: _split
                               ? () {
-                                  print("marking $i for deletion");
+                                  debugPrint("marking $i for deletion");
                                   _cardsAnimationController[i].reverse();
                                 }
                               : null,
@@ -1548,27 +1568,27 @@ class TransactionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("TransactionTitle build()");
+    debugPrint("TransactionTitle build()");
     return Expanded(
-      child: AutoCompleteText(
+      child: AutoCompleteText<String>(
         labelText: "Transaction Title",
         labelIcon: Icons.receipt_long,
         textController: textController,
         focusNode: focusNode,
         optionsBuilder: (TextEditingValue textEditingValue) async {
           try {
-            final api = FireflyProvider.of(context).api;
+            final FireflyIii? api = FireflyProvider.of(context).api;
             if (api == null) {
               throw Exception("API not ready.");
             }
-            final response = await api.v1AutocompleteTransactionsGet(
-                query: textEditingValue.text);
+            final Response<AutocompleteTransactionArray> response = await api
+                .v1AutocompleteTransactionsGet(query: textEditingValue.text);
             if (!response.isSuccessful || response.body == null) {
               throw Exception("Invalid Response from API");
             }
-            return response.body!.map((e) => e.name);
+            return response.body!.map((AutocompleteTransaction e) => e.name);
           } catch (e) {
-            print("Error while fetching autocomplete from API: $e");
+            debugPrint("Error while fetching autocomplete from API: $e");
             return const Iterable<String>.empty();
           }
         },
@@ -1580,7 +1600,7 @@ class TransactionTitle extends StatelessWidget {
 class Tags {
   final List<String>? initialTags;
   Tags([this.initialTags]) {
-    _tags = initialTags ?? [];
+    _tags = initialTags ?? <String>[];
   }
 
   late List<String> _tags;
@@ -1621,7 +1641,7 @@ class TransactionTags extends StatefulWidget {
 class _TransactionTagsState extends State<TransactionTags> {
   @override
   Widget build(BuildContext context) {
-    print("TransactionTags build()");
+    debugPrint("TransactionTags build()");
     FocusNode disabledFocus = AlwaysDisabledFocusNode();
     return Row(
       children: <Widget>[
@@ -1644,7 +1664,7 @@ class _TransactionTagsState extends State<TransactionTags> {
                           runSpacing: 5,
                           children: widget.tagsController.tags
                               .map(
-                                (e) => InputChip(
+                                (String e) => InputChip(
                                   label: Text(e),
                                   onDeleted: () {
                                     setState(() {
@@ -1663,9 +1683,9 @@ class _TransactionTagsState extends State<TransactionTags> {
                     : null,
               ),
               onTap: () async {
-                var tags = await showDialog<List<String>>(
+                List<String>? tags = await showDialog<List<String>>(
                   context: context,
-                  builder: (context) =>
+                  builder: (BuildContext context) =>
                       TagDialog(selectedTags: widget.tagsController.tags),
                 );
                 // Cancelled
@@ -1696,7 +1716,7 @@ class TransactionNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("TransactionNote build()");
+    debugPrint("TransactionNote build()");
     return Row(
       children: <Widget>[
         Expanded(
@@ -1730,26 +1750,27 @@ class TransactionCategory extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          child: AutoCompleteText(
+          child: AutoCompleteText<String>(
             labelText: "Category",
             labelIcon: Icons.assignment,
             textController: textController,
             focusNode: focusNode,
             optionsBuilder: (TextEditingValue textEditingValue) async {
               try {
-                final api = FireflyProvider.of(context).api;
+                final FireflyIii? api = FireflyProvider.of(context).api;
                 if (api == null) {
                   throw Exception("API not ready.");
                 }
-                final response = await api.v1AutocompleteCategoriesGet(
+                final Response<AutocompleteCategoryArray> response =
+                    await api.v1AutocompleteCategoriesGet(
                   query: textEditingValue.text,
                 );
                 if (!response.isSuccessful || response.body == null) {
                   throw Exception("Invalid Response from API");
                 }
-                return response.body!.map((e) => e.name);
+                return response.body!.map((AutocompleteCategory e) => e.name);
               } catch (e) {
-                print("Error while fetching autocomplete from API: $e");
+                debugPrint("Error while fetching autocomplete from API: $e");
                 return const Iterable<String>.empty();
               }
             },
@@ -1794,11 +1815,12 @@ class _TransactionBudgetState extends State<TransactionBudget> {
         return;
       }
       try {
-        final api = FireflyProvider.of(context).api;
+        final FireflyIii? api = FireflyProvider.of(context).api;
         if (api == null) {
           throw Exception("API not ready.");
         }
-        final response = await api.v1AutocompleteBudgetsGet(
+        final Response<AutocompleteBudgetArray> response =
+            await api.v1AutocompleteBudgetsGet(
           query: widget.textController.text,
         );
         if (!response.isSuccessful || response.body == null) {
@@ -1817,7 +1839,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
           });
         }
       } catch (e) {
-        print("Error while fetching autocomplete from API: $e");
+        debugPrint("Error while fetching autocomplete from API: $e");
       }
     });
   }
@@ -1827,7 +1849,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
     return Row(
       children: <Widget>[
         Expanded(
-          child: AutoCompleteText(
+          child: AutoCompleteText<AutocompleteBudget>(
             labelText: "Budget",
             labelIcon: Icons.payments,
             textController: widget.textController,
@@ -1842,11 +1864,12 @@ class _TransactionBudgetState extends State<TransactionBudget> {
             },
             optionsBuilder: (TextEditingValue textEditingValue) async {
               try {
-                final api = FireflyProvider.of(context).api;
+                final FireflyIii? api = FireflyProvider.of(context).api;
                 if (api == null) {
                   throw Exception("API not ready.");
                 }
-                final response = await api.v1AutocompleteBudgetsGet(
+                final Response<AutocompleteBudgetArray> response =
+                    await api.v1AutocompleteBudgetsGet(
                   query: textEditingValue.text,
                 );
                 if (!response.isSuccessful || response.body == null) {
@@ -1854,7 +1877,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
                 }
                 return response.body!;
               } catch (e) {
-                print("Error while fetching autocomplete from API: $e");
+                debugPrint("Error while fetching autocomplete from API: $e");
                 return const Iterable<AutocompleteBudget>.empty();
               }
             },
@@ -1878,7 +1901,7 @@ class TagDialog extends StatefulWidget {
 }
 
 class _TagDialogState extends State<TagDialog> {
-  final _newTagTextController = TextEditingController();
+  final TextEditingController _newTagTextController = TextEditingController();
 
   late List<String> _newSelectedTags;
 
@@ -1897,15 +1920,15 @@ class _TagDialogState extends State<TagDialog> {
   }
 
   Future<List<String>>? _getTags() async {
-    final api = FireflyProvider.of(context).api;
+    final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
       throw Exception("Can't get API instance");
     }
-    final response = await api.v1TagsGet();
+    final Response<TagArray> response = await api.v1TagsGet();
     if (!response.isSuccessful || response.body == null) {
       throw Exception("Invalid Response from API");
     }
-    return response.body!.data.map((e) => e.attributes.tag).toList();
+    return response.body!.data.map((TagRead e) => e.attributes.tag).toList();
   }
 
   void _newTagSubmitted(
@@ -1975,7 +1998,7 @@ class _TagDialogState extends State<TagDialog> {
                 List<Widget> child = <Widget>[
                   TextField(
                     controller: _newTagTextController,
-                    onChanged: (value) {
+                    onChanged: (String value) {
                       setAlertState(() {});
                     },
                     onSubmitted: (String value) =>
@@ -2058,11 +2081,11 @@ class CurrencyDialog extends StatelessWidget {
   final CurrencyRead currentCurrency;
 
   Future<List<CurrencyRead>>? _getCurrencies(BuildContext context) async {
-    final api = FireflyProvider.of(context).api;
+    final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
       throw Exception("Can't get API instance");
     }
-    final response = await api.v1CurrenciesGet();
+    final Response<CurrencyArray> response = await api.v1CurrenciesGet();
     if (!response.isSuccessful || response.body == null) {
       throw Exception("Invalid Response from API");
     }
@@ -2094,7 +2117,7 @@ class CurrencyDialog extends StatelessWidget {
           builder: (BuildContext context,
               AsyncSnapshot<List<CurrencyRead>> snapshot) {
             if (snapshot.hasData) {
-              List<Widget> child = [];
+              List<Widget> child = <Widget>[];
               for (CurrencyRead currency in snapshot.data!) {
                 child.add(CurrencyDialogOption(
                   optionCurrency: currency,
@@ -2187,12 +2210,12 @@ class AttachmentDialog extends StatefulWidget {
 
 class _AttachmentDialogState extends State<AttachmentDialog>
     with SingleTickerProviderStateMixin {
-  final Map<int, double> _dlProgress = {};
+  final Map<int, double> _dlProgress = <int, double>{};
 
   @override
   Widget build(BuildContext context) {
-    print("AttachmentDialog build(), ${widget.transactionId}");
-    List<Widget> childs = [];
+    debugPrint("AttachmentDialog build(), ${widget.transactionId}");
+    List<Widget> childs = <Widget>[];
     for (int i = 0; i < widget.attachments.length; i++) {
       AttachmentRead attachment = widget.attachments[i];
       String subtitle = "";
@@ -2213,21 +2236,22 @@ class _AttachmentDialogState extends State<AttachmentDialog>
               : Icons.download,
           onPressed: _dlProgress[i] == null
               ? () async {
-                  final msg = ScaffoldMessenger.of(context);
-                  final user = FireflyProvider.of(context).user;
+                  final ScaffoldMessengerState msg =
+                      ScaffoldMessenger.of(context);
+                  final AuthUser? user = FireflyProvider.of(context).user;
                   if (user == null) {
                     throw Exception("API not ready.");
                   }
-                  final task = DownloadTask(
+                  final DownloadTask task = DownloadTask(
                     url: attachment.attributes.downloadUrl!,
                     filename: attachment.attributes.filename,
                     headers: user.headers(),
                     creationTime: attachment.attributes.updatedAt,
                     baseDirectory: BaseDirectory.temporary,
                   );
-                  final result = await FileDownloader().download(
+                  final TaskStatus result = await FileDownloader().download(
                     task,
-                    onProgress: (progress) {
+                    onProgress: (double progress) {
                       setState(() {
                         _dlProgress[i] = progress;
                       });
@@ -2245,8 +2269,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                     ));
                     return;
                   }
-                  final path = await task.filePath();
-                  final file = await OpenFilex.open(path);
+                  final String path = await task.filePath();
+                  final OpenResult file = await OpenFilex.open(path);
                   if (file.type != ResultType.done) {
                     msg.showSnackBar(SnackBar(
                       content: Text("Could not open file: ${file.message}"),
@@ -2272,13 +2296,13 @@ class _AttachmentDialogState extends State<AttachmentDialog>
           onPressed: (_dlProgress[i] != null && _dlProgress[i]! < 0)
               ? null
               : () async {
-                  final api = FireflyProvider.of(context).api;
+                  final FireflyIii? api = FireflyProvider.of(context).api;
                   if (api == null) {
                     throw Exception("API unavailable");
                   }
                   bool? ok = await showDialog<bool>(
                     context: context,
-                    builder: (context) => AlertDialog(
+                    builder: (BuildContext context) => AlertDialog(
                       icon: const Icon(Icons.delete),
                       title: const Text("Delete Attachment"),
                       clipBehavior: Clip.hardEdge,
@@ -2311,7 +2335,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                 },
         ),
       ));
-      final divTheme = DividerTheme.of(context);
+      final DividerThemeData divTheme = DividerTheme.of(context);
       childs.add(
         SizedBox(
           height: divTheme.space ?? 16,
@@ -2340,9 +2364,9 @@ class _AttachmentDialogState extends State<AttachmentDialog>
           const SizedBox(width: 12),
           FilledButton(
             onPressed: () async {
-              final msg = ScaffoldMessenger.of(context);
-              final api = FireflyProvider.of(context).api;
-              final user = FireflyProvider.of(context).user;
+              final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
+              final FireflyIii? api = FireflyProvider.of(context).api;
+              final AuthUser? user = FireflyProvider.of(context).user;
 
               if (api == null || user == null) {
                 throw Exception("API unavailable");
@@ -2351,7 +2375,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
               if (file == null || file.files.first.path == null) {
                 return;
               }
-              final respAttachment = await api.v1AttachmentsPost(
+              final Response<AttachmentSingle> respAttachment =
+                  await api.v1AttachmentsPost(
                 body: AttachmentStore(
                   filename: file.files.first.name,
                   attachableType: AttachableType.transactionjournal,
@@ -2386,17 +2411,17 @@ class _AttachmentDialogState extends State<AttachmentDialog>
               String newPath = "${tmpPath.path}/${file.files.first.name}";
               await File(file.files.first.path!).rename(newPath);
 
-              final task = UploadTask(
+              final UploadTask task = UploadTask(
                 url: newAttachment.attributes.uploadUrl!,
                 filename: file.files.first.name,
                 headers: user.headers(),
                 baseDirectory: BaseDirectory.temporary,
                 post: 'binary',
               );
-              final result = await FileDownloader().upload(
+              final TaskStatus result = await FileDownloader().upload(
                 task,
-                onProgress: (progress) {
-                  print("Upload progress: $progress");
+                onProgress: (double progress) {
+                  debugPrint("Upload progress: $progress");
                   setState(() {
                     _dlProgress[newAttachmentIndex] = progress * -1;
                   });
@@ -2407,7 +2432,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
 
               if (result != TaskStatus.complete) {
                 late String error;
-                print(result);
+                debugPrint(result.toString());
                 try {
                   ValidationError valError = ValidationError.fromJson(
                       json.decode(respAttachment.error.toString()));
@@ -2415,7 +2440,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                 } catch (e) {
                   error = "Unknown error.";
                 }
-                print("error: $error");
+                debugPrint("error: $error");
                 msg.showSnackBar(SnackBar(
                   content: Text("Could not upload file: $error"),
                   behavior: SnackBarBehavior.floating,

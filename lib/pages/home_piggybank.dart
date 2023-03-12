@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:chopper/chopper.dart';
+import 'package:chopper/chopper.dart' show Response;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -27,18 +27,18 @@ class HomePiggybank extends StatefulWidget {
 class _HomePiggybankState extends State<HomePiggybank>
     with AutomaticKeepAliveClientMixin {
   Future<PiggyBankArray> _fetchAccounts() async {
-    final api = FireflyProvider.of(context).api;
+    final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
       throw Exception("API unavailable");
     }
 
-    final respAccounts = await api.v1PiggyBanksGet();
+    final Response<PiggyBankArray> respAccounts = await api.v1PiggyBanksGet();
 
     if (!respAccounts.isSuccessful || respAccounts.body == null) {
       throw Exception("Invalid Response from API");
     }
 
-    return Future.value(respAccounts.body);
+    return Future<PiggyBankArray>.value(respAccounts.body);
   }
 
   Future<void> _refreshStats() async {
@@ -51,11 +51,11 @@ class _HomePiggybankState extends State<HomePiggybank>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    print("home_piggybank build()");
+    debugPrint("home_piggybank build()");
 
     return RefreshIndicator(
       onRefresh: _refreshStats,
-      child: FutureBuilder(
+      child: FutureBuilder<PiggyBankArray>(
         future: _fetchAccounts(),
         builder:
             (BuildContext context, AsyncSnapshot<PiggyBankArray> snapshot) {
@@ -132,12 +132,12 @@ class _HomePiggybankState extends State<HomePiggybank>
                                 gradient: LinearGradient(
                                   begin: Alignment.bottomCenter,
                                   end: Alignment.topCenter,
-                                  stops: [
+                                  stops: <double>[
                                     0,
                                     (piggy.attributes.percentage ?? 100) / 100,
                                     (piggy.attributes.percentage ?? 100) / 100,
                                   ],
-                                  colors: [
+                                  colors: <Color>[
                                     Theme.of(context)
                                         .colorScheme
                                         .primaryContainer,
@@ -187,7 +187,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                             ),
                           ),
                           onTap: () {
-                            showDialog(
+                            showDialog<void>(
                               context: context,
                               builder: (BuildContext context) =>
                                   PiggyDetails(piggy: piggy),
@@ -242,12 +242,13 @@ class TimeSeriesChart {
 
 class _PiggyDetailsState extends State<PiggyDetails> {
   Future<List<PiggyBankEventRead>> _fetchChart() async {
-    final api = FireflyProvider.of(context).api;
+    final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
       throw Exception("API unavailable");
     }
 
-    final resp = await api.v1PiggyBanksIdEventsGet(id: currentPiggy.id);
+    final Response<PiggyBankEventArray> resp =
+        await api.v1PiggyBanksIdEventsGet(id: currentPiggy.id);
     if (!resp.isSuccessful || resp.body == null || resp.body!.data.isEmpty) {
       throw Exception("Invalid Response from API");
     }
@@ -317,18 +318,19 @@ class _PiggyDetailsState extends State<PiggyDetails> {
             : const Divider(height: 0),
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
-          child: Text(infoText.strip()),
+          child: Text(infoText.trim()),
         ),
-        FutureBuilder(
+        FutureBuilder<List<PiggyBankEventRead>>(
             future: _fetchChart(),
             builder: (BuildContext context,
                 AsyncSnapshot<List<PiggyBankEventRead>> snapshot) {
               if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.hasData) {
                 final List<charts.Series<TimeSeriesChart, DateTime>> chartData =
-                    [];
-                final List<charts.TickSpec<DateTime>> ticks = [];
-                final List<TimeSeriesChart> data = [];
+                    <charts.Series<TimeSeriesChart, DateTime>>[];
+                final List<charts.TickSpec<DateTime>> ticks =
+                    <charts.TickSpec<DateTime>>[];
+                final List<TimeSeriesChart> data = <TimeSeriesChart>[];
 
                 double total = 0;
 
@@ -337,21 +339,21 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                     currentPiggy.attributes.startDate!,
                     0,
                   ));
-                  ticks.add(charts.TickSpec(
+                  ticks.add(charts.TickSpec<DateTime>(
                       currentPiggy.attributes.startDate!.toLocal()));
                 }
 
                 for (PiggyBankEventRead e in snapshot.data!) {
                   final DateTime? date =
                       e.attributes.createdAt ?? e.attributes.updatedAt;
-                  final amount =
+                  final double amount =
                       double.tryParse(e.attributes.amount ?? "") ?? 0;
                   if (date == null || amount == 0) {
                     continue;
                   }
                   total += amount;
                   data.add(TimeSeriesChart(date, total));
-                  ticks.add(charts.TickSpec(date.toLocal()));
+                  ticks.add(charts.TickSpec<DateTime>(date.toLocal()));
                 }
                 chartData.add(
                   charts.Series<TimeSeriesChart, DateTime>(
@@ -362,7 +364,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                   ),
                 );
 
-                final chart = charts.TimeSeriesChart(
+                final charts.TimeSeriesChart chart = charts.TimeSeriesChart(
                   chartData,
                   animate: true,
                   primaryMeasureAxis: charts.NumericAxisSpec(
@@ -372,7 +374,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                       desiredMinTickCount: 4,
                       zeroBound: true,
                     ),
-                    renderSpec: charts.SmallTickRendererSpec(
+                    renderSpec: charts.SmallTickRendererSpec<num>(
                       labelStyle: charts.TextStyleSpec(
                         color: charts.ColorUtil.fromDartColor(
                             Theme.of(context).colorScheme.onSurfaceVariant),
@@ -385,7 +387,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                             DateFormat(DateFormat.ABBR_MONTH_DAY)),
                     tickProviderSpec: const charts.AutoDateTimeTickProviderSpec(
                         includeTime: false),
-                    renderSpec: charts.SmallTickRendererSpec(
+                    renderSpec: charts.SmallTickRendererSpec<DateTime>(
                       labelStyle: charts.TextStyleSpec(
                         color: charts.ColorUtil.fromDartColor(
                             Theme.of(context).colorScheme.onSurfaceVariant),
@@ -393,21 +395,23 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                     ),
                   ),
                   defaultRenderer:
-                      charts.LineRendererConfig(includePoints: true),
+                      charts.LineRendererConfig<DateTime>(includePoints: true),
                   behaviors: targetAmount != 0
-                      ? [
-                          charts.RangeAnnotation([
-                            charts.LineAnnotationSegment(
-                              targetAmount,
-                              charts.RangeAnnotationAxisType.measure,
-                              color: charts
-                                  .MaterialPalette.deepOrange.shadeDefault,
-                              labelAnchor: charts.AnnotationLabelAnchor.start,
-                              startLabel: "Target",
-                            )
-                          ]),
+                      ? <charts.ChartBehavior<DateTime>>[
+                          charts.RangeAnnotation<DateTime>(
+                            <charts.LineAnnotationSegment<num>>[
+                              charts.LineAnnotationSegment<num>(
+                                targetAmount,
+                                charts.RangeAnnotationAxisType.measure,
+                                color: charts
+                                    .MaterialPalette.deepOrange.shadeDefault,
+                                labelAnchor: charts.AnnotationLabelAnchor.start,
+                                startLabel: "Target",
+                              )
+                            ],
+                          ),
                         ]
-                      : [],
+                      : <charts.ChartBehavior<DateTime>>[],
                 );
 
                 return Padding(
@@ -418,7 +422,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                   ),
                 );
               } else if (snapshot.hasError) {
-                print("has error ${snapshot.error}, popping view");
+                debugPrint("has error ${snapshot.error}, popping view");
                 Navigator.of(context).pop();
                 return const SizedBox.shrink();
               } else {
@@ -560,8 +564,8 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
             const SizedBox(width: 12),
             FilledButton(
               onPressed: () async {
-                final api = FireflyProvider.of(context).api;
-                final nav = Navigator.of(context);
+                final FireflyIii? api = FireflyProvider.of(context).api;
+                final NavigatorState nav = Navigator.of(context);
 
                 double amount =
                     double.tryParse(_amountTextController.text) ?? 0;
@@ -575,7 +579,8 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                 if (api == null) {
                   throw Exception("Can't get API instance");
                 }
-                final resp = await api.v1PiggyBanksIdPut(
+                final Response<PiggyBankSingle> resp =
+                    await api.v1PiggyBanksIdPut(
                   id: widget.piggy.id,
                   body: PiggyBankUpdate(
                     currentAmount: totalAmount.toStringAsFixed(
@@ -593,9 +598,9 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                   }
 
                   if (context.mounted) {
-                    showDialog(
+                    showDialog<void>(
                       context: context,
-                      builder: (context) => AlertDialog(
+                      builder: (BuildContext context) => AlertDialog(
                         icon: const Icon(Icons.error),
                         title: const Text("Error"),
                         clipBehavior: Clip.hardEdge,

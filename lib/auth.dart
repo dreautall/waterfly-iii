@@ -1,9 +1,12 @@
+import 'dart:_http'
+    show HttpClient, HttpClientRequest, HttpClientResponse, HttpHeaders;
 import 'dart:convert';
-import 'dart:io' show HttpHeaders, HttpClient;
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:chopper/chopper.dart';
+import 'package:chopper/chopper.dart'
+    show Request, Response, StripStringExtension;
 
 import 'package:waterflyiii/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
@@ -47,22 +50,22 @@ class AuthUser {
   AuthUser._create(Uri host, String apiKey) {
     _apiKey = apiKey;
 
-    List<String> path = [...host.pathSegments, "api"];
+    List<String> path = <String>[...host.pathSegments, "api"];
     _host = host.replace(pathSegments: path);
 
     _api = FireflyIii.create(
       baseUrl: _host,
-      interceptors: [
+      interceptors: <dynamic>[
         (Request request) async {
-          print("API query to ${request.url}");
+          debugPrint("API query to ${request.url}");
           request.followRedirects = false;
           request.maxRedirects = 0;
-          return request.copyWith(headers: {
+          return request.copyWith(headers: <String, String>{
             ...request.headers,
             ...headers(),
           });
         },
-        (Response response) async {
+        (Response<dynamic> response) async {
           return response;
         },
       ],
@@ -70,17 +73,17 @@ class AuthUser {
   }
 
   Map<String, String> headers() {
-    return {
+    return <String, String>{
       HttpHeaders.authorizationHeader: "Bearer $_apiKey",
       HttpHeaders.acceptHeader: "application/json",
     };
   }
 
   static Future<AuthUser> create(String host, String apiKey) async {
-    print("AuthUser->create()");
+    debugPrint("AuthUser->create()");
 
     // This call is on purpose not using the Swagger API
-    final client = HttpClient();
+    final HttpClient client = HttpClient();
     Uri uri;
 
     try {
@@ -90,10 +93,10 @@ class AuthUser {
     }
 
     try {
-      var request = await client.getUrl(uri);
+      HttpClientRequest request = await client.getUrl(uri);
       request.headers.add(HttpHeaders.authorizationHeader, "Bearer $apiKey");
       request.followRedirects = false;
-      var response = await request.close();
+      HttpClientResponse response = await request.close();
 
       if (response.isRedirect) {
         throw const AuthErrorApiKey();
@@ -102,7 +105,7 @@ class AuthUser {
         throw AuthErrorStatusCode(response.statusCode);
       }
 
-      final stringData = await response.transform(utf8.decoder).join();
+      final String stringData = await response.transform(utf8.decoder).join();
 
       try {
         SystemInfo.fromJson(json.decode(stringData));
@@ -130,21 +133,21 @@ class FireflyService extends ChangeNotifier {
 
   late CurrencyRead defaultCurrency;
 
-  final storage = const FlutterSecureStorage(
+  final FlutterSecureStorage storage = const FlutterSecureStorage(
     aOptions: AndroidOptions(
       encryptedSharedPreferences: true,
     ),
   );
 
   FireflyService() {
-    print("new FireflyService");
+    debugPrint("new FireflyService");
   }
 
   Future<bool> signInFromStorage() async {
     String? apiHost = await storage.read(key: 'api_host');
     String? apiKey = await storage.read(key: 'api_key');
 
-    print("storage: $apiHost, $apiKey");
+    debugPrint("storage: $apiHost, $apiKey");
 
     if (apiHost == null || apiKey == null) {
       // this triggers app.dart to go on to the login screen
@@ -156,7 +159,7 @@ class FireflyService extends ChangeNotifier {
   }
 
   Future<void> signOut() async {
-    print("FireflyService->signOut()");
+    debugPrint("FireflyService->signOut()");
     _currentUser = null;
     _signedIn = false;
     await storage.deleteAll();
@@ -164,7 +167,7 @@ class FireflyService extends ChangeNotifier {
   }
 
   Future<bool> signIn(String host, String apiKey) async {
-    print("FireflyService->signIn($host)");
+    debugPrint("FireflyService->signIn($host)");
     host = host.strip().rightStrip('/');
     apiKey = apiKey.strip();
 

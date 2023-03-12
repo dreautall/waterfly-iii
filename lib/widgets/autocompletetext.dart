@@ -37,38 +37,43 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("AutoCompleteText(labelText: $labelText)");
+    debugPrint("AutoCompleteText(labelText: $labelText)");
     return LayoutBuilder(
-      builder: (context, constraints) => RawAutocomplete<T>(
+      builder: (BuildContext context, BoxConstraints constraints) =>
+          RawAutocomplete<T>(
         textEditingController: textController,
         focusNode: focusNode,
         onSelected: onSelected,
         displayStringForOption: displayStringForOption,
-        fieldViewBuilder: (context, textEditingController, focusNode,
-                onFieldSubmitted) =>
+        fieldViewBuilder: (BuildContext context,
+                TextEditingController textEditingController,
+                FocusNode focusNode,
+                void onFieldSubmitted) =>
             TextFormField(
-                controller: textEditingController,
-                focusNode: focusNode,
-                onChanged: onChanged,
-                readOnly: disabled,
-                enabled: !disabled,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: labelText,
-                  icon: (labelIcon != null) ? Icon(labelIcon) : null,
-                  filled: disabled,
-                  suffixIcon: errorText != null && errorIconOnly
-                      ? const ErrorIcon(true)
-                      : null,
-                  errorText: errorText,
-                  errorStyle:
-                      errorIconOnly ? const TextStyle(fontSize: 0) : null,
-                ),
-                enableSuggestions: true,
-                style: disabled
-                    ? style?.copyWith(color: Theme.of(context).disabledColor)
-                    : style),
-        optionsViewBuilder: (context, onOptionSelected, options) => Align(
+          controller: textEditingController,
+          focusNode: focusNode,
+          onChanged: onChanged,
+          readOnly: disabled,
+          enabled: !disabled,
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            labelText: labelText,
+            icon: (labelIcon != null) ? Icon(labelIcon) : null,
+            filled: disabled,
+            suffixIcon: errorText != null && errorIconOnly
+                ? const ErrorIcon(true)
+                : null,
+            errorText: errorText,
+            errorStyle: errorIconOnly ? const TextStyle(fontSize: 0) : null,
+          ),
+          enableSuggestions: true,
+          style: disabled
+              ? style?.copyWith(color: Theme.of(context).disabledColor)
+              : style,
+        ),
+        optionsViewBuilder: (BuildContext context,
+                void Function(T) onOptionSelected, Iterable<T> options) =>
+            Align(
           alignment: Alignment.topLeft,
           child: Padding(
             padding: EdgeInsets.only(left: labelIcon == null ? 0 : 40),

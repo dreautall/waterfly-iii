@@ -33,7 +33,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
   final int _numberOfPostsPerRequest = 50;
 
   final PagingController<int, TransactionRead> _pagingController =
-      PagingController(
+      PagingController<int, TransactionRead>(
     firstPageKey: 0,
     invisibleItemsThreshold: 20,
   );
@@ -46,7 +46,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
   void initState() {
     super.initState();
 
-    _pagingController.addPageRequestListener((pageKey) {
+    _pagingController.addPageRequestListener((int pageKey) {
       _fetchPage(pageKey);
     });
 
@@ -67,7 +67,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     text: _filters.text, account: _filters.account);
                 bool? ok = await showDialog<bool>(
                   context: context,
-                  builder: (context) => FilterDialog(
+                  builder: (BuildContext context) => FilterDialog(
                     filters: _filters, // passed by reference -> auto updated
                   ),
                 );
@@ -95,7 +95,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final api = FireflyProvider.of(context).api;
+      final FireflyIii? api = FireflyProvider.of(context).api;
       if (api == null) {
         throw Exception("API unavailable");
       }
@@ -117,20 +117,20 @@ class _HomeTransactionsState extends State<HomeTransactions>
                 end: DateFormat('yyyy-MM-dd').format(DateTime.now().toLocal()),
               );
       }
-      final response = await searchFunc;
+      final Response<TransactionArray> response = await searchFunc;
       if (!response.isSuccessful || response.body == null) {
         throw Exception("Invalid Response from API");
       }
-      final transactionList = response.body!.data;
-      final isLastPage = transactionList.length < _numberOfPostsPerRequest;
+      final List<TransactionRead> transactionList = response.body!.data;
+      final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
       if (isLastPage) {
         _pagingController.appendLastPage(transactionList);
       } else {
-        final nextPageKey = pageKey + 1;
+        final int nextPageKey = pageKey + 1;
         _pagingController.appendPage(transactionList, nextPageKey);
       }
     } catch (e) {
-      print("error --> $e");
+      debugPrint("error --> $e");
       _pagingController.error = e;
     }
   }
@@ -140,11 +140,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   @override
   Widget build(BuildContext context) {
-    print("home_transactions build()");
+    debugPrint("home_transactions build()");
     super.build(context);
 
     return RefreshIndicator(
-      onRefresh: () => Future.sync(() => _pagingController.refresh()),
+      onRefresh: () => Future<void>.sync(() => _pagingController.refresh()),
       child: PagedListView<int, TransactionRead>(
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
@@ -221,7 +221,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       title = transactions.first.description;
     }
     // Subtitle
-    List<InlineSpan> subtitle = [];
+    List<InlineSpan> subtitle = <InlineSpan>[];
     if (hasAttachments) {
       subtitle.add(const WidgetSpan(
         baseline: TextBaseline.ideographic,
@@ -326,13 +326,13 @@ class _HomeTransactionsState extends State<HomeTransactions>
         ),
       ),
       onTap: () async {
-        final refresh = await showDialog(
+        final bool? refresh = await showDialog<bool>(
           context: context,
           builder: (BuildContext context) => Dialog.fullscreen(
             child: TransactionPage(transaction: item),
           ),
         );
-        if (refresh != null && refresh) {
+        if (refresh ?? false) {
           _pagingController.refresh();
         }
 
@@ -351,7 +351,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       // Add date row
       transactionWidget = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 0, 8),
             child: Text(
@@ -378,11 +378,11 @@ class FilterDialog extends StatelessWidget {
   final TransactionFilters filters;
 
   Future<List<AccountRead>>? _getAccounts(BuildContext context) async {
-    final api = FireflyProvider.of(context).api;
+    final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
       throw Exception("Can't get API instance");
     }
-    final response =
+    final Response<AccountArray> response =
         await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
     if (!response.isSuccessful || response.body == null) {
       throw Exception("Invalid Response from API");
@@ -418,7 +418,7 @@ class FilterDialog extends StatelessWidget {
             builder: (BuildContext context,
                 AsyncSnapshot<List<AccountRead>> snapshot) {
               if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                List<Widget> child = [];
+                List<Widget> child = <Widget>[];
 
                 // Search Term
                 child.add(
@@ -440,7 +440,8 @@ class FilterDialog extends StatelessWidget {
                 child.add(const SizedBox(height: 12));
 
                 // Account Select
-                List<DropdownMenuEntry<AccountRead>> accountOptions = [
+                List<DropdownMenuEntry<AccountRead>> accountOptions =
+                    <DropdownMenuEntry<AccountRead>>[
                   DropdownMenuEntry<AccountRead>(
                     value: AccountRead(
                       id: "0",

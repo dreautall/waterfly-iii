@@ -61,6 +61,28 @@ class _HomePiggybankState extends State<HomePiggybank>
             (BuildContext context, AsyncSnapshot<PiggyBankArray> snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
+            if (snapshot.data!.data.isEmpty) {
+              return Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "No piggy banks set up.",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const Icon(
+                      Icons.savings_outlined,
+                      size: 200,
+                    ),
+                    Text(
+                      "Create some in the webinterface!",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
+              );
+            }
             return ListView(
               cacheExtent: 1000,
               padding: const EdgeInsets.all(8),

@@ -23,27 +23,20 @@ jobs:
           java-version: ${{env.JAVA_VERSION}}
           cache: 'gradle'
 
-      # Gradle cache for faster builds
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
       # Setup the flutter environment.
       - uses: subosito/flutter-action@v2
         with:
           channel: ${{env.FLUTTER_CHANNEL}}
           cache: true
 
+      # No flutter analytics.
+      - run: flutter config --no-analytics
+
       # Get flutter dependencies.
       - run: flutter pub get
 
       # Check for any formatting issues in the code.
-      - run: flutter format --set-exit-if-changed .
+      - run: dart format --set-exit-if-changed .
 
       # Statically analyze the Dart code for any errors.
       - run: dart analyze .
@@ -86,12 +79,12 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: app-x86_64-release.apk
-          path: ./artifcats
+          path: ./artifacts
       
       - uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            ./artifcats/app-arm64-v8a-release.apk
-            ./artifcats/app-armeabi-v7a-release.apk
-            ./artifcats/app-x86_64-release.apk
+            ./artifacts/app-arm64-v8a-release.apk
+            ./artifacts/app-armeabi-v7a-release.apk
+            ./artifacts/app-x86_64-release.apk

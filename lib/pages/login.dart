@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:waterflyiii/pages/splash.dart';
 import 'package:waterflyiii/widgets/logo.dart';
@@ -87,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                     child: Text(
-                      'Welcome to Waterfly III',
+                      S.of(context).loginWelcome,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
@@ -96,11 +97,11 @@ class _LoginPageState extends State<LoginPage> {
                     child: Card(
                       elevation: 0,
                       color: Theme.of(context).colorScheme.surfaceVariant,
-                      child: const Padding(
-                        padding: EdgeInsets.all(12),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
                         child: Text(
-                          "To use Waterfly III productively you need your own server with a Firefly III instance or the Firefly III add-on for Home Assistant.\n\nPlease enter the full URL as well as a personal access token (Settings -> Profile -> OAuth -> Personal Access Token) below.",
-                          style: TextStyle(height: 2),
+                          S.of(context).loginAbout,
+                          style: const TextStyle(height: 2),
                         ),
                       ),
                     ),
@@ -163,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                       focusNode: _hostFocusNode,
                       decoration: InputDecoration(
                         filled: true,
-                        labelText: "Host URL",
+                        labelText: S.of(context).loginFormLabelHost,
                         suffixIcon: _hostErrorIcon,
                         errorText: _hostError,
                       ),
@@ -188,19 +189,20 @@ class _LoginPageState extends State<LoginPage> {
                         if (error != _hostErrorIcon.isError ||
                             (_hostError != null &&
                                 _hostError!.isNotEmpty &&
-                                _hostError != "Invalid URL")) {
+                                _hostError != S.of(context).errorInvalidURL)) {
                           setState(() {
                             _hostErrorIcon = ErrorIcon(error);
-                            _hostError = error ? "Invalid URL" : null;
+                            _hostError =
+                                error ? S.of(context).errorInvalidURL : null;
                           });
                         }
                       },
                       autovalidateMode: AutovalidateMode.disabled,
                       validator: (String? value) {
                         String? error = value == null || value.isEmpty
-                            ? "This field is required."
+                            ? S.of(context).errorFieldRequired
                             : !_hostValid(value)
-                                ? "Invalid URL"
+                                ? S.of(context).errorInvalidURL
                                 : null;
                         if (_hostError != error ||
                             _hostErrorIcon.isError != (error != null)) {
@@ -220,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                       //readOnly: _formSubmitted,
                       decoration: InputDecoration(
                         filled: true,
-                        labelText: "Valid API Key",
+                        labelText: S.of(context).loginFormLabelAPIKey,
                         suffixIcon: _keyErrorIcon,
                         errorText: _keyError,
                       ),
@@ -235,7 +237,7 @@ class _LoginPageState extends State<LoginPage> {
                       autovalidateMode: AutovalidateMode.disabled,
                       validator: (String? value) {
                         String? error = value == null || value.isEmpty
-                            ? "This field is required."
+                            ? S.of(context).errorFieldRequired
                             : null;
                         if (_keyError != error ||
                             _keyErrorIcon.isError != (error != null)) {
@@ -254,16 +256,15 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
                       OutlinedButton(
                         onPressed: () async {
-                          const String url =
-                              "https://docs.firefly-iii.org/firefly-iii/api/#personal-access-token";
-                          final Uri uri = Uri.parse(url);
+                          final Uri uri = Uri.parse(
+                              "https://docs.firefly-iii.org/firefly-iii/api/#personal-access-token");
                           if (await canLaunchUrl(uri)) {
                             await launchUrl(uri);
                           } else {
-                            throw "Could not launch $url";
+                            throw "Could not open URL";
                           }
                         },
-                        child: const Text("Help"),
+                        child: Text(S.of(context).formButtonHelp),
                       ),
                       const SizedBox(width: 12),
                       FilledButton(
@@ -289,7 +290,7 @@ class _LoginPageState extends State<LoginPage> {
                                   _formSubmitted = true;
                                 });*/
                         },
-                        child: const Text("Login"),
+                        child: Text(S.of(context).formButtonLogin),
                       ),
                     ],
                   ),

@@ -1,0 +1,15 @@
+{
+  "loginWelcome": "Welcome to Waterfly III",
+  "loginAbout": "To use Waterfly III productively you need your own server with a Firefly III instance or the Firefly III add-on for Home Assistant.\\n\\nPlease enter the full URL as well as a personal access token (Settings -> Profile -> OAuth -> Personal Access Token) below.",
+  "errorInvalidURL": "Invalid URL",
+  "errorFieldRequired": "This field is required.",
+  "loginFormLabelAPIKey": "Valid API Key",
+  "formButtonHelp": "Help",
+  "formButtonLogin": "Login",
+  "loginFormLabelHost": "Host URL",
+  "formButtonTransactionAdd": "Add Transaction",
+  "homeTabLabelMain": "Main",
+  "homeTabLabelTransactions": "Transactions",
+  "homeTabLabelBalance": "Balance Sheet",
+  "homeTabLabelPiggybanks": "Piggy Banks"
+}

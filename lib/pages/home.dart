@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/home_main.dart';
@@ -43,27 +44,32 @@ class HomePageState extends State<HomePage>
   void initState() {
     super.initState();
 
-    _tabController = TabController(vsync: this, length: tabs.length);
+    _tabController = TabController(vsync: this, length: 4);
     _tabController.addListener(_handleTabChange);
 
-    _newTransactionFab = FloatingActionButton(
-      onPressed: () => showDialog<void>(
-        context: context,
-        builder: (BuildContext context) => const Dialog.fullscreen(
-          child: TransactionPage(),
-        ),
-      ),
-      tooltip: 'Add Transaction',
-      child: const Icon(Icons.add),
-    );
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _newTransactionFab = FloatingActionButton(
+        onPressed: () => showDialog<void>(
+          context: context,
+          builder: (BuildContext context) => const Dialog.fullscreen(
+            child: TransactionPage(),
+          ),
+        ),
+        tooltip: S.of(context).formButtonTransactionAdd,
+        child: const Icon(Icons.add),
+      );
+
       NavPageScaffold navScaffold = NavPageScaffold.of(context);
       navScaffold.data.setState(() {
         navScaffold.data.appBarBottom = TabBar(
           isScrollable: true,
           controller: _tabController,
-          tabs: tabs,
+          tabs: <Tab>[
+            Tab(text: S.of(context).homeTabLabelMain),
+            Tab(text: S.of(context).homeTabLabelTransactions),
+            Tab(text: S.of(context).homeTabLabelBalance),
+            Tab(text: S.of(context).homeTabLabelPiggybanks),
+          ],
         );
         navScaffold.data.appBarActions =
             getActions(tabPages[_tabController.index].key ?? const Key(''));
@@ -93,12 +99,7 @@ class HomePageState extends State<HomePage>
     }
   }
 
-  static const List<Tab> tabs = <Tab>[
-    Tab(text: 'Main'),
-    Tab(text: 'Transactions'),
-    Tab(text: 'Balance Sheet'),
-    Tab(text: 'Piggy Banks'),
-  ];
+  late List<Tab> tabs;
 
   static const List<Widget> tabPages = <Widget>[
     HomeMain(key: Key("HomeMain")),

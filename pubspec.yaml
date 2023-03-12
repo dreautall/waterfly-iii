@@ -10,6 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
   path_provider: ^2.0.13
   collection: ^1.17.0
   flutter_secure_storage: ^8.0.0
@@ -20,14 +23,12 @@ dependencies:
   flutter_svg: ^2.0.1
   url_launcher: ^6.1.8
   infinite_scroll_pagination: ^3.2.0
-  intl: ^0.18.0
   badges: ^3.0.2
   filesize: ^2.0.1
   background_downloader: ^5.0.0
   community_charts_flutter: ^1.0.1
   open_filex: ^4.3.2
   file_picker: ^5.2.5
-
 
 dev_dependencies:
   flutter_test:
@@ -41,6 +42,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
 
   assets:
     - assets/images/logo.svg
@@ -48,13 +50,10 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
@@ -74,3 +73,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true

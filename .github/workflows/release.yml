@@ -45,7 +45,7 @@ jobs:
       # - run: flutter test
 
       # Build apk.
-      - run: flutter build apk --release --split-per-abi
+      - run: flutter build apk --obfuscate --split-debug-info=build/app/outputs/symbols --release --split-per-abi
 
       # Upload generated apk to the artifacts.
       - uses: actions/upload-artifact@v3

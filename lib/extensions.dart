@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;
+}
+
+extension CurrencyFormat on CurrencyRead {
+  String fmtCurrency(double amount, {String? locale, bool forceCode = false}) =>
+      NumberFormat.currency(
+        locale: locale,
+        name: attributes.code,
+        decimalDigits: attributes.decimalPlaces,
+        symbol: forceCode ? null : attributes.symbol,
+      ).format(amount);
 }
 
 extension AccountRole on AccountRoleProperty {
@@ -303,9 +314,8 @@ extension TransactionType on TransactionTypeProperty {
 }
 
 extension DateTimeExtension on DateTime {
-  DateTime setTimeOfDay(TimeOfDay time) {
-    return DateTime(year, month, day, time.hour, time.minute);
-  }
+  DateTime setTimeOfDay(TimeOfDay time) =>
+      DateTime(year, month, day, time.hour, time.minute);
 
   DateTime setTime({
     int hours = 0,
@@ -313,16 +323,19 @@ extension DateTimeExtension on DateTime {
     int seconds = 0,
     int milliSeconds = 0,
     int microSeconds = 0,
-  }) {
-    return DateTime(
-        year, month, day, hours, minutes, seconds, milliSeconds, microSeconds);
-  }
+  }) =>
+      DateTime(
+        year,
+        month,
+        day,
+        hours,
+        minutes,
+        seconds,
+        milliSeconds,
+        microSeconds,
+      );
 
-  DateTime clearTime() {
-    return DateTime(year, month, day, 0, 0, 0, 0, 0);
-  }
+  DateTime clearTime() => DateTime(year, month, day, 0, 0, 0, 0, 0);
 
-  TimeOfDay getTimeOfDay() {
-    return TimeOfDay.fromDateTime(this);
-  }
+  TimeOfDay getTimeOfDay() => TimeOfDay.fromDateTime(this);
 }

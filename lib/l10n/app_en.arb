@@ -1,15 +1,68 @@
 {
-  "loginWelcome": "Welcome to Waterfly III",
-  "loginAbout": "To use Waterfly III productively you need your own server with a Firefly III instance or the Firefly III add-on for Home Assistant.\\n\\nPlease enter the full URL as well as a personal access token (Settings -> Profile -> OAuth -> Personal Access Token) below.",
-  "errorInvalidURL": "Invalid URL",
   "errorFieldRequired": "This field is required.",
-  "loginFormLabelAPIKey": "Valid API Key",
+  "@errorFieldRequired": {
+    "description": "Error: Required field was left empty."
+  },
+  "errorInvalidURL": "Invalid URL",
+  "@errorInvalidURL": {
+    "description": "Error: URL is invalid"
+  },
   "formButtonHelp": "Help",
+  "@formButtonHelp": {
+    "description": "Button Label: Help"
+  },
   "formButtonLogin": "Login",
-  "loginFormLabelHost": "Host URL",
+  "@formButtonLogin": {
+    "description": "Button Label: Login"
+  },
   "formButtonTransactionAdd": "Add Transaction",
-  "homeTabLabelMain": "Main",
-  "homeTabLabelTransactions": "Transactions",
+  "@formButtonTransactionAdd": {
+    "description": "Button Label: Add Transaction"
+  },
+  "homeMainChartDailyAvg": "7 days average: {avgAmount}",
+  "@homeMainChartDailyAvg": {
+    "description": "Text for last week average spent",
+    "placeholders": {
+      "avgAmount": {
+        "type": "String",
+        "example": "-EUR12.34"
+      }
+    }
+  },
+  "homeMainChartDailyTitle": "Daily Summary",
+  "@homeMainChartDailyTitle": {
+    "description": "Chart Label: Daily Summary"
+  },
   "homeTabLabelBalance": "Balance Sheet",
-  "homeTabLabelPiggybanks": "Piggy Banks"
+  "@homeTabLabelBalance": {
+    "description": "Tab Label: Balance Sheet page"
+  },
+  "homeTabLabelMain": "Main",
+  "@homeTabLabelMain": {
+    "description": "Tab Label: Start page (\"main\")"
+  },
+  "homeTabLabelPiggybanks": "Piggy Banks",
+  "@homeTabLabelPiggybanks": {
+    "description": "Tab Label: Piggy Banks page"
+  },
+  "homeTabLabelTransactions": "Transactions",
+  "@homeTabLabelTransactions": {
+    "description": "Tab Label: Transactions page"
+  },
+  "loginAbout": "To use Waterfly III productively you need your own server with a Firefly III instance or the Firefly III add-on for Home Assistant.\n\nPlease enter the full URL as well as a personal access token (Settings -> Profile -> OAuth -> Personal Access Token) below.",
+  "@loginAbout": {
+    "description": "Login screen welcome description"
+  },
+  "loginFormLabelAPIKey": "Valid API Key",
+  "@loginFormLabelAPIKey": {
+    "description": "Login Form: Label for API Key field"
+  },
+  "loginFormLabelHost": "Host URL",
+  "@loginFormLabelHost": {
+    "description": "Login Form: Label for Host field"
+  },
+  "loginWelcome": "Welcome to Waterfly III",
+  "@loginWelcome": {
+    "description": "Login screen welcome banner"
+  }
 }

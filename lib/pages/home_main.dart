@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:ui';
+
 import 'package:chopper/chopper.dart' show Response;
 import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -262,7 +264,7 @@ class _HomeMainState extends State<HomeMain>
         padding: const EdgeInsets.all(8),
         children: <Widget>[
           ChartCard(
-            title: "Daily Summary",
+            title: S.of(context).homeMainChartDailyTitle,
             future: _fetchLastDays(),
             summary: () {
               double sevenDayTotal = 0;
@@ -270,8 +272,15 @@ class _HomeMainState extends State<HomeMain>
                   sevenDayTotal -= (e.differenceFloat ?? 0).abs());
               lastDaysIncome.forEach((DateTime _, InsightTotalEntry e) =>
                   sevenDayTotal += (e.differenceFloat ?? 0).abs());
-              return Text(
-                  "7 days average: ${(sevenDayTotal / 7).toStringAsFixed(defaultCurrency.attributes.decimalPlaces ?? 2)} ${defaultCurrency.attributes.name}");
+              return Text(S
+                  .of(context)
+                  //.homeMainChartDailyAvg(sevenDayTotal / 7),
+                  .homeMainChartDailyAvg(
+                    defaultCurrency.fmtCurrency(
+                      sevenDayTotal / 7,
+                      locale: S.of(context).localeName,
+                    ),
+                  ));
             },
             height: 125,
             child: () => LastDaysChart(

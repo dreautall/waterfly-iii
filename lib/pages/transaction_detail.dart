@@ -1282,149 +1282,173 @@ class _TransactionPageState extends State<TransactionPage>
         child: Row(
           children: <Widget>[
             Expanded(
-                child: Column(
-              children: <Widget>[
-                animatedHeightCard(_split
-                    ? Row(
-                        children: <Widget>[
-                          TransactionTitle(
-                            textController: _titleTextControllers[i],
-                            focusNode: _titleFocusNodes[i],
-                          ),
-                        ],
-                      )
-                    : const SizedBox.shrink()),
-                animatedHeightCard(_split ? hDivider : const SizedBox.shrink()),
-                animatedHeightCard(showAccountSelection
-                    ? Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: AutoCompleteText(
-                              labelText: "Foreign account",
-                              labelIcon: Icons.account_balance,
-                              textController: _otherAccountTextControllers[i],
-                              focusNode: _otherAccountFocusNodes[i],
-                              onChanged: (String text) {
-                                splitTransactionCheckAccounts();
-                              },
-                              onSelected: (AutocompleteAccount option) {
-                                splitTransactionCheckAccounts();
-                              },
-                              displayStringForOption:
-                                  (AutocompleteAccount option) => option.name,
-                              optionsBuilder: (textEditingValue) async {
-                                try {
-                                  final api = FireflyProvider.of(context).api;
-                                  if (api == null) {
-                                    throw Exception("API not ready.");
-                                  }
-                                  final response =
-                                      await api.v1AutocompleteAccountsGet(
-                                    query: textEditingValue.text,
-                                    types: _transactionType ==
-                                            TransactionTypeProperty.withdrawal
-                                        ? _transactionType
-                                            .destinationAccountTypes
-                                        : _transactionType.sourceAccountTypes,
-                                  );
-                                  if (!response.isSuccessful ||
-                                      response.body == null) {
-                                    throw Exception(
-                                        "Invalid Response from API");
-                                  }
-                                  return response.body!;
-                                } catch (e) {
-                                  print(
-                                      "Error while fetching autocomplete from API: $e");
-                                  return const Iterable<
-                                      AutocompleteAccount>.empty();
-                                }
-                              },
-                            ),
-                          ),
-                        ],
-                      )
-                    : const SizedBox.shrink()),
-                animatedHeightCard(
-                  showAccountSelection ? hDivider : const SizedBox.shrink(),
-                ),
-                TransactionCategory(
-                  textController: _categoryTextControllers[i],
-                  focusNode: _categoryFocusNodes[i],
-                ),
-                hDivider,
-                TransactionBudget(
-                  textController: _budgetTextControllers[i],
-                  focusNode: _budgetFocusNodes[i],
-                ),
-                hDivider,
-                animatedHeightCard((_split)
-                    ? Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: NumberInput(
-                              icon: Icon(_transactionType.icon),
-                              controller: (_foreignCurrencies[i] != null)
-                                  ? _foreignAmountTextControllers[i]
-                                  : _localAmountTextControllers[i],
-                              hintText: "0.00",
-                              decimals: _foreignCurrencies[i]
-                                      ?.attributes
-                                      .decimalPlaces ??
-                                  _localCurrency!.attributes.decimalPlaces ??
-                                  2,
-                              prefixText:
-                                  "${_foreignCurrencies[i]?.attributes.code ?? _localCurrency!.attributes.code} ",
-                              onChanged: (string) {
-                                if (_foreignCurrencies[i] != null) {
-                                  _foreignAmounts[i] =
-                                      double.tryParse(string) ?? 0;
-                                } else {
-                                  _localAmounts[i] =
-                                      double.tryParse(string) ?? 0;
-                                }
-                                splitTransactionCalculateAmount();
-                              },
-                            ),
-                          ),
-                        ],
-                      )
-                    : const SizedBox.shrink()),
-                animatedHeightCard(
-                    (_split) ? hDivider : const SizedBox.shrink()),
-                animatedHeightCard((_split && _foreignCurrencies[i] != null)
-                    ? Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: NumberInput(
-                              icon: const Icon(Icons.currency_exchange),
-                              controller: _localAmountTextControllers[i],
-                              hintText: "0.00",
-                              decimals:
-                                  _localCurrency!.attributes.decimalPlaces ?? 2,
-                              prefixText: "${_localCurrency!.attributes.code} ",
-                              onChanged: (string) {
-                                _localAmounts[i] = double.tryParse(string) ?? 0;
-                                splitTransactionCalculateAmount();
-                              },
-                            ),
-                          ),
-                        ],
-                      )
-                    : const SizedBox.shrink()),
-                animatedHeightCard((_split && _foreignCurrencies[i] != null)
-                    ? hDivider
-                    : const SizedBox.shrink()),
-                TransactionTags(
-                  textController: _tagsTextControllers[i],
-                  tagsController: _tags[i],
-                ),
-                hDivider,
-                TransactionNote(
-                  textController: _noteTextControllers[i],
-                )
-              ],
-            )),
+              child: Column(
+                children: <Widget>[
+                  AnimatedHeightCard(
+                    child: _split
+                        ? Row(
+                            children: <Widget>[
+                              TransactionTitle(
+                                textController: _titleTextControllers[i],
+                                focusNode: _titleFocusNodes[i],
+                              ),
+                            ],
+                          )
+                        : const SizedBox.shrink(),
+                  ),
+                  AnimatedHeightCard(
+                    child: _split ? hDivider : const SizedBox.shrink(),
+                  ),
+                  AnimatedHeightCard(
+                    child: showAccountSelection
+                        ? Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: AutoCompleteText(
+                                  labelText: "Foreign account",
+                                  labelIcon: Icons.account_balance,
+                                  textController:
+                                      _otherAccountTextControllers[i],
+                                  focusNode: _otherAccountFocusNodes[i],
+                                  onChanged: (String text) {
+                                    splitTransactionCheckAccounts();
+                                  },
+                                  onSelected: (AutocompleteAccount option) {
+                                    splitTransactionCheckAccounts();
+                                  },
+                                  displayStringForOption:
+                                      (AutocompleteAccount option) =>
+                                          option.name,
+                                  optionsBuilder: (textEditingValue) async {
+                                    try {
+                                      final api =
+                                          FireflyProvider.of(context).api;
+                                      if (api == null) {
+                                        throw Exception("API not ready.");
+                                      }
+                                      final response =
+                                          await api.v1AutocompleteAccountsGet(
+                                        query: textEditingValue.text,
+                                        types: _transactionType ==
+                                                TransactionTypeProperty
+                                                    .withdrawal
+                                            ? _transactionType
+                                                .destinationAccountTypes
+                                            : _transactionType
+                                                .sourceAccountTypes,
+                                      );
+                                      if (!response.isSuccessful ||
+                                          response.body == null) {
+                                        throw Exception(
+                                            "Invalid Response from API");
+                                      }
+                                      return response.body!;
+                                    } catch (e) {
+                                      print(
+                                          "Error while fetching autocomplete from API: $e");
+                                      return const Iterable<
+                                          AutocompleteAccount>.empty();
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          )
+                        : const SizedBox.shrink(),
+                  ),
+                  AnimatedHeightCard(
+                    child: showAccountSelection
+                        ? hDivider
+                        : const SizedBox.shrink(),
+                  ),
+                  TransactionCategory(
+                    textController: _categoryTextControllers[i],
+                    focusNode: _categoryFocusNodes[i],
+                  ),
+                  hDivider,
+                  TransactionBudget(
+                    textController: _budgetTextControllers[i],
+                    focusNode: _budgetFocusNodes[i],
+                  ),
+                  hDivider,
+                  AnimatedHeightCard(
+                      child: (_split)
+                          ? Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: NumberInput(
+                                    icon: Icon(_transactionType.icon),
+                                    controller: (_foreignCurrencies[i] != null)
+                                        ? _foreignAmountTextControllers[i]
+                                        : _localAmountTextControllers[i],
+                                    hintText: "0.00",
+                                    decimals: _foreignCurrencies[i]
+                                            ?.attributes
+                                            .decimalPlaces ??
+                                        _localCurrency!
+                                            .attributes.decimalPlaces ??
+                                        2,
+                                    prefixText:
+                                        "${_foreignCurrencies[i]?.attributes.code ?? _localCurrency!.attributes.code} ",
+                                    onChanged: (string) {
+                                      if (_foreignCurrencies[i] != null) {
+                                        _foreignAmounts[i] =
+                                            double.tryParse(string) ?? 0;
+                                      } else {
+                                        _localAmounts[i] =
+                                            double.tryParse(string) ?? 0;
+                                      }
+                                      splitTransactionCalculateAmount();
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
+                          : const SizedBox.shrink()),
+                  AnimatedHeightCard(
+                    child: (_split) ? hDivider : const SizedBox.shrink(),
+                  ),
+                  AnimatedHeightCard(
+                    child: (_split && _foreignCurrencies[i] != null)
+                        ? Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: NumberInput(
+                                  icon: const Icon(Icons.currency_exchange),
+                                  controller: _localAmountTextControllers[i],
+                                  hintText: "0.00",
+                                  decimals: _localCurrency!
+                                          .attributes.decimalPlaces ??
+                                      2,
+                                  prefixText:
+                                      "${_localCurrency!.attributes.code} ",
+                                  onChanged: (string) {
+                                    _localAmounts[i] =
+                                        double.tryParse(string) ?? 0;
+                                    splitTransactionCalculateAmount();
+                                  },
+                                ),
+                              ),
+                            ],
+                          )
+                        : const SizedBox.shrink(),
+                  ),
+                  AnimatedHeightCard(
+                    child: (_split && _foreignCurrencies[i] != null)
+                        ? hDivider
+                        : const SizedBox.shrink(),
+                  ),
+                  TransactionTags(
+                    textController: _tagsTextControllers[i],
+                    tagsController: _tags[i],
+                  ),
+                  hDivider,
+                  TransactionNote(
+                    textController: _noteTextControllers[i],
+                  )
+                ],
+              ),
+            ),
             SizedBox(
               width: 48,
               child: Align(
@@ -1602,8 +1626,8 @@ class _TransactionTagsState extends State<TransactionTags> {
     return Row(
       children: <Widget>[
         Expanded(
-          child: animatedHeightCard(
-            TextFormField(
+          child: AnimatedHeightCard(
+            child: TextFormField(
               controller: widget.textController,
               maxLines: null,
               readOnly: true,
@@ -2002,8 +2026,8 @@ class _TagDialogState extends State<TagDialog> {
                 }
 
                 return SingleChildScrollView(
-                  child: animatedHeightCard(
-                    Column(
+                  child: AnimatedHeightCard(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: child,
                     ),

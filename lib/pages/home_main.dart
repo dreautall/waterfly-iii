@@ -482,8 +482,8 @@ class _HomeMainState extends State<HomeMain>
             ),
           ),
           const SizedBox(height: 8),
-          animatedHeightCard(
-            Card(
+          AnimatedHeightCard(
+            child: Card(
               clipBehavior: Clip.hardEdge,
               child: FutureBuilder(
                 future: _fetchBudgets(),
@@ -639,8 +639,8 @@ class ChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> summaryWidgets = <Widget>[];
 
-    return animatedHeightCard(
-      Card(
+    return AnimatedHeightCard(
+      child: Card(
         clipBehavior: Clip.hardEdge,
         child: FutureBuilder(
           future: future,

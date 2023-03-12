@@ -104,8 +104,8 @@ class _SplashPageState extends State<SplashPage> {
         width: double.infinity,
         child: Column(
           children: <Widget>[
-            animatedHeightCard(
-              Card(
+            AnimatedHeightCard(
+              child: Card(
                 elevation: 0,
                 color: Theme.of(context).colorScheme.errorContainer,
                 child: Padding(
@@ -118,8 +118,8 @@ class _SplashPageState extends State<SplashPage> {
                 ),
               ),
             ),
-            animatedHeightCard(
-              Card(
+            AnimatedHeightCard(
+              child: Card(
                 elevation: 0,
                 color: Theme.of(context).colorScheme.errorContainer,
                 child: Padding(
@@ -176,7 +176,9 @@ class _SplashPageState extends State<SplashPage> {
                 const SizedBox(height: 20),
                 const AppLogo(),
                 const SizedBox(height: 20),
-                animatedHeightCard(page),
+                AnimatedHeightCard(
+                  child: page,
+                ),
               ],
             ),
           ],

@@ -156,8 +156,8 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                   const SizedBox(height: 12),
-                  animatedHeightCard(
-                    TextFormField(
+                  AnimatedHeightCard(
+                    child: TextFormField(
                       controller: _hostTextController,
                       //readOnly: _formSubmitted,
                       focusNode: _hostFocusNode,
@@ -214,8 +214,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  animatedHeightCard(
-                    TextFormField(
+                  AnimatedHeightCard(
+                    child: TextFormField(
                       controller: _keyTextController,
                       //readOnly: _formSubmitted,
                       decoration: InputDecoration(

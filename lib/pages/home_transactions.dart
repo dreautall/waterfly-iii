@@ -105,15 +105,14 @@ class _HomeTransactionsState extends State<HomeTransactions>
         if (_filters.account != null) {
           query = "account_id:${_filters.account!.id} $query";
         }
-        searchFunc =
-            api.apiV1SearchTransactionsGet(query: query, page: pageKey);
+        searchFunc = api.v1SearchTransactionsGet(query: query, page: pageKey);
       } else {
         searchFunc = (widget.accountId != null || _filters.account != null)
-            ? api.apiV1AccountsIdTransactionsGet(
+            ? api.v1AccountsIdTransactionsGet(
                 id: widget.accountId ?? _filters.account!.id,
                 page: pageKey,
                 end: DateFormat('yyyy-MM-dd').format(DateTime.now().toLocal()))
-            : api.apiV1TransactionsGet(
+            : api.v1TransactionsGet(
                 page: pageKey,
                 end: DateFormat('yyyy-MM-dd').format(DateTime.now().toLocal()),
               );
@@ -384,7 +383,7 @@ class FilterDialog extends StatelessWidget {
       throw Exception("Can't get API instance");
     }
     final response =
-        await api.apiV1AccountsGet(type: AccountTypeFilter.assetAccount);
+        await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
     if (!response.isSuccessful || response.body == null) {
       throw Exception("Invalid Response from API");
     }

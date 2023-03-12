@@ -45,11 +45,13 @@ class AuthUser {
   FireflyIii get api => _api;
 
   AuthUser._create(Uri host, String apiKey) {
-    _host = host;
     _apiKey = apiKey;
 
+    List<String> path = [...host.pathSegments, "api"];
+    _host = host.replace(pathSegments: path);
+
     _api = FireflyIii.create(
-      baseUrl: host,
+      baseUrl: _host,
       interceptors: [
         (Request request) async {
           print("API query to ${request.url}");
@@ -145,7 +147,7 @@ class FireflyService extends ChangeNotifier {
     print("storage: $apiHost, $apiKey");
 
     if (apiHost == null || apiKey == null) {
-      // this triggers app.dart to go on to the login screen!
+      // this triggers app.dart to go on to the login screen
       notifyListeners();
       return false;
     }
@@ -162,7 +164,7 @@ class FireflyService extends ChangeNotifier {
   }
 
   Future<bool> signIn(String host, String apiKey) async {
-    print("FireflyService->signIn()");
+    print("FireflyService->signIn($host)");
     host = host.strip().rightStrip('/');
     apiKey = apiKey.strip();
 
@@ -170,8 +172,7 @@ class FireflyService extends ChangeNotifier {
     _currentUser = await AuthUser.create(host, apiKey);
     if (_currentUser == null || api == null) return false;
 
-    Response<CurrencySingle> currencyInfo =
-        await api!.apiV1CurrenciesDefaultGet();
+    Response<CurrencySingle> currencyInfo = await api!.v1CurrenciesDefaultGet();
     defaultCurrency = currencyInfo.body!.data;
 
     _signedIn = true;

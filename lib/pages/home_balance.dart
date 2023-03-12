@@ -26,7 +26,7 @@ class _HomeBalanceState extends State<HomeBalance>
     }
 
     final respAccounts =
-        await api.apiV1AccountsGet(type: AccountTypeFilter.assetAccount);
+        await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
 
     if (!respAccounts.isSuccessful || respAccounts.body == null) {
       throw Exception("Invalid Response from API");

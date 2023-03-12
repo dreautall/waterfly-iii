@@ -292,7 +292,7 @@ class _TransactionPageState extends State<TransactionPage>
         if (api == null) {
           throw Exception("API not ready.");
         }
-        final response = await api.apiV1AutocompleteAccountsGet(
+        final response = await api.v1AutocompleteAccountsGet(
           query: _ownAccountTextController.text,
           types: <AccountTypeFilter>[
             AccountTypeFilter.assetAccount,
@@ -572,7 +572,7 @@ class _TransactionPageState extends State<TransactionPage>
       if (api == null) {
         throw Exception("API not ready.");
       }
-      final response = await api.apiV1TransactionsIdAttachmentsGet(
+      final response = await api.v1TransactionsIdAttachmentsGet(
         id: widget.transaction?.id ?? widget.transactionId,
       );
       if (!response.isSuccessful || response.body == null) {
@@ -639,7 +639,7 @@ class _TransactionPageState extends State<TransactionPage>
                       return;
                     }
 
-                    await api.apiV1TransactionsIdDelete(
+                    await api.v1TransactionsIdDelete(
                         id: widget.transaction?.id ?? widget.transactionId);
                     nav.pop();
                   },
@@ -735,10 +735,10 @@ class _TransactionPageState extends State<TransactionPage>
                     continue;
                   }
                   print("deleting split $id");
-                  await api!.apiV1TransactionJournalsIdDelete(id: id);
+                  await api!.v1TransactionJournalsIdDelete(id: id);
                 }
                 final resp =
-                    await api!.apiV1TransactionsIdPut(id: id, body: txUpdate);
+                    await api!.v1TransactionsIdPut(id: id, body: txUpdate);
                 if (!resp.isSuccessful || resp.body == null) {
                   print(resp.error);
                   try {
@@ -811,7 +811,7 @@ class _TransactionPageState extends State<TransactionPage>
                     applyRules: true,
                     fireWebhooks: true,
                     errorIfDuplicateHash: true);
-                final resp = await api!.apiV1TransactionsPost(body: newTx);
+                final resp = await api!.v1TransactionsPost(body: newTx);
                 if (!resp.isSuccessful || resp.body == null) {
                   print(resp.error);
                   try {
@@ -1026,7 +1026,7 @@ class _TransactionPageState extends State<TransactionPage>
                   if (api == null) {
                     throw Exception("API not ready.");
                   }
-                  final response = await api.apiV1AutocompleteAccountsGet(
+                  final response = await api.v1AutocompleteAccountsGet(
                     query: textEditingValue.text,
                     types:
                         _transactionType == TransactionTypeProperty.withdrawal
@@ -1136,7 +1136,7 @@ class _TransactionPageState extends State<TransactionPage>
                   if (api == null) {
                     throw Exception("API not ready.");
                   }
-                  final response = await api.apiV1AutocompleteAccountsGet(
+                  final response = await api.v1AutocompleteAccountsGet(
                     query: textEditingValue.text,
                     types: <AccountTypeFilter>[
                       AccountTypeFilter.assetAccount,
@@ -1321,7 +1321,7 @@ class _TransactionPageState extends State<TransactionPage>
                                     throw Exception("API not ready.");
                                   }
                                   final response =
-                                      await api.apiV1AutocompleteAccountsGet(
+                                      await api.v1AutocompleteAccountsGet(
                                     query: textEditingValue.text,
                                     types: _transactionType ==
                                             TransactionTypeProperty.withdrawal
@@ -1540,7 +1540,7 @@ class TransactionTitle extends StatelessWidget {
             if (api == null) {
               throw Exception("API not ready.");
             }
-            final response = await api.apiV1AutocompleteTransactionsGet(
+            final response = await api.v1AutocompleteTransactionsGet(
                 query: textEditingValue.text);
             if (!response.isSuccessful || response.body == null) {
               throw Exception("Invalid Response from API");
@@ -1720,7 +1720,7 @@ class TransactionCategory extends StatelessWidget {
                 if (api == null) {
                   throw Exception("API not ready.");
                 }
-                final response = await api.apiV1AutocompleteCategoriesGet(
+                final response = await api.v1AutocompleteCategoriesGet(
                   query: textEditingValue.text,
                 );
                 if (!response.isSuccessful || response.body == null) {
@@ -1777,7 +1777,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
         if (api == null) {
           throw Exception("API not ready.");
         }
-        final response = await api.apiV1AutocompleteBudgetsGet(
+        final response = await api.v1AutocompleteBudgetsGet(
           query: widget.textController.text,
         );
         if (!response.isSuccessful || response.body == null) {
@@ -1825,7 +1825,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
                 if (api == null) {
                   throw Exception("API not ready.");
                 }
-                final response = await api.apiV1AutocompleteBudgetsGet(
+                final response = await api.v1AutocompleteBudgetsGet(
                   query: textEditingValue.text,
                 );
                 if (!response.isSuccessful || response.body == null) {
@@ -1880,7 +1880,7 @@ class _TagDialogState extends State<TagDialog> {
     if (api == null) {
       throw Exception("Can't get API instance");
     }
-    final response = await api.apiV1TagsGet();
+    final response = await api.v1TagsGet();
     if (!response.isSuccessful || response.body == null) {
       throw Exception("Invalid Response from API");
     }
@@ -2041,7 +2041,7 @@ class CurrencyDialog extends StatelessWidget {
     if (api == null) {
       throw Exception("Can't get API instance");
     }
-    final response = await api.apiV1CurrenciesGet();
+    final response = await api.v1CurrenciesGet();
     if (!response.isSuccessful || response.body == null) {
       throw Exception("Invalid Response from API");
     }
@@ -2283,7 +2283,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                     return;
                   }
 
-                  await api.apiV1AttachmentsIdDelete(id: attachment.id);
+                  await api.v1AttachmentsIdDelete(id: attachment.id);
                   setState(() {
                     widget.attachments.removeAt(i);
                   });
@@ -2330,7 +2330,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
               if (file == null || file.files.first.path == null) {
                 return;
               }
-              final respAttachment = await api.apiV1AttachmentsPost(
+              final respAttachment = await api.v1AttachmentsPost(
                 body: AttachmentStore(
                   filename: file.files.first.name,
                   attachableType: AttachableType.transactionjournal,
@@ -2400,7 +2400,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                   behavior: SnackBarBehavior.floating,
                 ));
                 widget.attachments.removeAt(newAttachmentIndex);
-                await api.apiV1AttachmentsIdDelete(id: newAttachment.id);
+                await api.v1AttachmentsIdDelete(id: newAttachment.id);
 
                 return;
               }

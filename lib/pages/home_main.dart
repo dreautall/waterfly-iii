@@ -58,7 +58,7 @@ class _HomeMainState extends State<HomeMain>
     lastDaysExpense.clear();
     lastDaysIncome.clear();
     for (DateTime e in lastDays) {
-      final respInsightExpense = await api.apiV1InsightExpenseTotalGet(
+      final respInsightExpense = await api.v1InsightExpenseTotalGet(
         start: DateFormat('yyyy-MM-dd').format(e),
         end: DateFormat('yyyy-MM-dd').format(e),
       );
@@ -68,7 +68,7 @@ class _HomeMainState extends State<HomeMain>
       lastDaysExpense[e] = respInsightExpense.body!.isNotEmpty
           ? respInsightExpense.body!.first
           : InsightTotalEntry(differenceFloat: 0);
-      final respInsightIncome = await api.apiV1InsightIncomeTotalGet(
+      final respInsightIncome = await api.v1InsightIncomeTotalGet(
         start: DateFormat('yyyy-MM-dd').format(e),
         end: DateFormat('yyyy-MM-dd').format(e),
       );
@@ -91,7 +91,7 @@ class _HomeMainState extends State<HomeMain>
 
     final DateTime now = DateTime.now().toLocal().clearTime();
 
-    final respChartData = await api.apiV1ChartAccountOverviewGet(
+    final respChartData = await api.v1ChartAccountOverviewGet(
       start:
           DateFormat('yyyy-MM-dd').format(now.copyWith(month: now.month - 12)),
       end: DateFormat('yyyy-MM-dd').format(now),
@@ -130,7 +130,7 @@ class _HomeMainState extends State<HomeMain>
         start = e;
         end = e.copyWith(month: e.month + 1, day: 0);
       }
-      final respInsightExpense = await api.apiV1InsightExpenseTotalGet(
+      final respInsightExpense = await api.v1InsightExpenseTotalGet(
         start: DateFormat('yyyy-MM-dd').format(start),
         end: DateFormat('yyyy-MM-dd').format(end),
       );
@@ -140,7 +140,7 @@ class _HomeMainState extends State<HomeMain>
       lastMonthsExpense[e] = respInsightExpense.body!.isNotEmpty
           ? respInsightExpense.body!.first
           : InsightTotalEntry(differenceFloat: 0);
-      final respInsightIncome = await api.apiV1InsightIncomeTotalGet(
+      final respInsightIncome = await api.v1InsightIncomeTotalGet(
         start: DateFormat('yyyy-MM-dd').format(start),
         end: DateFormat('yyyy-MM-dd').format(end),
       );
@@ -163,13 +163,13 @@ class _HomeMainState extends State<HomeMain>
 
     final DateTime now = DateTime.now().toLocal().clearTime();
 
-    final respCatData = await api.apiV1CategoriesGet();
+    final respCatData = await api.v1CategoriesGet();
     if (!respCatData.isSuccessful || respCatData.body == null) {
       throw Exception("Invalid Response from API");
     }
 
     for (CategoryRead e in respCatData.body!.data) {
-      final respCat = await api.apiV1CategoriesIdGet(
+      final respCat = await api.v1CategoriesIdGet(
         id: e.id,
         start: DateFormat('yyyy-MM-dd').format(now.copyWith(day: 1)),
         end: DateFormat('yyyy-MM-dd').format(now),
@@ -191,7 +191,7 @@ class _HomeMainState extends State<HomeMain>
       throw Exception("API unavailable");
     }
 
-    final respBudgetInfos = await api.apiV1BudgetsGet();
+    final respBudgetInfos = await api.v1BudgetsGet();
     if (!respBudgetInfos.isSuccessful || respBudgetInfos.body == null) {
       throw Exception("Invalid Response from API");
     }
@@ -201,7 +201,7 @@ class _HomeMainState extends State<HomeMain>
     }
 
     final DateTime now = DateTime.now().toLocal().clearTime();
-    final respBudgets = await api.apiV1BudgetLimitsGet(
+    final respBudgets = await api.v1BudgetLimitsGet(
       start: DateFormat('yyyy-MM-dd').format(now.copyWith(day: 1)),
       end: DateFormat('yyyy-MM-dd').format(now),
     );

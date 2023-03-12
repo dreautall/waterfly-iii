@@ -65,7 +65,7 @@ class _HomeBalanceState extends State<HomeBalance>
                     final String balanceString = balance.abs().toStringAsFixed(
                         account.attributes.currencyDecimalPlaces ?? 2);
                     if (!(account.attributes.active ?? false)) {
-                      return const SizedBox();
+                      return const SizedBox.shrink();
                     }
                     return ListTile(
                       title: Text(account.attributes.name),

@@ -293,7 +293,7 @@ class _HomeMainState extends State<HomeMain>
               children: <TableRow>[
                 TableRow(
                   children: <Widget>[
-                    const SizedBox(),
+                    const SizedBox.shrink(),
                     Text(
                       "Account",
                       style: Theme.of(context).textTheme.labelLarge,
@@ -370,8 +370,8 @@ class _HomeMainState extends State<HomeMain>
               children: <TableRow>[
                 TableRow(
                   children: <Widget>[
-                    const SizedBox(),
-                    const SizedBox(),
+                    const SizedBox.shrink(),
+                    const SizedBox.shrink(),
                     ...lastMonthsIncome.keys.toList().reversed.map(
                           (DateTime e) => Align(
                             alignment: Alignment.centerRight,
@@ -443,7 +443,7 @@ class _HomeMainState extends State<HomeMain>
                 ),
                 TableRow(
                   children: <Widget>[
-                    const SizedBox(),
+                    const SizedBox.shrink(),
                     const Text(
                       "Sum",
                       style: TextStyle(fontWeight: FontWeight.bold),

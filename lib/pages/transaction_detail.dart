@@ -644,7 +644,7 @@ class _TransactionPageState extends State<TransactionPage>
                     nav.pop();
                   },
                 )
-              : const SizedBox(),
+              : const SizedBox.shrink(),
           const SizedBox(width: 8),
           FilledButton(
             child: const Text('Save'),
@@ -990,7 +990,7 @@ class _TransactionPageState extends State<TransactionPage>
                         _localAmounts[0] = double.tryParse(string) ?? 0,
                   ),
                 )
-              : const SizedBox(),
+              : const SizedBox.shrink(),
         ],
       ),
     );
@@ -1295,8 +1295,8 @@ class _TransactionPageState extends State<TransactionPage>
                           ),
                         ],
                       )
-                    : const SizedBox()),
-                animatedHeightCard(_split ? hDivider : const SizedBox()),
+                    : const SizedBox.shrink()),
+                animatedHeightCard(_split ? hDivider : const SizedBox.shrink()),
                 animatedHeightCard(showAccountSelection
                     ? Row(
                         children: <Widget>[
@@ -1346,9 +1346,9 @@ class _TransactionPageState extends State<TransactionPage>
                           ),
                         ],
                       )
-                    : const SizedBox()),
+                    : const SizedBox.shrink()),
                 animatedHeightCard(
-                  showAccountSelection ? hDivider : const SizedBox(),
+                  showAccountSelection ? hDivider : const SizedBox.shrink(),
                 ),
                 TransactionCategory(
                   textController: _categoryTextControllers[i],
@@ -1391,8 +1391,9 @@ class _TransactionPageState extends State<TransactionPage>
                           ),
                         ],
                       )
-                    : const SizedBox()),
-                animatedHeightCard((_split) ? hDivider : const SizedBox()),
+                    : const SizedBox.shrink()),
+                animatedHeightCard(
+                    (_split) ? hDivider : const SizedBox.shrink()),
                 animatedHeightCard((_split && _foreignCurrencies[i] != null)
                     ? Row(
                         children: <Widget>[
@@ -1412,10 +1413,10 @@ class _TransactionPageState extends State<TransactionPage>
                           ),
                         ],
                       )
-                    : const SizedBox()),
+                    : const SizedBox.shrink()),
                 animatedHeightCard((_split && _foreignCurrencies[i] != null)
                     ? hDivider
-                    : const SizedBox()),
+                    : const SizedBox.shrink()),
                 TransactionTags(
                   textController: _tagsTextControllers[i],
                   tagsController: _tags[i],
@@ -1490,8 +1491,10 @@ class _TransactionPageState extends State<TransactionPage>
                                     ? "Change Split Target Account"
                                     : null,
                               )
-                            : const SizedBox(),
-                        !showAccountSelection ? hDivider : const SizedBox(),
+                            : const SizedBox.shrink(),
+                        !showAccountSelection
+                            ? hDivider
+                            : const SizedBox.shrink(),
                         IconButton(
                           icon: const Icon(Icons.delete),
                           onPressed: _split

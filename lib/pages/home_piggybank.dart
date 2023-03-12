@@ -104,7 +104,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                         .toStringAsFixed(
                             piggy.attributes.currencyDecimalPlaces ?? 2);
                     if (!(piggy.attributes.active ?? false)) {
-                      return const SizedBox();
+                      return const SizedBox.shrink();
                     }
                     return Column(
                       children: <Widget>[
@@ -420,7 +420,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
               } else if (snapshot.hasError) {
                 print("has error ${snapshot.error}, popping view");
                 Navigator.of(context).pop();
-                return const SizedBox();
+                return const SizedBox.shrink();
               } else {
                 return const Padding(
                   padding: EdgeInsets.all(8),

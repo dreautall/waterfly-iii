@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:chopper/chopper.dart';
@@ -6,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:waterflyiii/auth.dart';
+import 'package:waterflyiii/transactions.dart';
+import 'package:waterflyiii/widgets/input_number.dart';
+import 'package:waterflyiii/widgets/materialiconbutton.dart';
 import 'package:waterflyiii/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 import 'package:community_charts_flutter/community_charts_flutter.dart'
@@ -28,7 +32,7 @@ class _HomePiggybankState extends State<HomePiggybank>
       throw Exception("API unavailable");
     }
 
-    final respAccounts = await api.apiV1PiggyBanksGet();
+    final respAccounts = await api.v1PiggyBanksGet();
 
     if (!respAccounts.isSuccessful || respAccounts.body == null) {
       throw Exception("Invalid Response from API");
@@ -93,6 +97,40 @@ class _HomePiggybankState extends State<HomePiggybank>
                             ),
                           ),
                           isThreeLine: false,
+                          leading: CircleAvatar(
+                            child: Container(
+                              constraints: const BoxConstraints(
+                                minHeight: 40,
+                                maxHeight: 40,
+                                minWidth: 40,
+                                maxWidth: 40,
+                              ),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: LinearGradient(
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                  stops: [
+                                    0,
+                                    (piggy.attributes.percentage ?? 100) / 100,
+                                    (piggy.attributes.percentage ?? 100) / 100,
+                                  ],
+                                  colors: [
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .surfaceVariant,
+                                  ],
+                                ),
+                              ),
+                              child: const Icon(Icons.savings_outlined),
+                            ),
+                          ),
                           trailing: RichText(
                             textAlign: TextAlign.end,
                             maxLines: 2,
@@ -131,7 +169,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                               context: context,
                               builder: (BuildContext context) =>
                                   PiggyDetails(piggy: piggy),
-                            );
+                            ).then((_) => setState(() {}));
                           },
                         ),
                         piggy.attributes.percentage != null
@@ -187,7 +225,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
       throw Exception("API unavailable");
     }
 
-    final resp = await api.apiV1PiggyBanksIdEventsGet(id: widget.piggy.id);
+    final resp = await api.v1PiggyBanksIdEventsGet(id: currentPiggy.id);
     if (!resp.isSuccessful || resp.body == null || resp.body!.data.isEmpty) {
       throw Exception("Invalid Response from API");
     }
@@ -196,37 +234,46 @@ class _PiggyDetailsState extends State<PiggyDetails> {
         e.attributes.createdAt ?? e.attributes.updatedAt ?? DateTime.now());
   }
 
+  late PiggyBankRead currentPiggy;
+
+  @override
+  void initState() {
+    super.initState();
+
+    currentPiggy = widget.piggy;
+  }
+
   @override
   Widget build(BuildContext context) {
     final double currentAmount =
-        double.tryParse(widget.piggy.attributes.currentAmount ?? "") ?? 0;
+        double.tryParse(currentPiggy.attributes.currentAmount ?? "") ?? 0;
     final String currentString = currentAmount
         .abs()
-        .toStringAsFixed(widget.piggy.attributes.currencyDecimalPlaces ?? 2);
+        .toStringAsFixed(currentPiggy.attributes.currencyDecimalPlaces ?? 2);
     final double targetAmount =
-        double.tryParse(widget.piggy.attributes.targetAmount ?? "") ?? 0;
+        double.tryParse(currentPiggy.attributes.targetAmount ?? "") ?? 0;
     final String targetString = targetAmount
         .abs()
-        .toStringAsFixed(widget.piggy.attributes.currencyDecimalPlaces ?? 2);
+        .toStringAsFixed(currentPiggy.attributes.currencyDecimalPlaces ?? 2);
     final double leftAmount =
-        double.tryParse(widget.piggy.attributes.leftToSave ?? "") ?? 0;
+        double.tryParse(currentPiggy.attributes.leftToSave ?? "") ?? 0;
     final String leftString = leftAmount
         .abs()
-        .toStringAsFixed(widget.piggy.attributes.currencyDecimalPlaces ?? 2);
-    final DateTime? startDate = widget.piggy.attributes.startDate?.toLocal();
-    final DateTime? targetDate = widget.piggy.attributes.targetDate?.toLocal();
+        .toStringAsFixed(currentPiggy.attributes.currencyDecimalPlaces ?? 2);
+    final DateTime? startDate = currentPiggy.attributes.startDate?.toLocal();
+    final DateTime? targetDate = currentPiggy.attributes.targetDate?.toLocal();
 
     String infoText = "";
 
     if (targetAmount != 0) {
       infoText +=
-          "Target amount: ${widget.piggy.attributes.currencySymbol}$targetString\n";
+          "Target amount: ${currentPiggy.attributes.currencySymbol}$targetString\n";
     }
     infoText +=
-        "Saved so far: ${widget.piggy.attributes.currencySymbol}$currentString\n";
+        "Saved so far: ${currentPiggy.attributes.currencySymbol}$currentString\n";
     if (leftAmount != 0) {
       infoText +=
-          "Left to save: ${widget.piggy.attributes.currencySymbol}$leftString\n";
+          "Left to save: ${currentPiggy.attributes.currencySymbol}$leftString\n";
     }
     if (startDate != null) {
       infoText +=
@@ -238,12 +285,12 @@ class _PiggyDetailsState extends State<PiggyDetails> {
     }
 
     return SimpleDialog(
-      title: Text(widget.piggy.attributes.name),
+      title: Text(currentPiggy.attributes.name),
       clipBehavior: Clip.hardEdge,
       children: <Widget>[
-        widget.piggy.attributes.percentage != null
+        currentPiggy.attributes.percentage != null
             ? LinearProgressIndicator(
-                value: widget.piggy.attributes.percentage! / 100,
+                value: currentPiggy.attributes.percentage! / 100,
               )
             : const Divider(height: 0),
         Padding(
@@ -263,13 +310,13 @@ class _PiggyDetailsState extends State<PiggyDetails> {
 
                 double total = 0;
 
-                if (widget.piggy.attributes.startDate != null) {
+                if (currentPiggy.attributes.startDate != null) {
                   data.add(TimeSeriesChart(
-                    widget.piggy.attributes.startDate!,
+                    currentPiggy.attributes.startDate!,
                     0,
                   ));
                   ticks.add(charts.TickSpec(
-                      widget.piggy.attributes.startDate!.toLocal()));
+                      currentPiggy.attributes.startDate!.toLocal()));
                 }
 
                 for (PiggyBankEventRead e in snapshot.data!) {
@@ -286,50 +333,66 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                 }
                 chartData.add(
                   charts.Series<TimeSeriesChart, DateTime>(
-                    id: widget.piggy.id,
+                    id: currentPiggy.id,
                     domainFn: (TimeSeriesChart d, _) => d.time.toLocal(),
                     measureFn: (TimeSeriesChart d, _) => d.value,
                     data: data,
                   ),
                 );
 
+                final chart = charts.TimeSeriesChart(
+                  chartData,
+                  animate: true,
+                  primaryMeasureAxis: charts.NumericAxisSpec(
+                    tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+                      //desiredTickCount: 6,
+                      desiredMaxTickCount: 6,
+                      desiredMinTickCount: 4,
+                      zeroBound: true,
+                    ),
+                    renderSpec: charts.SmallTickRendererSpec(
+                      labelStyle: charts.TextStyleSpec(
+                        color: charts.ColorUtil.fromDartColor(
+                            Theme.of(context).colorScheme.onSurfaceVariant),
+                      ),
+                    ),
+                  ),
+                  domainAxis: charts.DateTimeAxisSpec(
+                    tickFormatterSpec:
+                        charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
+                            DateFormat(DateFormat.ABBR_MONTH_DAY)),
+                    tickProviderSpec: const charts.AutoDateTimeTickProviderSpec(
+                        includeTime: false),
+                    renderSpec: charts.SmallTickRendererSpec(
+                      labelStyle: charts.TextStyleSpec(
+                        color: charts.ColorUtil.fromDartColor(
+                            Theme.of(context).colorScheme.onSurfaceVariant),
+                      ),
+                    ),
+                  ),
+                  defaultRenderer:
+                      charts.LineRendererConfig(includePoints: true),
+                  behaviors: targetAmount != 0
+                      ? [
+                          charts.RangeAnnotation([
+                            charts.LineAnnotationSegment(
+                              targetAmount,
+                              charts.RangeAnnotationAxisType.measure,
+                              color: charts
+                                  .MaterialPalette.deepOrange.shadeDefault,
+                              labelAnchor: charts.AnnotationLabelAnchor.start,
+                              startLabel: "Target",
+                            )
+                          ]),
+                        ]
+                      : [],
+                );
+
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: SizedBox(
                     height: 300,
-                    child: charts.TimeSeriesChart(
-                      chartData,
-                      animate: true,
-                      primaryMeasureAxis: charts.NumericAxisSpec(
-                        tickProviderSpec:
-                            const charts.BasicNumericTickProviderSpec(
-                          //desiredTickCount: 6,
-                          desiredMaxTickCount: 6,
-                          desiredMinTickCount: 4,
-                          zeroBound: true,
-                        ),
-                        renderSpec: charts.SmallTickRendererSpec(
-                          labelStyle: charts.TextStyleSpec(
-                            color: charts.ColorUtil.fromDartColor(
-                                Theme.of(context).colorScheme.onSurfaceVariant),
-                          ),
-                        ),
-                      ),
-                      domainAxis: charts.DateTimeAxisSpec(
-                        tickFormatterSpec: charts.BasicDateTimeTickFormatterSpec
-                            .fromDateFormat(
-                                DateFormat(DateFormat.ABBR_MONTH_DAY)),
-                        tickProviderSpec:
-                            const charts.AutoDateTimeTickProviderSpec(
-                                includeTime: false),
-                        renderSpec: charts.SmallTickRendererSpec(
-                          labelStyle: charts.TextStyleSpec(
-                            color: charts.ColorUtil.fromDartColor(
-                                Theme.of(context).colorScheme.onSurfaceVariant),
-                          ),
-                        ),
-                      ),
-                    ),
+                    child: chart,
                   ),
                 );
               } else if (snapshot.hasError) {
@@ -353,6 +416,184 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                 Navigator.of(context).pop();
               },
               child: const Text("Close"),
+            ),
+            const SizedBox(width: 12),
+            FilledButton(
+              onPressed: () async {
+                PiggyBankSingle? newPiggy = await showDialog<PiggyBankSingle>(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      PiggyAdjustBalance(piggy: currentPiggy),
+                );
+                if (newPiggy == null) {
+                  return;
+                }
+                setState(() {
+                  currentPiggy = newPiggy.data;
+                });
+              },
+              child: const Icon(Icons.price_change_outlined),
+            ),
+            const SizedBox(width: 12),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class PiggyAdjustBalance extends StatefulWidget {
+  const PiggyAdjustBalance({
+    super.key,
+    required this.piggy,
+  });
+
+  final PiggyBankRead piggy;
+
+  @override
+  State<PiggyAdjustBalance> createState() => _PiggyAdjustBalanceState();
+}
+
+class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
+  final TextEditingController _amountTextController = TextEditingController();
+  TransactionTypeProperty _transactionType = TransactionTypeProperty.deposit;
+
+  late double currentAmount;
+  late String currentString;
+
+  @override
+  void initState() {
+    super.initState();
+
+    currentAmount =
+        double.tryParse(widget.piggy.attributes.currentAmount ?? "") ?? 0;
+    currentString = currentAmount
+        .abs()
+        .toStringAsFixed(widget.piggy.attributes.currencyDecimalPlaces ?? 2);
+  }
+
+  @override
+  void dispose() {
+    _amountTextController.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      title: const Text("Save/Spend Money"),
+      clipBehavior: Clip.hardEdge,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                  "Current Balance: ${widget.piggy.attributes.currencySymbol}$currentString"),
+              const SizedBox(height: 16),
+              Row(
+                children: <Widget>[
+                  MaterialIconButton(
+                    icon: _transactionType.icon,
+                    foregroundColor: Colors.white,
+                    backgroundColor: _transactionType.color,
+                    onPressed: () {
+                      setState(() {
+                        if (_transactionType ==
+                            TransactionTypeProperty.deposit) {
+                          _transactionType = TransactionTypeProperty.withdrawal;
+                        } else {
+                          _transactionType = TransactionTypeProperty.deposit;
+                        }
+                      });
+                    },
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: NumberInput(
+                      controller: _amountTextController,
+                      hintText: "0.00",
+                      decimals:
+                          widget.piggy.attributes.currencyDecimalPlaces ?? 2,
+                      prefixText: "${widget.piggy.attributes.currencyCode} ",
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+        OverflowBar(
+          alignment: MainAxisAlignment.end,
+          children: <Widget>[
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Close"),
+            ),
+            const SizedBox(width: 12),
+            FilledButton(
+              onPressed: () async {
+                final api = FireflyProvider.of(context).api;
+                final nav = Navigator.of(context);
+
+                double amount =
+                    double.tryParse(_amountTextController.text) ?? 0;
+                if (amount == 0) {
+                  nav.pop();
+                }
+                if (_transactionType == TransactionTypeProperty.withdrawal) {
+                  amount *= -1;
+                }
+                final double totalAmount = currentAmount + amount;
+                if (api == null) {
+                  throw Exception("Can't get API instance");
+                }
+                final resp = await api.v1PiggyBanksIdPut(
+                  id: widget.piggy.id,
+                  body: PiggyBankUpdate(
+                    currentAmount: totalAmount.toStringAsFixed(
+                        widget.piggy.attributes.currencyDecimalPlaces ?? 2),
+                  ),
+                );
+                if (!resp.isSuccessful || resp.body == null) {
+                  late String error;
+                  try {
+                    ValidationError valError = ValidationError.fromJson(
+                        json.decode(resp.error.toString()));
+                    error = valError.message ?? "Unknown error.";
+                  } catch (e) {
+                    error = "Unknown error.";
+                  }
+
+                  if (context.mounted) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        icon: const Icon(Icons.error),
+                        title: const Text("Error"),
+                        clipBehavior: Clip.hardEdge,
+                        actions: <Widget>[
+                          FilledButton(
+                            child: const Text('Dismiss'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                        content: Text(error),
+                      ),
+                    );
+                  }
+                  return;
+                }
+                nav.pop(resp.body);
+              },
+              child: const Text("Save"),
             ),
             const SizedBox(width: 12),
           ],

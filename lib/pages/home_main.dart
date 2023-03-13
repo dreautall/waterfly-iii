@@ -53,7 +53,8 @@ class _HomeMainState extends State<HomeMain>
   Future<bool> _fetchLastDays() async {
     final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
-      throw Exception("API unavailable");
+      FireflyProvider.of(context).signOut();
+      throw Exception(S.of(context).errorAPIUnavailable);
     }
 
     final DateTime now = DateTime.now().toLocal().clearTime();
@@ -71,7 +72,16 @@ class _HomeMainState extends State<HomeMain>
         end: DateFormat('yyyy-MM-dd').format(e),
       );
       if (!respInsightExpense.isSuccessful || respInsightExpense.body == null) {
-        throw Exception("Invalid Response from API");
+        if (context.mounted) {
+          throw Exception(
+            S.of(context).errorAPIInvalidResponse(
+                respInsightExpense.error?.toString() ?? ""),
+          );
+        } else {
+          throw Exception(
+            "[nocontext] Invalid API response: ${respInsightExpense.error}",
+          );
+        }
       }
       lastDaysExpense[e] = respInsightExpense.body!.isNotEmpty
           ? respInsightExpense.body!.first
@@ -82,7 +92,16 @@ class _HomeMainState extends State<HomeMain>
         end: DateFormat('yyyy-MM-dd').format(e),
       );
       if (!respInsightIncome.isSuccessful || respInsightIncome.body == null) {
-        throw Exception("Invalid Response from API");
+        if (context.mounted) {
+          throw Exception(
+            S.of(context).errorAPIInvalidResponse(
+                respInsightIncome.error?.toString() ?? ""),
+          );
+        } else {
+          throw Exception(
+            "[nocontext] Invalid API response: ${respInsightIncome.error}",
+          );
+        }
       }
       lastDaysIncome[e] = respInsightIncome.body!.isNotEmpty
           ? respInsightIncome.body!.first
@@ -95,7 +114,8 @@ class _HomeMainState extends State<HomeMain>
   Future<bool> _fetchOverviewChart() async {
     final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
-      throw Exception("API unavailable");
+      FireflyProvider.of(context).signOut();
+      throw Exception(S.of(context).errorAPIUnavailable);
     }
 
     final DateTime now = DateTime.now().toLocal().clearTime();
@@ -109,7 +129,17 @@ class _HomeMainState extends State<HomeMain>
     if (!respChartData.isSuccessful ||
         respChartData.body == null ||
         respChartData.body!.isEmpty) {
-      throw Exception("Invalid Response from API");
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(respChartData.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${respChartData.error}",
+        );
+      }
     }
     overviewChartData = respChartData.body!;
 
@@ -119,7 +149,8 @@ class _HomeMainState extends State<HomeMain>
   Future<bool> _fetchLastMonths() async {
     final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
-      throw Exception("API unavailable");
+      FireflyProvider.of(context).signOut();
+      throw Exception(S.of(context).errorAPIUnavailable);
     }
 
     final DateTime now = DateTime.now().toLocal().clearTime();
@@ -146,7 +177,16 @@ class _HomeMainState extends State<HomeMain>
         end: DateFormat('yyyy-MM-dd').format(end),
       );
       if (!respInsightExpense.isSuccessful || respInsightExpense.body == null) {
-        throw Exception("Invalid Response from API");
+        if (context.mounted) {
+          throw Exception(
+            S.of(context).errorAPIInvalidResponse(
+                respInsightExpense.error?.toString() ?? ""),
+          );
+        } else {
+          throw Exception(
+            "[nocontext] Invalid API response: ${respInsightExpense.error}",
+          );
+        }
       }
       lastMonthsExpense[e] = respInsightExpense.body!.isNotEmpty
           ? respInsightExpense.body!.first
@@ -157,7 +197,16 @@ class _HomeMainState extends State<HomeMain>
         end: DateFormat('yyyy-MM-dd').format(end),
       );
       if (!respInsightIncome.isSuccessful || respInsightIncome.body == null) {
-        throw Exception("Invalid Response from API");
+        if (context.mounted) {
+          throw Exception(
+            S.of(context).errorAPIInvalidResponse(
+                respInsightIncome.error?.toString() ?? ""),
+          );
+        } else {
+          throw Exception(
+            "[nocontext] Invalid API response: ${respInsightIncome.error}",
+          );
+        }
       }
       lastMonthsIncome[e] = respInsightIncome.body!.isNotEmpty
           ? respInsightIncome.body!.first
@@ -170,14 +219,25 @@ class _HomeMainState extends State<HomeMain>
   Future<bool> _fetchCategories() async {
     final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
-      throw Exception("API unavailable");
+      FireflyProvider.of(context).signOut();
+      throw Exception(S.of(context).errorAPIUnavailable);
     }
 
     final DateTime now = DateTime.now().toLocal().clearTime();
 
     final Response<CategoryArray> respCatData = await api.v1CategoriesGet();
     if (!respCatData.isSuccessful || respCatData.body == null) {
-      throw Exception("Invalid Response from API");
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(respCatData.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${respCatData.error}",
+        );
+      }
     }
 
     for (CategoryRead e in respCatData.body!.data) {
@@ -200,12 +260,23 @@ class _HomeMainState extends State<HomeMain>
   Future<List<BudgetLimitRead>> _fetchBudgets() async {
     final FireflyIii? api = FireflyProvider.of(context).api;
     if (api == null) {
-      throw Exception("API unavailable");
+      FireflyProvider.of(context).signOut();
+      throw Exception(S.of(context).errorAPIUnavailable);
     }
 
     final Response<BudgetArray> respBudgetInfos = await api.v1BudgetsGet();
     if (!respBudgetInfos.isSuccessful || respBudgetInfos.body == null) {
-      throw Exception("Invalid Response from API");
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(respBudgetInfos.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${respBudgetInfos.error}",
+        );
+      }
     }
 
     for (BudgetRead budget in respBudgetInfos.body!.data) {
@@ -219,7 +290,17 @@ class _HomeMainState extends State<HomeMain>
     );
 
     if (!respBudgets.isSuccessful || respBudgets.body == null) {
-      throw Exception("Invalid Response from API");
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(respBudgets.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${respBudgets.error}",
+        );
+      }
     }
 
     respBudgets.body!.data.sort((BudgetLimitRead a, BudgetLimitRead b) {
@@ -272,15 +353,14 @@ class _HomeMainState extends State<HomeMain>
                   sevenDayTotal -= (e.differenceFloat ?? 0).abs());
               lastDaysIncome.forEach((DateTime _, InsightTotalEntry e) =>
                   sevenDayTotal += (e.differenceFloat ?? 0).abs());
-              return Text(S
-                  .of(context)
-                  //.homeMainChartDailyAvg(sevenDayTotal / 7),
-                  .homeMainChartDailyAvg(
-                    defaultCurrency.fmtCurrency(
-                      sevenDayTotal / 7,
-                      locale: S.of(context).localeName,
+              return Text(
+                S.of(context).homeMainChartDailyAvg(
+                      defaultCurrency.fmt(
+                        sevenDayTotal / 7,
+                        locale: S.of(context).localeName,
+                      ),
                     ),
-                  ));
+              );
             },
             height: 125,
             child: () => LastDaysChart(
@@ -290,7 +370,7 @@ class _HomeMainState extends State<HomeMain>
           ),
           const SizedBox(height: 8),
           ChartCard(
-            title: "Category Summary",
+            title: S.of(context).homeMainChartCategoriesTitle,
             future: _fetchCategories(),
             height: 175,
             child: () => CategoryChart(
@@ -300,7 +380,7 @@ class _HomeMainState extends State<HomeMain>
           ),
           const SizedBox(height: 8),
           ChartCard(
-            title: "Account Summary",
+            title: S.of(context).homeMainChartAccountsTitle,
             future: _fetchOverviewChart(),
             summary: () => Table(
               //border: TableBorder.all(), // :DEBUG:
@@ -314,13 +394,13 @@ class _HomeMainState extends State<HomeMain>
                   children: <Widget>[
                     const SizedBox.shrink(),
                     Text(
-                      "Account",
+                      S.of(context).generalAccount,
                       style: Theme.of(context).textTheme.labelLarge,
                     ),
                     Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        "Balance",
+                        S.of(context).generalBalance,
                         style: Theme.of(context).textTheme.labelLarge,
                       ),
                     ),
@@ -330,9 +410,7 @@ class _HomeMainState extends State<HomeMain>
                   final Map<String, dynamic> entries =
                       e.entries! as Map<String, dynamic>;
                   final double balance =
-                      (double.tryParse(entries.entries.last.value) ?? 0);
-                  final String balanceString = balance.abs().toStringAsFixed(
-                      defaultCurrency.attributes.decimalPlaces ?? 2);
+                      double.tryParse(entries.entries.last.value) ?? 0;
                   return TableRow(
                     children: <Widget>[
                       Align(
@@ -352,7 +430,10 @@ class _HomeMainState extends State<HomeMain>
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          "${(balance < 0) ? '-' : ''}${defaultCurrency.attributes.symbol}$balanceString",
+                          defaultCurrency.fmt(
+                            balance,
+                            locale: S.of(context).localeName,
+                          ),
                           style: TextStyle(
                             color: (balance < 0) ? Colors.red : Colors.green,
                             fontWeight: FontWeight.bold,
@@ -375,7 +456,7 @@ class _HomeMainState extends State<HomeMain>
           ),
           const SizedBox(height: 8),
           ChartCard(
-            title: "Net Earnings",
+            title: S.of(context).homeMainChartNetearningsTitle,
             future: _fetchLastMonths(),
             summary: () => Table(
               // border: TableBorder.all(), // :DEBUG:
@@ -395,7 +476,10 @@ class _HomeMainState extends State<HomeMain>
                           (DateTime e) => Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              DateFormat(DateFormat.ABBR_MONTH).format(e),
+                              DateFormat(
+                                DateFormat.ABBR_MONTH,
+                                S.of(context).localeName,
+                              ).format(e),
                               style: Theme.of(context).textTheme.labelLarge,
                             ),
                           ),
@@ -415,12 +499,15 @@ class _HomeMainState extends State<HomeMain>
                         ),
                       ),
                     ),
-                    const Text("Income"),
+                    Text(S.of(context).generalIncome),
                     ...lastMonthsIncome.entries.toList().reversed.map(
                           (MapEntry<DateTime, InsightTotalEntry> e) => Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              "${defaultCurrency.attributes.symbol}${(e.value.differenceFloat ?? 0).toStringAsFixed(defaultCurrency.attributes.decimalPlaces ?? 2)}",
+                              defaultCurrency.fmt(
+                                e.value.differenceFloat ?? 0,
+                                locale: S.of(context).localeName,
+                              ),
                               style: const TextStyle(
                                 fontFeatures: <FontFeature>[
                                   FontFeature.tabularFigures()
@@ -444,12 +531,15 @@ class _HomeMainState extends State<HomeMain>
                         ),
                       ),
                     ),
-                    const Text("Expenses"),
+                    Text(S.of(context).generalExpenses),
                     ...lastMonthsExpense.entries.toList().reversed.map(
                           (MapEntry<DateTime, InsightTotalEntry> e) => Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              "-${defaultCurrency.attributes.symbol}${(e.value.differenceFloat ?? 0).abs().toStringAsFixed(defaultCurrency.attributes.decimalPlaces ?? 2)}",
+                              defaultCurrency.fmt(
+                                e.value.differenceFloat ?? 0,
+                                locale: S.of(context).localeName,
+                              ),
                               style: const TextStyle(
                                 fontFeatures: <FontFeature>[
                                   FontFeature.tabularFigures()
@@ -463,9 +553,9 @@ class _HomeMainState extends State<HomeMain>
                 TableRow(
                   children: <Widget>[
                     const SizedBox.shrink(),
-                    const Text(
-                      "Sum",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Text(
+                      S.of(context).generalSum,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     ...lastMonthsIncome.entries.toList().reversed.map(
                       (MapEntry<DateTime, InsightTotalEntry> e) {
@@ -479,7 +569,10 @@ class _HomeMainState extends State<HomeMain>
                         return Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            "${(sum < 0) ? '-' : ''}${defaultCurrency.attributes.symbol}${sum.abs().toStringAsFixed(defaultCurrency.attributes.decimalPlaces ?? 2)}",
+                            defaultCurrency.fmt(
+                              sum,
+                              locale: S.of(context).localeName,
+                            ),
                             style: TextStyle(
                               color: (sum < 0) ? Colors.red : Colors.green,
                               fontWeight: FontWeight.bold,
@@ -516,7 +609,7 @@ class _HomeMainState extends State<HomeMain>
                         Padding(
                           padding: const EdgeInsets.all(12),
                           child: Text(
-                            "Budgets for this month",
+                            S.of(context).homeMainBudgetTitle,
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ),
@@ -567,13 +660,23 @@ class BudgetList extends StatelessWidget {
             final List<Widget> widgets = <Widget>[];
             for (BudgetLimitRead budget in snapshot.data!) {
               final double spent =
-                  double.parse(budget.attributes.spent ?? "0").abs();
+                  (double.tryParse(budget.attributes.spent ?? "0") ?? 0).abs();
               final double available =
                   double.tryParse(budget.attributes.amount) ?? 0;
               Budget? budgetInfo = budgetInfos[budget.attributes.budgetId];
               if (budgetInfo == null || available == 0) {
                 continue;
               }
+              final CurrencyRead currency = CurrencyRead(
+                id: budget.attributes.currencyId ?? "0",
+                type: "currencies",
+                attributes: Currency(
+                  code: budget.attributes.currencyCode ?? "",
+                  name: budget.attributes.currencyName ?? "",
+                  symbol: budget.attributes.currencySymbol ?? "",
+                  decimalPlaces: budget.attributes.currencyDecimalPlaces,
+                ),
+              );
               Color lineColor = Colors.green;
               Color? bgColor;
               double value = spent / available;
@@ -595,8 +698,11 @@ class BudgetList extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       TextSpan(
-                        text:
-                            " (${DateFormat(DateFormat.ABBR_MONTH_DAY).format(budget.attributes.start.toLocal())} to ${DateFormat(DateFormat.ABBR_MONTH_DAY).format(budget.attributes.end.toLocal())}, ${budget.attributes.period})",
+                        text: S.of(context).homeMainBudgetInterval(
+                              budget.attributes.start.toLocal(),
+                              budget.attributes.end.toLocal(),
+                              budget.attributes.period ?? "",
+                            ),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
@@ -607,14 +713,26 @@ class BudgetList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    "${(spent / available * 100).round()}%",
+                    S.of(context).numPercent(spent / available),
                     style: Theme.of(context)
                         .textTheme
                         .labelLarge!
                         .copyWith(color: lineColor),
                   ),
                   Text(
-                    "${(available - spent).abs().round()}${budget.attributes.currencySymbol!} ${(spent > available) ? "over" : "left from"} ${available.round()}${budget.attributes.currencySymbol!}",
+                    S.of(context).homeMainBudgetSum(
+                          currency.fmt(
+                            (available - spent).abs().round(),
+                            locale: S.of(context).localeName,
+                            decimalDigits: 0,
+                          ),
+                          (spent > available) ? "over" : "leftfrom",
+                          currency.fmt(
+                            available.round(),
+                            locale: S.of(context).localeName,
+                            decimalDigits: 0,
+                          ),
+                        ),
                     style: Theme.of(context)
                         .textTheme
                         .labelLarge!
@@ -787,8 +905,10 @@ class SummaryChart extends StatelessWidget {
         ),
         domainAxis: charts.DateTimeAxisSpec(
           tickFormatterSpec:
-              charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
-                  DateFormat(DateFormat.ABBR_STANDALONE_MONTH)),
+              charts.BasicDateTimeTickFormatterSpec.fromDateFormat(DateFormat(
+            DateFormat.ABBR_STANDALONE_MONTH,
+            S.of(context).localeName,
+          )),
           tickProviderSpec: charts.StaticDateTimeTickProviderSpec(ticks),
           renderSpec: charts.SmallTickRendererSpec<DateTime>(
             labelStyle: charts.TextStyleSpec(
@@ -841,7 +961,12 @@ class LastDaysChart extends StatelessWidget {
           (income.differenceFloat ?? 0) + (expense.differenceFloat ?? 0);
 
       chartData.add(
-        LabelAmountChart(DateFormat(DateFormat.ABBR_WEEKDAY).format(e), diff),
+        LabelAmountChart(
+            DateFormat(
+              DateFormat.ABBR_WEEKDAY,
+              S.of(context).localeName,
+            ).format(e),
+            diff),
       );
     }
 
@@ -855,8 +980,11 @@ class LastDaysChart extends StatelessWidget {
           colorFn: (LabelAmountChart entry, _) => (entry.amount > 0)
               ? charts.MaterialPalette.green.shadeDefault
               : charts.MaterialPalette.red.shadeDefault,
-          labelAccessorFn: (LabelAmountChart entry, _) =>
-              '${defaultCurrency.attributes.symbol}${entry.amount.abs().round().toString()}',
+          labelAccessorFn: (LabelAmountChart entry, _) => defaultCurrency.fmt(
+            entry.amount.abs().round(),
+            locale: S.of(context).localeName,
+            decimalDigits: 0,
+          ),
           outsideLabelStyleAccessorFn: (_, __) => charts.TextStyleSpec(
             color: charts.ColorUtil.fromDartColor(
                 Theme.of(context).colorScheme.onSurfaceVariant),
@@ -898,7 +1026,10 @@ class NetEarningsChart extends StatelessWidget {
     lastMonthsIncome.forEach((DateTime key, InsightTotalEntry value) {
       incomeChartData.add(
         LabelAmountChart(
-          DateFormat(DateFormat.YEAR_MONTH).format(key),
+          DateFormat(
+            DateFormat.YEAR_MONTH,
+            S.of(context).localeName,
+          ).format(key),
           value.differenceFloat ?? 0,
         ),
       );
@@ -906,7 +1037,10 @@ class NetEarningsChart extends StatelessWidget {
     lastMonthsExpense.forEach((DateTime key, InsightTotalEntry value) {
       expenseChartData.add(
         LabelAmountChart(
-          DateFormat(DateFormat.YEAR_MONTH).format(key),
+          DateFormat(
+            DateFormat.YEAR_MONTH,
+            S.of(context).localeName,
+          ).format(key),
           value.differenceFloat ?? 0,
         ),
       );
@@ -996,8 +1130,9 @@ class CategoryChart extends StatelessWidget {
 
     if (data.length > 5) {
       LabelAmountChart otherData = data.skip(5).reduce(
-          (LabelAmountChart v, LabelAmountChart e) =>
-              LabelAmountChart("Other", v.amount + e.amount));
+            (LabelAmountChart v, LabelAmountChart e) =>
+                LabelAmountChart(S.of(context).catOther, v.amount + e.amount),
+          );
       data = data.take(5).toList();
 
       if (otherData.amount != 0) {
@@ -1015,7 +1150,7 @@ class CategoryChart extends StatelessWidget {
             measureFn: (LabelAmountChart entry, _) => entry.amount.abs(),
             data: data,
             labelAccessorFn: (LabelAmountChart entry, _) =>
-                "${entry.amount.abs().round()}",
+                entry.amount.abs().round().toString(),
             colorFn: (_, int? i) => possibleChartColors[i ?? 5],
           ),
         ],
@@ -1044,9 +1179,7 @@ class CategoryChart extends StatelessWidget {
             legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
             desiredMaxRows: 6,
             measureFormatter: (num? value) {
-              return value == null
-                  ? '-'
-                  : '${defaultCurrency.attributes.symbol}${value.toStringAsFixed(defaultCurrency.attributes.decimalPlaces ?? 2)}';
+              return value == null ? '-' : defaultCurrency.fmt(value);
             },
             entryTextStyle: charts.TextStyleSpec(
               fontSize:

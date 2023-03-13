@@ -9,11 +9,12 @@ class AlwaysDisabledFocusNode extends FocusNode {
 }
 
 extension CurrencyFormat on CurrencyRead {
-  String fmtCurrency(double amount, {String? locale, bool forceCode = false}) =>
+  String fmt(num amount,
+          {String? locale, bool forceCode = false, int? decimalDigits}) =>
       NumberFormat.currency(
         locale: locale,
         name: attributes.code,
-        decimalDigits: attributes.decimalPlaces,
+        decimalDigits: decimalDigits ?? attributes.decimalPlaces,
         symbol: forceCode ? null : attributes.symbol,
       ).format(amount);
 }

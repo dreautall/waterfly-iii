@@ -1,4 +1,22 @@
 {
+  "catOther": "Other",
+  "@catOther": {
+    "description": "Category description for summary category 'Other'"
+  },
+  "errorAPIInvalidResponse": "Invalid Response from API: {message}",
+  "@errorAPIInvalidResponse": {
+    "description": "Invalid API response error",
+    "placeholders": {
+      "message": {
+        "type": "String",
+        "example": "API could not be reached."
+      }
+    }
+  },
+  "errorAPIUnavailable": "API unavailable",
+  "@errorAPIUnavailable": {
+    "description": "Error thrown when API is unavailable."
+  },
   "errorFieldRequired": "This field is required.",
   "@errorFieldRequired": {
     "description": "Error: Required field was left empty."
@@ -19,6 +37,76 @@
   "@formButtonTransactionAdd": {
     "description": "Button Label: Add Transaction"
   },
+  "generalAccount": "Account",
+  "@generalAccount": {
+    "description": "Asset/Debt (Bank) Account"
+  },
+  "generalBalance": "Balance",
+  "@generalBalance": {
+    "description": "(Account) Balance"
+  },
+  "generalExpenses": "Expenses",
+  "@generalExpenses": {
+    "description": "(Account) Expenses"
+  },
+  "generalIncome": "Income",
+  "@generalIncome": {
+    "description": "(Account) Info"
+  },
+  "generalSum": "Sum",
+  "@generalSum": {
+    "description": "(Mathematical) Sum"
+  },
+  "homeMainBudgetInterval": " ({from} to {to}, {period})",
+  "@homeMainBudgetInterval": {
+    "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
+    "placeholders": {
+      "from": {
+        "type": "DateTime",
+        "format": "MMMd",
+        "example": "May 13"
+      },
+      "to": {
+        "type": "DateTime",
+        "format": "MMMd",
+        "example": "May 17"
+      },
+      "period": {
+        "type": "String",
+        "example": "weekly"
+      }
+    }
+  },
+  "homeMainBudgetSum": "{current} {status, select, over{over} other{left from}} {available}",
+  "@homeMainBudgetSum": {
+    "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
+    "placeholders": {
+      "current": {
+        "type": "String",
+        "example": "12.34€"
+      },
+      "status": {
+        "type": "String",
+        "example": "left from"
+      },
+      "available": {
+        "type": "String",
+        "example": "12.34€"
+      }
+    }
+  },
+  "homeMainBudgetTitle": "Budgets for this month",
+  "@homeMainBudgetTitle": {
+    "description": "Title: Budgets for this month"
+  },
+  "homeMainChartAccountsTitle": "Account Summary",
+  "@homeMainChartAccountsTitle": {
+    "description": "Chart Label: Account Summary"
+  },
+  "homeMainChartCategoriesTitle": "Category Summary",
+  "@homeMainChartCategoriesTitle": {
+    "description": "Chart Label: Category Summary"
+  },
   "homeMainChartDailyAvg": "7 days average: {avgAmount}",
   "@homeMainChartDailyAvg": {
     "description": "Text for last week average spent",
@@ -32,6 +120,10 @@
   "homeMainChartDailyTitle": "Daily Summary",
   "@homeMainChartDailyTitle": {
     "description": "Chart Label: Daily Summary"
+  },
+  "homeMainChartNetearningsTitle": "Net Earnings",
+  "@homeMainChartNetearningsTitle": {
+    "description": "Chart Label: Net Earnings"
   },
   "homeTabLabelBalance": "Balance Sheet",
   "@homeTabLabelBalance": {
@@ -64,5 +156,18 @@
   "loginWelcome": "Welcome to Waterfly III",
   "@loginWelcome": {
     "description": "Login screen welcome banner"
+  },
+  "numPercent": "{num}",
+  "@numPercent": {
+    "description": "Number formatted as percentage",
+    "placeholders": {
+      "num": {
+        "type": "double",
+        "format": "decimalPercentPattern",
+        "optionalParameters": {
+          "decimalDigits": 0
+        }
+      }
+    }
   }
 }

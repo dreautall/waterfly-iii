@@ -29,7 +29,7 @@ class _$FireflyIii extends FireflyIii {
       'query': query,
       'limit': limit,
       'date': date,
-      'types': types,
+      'types': types?.join(","),
     };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,

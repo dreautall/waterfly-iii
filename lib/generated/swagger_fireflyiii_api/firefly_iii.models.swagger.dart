@@ -950,7 +950,7 @@ class AutocompleteAccount {
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'currency_id', includeIfNull: false)
-  final String currencyId;
+  final int currencyId;
   @JsonKey(name: 'currency_name', includeIfNull: false)
   final String currencyName;
   @JsonKey(name: 'currency_code', includeIfNull: false)
@@ -973,7 +973,7 @@ extension $AutocompleteAccountExtension on AutocompleteAccount {
       String? name,
       String? nameWithBalance,
       String? type,
-      String? currencyId,
+      int? currencyId,
       String? currencyName,
       String? currencyCode,
       String? currencySymbol,
@@ -996,7 +996,7 @@ extension $AutocompleteAccountExtension on AutocompleteAccount {
       Wrapped<String>? name,
       Wrapped<String>? nameWithBalance,
       Wrapped<String>? type,
-      Wrapped<String>? currencyId,
+      Wrapped<int>? currencyId,
       Wrapped<String>? currencyName,
       Wrapped<String>? currencyCode,
       Wrapped<String>? currencySymbol,

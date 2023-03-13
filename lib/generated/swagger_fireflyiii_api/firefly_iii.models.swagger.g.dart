@@ -369,7 +369,7 @@ AutocompleteAccount _$AutocompleteAccountFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       nameWithBalance: json['name_with_balance'] as String,
       type: json['type'] as String,
-      currencyId: json['currency_id'] as String,
+      currencyId: json['currency_id'] as int,
       currencyName: json['currency_name'] as String,
       currencyCode: json['currency_code'] as String,
       currencySymbol: json['currency_symbol'] as String,

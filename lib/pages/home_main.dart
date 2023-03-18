@@ -51,11 +51,7 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastDays() async {
-    final FireflyIii? api = FireflyProvider.of(context).api;
-    if (api == null) {
-      FireflyProvider.of(context).signOut();
-      throw Exception(S.of(context).errorAPIUnavailable);
-    }
+    final FireflyIii api = FireflyProvider.of(context).api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
     final List<DateTime> lastDays = <DateTime>[];
@@ -112,11 +108,7 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchOverviewChart() async {
-    final FireflyIii? api = FireflyProvider.of(context).api;
-    if (api == null) {
-      FireflyProvider.of(context).signOut();
-      throw Exception(S.of(context).errorAPIUnavailable);
-    }
+    final FireflyIii api = FireflyProvider.of(context).api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
 
@@ -147,11 +139,7 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastMonths() async {
-    final FireflyIii? api = FireflyProvider.of(context).api;
-    if (api == null) {
-      FireflyProvider.of(context).signOut();
-      throw Exception(S.of(context).errorAPIUnavailable);
-    }
+    final FireflyIii api = FireflyProvider.of(context).api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
     final List<DateTime> lastMonths = <DateTime>[];
@@ -217,11 +205,7 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchCategories() async {
-    final FireflyIii? api = FireflyProvider.of(context).api;
-    if (api == null) {
-      FireflyProvider.of(context).signOut();
-      throw Exception(S.of(context).errorAPIUnavailable);
-    }
+    final FireflyIii api = FireflyProvider.of(context).api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
 
@@ -258,11 +242,7 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<List<BudgetLimitRead>> _fetchBudgets() async {
-    final FireflyIii? api = FireflyProvider.of(context).api;
-    if (api == null) {
-      FireflyProvider.of(context).signOut();
-      throw Exception(S.of(context).errorAPIUnavailable);
-    }
+    final FireflyIii api = FireflyProvider.of(context).api;
 
     final Response<BudgetArray> respBudgetInfos = await api.v1BudgetsGet();
     if (!respBudgetInfos.isSuccessful || respBudgetInfos.body == null) {

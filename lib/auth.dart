@@ -121,7 +121,14 @@ class AuthUser {
 class FireflyService extends ChangeNotifier {
   AuthUser? _currentUser;
   AuthUser? get user => _currentUser;
-  FireflyIii? get api => _currentUser?.api;
+  bool get hasApi => (_currentUser?.api != null) ? true : false;
+  FireflyIii get api {
+    if (_currentUser?.api == null) {
+      signOut();
+      throw Exception("API unavailable");
+    }
+    return _currentUser!.api;
+  }
 
   bool _signedIn = false;
   bool get signedIn => _signedIn;
@@ -171,9 +178,9 @@ class FireflyService extends ChangeNotifier {
 
     _lastTriedHost = host;
     _currentUser = await AuthUser.create(host, apiKey);
-    if (_currentUser == null || api == null) return false;
+    if (_currentUser == null || !hasApi) return false;
 
-    Response<CurrencySingle> currencyInfo = await api!.v1CurrenciesDefaultGet();
+    Response<CurrencySingle> currencyInfo = await api.v1CurrenciesDefaultGet();
     defaultCurrency = currencyInfo.body!.data;
 
     _signedIn = true;

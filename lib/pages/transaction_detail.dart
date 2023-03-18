@@ -298,10 +298,7 @@ class _TransactionPageState extends State<TransactionPage>
         return;
       }
       try {
-        final FireflyIii? api = FireflyProvider.of(context).api;
-        if (api == null) {
-          throw Exception("API not ready.");
-        }
+        final FireflyIii api = FireflyProvider.of(context).api;
         final Response<AutocompleteAccountArray> response =
             await api.v1AutocompleteAccountsGet(
           query: _ownAccountTextController.text,
@@ -579,10 +576,7 @@ class _TransactionPageState extends State<TransactionPage>
 
   void updateAttachmentCount() async {
     try {
-      final FireflyIii? api = FireflyProvider.of(context).api;
-      if (api == null) {
-        throw Exception("API not ready.");
-      }
+      final FireflyIii api = FireflyProvider.of(context).api;
       final Response<AttachmentArray> response =
           await api.v1TransactionsIdAttachmentsGet(
         id: widget.transaction?.id ?? widget.transactionId,
@@ -618,11 +612,8 @@ class _TransactionPageState extends State<TransactionPage>
               icon: const Icon(Icons.delete),
               tooltip: 'Delete',
               onPressed: () async {
-                final FireflyIii? api = FireflyProvider.of(context).api;
+                final FireflyIii api = FireflyProvider.of(context).api;
                 final NavigatorState nav = Navigator.of(context);
-                if (api == null) {
-                  throw Exception("API unavailable");
-                }
                 bool? ok = await showDialog<bool>(
                   context: context,
                   builder: (BuildContext context) => AlertDialog(
@@ -661,15 +652,12 @@ class _TransactionPageState extends State<TransactionPage>
             child: const Text('Save'),
             onPressed: () async {
               final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
-              final FireflyIii? api = FireflyProvider.of(context).api;
+              final FireflyIii api = FireflyProvider.of(context).api;
               final NavigatorState nav = Navigator.of(context);
 
               // Sanity checks
               String? error;
 
-              if (api == null) {
-                error = "API unavailable.";
-              }
               if (_ownAccountId == null) {
                 //error = "Please select an asset account.";
               }
@@ -746,10 +734,10 @@ class _TransactionPageState extends State<TransactionPage>
                     continue;
                   }
                   debugPrint("deleting split $id");
-                  await api!.v1TransactionJournalsIdDelete(id: id);
+                  await api.v1TransactionJournalsIdDelete(id: id);
                 }
                 final Response<TransactionSingle> resp =
-                    await api!.v1TransactionsIdPut(id: id, body: txUpdate);
+                    await api.v1TransactionsIdPut(id: id, body: txUpdate);
                 if (!resp.isSuccessful || resp.body == null) {
                   debugPrint(resp.error.toString());
                   try {
@@ -823,7 +811,7 @@ class _TransactionPageState extends State<TransactionPage>
                     fireWebhooks: true,
                     errorIfDuplicateHash: true);
                 final Response<TransactionSingle> resp =
-                    await api!.v1TransactionsPost(body: newTx);
+                    await api.v1TransactionsPost(body: newTx);
                 if (!resp.isSuccessful || resp.body == null) {
                   debugPrint(resp.error.toString());
                   try {
@@ -1034,10 +1022,7 @@ class _TransactionPageState extends State<TransactionPage>
                   option.name,
               optionsBuilder: (TextEditingValue textEditingValue) async {
                 try {
-                  final FireflyIii? api = FireflyProvider.of(context).api;
-                  if (api == null) {
-                    throw Exception("API not ready.");
-                  }
+                  final FireflyIii api = FireflyProvider.of(context).api;
                   final Response<AutocompleteAccountArray> response =
                       await api.v1AutocompleteAccountsGet(
                     query: textEditingValue.text,
@@ -1145,10 +1130,7 @@ class _TransactionPageState extends State<TransactionPage>
               },
               optionsBuilder: (TextEditingValue textEditingValue) async {
                 try {
-                  final FireflyIii? api = FireflyProvider.of(context).api;
-                  if (api == null) {
-                    throw Exception("API not ready.");
-                  }
+                  final FireflyIii api = FireflyProvider.of(context).api;
                   final Response<AutocompleteAccountArray> response =
                       await api.v1AutocompleteAccountsGet(
                     query: textEditingValue.text,
@@ -1338,11 +1320,8 @@ class _TransactionPageState extends State<TransactionPage>
                                   optionsBuilder: (TextEditingValue
                                       textEditingValue) async {
                                     try {
-                                      final FireflyIii? api =
+                                      final FireflyIii api =
                                           FireflyProvider.of(context).api;
-                                      if (api == null) {
-                                        throw Exception("API not ready.");
-                                      }
                                       final Response<AutocompleteAccountArray>
                                           response =
                                           await api.v1AutocompleteAccountsGet(
@@ -1577,10 +1556,7 @@ class TransactionTitle extends StatelessWidget {
         focusNode: focusNode,
         optionsBuilder: (TextEditingValue textEditingValue) async {
           try {
-            final FireflyIii? api = FireflyProvider.of(context).api;
-            if (api == null) {
-              throw Exception("API not ready.");
-            }
+            final FireflyIii api = FireflyProvider.of(context).api;
             final Response<AutocompleteTransactionArray> response = await api
                 .v1AutocompleteTransactionsGet(query: textEditingValue.text);
             if (!response.isSuccessful || response.body == null) {
@@ -1757,10 +1733,7 @@ class TransactionCategory extends StatelessWidget {
             focusNode: focusNode,
             optionsBuilder: (TextEditingValue textEditingValue) async {
               try {
-                final FireflyIii? api = FireflyProvider.of(context).api;
-                if (api == null) {
-                  throw Exception("API not ready.");
-                }
+                final FireflyIii api = FireflyProvider.of(context).api;
                 final Response<AutocompleteCategoryArray> response =
                     await api.v1AutocompleteCategoriesGet(
                   query: textEditingValue.text,
@@ -1815,10 +1788,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
         return;
       }
       try {
-        final FireflyIii? api = FireflyProvider.of(context).api;
-        if (api == null) {
-          throw Exception("API not ready.");
-        }
+        final FireflyIii api = FireflyProvider.of(context).api;
         final Response<AutocompleteBudgetArray> response =
             await api.v1AutocompleteBudgetsGet(
           query: widget.textController.text,
@@ -1864,10 +1834,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
             },
             optionsBuilder: (TextEditingValue textEditingValue) async {
               try {
-                final FireflyIii? api = FireflyProvider.of(context).api;
-                if (api == null) {
-                  throw Exception("API not ready.");
-                }
+                final FireflyIii api = FireflyProvider.of(context).api;
                 final Response<AutocompleteBudgetArray> response =
                     await api.v1AutocompleteBudgetsGet(
                   query: textEditingValue.text,
@@ -1920,10 +1887,7 @@ class _TagDialogState extends State<TagDialog> {
   }
 
   Future<List<String>>? _getTags() async {
-    final FireflyIii? api = FireflyProvider.of(context).api;
-    if (api == null) {
-      throw Exception("Can't get API instance");
-    }
+    final FireflyIii api = FireflyProvider.of(context).api;
     final Response<TagArray> response = await api.v1TagsGet();
     if (!response.isSuccessful || response.body == null) {
       throw Exception("Invalid Response from API");
@@ -2081,10 +2045,7 @@ class CurrencyDialog extends StatelessWidget {
   final CurrencyRead currentCurrency;
 
   Future<List<CurrencyRead>>? _getCurrencies(BuildContext context) async {
-    final FireflyIii? api = FireflyProvider.of(context).api;
-    if (api == null) {
-      throw Exception("Can't get API instance");
-    }
+    final FireflyIii api = FireflyProvider.of(context).api;
     final Response<CurrencyArray> response = await api.v1CurrenciesGet();
     if (!response.isSuccessful || response.body == null) {
       throw Exception("Invalid Response from API");
@@ -2296,10 +2257,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
           onPressed: (_dlProgress[i] != null && _dlProgress[i]! < 0)
               ? null
               : () async {
-                  final FireflyIii? api = FireflyProvider.of(context).api;
-                  if (api == null) {
-                    throw Exception("API unavailable");
-                  }
+                  final FireflyIii api = FireflyProvider.of(context).api;
                   bool? ok = await showDialog<bool>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
@@ -2365,10 +2323,10 @@ class _AttachmentDialogState extends State<AttachmentDialog>
           FilledButton(
             onPressed: () async {
               final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
-              final FireflyIii? api = FireflyProvider.of(context).api;
+              final FireflyIii api = FireflyProvider.of(context).api;
               final AuthUser? user = FireflyProvider.of(context).user;
 
-              if (api == null || user == null) {
+              if (user == null) {
                 throw Exception("API unavailable");
               }
               FilePickerResult? file = await FilePicker.platform.pickFiles();

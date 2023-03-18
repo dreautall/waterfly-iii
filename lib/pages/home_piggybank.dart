@@ -27,10 +27,7 @@ class HomePiggybank extends StatefulWidget {
 class _HomePiggybankState extends State<HomePiggybank>
     with AutomaticKeepAliveClientMixin {
   Future<PiggyBankArray> _fetchAccounts() async {
-    final FireflyIii? api = FireflyProvider.of(context).api;
-    if (api == null) {
-      throw Exception("API unavailable");
-    }
+    final FireflyIii api = FireflyProvider.of(context).api;
 
     final Response<PiggyBankArray> respAccounts = await api.v1PiggyBanksGet();
 
@@ -242,10 +239,7 @@ class TimeSeriesChart {
 
 class _PiggyDetailsState extends State<PiggyDetails> {
   Future<List<PiggyBankEventRead>> _fetchChart() async {
-    final FireflyIii? api = FireflyProvider.of(context).api;
-    if (api == null) {
-      throw Exception("API unavailable");
-    }
+    final FireflyIii api = FireflyProvider.of(context).api;
 
     final Response<PiggyBankEventArray> resp =
         await api.v1PiggyBanksIdEventsGet(id: currentPiggy.id);
@@ -564,7 +558,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
             const SizedBox(width: 12),
             FilledButton(
               onPressed: () async {
-                final FireflyIii? api = FireflyProvider.of(context).api;
+                final FireflyIii api = FireflyProvider.of(context).api;
                 final NavigatorState nav = Navigator.of(context);
 
                 double amount =
@@ -576,9 +570,6 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                   amount *= -1;
                 }
                 final double totalAmount = currentAmount + amount;
-                if (api == null) {
-                  throw Exception("Can't get API instance");
-                }
                 final Response<PiggyBankSingle> resp =
                     await api.v1PiggyBanksIdPut(
                   id: widget.piggy.id,

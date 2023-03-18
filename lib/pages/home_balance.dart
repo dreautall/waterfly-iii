@@ -21,10 +21,7 @@ class HomeBalance extends StatefulWidget {
 class _HomeBalanceState extends State<HomeBalance>
     with AutomaticKeepAliveClientMixin {
   Future<AccountArray> _fetchAccounts() async {
-    final FireflyIii? api = FireflyProvider.of(context).api;
-    if (api == null) {
-      throw Exception("API unavailable");
-    }
+    final FireflyIii api = FireflyProvider.of(context).api;
 
     final Response<AccountArray> respAccounts =
         await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);

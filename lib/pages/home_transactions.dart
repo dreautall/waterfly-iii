@@ -95,10 +95,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final FireflyIii? api = FireflyProvider.of(context).api;
-      if (api == null) {
-        throw Exception("API unavailable");
-      }
+      final FireflyIii api = FireflyProvider.of(context).api;
       late Future<Response<TransactionArray>> searchFunc;
       if (_filters.text != null) {
         String query = _filters.text!;
@@ -378,10 +375,7 @@ class FilterDialog extends StatelessWidget {
   final TransactionFilters filters;
 
   Future<List<AccountRead>>? _getAccounts(BuildContext context) async {
-    final FireflyIii? api = FireflyProvider.of(context).api;
-    if (api == null) {
-      throw Exception("Can't get API instance");
-    }
+    final FireflyIii api = FireflyProvider.of(context).api;
     final Response<AccountArray> response =
         await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
     if (!response.isSuccessful || response.body == null) {

@@ -758,13 +758,14 @@ class BudgetList extends StatelessWidget {
 }
 
 class ChartCard extends StatelessWidget {
-  const ChartCard(
-      {super.key,
-      required this.title,
-      required this.child,
-      required this.future,
-      this.height = 150,
-      this.summary});
+  const ChartCard({
+    super.key,
+    required this.title,
+    required this.child,
+    required this.future,
+    this.height = 150,
+    this.summary,
+  });
 
   final String title;
   final Widget Function() child;
@@ -917,6 +918,7 @@ class SummaryChart extends StatelessWidget {
             ),
           ),
         ),
+        defaultInteractions: false,
       ),
     );
   }
@@ -1004,6 +1006,7 @@ class LastDaysChart extends StatelessWidget {
           ),
         ),
       ),
+      defaultInteractions: false,
     );
   }
 }
@@ -1086,6 +1089,7 @@ class NetEarningsChart extends StatelessWidget {
             ),
           ),
         ),
+        defaultInteractions: false,
       ),
     );
   }
@@ -1187,6 +1191,7 @@ class CategoryChart extends StatelessWidget {
             ),
           ),
         ],
+        defaultInteractions: false,
       ),
     );
   }

@@ -9,8 +9,12 @@ class AlwaysDisabledFocusNode extends FocusNode {
 }
 
 extension CurrencyFormat on CurrencyRead {
-  String fmt(num amount,
-          {String? locale, bool forceCode = false, int? decimalDigits}) =>
+  String fmt(
+    num amount, {
+    String? locale,
+    bool forceCode = false,
+    int? decimalDigits,
+  }) =>
       NumberFormat.currency(
         locale: locale,
         name: attributes.code,
@@ -37,14 +41,6 @@ extension AccountRole on AccountRoleProperty {
     }
   }
 }
-
-/*extension AccountType on AccountTypeFilter {
-  List<AccountTypeFilter> get allowedOpposingTypes {
-    switch (this) {
-
-    }
-  }
-}*/
 
 extension TransactionType on TransactionTypeProperty {
   Color get color {
@@ -315,8 +311,13 @@ extension TransactionType on TransactionTypeProperty {
 }
 
 extension DateTimeExtension on DateTime {
-  DateTime setTimeOfDay(TimeOfDay time) =>
-      DateTime(year, month, day, time.hour, time.minute);
+  DateTime setTimeOfDay(TimeOfDay time) => DateTime(
+        year,
+        month,
+        day,
+        time.hour,
+        time.minute,
+      );
 
   DateTime setTime({
     int hours = 0,

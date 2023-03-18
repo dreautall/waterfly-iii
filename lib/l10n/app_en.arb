@@ -25,6 +25,14 @@
   "@errorInvalidURL": {
     "description": "Error: URL is invalid"
   },
+  "errorUnknown": "Unknown error.",
+  "@errorUnknown": {
+    "description": "Error without further information occured."
+  },
+  "formButtonClose": "Close",
+  "@formButtonClose": {
+    "description": "Close (dialog etc.)"
+  },
   "formButtonHelp": "Help",
   "@formButtonHelp": {
     "description": "Button Label: Help"
@@ -32,6 +40,10 @@
   "formButtonLogin": "Login",
   "@formButtonLogin": {
     "description": "Button Label: Login"
+  },
+  "formButtonSave": "Save",
+  "@formButtonSave": {
+    "description": "Save current form/dialog"
   },
   "formButtonTransactionAdd": "Add Transaction",
   "@formButtonTransactionAdd": {
@@ -44,6 +56,14 @@
   "generalBalance": "Balance",
   "@generalBalance": {
     "description": "(Account) Balance"
+  },
+  "generalDismiss": "Dismiss",
+  "@generalDismiss": {
+    "description": "Dismiss window/dialog without action"
+  },
+  "generalError": "Error",
+  "@generalError": {
+    "description": "Error (title in dialogs etc.)"
   },
   "generalExpenses": "Expenses",
   "@generalExpenses": {
@@ -60,6 +80,10 @@
   "generalSum": "Sum",
   "@generalSum": {
     "description": "(Mathematical) Sum"
+  },
+  "generalTarget": "Target",
+  "@generalTarget": {
+    "description": "Target value (i.e. a sum to save)"
   },
   "homeMainBudgetInterval": " ({from} to {to}, {period})",
   "@homeMainBudgetInterval": {
@@ -129,6 +153,80 @@
   "@homeMainChartNetearningsTitle": {
     "description": "Chart Label: Net Earnings"
   },
+  "homePiggyAdjustDialogTitle": "Save/Spend Money",
+  "@homePiggyAdjustDialogTitle": {
+    "description": "Title of the dialog where money can be added/removed to a piggy bank."
+  },
+  "homePiggyDateStart": "Start date: {date}",
+  "@homePiggyDateStart": {
+    "description": "Start of the piggy bank",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "March 12, 2023"
+      }
+    }
+  },
+  "homePiggyDateTarget": "Target date: {date}",
+  "@homePiggyDateTarget": {
+    "description": "Uset set target date of the piggy bank (when saving should be finished)",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "March 12, 2023"
+      }
+    }
+  },
+  "homePiggyLinked": "Linked to {account}",
+  "@homePiggyLinked": {
+    "description": "Piggy bank is linked to asset account {account}.",
+    "placeholders": {
+      "account": {
+        "type": "String",
+        "example": "Awesome Bank Account"
+      }
+    }
+  },
+  "homePiggyNoAccounts": "No piggy banks set up.",
+  "@homePiggyNoAccounts": {
+    "description": "Information that no piggy banks are existing"
+  },
+  "homePiggyNoAccountsSubtitle": "Create some in the webinterface!",
+  "@homePiggyNoAccountsSubtitle": {
+    "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
+  },
+  "homePiggyRemaining": "Left to save: {amount}",
+  "@homePiggyRemaining": {
+    "description": "How much money is left to save",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€12.34"
+      }
+    }
+  },
+  "homePiggySaved": "Saved so far: {amount}",
+  "@homePiggySaved": {
+    "description": "How much money already was saved",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€12.34"
+      }
+    }
+  },
+  "homePiggyTarget": "Target amount: {amount}",
+  "@homePiggyTarget": {
+    "description": "How much money should be saved",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€12.34"
+      }
+    }
+  },
   "homeTabLabelBalance": "Balance Sheet",
   "@homeTabLabelBalance": {
     "description": "Tab Label: Balance Sheet page"
@@ -171,6 +269,22 @@
         "optionalParameters": {
           "decimalDigits": 0
         }
+      }
+    }
+  },
+  "numPercentOf": "{perc} of {of}",
+  "@numPercentOf": {
+    "description": "Number formatted as percentage, with total amount provided",
+    "placeholders": {
+      "perc": {
+        "type": "double",
+        "format": "decimalPercentPattern",
+        "optionalParameters": {
+          "decimalDigits": 0
+        }
+      },
+      "of": {
+        "type": "String"
       }
     }
   }

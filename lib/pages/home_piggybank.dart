@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:chopper/chopper.dart' show Response;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 import 'package:waterflyiii/auth.dart';
@@ -32,7 +33,17 @@ class _HomePiggybankState extends State<HomePiggybank>
     final Response<PiggyBankArray> respAccounts = await api.v1PiggyBanksGet();
 
     if (!respAccounts.isSuccessful || respAccounts.body == null) {
-      throw Exception("Invalid Response from API");
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(respAccounts.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${respAccounts.error}",
+        );
+      }
     }
 
     return Future<PiggyBankArray>.value(respAccounts.body);
@@ -65,7 +76,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "No piggy banks set up.",
+                      S.of(context).homePiggyNoAccounts,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const Icon(
@@ -73,7 +84,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                       size: 200,
                     ),
                     Text(
-                      "Create some in the webinterface!",
+                      S.of(context).homePiggyNoAccountsSubtitle,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
@@ -89,17 +100,19 @@ class _HomePiggybankState extends State<HomePiggybank>
                     final double currentAmount =
                         double.tryParse(piggy.attributes.currentAmount ?? "") ??
                             0;
-                    final String currentString = currentAmount
-                        .abs()
-                        .toStringAsFixed(
-                            piggy.attributes.currencyDecimalPlaces ?? 2);
+                    final CurrencyRead currency = CurrencyRead(
+                      id: piggy.attributes.currencyId ?? "0",
+                      type: "currencies",
+                      attributes: Currency(
+                        code: piggy.attributes.currencyCode ?? "",
+                        name: "",
+                        symbol: piggy.attributes.currencySymbol ?? "",
+                        decimalPlaces: piggy.attributes.currencyDecimalPlaces,
+                      ),
+                    );
                     final double targetAmount =
                         double.tryParse(piggy.attributes.targetAmount ?? "") ??
                             0;
-                    final String targetString = targetAmount
-                        .abs()
-                        .toStringAsFixed(
-                            piggy.attributes.currencyDecimalPlaces ?? 2);
                     if (!(piggy.attributes.active ?? false)) {
                       return const SizedBox.shrink();
                     }
@@ -107,8 +120,10 @@ class _HomePiggybankState extends State<HomePiggybank>
                       children: <Widget>[
                         ListTile(
                           title: Text(piggy.attributes.name),
-                          subtitle:
-                              Text("Linked to ${piggy.attributes.accountName}"),
+                          subtitle: (piggy.attributes.accountName != null)
+                              ? Text(S.of(context).homePiggyLinked(
+                                  piggy.attributes.accountName!))
+                              : const Text(""),
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(16),
@@ -157,8 +172,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                               style: Theme.of(context).textTheme.bodyMedium,
                               children: <InlineSpan>[
                                 TextSpan(
-                                  text:
-                                      "${(currentAmount < 0) ? '-' : ''}${piggy.attributes.currencySymbol}$currentString",
+                                  text: currency.fmt(currentAmount),
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleMedium!
@@ -177,8 +191,10 @@ class _HomePiggybankState extends State<HomePiggybank>
                                     : const TextSpan(),
                                 targetAmount != 0
                                     ? TextSpan(
-                                        text:
-                                            "${(piggy.attributes.percentage ?? 0).round()}% of ${piggy.attributes.currencySymbol}$targetString")
+                                        text: S.of(context).numPercentOf(
+                                              piggy.attributes.percentage ?? 0,
+                                              currency.fmt(targetAmount),
+                                            ))
                                     : const TextSpan(),
                               ],
                             ),
@@ -244,7 +260,15 @@ class _PiggyDetailsState extends State<PiggyDetails> {
     final Response<PiggyBankEventArray> resp =
         await api.v1PiggyBanksIdEventsGet(id: currentPiggy.id);
     if (!resp.isSuccessful || resp.body == null || resp.body!.data.isEmpty) {
-      throw Exception("Invalid Response from API");
+      if (context.mounted) {
+        throw Exception(
+          S.of(context).errorAPIInvalidResponse(resp.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${resp.error}",
+        );
+      }
     }
 
     return resp.body!.data.sortedBy<DateTime>((PiggyBankEventRead e) =>
@@ -264,41 +288,42 @@ class _PiggyDetailsState extends State<PiggyDetails> {
   Widget build(BuildContext context) {
     final double currentAmount =
         double.tryParse(currentPiggy.attributes.currentAmount ?? "") ?? 0;
-    final String currentString = currentAmount
-        .abs()
-        .toStringAsFixed(currentPiggy.attributes.currencyDecimalPlaces ?? 2);
     final double targetAmount =
         double.tryParse(currentPiggy.attributes.targetAmount ?? "") ?? 0;
-    final String targetString = targetAmount
-        .abs()
-        .toStringAsFixed(currentPiggy.attributes.currencyDecimalPlaces ?? 2);
     final double leftAmount =
         double.tryParse(currentPiggy.attributes.leftToSave ?? "") ?? 0;
-    final String leftString = leftAmount
-        .abs()
-        .toStringAsFixed(currentPiggy.attributes.currencyDecimalPlaces ?? 2);
     final DateTime? startDate = currentPiggy.attributes.startDate?.toLocal();
     final DateTime? targetDate = currentPiggy.attributes.targetDate?.toLocal();
+    final CurrencyRead currency = CurrencyRead(
+      id: currentPiggy.attributes.currencyId ?? "0",
+      type: "currencies",
+      attributes: Currency(
+        code: currentPiggy.attributes.currencyCode ?? "",
+        name: "",
+        symbol: currentPiggy.attributes.currencySymbol ?? "",
+        decimalPlaces: currentPiggy.attributes.currencyDecimalPlaces,
+      ),
+    );
 
     String infoText = "";
 
     if (targetAmount != 0) {
-      infoText +=
-          "Target amount: ${currentPiggy.attributes.currencySymbol}$targetString\n";
+      infoText += S.of(context).homePiggyTarget(currency.fmt(targetAmount));
+      infoText += "\n";
     }
-    infoText +=
-        "Saved so far: ${currentPiggy.attributes.currencySymbol}$currentString\n";
+    infoText += S.of(context).homePiggySaved(currency.fmt(currentAmount));
+    infoText += "\n";
     if (leftAmount != 0) {
-      infoText +=
-          "Left to save: ${currentPiggy.attributes.currencySymbol}$leftString\n";
+      infoText += S.of(context).homePiggyRemaining(currency.fmt(leftAmount));
+      infoText += "\n";
     }
     if (startDate != null) {
-      infoText +=
-          "Start date: ${DateFormat(DateFormat.YEAR_MONTH_DAY).format(startDate)}\n";
+      infoText += S.of(context).homePiggyDateStart(startDate);
+      infoText += "\n";
     }
     if (targetDate != null) {
-      infoText +=
-          "Target date: ${DateFormat(DateFormat.YEAR_MONTH_DAY).format(targetDate)}\n";
+      infoText += S.of(context).homePiggyDateTarget(targetDate);
+      infoText += "\n";
     }
 
     return SimpleDialog(
@@ -400,7 +425,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                                 color: charts
                                     .MaterialPalette.deepOrange.shadeDefault,
                                 labelAnchor: charts.AnnotationLabelAnchor.start,
-                                startLabel: "Target",
+                                startLabel: S.of(context).generalTarget,
                               )
                             ],
                           ),
@@ -435,7 +460,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
               onPressed: () async {
                 Navigator.of(context).pop();
               },
-              child: const Text("Close"),
+              child: Text(S.of(context).formButtonClose),
             ),
             const SizedBox(width: 12),
             FilledButton(
@@ -479,7 +504,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
   TransactionTypeProperty _transactionType = TransactionTypeProperty.deposit;
 
   late double currentAmount;
-  late String currentString;
+  late CurrencyRead currency;
 
   @override
   void initState() {
@@ -487,9 +512,16 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
 
     currentAmount =
         double.tryParse(widget.piggy.attributes.currentAmount ?? "") ?? 0;
-    currentString = currentAmount
-        .abs()
-        .toStringAsFixed(widget.piggy.attributes.currencyDecimalPlaces ?? 2);
+    currency = CurrencyRead(
+      id: widget.piggy.attributes.currencyId ?? "0",
+      type: "currencies",
+      attributes: Currency(
+        code: widget.piggy.attributes.currencyCode ?? "",
+        name: "",
+        symbol: widget.piggy.attributes.currencySymbol ?? "",
+        decimalPlaces: widget.piggy.attributes.currencyDecimalPlaces,
+      ),
+    );
   }
 
   @override
@@ -502,7 +534,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      title: const Text("Save/Spend Money"),
+      title: Text(S.of(context).homePiggyAdjustDialogTitle),
       clipBehavior: Clip.hardEdge,
       children: <Widget>[
         Padding(
@@ -510,8 +542,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                  "Current Balance: ${widget.piggy.attributes.currencySymbol}$currentString"),
+              Text(S.of(context).homePiggySaved(currency.fmt(currentAmount))),
               const SizedBox(height: 16),
               Row(
                 children: <Widget>[
@@ -535,9 +566,8 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                     child: NumberInput(
                       controller: _amountTextController,
                       hintText: "0.00",
-                      decimals:
-                          widget.piggy.attributes.currencyDecimalPlaces ?? 2,
-                      prefixText: "${widget.piggy.attributes.currencyCode} ",
+                      decimals: currency.attributes.decimalPlaces ?? 2,
+                      prefixText: "${currency.attributes.code} ",
                     ),
                   ),
                 ],
@@ -553,7 +583,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
               onPressed: () async {
                 Navigator.of(context).pop();
               },
-              child: const Text("Close"),
+              child: Text(S.of(context).formButtonClose),
             ),
             const SizedBox(width: 12),
             FilledButton(
@@ -575,7 +605,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                   id: widget.piggy.id,
                   body: PiggyBankUpdate(
                     currentAmount: totalAmount.toStringAsFixed(
-                        widget.piggy.attributes.currencyDecimalPlaces ?? 2),
+                        currency.attributes.decimalPlaces ?? 2),
                   ),
                 );
                 if (!resp.isSuccessful || resp.body == null) {
@@ -583,9 +613,17 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                   try {
                     ValidationError valError = ValidationError.fromJson(
                         json.decode(resp.error.toString()));
-                    error = valError.message ?? "Unknown error.";
+                    if (context.mounted) {
+                      error = valError.message ?? S.of(context).errorUnknown;
+                    } else {
+                      error = "[nocontext] Unknown error";
+                    }
                   } catch (e) {
-                    error = "Unknown error.";
+                    if (context.mounted) {
+                      error = S.of(context).errorUnknown;
+                    } else {
+                      error = "[nocontext] Unknown error.";
+                    }
                   }
 
                   if (context.mounted) {
@@ -593,11 +631,11 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
                         icon: const Icon(Icons.error),
-                        title: const Text("Error"),
+                        title: Text(S.of(context).generalError),
                         clipBehavior: Clip.hardEdge,
                         actions: <Widget>[
                           FilledButton(
-                            child: const Text('Dismiss'),
+                            child: Text(S.of(context).generalDismiss),
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
@@ -611,7 +649,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                 }
                 nav.pop(resp.body);
               },
-              child: const Text("Save"),
+              child: Text(S.of(context).formButtonSave),
             ),
             const SizedBox(width: 12),
           ],

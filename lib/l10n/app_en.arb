@@ -53,6 +53,10 @@
   "@generalIncome": {
     "description": "(Account) Info"
   },
+  "generalNever": "never",
+  "@generalNever": {
+    "description": "Has never happened, no update etc."
+  },
   "generalSum": "Sum",
   "@generalSum": {
     "description": "(Mathematical) Sum"

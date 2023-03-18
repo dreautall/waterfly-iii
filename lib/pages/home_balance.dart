@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -27,7 +28,17 @@ class _HomeBalanceState extends State<HomeBalance>
         await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
 
     if (!respAccounts.isSuccessful || respAccounts.body == null) {
-      throw Exception("Invalid Response from API");
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(respAccounts.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${respAccounts.error}",
+        );
+      }
     }
 
     return Future<AccountArray>.value(respAccounts.body);
@@ -58,13 +69,22 @@ class _HomeBalanceState extends State<HomeBalance>
               children: <Widget>[
                 ...snapshot.data!.data.map(
                   (AccountRead account) {
-                    final double balance =
-                        double.parse(account.attributes.currentBalance ?? "");
-                    final String balanceString = balance.abs().toStringAsFixed(
-                        account.attributes.currencyDecimalPlaces ?? 2);
                     if (!(account.attributes.active ?? false)) {
                       return const SizedBox.shrink();
                     }
+                    final double balance =
+                        double.parse(account.attributes.currentBalance ?? "");
+                    final CurrencyRead currency = CurrencyRead(
+                      id: account.attributes.currencyId ?? "0",
+                      type: "currencies",
+                      attributes: Currency(
+                        code: account.attributes.currencyCode ?? "",
+                        name: "",
+                        symbol: account.attributes.currencySymbol ?? "",
+                        decimalPlaces: account.attributes.currencyDecimalPlaces,
+                      ),
+                    );
+
                     return ListTile(
                       title: Text(account.attributes.name),
                       subtitle:
@@ -83,8 +103,7 @@ class _HomeBalanceState extends State<HomeBalance>
                           style: Theme.of(context).textTheme.bodyMedium,
                           children: <InlineSpan>[
                             TextSpan(
-                              text:
-                                  "${(balance < 0) ? '-' : ''}${account.attributes.currencySymbol}$balanceString",
+                              text: currency.fmt(balance),
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
@@ -101,10 +120,12 @@ class _HomeBalanceState extends State<HomeBalance>
                             TextSpan(
                               text:
                                   account.attributes.currentBalanceDate != null
-                                      ? DateFormat.yMd().add_Hms().format(
-                                          account.attributes.currentBalanceDate!
+                                      ? DateFormat.yMd(S.of(context).localeName)
+                                          .add_Hms()
+                                          .format(account
+                                              .attributes.currentBalanceDate!
                                               .toLocal())
-                                      : "never",
+                                      : S.of(context).generalNever,
                             ),
                           ],
                         ),

@@ -177,10 +177,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
     String notes = "";
     bool hasAttachments = false;
     double amount = 0.0;
-    double foreignAmount = 0.0;
-    // :TODO: show all foreign currencies, not only a single one.
-    String? foreignCurrency;
-    int? foreignCurrencyDecimalPlaces;
+    final Map<String, double> foreignAmounts = <String, double>{};
+    final Map<String, CurrencyRead> foreignCurrencies =
+        <String, CurrencyRead>{};
+    String foreignText = "";
     String sourceName = "";
     String destinationName = "";
     late bool reconciled;
@@ -202,9 +202,23 @@ class _HomeTransactionsState extends State<HomeTransactions>
       }
       amount += double.parse(trans.amount);
       if (trans.foreignAmount?.isNotEmpty ?? false) {
-        foreignAmount += double.parse(trans.foreignAmount!);
-        foreignCurrency = trans.foreignCurrencySymbol;
-        foreignCurrencyDecimalPlaces = trans.foreignCurrencyDecimalPlaces;
+        final double amount = double.parse(trans.foreignAmount!);
+        final String foreignSymbol =
+            trans.foreignCurrencySymbol ?? trans.foreignCurrencyCode ?? "";
+        if (amount != 0 && foreignSymbol.isNotEmpty) {
+          foreignAmounts[foreignSymbol] =
+              foreignAmounts[foreignSymbol] ?? 0 + amount;
+          foreignCurrencies[foreignSymbol] = CurrencyRead(
+            id: trans.foreignCurrencyId ?? "0",
+            type: "currencies",
+            attributes: Currency(
+              code: trans.foreignCurrencyCode ?? "",
+              name: "",
+              symbol: trans.foreignCurrencySymbol ?? "",
+              decimalPlaces: trans.foreignCurrencyDecimalPlaces,
+            ),
+          );
+        }
       }
       if (sourceName == "") {
         sourceName = trans.sourceName!;
@@ -277,6 +291,14 @@ class _HomeTransactionsState extends State<HomeTransactions>
         decimalPlaces: transactions.first.currencyDecimalPlaces,
       ),
     );
+    if (foreignAmounts.isNotEmpty) {
+      foreignAmounts.forEach((String cur, double amount) {
+        if (foreignCurrencies.containsKey(cur)) {
+          foreignText += "${foreignCurrencies[cur]!.fmt(amount)} ";
+        }
+      });
+      foreignText += " ";
+    }
 
     Widget transactionWidget = ListTile(
       leading: CircleAvatar(
@@ -310,10 +332,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
         text: TextSpan(
           style: Theme.of(context).textTheme.bodyMedium,
           children: <InlineSpan>[
-            if (foreignCurrency != null)
+            if (foreignText.isNotEmpty)
               TextSpan(
-                text:
-                    "$foreignCurrency${foreignAmount.toStringAsFixed(foreignCurrencyDecimalPlaces!)}  ",
+                text: foreignText,
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: Colors.blue,
                     ),

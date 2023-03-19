@@ -64,6 +64,10 @@
   "@formButtonLogin": {
     "description": "Button Label: Login"
   },
+  "formButtonLogout": "Logout",
+  "@formButtonLogout": {
+    "description": "Button Label: Logout"
+  },
   "formButtonResetLogin": "Reset login",
   "@formButtonResetLogin": {
     "description": "Button Label: Reset login form (when error is shown)"
@@ -320,6 +324,9 @@
   "@loginWelcome": {
     "description": "Login screen welcome banner"
   },
+  "navigationAccounts": "Accounts",
+  "navigationMain": "Main Dashboard",
+  "navigationSettings": "Settings",
   "numPercent": "{num}",
   "@numPercent": {
     "description": "Number formatted as percentage",

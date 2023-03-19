@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/pages/home.dart';
@@ -17,27 +18,6 @@ class NavDestination {
   final Widget selectedIcon;
 }
 
-const List<NavDestination> navDestinations = <NavDestination>[
-  NavDestination(
-    'Main Dashboard',
-    HomePage(),
-    Icon(Icons.dashboard_outlined),
-    Icon(Icons.dashboard),
-  ),
-  NavDestination(
-    'Accounts',
-    Placeholder(color: Colors.red, key: ValueKey<String>("accounts")),
-    Icon(Icons.account_balance_outlined),
-    Icon(Icons.account_balance),
-  ),
-  NavDestination(
-    'Settings',
-    Placeholder(color: Colors.green, key: ValueKey<String>("settings")),
-    Icon(Icons.settings_outlined),
-    Icon(Icons.settings),
-  ),
-];
-
 class NavPage extends StatefulWidget {
   const NavPage({Key? key}) : super(key: key);
 
@@ -53,9 +33,33 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
   PreferredSizeWidget? appBarBottom;
   Widget? fab;
 
+  late List<NavDestination> navDestinations;
+
   @override
   void initState() {
     super.initState();
+
+    navDestinations = <NavDestination>[
+      NavDestination(
+        S.of(context).navigationMain,
+        const HomePage(),
+        const Icon(Icons.dashboard_outlined),
+        const Icon(Icons.dashboard),
+      ),
+      NavDestination(
+        S.of(context).navigationAccounts,
+        const Placeholder(color: Colors.red, key: ValueKey<String>("accounts")),
+        const Icon(Icons.account_balance_outlined),
+        const Icon(Icons.account_balance),
+      ),
+      NavDestination(
+        S.of(context).navigationSettings,
+        const Placeholder(
+            color: Colors.green, key: ValueKey<String>("settings")),
+        const Icon(Icons.settings_outlined),
+        const Icon(Icons.settings),
+      ),
+    ];
 
     _tabController = TabController(vsync: this, length: navDestinations.length);
   }
@@ -94,7 +98,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
               child: Text(
-                'Waterfly-III',
+                'Waterfly III',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
             ),
@@ -113,7 +117,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                   FireflyProvider.of(context).signOut();
                 },
                 child: Text(
-                  'Logout',
+                  S.of(context).formButtonLogout,
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
               ),

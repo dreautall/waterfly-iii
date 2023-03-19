@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -116,7 +117,17 @@ class _HomeTransactionsState extends State<HomeTransactions>
       }
       final Response<TransactionArray> response = await searchFunc;
       if (!response.isSuccessful || response.body == null) {
-        throw Exception("Invalid Response from API");
+        if (context.mounted) {
+          throw Exception(
+            S
+                .of(context)
+                .errorAPIInvalidResponse(response.error?.toString() ?? ""),
+          );
+        } else {
+          throw Exception(
+            "[nocontext] Invalid API response: ${response.error}",
+          );
+        }
       }
       final List<TransactionRead> transactionList = response.body!.data;
       final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
@@ -159,7 +170,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
   ) {
     List<TransactionSplit> transactions = item.attributes.transactions;
     if (transactions.isEmpty) {
-      return const Text("No transactions found");
+      return Text(S.of(context).homeTransactionsEmpty);
     }
     String category = "";
     int categories = 0;
@@ -167,11 +178,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
     bool hasAttachments = false;
     double amount = 0.0;
     double foreignAmount = 0.0;
+    // :TODO: show all foreign currencies, not only a single one.
     String? foreignCurrency;
     int? foreignCurrencyDecimalPlaces;
     String sourceName = "";
     String destinationName = "";
-    bool reconciled = false;
+    late bool reconciled;
     for (TransactionSplit trans in transactions) {
       if (trans.categoryName?.isNotEmpty ?? false) {
         categories++;
@@ -185,11 +197,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
         }
         notes += trans.notes!.trim();
       }
-      if (trans.hasAttachments != null && trans.hasAttachments!) {
+      if (trans.hasAttachments ?? false) {
         hasAttachments = true;
       }
       amount += double.parse(trans.amount);
-      if (trans.foreignAmount != null) {
+      if (trans.foreignAmount?.isNotEmpty ?? false) {
         foreignAmount += double.parse(trans.foreignAmount!);
         foreignCurrency = trans.foreignCurrencySymbol;
         foreignCurrencyDecimalPlaces = trans.foreignCurrencyDecimalPlaces;
@@ -197,22 +209,21 @@ class _HomeTransactionsState extends State<HomeTransactions>
       if (sourceName == "") {
         sourceName = trans.sourceName!;
       } else if (sourceName != trans.sourceName!) {
-        sourceName = "multiple";
+        sourceName = S.of(context).generalMultiple;
       }
       if (destinationName == "") {
         destinationName = trans.destinationName!;
       } else if (destinationName != trans.destinationName!) {
-        destinationName = "multiple";
+        destinationName = S.of(context).generalMultiple;
       }
     }
     if (categories > 1) {
-      category = "$categories categories";
+      category = S.of(context).homeTransactionsMultipleCategories(categories);
     }
 
     // Title
     late String title;
-    if (item.attributes.groupTitle != null &&
-        item.attributes.groupTitle!.isNotEmpty) {
+    if (item.attributes.groupTitle?.isNotEmpty ?? false) {
       title = item.attributes.groupTitle!;
     } else {
       title = transactions.first.description;
@@ -230,7 +241,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
       ));
     }
     if (transactions.first.type == TransactionTypeProperty.transfer) {
-      subtitle.add(const TextSpan(text: "(Transfer) "));
+      subtitle.add(
+        TextSpan(text: "(${S.of(context).transactionTypeTransfer}) "),
+      );
     }
     subtitle.add(TextSpan(
       text: (transactions.first.type == TransactionTypeProperty.withdrawal)
@@ -254,6 +267,16 @@ class _HomeTransactionsState extends State<HomeTransactions>
     }
 
     reconciled = transactions.first.reconciled ?? false;
+    final CurrencyRead currency = CurrencyRead(
+      id: transactions.first.currencyId ?? "0",
+      type: "currencies",
+      attributes: Currency(
+        code: transactions.first.currencyCode ?? "",
+        name: transactions.first.currencyName ?? "",
+        symbol: transactions.first.currencySymbol ?? "",
+        decimalPlaces: transactions.first.currencyDecimalPlaces,
+      ),
+    );
 
     Widget transactionWidget = ListTile(
       leading: CircleAvatar(
@@ -287,33 +310,31 @@ class _HomeTransactionsState extends State<HomeTransactions>
         text: TextSpan(
           style: Theme.of(context).textTheme.bodyMedium,
           children: <InlineSpan>[
+            if (foreignCurrency != null)
+              TextSpan(
+                text:
+                    "$foreignCurrency${foreignAmount.toStringAsFixed(foreignCurrencyDecimalPlaces!)}  ",
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: Colors.blue,
+                    ),
+              ),
             TextSpan(
-              text: (foreignCurrency != null)
-                  ? "$foreignCurrency${foreignAmount.toStringAsFixed(foreignCurrencyDecimalPlaces!)}  "
-                  : "",
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: Colors.blue,
-                  ),
-            ),
-            TextSpan(
-              text:
-                  "${transactions.first.currencySymbol}${amount.toStringAsFixed(transactions.first.currencyDecimalPlaces!)}",
+              text: currency.fmt(amount),
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: transactions.first.type.color,
                 fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
               ),
             ),
             const TextSpan(text: "\n"),
-            reconciled
-                ? const WidgetSpan(
-                    baseline: TextBaseline.ideographic,
-                    alignment: PlaceholderAlignment.middle,
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 2),
-                      child: Icon(Icons.check),
-                    ),
-                  )
-                : const TextSpan(),
+            if (reconciled)
+              const WidgetSpan(
+                baseline: TextBaseline.ideographic,
+                alignment: PlaceholderAlignment.middle,
+                child: Padding(
+                  padding: EdgeInsets.only(right: 2),
+                  child: Icon(Icons.check),
+                ),
+              ),
             TextSpan(
               text: (transactions.first.type == TransactionTypeProperty.deposit)
                   ? destinationName
@@ -332,13 +353,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
         if (refresh ?? false) {
           _pagingController.refresh();
         }
-
-        /*Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TransactionPage(transaction: item),
-          ),
-        );*/
       },
     );
 
@@ -352,7 +366,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 0, 8),
             child: Text(
-              DateFormat.yMd().format(date),
+              DateFormat.yMd(S.of(context).localeName).format(date),
               style: Theme.of(context).textTheme.labelLarge,
             ),
           ),
@@ -379,7 +393,17 @@ class FilterDialog extends StatelessWidget {
     final Response<AccountArray> response =
         await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
     if (!response.isSuccessful || response.body == null) {
-      throw Exception("Invalid Response from API");
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(response.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${response.error}",
+        );
+      }
     }
     return response.body!.data;
   }
@@ -388,17 +412,17 @@ class FilterDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       icon: const Icon(Icons.tune),
-      title: const Text("Select filters"),
+      title: Text(S.of(context).homeTransactionsFilterTitle),
       clipBehavior: Clip.hardEdge,
       actions: <Widget>[
         TextButton(
-          child: const Text('Cancel'),
+          child: Text(S.of(context).formButtonCancel),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
         TextButton(
-          child: const Text('OK'),
+          child: Text(S.of(context).formButtonSave),
           onPressed: () {
             Navigator.of(context).pop(true);
           },
@@ -419,11 +443,11 @@ class FilterDialog extends StatelessWidget {
                   TextFormField(
                     //controller: _keyTextController,
                     //readOnly: _formSubmitted,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       filled: false,
-                      border: OutlineInputBorder(),
-                      labelText: "Search Term",
-                      prefixIcon: Icon(Icons.search),
+                      border: const OutlineInputBorder(),
+                      labelText: S.of(context).homeTransactionsFilterSearch,
+                      prefixIcon: const Icon(Icons.search),
                     ),
                     initialValue: filters.text,
                     onChanged: (String value) {
@@ -441,11 +465,11 @@ class FilterDialog extends StatelessWidget {
                       id: "0",
                       type: "dummy",
                       attributes: Account(
-                          name: "<All Accounts>",
-                          type:
-                              ShortAccountTypeProperty.swaggerGeneratedUnknown),
+                        name: S.of(context).homeTransactionsFilterAccountsAll,
+                        type: ShortAccountTypeProperty.swaggerGeneratedUnknown,
+                      ),
                     ),
-                    label: "<All Accounts>",
+                    label: S.of(context).homeTransactionsFilterAccountsAll,
                   )
                 ];
                 AccountRead? currentAccount = accountOptions.first.value;
@@ -463,10 +487,10 @@ class FilterDialog extends StatelessWidget {
                   DropdownMenu<AccountRead>(
                     initialSelection: currentAccount,
                     leadingIcon: const Icon(Icons.account_balance),
-                    label: const Text('Account'),
+                    label: Text(S.of(context).generalAccount),
                     dropdownMenuEntries: accountOptions,
                     onSelected: (AccountRead? account) {
-                      if (account == null || account.id == "0") {
+                      if ((account?.id ?? "0") == "0") {
                         filters.account = null;
                       } else {
                         filters.account = account;
@@ -484,7 +508,7 @@ class FilterDialog extends StatelessWidget {
                 );
               } else if (snapshot.hasError) {
                 Navigator.pop(context);
-                return const CircularProgressIndicator();
+                return const SizedBox.shrink();
               } else {
                 return const Center(
                   child: CircularProgressIndicator(),

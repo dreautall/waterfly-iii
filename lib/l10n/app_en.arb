@@ -29,6 +29,10 @@
   "@errorUnknown": {
     "description": "Error without further information occured."
   },
+  "formButtonCancel": "Cancel",
+  "@formButtonCancel": {
+    "description": "Close (dialog etc.) without saving"
+  },
   "formButtonClose": "Close",
   "@formButtonClose": {
     "description": "Close (dialog etc.)"
@@ -72,6 +76,10 @@
   "generalIncome": "Income",
   "@generalIncome": {
     "description": "(Account) Info"
+  },
+  "generalMultiple": "multiple",
+  "@generalMultiple": {
+    "description": "Multiples of a single thing (e.g. source accounts) are existing"
   },
   "generalNever": "never",
   "@generalNever": {
@@ -243,6 +251,32 @@
   "@homeTabLabelTransactions": {
     "description": "Tab Label: Transactions page"
   },
+  "homeTransactionsEmpty": "No transactions found.",
+  "@homeTransactionsEmpty": {
+    "description": "Message when no transactions are found."
+  },
+  "homeTransactionsFilterAccountsAll": "<All Accounts>",
+  "@homeTransactionsFilterAccountsAll": {
+    "description": "Don't filter for a specific account (default entry)"
+  },
+  "homeTransactionsFilterSearch": "Search Term",
+  "@homeTransactionsFilterSearch": {
+    "description": "Search term for filter"
+  },
+  "homeTransactionsFilterTitle": "Select filters",
+  "@homeTransactionsFilterTitle": {
+    "description": "Title of Filter Dialog"
+  },
+  "homeTransactionsMultipleCategories": "{num} categories",
+  "@homeTransactionsMultipleCategories": {
+    "description": "$num categories for the transction.",
+    "placeholders": {
+      "num": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
   "loginAbout": "To use Waterfly III productively you need your own server with a Firefly III instance or the Firefly III add-on for Home Assistant.\n\nPlease enter the full URL as well as a personal access token (Settings -> Profile -> OAuth -> Personal Access Token) below.",
   "@loginAbout": {
     "description": "Login screen welcome description"
@@ -287,5 +321,9 @@
         "type": "String"
       }
     }
+  },
+  "transactionTypeTransfer": "Transfer",
+  "@transactionTypeTransfer": {
+    "description": "Transfer transaction type"
   }
 }

@@ -1,4 +1,6 @@
 {
+  "@@locale": "en",
+  "@@x-reference": true,
   "catOther": "Other",
   "@catOther": {
     "description": "Category description for summary category 'Other'"

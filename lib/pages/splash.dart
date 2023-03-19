@@ -1,6 +1,7 @@
 import 'dart:io' show HandshakeException;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:waterflyiii/widgets/logo.dart';
 import 'package:waterflyiii/widgets/animatedheightcard.dart';
@@ -46,10 +47,6 @@ class _SplashPageState extends State<SplashPage> {
     }
 
     debugPrint("SplashPage->_login() returning $success");
-    /*if (success) {
-      debugPrint("popping");
-      if (Navigator.of(context).canPop()) Navigator.of(context).pop();
-    }*/
 
     return;
   }
@@ -92,13 +89,14 @@ class _SplashPageState extends State<SplashPage> {
             return errorType.cause;
           case AuthErrorStatusCode:
             AuthErrorStatusCode errorType = _loginError as AuthErrorStatusCode;
-            errorDetails += "\nStatus Code: ${errorType.code}";
+            errorDetails += "\n";
+            errorDetails += S.of(context).errorStatusCode(errorType.code);
             return errorType.cause;
           case HandshakeException:
-            return "Invalid SSL Certificate";
+            return S.of(context).errorInvalidSSLCert;
           default:
             errorDetails += "\n$_loginError";
-            return "Unknown error";
+            return S.of(context).errorUnknown;
         }
       }();
       page = SizedBox(
@@ -146,8 +144,8 @@ class _SplashPageState extends State<SplashPage> {
                     }
                   },
                   child: Navigator.canPop(context)
-                      ? const Text("Back")
-                      : const Text("Reset login"),
+                      ? Text(S.of(context).formButtonBack)
+                      : Text(S.of(context).formButtonResetLogin),
                 ),
                 const SizedBox(width: 12),
                 FilledButton(
@@ -157,7 +155,7 @@ class _SplashPageState extends State<SplashPage> {
                     });
                     _login(widget.host, widget.apiKey);
                   },
-                  child: const Text("Try again"),
+                  child: Text(S.of(context).formButtonTryAgain),
                 ),
               ],
             )

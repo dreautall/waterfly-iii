@@ -23,21 +23,38 @@
   "@errorFieldRequired": {
     "description": "Error: Required field was left empty."
   },
+  "errorInvalidSSLCert": "Invalid SSL Certificate",
+  "@errorInvalidSSLCert": {
+    "description": "Error: SSL certificate is invalid"
+  },
   "errorInvalidURL": "Invalid URL",
   "@errorInvalidURL": {
     "description": "Error: URL is invalid"
+  },
+  "errorStatusCode": "Status Code: {code}",
+  "@errorStatusCode": {
+    "description": "HTTP status code information on error",
+    "placeholders": {
+      "code": {
+        "type": "int"
+      }
+    }
   },
   "errorUnknown": "Unknown error.",
   "@errorUnknown": {
     "description": "Error without further information occured."
   },
+  "formButtonBack": "Back",
+  "@formButtonBack": {
+    "description": "Button Label: Go one step backwards"
+  },
   "formButtonCancel": "Cancel",
   "@formButtonCancel": {
-    "description": "Close (dialog etc.) without saving"
+    "description": "Button Label: Close (dialog etc.) without saving"
   },
   "formButtonClose": "Close",
   "@formButtonClose": {
-    "description": "Close (dialog etc.)"
+    "description": "Button Label: Close (dialog etc.)"
   },
   "formButtonHelp": "Help",
   "@formButtonHelp": {
@@ -47,13 +64,21 @@
   "@formButtonLogin": {
     "description": "Button Label: Login"
   },
+  "formButtonResetLogin": "Reset login",
+  "@formButtonResetLogin": {
+    "description": "Button Label: Reset login form (when error is shown)"
+  },
   "formButtonSave": "Save",
   "@formButtonSave": {
-    "description": "Save current form/dialog"
+    "description": "Button Label: Save current form/dialog"
   },
   "formButtonTransactionAdd": "Add Transaction",
   "@formButtonTransactionAdd": {
     "description": "Button Label: Add Transaction"
+  },
+  "formButtonTryAgain": "Try again",
+  "@formButtonTryAgain": {
+    "description": "Button Label: Try that thing again (login etc)"
   },
   "generalAccount": "Account",
   "@generalAccount": {

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:collection/collection.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -310,7 +311,17 @@ class _TransactionPageState extends State<TransactionPage>
           ],
         );
         if (!response.isSuccessful || response.body == null) {
-          throw Exception("Invalid Response from API");
+          if (context.mounted) {
+            throw Exception(
+              S
+                  .of(context)
+                  .errorAPIInvalidResponse(response.error?.toString() ?? ""),
+            );
+          } else {
+            throw Exception(
+              "[nocontext] Invalid API response: ${response.error}",
+            );
+          }
         }
         if (response.body!.isEmpty ||
             (response.body!.length > 1 &&
@@ -549,7 +560,7 @@ class _TransactionPageState extends State<TransactionPage>
       _foreignAmountTextController.text = _foreignAmounts.sum
           .toStringAsFixed(_foreignCurrency?.attributes.decimalPlaces ?? 2);
     } else {
-      _foreignAmountTextController.text = "<multiple>";
+      _foreignAmountTextController.text = "<${S.of(context).generalMultiple}>";
     }
   }
 
@@ -564,8 +575,9 @@ class _TransactionPageState extends State<TransactionPage>
         update = true;
       }
     } else {
-      if (_otherAccountTextController.text != "<multiple>") {
-        _otherAccountTextController.text = "<multiple>";
+      if (_otherAccountTextController.text !=
+          "<${S.of(context).generalMultiple}>") {
+        _otherAccountTextController.text = "<${S.of(context).generalMultiple}>";
         update = true;
       }
     }
@@ -582,7 +594,17 @@ class _TransactionPageState extends State<TransactionPage>
         id: widget.transaction?.id ?? widget.transactionId,
       );
       if (!response.isSuccessful || response.body == null) {
-        throw Exception("Invalid Response from API");
+        if (context.mounted) {
+          throw Exception(
+            S
+                .of(context)
+                .errorAPIInvalidResponse(response.error?.toString() ?? ""),
+          );
+        } else {
+          throw Exception(
+            "[nocontext] Invalid API response: ${response.error}",
+          );
+        }
       }
       _attachments = response.body!.data;
       setState(() {
@@ -605,12 +627,15 @@ class _TransactionPageState extends State<TransactionPage>
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            "${(widget.transaction == null) ? "Add" : "Edit"} Transaction"),
+          (widget.transaction == null)
+              ? S.of(context).transactionTitleAdd
+              : S.of(context).transactionTitleEdit,
+        ),
         actions: <Widget>[
           if (!(widget.transactionId == null && widget.transaction == null))
             IconButton(
               icon: const Icon(Icons.delete),
-              tooltip: 'Delete',
+              tooltip: S.of(context).formButtonDelete,
               onPressed: () async {
                 final FireflyIii api = FireflyProvider.of(context).api;
                 final NavigatorState nav = Navigator.of(context);
@@ -618,38 +643,38 @@ class _TransactionPageState extends State<TransactionPage>
                   context: context,
                   builder: (BuildContext context) => AlertDialog(
                     icon: const Icon(Icons.delete),
-                    title: const Text("Delete Transaction"),
+                    title: Text(S.of(context).transactionTitleDelete),
                     clipBehavior: Clip.hardEdge,
                     actions: <Widget>[
                       TextButton(
-                        child: const Text('Cancel'),
+                        child: Text(S.of(context).formButtonCancel),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                       ),
                       FilledButton(
-                        child: const Text('Delete'),
+                        child: Text(S.of(context).formButtonDelete),
                         onPressed: () {
                           Navigator.of(context).pop(true);
                         },
                       ),
                     ],
-                    content: const Text(
-                        "Are you sure you want to delete this transaction?"),
+                    content: Text(S.of(context).transactionDeleteConfirmation),
                   ),
                 );
-                if (ok == null || !ok) {
+                if (!(ok ?? false)) {
                   return;
                 }
 
                 await api.v1TransactionsIdDelete(
-                    id: widget.transaction?.id ?? widget.transactionId);
+                  id: widget.transaction?.id ?? widget.transactionId,
+                );
                 nav.pop();
               },
             ),
           const SizedBox(width: 8),
           FilledButton(
-            child: const Text('Save'),
+            child: Text(S.of(context).formButtonSave),
             onPressed: () async {
               final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
               final FireflyIii api = FireflyProvider.of(context).api;
@@ -662,7 +687,7 @@ class _TransactionPageState extends State<TransactionPage>
                 //error = "Please select an asset account.";
               }
               if (_titleTextController.text.isEmpty) {
-                error = "Please provide a title.";
+                error = S.of(context).transactionErrorTitle;
               }
               if (error != null) {
                 msg.showSnackBar(SnackBar(
@@ -672,6 +697,9 @@ class _TransactionPageState extends State<TransactionPage>
                 return;
               }
               // Do stuff
+              // :TODO: grey out "save" to avoid double-entries
+              late Response<TransactionSingle> resp;
+
               if (widget.transaction != null) {
                 String id = widget.transaction!.id;
                 List<TransactionSplitUpdate> txS = <TransactionSplitUpdate>[];
@@ -736,24 +764,7 @@ class _TransactionPageState extends State<TransactionPage>
                   debugPrint("deleting split $id");
                   await api.v1TransactionJournalsIdDelete(id: id);
                 }
-                final Response<TransactionSingle> resp =
-                    await api.v1TransactionsIdPut(id: id, body: txUpdate);
-                if (!resp.isSuccessful || resp.body == null) {
-                  debugPrint(resp.error.toString());
-                  try {
-                    ValidationError valError = ValidationError.fromJson(
-                        json.decode(resp.error.toString()));
-                    error = valError.message ?? "Unknown error.";
-                  } catch (e) {
-                    error = "Unknown error.";
-                  }
-
-                  msg.showSnackBar(SnackBar(
-                    content: Text(error),
-                    behavior: SnackBarBehavior.floating,
-                  ));
-                  return;
-                }
+                resp = await api.v1TransactionsIdPut(id: id, body: txUpdate);
               } else {
                 List<TransactionSplitStore> txS = <TransactionSplitStore>[];
                 for (int i = 0; i < _localAmounts.length; i++) {
@@ -810,25 +821,37 @@ class _TransactionPageState extends State<TransactionPage>
                     applyRules: true,
                     fireWebhooks: true,
                     errorIfDuplicateHash: true);
-                final Response<TransactionSingle> resp =
-                    await api.v1TransactionsPost(body: newTx);
-                if (!resp.isSuccessful || resp.body == null) {
-                  debugPrint(resp.error.toString());
-                  try {
-                    ValidationError valError = ValidationError.fromJson(
-                        json.decode(resp.error.toString()));
-                    error = valError.message ?? "Unknown error.";
-                  } catch (e) {
-                    error = "Unknown error.";
-                  }
-
-                  msg.showSnackBar(SnackBar(
-                    content: Text(error),
-                    behavior: SnackBarBehavior.floating,
-                  ));
-                  return;
-                }
+                resp = await api.v1TransactionsPost(body: newTx);
               }
+
+              // Check if insert/update was successful
+              if (!resp.isSuccessful || resp.body == null) {
+                debugPrint(resp.error.toString());
+                try {
+                  ValidationError valError = ValidationError.fromJson(
+                    json.decode(resp.error.toString()),
+                  );
+                  error = valError.message ??
+                      // ignore: use_build_context_synchronously
+                      (context.mounted
+                          // ignore: use_build_context_synchronously
+                          ? S.of(context).errorUnknown
+                          : "[nocontext] Unknown error.");
+                } catch (_) {
+                  // ignore: use_build_context_synchronously
+                  error = context.mounted
+                      // ignore: use_build_context_synchronously
+                      ? S.of(context).errorUnknown
+                      : "[nocontext] Unknown error.";
+                }
+
+                msg.showSnackBar(SnackBar(
+                  content: Text(error),
+                  behavior: SnackBarBehavior.floating,
+                ));
+                return;
+              }
+
               nav.pop(true);
             },
           ),
@@ -889,13 +912,13 @@ class _TransactionPageState extends State<TransactionPage>
             ),
             child: MaterialIconButton(
               icon: Icons.attach_file,
-              tooltip: "Attachments",
+              tooltip: S.of(context).transactionAttachments,
               onPressed: () async {
                 String? txId = _transactionJournalIDs
                     .firstWhereOrNull((String? element) => element != null);
                 if (txId == null) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Please save the transaction first."),
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(S.of(context).transactionErrorSaveFirst),
                     behavior: SnackBarBehavior.floating,
                   ));
                   return;
@@ -930,7 +953,7 @@ class _TransactionPageState extends State<TransactionPage>
               icon: const Icon(Icons.monetization_on),
               hintText: "0.00",
               decimals: _foreignCurrency?.attributes.decimalPlaces ??
-                  _localCurrency!.attributes.decimalPlaces ??
+                  _localCurrency?.attributes.decimalPlaces ??
                   2,
               //style: Theme.of(context).textTheme.headlineLarge,
               controller: (_foreignCurrency != null)
@@ -976,7 +999,8 @@ class _TransactionPageState extends State<TransactionPage>
             },
             //style: FilledButton.styleFrom(textStyle: Theme.of(context).textTheme.headlineLarge,),
             child: Text(_foreignCurrency?.attributes.code ??
-                _localCurrency!.attributes.code),
+                _localCurrency?.attributes.code ??
+                ""),
           ),
           vDivider,
           if (_foreignCurrency != null)
@@ -984,9 +1008,12 @@ class _TransactionPageState extends State<TransactionPage>
               child: NumberInput(
                 controller: _localAmountTextController,
                 disabled: _split,
-                hintText: "0.00",
-                decimals: _localCurrency!.attributes.decimalPlaces ?? 2,
-                prefixText: "${_localCurrency!.attributes.code} ",
+                hintText: _localCurrency?.zero() ??
+                    NumberFormat.currency(
+                      decimalDigits: 2,
+                    ).format(0),
+                decimals: _localCurrency?.attributes.decimalPlaces ?? 2,
+                prefixText: "${_localCurrency?.attributes.code} ",
                 onChanged: (String string) =>
                     _localAmounts[0] = double.tryParse(string) ?? 0,
               ),
@@ -1003,7 +1030,7 @@ class _TransactionPageState extends State<TransactionPage>
           vDivider,
           Expanded(
             child: AutoCompleteText<AutocompleteAccount>(
-              labelText: "Foreign account",
+              labelText: S.of(context).transactionAccountForeign,
               //labelIcon: Icons.account_balance,
               textController: _otherAccountTextController,
               disabled: showAccountSelection,
@@ -1032,7 +1059,16 @@ class _TransactionPageState extends State<TransactionPage>
                             : _transactionType.sourceAccountTypes,
                   );
                   if (!response.isSuccessful || response.body == null) {
-                    throw Exception("Invalid Response from API");
+                    if (context.mounted) {
+                      throw Exception(
+                        S.of(context).errorAPIInvalidResponse(
+                            response.error?.toString() ?? ""),
+                      );
+                    } else {
+                      throw Exception(
+                        "[nocontext] Invalid API response: ${response.error}",
+                      );
+                    }
                   }
                   return response.body!;
                 } catch (e) {
@@ -1048,7 +1084,7 @@ class _TransactionPageState extends State<TransactionPage>
             menuChildren: <Widget>[
               MenuItemButton(
                 leadingIcon: const Icon(Icons.arrow_back),
-                child: const Text("Withdrawal"),
+                child: Text(S.of(context).transactionTypeWithdrawal),
                 onPressed: () {
                   if (_transactionType == TransactionTypeProperty.withdrawal) {
                     return;
@@ -1060,7 +1096,7 @@ class _TransactionPageState extends State<TransactionPage>
               ),
               MenuItemButton(
                 leadingIcon: const Icon(Icons.arrow_forward),
-                child: const Text("Deposit"),
+                child: Text(S.of(context).transactionTypeDeposit),
                 onPressed: () {
                   if (_transactionType == TransactionTypeProperty.deposit) {
                     return;
@@ -1072,7 +1108,7 @@ class _TransactionPageState extends State<TransactionPage>
               ),
               MenuItemButton(
                 leadingIcon: const Icon(Icons.swap_horiz),
-                child: const Text("Transfer"),
+                child: Text(S.of(context).transactionTypeDeposit),
                 onPressed: () {
                   if (_transactionType == TransactionTypeProperty.transfer) {
                     return;
@@ -1113,11 +1149,13 @@ class _TransactionPageState extends State<TransactionPage>
           vDivider,
           Expanded(
             child: AutoCompleteText<AutocompleteAccount>(
-              labelText: "Own account",
+              labelText: S.of(context).transactionAccountOwn,
               //labelIcon: Icons.account_balance,
               textController: _ownAccountTextController,
               focusNode: _ownAccountFocusNode,
-              errorText: _ownAccountId == null ? 'Invalid Account' : null,
+              errorText: _ownAccountId == null
+                  ? S.of(context).transactionErrorInvalidAccount
+                  : null,
               errorIconOnly: true,
               displayStringForOption: (AutocompleteAccount option) =>
                   option.name,
@@ -1142,7 +1180,16 @@ class _TransactionPageState extends State<TransactionPage>
                     ],
                   );
                   if (!response.isSuccessful || response.body == null) {
-                    throw Exception("Invalid Response from API");
+                    if (context.mounted) {
+                      throw Exception(
+                        S.of(context).errorAPIInvalidResponse(
+                            response.error?.toString() ?? ""),
+                      );
+                    } else {
+                      throw Exception(
+                        "[nocontext] Invalid API response: ${response.error}",
+                      );
+                    }
                   }
                   return response.body!;
                 } catch (e) {
@@ -1244,7 +1291,7 @@ class _TransactionPageState extends State<TransactionPage>
     childs.add(
       FilledButton.icon(
         onPressed: () => splitTransactionAdd(),
-        label: const Text("Add split transaction"),
+        label: Text(S.of(context).transactionSplitAdd),
         icon: const Icon(Icons.call_split),
       ),
     );
@@ -1303,7 +1350,8 @@ class _TransactionPageState extends State<TransactionPage>
                             children: <Widget>[
                               Expanded(
                                 child: AutoCompleteText<AutocompleteAccount>(
-                                  labelText: "Foreign account",
+                                  labelText:
+                                      S.of(context).transactionAccountForeign,
                                   labelIcon: Icons.account_balance,
                                   textController:
                                       _otherAccountTextControllers[i],
@@ -1336,8 +1384,20 @@ class _TransactionPageState extends State<TransactionPage>
                                       );
                                       if (!response.isSuccessful ||
                                           response.body == null) {
-                                        throw Exception(
-                                            "Invalid Response from API");
+                                        if (context.mounted) {
+                                          throw Exception(
+                                            S
+                                                .of(context)
+                                                .errorAPIInvalidResponse(
+                                                    response.error
+                                                            ?.toString() ??
+                                                        ""),
+                                          );
+                                        } else {
+                                          throw Exception(
+                                            "[nocontext] Invalid API response: ${response.error}",
+                                          );
+                                        }
                                       }
                                       return response.body!;
                                     } catch (e) {
@@ -1378,15 +1438,18 @@ class _TransactionPageState extends State<TransactionPage>
                                     controller: (_foreignCurrencies[i] != null)
                                         ? _foreignAmountTextControllers[i]
                                         : _localAmountTextControllers[i],
-                                    hintText: "0.00",
+                                    hintText: _foreignCurrencies[i]?.zero() ??
+                                        _localCurrency?.zero() ??
+                                        NumberFormat.currency(decimalDigits: 2)
+                                            .format(0),
                                     decimals: _foreignCurrencies[i]
                                             ?.attributes
                                             .decimalPlaces ??
-                                        _localCurrency!
-                                            .attributes.decimalPlaces ??
+                                        _localCurrency
+                                            ?.attributes.decimalPlaces ??
                                         2,
                                     prefixText:
-                                        "${_foreignCurrencies[i]?.attributes.code ?? _localCurrency!.attributes.code} ",
+                                        "${_foreignCurrencies[i]?.attributes.code ?? _localCurrency?.attributes.code} ",
                                     onChanged: (String string) {
                                       if (_foreignCurrencies[i] != null) {
                                         _foreignAmounts[i] =
@@ -1413,12 +1476,14 @@ class _TransactionPageState extends State<TransactionPage>
                                 child: NumberInput(
                                   icon: const Icon(Icons.currency_exchange),
                                   controller: _localAmountTextControllers[i],
-                                  hintText: "0.00",
-                                  decimals: _localCurrency!
-                                          .attributes.decimalPlaces ??
+                                  hintText: _localCurrency?.zero() ??
+                                      NumberFormat.currency(decimalDigits: 2)
+                                          .format(0),
+                                  decimals: _localCurrency
+                                          ?.attributes.decimalPlaces ??
                                       2,
                                   prefixText:
-                                      "${_localCurrency!.attributes.code} ",
+                                      "${_localCurrency?.attributes.code} ",
                                   onChanged: (String string) {
                                     _localAmounts[i] =
                                         double.tryParse(string) ?? 0;
@@ -1493,7 +1558,9 @@ class _TransactionPageState extends State<TransactionPage>
                                   });
                                 }
                               : null,
-                          tooltip: (_split) ? "Change Split Currency" : null,
+                          tooltip: (_split)
+                              ? S.of(context).transactionSplitChangeCurrency
+                              : null,
                         ),
                         hDivider,
                         if (!showAccountSelection) ...<Widget>[
@@ -1507,8 +1574,9 @@ class _TransactionPageState extends State<TransactionPage>
                                     splitTransactionCheckAccounts();
                                   }
                                 : null,
-                            tooltip:
-                                (_split) ? "Change Split Target Account" : null,
+                            tooltip: (_split)
+                                ? S.of(context).transactionSplitChangeTarget
+                                : null,
                           ),
                           hDivider,
                         ],
@@ -1520,7 +1588,9 @@ class _TransactionPageState extends State<TransactionPage>
                                   _cardsAnimationController[i].reverse();
                                 }
                               : null,
-                          tooltip: (_split) ? "Delete split" : null,
+                          tooltip: (_split)
+                              ? S.of(context).transactionSplitDelete
+                              : null,
                         ),
                       ],
                     ),
@@ -1550,7 +1620,7 @@ class TransactionTitle extends StatelessWidget {
     debugPrint("TransactionTitle build()");
     return Expanded(
       child: AutoCompleteText<String>(
-        labelText: "Transaction Title",
+        labelText: S.of(context).transactionFormLabelTitle,
         labelIcon: Icons.receipt_long,
         textController: textController,
         focusNode: focusNode,
@@ -1560,7 +1630,16 @@ class TransactionTitle extends StatelessWidget {
             final Response<AutocompleteTransactionArray> response = await api
                 .v1AutocompleteTransactionsGet(query: textEditingValue.text);
             if (!response.isSuccessful || response.body == null) {
-              throw Exception("Invalid Response from API");
+              if (context.mounted) {
+                throw Exception(
+                  S.of(context).errorAPIInvalidResponse(
+                      response.error?.toString() ?? ""),
+                );
+              } else {
+                throw Exception(
+                  "[nocontext] Invalid API response: ${response.error}",
+                );
+              }
             }
             return response.body!.map((AutocompleteTransaction e) => e.name);
           } catch (e) {
@@ -1630,7 +1709,7 @@ class _TransactionTagsState extends State<TransactionTags> {
               focusNode: disabledFocus,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
-                labelText: "Tags",
+                labelText: S.of(context).transactionFormLabelTags,
                 icon: const Icon(Icons.bookmarks),
                 prefixIcon: widget.tagsController.tags.isNotEmpty
                     ? Padding(
@@ -1699,10 +1778,10 @@ class TransactionNote extends StatelessWidget {
           child: TextFormField(
             controller: textController,
             maxLines: null,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "Notes",
-              icon: Icon(Icons.description),
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              labelText: S.of(context).transactionFormLabelNotes,
+              icon: const Icon(Icons.description),
             ),
           ),
         ),
@@ -1727,7 +1806,7 @@ class TransactionCategory extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: AutoCompleteText<String>(
-            labelText: "Category",
+            labelText: S.of(context).transactionFormLabelCategory,
             labelIcon: Icons.assignment,
             textController: textController,
             focusNode: focusNode,
@@ -1739,7 +1818,16 @@ class TransactionCategory extends StatelessWidget {
                   query: textEditingValue.text,
                 );
                 if (!response.isSuccessful || response.body == null) {
-                  throw Exception("Invalid Response from API");
+                  if (context.mounted) {
+                    throw Exception(
+                      S.of(context).errorAPIInvalidResponse(
+                          response.error?.toString() ?? ""),
+                    );
+                  } else {
+                    throw Exception(
+                      "[nocontext] Invalid API response: ${response.error}",
+                    );
+                  }
                 }
                 return response.body!.map((AutocompleteCategory e) => e.name);
               } catch (e) {
@@ -1794,7 +1882,17 @@ class _TransactionBudgetState extends State<TransactionBudget> {
           query: widget.textController.text,
         );
         if (!response.isSuccessful || response.body == null) {
-          throw Exception("Invalid Response from API");
+          if (context.mounted) {
+            throw Exception(
+              S
+                  .of(context)
+                  .errorAPIInvalidResponse(response.error?.toString() ?? ""),
+            );
+          } else {
+            throw Exception(
+              "[nocontext] Invalid API response: ${response.error}",
+            );
+          }
         }
         if (response.body!.isEmpty ||
             (response.body!.length > 1 &&
@@ -1820,11 +1918,13 @@ class _TransactionBudgetState extends State<TransactionBudget> {
       children: <Widget>[
         Expanded(
           child: AutoCompleteText<AutocompleteBudget>(
-            labelText: "Budget",
+            labelText: S.of(context).transactionFormLabelBudget,
             labelIcon: Icons.payments,
             textController: widget.textController,
             focusNode: widget.focusNode,
-            errorText: _budgetId == null ? 'Invalid Budget' : null,
+            errorText: _budgetId == null
+                ? S.of(context).transactionErrorInvalidBudget
+                : null,
             errorIconOnly: true,
             displayStringForOption: (AutocompleteBudget option) => option.name,
             onSelected: (AutocompleteBudget option) {
@@ -1840,7 +1940,16 @@ class _TransactionBudgetState extends State<TransactionBudget> {
                   query: textEditingValue.text,
                 );
                 if (!response.isSuccessful || response.body == null) {
-                  throw Exception("Invalid Response from API");
+                  if (context.mounted) {
+                    throw Exception(
+                      S.of(context).errorAPIInvalidResponse(
+                          response.error?.toString() ?? ""),
+                    );
+                  } else {
+                    throw Exception(
+                      "[nocontext] Invalid API response: ${response.error}",
+                    );
+                  }
                 }
                 return response.body!;
               } catch (e) {
@@ -1890,7 +1999,17 @@ class _TagDialogState extends State<TagDialog> {
     final FireflyIii api = FireflyProvider.of(context).api;
     final Response<TagArray> response = await api.v1TagsGet();
     if (!response.isSuccessful || response.body == null) {
-      throw Exception("Invalid Response from API");
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(response.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${response.error}",
+        );
+      }
     }
     return response.body!.data.map((TagRead e) => e.attributes.tag).toList();
   }
@@ -1920,17 +2039,17 @@ class _TagDialogState extends State<TagDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Select tags"),
+      title: Text(S.of(context).transactionDialogTagsTitle),
       clipBehavior: Clip.hardEdge,
       actions: <Widget>[
         TextButton(
-          child: const Text("Cancel"),
+          child: Text(S.of(context).formButtonCancel),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
         TextButton(
-          child: const Text("OK"),
+          child: Text(S.of(context).formButtonSave),
           onPressed: () {
             Navigator.pop(context, _newSelectedTags);
           },
@@ -1968,7 +2087,7 @@ class _TagDialogState extends State<TagDialog> {
                     onSubmitted: (String value) =>
                         _newTagSubmitted(setAlertState, allTags, value),
                     decoration: InputDecoration(
-                        hintText: "Search/Add Tag",
+                        hintText: S.of(context).transactionDialogTagsHint,
                         icon: const Icon(Icons.bookmark_add),
                         suffixIcon: showAddTag
                             ? Padding(
@@ -1980,7 +2099,8 @@ class _TagDialogState extends State<TagDialog> {
                                       setAlertState,
                                       allTags,
                                       _newTagTextController.text),
-                                  tooltip: "Add Tag",
+                                  tooltip:
+                                      S.of(context).transactionDialogTagsAdd,
                                 ),
                               )
                             : null),
@@ -2048,7 +2168,17 @@ class CurrencyDialog extends StatelessWidget {
     final FireflyIii api = FireflyProvider.of(context).api;
     final Response<CurrencyArray> response = await api.v1CurrenciesGet();
     if (!response.isSuccessful || response.body == null) {
-      throw Exception("Invalid Response from API");
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(response.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${response.error}",
+        );
+      }
     }
     List<CurrencyRead> currencies = response.body!.data;
     currencies.sort(
@@ -2070,7 +2200,7 @@ class CurrencyDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      title: const Text("Select currency"),
+      title: Text(S.of(context).transactionDialogCurrencyTitle),
       clipBehavior: Clip.hardEdge,
       children: <Widget>[
         FutureBuilder<List<CurrencyRead>>(
@@ -2145,9 +2275,9 @@ class CurrencyDialogOption extends StatelessWidget {
       },
       trailing:
           (optionCurrency.id == FireflyProvider.of(context).defaultCurrency.id)
-              ? const Text(
-                  "default",
-                  style: TextStyle(fontStyle: FontStyle.italic),
+              ? Text(
+                  S.of(context).generalDefault,
+                  style: const TextStyle(fontStyle: FontStyle.italic),
                 )
               : null,
       selected: (optionCurrency.id == currentCurrency.id),
@@ -2200,9 +2330,12 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                   final ScaffoldMessengerState msg =
                       ScaffoldMessenger.of(context);
                   final AuthUser? user = FireflyProvider.of(context).user;
+                  final S l10n = S.of(context);
+
                   if (user == null) {
                     throw Exception("API not ready.");
                   }
+
                   final DownloadTask task = DownloadTask(
                     url: attachment.attributes.downloadUrl!,
                     filename: attachment.attributes.filename,
@@ -2224,8 +2357,9 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                   });
 
                   if (result != TaskStatus.complete) {
-                    msg.showSnackBar(const SnackBar(
-                      content: Text("Could not download file."),
+                    msg.showSnackBar(SnackBar(
+                      content:
+                          Text(l10n.transactionDialogAttachmentsErrorDownload),
                       behavior: SnackBarBehavior.floating,
                     ));
                     return;
@@ -2234,7 +2368,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                   final OpenResult file = await OpenFilex.open(path);
                   if (file.type != ResultType.done) {
                     msg.showSnackBar(SnackBar(
-                      content: Text("Could not open file: ${file.message}"),
+                      content: Text(l10n
+                          .transactionDialogAttachmentsErrorOpen(file.message)),
                       behavior: SnackBarBehavior.floating,
                     ));
                   }
@@ -2262,24 +2397,26 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
                       icon: const Icon(Icons.delete),
-                      title: const Text("Delete Attachment"),
+                      title: Text(
+                          S.of(context).transactionDialogAttachmentsDelete),
                       clipBehavior: Clip.hardEdge,
                       actions: <Widget>[
                         TextButton(
-                          child: const Text('Cancel'),
+                          child: Text(S.of(context).formButtonCancel),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
                         ),
                         FilledButton(
-                          child: const Text('Delete'),
+                          child: Text(S.of(context).formButtonDelete),
                           onPressed: () {
                             Navigator.of(context).pop(true);
                           },
                         ),
                       ],
-                      content: const Text(
-                          "Are you sure you want to delete this attachment?"),
+                      content: Text(S
+                          .of(context)
+                          .transactionDialogAttachmentsDeleteConfirm),
                     ),
                   );
                   if (ok == null || !ok) {
@@ -2317,7 +2454,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
             onPressed: () async {
               Navigator.of(context).pop();
             },
-            child: const Text("Close"),
+            child: Text(S.of(context).formButtonClose),
           ),
           const SizedBox(width: 12),
           FilledButton(
@@ -2325,10 +2462,12 @@ class _AttachmentDialogState extends State<AttachmentDialog>
               final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
               final FireflyIii api = FireflyProvider.of(context).api;
               final AuthUser? user = FireflyProvider.of(context).user;
+              final S l10n = S.of(context);
 
               if (user == null) {
                 throw Exception("API unavailable");
               }
+
               FilePickerResult? file = await FilePicker.platform.pickFiles();
               if (file == null || file.files.first.path == null) {
                 return;
@@ -2346,12 +2485,13 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                 try {
                   ValidationError valError = ValidationError.fromJson(
                       json.decode(respAttachment.error.toString()));
-                  error = valError.message ?? "Unknown error.";
-                } catch (e) {
-                  error = "Unknown error.";
+                  error = error = valError.message ?? l10n.errorUnknown;
+                } catch (_) {
+                  error = l10n.errorUnknown;
                 }
                 msg.showSnackBar(SnackBar(
-                  content: Text("Could not add attachment: $error"),
+                  content:
+                      Text(l10n.transactionDialogAttachmentsErrorUpload(error)),
                   behavior: SnackBarBehavior.floating,
                 ));
                 return;
@@ -2394,13 +2534,14 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                 try {
                   ValidationError valError = ValidationError.fromJson(
                       json.decode(respAttachment.error.toString()));
-                  error = valError.message ?? "Unknown error.";
-                } catch (e) {
-                  error = "Unknown error.";
+                  error = error = valError.message ?? l10n.errorUnknown;
+                } catch (_) {
+                  error = l10n.errorUnknown;
                 }
                 debugPrint("error: $error");
                 msg.showSnackBar(SnackBar(
-                  content: Text("Could not upload file: $error"),
+                  content:
+                      Text(l10n.transactionDialogAttachmentsErrorUpload(error)),
                   behavior: SnackBarBehavior.floating,
                 ));
                 widget.attachments.removeAt(newAttachmentIndex);
@@ -2409,14 +2550,14 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                 return;
               }
             },
-            child: const Text("Upload"),
+            child: Text(S.of(context).formButtonUpload),
           ),
           const SizedBox(width: 12),
         ],
       ),
     );
     return SimpleDialog(
-      title: const Text("Attachments"),
+      title: Text(S.of(context).transactionDialogAttachmentsTitle),
       clipBehavior: Clip.hardEdge,
       children: childs,
     );

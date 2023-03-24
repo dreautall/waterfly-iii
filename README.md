@@ -10,6 +10,7 @@ The app is still pretty much work in progress, but basic features already do wor
 
 - General
   - Dark Mode switch according to system settings
+  - Ready for translations (but not translated yet)
 - Dashboard
   - Multiple charts for the current balance & recent history
   - Budget overview for last 30 days
@@ -29,8 +30,7 @@ The app does **not** try to replicate every single feature that the Webinterface
 - Settings page
 - Notification Listener
 - More filter options
-- Translations
-- ... and many more.
+- ... and more.
 
 ## Screenshots
 

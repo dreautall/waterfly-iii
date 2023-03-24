@@ -121,6 +121,11 @@ class AuthUser {
 class FireflyService extends ChangeNotifier {
   AuthUser? _currentUser;
   AuthUser? get user => _currentUser;
+  bool _signedIn = false;
+  bool get signedIn => _signedIn;
+  String? _lastTriedHost;
+  String? get lastTriedHost => _lastTriedHost;
+
   bool get hasApi => (_currentUser?.api != null) ? true : false;
   FireflyIii get api {
     if (_currentUser?.api == null) {
@@ -129,12 +134,6 @@ class FireflyService extends ChangeNotifier {
     }
     return _currentUser!.api;
   }
-
-  bool _signedIn = false;
-  bool get signedIn => _signedIn;
-
-  String? _lastTriedHost;
-  String? get lastTriedHost => _lastTriedHost;
 
   late CurrencyRead defaultCurrency;
 

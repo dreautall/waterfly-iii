@@ -29,6 +29,19 @@ jobs:
           channel: ${{env.FLUTTER_CHANNEL}}
           cache: true
 
+      # Generate keystore
+      - uses: timheuer/base64-to-file@v1.0.3
+        with:
+          fileName: upload-keystore.jks
+          encodedString: ${{ secrets.KEYSTORE_BASE64 }}
+
+      # Create key.properties
+      - run: |
+          echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > ${{env.PROPERTIES_PATH}}
+          echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> ${{env.PROPERTIES_PATH}}
+
       # No flutter analytics.
       - run: flutter config --no-analytics
 
@@ -45,7 +58,10 @@ jobs:
       # - run: flutter test
 
       # Build apk.
-      - run: flutter build apk --obfuscate --split-debug-info=build/app/outputs/symbols --release --split-per-abi
+      - run: flutter build apk --obfuscate --split-debug-info=build/app/outputs/symbols/apk --release --split-per-abi
+
+      # Build aab
+      - run: flutter build appbundle --obfuscate --split-debug-info=build/app/outputs/symbols/aab --release
 
       # Upload generated apk to the artifacts.
       - uses: actions/upload-artifact@v3
@@ -62,6 +78,11 @@ jobs:
         with:
           name: app-x86_64-release.apk
           path: build/app/outputs/flutter-apk/app-x86_64-release.apk
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: app-release.aab
+          path: build/app/outputs/bundle/release/app-release.aab
 
   upload-to-github:
     runs-on: ubuntu-latest
@@ -88,3 +109,20 @@ jobs:
             ./artifacts/app-arm64-v8a-release.apk
             ./artifacts/app-armeabi-v7a-release.apk
             ./artifacts/app-x86_64-release.apk
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: app-release.aab
+          path: ./artifacts
+      - uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAYSTORE_ACCOUNT_KEY }}
+          packageName: com.dreautall.waterflyiii
+          releaseFiles: ./artifacts/app-release.aab
+          track: internal
+          status: completed

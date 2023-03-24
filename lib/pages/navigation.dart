@@ -36,8 +36,8 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
   late List<NavDestination> navDestinations;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
     navDestinations = <NavDestination>[
       NavDestination(

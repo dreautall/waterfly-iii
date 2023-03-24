@@ -273,8 +273,10 @@ class _TransactionPageState extends State<TransactionPage>
       }
 
       // Individual for split transactions, show common for single transaction
-      updateTransactionAmounts();
-      splitTransactionCheckAccounts();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        updateTransactionAmounts();
+        splitTransactionCheckAccounts();
+      });
 
       _split = (_localAmounts.length > 1);
     } else {
@@ -283,9 +285,8 @@ class _TransactionPageState extends State<TransactionPage>
       _transactionType = TransactionTypeProperty.withdrawal;
       _date = DateTime.now();
 
-      splitTransactionAdd();
-
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        splitTransactionAdd();
         _localCurrency = FireflyProvider.of(context).defaultCurrency;
       });
     }

@@ -81,9 +81,10 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
               elevation: 4.0,
               child: ConstrainedBox(
                 constraints: BoxConstraints(
-                    maxHeight: 200,
-                    maxWidth: constraints.biggest.width -
-                        (labelIcon == null ? 0 : 40)),
+                  maxHeight: 200,
+                  maxWidth:
+                      constraints.biggest.width - (labelIcon == null ? 0 : 40),
+                ),
                 child: ListView.builder(
                   padding: EdgeInsets.zero,
                   itemCount: options.length,

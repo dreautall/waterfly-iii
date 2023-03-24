@@ -21,6 +21,11 @@ extension CurrencyFormat on CurrencyRead {
         decimalDigits: decimalDigits ?? attributes.decimalPlaces,
         symbol: forceCode ? null : attributes.symbol,
       ).format(amount);
+
+  String zero({String? locale}) => NumberFormat.currency(
+        locale: locale,
+        decimalDigits: attributes.decimalPlaces,
+      ).format(0);
 }
 
 extension AccountRole on AccountRoleProperty {

@@ -120,10 +120,8 @@ class _HomeBalanceState extends State<HomeBalance>
                             TextSpan(
                               text:
                                   account.attributes.currentBalanceDate != null
-                                      ? DateFormat.yMd(S.of(context).localeName)
-                                          .add_Hms()
-                                          .format(account
-                                              .attributes.currentBalanceDate!
+                                      ? DateFormat.yMd().add_Hms().format(
+                                          account.attributes.currentBalanceDate!
                                               .toLocal())
                                       : S.of(context).generalNever,
                             ),

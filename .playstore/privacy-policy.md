@@ -3,9 +3,8 @@
 We take the protection of your data very seriously and comply with applicable laws and regulations. In the following, we will give you an overview of what data is processed for what purpose and what happens to your personal data when you use our Android app Waterfly III. Personal data (hereafter often referred to as just “data”) is any data with which you can be personally identified.
 
 ## 1. Responsibility
-Responsible person according to Art. 4 GDPR and service provider according to the Telemediengesetz (TMG):
+Responsible person according to Art. 4 GDPR:
 
-Michael Vogt\
 app@vogt.pw
 
 ## 2. Collected data
@@ -15,7 +14,7 @@ We do not collect any data in Waterfly III. The app does not use ads, tracking o
 If you contact us via email, you agree that your data will be stored for the purpose of processing your request and for any further correspondence. If there is no reason for us to further store your data or if you exercise your right of revocation, your data will be deleted. Your data will never be passed on to third parties.
 
 ### Crash reports
-If you have installed Waterfly III via Google Play, diagnostic data about your app usage may be sent to Google, as described in the [Google Account Help](https://support.google.com/accounts/answer/6078260?hl=en) for Android. You can turn this on or off in the privacy settings of your Android device, usually this setting is already asked for when you set up your device. The collected data is automatically forwarded to the respective app developers, i.e. to us in the case of our apps, if this option is enabled.
+If you have installed Waterfly III via Google Play, diagnostic data about your app usage may be sent to Google, as described in the [Google Account Help](https://support.google.com/accounts/answer/6078260) for Android. You can turn this on or off in the privacy settings of your Android device, usually this setting is already asked for when you set up your device. The collected data is automatically forwarded to the respective app developers, i.e. to us in the case of our apps, if this option is enabled.
 
 Specifically, this involves the causes of crashes, also called “crash logs”, as well as the number and time of the crashes that occurred. We can also see which version of the app the crashes happened on. In the vast majority of cases, this data helps us a lot, so we can search for the displayed errors and fix them faster. The transmitted data is only information about crashes, no other usage or diagnostic data is transferred to us.
 

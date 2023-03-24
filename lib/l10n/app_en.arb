@@ -56,6 +56,7 @@
   "@formButtonClose": {
     "description": "Button Label: Close (dialog etc.)"
   },
+  "formButtonDelete": "Delete",
   "formButtonHelp": "Help",
   "@formButtonHelp": {
     "description": "Button Label: Help"
@@ -84,6 +85,7 @@
   "@formButtonTryAgain": {
     "description": "Button Label: Try that thing again (login etc)"
   },
+  "formButtonUpload": "Upload",
   "generalAccount": "Account",
   "@generalAccount": {
     "description": "Asset/Debt (Bank) Account"
@@ -92,6 +94,7 @@
   "@generalBalance": {
     "description": "(Account) Balance"
   },
+  "generalDefault": "default",
   "generalDismiss": "Dismiss",
   "@generalDismiss": {
     "description": "Dismiss window/dialog without action"
@@ -356,8 +359,54 @@
       }
     }
   },
+  "transactionAccountForeign": "Foreign account",
+  "transactionAccountOwn": "Own account",
+  "transactionAttachments": "Attachments",
+  "transactionDeleteConfirmation": "Are you sure you want to delete this transaction?",
+  "transactionDialogAttachmentsDelete": "Delete Attachment",
+  "transactionDialogAttachmentsDeleteConfirm": "Are you sure you want to delete this attachment?",
+  "transactionDialogAttachmentsErrorDownload": "Could not download file.",
+  "transactionDialogAttachmentsErrorOpen": "Could not open file: {error}",
+  "@transactionDialogAttachmentsErrorOpen": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionDialogAttachmentsErrorUpload": "Could not upload file: {error}",
+  "@transactionDialogAttachmentsErrorUpload": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionDialogAttachmentsTitle": "Attachments",
+  "transactionDialogCurrencyTitle": "Select currency",
+  "transactionDialogTagsAdd": "Add Tag",
+  "transactionDialogTagsHint": "Search/Add Tag",
+  "transactionDialogTagsTitle": "Select tags",
+  "transactionErrorInvalidAccount": "Invalid Account",
+  "transactionErrorInvalidBudget": "Invalid Budget",
+  "transactionErrorSaveFirst": "Please save the transaction first.",
+  "transactionErrorTitle": "Please provide a title.",
+  "transactionFormLabelBudget": "Budget",
+  "transactionFormLabelCategory": "Category",
+  "transactionFormLabelNotes": "Notes",
+  "transactionFormLabelTags": "Tags",
+  "transactionFormLabelTitle": "Transaction Title",
+  "transactionSplitAdd": "Add split transaction",
+  "transactionSplitChangeCurrency": "Change Split Currency",
+  "transactionSplitChangeTarget": "Change Split Target Account",
+  "transactionSplitDelete": "Delete split",
+  "transactionTitleAdd": "Add Transaction",
+  "transactionTitleDelete": "Delete Transaction",
+  "transactionTitleEdit": "Edit Transaction",
+  "transactionTypeDeposit": "Deposit",
   "transactionTypeTransfer": "Transfer",
   "@transactionTypeTransfer": {
     "description": "Transfer transaction type"
-  }
+  },
+  "transactionTypeWithdrawal": "Withdrawal"
 }

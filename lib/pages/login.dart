@@ -145,6 +145,10 @@ class _LoginPageState extends State<LoginPage> {
                       } else {
                         _hostTextController.text = "$newScheme$currentUrl";
                       }
+                      _hostTextController.selection =
+                          TextSelection.fromPosition(TextPosition(
+                              offset: _hostTextController.text.length));
+
                       bool error = _hostTextController.text.isNotEmpty &&
                           !_hostValid(_hostTextController.text);
                       setState(() {

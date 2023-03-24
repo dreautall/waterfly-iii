@@ -57,6 +57,9 @@
     "description": "Button Label: Close (dialog etc.)"
   },
   "formButtonDelete": "Delete",
+  "@formButtonDelete": {
+    "description": "Button Label: Delete (item etc.)"
+  },
   "formButtonHelp": "Help",
   "@formButtonHelp": {
     "description": "Button Label: Help"
@@ -86,6 +89,9 @@
     "description": "Button Label: Try that thing again (login etc)"
   },
   "formButtonUpload": "Upload",
+  "@formButtonUpload": {
+    "description": "Button Label: Upload (file etc.)"
+  },
   "generalAccount": "Account",
   "@generalAccount": {
     "description": "Asset/Debt (Bank) Account"
@@ -95,6 +101,9 @@
     "description": "(Account) Balance"
   },
   "generalDefault": "default",
+  "@generalDefault": {
+    "description": "Indicates that something is the default choice"
+  },
   "generalDismiss": "Dismiss",
   "@generalDismiss": {
     "description": "Dismiss window/dialog without action"
@@ -328,8 +337,17 @@
     "description": "Login screen welcome banner"
   },
   "navigationAccounts": "Accounts",
+  "@navigationAccounts": {
+    "description": "Navigation Label: Accounts Page"
+  },
   "navigationMain": "Main Dashboard",
+  "@navigationMain": {
+    "description": "Navigation Label: Main Dashboard"
+  },
   "navigationSettings": "Settings",
+  "@navigationSettings": {
+    "description": "Navigation Label: Settings"
+  },
   "numPercent": "{num}",
   "@numPercent": {
     "description": "Number formatted as percentage",
@@ -359,15 +377,29 @@
       }
     }
   },
-  "transactionAccountForeign": "Foreign account",
-  "transactionAccountOwn": "Own account",
   "transactionAttachments": "Attachments",
-  "transactionDeleteConfirmation": "Are you sure you want to delete this transaction?",
+  "@transactionAttachments": {
+    "description": "Button Label: Attachments"
+  },
+  "transactionDeleteConfirm": "Are you sure you want to delete this transaction?",
+  "@transactionDeleteConfirm": {
+    "description": "Confirmation text to delete transaction"
+  },
   "transactionDialogAttachmentsDelete": "Delete Attachment",
+  "@transactionDialogAttachmentsDelete": {
+    "description": "Button Label: Delete Attachment"
+  },
   "transactionDialogAttachmentsDeleteConfirm": "Are you sure you want to delete this attachment?",
+  "@transactionDialogAttachmentsDeleteConfirm": {
+    "description": "Confirmation text to delete attachment"
+  },
   "transactionDialogAttachmentsErrorDownload": "Could not download file.",
+  "@transactionDialogAttachmentsErrorDownload": {
+    "description": "Snackbar Text: File download failed."
+  },
   "transactionDialogAttachmentsErrorOpen": "Could not open file: {error}",
   "@transactionDialogAttachmentsErrorOpen": {
+    "description": "Snackbar Text: File could not be opened, with reason.",
     "placeholders": {
       "error": {
         "type": "String"
@@ -376,6 +408,7 @@
   },
   "transactionDialogAttachmentsErrorUpload": "Could not upload file: {error}",
   "@transactionDialogAttachmentsErrorUpload": {
+    "description": "Snackbar Text: File could not be uploaded, with reason.",
     "placeholders": {
       "error": {
         "type": "String"
@@ -383,30 +416,107 @@
     }
   },
   "transactionDialogAttachmentsTitle": "Attachments",
+  "@transactionDialogAttachmentsTitle": {
+    "description": "Dialog Title: Attachments Dialog"
+  },
   "transactionDialogCurrencyTitle": "Select currency",
+  "@transactionDialogCurrencyTitle": {
+    "description": "Dialog Title: Currency Selection"
+  },
   "transactionDialogTagsAdd": "Add Tag",
+  "@transactionDialogTagsAdd": {
+    "description": "Button Label: Add Tag"
+  },
   "transactionDialogTagsHint": "Search/Add Tag",
+  "@transactionDialogTagsHint": {
+    "description": "Hint Text for search tag field"
+  },
   "transactionDialogTagsTitle": "Select tags",
+  "@transactionDialogTagsTitle": {
+    "description": "Dialog Title: Select Tags"
+  },
   "transactionErrorInvalidAccount": "Invalid Account",
+  "@transactionErrorInvalidAccount": {
+    "description": "Transaction Save Error: Invalid account"
+  },
   "transactionErrorInvalidBudget": "Invalid Budget",
+  "@transactionErrorInvalidBudget": {
+    "description": "Transaction Save Error: Invalid budget"
+  },
   "transactionErrorSaveFirst": "Please save the transaction first.",
+  "@transactionErrorSaveFirst": {
+    "description": "Transaction Hint Error: Needs to be saved"
+  },
   "transactionErrorTitle": "Please provide a title.",
+  "@transactionErrorTitle": {
+    "description": "Transaction Save Error: No title provided"
+  },
+  "transactionFormLabelAccountForeign": "Foreign account",
+  "@transactionFormLabelAccountForeign": {
+    "description": "Transaction Form: Label for foreign (other) account"
+  },
+  "transactionFormLabelAccountOwn": "Own account",
+  "@transactionFormLabelAccountOwn": {
+    "description": "Transaction Form: Label for own account"
+  },
   "transactionFormLabelBudget": "Budget",
+  "@transactionFormLabelBudget": {
+    "description": "Transaction Form: Label for budget field"
+  },
   "transactionFormLabelCategory": "Category",
+  "@transactionFormLabelCategory": {
+    "description": "Transaction Form: Label for category field"
+  },
   "transactionFormLabelNotes": "Notes",
+  "@transactionFormLabelNotes": {
+    "description": "Transaction Form: Label for notes field"
+  },
   "transactionFormLabelTags": "Tags",
+  "@transactionFormLabelTags": {
+    "description": "Transaction Form: Label for tags field"
+  },
   "transactionFormLabelTitle": "Transaction Title",
+  "@transactionFormLabelTitle": {
+    "description": "Transaction Form: Label for title field"
+  },
   "transactionSplitAdd": "Add split transaction",
+  "@transactionSplitAdd": {
+    "description": "Button Label: Add a split"
+  },
   "transactionSplitChangeCurrency": "Change Split Currency",
+  "@transactionSplitChangeCurrency": {
+    "description": "Hint Text: Change currency for a single split"
+  },
   "transactionSplitChangeTarget": "Change Split Target Account",
+  "@transactionSplitChangeTarget": {
+    "description": "Hint Text: Change target account for single split"
+  },
   "transactionSplitDelete": "Delete split",
+  "@transactionSplitDelete": {
+    "description": "Hint Text: Delete single split"
+  },
   "transactionTitleAdd": "Add Transaction",
+  "@transactionTitleAdd": {
+    "description": "Title: Add a new transaction"
+  },
   "transactionTitleDelete": "Delete Transaction",
+  "@transactionTitleDelete": {
+    "description": "Title: Delete existing transaction"
+  },
   "transactionTitleEdit": "Edit Transaction",
+  "@transactionTitleEdit": {
+    "description": "Title: Edit existing transaction"
+  },
   "transactionTypeDeposit": "Deposit",
+  "@transactionTypeDeposit": {
+    "description": "Deposit transaction type"
+  },
   "transactionTypeTransfer": "Transfer",
   "@transactionTypeTransfer": {
     "description": "Transfer transaction type"
   },
-  "transactionTypeWithdrawal": "Withdrawal"
+  "transactionTypeWithdrawal": "Withdrawal",
+  "@transactionTypeWithdrawal": {
+    "description": "Withdrawal transaction type"
+  }
 }

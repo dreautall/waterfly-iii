@@ -41,14 +41,6 @@ If the processing of personal data concerning you is necessary for the performan
 
 ### Right of appeal
 If you believe that the processing of personal data concerning you violates the General Data Protection Regulation, you have the right to lodge a complaint with a supervisory authority, without prejudice to other legal remedies.
-You can reach the competent supervisory authority for Baden-Württemberg at:
- 
-Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit
-Lautenschlagerstraße 20
-70173 Stuttgart
-Germany
-
-Email: poststelle@lfdi.bwl.de
 
 ## 5. Security
 Your requests to this web server are protected by SSL encryption. Nevertheless, data transmission on the Internet (e.g. communication by email) may have security gaps. A complete protection of data against access by third parties is not possible.

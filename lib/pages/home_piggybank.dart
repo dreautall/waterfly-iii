@@ -192,7 +192,9 @@ class _HomePiggybankState extends State<HomePiggybank>
                                 targetAmount != 0
                                     ? TextSpan(
                                         text: S.of(context).numPercentOf(
-                                              piggy.attributes.percentage ?? 0,
+                                              (piggy.attributes.percentage ??
+                                                      0) /
+                                                  100,
                                               currency.fmt(targetAmount),
                                             ))
                                     : const TextSpan(),

@@ -47,7 +47,7 @@ jobs:
 
       # Set build number
       - run: |
-          sed -i 's/^\(version: [0-9\.]\{1,\}\(-[a-z]\{1,\}\)\{0,1\}\)$/\1+${{ github.run_number }}/m'
+          sed -i 's/^\(version: [0-9\.]\{1,\}\(-[a-z]\{1,\}\)\{0,1\}\)$/\1+${{ github.run_number }}/m' pubspec.yaml
 
       # No flutter analytics.
       - run: flutter config --no-analytics

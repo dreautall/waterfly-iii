@@ -2,7 +2,7 @@ name: waterflyiii
 description: WaterFly III, a mobile client for Firefly III
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.6+2
+version: 0.0.6-alpha+3
 
 environment:
   sdk: '>=2.19.0 <3.0.0'

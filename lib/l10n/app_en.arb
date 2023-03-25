@@ -100,6 +100,10 @@
   "@generalBalance": {
     "description": "(Account) Balance"
   },
+  "generalCurrency": "Currency",
+  "@generalCurrency": {
+    "description": "(Money) Currency"
+  },
   "generalDefault": "default",
   "@generalDefault": {
     "description": "Indicates that something is the default choice"
@@ -294,21 +298,29 @@
   "@homeTabLabelTransactions": {
     "description": "Tab Label: Transactions page"
   },
+  "homeTransactionsActionFilter": "Filter List",
+  "@homeTransactionsActionFilter": {
+    "description": "Action Button Label: Filter list."
+  },
+  "homeTransactionsDialogFilterAccountsAll": "<All Accounts>",
+  "@homeTransactionsDialogFilterAccountsAll": {
+    "description": "Don't filter for a specific account (default entry)"
+  },
+  "homeTransactionsDialogFilterCurrenciesAll": "<All Currencies>",
+  "@homeTransactionsDialogFilterCurrenciesAll": {
+    "description": "Don't filter for a specific currency (default entry)"
+  },
+  "homeTransactionsDialogFilterSearch": "Search Term",
+  "@homeTransactionsDialogFilterSearch": {
+    "description": "Search term for filter"
+  },
+  "homeTransactionsDialogFilterTitle": "Select filters",
+  "@homeTransactionsDialogFilterTitle": {
+    "description": "Title of Filter Dialog"
+  },
   "homeTransactionsEmpty": "No transactions found.",
   "@homeTransactionsEmpty": {
     "description": "Message when no transactions are found."
-  },
-  "homeTransactionsFilterAccountsAll": "<All Accounts>",
-  "@homeTransactionsFilterAccountsAll": {
-    "description": "Don't filter for a specific account (default entry)"
-  },
-  "homeTransactionsFilterSearch": "Search Term",
-  "@homeTransactionsFilterSearch": {
-    "description": "Search term for filter"
-  },
-  "homeTransactionsFilterTitle": "Select filters",
-  "@homeTransactionsFilterTitle": {
-    "description": "Title of Filter Dialog"
   },
   "homeTransactionsMultipleCategories": "{num} categories",
   "@homeTransactionsMultipleCategories": {

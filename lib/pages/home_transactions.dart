@@ -14,10 +14,13 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class TransactionFilters {
-  TransactionFilters({this.account, this.text});
+  TransactionFilters({this.account, this.text, this.currency});
 
   AccountRead? account;
   String? text;
+  CurrencyRead? currency;
+
+  bool get hasFilters => account != null || text != null || currency != null;
 }
 
 class HomeTransactions extends StatefulWidget {
@@ -62,10 +65,13 @@ class _HomeTransactionsState extends State<HomeTransactions>
             IconButton(
               // :TODO: turn blue when filter is set.. if feasible
               icon: const Icon(Icons.tune),
-              tooltip: 'Filter List',
+              tooltip: S.of(context).homeTransactionsActionFilter,
               onPressed: () async {
                 TransactionFilters oldFilters = TransactionFilters(
-                    text: _filters.text, account: _filters.account);
+                  text: _filters.text,
+                  account: _filters.account,
+                  currency: _filters.currency,
+                );
                 bool? ok = await showDialog<bool>(
                   context: context,
                   builder: (BuildContext context) => FilterDialog(
@@ -98,11 +104,15 @@ class _HomeTransactionsState extends State<HomeTransactions>
     try {
       final FireflyIii api = FireflyProvider.of(context).api;
       late Future<Response<TransactionArray>> searchFunc;
-      if (_filters.text != null) {
+      if (_filters.hasFilters) {
         String query = _filters.text!;
         if (_filters.account != null) {
           query = "account_id:${_filters.account!.id} $query";
         }
+        if (_filters.currency != null) {
+          query = "currency_is:${_filters.currency!.attributes.code} $query";
+        }
+        debugPrint("Search query: $query");
         searchFunc = api.v1SearchTransactionsGet(query: query, page: pageKey);
       } else {
         searchFunc = (widget.accountId != null || _filters.account != null)
@@ -401,6 +411,13 @@ class _HomeTransactionsState extends State<HomeTransactions>
   }
 }
 
+class FilterData {
+  FilterData(this.accounts, this.currencies);
+
+  final List<AccountRead> accounts;
+  final List<CurrencyRead> currencies;
+}
+
 class FilterDialog extends StatelessWidget {
   const FilterDialog({
     super.key,
@@ -409,31 +426,53 @@ class FilterDialog extends StatelessWidget {
 
   final TransactionFilters filters;
 
-  Future<List<AccountRead>>? _getAccounts(BuildContext context) async {
+  Future<FilterData> _getData(BuildContext context) async {
     final FireflyIii api = FireflyProvider.of(context).api;
-    final Response<AccountArray> response =
+
+    // Accounts
+    final Response<AccountArray> respAccounts =
         await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
-    if (!response.isSuccessful || response.body == null) {
+    if (!respAccounts.isSuccessful || respAccounts.body == null) {
       if (context.mounted) {
         throw Exception(
           S
               .of(context)
-              .errorAPIInvalidResponse(response.error?.toString() ?? ""),
+              .errorAPIInvalidResponse(respAccounts.error?.toString() ?? ""),
         );
       } else {
         throw Exception(
-          "[nocontext] Invalid API response: ${response.error}",
+          "[nocontext] Invalid API response: ${respAccounts.error}",
         );
       }
     }
-    return response.body!.data;
+
+    // Currencies
+    final Response<CurrencyArray> respCurrencies = await api.v1CurrenciesGet();
+    if (!respCurrencies.isSuccessful || respCurrencies.body == null) {
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(respCurrencies.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${respCurrencies.error}",
+        );
+      }
+    }
+
+    return FilterData(
+      respAccounts.body!.data,
+      respCurrencies.body!.data,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       icon: const Icon(Icons.tune),
-      title: Text(S.of(context).homeTransactionsFilterTitle),
+      title: Text(S.of(context).homeTransactionsDialogFilterTitle),
       clipBehavior: Clip.hardEdge,
       actions: <Widget>[
         TextButton(
@@ -449,95 +488,154 @@ class FilterDialog extends StatelessWidget {
           },
         ),
       ],
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          FutureBuilder<List<AccountRead>>(
-            future: _getAccounts(context),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<AccountRead>> snapshot) {
-              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                List<Widget> child = <Widget>[];
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            FutureBuilder<FilterData>(
+              future: _getData(context),
+              builder:
+                  (BuildContext context, AsyncSnapshot<FilterData> snapshot) {
+                if (snapshot.hasData && snapshot.data != null) {
+                  List<Widget> child = <Widget>[];
 
-                // Search Term
-                child.add(
-                  TextFormField(
-                    //controller: _keyTextController,
-                    //readOnly: _formSubmitted,
-                    decoration: InputDecoration(
-                      filled: false,
-                      border: const OutlineInputBorder(),
-                      labelText: S.of(context).homeTransactionsFilterSearch,
-                      prefixIcon: const Icon(Icons.search),
-                    ),
-                    initialValue: filters.text,
-                    onChanged: (String value) {
-                      filters.text = value;
-                    },
-                  ),
-                );
-                child.add(const SizedBox(height: 12));
-
-                // Account Select
-                List<DropdownMenuEntry<AccountRead>> accountOptions =
-                    <DropdownMenuEntry<AccountRead>>[
-                  DropdownMenuEntry<AccountRead>(
-                    value: AccountRead(
-                      id: "0",
-                      type: "dummy",
-                      attributes: Account(
-                        name: S.of(context).homeTransactionsFilterAccountsAll,
-                        type: ShortAccountTypeProperty.swaggerGeneratedUnknown,
+                  // Search Term
+                  child.add(
+                    TextFormField(
+                      //controller: _keyTextController,
+                      //readOnly: _formSubmitted,
+                      decoration: InputDecoration(
+                        filled: false,
+                        border: const OutlineInputBorder(),
+                        labelText:
+                            S.of(context).homeTransactionsDialogFilterSearch,
+                        prefixIcon: const Icon(Icons.search),
                       ),
+                      initialValue: filters.text,
+                      onChanged: (String value) {
+                        filters.text = value;
+                        if (value.isEmpty) {
+                          filters.text = null;
+                        }
+                      },
                     ),
-                    label: S.of(context).homeTransactionsFilterAccountsAll,
-                  )
-                ];
-                AccountRead? currentAccount = accountOptions.first.value;
-                for (AccountRead e in snapshot.data!) {
-                  accountOptions.add(DropdownMenuEntry<AccountRead>(
-                    value: e,
-                    label: e.attributes.name,
-                  ));
-                  if (filters.account != null && filters.account!.id == e.id) {
-                    currentAccount = e;
+                  );
+                  child.add(const SizedBox(height: 12));
+
+                  // Account Select
+                  List<DropdownMenuEntry<AccountRead>> accountOptions =
+                      <DropdownMenuEntry<AccountRead>>[
+                    DropdownMenuEntry<AccountRead>(
+                      value: AccountRead(
+                        id: "0",
+                        type: "dummy",
+                        attributes: Account(
+                          name: S
+                              .of(context)
+                              .homeTransactionsDialogFilterAccountsAll,
+                          type:
+                              ShortAccountTypeProperty.swaggerGeneratedUnknown,
+                        ),
+                      ),
+                      label:
+                          S.of(context).homeTransactionsDialogFilterAccountsAll,
+                    )
+                  ];
+                  AccountRead? currentAccount = accountOptions.first.value;
+                  for (AccountRead e in snapshot.data!.accounts) {
+                    accountOptions.add(DropdownMenuEntry<AccountRead>(
+                      value: e,
+                      label: e.attributes.name,
+                    ));
+                    if (filters.account?.id == e.id) {
+                      currentAccount = e;
+                    }
                   }
+
+                  child.add(
+                    DropdownMenu<AccountRead>(
+                      initialSelection: currentAccount,
+                      leadingIcon: const Icon(Icons.account_balance),
+                      label: Text(S.of(context).generalAccount),
+                      dropdownMenuEntries: accountOptions,
+                      onSelected: (AccountRead? account) {
+                        if ((account?.id ?? "0") == "0") {
+                          filters.account = null;
+                        } else {
+                          filters.account = account;
+                        }
+                      },
+                    ),
+                  );
+                  child.add(const SizedBox(height: 12));
+
+                  // Currency Select
+                  List<DropdownMenuEntry<CurrencyRead>> currencyOptions =
+                      <DropdownMenuEntry<CurrencyRead>>[
+                    DropdownMenuEntry<CurrencyRead>(
+                      value: CurrencyRead(
+                        id: "0",
+                        type: "dummy",
+                        attributes: Currency(
+                          name: S
+                              .of(context)
+                              .homeTransactionsDialogFilterCurrenciesAll,
+                          code: "",
+                          symbol: "",
+                        ),
+                      ),
+                      label: S
+                          .of(context)
+                          .homeTransactionsDialogFilterCurrenciesAll,
+                    )
+                  ];
+                  CurrencyRead? currentCurrency = currencyOptions.first.value;
+                  for (CurrencyRead e in snapshot.data!.currencies) {
+                    currencyOptions.add(DropdownMenuEntry<CurrencyRead>(
+                      value: e,
+                      label: e.attributes.name,
+                    ));
+                    if (filters.currency?.id == e.id) {
+                      currentCurrency = e;
+                    }
+                  }
+
+                  child.add(
+                    DropdownMenu<CurrencyRead>(
+                      initialSelection: currentCurrency,
+                      leadingIcon: const Icon(Icons.money),
+                      label: Text(S.of(context).generalCurrency),
+                      dropdownMenuEntries: currencyOptions,
+                      onSelected: (CurrencyRead? currency) {
+                        if ((currency?.id ?? "0") == "0") {
+                          filters.currency = null;
+                        } else {
+                          filters.currency = currency;
+                        }
+                      },
+                    ),
+                  );
+                  child.add(const SizedBox(height: 12));
+
+                  return Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: child,
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  Navigator.pop(context);
+                  return const SizedBox.shrink();
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
-
-                child.add(
-                  DropdownMenu<AccountRead>(
-                    initialSelection: currentAccount,
-                    leadingIcon: const Icon(Icons.account_balance),
-                    label: Text(S.of(context).generalAccount),
-                    dropdownMenuEntries: accountOptions,
-                    onSelected: (AccountRead? account) {
-                      if ((account?.id ?? "0") == "0") {
-                        filters.account = null;
-                      } else {
-                        filters.account = account;
-                      }
-                    },
-                  ),
-                );
-
-                return Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: child,
-                  ),
-                );
-              } else if (snapshot.hasError) {
-                Navigator.pop(context);
-                return const SizedBox.shrink();
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
-          ),
-        ],
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

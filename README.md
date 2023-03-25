@@ -9,8 +9,8 @@ The app design is heavily influenced by [Bluecoins](https://play.google.com/stor
 The app is still pretty much work in progress, but basic features already do work:
 
 - General
-  - Dark Mode switch according to system settings
-  - Ready for translations (but not translated yet)
+  - Light & Dark Mode
+  - Translation Ready (currently only translated into German)
 - Dashboard
   - Multiple charts for the current balance & recent history
   - Budget overview for last 30 days
@@ -27,7 +27,6 @@ The app is still pretty much work in progress, but basic features already do wor
 The app does **not** try to replicate every single feature that the Webinterface has. Instead, it tries to be a good *companion* to access the most used functions on-the-go. More in-depth operations such as creating or deleting asset accounts, creating or modifying rules etc. are not planned.
 
 - Detailed Accounts page
-- Settings page
 - Notification Listener
 - More filter options
 - ... and more.

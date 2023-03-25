@@ -377,6 +377,32 @@
       }
     }
   },
+  "settingsDialogLanguageTitle": "Select Language",
+  "@settingsDialogLanguageTitle": {
+    "description": "Dialog title: Select Language"
+  },
+  "settingsDialogThemeTitle": "Select Theme",
+  "@settingsDialogThemeTitle": {
+    "description": "Dialog title: Select theme"
+  },
+  "settingsLanguage": "Language",
+  "@settingsLanguage": {
+    "description": "Currently selected language"
+  },
+  "settingsTheme": "App Theme",
+  "@settingsTheme": {
+    "description": "App theme (dark or light)"
+  },
+  "settingsThemeValue": "{theme, select, dark{Dark Mode} light{Light Mode} other{System Default}}",
+  "@settingsThemeValue": {
+    "description": "Currently selected theme (either dark, light or system)",
+    "placeholders": {
+      "theme": {
+        "type": "String",
+        "example": "ThemeMode.dark"
+      }
+    }
+  },
   "transactionAttachments": "Attachments",
   "@transactionAttachments": {
     "description": "Button Label: Attachments"

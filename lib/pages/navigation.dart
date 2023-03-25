@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/pages/home.dart';
+import 'package:waterflyiii/pages/settings.dart';
 
 class NavDestination {
   const NavDestination(
@@ -54,8 +55,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
       ),
       NavDestination(
         S.of(context).navigationSettings,
-        const Placeholder(
-            color: Colors.green, key: ValueKey<String>("settings")),
+        const SettingsPage(),
         const Icon(Icons.settings_outlined),
         const Icon(Icons.settings),
       ),

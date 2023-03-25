@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:animations/animations.dart';
 import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -310,78 +311,92 @@ class _HomeTransactionsState extends State<HomeTransactions>
       foreignText += " ";
     }
 
-    Widget transactionWidget = ListTile(
-      leading: CircleAvatar(
-        foregroundColor: Colors.white,
-        backgroundColor: transactions.first.type.color,
-        child: Icon(transactions.first.type.icon),
-      ),
-      title: Text(
-        title,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-      subtitle: RichText(
-        overflow: TextOverflow.ellipsis,
-        maxLines: 2,
-        text: TextSpan(
-          style: Theme.of(context).textTheme.bodyMedium,
-          children: subtitle,
-        ),
-      ),
-      isThreeLine: true,
-      shape: const RoundedRectangleBorder(
+    Widget transactionWidget = OpenContainer(
+      openBuilder: (BuildContext context, Function closedContainer) {
+        return TransactionPage(transaction: item);
+      },
+      openColor: Theme.of(context).cardColor,
+      closedColor: Theme.of(context).cardColor,
+      closedShape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16),
           bottomLeft: Radius.circular(16),
         ),
       ),
-      trailing: RichText(
-        textAlign: TextAlign.end,
-        maxLines: 2,
-        text: TextSpan(
-          style: Theme.of(context).textTheme.bodyMedium,
-          children: <InlineSpan>[
-            if (foreignText.isNotEmpty)
-              TextSpan(
-                text: foreignText,
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: Colors.blue,
-                    ),
-              ),
-            TextSpan(
-              text: currency.fmt(amount),
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: transactions.first.type.color,
-                fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
-              ),
-            ),
-            const TextSpan(text: "\n"),
-            if (reconciled)
-              const WidgetSpan(
-                baseline: TextBaseline.ideographic,
-                alignment: PlaceholderAlignment.middle,
-                child: Padding(
-                  padding: EdgeInsets.only(right: 2),
-                  child: Icon(Icons.check),
-                ),
-              ),
-            TextSpan(
-              text: (transactions.first.type == TransactionTypeProperty.deposit)
-                  ? destinationName
-                  : sourceName,
-            ),
-          ],
-        ),
-      ),
-      onTap: () async {
-        final bool? refresh = await showDialog<bool>(
-          context: context,
-          builder: (BuildContext context) => Dialog.fullscreen(
-            child: TransactionPage(transaction: item),
+      closedElevation: 0,
+      closedBuilder: (BuildContext context, Function openContainer) {
+        return ListTile(
+          leading: CircleAvatar(
+            foregroundColor: Colors.white,
+            backgroundColor: transactions.first.type.color,
+            child: Icon(transactions.first.type.icon),
           ),
+          title: Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subtitle: RichText(
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+            text: TextSpan(
+              style: Theme.of(context).textTheme.bodyMedium,
+              children: subtitle,
+            ),
+          ),
+          isThreeLine: true,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              bottomLeft: Radius.circular(16),
+            ),
+          ),
+          trailing: RichText(
+            textAlign: TextAlign.end,
+            maxLines: 2,
+            text: TextSpan(
+              style: Theme.of(context).textTheme.bodyMedium,
+              children: <InlineSpan>[
+                if (foreignText.isNotEmpty)
+                  TextSpan(
+                    text: foreignText,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: Colors.blue,
+                        ),
+                  ),
+                TextSpan(
+                  text: currency.fmt(amount),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: transactions.first.type.color,
+                    fontFeatures: const <FontFeature>[
+                      FontFeature.tabularFigures()
+                    ],
+                  ),
+                ),
+                const TextSpan(text: "\n"),
+                if (reconciled)
+                  const WidgetSpan(
+                    baseline: TextBaseline.ideographic,
+                    alignment: PlaceholderAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 2),
+                      child: Icon(Icons.check),
+                    ),
+                  ),
+                TextSpan(
+                  text: (transactions.first.type ==
+                          TransactionTypeProperty.deposit)
+                      ? destinationName
+                      : sourceName,
+                ),
+              ],
+            ),
+          ),
+          onTap: () => openContainer(),
         );
-        if (refresh ?? false) {
+      },
+      onClosed: (bool? refresh) {
+        if (refresh ?? false == true) {
           _pagingController.refresh();
         }
       },

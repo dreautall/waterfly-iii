@@ -426,6 +426,12 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                                     .MaterialPalette.deepOrange.shadeDefault,
                                 labelAnchor: charts.AnnotationLabelAnchor.start,
                                 startLabel: S.of(context).generalTarget,
+                                labelStyleSpec: charts.TextStyleSpec(
+                                  color: charts.ColorUtil.fromDartColor(
+                                      Theme.of(context)
+                                          .colorScheme
+                                          .onSurfaceVariant),
+                                ),
                               )
                             ],
                           ),

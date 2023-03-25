@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/auth.dart';
+import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/pages/login.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/splash.dart';
@@ -16,6 +18,7 @@ class WaterflyApp extends StatefulWidget {
 class _WaterflyAppState extends State<WaterflyApp> {
   final GlobalKey<NavigatorState> _navigator = GlobalKey<NavigatorState>();
   final FireflyService _firefly = FireflyService();
+  final SettingsProvider _settings = SettingsProvider();
   bool _loggedIn = false;
   bool _loading = true;
 
@@ -24,6 +27,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
     super.initState();
 
     _firefly.addListener(_handleAuthStateChanged);
+    _settings.loadSettings();
   }
 
   @override
@@ -61,32 +65,39 @@ class _WaterflyAppState extends State<WaterflyApp> {
 
     return FireflyProvider(
       fireflyService: _firefly,
-      child: MaterialApp(
-        title: 'Waterfly III',
-        theme: ThemeData(
-          brightness: Brightness.light,
-          colorSchemeSeed: Colors.blue,
-          useMaterial3: true,
-        ),
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          colorScheme: ColorScheme.fromSeed(
-                  seedColor: Colors.blue, brightness: Brightness.dark)
-              .copyWith(
-            surfaceVariant: Colors.blueGrey.shade900,
-            onSurfaceVariant: Colors.white,
-          ),
-          useMaterial3: true,
-        ).copyWith(),
-        themeMode: ThemeMode.system,
-        localizationsDelegates: S.localizationsDelegates,
-        supportedLocales: S.supportedLocales,
-        navigatorKey: _navigator,
-        home: _loading
-            ? const SplashPage()
-            : _loggedIn
-                ? const NavPage()
-                : const LoginPage(),
+      child: ChangeNotifierProvider<SettingsProvider>(
+        create: (_) => _settings,
+        builder: (BuildContext context, Widget? child) {
+          return MaterialApp(
+            title: 'Waterfly III',
+            theme: ThemeData(
+              brightness: Brightness.light,
+              colorSchemeSeed: Colors.blue,
+              useMaterial3: true,
+            ),
+            darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Colors.blue,
+                brightness: Brightness.dark,
+              ).copyWith(
+                surfaceVariant: Colors.blueGrey.shade900,
+                onSurfaceVariant: Colors.white,
+              ),
+              useMaterial3: true,
+            ).copyWith(),
+            themeMode: Provider.of<SettingsProvider>(context).getTheme,
+            localizationsDelegates: S.localizationsDelegates,
+            supportedLocales: S.supportedLocales,
+            locale: Provider.of<SettingsProvider>(context).getLocale,
+            navigatorKey: _navigator,
+            home: _loading
+                ? const SplashPage()
+                : _loggedIn
+                    ? const NavPage()
+                    : const LoginPage(),
+          );
+        },
       ),
     );
   }

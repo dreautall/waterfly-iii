@@ -118,6 +118,8 @@ class _TransactionPageState extends State<TransactionPage>
       Duration(milliseconds: 200);
   static const Curve animationCurveAccelerate = Cubic(0.3, 0.0, 0.8, 0.15);
 
+  bool _saving = false;
+
   @override
   void initState() {
     super.initState();
@@ -670,191 +672,208 @@ class _TransactionPageState extends State<TransactionPage>
                 await api.v1TransactionsIdDelete(
                   id: widget.transaction?.id ?? widget.transactionId,
                 );
-                nav.pop();
+                nav.pop(true);
               },
             ),
           const SizedBox(width: 8),
           FilledButton(
+            onPressed: _saving
+                ? null
+                : () async {
+                    final ScaffoldMessengerState msg =
+                        ScaffoldMessenger.of(context);
+                    final FireflyIii api = FireflyProvider.of(context).api;
+                    final NavigatorState nav = Navigator.of(context);
+
+                    // Sanity checks
+                    String? error;
+
+                    if (_ownAccountId == null) {
+                      //error = "Please select an asset account.";
+                    }
+                    if (_titleTextController.text.isEmpty) {
+                      error = S.of(context).transactionErrorTitle;
+                    }
+                    if (error != null) {
+                      msg.showSnackBar(SnackBar(
+                        content: Text(error),
+                        behavior: SnackBarBehavior.floating,
+                      ));
+                      return;
+                    }
+                    // Do stuff
+                    setState(() {
+                      _saving = true;
+                    });
+                    late Response<TransactionSingle> resp;
+
+                    if (widget.transaction != null) {
+                      String id = widget.transaction!.id;
+                      List<TransactionSplitUpdate> txS =
+                          <TransactionSplitUpdate>[];
+                      for (int i = 0; i < _localAmounts.length; i++) {
+                        late String sourceName, destinationName;
+                        String? sourceId, destinationId;
+                        if (_transactionType ==
+                                TransactionTypeProperty.withdrawal ||
+                            _transactionType ==
+                                TransactionTypeProperty.transfer) {
+                          sourceName = _ownAccountTextController.text;
+                          sourceId = _ownAccountId;
+                          destinationName =
+                              _otherAccountTextControllers[i].text;
+                          if (destinationName.isEmpty) {
+                            destinationName = _otherAccountTextController.text;
+                          }
+                        } else {
+                          destinationName = _ownAccountTextController.text;
+                          destinationId = _ownAccountId;
+                          sourceName = _otherAccountTextControllers[i].text;
+                          if (sourceName.isEmpty) {
+                            sourceName = _otherAccountTextController.text;
+                          }
+                        }
+                        txS.add(TransactionSplitUpdate(
+                          amount: _localAmounts[i].toString(),
+                          budgetName: _budgetTextControllers[i].text,
+                          categoryName: _categoryTextControllers[i].text,
+                          date: _date,
+                          description: _split
+                              ? _titleTextControllers[i].text
+                              : _titleTextController.text,
+                          destinationId: destinationId,
+                          destinationName: destinationName,
+                          foreignAmount: _split
+                              ? _foreignCurrencies[i] != null
+                                  ? _foreignAmounts[i].toString()
+                                  : "0"
+                              : _foreignCurrency != null
+                                  ? _foreignAmounts[i].toString()
+                                  : "0",
+                          foreignCurrencyId: _split
+                              ? _foreignCurrencies[i]?.id
+                              : _foreignCurrency?.id,
+                          notes: _noteTextControllers[i].text,
+                          order: i,
+                          sourceId: sourceId,
+                          sourceName: sourceName,
+                          tags: _tags[i].tags,
+                          transactionJournalId:
+                              _transactionJournalIDs.elementAtOrNull(i),
+                          type: _transactionType,
+                        ));
+                      }
+                      TransactionUpdate txUpdate = TransactionUpdate(
+                        groupTitle: _split ? _titleTextController.text : null,
+                        transactions: txS,
+                      );
+                      // Delete old splits
+                      for (String id in _deletedSplitIDs) {
+                        if (id.isEmpty) {
+                          continue;
+                        }
+                        debugPrint("deleting split $id");
+                        await api.v1TransactionJournalsIdDelete(id: id);
+                      }
+                      resp =
+                          await api.v1TransactionsIdPut(id: id, body: txUpdate);
+                    } else {
+                      List<TransactionSplitStore> txS =
+                          <TransactionSplitStore>[];
+                      for (int i = 0; i < _localAmounts.length; i++) {
+                        late String sourceName, destinationName;
+                        String? sourceId, destinationId;
+                        if (_transactionType ==
+                                TransactionTypeProperty.withdrawal ||
+                            _transactionType ==
+                                TransactionTypeProperty.transfer) {
+                          sourceName = _ownAccountTextController.text;
+                          sourceId = _ownAccountId;
+                          destinationName =
+                              _otherAccountTextControllers[i].text;
+                          if (destinationName.isEmpty) {
+                            destinationName = _otherAccountTextController.text;
+                          }
+                        } else {
+                          destinationName = _ownAccountTextController.text;
+                          destinationId = _ownAccountId;
+                          sourceName = _otherAccountTextControllers[i].text;
+                          if (sourceName.isEmpty) {
+                            sourceName = _otherAccountTextController.text;
+                          }
+                        }
+                        txS.add(TransactionSplitStore(
+                          type: _transactionType,
+                          date: _date,
+                          amount: _localAmounts[i].toString(),
+                          description: _split
+                              ? _titleTextControllers[i].text
+                              : _titleTextController.text,
+                          budgetName: _budgetTextControllers[i].text,
+                          categoryName: _categoryTextControllers[i].text,
+                          destinationId: destinationId,
+                          destinationName: destinationName,
+                          foreignAmount: _split
+                              ? _foreignCurrencies[i] != null
+                                  ? _foreignAmounts[i].toString()
+                                  : "0"
+                              : _foreignCurrency != null
+                                  ? _foreignAmounts[i].toString()
+                                  : "0",
+                          foreignCurrencyId: _split
+                              ? _foreignCurrencies[i]?.id
+                              : _foreignCurrency?.id,
+                          notes: _noteTextControllers[i].text,
+                          order: i,
+                          sourceId: sourceId,
+                          sourceName: sourceName,
+                          tags: _tags[i].tags,
+                          reconciled: false,
+                        ));
+                      }
+                      final TransactionStore newTx = TransactionStore(
+                          groupTitle: _split ? _titleTextController.text : null,
+                          transactions: txS,
+                          applyRules: true,
+                          fireWebhooks: true,
+                          errorIfDuplicateHash: true);
+                      resp = await api.v1TransactionsPost(body: newTx);
+                    }
+
+                    // Check if insert/update was successful
+                    if (!resp.isSuccessful || resp.body == null) {
+                      debugPrint(resp.error.toString());
+                      try {
+                        ValidationError valError = ValidationError.fromJson(
+                          json.decode(resp.error.toString()),
+                        );
+                        error = valError.message ??
+                            // ignore: use_build_context_synchronously
+                            (context.mounted
+                                // ignore: use_build_context_synchronously
+                                ? S.of(context).errorUnknown
+                                : "[nocontext] Unknown error.");
+                      } catch (_) {
+                        // ignore: use_build_context_synchronously
+                        error = context.mounted
+                            // ignore: use_build_context_synchronously
+                            ? S.of(context).errorUnknown
+                            : "[nocontext] Unknown error.";
+                      }
+
+                      msg.showSnackBar(SnackBar(
+                        content: Text(error),
+                        behavior: SnackBarBehavior.floating,
+                      ));
+                      setState(() {
+                        _saving = false;
+                      });
+                      return;
+                    }
+
+                    nav.pop(true);
+                  },
             child: Text(S.of(context).formButtonSave),
-            onPressed: () async {
-              final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
-              final FireflyIii api = FireflyProvider.of(context).api;
-              final NavigatorState nav = Navigator.of(context);
-
-              // Sanity checks
-              String? error;
-
-              if (_ownAccountId == null) {
-                //error = "Please select an asset account.";
-              }
-              if (_titleTextController.text.isEmpty) {
-                error = S.of(context).transactionErrorTitle;
-              }
-              if (error != null) {
-                msg.showSnackBar(SnackBar(
-                  content: Text(error),
-                  behavior: SnackBarBehavior.floating,
-                ));
-                return;
-              }
-              // Do stuff
-              // :TODO: grey out "save" to avoid double-entries
-              late Response<TransactionSingle> resp;
-
-              if (widget.transaction != null) {
-                String id = widget.transaction!.id;
-                List<TransactionSplitUpdate> txS = <TransactionSplitUpdate>[];
-                for (int i = 0; i < _localAmounts.length; i++) {
-                  late String sourceName, destinationName;
-                  String? sourceId, destinationId;
-                  if (_transactionType == TransactionTypeProperty.withdrawal ||
-                      _transactionType == TransactionTypeProperty.transfer) {
-                    sourceName = _ownAccountTextController.text;
-                    sourceId = _ownAccountId;
-                    destinationName = _otherAccountTextControllers[i].text;
-                    if (destinationName.isEmpty) {
-                      destinationName = _otherAccountTextController.text;
-                    }
-                  } else {
-                    destinationName = _ownAccountTextController.text;
-                    destinationId = _ownAccountId;
-                    sourceName = _otherAccountTextControllers[i].text;
-                    if (sourceName.isEmpty) {
-                      sourceName = _otherAccountTextController.text;
-                    }
-                  }
-                  txS.add(TransactionSplitUpdate(
-                    amount: _localAmounts[i].toString(),
-                    budgetName: _budgetTextControllers[i].text,
-                    categoryName: _categoryTextControllers[i].text,
-                    date: _date,
-                    description: _split
-                        ? _titleTextControllers[i].text
-                        : _titleTextController.text,
-                    destinationId: destinationId,
-                    destinationName: destinationName,
-                    foreignAmount: _split
-                        ? _foreignCurrencies[i] != null
-                            ? _foreignAmounts[i].toString()
-                            : "0"
-                        : _foreignCurrency != null
-                            ? _foreignAmounts[i].toString()
-                            : "0",
-                    foreignCurrencyId: _split
-                        ? _foreignCurrencies[i]?.id
-                        : _foreignCurrency?.id,
-                    notes: _noteTextControllers[i].text,
-                    order: i,
-                    sourceId: sourceId,
-                    sourceName: sourceName,
-                    tags: _tags[i].tags,
-                    transactionJournalId:
-                        _transactionJournalIDs.elementAtOrNull(i),
-                    type: _transactionType,
-                  ));
-                }
-                TransactionUpdate txUpdate = TransactionUpdate(
-                  groupTitle: _split ? _titleTextController.text : null,
-                  transactions: txS,
-                );
-                // Delete old splits
-                for (String id in _deletedSplitIDs) {
-                  if (id.isEmpty) {
-                    continue;
-                  }
-                  debugPrint("deleting split $id");
-                  await api.v1TransactionJournalsIdDelete(id: id);
-                }
-                resp = await api.v1TransactionsIdPut(id: id, body: txUpdate);
-              } else {
-                List<TransactionSplitStore> txS = <TransactionSplitStore>[];
-                for (int i = 0; i < _localAmounts.length; i++) {
-                  late String sourceName, destinationName;
-                  String? sourceId, destinationId;
-                  if (_transactionType == TransactionTypeProperty.withdrawal ||
-                      _transactionType == TransactionTypeProperty.transfer) {
-                    sourceName = _ownAccountTextController.text;
-                    sourceId = _ownAccountId;
-                    destinationName = _otherAccountTextControllers[i].text;
-                    if (destinationName.isEmpty) {
-                      destinationName = _otherAccountTextController.text;
-                    }
-                  } else {
-                    destinationName = _ownAccountTextController.text;
-                    destinationId = _ownAccountId;
-                    sourceName = _otherAccountTextControllers[i].text;
-                    if (sourceName.isEmpty) {
-                      sourceName = _otherAccountTextController.text;
-                    }
-                  }
-                  txS.add(TransactionSplitStore(
-                    type: _transactionType,
-                    date: _date,
-                    amount: _localAmounts[i].toString(),
-                    description: _split
-                        ? _titleTextControllers[i].text
-                        : _titleTextController.text,
-                    budgetName: _budgetTextControllers[i].text,
-                    categoryName: _categoryTextControllers[i].text,
-                    destinationId: destinationId,
-                    destinationName: destinationName,
-                    foreignAmount: _split
-                        ? _foreignCurrencies[i] != null
-                            ? _foreignAmounts[i].toString()
-                            : "0"
-                        : _foreignCurrency != null
-                            ? _foreignAmounts[i].toString()
-                            : "0",
-                    foreignCurrencyId: _split
-                        ? _foreignCurrencies[i]?.id
-                        : _foreignCurrency?.id,
-                    notes: _noteTextControllers[i].text,
-                    order: i,
-                    sourceId: sourceId,
-                    sourceName: sourceName,
-                    tags: _tags[i].tags,
-                    reconciled: false,
-                  ));
-                }
-                final TransactionStore newTx = TransactionStore(
-                    groupTitle: _split ? _titleTextController.text : null,
-                    transactions: txS,
-                    applyRules: true,
-                    fireWebhooks: true,
-                    errorIfDuplicateHash: true);
-                resp = await api.v1TransactionsPost(body: newTx);
-              }
-
-              // Check if insert/update was successful
-              if (!resp.isSuccessful || resp.body == null) {
-                debugPrint(resp.error.toString());
-                try {
-                  ValidationError valError = ValidationError.fromJson(
-                    json.decode(resp.error.toString()),
-                  );
-                  error = valError.message ??
-                      // ignore: use_build_context_synchronously
-                      (context.mounted
-                          // ignore: use_build_context_synchronously
-                          ? S.of(context).errorUnknown
-                          : "[nocontext] Unknown error.");
-                } catch (_) {
-                  // ignore: use_build_context_synchronously
-                  error = context.mounted
-                      // ignore: use_build_context_synchronously
-                      ? S.of(context).errorUnknown
-                      : "[nocontext] Unknown error.";
-                }
-
-                msg.showSnackBar(SnackBar(
-                  content: Text(error),
-                  behavior: SnackBarBehavior.floating,
-                ));
-                return;
-              }
-
-              nav.pop(true);
-            },
           ),
         ],
       ),

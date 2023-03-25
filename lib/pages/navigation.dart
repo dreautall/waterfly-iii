@@ -91,6 +91,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
               screenIndex = index;
               appBarActions = null;
               appBarBottom = null;
+              fab = null;
             });
             Navigator.pop(context); // closes the drawer
           },

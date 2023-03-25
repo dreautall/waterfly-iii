@@ -65,8 +65,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
 
     return FireflyProvider(
       fireflyService: _firefly,
-      child: ChangeNotifierProvider<SettingsProvider>(
-        create: (_) => _settings,
+      child: ChangeNotifierProvider<SettingsProvider>.value(
+        value: _settings,
         builder: (BuildContext context, Widget? child) {
           return MaterialApp(
             title: 'Waterfly III',

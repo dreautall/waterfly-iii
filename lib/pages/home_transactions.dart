@@ -5,6 +5,7 @@ import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -14,7 +15,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class TransactionFilters {
+class TransactionFilters with ChangeNotifier {
   TransactionFilters({this.account, this.text, this.currency});
 
   AccountRead? account;
@@ -22,6 +23,10 @@ class TransactionFilters {
   CurrencyRead? currency;
 
   bool get hasFilters => account != null || text != null || currency != null;
+
+  void updateFilters() {
+    notifyListeners();
+  }
 }
 
 class HomeTransactions extends StatefulWidget {
@@ -58,35 +63,37 @@ class _HomeTransactionsState extends State<HomeTransactions>
     // Only add button when in own tab
     if (widget.accountId == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        HomePageInheritedState homePageState =
-            HomePageInheritedState.of(context);
-        homePageState.data.setActions(
+        HomePageInheritedState.of(context).data.setActions(
           widget.key!,
           <Widget>[
-            IconButton(
-              // :TODO: turn blue when filter is set.. if feasible
-              icon: const Icon(Icons.tune),
-              tooltip: S.of(context).homeTransactionsActionFilter,
-              onPressed: () async {
-                TransactionFilters oldFilters = TransactionFilters(
-                  text: _filters.text,
-                  account: _filters.account,
-                  currency: _filters.currency,
-                );
-                bool? ok = await showDialog<bool>(
-                  context: context,
-                  builder: (BuildContext context) => FilterDialog(
-                    filters: _filters, // passed by reference -> auto updated
-                  ),
-                );
-                if (ok == null || !ok) {
-                  return;
-                }
-                if (oldFilters == _filters) {
-                  return;
-                }
-                _pagingController.refresh();
-              },
+            ChangeNotifierProvider<TransactionFilters>.value(
+              value: _filters,
+              builder: (BuildContext context, _) => IconButton(
+                icon: const Icon(Icons.tune),
+                isSelected: context.watch<TransactionFilters>().hasFilters,
+                tooltip: S.of(context).homeTransactionsActionFilter,
+                onPressed: () async {
+                  TransactionFilters oldFilters = TransactionFilters(
+                    text: _filters.text,
+                    account: _filters.account,
+                    currency: _filters.currency,
+                  );
+                  bool? ok = await showDialog<bool>(
+                    context: context,
+                    builder: (BuildContext context) => FilterDialog(
+                      filters: _filters, // passed by reference -> auto updated
+                    ),
+                  );
+                  if (ok == null || !ok) {
+                    return;
+                  }
+                  if (oldFilters == _filters) {
+                    return;
+                  }
+                  _filters.updateFilters();
+                  _pagingController.refresh();
+                },
+              ),
             ),
           ],
         );
@@ -106,7 +113,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       final FireflyIii api = FireflyProvider.of(context).api;
       late Future<Response<TransactionArray>> searchFunc;
       if (_filters.hasFilters) {
-        String query = _filters.text!;
+        String query = _filters.text ?? "";
         if (_filters.account != null) {
           query = "account_id:${_filters.account!.id} $query";
         }

@@ -89,7 +89,7 @@ jobs:
           path: build/app/outputs/bundle/release/app-release.aab
       - uses: actions/upload-artifact@v3
         with:
-          name: aab-debug-symbols
+          name: aab-debug-symbols.zip
           path: build/app/intermediates/merged_native_libs/release/out/lib/symbols.zip
 
   upload-to-github:

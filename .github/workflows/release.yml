@@ -43,7 +43,7 @@ jobs:
           echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > ${{env.PROPERTIES_PATH}}
           echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> ${{env.PROPERTIES_PATH}}
+          echo "keyAlias=upload" >> ${{env.PROPERTIES_PATH}}
 
       # Set build number
       - run: |
@@ -138,7 +138,7 @@ jobs:
           name: aab-debug-symbols.zip
           path: ./artifacts
       - uses: r0adkll/upload-google-play@v1
-        if: ${{ github.event.release.prerelease  }}
+        if: ${{ !startsWith(github.ref, 'refs/tags/')  }}
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAYSTORE_ACCOUNT_KEY }}
           packageName: com.dreautall.waterflyiii

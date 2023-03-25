@@ -45,7 +45,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
 
           signedIn = false;
         } else {
-          signedIn = context.watch<FireflyService>().signedIn;
+          signedIn = context.select((FireflyService f) => f.signedIn);
           debugPrint("signedIn: $signedIn");
         }
         return MaterialApp(

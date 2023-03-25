@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:collection/collection.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -289,7 +290,7 @@ class _TransactionPageState extends State<TransactionPage>
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         splitTransactionAdd();
-        _localCurrency = FireflyProvider.of(context).defaultCurrency;
+        _localCurrency = context.read<FireflyService>().defaultCurrency;
       });
     }
 
@@ -302,7 +303,7 @@ class _TransactionPageState extends State<TransactionPage>
         return;
       }
       try {
-        final FireflyIii api = FireflyProvider.of(context).api;
+        final FireflyIii api = context.read<FireflyService>().api;
         final Response<AutocompleteAccountArray> response =
             await api.v1AutocompleteAccountsGet(
           query: _ownAccountTextController.text,
@@ -591,7 +592,7 @@ class _TransactionPageState extends State<TransactionPage>
 
   void updateAttachmentCount() async {
     try {
-      final FireflyIii api = FireflyProvider.of(context).api;
+      final FireflyIii api = context.read<FireflyService>().api;
       final Response<AttachmentArray> response =
           await api.v1TransactionsIdAttachmentsGet(
         id: widget.transaction?.id ?? widget.transactionId,
@@ -621,7 +622,7 @@ class _TransactionPageState extends State<TransactionPage>
   @override
   Widget build(BuildContext context) {
     debugPrint("TransactionDetail build()");
-    _localCurrency ??= FireflyProvider.of(context).defaultCurrency;
+    _localCurrency ??= context.read<FireflyService>().defaultCurrency;
 
     if (_hasAttachments && _attachments == null) {
       updateAttachmentCount();
@@ -640,7 +641,7 @@ class _TransactionPageState extends State<TransactionPage>
               icon: const Icon(Icons.delete),
               tooltip: S.of(context).formButtonDelete,
               onPressed: () async {
-                final FireflyIii api = FireflyProvider.of(context).api;
+                final FireflyIii api = context.read<FireflyService>().api;
                 final NavigatorState nav = Navigator.of(context);
                 bool? ok = await showDialog<bool>(
                   context: context,
@@ -682,7 +683,7 @@ class _TransactionPageState extends State<TransactionPage>
                 : () async {
                     final ScaffoldMessengerState msg =
                         ScaffoldMessenger.of(context);
-                    final FireflyIii api = FireflyProvider.of(context).api;
+                    final FireflyIii api = context.read<FireflyService>().api;
                     final NavigatorState nav = Navigator.of(context);
 
                     // Sanity checks
@@ -1069,7 +1070,7 @@ class _TransactionPageState extends State<TransactionPage>
                   option.name,
               optionsBuilder: (TextEditingValue textEditingValue) async {
                 try {
-                  final FireflyIii api = FireflyProvider.of(context).api;
+                  final FireflyIii api = context.read<FireflyService>().api;
                   final Response<AutocompleteAccountArray> response =
                       await api.v1AutocompleteAccountsGet(
                     query: textEditingValue.text,
@@ -1188,7 +1189,7 @@ class _TransactionPageState extends State<TransactionPage>
               },
               optionsBuilder: (TextEditingValue textEditingValue) async {
                 try {
-                  final FireflyIii api = FireflyProvider.of(context).api;
+                  final FireflyIii api = context.read<FireflyService>().api;
                   final Response<AutocompleteAccountArray> response =
                       await api.v1AutocompleteAccountsGet(
                     query: textEditingValue.text,
@@ -1390,7 +1391,7 @@ class _TransactionPageState extends State<TransactionPage>
                                       textEditingValue) async {
                                     try {
                                       final FireflyIii api =
-                                          FireflyProvider.of(context).api;
+                                          context.read<FireflyService>().api;
                                       final Response<AutocompleteAccountArray>
                                           response =
                                           await api.v1AutocompleteAccountsGet(
@@ -1647,7 +1648,7 @@ class TransactionTitle extends StatelessWidget {
         focusNode: focusNode,
         optionsBuilder: (TextEditingValue textEditingValue) async {
           try {
-            final FireflyIii api = FireflyProvider.of(context).api;
+            final FireflyIii api = context.read<FireflyService>().api;
             final Response<AutocompleteTransactionArray> response = await api
                 .v1AutocompleteTransactionsGet(query: textEditingValue.text);
             if (!response.isSuccessful || response.body == null) {
@@ -1833,7 +1834,7 @@ class TransactionCategory extends StatelessWidget {
             focusNode: focusNode,
             optionsBuilder: (TextEditingValue textEditingValue) async {
               try {
-                final FireflyIii api = FireflyProvider.of(context).api;
+                final FireflyIii api = context.read<FireflyService>().api;
                 final Response<AutocompleteCategoryArray> response =
                     await api.v1AutocompleteCategoriesGet(
                   query: textEditingValue.text,
@@ -1897,7 +1898,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
         return;
       }
       try {
-        final FireflyIii api = FireflyProvider.of(context).api;
+        final FireflyIii api = context.read<FireflyService>().api;
         final Response<AutocompleteBudgetArray> response =
             await api.v1AutocompleteBudgetsGet(
           query: widget.textController.text,
@@ -1955,7 +1956,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
             },
             optionsBuilder: (TextEditingValue textEditingValue) async {
               try {
-                final FireflyIii api = FireflyProvider.of(context).api;
+                final FireflyIii api = context.read<FireflyService>().api;
                 final Response<AutocompleteBudgetArray> response =
                     await api.v1AutocompleteBudgetsGet(
                   query: textEditingValue.text,
@@ -2017,7 +2018,7 @@ class _TagDialogState extends State<TagDialog> {
   }
 
   Future<List<String>>? _getTags() async {
-    final FireflyIii api = FireflyProvider.of(context).api;
+    final FireflyIii api = context.read<FireflyService>().api;
     final Response<TagArray> response = await api.v1TagsGet();
     if (!response.isSuccessful || response.body == null) {
       if (context.mounted) {
@@ -2186,7 +2187,7 @@ class CurrencyDialog extends StatelessWidget {
   final CurrencyRead currentCurrency;
 
   Future<List<CurrencyRead>>? _getCurrencies(BuildContext context) async {
-    final FireflyIii api = FireflyProvider.of(context).api;
+    final FireflyIii api = context.read<FireflyService>().api;
     final Response<CurrencyArray> response = await api.v1CurrenciesGet();
     if (!response.isSuccessful || response.body == null) {
       if (context.mounted) {
@@ -2204,9 +2205,9 @@ class CurrencyDialog extends StatelessWidget {
     List<CurrencyRead> currencies = response.body!.data;
     currencies.sort(
       (CurrencyRead a, CurrencyRead b) {
-        if (a.id == FireflyProvider.of(context).defaultCurrency.id) {
+        if (a.id == context.read<FireflyService>().defaultCurrency.id) {
           return -1;
-        } else if (b.id == FireflyProvider.of(context).defaultCurrency.id) {
+        } else if (b.id == context.read<FireflyService>().defaultCurrency.id) {
           return 1;
         } else {
           return a.attributes.code
@@ -2294,13 +2295,13 @@ class CurrencyDialogOption extends StatelessWidget {
       onTap: () {
         Navigator.pop(context, optionCurrency);
       },
-      trailing:
-          (optionCurrency.id == FireflyProvider.of(context).defaultCurrency.id)
-              ? Text(
-                  S.of(context).generalDefault,
-                  style: const TextStyle(fontStyle: FontStyle.italic),
-                )
-              : null,
+      trailing: (optionCurrency.id ==
+              context.read<FireflyService>().defaultCurrency.id)
+          ? Text(
+              S.of(context).generalDefault,
+              style: const TextStyle(fontStyle: FontStyle.italic),
+            )
+          : null,
       selected: (optionCurrency.id == currentCurrency.id),
     );
   }
@@ -2350,7 +2351,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
               ? () async {
                   final ScaffoldMessengerState msg =
                       ScaffoldMessenger.of(context);
-                  final AuthUser? user = FireflyProvider.of(context).user;
+                  final AuthUser? user = context.read<FireflyService>().user;
                   final S l10n = S.of(context);
 
                   if (user == null) {
@@ -2413,7 +2414,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
           onPressed: (_dlProgress[i] != null && _dlProgress[i]! < 0)
               ? null
               : () async {
-                  final FireflyIii api = FireflyProvider.of(context).api;
+                  final FireflyIii api = context.read<FireflyService>().api;
                   bool? ok = await showDialog<bool>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
@@ -2481,8 +2482,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
           FilledButton(
             onPressed: () async {
               final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
-              final FireflyIii api = FireflyProvider.of(context).api;
-              final AuthUser? user = FireflyProvider.of(context).user;
+              final FireflyIii api = context.read<FireflyService>().api;
+              final AuthUser? user = context.read<FireflyService>().user;
               final S l10n = S.of(context);
 
               if (user == null) {

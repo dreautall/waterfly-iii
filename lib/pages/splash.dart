@@ -2,6 +2,7 @@ import 'dart:io' show HandshakeException;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/widgets/logo.dart';
 import 'package:waterflyiii/widgets/animatedheightcard.dart';
@@ -33,10 +34,10 @@ class _SplashPageState extends State<SplashPage> {
     try {
       if (host == null || apiKey == null) {
         debugPrint("SplashPage->_login() from storage");
-        success = await FireflyProvider.of(context).signInFromStorage();
+        success = await context.read<FireflyService>().signInFromStorage();
       } else {
         debugPrint("SplashPage->_login() with credentials: $host, $apiKey");
-        success = await FireflyProvider.of(context).signIn(host, apiKey);
+        success = await context.read<FireflyService>().signIn(host, apiKey);
       }
     } catch (e) {
       debugPrint(
@@ -56,16 +57,21 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      debugPrint("initState() scheduling login");
-      _login(widget.host, widget.apiKey);
+      if (widget.host != null && widget.apiKey != null) {
+        debugPrint("initState() scheduling login");
+        _login(widget.host, widget.apiKey);
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     debugPrint("splash build(), current _loginError: $_loginError");
-    if (FireflyProvider.of(context).signedIn) {
-      return const Text("");
+    if (context.read<FireflyService>().signedIn) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(context).popUntil((Route<dynamic> route) => route.isFirst);
+      });
+      return const SizedBox.shrink();
     }
 
     Widget page;
@@ -79,7 +85,7 @@ class _SplashPageState extends State<SplashPage> {
     } else {
       debugPrint("_loginError available --> show error");
       String errorDetails =
-          "Host: ${FireflyProvider.of(context).lastTriedHost}";
+          "Host: ${context.read<FireflyService>().lastTriedHost}";
       final String errorDescription = () {
         switch (_loginError.runtimeType) {
           case AuthErrorHost:
@@ -140,7 +146,7 @@ class _SplashPageState extends State<SplashPage> {
                     if (Navigator.canPop(context)) {
                       Navigator.pop(context);
                     } else {
-                      FireflyProvider.of(context).signOut();
+                      context.read<FireflyService>().signOut();
                     }
                   },
                   child: Navigator.canPop(context)

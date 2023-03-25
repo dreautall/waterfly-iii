@@ -118,7 +118,7 @@ class AuthUser {
   }
 }
 
-class FireflyService extends ChangeNotifier {
+class FireflyService with ChangeNotifier {
   AuthUser? _currentUser;
   AuthUser? get user => _currentUser;
   bool _signedIn = false;
@@ -190,27 +190,4 @@ class FireflyService extends ChangeNotifier {
 
     return true;
   }
-}
-
-class FireflyProvider extends InheritedWidget {
-  const FireflyProvider(
-      {Key? key, required this.fireflyService, required Widget child})
-      : super(key: key, child: child);
-
-  final FireflyService fireflyService;
-
-  static FireflyProvider? maybeOf(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<FireflyProvider>();
-  }
-
-  static FireflyService of(BuildContext context) {
-    final FireflyProvider? result =
-        context.dependOnInheritedWidgetOfExactType<FireflyProvider>();
-    assert(result != null, 'No FireflyService found in context');
-    return result!.fireflyService;
-  }
-
-  @override
-  bool updateShouldNotify(FireflyProvider oldWidget) =>
-      fireflyService != oldWidget.fireflyService;
 }

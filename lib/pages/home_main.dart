@@ -6,6 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -51,7 +52,7 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastDays() async {
-    final FireflyIii api = FireflyProvider.of(context).api;
+    final FireflyIii api = context.read<FireflyService>().api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
     final List<DateTime> lastDays = <DateTime>[];
@@ -108,7 +109,7 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchOverviewChart() async {
-    final FireflyIii api = FireflyProvider.of(context).api;
+    final FireflyIii api = context.read<FireflyService>().api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
 
@@ -139,7 +140,7 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastMonths() async {
-    final FireflyIii api = FireflyProvider.of(context).api;
+    final FireflyIii api = context.read<FireflyService>().api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
     final List<DateTime> lastMonths = <DateTime>[];
@@ -205,7 +206,7 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchCategories() async {
-    final FireflyIii api = FireflyProvider.of(context).api;
+    final FireflyIii api = context.read<FireflyService>().api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
 
@@ -242,7 +243,7 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<List<BudgetLimitRead>> _fetchBudgets() async {
-    final FireflyIii api = FireflyProvider.of(context).api;
+    final FireflyIii api = context.read<FireflyService>().api;
 
     final Response<BudgetArray> respBudgetInfos = await api.v1BudgetsGet();
     if (!respBudgetInfos.isSuccessful || respBudgetInfos.body == null) {
@@ -316,7 +317,8 @@ class _HomeMainState extends State<HomeMain>
     super.build(context);
     debugPrint("home_main build()");
 
-    CurrencyRead defaultCurrency = FireflyProvider.of(context).defaultCurrency;
+    CurrencyRead defaultCurrency =
+        context.read<FireflyService>().defaultCurrency;
 
     return RefreshIndicator(
       onRefresh: _refreshStats,
@@ -906,7 +908,8 @@ class LastDaysChart extends StatelessWidget {
     for (int i = 0; i < 7; i++) {
       lastDays.add(now.subtract(Duration(days: i)));
     }
-    CurrencyRead defaultCurrency = FireflyProvider.of(context).defaultCurrency;
+    CurrencyRead defaultCurrency =
+        context.read<FireflyService>().defaultCurrency;
 
     final List<LabelAmountChart> chartData = <LabelAmountChart>[];
 
@@ -1054,7 +1057,8 @@ class CategoryChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<LabelAmountChart> data = <LabelAmountChart>[];
-    CurrencyRead defaultCurrency = FireflyProvider.of(context).defaultCurrency;
+    CurrencyRead defaultCurrency =
+        context.read<FireflyService>().defaultCurrency;
 
     catChartData.forEach((_, Category e) {
       double sum = 0;

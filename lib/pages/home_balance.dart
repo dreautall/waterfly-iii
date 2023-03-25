@@ -4,6 +4,7 @@ import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -22,7 +23,7 @@ class HomeBalance extends StatefulWidget {
 class _HomeBalanceState extends State<HomeBalance>
     with AutomaticKeepAliveClientMixin {
   Future<AccountArray> _fetchAccounts() async {
-    final FireflyIii api = FireflyProvider.of(context).api;
+    final FireflyIii api = context.read<FireflyService>().api;
 
     final Response<AccountArray> respAccounts =
         await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);

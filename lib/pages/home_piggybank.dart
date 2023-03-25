@@ -6,6 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -28,7 +29,7 @@ class HomePiggybank extends StatefulWidget {
 class _HomePiggybankState extends State<HomePiggybank>
     with AutomaticKeepAliveClientMixin {
   Future<PiggyBankArray> _fetchAccounts() async {
-    final FireflyIii api = FireflyProvider.of(context).api;
+    final FireflyIii api = context.read<FireflyService>().api;
 
     final Response<PiggyBankArray> respAccounts = await api.v1PiggyBanksGet();
 
@@ -257,7 +258,7 @@ class TimeSeriesChart {
 
 class _PiggyDetailsState extends State<PiggyDetails> {
   Future<List<PiggyBankEventRead>> _fetchChart() async {
-    final FireflyIii api = FireflyProvider.of(context).api;
+    final FireflyIii api = context.read<FireflyService>().api;
 
     final Response<PiggyBankEventArray> resp =
         await api.v1PiggyBanksIdEventsGet(id: currentPiggy.id);
@@ -596,7 +597,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
             const SizedBox(width: 12),
             FilledButton(
               onPressed: () async {
-                final FireflyIii api = FireflyProvider.of(context).api;
+                final FireflyIii api = context.read<FireflyService>().api;
                 final NavigatorState nav = Navigator.of(context);
 
                 double amount =

@@ -110,7 +110,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final FireflyIii api = FireflyProvider.of(context).api;
+      final FireflyIii api = context.read<FireflyService>().api;
       late Future<Response<TransactionArray>> searchFunc;
       if (_filters.hasFilters) {
         String query = _filters.text ?? "";
@@ -449,7 +449,7 @@ class FilterDialog extends StatelessWidget {
   final TransactionFilters filters;
 
   Future<FilterData> _getData(BuildContext context) async {
-    final FireflyIii api = FireflyProvider.of(context).api;
+    final FireflyIii api = context.read<FireflyService>().api;
 
     // Accounts
     final Response<AccountArray> respAccounts =

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/pages/home.dart';
@@ -115,7 +116,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
               padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
               child: GestureDetector(
                 onTap: () {
-                  FireflyProvider.of(context).signOut();
+                  context.read<FireflyService>().signOut();
                 },
                 child: Text(
                   S.of(context).formButtonLogout,

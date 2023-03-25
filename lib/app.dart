@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/settings.dart';
@@ -17,88 +18,66 @@ class WaterflyApp extends StatefulWidget {
 
 class _WaterflyAppState extends State<WaterflyApp> {
   final GlobalKey<NavigatorState> _navigator = GlobalKey<NavigatorState>();
-  final FireflyService _firefly = FireflyService();
-  final SettingsProvider _settings = SettingsProvider();
-  bool _loggedIn = false;
-  bool _loading = true;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _firefly.addListener(_handleAuthStateChanged);
-    _settings.loadSettings();
-  }
-
-  @override
-  void dispose() {
-    _firefly.removeListener(_handleAuthStateChanged);
-    _firefly.dispose();
-
-    super.dispose();
-  }
-
-  void _handleAuthStateChanged() {
-    debugPrint("handleAuthStateChanged()");
-    if (!_firefly.signedIn) {
-      debugPrint("handleAuthStateChanged() -> not signed in");
-      setState(() {
-        _loggedIn = false;
-      });
-    } else {
-      debugPrint("handleAuthStateChanged() -> logged in");
-      _loggedIn = true;
-    }
-    setState(() {
-      debugPrint("handleAuthStateChanged() -> loading = false");
-      _loading = false;
-    });
-  }
+  bool _firstStart = true;
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(
-        "WaterflyApp() building, _loggedIn: $_loggedIn, _loading: $_loading");
+    debugPrint("WaterflyApp() building");
 
-    // This is only called if the state refreshes, so let's always pop back to the beginning
-    _navigator.currentState?.popUntil((Route<dynamic> route) => route.isFirst);
+    return MultiProvider(
+      providers: <SingleChildWidget>[
+        ChangeNotifierProvider<FireflyService>(
+          create: (_) => FireflyService(),
+        ),
+        ChangeNotifierProvider<SettingsProvider>(
+          create: (_) => SettingsProvider(),
+        ),
+      ],
+      builder: (BuildContext context, _) {
+        late bool signedIn;
+        if (_firstStart) {
+          debugPrint("_firstStart");
+          context.read<FireflyService>().signInFromStorage().then(
+                (_) => setState(() {
+                  _firstStart = false;
+                }),
+              );
 
-    return FireflyProvider(
-      fireflyService: _firefly,
-      child: ChangeNotifierProvider<SettingsProvider>.value(
-        value: _settings,
-        builder: (BuildContext context, Widget? child) {
-          return MaterialApp(
-            title: 'Waterfly III',
-            theme: ThemeData(
-              brightness: Brightness.light,
-              colorSchemeSeed: Colors.blue,
-              useMaterial3: true,
-            ),
-            darkTheme: ThemeData(
+          signedIn = false;
+        } else {
+          signedIn = context.watch<FireflyService>().signedIn;
+          debugPrint("signedIn: $signedIn");
+        }
+        return MaterialApp(
+          title: 'Waterfly III',
+          theme: ThemeData(
+            brightness: Brightness.light,
+            colorSchemeSeed: Colors.blue,
+            useMaterial3: true,
+          ),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.blue,
               brightness: Brightness.dark,
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: Colors.blue,
-                brightness: Brightness.dark,
-              ).copyWith(
-                surfaceVariant: Colors.blueGrey.shade900,
-                onSurfaceVariant: Colors.white,
-              ),
-              useMaterial3: true,
-            ).copyWith(),
-            themeMode: Provider.of<SettingsProvider>(context).getTheme,
-            localizationsDelegates: S.localizationsDelegates,
-            supportedLocales: S.supportedLocales,
-            locale: Provider.of<SettingsProvider>(context).getLocale,
-            navigatorKey: _navigator,
-            home: _loading
-                ? const SplashPage()
-                : _loggedIn
-                    ? const NavPage()
-                    : const LoginPage(),
-          );
-        },
-      ),
+            ).copyWith(
+              surfaceVariant: Colors.blueGrey.shade900,
+              onSurfaceVariant: Colors.white,
+            ),
+            useMaterial3: true,
+          ).copyWith(),
+          themeMode: Provider.of<SettingsProvider>(context).getTheme,
+          localizationsDelegates: S.localizationsDelegates,
+          supportedLocales: S.supportedLocales,
+          locale: Provider.of<SettingsProvider>(context).getLocale,
+          navigatorKey: _navigator,
+          home: _firstStart
+              ? const SplashPage()
+              : signedIn
+                  ? const NavPage()
+                  : const LoginPage(),
+        );
+      },
     );
   }
 }

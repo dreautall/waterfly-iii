@@ -20,6 +20,39 @@ class NavDestination {
   final Widget selectedIcon;
 }
 
+class NavPageElements with ChangeNotifier {
+  List<Widget>? appBarActions;
+  PreferredSizeWidget? appBarBottom;
+  Widget? fab;
+
+  void setAppBarActions(List<Widget>? actions) {
+    if (actions == appBarActions) {
+      return;
+    }
+    appBarActions = actions;
+    debugPrint("notify NavPageElements->setAppBarActions()");
+    notifyListeners();
+  }
+
+  void setAppBarBottom(PreferredSizeWidget? bottom) {
+    if (bottom == appBarBottom) {
+      return;
+    }
+    appBarBottom = bottom;
+    debugPrint("notify NavPageElements->setAppBarBottom()");
+    notifyListeners();
+  }
+
+  void setFab(Widget? newFab) {
+    if (newFab == fab) {
+      return;
+    }
+    fab = newFab;
+    debugPrint("notify NavPageElements->setFab()");
+    notifyListeners();
+  }
+}
+
 class NavPage extends StatefulWidget {
   const NavPage({Key? key}) : super(key: key);
 
@@ -31,9 +64,6 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
   late TabController _tabController;
 
   int screenIndex = 0;
-  List<Widget>? appBarActions;
-  PreferredSizeWidget? appBarBottom;
-  Widget? fab;
 
   late List<NavDestination> navDestinations;
 
@@ -77,22 +107,22 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
     final NavDestination currentPage = navDestinations[screenIndex];
     debugPrint("nav build(), page $screenIndex");
 
-    return NavPageScaffold(
-      data: this,
-      child: Scaffold(
+    return ChangeNotifierProvider<NavPageElements>(
+      create: (_) => NavPageElements(),
+      builder: (BuildContext context, _) => Scaffold(
         appBar: AppBar(
           title: Text(currentPage.label),
-          actions: appBarActions,
-          bottom: appBarBottom,
+          actions: context.select((NavPageElements n) => n.appBarActions),
+          bottom: context.select((NavPageElements n) => n.appBarBottom),
         ),
         drawer: NavigationDrawer(
           selectedIndex: screenIndex,
           onDestinationSelected: (int index) {
+            context.read<NavPageElements>().setAppBarActions(null);
+            context.read<NavPageElements>().setAppBarBottom(null);
+            context.read<NavPageElements>().setFab(null);
             setState(() {
               screenIndex = index;
-              appBarActions = null;
-              appBarBottom = null;
-              fab = null;
             });
             Navigator.pop(context); // closes the drawer
           },
@@ -142,31 +172,8 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
           },
           child: currentPage.pageHandler,
         ),
-        floatingActionButton: fab,
+        floatingActionButton: context.select((NavPageElements n) => n.fab),
       ),
     );
   }
-}
-
-class NavPageScaffold extends InheritedWidget {
-  const NavPageScaffold({
-    Key? key,
-    required this.data,
-    required Widget child,
-  }) : super(key: key, child: child);
-
-  final NavPageState data;
-
-  static NavPageScaffold? maybeOf(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<NavPageScaffold>();
-  }
-
-  static NavPageScaffold of(BuildContext context) {
-    final NavPageScaffold? result = maybeOf(context);
-    assert(result != null, 'No NavPageScaffold found in context');
-    return result!;
-  }
-
-  @override
-  bool updateShouldNotify(NavPageScaffold oldWidget) => data != oldWidget.data;
 }

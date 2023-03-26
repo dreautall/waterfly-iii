@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/home_main.dart';
@@ -16,30 +17,28 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => HomePageState();
 }
 
+class PageActions extends ChangeNotifier {
+  final Map<Key, List<Widget>> _map = <Key, List<Widget>>{};
+
+  List<Widget>? get(Key key) => _map[key];
+
+  void set(Key key, List<Widget>? actions) {
+    if (actions == null) {
+      _map.remove(key);
+    } else {
+      _map[key] = actions;
+    }
+    debugPrint("notify PageActions->set()");
+    notifyListeners();
+  }
+}
+
 class HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late Widget _newTransactionFab;
 
-  final Map<Key, List<Widget>> _actionsMap = <Key, List<Widget>>{};
-
-  List<Widget>? getActions(Key key) => _actionsMap[key];
-
-  void setActions(Key key, List<Widget> actions) {
-    _actionsMap[key] = actions;
-    if (key == tabPages[_tabController.index].key) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        NavPageScaffold navScaffold = NavPageScaffold.of(context);
-        navScaffold.data.setState(() {
-          navScaffold.data.appBarActions = actions;
-        });
-      });
-    }
-  }
-
-  void disposeActions(Key key) {
-    _actionsMap.remove(key);
-  }
+  final PageActions _actions = PageActions();
 
   @override
   void initState() {
@@ -69,21 +68,20 @@ class HomePageState extends State<HomePage>
         },
       );
 
-      NavPageScaffold navScaffold = NavPageScaffold.of(context);
-      navScaffold.data.setState(() {
-        navScaffold.data.appBarBottom = TabBar(
-          isScrollable: true,
-          controller: _tabController,
-          tabs: <Tab>[
-            Tab(text: S.of(context).homeTabLabelMain),
-            Tab(text: S.of(context).homeTabLabelTransactions),
-            Tab(text: S.of(context).homeTabLabelBalance),
-            Tab(text: S.of(context).homeTabLabelPiggybanks),
-          ],
-        );
-        navScaffold.data.appBarActions =
-            getActions(tabPages[_tabController.index].key ?? const Key(''));
-        navScaffold.data.fab = _newTransactionFab;
+      context.read<NavPageElements>().setAppBarBottom(TabBar(
+            isScrollable: true,
+            controller: _tabController,
+            tabs: <Tab>[
+              Tab(text: S.of(context).homeTabLabelMain),
+              Tab(text: S.of(context).homeTabLabelTransactions),
+              Tab(text: S.of(context).homeTabLabelBalance),
+              Tab(text: S.of(context).homeTabLabelPiggybanks),
+            ],
+          ));
+      // Call once to set fab/page actions
+      _handleTabChange();
+      _actions.addListener(() {
+        print("actions listener called!");
       });
     });
   }
@@ -99,13 +97,11 @@ class HomePageState extends State<HomePage>
   void _handleTabChange() {
     if (!_tabController.indexIsChanging) {
       debugPrint("_handleTabChange()");
-      NavPageScaffold navScaffold = NavPageScaffold.of(context);
-      navScaffold.data.setState(() {
-        navScaffold.data.fab =
-            (_tabController.index < 2) ? _newTransactionFab : null;
-        navScaffold.data.appBarActions =
-            getActions(tabPages[_tabController.index].key ?? const Key(''));
-      });
+      context
+          .read<NavPageElements>()
+          .setFab((_tabController.index < 2) ? _newTransactionFab : null);
+      context.read<NavPageElements>().setAppBarActions(
+          _actions.get(tabPages[_tabController.index].key ?? const Key('')));
     }
   }
 
@@ -121,36 +117,12 @@ class HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     debugPrint("home build(), tab ${_tabController.index}");
-    return HomePageInheritedState(
-      data: this,
+    return ChangeNotifierProvider<PageActions>.value(
+      value: _actions,
       child: TabBarView(
         controller: _tabController,
         children: tabPages,
       ),
     );
   }
-}
-
-class HomePageInheritedState extends InheritedWidget {
-  const HomePageInheritedState({
-    Key? key,
-    required this.data,
-    required Widget child,
-  }) : super(key: key, child: child);
-
-  final HomePageState data;
-
-  static HomePageInheritedState? maybeOf(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<HomePageInheritedState>();
-  }
-
-  static HomePageInheritedState of(BuildContext context) {
-    final HomePageInheritedState? result = maybeOf(context);
-    assert(result != null, 'No HomePageInheritedState found in context');
-    return result!;
-  }
-
-  @override
-  bool updateShouldNotify(HomePageInheritedState oldWidget) =>
-      data != oldWidget.data;
 }

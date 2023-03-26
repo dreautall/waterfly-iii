@@ -25,6 +25,7 @@ class TransactionFilters with ChangeNotifier {
   bool get hasFilters => account != null || text != null || currency != null;
 
   void updateFilters() {
+    debugPrint("notify TransactionFilters, filters? $hasFilters");
     notifyListeners();
   }
 }
@@ -63,13 +64,14 @@ class _HomeTransactionsState extends State<HomeTransactions>
     // Only add button when in own tab
     if (widget.accountId == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        HomePageInheritedState.of(context).data.setActions(
+        context.read<PageActions>().set(
           widget.key!,
           <Widget>[
             ChangeNotifierProvider<TransactionFilters>.value(
               value: _filters,
               builder: (BuildContext context, _) => IconButton(
                 icon: const Icon(Icons.tune),
+                // :TODO: context refresh is not called :(
                 isSelected: context.watch<TransactionFilters>().hasFilters,
                 tooltip: S.of(context).homeTransactionsActionFilter,
                 onPressed: () async {

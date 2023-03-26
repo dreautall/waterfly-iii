@@ -24,6 +24,8 @@ extension CurrencyFormat on CurrencyRead {
 
   String zero({String? locale}) => NumberFormat.currency(
         locale: locale,
+        name: "",
+        symbol: "",
         decimalDigits: attributes.decimalPlaces,
       ).format(0);
 }

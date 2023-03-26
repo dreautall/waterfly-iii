@@ -38,6 +38,9 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        
+        // Added: flutter_local_notifications
+        coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
@@ -90,4 +93,5 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1' // Added: https://stackoverflow.com/a/36786721
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.5.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0"
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5' // Added: flutter_local_notifications
 }

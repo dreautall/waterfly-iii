@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:waterflyiii/settings.dart';
+import 'package:waterflyiii/notificationlistener.dart';
+
+import 'package:notification_listener_service/notification_listener_service.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -61,6 +65,88 @@ class SettingsPageState extends State<SettingsPage>
               }
               settings.setTheme(theme);
             });
+          },
+        ),
+        const Divider(),
+        ListTile(
+          title: const Text("Notification Listener Service"),
+          subtitle: FutureBuilder<bool>(
+            future: NotificationListenerService.isPermissionGranted(),
+            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.hasData) {
+                return Text("Enabled? ${snapshot.data!}");
+              } else if (snapshot.hasError) {
+                return Text("Error checking: ${snapshot.error}");
+              } else {
+                return const Text("Checking if enabled...");
+              }
+            },
+          ),
+          leading: const CircleAvatar(
+            child: Icon(Icons.notifications),
+          ),
+          onTap: () async {
+            final bool granted =
+                await NotificationListenerService.requestPermission();
+            debugPrint("granted? $granted");
+            if (!granted) {
+              return;
+            }
+            setState(() {});
+          },
+        ),
+        const Divider(),
+        ListTile(
+          title: const Text("Background Service Debug Start"),
+          leading: const CircleAvatar(
+            child: Icon(Icons.start),
+          ),
+          onTap: () async {
+            bgsvcStart();
+          },
+        ),
+        ListTile(
+          title: const Text("Background Service Debug Stop"),
+          leading: const CircleAvatar(
+            child: Icon(Icons.start),
+          ),
+          onTap: () async {
+            bgsvcStop();
+          },
+        ),
+        ListTile(
+          title: const Text("Notification Debug"),
+          leading: const CircleAvatar(
+            child: Icon(Icons.start),
+          ),
+          onTap: () async {
+            final FlutterLocalNotificationsPlugin
+                flutterLocalNotificationsPlugin =
+                FlutterLocalNotificationsPlugin();
+            const AndroidInitializationSettings initializationSettingsAndroid =
+                AndroidInitializationSettings('ic_launcher');
+            const InitializationSettings initializationSettings =
+                InitializationSettings(android: initializationSettingsAndroid);
+            await flutterLocalNotificationsPlugin
+                .initialize(initializationSettings);
+
+            flutterLocalNotificationsPlugin.show(
+              0,
+              "TestTitle",
+              "TestSubtitle",
+              const NotificationDetails(
+                android: AndroidNotificationDetails(
+                  'waterflyiii_debug',
+                  'Debug Notificiations',
+                  channelDescription: 'Debugging stuff',
+                  importance: Importance.max,
+                  priority: Priority.high,
+                  ticker: 'ticker',
+                ),
+              ),
+              payload: "TestPayload",
+            );
           },
         ),
       ],

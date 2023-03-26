@@ -319,7 +319,7 @@ class _HomeMainState extends State<HomeMain>
 
     CurrencyRead defaultCurrency =
         context.read<FireflyService>().defaultCurrency;
-    return const Text("boo");
+
     return RefreshIndicator(
       onRefresh: _refreshStats,
       child: ListView(

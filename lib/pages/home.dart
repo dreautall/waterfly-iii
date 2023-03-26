@@ -80,9 +80,6 @@ class HomePageState extends State<HomePage>
           ));
       // Call once to set fab/page actions
       _handleTabChange();
-      _actions.addListener(() {
-        print("actions listener called!");
-      });
     });
   }
 

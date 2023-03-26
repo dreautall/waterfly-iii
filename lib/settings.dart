@@ -15,7 +15,10 @@ class SettingsProvider with ChangeNotifier {
   Locale? _locale;
   Locale? get getLocale => _locale;
 
-  void loadSettings() async {
+  bool _loaded = false;
+  bool get loaded => _loaded;
+
+  Future<void> loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     debugPrint("reading prefs!");
     final String theme = prefs.getString(settingTheme) ?? "unset";
@@ -38,6 +41,8 @@ class SettingsProvider with ChangeNotifier {
     if (S.supportedLocales.contains(locale)) {
       _locale = locale;
     }
+    debugPrint("notify SettingsProvider->loadSettings()");
+    _loaded = true;
     notifyListeners();
   }
 
@@ -56,6 +61,7 @@ class SettingsProvider with ChangeNotifier {
         prefs.setString(settingTheme, settingThemeSystem);
     }
 
+    debugPrint("notify SettingsProvider->setTheme()");
     notifyListeners();
   }
 
@@ -68,6 +74,7 @@ class SettingsProvider with ChangeNotifier {
     _locale = locale;
     prefs.setString(settingLocale, locale.languageCode);
 
+    debugPrint("notify SettingsProvider->setLocale()");
     notifyListeners();
   }
 }

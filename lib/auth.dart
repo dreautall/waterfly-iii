@@ -125,6 +125,8 @@ class FireflyService with ChangeNotifier {
   bool get signedIn => _signedIn;
   String? _lastTriedHost;
   String? get lastTriedHost => _lastTriedHost;
+  Object? _storageSignInException;
+  Object? get storageSignInException => _storageSignInException;
 
   bool get hasApi => (_currentUser?.api != null) ? true : false;
   FireflyIii get api {
@@ -148,25 +150,35 @@ class FireflyService with ChangeNotifier {
   }
 
   Future<bool> signInFromStorage() async {
+    _storageSignInException = null;
     String? apiHost = await storage.read(key: 'api_host');
     String? apiKey = await storage.read(key: 'api_key');
 
     debugPrint("storage: $apiHost, $apiKey");
 
     if (apiHost == null || apiKey == null) {
-      // this triggers app.dart to go on to the login screen
-      notifyListeners();
       return false;
     }
 
-    return signIn(apiHost, apiKey);
+    try {
+      final bool success = await signIn(apiHost, apiKey);
+      return success;
+    } catch (e) {
+      _storageSignInException = e;
+      debugPrint("notify FireflyService->signInFromStorage");
+      notifyListeners();
+      return false;
+    }
   }
 
   Future<void> signOut() async {
     debugPrint("FireflyService->signOut()");
     _currentUser = null;
     _signedIn = false;
+    _storageSignInException = null;
     await storage.deleteAll();
+
+    debugPrint("notify FireflyService->signOut");
     notifyListeners();
   }
 
@@ -183,6 +195,7 @@ class FireflyService with ChangeNotifier {
     defaultCurrency = currencyInfo.body!.data;
 
     _signedIn = true;
+    debugPrint("notify FireflyService->signIn");
     notifyListeners();
 
     storage.write(key: 'api_host', value: host);

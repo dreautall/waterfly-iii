@@ -56,12 +56,12 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.host != null && widget.apiKey != null) {
+    if (widget.host != null && widget.apiKey != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         debugPrint("initState() scheduling login");
         _login(widget.host, widget.apiKey);
-      }
-    });
+      });
+    }
   }
 
   @override
@@ -75,6 +75,9 @@ class _SplashPageState extends State<SplashPage> {
     }
 
     Widget page;
+
+    _loginError ??=
+        context.select((FireflyService f) => f.storageSignInException);
 
     if (_loginError == null) {
       debugPrint("_loginError null --> show spinner");

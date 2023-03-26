@@ -18,7 +18,7 @@ class WaterflyApp extends StatefulWidget {
 
 class _WaterflyAppState extends State<WaterflyApp> {
   final GlobalKey<NavigatorState> _navigator = GlobalKey<NavigatorState>();
-  bool _firstStart = true;
+  bool _startup = true;
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +35,22 @@ class _WaterflyAppState extends State<WaterflyApp> {
       ],
       builder: (BuildContext context, _) {
         late bool signedIn;
-        if (_firstStart) {
-          debugPrint("_firstStart");
-          context.read<FireflyService>().signInFromStorage().then(
-                (_) => setState(() {
-                  _firstStart = false;
-                }),
-              );
-
+        debugPrint("_startup = $_startup");
+        if (_startup) {
           signedIn = false;
+
+          if (!context.read<SettingsProvider>().loaded) {
+            debugPrint("Load Step 1: Loading Settings");
+            context.read<SettingsProvider>().loadSettings();
+          } else {
+            debugPrint("Load Step 2: Signin In");
+            context.read<FireflyService>().signInFromStorage().then(
+                  (_) => setState(() {
+                    debugPrint("_startup = false");
+                    _startup = false;
+                  }),
+                );
+          }
         } else {
           signedIn = context.select((FireflyService f) => f.signedIn);
           debugPrint("signedIn: $signedIn");
@@ -65,13 +72,15 @@ class _WaterflyAppState extends State<WaterflyApp> {
               onSurfaceVariant: Colors.white,
             ),
             useMaterial3: true,
-          ).copyWith(),
-          themeMode: Provider.of<SettingsProvider>(context).getTheme,
+          ),
+          themeMode: context.select((SettingsProvider s) => s.getTheme),
           localizationsDelegates: S.localizationsDelegates,
           supportedLocales: S.supportedLocales,
-          locale: Provider.of<SettingsProvider>(context).getLocale,
+          locale: context.select((SettingsProvider s) => s.getLocale),
           navigatorKey: _navigator,
-          home: _firstStart
+          home: (_startup ||
+                  context.select(
+                      (FireflyService f) => f.storageSignInException != null))
               ? const SplashPage()
               : signedIn
                   ? const NavPage()

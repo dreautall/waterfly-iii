@@ -97,8 +97,7 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
                         final bool highlight =
                             AutocompleteHighlightedOption.of(context) == index;
                         if (highlight) {
-                          SchedulerBinding.instance
-                              .addPostFrameCallback((Duration timeStamp) {
+                          SchedulerBinding.instance.addPostFrameCallback((_) {
                             Scrollable.ensureVisible(context, alignment: 0.5);
                           });
                         }

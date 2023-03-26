@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/pages/splash.dart';
 import 'package:waterflyiii/widgets/logo.dart';
 import 'package:waterflyiii/widgets/erroricon.dart';
-import 'package:waterflyiii/widgets/animatedheightcard.dart';
 
 class UriScheme {
   static const String https = "https://";
@@ -161,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                   const SizedBox(height: 12),
-                  AnimatedHeightCard(
+                  AnimatedHeight(
                     child: TextFormField(
                       controller: _hostTextController,
                       //readOnly: _formSubmitted,
@@ -220,7 +220,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  AnimatedHeightCard(
+                  AnimatedHeight(
                     child: TextFormField(
                       controller: _keyTextController,
                       //readOnly: _formSubmitted,

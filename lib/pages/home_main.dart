@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/widgets/animatedheightcard.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 import 'package:community_charts_flutter/community_charts_flutter.dart'
@@ -558,7 +558,7 @@ class _HomeMainState extends State<HomeMain>
             ),
           ),
           const SizedBox(height: 8),
-          AnimatedHeightCard(
+          AnimatedHeight(
             child: Card(
               clipBehavior: Clip.hardEdge,
               child: FutureBuilder<List<BudgetLimitRead>>(
@@ -739,7 +739,7 @@ class ChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> summaryWidgets = <Widget>[];
 
-    return AnimatedHeightCard(
+    return AnimatedHeight(
       child: Card(
         clipBehavior: Clip.hardEdge,
         child: FutureBuilder<bool>(

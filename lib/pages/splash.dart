@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/widgets/logo.dart';
-import 'package:waterflyiii/widgets/animatedheightcard.dart';
 import 'package:waterflyiii/auth.dart';
 
 enum SplashState {
@@ -112,7 +112,7 @@ class _SplashPageState extends State<SplashPage> {
         width: double.infinity,
         child: Column(
           children: <Widget>[
-            AnimatedHeightCard(
+            AnimatedHeight(
               child: Card(
                 elevation: 0,
                 color: Theme.of(context).colorScheme.errorContainer,
@@ -126,7 +126,7 @@ class _SplashPageState extends State<SplashPage> {
                 ),
               ),
             ),
-            AnimatedHeightCard(
+            AnimatedHeight(
               child: Card(
                 elevation: 0,
                 color: Theme.of(context).colorScheme.errorContainer,
@@ -184,7 +184,7 @@ class _SplashPageState extends State<SplashPage> {
                 const SizedBox(height: 20),
                 const AppLogo(),
                 const SizedBox(height: 20),
-                AnimatedHeightCard(
+                AnimatedHeight(
                   child: page,
                 ),
               ],

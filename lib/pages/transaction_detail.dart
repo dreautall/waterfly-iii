@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
 
-import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:collection/collection.dart';
@@ -9,14 +8,15 @@ import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/widgets/animatedheightcard.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
+import 'package:chopper/chopper.dart' show Response;
 import 'package:badges/badges.dart' as badges;
 import 'package:filesize/filesize.dart';
 import 'package:background_downloader/background_downloader.dart';
@@ -106,18 +106,6 @@ class _TransactionPageState extends State<TransactionPage>
   final List<AnimationController> _cardsAnimationController =
       <AnimationController>[];
   final List<Animation<double>> _cardsAnimation = <Animation<double>>[];
-  // on screen
-  static const Duration animationDurationEmphasized =
-      Duration(milliseconds: 500);
-  static const Curve animationCurveEmphasized = Curves.easeInOutCubicEmphasized;
-  // enter screen
-  static const Duration animationDurationDecelerate =
-      Duration(milliseconds: 400);
-  static const Curve animationCurveDecelerate = Cubic(0.05, 0.7, 0.1, 1.0);
-  // exit screen
-  static const Duration animationDurationAccelerate =
-      Duration(milliseconds: 200);
-  static const Curve animationCurveAccelerate = Cubic(0.3, 0.0, 0.8, 0.15);
 
   bool _saving = false;
 
@@ -261,8 +249,8 @@ class _TransactionPageState extends State<TransactionPage>
         _cardsAnimationController.add(AnimationController(
           // height 1 = visible - enter = fwd (0->1), exit = reverse (1->0)
           value: 1.0,
-          duration: animationDurationDecelerate,
-          reverseDuration: animationDurationAccelerate,
+          duration: animDurationEmphasizedDecelerate,
+          reverseDuration: animDurationEmphasizedDecelerate,
           vsync: this,
         ));
         int i = _cardsAnimationController.length - 1;
@@ -270,8 +258,8 @@ class _TransactionPageState extends State<TransactionPage>
             (AnimationStatus status) => deleteCardAnimated(i)(status));
         _cardsAnimation.add(CurvedAnimation(
           parent: _cardsAnimationController.last,
-          curve: animationCurveDecelerate,
-          reverseCurve: animationCurveAccelerate,
+          curve: animCurveEmphasizedDecelerate,
+          reverseCurve: animCurveEmphasizedAccelerate,
         ));
       }
 
@@ -449,7 +437,7 @@ class _TransactionPageState extends State<TransactionPage>
     TextEditingController t4 = _tagsTextControllers.removeAt(i);
     TextEditingController t5 = _noteTextControllers.removeAt(i);
 
-    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       t1.dispose();
       f1.dispose();
       t2.dispose();
@@ -532,8 +520,8 @@ class _TransactionPageState extends State<TransactionPage>
     _cardsAnimationController.add(AnimationController(
       // height 0 = invisible - enter = fwd (0->1), exit = reverse (1->0)
       value: 0.0,
-      duration: animationDurationDecelerate,
-      reverseDuration: animationDurationAccelerate,
+      duration: animDurationEmphasizedDecelerate,
+      reverseDuration: animDurationEmphasizedAccelerate,
       vsync: this,
     ));
     int i = _cardsAnimationController.length - 1;
@@ -541,8 +529,8 @@ class _TransactionPageState extends State<TransactionPage>
         (AnimationStatus status) => deleteCardAnimated(i)(status));
     _cardsAnimation.add(CurvedAnimation(
       parent: _cardsAnimationController.last,
-      curve: animationCurveDecelerate,
-      reverseCurve: animationCurveAccelerate,
+      curve: animCurveEmphasizedDecelerate,
+      reverseCurve: animCurveEmphasizedAccelerate,
     ));
 
     debugPrint("new split #: ${_localAmounts.length}");
@@ -551,7 +539,7 @@ class _TransactionPageState extends State<TransactionPage>
       _split = (_localAmounts.length > 1);
     });
 
-    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _cardsAnimationController.last.forward();
     });
   }
@@ -928,8 +916,8 @@ class _TransactionPageState extends State<TransactionPage>
               badgeColor: Theme.of(context).colorScheme.surfaceVariant,
             ),
             badgeAnimation: const badges.BadgeAnimation.scale(
-              animationDuration: animationDurationEmphasized,
-              curve: animationCurveEmphasized,
+              animationDuration: animDurationEmphasized,
+              curve: animCurveEmphasized,
             ),
             child: MaterialIconButton(
               icon: Icons.attach_file,
@@ -1350,7 +1338,7 @@ class _TransactionPageState extends State<TransactionPage>
             Expanded(
               child: Column(
                 children: <Widget>[
-                  AnimatedHeightCard(
+                  AnimatedHeight(
                     child: _split
                         ? Row(
                             children: <Widget>[
@@ -1362,10 +1350,10 @@ class _TransactionPageState extends State<TransactionPage>
                           )
                         : const SizedBox.shrink(),
                   ),
-                  AnimatedHeightCard(
+                  AnimatedHeight(
                     child: _split ? hDivider : const SizedBox.shrink(),
                   ),
-                  AnimatedHeightCard(
+                  AnimatedHeight(
                     child: showAccountSelection
                         ? Row(
                             children: <Widget>[
@@ -1435,7 +1423,7 @@ class _TransactionPageState extends State<TransactionPage>
                           )
                         : const SizedBox.shrink(),
                   ),
-                  AnimatedHeightCard(
+                  AnimatedHeight(
                     child: showAccountSelection
                         ? hDivider
                         : const SizedBox.shrink(),
@@ -1450,7 +1438,7 @@ class _TransactionPageState extends State<TransactionPage>
                     focusNode: _budgetFocusNodes[i],
                   ),
                   hDivider,
-                  AnimatedHeightCard(
+                  AnimatedHeight(
                       child: (_split)
                           ? Row(
                               children: <Widget>[
@@ -1487,10 +1475,10 @@ class _TransactionPageState extends State<TransactionPage>
                               ],
                             )
                           : const SizedBox.shrink()),
-                  AnimatedHeightCard(
+                  AnimatedHeight(
                     child: (_split) ? hDivider : const SizedBox.shrink(),
                   ),
-                  AnimatedHeightCard(
+                  AnimatedHeight(
                     child: (_split && _foreignCurrencies[i] != null)
                         ? Row(
                             children: <Widget>[
@@ -1517,7 +1505,7 @@ class _TransactionPageState extends State<TransactionPage>
                           )
                         : const SizedBox.shrink(),
                   ),
-                  AnimatedHeightCard(
+                  AnimatedHeight(
                     child: (_split && _foreignCurrencies[i] != null)
                         ? hDivider
                         : const SizedBox.shrink(),
@@ -1539,11 +1527,11 @@ class _TransactionPageState extends State<TransactionPage>
                 alignment: Alignment.centerRight,
                 child: AnimatedOpacity(
                   opacity: (_split) ? 1 : 0,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOutCubicEmphasized,
+                  duration: animDurationStandard,
+                  curve: animCurveStandard,
                   child: AnimatedSize(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOutCubicEmphasized,
+                    duration: animDurationStandard,
+                    curve: animCurveStandard,
                     alignment: Alignment.topCenter,
                     child: Column(
                       children: <Widget>[
@@ -1723,7 +1711,7 @@ class _TransactionTagsState extends State<TransactionTags> {
     return Row(
       children: <Widget>[
         Expanded(
-          child: AnimatedHeightCard(
+          child: AnimatedHeight(
             child: TextFormField(
               controller: widget.textController,
               maxLines: null,
@@ -2155,7 +2143,7 @@ class _TagDialogState extends State<TagDialog> {
                 }
 
                 return SingleChildScrollView(
-                  child: AnimatedHeightCard(
+                  child: AnimatedHeight(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: child,

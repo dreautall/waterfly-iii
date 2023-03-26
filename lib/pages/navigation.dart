@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:waterflyiii/animations.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/pages/home.dart';
@@ -157,15 +158,13 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
           ],
         ),
         body: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 400),
-          reverseDuration: const Duration(milliseconds: 200),
-          switchInCurve: const Cubic(0.05, 0.7, 0.1, 1.0),
-          switchOutCurve: const Cubic(0.3, 0.0, 0.8, 0.15),
+          duration: const Duration(milliseconds: 100),
+          switchInCurve: animCurveStandard,
           transitionBuilder: (Widget child, Animation<double> animation) {
-            return SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(1, 0),
-                end: const Offset(0, 0),
+            return FadeTransition(
+              opacity: Tween<double>(
+                begin: 0,
+                end: 1,
               ).animate(animation),
               child: child,
             );

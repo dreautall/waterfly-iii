@@ -32,7 +32,7 @@ jobs:
           cache: true
 
       # Generate keystore
-      - uses: timheuer/base64-to-file@v1.0.3
+      - uses: timheuer/base64-to-file@v1.2
         id: android_keystore
         with:
           fileName: upload-keystore.jks

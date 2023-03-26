@@ -39,7 +39,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
         if (_startup) {
           signedIn = false;
 
-          if (!context.read<SettingsProvider>().loaded) {
+          if (!context.select((SettingsProvider s) => s.loaded)) {
             debugPrint("Load Step 1: Loading Settings");
             context.read<SettingsProvider>().loadSettings();
           } else {

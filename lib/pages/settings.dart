@@ -20,7 +20,6 @@ class SettingsPageState extends State<SettingsPage>
     final SettingsProvider settings = Provider.of<SettingsProvider>(context);
 
     return ListView(
-      shrinkWrap: true,
       padding: const EdgeInsets.all(24),
       children: <Widget>[
         ListTile(

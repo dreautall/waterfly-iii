@@ -6,7 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/notificationlistener.dart';
 
-import 'package:notification_listener_service/notification_listener_service.dart';
+import 'package:flutter_notification_listener/flutter_notification_listener.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -70,12 +70,12 @@ class SettingsPageState extends State<SettingsPage>
         const Divider(),
         ListTile(
           title: const Text("Notification Listener Service"),
-          subtitle: FutureBuilder<bool>(
-            future: NotificationListenerService.isPermissionGranted(),
-            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          subtitle: FutureBuilder<bool?>(
+            future: NotificationsListener.isRunning,
+            builder: (BuildContext context, AsyncSnapshot<bool?> snapshot) {
               if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.hasData) {
-                return Text("Enabled? ${snapshot.data!}");
+                return Text("Running? ${snapshot.data ?? false}");
               } else if (snapshot.hasError) {
                 return Text("Error checking: ${snapshot.error}");
               } else {
@@ -87,34 +87,22 @@ class SettingsPageState extends State<SettingsPage>
             child: Icon(Icons.notifications),
           ),
           onTap: () async {
-            final bool granted =
-                await NotificationListenerService.requestPermission();
-            debugPrint("granted? $granted");
-            if (!granted) {
-              return;
+            bool? running = await NotificationsListener.isRunning;
+            if (running ?? false) {
+              await NotificationsListener.stopService();
+            }
+            await nlInit();
+            await NotificationsListener.openPermissionSettings();
+            running = await NotificationsListener.isRunning;
+            if (!(running ?? false)) {
+              await NotificationsListener.startService(
+                foreground: false,
+              );
             }
             setState(() {});
           },
         ),
         const Divider(),
-        ListTile(
-          title: const Text("Background Service Debug Start"),
-          leading: const CircleAvatar(
-            child: Icon(Icons.start),
-          ),
-          onTap: () async {
-            bgsvcStart();
-          },
-        ),
-        ListTile(
-          title: const Text("Background Service Debug Stop"),
-          leading: const CircleAvatar(
-            child: Icon(Icons.start),
-          ),
-          onTap: () async {
-            bgsvcStop();
-          },
-        ),
         ListTile(
           title: const Text("Notification Debug"),
           leading: const CircleAvatar(

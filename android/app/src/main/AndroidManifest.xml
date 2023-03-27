@@ -33,18 +33,23 @@
             android:value="2" />
 
         <!-- Notification Listener -->
-        <service android:label="notifications"
-            android:name="notification.listener.service.NotificationListener"
+        <service
+            android:label="notifications"
+            android:name="im.zoe.labs.flutter_notification_listener.NotificationsHandlerService"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
-        <service
-            android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
-            android:exported="true"
-        />
+        <receiver android:name="im.zoe.labs.flutter_notification_listener.RebootBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
     <!-- Permissions -->
@@ -53,7 +58,6 @@
     <!-- for notification listener -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <!-- Queries, used by url_launcher -->
@@ -69,5 +73,4 @@
             <data android:scheme="https" />
         </intent>
     </queries>
-
 </manifest>

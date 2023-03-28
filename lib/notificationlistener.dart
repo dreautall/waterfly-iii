@@ -1,18 +1,14 @@
-import 'dart:isolate';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import 'package:flutter_notification_listener/flutter_notification_listener.dart';
-
-ReceivePort _receivePort = ReceivePort();
+import 'package:notifications_listener_service/notifications_listener_service.dart';
 
 @pragma('vm:entry-point')
-void nlCallback(NotificationEvent evt) async {
+void nlCallback() async {
   debugPrint("nlCallback()");
-  debugPrint("send evt to ui: $evt");
-  if (evt.packageName?.startsWith("com.dreautall.waterflyiii") ?? false) {
+  NotificationServicePlugin.instance
+      .executeNotificationListener((NotificationEvent? evt) async {
+    debugPrint("got event $evt");
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
     const AndroidInitializationSettings initializationSettingsAndroid =
@@ -21,10 +17,16 @@ void nlCallback(NotificationEvent evt) async {
         InitializationSettings(android: initializationSettingsAndroid);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
+    if (evt?.packageName?.startsWith("com.dreautall.waterflyiii") ?? false) {
+      return;
+    }
+    if (evt?.state == NotificationState.remove) {
+      return;
+    }
     flutterLocalNotificationsPlugin.show(
-      evt.id ?? 1,
-      "Got Event from ${evt.packageName}",
-      evt.message,
+      evt?.id ?? 1,
+      "Got Event from ${evt?.packageName}",
+      evt?.tag,
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'waterflyiii_debug',
@@ -35,31 +37,12 @@ void nlCallback(NotificationEvent evt) async {
           ticker: 'ticker',
         ),
       ),
-      payload: evt.text,
+      payload: evt?.key,
     );
-  }
-  final SendPort? send = IsolateNameServer.lookupPortByName("_listener_");
-  if (send == null) debugPrint("can't find the sender");
-  send?.send(evt);
+  });
 }
 
 Future<void> nlInit() async {
   debugPrint("nlInit()");
-  NotificationsListener.initialize(callbackHandle: nlCallback);
-
-  // this can fix restart<debug> can't handle error
-  IsolateNameServer.removePortNameMapping("_listener_");
-  IsolateNameServer.registerPortWithName(_receivePort.sendPort, "_listener_");
-  _receivePort.listen((dynamic message) => nlOnData(message));
-
-  // don't use the default receivePort
-  // NotificationsListener.receivePort.listen((evt) => onData(evt));
-
-  bool isRunning = (await NotificationsListener.isRunning) ?? false;
-  debugPrint("""Service is ${!isRunning ? "not " : ""}already running""");
-}
-
-void nlOnData(NotificationEvent event) {
-  debugPrint("nlOnData()");
-  debugPrint(event.toString());
+  NotificationServicePlugin.instance.initialize(nlCallback);
 }

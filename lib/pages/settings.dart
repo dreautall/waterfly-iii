@@ -6,7 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/notificationlistener.dart';
 
-import 'package:flutter_notification_listener/flutter_notification_listener.dart';
+import 'package:notifications_listener_service/notifications_listener_service.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -70,12 +70,13 @@ class SettingsPageState extends State<SettingsPage>
         const Divider(),
         ListTile(
           title: const Text("Notification Listener Service"),
-          subtitle: FutureBuilder<bool?>(
-            future: NotificationsListener.isRunning,
-            builder: (BuildContext context, AsyncSnapshot<bool?> snapshot) {
+          subtitle: FutureBuilder<bool>(
+            future:
+                NotificationServicePlugin.instance.isServicePermissionGranted(),
+            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.hasData) {
-                return Text("Running? ${snapshot.data ?? false}");
+                return Text("Granted? ${snapshot.data}");
               } else if (snapshot.hasError) {
                 return Text("Error checking: ${snapshot.error}");
               } else {
@@ -87,18 +88,8 @@ class SettingsPageState extends State<SettingsPage>
             child: Icon(Icons.notifications),
           ),
           onTap: () async {
-            bool? running = await NotificationsListener.isRunning;
-            if (running ?? false) {
-              await NotificationsListener.stopService();
-            }
-            await nlInit();
-            await NotificationsListener.openPermissionSettings();
-            running = await NotificationsListener.isRunning;
-            if (!(running ?? false)) {
-              await NotificationsListener.startService(
-                foreground: false,
-              );
-            }
+            await NotificationServicePlugin.instance.requestServicePermission();
+            nlInit();
             setState(() {});
           },
         ),

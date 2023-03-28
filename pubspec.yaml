@@ -31,9 +31,8 @@ dependencies:
   file_picker: ^5.2.5
   animations: ^2.0.7
   flutter_local_notifications: ^13.0.0
-  flutter_notification_listener:
-    git:
-      url: https://github.com/zjTek/flutter_notification_listener.git
+  notifications_listener_service:
+    git: https://github.com/dreautall/notification_listener_service.git
 
 
 dev_dependencies:

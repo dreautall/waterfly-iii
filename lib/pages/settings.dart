@@ -69,7 +69,7 @@ class SettingsPageState extends State<SettingsPage>
         ),
         const Divider(),
         ListTile(
-          title: const Text("Notification Listener Service"),
+          title: const Text("Notification Listener Permission"),
           subtitle: FutureBuilder<bool>(
             future:
                 NotificationServicePlugin.instance.isServicePermissionGranted(),
@@ -80,7 +80,7 @@ class SettingsPageState extends State<SettingsPage>
               } else if (snapshot.hasError) {
                 return Text("Error checking: ${snapshot.error}");
               } else {
-                return const Text("Checking if enabled...");
+                return const Text("Checking if granted...");
               }
             },
           ),
@@ -91,6 +91,28 @@ class SettingsPageState extends State<SettingsPage>
             await NotificationServicePlugin.instance.requestServicePermission();
             nlInit();
             setState(() {});
+          },
+        ),
+        ListTile(
+          title: const Text("Notification Listener Service"),
+          subtitle: FutureBuilder<bool>(
+            future: NotificationServicePlugin.instance.isServiceRunning(),
+            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.hasData) {
+                return Text("Running? ${snapshot.data}");
+              } else if (snapshot.hasError) {
+                return Text("Error checking: ${snapshot.error}");
+              } else {
+                return const Text("Checking if running...");
+              }
+            },
+          ),
+          leading: const CircleAvatar(
+            child: Icon(Icons.notifications),
+          ),
+          onTap: () async {
+            await NotificationServicePlugin.instance.startService();
           },
         ),
         const Divider(),

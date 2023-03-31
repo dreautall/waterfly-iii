@@ -864,6 +864,7 @@ class _TransactionPageState extends State<TransactionPage>
                   },
             child: Text(S.of(context).formButtonSave),
           ),
+          const SizedBox(width: 16),
         ],
       ),
       body: (widget.transactionId != null && widget.transaction == null)

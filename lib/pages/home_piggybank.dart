@@ -263,7 +263,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
 
     final Response<PiggyBankEventArray> resp =
         await api.v1PiggyBanksIdEventsGet(id: currentPiggy.id);
-    if (!resp.isSuccessful || resp.body == null || resp.body!.data.isEmpty) {
+    if (!resp.isSuccessful || resp.body == null) {
       if (context.mounted) {
         throw Exception(
           S.of(context).errorAPIInvalidResponse(resp.error?.toString() ?? ""),
@@ -350,6 +350,12 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                   AsyncSnapshot<List<PiggyBankEventRead>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData) {
+                  if (snapshot.data!.isEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
+                      child: Text(S.of(context).homeTransactionsEmpty),
+                    );
+                  }
                   final List<charts.Series<TimeSeriesChart, DateTime>>
                       chartData = <charts.Series<TimeSeriesChart, DateTime>>[];
                   final List<charts.TickSpec<DateTime>> ticks =
@@ -615,6 +621,8 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                   amount *= -1;
                 }
                 final double totalAmount = currentAmount + amount;
+                debugPrint(
+                    "New piggy bank total = $totalAmount out of $currentAmount + $amount");
                 final Response<PiggyBankSingle> resp =
                     await api.v1PiggyBanksIdPut(
                   id: widget.piggy.id,

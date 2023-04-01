@@ -8,17 +8,17 @@ import 'package:waterflyiii/app.dart';
 import 'package:waterflyiii/pages/transaction_detail.dart';
 
 class NotificationTransaction {
-  final String appName;
-  final String title;
-  final String body;
-  final DateTime date;
-
   NotificationTransaction(
     this.appName,
     this.title,
     this.body,
     this.date,
   );
+
+  final String appName;
+  final String title;
+  final String body;
+  final DateTime date;
 
   NotificationTransaction.fromJson(Map<String, dynamic> json)
       : appName = json['appName'],
@@ -34,8 +34,31 @@ class NotificationTransaction {
       };
 }
 
+class NotificationListenerStatus {
+  NotificationListenerStatus(
+    this.servicePermission,
+    this.serviceRunning,
+    this.notificationPermission,
+  );
+
+  final bool servicePermission;
+  final bool serviceRunning;
+  final bool notificationPermission;
+}
+
 final RegExp rFindMoney = RegExp(
     r'(?:^|\s)(?<preCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})\s*(?<amount>\d+(?:[.,]\d+)?)\s*(?<postCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})(?:$|\s)');
+
+Future<NotificationListenerStatus> nlStatus() async {
+  return NotificationListenerStatus(
+      await NotificationServicePlugin.instance.isServicePermissionGranted(),
+      await NotificationServicePlugin.instance.isServiceRunning(),
+      await FlutterLocalNotificationsPlugin()
+              .resolvePlatformSpecificImplementation<
+                  AndroidFlutterLocalNotificationsPlugin>()!
+              .areNotificationsEnabled() ??
+          false);
+}
 
 @pragma('vm:entry-point')
 void nlCallback() async {

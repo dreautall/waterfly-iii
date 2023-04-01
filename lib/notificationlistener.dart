@@ -24,13 +24,13 @@ class NotificationTransaction {
       : appName = json['appName'],
         title = json['title'],
         body = json['body'],
-        date = json['date'];
+        date = DateTime.parse(json['date']);
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'appName': appName,
         'title': title,
         'body': body,
-        'date': date,
+        'date': date.toIso8601String(),
       };
 }
 

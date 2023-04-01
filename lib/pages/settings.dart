@@ -69,100 +69,97 @@ class SettingsPageState extends State<SettingsPage>
           },
         ),
         const Divider(),
-        ListTile(
-          title: const Text("Notification Listener Permission"),
-          subtitle: FutureBuilder<bool>(
-            future:
-                NotificationServicePlugin.instance.isServicePermissionGranted(),
-            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.hasData) {
-                return Text("Granted? ${snapshot.data}");
-              } else if (snapshot.hasError) {
-                return Text("Error checking: ${snapshot.error}");
-              } else {
-                return const Text("Checking if granted...");
-              }
-            },
-          ),
-          leading: const CircleAvatar(
-            child: Icon(Icons.notifications),
-          ),
-          onTap: () async {
-            FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-                FlutterLocalNotificationsPlugin();
-            flutterLocalNotificationsPlugin
-                .resolvePlatformSpecificImplementation<
-                    AndroidFlutterLocalNotificationsPlugin>()!
-                .requestPermission();
-            await NotificationServicePlugin.instance.requestServicePermission();
-            nlInit();
-            setState(() {});
-          },
-        ),
-        ListTile(
-          title: const Text("Notification Listener Service"),
-          subtitle: FutureBuilder<bool>(
-            future: NotificationServicePlugin.instance.isServiceRunning(),
-            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.hasData) {
-                return Text("Running? ${snapshot.data}");
-              } else if (snapshot.hasError) {
-                return Text("Error checking: ${snapshot.error}");
-              } else {
-                return const Text("Checking if running...");
-              }
-            },
-          ),
-          leading: const CircleAvatar(
-            child: Icon(Icons.notifications),
-          ),
-          onTap: () async {
-            await NotificationServicePlugin.instance.startService();
-          },
-        ),
-        const Divider(),
-        ListTile(
-          title: const Text("Notification Debug"),
-          leading: const CircleAvatar(
-            child: Icon(Icons.start),
-          ),
-          onTap: () async {
-            final FlutterLocalNotificationsPlugin
-                flutterLocalNotificationsPlugin =
-                FlutterLocalNotificationsPlugin();
-            const AndroidInitializationSettings initializationSettingsAndroid =
-                AndroidInitializationSettings('ic_launcher');
-            const InitializationSettings initializationSettings =
-                InitializationSettings(
-              android: initializationSettingsAndroid,
-            );
-            await flutterLocalNotificationsPlugin.initialize(
-              initializationSettings,
-              onDidReceiveNotificationResponse: nlNotificationTap,
-              onDidReceiveBackgroundNotificationResponse: nlNotificationTap,
-            );
+        FutureBuilder<NotificationListenerStatus>(
+          future: nlStatus(),
+          builder: (BuildContext context,
+              AsyncSnapshot<NotificationListenerStatus> snapshot) {
+            final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
 
-            flutterLocalNotificationsPlugin.show(
-              0,
-              "Testladen 1234",
-              "€12.34 with Barclays",
-              const NotificationDetails(
-                android: AndroidNotificationDetails(
-                  'debug',
-                  'Debug Notificiations',
-                  channelDescription: 'Debugging stuff',
-                  importance: Importance.max,
-                  priority: Priority.high,
-                ),
+            late String subtitle;
+            Function? clickFn;
+            bool permissionsGranted = false;
+            bool isRunning = false;
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData) {
+              if (!snapshot.data!.servicePermission) {
+                subtitle = "Click to grant permission.";
+                clickFn = () async {
+                  bool granted = await FlutterLocalNotificationsPlugin()
+                          .resolvePlatformSpecificImplementation<
+                              AndroidFlutterLocalNotificationsPlugin>()!
+                          .requestPermission() ??
+                      false;
+                  if (!granted) {
+                    msg.showSnackBar(const SnackBar(
+                      content: Text("Permission not granted."),
+                      behavior: SnackBarBehavior.floating,
+                    ));
+                    return;
+                  }
+                  await NotificationServicePlugin.instance
+                      .requestPermissionsIfDenied();
+                  await nlInit();
+                };
+              } else if (!snapshot.data!.notificationPermission) {
+                subtitle = "Click to grant permission.";
+                clickFn = FlutterLocalNotificationsPlugin()
+                    .resolvePlatformSpecificImplementation<
+                        AndroidFlutterLocalNotificationsPlugin>()!
+                    .requestPermission;
+              } else if (!snapshot.data!.serviceRunning) {
+                subtitle = "Service stopped";
+                permissionsGranted = true;
+              } else {
+                subtitle = "Service running";
+                permissionsGranted = true;
+                isRunning = true;
+              }
+            } else if (snapshot.hasError) {
+              subtitle = "Error checking status: ${snapshot.error}";
+            } else {
+              subtitle = "Checking status...";
+            }
+            return ListTile(
+              title: const Text("Notification Listener"),
+              subtitle: Text(
+                subtitle,
+                maxLines: 2,
               ),
-              payload: jsonEncode(NotificationTransaction(
-                "com.dummy.pay",
-                "Testladen 1234",
-                "12.34 USD with Barclays",
-                DateTime.now(),
-              )),
+              leading: const CircleAvatar(
+                child: Icon(Icons.notifications),
+              ),
+              onTap: clickFn != null
+                  ? () async {
+                      await clickFn!();
+                      setState(() {});
+                    }
+                  : null,
+              // :TODO: stopService not working currently
+              /*trailing: Switch(
+                thumbIcon: MaterialStateProperty.resolveWith<Icon?>(
+                  (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.selected)) {
+                      return const Icon(Icons.check);
+                    }
+                    return const Icon(Icons.close);
+                  },
+                ),
+                value: isRunning,
+                onChanged: permissionsGranted
+                    ? (bool value) async {
+                        if (value) {
+                          debugPrint("Starting Service");
+                          await NotificationServicePlugin.instance
+                              .startService();
+                        } else {
+                          debugPrint("Stopping Service");
+                          await NotificationServicePlugin.instance
+                              .stopService();
+                        }
+                        setState(() {});
+                      }
+                    : null,
+              ),*/
             );
           },
         ),

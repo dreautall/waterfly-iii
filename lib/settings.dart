@@ -41,8 +41,8 @@ class SettingsProvider with ChangeNotifier {
     if (S.supportedLocales.contains(locale)) {
       _locale = locale;
     }
-    debugPrint("notify SettingsProvider->loadSettings()");
     _loaded = true;
+    debugPrint("notify SettingsProvider->loadSettings()");
     notifyListeners();
   }
 

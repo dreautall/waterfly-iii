@@ -338,10 +338,21 @@ class _HomeMainState extends State<HomeMain>
                   sevenDayTotal -= (e.differenceFloat ?? 0).abs());
               lastDaysIncome.forEach((DateTime _, InsightTotalEntry e) =>
                   sevenDayTotal += (e.differenceFloat ?? 0).abs());
-              return Text(
-                S.of(context).homeMainChartDailyAvg(
-                      defaultCurrency.fmt(sevenDayTotal / 7),
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(S.of(context).homeMainChartDailyAvg),
+                  Text(
+                    defaultCurrency.fmt(sevenDayTotal / 7),
+                    style: TextStyle(
+                      color: sevenDayTotal < 0 ? Colors.red : Colors.green,
+                      fontWeight: FontWeight.bold,
+                      fontFeatures: const <FontFeature>[
+                        FontFeature.tabularFigures()
+                      ],
                     ),
+                  ),
+                ],
               );
             },
             height: 125,

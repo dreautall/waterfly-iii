@@ -190,15 +190,9 @@
   "@homeMainChartCategoriesTitle": {
     "description": "Chart Label: Category Summary"
   },
-  "homeMainChartDailyAvg": "7 days average: {avgAmount}",
+  "homeMainChartDailyAvg": "7 days average",
   "@homeMainChartDailyAvg": {
-    "description": "Text for last week average spent",
-    "placeholders": {
-      "avgAmount": {
-        "type": "String",
-        "example": "-EUR12.34"
-      }
-    }
+    "description": "Text for last week average spent"
   },
   "homeMainChartDailyTitle": "Daily Summary",
   "@homeMainChartDailyTitle": {

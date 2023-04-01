@@ -37,7 +37,7 @@
   "homeMainBudgetTitle": "Budgets für diesen Monat",
   "homeMainChartAccountsTitle": "Kontenübersicht",
   "homeMainChartCategoriesTitle": "Kateogrieübersicht",
-  "homeMainChartDailyAvg": "7-Tage-Durchschnitt: {avgAmount}",
+  "homeMainChartDailyAvg": "7-Tage-Durchschnitt",
   "homeMainChartDailyTitle": "Tägliche Zusammenfassung",
   "homeMainChartNetearningsTitle": "Überschuss",
   "homePiggyAdjustDialogTitle": "Geld sparen/ausgeben",

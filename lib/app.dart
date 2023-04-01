@@ -111,7 +111,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
               ? const SplashPage()
               : signedIn
                   ? _fromNotification
-                      ? const TransactionPage()
+                      ? TransactionPage(notification: _notificationPayload)
                       : const NavPage()
                   : const LoginPage(),
         );

@@ -11,6 +11,7 @@ The app is still pretty much work in progress, but basic features already do wor
 - General
   - Light & Dark Mode
   - Translation Ready (currently only translated into German)
+  - Listen to incoming notifications and pre-fill transactions
 - Dashboard
   - Multiple charts for the current balance & recent history
   - Budget overview for last 30 days
@@ -24,10 +25,10 @@ The app is still pretty much work in progress, but basic features already do wor
   - Add/Remove money from Piggy Banks
 
 ### Planned Features
+
 The app does **not** try to replicate every single feature that the Webinterface has. Instead, it tries to be a good *companion* to access the most used functions on-the-go. More in-depth operations such as creating or deleting asset accounts, creating or modifying rules etc. are not planned.
 
 - Detailed Accounts page
-- Notification Listener
 - More filter options
 - ... and more.
 

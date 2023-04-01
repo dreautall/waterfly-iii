@@ -11,10 +11,11 @@ import 'package:provider/provider.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
+import 'package:waterflyiii/notificationlistener.dart';
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 import 'package:chopper/chopper.dart' show Response;
 import 'package:badges/badges.dart' as badges;
@@ -24,11 +25,16 @@ import 'package:open_filex/open_filex.dart';
 import 'package:file_picker/file_picker.dart';
 
 class TransactionPage extends StatefulWidget {
-  const TransactionPage({Key? key, this.transaction, this.transactionId})
-      : super(key: key);
+  const TransactionPage({
+    Key? key,
+    this.transaction,
+    this.transactionId,
+    this.notification,
+  }) : super(key: key);
 
   final String? transactionId;
   final TransactionRead? transaction;
+  final NotificationTransaction? notification;
 
   @override
   State<TransactionPage> createState() => _TransactionPageState();
@@ -279,6 +285,39 @@ class _TransactionPageState extends State<TransactionPage>
       WidgetsBinding.instance.addPostFrameCallback((_) {
         splitTransactionAdd();
         _localCurrency = context.read<FireflyService>().defaultCurrency;
+
+        if (widget.notification != null) {
+          final RegExpMatch? match =
+              rFindMoney.firstMatch(widget.notification!.body);
+          if (match == null) {
+            return;
+          }
+          late CurrencyRead currency;
+          String currencyStr = match.namedGroup("postCurrency") ?? "";
+          if (currencyStr.isEmpty) {
+            currencyStr = match.namedGroup("preCurrency") ?? "";
+          }
+          if (currencyStr.isEmpty) {
+            return;
+          }
+          if (currencyStr == _localCurrency!.attributes.code ||
+              currencyStr == _localCurrency!.attributes.symbol) {
+            currency = _localCurrency!;
+          } else {
+            // :TODO: foreign currency support
+          }
+          final double amount =
+              double.tryParse(match.namedGroup("amount") ?? "") ?? 0;
+          if (amount == 0) {
+            return;
+          }
+          _titleTextController.text = widget.notification!.title;
+
+          _localAmounts[0] = amount;
+          _localAmountTextController.text =
+              amount.toStringAsFixed(currency.attributes.decimalPlaces ?? 2);
+          _noteTextControllers[0].text = widget.notification!.body;
+        }
       });
     }
 

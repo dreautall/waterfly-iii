@@ -116,7 +116,7 @@ void nlCallback() async {
 
 Future<void> nlInit() async {
   debugPrint("nlInit()");
-  NotificationServicePlugin.instance.initialize(nlCallback);
+  await NotificationServicePlugin.instance.initialize(nlCallback);
 }
 
 @pragma('vm:entry-point')

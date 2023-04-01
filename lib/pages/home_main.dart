@@ -54,7 +54,10 @@ class _HomeMainState extends State<HomeMain>
   Future<bool> _fetchLastDays() async {
     final FireflyIii api = context.read<FireflyService>().api;
 
-    final DateTime now = DateTime.now().toLocal().clearTime();
+    // Use noon due to dailylight saving time
+    final DateTime now = DateTime.now()
+        .toLocal()
+        .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
     final List<DateTime> lastDays = <DateTime>[];
     for (int i = 0; i < 7; i++) {
       lastDays.add(now.subtract(Duration(days: i)));
@@ -904,7 +907,10 @@ class LastDaysChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime now = DateTime.now().toLocal().clearTime();
+    // Use noon due to dailylight saving time
+    final DateTime now = DateTime.now()
+        .toLocal()
+        .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
     final List<DateTime> lastDays = <DateTime>[];
     for (int i = 0; i < 7; i++) {
       lastDays.add(now.subtract(Duration(days: i)));

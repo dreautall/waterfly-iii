@@ -88,6 +88,12 @@ class SettingsPageState extends State<SettingsPage>
             child: Icon(Icons.notifications),
           ),
           onTap: () async {
+            FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+                FlutterLocalNotificationsPlugin();
+            flutterLocalNotificationsPlugin
+                .resolvePlatformSpecificImplementation<
+                    AndroidFlutterLocalNotificationsPlugin>()!
+                .requestPermission();
             await NotificationServicePlugin.instance.requestServicePermission();
             nlInit();
             setState(() {});
@@ -128,14 +134,19 @@ class SettingsPageState extends State<SettingsPage>
             const AndroidInitializationSettings initializationSettingsAndroid =
                 AndroidInitializationSettings('ic_launcher');
             const InitializationSettings initializationSettings =
-                InitializationSettings(android: initializationSettingsAndroid);
-            await flutterLocalNotificationsPlugin
-                .initialize(initializationSettings);
+                InitializationSettings(
+              android: initializationSettingsAndroid,
+            );
+            await flutterLocalNotificationsPlugin.initialize(
+              initializationSettings,
+              onDidReceiveNotificationResponse: nlNotificationTap,
+              onDidReceiveBackgroundNotificationResponse: nlNotificationTap,
+            );
 
             flutterLocalNotificationsPlugin.show(
               0,
-              "TestTitle",
-              "TestSubtitle",
+              "Testladen 1234",
+              "€12.34 with Barclays",
               const NotificationDetails(
                 android: AndroidNotificationDetails(
                   'waterflyiii_debug',

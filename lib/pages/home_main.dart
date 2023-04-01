@@ -853,6 +853,7 @@ class SummaryChart extends StatelessWidget {
       child: charts.TimeSeriesChart(
         chartData,
         animate: true,
+        animationDuration: animDurationEmphasized,
         primaryMeasureAxis: charts.NumericAxisSpec(
           tickProviderSpec: const charts.BasicNumericTickProviderSpec(
             //desiredTickCount: 6,
@@ -949,6 +950,7 @@ class LastDaysChart extends StatelessWidget {
         ),
       ],
       animate: true,
+      animationDuration: animDurationEmphasized,
       barRendererDecorator: charts.BarLabelDecorator<String>(),
       primaryMeasureAxis: const charts.NumericAxisSpec(
         renderSpec: charts.NoneRenderSpec<num>(),
@@ -1020,6 +1022,7 @@ class NetEarningsChart extends StatelessWidget {
           ),
         ],
         animate: true,
+        animationDuration: animDurationEmphasized,
         primaryMeasureAxis: charts.NumericAxisSpec(
           tickProviderSpec:
               const charts.BasicNumericTickProviderSpec(desiredTickCount: 5),
@@ -1109,6 +1112,7 @@ class CategoryChart extends StatelessWidget {
           ),
         ],
         animate: true,
+        animationDuration: animDurationEmphasized,
         defaultRenderer: charts.ArcRendererConfig<String>(
           arcRendererDecorators: <charts.ArcLabelDecorator<String>>[
             charts.ArcLabelDecorator<String>(

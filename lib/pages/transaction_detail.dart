@@ -314,7 +314,7 @@ class _TransactionPageState extends State<TransactionPage>
             for (CurrencyRead cur in response.body!.data) {
               if (cur.attributes.code == currencyStr ||
                   cur.attributes.symbol == currencyStr) {
-                currency = _localCurrency;
+                currency = cur;
                 break;
               }
             }

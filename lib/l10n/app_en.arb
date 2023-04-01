@@ -395,6 +395,41 @@
   "@settingsLanguage": {
     "description": "Currently selected language"
   },
+  "settingsNotificationListener": "Notification Listener Service",
+  "@settingsNotificationListener": {
+    "description": "Setting for the notification listener service."
+  },
+  "settingsPermissionGrant": "Tap to grant permission.",
+  "@settingsPermissionGrant": {
+    "description": "Indicates user should tap the text to grant certain permissions (notification access)."
+  },
+  "settingsPermissionNotGranted": "Permission not granted.",
+  "@settingsPermissionNotGranted": {
+    "description": "A requested permission was not granted."
+  },
+  "settingsServiceChecking": "Checking status…",
+  "@settingsServiceChecking": {
+    "description": "Checking the status of the background service"
+  },
+  "settingsServiceCheckingError": "Error checking status: {error}",
+  "@settingsServiceCheckingError": {
+    "description": "An error occured while checking the service status",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "description": "Error details",
+        "example": "Timeout"
+      }
+    }
+  },
+  "settingsServiceRunning": "Service is running.",
+  "@settingsServiceRunning": {
+    "description": "A background service is running normally."
+  },
+  "settingsServiceStopped": "Service is stopped.",
+  "@settingsServiceStopped": {
+    "description": "A background service is stopped."
+  },
   "settingsTheme": "App Theme",
   "@settingsTheme": {
     "description": "App theme (dark or light)"

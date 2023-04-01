@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:waterflyiii/animations.dart';
 
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/settings.dart';
@@ -63,9 +63,7 @@ class NavPage extends StatefulWidget {
 
 class NavPageState extends State<NavPage> with TickerProviderStateMixin {
   late TabController _tabController;
-
   int screenIndex = 0;
-
   late List<NavDestination> navDestinations;
 
   @override

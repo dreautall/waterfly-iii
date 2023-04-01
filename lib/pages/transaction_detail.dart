@@ -11,10 +11,11 @@ import 'package:provider/provider.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
+import 'package:waterflyiii/notificationlistener.dart';
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 import 'package:chopper/chopper.dart' show Response;
 import 'package:badges/badges.dart' as badges;
@@ -24,11 +25,16 @@ import 'package:open_filex/open_filex.dart';
 import 'package:file_picker/file_picker.dart';
 
 class TransactionPage extends StatefulWidget {
-  const TransactionPage({Key? key, this.transaction, this.transactionId})
-      : super(key: key);
+  const TransactionPage({
+    Key? key,
+    this.transaction,
+    this.transactionId,
+    this.notification,
+  }) : super(key: key);
 
   final String? transactionId;
   final TransactionRead? transaction;
+  final NotificationTransaction? notification;
 
   @override
   State<TransactionPage> createState() => _TransactionPageState();
@@ -276,9 +282,86 @@ class _TransactionPageState extends State<TransactionPage>
       _transactionType = TransactionTypeProperty.withdrawal;
       _date = DateTime.now();
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
         splitTransactionAdd();
         _localCurrency = context.read<FireflyService>().defaultCurrency;
+
+        if (widget.notification != null) {
+          final FireflyIii api = context.read<FireflyService>().api;
+
+          final RegExpMatch? match =
+              rFindMoney.firstMatch(widget.notification!.body);
+          if (match == null) {
+            return;
+          }
+          CurrencyRead? currency;
+          String currencyStr = match.namedGroup("postCurrency") ?? "";
+          if (currencyStr.isEmpty) {
+            currencyStr = match.namedGroup("preCurrency") ?? "";
+          }
+          if (currencyStr.isEmpty) {
+            return;
+          }
+          if (_localCurrency!.attributes.code == currencyStr ||
+              _localCurrency!.attributes.symbol == currencyStr) {
+            currency = _localCurrency;
+          } else {
+            final Response<CurrencyArray> response =
+                await api.v1CurrenciesGet();
+            if (!response.isSuccessful || response.body == null) {
+              return;
+            }
+            for (CurrencyRead cur in response.body!.data) {
+              if (cur.attributes.code == currencyStr ||
+                  cur.attributes.symbol == currencyStr) {
+                currency = cur;
+                break;
+              }
+            }
+          }
+          if (currency == null) {
+            return;
+          }
+          final double amount =
+              double.tryParse(match.namedGroup("amount") ?? "") ?? 0;
+          if (amount == 0) {
+            return;
+          }
+
+          // Sanity checks passed, set title & date
+          _titleTextController.text = widget.notification!.title;
+          _date = widget.notification!.date;
+          _dateTextController.text = DateFormat.yMMMMd().format(_date);
+          _timeTextController.text = DateFormat.Hm().format(_date);
+
+          // Check currency
+          if (currency == _localCurrency) {
+            _localAmounts[0] = amount;
+            _localAmountTextController.text =
+                amount.toStringAsFixed(currency.attributes.decimalPlaces ?? 2);
+          } else {
+            _foreignCurrency = currency;
+            _foreignAmounts[0] = amount;
+            _foreignAmountTextController.text =
+                amount.toStringAsFixed(currency.attributes.decimalPlaces ?? 2);
+          }
+          _noteTextControllers[0].text = widget.notification!.body;
+
+          final Response<AccountArray> response =
+              await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
+          if (!response.isSuccessful || response.body == null) {
+            return;
+          }
+          for (AccountRead acc in response.body!.data) {
+            if (widget.notification!.body.contains(acc.attributes.name)) {
+              _ownAccountTextController.text = acc.attributes.name;
+              _ownAccountId = acc.id;
+              break;
+            }
+          }
+
+          setState(() {});
+        }
       });
     }
 

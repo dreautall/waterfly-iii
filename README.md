@@ -1,5 +1,9 @@
 # Waterfly III
 
+<p align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.dreautall.waterflyiii"><img src=".playstore/en_badge_web_generic.png" width="200" /></a>
+</p>
+
 **Unofficial** Android App for [Firefly III](https://github.com/firefly-iii/firefly-iii), a free and open source personal finance manager.
 
 The app design is heavily influenced by [Bluecoins](https://play.google.com/store/apps/details?id=com.rammigsoftware.bluecoins).
@@ -24,6 +28,7 @@ The app is still pretty much work in progress, but basic features already do wor
   - Add/Remove money from Piggy Banks
 
 ### Planned Features
+
 The app does **not** try to replicate every single feature that the Webinterface has. Instead, it tries to be a good *companion* to access the most used functions on-the-go. More in-depth operations such as creating or deleting asset accounts, creating or modifying rules etc. are not planned.
 
 - Detailed Accounts page
@@ -35,13 +40,13 @@ The app does **not** try to replicate every single feature that the Webinterface
 
 *All made with a Google Pixel 5.*
 
-Dashboard | Transactions | Balance Sheet |
-| :-: | :-: | :-: |
-<img src=".github/assets/screen_dashboard.png" width="250" />|<img src=".github/assets/screen_transactions_overview.png" width="250" />|<img src=".github/assets/screen_balance.png" width="250" />
+|                           Dashboard                           |                               Transactions                                |                        Balance Sheet                        |
+| :-----------------------------------------------------------: | :-----------------------------------------------------------------------: | :---------------------------------------------------------: |
+| <img src=".github/assets/screen_dashboard.png" width="250" /> | <img src=".github/assets/screen_transactions_overview.png" width="250" /> | <img src=".github/assets/screen_balance.png" width="250" /> |
 
-Transaction Edit | Split Transaction | Transaction Attachments
-| :-: | :-: | :-: |
-<img src=".github/assets/screen_transaction.png" width="250" />|<img src=".github/assets/screen_transaction_split.png" width="250" />|<img src=".github/assets/screen_transaction_attachments.png" width="250" />
+|                        Transaction Edit                         |                           Split Transaction                           |                           Transaction Attachments                           |
+| :-------------------------------------------------------------: | :-------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
+| <img src=".github/assets/screen_transaction.png" width="250" /> | <img src=".github/assets/screen_transaction_split.png" width="250" /> | <img src=".github/assets/screen_transaction_attachments.png" width="250" /> |
 
 ## Technology
 

@@ -38,7 +38,11 @@ void nlCallback() async {
         AndroidInitializationSettings('ic_launcher');
     const InitializationSettings initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: nlNotificationTap,
+      onDidReceiveBackgroundNotificationResponse: nlNotificationTap,
+    );
 
     if (evt?.packageName?.startsWith("com.dreautall.waterflyiii") ?? false) {
       return;
@@ -49,16 +53,16 @@ void nlCallback() async {
 
     flutterLocalNotificationsPlugin.show(
       evt?.id ?? 1,
-      "Got Event from ${evt?.packageName}",
-      evt?.tag,
+      "Create Transaction?",
+      "Click to create a transaction based on the notification ${evt?.title}",
       const NotificationDetails(
         android: AndroidNotificationDetails(
-          'waterflyiii_debug',
-          'Debug Notificiations',
-          channelDescription: 'Debugging stuff',
-          importance: Importance.defaultImportance,
-          priority: Priority.defaultPriority,
-          ticker: 'ticker',
+          'extract_transaction',
+          'Create Transaction from Notification',
+          channelDescription:
+              'Notification asking to create a transaction from another Notification.',
+          importance: Importance.low, // Android 8.0 and higher
+          priority: Priority.low, // Android 7.1 and lower
         ),
       ),
       payload: jsonEncode(NotificationTransaction(

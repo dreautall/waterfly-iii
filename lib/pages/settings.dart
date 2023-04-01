@@ -1,12 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:notifications_listener_service/notifications_listener_service.dart';
 
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/notificationlistener.dart';
-
-import 'package:notifications_listener_service/notifications_listener_service.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -157,7 +158,11 @@ class SettingsPageState extends State<SettingsPage>
                   ticker: 'ticker',
                 ),
               ),
-              payload: "TestPayload",
+              payload: jsonEncode(NotificationTransaction(
+                "com.dummy.pay",
+                "Testladen 1234",
+                "€12.34 with Barclays",
+              )),
             );
           },
         ),

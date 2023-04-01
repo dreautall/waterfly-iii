@@ -150,18 +150,18 @@ class SettingsPageState extends State<SettingsPage>
               "€12.34 with Barclays",
               const NotificationDetails(
                 android: AndroidNotificationDetails(
-                  'waterflyiii_debug',
+                  'debug',
                   'Debug Notificiations',
                   channelDescription: 'Debugging stuff',
                   importance: Importance.max,
                   priority: Priority.high,
-                  ticker: 'ticker',
                 ),
               ),
               payload: jsonEncode(NotificationTransaction(
                 "com.dummy.pay",
                 "Testladen 1234",
                 "€12.34 with Barclays",
+                DateTime.now(),
               )),
             );
           },

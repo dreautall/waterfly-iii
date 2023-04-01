@@ -11,20 +11,31 @@ class NotificationTransaction {
   final String appName;
   final String title;
   final String body;
+  final DateTime date;
 
-  NotificationTransaction(this.appName, this.title, this.body);
+  NotificationTransaction(
+    this.appName,
+    this.title,
+    this.body,
+    this.date,
+  );
 
   NotificationTransaction.fromJson(Map<String, dynamic> json)
       : appName = json['appName'],
         title = json['title'],
-        body = json['body'];
+        body = json['body'],
+        date = json['date'];
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'appName': appName,
         'title': title,
         'body': body,
+        'date': date,
       };
 }
+
+final RegExp rFindMoney = RegExp(
+    r'(?:^|\s)(?<preCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})\s*(?<amount>\d+(?:[.,]\d+)?)\s*(?<postCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})(?:$|\s)');
 
 @pragma('vm:entry-point')
 void nlCallback() async {
@@ -51,6 +62,11 @@ void nlCallback() async {
       return;
     }
 
+    if (!rFindMoney.hasMatch(evt?.text ?? "")) {
+      debugPrint("nlCallback(): no money found");
+      return;
+    }
+
     flutterLocalNotificationsPlugin.show(
       evt?.id ?? 1,
       "Create Transaction?",
@@ -69,6 +85,7 @@ void nlCallback() async {
         evt?.packageName ?? "",
         evt?.title ?? "",
         evt?.text ?? "",
+        DateTime.tryParse(evt?.postTime ?? "") ?? DateTime.now(),
       )),
     );
   });
@@ -81,9 +98,16 @@ Future<void> nlInit() async {
 
 @pragma('vm:entry-point')
 void nlNotificationTap(NotificationResponse notificationResponse) async {
-  debugPrint("Pressed notification: $notificationResponse");
+  debugPrint("nlNotificationTap()");
+  if (notificationResponse.payload?.isEmpty ?? true) {
+    return;
+  }
   await showDialog(
     context: navigatorKey.currentState!.context,
-    builder: (BuildContext context) => const TransactionPage(),
+    builder: (BuildContext context) => TransactionPage(
+      notification: NotificationTransaction.fromJson(
+        jsonDecode(notificationResponse.payload!),
+      ),
+    ),
   );
 }

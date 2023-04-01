@@ -327,8 +327,13 @@ class _TransactionPageState extends State<TransactionPage>
           if (amount == 0) {
             return;
           }
-          _titleTextController.text = widget.notification!.title;
 
+          // Sanity checks passed, set title & date
+          _titleTextController.text = widget.notification!.title;
+          _date = widget.notification!.date;
+          _dateTextController.text = DateFormat.yMMMMd().format(_date);
+
+          // Check currency
           if (currency == _localCurrency) {
             _localAmounts[0] = amount;
             _localAmountTextController.text =
@@ -353,6 +358,7 @@ class _TransactionPageState extends State<TransactionPage>
               break;
             }
           }
+
           setState(() {});
         }
       });

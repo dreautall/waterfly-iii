@@ -1,7 +1,30 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 import 'package:notifications_listener_service/notifications_listener_service.dart';
+
+import 'package:waterflyiii/app.dart';
+import 'package:waterflyiii/pages/transaction_detail.dart';
+
+class NotificationTransaction {
+  final String appName;
+  final String title;
+  final String body;
+
+  NotificationTransaction(this.appName, this.title, this.body);
+
+  NotificationTransaction.fromJson(Map<String, dynamic> json)
+      : appName = json['appName'],
+        title = json['title'],
+        body = json['body'];
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'appName': appName,
+        'title': title,
+        'body': body,
+      };
+}
 
 @pragma('vm:entry-point')
 void nlCallback() async {
@@ -23,6 +46,7 @@ void nlCallback() async {
     if (evt?.state == NotificationState.remove) {
       return;
     }
+
     flutterLocalNotificationsPlugin.show(
       evt?.id ?? 1,
       "Got Event from ${evt?.packageName}",
@@ -37,7 +61,11 @@ void nlCallback() async {
           ticker: 'ticker',
         ),
       ),
-      payload: evt?.key,
+      payload: jsonEncode(NotificationTransaction(
+        evt?.packageName ?? "",
+        evt?.title ?? "",
+        evt?.text ?? "",
+      )),
     );
   });
 }
@@ -45,4 +73,13 @@ void nlCallback() async {
 Future<void> nlInit() async {
   debugPrint("nlInit()");
   NotificationServicePlugin.instance.initialize(nlCallback);
+}
+
+@pragma('vm:entry-point')
+void nlNotificationTap(NotificationResponse notificationResponse) async {
+  debugPrint("Pressed notification: $notificationResponse");
+  await showDialog(
+    context: navigatorKey.currentState!.context,
+    builder: (BuildContext context) => const TransactionPage(),
+  );
 }

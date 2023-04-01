@@ -332,6 +332,7 @@ class _TransactionPageState extends State<TransactionPage>
           _titleTextController.text = widget.notification!.title;
           _date = widget.notification!.date;
           _dateTextController.text = DateFormat.yMMMMd().format(_date);
+          _timeTextController.text = DateFormat.Hm().format(_date);
 
           // Check currency
           if (currency == _localCurrency) {

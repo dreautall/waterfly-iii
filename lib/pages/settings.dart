@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -73,6 +71,7 @@ class SettingsPageState extends State<SettingsPage>
           builder: (BuildContext context,
               AsyncSnapshot<NotificationListenerStatus> snapshot) {
             final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
+            final S l10n = S.of(context);
 
             late String subtitle;
             Function? clickFn;
@@ -81,7 +80,7 @@ class SettingsPageState extends State<SettingsPage>
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData) {
               if (!snapshot.data!.servicePermission) {
-                subtitle = "Click to grant permission.";
+                subtitle = l10n.settingsPermissionGrant;
                 clickFn = () async {
                   bool granted = await FlutterLocalNotificationsPlugin()
                           .resolvePlatformSpecificImplementation<
@@ -89,8 +88,8 @@ class SettingsPageState extends State<SettingsPage>
                           .requestPermission() ??
                       false;
                   if (!granted) {
-                    msg.showSnackBar(const SnackBar(
-                      content: Text("Permission not granted."),
+                    msg.showSnackBar(SnackBar(
+                      content: Text(l10n.settingsPermissionNotGranted),
                       behavior: SnackBarBehavior.floating,
                     ));
                     return;
@@ -100,26 +99,28 @@ class SettingsPageState extends State<SettingsPage>
                   await nlInit();
                 };
               } else if (!snapshot.data!.notificationPermission) {
-                subtitle = "Click to grant permission.";
+                subtitle = l10n.settingsPermissionGrant;
                 clickFn = FlutterLocalNotificationsPlugin()
                     .resolvePlatformSpecificImplementation<
                         AndroidFlutterLocalNotificationsPlugin>()!
                     .requestPermission;
               } else if (!snapshot.data!.serviceRunning) {
-                subtitle = "Service stopped";
+                subtitle = l10n.settingsServiceStopped;
                 permissionsGranted = true;
               } else {
-                subtitle = "Service running";
+                subtitle = l10n.settingsServiceRunning;
                 permissionsGranted = true;
                 isRunning = true;
               }
             } else if (snapshot.hasError) {
-              subtitle = "Error checking status: ${snapshot.error}";
+              subtitle = S
+                  .of(context)
+                  .settingsServiceCheckingError(snapshot.error.toString());
             } else {
-              subtitle = "Checking status...";
+              subtitle = S.of(context).settingsServiceChecking;
             }
             return ListTile(
-              title: const Text("Notification Listener"),
+              title: Text(S.of(context).settingsNotificationListener),
               subtitle: Text(
                 subtitle,
                 maxLines: 2,

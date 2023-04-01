@@ -45,7 +45,6 @@ class SettingsPageState extends State<SettingsPage>
             });
           },
         ),
-        const Divider(),
         ListTile(
           title: Text(S.of(context).settingsTheme),
           subtitle: Text(

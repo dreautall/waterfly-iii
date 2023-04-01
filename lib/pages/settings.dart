@@ -160,7 +160,7 @@ class SettingsPageState extends State<SettingsPage>
               payload: jsonEncode(NotificationTransaction(
                 "com.dummy.pay",
                 "Testladen 1234",
-                "€12.34 with Barclays",
+                "12.34 USD with Barclays",
                 DateTime.now(),
               )),
             );

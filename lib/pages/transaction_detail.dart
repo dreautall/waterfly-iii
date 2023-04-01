@@ -282,17 +282,19 @@ class _TransactionPageState extends State<TransactionPage>
       _transactionType = TransactionTypeProperty.withdrawal;
       _date = DateTime.now();
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
         splitTransactionAdd();
         _localCurrency = context.read<FireflyService>().defaultCurrency;
 
         if (widget.notification != null) {
+          final FireflyIii api = context.read<FireflyService>().api;
+
           final RegExpMatch? match =
               rFindMoney.firstMatch(widget.notification!.body);
           if (match == null) {
             return;
           }
-          late CurrencyRead currency;
+          CurrencyRead? currency;
           String currencyStr = match.namedGroup("postCurrency") ?? "";
           if (currencyStr.isEmpty) {
             currencyStr = match.namedGroup("preCurrency") ?? "";
@@ -300,11 +302,25 @@ class _TransactionPageState extends State<TransactionPage>
           if (currencyStr.isEmpty) {
             return;
           }
-          if (currencyStr == _localCurrency!.attributes.code ||
-              currencyStr == _localCurrency!.attributes.symbol) {
-            currency = _localCurrency!;
+          if (_localCurrency!.attributes.code == currencyStr ||
+              _localCurrency!.attributes.symbol == currencyStr) {
+            currency = _localCurrency;
           } else {
-            // :TODO: foreign currency support
+            final Response<CurrencyArray> response =
+                await api.v1CurrenciesGet();
+            if (!response.isSuccessful || response.body == null) {
+              return;
+            }
+            for (CurrencyRead cur in response.body!.data) {
+              if (cur.attributes.code == currencyStr ||
+                  cur.attributes.symbol == currencyStr) {
+                currency = _localCurrency;
+                break;
+              }
+            }
+          }
+          if (currency == null) {
+            return;
           }
           final double amount =
               double.tryParse(match.namedGroup("amount") ?? "") ?? 0;
@@ -313,10 +329,31 @@ class _TransactionPageState extends State<TransactionPage>
           }
           _titleTextController.text = widget.notification!.title;
 
-          _localAmounts[0] = amount;
-          _localAmountTextController.text =
-              amount.toStringAsFixed(currency.attributes.decimalPlaces ?? 2);
+          if (currency == _localCurrency) {
+            _localAmounts[0] = amount;
+            _localAmountTextController.text =
+                amount.toStringAsFixed(currency.attributes.decimalPlaces ?? 2);
+          } else {
+            _foreignCurrency = currency;
+            _foreignAmounts[0] = amount;
+            _foreignAmountTextController.text =
+                amount.toStringAsFixed(currency.attributes.decimalPlaces ?? 2);
+          }
           _noteTextControllers[0].text = widget.notification!.body;
+
+          final Response<AccountArray> response =
+              await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
+          if (!response.isSuccessful || response.body == null) {
+            return;
+          }
+          for (AccountRead acc in response.body!.data) {
+            if (widget.notification!.body.contains(acc.attributes.name)) {
+              _ownAccountTextController.text = acc.attributes.name;
+              _ownAccountId = acc.id;
+              break;
+            }
+          }
+          setState(() {});
         }
       });
     }

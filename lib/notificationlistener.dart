@@ -6,6 +6,7 @@ import 'package:notifications_listener_service/notifications_listener_service.da
 
 import 'package:waterflyiii/app.dart';
 import 'package:waterflyiii/pages/transaction_detail.dart';
+import 'package:waterflyiii/settings.dart';
 
 class NotificationTransaction {
   NotificationTransaction(
@@ -90,6 +91,8 @@ void nlCallback() async {
       debugPrint("nlCallback(): no money found");
       return;
     }
+
+    SettingsProvider().notificationAddKnownApp(evt?.packageName ?? "");
 
     flutterLocalNotificationsPlugin.show(
       evt?.id ?? 1,

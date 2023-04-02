@@ -45,6 +45,7 @@ dev_dependencies:
   json_serializable: ^6.6.0
   swagger_dart_code_generator: ^2.4.6
   flutter_launcher_icons: ^0.12.0
+  flutter_native_splash: ^2.2.19
 
 flutter:
   uses-material-design: true
@@ -95,3 +96,9 @@ flutter_icons:
     generate: false
   macos:
     generate: false
+
+flutter_native_splash:
+  android: true
+  ios: false
+  web: false
+  color: "#ffffff"

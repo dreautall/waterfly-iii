@@ -44,6 +44,7 @@ dev_dependencies:
   chopper_generator: ^6.0.0
   json_serializable: ^6.6.0
   swagger_dart_code_generator: ^2.4.6
+  flutter_launcher_icons: ^0.12.0
 
 flutter:
   uses-material-design: true
@@ -80,3 +81,17 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_intl:
   enabled: true
+
+flutter_icons:
+  android: true
+  ios: false
+  image_path: "assets/images/logo.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/images/logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: false
+  windows:
+    generate: false
+  macos:
+    generate: false

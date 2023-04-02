@@ -85,7 +85,10 @@ void nlCallback() async {
       return;
     }
 
-    if (!rFindMoney.hasMatch(evt?.text ?? "")) {
+    final RegExpMatch? match = rFindMoney.firstMatch(evt?.text ?? "");
+    if (match == null ||
+        ((match.namedGroup("postCurrency")?.isEmpty ?? true) &&
+            (match.namedGroup("preCurrency")?.isEmpty ?? true))) {
       debugPrint("nlCallback(): no money found");
       return;
     }

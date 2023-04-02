@@ -68,12 +68,10 @@ void nlCallback() async {
     debugPrint("got event $evt");
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('ic_stat_notification');
-    const InitializationSettings initializationSettings =
-        InitializationSettings(android: initializationSettingsAndroid);
     await flutterLocalNotificationsPlugin.initialize(
-      initializationSettings,
+      const InitializationSettings(
+        android: AndroidInitializationSettings('ic_stat_notification'),
+      ),
       onDidReceiveNotificationResponse: nlNotificationTap,
       onDidReceiveBackgroundNotificationResponse: nlNotificationTap,
     );

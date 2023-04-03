@@ -289,9 +289,12 @@ class _TransactionPageState extends State<TransactionPage>
         if (widget.notification != null) {
           final FireflyIii api = context.read<FireflyService>().api;
 
+          debugPrint("Got notification ${widget.notification}");
+
           final RegExpMatch? match =
               rFindMoney.firstMatch(widget.notification!.body);
           if (match == null) {
+            debugPrint("regex did not match");
             return;
           }
           CurrencyRead? currency;
@@ -300,6 +303,7 @@ class _TransactionPageState extends State<TransactionPage>
             currencyStr = match.namedGroup("preCurrency") ?? "";
           }
           if (currencyStr.isEmpty) {
+            debugPrint("no currency found");
             return;
           }
           if (_localCurrency!.attributes.code == currencyStr ||
@@ -309,6 +313,7 @@ class _TransactionPageState extends State<TransactionPage>
             final Response<CurrencyArray> response =
                 await api.v1CurrenciesGet();
             if (!response.isSuccessful || response.body == null) {
+              debugPrint("api currency fetch failed");
               return;
             }
             for (CurrencyRead cur in response.body!.data) {
@@ -320,12 +325,29 @@ class _TransactionPageState extends State<TransactionPage>
             }
           }
           if (currency == null) {
+            debugPrint("api currency unknown");
             return;
           }
-          final double amount =
-              double.tryParse(match.namedGroup("amount") ?? "") ?? 0;
-          if (amount == 0) {
-            return;
+          // Check if string has a decimal separator
+          late double amount;
+          final String amountStr = match.namedGroup("amount") ?? "";
+          final String decimalSep = amountStr[amountStr.length - 3];
+          if (decimalSep == "," || decimalSep == ".") {
+            final double wholes = double.tryParse(amountStr
+                    .substring(0, amountStr.length - 3)
+                    .replaceAll(",", "")
+                    .replaceAll(".", "")) ??
+                0;
+            final double dec = double.tryParse(amountStr
+                    .substring(amountStr.length - 2)
+                    .replaceAll(",", "")
+                    .replaceAll(".", "")) ??
+                0;
+            amount = wholes + dec / 100;
+          } else {
+            amount = double.tryParse(
+                    amountStr.replaceAll(",", "").replaceAll(".", "")) ??
+                0;
           }
 
           // Sanity checks passed, set title & date
@@ -350,6 +372,7 @@ class _TransactionPageState extends State<TransactionPage>
           final Response<AccountArray> response =
               await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
           if (!response.isSuccessful || response.body == null) {
+            debugPrint("api account fetch failed");
             return;
           }
           for (AccountRead acc in response.body!.data) {

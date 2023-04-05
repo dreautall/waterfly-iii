@@ -67,15 +67,6 @@ void nlCallback() async {
   NotificationServicePlugin.instance
       .executeNotificationListener((NotificationEvent? evt) async {
     debugPrint("got event $evt");
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
-    await flutterLocalNotificationsPlugin.initialize(
-      const InitializationSettings(
-        android: AndroidInitializationSettings('ic_stat_notification'),
-      ),
-      onDidReceiveNotificationResponse: nlNotificationTap,
-      onDidReceiveBackgroundNotificationResponse: nlNotificationTap,
-    );
 
     if (evt?.packageName?.startsWith("com.dreautall.waterflyiii") ?? false) {
       return;
@@ -94,7 +85,7 @@ void nlCallback() async {
 
     SettingsProvider().notificationAddKnownApp(evt?.packageName ?? "");
 
-    flutterLocalNotificationsPlugin.show(
+    FlutterLocalNotificationsPlugin().show(
       evt?.id ?? 1,
       "Create Transaction?",
       "Click to create a transaction based on the notification ${evt?.title}",
@@ -123,8 +114,8 @@ Future<void> nlInit() async {
   await NotificationServicePlugin.instance.initialize(nlCallback);
 }
 
-@pragma('vm:entry-point')
-void nlNotificationTap(NotificationResponse notificationResponse) async {
+Future<void> nlNotificationTap(
+    NotificationResponse notificationResponse) async {
   debugPrint("nlNotificationTap()");
   if (notificationResponse.payload?.isEmpty ?? true) {
     return;

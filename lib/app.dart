@@ -33,6 +33,13 @@ class _WaterflyAppState extends State<WaterflyApp> {
   void initState() {
     super.initState();
 
+    FlutterLocalNotificationsPlugin().initialize(
+      const InitializationSettings(
+        android: AndroidInitializationSettings('ic_stat_notification'),
+      ),
+      onDidReceiveNotificationResponse: nlNotificationTap,
+    );
+
     FlutterLocalNotificationsPlugin().getNotificationAppLaunchDetails().then(
       (NotificationAppLaunchDetails? details) {
         debugPrint("checking NotificationAppLaunchDetails");

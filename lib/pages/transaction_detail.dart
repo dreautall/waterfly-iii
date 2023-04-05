@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:collection/collection.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
@@ -967,7 +968,14 @@ class _TransactionPageState extends State<TransactionPage>
                       return;
                     }
 
-                    nav.pop(true);
+                    if (nav.canPop()) {
+                      nav.pop(true);
+                    } else {
+                      // Launched from notification
+                      // https://stackoverflow.com/questions/45109557/flutter-how-to-programmatically-exit-the-app
+                      SystemChannels.platform
+                          .invokeMethod('SystemNavigator.pop');
+                    }
                   },
             child: Text(S.of(context).formButtonSave),
           ),

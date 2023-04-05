@@ -41,7 +41,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
           debugPrint("Was launched from notification!");
           _fromNotification = true;
           _notificationPayload = NotificationTransaction.fromJson(
-              jsonDecode(details!.notificationResponse!.payload!));
+            jsonDecode(details!.notificationResponse!.payload!),
+          );
         }
       },
     );

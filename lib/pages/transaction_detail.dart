@@ -331,7 +331,8 @@ class _TransactionPageState extends State<TransactionPage>
           // Check if string has a decimal separator
           late double amount;
           final String amountStr = match.namedGroup("amount") ?? "";
-          final String decimalSep = amountStr[amountStr.length - 3];
+          final String decimalSep =
+              amountStr.length >= 3 ? amountStr[amountStr.length - 3] : "";
           if (decimalSep == "," || decimalSep == ".") {
             final double wholes = double.tryParse(amountStr
                     .substring(0, amountStr.length - 3)

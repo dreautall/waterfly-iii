@@ -23,7 +23,7 @@ dependencies:
   flutter_svg: ^2.0.1
   url_launcher: ^6.1.8
   infinite_scroll_pagination: ^3.2.0
-  badges: ^3.0.2
+  badges: ^3.1.0
   filesize: ^2.0.1
   background_downloader: ^5.0.0
   community_charts_flutter: ^1.0.1

@@ -10,6 +10,7 @@ class SettingsProvider with ChangeNotifier {
   static const String settingLocale = "LOCALE";
   static const String settingNLKnownApps = "NL_KNOWNAPPS";
   static const String settingNLUsedApps = "NL_USEDAPPS";
+  static const String settingNLAppPrefix = "NL_APP_";
 
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get getTheme => _theme;
@@ -91,8 +92,6 @@ class SettingsProvider with ChangeNotifier {
     if (packageName.isEmpty || apps.contains(packageName)) {
       return;
     }
-
-    debugPrint("known apps: ${apps.join(",")}");
 
     apps.add(packageName);
     prefs.setStringList(settingNLKnownApps, apps);

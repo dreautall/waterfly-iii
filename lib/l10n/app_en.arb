@@ -399,6 +399,14 @@
   "@settingsLanguage": {
     "description": "Currently selected language"
   },
+  "settingsNLAppAdd": "Add App",
+  "@settingsNLAppAdd": {
+    "description": "Button title to add a new app."
+  },
+  "settingsNLAppAddHelp": "Click to add an app to listen to. Only eglible apps will show up in the list.",
+  "@settingsNLAppAddHelp": {
+    "description": "Help text below adding the new app button."
+  },
   "settingsNLDescription": "This service allows you to fetch transaction details from incoming push notifications.",
   "@settingsNLDescription": {
     "description": "Description text for the notification listener service."
@@ -437,6 +445,10 @@
   "settingsNLServiceRunning": "Service is running.",
   "@settingsNLServiceRunning": {
     "description": "A background service is running normally."
+  },
+  "settingsNLServiceStatus": "Service Status",
+  "@settingsNLServiceStatus": {
+    "description": "Status of a background service."
   },
   "settingsNLServiceStopped": "Service is stopped.",
   "@settingsNLServiceStopped": {

@@ -1,9 +1,11 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:installed_apps/app_info.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';
+import 'package:installed_apps/installed_apps.dart';
 
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/notificationlistener.dart';
@@ -197,9 +199,11 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
 
   @override
   Widget build(BuildContext context) {
+    final SettingsProvider settings = Provider.of<SettingsProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Notification Service"),
+        title: Text(S.of(context).settingsNotificationListener),
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -294,79 +298,157 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                 subtitle = S.of(context).settingsNLServiceChecking;
               }
               return ListTile(
-                title: const Text("Service Status"),
+                title: Text(S.of(context).settingsNLServiceStatus),
+                leading: CircleAvatar(
+                  child: (snapshot.data?.serviceRunning ?? false)
+                      ? const Icon(Icons.check)
+                      : const Icon(Icons.close),
+                ),
                 subtitle: Text(
                   subtitle,
-                  maxLines: 2,
+                  maxLines: 1,
                 ),
                 onTap: () async {
                   await clickFn();
                   setState(() {});
                 },
-                trailing: snapshot.data != null
-                    ? Switch(
-                        thumbIcon: MaterialStateProperty.resolveWith<Icon?>(
-                          (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.selected)) {
-                              return const Icon(Icons.check);
-                            }
-                            return const Icon(Icons.close);
-                          },
-                        ),
-                        value: snapshot.data!.serviceRunning,
-                        onChanged: snapshot.data!.servicePermission
-                            ? (_) async {
-                                await clickFn();
-                                setState(() {});
-                              }
-                            : null,
-                      )
-                    : null,
               );
             },
           ),
-          const Divider(),
-          FutureBuilder<List<String>>(
-            future:
-                Provider.of<SettingsProvider>(context).notificationKnownApps(),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.hasData) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    ...snapshot.data!.map(
-                      (String e) {
-                        return Card(
-                          clipBehavior: Clip.hardEdge,
-                          child: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: Text(e),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                );
-              } else if (snapshot.hasError) {
-                return Text(S
-                    .of(context)
-                    .settingsNLServiceCheckingError(snapshot.error.toString()));
-              } else {
-                return Text(S.of(context).settingsNLServiceChecking);
-              }
-            },
-          ),
-          const Divider(),
           if (status != null &&
               status!.serviceRunning &&
               status!.notificationPermission) ...<Widget>[
             const Divider(),
-            const Text("yay"),
+            ListTile(
+              title: Text(S.of(context).settingsNLAppAdd),
+              leading: const CircleAvatar(
+                child: Icon(Icons.add),
+              ),
+              subtitle: Text(
+                S.of(context).settingsNLAppAddHelp,
+                maxLines: 2,
+              ),
+              isThreeLine: true,
+              onTap: () async {
+                String? app = await showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => const AppDialog(),
+                );
+                debugPrint("app: $app");
+              },
+            ),
+            const Divider(),
+            FutureBuilder<List<String>>(
+              future: settings.notificationUsedApps(),
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      ...snapshot.data!.map(
+                        (String e) {
+                          return Card(
+                            clipBehavior: Clip.hardEdge,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Text(e),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  return Text(S.of(context).settingsNLServiceCheckingError(
+                      snapshot.error.toString()));
+                } else {
+                  return Text(S.of(context).settingsNLServiceChecking);
+                }
+              },
+            ),
           ],
         ],
       ),
+    );
+  }
+}
+
+class AppDialog extends StatelessWidget {
+  const AppDialog({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      title: Text(S.of(context).settingsNLAppAdd),
+      clipBehavior: Clip.hardEdge,
+      children: <Widget>[
+        FutureBuilder<List<String>>(
+          future:
+              Provider.of<SettingsProvider>(context).notificationKnownApps(),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+            if (snapshot.hasData) {
+              List<Widget> child = <Widget>[];
+              for (String app in snapshot.data!) {
+                child.add(AppDialogEntry(app: app));
+                child.add(const Divider());
+              }
+              child.removeLast();
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: child,
+              );
+            } else if (snapshot.hasError) {
+              Navigator.pop(context);
+              return const CircularProgressIndicator();
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class AppDialogEntry extends StatelessWidget {
+  const AppDialogEntry({
+    super.key,
+    required this.app,
+  });
+
+  final String app;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<AppInfo>(
+      future: InstalledApps.getAppInfo(app),
+      builder: (BuildContext context, AsyncSnapshot<AppInfo> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.hasData) {
+          return ListTile(
+            leading: CircleAvatar(
+              child: Image.memory(snapshot.data!.icon!),
+            ),
+            title: Text(snapshot.data!.name!),
+            subtitle: Text(app),
+            onTap: () {
+              Navigator.pop(context, app);
+            },
+          );
+        } else if (snapshot.hasError) {
+          debugPrint("error: ${snapshot.error}");
+          return const SizedBox.shrink();
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
     );
   }
 }

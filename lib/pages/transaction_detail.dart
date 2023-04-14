@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:mime/mime.dart' show lookupMimeType;
 import 'package:collection/collection.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -306,7 +305,6 @@ class _TransactionPageState extends State<TransactionPage>
           }
           if (currencyStr.isEmpty) {
             debugPrint("no currency found");
-            return;
           }
           if (_localCurrency!.attributes.code == currencyStr ||
               _localCurrency!.attributes.symbol == currencyStr) {
@@ -325,10 +323,6 @@ class _TransactionPageState extends State<TransactionPage>
                 break;
               }
             }
-          }
-          if (currency == null) {
-            debugPrint("api currency unknown");
-            return;
           }
           // Check if string has a decimal separator
           late double amount;
@@ -363,12 +357,12 @@ class _TransactionPageState extends State<TransactionPage>
           if (currency == _localCurrency) {
             _localAmounts[0] = amount;
             _localAmountTextController.text =
-                amount.toStringAsFixed(currency.attributes.decimalPlaces ?? 2);
+                amount.toStringAsFixed(currency?.attributes.decimalPlaces ?? 2);
           } else {
             _foreignCurrency = currency;
             _foreignAmounts[0] = amount;
             _foreignAmountTextController.text =
-                amount.toStringAsFixed(currency.attributes.decimalPlaces ?? 2);
+                amount.toStringAsFixed(currency?.attributes.decimalPlaces ?? 2);
           }
           _noteTextControllers[0].text = widget.notification!.body;
 

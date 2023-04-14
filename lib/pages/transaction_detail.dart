@@ -299,15 +299,18 @@ class _TransactionPageState extends State<TransactionPage>
             return;
           }
           CurrencyRead? currency;
-          String currencyStr = match.namedGroup("postCurrency") ?? "";
+          String currencyStr = match.namedGroup("preCurrency") ?? "";
+          String currencyStrAlt = match.namedGroup("postCurrency") ?? "";
           if (currencyStr.isEmpty) {
-            currencyStr = match.namedGroup("preCurrency") ?? "";
+            currencyStr = currencyStrAlt;
           }
           if (currencyStr.isEmpty) {
             debugPrint("no currency found");
           }
           if (_localCurrency!.attributes.code == currencyStr ||
-              _localCurrency!.attributes.symbol == currencyStr) {
+              _localCurrency!.attributes.symbol == currencyStr ||
+              _localCurrency!.attributes.code == currencyStrAlt ||
+              _localCurrency!.attributes.symbol == currencyStrAlt) {
             currency = _localCurrency;
           } else {
             final Response<CurrencyArray> response =
@@ -318,7 +321,9 @@ class _TransactionPageState extends State<TransactionPage>
             }
             for (CurrencyRead cur in response.body!.data) {
               if (cur.attributes.code == currencyStr ||
-                  cur.attributes.symbol == currencyStr) {
+                  cur.attributes.symbol == currencyStr ||
+                  cur.attributes.code == currencyStrAlt ||
+                  cur.attributes.symbol == currencyStrAlt) {
                 currency = cur;
                 break;
               }

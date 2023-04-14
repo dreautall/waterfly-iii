@@ -14,6 +14,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
@@ -289,6 +290,7 @@ class _TransactionPageState extends State<TransactionPage>
 
         if (widget.notification != null) {
           final FireflyIii api = context.read<FireflyService>().api;
+          final SettingsProvider settings = context.read<SettingsProvider>();
 
           debugPrint("Got notification ${widget.notification}");
 
@@ -371,14 +373,19 @@ class _TransactionPageState extends State<TransactionPage>
           }
           _noteTextControllers[0].text = widget.notification!.body;
 
+          // Check account
           final Response<AccountArray> response =
               await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
           if (!response.isSuccessful || response.body == null) {
             debugPrint("api account fetch failed");
             return;
           }
+          final NotificationAppSettings appSettings = await settings
+              .notificationGetAppSettings(widget.notification!.appName);
+          final String settingAppId = appSettings.defaultAccountId ?? "0";
           for (AccountRead acc in response.body!.data) {
-            if (widget.notification!.body.contains(acc.attributes.name)) {
+            if (acc.id == settingAppId ||
+                widget.notification!.body.contains(acc.attributes.name)) {
               _ownAccountTextController.text = acc.attributes.name;
               _ownAccountId = acc.id;
               break;

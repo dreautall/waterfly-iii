@@ -1,12 +1,12 @@
 import 'package:animations/animations.dart';
-import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:installed_apps/app_info.dart';
 import 'package:provider/provider.dart';
+import 'package:chopper/chopper.dart';
+
+import 'package:device_apps/device_apps.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';
-import 'package:installed_apps/installed_apps.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
@@ -335,18 +335,18 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
               ),
               isThreeLine: true,
               onTap: () async {
-                AppInfo? app = await showDialog<AppInfo>(
+                Application? app = await showDialog<Application>(
                   context: context,
                   builder: (BuildContext context) => const AppDialog(),
                 );
-                if (app == null || (app.packageName ?? "").isEmpty) {
+                if (app == null || app.packageName.isEmpty) {
                   return;
                 }
 
                 setState(() {
-                  settings.notificationAddUsedApp(app.packageName!);
+                  settings.notificationAddUsedApp(app.packageName);
                   settings.notificationSetAppSettings(
-                      app.packageName!, NotificationAppSettings(app.name!));
+                      app.packageName, NotificationAppSettings(app.appName));
                 });
               },
             ),
@@ -568,7 +568,6 @@ class AppDialog extends StatelessWidget {
               List<Widget> child = <Widget>[];
               for (String app in snapshot.data!) {
                 child.add(AppDialogEntry(app: app));
-                child.add(const Divider());
               }
 
               if (child.isEmpty) {
@@ -578,8 +577,6 @@ class AppDialog extends StatelessWidget {
                     child: Text(S.of(context).settingsNLAppAddEmpty),
                   ),
                 );
-              } else {
-                child.removeLast();
               }
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -587,7 +584,7 @@ class AppDialog extends StatelessWidget {
               );
             } else if (snapshot.hasError) {
               Navigator.pop(context);
-              return const CircularProgressIndicator();
+              return const SizedBox.shrink();
             } else {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -610,16 +607,19 @@ class AppDialogEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<AppInfo>(
-      future: InstalledApps.getAppInfo(app),
-      builder: (BuildContext context, AsyncSnapshot<AppInfo> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done &&
-            snapshot.hasData) {
+    return FutureBuilder<Application?>(
+      future: DeviceApps.getApp(app),
+      builder: (BuildContext context, AsyncSnapshot<Application?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.data == null) {
+            return const SizedBox.shrink();
+          }
           return ListTile(
-            leading: CircleAvatar(
-              child: Image.memory(snapshot.data!.icon!),
+            // :TODO: check for a library that can fetch the app icon
+            leading: const CircleAvatar(
+              child: Icon(Icons.api),
             ),
-            title: Text(snapshot.data!.name!),
+            title: Text(snapshot.data!.appName),
             subtitle: Text(app),
             onTap: () {
               Navigator.pop(context, snapshot.data);

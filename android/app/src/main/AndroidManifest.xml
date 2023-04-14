@@ -1,26 +1,11 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dreautall.waterflyiii">
-    <application
-        android:label="Waterfly III"
-        android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
-        android:enableOnBackInvokedCallback="true">
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:launchMode="singleTop"
-            android:theme="@style/LaunchTheme"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.dreautall.waterflyiii">
+    <application android:label="Waterfly III" android:name="${applicationName}" android:icon="@mipmap/ic_launcher" android:enableOnBackInvokedCallback="true">
+        <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
-            <meta-data
-                android:name="io.flutter.embedding.android.NormalTheme"
-                android:resource="@style/NormalTheme"
-            />
+            <meta-data android:name="io.flutter.embedding.android.NormalTheme" android:resource="@style/NormalTheme" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -28,9 +13,7 @@
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
-        <meta-data
-            android:name="flutterEmbedding"
-            android:value="2" />
+        <meta-data android:name="flutterEmbedding" android:value="2" />
     </application>
 
     <!-- Permissions -->
@@ -49,5 +32,192 @@
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="https" />
         </intent>
+
+        <!-- App queries for some well-known financial apps for the notification listener -->
+        <package android:name="agency.sevenofnine.erstewallet.production"/>
+        <package android:name="air.app.scb.breeze.android.main.in.prod"/>
+        <package android:name="air.app.scb.breeze.android.main.sg.prod"/>
+        <package android:name="am.vtb.mobilebank"/>
+        <package android:name="au.com.up.money"/>
+        <package android:name="bank.discovery.banking.production.release"/>
+        <package android:name="br.com.bb.android"/>
+        <package android:name="br.com.digio"/>
+        <package android:name="by.alfabank.insync"/>
+        <package android:name="by.belinvestbank"/>
+        <package android:name="capitec.acuity.mobile.prod"/>
+        <package android:name="cl.android"/>
+        <package android:name="cl.bancochile.mi_banco"/>
+        <package android:name="cl.scotiabank.go"/>
+        <package android:name="co.com.lulobank.production"/>
+        <package android:name="co.infinum.hpb"/>
+        <package android:name="co.mona.android"/>
+        <package android:name="co.uk.getmondo"/>
+        <package android:name="com.abnamro.nl.mobile.payments"/>
+        <package android:name="com.aktia.wallet"/>
+        <package android:name="com.ally.cardcontrols"/>
+        <package android:name="com.ally.mobilebanking"/>
+        <package android:name="com.americanexpress.android.acctsvcs.it"/>
+        <package android:name="com.americanexpress.android.acctsvcs.us"/>
+        <package android:name="com.americanexpress.android.acctsvcs.us.experimental"/>
+        <package android:name="com.americanexpress.android.amex4you"/>
+        <package android:name="com.americanexpress.android.amexgo"/>
+        <package android:name="com.americanexpress.receiptmatch.activities"/>
+        <package android:name="com.apps4fuun.smssender"/>
+        <package android:name="com.axis.mobile"/>
+        <package android:name="com.b2winc.amedigital"/>
+        <package android:name="com.bankfab.pbg.ae.dubaifirst"/>
+        <package android:name="com.barclays.absa.banking"/>
+        <package android:name="com.barclays.android.barclaysmobilebanking"/>
+        <package android:name="com.barclays.bca"/>
+        <package android:name="com.bca"/>
+        <package android:name="com.bcadigital.blu"/>
+        <package android:name="com.bcp.bank.bcp"/>
+        <package android:name="com.binance.dev"/>
+        <package android:name="com.bnpp.hellobank"/>
+        <package android:name="com.boursorama.android.clients"/>
+        <package android:name="com.bpi.ng.mobilebanking"/>
+        <package android:name="com.chase.sig.android"/>
+        <package android:name="com.chinatrust.mobilebank"/>
+        <package android:name="com.citi.citimobile"/>
+        <package android:name="com.citibank.CitibankPH"/>
+        <package android:name="com.citibank.mobile.citiuaePAT"/>
+        <package android:name="com.coinbase.android"/>
+        <package android:name="com.commbank.netbank"/>
+        <package android:name="com.commercebank.mobile"/>
+        <package android:name="com.csam.icici.bank.imobile"/>
+        <package android:name="com.danskebank.weshare"/>
+        <package android:name="com.db.pbc.miabanca"/>
+        <package android:name="com.db.pwcc.dbmobile"/>
+        <package android:name="com.defi.wallet"/>
+        <package android:name="com.deserve.deserve"/>
+        <package android:name="com.dkbcodefactory.banking"/>
+        <package android:name="com.ehorizon.apollo.numobile"/>
+        <package android:name="com.esunbank.ESUNWALLET"/>
+        <package android:name="com.fineco.it"/>
+        <package android:name="com.firstbank.mbanklite"/>
+        <package android:name="com.ftband.koto"/>
+        <package android:name="com.ftband.mono"/>
+        <package android:name="com.fuib.android.spot.online"/>
+        <package android:name="com.giro"/>
+        <package android:name="com.globe.gcash.android"/>
+        <package android:name="com.golden1.card"/>
+        <package android:name="com.google.android.apps.messaging"/>
+        <package android:name="com.google.android.apps.nbu.paisa.user"/>
+        <package android:name="com.google.android.apps.playconsole"/>
+        <package android:name="com.google.android.apps.walletnfcrel"/>
+        <package android:name="com.google.android.gm"/>
+        <package android:name="com.grability.rappi"/>
+        <package android:name="com.grabtaxi.driver"/>
+        <package android:name="com.grabtaxi.passenger"/>
+        <package android:name="com.idamob.tinkoff.android"/>
+        <package android:name="com.ie.capitalone.uk"/>
+        <package android:name="com.illimity.mobile.rtl"/>
+        <package android:name="com.imaginecurve.curve.prd"/>
+        <package android:name="com.ing.asia.mobile"/>
+        <package android:name="com.ing.banking"/>
+        <package android:name="com.ing.mobile"/>
+        <package android:name="com.interbank.mobile"/>
+        <package android:name="com.konylabs.capitalone"/>
+        <package android:name="com.latuabancaperandroid"/>
+        <package android:name="com.loan.cash.credit.nanopay"/>
+        <package android:name="com.loan.cash.credit.nanopaymx"/>
+        <package android:name="com.lynxspa.bancopopolare"/>
+        <package android:name="com.marcus.android"/>
+        <package android:name="com.marcus.android.uk"/>
+        <package android:name="com.mashreq.NeoApp"/>
+        <package android:name="com.mercadolibre"/>
+        <package android:name="com.mercadopago.wallet"/>
+        <package android:name="com.microsoft.android.smsorganizer"/>
+        <package android:name="com.mtbank"/>
+        <package android:name="com.nequi.MobileApp"/>
+        <package android:name="com.nordea.mep.npay"/>
+        <package android:name="com.nu.production"/>
+        <package android:name="com.opentecheng.android.webank"/>
+        <package android:name="com.opentecheng.android.webank"/>
+        <package android:name="com.paypal.android.p2pmobile"/>
+        <package android:name="com.phonepe.app"/>
+        <package android:name="com.rappi.restaurants"/>
+        <package android:name="com.rbs.mobile.android.natwest"/>
+        <package android:name="com.rbs.mobile.android.rbs"/>
+        <package android:name="com.remitly.androidapp"/>
+        <package android:name="com.revolut.revolut"/>
+        <package android:name="com.rewire.app"/>
+        <package android:name="com.ripley.banco.peru"/>
+        <package android:name="com.samsung.android.email.provider"/>
+        <package android:name="com.samsung.android.samsungpay.gear"/>
+        <package android:name="com.samsung.android.spay"/>
+        <package android:name="com.santander.app"/>
+        <package android:name="com.satispay.customer"/>
+        <package android:name="com.sbg.mobile.phone"/>
+        <package android:name="com.sc.equities"/>
+        <package android:name="com.sc.privatebank.pvm"/>
+        <package android:name="com.scb.breezebanking.hk"/>
+        <package android:name="com.scb.breezebanking.zm"/>
+        <package android:name="com.scotiabank.banking"/>
+        <package android:name="com.sinopac.DaCard"/>
+        <package android:name="com.sinopac.DaCard"/>
+        <package android:name="com.sionpac.app.SinoPac"/>
+        <package android:name="com.softteco.bsbank"/>
+        <package android:name="com.starlingbank.android"/>
+        <package android:name="com.taxis99"/>
+        <package android:name="com.transferwise.android"/>
+        <package android:name="com.ukrsibbank.client.android"/>
+        <package android:name="com.unicredit"/>
+        <package android:name="com.vipera.chebanca"/>
+        <package android:name="com.vipera.ts.starter.MashreqAE"/>
+        <package android:name="com.whatsapp"/>
+        <package android:name="com.willmobile.mobilebank.fcb"/>
+        <package android:name="com.ykb.android"/>
+        <package android:name="com.zen.application"/>
+        <package android:name="consumer.cbsa.smartapp"/>
+        <package android:name="de.dkb.portalapp"/>
+        <package android:name="de.dwins.financeguru"/>
+        <package android:name="de.number26.android"/>
+        <package android:name="es.bancosantander.apps"/>
+        <package android:name="eu.netinfo.colpatria.system"/>
+        <package android:name="fi.danskebank.mobilepay"/>
+        <package android:name="fi.nordea.mep.p2p"/>
+        <package android:name="fi.nordea.mobilebank"/>
+        <package android:name="fi.op.android.lompsa"/>
+        <package android:name="fi.op.android.opmobiili"/>
+        <package android:name="fi.spankki"/>
+        <package android:name="fr.creditagricole.androidapp"/>
+        <package android:name="fr.max.android"/>
+        <package android:name="hr.asseco.android.jimba.sberbankrs"/>
+        <package android:name="hr.asseco.android.jimba.tutunskamk.production"/>
+        <package android:name="hr.asseco.android.zaba.new"/>
+        <package android:name="hr.binom.ecc.mobile"/>
+        <package android:name="hu.netbank.netbankdroid"/>
+        <package android:name="hu.otpbank.mobile"/>
+        <package android:name="it.bancomat.pay.user"/>
+        <package android:name="it.hype.app"/>
+        <package android:name="it.icbpi.mobile"/>
+        <package android:name="it.ingdirect.app"/>
+        <package android:name="it.nexi.yap"/>
+        <package android:name="md.maib.maibank"/>
+        <package android:name="mx.com.hsbc.controltotal"/>
+        <package android:name="net.easypark.android"/>
+        <package android:name="om.nu.production"/>
+        <package android:name="om.todo1.mobile"/>
+        <package android:name="org.ping.sberbank.elba.mobile"/>
+        <package android:name="org.toshi"/>
+        <package android:name="pe.com.interbank.mobilebanking"/>
+        <package android:name="pe.com.scotiabank.blpm.android.client"/>
+        <package android:name="pl.mbank"/>
+        <package android:name="ro.ing.mobile.banking.android.activity"/>
+        <package android:name="ru.abr"/>
+        <package android:name="ru.nspk.mirpay"/>
+        <package android:name="ru.sberbankmobile"/>
+        <package android:name="ru.vtb24.mobilebanking.android"/>
+        <package android:name="tw.com.hncb.sny"/>
+        <package android:name="ua.alfabank.mobile.android"/>
+        <package android:name="ua.aval.dbo.client.android"/>
+        <package android:name="ua.com.abank"/>
+        <package android:name="ua.izibank.app"/>
+        <package android:name="ua.oschadbank.online"/>
+        <package android:name="ua.privatbank.ap24"/>
+        <package android:name="uk.co.hsbc.hsbcukmobilebanking"/>
+        <package android:name="za.co.fnb.connect.itt"/>
+        <package android:name="za.co.nedbank"/>
     </queries>
 </manifest>

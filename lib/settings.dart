@@ -1,6 +1,31 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+class NotificationAppSettings {
+  NotificationAppSettings(
+    this.appName, {
+    this.defaultAccountName,
+    this.defaultAccountId,
+  });
+
+  final String appName;
+  final String? defaultAccountName;
+  final String? defaultAccountId;
+
+  NotificationAppSettings.fromJson(Map<String, dynamic> json)
+      : appName = json['appName'],
+        defaultAccountName = json['defaultAccountName'],
+        defaultAccountId = json['defaultAccountId'];
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'appName': appName,
+        'defaultAccountName': defaultAccountName,
+        'defaultAccountId': defaultAccountId,
+      };
+}
 
 class SettingsProvider with ChangeNotifier {
   static const String settingTheme = "THEME";
@@ -100,7 +125,21 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void notificationAddApp(String packageName) async {
+  Future<List<String>> notificationKnownApps({bool filterUsed = false}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String> apps =
+        prefs.getStringList(settingNLKnownApps) ?? <String>[];
+    if (filterUsed) {
+      final List<String> knownApps = await notificationUsedApps();
+      return apps
+          .where((String element) => !knownApps.contains(element))
+          .toList();
+    }
+
+    return apps;
+  }
+
+  void notificationAddUsedApp(String packageName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final List<String> apps =
         prefs.getStringList(settingNLUsedApps) ?? <String>[];
@@ -116,7 +155,7 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void notificationRemoveApp(String packageName) async {
+  void notificationRemoveUsedApp(String packageName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final List<String> apps =
         prefs.getStringList(settingNLUsedApps) ?? <String>[];
@@ -127,18 +166,31 @@ class SettingsProvider with ChangeNotifier {
 
     apps.remove(packageName);
     prefs.setStringList(settingNLUsedApps, apps);
+    prefs.setString("$settingNLAppPrefix$packageName", "");
 
     debugPrint("notify SettingsProvider->notificationRemoveApp()");
     notifyListeners();
   }
 
-  Future<List<String>> notificationKnownApps() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getStringList(settingNLKnownApps) ?? <String>[];
-  }
-
   Future<List<String>> notificationUsedApps() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getStringList(settingNLUsedApps) ?? <String>[];
+  }
+
+  Future<NotificationAppSettings> notificationGetAppSettings(
+    String packageName,
+  ) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return NotificationAppSettings.fromJson(
+      jsonDecode(prefs.getString("$settingNLAppPrefix$packageName") ?? ""),
+    );
+  }
+
+  void notificationSetAppSettings(
+    String packageName,
+    NotificationAppSettings settings,
+  ) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("$settingNLAppPrefix$packageName", jsonEncode(settings));
   }
 }

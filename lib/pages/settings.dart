@@ -330,11 +330,19 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
               ),
               isThreeLine: true,
               onTap: () async {
-                String? app = await showDialog<String>(
+                AppInfo? app = await showDialog<AppInfo>(
                   context: context,
                   builder: (BuildContext context) => const AppDialog(),
                 );
-                debugPrint("app: $app");
+                if (app == null || (app.packageName ?? "").isEmpty) {
+                  return;
+                }
+
+                setState(() {
+                  settings.notificationAddUsedApp(app.packageName!);
+                  settings.notificationSetAppSettings(
+                      app.packageName!, NotificationAppSettings(app.name!));
+                });
               },
             ),
             const Divider(),
@@ -348,14 +356,8 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       ...snapshot.data!.map(
-                        (String e) {
-                          return Card(
-                            clipBehavior: Clip.hardEdge,
-                            child: Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Text(e),
-                            ),
-                          );
+                        (String app) {
+                          return AppCard(app: app, update: setState);
                         },
                       ),
                     ],
@@ -375,6 +377,49 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
   }
 }
 
+class AppCard extends StatelessWidget {
+  const AppCard({
+    super.key,
+    required this.app,
+    required this.update,
+  });
+
+  final String app;
+  final Function update;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      clipBehavior: Clip.hardEdge,
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Text(app),
+            ),
+            SizedBox(
+              width: 48,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {
+                    Provider.of<SettingsProvider>(context, listen: false)
+                        .notificationRemoveUsedApp(app);
+                    update(() {});
+                  },
+                  tooltip: S.of(context).transactionSplitDelete,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class AppDialog extends StatelessWidget {
   const AppDialog({
     super.key,
@@ -387,8 +432,8 @@ class AppDialog extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       children: <Widget>[
         FutureBuilder<List<String>>(
-          future:
-              Provider.of<SettingsProvider>(context).notificationKnownApps(),
+          future: Provider.of<SettingsProvider>(context)
+              .notificationKnownApps(filterUsed: true),
           builder:
               (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
             if (snapshot.hasData) {
@@ -397,7 +442,17 @@ class AppDialog extends StatelessWidget {
                 child.add(AppDialogEntry(app: app));
                 child.add(const Divider());
               }
-              child.removeLast();
+
+              if (child.isEmpty) {
+                child.add(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Text(S.of(context).settingsNLAppAddEmpty),
+                  ),
+                );
+              } else {
+                child.removeLast();
+              }
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: child,
@@ -439,11 +494,10 @@ class AppDialogEntry extends StatelessWidget {
             title: Text(snapshot.data!.name!),
             subtitle: Text(app),
             onTap: () {
-              Navigator.pop(context, app);
+              Navigator.pop(context, snapshot.data);
             },
           );
         } else if (snapshot.hasError) {
-          debugPrint("error: ${snapshot.error}");
           return const SizedBox.shrink();
         } else {
           return const CircularProgressIndicator();

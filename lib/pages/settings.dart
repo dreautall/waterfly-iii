@@ -26,7 +26,7 @@ class SettingsPageState extends State<SettingsPage>
   Widget build(BuildContext context) {
     debugPrint("settings build()");
 
-    final SettingsProvider settings = Provider.of<SettingsProvider>(context);
+    final SettingsProvider settings = context.read<SettingsProvider>();
 
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -156,7 +156,7 @@ class ThemeDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SettingsProvider settings = Provider.of<SettingsProvider>(context);
+    final SettingsProvider settings = context.read<SettingsProvider>();
     return SimpleDialog(
       title: Text(S.of(context).settingsDialogThemeTitle),
       children: <Widget>[
@@ -203,7 +203,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
 
   @override
   Widget build(BuildContext context) {
-    final SettingsProvider settings = Provider.of<SettingsProvider>(context);
+    final SettingsProvider settings = context.read<SettingsProvider>();
 
     return Scaffold(
       appBar: AppBar(
@@ -434,7 +434,8 @@ class _AppCardState extends State<AppCard> {
           children: <Widget>[
             Expanded(
               child: FutureBuilder<NotificationAppSettings>(
-                future: Provider.of<SettingsProvider>(context, listen: false)
+                future: context
+                    .read<SettingsProvider>()
                     .notificationGetAppSettings(widget.app),
                 builder: (BuildContext context,
                     AsyncSnapshot<NotificationAppSettings> snapshot) {
@@ -500,8 +501,8 @@ class _AppCardState extends State<AppCard> {
                                   } else {
                                     settings.defaultAccountId = account!.id;
                                   }
-                                  Provider.of<SettingsProvider>(context,
-                                          listen: false)
+                                  context
+                                      .read<SettingsProvider>()
                                       .notificationSetAppSettings(
                                           widget.app, settings);
                                 },
@@ -530,7 +531,8 @@ class _AppCardState extends State<AppCard> {
                 child: IconButton(
                   icon: const Icon(Icons.delete),
                   onPressed: () {
-                    Provider.of<SettingsProvider>(context, listen: false)
+                    context
+                        .read<SettingsProvider>()
                         .notificationRemoveUsedApp(widget.app);
                     widget.update(() {});
                   },
@@ -557,7 +559,8 @@ class AppDialog extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       children: <Widget>[
         FutureBuilder<List<String>>(
-          future: Provider.of<SettingsProvider>(context)
+          future: context
+              .read<SettingsProvider>()
               .notificationKnownApps(filterUsed: true),
           builder:
               (BuildContext context, AsyncSnapshot<List<String>> snapshot) {

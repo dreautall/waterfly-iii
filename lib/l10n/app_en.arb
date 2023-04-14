@@ -399,6 +399,14 @@
   "@settingsLanguage": {
     "description": "Currently selected language"
   },
+  "settingsNLAppAccount": "Default Account",
+  "@settingsNLAppAccount": {
+    "description": "Default account which will be used for the transaction."
+  },
+  "settingsNLAppAccountDynamic": "<Dynamic>",
+  "@settingsNLAppAccountDynamic": {
+    "description": "Account will be selected dynamically by the content of the notification."
+  },
   "settingsNLAppAdd": "Add App",
   "@settingsNLAppAdd": {
     "description": "Button title to add a new app."
@@ -411,7 +419,7 @@
   "@settingsNLAppAddHelp": {
     "description": "Help text below adding the new app button."
   },
-  "settingsNLDescription": "This service allows you to fetch transaction details from incoming push notifications.",
+  "settingsNLDescription": "This service allows you to fetch transaction details from incoming push notifications. Additionally, you can select a default account which the transaction should be assigned to - if no value is set, it tries to extract an account from the notification.",
   "@settingsNLDescription": {
     "description": "Description text for the notification listener service."
   },

@@ -66,7 +66,7 @@ void nlCallback() async {
   debugPrint("nlCallback()");
   NotificationServicePlugin.instance
       .executeNotificationListener((NotificationEvent? evt) async {
-    debugPrint("got event $evt");
+    //debugPrint("got event $evt");
 
     if (evt?.packageName?.startsWith("com.dreautall.waterflyiii") ?? false) {
       return;
@@ -84,6 +84,11 @@ void nlCallback() async {
     }
 
     SettingsProvider().notificationAddKnownApp(evt?.packageName ?? "");
+
+    if (!(await SettingsProvider().notificationUsedApps())
+        .contains(evt?.packageName ?? "")) {
+      debugPrint("nlCallback(): app not used");
+    }
 
     FlutterLocalNotificationsPlugin().show(
       evt?.id ?? 1,

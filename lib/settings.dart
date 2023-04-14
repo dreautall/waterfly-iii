@@ -9,7 +9,7 @@ class SettingsProvider with ChangeNotifier {
   static const String settingThemeSystem = "SYSTEM";
   static const String settingLocale = "LOCALE";
   static const String settingNLKnownApps = "NL_KNOWNAPPS";
-  static const String settingNLIgnoredApps = "NL_IGNOREDAPPS";
+  static const String settingNLUsedApps = "NL_USEDAPPS";
 
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get getTheme => _theme;
@@ -19,11 +19,6 @@ class SettingsProvider with ChangeNotifier {
 
   bool _loaded = false;
   bool get loaded => _loaded;
-
-  List<String> _notificationKnownApps = <String>[];
-  List<String> get notificationKnownApps => _notificationKnownApps;
-  List<String> _notificationIgnoredApps = <String>[];
-  List<String> get notificationIgnoredApps => _notificationIgnoredApps;
 
   Future<void> loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -50,11 +45,6 @@ class SettingsProvider with ChangeNotifier {
     if (S.supportedLocales.contains(locale)) {
       _locale = locale;
     }
-
-    _notificationIgnoredApps =
-        prefs.getStringList(settingNLIgnoredApps) ?? <String>[];
-    _notificationKnownApps =
-        prefs.getStringList(settingNLKnownApps) ?? <String>[];
 
     _loaded = true;
     debugPrint("notify SettingsProvider->loadSettings()");
@@ -94,42 +84,62 @@ class SettingsProvider with ChangeNotifier {
   }
 
   void notificationAddKnownApp(String packageName) async {
-    if (packageName.isEmpty || _notificationKnownApps.contains(packageName)) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String> apps =
+        prefs.getStringList(settingNLKnownApps) ?? <String>[];
+
+    if (packageName.isEmpty || apps.contains(packageName)) {
       return;
     }
 
-    _notificationKnownApps.add(packageName);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList(settingNLKnownApps, _notificationKnownApps);
+    debugPrint("known apps: ${apps.join(",")}");
+
+    apps.add(packageName);
+    prefs.setStringList(settingNLKnownApps, apps);
 
     debugPrint("notify SettingsProvider->notificationAddKnownApp()");
     notifyListeners();
   }
 
-  void notificationAddIgnoredApp(String packageName) async {
-    if (packageName.isEmpty || _notificationIgnoredApps.contains(packageName)) {
+  void notificationAddApp(String packageName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String> apps =
+        prefs.getStringList(settingNLUsedApps) ?? <String>[];
+
+    if (packageName.isEmpty || apps.contains(packageName)) {
       return;
     }
 
-    _notificationIgnoredApps.add(packageName);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList(settingNLIgnoredApps, _notificationIgnoredApps);
+    apps.add(packageName);
+    prefs.setStringList(settingNLUsedApps, apps);
 
-    debugPrint("notify SettingsProvider->notificationAddIgnoredApp()");
+    debugPrint("notify SettingsProvider->notificationAddApp()");
     notifyListeners();
   }
 
-  void notificationRemoveIgnoredApp(String packageName) async {
-    if (packageName.isEmpty ||
-        !_notificationIgnoredApps.contains(packageName)) {
+  void notificationRemoveApp(String packageName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String> apps =
+        prefs.getStringList(settingNLUsedApps) ?? <String>[];
+
+    if (packageName.isEmpty || !apps.contains(packageName)) {
       return;
     }
 
-    _notificationIgnoredApps.remove(packageName);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList(settingNLIgnoredApps, _notificationIgnoredApps);
+    apps.remove(packageName);
+    prefs.setStringList(settingNLUsedApps, apps);
 
-    debugPrint("notify SettingsProvider->notificationRemoveIgnoredApp()");
+    debugPrint("notify SettingsProvider->notificationRemoveApp()");
     notifyListeners();
+  }
+
+  Future<List<String>> notificationKnownApps() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList(settingNLKnownApps) ?? <String>[];
+  }
+
+  Future<List<String>> notificationUsedApps() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList(settingNLUsedApps) ?? <String>[];
   }
 }

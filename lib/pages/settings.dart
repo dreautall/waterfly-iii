@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:installed_apps/app_info.dart';
@@ -7,6 +8,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';
 import 'package:installed_apps/installed_apps.dart';
 
+import 'package:waterflyiii/auth.dart';
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/notificationlistener.dart';
 
@@ -27,6 +30,7 @@ class SettingsPageState extends State<SettingsPage>
 
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: 24),
+      primary: false,
       children: <Widget>[
         ListTile(
           title: Text(S.of(context).settingsLanguage),
@@ -207,6 +211,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24),
+        primary: false,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -377,7 +382,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
   }
 }
 
-class AppCard extends StatelessWidget {
+class AppCard extends StatefulWidget {
   const AppCard({
     super.key,
     required this.app,
@@ -388,6 +393,38 @@ class AppCard extends StatelessWidget {
   final Function update;
 
   @override
+  State<AppCard> createState() => _AppCardState();
+}
+
+class _AppCardState extends State<AppCard> {
+  final TextEditingController accountTextController = TextEditingController();
+  final FocusNode accountFocusNode = FocusNode();
+
+  String? appAccountId;
+
+  Future<AccountArray> _getData(BuildContext context) async {
+    final FireflyIii api = context.read<FireflyService>().api;
+
+    // Accounts
+    final Response<AccountArray> respAccounts =
+        await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
+    if (!respAccounts.isSuccessful || respAccounts.body == null) {
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(respAccounts.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${respAccounts.error}",
+        );
+      }
+    }
+    return respAccounts.body!;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.hardEdge,
@@ -396,7 +433,95 @@ class AppCard extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Expanded(
-              child: Text(app),
+              child: FutureBuilder<NotificationAppSettings>(
+                future: Provider.of<SettingsProvider>(context, listen: false)
+                    .notificationGetAppSettings(widget.app),
+                builder: (BuildContext context,
+                    AsyncSnapshot<NotificationAppSettings> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          snapshot.data!.appName,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 16),
+                        FutureBuilder<AccountArray>(
+                          future: _getData(context),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<AccountArray> accSnapshot) {
+                            if (accSnapshot.connectionState ==
+                                    ConnectionState.done &&
+                                accSnapshot.hasData) {
+                              List<DropdownMenuEntry<AccountRead>>
+                                  accountOptions =
+                                  <DropdownMenuEntry<AccountRead>>[
+                                DropdownMenuEntry<AccountRead>(
+                                  value: AccountRead(
+                                    id: "0",
+                                    type: "dummy",
+                                    attributes: Account(
+                                      name: S
+                                          .of(context)
+                                          .settingsNLAppAccountDynamic,
+                                      type: ShortAccountTypeProperty
+                                          .swaggerGeneratedUnknown,
+                                    ),
+                                  ),
+                                  label:
+                                      S.of(context).settingsNLAppAccountDynamic,
+                                )
+                              ];
+                              AccountRead? currentAccount =
+                                  accountOptions.first.value;
+                              for (AccountRead e in accSnapshot.data!.data) {
+                                accountOptions
+                                    .add(DropdownMenuEntry<AccountRead>(
+                                  value: e,
+                                  label: e.attributes.name,
+                                ));
+                                if (snapshot.data!.defaultAccountId == e.id) {
+                                  currentAccount = e;
+                                }
+                              }
+
+                              return DropdownMenu<AccountRead>(
+                                initialSelection: currentAccount,
+                                leadingIcon: const Icon(Icons.account_balance),
+                                label: Text(S.of(context).settingsNLAppAccount),
+                                dropdownMenuEntries: accountOptions,
+                                onSelected: (AccountRead? account) async {
+                                  final NotificationAppSettings settings =
+                                      snapshot.data!;
+                                  if ((account?.id ?? "0") == "0") {
+                                    settings.defaultAccountId = null;
+                                  } else {
+                                    settings.defaultAccountId = account!.id;
+                                  }
+                                  Provider.of<SettingsProvider>(context,
+                                          listen: false)
+                                      .notificationSetAppSettings(
+                                          widget.app, settings);
+                                },
+                              );
+                            } else if (accSnapshot.hasError) {
+                              return const SizedBox.shrink();
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
+                          },
+                        ),
+                      ],
+                    );
+                  } else if (snapshot.hasError) {
+                    return const SizedBox.shrink();
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
+              ),
             ),
             SizedBox(
               width: 48,
@@ -406,8 +531,8 @@ class AppCard extends StatelessWidget {
                   icon: const Icon(Icons.delete),
                   onPressed: () {
                     Provider.of<SettingsProvider>(context, listen: false)
-                        .notificationRemoveUsedApp(app);
-                    update(() {});
+                        .notificationRemoveUsedApp(widget.app);
+                    widget.update(() {});
                   },
                   tooltip: S.of(context).transactionSplitDelete,
                 ),

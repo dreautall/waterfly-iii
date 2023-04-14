@@ -7,22 +7,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 class NotificationAppSettings {
   NotificationAppSettings(
     this.appName, {
-    this.defaultAccountName,
     this.defaultAccountId,
   });
 
   final String appName;
-  final String? defaultAccountName;
-  final String? defaultAccountId;
+  String? defaultAccountId;
 
   NotificationAppSettings.fromJson(Map<String, dynamic> json)
       : appName = json['appName'],
-        defaultAccountName = json['defaultAccountName'],
         defaultAccountId = json['defaultAccountId'];
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'appName': appName,
-        'defaultAccountName': defaultAccountName,
         'defaultAccountId': defaultAccountId,
       };
 }

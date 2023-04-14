@@ -76,21 +76,20 @@ class SettingsPageState extends State<SettingsPage>
             late String subtitle;
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData) {
-              if (!snapshot.data!.servicePermission) {
-                subtitle = l10n.settingsPermissionNotGranted;
-              } else if (!snapshot.data!.notificationPermission) {
-                subtitle = l10n.settingsPermissionNotGranted;
+              if (!snapshot.data!.servicePermission ||
+                  !snapshot.data!.notificationPermission) {
+                subtitle = l10n.settingsNLPermissionNotGranted;
               } else if (!snapshot.data!.serviceRunning) {
-                subtitle = l10n.settingsServiceStopped;
+                subtitle = l10n.settingsNLServiceStopped;
               } else {
-                subtitle = l10n.settingsServiceRunning;
+                subtitle = l10n.settingsNLServiceRunning;
               }
             } else if (snapshot.hasError) {
               subtitle = S
                   .of(context)
-                  .settingsServiceCheckingError(snapshot.error.toString());
+                  .settingsNLServiceCheckingError(snapshot.error.toString());
             } else {
-              subtitle = S.of(context).settingsServiceChecking;
+              subtitle = S.of(context).settingsNLServiceChecking;
             }
             return OpenContainer(
               openBuilder: (BuildContext context, Function closedContainer) =>
@@ -207,8 +206,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Text(
-                "This service allows you to fetch transaction details from incoming push notifications."),
+            child: Text(S.of(context).settingsNLDescription),
           ),
           const Divider(),
           FutureBuilder<NotificationListenerStatus>(
@@ -223,7 +221,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
               if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.hasData) {
                 if (!snapshot.data!.servicePermission) {
-                  subtitle = l10n.settingsPermissionGrant;
+                  subtitle = l10n.settingsNLPermissionGrant;
                   clickFn = () async {
                     bool granted = await FlutterLocalNotificationsPlugin()
                             .resolvePlatformSpecificImplementation<
@@ -232,7 +230,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                         false;
                     if (!granted) {
                       msg.showSnackBar(SnackBar(
-                        content: Text(l10n.settingsPermissionNotGranted),
+                        content: Text(l10n.settingsNLPermissionNotGranted),
                         behavior: SnackBarBehavior.floating,
                       ));
                       return;
@@ -242,7 +240,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                     await nlInit();
                   };
                 } else if (!snapshot.data!.notificationPermission) {
-                  subtitle = l10n.settingsPermissionGrant;
+                  subtitle = l10n.settingsNLPermissionGrant;
                   clickFn = () async {
                     await FlutterLocalNotificationsPlugin()
                         .resolvePlatformSpecificImplementation<
@@ -250,18 +248,18 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                         .requestPermission();
                   };
                 } else if (!snapshot.data!.serviceRunning) {
-                  subtitle = l10n.settingsServiceStopped;
+                  subtitle = l10n.settingsNLServiceStopped;
                   clickFn = () async {
                     await NotificationServicePlugin.instance.startService();
                   };
                 } else {
-                  subtitle = l10n.settingsServiceRunning;
+                  subtitle = l10n.settingsNLServiceRunning;
                   clickFn = () async {
                     final bool? ok = await showDialog<bool>(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
                         icon: const Icon(Icons.remove_done),
-                        title: Text("Remove permission?"),
+                        title: Text(S.of(context).settingsNLPermissionRemove),
                         clipBehavior: Clip.hardEdge,
                         actions: <Widget>[
                           TextButton(
@@ -271,14 +269,14 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                             },
                           ),
                           FilledButton(
-                            child: Text("Remove"),
+                            child: Text(S.of(context).formButtonRemove),
                             onPressed: () {
                               Navigator.of(context).pop(true);
                             },
                           ),
                         ],
-                        content: Text(
-                            "To disable this service, click on the app and remove the permissions in the next screen."),
+                        content:
+                            Text(S.of(context).settingsNLPermissionRemoveHelp),
                       ),
                     );
                     if (!(ok ?? false)) {
@@ -291,9 +289,9 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
               } else if (snapshot.hasError) {
                 subtitle = S
                     .of(context)
-                    .settingsServiceCheckingError(snapshot.error.toString());
+                    .settingsNLServiceCheckingError(snapshot.error.toString());
               } else {
-                subtitle = S.of(context).settingsServiceChecking;
+                subtitle = S.of(context).settingsNLServiceChecking;
               }
               return ListTile(
                 title: const Text("Service Status"),
@@ -354,9 +352,9 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
               } else if (snapshot.hasError) {
                 return Text(S
                     .of(context)
-                    .settingsServiceCheckingError(snapshot.error.toString()));
+                    .settingsNLServiceCheckingError(snapshot.error.toString()));
               } else {
-                return Text(S.of(context).settingsServiceChecking);
+                return Text(S.of(context).settingsNLServiceChecking);
               }
             },
           ),

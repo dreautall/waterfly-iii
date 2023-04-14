@@ -72,6 +72,10 @@
   "@formButtonLogout": {
     "description": "Button Label: Logout"
   },
+  "formButtonRemove": "Remove",
+  "@formButtonRemove": {
+    "description": "Button Label: Remove"
+  },
   "formButtonResetLogin": "Reset login",
   "@formButtonResetLogin": {
     "description": "Button Label: Reset login form (when error is shown)"
@@ -395,24 +399,32 @@
   "@settingsLanguage": {
     "description": "Currently selected language"
   },
-  "settingsNotificationListener": "Notification Listener Service",
-  "@settingsNotificationListener": {
-    "description": "Setting for the notification listener service."
+  "settingsNLDescription": "This service allows you to fetch transaction details from incoming push notifications.",
+  "@settingsNLDescription": {
+    "description": "Description text for the notification listener service."
   },
-  "settingsPermissionGrant": "Tap to grant permission.",
-  "@settingsPermissionGrant": {
+  "settingsNLPermissionGrant": "Tap to grant permission.",
+  "@settingsNLPermissionGrant": {
     "description": "Indicates user should tap the text to grant certain permissions (notification access)."
   },
-  "settingsPermissionNotGranted": "Permission not granted.",
-  "@settingsPermissionNotGranted": {
+  "settingsNLPermissionNotGranted": "Permission not granted.",
+  "@settingsNLPermissionNotGranted": {
     "description": "A requested permission was not granted."
   },
-  "settingsServiceChecking": "Checking status…",
-  "@settingsServiceChecking": {
+  "settingsNLPermissionRemove": "Remove permission?",
+  "@settingsNLPermissionRemove": {
+    "description": "Dialog title asking if permission should be removed."
+  },
+  "settingsNLPermissionRemoveHelp": "To disable this service, click on the app and remove the permissions in the next screen.",
+  "@settingsNLPermissionRemoveHelp": {
+    "description": "Dialog text giving hint how to remove the permission."
+  },
+  "settingsNLServiceChecking": "Checking status…",
+  "@settingsNLServiceChecking": {
     "description": "Checking the status of the background service"
   },
-  "settingsServiceCheckingError": "Error checking status: {error}",
-  "@settingsServiceCheckingError": {
+  "settingsNLServiceCheckingError": "Error checking status: {error}",
+  "@settingsNLServiceCheckingError": {
     "description": "An error occured while checking the service status",
     "placeholders": {
       "error": {
@@ -422,13 +434,17 @@
       }
     }
   },
-  "settingsServiceRunning": "Service is running.",
-  "@settingsServiceRunning": {
+  "settingsNLServiceRunning": "Service is running.",
+  "@settingsNLServiceRunning": {
     "description": "A background service is running normally."
   },
-  "settingsServiceStopped": "Service is stopped.",
-  "@settingsServiceStopped": {
+  "settingsNLServiceStopped": "Service is stopped.",
+  "@settingsNLServiceStopped": {
     "description": "A background service is stopped."
+  },
+  "settingsNotificationListener": "Notification Listener Service",
+  "@settingsNotificationListener": {
+    "description": "Setting for the notification listener service."
   },
   "settingsTheme": "App Theme",
   "@settingsTheme": {

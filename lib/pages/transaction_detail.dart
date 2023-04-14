@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:mime/mime.dart' show lookupMimeType;
 import 'package:collection/collection.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -2641,8 +2642,10 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                 headers: user.headers(),
                 baseDirectory: BaseDirectory.temporary,
                 post: 'binary',
+                mimeType: "application/octet-stream",
               );
-              final TaskStatus result = await FileDownloader().upload(
+              debugPrint("AttachmentUpload: Starting Upload");
+              await FileDownloader().upload(
                 task,
                 onProgress: (double progress) {
                   debugPrint("Upload progress: $progress");
@@ -2650,31 +2653,31 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                     _dlProgress[newAttachmentIndex] = progress * -1;
                   });
                 },
+                onStatus: (TaskStatus result) async {
+                  debugPrint("AttachmentUpload: status update");
+                  _dlProgress.remove(newAttachmentIndex);
+                  if (result != TaskStatus.complete) {
+                    late String error;
+                    debugPrint(result.toString());
+                    try {
+                      ValidationError valError = ValidationError.fromJson(
+                          json.decode(respAttachment.error.toString()));
+                      error = error = valError.message ?? l10n.errorUnknown;
+                    } catch (_) {
+                      error = l10n.errorUnknown;
+                    }
+                    debugPrint("error: $error");
+                    msg.showSnackBar(SnackBar(
+                      content: Text(
+                          l10n.transactionDialogAttachmentsErrorUpload(error)),
+                      behavior: SnackBarBehavior.floating,
+                    ));
+                    widget.attachments.removeAt(newAttachmentIndex);
+                    await api.v1AttachmentsIdDelete(id: newAttachment.id);
+                  }
+                },
               );
-
-              _dlProgress.remove(newAttachmentIndex);
-
-              if (result != TaskStatus.complete) {
-                late String error;
-                debugPrint(result.toString());
-                try {
-                  ValidationError valError = ValidationError.fromJson(
-                      json.decode(respAttachment.error.toString()));
-                  error = error = valError.message ?? l10n.errorUnknown;
-                } catch (_) {
-                  error = l10n.errorUnknown;
-                }
-                debugPrint("error: $error");
-                msg.showSnackBar(SnackBar(
-                  content:
-                      Text(l10n.transactionDialogAttachmentsErrorUpload(error)),
-                  behavior: SnackBarBehavior.floating,
-                ));
-                widget.attachments.removeAt(newAttachmentIndex);
-                await api.v1AttachmentsIdDelete(id: newAttachment.id);
-
-                return;
-              }
+              debugPrint("AttachmentUpload: Done with Upload");
             },
             child: Text(S.of(context).formButtonUpload),
           ),

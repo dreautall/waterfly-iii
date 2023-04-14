@@ -403,6 +403,10 @@
   "@settingsNLAppAdd": {
     "description": "Button title to add a new app."
   },
+  "settingsNLAppAddEmpty": "No more possible apps available. Make some transactions where you receive phone notifications to add apps to this list. If the app still doesn't show up, please report it to app@vogt.pw.",
+  "@settingsNLAppAddEmpty": {
+    "description": "Help text when no more app is available to add."
+  },
   "settingsNLAppAddHelp": "Click to add an app to listen to. Only eglible apps will show up in the list.",
   "@settingsNLAppAddHelp": {
     "description": "Help text below adding the new app button."

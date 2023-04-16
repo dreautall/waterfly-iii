@@ -343,11 +343,12 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                   return;
                 }
 
-                setState(() {
-                  settings.notificationAddUsedApp(app.packageName);
-                  settings.notificationSetAppSettings(
-                      app.packageName, NotificationAppSettings(app.appName));
-                });
+                await settings.notificationAddUsedApp(app.packageName);
+                await settings.notificationSetAppSettings(
+                  app.packageName,
+                  NotificationAppSettings(app.appName),
+                );
+                setState(() {});
               },
             ),
             const Divider(),
@@ -566,17 +567,14 @@ class AppDialog extends StatelessWidget {
               (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
             if (snapshot.hasData) {
               List<Widget> child = <Widget>[];
+              child.add(
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Text(S.of(context).settingsNLAppAddInfo),
+                ),
+              );
               for (String app in snapshot.data!) {
                 child.add(AppDialogEntry(app: app));
-              }
-
-              if (child.isEmpty) {
-                child.add(
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Text(S.of(context).settingsNLAppAddEmpty),
-                  ),
-                );
               }
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

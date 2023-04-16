@@ -411,13 +411,13 @@
   "@settingsNLAppAdd": {
     "description": "Button title to add a new app."
   },
-  "settingsNLAppAddEmpty": "No more possible apps available. Make some transactions where you receive phone notifications to add apps to this list. If the app still doesn't show up, please report it to app@vogt.pw.",
-  "@settingsNLAppAddEmpty": {
-    "description": "Help text when no more app is available to add."
-  },
   "settingsNLAppAddHelp": "Click to add an app to listen to. Only eglible apps will show up in the list.",
   "@settingsNLAppAddHelp": {
     "description": "Help text below adding the new app button."
+  },
+  "settingsNLAppAddInfo": "Make some transactions where you receive phone notifications to add apps to this list. If the app still doesn't show up, please report it to app@vogt.pw.",
+  "@settingsNLAppAddInfo": {
+    "description": "Help text when no more app is available to add."
   },
   "settingsNLDescription": "This service allows you to fetch transaction details from incoming push notifications. Additionally, you can select a default account which the transaction should be assigned to - if no value is set, it tries to extract an account from the notification.",
   "@settingsNLDescription": {

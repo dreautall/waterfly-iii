@@ -5,8 +5,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/animations.dart';
-import 'package:waterflyiii/widgets/logo.dart';
 import 'package:waterflyiii/auth.dart';
+import 'package:waterflyiii/widgets/logo.dart';
 
 enum SplashState {
   login,

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/pages/splash.dart';
-import 'package:waterflyiii/widgets/logo.dart';
 import 'package:waterflyiii/widgets/erroricon.dart';
+import 'package:waterflyiii/widgets/logo.dart';
 
 class UriScheme {
   static const String https = "https://";

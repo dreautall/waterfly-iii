@@ -42,6 +42,9 @@ class SettingsProvider with ChangeNotifier {
   bool _loaded = false;
   bool get loaded => _loaded;
 
+  List<String> _notificationApps = <String>[];
+  List<String> get notificationApps => _notificationApps;
+
   Future<void> loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     debugPrint("reading prefs!");
@@ -67,6 +70,8 @@ class SettingsProvider with ChangeNotifier {
     if (S.supportedLocales.contains(locale)) {
       _locale = locale;
     }
+
+    _notificationApps = prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
     _loaded = true;
     debugPrint("notify SettingsProvider->loadSettings()");
@@ -143,7 +148,13 @@ class SettingsProvider with ChangeNotifier {
     }
 
     apps.add(packageName);
-    return prefs.setStringList(settingNLUsedApps, apps);
+    await prefs.setStringList(settingNLUsedApps, apps);
+
+    _notificationApps = apps;
+
+    debugPrint("notify SettingsProvider->notificationAddUsedApp()");
+    notifyListeners();
+    return true;
   }
 
   Future<bool> notificationRemoveUsedApp(String packageName) async {
@@ -157,7 +168,14 @@ class SettingsProvider with ChangeNotifier {
 
     apps.remove(packageName);
     await prefs.remove("$settingNLAppPrefix$packageName");
-    return prefs.setStringList(settingNLUsedApps, apps);
+    await prefs.setStringList(settingNLUsedApps, apps);
+
+    _notificationApps = apps;
+
+    debugPrint("notify SettingsProvider->notificationRemoveUsedApp()");
+
+    notifyListeners();
+    return true;
   }
 
   Future<List<String>> notificationUsedApps({bool forceReload = false}) async {
@@ -165,7 +183,14 @@ class SettingsProvider with ChangeNotifier {
     if (forceReload) {
       await prefs.reload();
     }
-    return prefs.getStringList(settingNLUsedApps) ?? <String>[];
+    final List<String> apps =
+        prefs.getStringList(settingNLUsedApps) ?? <String>[];
+    _notificationApps = apps;
+
+    debugPrint("notify SettingsProvider->notificationUsedApps()");
+    notifyListeners();
+
+    return _notificationApps;
   }
 
   Future<NotificationAppSettings> notificationGetAppSettings(

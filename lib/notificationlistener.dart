@@ -85,9 +85,10 @@ void nlCallback() async {
 
     SettingsProvider().notificationAddKnownApp(evt?.packageName ?? "");
 
-    if (!(await SettingsProvider().notificationUsedApps())
+    if (!(await SettingsProvider().notificationUsedApps(forceReload: true))
         .contains(evt?.packageName ?? "")) {
       debugPrint("nlCallback(): app not used");
+      return;
     }
 
     FlutterLocalNotificationsPlugin().show(

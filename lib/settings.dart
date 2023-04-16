@@ -73,52 +73,49 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setTheme(ThemeMode theme) async {
+  Future<void> setTheme(ThemeMode theme) async {
     _theme = theme;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     switch (theme) {
       case ThemeMode.dark:
-        prefs.setString(settingTheme, settingThemeDark);
+        await prefs.setString(settingTheme, settingThemeDark);
         break;
       case ThemeMode.light:
-        prefs.setString(settingTheme, settingThemeLight);
+        await prefs.setString(settingTheme, settingThemeLight);
         break;
       case ThemeMode.system:
       default:
-        prefs.setString(settingTheme, settingThemeSystem);
+        await prefs.setString(settingTheme, settingThemeSystem);
     }
 
     debugPrint("notify SettingsProvider->setTheme()");
     notifyListeners();
   }
 
-  void setLocale(Locale locale) async {
+  Future<void> setLocale(Locale locale) async {
     if (!S.supportedLocales.contains(locale)) {
       return;
     }
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _locale = locale;
-    prefs.setString(settingLocale, locale.languageCode);
+    await prefs.setString(settingLocale, locale.languageCode);
 
     debugPrint("notify SettingsProvider->setLocale()");
     notifyListeners();
   }
 
-  void notificationAddKnownApp(String packageName) async {
+  Future<bool> notificationAddKnownApp(String packageName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final List<String> apps =
         prefs.getStringList(settingNLKnownApps) ?? <String>[];
 
     if (packageName.isEmpty || apps.contains(packageName)) {
-      return;
+      return false;
     }
 
     apps.add(packageName);
-    prefs.setStringList(settingNLKnownApps, apps);
-
-    debugPrint("notify SettingsProvider->notificationAddKnownApp()");
-    notifyListeners();
+    return prefs.setStringList(settingNLKnownApps, apps);
   }
 
   Future<List<String>> notificationKnownApps({bool filterUsed = false}) async {
@@ -135,41 +132,39 @@ class SettingsProvider with ChangeNotifier {
     return apps;
   }
 
-  void notificationAddUsedApp(String packageName) async {
+  Future<bool> notificationAddUsedApp(String packageName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.reload();
     final List<String> apps =
         prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
     if (packageName.isEmpty || apps.contains(packageName)) {
-      return;
+      return false;
     }
 
     apps.add(packageName);
-    prefs.setStringList(settingNLUsedApps, apps);
-
-    debugPrint("notify SettingsProvider->notificationAddApp()");
-    notifyListeners();
+    return prefs.setStringList(settingNLUsedApps, apps);
   }
 
-  void notificationRemoveUsedApp(String packageName) async {
+  Future<bool> notificationRemoveUsedApp(String packageName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final List<String> apps =
         prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
     if (packageName.isEmpty || !apps.contains(packageName)) {
-      return;
+      return false;
     }
 
     apps.remove(packageName);
-    prefs.setStringList(settingNLUsedApps, apps);
-    prefs.setString("$settingNLAppPrefix$packageName", "");
-
-    debugPrint("notify SettingsProvider->notificationRemoveApp()");
-    notifyListeners();
+    await prefs.remove("$settingNLAppPrefix$packageName");
+    return prefs.setStringList(settingNLUsedApps, apps);
   }
 
-  Future<List<String>> notificationUsedApps() async {
+  Future<List<String>> notificationUsedApps({bool forceReload = false}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (forceReload) {
+      await prefs.reload();
+    }
     return prefs.getStringList(settingNLUsedApps) ?? <String>[];
   }
 
@@ -177,16 +172,21 @@ class SettingsProvider with ChangeNotifier {
     String packageName,
   ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return NotificationAppSettings.fromJson(
-      jsonDecode(prefs.getString("$settingNLAppPrefix$packageName") ?? ""),
-    );
+    final String json =
+        prefs.getString("$settingNLAppPrefix$packageName") ?? "";
+    try {
+      return NotificationAppSettings.fromJson(jsonDecode(json));
+    } on FormatException catch (_) {
+      return NotificationAppSettings(packageName);
+    }
   }
 
-  void notificationSetAppSettings(
+  Future<void> notificationSetAppSettings(
     String packageName,
     NotificationAppSettings settings,
   ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("$settingNLAppPrefix$packageName", jsonEncode(settings));
+    await prefs.setString(
+        "$settingNLAppPrefix$packageName", jsonEncode(settings));
   }
 }

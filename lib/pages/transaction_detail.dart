@@ -1,30 +1,30 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-import 'package:collection/collection.dart';
-import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:provider/provider.dart';
+
+import 'package:background_downloader/background_downloader.dart';
+import 'package:badges/badges.dart' as badges;
+import 'package:chopper/chopper.dart' show Response;
+import 'package:file_picker/file_picker.dart';
+import 'package:filesize/filesize.dart';
+import 'package:open_filex/open_filex.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
-
-import 'package:chopper/chopper.dart' show Response;
-import 'package:badges/badges.dart' as badges;
-import 'package:filesize/filesize.dart';
-import 'package:background_downloader/background_downloader.dart';
-import 'package:open_filex/open_filex.dart';
-import 'package:file_picker/file_picker.dart';
 
 class TransactionPage extends StatefulWidget {
   const TransactionPage({

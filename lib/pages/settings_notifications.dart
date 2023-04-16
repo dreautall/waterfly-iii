@@ -1,9 +1,8 @@
-import 'package:chopper/chopper.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'package:chopper/chopper.dart' show Response;
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';

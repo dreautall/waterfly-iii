@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-import 'package:waterflyiii/pages/navigation.dart';
-import 'package:waterflyiii/pages/home_main.dart';
-import 'package:waterflyiii/pages/home_transactions.dart';
 import 'package:waterflyiii/pages/home_balance.dart';
+import 'package:waterflyiii/pages/home_main.dart';
 import 'package:waterflyiii/pages/home_piggybank.dart';
+import 'package:waterflyiii/pages/home_transactions.dart';
+import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/transaction_detail.dart';
 
 class HomePage extends StatefulWidget {

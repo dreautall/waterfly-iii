@@ -1,15 +1,16 @@
 import 'dart:ui';
 
-import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import 'package:chopper/chopper.dart' show Response;
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/pages/home_transactions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/home_transactions.dart';
 
 class HomeBalance extends StatefulWidget {
   const HomeBalance({

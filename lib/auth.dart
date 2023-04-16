@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:chopper/chopper.dart'
     show Request, Response, StripStringExtension;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
@@ -177,6 +178,8 @@ class FireflyService with ChangeNotifier {
     _signedIn = false;
     _storageSignInException = null;
     await storage.deleteAll();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
 
     debugPrint("notify FireflyService->signOut");
     notifyListeners();

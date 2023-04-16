@@ -203,8 +203,6 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
 
   @override
   Widget build(BuildContext context) {
-    final SettingsProvider settings = context.read<SettingsProvider>();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).settingsNotificationListener),
@@ -335,6 +333,8 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
               ),
               isThreeLine: true,
               onTap: () async {
+                final SettingsProvider settings =
+                    context.read<SettingsProvider>();
                 Application? app = await showDialog<Application>(
                   context: context,
                   builder: (BuildContext context) => const AppDialog(),
@@ -352,30 +352,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
               },
             ),
             const Divider(),
-            FutureBuilder<List<String>>(
-              future: settings.notificationUsedApps(),
-              builder:
-                  (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.done &&
-                    snapshot.hasData) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      ...snapshot.data!.map(
-                        (String app) {
-                          return AppCard(app: app, update: setState);
-                        },
-                      ),
-                    ],
-                  );
-                } else if (snapshot.hasError) {
-                  return Text(S.of(context).settingsNLServiceCheckingError(
-                      snapshot.error.toString()));
-                } else {
-                  return Text(S.of(context).settingsNLServiceChecking);
-                }
-              },
-            ),
+            const NotificationApps(),
           ],
         ],
       ),
@@ -383,27 +360,12 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
   }
 }
 
-class AppCard extends StatefulWidget {
-  const AppCard({
+class NotificationApps extends StatelessWidget {
+  const NotificationApps({
     super.key,
-    required this.app,
-    required this.update,
   });
 
-  final String app;
-  final Function update;
-
-  @override
-  State<AppCard> createState() => _AppCardState();
-}
-
-class _AppCardState extends State<AppCard> {
-  final TextEditingController accountTextController = TextEditingController();
-  final FocusNode accountFocusNode = FocusNode();
-
-  String? appAccountId;
-
-  Future<AccountArray> _getData(BuildContext context) async {
+  Future<AccountArray> _getAccounts(BuildContext context) async {
     final FireflyIii api = context.read<FireflyService>().api;
 
     // Accounts
@@ -427,6 +389,58 @@ class _AppCardState extends State<AppCard> {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder<AccountArray>(
+      future: _getAccounts(context),
+      builder: (BuildContext context, AsyncSnapshot<AccountArray> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.hasData) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              ...context.watch<SettingsProvider>().notificationApps.map(
+                (String app) {
+                  return AppCard(
+                    app: app,
+                    accounts: snapshot.data!,
+                  );
+                },
+              ),
+            ],
+          );
+        } else if (snapshot.hasError) {
+          return Text(S
+              .of(context)
+              .settingsNLServiceCheckingError(snapshot.error.toString()));
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+}
+
+class AppCard extends StatefulWidget {
+  const AppCard({
+    super.key,
+    required this.app,
+    required this.accounts,
+  });
+
+  final String app;
+  final AccountArray accounts;
+
+  @override
+  State<AppCard> createState() => _AppCardState();
+}
+
+class _AppCardState extends State<AppCard> {
+  final TextEditingController accountTextController = TextEditingController();
+  final FocusNode accountFocusNode = FocusNode();
+
+  String? appAccountId;
+
+  @override
+  Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.hardEdge,
       child: Padding(
@@ -442,6 +456,31 @@ class _AppCardState extends State<AppCard> {
                     AsyncSnapshot<NotificationAppSettings> snapshot) {
                   if (snapshot.connectionState == ConnectionState.done &&
                       snapshot.hasData) {
+                    List<DropdownMenuEntry<AccountRead>> accountOptions =
+                        <DropdownMenuEntry<AccountRead>>[
+                      DropdownMenuEntry<AccountRead>(
+                        value: AccountRead(
+                          id: "0",
+                          type: "dummy",
+                          attributes: Account(
+                            name: S.of(context).settingsNLAppAccountDynamic,
+                            type: ShortAccountTypeProperty
+                                .swaggerGeneratedUnknown,
+                          ),
+                        ),
+                        label: S.of(context).settingsNLAppAccountDynamic,
+                      )
+                    ];
+                    AccountRead? currentAccount = accountOptions.first.value;
+                    for (AccountRead e in widget.accounts.data) {
+                      accountOptions.add(DropdownMenuEntry<AccountRead>(
+                        value: e,
+                        label: e.attributes.name,
+                      ));
+                      if (snapshot.data!.defaultAccountId == e.id) {
+                        currentAccount = e;
+                      }
+                    }
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -450,69 +489,24 @@ class _AppCardState extends State<AppCard> {
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         const SizedBox(height: 16),
-                        FutureBuilder<AccountArray>(
-                          future: _getData(context),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<AccountArray> accSnapshot) {
-                            if (accSnapshot.connectionState ==
-                                    ConnectionState.done &&
-                                accSnapshot.hasData) {
-                              List<DropdownMenuEntry<AccountRead>>
-                                  accountOptions =
-                                  <DropdownMenuEntry<AccountRead>>[
-                                DropdownMenuEntry<AccountRead>(
-                                  value: AccountRead(
-                                    id: "0",
-                                    type: "dummy",
-                                    attributes: Account(
-                                      name: S
-                                          .of(context)
-                                          .settingsNLAppAccountDynamic,
-                                      type: ShortAccountTypeProperty
-                                          .swaggerGeneratedUnknown,
-                                    ),
-                                  ),
-                                  label:
-                                      S.of(context).settingsNLAppAccountDynamic,
-                                )
-                              ];
-                              AccountRead? currentAccount =
-                                  accountOptions.first.value;
-                              for (AccountRead e in accSnapshot.data!.data) {
-                                accountOptions
-                                    .add(DropdownMenuEntry<AccountRead>(
-                                  value: e,
-                                  label: e.attributes.name,
-                                ));
-                                if (snapshot.data!.defaultAccountId == e.id) {
-                                  currentAccount = e;
-                                }
-                              }
-
-                              return DropdownMenu<AccountRead>(
-                                initialSelection: currentAccount,
-                                leadingIcon: const Icon(Icons.account_balance),
-                                label: Text(S.of(context).settingsNLAppAccount),
-                                dropdownMenuEntries: accountOptions,
-                                onSelected: (AccountRead? account) async {
-                                  final NotificationAppSettings settings =
-                                      snapshot.data!;
-                                  if ((account?.id ?? "0") == "0") {
-                                    settings.defaultAccountId = null;
-                                  } else {
-                                    settings.defaultAccountId = account!.id;
-                                  }
-                                  context
-                                      .read<SettingsProvider>()
-                                      .notificationSetAppSettings(
-                                          widget.app, settings);
-                                },
-                              );
-                            } else if (accSnapshot.hasError) {
-                              return const SizedBox.shrink();
+                        DropdownMenu<AccountRead>(
+                          initialSelection: currentAccount,
+                          leadingIcon: const Icon(Icons.account_balance),
+                          label: Text(S.of(context).settingsNLAppAccount),
+                          dropdownMenuEntries: accountOptions,
+                          onSelected: (AccountRead? account) async {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            final NotificationAppSettings settings =
+                                snapshot.data!;
+                            if ((account?.id ?? "0") == "0") {
+                              settings.defaultAccountId = null;
                             } else {
-                              return const CircularProgressIndicator();
+                              settings.defaultAccountId = account!.id;
                             }
+                            await context
+                                .read<SettingsProvider>()
+                                .notificationSetAppSettings(
+                                    widget.app, settings);
                           },
                         ),
                       ],
@@ -535,7 +529,6 @@ class _AppCardState extends State<AppCard> {
                     context
                         .read<SettingsProvider>()
                         .notificationRemoveUsedApp(widget.app);
-                    widget.update(() {});
                   },
                   tooltip: S.of(context).transactionSplitDelete,
                 ),

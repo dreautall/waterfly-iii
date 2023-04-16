@@ -2650,40 +2650,46 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                 post: 'binary',
                 mimeType: "application/octet-stream",
               );
-              debugPrint("AttachmentUpload: Starting Upload");
-              await FileDownloader().upload(
+              debugPrint(
+                  "AttachmentUpload: Starting Upload $newAttachmentIndex");
+              final TaskStatus result = await FileDownloader().upload(
                 task,
                 onProgress: (double progress) {
-                  debugPrint("Upload progress: $progress");
+                  debugPrint(
+                      "AttachmentUpload $newAttachmentIndex: progress $progress");
                   setState(() {
                     _dlProgress[newAttachmentIndex] = progress * -1;
                   });
                 },
-                onStatus: (TaskStatus result) async {
-                  debugPrint("AttachmentUpload: status update");
-                  _dlProgress.remove(newAttachmentIndex);
-                  if (result != TaskStatus.complete) {
-                    late String error;
-                    debugPrint(result.toString());
-                    try {
-                      ValidationError valError = ValidationError.fromJson(
-                          json.decode(respAttachment.error.toString()));
-                      error = error = valError.message ?? l10n.errorUnknown;
-                    } catch (_) {
-                      error = l10n.errorUnknown;
-                    }
-                    debugPrint("error: $error");
-                    msg.showSnackBar(SnackBar(
-                      content: Text(
-                          l10n.transactionDialogAttachmentsErrorUpload(error)),
-                      behavior: SnackBarBehavior.floating,
-                    ));
-                    widget.attachments.removeAt(newAttachmentIndex);
-                    await api.v1AttachmentsIdDelete(id: newAttachment.id);
-                  }
-                },
               );
-              debugPrint("AttachmentUpload: Done with Upload");
+
+              debugPrint(
+                  "AttachmentUpload: Done with Upload $newAttachmentIndex, Result: $result");
+              setState(() {
+                _dlProgress.remove(newAttachmentIndex);
+              });
+
+              if (result != TaskStatus.complete) {
+                late String error;
+                debugPrint(result.toString());
+                try {
+                  ValidationError valError = ValidationError.fromJson(
+                      json.decode(respAttachment.error.toString()));
+                  error = error = valError.message ?? l10n.errorUnknown;
+                } catch (_) {
+                  error = l10n.errorUnknown;
+                }
+                debugPrint("error: $error");
+                msg.showSnackBar(SnackBar(
+                  content:
+                      Text(l10n.transactionDialogAttachmentsErrorUpload(error)),
+                  behavior: SnackBarBehavior.floating,
+                ));
+                await api.v1AttachmentsIdDelete(id: newAttachment.id);
+                setState(() {
+                  widget.attachments.removeAt(newAttachmentIndex);
+                });
+              }
             },
             child: Text(S.of(context).formButtonUpload),
           ),

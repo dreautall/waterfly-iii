@@ -28,7 +28,7 @@ dependencies:
   background_downloader: ^5.4.4
   community_charts_flutter: ^1.0.1
   open_filex: ^4.3.2
-  file_picker: ^5.2.7
+  file_picker: ^5.2.9
   animations: ^2.0.7
   flutter_local_notifications: ^13.0.0
   notifications_listener_service:

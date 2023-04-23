@@ -103,7 +103,8 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                         clipBehavior: Clip.hardEdge,
                         actions: <Widget>[
                           TextButton(
-                            child: Text(S.of(context).formButtonCancel),
+                            child: Text(MaterialLocalizations.of(context)
+                                .cancelButtonLabel),
                             onPressed: () {
                               Navigator.of(context).pop();
                             },

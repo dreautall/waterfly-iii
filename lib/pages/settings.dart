@@ -1,11 +1,11 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:notifications_listener_service/notifications_listener_service.dart';
 
-import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/notificationlistener.dart';
+import 'package:waterflyiii/pages/settings_notifications.dart';
+import 'package:waterflyiii/settings.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -20,10 +20,11 @@ class SettingsPageState extends State<SettingsPage>
   Widget build(BuildContext context) {
     debugPrint("settings build()");
 
-    final SettingsProvider settings = Provider.of<SettingsProvider>(context);
+    final SettingsProvider settings = context.read<SettingsProvider>();
 
     return ListView(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      primary: false,
       children: <Widget>[
         ListTile(
           title: Text(S.of(context).settingsLanguage),
@@ -70,96 +71,45 @@ class SettingsPageState extends State<SettingsPage>
           future: nlStatus(),
           builder: (BuildContext context,
               AsyncSnapshot<NotificationListenerStatus> snapshot) {
-            final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
             final S l10n = S.of(context);
 
             late String subtitle;
-            Function? clickFn;
-            bool permissionsGranted = false;
-            bool isRunning = false;
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData) {
-              if (!snapshot.data!.servicePermission) {
-                subtitle = l10n.settingsPermissionGrant;
-                clickFn = () async {
-                  bool granted = await FlutterLocalNotificationsPlugin()
-                          .resolvePlatformSpecificImplementation<
-                              AndroidFlutterLocalNotificationsPlugin>()!
-                          .requestPermission() ??
-                      false;
-                  if (!granted) {
-                    msg.showSnackBar(SnackBar(
-                      content: Text(l10n.settingsPermissionNotGranted),
-                      behavior: SnackBarBehavior.floating,
-                    ));
-                    return;
-                  }
-                  await NotificationServicePlugin.instance
-                      .requestPermissionsIfDenied();
-                  await nlInit();
-                };
-              } else if (!snapshot.data!.notificationPermission) {
-                subtitle = l10n.settingsPermissionGrant;
-                clickFn = FlutterLocalNotificationsPlugin()
-                    .resolvePlatformSpecificImplementation<
-                        AndroidFlutterLocalNotificationsPlugin>()!
-                    .requestPermission;
+              if (!snapshot.data!.servicePermission ||
+                  !snapshot.data!.notificationPermission) {
+                subtitle = l10n.settingsNLPermissionNotGranted;
               } else if (!snapshot.data!.serviceRunning) {
-                subtitle = l10n.settingsServiceStopped;
-                permissionsGranted = true;
+                subtitle = l10n.settingsNLServiceStopped;
               } else {
-                subtitle = l10n.settingsServiceRunning;
-                permissionsGranted = true;
-                isRunning = true;
+                subtitle = l10n.settingsNLServiceRunning;
               }
             } else if (snapshot.hasError) {
               subtitle = S
                   .of(context)
-                  .settingsServiceCheckingError(snapshot.error.toString());
+                  .settingsNLServiceCheckingError(snapshot.error.toString());
             } else {
-              subtitle = S.of(context).settingsServiceChecking;
+              subtitle = S.of(context).settingsNLServiceChecking;
             }
-            return ListTile(
-              title: Text(S.of(context).settingsNotificationListener),
-              subtitle: Text(
-                subtitle,
-                maxLines: 2,
-              ),
-              leading: const CircleAvatar(
-                child: Icon(Icons.notifications),
-              ),
-              onTap: clickFn != null
-                  ? () async {
-                      await clickFn!();
-                      setState(() {});
-                    }
-                  : null,
-              // :TODO: stopService not working currently
-              /*trailing: Switch(
-                thumbIcon: MaterialStateProperty.resolveWith<Icon?>(
-                  (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.selected)) {
-                      return const Icon(Icons.check);
-                    }
-                    return const Icon(Icons.close);
-                  },
+            return OpenContainer(
+              openBuilder: (BuildContext context, Function closedContainer) =>
+                  const SettingsNotifications(),
+              openColor: Theme.of(context).cardColor,
+              closedColor: Theme.of(context).cardColor,
+              closedElevation: 0,
+              closedBuilder: (BuildContext context, Function openContainer) =>
+                  ListTile(
+                title: Text(S.of(context).settingsNotificationListener),
+                subtitle: Text(
+                  subtitle,
+                  maxLines: 2,
                 ),
-                value: isRunning,
-                onChanged: permissionsGranted
-                    ? (bool value) async {
-                        if (value) {
-                          debugPrint("Starting Service");
-                          await NotificationServicePlugin.instance
-                              .startService();
-                        } else {
-                          debugPrint("Stopping Service");
-                          await NotificationServicePlugin.instance
-                              .stopService();
-                        }
-                        setState(() {});
-                      }
-                    : null,
-              ),*/
+                leading: const CircleAvatar(
+                  child: Icon(Icons.notifications),
+                ),
+                onTap: () => openContainer(),
+              ),
+              onClosed: (_) => setState(() {}),
             );
           },
         ),
@@ -200,7 +150,7 @@ class ThemeDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SettingsProvider settings = Provider.of<SettingsProvider>(context);
+    final SettingsProvider settings = context.read<SettingsProvider>();
     return SimpleDialog(
       title: Text(S.of(context).settingsDialogThemeTitle),
       children: <Widget>[

@@ -1,9 +1,9 @@
 # Waterfly III
 
 <p align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.dreautall.waterflyiii"><img src=".playstore/en_badge_web_generic.png" width="200" /></a>
   <a href="https://f-droid.org/en/packages/com.dreautall.waterflyiii/"><img src=".github/assets/fdroid_get-it-on.ong" width="200" /></a>
 </p>
-
 
 **Unofficial** Android App for [Firefly III](https://github.com/firefly-iii/firefly-iii), a free and open source personal finance manager.
 
@@ -41,13 +41,13 @@ The app does **not** try to replicate every single feature that the Webinterface
 
 *All made with a Google Pixel 5.*
 
-Dashboard | Transactions | Balance Sheet |
-| :-: | :-: | :-: |
-<img src=".github/assets/screen_dashboard.png" width="250" />|<img src=".github/assets/screen_transactions_overview.png" width="250" />|<img src=".github/assets/screen_balance.png" width="250" />
+|                           Dashboard                           |                               Transactions                                |                        Balance Sheet                        |
+| :-----------------------------------------------------------: | :-----------------------------------------------------------------------: | :---------------------------------------------------------: |
+| <img src=".github/assets/screen_dashboard.png" width="250" /> | <img src=".github/assets/screen_transactions_overview.png" width="250" /> | <img src=".github/assets/screen_balance.png" width="250" /> |
 
-Transaction Edit | Split Transaction | Transaction Attachments
-| :-: | :-: | :-: |
-<img src=".github/assets/screen_transaction.png" width="250" />|<img src=".github/assets/screen_transaction_split.png" width="250" />|<img src=".github/assets/screen_transaction_attachments.png" width="250" />
+|                        Transaction Edit                         |                           Split Transaction                           |                           Transaction Attachments                           |
+| :-------------------------------------------------------------: | :-------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
+| <img src=".github/assets/screen_transaction.png" width="250" /> | <img src=".github/assets/screen_transaction_split.png" width="250" /> | <img src=".github/assets/screen_transaction_attachments.png" width="250" /> |
 
 ## Technology
 

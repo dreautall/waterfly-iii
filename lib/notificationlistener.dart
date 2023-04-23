@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';
 
@@ -66,7 +67,7 @@ void nlCallback() async {
   debugPrint("nlCallback()");
   NotificationServicePlugin.instance
       .executeNotificationListener((NotificationEvent? evt) async {
-    debugPrint("got event $evt");
+    //debugPrint("got event $evt");
 
     if (evt?.packageName?.startsWith("com.dreautall.waterflyiii") ?? false) {
       return;
@@ -84,6 +85,12 @@ void nlCallback() async {
     }
 
     SettingsProvider().notificationAddKnownApp(evt?.packageName ?? "");
+
+    if (!(await SettingsProvider().notificationUsedApps(forceReload: true))
+        .contains(evt?.packageName ?? "")) {
+      debugPrint("nlCallback(): app not used");
+      return;
+    }
 
     FlutterLocalNotificationsPlugin().show(
       evt?.id ?? 1,

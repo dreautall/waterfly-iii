@@ -12,7 +12,7 @@ import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/login.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/splash.dart';
-import 'package:waterflyiii/pages/transaction_detail.dart';
+import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/settings.dart';
 
 final GlobalKey<NavigatorState> navigatorKey =

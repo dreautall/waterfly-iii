@@ -411,7 +411,7 @@
   "@settingsNLAppAdd": {
     "description": "Button title to add a new app."
   },
-  "settingsNLAppAddHelp": "Click to add an app to listen to. Only eglible apps will show up in the list.",
+  "settingsNLAppAddHelp": "Click to add an app to listen to. Only eligible apps will show up in the list.",
   "@settingsNLAppAddHelp": {
     "description": "Help text below adding the new app button."
   },

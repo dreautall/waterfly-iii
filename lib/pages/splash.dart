@@ -153,7 +153,8 @@ class _SplashPageState extends State<SplashPage> {
                     }
                   },
                   child: Navigator.canPop(context)
-                      ? Text(S.of(context).formButtonBack)
+                      ? Text(
+                          MaterialLocalizations.of(context).backButtonTooltip)
                       : Text(S.of(context).formButtonResetLogin),
                 ),
                 const SizedBox(width: 12),

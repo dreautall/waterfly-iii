@@ -742,7 +742,7 @@ class _TransactionPageState extends State<TransactionPage>
           if (!(widget.transactionId == null && widget.transaction == null))
             IconButton(
               icon: const Icon(Icons.delete),
-              tooltip: S.of(context).formButtonDelete,
+              tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
               onPressed: () async {
                 final FireflyIii api = context.read<FireflyService>().api;
                 final NavigatorState nav = Navigator.of(context);
@@ -754,13 +754,15 @@ class _TransactionPageState extends State<TransactionPage>
                     clipBehavior: Clip.hardEdge,
                     actions: <Widget>[
                       TextButton(
-                        child: Text(S.of(context).formButtonCancel),
+                        child: Text(MaterialLocalizations.of(context)
+                            .cancelButtonLabel),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                       ),
                       FilledButton(
-                        child: Text(S.of(context).formButtonDelete),
+                        child: Text(MaterialLocalizations.of(context)
+                            .deleteButtonTooltip),
                         onPressed: () {
                           Navigator.of(context).pop(true);
                         },
@@ -984,7 +986,7 @@ class _TransactionPageState extends State<TransactionPage>
                           .invokeMethod('SystemNavigator.pop');
                     }
                   },
-            child: Text(S.of(context).formButtonSave),
+            child: Text(MaterialLocalizations.of(context).saveButtonLabel),
           ),
           const SizedBox(width: 16),
         ],
@@ -2176,13 +2178,13 @@ class _TagDialogState extends State<TagDialog> {
       clipBehavior: Clip.hardEdge,
       actions: <Widget>[
         TextButton(
-          child: Text(S.of(context).formButtonCancel),
+          child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
         TextButton(
-          child: Text(S.of(context).formButtonSave),
+          child: Text(MaterialLocalizations.of(context).saveButtonLabel),
           onPressed: () {
             Navigator.pop(context, _newSelectedTags);
           },
@@ -2571,13 +2573,15 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                       clipBehavior: Clip.hardEdge,
                       actions: <Widget>[
                         TextButton(
-                          child: Text(S.of(context).formButtonCancel),
+                          child: Text(MaterialLocalizations.of(context)
+                              .cancelButtonLabel),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
                         ),
                         FilledButton(
-                          child: Text(S.of(context).formButtonDelete),
+                          child: Text(MaterialLocalizations.of(context)
+                              .deleteButtonTooltip),
                           onPressed: () {
                             Navigator.of(context).pop(true);
                           },
@@ -2623,7 +2627,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
             onPressed: () async {
               Navigator.of(context).pop();
             },
-            child: Text(S.of(context).formButtonClose),
+            child: Text(MaterialLocalizations.of(context).closeButtonLabel),
           ),
           const SizedBox(width: 12),
           FilledButton(

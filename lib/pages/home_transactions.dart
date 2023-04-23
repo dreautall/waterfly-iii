@@ -501,13 +501,13 @@ class FilterDialog extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       actions: <Widget>[
         TextButton(
-          child: Text(S.of(context).formButtonCancel),
+          child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
         TextButton(
-          child: Text(S.of(context).formButtonSave),
+          child: Text(MaterialLocalizations.of(context).saveButtonLabel),
           onPressed: () {
             Navigator.of(context).pop(true);
           },

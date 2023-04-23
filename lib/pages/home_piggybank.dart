@@ -481,7 +481,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
               onPressed: () async {
                 Navigator.of(context).pop();
               },
-              child: Text(S.of(context).formButtonClose),
+              child: Text(MaterialLocalizations.of(context).closeButtonLabel),
             ),
             const SizedBox(width: 12),
             FilledButton(
@@ -604,7 +604,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
               onPressed: () async {
                 Navigator.of(context).pop();
               },
-              child: Text(S.of(context).formButtonClose),
+              child: Text(MaterialLocalizations.of(context).closeButtonLabel),
             ),
             const SizedBox(width: 12),
             FilledButton(
@@ -672,7 +672,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                 }
                 nav.pop(resp.body);
               },
-              child: Text(S.of(context).formButtonSave),
+              child: Text(MaterialLocalizations.of(context).saveButtonLabel),
             ),
             const SizedBox(width: 12),
           ],

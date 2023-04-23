@@ -44,22 +44,6 @@
   "@errorUnknown": {
     "description": "Error without further information occured."
   },
-  "formButtonBack": "Back",
-  "@formButtonBack": {
-    "description": "Button Label: Go one step backwards"
-  },
-  "formButtonCancel": "Cancel",
-  "@formButtonCancel": {
-    "description": "Button Label: Close (dialog etc.) without saving"
-  },
-  "formButtonClose": "Close",
-  "@formButtonClose": {
-    "description": "Button Label: Close (dialog etc.)"
-  },
-  "formButtonDelete": "Delete",
-  "@formButtonDelete": {
-    "description": "Button Label: Delete (item etc.)"
-  },
   "formButtonHelp": "Help",
   "@formButtonHelp": {
     "description": "Button Label: Help"
@@ -79,10 +63,6 @@
   "formButtonResetLogin": "Reset login",
   "@formButtonResetLogin": {
     "description": "Button Label: Reset login form (when error is shown)"
-  },
-  "formButtonSave": "Save",
-  "@formButtonSave": {
-    "description": "Button Label: Save current form/dialog"
   },
   "formButtonTransactionAdd": "Add Transaction",
   "@formButtonTransactionAdd": {

@@ -14,7 +14,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home.dart';
-import 'package:waterflyiii/pages/transaction_detail.dart';
+import 'package:waterflyiii/pages/transaction.dart';
 
 class TransactionFilters with ChangeNotifier {
   TransactionFilters({this.account, this.text, this.currency});

@@ -8,7 +8,7 @@ import 'package:waterflyiii/pages/home_main.dart';
 import 'package:waterflyiii/pages/home_piggybank.dart';
 import 'package:waterflyiii/pages/home_transactions.dart';
 import 'package:waterflyiii/pages/navigation.dart';
-import 'package:waterflyiii/pages/transaction_detail.dart';
+import 'package:waterflyiii/pages/transaction.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

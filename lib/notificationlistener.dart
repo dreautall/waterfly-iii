@@ -6,7 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';
 
 import 'package:waterflyiii/app.dart';
-import 'package:waterflyiii/pages/transaction_detail.dart';
+import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/settings.dart';
 
 class NotificationTransaction {

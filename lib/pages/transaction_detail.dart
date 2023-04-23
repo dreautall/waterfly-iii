@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -9,7 +10,6 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:provider/provider.dart';
 
-import 'package:background_downloader/background_downloader.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:chopper/chopper.dart' show Response;
 import 'package:file_picker/file_picker.dart';
@@ -2464,32 +2464,30 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                       ScaffoldMessenger.of(context);
                   final AuthUser? user = context.read<FireflyService>().user;
                   final S l10n = S.of(context);
+                  //late http.StreamedResponse resp;
+                  late int total;
+                  int received = 0;
+                  final List<int> fileData = <int>[];
 
                   if (user == null) {
                     throw Exception("API not ready.");
                   }
 
-                  final DownloadTask task = DownloadTask(
-                    url: attachment.attributes.downloadUrl!,
-                    filename: attachment.attributes.filename,
-                    headers: user.headers(),
-                    creationTime: attachment.attributes.updatedAt,
-                    baseDirectory: BaseDirectory.temporary,
-                  );
-                  final TaskStatus result = await FileDownloader().download(
-                    task,
-                    onProgress: (double progress) {
-                      setState(() {
-                        _dlProgress[i] = progress;
-                      });
-                    },
-                  );
-                  // We awaited the download, so we're behind it now!
-                  setState(() {
-                    _dlProgress.remove(i);
-                  });
+                  final Directory tmpPath = await getTemporaryDirectory();
+                  final String filePath =
+                      "${tmpPath.path}/${attachment.attributes.filename}";
+                  total = attachment.attributes.size ?? 0;
 
-                  if (result != TaskStatus.complete) {
+                  final HttpClientRequest request = await HttpClient().getUrl(
+                    Uri.parse(attachment.attributes.downloadUrl!),
+                  );
+                  user.headers().forEach(
+                        (String key, String value) =>
+                            request.headers.add(key, value),
+                      );
+                  final HttpClientResponse resp = await request.close();
+                  if (resp.statusCode != 200) {
+                    debugPrint("got invalid status code ${resp.statusCode}");
                     msg.showSnackBar(SnackBar(
                       content:
                           Text(l10n.transactionDialogAttachmentsErrorDownload),
@@ -2497,15 +2495,53 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                     ));
                     return;
                   }
-                  final String path = await task.filePath();
-                  final OpenResult file = await OpenFilex.open(path);
-                  if (file.type != ResultType.done) {
-                    msg.showSnackBar(SnackBar(
-                      content: Text(l10n
-                          .transactionDialogAttachmentsErrorOpen(file.message)),
-                      behavior: SnackBarBehavior.floating,
-                    ));
+                  total = resp.headers.contentLength;
+                  if (total == 0) {
+                    total = attachment.attributes.size ?? 0;
                   }
+                  resp.listen(
+                    (List<int> value) {
+                      setState(() {
+                        fileData.addAll(value);
+                        received += value.length;
+                        _dlProgress[i] = received / total;
+                        debugPrint(
+                          "received ${value.length} bytes (total $received of $total), ${received / total * 100}%",
+                        );
+                      });
+                    },
+                    cancelOnError: true,
+                    onDone: () async {
+                      setState(() {
+                        _dlProgress.remove(i);
+                      });
+                      debugPrint(
+                          "writing ${fileData.length} bytes to $filePath");
+                      //debugPrint(String.fromCharCodes(fileData));
+                      await File(filePath).writeAsBytes(fileData, flush: true);
+                      final OpenResult file = await OpenFilex.open(filePath);
+                      if (file.type != ResultType.done) {
+                        debugPrint("error: ${file.message}");
+                        msg.showSnackBar(SnackBar(
+                          content: Text(
+                              l10n.transactionDialogAttachmentsErrorOpen(
+                                  file.message)),
+                          behavior: SnackBarBehavior.floating,
+                        ));
+                      }
+                    },
+                    onError: (Object _) {
+                      debugPrint("got error");
+                      setState(() {
+                        _dlProgress.remove(i);
+                      });
+                      msg.showSnackBar(SnackBar(
+                        content: Text(
+                            l10n.transactionDialogAttachmentsErrorDownload),
+                        behavior: SnackBarBehavior.floating,
+                      ));
+                    },
+                  );
                 }
               : null,
         ),
@@ -2632,64 +2668,81 @@ class _AttachmentDialogState extends State<AttachmentDialog>
               final AttachmentRead newAttachment = respAttachment.body!.data;
               int newAttachmentIndex = widget
                   .attachments.length; // Will be added later, no -1 needed.
+              final int total = file.files.first.size;
+              int sent = 0;
 
               setState(() {
                 widget.attachments.add(newAttachment);
                 _dlProgress[newAttachmentIndex] = -0.0001;
               });
 
-              Directory tmpPath = await getTemporaryDirectory();
-              String newPath = "${tmpPath.path}/${file.files.first.name}";
-              await File(file.files.first.path!).rename(newPath);
-
-              final UploadTask task = UploadTask(
-                url: newAttachment.attributes.uploadUrl!,
-                filename: file.files.first.name,
-                headers: user.headers(),
-                baseDirectory: BaseDirectory.temporary,
-                post: 'binary',
-                mimeType: "application/octet-stream",
+              final HttpClientRequest request = await HttpClient().postUrl(
+                Uri.parse(newAttachment.attributes.uploadUrl!),
               );
+              user.headers().forEach(
+                    (String key, String value) =>
+                        request.headers.add(key, value),
+                  );
+              request.headers.set(
+                  HttpHeaders.contentTypeHeader, "application/octet-stream");
               debugPrint(
                   "AttachmentUpload: Starting Upload $newAttachmentIndex");
-              final TaskStatus result = await FileDownloader().upload(
-                task,
-                onProgress: (double progress) {
-                  debugPrint(
-                      "AttachmentUpload $newAttachmentIndex: progress $progress");
-                  setState(() {
-                    _dlProgress[newAttachmentIndex] = progress * -1;
-                  });
-                },
-              );
 
+              final Stream<List<int>> listenStream =
+                  File(file.files.first.path!).openRead().transform(
+                        StreamTransformer<List<int>, List<int>>.fromHandlers(
+                          handleData:
+                              (List<int> data, EventSink<List<int>> sink) {
+                            setState(() {
+                              sent += data.length;
+                              _dlProgress[newAttachmentIndex] =
+                                  sent / total * -1;
+                              debugPrint(
+                                "sent ${data.length} bytes (total $sent of $total), ${sent / total * 100}%",
+                              );
+                            });
+                            sink.add(data);
+                          },
+                          handleDone: (EventSink<List<int>> sink) {
+                            sink.close();
+                          },
+                        ),
+                      );
+
+              await request.addStream(listenStream);
+              final HttpClientResponse resp = await request.close();
               debugPrint(
-                  "AttachmentUpload: Done with Upload $newAttachmentIndex, Result: $result");
+                  "AttachmentUpload: Done with Upload $newAttachmentIndex");
               setState(() {
                 _dlProgress.remove(newAttachmentIndex);
               });
-
-              if (result != TaskStatus.complete) {
-                late String error;
-                debugPrint(result.toString());
-                try {
-                  ValidationError valError = ValidationError.fromJson(
-                      json.decode(respAttachment.error.toString()));
-                  error = error = valError.message ?? l10n.errorUnknown;
-                } catch (_) {
-                  error = l10n.errorUnknown;
-                }
-                debugPrint("error: $error");
-                msg.showSnackBar(SnackBar(
-                  content:
-                      Text(l10n.transactionDialogAttachmentsErrorUpload(error)),
-                  behavior: SnackBarBehavior.floating,
-                ));
-                await api.v1AttachmentsIdDelete(id: newAttachment.id);
-                setState(() {
-                  widget.attachments.removeAt(newAttachmentIndex);
-                });
+              if (resp.statusCode == HttpStatus.ok ||
+                  resp.statusCode == HttpStatus.created ||
+                  resp.statusCode == HttpStatus.noContent) {
+                return;
               }
+              late String error;
+              debugPrint(resp.toString());
+              try {
+                final String respString =
+                    await resp.transform(utf8.decoder).join();
+                debugPrint(respString);
+                ValidationError valError =
+                    ValidationError.fromJson(json.decode(respString));
+                error = error = valError.message ?? l10n.errorUnknown;
+              } catch (_) {
+                error = l10n.errorUnknown;
+              }
+              debugPrint("error: $error");
+              msg.showSnackBar(SnackBar(
+                content:
+                    Text(l10n.transactionDialogAttachmentsErrorUpload(error)),
+                behavior: SnackBarBehavior.floating,
+              ));
+              await api.v1AttachmentsIdDelete(id: newAttachment.id);
+              setState(() {
+                widget.attachments.removeAt(newAttachmentIndex);
+              });
             },
             child: Text(S.of(context).formButtonUpload),
           ),

@@ -1,0 +1,2 @@
+versionName=0.1.0-f-beta
+versionCode=42

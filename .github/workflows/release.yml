@@ -49,6 +49,9 @@ jobs:
       - run: |
           sed -i 's/^\(version: [0-9\.]\{1,\}\(-[a-z]\{1,\}\)\{0,1\}\)$/\1+${{ github.run_number }}/m' pubspec.yaml
 
+      # No dart analytics.
+      - run: dart --disable-analytics
+
       # No flutter analytics.
       - run: flutter config --no-analytics
 

@@ -16,7 +16,7 @@ The app is still pretty much work in progress, but basic features already do wor
 - General
   - Light & Dark Mode
   - Translation Ready (currently only translated into German)
-  - Listen to incoming notifications and pre-fill transactions
+  - Listen to incoming notifications (e.g., from Google Pay or your banking app) and pre-fill transactions
 - Dashboard
   - Multiple charts for the current balance & recent history
   - Budget overview for last 30 days

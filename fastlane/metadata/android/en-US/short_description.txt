@@ -1,1 +1,1 @@
-Waterfly III is an unofficiall app for Firefly III, a free finance manager.
+Unofficial App for Firefly III, an open source personal finance manager.

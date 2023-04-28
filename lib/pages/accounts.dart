@@ -265,12 +265,20 @@ class _AccountDetailsState extends State<AccountDetails>
                           subtitle = "Unknown";
                       }
                       return ListTile(
-                        title: Text(account.attributes.name),
+                        title: Text(
+                          account.attributes.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                         subtitle: Text(
                           subtitle,
-                          maxLines: 2,
+                          maxLines:
+                              widget.accountType == AccountTypeFilter.asset
+                                  ? 2
+                                  : 1,
                         ),
-                        isThreeLine: true,
+                        isThreeLine:
+                            widget.accountType == AccountTypeFilter.asset,
                         trailing: RichText(
                           textAlign: TextAlign.end,
                           maxLines: 2,

@@ -1,0 +1,2 @@
+* Neue "Konten"-Seite
+* Kleinere Bugfixes & Verbesserungen

@@ -1,0 +1,2 @@
+* Add Accounts page
+* Smaller bug fixes & improvements

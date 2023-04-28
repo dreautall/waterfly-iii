@@ -10,13 +10,6 @@ import 'package:waterflyiii/pages/home/home_transactions.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  State<HomePage> createState() => HomePageState();
-}
-
 class PageActions extends ChangeNotifier {
   final Map<Key, List<Widget>> _map = <Key, List<Widget>>{};
 
@@ -31,6 +24,13 @@ class PageActions extends ChangeNotifier {
     debugPrint("notify PageActions->set()");
     notifyListeners();
   }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage>

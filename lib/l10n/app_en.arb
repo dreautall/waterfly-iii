@@ -464,6 +464,14 @@
       }
     }
   },
+  "settingsVersion": "App Version",
+  "@settingsVersion": {
+    "description": "Current App Version"
+  },
+  "settingsVersionChecking": "checking...",
+  "@settingsVersionChecking": {
+    "description": "Shown while checking for app version"
+  },
   "transactionAttachments": "Attachments",
   "@transactionAttachments": {
     "description": "Button Label: Attachments"

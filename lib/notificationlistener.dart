@@ -93,7 +93,7 @@ void nlCallback() async {
     }
 
     FlutterLocalNotificationsPlugin().show(
-      evt?.id ?? 1,
+      evt?.id ?? DateTime.now().microsecondsSinceEpoch,
       "Create Transaction?",
       "Click to create a transaction based on the notification ${evt?.title}",
       const NotificationDetails(

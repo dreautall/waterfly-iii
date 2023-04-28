@@ -86,6 +86,8 @@
   "settingsNotificationListener": "Dienst zum Auslesen von Benachrichtigungen",
   "settingsTheme": "Erscheinungsbild",
   "settingsThemeValue": "{theme, select, dark{Dunkel} light{Hell} other{Systemeinstellung}}",
+  "settingsVersion": "App Version",
+  "settingsVersionChecking": "Überprüfe...",
   "transactionAttachments": "Anhänge",
   "transactionDeleteConfirm": "Soll diese Transaktion wirklich gelöscht werden?",
   "transactionDialogAttachmentsDelete": "Anhang löschen",

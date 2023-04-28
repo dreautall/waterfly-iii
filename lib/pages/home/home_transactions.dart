@@ -124,7 +124,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
           query = "currency_is:${_filters.currency!.attributes.code} $query";
         }
         debugPrint("Search query: $query");
-        searchFunc = api.v1SearchTransactionsGet(query: query, page: pageKey);
+        searchFunc = api.v1SearchTransactionsGet(
+          query: query,
+          page: pageKey,
+        );
       } else {
         searchFunc = (widget.accountId != null || _filters.account != null)
             ? api.v1AccountsIdTransactionsGet(

@@ -322,9 +322,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
     }
 
     Widget transactionWidget = OpenContainer(
-      openBuilder: (BuildContext context, Function closedContainer) {
-        return TransactionPage(transaction: item);
-      },
+      openBuilder: (BuildContext context, Function closedContainer) =>
+          TransactionPage(transaction: item),
       openColor: Theme.of(context).cardColor,
       closedColor: Theme.of(context).cardColor,
       closedShape: const RoundedRectangleBorder(
@@ -334,77 +333,75 @@ class _HomeTransactionsState extends State<HomeTransactions>
         ),
       ),
       closedElevation: 0,
-      closedBuilder: (BuildContext context, Function openContainer) {
-        return ListTile(
-          leading: CircleAvatar(
-            foregroundColor: Colors.white,
-            backgroundColor: transactions.first.type.color,
-            child: Icon(transactions.first.type.icon),
+      closedBuilder: (BuildContext context, Function openContainer) => ListTile(
+        leading: CircleAvatar(
+          foregroundColor: Colors.white,
+          backgroundColor: transactions.first.type.color,
+          child: Icon(transactions.first.type.icon),
+        ),
+        title: Text(
+          title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        subtitle: RichText(
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+          text: TextSpan(
+            style: Theme.of(context).textTheme.bodyMedium,
+            children: subtitle,
           ),
-          title: Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+        ),
+        isThreeLine: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            bottomLeft: Radius.circular(16),
           ),
-          subtitle: RichText(
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            text: TextSpan(
-              style: Theme.of(context).textTheme.bodyMedium,
-              children: subtitle,
-            ),
-          ),
-          isThreeLine: true,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              bottomLeft: Radius.circular(16),
-            ),
-          ),
-          trailing: RichText(
-            textAlign: TextAlign.end,
-            maxLines: 2,
-            text: TextSpan(
-              style: Theme.of(context).textTheme.bodyMedium,
-              children: <InlineSpan>[
-                if (foreignText.isNotEmpty)
-                  TextSpan(
-                    text: foreignText,
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Colors.blue,
-                        ),
-                  ),
+        ),
+        trailing: RichText(
+          textAlign: TextAlign.end,
+          maxLines: 2,
+          text: TextSpan(
+            style: Theme.of(context).textTheme.bodyMedium,
+            children: <InlineSpan>[
+              if (foreignText.isNotEmpty)
                 TextSpan(
-                  text: currency.fmt(amount),
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: transactions.first.type.color,
-                    fontFeatures: const <FontFeature>[
-                      FontFeature.tabularFigures()
-                    ],
+                  text: foreignText,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: Colors.blue,
+                      ),
+                ),
+              TextSpan(
+                text: currency.fmt(amount),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  color: transactions.first.type.color,
+                  fontFeatures: const <FontFeature>[
+                    FontFeature.tabularFigures()
+                  ],
+                ),
+              ),
+              const TextSpan(text: "\n"),
+              if (reconciled)
+                const WidgetSpan(
+                  baseline: TextBaseline.ideographic,
+                  alignment: PlaceholderAlignment.middle,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 2),
+                    child: Icon(Icons.check),
                   ),
                 ),
-                const TextSpan(text: "\n"),
-                if (reconciled)
-                  const WidgetSpan(
-                    baseline: TextBaseline.ideographic,
-                    alignment: PlaceholderAlignment.middle,
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 2),
-                      child: Icon(Icons.check),
-                    ),
-                  ),
-                TextSpan(
-                  text: (transactions.first.type ==
-                          TransactionTypeProperty.deposit)
-                      ? destinationName
-                      : sourceName,
-                ),
-              ],
-            ),
+              TextSpan(
+                text:
+                    (transactions.first.type == TransactionTypeProperty.deposit)
+                        ? destinationName
+                        : sourceName,
+              ),
+            ],
           ),
-          onTap: () => openContainer(),
-        );
-      },
+        ),
+        onTap: () => openContainer(),
+      ),
       onClosed: (bool? refresh) {
         if (refresh ?? false == true) {
           _pagingController.refresh();

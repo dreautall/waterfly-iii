@@ -155,14 +155,97 @@ class _AccountDetailsState extends State<AccountDetails>
                   ),
                 );
               }
+              snapshot.data!.data.sort(
+                (AccountRead a, AccountRead b) {
+                  if (!(a.attributes.active ?? true)) {
+                    return 1;
+                  }
+                  if (!(b.attributes.active ?? true)) {
+                    return -1;
+                  }
+                  return a.attributes.order?.compareTo(
+                        b.attributes.order ?? 0,
+                      ) ??
+                      0;
+                },
+              );
               return ListView(
                 cacheExtent: 1000,
                 padding: const EdgeInsets.all(8),
                 children: <Widget>[
                   ...snapshot.data!.data.map(
                     (AccountRead account) {
+                      late String subtitle;
+                      switch (widget.accountType) {
+                        case AccountTypeFilter.asset:
+                          switch (account.attributes.accountRole) {
+                            case AccountRoleProperty.cashwalletasset:
+                              subtitle =
+                                  S.of(context).accountRoleAssetCashWallet;
+                              break;
+                            case AccountRoleProperty.ccasset:
+                              subtitle = S.of(context).accountRoleAssetCC;
+                              break;
+                            case AccountRoleProperty.defaultasset:
+                              subtitle = S.of(context).accountRoleAssetDefault;
+                              break;
+                            case AccountRoleProperty.savingasset:
+                              subtitle = S.of(context).accountRoleAssetSavings;
+                              break;
+                            case AccountRoleProperty.sharedasset:
+                              subtitle = S.of(context).accountRoleAssetShared;
+                              break;
+                            default:
+                              subtitle = "Unknown";
+                          }
+                          if (account.attributes.iban != null) {
+                            subtitle += "\nIBAN: ${account.attributes.iban!}";
+                          }
+                          break;
+                        case AccountTypeFilter.expense:
+                          subtitle = account.attributes.iban ?? "";
+                          break;
+                        case AccountTypeFilter.revenue:
+                          subtitle = account.attributes.iban ?? "";
+                          break;
+                        case AccountTypeFilter.liabilities:
+                          switch (account.attributes.liabilityType) {
+                            case LiabilityType.debt:
+                              subtitle = S.of(context).liabilityTypeDebt;
+                              break;
+                            case LiabilityType.loan:
+                              subtitle = S.of(context).liabilityTypeLoan;
+                              break;
+                            case LiabilityType.mortgage:
+                              subtitle = S.of(context).liabilityTypeMortgage;
+                              break;
+                            default:
+                              subtitle = "Unknown";
+                          }
+                          subtitle += "; ";
+                          switch (account.attributes.liabilityDirection) {
+                            case LiabilityDirection.credit:
+                              subtitle +=
+                                  S.of(context).liabilityDirectionCredit;
+                              break;
+                            case LiabilityDirection.debit:
+                              subtitle += S.of(context).liabilityDirectionDebit;
+                              break;
+                            default:
+                              subtitle = "Unknown";
+                          }
+                          break;
+                        default:
+                          subtitle = "Unknown";
+                      }
                       return ListTile(
                         title: Text(account.attributes.name),
+                        subtitle: Text(
+                          subtitle,
+                          maxLines: 2,
+                        ),
+                        isThreeLine: true,
+                        enabled: account.attributes.active ?? true,
                       );
                     },
                   ),

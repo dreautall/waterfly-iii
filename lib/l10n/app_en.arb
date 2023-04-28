@@ -1,6 +1,26 @@
 {
   "@@locale": "en",
   "@@x-reference": true,
+  "accountRoleAssetCashWallet": "Cash Wallet",
+  "@accountRoleAssetCashWallet": {
+    "description": "Firefly Translation String: account_role_cashWalletAsset"
+  },
+  "accountRoleAssetCC": "Credit card",
+  "@accountRoleAssetCC": {
+    "description": "Firefly Translation String: account_role_ccAsset"
+  },
+  "accountRoleAssetDefault": "Default asset account",
+  "@accountRoleAssetDefault": {
+    "description": "Firefly Translation String: account_role_defaultAsset"
+  },
+  "accountRoleAssetSavings": "Savings account",
+  "@accountRoleAssetSavings": {
+    "description": "Firefly Translation String: account_role_savingAsset"
+  },
+  "accountRoleAssetShared": "Shared asset account",
+  "@accountRoleAssetShared": {
+    "description": "Firefly Translation String: account_role_sharedAsset"
+  },
   "accountsLabelAsset": "Asset Accounts",
   "@accountsLabelAsset": {
     "description": "Label for Asset Accounts"
@@ -325,6 +345,26 @@
         "example": "2"
       }
     }
+  },
+  "liabilityDirectionCredit": "I am owed this debt",
+  "@liabilityDirectionCredit": {
+    "description": "Firefly Translation String: liability_direction_credit"
+  },
+  "liabilityDirectionDebit": "I owe this debt to somebody else",
+  "@liabilityDirectionDebit": {
+    "description": "Firefly Translation String: liability_direction_debit"
+  },
+  "liabilityTypeDebt": "Debt",
+  "@liabilityTypeDebt": {
+    "description": "Firefly Translation String: account_type_debt"
+  },
+  "liabilityTypeLoan": "Loan",
+  "@liabilityTypeLoan": {
+    "description": "Firefly Translation String: account_type_loan"
+  },
+  "liabilityTypeMortgage": "Mortgage",
+  "@liabilityTypeMortgage": {
+    "description": "Firefly Translation String: account_type_mortgage"
   },
   "loginAbout": "To use Waterfly III productively you need your own server with a Firefly III instance or the Firefly III add-on for Home Assistant.\n\nPlease enter the full URL as well as a personal access token (Settings -> Profile -> OAuth -> Personal Access Token) below.",
   "@loginAbout": {

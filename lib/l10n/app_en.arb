@@ -23,19 +23,19 @@
   },
   "accountsLabelAsset": "Asset Accounts",
   "@accountsLabelAsset": {
-    "description": "Label for Asset Accounts"
+    "description": "Firefly Translation String: asset_accounts"
   },
   "accountsLabelExpense": "Expense Accounts",
   "@accountsLabelExpense": {
-    "description": "Label for Expense Accounts"
+    "description": "Firefly Translation String: expense_accounts"
   },
   "accountsLabelLiabilities": "Liabilities",
   "@accountsLabelLiabilities": {
-    "description": "Label for Liabilities account"
+    "description": "Firefly Translation String: liabilities_accounts"
   },
   "accountsLabelRevenue": "Revenue Accounts",
   "@accountsLabelRevenue": {
-    "description": "Label for Revenue Accounts"
+    "description": "Firefly Translation String: revenue_accounts"
   },
   "catOther": "Other",
   "@catOther": {
@@ -159,6 +159,10 @@
   "generalTarget": "Target",
   "@generalTarget": {
     "description": "Target value (i.e. a sum to save)"
+  },
+  "generalUnknown": "Unknown",
+  "@generalUnknown": {
+    "description": "Something is unknown."
   },
   "homeMainBudgetInterval": " ({from} to {to}, {period})",
   "@homeMainBudgetInterval": {

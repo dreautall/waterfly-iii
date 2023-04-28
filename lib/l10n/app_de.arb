@@ -1,5 +1,9 @@
 {
   "@@locale": "de",
+  "accountsLabelAsset": "Bestandskonten",
+  "accountsLabelExpense": "Ausgabekonten",
+  "accountsLabelLiabilities": "Verbindlichkeiten",
+  "accountsLabelRevenue": "Einnahmekonten",
   "catOther": "Andere",
   "errorAPIInvalidResponse": "Ungültige API-Antwort: {message}",
   "errorAPIUnavailable": "API nicht verfügbar.",

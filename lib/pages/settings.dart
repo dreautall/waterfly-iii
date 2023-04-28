@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'package:package_info_plus/package_info_plus.dart';
+
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/settings_notifications.dart';
 import 'package:waterflyiii/settings.dart';
@@ -110,6 +112,21 @@ class SettingsPageState extends State<SettingsPage>
                 onTap: () => openContainer(),
               ),
               onClosed: (_) => setState(() {}),
+            );
+          },
+        ),
+        const Divider(),
+        FutureBuilder<PackageInfo>(
+          future: PackageInfo.fromPlatform(),
+          builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
+            return ListTile(
+              title: Text(S.of(context).settingsVersion),
+              subtitle: Text((snapshot.data != null)
+                  ? "${snapshot.data!.appName}, ${snapshot.data!.version}+${snapshot.data!.buildNumber}"
+                  : S.of(context).settingsVersionChecking),
+              leading: const CircleAvatar(
+                child: Icon(Icons.info_outline_rounded),
+              ),
             );
           },
         ),

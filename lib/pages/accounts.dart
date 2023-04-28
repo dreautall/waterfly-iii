@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -10,6 +11,7 @@ import 'package:chopper/chopper.dart' show Response;
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/home/home_transactions.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 
 class AccountsPage extends StatefulWidget {
@@ -264,58 +266,82 @@ class _AccountDetailsState extends State<AccountDetails>
                         default:
                           subtitle = "Unknown";
                       }
-                      return ListTile(
-                        title: Text(
-                          account.attributes.name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        subtitle: Text(
-                          subtitle,
-                          maxLines:
-                              widget.accountType == AccountTypeFilter.asset
-                                  ? 2
-                                  : 1,
-                        ),
-                        isThreeLine:
-                            widget.accountType == AccountTypeFilter.asset,
-                        trailing: RichText(
-                          textAlign: TextAlign.end,
-                          maxLines: 2,
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.bodyMedium,
-                            children: <InlineSpan>[
-                              TextSpan(
-                                text: currency.fmt(currentAmount),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium!
-                                    .copyWith(
-                                  color: (currentAmount < 0)
-                                      ? Colors.red
-                                      : Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                  fontFeatures: const <FontFeature>[
-                                    FontFeature.tabularFigures()
-                                  ],
-                                ),
-                              ),
-                              const TextSpan(text: "\n"),
-                              TextSpan(
-                                text: DateFormat.yMd().format(account
-                                        .attributes.currentBalanceDate
-                                        ?.toLocal() ??
-                                    DateTime.now().toLocal()),
-                              ),
-                            ],
+                      return OpenContainer(
+                        openBuilder:
+                            (BuildContext context, Function closedContainer) =>
+                                Scaffold(
+                          appBar: AppBar(
+                            title: Text(account.attributes.name),
                           ),
+                          body: HomeTransactions(accountId: account.id),
                         ),
-                        enabled: account.attributes.active ?? true,
-                        shape: const RoundedRectangleBorder(
+                        openColor: Theme.of(context).cardColor,
+                        closedColor: Theme.of(context).cardColor,
+                        closedShape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(16),
                             bottomLeft: Radius.circular(16),
                           ),
+                        ),
+                        closedElevation: 0,
+                        closedBuilder:
+                            (BuildContext context, Function openContainer) =>
+                                ListTile(
+                          title: Text(
+                            account.attributes.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          subtitle: Text(
+                            subtitle,
+                            maxLines:
+                                widget.accountType == AccountTypeFilter.asset
+                                    ? 2
+                                    : 1,
+                          ),
+                          isThreeLine:
+                              widget.accountType == AccountTypeFilter.asset,
+                          trailing: RichText(
+                            textAlign: TextAlign.end,
+                            maxLines: 2,
+                            text: TextSpan(
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              children: <InlineSpan>[
+                                TextSpan(
+                                  text: currency.fmt(currentAmount),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(
+                                    color: (currentAmount < 0)
+                                        ? Colors.red
+                                        : Colors.green,
+                                    fontWeight: FontWeight.bold,
+                                    fontFeatures: const <FontFeature>[
+                                      FontFeature.tabularFigures()
+                                    ],
+                                  ),
+                                ),
+                                const TextSpan(text: "\n"),
+                                TextSpan(
+                                  text: account.attributes.currentBalanceDate !=
+                                          null
+                                      ? DateFormat.yMd().add_Hms().format(
+                                          account.attributes.currentBalanceDate!
+                                              .toLocal())
+                                      : S.of(context).generalNever,
+                                ),
+                              ],
+                            ),
+                          ),
+                          enabled: account.attributes.active ?? true,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              bottomLeft: Radius.circular(16),
+                            ),
+                          ),
+                          onTap: () => openContainer(),
                         ),
                       );
                     },

@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:waterflyiii/notificationlistener.dart';
-import 'package:waterflyiii/pages/settings_notifications.dart';
+import 'package:waterflyiii/pages/settings/settings_notifications.dart';
 import 'package:waterflyiii/settings.dart';
 
 class SettingsPage extends StatefulWidget {

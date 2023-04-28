@@ -1,10 +1,14 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
 
 import 'package:waterflyiii/auth.dart';
+import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 
@@ -175,6 +179,28 @@ class _AccountDetailsState extends State<AccountDetails>
                 children: <Widget>[
                   ...snapshot.data!.data.map(
                     (AccountRead account) {
+                      late double currentAmount;
+                      if (widget.accountType == AccountTypeFilter.liability) {
+                        currentAmount = double.tryParse(
+                                account.attributes.currentDebt ?? "") ??
+                            0;
+                      } else {
+                        currentAmount = double.tryParse(
+                                account.attributes.currentBalance ?? "") ??
+                            0;
+                      }
+                      final CurrencyRead currency = CurrencyRead(
+                        id: account.attributes.currencyId ?? "0",
+                        type: "currencies",
+                        attributes: Currency(
+                          code: account.attributes.currencyCode ?? "",
+                          name: "",
+                          symbol: account.attributes.currencySymbol ?? "",
+                          decimalPlaces:
+                              account.attributes.currencyDecimalPlaces,
+                        ),
+                      );
+
                       late String subtitle;
                       switch (widget.accountType) {
                         case AccountTypeFilter.asset:
@@ -245,7 +271,44 @@ class _AccountDetailsState extends State<AccountDetails>
                           maxLines: 2,
                         ),
                         isThreeLine: true,
+                        trailing: RichText(
+                          textAlign: TextAlign.end,
+                          maxLines: 2,
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            children: <InlineSpan>[
+                              TextSpan(
+                                text: currency.fmt(currentAmount),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                  color: (currentAmount < 0)
+                                      ? Colors.red
+                                      : Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                  fontFeatures: const <FontFeature>[
+                                    FontFeature.tabularFigures()
+                                  ],
+                                ),
+                              ),
+                              const TextSpan(text: "\n"),
+                              TextSpan(
+                                text: DateFormat.yMd().format(account
+                                        .attributes.currentBalanceDate
+                                        ?.toLocal() ??
+                                    DateTime.now().toLocal()),
+                              ),
+                            ],
+                          ),
+                        ),
                         enabled: account.attributes.active ?? true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            bottomLeft: Radius.circular(16),
+                          ),
+                        ),
                       );
                     },
                   ),

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -87,62 +88,71 @@ class _HomeBalanceState extends State<HomeBalance>
                       ),
                     );
 
-                    return ListTile(
-                      title: Text(account.attributes.name),
-                      subtitle:
-                          Text(account.attributes.accountRole!.friendlyName),
-                      shape: const RoundedRectangleBorder(
+                    return OpenContainer(
+                      openBuilder:
+                          (BuildContext context, Function closedContainer) =>
+                              Scaffold(
+                        appBar: AppBar(
+                          title: Text(account.attributes.name),
+                        ),
+                        body: HomeTransactions(accountId: account.id),
+                      ),
+                      openColor: Theme.of(context).cardColor,
+                      closedColor: Theme.of(context).cardColor,
+                      closedShape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(16),
                           bottomLeft: Radius.circular(16),
                         ),
                       ),
-                      isThreeLine: false,
-                      trailing: RichText(
-                        textAlign: TextAlign.end,
-                        maxLines: 2,
-                        text: TextSpan(
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          children: <InlineSpan>[
-                            TextSpan(
-                              text: currency.fmt(balance),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                color:
-                                    (balance < 0) ? Colors.red : Colors.green,
-                                fontWeight: FontWeight.bold,
-                                fontFeatures: const <FontFeature>[
-                                  FontFeature.tabularFigures()
-                                ],
-                              ),
-                            ),
-                            const TextSpan(text: "\n"),
-                            TextSpan(
-                              text:
-                                  account.attributes.currentBalanceDate != null
-                                      ? DateFormat.yMd().add_Hms().format(
-                                          account.attributes.currentBalanceDate!
-                                              .toLocal())
-                                      : S.of(context).generalNever,
-                            ),
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        showDialog<void>(
-                          context: context,
-                          builder: (BuildContext context) => Dialog.fullscreen(
-                            child: Scaffold(
-                              appBar: AppBar(
-                                title: Text(account.attributes.name),
-                              ),
-                              body: HomeTransactions(accountId: account.id),
-                            ),
+                      closedElevation: 0,
+                      closedBuilder:
+                          (BuildContext context, Function openContainer) =>
+                              ListTile(
+                        title: Text(account.attributes.name),
+                        subtitle:
+                            Text(account.attributes.accountRole!.friendlyName),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            bottomLeft: Radius.circular(16),
                           ),
-                        );
-                      },
+                        ),
+                        isThreeLine: false,
+                        trailing: RichText(
+                          textAlign: TextAlign.end,
+                          maxLines: 2,
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            children: <InlineSpan>[
+                              TextSpan(
+                                text: currency.fmt(balance),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                  color:
+                                      (balance < 0) ? Colors.red : Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                  fontFeatures: const <FontFeature>[
+                                    FontFeature.tabularFigures()
+                                  ],
+                                ),
+                              ),
+                              const TextSpan(text: "\n"),
+                              TextSpan(
+                                text: account.attributes.currentBalanceDate !=
+                                        null
+                                    ? DateFormat.yMd().add_Hms().format(account
+                                        .attributes.currentBalanceDate!
+                                        .toLocal())
+                                    : S.of(context).generalNever,
+                              ),
+                            ],
+                          ),
+                        ),
+                        onTap: () => openContainer(),
+                      ),
                     );
                   },
                 ),

@@ -224,7 +224,7 @@ class _AccountDetailsState extends State<AccountDetails>
                               subtitle = S.of(context).accountRoleAssetShared;
                               break;
                             default:
-                              subtitle = "Unknown";
+                              subtitle = S.of(context).generalUnknown;
                           }
                           if (account.attributes.iban != null) {
                             subtitle += "\nIBAN: ${account.attributes.iban!}";
@@ -248,7 +248,7 @@ class _AccountDetailsState extends State<AccountDetails>
                               subtitle = S.of(context).liabilityTypeMortgage;
                               break;
                             default:
-                              subtitle = "Unknown";
+                              subtitle = S.of(context).generalUnknown;
                           }
                           subtitle += "; ";
                           switch (account.attributes.liabilityDirection) {
@@ -260,11 +260,11 @@ class _AccountDetailsState extends State<AccountDetails>
                               subtitle += S.of(context).liabilityDirectionDebit;
                               break;
                             default:
-                              subtitle = "Unknown";
+                              subtitle = S.of(context).generalUnknown;
                           }
                           break;
                         default:
-                          subtitle = "Unknown";
+                          subtitle = S.of(context).generalUnknown;
                       }
                       return OpenContainer(
                         openBuilder:

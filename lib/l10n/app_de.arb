@@ -37,6 +37,7 @@
   "generalNever": "nie",
   "generalSum": "Summe",
   "generalTarget": "Ziel",
+  "generalUnknown": "Unbekannt",
   "homeMainBudgetInterval": " ({from} bis {to}, {period})",
   "homeMainBudgetSum": "{current} {status, select, over{über} other{bis}} {available}",
   "homeMainBudgetTitle": "Budgets für diesen Monat",

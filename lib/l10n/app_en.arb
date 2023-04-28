@@ -1,6 +1,22 @@
 {
   "@@locale": "en",
   "@@x-reference": true,
+  "accountsLabelAsset": "Asset Accounts",
+  "@accountsLabelAsset": {
+    "description": "Label for Asset Accounts"
+  },
+  "accountsLabelExpense": "Expense Accounts",
+  "@accountsLabelExpense": {
+    "description": "Label for Expense Accounts"
+  },
+  "accountsLabelLiabilities": "Liabilities",
+  "@accountsLabelLiabilities": {
+    "description": "Label for Liabilities account"
+  },
+  "accountsLabelRevenue": "Revenue Accounts",
+  "@accountsLabelRevenue": {
+    "description": "Label for Revenue Accounts"
+  },
   "catOther": "Other",
   "@catOther": {
     "description": "Category description for summary category 'Other'"

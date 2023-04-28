@@ -33,7 +33,6 @@ class _HomePiggybankState extends State<HomePiggybank>
     final FireflyIii api = context.read<FireflyService>().api;
 
     final Response<PiggyBankArray> respAccounts = await api.v1PiggyBanksGet();
-
     if (!respAccounts.isSuccessful || respAccounts.body == null) {
       if (context.mounted) {
         throw Exception(

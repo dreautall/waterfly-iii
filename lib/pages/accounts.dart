@@ -262,6 +262,21 @@ class _AccountDetailsState extends State<AccountDetails>
                             default:
                               subtitle = S.of(context).generalUnknown;
                           }
+
+                          if (account.attributes.interest != null &&
+                              account.attributes.interestPeriod != null) {
+                            subtitle += "; ";
+                            subtitle +=
+                                S.of(context).accountsLiabilitiesInterest(
+                                      double.tryParse(
+                                            account.attributes.interest!,
+                                          ) ??
+                                          0,
+                                      account.attributes.interestPeriod!.value
+                                              ?.replaceAll('-', '') ??
+                                          "",
+                                    );
+                          }
                           break;
                         default:
                           subtitle = S.of(context).generalUnknown;
@@ -295,12 +310,16 @@ class _AccountDetailsState extends State<AccountDetails>
                           subtitle: Text(
                             subtitle,
                             maxLines:
-                                widget.accountType == AccountTypeFilter.asset
+                                widget.accountType == AccountTypeFilter.asset ||
+                                        widget.accountType ==
+                                            AccountTypeFilter.liabilities
                                     ? 2
                                     : 1,
                           ),
                           isThreeLine:
-                              widget.accountType == AccountTypeFilter.asset,
+                              widget.accountType == AccountTypeFilter.asset ||
+                                  widget.accountType ==
+                                      AccountTypeFilter.liabilities,
                           trailing: RichText(
                             textAlign: TextAlign.end,
                             maxLines: 2,

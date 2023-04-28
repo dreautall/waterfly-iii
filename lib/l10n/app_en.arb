@@ -37,6 +37,20 @@
   "@accountsLabelRevenue": {
     "description": "Firefly Translation String: revenue_accounts"
   },
+  "accountsLiabilitiesInterest": "{interest}% interest per {period, select, weekly{week} monthly{month} quarterly{quarter} halfyear{half-year} yearly{year} other{unknown}}",
+  "@accountsLiabilitiesInterest": {
+    "description": "Interest in a certain period",
+    "placeholders": {
+      "interest": {
+        "type": "double",
+        "example": "1.2"
+      },
+      "period": {
+        "type": "String",
+        "example": "yearly"
+      }
+    }
+  },
   "catOther": "Other",
   "@catOther": {
     "description": "Category description for summary category 'Other'"
@@ -354,7 +368,7 @@
   "@liabilityDirectionCredit": {
     "description": "Firefly Translation String: liability_direction_credit"
   },
-  "liabilityDirectionDebit": "I owe this debt to somebody else",
+  "liabilityDirectionDebit": "I owe this debt",
   "@liabilityDirectionDebit": {
     "description": "Firefly Translation String: liability_direction_debit"
   },

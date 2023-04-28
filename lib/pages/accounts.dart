@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -97,30 +98,62 @@ class AccountDetails extends StatefulWidget {
 
 class _AccountDetailsState extends State<AccountDetails>
     with AutomaticKeepAliveClientMixin {
-  Future<AccountArray> _fetchData() async {
-    final FireflyIii api = context.read<FireflyService>().api;
+  final int _numberOfItemsPerRequest = 50;
+  final PagingController<int, AccountRead> _pagingController =
+      PagingController<int, AccountRead>(
+    firstPageKey: 0,
+    invisibleItemsThreshold: 10,
+  );
 
-    final Response<AccountArray> respAccounts =
-        await api.v1AccountsGet(type: widget.accountType);
-    if (!respAccounts.isSuccessful || respAccounts.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respAccounts.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respAccounts.error}",
-        );
-      }
-    }
+  @override
+  void initState() {
+    super.initState();
 
-    return Future<AccountArray>.value(respAccounts.body);
+    _pagingController.addPageRequestListener((int pageKey) {
+      _fetchPage(pageKey);
+    });
   }
 
-  Future<void> _refreshStats() async {
-    setState(() {});
+  @override
+  void dispose() {
+    _pagingController.dispose();
+
+    super.dispose();
+  }
+
+  Future<void> _fetchPage(int pageKey) async {
+    try {
+      final FireflyIii api = context.read<FireflyService>().api;
+      final Response<AccountArray> respAccounts = await api.v1AccountsGet(
+        type: widget.accountType,
+        page: pageKey,
+      );
+      if (!respAccounts.isSuccessful || respAccounts.body == null) {
+        if (context.mounted) {
+          throw Exception(
+            S
+                .of(context)
+                .errorAPIInvalidResponse(respAccounts.error?.toString() ?? ""),
+          );
+        } else {
+          throw Exception(
+            "[nocontext] Invalid API response: ${respAccounts.error}",
+          );
+        }
+      }
+
+      final List<AccountRead> accountList = respAccounts.body!.data;
+      final bool isLastPage = accountList.length < _numberOfItemsPerRequest;
+      if (isLastPage) {
+        _pagingController.appendLastPage(accountList);
+      } else {
+        final int nextPageKey = pageKey + 1;
+        _pagingController.appendPage(accountList, nextPageKey);
+      }
+    } catch (e) {
+      debugPrint("error --> $e");
+      _pagingController.error = e;
+    }
   }
 
   @override
@@ -132,252 +165,180 @@ class _AccountDetailsState extends State<AccountDetails>
     debugPrint("accounts_detail build()");
 
     return RefreshIndicator(
-        onRefresh: () => _refreshStats(),
-        child: FutureBuilder<AccountArray>(
-          future: _fetchData(),
-          builder:
-              (BuildContext context, AsyncSnapshot<AccountArray> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done &&
-                snapshot.hasData) {
-              if (snapshot.data!.data.isEmpty) {
-                return Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        S.of(context).homePiggyNoAccounts,
-                        style: Theme.of(context).textTheme.titleLarge,
+      onRefresh: () => Future<void>.sync(() => _pagingController.refresh()),
+      child: PagedListView<int, AccountRead>(
+        pagingController: _pagingController,
+        builderDelegate: PagedChildBuilderDelegate<AccountRead>(
+          itemBuilder: (BuildContext context, AccountRead account, int index) {
+            late double currentAmount;
+            if (widget.accountType == AccountTypeFilter.liability) {
+              currentAmount =
+                  double.tryParse(account.attributes.currentDebt ?? "") ?? 0;
+            } else {
+              currentAmount =
+                  double.tryParse(account.attributes.currentBalance ?? "") ?? 0;
+            }
+            final CurrencyRead currency = CurrencyRead(
+              id: account.attributes.currencyId ?? "0",
+              type: "currencies",
+              attributes: Currency(
+                code: account.attributes.currencyCode ?? "",
+                name: "",
+                symbol: account.attributes.currencySymbol ?? "",
+                decimalPlaces: account.attributes.currencyDecimalPlaces,
+              ),
+            );
+
+            late String subtitle;
+            switch (widget.accountType) {
+              case AccountTypeFilter.asset:
+                switch (account.attributes.accountRole) {
+                  case AccountRoleProperty.cashwalletasset:
+                    subtitle = S.of(context).accountRoleAssetCashWallet;
+                    break;
+                  case AccountRoleProperty.ccasset:
+                    subtitle = S.of(context).accountRoleAssetCC;
+                    break;
+                  case AccountRoleProperty.defaultasset:
+                    subtitle = S.of(context).accountRoleAssetDefault;
+                    break;
+                  case AccountRoleProperty.savingasset:
+                    subtitle = S.of(context).accountRoleAssetSavings;
+                    break;
+                  case AccountRoleProperty.sharedasset:
+                    subtitle = S.of(context).accountRoleAssetShared;
+                    break;
+                  default:
+                    subtitle = S.of(context).generalUnknown;
+                }
+                if (account.attributes.iban != null) {
+                  subtitle += "\nIBAN: ${account.attributes.iban!}";
+                }
+                break;
+              case AccountTypeFilter.expense:
+                subtitle = account.attributes.iban ?? "";
+                break;
+              case AccountTypeFilter.revenue:
+                subtitle = account.attributes.iban ?? "";
+                break;
+              case AccountTypeFilter.liabilities:
+                switch (account.attributes.liabilityType) {
+                  case LiabilityType.debt:
+                    subtitle = S.of(context).liabilityTypeDebt;
+                    break;
+                  case LiabilityType.loan:
+                    subtitle = S.of(context).liabilityTypeLoan;
+                    break;
+                  case LiabilityType.mortgage:
+                    subtitle = S.of(context).liabilityTypeMortgage;
+                    break;
+                  default:
+                    subtitle = S.of(context).generalUnknown;
+                }
+                subtitle += "; ";
+                switch (account.attributes.liabilityDirection) {
+                  case LiabilityDirection.credit:
+                    subtitle += S.of(context).liabilityDirectionCredit;
+                    break;
+                  case LiabilityDirection.debit:
+                    subtitle += S.of(context).liabilityDirectionDebit;
+                    break;
+                  default:
+                    subtitle = S.of(context).generalUnknown;
+                }
+
+                if (account.attributes.interest != null &&
+                    account.attributes.interestPeriod != null) {
+                  subtitle += "; ";
+                  subtitle += S.of(context).accountsLiabilitiesInterest(
+                        double.tryParse(
+                              account.attributes.interest!,
+                            ) ??
+                            0,
+                        account.attributes.interestPeriod!.value
+                                ?.replaceAll('-', '') ??
+                            "",
+                      );
+                }
+                break;
+              default:
+                subtitle = S.of(context).generalUnknown;
+            }
+            return OpenContainer(
+              openBuilder: (BuildContext context, Function closedContainer) =>
+                  Scaffold(
+                appBar: AppBar(
+                  title: Text(account.attributes.name),
+                ),
+                body: HomeTransactions(accountId: account.id),
+              ),
+              openColor: Theme.of(context).cardColor,
+              closedColor: Theme.of(context).cardColor,
+              closedShape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  bottomLeft: Radius.circular(16),
+                ),
+              ),
+              closedElevation: 0,
+              closedBuilder: (BuildContext context, Function openContainer) =>
+                  ListTile(
+                title: Text(
+                  account.attributes.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                subtitle: Text(
+                  subtitle,
+                  maxLines: widget.accountType == AccountTypeFilter.asset ||
+                          widget.accountType == AccountTypeFilter.liabilities
+                      ? 2
+                      : 1,
+                ),
+                isThreeLine: widget.accountType == AccountTypeFilter.asset ||
+                    widget.accountType == AccountTypeFilter.liabilities,
+                trailing: RichText(
+                  textAlign: TextAlign.end,
+                  maxLines: 2,
+                  text: TextSpan(
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    children: <InlineSpan>[
+                      TextSpan(
+                        text: currency.fmt(currentAmount),
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color:
+                              (currentAmount < 0) ? Colors.red : Colors.green,
+                          fontWeight: FontWeight.bold,
+                          fontFeatures: const <FontFeature>[
+                            FontFeature.tabularFigures()
+                          ],
+                        ),
                       ),
-                      const Icon(
-                        Icons.savings_outlined,
-                        size: 200,
-                      ),
-                      Text(
-                        S.of(context).homePiggyNoAccountsSubtitle,
-                        style: Theme.of(context).textTheme.bodyLarge,
+                      const TextSpan(text: "\n"),
+                      TextSpan(
+                        text: account.attributes.currentBalanceDate != null
+                            ? DateFormat.yMd().add_Hms().format(account
+                                .attributes.currentBalanceDate!
+                                .toLocal())
+                            : S.of(context).generalNever,
                       ),
                     ],
                   ),
-                );
-              }
-              snapshot.data!.data.sort(
-                (AccountRead a, AccountRead b) {
-                  if (!(a.attributes.active ?? true)) {
-                    return 1;
-                  }
-                  if (!(b.attributes.active ?? true)) {
-                    return -1;
-                  }
-                  return a.attributes.order?.compareTo(
-                        b.attributes.order ?? 0,
-                      ) ??
-                      0;
-                },
-              );
-              return ListView(
-                cacheExtent: 1000,
-                padding: const EdgeInsets.all(8),
-                children: <Widget>[
-                  ...snapshot.data!.data.map(
-                    (AccountRead account) {
-                      late double currentAmount;
-                      if (widget.accountType == AccountTypeFilter.liability) {
-                        currentAmount = double.tryParse(
-                                account.attributes.currentDebt ?? "") ??
-                            0;
-                      } else {
-                        currentAmount = double.tryParse(
-                                account.attributes.currentBalance ?? "") ??
-                            0;
-                      }
-                      final CurrencyRead currency = CurrencyRead(
-                        id: account.attributes.currencyId ?? "0",
-                        type: "currencies",
-                        attributes: Currency(
-                          code: account.attributes.currencyCode ?? "",
-                          name: "",
-                          symbol: account.attributes.currencySymbol ?? "",
-                          decimalPlaces:
-                              account.attributes.currencyDecimalPlaces,
-                        ),
-                      );
-
-                      late String subtitle;
-                      switch (widget.accountType) {
-                        case AccountTypeFilter.asset:
-                          switch (account.attributes.accountRole) {
-                            case AccountRoleProperty.cashwalletasset:
-                              subtitle =
-                                  S.of(context).accountRoleAssetCashWallet;
-                              break;
-                            case AccountRoleProperty.ccasset:
-                              subtitle = S.of(context).accountRoleAssetCC;
-                              break;
-                            case AccountRoleProperty.defaultasset:
-                              subtitle = S.of(context).accountRoleAssetDefault;
-                              break;
-                            case AccountRoleProperty.savingasset:
-                              subtitle = S.of(context).accountRoleAssetSavings;
-                              break;
-                            case AccountRoleProperty.sharedasset:
-                              subtitle = S.of(context).accountRoleAssetShared;
-                              break;
-                            default:
-                              subtitle = S.of(context).generalUnknown;
-                          }
-                          if (account.attributes.iban != null) {
-                            subtitle += "\nIBAN: ${account.attributes.iban!}";
-                          }
-                          break;
-                        case AccountTypeFilter.expense:
-                          subtitle = account.attributes.iban ?? "";
-                          break;
-                        case AccountTypeFilter.revenue:
-                          subtitle = account.attributes.iban ?? "";
-                          break;
-                        case AccountTypeFilter.liabilities:
-                          switch (account.attributes.liabilityType) {
-                            case LiabilityType.debt:
-                              subtitle = S.of(context).liabilityTypeDebt;
-                              break;
-                            case LiabilityType.loan:
-                              subtitle = S.of(context).liabilityTypeLoan;
-                              break;
-                            case LiabilityType.mortgage:
-                              subtitle = S.of(context).liabilityTypeMortgage;
-                              break;
-                            default:
-                              subtitle = S.of(context).generalUnknown;
-                          }
-                          subtitle += "; ";
-                          switch (account.attributes.liabilityDirection) {
-                            case LiabilityDirection.credit:
-                              subtitle +=
-                                  S.of(context).liabilityDirectionCredit;
-                              break;
-                            case LiabilityDirection.debit:
-                              subtitle += S.of(context).liabilityDirectionDebit;
-                              break;
-                            default:
-                              subtitle = S.of(context).generalUnknown;
-                          }
-
-                          if (account.attributes.interest != null &&
-                              account.attributes.interestPeriod != null) {
-                            subtitle += "; ";
-                            subtitle +=
-                                S.of(context).accountsLiabilitiesInterest(
-                                      double.tryParse(
-                                            account.attributes.interest!,
-                                          ) ??
-                                          0,
-                                      account.attributes.interestPeriod!.value
-                                              ?.replaceAll('-', '') ??
-                                          "",
-                                    );
-                          }
-                          break;
-                        default:
-                          subtitle = S.of(context).generalUnknown;
-                      }
-                      return OpenContainer(
-                        openBuilder:
-                            (BuildContext context, Function closedContainer) =>
-                                Scaffold(
-                          appBar: AppBar(
-                            title: Text(account.attributes.name),
-                          ),
-                          body: HomeTransactions(accountId: account.id),
-                        ),
-                        openColor: Theme.of(context).cardColor,
-                        closedColor: Theme.of(context).cardColor,
-                        closedShape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(16),
-                            bottomLeft: Radius.circular(16),
-                          ),
-                        ),
-                        closedElevation: 0,
-                        closedBuilder:
-                            (BuildContext context, Function openContainer) =>
-                                ListTile(
-                          title: Text(
-                            account.attributes.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          subtitle: Text(
-                            subtitle,
-                            maxLines:
-                                widget.accountType == AccountTypeFilter.asset ||
-                                        widget.accountType ==
-                                            AccountTypeFilter.liabilities
-                                    ? 2
-                                    : 1,
-                          ),
-                          isThreeLine:
-                              widget.accountType == AccountTypeFilter.asset ||
-                                  widget.accountType ==
-                                      AccountTypeFilter.liabilities,
-                          trailing: RichText(
-                            textAlign: TextAlign.end,
-                            maxLines: 2,
-                            text: TextSpan(
-                              style: Theme.of(context).textTheme.bodyMedium,
-                              children: <InlineSpan>[
-                                TextSpan(
-                                  text: currency.fmt(currentAmount),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .copyWith(
-                                    color: (currentAmount < 0)
-                                        ? Colors.red
-                                        : Colors.green,
-                                    fontWeight: FontWeight.bold,
-                                    fontFeatures: const <FontFeature>[
-                                      FontFeature.tabularFigures()
-                                    ],
-                                  ),
-                                ),
-                                const TextSpan(text: "\n"),
-                                TextSpan(
-                                  text: account.attributes.currentBalanceDate !=
-                                          null
-                                      ? DateFormat.yMd().add_Hms().format(
-                                          account.attributes.currentBalanceDate!
-                                              .toLocal())
-                                      : S.of(context).generalNever,
-                                ),
-                              ],
-                            ),
-                          ),
-                          enabled: account.attributes.active ?? true,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16),
-                              bottomLeft: Radius.circular(16),
-                            ),
-                          ),
-                          onTap: () => openContainer(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Text(snapshot.error!.toString());
-            } else {
-              return const Padding(
-                padding: EdgeInsets.all(8),
-                child: Center(
-                  child: CircularProgressIndicator(),
                 ),
-              );
-            }
+                enabled: account.attributes.active ?? true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    bottomLeft: Radius.circular(16),
+                  ),
+                ),
+                onTap: () => openContainer(),
+              ),
+            );
           },
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -29,6 +29,7 @@ class NavPageElements with ChangeNotifier {
 
   void setAppBarActions(List<Widget>? actions) {
     if (actions == appBarActions) {
+      debugPrint("NavPageElements->setAppBarActions equal, skipping");
       return;
     }
     appBarActions = actions;
@@ -38,6 +39,7 @@ class NavPageElements with ChangeNotifier {
 
   void setAppBarBottom(PreferredSizeWidget? bottom) {
     if (bottom == appBarBottom) {
+      debugPrint("NavPageElements->setAppBarBottom equal, skipping");
       return;
     }
     appBarBottom = bottom;
@@ -47,6 +49,7 @@ class NavPageElements with ChangeNotifier {
 
   void setFab(Widget? newFab) {
     if (newFab == fab) {
+      debugPrint("NavPageElements->setFab equal, skipping");
       return;
     }
     fab = newFab;

@@ -23,9 +23,11 @@ class TransactionFilters with ChangeNotifier {
   String? text;
   CurrencyRead? currency;
 
-  bool get hasFilters => account != null || text != null || currency != null;
+  bool _hasFilters = false;
+  bool get hasFilters => _hasFilters;
 
   void updateFilters() {
+    _hasFilters = account != null || text != null || currency != null;
     debugPrint("notify TransactionFilters, filters? $hasFilters");
     notifyListeners();
   }
@@ -71,8 +73,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
             ChangeNotifierProvider<TransactionFilters>.value(
               value: _filters,
               builder: (BuildContext context, _) => IconButton(
-                icon: const Icon(Icons.tune),
-                // :TODO: context refresh is not called :(
+                icon: const Icon(Icons.filter_alt_outlined),
+                selectedIcon: Icon(Icons.filter_alt,
+                    color: Theme.of(context).colorScheme.primary),
                 isSelected: context.watch<TransactionFilters>().hasFilters,
                 tooltip: S.of(context).homeTransactionsActionFilter,
                 onPressed: () async {
@@ -84,7 +87,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   bool? ok = await showDialog<bool>(
                     context: context,
                     builder: (BuildContext context) => FilterDialog(
-                      filters: _filters, // passed by reference -> auto updated
+                      // passed by reference -> auto updated
+                      filters: _filters,
                     ),
                   );
                   if (ok == null || !ok) {

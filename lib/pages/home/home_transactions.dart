@@ -601,25 +601,29 @@ class FilterDialog extends StatelessWidget {
                   List<Widget> child = <Widget>[];
                   debugPrint("FilterDialog->FutureBuilder build()");
 
+                  final double inputWidth =
+                      MediaQuery.of(context).size.width - 128 - 24;
+
                   // Search Term
                   child.add(
-                    TextFormField(
-                      //controller: _keyTextController,
-                      //readOnly: _formSubmitted,
-                      decoration: InputDecoration(
-                        filled: false,
-                        border: const OutlineInputBorder(),
-                        labelText:
-                            S.of(context).homeTransactionsDialogFilterSearch,
-                        prefixIcon: const Icon(Icons.search),
+                    SizedBox(
+                      width: inputWidth,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          filled: false,
+                          border: const OutlineInputBorder(),
+                          labelText:
+                              S.of(context).homeTransactionsDialogFilterSearch,
+                          prefixIcon: const Icon(Icons.search),
+                        ),
+                        initialValue: filters.text,
+                        onChanged: (String value) {
+                          filters.text = value;
+                          if (value.isEmpty) {
+                            filters.text = null;
+                          }
+                        },
                       ),
-                      initialValue: filters.text,
-                      onChanged: (String value) {
-                        filters.text = value;
-                        if (value.isEmpty) {
-                          filters.text = null;
-                        }
-                      },
                     ),
                   );
                   child.add(const SizedBox(height: 12));
@@ -666,6 +670,7 @@ class FilterDialog extends StatelessWidget {
                           filters.account = account;
                         }
                       },
+                      width: inputWidth,
                     ),
                   );
                   child.add(const SizedBox(height: 12));
@@ -713,6 +718,7 @@ class FilterDialog extends StatelessWidget {
                           filters.currency = currency;
                         }
                       },
+                      width: inputWidth,
                     ),
                   );
                   child.add(const SizedBox(height: 12));
@@ -758,6 +764,7 @@ class FilterDialog extends StatelessWidget {
                           filters.category = category;
                         }
                       },
+                      width: inputWidth,
                     ),
                   );
                   child.add(const SizedBox(height: 12));
@@ -802,6 +809,7 @@ class FilterDialog extends StatelessWidget {
                           filters.budget = budget;
                         }
                       },
+                      width: inputWidth,
                     ),
                   );
                   child.add(const SizedBox(height: 12));

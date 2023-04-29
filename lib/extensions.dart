@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
@@ -31,20 +32,20 @@ extension CurrencyFormat on CurrencyRead {
 }
 
 extension AccountRole on AccountRoleProperty {
-  String get friendlyName {
+  String friendlyName(BuildContext context) {
     switch (this) {
       case AccountRoleProperty.cashwalletasset:
-        return "Cash wallet";
+        return S.of(context).accountRoleAssetCashWallet;
       case AccountRoleProperty.ccasset:
-        return "Credit card";
+        return S.of(context).accountRoleAssetCC;
       case AccountRoleProperty.defaultasset:
-        return "Default asset account";
+        return S.of(context).accountRoleAssetDefault;
       case AccountRoleProperty.savingasset:
-        return "Savings account";
+        return S.of(context).accountRoleAssetSavings;
       case AccountRoleProperty.sharedasset:
-        return "Shared asset account";
+        return S.of(context).accountRoleAssetShared;
       default:
-        return "Unknown";
+        return S.of(context).generalUnknown;
     }
   }
 }

@@ -66,7 +66,7 @@ class _SplashPageState extends State<SplashPage> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.of(context).popUntil((Route<dynamic> route) => route.isFirst);
       });
-      return const SizedBox.shrink();
+      return const Scaffold(body: SizedBox.shrink());
     }
 
     Widget page;

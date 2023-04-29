@@ -17,20 +17,35 @@ import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 
 class TransactionFilters with ChangeNotifier {
-  TransactionFilters({this.account, this.text, this.currency});
+  TransactionFilters({this.account, this.text, this.currency, this.category});
 
   AccountRead? account;
   String? text;
   CurrencyRead? currency;
+  CategoryRead? category;
 
   bool _hasFilters = false;
   bool get hasFilters => _hasFilters;
 
   void updateFilters() {
-    _hasFilters = account != null || text != null || currency != null;
+    _hasFilters =
+        account != null || text != null || currency != null || category != null;
     debugPrint("notify TransactionFilters, filters? $hasFilters");
     notifyListeners();
   }
+
+  TransactionFilters copyWith({
+    AccountRead? account,
+    String? text,
+    CurrencyRead? currency,
+    CategoryRead? category,
+  }) =>
+      TransactionFilters(
+        account: account ?? this.account,
+        text: text ?? this.text,
+        currency: currency ?? this.currency,
+        category: category ?? this.category,
+      );
 }
 
 class HomeTransactions extends StatefulWidget {
@@ -79,11 +94,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                 isSelected: context.watch<TransactionFilters>().hasFilters,
                 tooltip: S.of(context).homeTransactionsActionFilter,
                 onPressed: () async {
-                  TransactionFilters oldFilters = TransactionFilters(
-                    text: _filters.text,
-                    account: _filters.account,
-                    currency: _filters.currency,
-                  );
+                  TransactionFilters oldFilters = _filters.copyWith();
                   bool? ok = await showDialog<bool>(
                     context: context,
                     builder: (BuildContext context) => FilterDialog(
@@ -126,6 +137,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
         }
         if (_filters.currency != null) {
           query = "currency_is:${_filters.currency!.attributes.code} $query";
+        }
+        if (_filters.category != null) {
+          query =
+              "category_is:\"${_filters.category!.attributes.name}\" $query";
         }
         debugPrint("Search query: $query");
         searchFunc = api.v1SearchTransactionsGet(
@@ -441,10 +456,15 @@ class _HomeTransactionsState extends State<HomeTransactions>
 }
 
 class FilterData {
-  FilterData(this.accounts, this.currencies);
+  FilterData(
+    this.accounts,
+    this.currencies,
+    this.categories,
+  );
 
   final List<AccountRead> accounts;
   final List<CurrencyRead> currencies;
+  final List<CategoryRead> categories;
 }
 
 class FilterDialog extends StatelessWidget {
@@ -491,9 +511,26 @@ class FilterDialog extends StatelessWidget {
       }
     }
 
+    // Categories
+    final Response<CategoryArray> respCats = await api.v1CategoriesGet();
+    if (!respCats.isSuccessful || respCats.body == null) {
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(respCats.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${respCats.error}",
+        );
+      }
+    }
+
     return FilterData(
       respAccounts.body!.data,
       respCurrencies.body!.data,
+      respCats.body!.data,
     );
   }
 
@@ -552,7 +589,7 @@ class FilterDialog extends StatelessWidget {
                   child.add(const SizedBox(height: 12));
 
                   // Account Select
-                  List<DropdownMenuEntry<AccountRead>> accountOptions =
+                  final List<DropdownMenuEntry<AccountRead>> accountOptions =
                       <DropdownMenuEntry<AccountRead>>[
                     DropdownMenuEntry<AccountRead>(
                       value: AccountRead(
@@ -580,7 +617,6 @@ class FilterDialog extends StatelessWidget {
                       currentAccount = e;
                     }
                   }
-
                   child.add(
                     DropdownMenu<AccountRead>(
                       initialSelection: currentAccount,
@@ -599,7 +635,7 @@ class FilterDialog extends StatelessWidget {
                   child.add(const SizedBox(height: 12));
 
                   // Currency Select
-                  List<DropdownMenuEntry<CurrencyRead>> currencyOptions =
+                  final List<DropdownMenuEntry<CurrencyRead>> currencyOptions =
                       <DropdownMenuEntry<CurrencyRead>>[
                     DropdownMenuEntry<CurrencyRead>(
                       value: CurrencyRead(
@@ -628,7 +664,6 @@ class FilterDialog extends StatelessWidget {
                       currentCurrency = e;
                     }
                   }
-
                   child.add(
                     DropdownMenu<CurrencyRead>(
                       initialSelection: currentCurrency,
@@ -640,6 +675,51 @@ class FilterDialog extends StatelessWidget {
                           filters.currency = null;
                         } else {
                           filters.currency = currency;
+                        }
+                      },
+                    ),
+                  );
+                  child.add(const SizedBox(height: 12));
+
+                  // Category Select
+                  final List<DropdownMenuEntry<CategoryRead>> categoryOptions =
+                      <DropdownMenuEntry<CategoryRead>>[
+                    DropdownMenuEntry<CategoryRead>(
+                      value: CategoryRead(
+                        id: "0",
+                        type: "dummy",
+                        attributes: Category(
+                          name: S
+                              .of(context)
+                              .homeTransactionsDialogFilterCategoriesAll,
+                        ),
+                      ),
+                      label: S
+                          .of(context)
+                          .homeTransactionsDialogFilterCategoriesAll,
+                    )
+                  ];
+                  CategoryRead? currentCategory = categoryOptions.first.value;
+                  for (CategoryRead e in snapshot.data!.categories) {
+                    categoryOptions.add(DropdownMenuEntry<CategoryRead>(
+                      value: e,
+                      label: e.attributes.name,
+                    ));
+                    if (filters.category?.id == e.id) {
+                      currentCategory = e;
+                    }
+                  }
+                  child.add(
+                    DropdownMenu<CategoryRead>(
+                      initialSelection: currentCategory,
+                      leadingIcon: const Icon(Icons.money),
+                      label: Text(S.of(context).generalCategory),
+                      dropdownMenuEntries: categoryOptions,
+                      onSelected: (CategoryRead? category) {
+                        if ((category?.id ?? "0") == "0") {
+                          filters.category = null;
+                        } else {
+                          filters.category = category;
                         }
                       },
                     ),

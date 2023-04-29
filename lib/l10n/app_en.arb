@@ -134,6 +134,14 @@
   "@generalBalance": {
     "description": "(Account) Balance"
   },
+  "generalBudget": "Budget",
+  "@generalBudget": {
+    "description": "(Monetary) Budget)"
+  },
+  "generalCategory": "Category",
+  "@generalCategory": {
+    "description": "Category (of transaction etc.)."
+  },
   "generalCurrency": "Currency",
   "@generalCurrency": {
     "description": "(Money) Currency"
@@ -337,6 +345,10 @@
   "homeTransactionsDialogFilterAccountsAll": "<All Accounts>",
   "@homeTransactionsDialogFilterAccountsAll": {
     "description": "Don't filter for a specific account (default entry)"
+  },
+  "homeTransactionsDialogFilterCategoriesAll": "<All Categories>",
+  "@homeTransactionsDialogFilterCategoriesAll": {
+    "description": "Don't filter for a specific category (default entry)"
   },
   "homeTransactionsDialogFilterCurrenciesAll": "<All Currencies>",
   "@homeTransactionsDialogFilterCurrenciesAll": {
@@ -627,14 +639,6 @@
   "transactionFormLabelAccountOwn": "Own account",
   "@transactionFormLabelAccountOwn": {
     "description": "Transaction Form: Label for own account"
-  },
-  "transactionFormLabelBudget": "Budget",
-  "@transactionFormLabelBudget": {
-    "description": "Transaction Form: Label for budget field"
-  },
-  "transactionFormLabelCategory": "Category",
-  "@transactionFormLabelCategory": {
-    "description": "Transaction Form: Label for category field"
   },
   "transactionFormLabelNotes": "Notes",
   "@transactionFormLabelNotes": {

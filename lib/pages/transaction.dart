@@ -1829,7 +1829,7 @@ class TransactionCategory extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: AutoCompleteText<String>(
-            labelText: S.of(context).transactionFormLabelCategory,
+            labelText: S.of(context).generalCategory,
             labelIcon: Icons.assignment,
             textController: textController,
             focusNode: focusNode,
@@ -1941,7 +1941,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
       children: <Widget>[
         Expanded(
           child: AutoCompleteText<AutocompleteBudget>(
-            labelText: S.of(context).transactionFormLabelBudget,
+            labelText: S.of(context).generalBudget,
             labelIcon: Icons.payments,
             textController: widget.textController,
             focusNode: widget.focusNode,

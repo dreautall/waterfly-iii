@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:test/test.dart';
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
@@ -5,6 +6,17 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/extensions.dart';
 
 void main() {
+  group('AlwaysDisabledFocusNode', () {
+    late FocusNode focusNode;
+    setUp(() => focusNode = AlwaysDisabledFocusNode());
+    test('hasFocus', () {
+      expect(focusNode.hasFocus, isFalse);
+    });
+    test('canGetFocus', () {
+      focusNode.requestFocus();
+      expect(focusNode.hasFocus, isFalse);
+    });
+  });
   group('CurrencyFormat', () {
     late CurrencyRead currency;
     setUp(() {

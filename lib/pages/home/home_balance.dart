@@ -110,8 +110,9 @@ class _HomeBalanceState extends State<HomeBalance>
                           (BuildContext context, Function openContainer) =>
                               ListTile(
                         title: Text(account.attributes.name),
-                        subtitle:
-                            Text(account.attributes.accountRole!.friendlyName),
+                        subtitle: Text(account.attributes.accountRole
+                                ?.friendlyName(context) ??
+                            S.of(context).generalUnknown),
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(16),

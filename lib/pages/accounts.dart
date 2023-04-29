@@ -192,25 +192,9 @@ class _AccountDetailsState extends State<AccountDetails>
             late String subtitle;
             switch (widget.accountType) {
               case AccountTypeFilter.asset:
-                switch (account.attributes.accountRole) {
-                  case AccountRoleProperty.cashwalletasset:
-                    subtitle = S.of(context).accountRoleAssetCashWallet;
-                    break;
-                  case AccountRoleProperty.ccasset:
-                    subtitle = S.of(context).accountRoleAssetCC;
-                    break;
-                  case AccountRoleProperty.defaultasset:
-                    subtitle = S.of(context).accountRoleAssetDefault;
-                    break;
-                  case AccountRoleProperty.savingasset:
-                    subtitle = S.of(context).accountRoleAssetSavings;
-                    break;
-                  case AccountRoleProperty.sharedasset:
-                    subtitle = S.of(context).accountRoleAssetShared;
-                    break;
-                  default:
-                    subtitle = S.of(context).generalUnknown;
-                }
+                subtitle =
+                    account.attributes.accountRole?.friendlyName(context) ??
+                        S.of(context).generalUnknown;
                 if (account.attributes.iban != null) {
                   subtitle += "\nIBAN: ${account.attributes.iban!}";
                 }

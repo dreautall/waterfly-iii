@@ -64,6 +64,7 @@
   "homeTabLabelTransactions": "Transaktionen",
   "homeTransactionsActionFilter": "Liste filtern",
   "homeTransactionsDialogFilterAccountsAll": "<Alle Konten>",
+  "homeTransactionsDialogFilterBudgetsAll": "<Alle Budgets>",
   "homeTransactionsDialogFilterCategoriesAll": "<Alle Kategorien>",
   "homeTransactionsDialogFilterCurrenciesAll": "<Alle Währungen>",
   "homeTransactionsDialogFilterSearch": "Suchbegriff",

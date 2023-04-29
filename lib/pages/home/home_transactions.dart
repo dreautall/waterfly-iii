@@ -17,19 +17,29 @@ import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 
 class TransactionFilters with ChangeNotifier {
-  TransactionFilters({this.account, this.text, this.currency, this.category});
+  TransactionFilters({
+    this.account,
+    this.text,
+    this.currency,
+    this.category,
+    this.budget,
+  });
 
   AccountRead? account;
   String? text;
   CurrencyRead? currency;
   CategoryRead? category;
+  BudgetRead? budget;
 
   bool _hasFilters = false;
   bool get hasFilters => _hasFilters;
 
   void updateFilters() {
-    _hasFilters =
-        account != null || text != null || currency != null || category != null;
+    _hasFilters = account != null ||
+        text != null ||
+        currency != null ||
+        category != null ||
+        budget != null;
     debugPrint("notify TransactionFilters, filters? $hasFilters");
     notifyListeners();
   }
@@ -39,12 +49,14 @@ class TransactionFilters with ChangeNotifier {
     String? text,
     CurrencyRead? currency,
     CategoryRead? category,
+    BudgetRead? budget,
   }) =>
       TransactionFilters(
         account: account ?? this.account,
         text: text ?? this.text,
         currency: currency ?? this.currency,
         category: category ?? this.category,
+        budget: budget ?? this.budget,
       );
 }
 
@@ -141,6 +153,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
         if (_filters.category != null) {
           query =
               "category_is:\"${_filters.category!.attributes.name}\" $query";
+        }
+        if (_filters.budget != null) {
+          query = "budget_is:\"${_filters.budget!.attributes.name}\" $query";
         }
         debugPrint("Search query: $query");
         searchFunc = api.v1SearchTransactionsGet(
@@ -460,11 +475,13 @@ class FilterData {
     this.accounts,
     this.currencies,
     this.categories,
+    this.budgets,
   );
 
   final List<AccountRead> accounts;
   final List<CurrencyRead> currencies;
   final List<CategoryRead> categories;
+  final List<BudgetRead> budgets;
 }
 
 class FilterDialog extends StatelessWidget {
@@ -527,10 +544,27 @@ class FilterDialog extends StatelessWidget {
       }
     }
 
+    // Budgets
+    final Response<BudgetArray> respBudgets = await api.v1BudgetsGet();
+    if (!respBudgets.isSuccessful || respBudgets.body == null) {
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(respBudgets.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${respBudgets.error}",
+        );
+      }
+    }
+
     return FilterData(
       respAccounts.body!.data,
       respCurrencies.body!.data,
       respCats.body!.data,
+      respBudgets.body!.data,
     );
   }
 
@@ -720,6 +754,50 @@ class FilterDialog extends StatelessWidget {
                           filters.category = null;
                         } else {
                           filters.category = category;
+                        }
+                      },
+                    ),
+                  );
+                  child.add(const SizedBox(height: 12));
+
+                  // Budget Select
+                  final List<DropdownMenuEntry<BudgetRead>> budgetOptions =
+                      <DropdownMenuEntry<BudgetRead>>[
+                    DropdownMenuEntry<BudgetRead>(
+                      value: BudgetRead(
+                        id: "0",
+                        type: "dummy",
+                        attributes: Budget(
+                          name: S
+                              .of(context)
+                              .homeTransactionsDialogFilterBudgetsAll,
+                        ),
+                      ),
+                      label:
+                          S.of(context).homeTransactionsDialogFilterBudgetsAll,
+                    )
+                  ];
+                  BudgetRead? currentBudget = budgetOptions.first.value;
+                  for (BudgetRead e in snapshot.data!.budgets) {
+                    budgetOptions.add(DropdownMenuEntry<BudgetRead>(
+                      value: e,
+                      label: e.attributes.name,
+                    ));
+                    if (filters.budget?.id == e.id) {
+                      currentBudget = e;
+                    }
+                  }
+                  child.add(
+                    DropdownMenu<BudgetRead>(
+                      initialSelection: currentBudget,
+                      leadingIcon: const Icon(Icons.money),
+                      label: Text(S.of(context).generalCategory),
+                      dropdownMenuEntries: budgetOptions,
+                      onSelected: (BudgetRead? budget) {
+                        if ((budget?.id ?? "0") == "0") {
+                          filters.budget = null;
+                        } else {
+                          filters.budget = budget;
                         }
                       },
                     ),

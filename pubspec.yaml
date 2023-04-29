@@ -29,7 +29,7 @@ dependencies:
   open_filex: ^4.3.2
   file_picker: ^5.2.9
   animations: ^2.0.7
-  flutter_local_notifications: ^13.0.0
+  flutter_local_notifications: ^14.0.0+1
   notifications_listener_service:
     git: https://github.com/dreautall/notification_listener_service.git
   device_apps: ^2.2.0

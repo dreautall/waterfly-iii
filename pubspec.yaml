@@ -45,6 +45,7 @@ dev_dependencies:
   json_serializable: ^6.6.0
   swagger_dart_code_generator: ^2.10.4
   flutter_native_splash: ^2.2.19
+  test: any
 
 flutter:
   uses-material-design: true

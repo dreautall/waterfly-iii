@@ -8,6 +8,7 @@ import 'package:waterflyiii/extensions.dart';
 void main() {
   group('AlwaysDisabledFocusNode', () {
     late FocusNode focusNode;
+
     setUp(() => focusNode = AlwaysDisabledFocusNode());
     test('hasFocus', () {
       expect(focusNode.hasFocus, isFalse);
@@ -19,6 +20,7 @@ void main() {
   });
   group('CurrencyFormat', () {
     late CurrencyRead currency;
+
     setUp(() {
       currency = CurrencyRead(
         id: '1234',
@@ -54,6 +56,35 @@ void main() {
           '1.235\u{00A0}TST');
       expect(currency.fmt(1234.5678, locale: 'de', forceCode: true),
           '1.234,568\u{00A0}TEST');
+    });
+  });
+
+  group('DateTimeExtension', () {
+    late DateTime dt1;
+    late DateTime dt2;
+    late TimeOfDay tod1;
+    late TimeOfDay tod2;
+    setUp(() {
+      dt1 = DateTime(2017, 9, 7, 17, 30, 15, 20, 25);
+      dt2 = DateTime(2017, 9, 7);
+      tod1 = const TimeOfDay(hour: 1, minute: 2);
+      tod2 = const TimeOfDay(hour: 23, minute: 59);
+    });
+    test('setTimeOfDay', () {
+      expect(TimeOfDay.fromDateTime(dt1.setTimeOfDay(tod1)), tod1);
+      expect(TimeOfDay.fromDateTime(dt2.setTimeOfDay(tod2)), tod2);
+    });
+    test('setTime', () {
+      expect(TimeOfDay.fromDateTime(dt1.setTime(hours: 1, minutes: 2)), tod1);
+      expect(TimeOfDay.fromDateTime(dt2.setTime(hours: 23, minutes: 59)), tod2);
+    });
+    test('clearTime', () {
+      expect(TimeOfDay.fromDateTime(dt1.clearTime()),
+          const TimeOfDay(hour: 0, minute: 0));
+    });
+    test('getTimeOfDay', () {
+      expect(dt1.setTimeOfDay(tod1).getTimeOfDay(), tod1);
+      expect(dt2.setTimeOfDay(tod2).getTimeOfDay(), tod2);
     });
   });
 }

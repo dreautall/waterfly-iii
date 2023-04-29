@@ -50,7 +50,11 @@ class SettingsPageState extends State<SettingsPage>
           title: Text(S.of(context).settingsTheme),
           subtitle: Text(
             S.of(context).settingsThemeValue(
-                  settings.getTheme.toString().split('.').last,
+                  context
+                      .select((SettingsProvider s) => s.getTheme)
+                      .toString()
+                      .split('.')
+                      .last,
                 ),
           ),
           leading: const CircleAvatar(

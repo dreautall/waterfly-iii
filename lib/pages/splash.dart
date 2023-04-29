@@ -8,11 +8,6 @@ import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/widgets/logo.dart';
 
-enum SplashState {
-  login,
-  error,
-}
-
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key, this.host, this.apiKey}) : super(key: key);
 

@@ -28,7 +28,7 @@ extension CurrencyFormat on CurrencyRead {
         name: "",
         symbol: "",
         decimalDigits: attributes.decimalPlaces,
-      ).format(0);
+      ).format(0).trim();
 }
 
 extension AccountRole on AccountRoleProperty {

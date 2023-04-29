@@ -346,6 +346,10 @@
   "@homeTransactionsDialogFilterAccountsAll": {
     "description": "Don't filter for a specific account (default entry)"
   },
+  "homeTransactionsDialogFilterBudgetsAll": "<All Budgets>",
+  "@homeTransactionsDialogFilterBudgetsAll": {
+    "description": "Don't filter for a specific budget (default entry)"
+  },
   "homeTransactionsDialogFilterCategoriesAll": "<All Categories>",
   "@homeTransactionsDialogFilterCategoriesAll": {
     "description": "Don't filter for a specific category (default entry)"

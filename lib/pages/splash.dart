@@ -169,23 +169,25 @@ class _SplashPageState extends State<SplashPage> {
       );
     }
 
-    return SafeArea(
-      child: Center(
-        child: ListView(
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(24),
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                const SizedBox(height: 20),
-                const AppLogo(),
-                const SizedBox(height: 20),
-                AnimatedHeight(
-                  child: page,
-                ),
-              ],
-            ),
-          ],
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: ListView(
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(24),
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  const SizedBox(height: 20),
+                  const AppLogo(),
+                  const SizedBox(height: 20),
+                  AnimatedHeight(
+                    child: page,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

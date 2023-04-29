@@ -570,6 +570,7 @@ class FilterDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("FilterDialog build()");
     return AlertDialog(
       icon: const Icon(Icons.tune),
       title: Text(S.of(context).homeTransactionsDialogFilterTitle),
@@ -598,6 +599,7 @@ class FilterDialog extends StatelessWidget {
                   (BuildContext context, AsyncSnapshot<FilterData> snapshot) {
                 if (snapshot.hasData && snapshot.data != null) {
                   List<Widget> child = <Widget>[];
+                  debugPrint("FilterDialog->FutureBuilder build()");
 
                   // Search Term
                   child.add(
@@ -746,7 +748,7 @@ class FilterDialog extends StatelessWidget {
                   child.add(
                     DropdownMenu<CategoryRead>(
                       initialSelection: currentCategory,
-                      leadingIcon: const Icon(Icons.money),
+                      leadingIcon: const Icon(Icons.assignment),
                       label: Text(S.of(context).generalCategory),
                       dropdownMenuEntries: categoryOptions,
                       onSelected: (CategoryRead? category) {
@@ -790,7 +792,7 @@ class FilterDialog extends StatelessWidget {
                   child.add(
                     DropdownMenu<BudgetRead>(
                       initialSelection: currentBudget,
-                      leadingIcon: const Icon(Icons.money),
+                      leadingIcon: const Icon(Icons.payments),
                       label: Text(S.of(context).generalCategory),
                       dropdownMenuEntries: budgetOptions,
                       onSelected: (BudgetRead? budget) {

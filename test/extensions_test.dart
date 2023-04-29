@@ -33,7 +33,7 @@ void main() {
     });
     test('zero', () {
       expect(currency.zero(locale: 'en'), '0.000');
-      expect(currency.zero(locale: 'en'), '0,000');
+      expect(currency.zero(locale: 'de'), '0,000');
     });
     test('fmt locale = en', () {
       expect(currency.fmt(1234, locale: 'en'), 'TST1,234.000');

@@ -596,8 +596,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "24aca93f341427338f1546080e6b37eee8e4dc38"
+      ref: "280a7b869fe57c81dd1842cd08fa16045d828f0a"
+      resolved-ref: "280a7b869fe57c81dd1842cd08fa16045d828f0a"
       url: "https://github.com/dreautall/notification_listener_service.git"
     source: git
     version: "0.0.2"

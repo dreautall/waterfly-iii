@@ -1,0 +1,2 @@
+- Neue Filter-Möglichkeiten für die Transations-Liste!
+- Verschiedene Fehler-Behebungen

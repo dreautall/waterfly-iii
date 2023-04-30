@@ -1,0 +1,2 @@
+- New filter options for transactions!
+- Misc bug fixes

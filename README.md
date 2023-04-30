@@ -21,7 +21,7 @@ The app is still pretty much work in progress, but basic features already do wor
   - Multiple charts for the current balance & recent history
   - Budget overview for last 30 days
 - Transactions
-  - List transactions by date, including (basic) filters
+  - List transactions by date, including filters
   - Add & edit transactions with autocomplete, including attachments, split transactions & multi currency support
 - Balance Sheet
   - List invididual balances

@@ -290,68 +290,86 @@ class _TransactionPageState extends State<TransactionPage>
           final SettingsProvider settings = context.read<SettingsProvider>();
 
           debugPrint("Got notification ${widget.notification}");
+          late CurrencyRead? currency;
+          double amount = 0;
 
-          final RegExpMatch? match =
-              rFindMoney.firstMatch(widget.notification!.body);
-          if (match == null) {
-            debugPrint("regex did not match");
-            return;
-          }
-          CurrencyRead? currency;
-          String currencyStr = match.namedGroup("preCurrency") ?? "";
-          String currencyStrAlt = match.namedGroup("postCurrency") ?? "";
-          if (currencyStr.isEmpty) {
-            currencyStr = currencyStrAlt;
-          }
-          if (currencyStr.isEmpty) {
-            debugPrint("no currency found");
-          }
-          if (_localCurrency!.attributes.code == currencyStr ||
-              _localCurrency!.attributes.symbol == currencyStr ||
-              _localCurrency!.attributes.code == currencyStrAlt ||
-              _localCurrency!.attributes.symbol == currencyStrAlt) {
-            currency = _localCurrency;
-          } else {
-            final Response<CurrencyArray> response =
-                await api.v1CurrenciesGet();
-            if (!response.isSuccessful || response.body == null) {
-              debugPrint("api currency fetch failed");
-              return;
-            }
-            for (CurrencyRead cur in response.body!.data) {
-              if (cur.attributes.code == currencyStr ||
-                  cur.attributes.symbol == currencyStr ||
-                  cur.attributes.code == currencyStrAlt ||
-                  cur.attributes.symbol == currencyStrAlt) {
-                currency = cur;
+          // Try to extract some money
+          final Iterable<RegExpMatch> matches =
+              rFindMoney.allMatches(widget.notification!.body);
+          if (matches.isNotEmpty) {
+            RegExpMatch? validMatch;
+            for (RegExpMatch match
+                in matches.toList(growable: false).reversed) {
+              if ((match.namedGroup("postCurrency")?.isNotEmpty ?? false) &&
+                  (match.namedGroup("preCurrency")?.isNotEmpty ?? false)) {
+                validMatch = match;
                 break;
               }
             }
-          }
-          // Check if string has a decimal separator
-          late double amount;
-          final String amountStr = match.namedGroup("amount") ?? "";
-          final String decimalSep =
-              amountStr.length >= 3 ? amountStr[amountStr.length - 3] : "";
-          if (decimalSep == "," || decimalSep == ".") {
-            final double wholes = double.tryParse(amountStr
-                    .substring(0, amountStr.length - 3)
-                    .replaceAll(",", "")
-                    .replaceAll(".", "")) ??
-                0;
-            final double dec = double.tryParse(amountStr
-                    .substring(amountStr.length - 2)
-                    .replaceAll(",", "")
-                    .replaceAll(".", "")) ??
-                0;
-            amount = wholes + dec / 100;
+            if (validMatch != null) {
+              // extract currency
+              String currencyStr = validMatch.namedGroup("preCurrency") ?? "";
+              String currencyStrAlt =
+                  validMatch.namedGroup("postCurrency") ?? "";
+              if (currencyStr.isEmpty) {
+                currencyStr = currencyStrAlt;
+              }
+              if (currencyStr.isEmpty) {
+                debugPrint("no currency found");
+              }
+              if (_localCurrency!.attributes.code == currencyStr ||
+                  _localCurrency!.attributes.symbol == currencyStr ||
+                  _localCurrency!.attributes.code == currencyStrAlt ||
+                  _localCurrency!.attributes.symbol == currencyStrAlt) {
+              } else {
+                final Response<CurrencyArray> response =
+                    await api.v1CurrenciesGet();
+                if (!response.isSuccessful || response.body == null) {
+                  debugPrint("api currency fetch failed");
+                } else {
+                  for (CurrencyRead cur in response.body!.data) {
+                    if (cur.attributes.code == currencyStr ||
+                        cur.attributes.symbol == currencyStr ||
+                        cur.attributes.code == currencyStrAlt ||
+                        cur.attributes.symbol == currencyStrAlt) {
+                      currency = cur;
+                      break;
+                    }
+                  }
+                }
+              }
+              // extract amount
+              // Check if string has a decimal separator
+              final String amountStr = validMatch.namedGroup("amount") ?? "";
+              final String decimalSep =
+                  amountStr.length >= 3 ? amountStr[amountStr.length - 3] : "";
+              if (decimalSep == "," || decimalSep == ".") {
+                final double wholes = double.tryParse(amountStr
+                        .substring(0, amountStr.length - 3)
+                        .replaceAll(",", "")
+                        .replaceAll(".", "")) ??
+                    0;
+                final double dec = double.tryParse(amountStr
+                        .substring(amountStr.length - 2)
+                        .replaceAll(",", "")
+                        .replaceAll(".", "")) ??
+                    0;
+                amount = wholes + dec / 100;
+              } else {
+                amount = double.tryParse(
+                        amountStr.replaceAll(",", "").replaceAll(".", "")) ??
+                    0;
+              }
+            } else {
+              debugPrint("no currency was found");
+            }
           } else {
-            amount = double.tryParse(
-                    amountStr.replaceAll(",", "").replaceAll(".", "")) ??
-                0;
+            debugPrint("regex did not match");
           }
+          // Fallback solution
+          currency ??= _localCurrency;
 
-          // Sanity checks passed, set title & date
+          // Set title & date
           _titleTextController.text = widget.notification!.title;
           _date = widget.notification!.date;
           _dateTextController.text = DateFormat.yMMMMd().format(_date);

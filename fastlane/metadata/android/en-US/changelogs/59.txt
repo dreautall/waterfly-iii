@@ -1,0 +1,1 @@
+- The app should now be compatible with phones starting from Android 5 (Lollipop).

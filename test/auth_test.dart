@@ -82,7 +82,7 @@ void main() {
           if (invocation.positionalArguments[0] ==
               HttpHeaders.authorizationHeader) {
             final String apiKey = invocation.positionalArguments[1];
-            if (!apiKey.startsWith('Bearer valid-')) {
+            if (apiKey.startsWith('Bearer invalid-')) {
               when(response.statusCode).thenReturn(HttpStatus.movedPermanently);
               when(response.isRedirect).thenReturn(true);
             }
@@ -112,7 +112,7 @@ void main() {
     });
     test('create', () async {
       final AuthUser user =
-          await AuthUser.create('mock://fake.host', 'valid-api-key');
+          await AuthUser.create('mock://fake.host', 'api-key');
       expect(user.host, Uri.parse("mock://fake.host/api"));
       expect(user.api, isA<FireflyIii>());
     });

@@ -29,29 +29,29 @@ class MockHttpOverrides extends HttpOverrides {
 }
 
 void main() {
-  group('AuthError', () {
-    test('AuthErrorHost', () {
-      const AuthError err = AuthErrorHost('test.host');
+  group("AuthError", () {
+    test("AuthErrorHost", () {
+      const AuthError err = AuthErrorHost("test.host");
       expect(err, isException);
       expect(err.cause, "Invalid host");
     });
-    test('AuthErrorApiKey', () {
+    test("AuthErrorApiKey", () {
       const AuthError err = AuthErrorApiKey();
       expect(err, isException);
       expect(err.cause, "Invalid API key");
     });
-    test('AuthErrorStatusCode', () {
+    test("AuthErrorStatusCode", () {
       const AuthError err = AuthErrorStatusCode(500);
       expect(err, isException);
       expect(err.cause, "Unexpected HTTP status code");
     });
-    test('AuthErrorNoInstance', () {
-      const AuthError err = AuthErrorNoInstance('test.host');
+    test("AuthErrorNoInstance", () {
+      const AuthError err = AuthErrorNoInstance("test.host");
       expect(err, isException);
       expect(err.cause, "Not a valid Firefly III instance");
     });
   });
-  group('AuthUser', () {
+  group("AuthUser", () {
     setUpAll(() {
       HttpOverrides.global = MockHttpOverrides();
 
@@ -61,15 +61,15 @@ void main() {
         int code = HttpStatus.ok;
         // RESPONSES START
         if (url.host.startsWith("invalid")) {
-          body = 'INVALID';
+          body = "INVALID";
         } else if (url.host.startsWith("error400")) {
           code = HttpStatus.badRequest;
-          body = 'HTTP 400';
+          body = "HTTP 400";
         } else if (url.path.endsWith("/api/v1/about")) {
           body =
               '{"data": {"version": "6.0.9","api_version": "2.0.1","php_version": "8.2.5","os": "Linux","driver": "mysql"}}';
         } else {
-          body = '404';
+          body = "404";
         }
         // RESPONSES END
         final MockHttpClientRequest request = MockHttpClientRequest();
@@ -84,7 +84,7 @@ void main() {
           if (invocation.positionalArguments[0] ==
               HttpHeaders.authorizationHeader) {
             final String apiKey = invocation.positionalArguments[1];
-            if (apiKey.startsWith('Bearer invalid-')) {
+            if (apiKey.startsWith("Bearer invalid-")) {
               when(response.statusCode).thenReturn(HttpStatus.movedPermanently);
               when(response.isRedirect).thenReturn(true);
             }
@@ -95,10 +95,10 @@ void main() {
         });
 
         when(response.headers).thenReturn(MockHttpHeaders());
-        when(response.handleError(any, test: anyNamed('test')))
+        when(response.handleError(any, test: anyNamed("test")))
             .thenAnswer((_) => Stream<List<int>>.value(utf8.encode(body)));
         when(response.statusCode).thenReturn(code);
-        when(response.reasonPhrase).thenReturn('OK');
+        when(response.reasonPhrase).thenReturn("OK");
         when(response.contentLength).thenReturn(body.length);
         when(response.isRedirect).thenReturn(false);
         when(response.persistentConnection).thenReturn(false);
@@ -112,47 +112,49 @@ void main() {
         return Future<HttpClientRequest>.value(request);
       });
     });
-    test('create', () async {
+    group("create", () {
+      test("success", () async {
+        final AuthUser user =
+            await AuthUser.create("mock://fake.host", "api-key");
+        expect(user.host, equals(Uri.parse("mock://fake.host/api")));
+        expect(user.api, isA<FireflyIii>());
+        expect(
+          user.headers(),
+          containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
+        );
+        expect(
+          user.headers(),
+          containsPair(HttpHeaders.acceptHeader, "application/json"),
+        );
+      });
+      test("invalid host", () async {
+        await expectLater(
+          AuthUser.create("::INVALID-HOST::", "api-key"),
+          throwsA(isA<AuthErrorHost>()),
+        );
+      });
+      test("no firefly instance", () async {
+        await expectLater(
+          AuthUser.create("mock://invalid.host", "api-key"),
+          throwsA(isA<AuthErrorNoInstance>()),
+        );
+      });
+      test("http response 400", () async {
+        await expectLater(
+          AuthUser.create("mock://error400.host", "api-key"),
+          throwsA(isA<AuthErrorStatusCode>()),
+        );
+      });
+      test("invalid api key", () async {
+        await expectLater(
+          AuthUser.create("mock://fake.host", "invalid-api-key"),
+          throwsA(isA<AuthErrorApiKey>()),
+        );
+      });
+    });
+    test("headers", () async {
       final AuthUser user =
-          await AuthUser.create('mock://fake.host', 'api-key');
-      expect(user.host, equals(Uri.parse("mock://fake.host/api")));
-      expect(user.api, isA<FireflyIii>());
-      expect(
-        user.headers(),
-        containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
-      );
-      expect(
-        user.headers(),
-        containsPair(HttpHeaders.acceptHeader, "application/json"),
-      );
-    });
-    test('create: invalid host', () async {
-      await expectLater(
-        AuthUser.create('::INVALID-HOST::', 'api-key'),
-        throwsA(isA<AuthErrorHost>()),
-      );
-    });
-    test('create: no firefly instance', () async {
-      await expectLater(
-        AuthUser.create('mock://invalid.host', 'api-key'),
-        throwsA(isA<AuthErrorNoInstance>()),
-      );
-    });
-    test('create: http response 400', () async {
-      await expectLater(
-        AuthUser.create('mock://error400.host', 'api-key'),
-        throwsA(isA<AuthErrorStatusCode>()),
-      );
-    });
-    test('create: invalid api key', () async {
-      await expectLater(
-        AuthUser.create('mock://fake.host', 'invalid-api-key'),
-        throwsA(isA<AuthErrorApiKey>()),
-      );
-    });
-    test('headers', () async {
-      final AuthUser user =
-          await AuthUser.create('mock://fake.host', 'api-key');
+          await AuthUser.create("mock://fake.host", "api-key");
       expect(
         user.headers(),
         containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
@@ -164,7 +166,7 @@ void main() {
     });
   });
 
-  group('FireflyService', () {
+  group("FireflyService", () {
     late FireflyService service;
     setUpAll(() {
       HttpOverrides.global = MockHttpOverrides();
@@ -182,10 +184,10 @@ void main() {
         int code = HttpStatus.ok;
         // RESPONSES START
         if (url.host.startsWith("invalid")) {
-          body = 'INVALID';
+          body = "INVALID";
         } else if (url.host.startsWith("error400")) {
           code = HttpStatus.badRequest;
-          body = 'HTTP 400';
+          body = "HTTP 400";
         } else if (url.path.endsWith("/api/v1/about")) {
           body =
               '{"data": {"version": "6.0.9","api_version": "2.0.1","php_version": "8.2.5","os": "Linux","driver": "mysql"}}';
@@ -193,7 +195,7 @@ void main() {
           body =
               '{"data": {"type": "currencies","id": "1","attributes": {"created_at": "2023-05-01T14:04:19+02:00","updated_at": "2023-05-01T14:04:19+02:00","default": true,"enabled": true,"name": "Euro","code": "EUR","symbol": "€","decimal_places": 2},"links": {"0": {"rel": "self","uri": "/currencies/1"},"self": "https://demo.firefly-iii.org/api/v1/currencies/1"}}}';
         } else {
-          body = '404';
+          body = "404";
         }
         // RESPONSES END
         final MockHttpClientRequest request = MockHttpClientRequest();
@@ -208,7 +210,7 @@ void main() {
           if (invocation.positionalArguments[0] ==
               HttpHeaders.authorizationHeader) {
             final String apiKey = invocation.positionalArguments[1];
-            if (apiKey.startsWith('Bearer invalid-')) {
+            if (apiKey.startsWith("Bearer invalid-")) {
               when(response.statusCode).thenReturn(HttpStatus.movedPermanently);
               when(response.isRedirect).thenReturn(true);
             }
@@ -219,10 +221,10 @@ void main() {
         });
 
         when(response.headers).thenReturn(MockHttpHeaders());
-        when(response.handleError(any, test: anyNamed('test')))
+        when(response.handleError(any, test: anyNamed("test")))
             .thenAnswer((_) => Stream<List<int>>.value(utf8.encode(body)));
         when(response.statusCode).thenReturn(code);
-        when(response.reasonPhrase).thenReturn('OK');
+        when(response.reasonPhrase).thenReturn("OK");
         when(response.contentLength).thenReturn(body.length);
         when(response.isRedirect).thenReturn(false);
         when(response.persistentConnection).thenReturn(false);

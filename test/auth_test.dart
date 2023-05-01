@@ -115,6 +115,14 @@ void main() {
           await AuthUser.create('mock://fake.host', 'api-key');
       expect(user.host, Uri.parse("mock://fake.host/api"));
       expect(user.api, isA<FireflyIii>());
+      expect(
+        user.headers(),
+        containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
+      );
+      expect(
+        user.headers(),
+        containsPair(HttpHeaders.acceptHeader, "application/json"),
+      );
     });
     test('create: invalid host', () async {
       await expectLater(
@@ -138,6 +146,18 @@ void main() {
       await expectLater(
         AuthUser.create('mock://fake.host', 'invalid-api-key'),
         throwsA(isA<AuthErrorApiKey>()),
+      );
+    });
+    test('headers', () async {
+      final AuthUser user =
+          await AuthUser.create('mock://fake.host', 'api-key');
+      expect(
+        user.headers(),
+        containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
+      );
+      expect(
+        user.headers(),
+        containsPair(HttpHeaders.acceptHeader, "application/json"),
       );
     });
   });

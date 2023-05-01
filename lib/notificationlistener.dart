@@ -76,11 +76,23 @@ void nlCallback() async {
       return;
     }
 
-    final RegExpMatch? match = rFindMoney.firstMatch(evt?.text ?? "");
-    if (match == null ||
-        ((match.namedGroup("postCurrency")?.isEmpty ?? true) &&
-            (match.namedGroup("preCurrency")?.isEmpty ?? true))) {
+    final Iterable<RegExpMatch> matches =
+        rFindMoney.allMatches(evt?.text ?? "");
+    if (matches.isEmpty) {
       debugPrint("nlCallback(): no money found");
+      return;
+    }
+
+    bool validMatch = false;
+    for (RegExpMatch match in matches) {
+      if ((match.namedGroup("postCurrency")?.isNotEmpty ?? false) &&
+          (match.namedGroup("preCurrency")?.isNotEmpty ?? false)) {
+        validMatch = true;
+        break;
+      }
+    }
+    if (!validMatch) {
+      debugPrint("nlCallback(): no money with currency found");
       return;
     }
 

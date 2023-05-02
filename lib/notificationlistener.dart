@@ -85,7 +85,7 @@ void nlCallback() async {
 
     bool validMatch = false;
     for (RegExpMatch match in matches) {
-      if ((match.namedGroup("postCurrency")?.isNotEmpty ?? false) &&
+      if ((match.namedGroup("postCurrency")?.isNotEmpty ?? false) ||
           (match.namedGroup("preCurrency")?.isNotEmpty ?? false)) {
         validMatch = true;
         break;

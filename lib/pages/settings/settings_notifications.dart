@@ -437,7 +437,10 @@ class AppDialogEntry extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<Application?> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.data == null) {
-            return const SizedBox.shrink();
+            // TEMP: show all apps
+            return ListTile(title: Text(app));
+            // END TEMP
+            //return const SizedBox.shrink();
           }
           late Widget leading;
           try {
@@ -448,7 +451,6 @@ class AppDialogEntry extends StatelessWidget {
             leading = const Icon(Icons.api);
           }
           return ListTile(
-            // :TODO: check for a library that can fetch the app icon
             leading: CircleAvatar(
               child: leading,
             ),

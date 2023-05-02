@@ -300,7 +300,7 @@ class _TransactionPageState extends State<TransactionPage>
             RegExpMatch? validMatch;
             for (RegExpMatch match
                 in matches.toList(growable: false).reversed) {
-              if ((match.namedGroup("postCurrency")?.isNotEmpty ?? false) &&
+              if ((match.namedGroup("postCurrency")?.isNotEmpty ?? false) ||
                   (match.namedGroup("preCurrency")?.isNotEmpty ?? false)) {
                 validMatch = match;
                 break;

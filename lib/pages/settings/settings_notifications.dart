@@ -437,10 +437,7 @@ class AppDialogEntry extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<Application?> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.data == null) {
-            // TEMP: show all apps
-            return ListTile(title: Text(app));
-            // END TEMP
-            //return const SizedBox.shrink();
+            return const SizedBox.shrink();
           }
           late Widget leading;
           try {

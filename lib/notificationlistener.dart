@@ -79,7 +79,7 @@ void nlCallback() async {
     final Iterable<RegExpMatch> matches =
         rFindMoney.allMatches(evt?.text ?? "");
     if (matches.isEmpty) {
-      debugPrint("nlCallback(): no money found");
+      debugPrint("nlCallback(${evt?.packageName}): no money found");
       return;
     }
 
@@ -92,7 +92,8 @@ void nlCallback() async {
       }
     }
     if (!validMatch) {
-      debugPrint("nlCallback(): no money with currency found");
+      debugPrint(
+          "nlCallback(${evt?.packageName}): no money with currency found");
       return;
     }
 
@@ -100,7 +101,7 @@ void nlCallback() async {
 
     if (!(await SettingsProvider().notificationUsedApps(forceReload: true))
         .contains(evt?.packageName ?? "")) {
-      debugPrint("nlCallback(): app not used");
+      debugPrint("nlCallback(${evt?.packageName}): app not used");
       return;
     }
 

@@ -1257,7 +1257,7 @@ class _TransactionPageState extends State<TransactionPage>
               ),
               MenuItemButton(
                 leadingIcon: const Icon(Icons.swap_horiz),
-                child: Text(S.of(context).transactionTypeDeposit),
+                child: Text(S.of(context).transactionTypeTransfer),
                 onPressed: () {
                   if (_transactionType == TransactionTypeProperty.transfer) {
                     return;

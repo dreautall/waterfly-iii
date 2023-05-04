@@ -17,6 +17,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/transaction/transaction_attachments.dart';
 import 'package:waterflyiii/pages/transaction/transaction_currencies.dart';
+import 'package:waterflyiii/pages/transaction/transaction_delete.dart';
 import 'package:waterflyiii/pages/transaction/transaction_tags.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
@@ -763,28 +764,8 @@ class _TransactionPageState extends State<TransactionPage>
                 final NavigatorState nav = Navigator.of(context);
                 bool? ok = await showDialog<bool>(
                   context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    icon: const Icon(Icons.delete),
-                    title: Text(S.of(context).transactionTitleDelete),
-                    clipBehavior: Clip.hardEdge,
-                    actions: <Widget>[
-                      TextButton(
-                        child: Text(MaterialLocalizations.of(context)
-                            .cancelButtonLabel),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      FilledButton(
-                        child: Text(MaterialLocalizations.of(context)
-                            .deleteButtonTooltip),
-                        onPressed: () {
-                          Navigator.of(context).pop(true);
-                        },
-                      ),
-                    ],
-                    content: Text(S.of(context).transactionDeleteConfirm),
-                  ),
+                  builder: (BuildContext context) =>
+                      const DeletionConfirmDialog(),
                 );
                 if (!(ok ?? false)) {
                   return;

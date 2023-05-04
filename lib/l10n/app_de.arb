@@ -120,6 +120,7 @@
   "transactionDialogTagsAdd": "Schlagwort hinzufügen",
   "transactionDialogTagsHint": "Schlagwort suchen/hinzufügen",
   "transactionDialogTagsTitle": "Schlagwörter auswählen",
+  "transactionDuplicate": "Duplizieren",
   "transactionErrorInvalidAccount": "Ungültiges Konto",
   "transactionErrorInvalidBudget": "Ungültiges Budget",
   "transactionErrorSaveFirst": "Bitte speichere die Transaktion zuerst.",

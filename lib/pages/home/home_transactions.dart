@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -376,6 +377,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
         onLongPressStart: (LongPressStartDetails details) async {
           final Size screenSize = MediaQuery.of(context).size;
           final Offset offset = details.globalPosition;
+          HapticFeedback.vibrate();
           final Function? func = await showMenu<Function>(
             context: context,
             position: RelativeRect.fromLTRB(

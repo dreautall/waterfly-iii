@@ -295,7 +295,7 @@ class _TransactionPageState extends State<TransactionPage>
           final SettingsProvider settings = context.read<SettingsProvider>();
 
           debugPrint("Got notification ${widget.notification}");
-          late CurrencyRead? currency;
+          CurrencyRead? currency;
           double amount = 0;
 
           // Try to extract some money

@@ -620,6 +620,10 @@
   "@transactionDialogTagsTitle": {
     "description": "Dialog Title: Select Tags"
   },
+  "transactionDuplicate": "Duplicate",
+  "@transactionDuplicate": {
+    "description": "Menu Label: Duplicate item"
+  },
   "transactionErrorInvalidAccount": "Invalid Account",
   "@transactionErrorInvalidAccount": {
     "description": "Transaction Save Error: Invalid account"

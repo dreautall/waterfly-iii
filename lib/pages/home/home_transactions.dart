@@ -15,6 +15,7 @@ import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/transaction.dart';
+import 'package:waterflyiii/pages/transaction/transaction_delete.dart';
 
 class TransactionFilters with ChangeNotifier {
   TransactionFilters({
@@ -370,74 +371,135 @@ class _HomeTransactionsState extends State<HomeTransactions>
         ),
       ),
       closedElevation: 0,
-      closedBuilder: (BuildContext context, Function openContainer) => ListTile(
-        leading: CircleAvatar(
-          foregroundColor: Colors.white,
-          backgroundColor: transactions.first.type.color,
-          child: Icon(transactions.first.type.icon),
-        ),
-        title: Text(
-          title,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        subtitle: RichText(
-          overflow: TextOverflow.ellipsis,
-          maxLines: 2,
-          text: TextSpan(
-            style: Theme.of(context).textTheme.bodyMedium,
-            children: subtitle,
-          ),
-        ),
-        isThreeLine: true,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            bottomLeft: Radius.circular(16),
-          ),
-        ),
-        trailing: RichText(
-          textAlign: TextAlign.end,
-          maxLines: 2,
-          text: TextSpan(
-            style: Theme.of(context).textTheme.bodyMedium,
-            children: <InlineSpan>[
-              if (foreignText.isNotEmpty)
-                TextSpan(
-                  text: foreignText,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Colors.blue,
-                      ),
-                ),
-              TextSpan(
-                text: currency.fmt(amount),
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: transactions.first.type.color,
-                  fontFeatures: const <FontFeature>[
-                    FontFeature.tabularFigures()
+      closedBuilder: (BuildContext context, Function openContainer) =>
+          GestureDetector(
+        onLongPressStart: (LongPressStartDetails details) async {
+          final Size screenSize = MediaQuery.of(context).size;
+          final Offset offset = details.globalPosition;
+          final Function? func = await showMenu<Function>(
+            context: context,
+            position: RelativeRect.fromLTRB(
+              offset.dx,
+              offset.dy,
+              screenSize.width - offset.dx,
+              screenSize.height - offset.dy,
+            ),
+            items: <PopupMenuEntry<Function>>[
+              PopupMenuItem<Function>(
+                value: () {
+                  // :TODO:
+                },
+                child: Row(
+                  children: <Widget>[
+                    const Icon(Icons.copy),
+                    const SizedBox(width: 12),
+                    Text(S.of(context).transactionDuplicate),
                   ],
                 ),
               ),
-              const TextSpan(text: "\n"),
-              if (reconciled)
-                const WidgetSpan(
-                  baseline: TextBaseline.ideographic,
-                  alignment: PlaceholderAlignment.middle,
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 2),
-                    child: Icon(Icons.check),
-                  ),
+              const PopupMenuDivider(),
+              PopupMenuItem<Function>(
+                value: () async {
+                  final FireflyIii api = context.read<FireflyService>().api;
+                  bool? ok = await showDialog<bool>(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        const DeletionConfirmDialog(),
+                  );
+                  if (!(ok ?? false)) {
+                    return;
+                  }
+
+                  await api.v1TransactionsIdDelete(
+                    id: item.id,
+                  );
+                  _pagingController.refresh();
+                },
+                child: Row(
+                  children: <Widget>[
+                    const Icon(Icons.delete),
+                    const SizedBox(width: 12),
+                    Text(MaterialLocalizations.of(context).deleteButtonTooltip),
+                  ],
                 ),
-              TextSpan(
-                text:
-                    (transactions.first.type == TransactionTypeProperty.deposit)
-                        ? destinationName
-                        : sourceName,
               ),
             ],
+            clipBehavior: Clip.hardEdge,
+          );
+          if (func == null) {
+            return;
+          }
+          func();
+        },
+        child: ListTile(
+          leading: CircleAvatar(
+            foregroundColor: Colors.white,
+            backgroundColor: transactions.first.type.color,
+            child: Icon(transactions.first.type.icon),
           ),
+          title: Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subtitle: RichText(
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+            text: TextSpan(
+              style: Theme.of(context).textTheme.bodyMedium,
+              children: subtitle,
+            ),
+          ),
+          isThreeLine: true,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              bottomLeft: Radius.circular(16),
+            ),
+          ),
+          trailing: RichText(
+            textAlign: TextAlign.end,
+            maxLines: 2,
+            text: TextSpan(
+              style: Theme.of(context).textTheme.bodyMedium,
+              children: <InlineSpan>[
+                if (foreignText.isNotEmpty)
+                  TextSpan(
+                    text: foreignText,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: Colors.blue,
+                        ),
+                  ),
+                TextSpan(
+                  text: currency.fmt(amount),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: transactions.first.type.color,
+                    fontFeatures: const <FontFeature>[
+                      FontFeature.tabularFigures()
+                    ],
+                  ),
+                ),
+                const TextSpan(text: "\n"),
+                if (reconciled)
+                  const WidgetSpan(
+                    baseline: TextBaseline.ideographic,
+                    alignment: PlaceholderAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 2),
+                      child: Icon(Icons.check),
+                    ),
+                  ),
+                TextSpan(
+                  text: (transactions.first.type ==
+                          TransactionTypeProperty.deposit)
+                      ? destinationName
+                      : sourceName,
+                ),
+              ],
+            ),
+          ),
+          onTap: () => openContainer(),
         ),
-        onTap: () => openContainer(),
       ),
       onClosed: (bool? refresh) {
         if (refresh ?? false == true) {

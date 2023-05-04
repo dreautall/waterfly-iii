@@ -30,11 +30,13 @@ class TransactionPage extends StatefulWidget {
     this.transaction,
     this.transactionId,
     this.notification,
+    this.clone = false,
   }) : super(key: key);
 
   final String? transactionId;
   final TransactionRead? transaction;
   final NotificationTransaction? notification;
+  final bool clone;
 
   @override
   State<TransactionPage> createState() => _TransactionPageState();
@@ -154,7 +156,9 @@ class _TransactionPageState extends State<TransactionPage>
       }
 
       /// date
-      _date = transactions.first.date.toLocal();
+      _date = widget.clone
+          ? DateTime.now().toLocal()
+          : transactions.first.date.toLocal();
 
       /// account currency
       _localCurrency = CurrencyRead(
@@ -809,7 +813,7 @@ class _TransactionPageState extends State<TransactionPage>
                     });
                     late Response<TransactionSingle> resp;
 
-                    if (widget.transaction != null) {
+                    if (!widget.clone && widget.transaction != null) {
                       String id = widget.transaction!.id;
                       List<TransactionSplitUpdate> txS =
                           <TransactionSplitUpdate>[];
@@ -1264,7 +1268,7 @@ class _TransactionPageState extends State<TransactionPage>
                 foregroundColor: Colors.white,
                 backgroundColor: _transactionType.color,
                 // Disable when editing existing transaction --> not allowed
-                onPressed: (widget.transaction != null)
+                onPressed: (!widget.clone && widget.transaction != null)
                     ? null
                     : () {
                         if (controller.isOpen) {

@@ -386,8 +386,19 @@ class _HomeTransactionsState extends State<HomeTransactions>
             ),
             items: <PopupMenuEntry<Function>>[
               PopupMenuItem<Function>(
-                value: () {
-                  // :TODO:
+                value: () async {
+                  bool? ok = await Navigator.push(
+                    context,
+                    MaterialPageRoute<bool>(
+                      builder: (BuildContext context) => TransactionPage(
+                        transaction: item,
+                        clone: true,
+                      ),
+                    ),
+                  );
+                  if (ok ?? false) {
+                    _pagingController.refresh();
+                  }
                 },
                 child: Row(
                   children: <Widget>[

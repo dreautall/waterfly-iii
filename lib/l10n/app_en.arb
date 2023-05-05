@@ -224,15 +224,15 @@
       }
     }
   },
-  "homeMainBudgetTitle": "Budgets for this month",
+  "homeMainBudgetTitle": "Budgets for current month",
   "@homeMainBudgetTitle": {
-    "description": "Title: Budgets for this month"
+    "description": "Title: Budgets for current month"
   },
   "homeMainChartAccountsTitle": "Account Summary",
   "@homeMainChartAccountsTitle": {
     "description": "Chart Label: Account Summary"
   },
-  "homeMainChartCategoriesTitle": "Category Summary",
+  "homeMainChartCategoriesTitle": "Category Summary for current month",
   "@homeMainChartCategoriesTitle": {
     "description": "Chart Label: Category Summary"
   },

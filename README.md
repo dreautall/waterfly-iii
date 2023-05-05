@@ -24,7 +24,7 @@ The app is still pretty much work in progress, but basic features already do wor
   - List transactions by date, including filters
   - Add & edit transactions with autocomplete, including attachments, split transactions & multi currency support
 - Balance Sheet
-  - List invididual balances
+  - List individual balances
 - Piggy Banks
   - View Piggy Banks
   - Add/Remove money from Piggy Banks

@@ -48,6 +48,7 @@ class AuthUser {
   FireflyIii get api => _api;
 
   AuthUser._create(Uri host, String apiKey) {
+    debugPrint("AuthUser->_create($host)");
     _apiKey = apiKey;
 
     List<String> path = <String>[...host.pathSegments, "api"];
@@ -80,7 +81,7 @@ class AuthUser {
   }
 
   static Future<AuthUser> create(String host, String apiKey) async {
-    debugPrint("AuthUser->create()");
+    debugPrint("AuthUser->create($host)");
 
     // This call is on purpose not using the Swagger API
     final HttpClient client = HttpClient();
@@ -116,7 +117,7 @@ class AuthUser {
       client.close();
     }
 
-    return AuthUser._create(Uri(host: uri.host, scheme: uri.scheme), apiKey);
+    return AuthUser._create(Uri.parse(uri.origin), apiKey);
   }
 }
 

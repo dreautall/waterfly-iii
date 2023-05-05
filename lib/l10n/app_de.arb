@@ -45,7 +45,7 @@
   "homeMainBudgetSum": "{current} {status, select, over{über} other{bis}} {available}",
   "homeMainBudgetTitle": "Budgets für diesen Monat",
   "homeMainChartAccountsTitle": "Konten-Übersicht",
-  "homeMainChartCategoriesTitle": "Kategorie-Übersicht",
+  "homeMainChartCategoriesTitle": "Kategorie-Übersicht für diesen Monat",
   "homeMainChartDailyAvg": "7-Tage-Durchschnitt",
   "homeMainChartDailyTitle": "Tägliche Zusammenfassung",
   "homeMainChartNetearningsTitle": "Überschuss",

@@ -92,7 +92,7 @@
   },
   "errorUnknown": "Unknown error.",
   "@errorUnknown": {
-    "description": "Error without further information occured."
+    "description": "Error without further information occurred."
   },
   "formButtonHelp": "Help",
   "@formButtonHelp": {
@@ -265,7 +265,7 @@
   },
   "homePiggyDateTarget": "Target date: {date}",
   "@homePiggyDateTarget": {
-    "description": "Uset set target date of the piggy bank (when saving should be finished)",
+    "description": "Set target date of the piggy bank (when saving should be finished)",
     "placeholders": {
       "date": {
         "type": "DateTime",
@@ -372,7 +372,7 @@
   },
   "homeTransactionsMultipleCategories": "{num} categories",
   "@homeTransactionsMultipleCategories": {
-    "description": "$num categories for the transction.",
+    "description": "$num categories for the transaction.",
     "placeholders": {
       "num": {
         "type": "int",
@@ -515,7 +515,7 @@
   },
   "settingsNLServiceCheckingError": "Error checking status: {error}",
   "@settingsNLServiceCheckingError": {
-    "description": "An error occured while checking the service status",
+    "description": "An error occurred while checking the service status",
     "placeholders": {
       "error": {
         "type": "String",

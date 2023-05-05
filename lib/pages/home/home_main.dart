@@ -119,7 +119,7 @@ class _HomeMainState extends State<HomeMain>
     final Response<ChartLine> respChartData =
         await api.v1ChartAccountOverviewGet(
       start:
-          DateFormat('yyyy-MM-dd').format(now.copyWith(month: now.month - 12)),
+          DateFormat('yyyy-MM-dd').format(now.copyWith(month: now.month - 3)),
       end: DateFormat('yyyy-MM-dd').format(now),
     );
     if (!respChartData.isSuccessful ||
@@ -842,6 +842,9 @@ class SummaryChart extends StatelessWidget {
         if (prevDate != null && date.month != prevDate!.month) {
           ticks.add(
               charts.TickSpec<DateTime>(DateTime(date.year, date.month, 1)));
+        } else if (prevDate != null && date.day >= 15 && prevDate!.day < 15) {
+          ticks.add(
+              charts.TickSpec<DateTime>(DateTime(date.year, date.month, 15)));
         }
         data.add(TimeSeriesChart(
           date,
@@ -884,7 +887,8 @@ class SummaryChart extends StatelessWidget {
         domainAxis: charts.DateTimeAxisSpec(
           tickFormatterSpec:
               charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
-                  DateFormat(DateFormat.ABBR_STANDALONE_MONTH)),
+            DateFormat(DateFormat.ABBR_MONTH_DAY),
+          ),
           tickProviderSpec: charts.StaticDateTimeTickProviderSpec(ticks),
           renderSpec: charts.SmallTickRendererSpec<DateTime>(
             labelStyle: charts.TextStyleSpec(

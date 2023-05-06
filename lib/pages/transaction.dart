@@ -1164,7 +1164,9 @@ class _TransactionPageState extends State<TransactionPage>
           vDivider,
           Expanded(
             child: AutoCompleteText<AutocompleteAccount>(
-              labelText: S.of(context).transactionFormLabelAccountForeign,
+              labelText: (_transactionType == TransactionTypeProperty.transfer)
+                  ? S.of(context).transactionFormLabelAccountDestination
+                  : S.of(context).transactionFormLabelAccountForeign,
               //labelIcon: Icons.account_balance,
               textController: _otherAccountTextController,
               disabled: showAccountSelection,
@@ -1283,7 +1285,9 @@ class _TransactionPageState extends State<TransactionPage>
           vDivider,
           Expanded(
             child: AutoCompleteText<AutocompleteAccount>(
-              labelText: S.of(context).transactionFormLabelAccountOwn,
+              labelText: (_transactionType == TransactionTypeProperty.transfer)
+                  ? S.of(context).transactionFormLabelAccountSource
+                  : S.of(context).transactionFormLabelAccountOwn,
               //labelIcon: Icons.account_balance,
               textController: _ownAccountTextController,
               focusNode: _ownAccountFocusNode,

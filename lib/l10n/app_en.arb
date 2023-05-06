@@ -640,6 +640,10 @@
   "@transactionErrorTitle": {
     "description": "Transaction Save Error: No title provided"
   },
+  "transactionFormLabelAccountDestination": "Destination account",
+  "@transactionFormLabelAccountDestination": {
+    "description": "Transaction Form: Label for destination account for transfer transaction"
+  },
   "transactionFormLabelAccountForeign": "Foreign account",
   "@transactionFormLabelAccountForeign": {
     "description": "Transaction Form: Label for foreign (other) account"
@@ -647,6 +651,10 @@
   "transactionFormLabelAccountOwn": "Own account",
   "@transactionFormLabelAccountOwn": {
     "description": "Transaction Form: Label for own account"
+  },
+  "transactionFormLabelAccountSource": "Source account",
+  "@transactionFormLabelAccountSource": {
+    "description": "Transaction Form: Label for source account for transfer transaction"
   },
   "transactionFormLabelNotes": "Notes",
   "@transactionFormLabelNotes": {

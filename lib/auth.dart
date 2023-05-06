@@ -51,8 +51,7 @@ class AuthUser {
     debugPrint("AuthUser->_create($host)");
     _apiKey = apiKey;
 
-    List<String> path = <String>[...host.pathSegments, "api"];
-    _host = host.replace(pathSegments: path);
+    _host = host.replace(pathSegments: <String>[...host.pathSegments, "api"]);
 
     _api = FireflyIii.create(
       baseUrl: _host,
@@ -85,16 +84,23 @@ class AuthUser {
 
     // This call is on purpose not using the Swagger API
     final HttpClient client = HttpClient();
-    Uri uri;
+    late Uri uri;
 
     try {
-      uri = Uri.parse("$host/api/v1/about");
+      uri = Uri.parse(host);
     } on FormatException {
       throw AuthErrorHost(host);
     }
 
+    Uri aboutUri = uri.replace(pathSegments: <String>[
+      ...uri.pathSegments,
+      "api",
+      "v1",
+      "about",
+    ]);
+
     try {
-      HttpClientRequest request = await client.getUrl(uri);
+      HttpClientRequest request = await client.getUrl(aboutUri);
       request.headers.add(HttpHeaders.authorizationHeader, "Bearer $apiKey");
       request.followRedirects = false;
       HttpClientResponse response = await request.close();
@@ -117,7 +123,7 @@ class AuthUser {
       client.close();
     }
 
-    return AuthUser._create(Uri.parse(uri.origin), apiKey);
+    return AuthUser._create(uri, apiKey);
   }
 }
 

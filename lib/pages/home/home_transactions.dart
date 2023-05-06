@@ -523,7 +523,15 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
     // Date
     DateTime date = transactions.first.date.toLocal();
-    if (_lastDate == null || _lastDate!.clearTime() != date.clearTime()) {
+    // Show Date Banner when:
+    // 1. _lastDate is not set (= first element)
+    // 2. _lastDate has a different day than current date (= date changed)
+    // 3. _lastDate day is older than current date day. As the list is sorted by
+    //    time, this should not happen, and means _lastDate just wasn't properly
+    //    cleared
+    if (_lastDate == null ||
+        _lastDate!.clearTime() != date.clearTime() ||
+        _lastDate!.clearTime().isBefore(date.clearTime())) {
       // Add date row
       transactionWidget = Column(
         crossAxisAlignment: CrossAxisAlignment.start,

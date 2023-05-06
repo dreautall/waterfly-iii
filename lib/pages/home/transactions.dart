@@ -17,7 +17,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/pages/transaction.dart';
-import 'package:waterflyiii/pages/transaction/transaction_delete.dart';
+import 'package:waterflyiii/pages/transaction/delete.dart';
 
 class HomeTransactions extends StatefulWidget {
   const HomeTransactions({Key? key, this.accountId}) : super(key: key);

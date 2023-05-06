@@ -11,7 +11,7 @@ import 'package:chopper/chopper.dart' show Response;
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
-import 'package:waterflyiii/pages/home/home_transactions.dart';
+import 'package:waterflyiii/pages/home/transactions.dart';
 
 class HomeBalance extends StatefulWidget {
   const HomeBalance({

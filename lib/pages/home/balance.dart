@@ -4,6 +4,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
@@ -24,6 +25,8 @@ class HomeBalance extends StatefulWidget {
 
 class _HomeBalanceState extends State<HomeBalance>
     with AutomaticKeepAliveClientMixin {
+  final Logger log = Logger("Pages.Home.Balance");
+
   Future<AccountArray> _fetchAccounts() async {
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -57,7 +60,7 @@ class _HomeBalanceState extends State<HomeBalance>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    debugPrint("home_balance build()");
+    log.finest("build()");
 
     return RefreshIndicator(
       onRefresh: _refreshStats,

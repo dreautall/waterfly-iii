@@ -1,0 +1,3 @@
+- Behebung von Login-Fehlern wenn die Firefly-Instanz über einen bestimmten Port oder Sub-Pfad erreichbar ist
+- Verständlicheres Anzeige der Chart-Zeitrahmen
+- Kleinere Fehlerbehebungen

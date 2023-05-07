@@ -1,0 +1,3 @@
+- Fix login issues when Firefly is served on a separate port or subpath
+- Clear timing for chart overview
+- Smaller bug fixes

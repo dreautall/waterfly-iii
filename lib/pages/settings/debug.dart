@@ -18,31 +18,30 @@ class DebugDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      title: Text("DEBUG"),
+      title: Text(S.of(context).settingsDialogDebugTitle),
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
-          child: Text(
-              "You can enable & send debug logs here. These have a bad impact on performance, so please don't enable them unless you're advised to do so. Disabling logging will delete the stored log."),
+          child: Text(S.of(context).settingsDialogDebugInfo),
         ),
         SwitchListTile(
           value: context.watch<SettingsProvider>().debug,
           onChanged: (bool value) =>
               context.read<SettingsProvider>().setDebug(value),
-          title: Text("Enable Debug Logging"),
+          title: Text(S.of(context).settingsDialogDebugTitle),
           secondary: const Icon(Icons.bug_report),
         ),
         ListTile(
           enabled: context.watch<SettingsProvider>().debug,
           isThreeLine: false,
           leading: const Icon(Icons.send),
-          title: Text("Send Logs via Mail"),
+          title: Text(S.of(context).settingsDialogDebugSendButton),
           onTap: () async {
             final bool? ok = await showDialog<bool>(
               context: context,
               builder: (BuildContext context) => AlertDialog(
                 icon: const Icon(Icons.mail),
-                title: Text("Send Logs via Mail"),
+                title: Text(S.of(context).settingsDialogDebugSendButton),
                 clipBehavior: Clip.hardEdge,
                 actions: <Widget>[
                   TextButton(
@@ -53,14 +52,13 @@ class DebugDialog extends StatelessWidget {
                     },
                   ),
                   FilledButton(
-                    child: Text("Create Mail"),
+                    child: Text(S.of(context).settingsDialogDebugMailCreate),
                     onPressed: () {
                       Navigator.of(context).pop(true);
                     },
                   ),
                 ],
-                content: Text(
-                    "WARNING: A mail draft will open with the log file attached (in text format). The logs might contain sensitive information such as the host name of your Firefly instance (though I try to avoid logging of any secrets such as the api key). Please read through the log carefully and censor out any information you don't want to share and/or is not relevant to the problem you want to report.\n\nPlease do not send in logs without prior agreement via mail/GitHub to do so. I will delete any logs sent without context for privacy reasons. Never upload the log uncensored to GitHub or elsewhere."),
+                content: Text(S.of(context).settingsDialogDebugMailDisclaimer),
               ),
             );
             if (!(ok ?? false)) {

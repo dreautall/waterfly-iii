@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:badges/badges.dart' as badges;
@@ -23,6 +24,8 @@ import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
+
+final Logger log = Logger("Pages.Transaction");
 
 class TransactionPage extends StatefulWidget {
   const TransactionPage({
@@ -44,6 +47,8 @@ class TransactionPage extends StatefulWidget {
 
 class _TransactionPageState extends State<TransactionPage>
     with TickerProviderStateMixin {
+  final Logger log = Logger("Pages.Transaction.Page");
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   // Common values
@@ -294,7 +299,7 @@ class _TransactionPageState extends State<TransactionPage>
           final FireflyIii api = context.read<FireflyService>().api;
           final SettingsProvider settings = context.read<SettingsProvider>();
 
-          debugPrint("Got notification ${widget.notification}");
+          log.info("Got notification ${widget.notification}");
           CurrencyRead? currency;
           double amount = 0;
 
@@ -320,7 +325,7 @@ class _TransactionPageState extends State<TransactionPage>
                 currencyStr = currencyStrAlt;
               }
               if (currencyStr.isEmpty) {
-                debugPrint("no currency found");
+                log.warning("no currency found");
               }
               if (_localCurrency!.attributes.code == currencyStr ||
                   _localCurrency!.attributes.symbol == currencyStr ||
@@ -330,7 +335,7 @@ class _TransactionPageState extends State<TransactionPage>
                 final Response<CurrencyArray> response =
                     await api.v1CurrenciesGet();
                 if (!response.isSuccessful || response.body == null) {
-                  debugPrint("api currency fetch failed");
+                  log.warning("api currency fetch failed");
                 } else {
                   for (CurrencyRead cur in response.body!.data) {
                     if (cur.attributes.code == currencyStr ||
@@ -366,10 +371,10 @@ class _TransactionPageState extends State<TransactionPage>
                     0;
               }
             } else {
-              debugPrint("no currency was found");
+              log.info("no currency was found");
             }
           } else {
-            debugPrint("regex did not match");
+            log.warning("regex did not match");
           }
           // Fallback solution
           currency ??= _localCurrency;
@@ -397,7 +402,7 @@ class _TransactionPageState extends State<TransactionPage>
           final Response<AccountArray> response =
               await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
           if (!response.isSuccessful || response.body == null) {
-            debugPrint("api account fetch failed");
+            log.warning("api account fetch failed");
             return;
           }
           final NotificationAppSettings appSettings = await settings
@@ -463,8 +468,8 @@ class _TransactionPageState extends State<TransactionPage>
           });
           checkAccountCurrency(response.body!.first);
         }
-      } catch (e) {
-        debugPrint("Error while fetching autocomplete from API: $e");
+      } catch (e, stackTrace) {
+        log.severe("Error while fetching autocomplete from API", e, stackTrace);
       }
     });
   }
@@ -555,9 +560,9 @@ class _TransactionPageState extends State<TransactionPage>
   }
 
   void splitTransactionRemove(int i) {
-    debugPrint("removing split $i");
+    log.fine("removing split $i");
     if (_localAmounts.length < i || _localAmounts.length == 1) {
-      debugPrint("can't remove, last item");
+      log.finer("can't remove, last item");
       return;
     }
 
@@ -614,7 +619,7 @@ class _TransactionPageState extends State<TransactionPage>
           (AnimationStatus status) => deleteCardAnimated(i)(status));
     }
 
-    debugPrint("remaining split #: ${_localAmounts.length}");
+    log.finer("remaining split #: ${_localAmounts.length}");
 
     setState(() {
       _split = (_localAmounts.length > 1);
@@ -622,7 +627,7 @@ class _TransactionPageState extends State<TransactionPage>
   }
 
   void splitTransactionAdd() {
-    debugPrint("adding split");
+    log.fine("adding split");
     // Update from summary to first when first split is added
     if (_localAmounts.length == 1) {
       _localAmountTextControllers.first.text = _localAmountTextController.text;
@@ -668,7 +673,7 @@ class _TransactionPageState extends State<TransactionPage>
       reverseCurve: animCurveEmphasizedAccelerate,
     ));
 
-    debugPrint("new split #: ${_localAmounts.length}");
+    log.finer("new split #: ${_localAmounts.length}");
 
     setState(() {
       _split = (_localAmounts.length > 1);
@@ -737,14 +742,14 @@ class _TransactionPageState extends State<TransactionPage>
       setState(() {
         _hasAttachments = _attachments?.isNotEmpty ?? false;
       });
-    } catch (e) {
-      debugPrint("Error while fetching autocomplete from API: $e");
+    } catch (e, stackTrace) {
+      log.severe("Error while fetching autocomplete from API", e, stackTrace);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("TransactionDetail build()");
+    log.finest("build()");
     _localCurrency ??= context.read<FireflyService>().defaultCurrency;
 
     if (_hasAttachments && _attachments == null) {
@@ -878,7 +883,7 @@ class _TransactionPageState extends State<TransactionPage>
                         if (id.isEmpty) {
                           continue;
                         }
-                        debugPrint("deleting split $id");
+                        log.fine("deleting split $id");
                         await api.v1TransactionJournalsIdDelete(id: id);
                       }
                       resp =
@@ -948,7 +953,6 @@ class _TransactionPageState extends State<TransactionPage>
 
                     // Check if insert/update was successful
                     if (!resp.isSuccessful || resp.body == null) {
-                      debugPrint(resp.error.toString());
                       try {
                         ValidationError valError = ValidationError.fromJson(
                           json.decode(resp.error.toString()),
@@ -1009,8 +1013,8 @@ class _TransactionPageState extends State<TransactionPage>
   }
 
   List<Widget> _transactionDetailBuilder(BuildContext context) {
-    debugPrint("transactionDetailBuilder()");
-    debugPrint("splits: ${_localAmounts.length}, split? $_split");
+    log.fine("transactionDetailBuilder()");
+    log.finer("splits: ${_localAmounts.length}, split? $_split");
     bool showAccountSelection =
         _transactionType != TransactionTypeProperty.transfer &&
             _otherAccountTextControllers.every((TextEditingController e) =>
@@ -1117,7 +1121,7 @@ class _TransactionPageState extends State<TransactionPage>
                     _foreignCurrencies[i] = null;
                   } else {
                     _foreignCurrencies[i] = newCurrency;
-                    debugPrint(
+                    log.finest(
                         "foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
                     if (_foreignAmounts[i] == 0) {
                       _foreignAmounts[i] = _localAmounts[i];
@@ -1207,8 +1211,9 @@ class _TransactionPageState extends State<TransactionPage>
                     }
                   }
                   return response.body!;
-                } catch (e) {
-                  debugPrint("Error while fetching autocomplete from API: $e");
+                } catch (e, stackTrace) {
+                  log.severe("Error while fetching autocomplete from API", e,
+                      stackTrace);
                   return const Iterable<AutocompleteAccount>.empty();
                 }
               },
@@ -1301,7 +1306,7 @@ class _TransactionPageState extends State<TransactionPage>
                 setState(() {
                   _ownAccountId = option.id;
                 });
-                debugPrint("selected account $_ownAccountId");
+                log.finer("selected account $_ownAccountId");
                 checkAccountCurrency(option);
               },
               optionsBuilder: (TextEditingValue textEditingValue) async {
@@ -1330,8 +1335,9 @@ class _TransactionPageState extends State<TransactionPage>
                     }
                   }
                   return response.body!;
-                } catch (e) {
-                  debugPrint("Error while fetching autocomplete from API: $e");
+                } catch (e, stackTrace) {
+                  log.severe("Error while fetching autocomplete from API", e,
+                      stackTrace);
                   return const Iterable<AutocompleteAccount>.empty();
                 }
               },
@@ -1539,9 +1545,11 @@ class _TransactionPageState extends State<TransactionPage>
                                         }
                                       }
                                       return response.body!;
-                                    } catch (e) {
-                                      debugPrint(
-                                          "Error while fetching autocomplete from API: $e");
+                                    } catch (e, stackTrace) {
+                                      log.severe(
+                                          "Error while fetching autocomplete from API",
+                                          e,
+                                          stackTrace);
                                       return const Iterable<
                                           AutocompleteAccount>.empty();
                                     }
@@ -1707,8 +1715,7 @@ class _TransactionPageState extends State<TransactionPage>
                             icon: const Icon(Icons.add_business),
                             onPressed: _split && !showAccountSelection
                                 ? () {
-                                    debugPrint(
-                                        "adding separate account for $i");
+                                    log.fine("adding separate account for $i");
                                     _otherAccountTextControllers[i].text = "";
                                     splitTransactionCheckAccounts();
                                   }
@@ -1756,7 +1763,9 @@ class TransactionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("TransactionTitle build()");
+    final Logger log = Logger("Pages.Transaction.Title");
+
+    log.finest("build()");
     return Expanded(
       child: AutoCompleteText<String>(
         labelText: S.of(context).transactionFormLabelTitle,
@@ -1781,8 +1790,9 @@ class TransactionTitle extends StatelessWidget {
               }
             }
             return response.body!.map((AutocompleteTransaction e) => e.name);
-          } catch (e) {
-            debugPrint("Error while fetching autocomplete from API: $e");
+          } catch (e, stackTrace) {
+            log.severe(
+                "Error while fetching autocomplete from API", e, stackTrace);
             return const Iterable<String>.empty();
           }
         },
@@ -1801,7 +1811,9 @@ class TransactionNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("TransactionNote build()");
+    final Logger log = Logger("Pages.Transaction.Note");
+
+    log.finest("build()");
     return Row(
       children: <Widget>[
         Expanded(
@@ -1832,6 +1844,8 @@ class TransactionCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Logger log = Logger("Pages.Transaction.Category");
+
     return Row(
       children: <Widget>[
         Expanded(
@@ -1860,8 +1874,9 @@ class TransactionCategory extends StatelessWidget {
                   }
                 }
                 return response.body!.map((AutocompleteCategory e) => e.name);
-              } catch (e) {
-                debugPrint("Error while fetching autocomplete from API: $e");
+              } catch (e, stackTrace) {
+                log.severe("Error while fetching autocomplete from API", e,
+                    stackTrace);
                 return const Iterable<String>.empty();
               }
             },
@@ -1887,6 +1902,8 @@ class TransactionBudget extends StatefulWidget {
 }
 
 class _TransactionBudgetState extends State<TransactionBudget> {
+  final Logger log = Logger("Pages.Transaction.Budget");
+
   // Initial string is empty, as we expect it to be ok
   // (either empty or loaded from db)
   String? _budgetId = "";
@@ -1936,8 +1953,8 @@ class _TransactionBudgetState extends State<TransactionBudget> {
             _budgetId = response.body!.first.id;
           });
         }
-      } catch (e) {
-        debugPrint("Error while fetching autocomplete from API: $e");
+      } catch (e, stackTrace) {
+        log.severe("Error while fetching autocomplete from API", e, stackTrace);
       }
     });
   }
@@ -1982,8 +1999,9 @@ class _TransactionBudgetState extends State<TransactionBudget> {
                   }
                 }
                 return response.body!;
-              } catch (e) {
-                debugPrint("Error while fetching autocomplete from API: $e");
+              } catch (e, stackTrace) {
+                log.severe("Error while fetching autocomplete from API", e,
+                    stackTrace);
                 return const Iterable<AutocompleteBudget>.empty();
               }
             },

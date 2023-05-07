@@ -4,6 +4,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
@@ -14,6 +15,8 @@ import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/navigation.dart';
+
+final Logger log = Logger("Accounts");
 
 class AccountsPage extends StatefulWidget {
   const AccountsPage({
@@ -61,7 +64,7 @@ class _AccountsPageState extends State<AccountsPage>
 
   void _handleTabChange() {
     if (!_tabController.indexIsChanging) {
-      debugPrint("_handleTabChange()");
+      log.finer("_handleTabChange()");
     }
   }
 
@@ -76,7 +79,7 @@ class _AccountsPageState extends State<AccountsPage>
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("accounts build(), tab ${_tabController.index}");
+    log.fine("accounts build(), tab ${_tabController.index}");
     return TabBarView(
       controller: _tabController,
       children: tabPages,
@@ -150,8 +153,8 @@ class _AccountDetailsState extends State<AccountDetails>
         final int nextPageKey = pageKey + 1;
         _pagingController.appendPage(accountList, nextPageKey);
       }
-    } catch (e) {
-      debugPrint("error --> $e");
+    } catch (e, stackTrace) {
+      log.severe("_fetchPage($pageKey)", e, stackTrace);
       _pagingController.error = e;
     }
   }
@@ -162,7 +165,7 @@ class _AccountDetailsState extends State<AccountDetails>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    debugPrint("accounts_detail build()");
+    log.fine("accounts_detail build()");
 
     return RefreshIndicator(
       onRefresh: () => Future<void>.sync(() => _pagingController.refresh()),

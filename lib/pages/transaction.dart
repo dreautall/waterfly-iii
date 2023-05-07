@@ -841,7 +841,10 @@ class _TransactionPageState extends State<TransactionPage>
                         }
                         txS.add(TransactionSplitUpdate(
                           amount: _localAmounts[i].toString(),
-                          budgetName: _budgetTextControllers[i].text,
+                          budgetName: (_transactionType ==
+                                  TransactionTypeProperty.withdrawal)
+                              ? _budgetTextControllers[i].text
+                              : "",
                           categoryName: _categoryTextControllers[i].text,
                           date: _date,
                           description: _split
@@ -915,7 +918,10 @@ class _TransactionPageState extends State<TransactionPage>
                           description: _split
                               ? _titleTextControllers[i].text
                               : _titleTextController.text,
-                          budgetName: _budgetTextControllers[i].text,
+                          budgetName: (_transactionType ==
+                                  TransactionTypeProperty.withdrawal)
+                              ? _budgetTextControllers[i].text
+                              : "",
                           categoryName: _categoryTextControllers[i].text,
                           destinationId: destinationId,
                           destinationName: destinationName,
@@ -1562,48 +1568,59 @@ class _TransactionPageState extends State<TransactionPage>
                     focusNode: _categoryFocusNodes[i],
                   ),
                   hDivider,
-                  TransactionBudget(
-                    textController: _budgetTextControllers[i],
-                    focusNode: _budgetFocusNodes[i],
-                  ),
-                  hDivider,
                   AnimatedHeight(
-                      child: (_split)
-                          ? Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: NumberInput(
-                                    icon: Icon(_transactionType.icon),
-                                    controller: (_foreignCurrencies[i] != null)
-                                        ? _foreignAmountTextControllers[i]
-                                        : _localAmountTextControllers[i],
-                                    hintText: _foreignCurrencies[i]?.zero() ??
-                                        _localCurrency?.zero() ??
-                                        NumberFormat.currency(decimalDigits: 2)
-                                            .format(0),
-                                    decimals: _foreignCurrencies[i]
-                                            ?.attributes
-                                            .decimalPlaces ??
-                                        _localCurrency
-                                            ?.attributes.decimalPlaces ??
-                                        2,
-                                    prefixText:
-                                        "${_foreignCurrencies[i]?.attributes.code ?? _localCurrency?.attributes.code} ",
-                                    onChanged: (String string) {
-                                      if (_foreignCurrencies[i] != null) {
-                                        _foreignAmounts[i] =
-                                            double.tryParse(string) ?? 0;
-                                      } else {
-                                        _localAmounts[i] =
-                                            double.tryParse(string) ?? 0;
-                                      }
-                                      splitTransactionCalculateAmount();
-                                    },
-                                  ),
+                    child:
+                        (_transactionType == TransactionTypeProperty.withdrawal)
+                            ? TransactionBudget(
+                                textController: _budgetTextControllers[i],
+                                focusNode: _budgetFocusNodes[i],
+                              )
+                            : const SizedBox.shrink(),
+                  ),
+                  AnimatedHeight(
+                    child:
+                        (_transactionType == TransactionTypeProperty.withdrawal)
+                            ? hDivider
+                            : const SizedBox.shrink(),
+                  ),
+                  AnimatedHeight(
+                    child: (_split)
+                        ? Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: NumberInput(
+                                  icon: Icon(_transactionType.icon),
+                                  controller: (_foreignCurrencies[i] != null)
+                                      ? _foreignAmountTextControllers[i]
+                                      : _localAmountTextControllers[i],
+                                  hintText: _foreignCurrencies[i]?.zero() ??
+                                      _localCurrency?.zero() ??
+                                      NumberFormat.currency(decimalDigits: 2)
+                                          .format(0),
+                                  decimals: _foreignCurrencies[i]
+                                          ?.attributes
+                                          .decimalPlaces ??
+                                      _localCurrency
+                                          ?.attributes.decimalPlaces ??
+                                      2,
+                                  prefixText:
+                                      "${_foreignCurrencies[i]?.attributes.code ?? _localCurrency?.attributes.code} ",
+                                  onChanged: (String string) {
+                                    if (_foreignCurrencies[i] != null) {
+                                      _foreignAmounts[i] =
+                                          double.tryParse(string) ?? 0;
+                                    } else {
+                                      _localAmounts[i] =
+                                          double.tryParse(string) ?? 0;
+                                    }
+                                    splitTransactionCalculateAmount();
+                                  },
                                 ),
-                              ],
-                            )
-                          : const SizedBox.shrink()),
+                              ),
+                            ],
+                          )
+                        : const SizedBox.shrink(),
+                  ),
                   AnimatedHeight(
                     child: (_split) ? hDivider : const SizedBox.shrink(),
                   ),

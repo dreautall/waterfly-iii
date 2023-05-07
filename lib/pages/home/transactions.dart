@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
@@ -30,6 +31,8 @@ class HomeTransactions extends StatefulWidget {
 
 class _HomeTransactionsState extends State<HomeTransactions>
     with AutomaticKeepAliveClientMixin {
+  final Logger log = Logger("Pages.Home.Transaction");
+
   final int _numberOfPostsPerRequest = 50;
 
   final PagingController<int, TransactionRead> _pagingController =
@@ -116,7 +119,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
         if (_filters.budget != null) {
           query = "budget_is:\"${_filters.budget!.attributes.name}\" $query";
         }
-        debugPrint("Search query: $query");
+        log.fine("Search query: $query");
         searchFunc = api.v1SearchTransactionsGet(
           query: query,
           page: pageKey,
@@ -154,8 +157,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
         final int nextPageKey = pageKey + 1;
         _pagingController.appendPage(transactionList, nextPageKey);
       }
-    } catch (e) {
-      debugPrint("error --> $e");
+    } catch (e, stackTrace) {
+      log.severe("_fetchPage($pageKey)", e, stackTrace);
       _pagingController.error = e;
     }
   }
@@ -165,7 +168,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("home_transactions build()");
+    log.finest("build()");
     super.build(context);
 
     return RefreshIndicator(

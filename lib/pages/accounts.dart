@@ -31,7 +31,7 @@ class _AccountsPageState extends State<AccountsPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  final Logger log = Logger("Pages.AccountsPage");
+  final Logger log = Logger("Pages.Accounts.Page");
 
   @override
   void initState() {
@@ -110,7 +110,7 @@ class _AccountDetailsState extends State<AccountDetails>
     invisibleItemsThreshold: 10,
   );
 
-  final Logger log = Logger("Pages.AccountDetails");
+  final Logger log = Logger("Pages.Accounts.Details");
 
   @override
   void initState() {

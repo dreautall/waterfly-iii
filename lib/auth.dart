@@ -50,6 +50,8 @@ class AuthUser {
   Uri get host => _host;
   FireflyIii get api => _api;
 
+  final Logger log = Logger("Auth.AuthUser");
+
   AuthUser._create(Uri host, String apiKey) {
     log.config("AuthUser->_create($host)");
     _apiKey = apiKey;
@@ -83,6 +85,7 @@ class AuthUser {
   }
 
   static Future<AuthUser> create(String host, String apiKey) async {
+    final Logger log = Logger("Auth.AuthUser");
     log.config("AuthUser->create($host)");
 
     // This call is on purpose not using the Swagger API
@@ -156,6 +159,8 @@ class FireflyService with ChangeNotifier {
       encryptedSharedPreferences: true,
     ),
   );
+
+  final Logger log = Logger("Auth.FireflyService");
 
   FireflyService() {
     log.finest("new FireflyService");

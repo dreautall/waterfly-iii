@@ -119,7 +119,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
         if (_filters.budget != null) {
           query = "budget_is:\"${_filters.budget!.attributes.name}\" $query";
         }
-        log.fine("Search query: $query");
+        log.fine(() => "Search query: $query");
         searchFunc = api.v1SearchTransactionsGet(
           query: query,
           page: pageKey,
@@ -168,7 +168,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   @override
   Widget build(BuildContext context) {
-    log.finest("build()");
+    log.finest(() => "build()");
     super.build(context);
 
     return RefreshIndicator(

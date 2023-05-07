@@ -32,31 +32,31 @@ class NavPageElements with ChangeNotifier {
 
   void setAppBarActions(List<Widget>? actions) {
     if (actions == appBarActions) {
-      log.finer("NavPageElements->setAppBarActions equal, skipping");
+      log.finer(() => "NavPageElements->setAppBarActions equal, skipping");
       return;
     }
     appBarActions = actions;
-    log.finest("notify NavPageElements->setAppBarActions()");
+    log.finest(() => "notify NavPageElements->setAppBarActions()");
     notifyListeners();
   }
 
   void setAppBarBottom(PreferredSizeWidget? bottom) {
     if (bottom == appBarBottom) {
-      log.finer("NavPageElements->setAppBarBottom equal, skipping");
+      log.finer(() => "NavPageElements->setAppBarBottom equal, skipping");
       return;
     }
     appBarBottom = bottom;
-    log.finest("notify NavPageElements->setAppBarBottom()");
+    log.finest(() => "notify NavPageElements->setAppBarBottom()");
     notifyListeners();
   }
 
   void setFab(Widget? newFab) {
     if (newFab == fab) {
-      log.finer("NavPageElements->setFab equal, skipping");
+      log.finer(() => "NavPageElements->setFab equal, skipping");
       return;
     }
     fab = newFab;
-    log.finest("notify NavPageElements->setFab()");
+    log.finest(() => "notify NavPageElements->setFab()");
     notifyListeners();
   }
 }
@@ -113,7 +113,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final NavDestination currentPage = navDestinations[screenIndex];
-    log.finest("nav build(page: $screenIndex)");
+    log.finest(() => "nav build(page: $screenIndex)");
 
     return ChangeNotifierProvider<NavPageElements>(
       create: (_) => NavPageElements(),

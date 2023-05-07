@@ -56,7 +56,7 @@ class _TransactionTagsState extends State<TransactionTags> {
 
   @override
   Widget build(BuildContext context) {
-    log.finest("build()");
+    log.finest(() => "build()");
     FocusNode disabledFocus = AlwaysDisabledFocusNode();
     return Row(
       children: <Widget>[

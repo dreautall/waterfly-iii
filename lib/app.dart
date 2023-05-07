@@ -61,7 +61,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
 
   @override
   Widget build(BuildContext context) {
-    log.fine("WaterflyApp() building");
+    log.fine(() => "WaterflyApp() building");
 
     return MultiProvider(
       providers: <SingleChildWidget>[
@@ -74,18 +74,18 @@ class _WaterflyAppState extends State<WaterflyApp> {
       ],
       builder: (BuildContext context, _) {
         late bool signedIn;
-        log.finest("_startup = $_startup");
+        log.finest(() => "_startup = $_startup");
         if (_startup) {
           signedIn = false;
 
           if (!context.select((SettingsProvider s) => s.loaded)) {
-            log.finer("Load Step 1: Loading Settings");
+            log.finer(() => "Load Step 1: Loading Settings");
             context.read<SettingsProvider>().loadSettings();
           } else {
-            log.finer("Load Step 2: Signin In");
+            log.finer(() => "Load Step 2: Signin In");
             context.read<FireflyService>().signInFromStorage().then(
                   (_) => setState(() {
-                    log.finest("set _startup = false");
+                    log.finest(() => "set _startup = false");
                     _startup = false;
                   }),
                 );

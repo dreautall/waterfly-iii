@@ -78,7 +78,7 @@ class SettingsProvider with ChangeNotifier {
     _notificationApps = prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
     _loaded = true;
-    log.finest("notify SettingsProvider->loadSettings()");
+    log.finest(() => "notify SettingsProvider->loadSettings()");
     notifyListeners();
   }
 
@@ -97,7 +97,7 @@ class SettingsProvider with ChangeNotifier {
         await prefs.setString(settingTheme, settingThemeSystem);
     }
 
-    log.finest("notify SettingsProvider->setTheme()");
+    log.finest(() => "notify SettingsProvider->setTheme()");
     notifyListeners();
   }
 
@@ -110,7 +110,7 @@ class SettingsProvider with ChangeNotifier {
     _locale = locale;
     await prefs.setString(settingLocale, locale.languageCode);
 
-    log.finest("notify SettingsProvider->setLocale()");
+    log.finest(() => "notify SettingsProvider->setLocale()");
     notifyListeners();
   }
 
@@ -156,7 +156,7 @@ class SettingsProvider with ChangeNotifier {
 
     _notificationApps = apps;
 
-    log.finest("notify SettingsProvider->notificationAddUsedApp()");
+    log.finest(() => "notify SettingsProvider->notificationAddUsedApp()");
     notifyListeners();
     return true;
   }
@@ -176,7 +176,7 @@ class SettingsProvider with ChangeNotifier {
 
     _notificationApps = apps;
 
-    log.finest("notify SettingsProvider->notificationRemoveUsedApp()");
+    log.finest(() => "notify SettingsProvider->notificationRemoveUsedApp()");
 
     notifyListeners();
     return true;
@@ -191,7 +191,7 @@ class SettingsProvider with ChangeNotifier {
         prefs.getStringList(settingNLUsedApps) ?? <String>[];
     _notificationApps = apps;
 
-    log.finest("notify SettingsProvider->notificationUsedApps()");
+    log.finest(() => "notify SettingsProvider->notificationUsedApps()");
     notifyListeners();
 
     return _notificationApps;

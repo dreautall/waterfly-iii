@@ -560,9 +560,9 @@ class _TransactionPageState extends State<TransactionPage>
   }
 
   void splitTransactionRemove(int i) {
-    log.fine("removing split $i");
+    log.fine(() => "removing split $i");
     if (_localAmounts.length < i || _localAmounts.length == 1) {
-      log.finer("can't remove, last item");
+      log.finer(() => "can't remove, last item");
       return;
     }
 
@@ -619,7 +619,7 @@ class _TransactionPageState extends State<TransactionPage>
           (AnimationStatus status) => deleteCardAnimated(i)(status));
     }
 
-    log.finer("remaining split #: ${_localAmounts.length}");
+    log.finer(() => "remaining split #: ${_localAmounts.length}");
 
     setState(() {
       _split = (_localAmounts.length > 1);
@@ -627,7 +627,7 @@ class _TransactionPageState extends State<TransactionPage>
   }
 
   void splitTransactionAdd() {
-    log.fine("adding split");
+    log.fine(() => "adding split");
     // Update from summary to first when first split is added
     if (_localAmounts.length == 1) {
       _localAmountTextControllers.first.text = _localAmountTextController.text;
@@ -673,7 +673,7 @@ class _TransactionPageState extends State<TransactionPage>
       reverseCurve: animCurveEmphasizedAccelerate,
     ));
 
-    log.finer("new split #: ${_localAmounts.length}");
+    log.finer(() => "new split #: ${_localAmounts.length}");
 
     setState(() {
       _split = (_localAmounts.length > 1);
@@ -749,7 +749,7 @@ class _TransactionPageState extends State<TransactionPage>
 
   @override
   Widget build(BuildContext context) {
-    log.finest("build()");
+    log.finest(() => "build()");
     _localCurrency ??= context.read<FireflyService>().defaultCurrency;
 
     if (_hasAttachments && _attachments == null) {
@@ -883,7 +883,7 @@ class _TransactionPageState extends State<TransactionPage>
                         if (id.isEmpty) {
                           continue;
                         }
-                        log.fine("deleting split $id");
+                        log.fine(() => "deleting split $id");
                         await api.v1TransactionJournalsIdDelete(id: id);
                       }
                       resp =
@@ -1013,8 +1013,8 @@ class _TransactionPageState extends State<TransactionPage>
   }
 
   List<Widget> _transactionDetailBuilder(BuildContext context) {
-    log.fine("transactionDetailBuilder()");
-    log.finer("splits: ${_localAmounts.length}, split? $_split");
+    log.fine(() => "transactionDetailBuilder()");
+    log.finer(() => "splits: ${_localAmounts.length}, split? $_split");
     bool showAccountSelection =
         _transactionType != TransactionTypeProperty.transfer &&
             _otherAccountTextControllers.every((TextEditingController e) =>
@@ -1121,7 +1121,7 @@ class _TransactionPageState extends State<TransactionPage>
                     _foreignCurrencies[i] = null;
                   } else {
                     _foreignCurrencies[i] = newCurrency;
-                    log.finest(
+                    log.finest(() =>
                         "foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
                     if (_foreignAmounts[i] == 0) {
                       _foreignAmounts[i] = _localAmounts[i];
@@ -1306,7 +1306,7 @@ class _TransactionPageState extends State<TransactionPage>
                 setState(() {
                   _ownAccountId = option.id;
                 });
-                log.finer("selected account $_ownAccountId");
+                log.finer(() => "selected account $_ownAccountId");
                 checkAccountCurrency(option);
               },
               optionsBuilder: (TextEditingValue textEditingValue) async {
@@ -1715,7 +1715,8 @@ class _TransactionPageState extends State<TransactionPage>
                             icon: const Icon(Icons.add_business),
                             onPressed: _split && !showAccountSelection
                                 ? () {
-                                    log.fine("adding separate account for $i");
+                                    log.fine(
+                                        () => "adding separate account for $i");
                                     _otherAccountTextControllers[i].text = "";
                                     splitTransactionCheckAccounts();
                                   }
@@ -1730,7 +1731,7 @@ class _TransactionPageState extends State<TransactionPage>
                           icon: const Icon(Icons.delete),
                           onPressed: _split
                               ? () {
-                                  log.fine("marking $i for deletion");
+                                  log.fine(() => "marking $i for deletion");
                                   _cardsAnimationController[i].reverse();
                                 }
                               : null,
@@ -1765,7 +1766,7 @@ class TransactionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final Logger log = Logger("Pages.Transaction.Title");
 
-    log.finest("build()");
+    log.finest(() => "build()");
     return Expanded(
       child: AutoCompleteText<String>(
         labelText: S.of(context).transactionFormLabelTitle,
@@ -1813,7 +1814,7 @@ class TransactionNote extends StatelessWidget {
   Widget build(BuildContext context) {
     final Logger log = Logger("Pages.Transaction.Note");
 
-    log.finest("build()");
+    log.finest(() => "build()");
     return Row(
       children: <Widget>[
         Expanded(

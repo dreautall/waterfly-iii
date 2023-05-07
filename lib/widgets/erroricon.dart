@@ -11,7 +11,7 @@ class ErrorIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log.finest("build(isError: $_isError)");
+    log.finest(() => "build(isError: $_isError)");
     return _isError
         ? Icon(
             Icons.error,

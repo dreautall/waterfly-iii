@@ -40,7 +40,7 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log.finest("build(labelText: $labelText)");
+    log.finest(() => "build(labelText: $labelText)");
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) =>
           RawAutocomplete<T>(

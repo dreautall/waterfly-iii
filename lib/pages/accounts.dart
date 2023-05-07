@@ -66,7 +66,7 @@ class _AccountsPageState extends State<AccountsPage>
 
   void _handleTabChange() {
     if (!_tabController.indexIsChanging) {
-      log.finer("_handleTabChange(${_tabController.index})");
+      log.finer(() => "_handleTabChange(${_tabController.index})");
     }
   }
 
@@ -81,7 +81,7 @@ class _AccountsPageState extends State<AccountsPage>
 
   @override
   Widget build(BuildContext context) {
-    log.fine("build(tab: ${_tabController.index})");
+    log.fine(() => "build(tab: ${_tabController.index})");
     return TabBarView(
       controller: _tabController,
       children: tabPages,
@@ -169,7 +169,7 @@ class _AccountDetailsState extends State<AccountDetails>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    log.fine("build()");
+    log.fine(() => "build()");
 
     return RefreshIndicator(
       onRefresh: () => Future<void>.sync(() => _pagingController.refresh()),

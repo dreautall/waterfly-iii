@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:provider/provider.dart';
 
@@ -33,11 +34,13 @@ class AttachmentDialog extends StatefulWidget {
 
 class _AttachmentDialogState extends State<AttachmentDialog>
     with SingleTickerProviderStateMixin {
+  final Logger log = Logger("Pages.Transaction.AttachmentDialog");
+
   final Map<int, double> _dlProgress = <int, double>{};
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("AttachmentDialog build(), ${widget.transactionId}");
+    log.finest("build(transactionId: ${widget.transactionId})");
     List<Widget> childs = <Widget>[];
     for (int i = 0; i < widget.attachments.length; i++) {
       AttachmentRead attachment = widget.attachments[i];
@@ -86,7 +89,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                       );
                   final HttpClientResponse resp = await request.close();
                   if (resp.statusCode != 200) {
-                    debugPrint("got invalid status code ${resp.statusCode}");
+                    log.warning("got invalid status code ${resp.statusCode}");
                     msg.showSnackBar(SnackBar(
                       content:
                           Text(l10n.transactionDialogAttachmentsErrorDownload),
@@ -104,7 +107,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                         fileData.addAll(value);
                         received += value.length;
                         _dlProgress[i] = received / total;
-                        debugPrint(
+                        log.finest(
                           "received ${value.length} bytes (total $received of $total), ${received / total * 100}%",
                         );
                       });
@@ -114,13 +117,12 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                       setState(() {
                         _dlProgress.remove(i);
                       });
-                      debugPrint(
+                      log.finest(
                           "writing ${fileData.length} bytes to $filePath");
-                      //debugPrint(String.fromCharCodes(fileData));
                       await File(filePath).writeAsBytes(fileData, flush: true);
                       final OpenResult file = await OpenFilex.open(filePath);
                       if (file.type != ResultType.done) {
-                        debugPrint("error: ${file.message}");
+                        log.severe("error opening file", file.message);
                         msg.showSnackBar(SnackBar(
                           content: Text(
                               l10n.transactionDialogAttachmentsErrorOpen(
@@ -129,8 +131,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                         ));
                       }
                     },
-                    onError: (Object _) {
-                      debugPrint("got error");
+                    onError: (Error e) {
+                      log.severe("download error", e);
                       setState(() {
                         _dlProgress.remove(i);
                       });
@@ -286,8 +288,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                   );
               request.headers.set(
                   HttpHeaders.contentTypeHeader, "application/octet-stream");
-              debugPrint(
-                  "AttachmentUpload: Starting Upload $newAttachmentIndex");
+              log.fine("AttachmentUpload: Starting Upload $newAttachmentIndex");
 
               final Stream<List<int>> listenStream =
                   File(file.files.first.path!).openRead().transform(
@@ -298,7 +299,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                               sent += data.length;
                               _dlProgress[newAttachmentIndex] =
                                   sent / total * -1;
-                              debugPrint(
+                              log.finest(
                                 "sent ${data.length} bytes (total $sent of $total), ${sent / total * 100}%",
                               );
                             });
@@ -312,7 +313,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
 
               await request.addStream(listenStream);
               final HttpClientResponse resp = await request.close();
-              debugPrint(
+              log.fine(
                   "AttachmentUpload: Done with Upload $newAttachmentIndex");
               setState(() {
                 _dlProgress.remove(newAttachmentIndex);
@@ -323,18 +324,15 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                 return;
               }
               late String error;
-              debugPrint(resp.toString());
               try {
                 final String respString =
                     await resp.transform(utf8.decoder).join();
-                debugPrint(respString);
                 ValidationError valError =
                     ValidationError.fromJson(json.decode(respString));
                 error = error = valError.message ?? l10n.errorUnknown;
               } catch (_) {
                 error = l10n.errorUnknown;
               }
-              debugPrint("error: $error");
               msg.showSnackBar(SnackBar(
                 content:
                     Text(l10n.transactionDialogAttachmentsErrorUpload(error)),

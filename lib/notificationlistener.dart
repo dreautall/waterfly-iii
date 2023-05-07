@@ -70,8 +70,6 @@ void nlCallback() async {
   log.finest("nlCallback()");
   NotificationServicePlugin.instance
       .executeNotificationListener((NotificationEvent? evt) async {
-    //debugPrint("got event $evt");
-
     if (evt?.packageName?.startsWith("com.dreautall.waterflyiii") ?? false) {
       return;
     }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -14,6 +15,8 @@ import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/splash.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/settings.dart';
+
+final Logger log = Logger("App");
 
 final GlobalKey<NavigatorState> navigatorKey =
     GlobalKey<NavigatorState>(debugLabel: "Main Navigator");
@@ -43,10 +46,10 @@ class _WaterflyAppState extends State<WaterflyApp> {
 
     FlutterLocalNotificationsPlugin().getNotificationAppLaunchDetails().then(
       (NotificationAppLaunchDetails? details) {
-        debugPrint("checking NotificationAppLaunchDetails");
+        log.config("checking NotificationAppLaunchDetails");
         if ((details?.didNotificationLaunchApp ?? false) &&
             (details?.notificationResponse?.payload?.isNotEmpty ?? false)) {
-          debugPrint("Was launched from notification!");
+          log.info("Was launched from notification!");
           _fromNotification = true;
           _notificationPayload = NotificationTransaction.fromJson(
             jsonDecode(details!.notificationResponse!.payload!),
@@ -58,7 +61,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("WaterflyApp() building");
+    log.fine("WaterflyApp() building");
 
     return MultiProvider(
       providers: <SingleChildWidget>[
@@ -71,25 +74,25 @@ class _WaterflyAppState extends State<WaterflyApp> {
       ],
       builder: (BuildContext context, _) {
         late bool signedIn;
-        debugPrint("_startup = $_startup");
+        log.finest("_startup = $_startup");
         if (_startup) {
           signedIn = false;
 
           if (!context.select((SettingsProvider s) => s.loaded)) {
-            debugPrint("Load Step 1: Loading Settings");
+            log.finer("Load Step 1: Loading Settings");
             context.read<SettingsProvider>().loadSettings();
           } else {
-            debugPrint("Load Step 2: Signin In");
+            log.finer("Load Step 2: Signin In");
             context.read<FireflyService>().signInFromStorage().then(
                   (_) => setState(() {
-                    debugPrint("set _startup = false");
+                    log.finest("set _startup = false");
                     _startup = false;
                   }),
                 );
           }
         } else {
           signedIn = context.select((FireflyService f) => f.signedIn);
-          debugPrint("signedIn: $signedIn");
+          log.config("signedIn: $signedIn");
         }
         return MaterialApp(
           title: 'Waterfly III',

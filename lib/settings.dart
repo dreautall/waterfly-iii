@@ -1,9 +1,13 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 
+import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:shared_preferences/shared_preferences.dart';
 
 final Logger log = Logger("Settings");
@@ -28,20 +32,25 @@ class NotificationAppSettings {
 }
 
 class SettingsProvider with ChangeNotifier {
-  static const String settingTheme = "THEME";
-  static const String settingThemeDark = "DARK";
-  static const String settingThemeLight = "LIGHT";
-  static const String settingThemeSystem = "SYSTEM";
+  static const String settingDebug = "DEBUG";
   static const String settingLocale = "LOCALE";
   static const String settingNLKnownApps = "NL_KNOWNAPPS";
   static const String settingNLUsedApps = "NL_USEDAPPS";
   static const String settingNLAppPrefix = "NL_APP_";
+  static const String settingTheme = "THEME";
+  static const String settingThemeDark = "DARK";
+  static const String settingThemeLight = "LIGHT";
+  static const String settingThemeSystem = "SYSTEM";
 
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get getTheme => _theme;
 
   Locale? _locale;
   Locale? get getLocale => _locale;
+
+  bool _debug = false;
+  bool get debug => _debug;
+  StreamSubscription<LogRecord>? _debugLogger;
 
   bool _loaded = false;
   bool get loaded => _loaded;
@@ -73,6 +82,15 @@ class SettingsProvider with ChangeNotifier {
     log.config("read locale $locale");
     if (S.supportedLocales.contains(locale)) {
       _locale = locale;
+    }
+
+    _debug = prefs.getBool(settingDebug) ?? false;
+    log.config("read debug $debug");
+    if (_debug) {
+      Logger.root.level = Level.ALL;
+      _debugLogger = Logger.root.onRecord.listen(await DebugLogger().get());
+    } else {
+      Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
     }
 
     _notificationApps = prefs.getStringList(settingNLUsedApps) ?? <String>[];
@@ -111,6 +129,28 @@ class SettingsProvider with ChangeNotifier {
     await prefs.setString(settingLocale, locale.languageCode);
 
     log.finest(() => "notify SettingsProvider->setLocale()");
+    notifyListeners();
+  }
+
+  Future<void> setDebug(bool debug) async {
+    if (debug == _debug) {
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _debug = debug;
+    await prefs.setBool(settingDebug, debug);
+
+    if (debug) {
+      Logger.root.level = Level.ALL;
+      _debugLogger = Logger.root.onRecord.listen(await DebugLogger().get());
+    } else {
+      Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
+      await _debugLogger?.cancel();
+      await DebugLogger().destroy();
+    }
+
+    log.finest(() => "notify SettingsProvider->setDebug()");
     notifyListeners();
   }
 
@@ -217,5 +257,34 @@ class SettingsProvider with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(
         "$settingNLAppPrefix$packageName", jsonEncode(settings));
+  }
+}
+
+class DebugLogger {
+  String? _logPath;
+
+  Future<Function(LogRecord)> get() async {
+    _logPath = await _getPath();
+    return _log;
+  }
+
+  Future<String> _getPath() async {
+    final Directory tmpPath = await getTemporaryDirectory();
+    return "${tmpPath.path}/debuglog.txt";
+  }
+
+  void _log(LogRecord record) {
+    if (_logPath?.isEmpty ?? true) {
+      return;
+    }
+    File(_logPath!).writeAsStringSync(
+      "${record.time}: [${record.loggerName} - ${record.level.name}] ${record.message}\n",
+      mode: FileMode.append,
+      flush: true,
+    );
+  }
+
+  Future<void> destroy() async {
+    File(await _getPath()).deleteSync();
   }
 }

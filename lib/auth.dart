@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 import 'package:chopper/chopper.dart'
     show Request, Response, StripStringExtension;
@@ -9,6 +10,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+
+final Logger log = Logger("Auth");
 
 class AuthError implements Exception {
   const AuthError(this.cause);
@@ -48,7 +51,7 @@ class AuthUser {
   FireflyIii get api => _api;
 
   AuthUser._create(Uri host, String apiKey) {
-    debugPrint("AuthUser->_create($host)");
+    log.config("AuthUser->_create($host)");
     _apiKey = apiKey;
 
     _host = host.replace(pathSegments: <String>[...host.pathSegments, "api"]);
@@ -80,7 +83,7 @@ class AuthUser {
   }
 
   static Future<AuthUser> create(String host, String apiKey) async {
-    debugPrint("AuthUser->create($host)");
+    log.config("AuthUser->create($host)");
 
     // This call is on purpose not using the Swagger API
     final HttpClient client = HttpClient();
@@ -155,7 +158,7 @@ class FireflyService with ChangeNotifier {
   );
 
   FireflyService() {
-    debugPrint("new FireflyService");
+    log.finest("new FireflyService");
   }
 
   Future<bool> signInFromStorage() async {
@@ -163,7 +166,8 @@ class FireflyService with ChangeNotifier {
     String? apiHost = await storage.read(key: 'api_host');
     String? apiKey = await storage.read(key: 'api_key');
 
-    debugPrint("storage: $apiHost, $apiKey");
+    log.config(
+        "storage: $apiHost, apiKey ${apiKey?.isEmpty ?? true ? "unset" : "set"}");
 
     if (apiHost == null || apiKey == null) {
       return false;
@@ -174,14 +178,14 @@ class FireflyService with ChangeNotifier {
       return success;
     } catch (e) {
       _storageSignInException = e;
-      debugPrint("notify FireflyService->signInFromStorage");
+      log.finest("notify FireflyService->signInFromStorage");
       notifyListeners();
       return false;
     }
   }
 
   Future<void> signOut() async {
-    debugPrint("FireflyService->signOut()");
+    log.config("FireflyService->signOut()");
     _currentUser = null;
     _signedIn = false;
     _storageSignInException = null;
@@ -189,12 +193,12 @@ class FireflyService with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
 
-    debugPrint("notify FireflyService->signOut");
+    log.finest("notify FireflyService->signOut");
     notifyListeners();
   }
 
   Future<bool> signIn(String host, String apiKey) async {
-    debugPrint("FireflyService->signIn($host)");
+    log.config("FireflyService->signIn($host)");
     host = host.strip().rightStrip('/');
     apiKey = apiKey.strip();
 
@@ -206,7 +210,7 @@ class FireflyService with ChangeNotifier {
     defaultCurrency = currencyInfo.body!.data;
 
     _signedIn = true;
-    debugPrint("notify FireflyService->signIn");
+    log.finest("notify FireflyService->signIn");
     notifyListeners();
 
     storage.write(key: 'api_host', value: host);

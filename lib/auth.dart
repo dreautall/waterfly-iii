@@ -60,7 +60,7 @@ class AuthUser {
       baseUrl: _host,
       interceptors: <dynamic>[
         (Request request) async {
-          debugPrint("API query to ${request.url}");
+          log.finest("API query to ${request.url}");
           request.followRedirects = false;
           request.maxRedirects = 0;
           return request.copyWith(headers: <String, String>{

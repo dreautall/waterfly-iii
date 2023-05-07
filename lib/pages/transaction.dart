@@ -1730,7 +1730,7 @@ class _TransactionPageState extends State<TransactionPage>
                           icon: const Icon(Icons.delete),
                           onPressed: _split
                               ? () {
-                                  debugPrint("marking $i for deletion");
+                                  log.fine("marking $i for deletion");
                                   _cardsAnimationController[i].reverse();
                                 }
                               : null,

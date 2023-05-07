@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    log.finest("build()");
+    log.finest(() => "build()");
     return Scaffold(
       body: SafeArea(
         child: Form(

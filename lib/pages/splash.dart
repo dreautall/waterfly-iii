@@ -27,16 +27,16 @@ class _SplashPageState extends State<SplashPage> {
   Object? _loginError;
 
   void _login(String? host, String? apiKey) async {
-    log.fine("SplashPage->_login()");
+    log.fine(() => "SplashPage->_login()");
 
     bool success = false;
 
     try {
       if (host == null || apiKey == null) {
-        log.finer("SplashPage->_login() from storage");
+        log.finer(() => "SplashPage->_login() from storage");
         success = await context.read<FireflyService>().signInFromStorage();
       } else {
-        log.finer(
+        log.finer(() =>
             "SplashPage->_login() with credentials: $host, apiKey apiKey ${apiKey.isEmpty ? "unset" : "set"}");
         success = await context.read<FireflyService>().signIn(host, apiKey);
       }
@@ -48,7 +48,7 @@ class _SplashPageState extends State<SplashPage> {
       });
     }
 
-    log.fine("_login() returning $success");
+    log.fine(() => "_login() returning $success");
 
     return;
   }
@@ -59,7 +59,7 @@ class _SplashPageState extends State<SplashPage> {
 
     if (widget.host != null && widget.apiKey != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        log.finest("initState() scheduling login");
+        log.finest(() => "initState() scheduling login");
         _login(widget.host, widget.apiKey);
       });
     }
@@ -67,7 +67,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    log.finest("build(loginError: $_loginError)");
+    log.finest(() => "build(loginError: $_loginError)");
 
     if (context.read<FireflyService>().signedIn) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -82,13 +82,13 @@ class _SplashPageState extends State<SplashPage> {
         context.select((FireflyService f) => f.storageSignInException);
 
     if (_loginError == null) {
-      log.finer("_loginError null --> show spinner");
+      log.finer(() => "_loginError null --> show spinner");
       page = Container(
         alignment: const Alignment(0, 0),
         child: const CircularProgressIndicator(),
       );
     } else {
-      log.finer("_loginError available --> show error");
+      log.finer(() => "_loginError available --> show error");
       String errorDetails =
           "Host: ${context.read<FireflyService>().lastTriedHost}";
       final String errorDescription = () {

@@ -40,7 +40,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
 
   @override
   Widget build(BuildContext context) {
-    log.finest("build(transactionId: ${widget.transactionId})");
+    log.finest(() => "build(transactionId: ${widget.transactionId})");
     List<Widget> childs = <Widget>[];
     for (int i = 0; i < widget.attachments.length; i++) {
       AttachmentRead attachment = widget.attachments[i];
@@ -108,7 +108,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                         received += value.length;
                         _dlProgress[i] = received / total;
                         log.finest(
-                          "received ${value.length} bytes (total $received of $total), ${received / total * 100}%",
+                          () =>
+                              "received ${value.length} bytes (total $received of $total), ${received / total * 100}%",
                         );
                       });
                     },
@@ -117,7 +118,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                       setState(() {
                         _dlProgress.remove(i);
                       });
-                      log.finest(
+                      log.finest(() =>
                           "writing ${fileData.length} bytes to $filePath");
                       await File(filePath).writeAsBytes(fileData, flush: true);
                       final OpenResult file = await OpenFilex.open(filePath);
@@ -288,7 +289,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                   );
               request.headers.set(
                   HttpHeaders.contentTypeHeader, "application/octet-stream");
-              log.fine("AttachmentUpload: Starting Upload $newAttachmentIndex");
+              log.fine(() =>
+                  "AttachmentUpload: Starting Upload $newAttachmentIndex");
 
               final Stream<List<int>> listenStream =
                   File(file.files.first.path!).openRead().transform(
@@ -300,7 +302,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                               _dlProgress[newAttachmentIndex] =
                                   sent / total * -1;
                               log.finest(
-                                "sent ${data.length} bytes (total $sent of $total), ${sent / total * 100}%",
+                                () =>
+                                    "sent ${data.length} bytes (total $sent of $total), ${sent / total * 100}%",
                               );
                             });
                             sink.add(data);
@@ -313,7 +316,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
 
               await request.addStream(listenStream);
               final HttpClientResponse resp = await request.close();
-              log.fine(
+              log.fine(() =>
                   "AttachmentUpload: Done with Upload $newAttachmentIndex");
               setState(() {
                 _dlProgress.remove(newAttachmentIndex);

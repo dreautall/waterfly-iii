@@ -321,7 +321,7 @@ class _HomeMainState extends State<HomeMain>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    log.finest("build()");
+    log.finest(() => "build()");
 
     CurrencyRead defaultCurrency =
         context.read<FireflyService>().defaultCurrency;

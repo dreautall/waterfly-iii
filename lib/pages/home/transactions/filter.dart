@@ -36,7 +36,7 @@ class TransactionFilters with ChangeNotifier {
         currency != null ||
         category != null ||
         budget != null;
-    log.finest("notify TransactionFilters, filters? $hasFilters");
+    log.finest(() => "notify TransactionFilters, filters? $hasFilters");
     notifyListeners();
   }
 
@@ -158,7 +158,7 @@ class FilterDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final Logger log = Logger("Pages.Home.Transaction.Filter.Dialog");
 
-    log.finest("build()");
+    log.finest(() => "build()");
     return AlertDialog(
       icon: const Icon(Icons.tune),
       title: Text(S.of(context).homeTransactionsDialogFilterTitle),

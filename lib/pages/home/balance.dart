@@ -60,7 +60,7 @@ class _HomeBalanceState extends State<HomeBalance>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    log.finest("build()");
+    log.finest(() => "build()");
 
     return RefreshIndicator(
       onRefresh: _refreshStats,

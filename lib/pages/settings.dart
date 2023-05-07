@@ -25,7 +25,7 @@ class SettingsPageState extends State<SettingsPage>
 
   @override
   Widget build(BuildContext context) {
-    log.finest("build()");
+    log.finest(() => "build()");
 
     final SettingsProvider settings = context.read<SettingsProvider>();
 

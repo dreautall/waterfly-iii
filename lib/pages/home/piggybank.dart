@@ -96,7 +96,7 @@ class _HomePiggybankState extends State<HomePiggybank>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    log.finest("build()");
+    log.finest(() => "build()");
 
     return RefreshIndicator(
       onRefresh: () => Future<void>.sync(() => _pagingController.refresh()),
@@ -625,7 +625,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                   amount *= -1;
                 }
                 final double totalAmount = currentAmount + amount;
-                log.finest(
+                log.finest(() =>
                     "New piggy bank total = $totalAmount out of $currentAmount + $amount");
                 final Response<PiggyBankSingle> resp =
                     await api.v1PiggyBanksIdPut(

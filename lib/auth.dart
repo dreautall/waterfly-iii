@@ -62,7 +62,7 @@ class AuthUser {
       baseUrl: _host,
       interceptors: <dynamic>[
         (Request request) async {
-          log.finest("API query to ${request.url}");
+          log.finest(() => "API query to ${request.url}");
           request.followRedirects = false;
           request.maxRedirects = 0;
           return request.copyWith(headers: <String, String>{
@@ -163,7 +163,7 @@ class FireflyService with ChangeNotifier {
   final Logger log = Logger("Auth.FireflyService");
 
   FireflyService() {
-    log.finest("new FireflyService");
+    log.finest(() => "new FireflyService");
   }
 
   Future<bool> signInFromStorage() async {
@@ -183,7 +183,7 @@ class FireflyService with ChangeNotifier {
       return success;
     } catch (e) {
       _storageSignInException = e;
-      log.finest("notify FireflyService->signInFromStorage");
+      log.finest(() => "notify FireflyService->signInFromStorage");
       notifyListeners();
       return false;
     }
@@ -198,7 +198,7 @@ class FireflyService with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
 
-    log.finest("notify FireflyService->signOut");
+    log.finest(() => "notify FireflyService->signOut");
     notifyListeners();
   }
 
@@ -215,7 +215,7 @@ class FireflyService with ChangeNotifier {
     defaultCurrency = currencyInfo.body!.data;
 
     _signedIn = true;
-    log.finest("notify FireflyService->signIn");
+    log.finest(() => "notify FireflyService->signIn");
     notifyListeners();
 
     storage.write(key: 'api_host', value: host);

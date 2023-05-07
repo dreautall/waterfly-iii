@@ -25,7 +25,7 @@ class PageActions extends ChangeNotifier {
     } else {
       _map[key] = actions;
     }
-    log.finest("notify PageActions->set()");
+    log.finest(() => "notify PageActions->set()");
     notifyListeners();
   }
 }
@@ -99,7 +99,7 @@ class HomePageState extends State<HomePage>
 
   void _handleTabChange() {
     if (!_tabController.indexIsChanging) {
-      log.finer("_handleTabChange(${_tabController.index})");
+      log.finer(() => "_handleTabChange(${_tabController.index})");
       context
           .read<NavPageElements>()
           .setFab((_tabController.index < 2) ? _newTransactionFab : null);
@@ -119,7 +119,7 @@ class HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    log.finest("build(tab: ${_tabController.index})");
+    log.finest(() => "build(tab: ${_tabController.index})");
     return ChangeNotifierProvider<PageActions>.value(
       value: _actions,
       child: TabBarView(

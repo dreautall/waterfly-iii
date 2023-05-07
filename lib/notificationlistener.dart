@@ -67,7 +67,7 @@ Future<NotificationListenerStatus> nlStatus() async {
 
 @pragma('vm:entry-point')
 void nlCallback() async {
-  log.finest("nlCallback()");
+  log.finest(() => "nlCallback()");
   NotificationServicePlugin.instance
       .executeNotificationListener((NotificationEvent? evt) async {
     if (evt?.packageName?.startsWith("com.dreautall.waterflyiii") ?? false) {
@@ -80,7 +80,7 @@ void nlCallback() async {
     final Iterable<RegExpMatch> matches =
         rFindMoney.allMatches(evt?.text ?? "");
     if (matches.isEmpty) {
-      log.finer("nlCallback(${evt?.packageName}): no money found");
+      log.finer(() => "nlCallback(${evt?.packageName}): no money found");
       return;
     }
 
@@ -93,7 +93,7 @@ void nlCallback() async {
       }
     }
     if (!validMatch) {
-      log.finer(
+      log.finer(() =>
           "nlCallback(${evt?.packageName}): no money with currency found");
       return;
     }
@@ -102,7 +102,7 @@ void nlCallback() async {
 
     if (!(await SettingsProvider().notificationUsedApps(forceReload: true))
         .contains(evt?.packageName ?? "")) {
-      log.finer("nlCallback(${evt?.packageName}): app not used");
+      log.finer(() => "nlCallback(${evt?.packageName}): app not used");
       return;
     }
 
@@ -131,13 +131,13 @@ void nlCallback() async {
 }
 
 Future<void> nlInit() async {
-  log.finest("nlInit()");
+  log.finest(() => "nlInit()");
   await NotificationServicePlugin.instance.initialize(nlCallback);
 }
 
 Future<void> nlNotificationTap(
     NotificationResponse notificationResponse) async {
-  log.finest("nlNotificationTap()");
+  log.finest(() => "nlNotificationTap()");
   if (notificationResponse.payload?.isEmpty ?? true) {
     return;
   }

@@ -70,6 +70,8 @@ class SettingsProvider with ChangeNotifier {
     debugPrint("read locale $locale");
     if (S.supportedLocales.contains(locale)) {
       _locale = locale;
+    } else {
+      _locale = const Locale('en');
     }
 
     _notificationApps = prefs.getStringList(settingNLUsedApps) ?? <String>[];

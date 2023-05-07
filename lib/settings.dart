@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+
+final Logger log = Logger("Settings");
 
 class NotificationAppSettings {
   NotificationAppSettings(
@@ -48,10 +51,10 @@ class SettingsProvider with ChangeNotifier {
 
   Future<void> loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    debugPrint("reading prefs!");
+    log.config("reading prefs!");
 
     final String theme = prefs.getString(settingTheme) ?? "unset";
-    debugPrint("read theme $theme");
+    log.config("read theme $theme");
     switch (theme) {
       case settingThemeDark:
         _theme = ThemeMode.dark;
@@ -67,7 +70,7 @@ class SettingsProvider with ChangeNotifier {
     final Locale locale = Locale.fromSubtags(
       languageCode: prefs.getString(settingLocale) ?? "unset",
     );
-    debugPrint("read locale $locale");
+    log.config("read locale $locale");
     if (S.supportedLocales.contains(locale)) {
       _locale = locale;
     }
@@ -75,7 +78,7 @@ class SettingsProvider with ChangeNotifier {
     _notificationApps = prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
     _loaded = true;
-    debugPrint("notify SettingsProvider->loadSettings()");
+    log.finest("notify SettingsProvider->loadSettings()");
     notifyListeners();
   }
 
@@ -94,7 +97,7 @@ class SettingsProvider with ChangeNotifier {
         await prefs.setString(settingTheme, settingThemeSystem);
     }
 
-    debugPrint("notify SettingsProvider->setTheme()");
+    log.finest("notify SettingsProvider->setTheme()");
     notifyListeners();
   }
 
@@ -107,7 +110,7 @@ class SettingsProvider with ChangeNotifier {
     _locale = locale;
     await prefs.setString(settingLocale, locale.languageCode);
 
-    debugPrint("notify SettingsProvider->setLocale()");
+    log.finest("notify SettingsProvider->setLocale()");
     notifyListeners();
   }
 
@@ -153,7 +156,7 @@ class SettingsProvider with ChangeNotifier {
 
     _notificationApps = apps;
 
-    debugPrint("notify SettingsProvider->notificationAddUsedApp()");
+    log.finest("notify SettingsProvider->notificationAddUsedApp()");
     notifyListeners();
     return true;
   }
@@ -173,7 +176,7 @@ class SettingsProvider with ChangeNotifier {
 
     _notificationApps = apps;
 
-    debugPrint("notify SettingsProvider->notificationRemoveUsedApp()");
+    log.finest("notify SettingsProvider->notificationRemoveUsedApp()");
 
     notifyListeners();
     return true;
@@ -188,7 +191,7 @@ class SettingsProvider with ChangeNotifier {
         prefs.getStringList(settingNLUsedApps) ?? <String>[];
     _notificationApps = apps;
 
-    debugPrint("notify SettingsProvider->notificationUsedApps()");
+    log.finest("notify SettingsProvider->notificationUsedApps()");
     notifyListeners();
 
     return _notificationApps;

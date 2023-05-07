@@ -113,19 +113,78 @@ void main() {
       });
     });
     group("create", () {
-      test("success", () async {
-        final AuthUser user =
-            await AuthUser.create("mock://fake.host", "api-key");
-        expect(user.host, equals(Uri.parse("mock://fake.host/api")));
-        expect(user.api, isA<FireflyIii>());
-        expect(
-          user.headers(),
-          containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
-        );
-        expect(
-          user.headers(),
-          containsPair(HttpHeaders.acceptHeader, "application/json"),
-        );
+      group("success", () {
+        test("TLD", () async {
+          final AuthUser user =
+              await AuthUser.create("mock://fake.host", "api-key");
+          expect(user.host, equals(Uri.parse("mock://fake.host/api")));
+          expect(user.api, isA<FireflyIii>());
+          expect(
+            user.headers(),
+            containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
+          );
+          expect(
+            user.headers(),
+            containsPair(HttpHeaders.acceptHeader, "application/json"),
+          );
+        });
+        test("subdomain", () async {
+          final AuthUser user =
+              await AuthUser.create("mock://sub.fake.host", "api-key");
+          expect(user.host, equals(Uri.parse("mock://sub.fake.host/api")));
+          expect(user.api, isA<FireflyIii>());
+          expect(
+            user.headers(),
+            containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
+          );
+          expect(
+            user.headers(),
+            containsPair(HttpHeaders.acceptHeader, "application/json"),
+          );
+        });
+        test("custom port", () async {
+          final AuthUser user =
+              await AuthUser.create("mock://fake.host:1234", "api-key");
+          expect(user.host, equals(Uri.parse("mock://fake.host:1234/api")));
+          expect(user.api, isA<FireflyIii>());
+          expect(
+            user.headers(),
+            containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
+          );
+          expect(
+            user.headers(),
+            containsPair(HttpHeaders.acceptHeader, "application/json"),
+          );
+        });
+        test("custom path", () async {
+          final AuthUser user =
+              await AuthUser.create("mock://fake.host/sub/path", "api-key");
+          expect(user.host, equals(Uri.parse("mock://fake.host/sub/path/api")));
+          expect(user.api, isA<FireflyIii>());
+          expect(
+            user.headers(),
+            containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
+          );
+          expect(
+            user.headers(),
+            containsPair(HttpHeaders.acceptHeader, "application/json"),
+          );
+        });
+        test("port + path", () async {
+          final AuthUser user = await AuthUser.create(
+              "mock://sub.fake.host:1234/sub/path", "api-key");
+          expect(user.host,
+              equals(Uri.parse("mock://sub.fake.host:1234/sub/path/api")));
+          expect(user.api, isA<FireflyIii>());
+          expect(
+            user.headers(),
+            containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
+          );
+          expect(
+            user.headers(),
+            containsPair(HttpHeaders.acceptHeader, "application/json"),
+          );
+        });
       });
       test("invalid host", () async {
         await expectLater(

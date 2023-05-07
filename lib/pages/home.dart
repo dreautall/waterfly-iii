@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/pages/home/balance.dart';
@@ -10,10 +11,13 @@ import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 
+final Logger log = Logger("Pages.Home");
+
 class PageActions extends ChangeNotifier {
   final Map<Key, List<Widget>> _map = <Key, List<Widget>>{};
-
   List<Widget>? get(Key key) => _map[key];
+
+  final Logger log = Logger("Pages.Home.PageActions");
 
   void set(Key key, List<Widget>? actions) {
     if (actions == null) {
@@ -21,7 +25,7 @@ class PageActions extends ChangeNotifier {
     } else {
       _map[key] = actions;
     }
-    debugPrint("notify PageActions->set()");
+    log.finest("notify PageActions->set()");
     notifyListeners();
   }
 }
@@ -35,6 +39,8 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
+  final Logger log = Logger("Pages.Home.Page");
+
   late TabController _tabController;
   late Widget _newTransactionFab;
 
@@ -93,7 +99,7 @@ class HomePageState extends State<HomePage>
 
   void _handleTabChange() {
     if (!_tabController.indexIsChanging) {
-      debugPrint("_handleTabChange()");
+      log.finer("_handleTabChange(${_tabController.index})");
       context
           .read<NavPageElements>()
           .setFab((_tabController.index < 2) ? _newTransactionFab : null);
@@ -113,7 +119,7 @@ class HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("home build(), tab ${_tabController.index}");
+    log.finest("build(tab: ${_tabController.index})");
     return ChangeNotifierProvider<PageActions>.value(
       value: _actions,
       child: TabBarView(

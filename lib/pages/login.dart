@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/pages/splash.dart';
 import 'package:waterflyiii/widgets/erroricon.dart';
 import 'package:waterflyiii/widgets/logo.dart';
+
+final Logger log = Logger("Pages.Login");
 
 class UriScheme {
   static const String https = "https://";
@@ -32,6 +35,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final Logger log = Logger("Pages.Login.Page");
+
   final TextEditingController _hostTextController = TextEditingController();
   final TextEditingController _keyTextController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -72,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("login build()");
+    log.finest("build()");
     return Scaffold(
       body: SafeArea(
         child: Form(

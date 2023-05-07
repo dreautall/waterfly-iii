@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:waterflyiii/notificationlistener.dart';
+import 'package:waterflyiii/pages/settings/debug.dart';
 import 'package:waterflyiii/pages/settings/notifications.dart';
 import 'package:waterflyiii/settings.dart';
 
@@ -134,7 +135,13 @@ class SettingsPageState extends State<SettingsPage>
                   ? "${snapshot.data!.appName}, ${snapshot.data!.version}+${snapshot.data!.buildNumber}"
                   : S.of(context).settingsVersionChecking),
               leading: const CircleAvatar(
-                child: Icon(Icons.info_outline_rounded),
+                child: Icon(
+                  Icons.info_outline_rounded,
+                ),
+              ),
+              onTap: () => showDialog(
+                context: context,
+                builder: (BuildContext context) => const DebugDialog(),
               ),
             );
           },

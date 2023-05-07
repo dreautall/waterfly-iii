@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
@@ -51,9 +52,11 @@ class TransactionTags extends StatefulWidget {
 }
 
 class _TransactionTagsState extends State<TransactionTags> {
+  final Logger log = Logger("Pages.Transaction.Tags");
+
   @override
   Widget build(BuildContext context) {
-    debugPrint("TransactionTags build()");
+    log.finest("build()");
     FocusNode disabledFocus = AlwaysDisabledFocusNode();
     return Row(
       children: <Widget>[

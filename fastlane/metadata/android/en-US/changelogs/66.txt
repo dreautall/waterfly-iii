@@ -1,0 +1,3 @@
+- Transaction list now has a long-press context menu with clone & delete options
+- Creating transactions from notifications improved
+- Bug fixes

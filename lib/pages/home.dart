@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-import 'package:waterflyiii/pages/home/home_balance.dart';
-import 'package:waterflyiii/pages/home/home_main.dart';
-import 'package:waterflyiii/pages/home/home_piggybank.dart';
-import 'package:waterflyiii/pages/home/home_transactions.dart';
+import 'package:waterflyiii/pages/home/balance.dart';
+import 'package:waterflyiii/pages/home/main.dart';
+import 'package:waterflyiii/pages/home/piggybank.dart';
+import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 

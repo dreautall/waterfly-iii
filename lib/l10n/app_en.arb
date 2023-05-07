@@ -92,7 +92,7 @@
   },
   "errorUnknown": "Unknown error.",
   "@errorUnknown": {
-    "description": "Error without further information occured."
+    "description": "Error without further information occurred."
   },
   "formButtonHelp": "Help",
   "@formButtonHelp": {
@@ -224,15 +224,15 @@
       }
     }
   },
-  "homeMainBudgetTitle": "Budgets for this month",
+  "homeMainBudgetTitle": "Budgets for current month",
   "@homeMainBudgetTitle": {
-    "description": "Title: Budgets for this month"
+    "description": "Title: Budgets for current month"
   },
   "homeMainChartAccountsTitle": "Account Summary",
   "@homeMainChartAccountsTitle": {
     "description": "Chart Label: Account Summary"
   },
-  "homeMainChartCategoriesTitle": "Category Summary",
+  "homeMainChartCategoriesTitle": "Category Summary for current month",
   "@homeMainChartCategoriesTitle": {
     "description": "Chart Label: Category Summary"
   },
@@ -265,7 +265,7 @@
   },
   "homePiggyDateTarget": "Target date: {date}",
   "@homePiggyDateTarget": {
-    "description": "Uset set target date of the piggy bank (when saving should be finished)",
+    "description": "Set target date of the piggy bank (when saving should be finished)",
     "placeholders": {
       "date": {
         "type": "DateTime",
@@ -372,7 +372,7 @@
   },
   "homeTransactionsMultipleCategories": "{num} categories",
   "@homeTransactionsMultipleCategories": {
-    "description": "$num categories for the transction.",
+    "description": "$num categories for the transaction.",
     "placeholders": {
       "num": {
         "type": "int",
@@ -515,7 +515,7 @@
   },
   "settingsNLServiceCheckingError": "Error checking status: {error}",
   "@settingsNLServiceCheckingError": {
-    "description": "An error occured while checking the service status",
+    "description": "An error occurred while checking the service status",
     "placeholders": {
       "error": {
         "type": "String",
@@ -620,6 +620,10 @@
   "@transactionDialogTagsTitle": {
     "description": "Dialog Title: Select Tags"
   },
+  "transactionDuplicate": "Duplicate",
+  "@transactionDuplicate": {
+    "description": "Menu Label: Duplicate item"
+  },
   "transactionErrorInvalidAccount": "Invalid Account",
   "@transactionErrorInvalidAccount": {
     "description": "Transaction Save Error: Invalid account"
@@ -636,6 +640,10 @@
   "@transactionErrorTitle": {
     "description": "Transaction Save Error: No title provided"
   },
+  "transactionFormLabelAccountDestination": "Destination account",
+  "@transactionFormLabelAccountDestination": {
+    "description": "Transaction Form: Label for destination account for transfer transaction"
+  },
   "transactionFormLabelAccountForeign": "Foreign account",
   "@transactionFormLabelAccountForeign": {
     "description": "Transaction Form: Label for foreign (other) account"
@@ -643,6 +651,10 @@
   "transactionFormLabelAccountOwn": "Own account",
   "@transactionFormLabelAccountOwn": {
     "description": "Transaction Form: Label for own account"
+  },
+  "transactionFormLabelAccountSource": "Source account",
+  "@transactionFormLabelAccountSource": {
+    "description": "Transaction Form: Label for source account for transfer transaction"
   },
   "transactionFormLabelNotes": "Notes",
   "@transactionFormLabelNotes": {

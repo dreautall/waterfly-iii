@@ -433,16 +433,23 @@ class AppDialogEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Application?>(
-      future: DeviceApps.getApp(app),
+      future: DeviceApps.getApp(app, true),
       builder: (BuildContext context, AsyncSnapshot<Application?> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.data == null) {
             return const SizedBox.shrink();
           }
+          late Widget leading;
+          try {
+            final ApplicationWithIcon appIcon =
+                snapshot.data! as ApplicationWithIcon;
+            leading = Image.memory(appIcon.icon);
+          } catch (e) {
+            leading = const Icon(Icons.api);
+          }
           return ListTile(
-            // :TODO: check for a library that can fetch the app icon
-            leading: const CircleAvatar(
-              child: Icon(Icons.api),
+            leading: CircleAvatar(
+              child: leading,
             ),
             title: Text(snapshot.data!.appName),
             subtitle: Text(app),

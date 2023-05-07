@@ -1,0 +1,1 @@
+- Die App sollte jetzt ab Android 5 (Lollipop) funktionieren.

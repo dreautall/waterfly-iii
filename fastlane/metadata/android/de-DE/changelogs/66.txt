@@ -1,0 +1,3 @@
+- Kontextmenü nach langem Drücken in der Transaktionsliste mit weiteren Aktionen (Duplizieren & Löschen)
+- Erstellung von Transaktionen aus Benachrichtigungen verbessert
+- Fehlerbehebungen

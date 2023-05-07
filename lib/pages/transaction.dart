@@ -15,9 +15,10 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/notificationlistener.dart';
-import 'package:waterflyiii/pages/transaction/transaction_attachments.dart';
-import 'package:waterflyiii/pages/transaction/transaction_currencies.dart';
-import 'package:waterflyiii/pages/transaction/transaction_tags.dart';
+import 'package:waterflyiii/pages/transaction/attachments.dart';
+import 'package:waterflyiii/pages/transaction/currencies.dart';
+import 'package:waterflyiii/pages/transaction/delete.dart';
+import 'package:waterflyiii/pages/transaction/tags.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
@@ -29,11 +30,13 @@ class TransactionPage extends StatefulWidget {
     this.transaction,
     this.transactionId,
     this.notification,
+    this.clone = false,
   }) : super(key: key);
 
   final String? transactionId;
   final TransactionRead? transaction;
   final NotificationTransaction? notification;
+  final bool clone;
 
   @override
   State<TransactionPage> createState() => _TransactionPageState();
@@ -153,7 +156,9 @@ class _TransactionPageState extends State<TransactionPage>
       }
 
       /// date
-      _date = transactions.first.date.toLocal();
+      _date = widget.clone
+          ? DateTime.now().toLocal()
+          : transactions.first.date.toLocal();
 
       /// account currency
       _localCurrency = CurrencyRead(
@@ -290,68 +295,86 @@ class _TransactionPageState extends State<TransactionPage>
           final SettingsProvider settings = context.read<SettingsProvider>();
 
           debugPrint("Got notification ${widget.notification}");
-
-          final RegExpMatch? match =
-              rFindMoney.firstMatch(widget.notification!.body);
-          if (match == null) {
-            debugPrint("regex did not match");
-            return;
-          }
           CurrencyRead? currency;
-          String currencyStr = match.namedGroup("preCurrency") ?? "";
-          String currencyStrAlt = match.namedGroup("postCurrency") ?? "";
-          if (currencyStr.isEmpty) {
-            currencyStr = currencyStrAlt;
-          }
-          if (currencyStr.isEmpty) {
-            debugPrint("no currency found");
-          }
-          if (_localCurrency!.attributes.code == currencyStr ||
-              _localCurrency!.attributes.symbol == currencyStr ||
-              _localCurrency!.attributes.code == currencyStrAlt ||
-              _localCurrency!.attributes.symbol == currencyStrAlt) {
-            currency = _localCurrency;
-          } else {
-            final Response<CurrencyArray> response =
-                await api.v1CurrenciesGet();
-            if (!response.isSuccessful || response.body == null) {
-              debugPrint("api currency fetch failed");
-              return;
-            }
-            for (CurrencyRead cur in response.body!.data) {
-              if (cur.attributes.code == currencyStr ||
-                  cur.attributes.symbol == currencyStr ||
-                  cur.attributes.code == currencyStrAlt ||
-                  cur.attributes.symbol == currencyStrAlt) {
-                currency = cur;
+          double amount = 0;
+
+          // Try to extract some money
+          final Iterable<RegExpMatch> matches =
+              rFindMoney.allMatches(widget.notification!.body);
+          if (matches.isNotEmpty) {
+            RegExpMatch? validMatch;
+            for (RegExpMatch match
+                in matches.toList(growable: false).reversed) {
+              if ((match.namedGroup("postCurrency")?.isNotEmpty ?? false) ||
+                  (match.namedGroup("preCurrency")?.isNotEmpty ?? false)) {
+                validMatch = match;
                 break;
               }
             }
-          }
-          // Check if string has a decimal separator
-          late double amount;
-          final String amountStr = match.namedGroup("amount") ?? "";
-          final String decimalSep =
-              amountStr.length >= 3 ? amountStr[amountStr.length - 3] : "";
-          if (decimalSep == "," || decimalSep == ".") {
-            final double wholes = double.tryParse(amountStr
-                    .substring(0, amountStr.length - 3)
-                    .replaceAll(",", "")
-                    .replaceAll(".", "")) ??
-                0;
-            final double dec = double.tryParse(amountStr
-                    .substring(amountStr.length - 2)
-                    .replaceAll(",", "")
-                    .replaceAll(".", "")) ??
-                0;
-            amount = wholes + dec / 100;
+            if (validMatch != null) {
+              // extract currency
+              String currencyStr = validMatch.namedGroup("preCurrency") ?? "";
+              String currencyStrAlt =
+                  validMatch.namedGroup("postCurrency") ?? "";
+              if (currencyStr.isEmpty) {
+                currencyStr = currencyStrAlt;
+              }
+              if (currencyStr.isEmpty) {
+                debugPrint("no currency found");
+              }
+              if (_localCurrency!.attributes.code == currencyStr ||
+                  _localCurrency!.attributes.symbol == currencyStr ||
+                  _localCurrency!.attributes.code == currencyStrAlt ||
+                  _localCurrency!.attributes.symbol == currencyStrAlt) {
+              } else {
+                final Response<CurrencyArray> response =
+                    await api.v1CurrenciesGet();
+                if (!response.isSuccessful || response.body == null) {
+                  debugPrint("api currency fetch failed");
+                } else {
+                  for (CurrencyRead cur in response.body!.data) {
+                    if (cur.attributes.code == currencyStr ||
+                        cur.attributes.symbol == currencyStr ||
+                        cur.attributes.code == currencyStrAlt ||
+                        cur.attributes.symbol == currencyStrAlt) {
+                      currency = cur;
+                      break;
+                    }
+                  }
+                }
+              }
+              // extract amount
+              // Check if string has a decimal separator
+              final String amountStr = validMatch.namedGroup("amount") ?? "";
+              final String decimalSep =
+                  amountStr.length >= 3 ? amountStr[amountStr.length - 3] : "";
+              if (decimalSep == "," || decimalSep == ".") {
+                final double wholes = double.tryParse(amountStr
+                        .substring(0, amountStr.length - 3)
+                        .replaceAll(",", "")
+                        .replaceAll(".", "")) ??
+                    0;
+                final double dec = double.tryParse(amountStr
+                        .substring(amountStr.length - 2)
+                        .replaceAll(",", "")
+                        .replaceAll(".", "")) ??
+                    0;
+                amount = wholes + dec / 100;
+              } else {
+                amount = double.tryParse(
+                        amountStr.replaceAll(",", "").replaceAll(".", "")) ??
+                    0;
+              }
+            } else {
+              debugPrint("no currency was found");
+            }
           } else {
-            amount = double.tryParse(
-                    amountStr.replaceAll(",", "").replaceAll(".", "")) ??
-                0;
+            debugPrint("regex did not match");
           }
+          // Fallback solution
+          currency ??= _localCurrency;
 
-          // Sanity checks passed, set title & date
+          // Set title & date
           _titleTextController.text = widget.notification!.title;
           _date = widget.notification!.date;
           _dateTextController.text = DateFormat.yMMMMd().format(_date);
@@ -745,28 +768,8 @@ class _TransactionPageState extends State<TransactionPage>
                 final NavigatorState nav = Navigator.of(context);
                 bool? ok = await showDialog<bool>(
                   context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    icon: const Icon(Icons.delete),
-                    title: Text(S.of(context).transactionTitleDelete),
-                    clipBehavior: Clip.hardEdge,
-                    actions: <Widget>[
-                      TextButton(
-                        child: Text(MaterialLocalizations.of(context)
-                            .cancelButtonLabel),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      FilledButton(
-                        child: Text(MaterialLocalizations.of(context)
-                            .deleteButtonTooltip),
-                        onPressed: () {
-                          Navigator.of(context).pop(true);
-                        },
-                      ),
-                    ],
-                    content: Text(S.of(context).transactionDeleteConfirm),
-                  ),
+                  builder: (BuildContext context) =>
+                      const DeletionConfirmDialog(),
                 );
                 if (!(ok ?? false)) {
                   return;
@@ -810,7 +813,7 @@ class _TransactionPageState extends State<TransactionPage>
                     });
                     late Response<TransactionSingle> resp;
 
-                    if (widget.transaction != null) {
+                    if (!widget.clone && widget.transaction != null) {
                       String id = widget.transaction!.id;
                       List<TransactionSplitUpdate> txS =
                           <TransactionSplitUpdate>[];
@@ -1161,7 +1164,9 @@ class _TransactionPageState extends State<TransactionPage>
           vDivider,
           Expanded(
             child: AutoCompleteText<AutocompleteAccount>(
-              labelText: S.of(context).transactionFormLabelAccountForeign,
+              labelText: (_transactionType == TransactionTypeProperty.transfer)
+                  ? S.of(context).transactionFormLabelAccountDestination
+                  : S.of(context).transactionFormLabelAccountForeign,
               //labelIcon: Icons.account_balance,
               textController: _otherAccountTextController,
               disabled: showAccountSelection,
@@ -1239,7 +1244,7 @@ class _TransactionPageState extends State<TransactionPage>
               ),
               MenuItemButton(
                 leadingIcon: const Icon(Icons.swap_horiz),
-                child: Text(S.of(context).transactionTypeDeposit),
+                child: Text(S.of(context).transactionTypeTransfer),
                 onPressed: () {
                   if (_transactionType == TransactionTypeProperty.transfer) {
                     return;
@@ -1265,7 +1270,7 @@ class _TransactionPageState extends State<TransactionPage>
                 foregroundColor: Colors.white,
                 backgroundColor: _transactionType.color,
                 // Disable when editing existing transaction --> not allowed
-                onPressed: (widget.transaction != null)
+                onPressed: (!widget.clone && widget.transaction != null)
                     ? null
                     : () {
                         if (controller.isOpen) {
@@ -1280,7 +1285,9 @@ class _TransactionPageState extends State<TransactionPage>
           vDivider,
           Expanded(
             child: AutoCompleteText<AutocompleteAccount>(
-              labelText: S.of(context).transactionFormLabelAccountOwn,
+              labelText: (_transactionType == TransactionTypeProperty.transfer)
+                  ? S.of(context).transactionFormLabelAccountSource
+                  : S.of(context).transactionFormLabelAccountOwn,
               //labelIcon: Icons.account_balance,
               textController: _ownAccountTextController,
               focusNode: _ownAccountFocusNode,

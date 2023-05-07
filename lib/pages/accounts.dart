@@ -16,7 +16,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 
-final Logger log = Logger("Accounts");
+final Logger log = Logger("Pages.Accounts");
 
 class AccountsPage extends StatefulWidget {
   const AccountsPage({
@@ -30,6 +30,8 @@ class AccountsPage extends StatefulWidget {
 class _AccountsPageState extends State<AccountsPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+
+  final Logger log = Logger("Pages.AccountsPage");
 
   @override
   void initState() {
@@ -64,7 +66,7 @@ class _AccountsPageState extends State<AccountsPage>
 
   void _handleTabChange() {
     if (!_tabController.indexIsChanging) {
-      log.finer("_handleTabChange()");
+      log.finer("_handleTabChange(${_tabController.index})");
     }
   }
 
@@ -79,7 +81,7 @@ class _AccountsPageState extends State<AccountsPage>
 
   @override
   Widget build(BuildContext context) {
-    log.fine("accounts build(), tab ${_tabController.index}");
+    log.fine("build(tab: ${_tabController.index})");
     return TabBarView(
       controller: _tabController,
       children: tabPages,
@@ -107,6 +109,8 @@ class _AccountDetailsState extends State<AccountDetails>
     firstPageKey: 0,
     invisibleItemsThreshold: 10,
   );
+
+  final Logger log = Logger("Pages.AccountDetails");
 
   @override
   void initState() {
@@ -165,7 +169,7 @@ class _AccountDetailsState extends State<AccountDetails>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    log.fine("accounts_detail build()");
+    log.fine("build()");
 
     return RefreshIndicator(
       onRefresh: () => Future<void>.sync(() => _pagingController.refresh()),

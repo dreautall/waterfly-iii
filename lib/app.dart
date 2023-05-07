@@ -92,7 +92,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
           debugPrint("signedIn: $signedIn");
         }
         return MaterialApp(
-          title: S.of(context).appTitle,
+          title: 'Waterfly III',
           theme: ThemeData(
             brightness: Brightness.light,
             colorSchemeSeed: Colors.blue,

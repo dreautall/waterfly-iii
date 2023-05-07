@@ -10,7 +10,6 @@
   "accountsLabelLiabilities": "Verbindlichkeiten",
   "accountsLabelRevenue": "Einnahmekonten",
   "accountsLiabilitiesInterest": "{interest}% Zinsen pro {period, select, weekly{Woche} monthly{Monat} quarterly{Quartal} halfyear{halbes Jahr} yearly{Jahr} other{Unbekannt}}",
-  "appTitle": "Waterfly III",
   "catOther": "Andere",
   "errorAPIInvalidResponse": "Ungültige API-Antwort: {message}",
   "errorAPIUnavailable": "API nicht verfügbar.",

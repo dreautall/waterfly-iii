@@ -51,10 +51,6 @@
       }
     }
   },
-  "appTitle": "Waterfly III",
-  "@appTitle": {
-    "description": "App Title. Should always be Waterfly III and only be translated in case of different alphabets. The 'III' mimicks Firefly III, and should be the same as there."
-  },
   "catOther": "Other",
   "@catOther": {
     "description": "Category description for summary category 'Other'"

@@ -127,7 +127,10 @@ class _HomeBalanceState extends State<HomeBalance>
                             style: Theme.of(context).textTheme.bodyMedium,
                             children: <InlineSpan>[
                               TextSpan(
-                                text: currency.fmt(balance),
+                                text: currency.fmt(
+                                  balance,
+                                  locale: S.of(context).localeName,
+                                ),
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium!

@@ -34,7 +34,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   final PagingController<int, TransactionRead> _pagingController =
       PagingController<int, TransactionRead>(
-    firstPageKey: 0,
+    firstPageKey: 1,
     invisibleItemsThreshold: 20,
   );
 
@@ -151,8 +151,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       if (isLastPage) {
         _pagingController.appendLastPage(transactionList);
       } else {
-        final int nextPageKey = pageKey + 1;
-        _pagingController.appendPage(transactionList, nextPageKey);
+        _pagingController.appendPage(transactionList, pageKey + 1);
       }
     } catch (e) {
       debugPrint("error --> $e");

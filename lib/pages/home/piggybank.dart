@@ -33,7 +33,7 @@ class _HomePiggybankState extends State<HomePiggybank>
   final int _numberOfItemsPerRequest = 50;
   final PagingController<int, PiggyBankRead> _pagingController =
       PagingController<int, PiggyBankRead>(
-    firstPageKey: 0,
+    firstPageKey: 1,
     invisibleItemsThreshold: 10,
   );
 

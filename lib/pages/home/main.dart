@@ -971,6 +971,7 @@ class LastDaysChart extends StatelessWidget {
     for (int i = 0; i < 7; i++) {
       lastDays.add(now.subtract(Duration(days: i)));
     }
+    bool showCurrency = true;
     CurrencyRead defaultCurrency =
         context.read<FireflyService>().defaultCurrency;
 
@@ -985,6 +986,11 @@ class LastDaysChart extends StatelessWidget {
 
       double diff =
           (income.differenceFloat ?? 0) + (expense.differenceFloat ?? 0);
+
+      // Don't show currency when numbers are too big, see #29
+      if (diff > 1000) {
+        showCurrency = false;
+      }
 
       chartData.add(
         LabelAmountChart(
@@ -1006,11 +1012,13 @@ class LastDaysChart extends StatelessWidget {
           colorFn: (LabelAmountChart entry, _) => (entry.amount > 0)
               ? charts.MaterialPalette.green.shadeDefault
               : charts.MaterialPalette.red.shadeDefault,
-          labelAccessorFn: (LabelAmountChart entry, _) => defaultCurrency.fmt(
-            entry.amount.abs(),
-            decimalDigits: 0,
-            locale: S.of(context).localeName,
-          ),
+          labelAccessorFn: (LabelAmountChart entry, _) => showCurrency
+              ? defaultCurrency.fmt(
+                  entry.amount.abs(),
+                  decimalDigits: 0,
+                  locale: S.of(context).localeName,
+                )
+              : entry.amount.abs().toStringAsFixed(0),
           outsideLabelStyleAccessorFn: (_, __) => charts.TextStyleSpec(
             color: charts.ColorUtil.fromDartColor(
               Theme.of(context).colorScheme.onSurfaceVariant,

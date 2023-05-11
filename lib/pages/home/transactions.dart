@@ -321,7 +321,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
     if (foreignAmounts.isNotEmpty) {
       foreignAmounts.forEach((String cur, double amount) {
         if (foreignCurrencies.containsKey(cur)) {
-          foreignText += "${foreignCurrencies[cur]!.fmt(amount)} ";
+          foreignText += "${foreignCurrencies[cur]!.fmt(
+            amount,
+            locale: S.of(context).localeName,
+          )} ";
         }
       });
       foreignText += " ";
@@ -451,7 +454,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
                         ),
                   ),
                 TextSpan(
-                  text: currency.fmt(amount),
+                  text: currency.fmt(
+                    amount,
+                    locale: S.of(context).localeName,
+                  ),
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: transactions.first.type.color,
                     fontFeatures: const <FontFeature>[

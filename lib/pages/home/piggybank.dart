@@ -169,7 +169,10 @@ class _HomePiggybankState extends State<HomePiggybank>
                       style: Theme.of(context).textTheme.bodyMedium,
                       children: <InlineSpan>[
                         TextSpan(
-                          text: currency.fmt(currentAmount),
+                          text: currency.fmt(
+                            currentAmount,
+                            locale: S.of(context).localeName,
+                          ),
                           style:
                               Theme.of(context).textTheme.titleMedium!.copyWith(
                             color:
@@ -187,7 +190,10 @@ class _HomePiggybankState extends State<HomePiggybank>
                             ? TextSpan(
                                 text: S.of(context).numPercentOf(
                                       (piggy.attributes.percentage ?? 0) / 100,
-                                      currency.fmt(targetAmount),
+                                      currency.fmt(
+                                        targetAmount,
+                                        locale: S.of(context).localeName,
+                                      ),
                                     ))
                             : const TextSpan(),
                       ],
@@ -309,13 +315,22 @@ class _PiggyDetailsState extends State<PiggyDetails> {
     String infoText = "";
 
     if (targetAmount != 0) {
-      infoText += S.of(context).homePiggyTarget(currency.fmt(targetAmount));
+      infoText += S.of(context).homePiggyTarget(currency.fmt(
+            targetAmount,
+            locale: S.of(context).localeName,
+          ));
       infoText += "\n";
     }
-    infoText += S.of(context).homePiggySaved(currency.fmt(currentAmount));
+    infoText += S.of(context).homePiggySaved(currency.fmt(
+          currentAmount,
+          locale: S.of(context).localeName,
+        ));
     infoText += "\n";
     if (leftAmount != 0) {
-      infoText += S.of(context).homePiggyRemaining(currency.fmt(leftAmount));
+      infoText += S.of(context).homePiggyRemaining(currency.fmt(
+            leftAmount,
+            locale: S.of(context).localeName,
+          ));
       infoText += "\n";
     }
     if (startDate != null) {
@@ -560,7 +575,10 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(S.of(context).homePiggySaved(currency.fmt(currentAmount))),
+              Text(S.of(context).homePiggySaved(currency.fmt(
+                    currentAmount,
+                    locale: S.of(context).localeName,
+                  ))),
               const SizedBox(height: 16),
               Row(
                 children: <Widget>[

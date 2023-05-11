@@ -1148,10 +1148,12 @@ class _TransactionPageState extends State<TransactionPage>
               child: NumberInput(
                 controller: _localAmountTextController,
                 disabled: _split,
-                hintText: _localCurrency?.zero() ??
-                    NumberFormat.currency(
-                      decimalDigits: 2,
-                    ).format(0),
+                hintText:
+                    _localCurrency?.zero(locale: S.of(context).localeName) ??
+                        NumberFormat.currency(
+                          decimalDigits: 2,
+                          locale: S.of(context).localeName,
+                        ).format(0),
                 decimals: _localCurrency?.attributes.decimalPlaces ?? 2,
                 prefixText: "${_localCurrency?.attributes.code} ",
                 onChanged: (String string) =>
@@ -1593,10 +1595,16 @@ class _TransactionPageState extends State<TransactionPage>
                                   controller: (_foreignCurrencies[i] != null)
                                       ? _foreignAmountTextControllers[i]
                                       : _localAmountTextControllers[i],
-                                  hintText: _foreignCurrencies[i]?.zero() ??
-                                      _localCurrency?.zero() ??
-                                      NumberFormat.currency(decimalDigits: 2)
-                                          .format(0),
+                                  hintText: _foreignCurrencies[i]?.zero(
+                                        locale: S.of(context).localeName,
+                                      ) ??
+                                      _localCurrency?.zero(
+                                        locale: S.of(context).localeName,
+                                      ) ??
+                                      NumberFormat.currency(
+                                        decimalDigits: 2,
+                                        locale: S.of(context).localeName,
+                                      ).format(0),
                                   decimals: _foreignCurrencies[i]
                                           ?.attributes
                                           .decimalPlaces ??
@@ -1632,9 +1640,13 @@ class _TransactionPageState extends State<TransactionPage>
                                 child: NumberInput(
                                   icon: const Icon(Icons.currency_exchange),
                                   controller: _localAmountTextControllers[i],
-                                  hintText: _localCurrency?.zero() ??
-                                      NumberFormat.currency(decimalDigits: 2)
-                                          .format(0),
+                                  hintText: _localCurrency?.zero(
+                                        locale: S.of(context).localeName,
+                                      ) ??
+                                      NumberFormat.currency(
+                                        decimalDigits: 2,
+                                        locale: S.of(context).localeName,
+                                      ).format(0),
                                   decimals: _localCurrency
                                           ?.attributes.decimalPlaces ??
                                       2,

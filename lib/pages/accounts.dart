@@ -288,7 +288,10 @@ class _AccountDetailsState extends State<AccountDetails>
                     style: Theme.of(context).textTheme.bodyMedium,
                     children: <InlineSpan>[
                       TextSpan(
-                        text: currency.fmt(currentAmount),
+                        text: currency.fmt(
+                          currentAmount,
+                          locale: S.of(context).localeName,
+                        ),
                         style:
                             Theme.of(context).textTheme.titleMedium!.copyWith(
                           color:

@@ -343,7 +343,10 @@ class _HomeMainState extends State<HomeMain>
                 children: <Widget>[
                   Text(S.of(context).homeMainChartDailyAvg),
                   Text(
-                    defaultCurrency.fmt(sevenDayTotal / 7),
+                    defaultCurrency.fmt(
+                      sevenDayTotal / 7,
+                      locale: S.of(context).localeName,
+                    ),
                     style: TextStyle(
                       color: sevenDayTotal < 0 ? Colors.red : Colors.green,
                       fontWeight: FontWeight.bold,
@@ -423,7 +426,10 @@ class _HomeMainState extends State<HomeMain>
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          defaultCurrency.fmt(balance),
+                          defaultCurrency.fmt(
+                            balance,
+                            locale: S.of(context).localeName,
+                          ),
                           style: TextStyle(
                             color: (balance < 0) ? Colors.red : Colors.green,
                             fontWeight: FontWeight.bold,
@@ -491,7 +497,10 @@ class _HomeMainState extends State<HomeMain>
                           (MapEntry<DateTime, InsightTotalEntry> e) => Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              defaultCurrency.fmt(e.value.differenceFloat ?? 0),
+                              defaultCurrency.fmt(
+                                e.value.differenceFloat ?? 0,
+                                locale: S.of(context).localeName,
+                              ),
                               style: const TextStyle(
                                 fontFeatures: <FontFeature>[
                                   FontFeature.tabularFigures()
@@ -520,7 +529,10 @@ class _HomeMainState extends State<HomeMain>
                           (MapEntry<DateTime, InsightTotalEntry> e) => Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              defaultCurrency.fmt(e.value.differenceFloat ?? 0),
+                              defaultCurrency.fmt(
+                                e.value.differenceFloat ?? 0,
+                                locale: S.of(context).localeName,
+                              ),
                               style: const TextStyle(
                                 fontFeatures: <FontFeature>[
                                   FontFeature.tabularFigures()
@@ -550,7 +562,10 @@ class _HomeMainState extends State<HomeMain>
                         return Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            defaultCurrency.fmt(sum),
+                            defaultCurrency.fmt(
+                              sum,
+                              locale: S.of(context).localeName,
+                            ),
                             style: TextStyle(
                               color: (sum < 0) ? Colors.red : Colors.green,
                               fontWeight: FontWeight.bold,
@@ -700,13 +715,15 @@ class BudgetList extends StatelessWidget {
                   Text(
                     S.of(context).homeMainBudgetSum(
                           currency.fmt(
-                            (available - spent).abs().round(),
+                            (available - spent).abs(),
                             decimalDigits: 0,
+                            locale: S.of(context).localeName,
                           ),
                           (spent > available) ? "over" : "leftfrom",
                           currency.fmt(
-                            available.round(),
+                            available,
                             decimalDigits: 0,
+                            locale: S.of(context).localeName,
                           ),
                         ),
                     style: Theme.of(context)
@@ -961,12 +978,14 @@ class LastDaysChart extends StatelessWidget {
               ? charts.MaterialPalette.green.shadeDefault
               : charts.MaterialPalette.red.shadeDefault,
           labelAccessorFn: (LabelAmountChart entry, _) => defaultCurrency.fmt(
-            entry.amount.abs().round(),
+            entry.amount.abs(),
             decimalDigits: 0,
+            locale: S.of(context).localeName,
           ),
           outsideLabelStyleAccessorFn: (_, __) => charts.TextStyleSpec(
             color: charts.ColorUtil.fromDartColor(
-                Theme.of(context).colorScheme.onSurfaceVariant),
+              Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
         ),
       ],
@@ -980,7 +999,8 @@ class LastDaysChart extends StatelessWidget {
         renderSpec: charts.SmallTickRendererSpec<String>(
           labelStyle: charts.TextStyleSpec(
             color: charts.ColorUtil.fromDartColor(
-                Theme.of(context).colorScheme.onSurfaceVariant),
+              Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
         ),
       ),
@@ -1158,7 +1178,12 @@ class CategoryChart extends StatelessWidget {
             legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
             desiredMaxRows: 6,
             measureFormatter: (num? value) {
-              return value == null ? '-' : defaultCurrency.fmt(value);
+              return value == null
+                  ? '-'
+                  : defaultCurrency.fmt(
+                      value,
+                      locale: S.of(context).localeName,
+                    );
             },
             entryTextStyle: charts.TextStyleSpec(
               fontSize:

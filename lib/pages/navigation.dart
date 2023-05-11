@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/animations.dart';
@@ -7,6 +8,8 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/pages/accounts.dart';
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/settings.dart';
+
+final Logger log = Logger("Pages.Navigation");
 
 class NavDestination {
   const NavDestination(
@@ -29,31 +32,31 @@ class NavPageElements with ChangeNotifier {
 
   void setAppBarActions(List<Widget>? actions) {
     if (actions == appBarActions) {
-      debugPrint("NavPageElements->setAppBarActions equal, skipping");
+      log.finer(() => "NavPageElements->setAppBarActions equal, skipping");
       return;
     }
     appBarActions = actions;
-    debugPrint("notify NavPageElements->setAppBarActions()");
+    log.finest(() => "notify NavPageElements->setAppBarActions()");
     notifyListeners();
   }
 
   void setAppBarBottom(PreferredSizeWidget? bottom) {
     if (bottom == appBarBottom) {
-      debugPrint("NavPageElements->setAppBarBottom equal, skipping");
+      log.finer(() => "NavPageElements->setAppBarBottom equal, skipping");
       return;
     }
     appBarBottom = bottom;
-    debugPrint("notify NavPageElements->setAppBarBottom()");
+    log.finest(() => "notify NavPageElements->setAppBarBottom()");
     notifyListeners();
   }
 
   void setFab(Widget? newFab) {
     if (newFab == fab) {
-      debugPrint("NavPageElements->setFab equal, skipping");
+      log.finer(() => "NavPageElements->setFab equal, skipping");
       return;
     }
     fab = newFab;
-    debugPrint("notify NavPageElements->setFab()");
+    log.finest(() => "notify NavPageElements->setFab()");
     notifyListeners();
   }
 }
@@ -66,6 +69,8 @@ class NavPage extends StatefulWidget {
 }
 
 class NavPageState extends State<NavPage> with TickerProviderStateMixin {
+  final Logger log = Logger("Pages.Navigation.Page");
+
   late TabController _tabController;
   int screenIndex = 0;
   late List<NavDestination> navDestinations;
@@ -108,7 +113,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final NavDestination currentPage = navDestinations[screenIndex];
-    debugPrint("nav build(), page $screenIndex");
+    log.finest(() => "nav build(page: $screenIndex)");
 
     return ChangeNotifierProvider<NavPageElements>(
       create: (_) => NavPageElements(),

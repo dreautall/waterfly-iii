@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
@@ -30,6 +31,8 @@ class HomePiggybank extends StatefulWidget {
 
 class _HomePiggybankState extends State<HomePiggybank>
     with AutomaticKeepAliveClientMixin {
+  final Logger log = Logger("Pages.Home.Piggybank");
+
   final int _numberOfItemsPerRequest = 50;
   final PagingController<int, PiggyBankRead> _pagingController =
       PagingController<int, PiggyBankRead>(
@@ -81,8 +84,8 @@ class _HomePiggybankState extends State<HomePiggybank>
         final int nextPageKey = pageKey + 1;
         _pagingController.appendPage(piggyList, nextPageKey);
       }
-    } catch (e) {
-      debugPrint("error --> $e");
+    } catch (e, stackTrace) {
+      log.severe("_fetchPage($pageKey)", e, stackTrace);
       _pagingController.error = e;
     }
   }
@@ -93,7 +96,7 @@ class _HomePiggybankState extends State<HomePiggybank>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    debugPrint("home_piggybank build()");
+    log.finest(() => "build()");
 
     return RefreshIndicator(
       onRefresh: () => Future<void>.sync(() => _pagingController.refresh()),
@@ -241,6 +244,13 @@ class _HomePiggybankState extends State<HomePiggybank>
   }
 }
 
+class TimeSeriesChart {
+  final DateTime time;
+  final double value;
+
+  TimeSeriesChart(this.time, this.value);
+}
+
 class PiggyDetails extends StatefulWidget {
   const PiggyDetails({
     super.key,
@@ -253,14 +263,9 @@ class PiggyDetails extends StatefulWidget {
   State<PiggyDetails> createState() => _PiggyDetailsState();
 }
 
-class TimeSeriesChart {
-  final DateTime time;
-  final double value;
-
-  TimeSeriesChart(this.time, this.value);
-}
-
 class _PiggyDetailsState extends State<PiggyDetails> {
+  final Logger log = Logger("Pages.Home.Piggybank.Details");
+
   Future<List<PiggyBankEventRead>> _fetchChart() async {
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -477,7 +482,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                     ),
                   );
                 } else if (snapshot.hasError) {
-                  debugPrint("has error ${snapshot.error}, popping view");
+                  log.severe("error encountered, popping view", snapshot.error);
                   Navigator.of(context).pop();
                   return const SizedBox.shrink();
                 } else {
@@ -537,6 +542,8 @@ class PiggyAdjustBalance extends StatefulWidget {
 }
 
 class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
+  final Logger log = Logger("Pages.Home.Piggybank.AdjustBalance");
+
   final TextEditingController _amountTextController = TextEditingController();
   TransactionTypeProperty _transactionType = TransactionTypeProperty.deposit;
 
@@ -640,7 +647,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                   amount *= -1;
                 }
                 final double totalAmount = currentAmount + amount;
-                debugPrint(
+                log.finest(() =>
                     "New piggy bank total = $totalAmount out of $currentAmount + $amount");
                 final Response<PiggyBankSingle> resp =
                     await api.v1PiggyBanksIdPut(

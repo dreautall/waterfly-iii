@@ -2,12 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+
+final Logger log = Logger("Pages.Home.Transaction.Filter");
 
 class TransactionFilters with ChangeNotifier {
   TransactionFilters({
@@ -33,7 +36,7 @@ class TransactionFilters with ChangeNotifier {
         currency != null ||
         category != null ||
         budget != null;
-    debugPrint("notify TransactionFilters, filters? $hasFilters");
+    log.finest(() => "notify TransactionFilters, filters? $hasFilters");
     notifyListeners();
   }
 
@@ -153,7 +156,9 @@ class FilterDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("FilterDialog build()");
+    final Logger log = Logger("Pages.Home.Transaction.Filter.Dialog");
+
+    log.finest(() => "build()");
     return AlertDialog(
       icon: const Icon(Icons.tune),
       title: Text(S.of(context).homeTransactionsDialogFilterTitle),
@@ -182,8 +187,6 @@ class FilterDialog extends StatelessWidget {
                   (BuildContext context, AsyncSnapshot<FilterData> snapshot) {
                 if (snapshot.hasData && snapshot.data != null) {
                   List<Widget> child = <Widget>[];
-                  debugPrint("FilterDialog->FutureBuilder build()");
-
                   final double inputWidth =
                       MediaQuery.of(context).size.width - 128 - 24;
 

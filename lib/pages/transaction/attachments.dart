@@ -48,7 +48,9 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       DateTime? modDate =
           attachment.attributes.updatedAt ?? attachment.attributes.createdAt;
       if (modDate != null) {
-        subtitle = DateFormat.yMd().add_Hms().format(modDate.toLocal());
+        subtitle = DateFormat.yMd(S.of(context).localeName)
+            .add_Hms()
+            .format(modDate.toLocal());
       }
 
       if (attachment.attributes.size != null) {

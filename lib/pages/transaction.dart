@@ -298,6 +298,7 @@ class _TransactionPageState extends State<TransactionPage>
         if (widget.notification != null) {
           final FireflyIii api = context.read<FireflyService>().api;
           final SettingsProvider settings = context.read<SettingsProvider>();
+          final String locale = S.of(context).localeName;
 
           log.info("Got notification ${widget.notification}");
           CurrencyRead? currency;
@@ -382,8 +383,8 @@ class _TransactionPageState extends State<TransactionPage>
           // Set title & date
           _titleTextController.text = widget.notification!.title;
           _date = widget.notification!.date;
-          _dateTextController.text = DateFormat.yMMMMd().format(_date);
-          _timeTextController.text = DateFormat.Hm().format(_date);
+          _dateTextController.text = DateFormat.yMMMMd(locale).format(_date);
+          _timeTextController.text = DateFormat.Hm(locale).format(_date);
 
           // Check currency
           if (currency == _localCurrency) {
@@ -422,8 +423,10 @@ class _TransactionPageState extends State<TransactionPage>
       });
     }
 
-    _dateTextController.text = DateFormat.yMMMMd().format(_date);
-    _timeTextController.text = DateFormat.Hm().format(_date);
+    _dateTextController.text =
+        DateFormat.yMMMMd(S.of(context).localeName).format(_date);
+    _timeTextController.text =
+        DateFormat.Hm(S.of(context).localeName).format(_date);
 
     // focus node listener for ownaccount
     _ownAccountFocusNode.addListener(() async {
@@ -846,7 +849,10 @@ class _TransactionPageState extends State<TransactionPage>
                         }
                         txS.add(TransactionSplitUpdate(
                           amount: _localAmounts[i].toString(),
-                          budgetName: _budgetTextControllers[i].text,
+                          budgetName: (_transactionType ==
+                                  TransactionTypeProperty.withdrawal)
+                              ? _budgetTextControllers[i].text
+                              : "",
                           categoryName: _categoryTextControllers[i].text,
                           date: _date,
                           description: _split
@@ -920,7 +926,10 @@ class _TransactionPageState extends State<TransactionPage>
                           description: _split
                               ? _titleTextControllers[i].text
                               : _titleTextController.text,
-                          budgetName: _budgetTextControllers[i].text,
+                          budgetName: (_transactionType ==
+                                  TransactionTypeProperty.withdrawal)
+                              ? _budgetTextControllers[i].text
+                              : "",
                           categoryName: _categoryTextControllers[i].text,
                           destinationId: destinationId,
                           destinationName: destinationName,
@@ -1146,10 +1155,12 @@ class _TransactionPageState extends State<TransactionPage>
               child: NumberInput(
                 controller: _localAmountTextController,
                 disabled: _split,
-                hintText: _localCurrency?.zero() ??
-                    NumberFormat.currency(
-                      decimalDigits: 2,
-                    ).format(0),
+                hintText:
+                    _localCurrency?.zero(locale: S.of(context).localeName) ??
+                        NumberFormat.currency(
+                          decimalDigits: 2,
+                          locale: S.of(context).localeName,
+                        ).format(0),
                 decimals: _localCurrency?.attributes.decimalPlaces ?? 2,
                 prefixText: "${_localCurrency?.attributes.code} ",
                 onChanged: (String string) =>
@@ -1385,7 +1396,8 @@ class _TransactionPageState extends State<TransactionPage>
                       day: pickedDate.day,
                     );
                     _dateTextController.text =
-                        DateFormat.yMMMMd().format(_date);
+                        DateFormat.yMMMMd(S.of(context).localeName)
+                            .format(_date);
                   });
                 },
               ),
@@ -1411,7 +1423,8 @@ class _TransactionPageState extends State<TransactionPage>
 
                   setState(() {
                     _date = _date.setTimeOfDay(pickedTime);
-                    _timeTextController.text = DateFormat.Hm().format(_date);
+                    _timeTextController.text =
+                        DateFormat.Hm(S.of(context).localeName).format(_date);
                   });
                 },
               ),
@@ -1570,48 +1583,65 @@ class _TransactionPageState extends State<TransactionPage>
                     focusNode: _categoryFocusNodes[i],
                   ),
                   hDivider,
-                  TransactionBudget(
-                    textController: _budgetTextControllers[i],
-                    focusNode: _budgetFocusNodes[i],
-                  ),
-                  hDivider,
                   AnimatedHeight(
-                      child: (_split)
-                          ? Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: NumberInput(
-                                    icon: Icon(_transactionType.icon),
-                                    controller: (_foreignCurrencies[i] != null)
-                                        ? _foreignAmountTextControllers[i]
-                                        : _localAmountTextControllers[i],
-                                    hintText: _foreignCurrencies[i]?.zero() ??
-                                        _localCurrency?.zero() ??
-                                        NumberFormat.currency(decimalDigits: 2)
-                                            .format(0),
-                                    decimals: _foreignCurrencies[i]
-                                            ?.attributes
-                                            .decimalPlaces ??
-                                        _localCurrency
-                                            ?.attributes.decimalPlaces ??
-                                        2,
-                                    prefixText:
-                                        "${_foreignCurrencies[i]?.attributes.code ?? _localCurrency?.attributes.code} ",
-                                    onChanged: (String string) {
-                                      if (_foreignCurrencies[i] != null) {
-                                        _foreignAmounts[i] =
-                                            double.tryParse(string) ?? 0;
-                                      } else {
-                                        _localAmounts[i] =
-                                            double.tryParse(string) ?? 0;
-                                      }
-                                      splitTransactionCalculateAmount();
-                                    },
-                                  ),
+                    child:
+                        (_transactionType == TransactionTypeProperty.withdrawal)
+                            ? TransactionBudget(
+                                textController: _budgetTextControllers[i],
+                                focusNode: _budgetFocusNodes[i],
+                              )
+                            : const SizedBox.shrink(),
+                  ),
+                  AnimatedHeight(
+                    child:
+                        (_transactionType == TransactionTypeProperty.withdrawal)
+                            ? hDivider
+                            : const SizedBox.shrink(),
+                  ),
+                  AnimatedHeight(
+                    child: (_split)
+                        ? Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: NumberInput(
+                                  icon: Icon(_transactionType.icon),
+                                  controller: (_foreignCurrencies[i] != null)
+                                      ? _foreignAmountTextControllers[i]
+                                      : _localAmountTextControllers[i],
+                                  hintText: _foreignCurrencies[i]?.zero(
+                                        locale: S.of(context).localeName,
+                                      ) ??
+                                      _localCurrency?.zero(
+                                        locale: S.of(context).localeName,
+                                      ) ??
+                                      NumberFormat.currency(
+                                        decimalDigits: 2,
+                                        locale: S.of(context).localeName,
+                                      ).format(0),
+                                  decimals: _foreignCurrencies[i]
+                                          ?.attributes
+                                          .decimalPlaces ??
+                                      _localCurrency
+                                          ?.attributes.decimalPlaces ??
+                                      2,
+                                  prefixText:
+                                      "${_foreignCurrencies[i]?.attributes.code ?? _localCurrency?.attributes.code} ",
+                                  onChanged: (String string) {
+                                    if (_foreignCurrencies[i] != null) {
+                                      _foreignAmounts[i] =
+                                          double.tryParse(string) ?? 0;
+                                    } else {
+                                      _localAmounts[i] =
+                                          double.tryParse(string) ?? 0;
+                                    }
+                                    splitTransactionCalculateAmount();
+                                  },
                                 ),
-                              ],
-                            )
-                          : const SizedBox.shrink()),
+                              ),
+                            ],
+                          )
+                        : const SizedBox.shrink(),
+                  ),
                   AnimatedHeight(
                     child: (_split) ? hDivider : const SizedBox.shrink(),
                   ),
@@ -1623,9 +1653,13 @@ class _TransactionPageState extends State<TransactionPage>
                                 child: NumberInput(
                                   icon: const Icon(Icons.currency_exchange),
                                   controller: _localAmountTextControllers[i],
-                                  hintText: _localCurrency?.zero() ??
-                                      NumberFormat.currency(decimalDigits: 2)
-                                          .format(0),
+                                  hintText: _localCurrency?.zero(
+                                        locale: S.of(context).localeName,
+                                      ) ??
+                                      NumberFormat.currency(
+                                        decimalDigits: 2,
+                                        locale: S.of(context).localeName,
+                                      ).format(0),
                                   decimals: _localCurrency
                                           ?.attributes.decimalPlaces ??
                                       2,

@@ -35,7 +35,7 @@ dependencies:
       url: https://github.com/dreautall/notification_listener_service.git
       ref: 280a7b869fe57c81dd1842cd08fa16045d828f0a
   device_apps: ^2.2.0
-  package_info_plus: ^3.1.2
+  package_info_plus: ^4.0.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

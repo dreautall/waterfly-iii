@@ -101,7 +101,7 @@ class _AccountDetailsState extends State<AccountDetails>
   final int _numberOfItemsPerRequest = 50;
   final PagingController<int, AccountRead> _pagingController =
       PagingController<int, AccountRead>(
-    firstPageKey: 0,
+    firstPageKey: 1,
     invisibleItemsThreshold: 10,
   );
 

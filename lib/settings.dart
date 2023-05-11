@@ -82,6 +82,8 @@ class SettingsProvider with ChangeNotifier {
     log.config("read locale $locale");
     if (S.supportedLocales.contains(locale)) {
       _locale = locale;
+    } else {
+      _locale = const Locale('en');
     }
 
     _debug = prefs.getBool(settingDebug) ?? false;

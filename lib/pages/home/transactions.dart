@@ -37,7 +37,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   final PagingController<int, TransactionRead> _pagingController =
       PagingController<int, TransactionRead>(
-    firstPageKey: 0,
+    firstPageKey: 1,
     invisibleItemsThreshold: 20,
   );
 
@@ -154,8 +154,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       if (isLastPage) {
         _pagingController.appendLastPage(transactionList);
       } else {
-        final int nextPageKey = pageKey + 1;
-        _pagingController.appendPage(transactionList, nextPageKey);
+        _pagingController.appendPage(transactionList, pageKey + 1);
       }
     } catch (e, stackTrace) {
       log.severe("_fetchPage($pageKey)", e, stackTrace);
@@ -276,11 +275,22 @@ class _HomeTransactionsState extends State<HomeTransactions>
     }
     if (transactions.first.type == TransactionTypeProperty.transfer) {
       subtitle.add(
-        TextSpan(text: "(${S.of(context).transactionTypeTransfer}) "),
+        TextSpan(text: "(${S.of(context).transactionTypeTransfer})"),
+      );
+      subtitle.add(
+        const WidgetSpan(
+          baseline: TextBaseline.ideographic,
+          alignment: PlaceholderAlignment.middle,
+          child: Padding(
+            padding: EdgeInsets.only(right: 2),
+            child: Icon(Icons.arrow_right_alt),
+          ),
+        ),
       );
     }
     subtitle.add(TextSpan(
-      text: (transactions.first.type == TransactionTypeProperty.withdrawal)
+      text: (transactions.first.type == TransactionTypeProperty.withdrawal ||
+              transactions.first.type == TransactionTypeProperty.transfer)
           ? destinationName
           : sourceName,
     ));
@@ -314,7 +324,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
     if (foreignAmounts.isNotEmpty) {
       foreignAmounts.forEach((String cur, double amount) {
         if (foreignCurrencies.containsKey(cur)) {
-          foreignText += "${foreignCurrencies[cur]!.fmt(amount)} ";
+          foreignText += "${foreignCurrencies[cur]!.fmt(
+            amount,
+            locale: S.of(context).localeName,
+          )} ";
         }
       });
       foreignText += " ";
@@ -444,7 +457,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
                         ),
                   ),
                 TextSpan(
-                  text: currency.fmt(amount),
+                  text: currency.fmt(
+                    amount,
+                    locale: S.of(context).localeName,
+                  ),
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: transactions.first.type.color,
                     fontFeatures: const <FontFeature>[
@@ -499,7 +515,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 0, 8),
             child: Text(
-              DateFormat.yMd().format(date),
+              DateFormat.yMd(S.of(context).localeName).format(date),
               style: Theme.of(context).textTheme.labelLarge,
             ),
           ),

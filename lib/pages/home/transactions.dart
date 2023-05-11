@@ -272,11 +272,22 @@ class _HomeTransactionsState extends State<HomeTransactions>
     }
     if (transactions.first.type == TransactionTypeProperty.transfer) {
       subtitle.add(
-        TextSpan(text: "(${S.of(context).transactionTypeTransfer}) "),
+        TextSpan(text: "(${S.of(context).transactionTypeTransfer})"),
+      );
+      subtitle.add(
+        const WidgetSpan(
+          baseline: TextBaseline.ideographic,
+          alignment: PlaceholderAlignment.middle,
+          child: Padding(
+            padding: EdgeInsets.only(right: 2),
+            child: Icon(Icons.arrow_right_alt),
+          ),
+        ),
       );
     }
     subtitle.add(TextSpan(
-      text: (transactions.first.type == TransactionTypeProperty.withdrawal)
+      text: (transactions.first.type == TransactionTypeProperty.withdrawal ||
+              transactions.first.type == TransactionTypeProperty.transfer)
           ? destinationName
           : sourceName,
     ));

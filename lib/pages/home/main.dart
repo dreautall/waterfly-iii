@@ -205,6 +205,24 @@ class _HomeMainState extends State<HomeMain>
           : InsightTotalEntry(differenceFloat: 0);
     }
 
+    // If too big digits are present (>10000), only show two columns to avoid
+    // wrapping issues. See #30.
+    double maxNum = 0;
+    lastMonthsIncome.forEach((_, InsightTotalEntry value) {
+      if ((value.differenceFloat ?? 0) > maxNum) {
+        maxNum = value.differenceFloat ?? 0;
+      }
+    });
+    lastMonthsExpense.forEach((_, InsightTotalEntry value) {
+      if ((value.differenceFloat ?? 0) > maxNum) {
+        maxNum = value.differenceFloat ?? 0;
+      }
+    });
+    if (maxNum > 10000) {
+      lastMonthsIncome.remove(lastMonthsIncome.keys.first);
+      lastMonthsExpense.remove(lastMonthsIncome.keys.first);
+    }
+
     return true;
   }
 

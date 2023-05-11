@@ -472,7 +472,10 @@ class _HomeMainState extends State<HomeMain>
                           (DateTime e) => Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              DateFormat(DateFormat.ABBR_MONTH).format(e),
+                              DateFormat(
+                                DateFormat.MONTH,
+                                S.of(context).localeName,
+                              ).format(e),
                               style: Theme.of(context).textTheme.labelLarge,
                             ),
                           ),
@@ -904,7 +907,10 @@ class SummaryChart extends StatelessWidget {
         domainAxis: charts.DateTimeAxisSpec(
           tickFormatterSpec:
               charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
-            DateFormat(DateFormat.ABBR_MONTH_DAY),
+            DateFormat(
+              DateFormat.ABBR_MONTH_DAY,
+              S.of(context).localeName,
+            ),
           ),
           tickProviderSpec: charts.StaticDateTimeTickProviderSpec(ticks),
           renderSpec: charts.SmallTickRendererSpec<DateTime>(
@@ -963,7 +969,12 @@ class LastDaysChart extends StatelessWidget {
           (income.differenceFloat ?? 0) + (expense.differenceFloat ?? 0);
 
       chartData.add(
-        LabelAmountChart(DateFormat(DateFormat.ABBR_WEEKDAY).format(e), diff),
+        LabelAmountChart(
+            DateFormat(
+              DateFormat.ABBR_WEEKDAY,
+              S.of(context).localeName,
+            ).format(e),
+            diff),
       );
     }
 
@@ -1027,7 +1038,10 @@ class NetEarningsChart extends StatelessWidget {
     lastMonthsIncome.forEach((DateTime key, InsightTotalEntry value) {
       incomeChartData.add(
         LabelAmountChart(
-          DateFormat(DateFormat.YEAR_MONTH).format(key),
+          DateFormat(
+            DateFormat.YEAR_MONTH,
+            S.of(context).localeName,
+          ).format(key),
           value.differenceFloat ?? 0,
         ),
       );
@@ -1035,7 +1049,10 @@ class NetEarningsChart extends StatelessWidget {
     lastMonthsExpense.forEach((DateTime key, InsightTotalEntry value) {
       expenseChartData.add(
         LabelAmountChart(
-          DateFormat(DateFormat.YEAR_MONTH).format(key),
+          DateFormat(
+            DateFormat.YEAR_MONTH,
+            S.of(context).localeName,
+          ).format(key),
           value.differenceFloat ?? 0,
         ),
       );

@@ -150,7 +150,7 @@
         <package android:name="com.samsung.android.email.provider"/>
         <package android:name="com.samsung.android.samsungpay.gear"/>
         <package android:name="com.samsung.android.spay"/>
-        <package android:name="com.santander.app"/>
+      
         <package android:name="com.satispay.customer"/>
         <package android:name="com.sbg.mobile.phone"/>
         <package android:name="com.sc.equities"/>

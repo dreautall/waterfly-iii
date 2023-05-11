@@ -2,11 +2,14 @@ import 'dart:io' show HandshakeException;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/widgets/logo.dart';
+
+final Logger log = Logger("Pages.Splash");
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key, this.host, this.apiKey}) : super(key: key);
@@ -19,30 +22,33 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  final Logger log = Logger("Pages.Splash.Page");
+
   Object? _loginError;
 
   void _login(String? host, String? apiKey) async {
-    debugPrint("SplashPage->_login()");
+    log.fine(() => "SplashPage->_login()");
 
     bool success = false;
 
     try {
       if (host == null || apiKey == null) {
-        debugPrint("SplashPage->_login() from storage");
+        log.finer(() => "SplashPage->_login() from storage");
         success = await context.read<FireflyService>().signInFromStorage();
       } else {
-        debugPrint("SplashPage->_login() with credentials: $host, $apiKey");
+        log.finer(() =>
+            "SplashPage->_login() with credentials: $host, apiKey apiKey ${apiKey.isEmpty ? "unset" : "set"}");
         success = await context.read<FireflyService>().signIn(host, apiKey);
       }
-    } catch (e) {
-      debugPrint(
-          "SplashPage->_login got exception $e, assigning to _loginError");
+    } catch (e, stackTrace) {
+      log.warning(
+          "_login got exceptionassigning to _loginError", e, stackTrace);
       setState(() {
         _loginError = e;
       });
     }
 
-    debugPrint("SplashPage->_login() returning $success");
+    log.fine(() => "_login() returning $success");
 
     return;
   }
@@ -53,7 +59,7 @@ class _SplashPageState extends State<SplashPage> {
 
     if (widget.host != null && widget.apiKey != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        debugPrint("initState() scheduling login");
+        log.finest(() => "initState() scheduling login");
         _login(widget.host, widget.apiKey);
       });
     }
@@ -61,7 +67,8 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("splash build(), current _loginError: $_loginError");
+    log.finest(() => "build(loginError: $_loginError)");
+
     if (context.read<FireflyService>().signedIn) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.of(context).popUntil((Route<dynamic> route) => route.isFirst);
@@ -75,13 +82,13 @@ class _SplashPageState extends State<SplashPage> {
         context.select((FireflyService f) => f.storageSignInException);
 
     if (_loginError == null) {
-      debugPrint("_loginError null --> show spinner");
+      log.finer(() => "_loginError null --> show spinner");
       page = Container(
         alignment: const Alignment(0, 0),
         child: const CircularProgressIndicator(),
       );
     } else {
-      debugPrint("_loginError available --> show error");
+      log.finer(() => "_loginError available --> show error");
       String errorDetails =
           "Host: ${context.read<FireflyService>().lastTriedHost}";
       final String errorDescription = () {

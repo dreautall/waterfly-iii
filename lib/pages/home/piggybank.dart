@@ -427,7 +427,11 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                     domainAxis: charts.DateTimeAxisSpec(
                       tickFormatterSpec:
                           charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
-                              DateFormat(DateFormat.ABBR_MONTH_DAY)),
+                        DateFormat(
+                          DateFormat.ABBR_MONTH_DAY,
+                          S.of(context).localeName,
+                        ),
+                      ),
                       tickProviderSpec:
                           const charts.AutoDateTimeTickProviderSpec(
                               includeTime: false),

@@ -293,6 +293,7 @@ class _TransactionPageState extends State<TransactionPage>
         if (widget.notification != null) {
           final FireflyIii api = context.read<FireflyService>().api;
           final SettingsProvider settings = context.read<SettingsProvider>();
+          final String locale = S.of(context).localeName;
 
           debugPrint("Got notification ${widget.notification}");
           CurrencyRead? currency;
@@ -377,8 +378,8 @@ class _TransactionPageState extends State<TransactionPage>
           // Set title & date
           _titleTextController.text = widget.notification!.title;
           _date = widget.notification!.date;
-          _dateTextController.text = DateFormat.yMMMMd().format(_date);
-          _timeTextController.text = DateFormat.Hm().format(_date);
+          _dateTextController.text = DateFormat.yMMMMd(locale).format(_date);
+          _timeTextController.text = DateFormat.Hm(locale).format(_date);
 
           // Check currency
           if (currency == _localCurrency) {
@@ -417,8 +418,10 @@ class _TransactionPageState extends State<TransactionPage>
       });
     }
 
-    _dateTextController.text = DateFormat.yMMMMd().format(_date);
-    _timeTextController.text = DateFormat.Hm().format(_date);
+    _dateTextController.text =
+        DateFormat.yMMMMd(S.of(context).localeName).format(_date);
+    _timeTextController.text =
+        DateFormat.Hm(S.of(context).localeName).format(_date);
 
     // focus node listener for ownaccount
     _ownAccountFocusNode.addListener(() async {
@@ -1387,7 +1390,8 @@ class _TransactionPageState extends State<TransactionPage>
                       day: pickedDate.day,
                     );
                     _dateTextController.text =
-                        DateFormat.yMMMMd().format(_date);
+                        DateFormat.yMMMMd(S.of(context).localeName)
+                            .format(_date);
                   });
                 },
               ),
@@ -1413,7 +1417,8 @@ class _TransactionPageState extends State<TransactionPage>
 
                   setState(() {
                     _date = _date.setTimeOfDay(pickedTime);
-                    _timeTextController.text = DateFormat.Hm().format(_date);
+                    _timeTextController.text =
+                        DateFormat.Hm(S.of(context).localeName).format(_date);
                   });
                 },
               ),

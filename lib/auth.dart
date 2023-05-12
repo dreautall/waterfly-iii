@@ -13,6 +13,21 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 
 final Logger log = Logger("Auth");
 
+class SSLHttpOverride extends HttpOverrides {
+  SSLHttpOverride(this.validCert);
+  final String validCert;
+
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, _, __) {
+        log.fine("Using SSLHttpOverride");
+        return cert.pem.replaceAll("\r", "").trim() ==
+            validCert.replaceAll("\r", "").trim();
+      };
+  }
+}
+
 class AuthError implements Exception {
   const AuthError(this.cause);
 
@@ -170,16 +185,17 @@ class FireflyService with ChangeNotifier {
     _storageSignInException = null;
     String? apiHost = await storage.read(key: 'api_host');
     String? apiKey = await storage.read(key: 'api_key');
+    String? cert = await storage.read(key: 'api_cert');
 
     log.config(
-        "storage: $apiHost, apiKey ${apiKey?.isEmpty ?? true ? "unset" : "set"}");
+        "storage: $apiHost, apiKey ${apiKey?.isEmpty ?? true ? "unset" : "set"}, cert ${cert?.isEmpty ?? true ? "unset" : "set"}");
 
     if (apiHost == null || apiKey == null) {
       return false;
     }
 
     try {
-      final bool success = await signIn(apiHost, apiKey);
+      final bool success = await signIn(apiHost, apiKey, cert);
       return success;
     } catch (e) {
       _storageSignInException = e;
@@ -202,10 +218,16 @@ class FireflyService with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> signIn(String host, String apiKey) async {
+  Future<bool> signIn(String host, String apiKey, [String? cert]) async {
     log.config("FireflyService->signIn($host)");
     host = host.strip().rightStrip('/');
     apiKey = apiKey.strip();
+
+    if (cert != null && cert.isNotEmpty) {
+      HttpOverrides.global = SSLHttpOverride(cert);
+    } else {
+      HttpOverrides.global = null;
+    }
 
     _lastTriedHost = host;
     _currentUser = await AuthUser.create(host, apiKey);
@@ -220,6 +242,7 @@ class FireflyService with ChangeNotifier {
 
     storage.write(key: 'api_host', value: host);
     storage.write(key: 'api_key', value: apiKey);
+    storage.write(key: 'api_cert', value: cert);
 
     return true;
   }

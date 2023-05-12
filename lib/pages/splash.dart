@@ -1,5 +1,4 @@
-//import 'dart:io' show HandshakeException;
-import 'dart:io';
+import 'dart:io' show HandshakeException;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -10,32 +9,13 @@ import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/widgets/logo.dart';
 
-class SSLHttpOverride extends HttpOverrides {
-  SSLHttpOverride(this.cert);
-  final String cert;
-
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    debugPrint("MyHttpOverrides->createHttpClient");
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port) {
-        debugPrint("cert check for $host:$port");
-        debugPrint("got cert ${cert.pem}");
-        debugPrint("comparing to $cert");
-        return false;
-      };
-  }
-}
-
 final Logger log = Logger("Pages.Splash");
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({Key? key, this.host, this.apiKey, this.cert})
-      : super(key: key);
+  const SplashPage({Key? key, this.host, this.apiKey}) : super(key: key);
 
   final String? host;
   final String? apiKey;
-  final String? cert;
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -46,7 +26,7 @@ class _SplashPageState extends State<SplashPage> {
 
   Object? _loginError;
 
-  void _login(String? host, String? apiKey) async {
+  void _login(String? host, String? apiKey, [String? cert]) async {
     log.fine(() => "SplashPage->_login()");
 
     bool success = false;
@@ -58,7 +38,8 @@ class _SplashPageState extends State<SplashPage> {
       } else {
         log.finer(() =>
             "SplashPage->_login() with credentials: $host, apiKey apiKey ${apiKey.isEmpty ? "unset" : "set"}");
-        success = await context.read<FireflyService>().signIn(host, apiKey);
+        success =
+            await context.read<FireflyService>().signIn(host, apiKey, cert);
       }
     } catch (e, stackTrace) {
       log.warning(
@@ -80,12 +61,6 @@ class _SplashPageState extends State<SplashPage> {
     if (widget.host != null && widget.apiKey != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         log.finest(() => "initState() scheduling login");
-        debugPrint("got cert: ${widget.cert}");
-        if (widget.cert != null) {
-          HttpOverrides.global = SSLHttpOverride(widget.cert!);
-        } else {
-          HttpOverrides.global = null;
-        }
         _login(widget.host, widget.apiKey);
       });
     }
@@ -115,6 +90,7 @@ class _SplashPageState extends State<SplashPage> {
       );
     } else {
       log.finer(() => "_loginError available --> show error");
+      bool showCertButton = false;
       String errorDetails =
           "Host: ${context.read<FireflyService>().lastTriedHost}";
       final String errorDescription = () {
@@ -130,6 +106,7 @@ class _SplashPageState extends State<SplashPage> {
             errorDetails += S.of(context).errorStatusCode(errorType.code);
             return errorType.cause;
           case HandshakeException:
+            showCertButton = true;
             return S.of(context).errorInvalidSSLCert;
           default:
             errorDetails += "\n$_loginError";
@@ -149,7 +126,9 @@ class _SplashPageState extends State<SplashPage> {
                   child: Text(
                     errorDescription,
                     style: TextStyle(
-                        height: 2, color: Theme.of(context).colorScheme.error),
+                      height: 2,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                   ),
                 ),
               ),
@@ -163,14 +142,39 @@ class _SplashPageState extends State<SplashPage> {
                   child: Text(
                     errorDetails,
                     style: TextStyle(
-                        height: 2, color: Theme.of(context).colorScheme.error),
+                      height: 2,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                   ),
                 ),
               ),
             ),
             const SizedBox(height: 12),
+            showCertButton
+                ? FilledButton(
+                    onPressed: () async {
+                      String? cert = await showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            const SSLCertDialog(),
+                      );
+                      if (cert == null || cert.isEmpty) {
+                        return;
+                      }
+                      setState(() {
+                        _loginError = null;
+                      });
+                      _login(widget.host, widget.apiKey, cert);
+                    },
+                    child: Text("Use custom SSL certificate"),
+                  )
+                : const SizedBox.shrink(),
+            showCertButton
+                ? const SizedBox(height: 12)
+                : const SizedBox.shrink(),
             OverflowBar(
               alignment: MainAxisAlignment.center,
+              spacing: 12,
               children: <Widget>[
                 OutlinedButton(
                   onPressed: () {
@@ -185,7 +189,6 @@ class _SplashPageState extends State<SplashPage> {
                           MaterialLocalizations.of(context).backButtonTooltip)
                       : Text(S.of(context).formButtonResetLogin),
                 ),
-                const SizedBox(width: 12),
                 FilledButton(
                   onPressed: () {
                     setState(() {
@@ -222,6 +225,48 @@ class _SplashPageState extends State<SplashPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class SSLCertDialog extends StatelessWidget {
+  const SSLCertDialog({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController textController = TextEditingController();
+
+    return AlertDialog(
+      icon: const Icon(Icons.policy),
+      title: Text("Custom SSL Certificate"),
+      clipBehavior: Clip.hardEdge,
+      actions: <Widget>[
+        TextButton(
+          child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        TextButton(
+          child: Text(MaterialLocalizations.of(context).saveButtonLabel),
+          onPressed: () {
+            Navigator.of(context).pop(textController.text);
+          },
+        ),
+      ],
+      content: TextField(
+        controller: textController,
+        decoration: InputDecoration(
+          filled: true,
+          labelText: "Certificate File (DER)",
+        ),
+        autocorrect: false,
+        autofocus: true,
+        expands: true,
+        maxLines: null,
       ),
     );
   }

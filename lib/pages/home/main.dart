@@ -1194,7 +1194,12 @@ class CategoryChart extends StatelessWidget {
             measureFn: (LabelAmountChart entry, _) => entry.amount.abs(),
             data: data,
             labelAccessorFn: (LabelAmountChart entry, _) =>
-                entry.amount.abs().round().toString(),
+                entry.amount.abs().toStringAsFixed(0),
+            /*defaultCurrency.fmt(
+              entry.amount.abs(),
+              locale: S.of(context).localeName,
+              decimalDigits: 0,
+            ),*/
             colorFn: (_, int? i) => possibleChartColors[i ?? 5],
           ),
         ],
@@ -1208,9 +1213,18 @@ class CategoryChart extends StatelessWidget {
                     Theme.of(context).textTheme.labelSmall!.fontSize!.round(),
               ),
               outsideLabelStyleSpec: charts.TextStyleSpec(
-                fontSize: 12,
+                fontSize:
+                    Theme.of(context).textTheme.labelSmall!.fontSize!.round(),
                 color: charts.ColorUtil.fromDartColor(
-                    Theme.of(context).colorScheme.onSurfaceVariant),
+                  Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ),
+              leaderLineStyleSpec: charts.ArcLabelLeaderLineStyleSpec(
+                length: 10.0,
+                thickness: 1.0,
+                color: charts.ColorUtil.fromDartColor(
+                  Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
             )
           ],

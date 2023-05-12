@@ -166,7 +166,7 @@ class _SplashPageState extends State<SplashPage> {
                       });
                       _login(widget.host, widget.apiKey, cert);
                     },
-                    child: Text("Use custom SSL certificate"),
+                    child: Text(S.of(context).splashCustomSSLCert),
                   )
                 : const SizedBox.shrink(),
             showCertButton
@@ -241,7 +241,7 @@ class SSLCertDialog extends StatelessWidget {
 
     return AlertDialog(
       icon: const Icon(Icons.policy),
-      title: Text("Custom SSL Certificate"),
+      title: Text(S.of(context).splashCustomSSLCert),
       clipBehavior: Clip.hardEdge,
       actions: <Widget>[
         TextButton(
@@ -261,7 +261,7 @@ class SSLCertDialog extends StatelessWidget {
         controller: textController,
         decoration: InputDecoration(
           filled: true,
-          labelText: "Certificate File (DER)",
+          labelText: S.of(context).splashFormLabelCustomSSLCertPEM,
         ),
         autocorrect: false,
         autofocus: true,

@@ -262,6 +262,8 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 12),
                   OverflowBar(
                     alignment: MainAxisAlignment.end,
+                    spacing: 12,
+                    overflowSpacing: 12,
                     children: <Widget>[
                       OutlinedButton(
                         onPressed: () async {
@@ -275,7 +277,6 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: Text(S.of(context).formButtonHelp),
                       ),
-                      const SizedBox(width: 12),
                       FilledButton(
                         onPressed: /*_formSubmitted
                             ? null

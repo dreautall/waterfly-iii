@@ -26,7 +26,7 @@ class _SplashPageState extends State<SplashPage> {
 
   Object? _loginError;
 
-  void _login(String? host, String? apiKey) async {
+  void _login(String? host, String? apiKey, [String? cert]) async {
     log.fine(() => "SplashPage->_login()");
 
     bool success = false;
@@ -38,11 +38,12 @@ class _SplashPageState extends State<SplashPage> {
       } else {
         log.finer(() =>
             "SplashPage->_login() with credentials: $host, apiKey apiKey ${apiKey.isEmpty ? "unset" : "set"}");
-        success = await context.read<FireflyService>().signIn(host, apiKey);
+        success =
+            await context.read<FireflyService>().signIn(host, apiKey, cert);
       }
     } catch (e, stackTrace) {
       log.warning(
-          "_login got exceptionassigning to _loginError", e, stackTrace);
+          "_login got exception, assigning to _loginError", e, stackTrace);
       setState(() {
         _loginError = e;
       });
@@ -89,6 +90,7 @@ class _SplashPageState extends State<SplashPage> {
       );
     } else {
       log.finer(() => "_loginError available --> show error");
+      bool showCertButton = false;
       String errorDetails =
           "Host: ${context.read<FireflyService>().lastTriedHost}";
       final String errorDescription = () {
@@ -104,6 +106,7 @@ class _SplashPageState extends State<SplashPage> {
             errorDetails += S.of(context).errorStatusCode(errorType.code);
             return errorType.cause;
           case HandshakeException:
+            showCertButton = true;
             return S.of(context).errorInvalidSSLCert;
           default:
             errorDetails += "\n$_loginError";
@@ -123,7 +126,9 @@ class _SplashPageState extends State<SplashPage> {
                   child: Text(
                     errorDescription,
                     style: TextStyle(
-                        height: 2, color: Theme.of(context).colorScheme.error),
+                      height: 2,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                   ),
                 ),
               ),
@@ -137,14 +142,39 @@ class _SplashPageState extends State<SplashPage> {
                   child: Text(
                     errorDetails,
                     style: TextStyle(
-                        height: 2, color: Theme.of(context).colorScheme.error),
+                      height: 2,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                   ),
                 ),
               ),
             ),
             const SizedBox(height: 12),
+            showCertButton
+                ? FilledButton(
+                    onPressed: () async {
+                      String? cert = await showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            const SSLCertDialog(),
+                      );
+                      if (cert == null || cert.isEmpty) {
+                        return;
+                      }
+                      setState(() {
+                        _loginError = null;
+                      });
+                      _login(widget.host, widget.apiKey, cert);
+                    },
+                    child: Text(S.of(context).splashCustomSSLCert),
+                  )
+                : const SizedBox.shrink(),
+            showCertButton
+                ? const SizedBox(height: 12)
+                : const SizedBox.shrink(),
             OverflowBar(
               alignment: MainAxisAlignment.center,
+              spacing: 12,
               children: <Widget>[
                 OutlinedButton(
                   onPressed: () {
@@ -159,7 +189,6 @@ class _SplashPageState extends State<SplashPage> {
                           MaterialLocalizations.of(context).backButtonTooltip)
                       : Text(S.of(context).formButtonResetLogin),
                 ),
-                const SizedBox(width: 12),
                 FilledButton(
                   onPressed: () {
                     setState(() {
@@ -196,6 +225,48 @@ class _SplashPageState extends State<SplashPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class SSLCertDialog extends StatelessWidget {
+  const SSLCertDialog({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController textController = TextEditingController();
+
+    return AlertDialog(
+      icon: const Icon(Icons.policy),
+      title: Text(S.of(context).splashCustomSSLCert),
+      clipBehavior: Clip.hardEdge,
+      actions: <Widget>[
+        TextButton(
+          child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        TextButton(
+          child: Text(MaterialLocalizations.of(context).saveButtonLabel),
+          onPressed: () {
+            Navigator.of(context).pop(textController.text);
+          },
+        ),
+      ],
+      content: TextField(
+        controller: textController,
+        decoration: InputDecoration(
+          filled: true,
+          labelText: S.of(context).splashFormLabelCustomSSLCertPEM,
+        ),
+        autocorrect: false,
+        autofocus: true,
+        expands: true,
+        maxLines: null,
       ),
     );
   }

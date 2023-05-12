@@ -63,8 +63,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
               value: _filters,
               builder: (BuildContext context, _) => IconButton(
                 icon: const Icon(Icons.filter_alt_outlined),
-                selectedIcon: Icon(Icons.filter_alt,
-                    color: Theme.of(context).colorScheme.primary),
+                selectedIcon: Icon(
+                  Icons.filter_alt,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
                 isSelected: context.watch<TransactionFilters>().hasFilters,
                 tooltip: S.of(context).homeTransactionsActionFilter,
                 onPressed: () async {
@@ -77,6 +79,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     ),
                   );
                   if (ok == null || !ok) {
+                    _filters.account = oldFilters.account;
+                    _filters.budget = oldFilters.budget;
+                    _filters.category = oldFilters.category;
+                    _filters.currency = oldFilters.currency;
+                    _filters.text = oldFilters.text;
+
                     return;
                   }
                   if (oldFilters == _filters) {

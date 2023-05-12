@@ -1,4 +1,5 @@
-import 'dart:io' show HandshakeException;
+//import 'dart:io' show HandshakeException;
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -9,13 +10,32 @@ import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/widgets/logo.dart';
 
+class SSLHttpOverride extends HttpOverrides {
+  SSLHttpOverride(this.cert);
+  final String cert;
+
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    debugPrint("MyHttpOverrides->createHttpClient");
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port) {
+        debugPrint("cert check for $host:$port");
+        debugPrint("got cert ${cert.pem}");
+        debugPrint("comparing to $cert");
+        return false;
+      };
+  }
+}
+
 final Logger log = Logger("Pages.Splash");
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({Key? key, this.host, this.apiKey}) : super(key: key);
+  const SplashPage({Key? key, this.host, this.apiKey, this.cert})
+      : super(key: key);
 
   final String? host;
   final String? apiKey;
+  final String? cert;
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -42,7 +62,7 @@ class _SplashPageState extends State<SplashPage> {
       }
     } catch (e, stackTrace) {
       log.warning(
-          "_login got exceptionassigning to _loginError", e, stackTrace);
+          "_login got exception, assigning to _loginError", e, stackTrace);
       setState(() {
         _loginError = e;
       });
@@ -60,6 +80,12 @@ class _SplashPageState extends State<SplashPage> {
     if (widget.host != null && widget.apiKey != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         log.finest(() => "initState() scheduling login");
+        debugPrint("got cert: ${widget.cert}");
+        if (widget.cert != null) {
+          HttpOverrides.global = SSLHttpOverride(widget.cert!);
+        } else {
+          HttpOverrides.global = null;
+        }
         _login(widget.host, widget.apiKey);
       });
     }

@@ -497,6 +497,8 @@ class _PiggyDetailsState extends State<PiggyDetails> {
         ),
         OverflowBar(
           alignment: MainAxisAlignment.end,
+          spacing: 12,
+          overflowSpacing: 12,
           children: <Widget>[
             TextButton(
               onPressed: () async {
@@ -504,7 +506,6 @@ class _PiggyDetailsState extends State<PiggyDetails> {
               },
               child: Text(MaterialLocalizations.of(context).closeButtonLabel),
             ),
-            const SizedBox(width: 12),
             FilledButton(
               onPressed: () async {
                 PiggyBankSingle? newPiggy = await showDialog<PiggyBankSingle>(
@@ -521,7 +522,6 @@ class _PiggyDetailsState extends State<PiggyDetails> {
               },
               child: const Icon(Icons.price_change_outlined),
             ),
-            const SizedBox(width: 12),
           ],
         ),
       ],
@@ -625,6 +625,8 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
         const SizedBox(height: 16),
         OverflowBar(
           alignment: MainAxisAlignment.end,
+          spacing: 12,
+          overflowSpacing: 12,
           children: <Widget>[
             TextButton(
               onPressed: () async {
@@ -632,7 +634,6 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
               },
               child: Text(MaterialLocalizations.of(context).closeButtonLabel),
             ),
-            const SizedBox(width: 12),
             FilledButton(
               onPressed: () async {
                 final FireflyIii api = context.read<FireflyService>().api;
@@ -700,7 +701,6 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
               },
               child: Text(MaterialLocalizations.of(context).saveButtonLabel),
             ),
-            const SizedBox(width: 12),
           ],
         ),
       ],

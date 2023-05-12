@@ -224,6 +224,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     childs.add(
       OverflowBar(
         alignment: MainAxisAlignment.end,
+        spacing: 12,
+        overflowSpacing: 12,
         children: <Widget>[
           TextButton(
             onPressed: () async {
@@ -231,7 +233,6 @@ class _AttachmentDialogState extends State<AttachmentDialog>
             },
             child: Text(MaterialLocalizations.of(context).closeButtonLabel),
           ),
-          const SizedBox(width: 12),
           FilledButton(
             onPressed: () async {
               final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
@@ -350,7 +351,6 @@ class _AttachmentDialogState extends State<AttachmentDialog>
             },
             child: Text(S.of(context).formButtonUpload),
           ),
-          const SizedBox(width: 12),
         ],
       ),
     );

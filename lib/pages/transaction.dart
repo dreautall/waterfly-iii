@@ -309,8 +309,7 @@ class _TransactionPageState extends State<TransactionPage>
               rFindMoney.allMatches(widget.notification!.body);
           if (matches.isNotEmpty) {
             RegExpMatch? validMatch;
-            for (RegExpMatch match
-                in matches.toList(growable: false).reversed) {
+            for (RegExpMatch match in matches) {
               if ((match.namedGroup("postCurrency")?.isNotEmpty ?? false) ||
                   (match.namedGroup("preCurrency")?.isNotEmpty ?? false)) {
                 validMatch = match;

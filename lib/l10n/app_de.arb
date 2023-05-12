@@ -113,6 +113,8 @@
   "settingsThemeValue": "{theme, select, dark{Dunkel} light{Hell} other{Systemeinstellung}}",
   "settingsVersion": "App Version",
   "settingsVersionChecking": "Überprüfe...",
+  "splashCustomSSLCert": "Eigenes SSL Zertifikat",
+  "splashFormLabelCustomSSLCertPEM": "Zertifikats-Datei (PEM)",
   "transactionAttachments": "Anhänge",
   "transactionDeleteConfirm": "Soll diese Transaktion wirklich gelöscht werden?",
   "transactionDialogAttachmentsDelete": "Anhang löschen",

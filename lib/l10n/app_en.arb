@@ -134,6 +134,16 @@
   "@generalBalance": {
     "description": "(Account) Balance"
   },
+  "generalBalanceOn": "Balance on {date}",
+  "@generalBalanceOn": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd",
+        "example": "2023-05-13"
+      }
+    }
+  },
   "generalBudget": "Budget",
   "@generalBudget": {
     "description": "(Monetary) Budget)"

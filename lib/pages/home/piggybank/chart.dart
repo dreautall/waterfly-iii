@@ -179,7 +179,7 @@ class _PiggyChartState extends State<PiggyChart> {
         ),
         charts.SelectNearest<DateTime>(
           eventTrigger: charts.SelectionTrigger.tapAndDrag,
-        )
+        ),
       ],
       selectionModels: <charts.SelectionModelConfig<DateTime>>[
         charts.SelectionModelConfig<DateTime>(

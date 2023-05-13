@@ -435,6 +435,16 @@ class _HomeMainState extends State<HomeMain>
                       e.entries! as Map<String, dynamic>;
                   final double balance =
                       double.tryParse(entries.entries.last.value) ?? 0;
+                  final CurrencyRead currency = CurrencyRead(
+                    id: e.currencyId ?? "0",
+                    type: "currencies",
+                    attributes: Currency(
+                      code: e.currencyCode ?? "",
+                      name: "",
+                      symbol: e.currencySymbol ?? "",
+                      decimalPlaces: e.currencyDecimalPlaces,
+                    ),
+                  );
                   return TableRow(
                     children: <Widget>[
                       Align(
@@ -455,7 +465,7 @@ class _HomeMainState extends State<HomeMain>
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          defaultCurrency.fmt(
+                          currency.fmt(
                             balance,
                             locale: S.of(context).localeName,
                           ),
@@ -476,7 +486,7 @@ class _HomeMainState extends State<HomeMain>
             height: 175,
             onTap: () => showDialog<void>(
               context: context,
-              builder: (BuildContext context) => Placeholder(),
+              builder: (BuildContext context) => const SummaryChartPopup(),
             ),
             child: () => SummaryChart(
               data: overviewChartData,

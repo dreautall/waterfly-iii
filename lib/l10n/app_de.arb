@@ -28,6 +28,7 @@
   "formButtonUpload": "Hochladen",
   "generalAccount": "Konten",
   "generalBalance": "Kontostand",
+  "generalBalanceOn": "Kontostand am {date}",
   "generalBudget": "Budget",
   "generalCategory": "Kategorie",
   "generalCurrency": "Währung",

@@ -4,20 +4,17 @@ import 'dart:ui';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
-import 'package:community_charts_flutter/community_charts_flutter.dart'
-    as charts;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
-import 'package:waterflyiii/widgets/charts.dart';
+import 'package:waterflyiii/pages/home/piggybank/chart.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
 
@@ -245,13 +242,6 @@ class _HomePiggybankState extends State<HomePiggybank>
   }
 }
 
-class TimeSeriesChart {
-  final DateTime time;
-  final double value;
-
-  TimeSeriesChart(this.time, this.value);
-}
-
 class PiggyDetails extends StatefulWidget {
   const PiggyDetails({
     super.key,
@@ -298,24 +288,6 @@ class _PiggyDetailsState extends State<PiggyDetails> {
     super.initState();
 
     currentPiggy = widget.piggy;
-  }
-
-  String chartLabel() {
-    final CurrencyRead currency = CurrencyRead(
-      id: currentPiggy.attributes.currencyId ?? "0",
-      type: "currencies",
-      attributes: Currency(
-        code: currentPiggy.attributes.currencyCode ?? "",
-        name: "",
-        symbol: currentPiggy.attributes.currencySymbol ?? "",
-        decimalPlaces: currentPiggy.attributes.currencyDecimalPlaces,
-      ),
-    );
-
-    return "${DateFormat(
-      DateFormat.ABBR_MONTH_DAY,
-      S.of(context).localeName,
-    ).format(selectedTime ?? DateTime.now().toLocal())}: ${currency.fmt(selectedValue ?? 0)}";
   }
 
   @override
@@ -395,165 +367,12 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                       child: Text(S.of(context).homeTransactionsEmpty),
                     );
                   }
-                  final List<charts.Series<TimeSeriesChart, DateTime>>
-                      chartData = <charts.Series<TimeSeriesChart, DateTime>>[];
-                  final List<charts.TickSpec<DateTime>> ticks =
-                      <charts.TickSpec<DateTime>>[];
-                  final List<TimeSeriesChart> data = <TimeSeriesChart>[];
-
-                  double total = 0;
-
-                  if (currentPiggy.attributes.startDate != null) {
-                    data.add(TimeSeriesChart(
-                      currentPiggy.attributes.startDate!,
-                      0,
-                    ));
-                    ticks.add(charts.TickSpec<DateTime>(
-                      currentPiggy.attributes.startDate!.toLocal(),
-                    ));
-                  }
-                  if (currentPiggy.attributes.targetDate != null) {
-                    ticks.add(charts.TickSpec<DateTime>(
-                      currentPiggy.attributes.targetDate!.toLocal(),
-                    ));
-                  }
-
-                  for (PiggyBankEventRead e in snapshot.data!) {
-                    final DateTime? date =
-                        e.attributes.createdAt ?? e.attributes.updatedAt;
-                    final double amount =
-                        double.tryParse(e.attributes.amount ?? "") ?? 0;
-                    if (date == null || amount == 0) {
-                      continue;
-                    }
-                    total += amount;
-                    data.add(TimeSeriesChart(date, total));
-                    ticks.add(charts.TickSpec<DateTime>(date.toLocal()));
-                  }
-                  data.add(TimeSeriesChart(DateTime.now().toLocal(), total));
-                  chartData.add(
-                    charts.Series<TimeSeriesChart, DateTime>(
-                      id: currentPiggy.id,
-                      domainFn: (TimeSeriesChart d, _) => d.time.toLocal(),
-                      measureFn: (TimeSeriesChart d, _) => d.value,
-                      data: data,
-                    ),
-                  );
-
-                  final List<charts.LineAnnotationSegment<Object>>
-                      chartAnnotations =
-                      <charts.LineAnnotationSegment<Object>>[];
-
-                  if (targetAmount != 0) {
-                    chartAnnotations.add(
-                      charts.LineAnnotationSegment<num>(
-                        targetAmount,
-                        charts.RangeAnnotationAxisType.measure,
-                        color: charts.MaterialPalette.deepOrange.shadeDefault,
-                        labelAnchor: charts.AnnotationLabelAnchor.start,
-                        startLabel: S.of(context).generalTarget,
-                        labelStyleSpec: charts.TextStyleSpec(
-                          color: charts.ColorUtil.fromDartColor(
-                            Theme.of(context).colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                  if (currentPiggy.attributes.targetDate != null) {
-                    chartAnnotations.add(
-                      charts.LineAnnotationSegment<DateTime>(
-                        currentPiggy.attributes.targetDate!,
-                        charts.RangeAnnotationAxisType.domain,
-                        color: charts.MaterialPalette.deepOrange.shadeDefault,
-                        labelAnchor: charts.AnnotationLabelAnchor.start,
-                        startLabel: S.of(context).generalTarget,
-                        labelStyleSpec: charts.TextStyleSpec(
-                          color: charts.ColorUtil.fromDartColor(
-                            Theme.of(context).colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-
-                  final charts.TimeSeriesChart chart = charts.TimeSeriesChart(
-                    chartData,
-                    animate: true,
-                    primaryMeasureAxis: charts.NumericAxisSpec(
-                      tickProviderSpec:
-                          const charts.BasicNumericTickProviderSpec(
-                        //desiredTickCount: 6,
-                        desiredMaxTickCount: 6,
-                        desiredMinTickCount: 4,
-                        zeroBound: true,
-                      ),
-                      renderSpec: charts.SmallTickRendererSpec<num>(
-                        labelStyle: charts.TextStyleSpec(
-                          color: charts.ColorUtil.fromDartColor(
-                              Theme.of(context).colorScheme.onSurfaceVariant),
-                        ),
-                      ),
-                    ),
-                    domainAxis: charts.DateTimeAxisSpec(
-                      tickFormatterSpec:
-                          charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
-                        DateFormat(
-                          DateFormat.ABBR_MONTH_DAY,
-                          S.of(context).localeName,
-                        ),
-                      ),
-                      tickProviderSpec:
-                          const charts.AutoDateTimeTickProviderSpec(
-                              includeTime: false),
-                      renderSpec: charts.SmallTickRendererSpec<DateTime>(
-                        labelStyle: charts.TextStyleSpec(
-                          color: charts.ColorUtil.fromDartColor(
-                            Theme.of(context).colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                      ),
-                    ),
-                    defaultRenderer: charts.LineRendererConfig<DateTime>(
-                      includePoints: true,
-                    ),
-                    behaviors: <charts.ChartBehavior<DateTime>>[
-                      charts.RangeAnnotation<DateTime>(
-                        chartAnnotations,
-                      ),
-                      charts.LinePointHighlighter<DateTime>(
-                        showHorizontalFollowLine:
-                            charts.LinePointHighlighterFollowLineType.nearest,
-                        showVerticalFollowLine:
-                            charts.LinePointHighlighterFollowLineType.nearest,
-                        drawFollowLinesAcrossChart: false,
-                        symbolRenderer: TextSymbolRenderer(chartLabel, context),
-                      ),
-                      charts.SelectNearest<DateTime>(
-                        eventTrigger: charts.SelectionTrigger.tapAndDrag,
-                      )
-                    ],
-                    selectionModels: <charts.SelectionModelConfig<DateTime>>[
-                      charts.SelectionModelConfig<DateTime>(
-                        type: charts.SelectionModelType.info,
-                        changedListener:
-                            (charts.SelectionModel<DateTime> model) {
-                          if (model.hasDatumSelection) {
-                            selectedTime = model.selectedDatum[0].datum.time;
-                            selectedValue = model.selectedDatum[0].datum.value;
-                          } else {
-                            selectedTime = selectedValue = null;
-                          }
-                        },
-                      )
-                    ],
-                  );
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: SizedBox(
                       height: 300,
-                      child: chart,
+                      child: PiggyChart(currentPiggy, snapshot.data!),
                     ),
                   );
                 } else if (snapshot.hasError) {
@@ -661,10 +480,12 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(S.of(context).homePiggySaved(currency.fmt(
-                    currentAmount,
-                    locale: S.of(context).localeName,
-                  ))),
+              Text(S.of(context).homePiggySaved(
+                    currency.fmt(
+                      currentAmount,
+                      locale: S.of(context).localeName,
+                    ),
+                  )),
               const SizedBox(height: 16),
               Row(
                 children: <Widget>[

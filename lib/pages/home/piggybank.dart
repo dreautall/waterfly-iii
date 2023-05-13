@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:collection/collection.dart';
@@ -12,14 +11,13 @@ import 'package:provider/provider.dart';
 import 'package:chopper/chopper.dart' show Response;
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
-import 'package:community_charts_flutter/src/text_style.dart' as charts_style;
-import 'package:community_charts_flutter/src/text_element.dart' as charts_text;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/widgets/charts.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
 
@@ -781,77 +779,6 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
           ],
         ),
       ],
-    );
-  }
-}
-
-class TextSymbolRenderer extends charts.CircleSymbolRenderer {
-  TextSymbolRenderer(
-    this.printFunc,
-    this.context, {
-    this.marginBottom = 8,
-    this.padding = const EdgeInsets.all(8),
-  });
-
-  final String Function() printFunc;
-  final BuildContext context;
-  final double marginBottom;
-  final EdgeInsets padding;
-
-  @override
-  void paint(charts.ChartCanvas canvas, Rectangle<num> bounds,
-      {List<int>? dashPattern,
-      charts.Color? fillColor,
-      charts.FillPatternType? fillPattern,
-      charts.Color? strokeColor,
-      double? strokeWidthPx}) {
-    super.paint(canvas, bounds,
-        dashPattern: dashPattern,
-        fillColor: fillColor,
-        fillPattern: fillPattern,
-        strokeColor: strokeColor,
-        strokeWidthPx: strokeWidthPx);
-
-    charts_style.TextStyle textStyle = charts_style.TextStyle();
-    textStyle.color = charts.ColorUtil.fromDartColor(
-      Theme.of(context).colorScheme.onSurfaceVariant,
-    );
-    textStyle.fontSize =
-        Theme.of(context).textTheme.labelSmall?.fontSize?.toInt() ?? 12;
-
-    charts_text.TextElement textElement = charts_text.TextElement(
-      printFunc(),
-      style: textStyle,
-    );
-    double width = textElement.measurement.horizontalSliceWidth;
-    double height = textElement.measurement.verticalSliceWidth;
-
-    double centerX = bounds.left + bounds.width / 2;
-    double centerY = bounds.top +
-        bounds.height / 2 -
-        marginBottom -
-        (padding.top + padding.bottom);
-
-    canvas.drawRRect(
-      Rectangle<num>(
-        centerX - (width / 2) - padding.left,
-        centerY - (height / 2) - padding.top,
-        width + (padding.left + padding.right),
-        height + (padding.top + padding.bottom),
-      ),
-      fill: charts.ColorUtil.fromDartColor(
-        Theme.of(context).colorScheme.surfaceVariant,
-      ),
-      radius: 16,
-      roundTopLeft: true,
-      roundTopRight: true,
-      roundBottomRight: true,
-      roundBottomLeft: true,
-    );
-    canvas.drawText(
-      textElement,
-      (centerX - (width / 2)).round(),
-      (centerY - (height / 2)).round(),
     );
   }
 }

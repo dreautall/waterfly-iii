@@ -62,7 +62,6 @@ class _PiggyChartState extends State<PiggyChart> {
   Widget build(BuildContext context) {
     final List<charts.Series<TimeSeriesChart, DateTime>> chartData =
         <charts.Series<TimeSeriesChart, DateTime>>[];
-    final List<charts.TickSpec<DateTime>> ticks = <charts.TickSpec<DateTime>>[];
     final List<TimeSeriesChart> data = <TimeSeriesChart>[];
 
     double total = 0;
@@ -71,14 +70,6 @@ class _PiggyChartState extends State<PiggyChart> {
       data.add(TimeSeriesChart(
         widget.piggy.attributes.startDate!,
         0,
-      ));
-      ticks.add(charts.TickSpec<DateTime>(
-        widget.piggy.attributes.startDate!.toLocal(),
-      ));
-    }
-    if (widget.piggy.attributes.targetDate != null) {
-      ticks.add(charts.TickSpec<DateTime>(
-        widget.piggy.attributes.targetDate!.toLocal(),
       ));
     }
 
@@ -90,7 +81,6 @@ class _PiggyChartState extends State<PiggyChart> {
       }
       total += amount;
       data.add(TimeSeriesChart(date, total));
-      ticks.add(charts.TickSpec<DateTime>(date.toLocal()));
     }
     data.add(TimeSeriesChart(DateTime.now().toLocal(), total));
     chartData.add(

@@ -841,9 +841,22 @@ class ChartCard extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(12),
-                      child: Text(
-                        title,
-                        style: Theme.of(context).textTheme.titleMedium,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            title,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          onTap != null
+                              ? Icon(
+                                  Icons.touch_app_outlined,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .outlineVariant,
+                                )
+                              : const SizedBox.shrink(),
+                        ],
                       ),
                     ),
                     Ink(

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:collection/collection.dart';
@@ -11,6 +12,8 @@ import 'package:provider/provider.dart';
 import 'package:chopper/chopper.dart' show Response;
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
+import 'package:community_charts_flutter/src/text_style.dart' as charts_style;
+import 'package:community_charts_flutter/src/text_element.dart' as charts_text;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:waterflyiii/animations.dart';
@@ -266,6 +269,9 @@ class PiggyDetails extends StatefulWidget {
 class _PiggyDetailsState extends State<PiggyDetails> {
   final Logger log = Logger("Pages.Home.Piggybank.Details");
 
+  DateTime? selectedTime;
+  double? selectedValue;
+
   Future<List<PiggyBankEventRead>> _fetchChart() async {
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -294,6 +300,24 @@ class _PiggyDetailsState extends State<PiggyDetails> {
     super.initState();
 
     currentPiggy = widget.piggy;
+  }
+
+  String chartLabel() {
+    final CurrencyRead currency = CurrencyRead(
+      id: currentPiggy.attributes.currencyId ?? "0",
+      type: "currencies",
+      attributes: Currency(
+        code: currentPiggy.attributes.currencyCode ?? "",
+        name: "",
+        symbol: currentPiggy.attributes.currencySymbol ?? "",
+        decimalPlaces: currentPiggy.attributes.currencyDecimalPlaces,
+      ),
+    );
+
+    return "${DateFormat(
+      DateFormat.ABBR_MONTH_DAY,
+      S.of(context).localeName,
+    ).format(selectedTime ?? DateTime.now().toLocal())}: ${currency.fmt(selectedValue ?? 0)}";
   }
 
   @override
@@ -387,7 +411,13 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                       0,
                     ));
                     ticks.add(charts.TickSpec<DateTime>(
-                        currentPiggy.attributes.startDate!.toLocal()));
+                      currentPiggy.attributes.startDate!.toLocal(),
+                    ));
+                  }
+                  if (currentPiggy.attributes.targetDate != null) {
+                    ticks.add(charts.TickSpec<DateTime>(
+                      currentPiggy.attributes.targetDate!.toLocal(),
+                    ));
                   }
 
                   for (PiggyBankEventRead e in snapshot.data!) {
@@ -402,6 +432,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                     data.add(TimeSeriesChart(date, total));
                     ticks.add(charts.TickSpec<DateTime>(date.toLocal()));
                   }
+                  data.add(TimeSeriesChart(DateTime.now().toLocal(), total));
                   chartData.add(
                     charts.Series<TimeSeriesChart, DateTime>(
                       id: currentPiggy.id,
@@ -410,6 +441,43 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                       data: data,
                     ),
                   );
+
+                  final List<charts.LineAnnotationSegment<Object>>
+                      chartAnnotations =
+                      <charts.LineAnnotationSegment<Object>>[];
+
+                  if (targetAmount != 0) {
+                    chartAnnotations.add(
+                      charts.LineAnnotationSegment<num>(
+                        targetAmount,
+                        charts.RangeAnnotationAxisType.measure,
+                        color: charts.MaterialPalette.deepOrange.shadeDefault,
+                        labelAnchor: charts.AnnotationLabelAnchor.start,
+                        startLabel: S.of(context).generalTarget,
+                        labelStyleSpec: charts.TextStyleSpec(
+                          color: charts.ColorUtil.fromDartColor(
+                            Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  if (currentPiggy.attributes.targetDate != null) {
+                    chartAnnotations.add(
+                      charts.LineAnnotationSegment<DateTime>(
+                        currentPiggy.attributes.targetDate!,
+                        charts.RangeAnnotationAxisType.domain,
+                        color: charts.MaterialPalette.deepOrange.shadeDefault,
+                        labelAnchor: charts.AnnotationLabelAnchor.start,
+                        startLabel: S.of(context).generalTarget,
+                        labelStyleSpec: charts.TextStyleSpec(
+                          color: charts.ColorUtil.fromDartColor(
+                            Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
 
                   final charts.TimeSeriesChart chart = charts.TimeSeriesChart(
                     chartData,
@@ -443,35 +511,44 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                       renderSpec: charts.SmallTickRendererSpec<DateTime>(
                         labelStyle: charts.TextStyleSpec(
                           color: charts.ColorUtil.fromDartColor(
-                              Theme.of(context).colorScheme.onSurfaceVariant),
+                            Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
                         ),
                       ),
                     ),
                     defaultRenderer: charts.LineRendererConfig<DateTime>(
-                        includePoints: true),
-                    behaviors: targetAmount != 0
-                        ? <charts.ChartBehavior<DateTime>>[
-                            charts.RangeAnnotation<DateTime>(
-                              <charts.LineAnnotationSegment<num>>[
-                                charts.LineAnnotationSegment<num>(
-                                  targetAmount,
-                                  charts.RangeAnnotationAxisType.measure,
-                                  color: charts
-                                      .MaterialPalette.deepOrange.shadeDefault,
-                                  labelAnchor:
-                                      charts.AnnotationLabelAnchor.start,
-                                  startLabel: S.of(context).generalTarget,
-                                  labelStyleSpec: charts.TextStyleSpec(
-                                    color: charts.ColorUtil.fromDartColor(
-                                        Theme.of(context)
-                                            .colorScheme
-                                            .onSurfaceVariant),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ]
-                        : <charts.ChartBehavior<DateTime>>[],
+                      includePoints: true,
+                    ),
+                    behaviors: <charts.ChartBehavior<DateTime>>[
+                      charts.RangeAnnotation<DateTime>(
+                        chartAnnotations,
+                      ),
+                      charts.LinePointHighlighter<DateTime>(
+                        showHorizontalFollowLine:
+                            charts.LinePointHighlighterFollowLineType.nearest,
+                        showVerticalFollowLine:
+                            charts.LinePointHighlighterFollowLineType.nearest,
+                        drawFollowLinesAcrossChart: false,
+                        symbolRenderer: TextSymbolRenderer(chartLabel, context),
+                      ),
+                      charts.SelectNearest<DateTime>(
+                        eventTrigger: charts.SelectionTrigger.tapAndDrag,
+                      )
+                    ],
+                    selectionModels: <charts.SelectionModelConfig<DateTime>>[
+                      charts.SelectionModelConfig<DateTime>(
+                        type: charts.SelectionModelType.info,
+                        changedListener:
+                            (charts.SelectionModel<DateTime> model) {
+                          if (model.hasDatumSelection) {
+                            selectedTime = model.selectedDatum[0].datum.time;
+                            selectedValue = model.selectedDatum[0].datum.value;
+                          } else {
+                            selectedTime = selectedValue = null;
+                          }
+                        },
+                      )
+                    ],
                   );
 
                   return Padding(
@@ -704,6 +781,77 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
           ],
         ),
       ],
+    );
+  }
+}
+
+class TextSymbolRenderer extends charts.CircleSymbolRenderer {
+  TextSymbolRenderer(
+    this.printFunc,
+    this.context, {
+    this.marginBottom = 8,
+    this.padding = const EdgeInsets.all(8),
+  });
+
+  final String Function() printFunc;
+  final BuildContext context;
+  final double marginBottom;
+  final EdgeInsets padding;
+
+  @override
+  void paint(charts.ChartCanvas canvas, Rectangle<num> bounds,
+      {List<int>? dashPattern,
+      charts.Color? fillColor,
+      charts.FillPatternType? fillPattern,
+      charts.Color? strokeColor,
+      double? strokeWidthPx}) {
+    super.paint(canvas, bounds,
+        dashPattern: dashPattern,
+        fillColor: fillColor,
+        fillPattern: fillPattern,
+        strokeColor: strokeColor,
+        strokeWidthPx: strokeWidthPx);
+
+    charts_style.TextStyle textStyle = charts_style.TextStyle();
+    textStyle.color = charts.ColorUtil.fromDartColor(
+      Theme.of(context).colorScheme.onSurfaceVariant,
+    );
+    textStyle.fontSize =
+        Theme.of(context).textTheme.labelSmall?.fontSize?.toInt() ?? 12;
+
+    charts_text.TextElement textElement = charts_text.TextElement(
+      printFunc(),
+      style: textStyle,
+    );
+    double width = textElement.measurement.horizontalSliceWidth;
+    double height = textElement.measurement.verticalSliceWidth;
+
+    double centerX = bounds.left + bounds.width / 2;
+    double centerY = bounds.top +
+        bounds.height / 2 -
+        marginBottom -
+        (padding.top + padding.bottom);
+
+    canvas.drawRRect(
+      Rectangle<num>(
+        centerX - (width / 2) - padding.left,
+        centerY - (height / 2) - padding.top,
+        width + (padding.left + padding.right),
+        height + (padding.top + padding.bottom),
+      ),
+      fill: charts.ColorUtil.fromDartColor(
+        Theme.of(context).colorScheme.surfaceVariant,
+      ),
+      radius: 16,
+      roundTopLeft: true,
+      roundTopRight: true,
+      roundBottomRight: true,
+      roundBottomLeft: true,
+    );
+    canvas.drawText(
+      textElement,
+      (centerX - (width / 2)).round(),
+      (centerY - (height / 2)).round(),
     );
   }
 }

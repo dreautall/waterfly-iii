@@ -23,6 +23,15 @@ class LabelAmountChart {
   LabelAmountChart(this.label, this.amount);
 }
 
+final List<charts.Color> possibleChartColors = <charts.Color>[
+  charts.MaterialPalette.blue.shadeDefault,
+  charts.MaterialPalette.deepOrange.shadeDefault,
+  charts.MaterialPalette.purple.shadeDefault,
+  charts.MaterialPalette.teal.shadeDefault,
+  charts.MaterialPalette.lime.shadeDefault,
+  charts.MaterialPalette.cyan.shadeDefault,
+];
+
 class TextSymbolRenderer extends charts.CircleSymbolRenderer {
   TextSymbolRenderer(
     this.printFunc,

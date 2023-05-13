@@ -20,6 +20,7 @@ import 'package:waterflyiii/pages/home/main_charts/category.dart';
 import 'package:waterflyiii/pages/home/main_charts/lastdays.dart';
 import 'package:waterflyiii/pages/home/main_charts/netearnings.dart';
 import 'package:waterflyiii/pages/home/main_charts/summary.dart';
+import 'package:waterflyiii/widgets/charts.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({super.key});
@@ -44,21 +45,15 @@ class _HomeMainState extends State<HomeMain>
   final Map<String, Category> catChartData = <String, Category>{};
   final Map<String, Budget> budgetInfos = <String, Budget>{};
 
-  final List<charts.Color> possibleChartColors = <charts.Color>[
-    charts.MaterialPalette.blue.shadeDefault,
-    charts.MaterialPalette.deepOrange.shadeDefault,
-    charts.MaterialPalette.purple.shadeDefault,
-    charts.MaterialPalette.teal.shadeDefault,
-    charts.MaterialPalette.lime.shadeDefault,
-    charts.MaterialPalette.cyan.shadeDefault,
-  ];
-
   @override
   void dispose() {
     super.dispose();
   }
 
   Future<bool> _fetchLastDays() async {
+    if (lastDaysIncome.isNotEmpty) {
+      return true; // :DEBUG:
+    }
     final FireflyIii api = context.read<FireflyService>().api;
 
     // Use noon due to dailylight saving time
@@ -119,6 +114,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchOverviewChart() async {
+    if (overviewChartData.isNotEmpty) {
+      return true; // :DEBUG:
+    }
     final FireflyIii api = context.read<FireflyService>().api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
@@ -150,6 +148,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastMonths() async {
+    if (lastMonthsExpense.isNotEmpty) {
+      return true; // :DEBUG:
+    }
     final FireflyIii api = context.read<FireflyService>().api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
@@ -234,6 +235,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchCategories() async {
+    if (catChartData.isNotEmpty) {
+      return true; // :DEBUG:
+    }
     final FireflyIii api = context.read<FireflyService>().api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
@@ -396,7 +400,6 @@ class _HomeMainState extends State<HomeMain>
             height: 175,
             child: () => CategoryChart(
               catChartData: catChartData,
-              possibleChartColors: possibleChartColors,
             ),
           ),
           const SizedBox(height: 8),
@@ -440,8 +443,9 @@ class _HomeMainState extends State<HomeMain>
                           "⬤",
                           style: TextStyle(
                             color: charts.ColorUtil.toDartColor(
-                                possibleChartColors[
-                                    i % possibleChartColors.length]),
+                              possibleChartColors[
+                                  i % possibleChartColors.length],
+                            ),
                             textBaseline: TextBaseline.ideographic,
                             height: 1.3,
                           ),
@@ -472,7 +476,6 @@ class _HomeMainState extends State<HomeMain>
             height: 175,
             child: () => SummaryChart(
               overviewChartData: overviewChartData,
-              possibleChartColors: possibleChartColors,
             ),
           ),
           const SizedBox(height: 8),

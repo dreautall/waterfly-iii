@@ -351,6 +351,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
             },
             child: Text(S.of(context).formButtonUpload),
           ),
+          const SizedBox(width: 12),
         ],
       ),
     );

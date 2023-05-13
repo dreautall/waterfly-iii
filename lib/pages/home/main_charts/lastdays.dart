@@ -15,12 +15,12 @@ import 'package:waterflyiii/widgets/charts.dart';
 class LastDaysChart extends StatelessWidget {
   const LastDaysChart({
     super.key,
-    required this.lastDaysExpense,
-    required this.lastDaysIncome,
+    required this.expenses,
+    required this.income,
   });
 
-  final Map<DateTime, InsightTotalEntry> lastDaysExpense;
-  final Map<DateTime, InsightTotalEntry> lastDaysIncome;
+  final Map<DateTime, InsightTotalEntry> expenses;
+  final Map<DateTime, InsightTotalEntry> income;
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +39,14 @@ class LastDaysChart extends StatelessWidget {
     final List<LabelAmountChart> chartData = <LabelAmountChart>[];
 
     for (DateTime e in lastDays.reversed) {
-      if (!lastDaysExpense.containsKey(e) || !lastDaysIncome.containsKey(e)) {
+      if (!expenses.containsKey(e) || !income.containsKey(e)) {
         continue;
       }
-      InsightTotalEntry expense = lastDaysExpense[e]!;
-      InsightTotalEntry income = lastDaysIncome[e]!;
+      InsightTotalEntry dayExpenses = expenses[e]!;
+      InsightTotalEntry dayIncome = income[e]!;
 
       double diff =
-          (income.differenceFloat ?? 0) + (expense.differenceFloat ?? 0);
+          (dayIncome.differenceFloat ?? 0) + (dayExpenses.differenceFloat ?? 0);
 
       // Don't show currency when numbers are too big, see #29
       if (diff > 1000) {

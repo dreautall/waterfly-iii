@@ -389,8 +389,8 @@ class _HomeMainState extends State<HomeMain>
             },
             height: 125,
             child: () => LastDaysChart(
-              lastDaysExpense: lastDaysExpense,
-              lastDaysIncome: lastDaysIncome,
+              expenses: lastDaysExpense,
+              income: lastDaysIncome,
             ),
           ),
           const SizedBox(height: 8),
@@ -399,7 +399,7 @@ class _HomeMainState extends State<HomeMain>
             future: _fetchCategories(),
             height: 175,
             child: () => CategoryChart(
-              catChartData: catChartData,
+              data: catChartData,
             ),
           ),
           const SizedBox(height: 8),
@@ -475,7 +475,7 @@ class _HomeMainState extends State<HomeMain>
             ),
             height: 175,
             child: () => SummaryChart(
-              overviewChartData: overviewChartData,
+              data: overviewChartData,
             ),
           ),
           const SizedBox(height: 8),
@@ -613,8 +613,8 @@ class _HomeMainState extends State<HomeMain>
               ],
             ),
             child: () => NetEarningsChart(
-              lastMonthsExpense: lastMonthsExpense,
-              lastMonthsIncome: lastMonthsIncome,
+              expenses: lastMonthsExpense,
+              income: lastMonthsIncome,
             ),
           ),
           const SizedBox(height: 8),

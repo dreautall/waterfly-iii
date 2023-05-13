@@ -12,19 +12,19 @@ import 'package:waterflyiii/widgets/charts.dart';
 class NetEarningsChart extends StatelessWidget {
   const NetEarningsChart({
     super.key,
-    required this.lastMonthsExpense,
-    required this.lastMonthsIncome,
+    required this.expenses,
+    required this.income,
   });
 
-  final Map<DateTime, InsightTotalEntry> lastMonthsExpense;
-  final Map<DateTime, InsightTotalEntry> lastMonthsIncome;
+  final Map<DateTime, InsightTotalEntry> expenses;
+  final Map<DateTime, InsightTotalEntry> income;
 
   @override
   Widget build(BuildContext context) {
     List<LabelAmountChart> incomeChartData = <LabelAmountChart>[];
     List<LabelAmountChart> expenseChartData = <LabelAmountChart>[];
 
-    lastMonthsIncome.forEach((DateTime key, InsightTotalEntry value) {
+    income.forEach((DateTime key, InsightTotalEntry value) {
       incomeChartData.add(
         LabelAmountChart(
           DateFormat(
@@ -35,7 +35,7 @@ class NetEarningsChart extends StatelessWidget {
         ),
       );
     });
-    lastMonthsExpense.forEach((DateTime key, InsightTotalEntry value) {
+    expenses.forEach((DateTime key, InsightTotalEntry value) {
       expenseChartData.add(
         LabelAmountChart(
           DateFormat(

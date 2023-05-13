@@ -9,6 +9,13 @@ import 'package:community_charts_flutter/src/text_style.dart' as charts_style;
 // ignore: implementation_imports
 import 'package:community_charts_flutter/src/text_element.dart' as charts_text;
 
+class TimeSeriesChart {
+  final DateTime time;
+  final double value;
+
+  TimeSeriesChart(this.time, this.value);
+}
+
 class TextSymbolRenderer extends charts.CircleSymbolRenderer {
   TextSymbolRenderer(
     this.printFunc,

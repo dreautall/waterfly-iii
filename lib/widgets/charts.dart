@@ -16,6 +16,13 @@ class TimeSeriesChart {
   TimeSeriesChart(this.time, this.value);
 }
 
+class LabelAmountChart {
+  final String label;
+  final double amount;
+
+  LabelAmountChart(this.label, this.amount);
+}
+
 class TextSymbolRenderer extends charts.CircleSymbolRenderer {
   TextSymbolRenderer(
     this.printFunc,

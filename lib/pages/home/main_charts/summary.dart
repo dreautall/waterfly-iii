@@ -13,11 +13,9 @@ class SummaryChart extends StatelessWidget {
   const SummaryChart({
     super.key,
     required this.overviewChartData,
-    required this.possibleChartColors,
   });
 
   final List<ChartDataSet> overviewChartData;
-  final List<charts.Color> possibleChartColors;
 
   @override
   Widget build(BuildContext context) {

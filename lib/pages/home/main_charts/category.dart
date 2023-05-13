@@ -15,11 +15,9 @@ class CategoryChart extends StatelessWidget {
   const CategoryChart({
     super.key,
     required this.catChartData,
-    required this.possibleChartColors,
   });
 
   final Map<String, Category> catChartData;
-  final List<charts.Color> possibleChartColors;
 
   @override
   Widget build(BuildContext context) {

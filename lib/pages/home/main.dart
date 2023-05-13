@@ -474,6 +474,10 @@ class _HomeMainState extends State<HomeMain>
               ],
             ),
             height: 175,
+            onTap: () => showDialog<void>(
+              context: context,
+              builder: (BuildContext context) => Placeholder(),
+            ),
             child: () => SummaryChart(
               data: overviewChartData,
             ),
@@ -789,6 +793,7 @@ class ChartCard extends StatelessWidget {
     required this.future,
     this.height = 150,
     this.summary,
+    this.onTap,
   });
 
   final String title;
@@ -796,6 +801,7 @@ class ChartCard extends StatelessWidget {
   final Future<bool> future;
   final Widget Function()? summary;
   final double height;
+  final Future<void> Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -818,29 +824,34 @@ class ChartCard extends StatelessWidget {
                   ),
                 );
               }
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Text(
-                      title,
-                      style: Theme.of(context).textTheme.titleMedium,
+              return InkWell(
+                onTap: onTap,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Text(
+                        title,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                     ),
-                  ),
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surfaceVariant,
+                    Ink(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surfaceVariant,
+                      ),
+                      child: SizedBox(
+                        height: height,
+                        child: child(),
+                      ),
                     ),
-                    child: SizedBox(
-                      height: height,
-                      child: child(),
-                    ),
-                  ),
-                  ...summaryWidgets,
-                ],
+                    ...summaryWidgets,
+                  ],
+                ),
               );
             } else if (snapshot.hasError) {
+              log.severe("Error getting chart card data", snapshot.error,
+                  snapshot.stackTrace);
               return Text(snapshot.error!.toString());
             } else {
               return const Padding(

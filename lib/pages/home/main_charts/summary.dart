@@ -12,10 +12,10 @@ import 'package:waterflyiii/widgets/charts.dart';
 class SummaryChart extends StatelessWidget {
   const SummaryChart({
     super.key,
-    required this.overviewChartData,
+    required this.data,
   });
 
-  final List<ChartDataSet> overviewChartData;
+  final List<ChartDataSet> data;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class SummaryChart extends StatelessWidget {
     final List<charts.TickSpec<DateTime>> ticks = <charts.TickSpec<DateTime>>[];
     final List<DateTime> addedTicks = <DateTime>[];
 
-    for (ChartDataSet e in overviewChartData) {
+    for (ChartDataSet e in data) {
       final List<TimeSeriesChart> data = <TimeSeriesChart>[];
 
       final Map<String, dynamic> entries = e.entries! as Map<String, dynamic>;

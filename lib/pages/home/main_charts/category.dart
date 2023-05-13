@@ -14,18 +14,18 @@ import 'package:waterflyiii/widgets/charts.dart';
 class CategoryChart extends StatelessWidget {
   const CategoryChart({
     super.key,
-    required this.catChartData,
+    required this.data,
   });
 
-  final Map<String, Category> catChartData;
+  final Map<String, Category> data;
 
   @override
   Widget build(BuildContext context) {
-    List<LabelAmountChart> data = <LabelAmountChart>[];
+    List<LabelAmountChart> chartData = <LabelAmountChart>[];
     CurrencyRead defaultCurrency =
         context.read<FireflyService>().defaultCurrency;
 
-    catChartData.forEach((_, Category e) {
+    data.forEach((_, Category e) {
       double sum = 0;
       if (e.spent == null) {
         return;
@@ -36,7 +36,7 @@ class CategoryChart extends StatelessWidget {
       if (sum == 0) {
         return;
       }
-      data.add(
+      chartData.add(
         LabelAmountChart(
           e.name,
           sum,
@@ -44,18 +44,18 @@ class CategoryChart extends StatelessWidget {
       );
     });
 
-    data.sort((LabelAmountChart a, LabelAmountChart b) =>
+    chartData.sort((LabelAmountChart a, LabelAmountChart b) =>
         a.amount.compareTo(b.amount));
 
     if (data.length > 5) {
-      LabelAmountChart otherData = data.skip(5).reduce(
+      LabelAmountChart otherData = chartData.skip(5).reduce(
             (LabelAmountChart v, LabelAmountChart e) =>
                 LabelAmountChart(S.of(context).catOther, v.amount + e.amount),
           );
-      data = data.take(5).toList();
+      chartData = chartData.take(5).toList();
 
       if (otherData.amount != 0) {
-        data.add(otherData);
+        chartData.add(otherData);
       }
     }
 
@@ -67,7 +67,7 @@ class CategoryChart extends StatelessWidget {
             id: 'Categories',
             domainFn: (LabelAmountChart entry, _) => entry.label,
             measureFn: (LabelAmountChart entry, _) => entry.amount.abs(),
-            data: data,
+            data: chartData,
             labelAccessorFn: (LabelAmountChart entry, _) =>
                 entry.amount.abs().toStringAsFixed(0),
             /*defaultCurrency.fmt(

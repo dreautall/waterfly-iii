@@ -316,7 +316,6 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                                   final int i =
                                       accounts.indexOf(datum.series.id);
                                   if (i == -1) {
-                                    debugPrint("skipping ${datum.series.id}");
                                     continue;
                                   }
                                   balances[i] = datum.datum.value;

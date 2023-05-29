@@ -101,10 +101,10 @@ packages:
     dependency: "direct dev"
     description:
       name: build_runner
-      sha256: "87e06c939450b9b94e3e1bb2d46e0e9780adbff5500d3969f2ba2de6bbb860cb"
+      sha256: "220ae4553e50d7c21a17c051afc7b183d28a24a420502e842f303f8e4e6edced"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.2"
+    version: "2.4.4"
   build_runner_core:
     dependency: transitive
     description:
@@ -149,18 +149,18 @@ packages:
     dependency: "direct main"
     description:
       name: chopper
-      sha256: b2645618fa760df06d7609c96b092d7b3e7a8f23639d34269f62f45a5edabc7d
+      sha256: "946bf5a8712140032d71683b95c959d1b6b2ae48d4ace32ec0675cbef39e51dc"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.1"
+    version: "6.1.2"
   chopper_generator:
     dependency: "direct dev"
     description:
       name: chopper_generator
-      sha256: "62360a1a3536645aaee030dd7719089838a478682867d46dbcf30a3c0e5305b4"
+      sha256: b3860ae94129012b636c3b68af25ad9a326aa2203afa118ab7b6fbc0ca98144d
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0"
+    version: "6.0.1"
   clock:
     dependency: transitive
     description:
@@ -351,10 +351,10 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_native_splash
-      sha256: af665ef80a213a9ed502845a3d7a61b9acca4100ee7e9f067a7440bc3acd6730
+      sha256: "02df24aec455c26428dadc637f20d4c548bda23ee2179479a8e8c39f1ecb75b3"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.19"
+    version: "2.3.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:

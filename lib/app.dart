@@ -92,27 +92,28 @@ class _WaterflyAppState extends State<WaterflyApp> {
                     log.finest(() => "set _startup = false");
                     _startup = false;
                   });
-                }
-
-                // Authentication required
-                log.fine("awaiting authentication");
-                final LocalAuthentication auth = LocalAuthentication();
-                final bool authed = await auth.authenticate(
-                    localizedReason: "Please authenticate",
+                } else {
+                  // Authentication required
+                  log.fine("awaiting authentication");
+                  final LocalAuthentication auth = LocalAuthentication();
+                  final bool authed = await auth.authenticate(
+                    localizedReason: "Waterfly III",
                     options: const AuthenticationOptions(
                       useErrorDialogs: false,
                       stickyAuth: true,
-                    ));
-                log.finest("done authing, $authed");
-                if (authed) {
-                  setState(() {
-                    log.finest(() => "authentication succeeded");
-                    _startup = false;
-                  });
-                } else {
-                  log.shout(() => "authentication failed");
-                  // close app
-                  SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                    ),
+                  );
+                  log.finest("done authing, $authed");
+                  if (authed) {
+                    setState(() {
+                      log.finest(() => "authentication succeeded");
+                      _startup = false;
+                    });
+                  } else {
+                    log.shout(() => "authentication failed");
+                    // close app
+                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                  }
                 }
               },
             );

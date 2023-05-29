@@ -130,10 +130,7 @@ class _HomeBalanceState extends State<HomeBalance>
                             style: Theme.of(context).textTheme.bodyMedium,
                             children: <InlineSpan>[
                               TextSpan(
-                                text: currency.fmt(
-                                  balance,
-                                  locale: S.of(context).localeName,
-                                ),
+                                text: currency.fmt(balance),
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium!
@@ -150,11 +147,9 @@ class _HomeBalanceState extends State<HomeBalance>
                               TextSpan(
                                 text: account.attributes.currentBalanceDate !=
                                         null
-                                    ? DateFormat.yMd(S.of(context).localeName)
-                                        .add_Hms()
-                                        .format(account
-                                            .attributes.currentBalanceDate!
-                                            .toLocal())
+                                    ? DateFormat.yMd().add_Hms().format(account
+                                        .attributes.currentBalanceDate!
+                                        .toLocal())
                                     : S.of(context).generalNever,
                               ),
                             ],

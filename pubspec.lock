@@ -351,10 +351,10 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_native_splash
-      sha256: af665ef80a213a9ed502845a3d7a61b9acca4100ee7e9f067a7440bc3acd6730
+      sha256: "02df24aec455c26428dadc637f20d4c548bda23ee2179479a8e8c39f1ecb75b3"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.19"
+    version: "2.3.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -930,10 +930,10 @@ packages:
     dependency: "direct dev"
     description:
       name: swagger_dart_code_generator
-      sha256: de3846fca5f0ac1ea0fbd30ec0fbf0e835b917dd5e039afa4222c40101715960
+      sha256: "9e8aea5e047250d78d7c688b5ea445ecbb1286fad7cf612cbfcfd3d526af85ea"
       url: "https://pub.dev"
     source: hosted
-    version: "2.11.0"
+    version: "2.11.5"
   term_glyph:
     dependency: transitive
     description:

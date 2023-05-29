@@ -930,10 +930,10 @@ packages:
     dependency: "direct dev"
     description:
       name: swagger_dart_code_generator
-      sha256: "58bdb386e3fc5d4e6c8c146ea9b9a488bec94f89c7583bddfd2205ee7089b860"
+      sha256: "9e8aea5e047250d78d7c688b5ea445ecbb1286fad7cf612cbfcfd3d526af85ea"
       url: "https://pub.dev"
     source: hosted
-    version: "2.11.3"
+    version: "2.11.5"
   term_glyph:
     dependency: transitive
     description:

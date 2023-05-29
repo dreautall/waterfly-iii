@@ -79,6 +79,23 @@ class SettingsPageState extends State<SettingsPage>
           },
         ),
         const Divider(),
+        SwitchListTile(
+          title: Text("Lockscreen"),
+          value: context.select((SettingsProvider s) => s.lock),
+          subtitle: Text(
+            context.select((SettingsProvider s) => s.lock).toString(),
+          ),
+          secondary: CircleAvatar(
+            child: Icon(context.select((SettingsProvider s) => s.lock)
+                ? Icons.lock
+                : Icons.lock_outline),
+          ),
+          onChanged: (bool value) async {
+            // :TODO: init lockscreen stuff
+            await settings.setLock(value);
+          },
+        ),
+        const Divider(),
         FutureBuilder<NotificationListenerStatus>(
           future: nlStatus(),
           builder: (BuildContext context,

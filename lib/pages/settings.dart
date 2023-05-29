@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
+import 'package:local_auth/local_auth.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:waterflyiii/notificationlistener.dart';
@@ -92,6 +93,15 @@ class SettingsPageState extends State<SettingsPage>
           ),
           onChanged: (bool value) async {
             // :TODO: init lockscreen stuff
+            if (value == true) {
+              final LocalAuthentication auth = LocalAuthentication();
+              final bool canAuth = await auth.isDeviceSupported() ||
+                  await auth.canCheckBiometrics;
+              if (!canAuth) {
+                log.warning("no auth method supported");
+                return;
+              }
+            }
             await settings.setLock(value);
           },
         ),

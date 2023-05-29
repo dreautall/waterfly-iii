@@ -35,6 +35,7 @@ class NotificationAppSettings {
 class SettingsProvider with ChangeNotifier {
   static const String settingDebug = "DEBUG";
   static const String settingLocale = "LOCALE";
+  static const String settingLock = "LOCK";
   static const String settingNLKnownApps = "NL_KNOWNAPPS";
   static const String settingNLUsedApps = "NL_USEDAPPS";
   static const String settingNLAppPrefix = "NL_APP_";
@@ -52,6 +53,9 @@ class SettingsProvider with ChangeNotifier {
   bool _debug = false;
   bool get debug => _debug;
   StreamSubscription<LogRecord>? _debugLogger;
+
+  bool _lock = false;
+  bool get lock => _lock;
 
   bool _loaded = false;
   bool get loaded => _loaded;
@@ -95,6 +99,9 @@ class SettingsProvider with ChangeNotifier {
     } else {
       Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
     }
+
+    _lock = prefs.getBool(settingLock) ?? false;
+    log.config("read lock $lock");
 
     _notificationApps = prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
@@ -156,6 +163,19 @@ class SettingsProvider with ChangeNotifier {
     }
 
     log.finest(() => "notify SettingsProvider->setDebug()");
+    notifyListeners();
+  }
+
+  Future<void> setLock(bool lock) async {
+    if (lock == _lock) {
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _lock = lock;
+    await prefs.setBool(settingLock, lock);
+
+    log.finest(() => "notify SettingsProvider->setLock()");
     notifyListeners();
   }
 

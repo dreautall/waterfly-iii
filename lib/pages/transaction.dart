@@ -422,10 +422,12 @@ class _TransactionPageState extends State<TransactionPage>
       });
     }
 
-    _dateTextController.text =
-        DateFormat.yMMMMd(S.of(context).localeName).format(_date);
-    _timeTextController.text =
-        DateFormat.Hm(S.of(context).localeName).format(_date);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _dateTextController.text =
+          DateFormat.yMMMMd(S.of(context).localeName).format(_date);
+      _timeTextController.text =
+          DateFormat.Hm(S.of(context).localeName).format(_date);
+    });
 
     // focus node listener for ownaccount
     _ownAccountFocusNode.addListener(() async {

@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show SystemChannels;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:local_auth/local_auth.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/notificationlistener.dart';
@@ -84,11 +86,37 @@ class _WaterflyAppState extends State<WaterflyApp> {
           } else {
             log.finer(() => "Load Step 2: Signin In");
             context.read<FireflyService>().signInFromStorage().then(
-                  (_) => setState(() {
+              (bool success) async {
+                if (!success || !context.read<SettingsProvider>().lock) {
+                  setState(() {
                     log.finest(() => "set _startup = false");
                     _startup = false;
-                  }),
-                );
+                  });
+                } else {
+                  // Authentication required
+                  log.fine("awaiting authentication");
+                  final LocalAuthentication auth = LocalAuthentication();
+                  final bool authed = await auth.authenticate(
+                    localizedReason: "Waterfly III",
+                    options: const AuthenticationOptions(
+                      useErrorDialogs: false,
+                      stickyAuth: true,
+                    ),
+                  );
+                  log.finest("done authing, $authed");
+                  if (authed) {
+                    setState(() {
+                      log.finest(() => "authentication succeeded");
+                      _startup = false;
+                    });
+                  } else {
+                    log.shout(() => "authentication failed");
+                    // close app
+                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                  }
+                }
+              },
+            );
           }
         } else {
           signedIn = context.select((FireflyService f) => f.signedIn);

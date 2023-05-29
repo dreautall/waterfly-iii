@@ -489,6 +489,9 @@
   "@settingsLanguage": {
     "description": "Currently selected language"
   },
+  "settingsLockscreen": "Lockscreen",
+  "settingsLockscreenHelp": "Require authenticiation on app startup",
+  "settingsLockscreenInitial": "Please authenticate to enable the lock screen.",
   "settingsNLAppAccount": "Default Account",
   "@settingsNLAppAccount": {
     "description": "Default account which will be used for the transaction."

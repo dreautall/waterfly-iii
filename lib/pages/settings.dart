@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
+import 'package:local_auth/local_auth.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:waterflyiii/notificationlistener.dart';
@@ -76,6 +77,41 @@ class SettingsPageState extends State<SettingsPage>
               }
               settings.setTheme(theme);
             });
+          },
+        ),
+        const Divider(),
+        SwitchListTile(
+          title: Text(S.of(context).settingsLockscreen),
+          subtitle: Text(S.of(context).settingsLockscreenHelp),
+          value: context.select((SettingsProvider s) => s.lock),
+          secondary: CircleAvatar(
+            child: Icon(
+              context.select((SettingsProvider s) => s.lock)
+                  ? Icons.lock
+                  : Icons.lock_outline,
+            ),
+          ),
+          onChanged: (bool value) async {
+            final S l10n = S.of(context);
+            if (value == true) {
+              final LocalAuthentication auth = LocalAuthentication();
+              final bool canAuth = await auth.isDeviceSupported() ||
+                  await auth.canCheckBiometrics;
+              if (!canAuth) {
+                log.warning("no auth method supported");
+                return;
+              }
+              log.finest("trying authentication");
+              final bool authed = await auth.authenticate(
+                localizedReason:
+                    l10n.settingsLockscreenInitial, // :TODO: translate
+              );
+              if (!authed) {
+                log.warning("authentication was cancelled");
+                return;
+              }
+            }
+            settings.setLock(value);
           },
         ),
         const Divider(),

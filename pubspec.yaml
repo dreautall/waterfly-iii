@@ -38,6 +38,7 @@ dependencies:
   package_info_plus: ^4.0.0
   logging: ^1.1.1
   flutter_email_sender: ^5.2.0
+  local_auth: ^2.1.6
 
 dev_dependencies:
   flutter_lints: ^2.0.0

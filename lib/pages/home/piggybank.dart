@@ -172,10 +172,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                       style: Theme.of(context).textTheme.bodyMedium,
                       children: <InlineSpan>[
                         TextSpan(
-                          text: currency.fmt(
-                            currentAmount,
-                            locale: S.of(context).localeName,
-                          ),
+                          text: currency.fmt(currentAmount),
                           style:
                               Theme.of(context).textTheme.titleMedium!.copyWith(
                             color:
@@ -193,10 +190,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                             ? TextSpan(
                                 text: S.of(context).numPercentOf(
                                       (piggy.attributes.percentage ?? 0) / 100,
-                                      currency.fmt(
-                                        targetAmount,
-                                        locale: S.of(context).localeName,
-                                      ),
+                                      currency.fmt(targetAmount),
                                     ))
                             : const TextSpan(),
                       ],
@@ -320,22 +314,13 @@ class _PiggyDetailsState extends State<PiggyDetails> {
     String infoText = "";
 
     if (targetAmount != 0) {
-      infoText += S.of(context).homePiggyTarget(currency.fmt(
-            targetAmount,
-            locale: S.of(context).localeName,
-          ));
+      infoText += S.of(context).homePiggyTarget(currency.fmt(targetAmount));
       infoText += "\n";
     }
-    infoText += S.of(context).homePiggySaved(currency.fmt(
-          currentAmount,
-          locale: S.of(context).localeName,
-        ));
+    infoText += S.of(context).homePiggySaved(currency.fmt(currentAmount));
     infoText += "\n";
     if (leftAmount != 0) {
-      infoText += S.of(context).homePiggyRemaining(currency.fmt(
-            leftAmount,
-            locale: S.of(context).localeName,
-          ));
+      infoText += S.of(context).homePiggyRemaining(currency.fmt(leftAmount));
       infoText += "\n";
     }
     if (startDate != null) {
@@ -432,10 +417,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                     domainAxis: charts.DateTimeAxisSpec(
                       tickFormatterSpec:
                           charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
-                        DateFormat(
-                          DateFormat.ABBR_MONTH_DAY,
-                          S.of(context).localeName,
-                        ),
+                        DateFormat(DateFormat.ABBR_MONTH_DAY),
                       ),
                       tickProviderSpec:
                           const charts.AutoDateTimeTickProviderSpec(
@@ -587,10 +569,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(S.of(context).homePiggySaved(currency.fmt(
-                    currentAmount,
-                    locale: S.of(context).localeName,
-                  ))),
+              Text(S.of(context).homePiggySaved(currency.fmt(currentAmount))),
               const SizedBox(height: 16),
               Row(
                 children: <Widget>[

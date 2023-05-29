@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
@@ -76,12 +77,12 @@ class SettingsProvider with ChangeNotifier {
         _theme = ThemeMode.system;
     }
 
-    final Locale locale = Locale.fromSubtags(
-      languageCode: prefs.getString(settingLocale) ?? "unset",
-    );
+    final String? countryCode = Intl.defaultLocale?.split("_").last;
+    final Locale locale = Locale(prefs.getString(settingLocale) ?? "unset");
     log.config("read locale $locale");
     if (S.supportedLocales.contains(locale)) {
       _locale = locale;
+      Intl.defaultLocale = "${locale.languageCode}_$countryCode";
     } else {
       _locale = const Locale('en');
     }
@@ -127,7 +128,9 @@ class SettingsProvider with ChangeNotifier {
     }
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _locale = locale;
+    _locale = Locale(locale.languageCode);
+    final String? countryCode = Intl.defaultLocale?.split("_").last;
+    Intl.defaultLocale = "${locale.languageCode}_$countryCode";
     await prefs.setString(settingLocale, locale.languageCode);
 
     log.finest(() => "notify SettingsProvider->setLocale()");

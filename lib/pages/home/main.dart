@@ -364,10 +364,7 @@ class _HomeMainState extends State<HomeMain>
                 children: <Widget>[
                   Text(S.of(context).homeMainChartDailyAvg),
                   Text(
-                    defaultCurrency.fmt(
-                      sevenDayTotal / 7,
-                      locale: S.of(context).localeName,
-                    ),
+                    defaultCurrency.fmt(sevenDayTotal / 7),
                     style: TextStyle(
                       color: sevenDayTotal < 0 ? Colors.red : Colors.green,
                       fontWeight: FontWeight.bold,
@@ -447,10 +444,7 @@ class _HomeMainState extends State<HomeMain>
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          defaultCurrency.fmt(
-                            balance,
-                            locale: S.of(context).localeName,
-                          ),
+                          defaultCurrency.fmt(balance),
                           style: TextStyle(
                             color: (balance < 0) ? Colors.red : Colors.green,
                             fontWeight: FontWeight.bold,
@@ -493,10 +487,7 @@ class _HomeMainState extends State<HomeMain>
                           (DateTime e) => Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              DateFormat(
-                                DateFormat.MONTH,
-                                S.of(context).localeName,
-                              ).format(e),
+                              DateFormat(DateFormat.MONTH).format(e),
                               style: Theme.of(context).textTheme.labelLarge,
                             ),
                           ),
@@ -521,10 +512,7 @@ class _HomeMainState extends State<HomeMain>
                           (MapEntry<DateTime, InsightTotalEntry> e) => Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              defaultCurrency.fmt(
-                                e.value.differenceFloat ?? 0,
-                                locale: S.of(context).localeName,
-                              ),
+                              defaultCurrency.fmt(e.value.differenceFloat ?? 0),
                               style: const TextStyle(
                                 fontFeatures: <FontFeature>[
                                   FontFeature.tabularFigures()
@@ -553,10 +541,7 @@ class _HomeMainState extends State<HomeMain>
                           (MapEntry<DateTime, InsightTotalEntry> e) => Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              defaultCurrency.fmt(
-                                e.value.differenceFloat ?? 0,
-                                locale: S.of(context).localeName,
-                              ),
+                              defaultCurrency.fmt(e.value.differenceFloat ?? 0),
                               style: const TextStyle(
                                 fontFeatures: <FontFeature>[
                                   FontFeature.tabularFigures()
@@ -586,10 +571,7 @@ class _HomeMainState extends State<HomeMain>
                         return Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            defaultCurrency.fmt(
-                              sum,
-                              locale: S.of(context).localeName,
-                            ),
+                            defaultCurrency.fmt(sum),
                             style: TextStyle(
                               color: (sum < 0) ? Colors.red : Colors.green,
                               fontWeight: FontWeight.bold,
@@ -741,13 +723,11 @@ class BudgetList extends StatelessWidget {
                           currency.fmt(
                             (available - spent).abs(),
                             decimalDigits: 0,
-                            locale: S.of(context).localeName,
                           ),
                           (spent > available) ? "over" : "leftfrom",
                           currency.fmt(
                             available,
                             decimalDigits: 0,
-                            locale: S.of(context).localeName,
                           ),
                         ),
                     style: Theme.of(context)
@@ -928,10 +908,7 @@ class SummaryChart extends StatelessWidget {
         domainAxis: charts.DateTimeAxisSpec(
           tickFormatterSpec:
               charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
-            DateFormat(
-              DateFormat.ABBR_MONTH_DAY,
-              S.of(context).localeName,
-            ),
+            DateFormat(DateFormat.ABBR_MONTH_DAY),
           ),
           tickProviderSpec: charts.StaticDateTimeTickProviderSpec(ticks),
           renderSpec: charts.SmallTickRendererSpec<DateTime>(
@@ -996,12 +973,7 @@ class LastDaysChart extends StatelessWidget {
       }
 
       chartData.add(
-        LabelAmountChart(
-            DateFormat(
-              DateFormat.ABBR_WEEKDAY,
-              S.of(context).localeName,
-            ).format(e),
-            diff),
+        LabelAmountChart(DateFormat(DateFormat.ABBR_WEEKDAY).format(e), diff),
       );
     }
 
@@ -1019,7 +991,6 @@ class LastDaysChart extends StatelessWidget {
               ? defaultCurrency.fmt(
                   entry.amount.abs(),
                   decimalDigits: 0,
-                  locale: S.of(context).localeName,
                 )
               : entry.amount.abs().toStringAsFixed(0),
           outsideLabelStyleAccessorFn: (_, __) => charts.TextStyleSpec(
@@ -1067,10 +1038,7 @@ class NetEarningsChart extends StatelessWidget {
     lastMonthsIncome.forEach((DateTime key, InsightTotalEntry value) {
       incomeChartData.add(
         LabelAmountChart(
-          DateFormat(
-            DateFormat.YEAR_MONTH,
-            S.of(context).localeName,
-          ).format(key),
+          DateFormat(DateFormat.YEAR_MONTH).format(key),
           value.differenceFloat ?? 0,
         ),
       );
@@ -1078,10 +1046,7 @@ class NetEarningsChart extends StatelessWidget {
     lastMonthsExpense.forEach((DateTime key, InsightTotalEntry value) {
       expenseChartData.add(
         LabelAmountChart(
-          DateFormat(
-            DateFormat.YEAR_MONTH,
-            S.of(context).localeName,
-          ).format(key),
+          DateFormat(DateFormat.YEAR_MONTH).format(key),
           value.differenceFloat ?? 0,
         ),
       );
@@ -1197,7 +1162,6 @@ class CategoryChart extends StatelessWidget {
                 entry.amount.abs().toStringAsFixed(0),
             /*defaultCurrency.fmt(
               entry.amount.abs(),
-              locale: S.of(context).localeName,
               decimalDigits: 0,
             ),*/
             colorFn: (_, int? i) => possibleChartColors[i ?? 5],
@@ -1238,12 +1202,7 @@ class CategoryChart extends StatelessWidget {
             legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
             desiredMaxRows: 6,
             measureFormatter: (num? value) {
-              return value == null
-                  ? '-'
-                  : defaultCurrency.fmt(
-                      value,
-                      locale: S.of(context).localeName,
-                    );
+              return value == null ? '-' : defaultCurrency.fmt(value);
             },
             entryTextStyle: charts.TextStyleSpec(
               fontSize:

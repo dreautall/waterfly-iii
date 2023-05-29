@@ -81,18 +81,18 @@ class SettingsPageState extends State<SettingsPage>
         ),
         const Divider(),
         SwitchListTile(
-          title: Text("Lockscreen"),
+          title: Text(S.of(context).settingsLockscreen),
+          subtitle: Text(S.of(context).settingsLockscreenHelp),
           value: context.select((SettingsProvider s) => s.lock),
-          subtitle: Text(
-            context.select((SettingsProvider s) => s.lock).toString(),
-          ),
           secondary: CircleAvatar(
-            child: Icon(context.select((SettingsProvider s) => s.lock)
-                ? Icons.lock
-                : Icons.lock_outline),
+            child: Icon(
+              context.select((SettingsProvider s) => s.lock)
+                  ? Icons.lock
+                  : Icons.lock_outline,
+            ),
           ),
           onChanged: (bool value) async {
-            // :TODO: init lockscreen stuff
+            final S l10n = S.of(context);
             if (value == true) {
               final LocalAuthentication auth = LocalAuthentication();
               final bool canAuth = await auth.isDeviceSupported() ||
@@ -101,8 +101,17 @@ class SettingsPageState extends State<SettingsPage>
                 log.warning("no auth method supported");
                 return;
               }
+              log.finest("trying authentication");
+              final bool authed = await auth.authenticate(
+                localizedReason:
+                    l10n.settingsLockscreenInitial, // :TODO: translate
+              );
+              if (!authed) {
+                log.warning("authentication was cancelled");
+                return;
+              }
             }
-            await settings.setLock(value);
+            settings.setLock(value);
           },
         ),
         const Divider(),

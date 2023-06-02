@@ -94,6 +94,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.5.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0"
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5' // Added: flutter_local_notifications
-    implementation 'androidx.window:window:1.0.0' // Added: flutter_local_notifications
-    implementation 'androidx.window:window-java:1.0.0' // Added: flutter_local_notifications
+    implementation 'androidx.window:window:1.1.0-rc01' // Added: flutter_local_notifications
+    implementation 'androidx.window:window-java:1.1.0-rc01' // Added: flutter_local_notifications
 }

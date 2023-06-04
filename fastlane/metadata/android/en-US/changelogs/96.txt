@@ -1,0 +1,2 @@
+- Option to secure the app with authentication (fingerprint etc.)
+- Bug fixes

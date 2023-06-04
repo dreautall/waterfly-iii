@@ -37,7 +37,7 @@ dependencies:
   device_apps: ^2.2.0
   package_info_plus: ^4.0.0
   logging: ^1.1.1
-  flutter_email_sender: ^5.2.0
+  flutter_email_sender: ^6.0.0
   local_auth: ^2.1.6
 
 dev_dependencies:

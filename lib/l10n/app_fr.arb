@@ -5,7 +5,7 @@
   "@accountRoleAssetCashWallet": {
     "description": "Firefly Translation String: account_role_cashWalletAsset"
   },
-  "accountRoleAssetCC": "Carte de crédit",
+  "accountRoleAssetCC": "Carte bancaire",
   "@accountRoleAssetCC": {
     "description": "Firefly Translation String: account_role_ccAsset"
   },

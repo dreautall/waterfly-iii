@@ -581,7 +581,7 @@
   "@settingsVersion": {
     "description": "Current App Version"
   },
-  "settingsVersionChecking": "checking...",
+  "settingsVersionChecking": "checking…",
   "@settingsVersionChecking": {
     "description": "Shown while checking for app version"
   },

@@ -577,7 +577,7 @@
       }
     }
   },
-  "settingsVersion": "App Version",
+  "settingsVersion": "App-Version",
   "@settingsVersion": {
     "description": "Current App Version"
   },

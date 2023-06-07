@@ -13,7 +13,7 @@
   "@accountRoleAssetDefault": {
     "description": "Firefly Translation String: account_role_defaultAsset"
   },
-  "accountRoleAssetSavings": "Compte d’épargne",
+  "accountRoleAssetSavings": "Compte d'épargne",
   "@accountRoleAssetSavings": {
     "description": "Firefly Translation String: account_role_savingAsset"
   },
@@ -33,7 +33,7 @@
   "@accountsLabelLiabilities": {
     "description": "Firefly Translation String: liabilities_accounts"
   },
-  "accountsLabelRevenue": "Comptes de revenus",
+  "accountsLabelRevenue": "Comptes de recettes",
   "@accountsLabelRevenue": {
     "description": "Firefly Translation String: revenue_accounts"
   },
@@ -593,7 +593,7 @@
   "@splashFormLabelCustomSSLCertPEM": {
     "description": "Label for certificate file text input in PEM format"
   },
-  "transactionAttachments": "Pieces jointes",
+  "transactionAttachments": "Pièces jointes",
   "@transactionAttachments": {
     "description": "Button Label: Attachments"
   },
@@ -631,7 +631,7 @@
       }
     }
   },
-  "transactionDialogAttachmentsTitle": "Pieces jointes",
+  "transactionDialogAttachmentsTitle": "Pièces jointes",
   "@transactionDialogAttachmentsTitle": {
     "description": "Dialog Title: Attachments Dialog"
   },

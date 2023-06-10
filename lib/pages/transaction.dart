@@ -1096,7 +1096,9 @@ class _TransactionPageState extends State<TransactionPage>
             width: 150,
             child: NumberInput(
               icon: const Icon(Icons.monetization_on),
-              hintText: "0.00",
+              hintText: _foreignCurrency?.zero() ??
+                  _localCurrency?.zero() ??
+                  NumberFormat.currency(decimalDigits: 2).format(0),
               decimals: _foreignCurrency?.attributes.decimalPlaces ??
                   _localCurrency?.attributes.decimalPlaces ??
                   2,

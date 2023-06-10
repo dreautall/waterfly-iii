@@ -536,8 +536,12 @@ class _TransactionPageState extends State<TransactionPage>
   void updateTransactionAmounts() {
     // Individual for split transactions, show common for single transaction
     /// local amount
-    _localAmountTextController.text = _localAmounts.sum
-        .toStringAsFixed(_localCurrency?.attributes.decimalPlaces ?? 2);
+    if (_localAmounts.sum != 0) {
+      _localAmountTextController.text = _localAmounts.sum
+          .toStringAsFixed(_localCurrency?.attributes.decimalPlaces ?? 2);
+    } else {
+      _localAmountTextController.text = "";
+    }
 
     /// foreign amount & currency
     _foreignCurrency = _foreignCurrencies.first;
@@ -545,8 +549,12 @@ class _TransactionPageState extends State<TransactionPage>
         _foreignCurrencies.every(
             (CurrencyRead? e) => e != null && e.id == _foreignCurrency!.id)) {
       // all same foreign currency --> ok to show in summary
-      _foreignAmountTextController.text = _foreignAmounts.sum
-          .toStringAsFixed(_foreignCurrency?.attributes.decimalPlaces ?? 2);
+      if (_foreignAmounts.sum != 0) {
+        _foreignAmountTextController.text = _foreignAmounts.sum
+            .toStringAsFixed(_foreignCurrency?.attributes.decimalPlaces ?? 2);
+      } else {
+        _foreignAmountTextController.text = "";
+      }
     } else {
       _foreignCurrency = null;
     }
@@ -1134,10 +1142,14 @@ class _TransactionPageState extends State<TransactionPage>
                         "foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
                     if (_foreignAmounts[i] == 0) {
                       _foreignAmounts[i] = _localAmounts[i];
-                      _foreignAmountTextControllers[i].text = _foreignAmounts[i]
-                          .toStringAsFixed(
-                              _foreignCurrencies[i]?.attributes.decimalPlaces ??
-                                  2);
+                      if (_foreignAmounts[i] != 0) {
+                        _foreignAmountTextControllers[i].text =
+                            _foreignAmounts[i].toStringAsFixed(
+                                _foreignCurrencies[i]
+                                        ?.attributes
+                                        .decimalPlaces ??
+                                    2);
+                      }
                     }
                   }
                 }

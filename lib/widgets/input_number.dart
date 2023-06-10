@@ -31,8 +31,6 @@ class NumberInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(
-        "Building with initialValue $value, decimals $decimals, hintText $hintText");
     return TextFormField(
       controller: controller,
       initialValue: value,

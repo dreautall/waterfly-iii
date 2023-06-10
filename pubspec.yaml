@@ -39,6 +39,7 @@ dependencies:
   logging: ^1.1.1
   flutter_email_sender: ^6.0.0
   local_auth: ^2.1.6
+  dynamic_color: ^1.6.5
 
 dev_dependencies:
   flutter_lints: ^2.0.0

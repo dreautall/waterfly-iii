@@ -328,6 +328,7 @@ class _AppCardState extends State<AppCard> {
                           leadingIcon: const Icon(Icons.account_balance),
                           label: Text(S.of(context).settingsNLAppAccount),
                           dropdownMenuEntries: accountOptions,
+                          width: MediaQuery.of(context).size.width - 128,
                           onSelected: (AccountRead? account) async {
                             FocusManager.instance.primaryFocus?.unfocus();
                             final NotificationAppSettings settings =

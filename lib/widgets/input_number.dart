@@ -31,6 +31,8 @@ class NumberInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(
+        "Building with initialValue $value, decimals $decimals, hintText $hintText");
     return TextFormField(
       controller: controller,
       initialValue: value,
@@ -66,5 +68,5 @@ class NumberInput extends StatelessWidget {
 
   String _getRegexString() => (decimals > 0)
       ? r'^[0-9]+[,.]{0,1}[0-9]{0,' + decimals.toString() + r'}'
-      : r'^[0-9]$';
+      : r'[0-9]';
 }

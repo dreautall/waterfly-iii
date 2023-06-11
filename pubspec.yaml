@@ -40,6 +40,7 @@ dependencies:
   flutter_email_sender: ^6.0.0
   local_auth: ^2.1.6
   dynamic_color: ^1.6.5
+  material_color_utilities: ^0.2.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

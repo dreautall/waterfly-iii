@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemChannels;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -65,95 +66,118 @@ class _WaterflyAppState extends State<WaterflyApp> {
   Widget build(BuildContext context) {
     log.fine(() => "WaterflyApp() building");
 
-    return MultiProvider(
-      providers: <SingleChildWidget>[
-        ChangeNotifierProvider<FireflyService>(
-          create: (_) => FireflyService(),
-        ),
-        ChangeNotifierProvider<SettingsProvider>(
-          create: (_) => SettingsProvider(),
-        ),
-      ],
-      builder: (BuildContext context, _) {
-        late bool signedIn;
-        log.finest(() => "_startup = $_startup");
-        if (_startup) {
-          signedIn = false;
+    return DynamicColorBuilder(
+      builder: (
+        ColorScheme? cSchemeDynamicLight,
+        ColorScheme? cSchemeDynamicDark,
+      ) {
+        ColorScheme cSchemeLight = ColorScheme.fromSeed(
+          seedColor: Colors.blue,
+        );
+        ColorScheme cSchemeDark = ColorScheme.fromSeed(
+          seedColor: Colors.blue,
+          brightness: Brightness.dark,
+        ).copyWith(
+          surfaceVariant: Colors.blueGrey.shade900,
+          onSurfaceVariant: Colors.white,
+        );
 
-          if (!context.select((SettingsProvider s) => s.loaded)) {
-            log.finer(() => "Load Step 1: Loading Settings");
-            context.read<SettingsProvider>().loadSettings();
-          } else {
-            log.finer(() => "Load Step 2: Signin In");
-            context.read<FireflyService>().signInFromStorage().then(
-              (bool success) async {
-                if (!success || !context.read<SettingsProvider>().lock) {
-                  setState(() {
-                    log.finest(() => "set _startup = false");
-                    _startup = false;
-                  });
-                } else {
-                  // Authentication required
-                  log.fine("awaiting authentication");
-                  final LocalAuthentication auth = LocalAuthentication();
-                  final bool authed = await auth.authenticate(
-                    localizedReason: "Waterfly III",
-                    options: const AuthenticationOptions(
-                      useErrorDialogs: false,
-                      stickyAuth: true,
-                    ),
-                  );
-                  log.finest("done authing, $authed");
-                  if (authed) {
-                    setState(() {
-                      log.finest(() => "authentication succeeded");
-                      _startup = false;
-                    });
-                  } else {
-                    log.shout(() => "authentication failed");
-                    // close app
-                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                  }
-                }
-              },
-            );
-          }
-        } else {
-          signedIn = context.select((FireflyService f) => f.signedIn);
-          log.config("signedIn: $signedIn");
-        }
-        return MaterialApp(
-          title: 'Waterfly III',
-          theme: ThemeData(
-            brightness: Brightness.light,
-            colorSchemeSeed: Colors.blue,
-            useMaterial3: true,
-          ),
-          darkTheme: ThemeData(
-            brightness: Brightness.dark,
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.blue,
-              brightness: Brightness.dark,
-            ).copyWith(
-              surfaceVariant: Colors.blueGrey.shade900,
-              onSurfaceVariant: Colors.white,
+        log.finest(
+            "has dynamic color? light: ${cSchemeDynamicLight != null}, dark: ${cSchemeDynamicDark != null}");
+
+        return MultiProvider(
+          providers: <SingleChildWidget>[
+            ChangeNotifierProvider<FireflyService>(
+              create: (_) => FireflyService(),
             ),
-            useMaterial3: true,
-          ),
-          themeMode: context.select((SettingsProvider s) => s.theme),
-          localizationsDelegates: S.localizationsDelegates,
-          supportedLocales: S.supportedLocales,
-          locale: context.select((SettingsProvider s) => s.locale),
-          navigatorKey: navigatorKey,
-          home: (_startup ||
-                  context.select(
-                      (FireflyService f) => f.storageSignInException != null))
-              ? const SplashPage()
-              : signedIn
-                  ? _fromNotification
-                      ? TransactionPage(notification: _notificationPayload)
-                      : const NavPage()
-                  : const LoginPage(),
+            ChangeNotifierProvider<SettingsProvider>(
+              create: (_) => SettingsProvider(),
+            ),
+          ],
+          builder: (BuildContext context, _) {
+            late bool signedIn;
+            log.finest(() => "_startup = $_startup");
+            if (_startup) {
+              signedIn = false;
+
+              if (!context.select((SettingsProvider s) => s.loaded)) {
+                log.finer(() => "Load Step 1: Loading Settings");
+                context.read<SettingsProvider>().loadSettings();
+              } else {
+                log.finer(() => "Load Step 2: Signin In");
+                context.read<FireflyService>().signInFromStorage().then(
+                  (bool success) async {
+                    if (!success || !context.read<SettingsProvider>().lock) {
+                      setState(() {
+                        log.finest(() => "set _startup = false");
+                        _startup = false;
+                      });
+                    } else {
+                      // Authentication required
+                      log.fine("awaiting authentication");
+                      final LocalAuthentication auth = LocalAuthentication();
+                      final bool authed = await auth.authenticate(
+                        localizedReason: "Waterfly III",
+                        options: const AuthenticationOptions(
+                          useErrorDialogs: false,
+                          stickyAuth: true,
+                        ),
+                      );
+                      log.finest("done authing, $authed");
+                      if (authed) {
+                        setState(() {
+                          log.finest(() => "authentication succeeded");
+                          _startup = false;
+                        });
+                      } else {
+                        log.shout(() => "authentication failed");
+                        // close app
+                        SystemChannels.platform
+                            .invokeMethod('SystemNavigator.pop');
+                      }
+                    }
+                  },
+                );
+              }
+            } else {
+              signedIn = context.select((FireflyService f) => f.signedIn);
+              log.config("signedIn: $signedIn");
+            }
+
+            return MaterialApp(
+              title: 'Waterfly III',
+              theme: ThemeData(
+                brightness: Brightness.light,
+                colorScheme:
+                    context.select((SettingsProvider s) => s.dynamicColors)
+                        ? cSchemeDynamicLight?.harmonized() ?? cSchemeLight
+                        : cSchemeLight,
+                useMaterial3: true,
+              ),
+              darkTheme: ThemeData(
+                brightness: Brightness.dark,
+                colorScheme:
+                    context.select((SettingsProvider s) => s.dynamicColors)
+                        ? cSchemeDynamicDark?.harmonized() ?? cSchemeDark
+                        : cSchemeDark,
+                useMaterial3: true,
+              ),
+              themeMode: context.select((SettingsProvider s) => s.theme),
+              localizationsDelegates: S.localizationsDelegates,
+              supportedLocales: S.supportedLocales,
+              locale: context.select((SettingsProvider s) => s.locale),
+              navigatorKey: navigatorKey,
+              home: (_startup ||
+                      context.select((FireflyService f) =>
+                          f.storageSignInException != null))
+                  ? const SplashPage()
+                  : signedIn
+                      ? _fromNotification
+                          ? TransactionPage(notification: _notificationPayload)
+                          : const NavPage()
+                      : const LoginPage(),
+            );
+          },
         );
       },
     );

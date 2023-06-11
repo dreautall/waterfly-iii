@@ -162,7 +162,7 @@
   "@generalExpenses": {
     "description": "(Account) Expenses"
   },
-  "generalIncome": "Revenu",
+  "generalIncome": "Revenus",
   "@generalIncome": {
     "description": "(Account) Info"
   },

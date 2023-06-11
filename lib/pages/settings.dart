@@ -1,7 +1,10 @@
 import 'package:animations/animations.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
+import 'package:material_color_utilities/material_color_utilities.dart'
+    show CorePalette;
 import 'package:provider/provider.dart';
 
 import 'package:local_auth/local_auth.dart';
@@ -53,30 +56,43 @@ class SettingsPageState extends State<SettingsPage>
             });
           },
         ),
-        ListTile(
-          title: Text(S.of(context).settingsTheme),
-          subtitle: Text(
-            S.of(context).settingsThemeValue(
-                  context
-                      .select((SettingsProvider s) => s.getTheme)
-                      .toString()
-                      .split('.')
-                      .last,
-                ),
-          ),
-          leading: const CircleAvatar(
-            child: Icon(Icons.format_paint),
-          ),
-          onTap: () {
-            showDialog<ThemeMode?>(
-              context: context,
-              builder: (BuildContext context) => const ThemeDialog(),
-            ).then((ThemeMode? theme) {
-              if (theme == null) {
-                return;
+        FutureBuilder<CorePalette?>(
+          future: DynamicColorPlugin.getCorePalette(),
+          builder:
+              (BuildContext context, AsyncSnapshot<CorePalette?> snapshot) {
+            String dynamicColor = "";
+            bool dynamicColorAvailable = false;
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData &&
+                snapshot.data != null) {
+              // Dynamic color support available
+              dynamicColorAvailable = true;
+              if (context.select((SettingsProvider s) => s.dynamicColors)) {
+                dynamicColor = " - ${S.of(context).settingsThemeDynamicColors}";
               }
-              settings.setTheme(theme);
-            });
+            }
+            return ListTile(
+              title: Text(S.of(context).settingsTheme),
+              subtitle: Text(
+                "${S.of(context).settingsThemeValue(context.select((SettingsProvider s) => s.getTheme).toString().split('.').last)}$dynamicColor",
+              ),
+              leading: const CircleAvatar(
+                child: Icon(Icons.format_paint),
+              ),
+              onTap: () {
+                showDialog<ThemeMode?>(
+                  context: context,
+                  builder: (BuildContext context) => ThemeDialog(
+                    dynamicColorAvailable: dynamicColorAvailable,
+                  ),
+                ).then((ThemeMode? theme) {
+                  if (theme == null) {
+                    return;
+                  }
+                  settings.setTheme(theme);
+                });
+              },
+            );
           },
         ),
         const Divider(),
@@ -215,7 +231,10 @@ class LanguageDialog extends StatelessWidget {
 class ThemeDialog extends StatelessWidget {
   const ThemeDialog({
     super.key,
+    required this.dynamicColorAvailable,
   });
+
+  final bool dynamicColorAvailable;
 
   @override
   Widget build(BuildContext context) {
@@ -223,6 +242,16 @@ class ThemeDialog extends StatelessWidget {
     return SimpleDialog(
       title: Text(S.of(context).settingsDialogThemeTitle),
       children: <Widget>[
+        dynamicColorAvailable
+            ? SwitchListTile(
+                title: Text(S.of(context).settingsThemeDynamicColors),
+                value: context.select((SettingsProvider s) => s.dynamicColors),
+                isThreeLine: false,
+                onChanged: (bool value) async {
+                  settings.setDynamicColors(value);
+                },
+              )
+            : const SizedBox.shrink(),
         ...ThemeMode.values.map(
           (ThemeMode theme) => RadioListTile<ThemeMode>(
             value: theme,

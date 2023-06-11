@@ -140,10 +140,10 @@ class _WaterflyAppState extends State<WaterflyApp> {
             ),
             useMaterial3: true,
           ),
-          themeMode: context.select((SettingsProvider s) => s.getTheme),
+          themeMode: context.select((SettingsProvider s) => s.theme),
           localizationsDelegates: S.localizationsDelegates,
           supportedLocales: S.supportedLocales,
-          locale: context.select((SettingsProvider s) => s.getLocale),
+          locale: context.select((SettingsProvider s) => s.locale),
           navigatorKey: navigatorKey,
           home: (_startup ||
                   context.select(

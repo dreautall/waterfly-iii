@@ -46,12 +46,12 @@ class SettingsProvider with ChangeNotifier {
   static const String settingDynamicColors = "DYNAMICCOLORS";
 
   ThemeMode _theme = ThemeMode.system;
-  ThemeMode get getTheme => _theme;
+  ThemeMode get theme => _theme;
   bool _dynamicColors = false;
   bool get dynamicColors => _dynamicColors;
 
   Locale? _locale;
-  Locale? get getLocale => _locale;
+  Locale? get locale => _locale;
 
   bool _debug = false;
   bool get debug => _debug;

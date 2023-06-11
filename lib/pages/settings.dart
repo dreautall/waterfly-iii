@@ -74,7 +74,7 @@ class SettingsPageState extends State<SettingsPage>
             return ListTile(
               title: Text(S.of(context).settingsTheme),
               subtitle: Text(
-                "${S.of(context).settingsThemeValue(context.select((SettingsProvider s) => s.getTheme).toString().split('.').last)}$dynamicColor",
+                "${S.of(context).settingsThemeValue(context.select((SettingsProvider s) => s.theme).toString().split('.').last)}$dynamicColor",
               ),
               leading: const CircleAvatar(
                 child: Icon(Icons.format_paint),
@@ -260,7 +260,7 @@ class ThemeDialog extends StatelessWidget {
                   .of(context)
                   .settingsThemeValue(theme.toString().split('.').last),
             ),
-            groupValue: settings.getTheme,
+            groupValue: settings.theme,
             onChanged: (_) {
               Navigator.pop(context, theme);
             },

@@ -1371,7 +1371,7 @@ class _TransactionPageState extends State<TransactionPage>
       // Date/Time select might overflow, so we need to be able to scroll horizontally.
       SizedBox(
         height:
-            56, // 56 is measured height from layout inspector of a normal row.
+            64, // 64 is measured height from layout inspector of a normal row.
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: <Widget>[

@@ -148,12 +148,18 @@ class _WaterflyAppState extends State<WaterflyApp> {
               title: 'Waterfly III',
               theme: ThemeData(
                 brightness: Brightness.light,
-                colorScheme: cSchemeDynamicLight?.harmonized() ?? cSchemeLight,
+                colorScheme:
+                    context.select((SettingsProvider s) => s.dynamicColors)
+                        ? cSchemeDynamicLight?.harmonized() ?? cSchemeLight
+                        : cSchemeLight,
                 useMaterial3: true,
               ),
               darkTheme: ThemeData(
                 brightness: Brightness.dark,
-                colorScheme: cSchemeDynamicDark?.harmonized() ?? cSchemeDark,
+                colorScheme:
+                    context.select((SettingsProvider s) => s.dynamicColors)
+                        ? cSchemeDynamicDark?.harmonized() ?? cSchemeDark
+                        : cSchemeDark,
                 useMaterial3: true,
               ),
               themeMode: context.select((SettingsProvider s) => s.getTheme),

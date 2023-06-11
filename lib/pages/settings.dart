@@ -58,7 +58,7 @@ class SettingsPageState extends State<SettingsPage>
           subtitle: Text(
             S.of(context).settingsThemeValue(
                   context
-                      .select((SettingsProvider s) => s.getTheme)
+                      .select((SettingsProvider s) => s.theme)
                       .toString()
                       .split('.')
                       .last,
@@ -231,7 +231,7 @@ class ThemeDialog extends StatelessWidget {
                   .of(context)
                   .settingsThemeValue(theme.toString().split('.').last),
             ),
-            groupValue: settings.getTheme,
+            groupValue: settings.theme,
             onChanged: (_) {
               Navigator.pop(context, theme);
             },

@@ -567,6 +567,10 @@
   "@settingsTheme": {
     "description": "App theme (dark or light)"
   },
+  "settingsThemeDynamicColors": "Dynamic Colors",
+  "@settingsThemeDynamicColors": {
+    "description": "Material You Dynamic Colors feature"
+  },
   "settingsThemeValue": "{theme, select, dark{Dark Mode} light{Light Mode} other{System Default}}",
   "@settingsThemeValue": {
     "description": "Currently selected theme (either dark, light or system)",

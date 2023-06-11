@@ -43,9 +43,12 @@ class SettingsProvider with ChangeNotifier {
   static const String settingThemeDark = "DARK";
   static const String settingThemeLight = "LIGHT";
   static const String settingThemeSystem = "SYSTEM";
+  static const String settingDynamicColors = "DYNAMICCOLORS";
 
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get theme => _theme;
+  bool _dynamicColors = false;
+  bool get dynamicColors => _dynamicColors;
 
   Locale? _locale;
   Locale? get locale => _locale;
@@ -80,6 +83,8 @@ class SettingsProvider with ChangeNotifier {
       default:
         _theme = ThemeMode.system;
     }
+    _dynamicColors = prefs.getBool(settingDynamicColors) ?? false;
+    log.config("read dynamic colors $dynamicColors");
 
     final String? countryCode = Intl.defaultLocale?.split("_").last;
     final Locale locale = Locale(prefs.getString(settingLocale) ?? "unset");
@@ -176,6 +181,19 @@ class SettingsProvider with ChangeNotifier {
     await prefs.setBool(settingLock, lock);
 
     log.finest(() => "notify SettingsProvider->setLock()");
+    notifyListeners();
+  }
+
+  Future<void> setDynamicColors(bool dynamicColors) async {
+    if (dynamicColors == _dynamicColors) {
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _dynamicColors = dynamicColors;
+    await prefs.setBool(settingDynamicColors, dynamicColors);
+
+    log.finest(() => "notify SettingsProvider->dynamicColors()");
     notifyListeners();
   }
 

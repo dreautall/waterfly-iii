@@ -16,6 +16,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/notificationlistener.dart';
+import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/transaction/attachments.dart';
 import 'package:waterflyiii/pages/transaction/currencies.dart';
 import 'package:waterflyiii/pages/transaction/delete.dart';
@@ -46,7 +47,7 @@ class TransactionPage extends StatefulWidget {
 }
 
 class _TransactionPageState extends State<TransactionPage>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   final Logger log = Logger("Pages.Transaction.Page");
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -121,10 +122,26 @@ class _TransactionPageState extends State<TransactionPage>
   final List<Animation<double>> _cardsAnimation = <Animation<double>>[];
 
   bool _saving = false;
+  bool _doneSaving = false;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (_doneSaving == true && state == AppLifecycleState.resumed) {
+      log.finest(() => "pushing replacement route due to resumed app");
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute<bool>(
+          builder: (BuildContext context) => const NavPage(),
+        ),
+      );
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addObserver(this);
 
     if (widget.transactionId != null && widget.transaction == null) {
       // :TODO: Fetch transaction while spinner is shown
@@ -529,6 +546,8 @@ class _TransactionPageState extends State<TransactionPage>
     for (AnimationController a in _cardsAnimationController) {
       a.dispose();
     }
+
+    WidgetsBinding.instance.removeObserver(this);
 
     super.dispose();
   }
@@ -995,6 +1014,10 @@ class _TransactionPageState extends State<TransactionPage>
                       });
                       return;
                     }
+
+                    setState(() {
+                      _doneSaving = true;
+                    });
 
                     if (nav.canPop()) {
                       nav.pop(true);

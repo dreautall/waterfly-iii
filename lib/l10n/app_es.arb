@@ -5,27 +5,27 @@
   "@accountRoleAssetCashWallet": {
     "description": "Firefly Translation String: account_role_cashWalletAsset"
   },
-  "accountRoleAssetCC": "Tarjeta de crédito",
+  "accountRoleAssetCC": "Tarjeta de Crédito",
   "@accountRoleAssetCC": {
     "description": "Firefly Translation String: account_role_ccAsset"
   },
-  "accountRoleAssetDefault": "Cuenta de activo por defecto",
+  "accountRoleAssetDefault": "Cuentas de ingresos por defecto",
   "@accountRoleAssetDefault": {
     "description": "Firefly Translation String: account_role_defaultAsset"
   },
-  "accountRoleAssetSavings": "Cuenta de ahorros",
+  "accountRoleAssetSavings": "Cuentas de ahorros",
   "@accountRoleAssetSavings": {
     "description": "Firefly Translation String: account_role_savingAsset"
   },
-  "accountRoleAssetShared": "Cuenta de activo compartida",
+  "accountRoleAssetShared": "Cuenta de ingresos compartida",
   "@accountRoleAssetShared": {
     "description": "Firefly Translation String: account_role_sharedAsset"
   },
-  "accountsLabelAsset": "Cuentas de activo",
+  "accountsLabelAsset": "Cuenta de activos",
   "@accountsLabelAsset": {
     "description": "Firefly Translation String: asset_accounts"
   },
-  "accountsLabelExpense": "Cuentas de gasto",
+  "accountsLabelExpense": "Cuentas de gastos",
   "@accountsLabelExpense": {
     "description": "Firefly Translation String: expense_accounts"
   },
@@ -384,7 +384,7 @@
   "@liabilityDirectionCredit": {
     "description": "Firefly Translation String: liability_direction_credit"
   },
-  "liabilityDirectionDebit": "Tengo esta deuda",
+  "liabilityDirectionDebit": "Le debo esta deuda a otra persona",
   "@liabilityDirectionDebit": {
     "description": "Firefly Translation String: liability_direction_debit"
   },

@@ -7,7 +7,7 @@ Características:
 - Lista de transacciones con filtros
 - Añadir y editar transacciones con autocompletado, incluyendo archivos adjuntos, transacciones divididas y soporte multidivisa
 Compatibilidad con el sistema de huchas (ver y añadir dinero)
-Servicio de Escucha de Notificaciones para crear fácilmente transacciones a partir de notificaciones entrantes (ej. Google Pay o una app bancaria)
+Servicio de Escucha de Notificaciones para crear fácilmente transacciones a partir de notificaciones entrantes (ej.
 Código abierto: https://github.com/dreautall/waterfly-iii
 Sin anuncios ni rastreadores
 

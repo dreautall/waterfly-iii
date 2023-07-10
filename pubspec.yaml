@@ -46,7 +46,7 @@ dev_dependencies:
   flutter_lints: ^2.0.2
   # needed for swagger_dart_code_generator
   build_runner: ^2.4.6
-  chopper_generator: ^6.0.2
+  chopper_generator: ^6.0.3
   json_serializable: ^6.6.0
   swagger_dart_code_generator: ^2.11.5
   flutter_native_splash: ^2.3.0

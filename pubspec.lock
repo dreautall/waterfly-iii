@@ -157,10 +157,10 @@ packages:
     dependency: "direct dev"
     description:
       name: chopper_generator
-      sha256: ba6656f6f213910307b5bf5e4bbc49293d2f81c336266fb392cd6a57cb727d8c
+      sha256: "09d512f1acb086cf4101bef02bdb23ee7a8eb55a9935f53af866736606c57523"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.2"
+    version: "6.0.3"
   clock:
     dependency: transitive
     description:

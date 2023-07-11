@@ -21,7 +21,7 @@ dependencies:
   chopper: ^6.1.2
   json_annotation: ^4.8.0
   flutter_svg: ^2.0.7
-  url_launcher: ^6.1.8
+  url_launcher: ^6.1.12
   infinite_scroll_pagination: ^3.2.0
   badges: ^3.1.1
   filesize: ^2.0.1

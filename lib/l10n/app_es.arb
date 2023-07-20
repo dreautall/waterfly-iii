@@ -1,27 +1,27 @@
 {
-  "@@locale": "es",
+  "@@locale": "es-ES",
   "@@x-reference": true,
   "accountRoleAssetCashWallet": "Billetera de efectivo",
   "@accountRoleAssetCashWallet": {
     "description": "Firefly Translation String: account_role_cashWalletAsset"
   },
-  "accountRoleAssetCC": "Tarjeta de Crédito",
+  "accountRoleAssetCC": "Tarjeta de crédito",
   "@accountRoleAssetCC": {
     "description": "Firefly Translation String: account_role_ccAsset"
   },
-  "accountRoleAssetDefault": "Cuentas de ingresos por defecto",
+  "accountRoleAssetDefault": "Cuenta de activos por defecto",
   "@accountRoleAssetDefault": {
     "description": "Firefly Translation String: account_role_defaultAsset"
   },
-  "accountRoleAssetSavings": "Cuentas de ahorros",
+  "accountRoleAssetSavings": "Cuenta de ahorros",
   "@accountRoleAssetSavings": {
     "description": "Firefly Translation String: account_role_savingAsset"
   },
-  "accountRoleAssetShared": "Cuenta de ingresos compartida",
+  "accountRoleAssetShared": "Cuenta de activos compartida",
   "@accountRoleAssetShared": {
     "description": "Firefly Translation String: account_role_sharedAsset"
   },
-  "accountsLabelAsset": "Cuenta de activos",
+  "accountsLabelAsset": "Cuentas de activos",
   "@accountsLabelAsset": {
     "description": "Firefly Translation String: asset_accounts"
   },
@@ -118,7 +118,7 @@
   "@formButtonTransactionAdd": {
     "description": "Button Label: Add Transaction"
   },
-  "formButtonTryAgain": "Inténtelo de nuevo",
+  "formButtonTryAgain": "Inténtalo de nuevo",
   "@formButtonTryAgain": {
     "description": "Button Label: Try that thing again (login etc)"
   },
@@ -224,7 +224,7 @@
       }
     }
   },
-  "homeMainBudgetTitle": "Presupuestos del mes actual",
+  "homeMainBudgetTitle": "Presupuestos para el mes actual",
   "@homeMainBudgetTitle": {
     "description": "Title: Budgets for current month"
   },

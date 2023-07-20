@@ -1,4 +1,4 @@
-Waterfly III es una app no oficial para su propia instancia de Firefly III, un gestor financiero libre y de código abierto.
+Waterfly III es una aplicación no oficial para tu propia instancia de Firefly III, un gestor de finanzas libre y de código abierto.
 
 Esta app requiere de su propia instancia autohospedada de Firefly III en un servidor, por favor, visite https://www.firefly-iii.org/ para más información sobre este programa. Es una app complementaria y no se puede utilizar por sí sola.
 

@@ -425,6 +425,16 @@ class _HomeMainState extends State<HomeMain>
                       e.entries! as Map<String, dynamic>;
                   final double balance =
                       double.tryParse(entries.entries.last.value) ?? 0;
+                  final CurrencyRead currency = CurrencyRead(
+                    id: e.currencyId ?? "0",
+                    type: "currencies",
+                    attributes: Currency(
+                      code: e.currencyCode ?? "",
+                      name: "",
+                      symbol: e.currencySymbol ?? "",
+                      decimalPlaces: e.currencyDecimalPlaces,
+                    ),
+                  );
                   return TableRow(
                     children: <Widget>[
                       Align(
@@ -444,7 +454,7 @@ class _HomeMainState extends State<HomeMain>
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          defaultCurrency.fmt(balance),
+                          currency.fmt(balance),
                           style: TextStyle(
                             color: (balance < 0) ? Colors.red : Colors.green,
                             fontWeight: FontWeight.bold,

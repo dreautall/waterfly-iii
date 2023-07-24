@@ -416,6 +416,10 @@
   "@loginWelcome": {
     "description": "Login screen welcome banner"
   },
+  "logoutConfirmation": "Wirklich ausloggen?",
+  "@logoutConfirmation": {
+    "description": "Get user confirmation if he really wants to log out"
+  },
   "navigationAccounts": "Konten",
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"

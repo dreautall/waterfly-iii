@@ -42,6 +42,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
   );
 
   DateTime? _lastDate;
+  List<int> _rowsWithDate = <int>[];
 
   final TransactionFilters _filters = TransactionFilters();
 
@@ -91,6 +92,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     return;
                   }
                   _filters.updateFilters();
+                  _rowsWithDate = <int>[];
+                  _lastDate = null;
                   _pagingController.refresh();
                 },
               ),
@@ -179,7 +182,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
     super.build(context);
 
     return RefreshIndicator(
-      onRefresh: () => Future<void>.sync(() => _pagingController.refresh()),
+      onRefresh: () => Future<void>.sync(() {
+        _rowsWithDate = <int>[];
+        _lastDate = null;
+        return _pagingController.refresh();
+      }),
       child: PagedListView<int, TransactionRead>(
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
@@ -377,6 +384,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     ),
                   );
                   if (ok ?? false) {
+                    _rowsWithDate = <int>[];
+                    _lastDate = null;
                     _pagingController.refresh();
                   }
                 },
@@ -404,6 +413,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   await api.v1TransactionsIdDelete(
                     id: item.id,
                   );
+                  _rowsWithDate = <int>[];
+                  _lastDate = null;
                   _pagingController.refresh();
                 },
                 child: Row(
@@ -494,6 +505,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
       ),
       onClosed: (bool? refresh) {
         if (refresh ?? false == true) {
+          _rowsWithDate = <int>[];
+          _lastDate = null;
           _pagingController.refresh();
         }
       },
@@ -503,14 +516,15 @@ class _HomeTransactionsState extends State<HomeTransactions>
     DateTime date = transactions.first.date.toLocal();
     // Show Date Banner when:
     // 1. _lastDate is not set (= first element)
-    // 2. _lastDate has a different day than current date (= date changed)
-    // 3. _lastDate day is older than current date day. As the list is sorted by
-    //    time, this should not happen, and means _lastDate just wasn't properly
-    //    cleared
+    // 2. _lastDate has a different day than current date (= date changed) and
+    //    is an earlier date (= scrolling down)
+    // 3. index indicates we have to.
     if (_lastDate == null ||
-        _lastDate!.clearTime() != date.clearTime() ||
-        _lastDate!.clearTime().isBefore(date.clearTime())) {
+        (_lastDate!.clearTime() != date.clearTime() &&
+            date.clearTime().isBefore(_lastDate!.clearTime())) ||
+        _rowsWithDate.contains(index)) {
       // Add date row
+      _rowsWithDate.add(index);
       transactionWidget = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

@@ -47,7 +47,7 @@ class TransactionPage extends StatefulWidget {
 }
 
 class _TransactionPageState extends State<TransactionPage>
-    with TickerProviderStateMixin, WidgetsBindingObserver {
+    with TickerProviderStateMixin {
   final Logger log = Logger("Pages.Transaction.Page");
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -122,26 +122,10 @@ class _TransactionPageState extends State<TransactionPage>
   final List<Animation<double>> _cardsAnimation = <Animation<double>>[];
 
   bool _saving = false;
-  bool _doneSaving = false;
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (_doneSaving == true && state == AppLifecycleState.resumed) {
-      log.finest(() => "pushing replacement route due to resumed app");
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute<bool>(
-          builder: (BuildContext context) => const NavPage(),
-        ),
-      );
-    }
-  }
 
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance.addObserver(this);
 
     if (widget.transactionId != null && widget.transaction == null) {
       // :TODO: Fetch transaction while spinner is shown
@@ -316,7 +300,7 @@ class _TransactionPageState extends State<TransactionPage>
           final FireflyIii api = context.read<FireflyService>().api;
           final SettingsProvider settings = context.read<SettingsProvider>();
 
-          log.info("Got notification ${widget.notification}");
+          log.info("Got notification ${widget.notification?.title}");
           CurrencyRead? currency;
           double amount = 0;
 
@@ -546,8 +530,6 @@ class _TransactionPageState extends State<TransactionPage>
     for (AnimationController a in _cardsAnimationController) {
       a.dispose();
     }
-
-    WidgetsBinding.instance.removeObserver(this);
 
     super.dispose();
   }
@@ -1015,10 +997,6 @@ class _TransactionPageState extends State<TransactionPage>
                       return;
                     }
 
-                    setState(() {
-                      _doneSaving = true;
-                    });
-
                     if (nav.canPop()) {
                       nav.pop(true);
                     } else {
@@ -1026,6 +1004,11 @@ class _TransactionPageState extends State<TransactionPage>
                       // https://stackoverflow.com/questions/45109557/flutter-how-to-programmatically-exit-the-app
                       SystemChannels.platform
                           .invokeMethod('SystemNavigator.pop');
+                      nav.pushReplacement(
+                        MaterialPageRoute<bool>(
+                          builder: (BuildContext context) => const NavPage(),
+                        ),
+                      );
                     }
                   },
             child: Text(MaterialLocalizations.of(context).saveButtonLabel),

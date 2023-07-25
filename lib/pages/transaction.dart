@@ -1073,22 +1073,14 @@ class _TransactionPageState extends State<TransactionPage>
               icon: Icons.attach_file,
               tooltip: S.of(context).transactionAttachments,
               onPressed: () async {
-                String? txId = _transactionJournalIDs
-                    .firstWhereOrNull((String? element) => element != null);
-                if (txId == null) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(S.of(context).transactionErrorSaveFirst),
-                    behavior: SnackBarBehavior.floating,
-                  ));
-                  return;
-                }
                 List<AttachmentRead> dialogAttachments =
                     _attachments ?? <AttachmentRead>[];
                 await showDialog<List<AttachmentRead>>(
                   context: context,
                   builder: (BuildContext context) => AttachmentDialog(
                     attachments: dialogAttachments,
-                    transactionId: txId,
+                    transactionId: _transactionJournalIDs
+                        .firstWhereOrNull((String? element) => element != null),
                   ),
                 );
                 setState(() {

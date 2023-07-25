@@ -26,7 +26,7 @@ class AttachmentDialog extends StatefulWidget {
   });
 
   final List<AttachmentRead> attachments;
-  final String transactionId;
+  final String? transactionId;
 
   @override
   State<AttachmentDialog> createState() => _AttachmentDialogState();
@@ -251,7 +251,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                 body: AttachmentStore(
                   filename: file.files.first.name,
                   attachableType: AttachableType.transactionjournal,
-                  attachableId: widget.transactionId,
+                  attachableId: widget.transactionId!,
                 ),
               );
               if (!respAttachment.isSuccessful || respAttachment.body == null) {

@@ -184,7 +184,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       try {
         ValidationError valError = ValidationError.fromJson(
             json.decode(respAttachment.error.toString()));
-        error = error = valError.message ?? l10n.errorUnknown;
+        error = valError.message ?? l10n.errorUnknown;
       } catch (_) {
         error = l10n.errorUnknown;
       }
@@ -251,7 +251,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       final String respString = await resp.transform(utf8.decoder).join();
       ValidationError valError =
           ValidationError.fromJson(json.decode(respString));
-      error = error = valError.message ?? l10n.errorUnknown;
+      error = valError.message ?? l10n.errorUnknown;
     } catch (_) {
       error = l10n.errorUnknown;
     }

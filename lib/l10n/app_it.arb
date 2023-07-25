@@ -13,7 +13,7 @@
   "@accountRoleAssetDefault": {
     "description": "Firefly Translation String: account_role_defaultAsset"
   },
-  "accountRoleAssetSavings": "Conto risparmio",
+  "accountRoleAssetSavings": "Conto risparmi",
   "@accountRoleAssetSavings": {
     "description": "Firefly Translation String: account_role_savingAsset"
   },
@@ -25,7 +25,7 @@
   "@accountsLabelAsset": {
     "description": "Firefly Translation String: asset_accounts"
   },
-  "accountsLabelExpense": "Conti Uscite",
+  "accountsLabelExpense": "Conti Spese",
   "@accountsLabelExpense": {
     "description": "Firefly Translation String: expense_accounts"
   },
@@ -37,7 +37,7 @@
   "@accountsLabelRevenue": {
     "description": "Firefly Translation String: revenue_accounts"
   },
-  "accountsLiabilitiesInterest": "{interest}% di interesse per {period, select, weekly{week} monthly{month} quarterly{quarter} halfyear{half-year} yearly{year} other{unknown}}",
+  "accountsLiabilitiesInterest": "{interest}% di interesse per {period, select, weekly{settimana} monthly{mese} quarterly{trimestre} halfyear{semestre} yearly{anno} other{sconosciuto}}",
   "@accountsLiabilitiesInterest": {
     "description": "Interest in a certain period",
     "placeholders": {
@@ -55,7 +55,7 @@
   "@catOther": {
     "description": "Category description for summary category 'Other'"
   },
-  "errorAPIInvalidResponse": "Risposta errata dall'API: {message}",
+  "errorAPIInvalidResponse": "Risposta non valida dall'API: {message}",
   "@errorAPIInvalidResponse": {
     "description": "Invalid API response error",
     "placeholders": {
@@ -312,7 +312,7 @@
       }
     }
   },
-  "homePiggyTarget": "Traguardo: {amount}",
+  "homePiggyTarget": "Importo obiettivo: {amount}",
   "@homePiggyTarget": {
     "description": "How much money should be saved",
     "placeholders": {

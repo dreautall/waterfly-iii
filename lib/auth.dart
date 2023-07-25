@@ -8,10 +8,12 @@ import 'package:chopper/chopper.dart'
     show Request, Response, StripStringExtension;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:version/version.dart';
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 final Logger log = Logger("Auth");
+final Version minApiVersion = Version(2, 0, 0);
 
 class SSLHttpOverride extends HttpOverrides {
   SSLHttpOverride(this.validCert);
@@ -28,6 +30,7 @@ class SSLHttpOverride extends HttpOverrides {
   }
 }
 
+// :TODO: translate strings. cause returns just an identifier for the translation.
 class AuthError implements Exception {
   const AuthError(this.cause);
 
@@ -42,6 +45,17 @@ class AuthErrorHost extends AuthError {
 
 class AuthErrorApiKey extends AuthError {
   const AuthErrorApiKey() : super("Invalid API key");
+}
+
+class AuthErrorVersionInvalid extends AuthError {
+  const AuthErrorVersionInvalid() : super("Invalid Firefly API version");
+}
+
+class AuthErrorVersionTooLow extends AuthError {
+  const AuthErrorVersionTooLow(this.requiredVersion)
+      : super("Firefly API version too low");
+
+  final Version requiredVersion;
 }
 
 class AuthErrorStatusCode extends AuthError {
@@ -157,6 +171,8 @@ class FireflyService with ChangeNotifier {
   String? get lastTriedHost => _lastTriedHost;
   Object? _storageSignInException;
   Object? get storageSignInException => _storageSignInException;
+  Version? _apiVersion;
+  Version? get apiVersion => _apiVersion;
 
   bool get hasApi => (_currentUser?.api != null) ? true : false;
   FireflyIii get api {
@@ -234,6 +250,17 @@ class FireflyService with ChangeNotifier {
 
     Response<CurrencySingle> currencyInfo = await api.v1CurrenciesDefaultGet();
     defaultCurrency = currencyInfo.body!.data;
+
+    Response<SystemInfo> about = await api.v1AboutGet();
+    try {
+      _apiVersion = Version.parse(about.body?.data?.apiVersion ?? "");
+    } on FormatException {
+      throw const AuthErrorVersionInvalid();
+    }
+    log.info(() => "Firefly API version $_apiVersion");
+    if (apiVersion == null || apiVersion! < minApiVersion) {
+      throw AuthErrorVersionTooLow(minApiVersion);
+    }
 
     _signedIn = true;
     log.finest(() => "notify FireflyService->signIn");

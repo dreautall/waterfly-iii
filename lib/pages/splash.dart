@@ -98,6 +98,8 @@ class _SplashPageState extends State<SplashPage> {
           case AuthErrorHost:
           case AuthErrorApiKey:
           case AuthErrorNoInstance:
+          case AuthErrorVersionInvalid:
+          case AuthErrorVersionTooLow:
             AuthError errorType = _loginError as AuthError;
             return errorType.cause;
           case AuthErrorStatusCode:

@@ -1,7 +1,7 @@
 {
   "@@locale": "it",
   "@@x-reference": true,
-  "accountRoleAssetCashWallet": "Borsellino Contanti",
+  "accountRoleAssetCashWallet": "Portafoglio Contanti",
   "@accountRoleAssetCashWallet": {
     "description": "Firefly Translation String: account_role_cashWalletAsset"
   },
@@ -358,7 +358,7 @@
   "@homeTransactionsDialogFilterCurrenciesAll": {
     "description": "Don't filter for a specific currency (default entry)"
   },
-  "homeTransactionsDialogFilterSearch": "Ricerca termine",
+  "homeTransactionsDialogFilterSearch": "Termine di Ricerca",
   "@homeTransactionsDialogFilterSearch": {
     "description": "Search term for filter"
   },
@@ -380,7 +380,7 @@
       }
     }
   },
-  "liabilityDirectionCredit": "Mi è dovuta questa somma",
+  "liabilityDirectionCredit": "Questo debito mi è dovuto",
   "@liabilityDirectionCredit": {
     "description": "Firefly Translation String: liability_direction_credit"
   },
@@ -396,7 +396,7 @@
   "@liabilityTypeLoan": {
     "description": "Firefly Translation String: account_type_loan"
   },
-  "liabilityTypeMortgage": "Ammortamento",
+  "liabilityTypeMortgage": "Mutuo",
   "@liabilityTypeMortgage": {
     "description": "Firefly Translation String: account_type_mortgage"
   },
@@ -412,11 +412,11 @@
   "@loginFormLabelHost": {
     "description": "Login Form: Label for Host field"
   },
-  "loginWelcome": "Benvenuti su Waterfly III",
+  "loginWelcome": "Benvenuto su Waterfly III",
   "@loginWelcome": {
     "description": "Login screen welcome banner"
   },
-  "logoutConfirmation": "Sei sicuro di voler uscire?",
+  "logoutConfirmation": "Sei sicuro di volerti disconnettere?",
   "@logoutConfirmation": {
     "description": "Get user confirmation if he really wants to log out"
   },
@@ -424,11 +424,11 @@
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"
   },
-  "navigationMain": "Cruscotto",
+  "navigationMain": "Dashboard Principale",
   "@navigationMain": {
     "description": "Navigation Label: Main Dashboard"
   },
-  "navigationSettings": "Opzioni",
+  "navigationSettings": "Impostazioni",
   "@navigationSettings": {
     "description": "Navigation Label: Settings"
   },
@@ -493,9 +493,9 @@
   "@settingsLanguage": {
     "description": "Currently selected language"
   },
-  "settingsLockscreen": "Blocco applicazione",
+  "settingsLockscreen": "Schermata di blocco",
   "settingsLockscreenHelp": "Richiedi l'autenticazione all'avvio dell'app",
-  "settingsLockscreenInitial": "Si prega di autenticarsi per abilitare il blocco.",
+  "settingsLockscreenInitial": "Si prega di autenticarsi per abilitare la schermata di blocco.",
   "settingsNLAppAccount": "Conto Predefinito",
   "@settingsNLAppAccount": {
     "description": "Default account which will be used for the transaction."
@@ -567,7 +567,7 @@
   "@settingsNotificationListener": {
     "description": "Setting for the notification listener service."
   },
-  "settingsTheme": "Tema dell'App",
+  "settingsTheme": "Tema App",
   "@settingsTheme": {
     "description": "App theme (dark or light)"
   },
@@ -575,7 +575,7 @@
   "@settingsThemeDynamicColors": {
     "description": "Material You Dynamic Colors feature"
   },
-  "settingsThemeValue": "{theme, select, dark{Tema Scuro} light{Tema Chiaro} other{Segui il sistema}}",
+  "settingsThemeValue": "{theme, select, dark{Modalità Scura} light{Modalità Chiara} other{Predefinito di sistema}}",
   "@settingsThemeValue": {
     "description": "Currently selected theme (either dark, light or system)",
     "placeholders": {
@@ -671,11 +671,11 @@
   "@transactionErrorInvalidBudget": {
     "description": "Transaction Save Error: Invalid budget"
   },
-  "transactionErrorSaveFirst": "Salvare prima la transazione.",
+  "transactionErrorSaveFirst": "Si prega di salvare prima la transazione.",
   "@transactionErrorSaveFirst": {
     "description": "Transaction Hint Error: Needs to be saved"
   },
-  "transactionErrorTitle": "Fornire un titolo.",
+  "transactionErrorTitle": "Si prega di fornire un titolo.",
   "@transactionErrorTitle": {
     "description": "Transaction Save Error: No title provided"
   },
@@ -683,7 +683,7 @@
   "@transactionFormLabelAccountDestination": {
     "description": "Transaction Form: Label for destination account for transfer transaction"
   },
-  "transactionFormLabelAccountForeign": "Conto estero",
+  "transactionFormLabelAccountForeign": "Conto esterno",
   "@transactionFormLabelAccountForeign": {
     "description": "Transaction Form: Label for foreign (other) account"
   },
@@ -715,7 +715,7 @@
   "@transactionSplitChangeCurrency": {
     "description": "Hint Text: Change currency for a single split"
   },
-  "transactionSplitChangeTarget": "Modifica conto destinazione suddivisa",
+  "transactionSplitChangeTarget": "Modifica Conto Destinazione Suddivisa",
   "@transactionSplitChangeTarget": {
     "description": "Hint Text: Change target account for single split"
   },

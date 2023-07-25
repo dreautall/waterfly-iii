@@ -208,9 +208,17 @@ class _AccountDetailsState extends State<AccountDetails>
                 break;
               case AccountTypeFilter.expense:
                 subtitle = account.attributes.iban ?? "";
+                // Switch sign, see #96
+                if (currentAmount != 0) {
+                  currentAmount *= -1;
+                }
                 break;
               case AccountTypeFilter.revenue:
                 subtitle = account.attributes.iban ?? "";
+                // Switch sign, see #96
+                if (currentAmount != 0) {
+                  currentAmount *= -1;
+                }
                 break;
               case AccountTypeFilter.liabilities:
                 switch (account.attributes.liabilityType) {

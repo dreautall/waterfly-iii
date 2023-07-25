@@ -416,7 +416,7 @@
   "@loginWelcome": {
     "description": "Login screen welcome banner"
   },
-  "logoutConfirmation": "Êtes-vous sûr de vouloir vous déconnecter ?",
+  "logoutConfirmation": "Êtes-vous sûr de vouloir vous déconnecter ?",
   "@logoutConfirmation": {
     "description": "Get user confirmation if he really wants to log out"
   },
@@ -528,7 +528,7 @@
   "@settingsNLPermissionNotGranted": {
     "description": "A requested permission was not granted."
   },
-  "settingsNLPermissionRemove": "Supprimer la permission ?",
+  "settingsNLPermissionRemove": "Supprimer la permission ?",
   "@settingsNLPermissionRemove": {
     "description": "Dialog title asking if permission should be removed."
   },
@@ -605,7 +605,7 @@
   "@transactionAttachments": {
     "description": "Button Label: Attachments"
   },
-  "transactionDeleteConfirm": "Êtes-vous sûr de vouloir supprimer cette opération ?",
+  "transactionDeleteConfirm": "Êtes-vous sûr de vouloir supprimer cette opération ?",
   "@transactionDeleteConfirm": {
     "description": "Confirmation text to delete transaction"
   },
@@ -613,7 +613,7 @@
   "@transactionDialogAttachmentsDelete": {
     "description": "Button Label: Delete Attachment"
   },
-  "transactionDialogAttachmentsDeleteConfirm": "Êtes-vous sûr de vouloir supprimer cette pièce jointe ?",
+  "transactionDialogAttachmentsDeleteConfirm": "Êtes-vous sûr de vouloir supprimer cette pièce jointe ?",
   "@transactionDialogAttachmentsDeleteConfirm": {
     "description": "Confirmation text to delete attachment"
   },

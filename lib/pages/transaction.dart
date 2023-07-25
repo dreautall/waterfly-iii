@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -805,6 +807,7 @@ class _TransactionPageState extends State<TransactionPage>
                         ScaffoldMessenger.of(context);
                     final FireflyIii api = context.read<FireflyService>().api;
                     final NavigatorState nav = Navigator.of(context);
+                    final AuthUser? user = context.read<FireflyService>().user;
 
                     // Sanity checks
                     String? error;
@@ -814,6 +817,9 @@ class _TransactionPageState extends State<TransactionPage>
                     }
                     if (_titleTextController.text.isEmpty) {
                       error = S.of(context).transactionErrorTitle;
+                    }
+                    if (user == null) {
+                      error = S.of(context).errorAPIUnavailable;
                     }
                     if (error != null) {
                       msg.showSnackBar(SnackBar(
@@ -995,6 +1001,72 @@ class _TransactionPageState extends State<TransactionPage>
                         _saving = false;
                       });
                       return;
+                    }
+
+                    // Upload attachments if required
+                    if ((_attachments?.isNotEmpty ?? false) &&
+                        _transactionJournalIDs
+                                .firstWhereOrNull((String? e) => e != null) ==
+                            null) {
+                      log.fine(() =>
+                          "uploading ${_attachments!.length} attachments");
+                      TransactionSplit? tx = resp
+                          .body?.data.attributes.transactions
+                          .firstWhereOrNull((TransactionSplit e) =>
+                              e.transactionJournalId != null);
+                      if (tx != null) {
+                        String txId = tx.transactionJournalId!;
+                        log.finest(() => "uploading to txId $txId");
+                        for (AttachmentRead attachment in _attachments!) {
+                          log.finest(() =>
+                              "uploading attachment ${attachment.id}: ${attachment.attributes.filename}");
+                          final Response<AttachmentSingle> respAttachment =
+                              await api.v1AttachmentsPost(
+                            body: AttachmentStore(
+                              filename: attachment.attributes.filename,
+                              attachableType: AttachableType.transactionjournal,
+                              attachableId: txId,
+                            ),
+                          );
+                          if (!respAttachment.isSuccessful ||
+                              respAttachment.body == null) {
+                            log.warning(() => "error uploading attachment");
+                            continue;
+                          }
+                          final AttachmentRead newAttachment =
+                              respAttachment.body!.data;
+                          log.finest(
+                              () => "attachment id is ${newAttachment.id}");
+                          final HttpClientRequest request =
+                              await HttpClient().postUrl(
+                            Uri.parse(newAttachment.attributes.uploadUrl!),
+                          );
+                          user!.headers().forEach(
+                                (String key, String value) =>
+                                    request.headers.add(key, value),
+                              );
+                          request.headers.set(HttpHeaders.contentTypeHeader,
+                              "application/octet-stream");
+                          final Stream<List<int>> listenStream =
+                              File(attachment.attributes.uploadUrl!)
+                                  .openRead()
+                                  .transform(
+                                    StreamTransformer<List<int>,
+                                        List<int>>.fromHandlers(
+                                      handleData: (List<int> data,
+                                          EventSink<List<int>> sink) {
+                                        sink.add(data);
+                                      },
+                                      handleDone: (EventSink<List<int>> sink) {
+                                        sink.close();
+                                      },
+                                    ),
+                                  );
+                          await request.addStream(listenStream);
+                          await request.close();
+                          log.fine(() => "done uploading attachment");
+                        }
+                      }
                     }
 
                     if (nav.canPop()) {

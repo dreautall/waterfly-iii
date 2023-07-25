@@ -126,26 +126,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     final FireflyIii api = context.read<FireflyService>().api;
     bool? ok = await showDialog<bool>(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
-        icon: const Icon(Icons.delete),
-        title: Text(S.of(context).transactionDialogAttachmentsDelete),
-        clipBehavior: Clip.hardEdge,
-        actions: <Widget>[
-          TextButton(
-            child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          FilledButton(
-            child: Text(MaterialLocalizations.of(context).deleteButtonTooltip),
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-          ),
-        ],
-        content: Text(S.of(context).transactionDialogAttachmentsDeleteConfirm),
-      ),
+      builder: (BuildContext context) =>
+          const AttachmentDeletionConfirmDialog(),
     );
     if (ok == null || !ok) {
       return;
@@ -265,6 +247,64 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     });
   }
 
+  void fakeDownloadAttachment(
+    BuildContext context,
+    AttachmentRead attachment,
+  ) async {
+    final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
+    final S l10n = S.of(context);
+
+    final OpenResult file =
+        await OpenFilex.open(attachment.attributes.uploadUrl);
+    if (file.type != ResultType.done) {
+      log.severe("error opening file", file.message);
+      msg.showSnackBar(SnackBar(
+        content: Text(l10n.transactionDialogAttachmentsErrorOpen(file.message)),
+        behavior: SnackBarBehavior.floating,
+      ));
+    }
+  }
+
+  void fakeDeleteAttachment(
+    BuildContext context,
+    int i,
+  ) async {
+    bool? ok = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) =>
+          const AttachmentDeletionConfirmDialog(),
+    );
+    if (ok == null || !ok) {
+      return;
+    }
+    setState(() {
+      widget.attachments.removeAt(i);
+    });
+  }
+
+  void fakeUploadAttachment(BuildContext context) async {
+    FilePickerResult? file = await FilePicker.platform.pickFiles();
+    if (file == null || file.files.first.path == null) {
+      return;
+    }
+
+    final AttachmentRead newAttachment = AttachmentRead(
+      type: "attachments",
+      id: widget.attachments.length.toString(),
+      attributes: Attachment(
+        attachableType: AttachableType.transactionjournal,
+        attachableId: "FAKE",
+        filename: file.files.first.name,
+        uploadUrl: file.files.first.path,
+        size: file.files.first.size,
+      ),
+      links: ObjectLink(),
+    );
+    setState(() {
+      widget.attachments.add(newAttachment);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     log.finest(() => "build(transactionId: ${widget.transactionId})");
@@ -287,9 +327,11 @@ class _AttachmentDialogState extends State<AttachmentDialog>
           icon: (_dlProgress[i] != null && _dlProgress[i]! < 0)
               ? Icons.upload
               : Icons.download,
-          onPressed: _dlProgress[i] == null
-              ? () async => downloadAttachment(context, attachment, i)
-              : null,
+          onPressed: _dlProgress[i] != null
+              ? null
+              : widget.transactionId == null
+                  ? () async => fakeDownloadAttachment(context, attachment)
+                  : () async => downloadAttachment(context, attachment, i),
         ),
         title: Text(
           attachment.attributes.title ?? attachment.attributes.filename,
@@ -306,7 +348,9 @@ class _AttachmentDialogState extends State<AttachmentDialog>
           icon: Icons.delete,
           onPressed: (_dlProgress[i] != null && _dlProgress[i]! < 0)
               ? null
-              : () async => deleteAttachment(context, attachment, i),
+              : widget.transactionId == null
+                  ? () async => fakeDeleteAttachment(context, i)
+                  : () async => deleteAttachment(context, attachment, i),
         ),
       ));
       final DividerThemeData divTheme = DividerTheme.of(context);
@@ -338,7 +382,9 @@ class _AttachmentDialogState extends State<AttachmentDialog>
             child: Text(MaterialLocalizations.of(context).closeButtonLabel),
           ),
           FilledButton(
-            onPressed: () async => uploadAttachment(context),
+            onPressed: widget.transactionId == null
+                ? () async => fakeUploadAttachment(context)
+                : () async => uploadAttachment(context),
             child: Text(S.of(context).formButtonUpload),
           ),
           const SizedBox(width: 12),
@@ -349,6 +395,36 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       title: Text(S.of(context).transactionDialogAttachmentsTitle),
       clipBehavior: Clip.hardEdge,
       children: childs,
+    );
+  }
+}
+
+class AttachmentDeletionConfirmDialog extends StatelessWidget {
+  const AttachmentDeletionConfirmDialog({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      icon: const Icon(Icons.delete),
+      title: Text(S.of(context).transactionDialogAttachmentsDelete),
+      clipBehavior: Clip.hardEdge,
+      actions: <Widget>[
+        TextButton(
+          child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        FilledButton(
+          child: Text(MaterialLocalizations.of(context).deleteButtonTooltip),
+          onPressed: () {
+            Navigator.of(context).pop(true);
+          },
+        ),
+      ],
+      content: Text(S.of(context).transactionDialogAttachmentsDeleteConfirm),
     );
   }
 }

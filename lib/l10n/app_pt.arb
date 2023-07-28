@@ -1,6 +1,5 @@
 {
-  "@@locale": "pt-BR",
-  "@@x-reference": true,
+  "@@locale": "pt",
   "accountRoleAssetCashWallet": "Carteira de Dinheiro",
   "@accountRoleAssetCashWallet": {
     "description": "Firefly Translation String: account_role_cashWalletAsset"

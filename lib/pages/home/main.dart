@@ -71,8 +71,8 @@ class _HomeMainState extends State<HomeMain>
     for (DateTime e in lastDays) {
       final Response<InsightTotal> respInsightExpense =
           await api.v1InsightExpenseTotalGet(
-        start: DateFormat('yyyy-MM-dd').format(e),
-        end: DateFormat('yyyy-MM-dd').format(e),
+        start: DateFormat('yyyy-MM-dd', 'en_US').format(e),
+        end: DateFormat('yyyy-MM-dd', 'en_US').format(e),
       );
       if (!respInsightExpense.isSuccessful || respInsightExpense.body == null) {
         if (context.mounted) {
@@ -91,8 +91,8 @@ class _HomeMainState extends State<HomeMain>
           : InsightTotalEntry(differenceFloat: 0);
       final Response<InsightTotal> respInsightIncome =
           await api.v1InsightIncomeTotalGet(
-        start: DateFormat('yyyy-MM-dd').format(e),
-        end: DateFormat('yyyy-MM-dd').format(e),
+        start: DateFormat('yyyy-MM-dd', 'en_US').format(e),
+        end: DateFormat('yyyy-MM-dd', 'en_US').format(e),
       );
       if (!respInsightIncome.isSuccessful || respInsightIncome.body == null) {
         if (context.mounted) {
@@ -121,9 +121,9 @@ class _HomeMainState extends State<HomeMain>
 
     final Response<ChartLine> respChartData =
         await api.v1ChartAccountOverviewGet(
-      start:
-          DateFormat('yyyy-MM-dd').format(now.copyWith(month: now.month - 3)),
-      end: DateFormat('yyyy-MM-dd').format(now),
+      start: DateFormat('yyyy-MM-dd', 'en_US')
+          .format(now.copyWith(month: now.month - 3)),
+      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
     );
     if (!respChartData.isSuccessful ||
         respChartData.body == null ||
@@ -168,8 +168,8 @@ class _HomeMainState extends State<HomeMain>
       }
       final Response<InsightTotal> respInsightExpense =
           await api.v1InsightExpenseTotalGet(
-        start: DateFormat('yyyy-MM-dd').format(start),
-        end: DateFormat('yyyy-MM-dd').format(end),
+        start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
+        end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
       );
       if (!respInsightExpense.isSuccessful || respInsightExpense.body == null) {
         if (context.mounted) {
@@ -188,8 +188,8 @@ class _HomeMainState extends State<HomeMain>
           : InsightTotalEntry(differenceFloat: 0);
       final Response<InsightTotal> respInsightIncome =
           await api.v1InsightIncomeTotalGet(
-        start: DateFormat('yyyy-MM-dd').format(start),
-        end: DateFormat('yyyy-MM-dd').format(end),
+        start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
+        end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
       );
       if (!respInsightIncome.isSuccessful || respInsightIncome.body == null) {
         if (context.mounted) {
@@ -252,8 +252,8 @@ class _HomeMainState extends State<HomeMain>
     for (CategoryRead e in respCatData.body!.data) {
       final Response<CategorySingle> respCat = await api.v1CategoriesIdGet(
         id: e.id,
-        start: DateFormat('yyyy-MM-dd').format(now.copyWith(day: 1)),
-        end: DateFormat('yyyy-MM-dd').format(now),
+        start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+        end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
       );
 
       if (!respCat.isSuccessful || respCat.body == null) {
@@ -290,8 +290,8 @@ class _HomeMainState extends State<HomeMain>
 
     final DateTime now = DateTime.now().toLocal().clearTime();
     final Response<BudgetLimitArray> respBudgets = await api.v1BudgetLimitsGet(
-      start: DateFormat('yyyy-MM-dd').format(now.copyWith(day: 1)),
-      end: DateFormat('yyyy-MM-dd').format(now),
+      start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
     );
 
     if (!respBudgets.isSuccessful || respBudgets.body == null) {

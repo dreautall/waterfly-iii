@@ -140,10 +140,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
             ? api.v1AccountsIdTransactionsGet(
                 id: widget.accountId ?? _filters.account!.id,
                 page: pageKey,
-                end: DateFormat('yyyy-MM-dd').format(DateTime.now().toLocal()))
+                end: DateFormat('yyyy-MM-dd', 'en_US')
+                    .format(DateTime.now().toLocal()))
             : api.v1TransactionsGet(
                 page: pageKey,
-                end: DateFormat('yyyy-MM-dd').format(DateTime.now().toLocal()),
+                end: DateFormat('yyyy-MM-dd', 'en_US')
+                    .format(DateTime.now().toLocal()),
               );
       }
       final Response<TransactionArray> response = await searchFunc;

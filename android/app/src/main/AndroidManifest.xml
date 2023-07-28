@@ -43,6 +43,9 @@
         <package android:name="air.app.scb.breeze.android.main.in.prod"/>
         <package android:name="air.app.scb.breeze.android.main.sg.prod"/>
         <package android:name="am.vtb.mobilebank"/>
+        <package android:name="au.com.bank86400"/>
+        <package android:name="au.com.boq.mobilebanking"/>
+        <package android:name="au.com.nab.mobile"/>
         <package android:name="au.com.up.money"/>
         <package android:name="bank.discovery.banking.production.release"/>
         <package android:name="br.com.bb.android"/>
@@ -195,6 +198,7 @@
         <package android:name="hu.netbank.netbankdroid"/>
         <package android:name="hu.otpbank.mobile"/>
         <package android:name="it.bancomat.pay.user"/>
+        <package android:name="it.beem.app"/>
         <package android:name="it.hype.app"/>
         <package android:name="it.icbpi.mobile"/>
         <package android:name="it.ingdirect.app"/>
@@ -206,6 +210,7 @@
         <package android:name="om.todo1.mobile"/>
         <package android:name="org.ping.sberbank.elba.mobile"/>
         <package android:name="org.toshi"/>
+        <package android:name="org.westpac.bank"/>
         <package android:name="pe.com.interbank.mobilebanking"/>
         <package android:name="pe.com.scotiabank.blpm.android.client"/>
         <package android:name="pl.mbank"/>

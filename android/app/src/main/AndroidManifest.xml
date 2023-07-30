@@ -173,6 +173,7 @@
         <package android:name="com.unicredit"/>
         <package android:name="com.vipera.chebanca"/>
         <package android:name="com.vipera.ts.starter.MashreqAE"/>
+        <package android:name="com.wave.personal"/>
         <package android:name="com.whatsapp"/>
         <package android:name="com.willmobile.mobilebank.fcb"/>
         <package android:name="com.ykb.android"/>

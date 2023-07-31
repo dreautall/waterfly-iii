@@ -18,7 +18,7 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   provider: ^6.0.5
   shared_preferences: ^2.2.0
-  chopper: ^6.1.2
+  chopper: ^7.0.0
   json_annotation: ^4.8.0
   flutter_svg: ^2.0.7
   url_launcher: ^6.1.12
@@ -47,7 +47,7 @@ dev_dependencies:
   flutter_lints: ^2.0.2
   # needed for swagger_dart_code_generator
   build_runner: ^2.4.6
-  chopper_generator: ^6.0.3
+  chopper_generator: ^7.0.0
   json_serializable: ^6.7.1
   swagger_dart_code_generator: ^2.11.10
   flutter_native_splash: ^2.3.0

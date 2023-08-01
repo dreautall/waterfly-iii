@@ -813,6 +813,7 @@ class _CameraDialogState extends State<CameraDialog>
 
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Listener(
             onPointerDown: (_) => _pointers++,
@@ -830,6 +831,49 @@ class _CameraDialogState extends State<CameraDialog>
                     onScaleUpdate: _handleScaleUpdate,
                     onTapDown: (TapDownDetails details) =>
                         onViewFinderTap(details, constraints),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              IconButton(
+                                icon: const Icon(Icons.close),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.flash_on),
+                                onPressed: () {},
+                              )
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              const SizedBox(
+                                // Button placeholder
+                                width: 48,
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.camera),
+                                iconSize: 72,
+                                onPressed: () {},
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.cameraswitch),
+                                onPressed: () {},
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                   );
                 },
               ),

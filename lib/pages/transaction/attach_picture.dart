@@ -847,8 +847,27 @@ class _CameraDialogState extends State<CameraDialog>
                                 },
                               ),
                               IconButton(
-                                icon: const Icon(Icons.flash_on),
-                                onPressed: () {},
+                                icon:
+                                    Icon(switch (controller?.value.flashMode) {
+                                  FlashMode.off => Icons.flash_off,
+                                  FlashMode.auto => Icons.flash_auto,
+                                  FlashMode.always => Icons.flash_on,
+                                  FlashMode.torch => Icons.highlight,
+                                  null => Icons.flash_off,
+                                }),
+                                onPressed: () {
+                                  switch (controller?.value.flashMode) {
+                                    case FlashMode.auto:
+                                      onSetFlashModeButtonPressed(
+                                          FlashMode.off);
+                                    case FlashMode.off:
+                                      onSetFlashModeButtonPressed(
+                                          FlashMode.always);
+                                    default:
+                                      onSetFlashModeButtonPressed(
+                                          FlashMode.auto);
+                                  }
+                                },
                               )
                             ],
                           ),

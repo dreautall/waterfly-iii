@@ -415,6 +415,10 @@
   "@loginWelcome": {
     "description": "Login screen welcome banner"
   },
+  "logoutConfirmation": "¿Estás seguro de que deseas cerrar sesión?",
+  "@logoutConfirmation": {
+    "description": "Get user confirmation if he really wants to log out"
+  },
   "navigationAccounts": "Cuentas",
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"

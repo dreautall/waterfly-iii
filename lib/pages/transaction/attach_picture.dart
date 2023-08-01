@@ -886,7 +886,15 @@ class _CameraDialogState extends State<CameraDialog>
                               ),
                               IconButton(
                                 icon: const Icon(Icons.cameraswitch),
-                                onPressed: () {},
+                                onPressed: () {
+                                  for (final CameraDescription cameraDescription
+                                      in widget.cameras) {
+                                    if (cameraDescription.lensDirection !=
+                                        controller!.description.lensDirection) {
+                                      onNewCameraSelected(cameraDescription);
+                                    }
+                                  }
+                                },
                               ),
                             ],
                           )

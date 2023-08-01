@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +17,7 @@ import 'package:open_filex/open_filex.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/transaction/attach_picture.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
 
 class AttachmentDialog extends StatefulWidget {
@@ -376,10 +378,37 @@ class _AttachmentDialogState extends State<AttachmentDialog>
         overflowSpacing: 12,
         children: <Widget>[
           TextButton(
-            onPressed: () async {
-              Navigator.of(context).pop();
-            },
+            onPressed: () => Navigator.of(context).pop(),
             child: Text(MaterialLocalizations.of(context).closeButtonLabel),
+          ),
+          FilledButton(
+            onPressed: () async {
+              final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
+              final S l10n = S.of(context);
+              final BuildContext ctx = context;
+              late List<CameraDescription> cameras = <CameraDescription>[];
+              try {
+                WidgetsFlutterBinding.ensureInitialized();
+                cameras = await availableCameras();
+                if (cameras.isEmpty) {
+                  throw CameraException("404", "No camera found.");
+                }
+              } on CameraException catch (e) {
+                log.warning("Could not get camera list", e);
+                msg.showSnackBar(SnackBar(
+                  content: Text("Cannot initialize Camera: ${e.description}"),
+                  behavior: SnackBarBehavior.floating,
+                ));
+                return;
+              }
+              // ignore: use_build_context_synchronously
+              await showDialog(
+                context: ctx,
+                builder: (BuildContext context) =>
+                    CameraDialog(cameras: cameras),
+              );
+            },
+            child: const Icon(Icons.camera_alt),
           ),
           FilledButton(
             onPressed: widget.transactionId == null

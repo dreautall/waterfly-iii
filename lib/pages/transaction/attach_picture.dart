@@ -36,21 +36,14 @@ class _CameraDialogState extends State<CameraDialog>
     with WidgetsBindingObserver, TickerProviderStateMixin {
   CameraController? controller;
   XFile? imageFile;
-  double _minAvailableExposureOffset = 0.0;
-  double _maxAvailableExposureOffset = 0.0;
-  double _currentExposureOffset = 0.0;
-  late AnimationController _flashModeControlRowAnimationController;
-  late Animation<double> _flashModeControlRowAnimation;
-  late AnimationController _exposureModeControlRowAnimationController;
-  late Animation<double> _exposureModeControlRowAnimation;
-  late AnimationController _focusModeControlRowAnimationController;
-  late Animation<double> _focusModeControlRowAnimation;
   double _minAvailableZoom = 1.0;
   double _maxAvailableZoom = 1.0;
   double _currentScale = 1.0;
   double _baseScale = 1.0;
 
   Offset? _focusPoint;
+  late AnimationController _focusPointAnimationController;
+  late Animation<double> _focusPointAnimation;
 
   final Logger log = Logger("Pages.Transaction.AttachmentDialog.AttachPicture");
 
@@ -61,11 +54,35 @@ class _CameraDialogState extends State<CameraDialog>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+
+    _focusPointAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    );
+    _focusPointAnimation = TweenSequence<double>(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 20.0, end: 15.0)
+              .chain(CurveTween(curve: Curves.ease)),
+          weight: 50.0,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 15.0, end: 20.0)
+              .chain(CurveTween(curve: Curves.ease)),
+          weight: 50.0,
+        ),
+      ],
+    ).animate(_focusPointAnimationController);
   }
 
   @override
   void dispose() {
+    if (controller != null) {
+      controller!.dispose();
+    }
     WidgetsBinding.instance.removeObserver(this);
+    _focusPointAnimationController.dispose();
+
     super.dispose();
   }
 
@@ -146,7 +163,8 @@ class _CameraDialogState extends State<CameraDialog>
       setState(() {
         _focusPoint = details.localPosition;
       });
-      log.finest("dx: ${_focusPoint!.dx}, dy: ${_focusPoint!.dy}");
+      _focusPointAnimationController.reset();
+      _focusPointAnimationController.forward();
     }
 
     cameraController.setExposurePoint(offset);
@@ -186,15 +204,6 @@ class _CameraDialogState extends State<CameraDialog>
     try {
       await cameraController.initialize();
       await Future.wait(<Future<Object?>>[
-        // The exposure mode is currently not supported on the web.
-        ...<Future<Object?>>[
-          cameraController
-              .getMinExposureOffset()
-              .then((double value) => _minAvailableExposureOffset = value),
-          cameraController
-              .getMaxExposureOffset()
-              .then((double value) => _maxAvailableExposureOffset = value)
-        ],
         cameraController
             .getMaxZoomLevel()
             .then((double value) => _maxAvailableZoom = value),
@@ -304,22 +313,6 @@ class _CameraDialogState extends State<CameraDialog>
     }
   }
 
-  Future<void> setExposureOffset(double offset) async {
-    if (controller == null) {
-      return;
-    }
-
-    setState(() {
-      _currentExposureOffset = offset;
-    });
-    try {
-      offset = await controller!.setExposureOffset(offset);
-    } on CameraException catch (e) {
-      _showCameraException(e);
-      rethrow;
-    }
-  }
-
   Future<void> setFocusMode(FocusMode mode) async {
     if (controller == null) {
       return;
@@ -402,13 +395,22 @@ class _CameraDialogState extends State<CameraDialog>
                     child: Stack(
                       children: <Widget>[
                         _focusPoint != null
-                            ? Positioned(
-                                left: _focusPoint!.dx - (72 / 2),
-                                top: _focusPoint!.dy - (72 / 2),
-                                child: const Icon(
-                                  Icons.filter_center_focus,
-                                  size: 72,
-                                ),
+                            ? AnimatedBuilder(
+                                animation: _focusPointAnimationController,
+                                builder: (BuildContext context, Widget? child) {
+                                  final double iconSize =
+                                      _focusPointAnimationController.value * 72;
+                                  log.finest(
+                                      "iconSize: $iconSize, controller: ${_focusPointAnimationController.value}");
+                                  return Positioned(
+                                    left: _focusPoint!.dx - (iconSize / 2),
+                                    top: _focusPoint!.dy - (iconSize / 2),
+                                    child: Icon(
+                                      Icons.filter_center_focus,
+                                      size: iconSize,
+                                    ),
+                                  );
+                                },
                               )
                             : const SizedBox.shrink(),
                         Padding(

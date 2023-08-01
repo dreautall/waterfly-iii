@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:async/async.dart' show RestartableTimer;
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:waterflyiii/animations.dart';
 
 /// Returns a suitable camera icon for [direction].
 IconData getCameraLensIcon(CameraLensDirection direction) {
@@ -44,6 +46,8 @@ class _CameraDialogState extends State<CameraDialog>
   Offset? _focusPoint;
   late AnimationController _focusPointAnimationController;
   late Animation<double> _focusPointAnimation;
+  final double _focusPointIconSize = 72;
+  late RestartableTimer _focusPointHideTimer;
 
   final Logger log = Logger("Pages.Transaction.AttachmentDialog.AttachPicture");
 
@@ -56,23 +60,36 @@ class _CameraDialogState extends State<CameraDialog>
     WidgetsBinding.instance.addObserver(this);
 
     _focusPointAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
+      duration: animDurationEmphasized,
       vsync: this,
     );
     _focusPointAnimation = TweenSequence<double>(
       <TweenSequenceItem<double>>[
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 20.0, end: 15.0)
-              .chain(CurveTween(curve: Curves.ease)),
+          tween: Tween<double>(
+                  begin: _focusPointIconSize * 0.7,
+                  end: _focusPointIconSize * 1.2)
+              .chain(CurveTween(curve: animCurveEmphasizedDecelerate)),
           weight: 50.0,
         ),
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 15.0, end: 20.0)
-              .chain(CurveTween(curve: Curves.ease)),
+          tween: Tween<double>(
+                  begin: _focusPointIconSize * 1.2, end: _focusPointIconSize)
+              .chain(CurveTween(curve: animCurveEmphasizedAccelerate)),
           weight: 50.0,
         ),
       ],
     ).animate(_focusPointAnimationController);
+    _focusPointHideTimer = RestartableTimer(
+      const Duration(milliseconds: 1200),
+      () {
+        if (mounted) {
+          setState(() {
+            _focusPoint = null;
+          });
+        }
+      },
+    )..cancel();
   }
 
   @override
@@ -113,7 +130,8 @@ class _CameraDialogState extends State<CameraDialog>
     }
 
     // Clamp zoom to 1, crashes when zoom < 1!
-    _currentScale = (_baseScale * details.scale).clamp(1, _maxAvailableZoom);
+    _currentScale = (_baseScale * details.scale)
+        .clamp(_minAvailableZoom, _maxAvailableZoom);
 
     await controller!.setZoomLevel(_currentScale);
   }
@@ -159,12 +177,13 @@ class _CameraDialogState extends State<CameraDialog>
       details.localPosition.dy / constraints.maxHeight,
     );
 
+    _focusPointAnimationController.reset();
+    _focusPointAnimationController.forward();
+    _focusPointHideTimer.reset();
     if (mounted) {
       setState(() {
         _focusPoint = details.localPosition;
       });
-      _focusPointAnimationController.reset();
-      _focusPointAnimationController.forward();
     }
 
     cameraController.setExposurePoint(offset);
@@ -207,9 +226,12 @@ class _CameraDialogState extends State<CameraDialog>
         cameraController
             .getMaxZoomLevel()
             .then((double value) => _maxAvailableZoom = value),
+        /*
+        // Flutter crashes when minAvailableZoom < 1. So don't fetch this,
+        // 1 is the default!
         cameraController
             .getMinZoomLevel()
-            .then((double value) => _minAvailableZoom = value),
+            .then((double value) => _minAvailableZoom = value),*/
       ]);
     } on CameraException catch (e) {
       switch (e.code) {
@@ -398,16 +420,14 @@ class _CameraDialogState extends State<CameraDialog>
                             ? AnimatedBuilder(
                                 animation: _focusPointAnimationController,
                                 builder: (BuildContext context, Widget? child) {
-                                  final double iconSize =
-                                      _focusPointAnimationController.value * 72;
-                                  log.finest(
-                                      "iconSize: $iconSize, controller: ${_focusPointAnimationController.value}");
                                   return Positioned(
-                                    left: _focusPoint!.dx - (iconSize / 2),
-                                    top: _focusPoint!.dy - (iconSize / 2),
+                                    left: _focusPoint!.dx -
+                                        (_focusPointAnimation.value / 2),
+                                    top: _focusPoint!.dy -
+                                        (_focusPointAnimation.value / 2),
                                     child: Icon(
-                                      Icons.filter_center_focus,
-                                      size: iconSize,
+                                      Icons.filter_center_focus_outlined,
+                                      size: _focusPointAnimation.value,
                                     ),
                                   );
                                 },

@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  async: any
   intl: any
   path_provider: ^2.0.13
   collection: ^1.17.0

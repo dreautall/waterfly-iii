@@ -1,5 +1,6 @@
 {
-  "@@locale": "es",
+  "@@locale": "es-ES",
+  "@@x-reference": true,
   "accountRoleAssetCashWallet": "Billetera de efectivo",
   "@accountRoleAssetCashWallet": {
     "description": "Firefly Translation String: account_role_cashWalletAsset"
@@ -414,6 +415,10 @@
   "loginWelcome": "Bienvenido a Waterfly III",
   "@loginWelcome": {
     "description": "Login screen welcome banner"
+  },
+  "logoutConfirmation": "¿Estás seguro de que deseas cerrar sesión?",
+  "@logoutConfirmation": {
+    "description": "Get user confirmation if he really wants to log out"
   },
   "navigationAccounts": "Cuentas",
   "@navigationAccounts": {

@@ -22,7 +22,7 @@ class _CameraDialogState extends State<CameraDialog>
     with WidgetsBindingObserver, TickerProviderStateMixin {
   CameraController? controller;
   XFile? imageFile;
-  double _minAvailableZoom = 1.0;
+  final double _minAvailableZoom = 1.0;
   double _maxAvailableZoom = 1.0;
   double _currentScale = 1.0;
   double _baseScale = 1.0;
@@ -265,27 +265,6 @@ class _CameraDialogState extends State<CameraDialog>
     });
   }
 
-  void onSetFlashModeButtonPressed(FlashMode mode) {
-    setFlashMode(mode).then((_) {
-      if (mounted) {
-        setState(() {});
-      }
-    });
-  }
-
-  Future<void> setFlashMode(FlashMode mode) async {
-    if (controller == null) {
-      return;
-    }
-
-    try {
-      await controller!.setFlashMode(mode);
-    } on CameraException catch (e) {
-      _showCameraException(e);
-      rethrow;
-    }
-  }
-
   Future<XFile?> takePicture() async {
     final CameraController? cameraController = controller;
     if (cameraController == null || !cameraController.value.isInitialized) {
@@ -371,79 +350,10 @@ class _CameraDialogState extends State<CameraDialog>
                                 },
                               )
                             : const SizedBox.shrink(),
-                        Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  IconButton(
-                                    icon: const Icon(Icons.close),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: Icon(
-                                        switch (controller?.value.flashMode) {
-                                      FlashMode.off => Icons.flash_off,
-                                      FlashMode.auto => Icons.flash_auto,
-                                      FlashMode.always => Icons.flash_on,
-                                      FlashMode.torch => Icons.highlight,
-                                      null => Icons.flash_off,
-                                    }),
-                                    onPressed: () {
-                                      switch (controller?.value.flashMode) {
-                                        case FlashMode.auto:
-                                          onSetFlashModeButtonPressed(
-                                              FlashMode.off);
-                                        case FlashMode.off:
-                                          onSetFlashModeButtonPressed(
-                                              FlashMode.always);
-                                        default:
-                                          onSetFlashModeButtonPressed(
-                                              FlashMode.auto);
-                                      }
-                                    },
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  const SizedBox(
-                                    // Button placeholder
-                                    width: 48,
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.camera),
-                                    iconSize: 72,
-                                    onPressed: () {},
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.cameraswitch),
-                                    onPressed: () {
-                                      for (final CameraDescription cameraDescription
-                                          in widget.cameras) {
-                                        if (cameraDescription.lensDirection !=
-                                            controller!
-                                                .description.lensDirection) {
-                                          onNewCameraSelected(
-                                              cameraDescription);
-                                        }
-                                      }
-                                    },
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
+                        CameraControls(
+                          controller: controller!,
+                          cameras: widget.cameras,
+                          newCameraFunc: onNewCameraSelected,
                         ),
                       ],
                     ),
@@ -452,6 +362,109 @@ class _CameraDialogState extends State<CameraDialog>
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class CameraControls extends StatefulWidget {
+  const CameraControls({
+    super.key,
+    required this.controller,
+    required this.cameras,
+    required this.newCameraFunc,
+  });
+
+  final CameraController controller;
+  final List<CameraDescription> cameras;
+  final Future<void> Function(CameraDescription) newCameraFunc;
+
+  @override
+  State<CameraControls> createState() => _CameraControlsState();
+}
+
+class _CameraControlsState extends State<CameraControls> {
+  void onSetFlashModeButtonPressed(FlashMode mode) {
+    setFlashMode(mode).then((_) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  Future<void> setFlashMode(FlashMode mode) async {
+    widget.controller.setFlashMode(mode).then((_) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              IconButton(
+                icon: Icon(switch (widget.controller.value.flashMode) {
+                  FlashMode.off => Icons.flash_off,
+                  FlashMode.auto => Icons.flash_auto,
+                  FlashMode.always => Icons.flash_on,
+                  FlashMode.torch => Icons.highlight,
+                }),
+                onPressed: () {
+                  switch (widget.controller.value.flashMode) {
+                    case FlashMode.auto:
+                      setFlashMode(FlashMode.off);
+                    case FlashMode.off:
+                      setFlashMode(FlashMode.always);
+                    default:
+                      setFlashMode(FlashMode.auto);
+                  }
+                },
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const SizedBox(
+                // Button placeholder
+                width: 48,
+              ),
+              IconButton(
+                icon: const Icon(Icons.camera),
+                iconSize: 72,
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.cameraswitch),
+                onPressed: () {
+                  for (final CameraDescription cameraDescription
+                      in widget.cameras) {
+                    if (cameraDescription.lensDirection !=
+                        widget.controller.description.lensDirection) {
+                      widget.newCameraFunc(cameraDescription);
+                    }
+                  }
+                },
+              ),
+            ],
+          )
         ],
       ),
     );

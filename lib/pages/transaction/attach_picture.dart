@@ -292,45 +292,45 @@ class _CameraDialogState extends State<CameraDialog>
 
     if (imageFile != null) {
       return Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  Image.file(File(imageFile!.path)),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          IconButton(
-                            icon: const Icon(Icons.close),
-                            color: Colors.white,
-                            onPressed: () => setState(() {
-                              imageFile = null;
-                            }),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.check_circle),
-                            color: Colors.white,
-                            iconSize: 72,
-                            onPressed: () {},
-                          ),
-                          const SizedBox(
-                            // Button placeholder
-                            width: 48,
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ));
+        backgroundColor: Colors.transparent,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Image.file(File(imageFile!.path)),
+                Positioned(
+                    bottom: 16,
+                    left: 16,
+                    right: 16,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        IconButton(
+                          icon: const Icon(Icons.close),
+                          color: Colors.white,
+                          onPressed: () => setState(() {
+                            imageFile = null;
+                          }),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.check_circle),
+                          color: Colors.white,
+                          iconSize: 72,
+                          onPressed: () {},
+                        ),
+                        const SizedBox(
+                          // Button placeholder
+                          width: 48,
+                        ),
+                      ],
+                    )),
+              ],
+            ),
+          ],
+        ),
+      );
     }
 
     return Scaffold(
@@ -409,6 +409,7 @@ class CameraControls extends StatefulWidget {
 }
 
 class _CameraControlsState extends State<CameraControls> {
+  bool capturing = false;
   void onSetFlashModeButtonPressed(FlashMode mode) {
     setFlashMode(mode).then((_) {
       if (mounted) {
@@ -472,12 +473,23 @@ class _CameraControlsState extends State<CameraControls> {
                 // Button placeholder
                 width: 48,
               ),
-              IconButton(
-                icon: const Icon(Icons.camera),
-                color: Colors.white,
-                iconSize: 72,
-                onPressed: () => widget.pictureFunc(),
-              ),
+              capturing
+                  ? const SizedBox(
+                      height: 72,
+                      width: 72,
+                      child: CircularProgressIndicator(),
+                    )
+                  : IconButton(
+                      icon: const Icon(Icons.camera),
+                      color: Colors.white,
+                      iconSize: 72,
+                      onPressed: () {
+                        setState(() {
+                          capturing = true;
+                        });
+                        widget.pictureFunc();
+                      },
+                    ),
               IconButton(
                 icon: const Icon(Icons.cameraswitch),
                 color: Colors.white,

@@ -84,6 +84,7 @@
         <package android:name="com.bnpp.hellobank"/>
         <package android:name="com.boursorama.android.clients"/>
         <package android:name="com.bpi.ng.mobilebanking"/>
+        <package android:name="com.c6bank.app"/>
         <package android:name="com.chase.sig.android"/>
         <package android:name="com.chinatrust.mobilebank"/>
         <package android:name="com.citi.citimobile"/>

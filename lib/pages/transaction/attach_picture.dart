@@ -155,11 +155,11 @@ class _CameraDialogState extends State<CameraDialog>
   }
 
   Future<void> onNewCameraSelected(CameraDescription cameraDescription) async {
-    if (controller != null) {
+    /*if (controller != null) {
       return controller!.setDescription(cameraDescription);
-    } else {
-      return _initializeCameraController(cameraDescription);
-    }
+    } else {*/
+    return _initializeCameraController(cameraDescription);
+    //}
   }
 
   Future<void> _initializeCameraController(

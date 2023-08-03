@@ -293,9 +293,6 @@ class _CameraDialogState extends State<CameraDialog>
 
   @override
   Widget build(BuildContext context) {
-    final Logger log =
-        Logger("Pages.Transaction.AttachmentDialog.AttachPicture");
-
     if (controller == null) {
       for (final CameraDescription cameraDescription in widget.cameras) {
         if (cameraDescription.lensDirection == CameraLensDirection.back) {
@@ -312,6 +309,7 @@ class _CameraDialogState extends State<CameraDialog>
     }
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -412,6 +410,7 @@ class _CameraControlsState extends State<CameraControls> {
             children: <Widget>[
               IconButton(
                 icon: const Icon(Icons.close),
+                color: Colors.white,
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -423,6 +422,7 @@ class _CameraControlsState extends State<CameraControls> {
                   FlashMode.always => Icons.flash_on,
                   FlashMode.torch => Icons.highlight,
                 }),
+                color: Colors.white,
                 onPressed: () {
                   switch (widget.controller.value.flashMode) {
                     case FlashMode.auto:
@@ -446,11 +446,13 @@ class _CameraControlsState extends State<CameraControls> {
               ),
               IconButton(
                 icon: const Icon(Icons.camera),
+                color: Colors.white,
                 iconSize: 72,
                 onPressed: () {},
               ),
               IconButton(
                 icon: const Icon(Icons.cameraswitch),
+                color: Colors.white,
                 onPressed: () {
                   for (final CameraDescription cameraDescription
                       in widget.cameras) {

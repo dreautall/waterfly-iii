@@ -132,19 +132,21 @@ packages:
   camera:
     dependency: "direct main"
     description:
-      name: camera
-      sha256: ebebead3d5ec3d148249331d751d462d7e8c98102b8830a9b45ec96a2bd4333f
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.10.5+2"
+      path: "packages/camera/camera"
+      ref: issue-97501-and-88070-combined
+      resolved-ref: "02174fd15118af51232ef185a8912b1d3e3c1525"
+      url: "https://github.com/gerken-tss/plugins.git"
+    source: git
+    version: "0.10.3"
   camera_android:
     dependency: transitive
     description:
-      name: camera_android
-      sha256: f2d886ab431e468301eef451a897db8beb8e66a053bb556c3111d3337acc4c7b
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.10.8+5"
+      path: "packages/camera/camera_android"
+      ref: issue-97501-and-88070-combined
+      resolved-ref: "02174fd15118af51232ef185a8912b1d3e3c1525"
+      url: "git@github.com:gerken-tss/plugins.git"
+    source: git
+    version: "0.10.4"
   camera_avfoundation:
     dependency: transitive
     description:

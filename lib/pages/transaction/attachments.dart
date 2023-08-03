@@ -414,7 +414,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
             onPressed: widget.transactionId == null
                 ? () async => fakeUploadAttachment(context)
                 : () async => uploadAttachment(context),
-            child: Text(S.of(context).formButtonUpload),
+            child: const Icon(Icons.upload_file),
           ),
           const SizedBox(width: 12),
         ],

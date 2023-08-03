@@ -133,9 +133,9 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/camera/camera"
-      ref: issue-97501-and-88070-combined
-      resolved-ref: "02174fd15118af51232ef185a8912b1d3e3c1525"
-      url: "https://github.com/gerken-tss/plugins.git"
+      ref: issue-97501-and-88070-combined-1
+      resolved-ref: "09e1af67bd46ac687146bf1d23c350b608ddea57"
+      url: "https://github.com/dreautall/plugins.git"
     source: git
     version: "0.10.3"
   camera_android:
@@ -144,7 +144,7 @@ packages:
       path: "packages/camera/camera_android"
       ref: issue-97501-and-88070-combined
       resolved-ref: "02174fd15118af51232ef185a8912b1d3e3c1525"
-      url: "git@github.com:gerken-tss/plugins.git"
+      url: "https://github.com/gerken-tss/plugins.git"
     source: git
     version: "0.10.4"
   camera_avfoundation:

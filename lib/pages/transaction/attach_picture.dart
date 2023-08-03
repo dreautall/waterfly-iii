@@ -120,30 +120,6 @@ class _CameraDialogState extends State<CameraDialog>
     await controller!.setZoomLevel(_currentScale);
   }
 
-  /// Display the thumbnail of the captured image.
-  Widget _thumbnailWidget() {
-    return Expanded(
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            if (imageFile == null)
-              Container()
-            else
-              SizedBox(
-                width: 64.0,
-                height: 64.0,
-                child: Image.file(File(imageFile!.path)),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
-
   void showInSnackBar(String message) {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(message)));
@@ -253,14 +229,16 @@ class _CameraDialogState extends State<CameraDialog>
   }
 
   void onTakePictureButtonPressed() {
+    log.finest("pressed picture button");
     takePicture().then((XFile? file) {
+      if (file == null) {
+        log.warning("picture file empty");
+        return;
+      }
       if (mounted) {
         setState(() {
           imageFile = file;
         });
-        if (file != null) {
-          showInSnackBar('Picture saved to ${file.path}');
-        }
       }
     });
   }
@@ -293,6 +271,7 @@ class _CameraDialogState extends State<CameraDialog>
 
   @override
   Widget build(BuildContext context) {
+    log.finest("building without controller? ${controller == null}");
     if (controller == null) {
       for (final CameraDescription cameraDescription in widget.cameras) {
         if (cameraDescription.lensDirection == CameraLensDirection.back) {
@@ -306,6 +285,49 @@ class _CameraDialogState extends State<CameraDialog>
         Navigator.of(context).pop();
         return const SizedBox.shrink();
       }
+    }
+
+    if (imageFile != null) {
+      return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Stack(
+                children: <Widget>[
+                  Image.file(File(imageFile!.path)),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          IconButton(
+                            icon: const Icon(Icons.close),
+                            color: Colors.white,
+                            onPressed: () => setState(() {
+                              imageFile = null;
+                            }),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.check_circle),
+                            color: Colors.white,
+                            iconSize: 72,
+                            onPressed: () {},
+                          ),
+                          const SizedBox(
+                            // Button placeholder
+                            width: 48,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ));
     }
 
     return Scaffold(
@@ -351,6 +373,7 @@ class _CameraDialogState extends State<CameraDialog>
                         controller: controller!,
                         cameras: widget.cameras,
                         newCameraFunc: onNewCameraSelected,
+                        pictureFunc: onTakePictureButtonPressed,
                       ),
                     ],
                   ),
@@ -370,11 +393,13 @@ class CameraControls extends StatefulWidget {
     required this.controller,
     required this.cameras,
     required this.newCameraFunc,
+    required this.pictureFunc,
   });
 
   final CameraController controller;
   final List<CameraDescription> cameras;
   final Future<void> Function(CameraDescription) newCameraFunc;
+  final void Function() pictureFunc;
 
   @override
   State<CameraControls> createState() => _CameraControlsState();
@@ -448,7 +473,7 @@ class _CameraControlsState extends State<CameraControls> {
                 icon: const Icon(Icons.camera),
                 color: Colors.white,
                 iconSize: 72,
-                onPressed: () {},
+                onPressed: () => widget.pictureFunc(),
               ),
               IconButton(
                 icon: const Icon(Icons.cameraswitch),
@@ -464,7 +489,7 @@ class _CameraControlsState extends State<CameraControls> {
                 },
               ),
             ],
-          )
+          ),
         ],
       ),
     );

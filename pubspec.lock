@@ -42,7 +42,7 @@ packages:
     source: hosted
     version: "2.4.2"
   async:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: async
       sha256: "947bfcf187f74dbc5e146c9eb9c0f10c9f8b30743e341481c1e2ed3ecc18c20c"
@@ -129,6 +129,48 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.6.1"
+  camera:
+    dependency: "direct main"
+    description:
+      path: "packages/camera/camera"
+      ref: issue-97501-and-88070-combined
+      resolved-ref: "02174fd15118af51232ef185a8912b1d3e3c1525"
+      url: "https://github.com/gerken-tss/plugins.git"
+    source: git
+    version: "0.10.3"
+  camera_android:
+    dependency: transitive
+    description:
+      path: "packages/camera/camera_android"
+      ref: issue-97501-and-88070-combined
+      resolved-ref: "02174fd15118af51232ef185a8912b1d3e3c1525"
+      url: "git@github.com:gerken-tss/plugins.git"
+    source: git
+    version: "0.10.4"
+  camera_avfoundation:
+    dependency: transitive
+    description:
+      name: camera_avfoundation
+      sha256: "1a416e452b30955b392f4efbf23291d3f2ba3660a85e1628859eb62d2a2bab26"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.13+2"
+  camera_platform_interface:
+    dependency: transitive
+    description:
+      name: camera_platform_interface
+      sha256: "60fa0bb62a4f3bf3a7c413e31e4cd01b69c779ccc8e4668904a24581b86c316b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.1"
+  camera_web:
+    dependency: transitive
+    description:
+      name: camera_web
+      sha256: "6eb7b7f439ec8e48c2738408c7461df6e89a9dc42c91b7fb1586eb62b69c4672"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.2"
   characters:
     dependency: transitive
     description:
@@ -209,6 +251,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
+  cross_file:
+    dependency: transitive
+    description:
+      name: cross_file
+      sha256: "0b0036e8cccbfbe0555fd83c1d31a6f30b77a96b598b35a5d36dd41f718695e9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.3+4"
   crypto:
     dependency: transitive
     description:
@@ -830,6 +880,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  quiver:
+    dependency: transitive
+    description:
+      name: quiver
+      sha256: b1c1ac5ce6688d77f65f3375a9abb9319b3cb32486bdc7a1e0fdf004d7ba4e47
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.1"
   recase:
     dependency: transitive
     description:

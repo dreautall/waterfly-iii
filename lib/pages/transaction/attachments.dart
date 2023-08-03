@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +17,7 @@ import 'package:open_filex/open_filex.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/transaction/attach_picture.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
 
 class AttachmentDialog extends StatefulWidget {
@@ -139,7 +141,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     });
   }
 
-  void uploadAttachment(BuildContext context) async {
+  void uploadAttachment(BuildContext context, PlatformFile file) async {
     final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
     final FireflyIii api = context.read<FireflyService>().api;
     final AuthUser? user = context.read<FireflyService>().user;
@@ -149,14 +151,10 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       throw Exception(l10n.errorAPIUnavailable);
     }
 
-    FilePickerResult? file = await FilePicker.platform.pickFiles();
-    if (file == null || file.files.first.path == null) {
-      return;
-    }
     final Response<AttachmentSingle> respAttachment =
         await api.v1AttachmentsPost(
       body: AttachmentStore(
-        filename: file.files.first.name,
+        filename: file.name,
         attachableType: AttachableType.transactionjournal,
         attachableId: widget.transactionId!,
       ),
@@ -179,7 +177,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     final AttachmentRead newAttachment = respAttachment.body!.data;
     int newAttachmentIndex =
         widget.attachments.length; // Will be added later, no -1 needed.
-    final int total = file.files.first.size;
+    final int total = file.size;
     int sent = 0;
 
     setState(() {
@@ -198,7 +196,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     log.fine(() => "AttachmentUpload: Starting Upload $newAttachmentIndex");
 
     final Stream<List<int>> listenStream =
-        File(file.files.first.path!).openRead().transform(
+        File(file.path!).openRead().transform(
               StreamTransformer<List<int>, List<int>>.fromHandlers(
                 handleData: (List<int> data, EventSink<List<int>> sink) {
                   setState(() {
@@ -282,21 +280,16 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     });
   }
 
-  void fakeUploadAttachment(BuildContext context) async {
-    FilePickerResult? file = await FilePicker.platform.pickFiles();
-    if (file == null || file.files.first.path == null) {
-      return;
-    }
-
+  void fakeUploadAttachment(BuildContext context, PlatformFile file) async {
     final AttachmentRead newAttachment = AttachmentRead(
       type: "attachments",
       id: widget.attachments.length.toString(),
       attributes: Attachment(
         attachableType: AttachableType.transactionjournal,
         attachableId: "FAKE",
-        filename: file.files.first.name,
-        uploadUrl: file.files.first.path,
-        size: file.files.first.size,
+        filename: file.name,
+        uploadUrl: file.path,
+        size: file.size,
       ),
       links: ObjectLink(),
     );
@@ -376,16 +369,76 @@ class _AttachmentDialogState extends State<AttachmentDialog>
         overflowSpacing: 12,
         children: <Widget>[
           TextButton(
-            onPressed: () async {
-              Navigator.of(context).pop();
-            },
+            onPressed: () => Navigator.of(context).pop(),
             child: Text(MaterialLocalizations.of(context).closeButtonLabel),
           ),
           FilledButton(
-            onPressed: widget.transactionId == null
-                ? () async => fakeUploadAttachment(context)
-                : () async => uploadAttachment(context),
-            child: Text(S.of(context).formButtonUpload),
+            onPressed: () async {
+              final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
+              final S l10n = S.of(context);
+              final BuildContext ctx = context;
+              late List<CameraDescription> cameras = <CameraDescription>[];
+              try {
+                WidgetsFlutterBinding.ensureInitialized();
+                cameras = await availableCameras();
+                if (cameras.isEmpty) {
+                  throw CameraException("404", "No camera found.");
+                }
+              } on CameraException catch (e) {
+                log.warning("Could not get camera list", e);
+                msg.showSnackBar(SnackBar(
+                  content: Text(
+                    l10n.cameraErrorInitialize(
+                        e.description ?? l10n.errorUnknown),
+                  ),
+                  behavior: SnackBarBehavior.floating,
+                ));
+                return;
+              }
+
+              if (mounted) {
+                final XFile? imageFile = await showDialog<XFile>(
+                  context: ctx,
+                  builder: (BuildContext context) =>
+                      CameraDialog(cameras: cameras),
+                );
+                if (imageFile == null) {
+                  log.finest(() => "no image returned");
+                  return;
+                }
+
+                log.finer(() => "Image ${imageFile.path} will be uploaded");
+                final PlatformFile file = PlatformFile(
+                  path: imageFile.path,
+                  name: imageFile.name,
+                  size: await imageFile.length(),
+                );
+                if (mounted) {
+                  if (widget.transactionId == null) {
+                    fakeUploadAttachment(context, file);
+                  } else {
+                    uploadAttachment(context, file);
+                  }
+                }
+              }
+            },
+            child: const Icon(Icons.camera_alt),
+          ),
+          FilledButton(
+            onPressed: () async {
+              FilePickerResult? file = await FilePicker.platform.pickFiles();
+              if (file == null || file.files.first.path == null) {
+                return;
+              }
+              if (mounted) {
+                if (widget.transactionId == null) {
+                  fakeUploadAttachment(context, file.files.first);
+                } else {
+                  uploadAttachment(context, file.files.first);
+                }
+              }
+            },
+            child: const Icon(Icons.upload_file),
           ),
           const SizedBox(width: 12),
         ],

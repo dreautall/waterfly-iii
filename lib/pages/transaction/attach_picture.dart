@@ -291,44 +291,22 @@ class _CameraDialogState extends State<CameraDialog>
     }
 
     if (imageFile != null) {
-      return Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Stack(
-              children: <Widget>[
-                Image.file(File(imageFile!.path)),
-                Positioned(
-                    bottom: 16,
-                    left: 16,
-                    right: 16,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        IconButton(
-                          icon: const Icon(Icons.close),
-                          color: Colors.white,
-                          onPressed: () => setState(() {
-                            imageFile = null;
-                          }),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.check_circle),
-                          color: Colors.white,
-                          iconSize: 72,
-                          onPressed: () {},
-                        ),
-                        const SizedBox(
-                          // Button placeholder
-                          width: 48,
-                        ),
-                      ],
-                    )),
-              ],
-            ),
-          ],
+      return WillPopScope(
+        onWillPop: () async {
+          setState(() {
+            imageFile = null;
+          });
+          return false;
+        },
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: CameraResult(
+            imageFile: imageFile!,
+            backCallback: () => setState(() {
+              imageFile = null;
+            }),
+            okCallback: () => Navigator.of(context).pop(imageFile),
+          ),
         ),
       );
     }
@@ -386,6 +364,58 @@ class _CameraDialogState extends State<CameraDialog>
           ),
         ],
       ),
+    );
+  }
+}
+
+class CameraResult extends StatelessWidget {
+  const CameraResult({
+    super.key,
+    required this.imageFile,
+    required this.backCallback,
+    required this.okCallback,
+  });
+
+  final XFile imageFile;
+  final void Function() backCallback;
+  final void Function() okCallback;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Stack(
+          children: <Widget>[
+            Image.file(File(imageFile.path)),
+            Positioned(
+                bottom: 16,
+                left: 16,
+                right: 16,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      color: Colors.white,
+                      onPressed: () => backCallback(),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.check_circle),
+                      color: Colors.white,
+                      iconSize: 72,
+                      onPressed: () => okCallback(),
+                    ),
+                    const SizedBox(
+                      // Button placeholder
+                      width: 48,
+                    ),
+                  ],
+                )),
+          ],
+        ),
+      ],
     );
   }
 }

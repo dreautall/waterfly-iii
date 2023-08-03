@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:async/async.dart' show RestartableTimer;
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
+
 import 'package:waterflyiii/animations.dart';
 
 class CameraDialog extends StatefulWidget {
@@ -178,9 +180,12 @@ class _CameraDialogState extends State<CameraDialog>
       }
       if (cameraController.value.hasError) {
         log.warning(
-            "Camera Controller Error:  ${cameraController.value.errorDescription}");
+            "Camera Controller Error: ${cameraController.value.errorDescription}");
         showInSnackBar(
-            'Camera error ${cameraController.value.errorDescription}');
+          S.of(context).cameraErrorGeneric(
+              cameraController.value.errorDescription ??
+                  S.of(context).errorUnknown),
+        );
       }
     });
 
@@ -201,7 +206,7 @@ class _CameraDialogState extends State<CameraDialog>
       log.warning("Camera Error", e);
       switch (e.code) {
         case 'CameraAccessDenied':
-          showInSnackBar('You have denied camera access.');
+          showInSnackBar(S.of(context).cameraErrorDenied);
           break;
         default:
           _showCameraException(e);
@@ -216,7 +221,6 @@ class _CameraDialogState extends State<CameraDialog>
   }
 
   void onTakePictureButtonPressed() {
-    log.finest("pressed picture button");
     takePicture().then((XFile? file) {
       if (file == null) {
         log.warning("picture file empty");
@@ -252,7 +256,11 @@ class _CameraDialogState extends State<CameraDialog>
 
   void _showCameraException(CameraException e) {
     log.severe("Camera Error", e);
-    showInSnackBar('Camera Error: ${e.code}\n${e.description}');
+    showInSnackBar(
+      S
+          .of(context)
+          .cameraErrorGeneric(e.description ?? S.of(context).errorUnknown),
+    );
   }
 
   @override

@@ -271,7 +271,6 @@ class _CameraDialogState extends State<CameraDialog>
 
   @override
   Widget build(BuildContext context) {
-    log.finest("building without controller? ${controller == null}");
     if (controller == null) {
       for (final CameraDescription cameraDescription in widget.cameras) {
         if (cameraDescription.lensDirection == CameraLensDirection.back) {
@@ -285,6 +284,10 @@ class _CameraDialogState extends State<CameraDialog>
         Navigator.of(context).pop();
         return const SizedBox.shrink();
       }
+    }
+
+    if (controller == null || !controller!.value.isInitialized) {
+      return const Center(child: CircularProgressIndicator());
     }
 
     if (imageFile != null) {

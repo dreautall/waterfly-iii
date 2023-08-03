@@ -387,7 +387,10 @@ class _AttachmentDialogState extends State<AttachmentDialog>
               } on CameraException catch (e) {
                 log.warning("Could not get camera list", e);
                 msg.showSnackBar(SnackBar(
-                  content: Text("Cannot initialize Camera: ${e.description}"),
+                  content: Text(
+                    l10n.cameraErrorInitialize(
+                        e.description ?? l10n.errorUnknown),
+                  ),
                   behavior: SnackBarBehavior.floating,
                 ));
                 return;
@@ -399,12 +402,12 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                   builder: (BuildContext context) =>
                       CameraDialog(cameras: cameras),
                 );
-
                 if (imageFile == null) {
-                  log.finest("no image returned");
+                  log.finest(() => "no image returned");
                   return;
                 }
-                log.finer("Image ${imageFile.path} will be uploaded");
+
+                log.finer(() => "Image ${imageFile.path} will be uploaded");
                 final PlatformFile file = PlatformFile(
                   path: imageFile.path,
                   name: imageFile.name,

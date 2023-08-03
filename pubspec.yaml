@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  async: any
   intl: any
   path_provider: ^2.0.13
   collection: ^1.17.0
@@ -42,6 +43,11 @@ dependencies:
   dynamic_color: ^1.6.6
   material_color_utilities: ^0.2.0
   version: ^3.0.2
+  camera:
+    git:
+      url: https://github.com/gerken-tss/plugins.git
+      ref: issue-97501-and-88070-combined
+      path: packages/camera/camera
 
 dev_dependencies:
   flutter_lints: ^2.0.2

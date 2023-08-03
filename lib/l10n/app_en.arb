@@ -51,6 +51,29 @@
       }
     }
   },
+  "cameraErrorDenied": "You have denied camera access.",
+  "@cameraErrorDenied": {
+    "description": "Error shown when camera permission is denied."
+  },
+  "cameraErrorGeneric": "Camera Error: {description}",
+  "@cameraErrorGeneric": {
+    "description": "Generic Camera Error",
+    "placeholders": {
+      "description": {
+        "type": "String"
+      }
+    }
+  },
+  "cameraErrorInitialize": "Cannot initialize Camera: {description}",
+  "@cameraErrorInitialize": {
+    "description": "Error shown when camera cannot be initialized",
+    "placeholders": {
+      "description": {
+        "type": "String",
+        "example": "No camera found."
+      }
+    }
+  },
   "catOther": "Other",
   "@catOther": {
     "description": "Category description for summary category 'Other'"

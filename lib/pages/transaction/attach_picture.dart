@@ -121,8 +121,10 @@ class _CameraDialogState extends State<CameraDialog>
   }
 
   void showInSnackBar(String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      behavior: SnackBarBehavior.floating,
+    ));
   }
 
   void onViewFinderTap(TapDownDetails details, BoxConstraints constraints) {
@@ -175,6 +177,8 @@ class _CameraDialogState extends State<CameraDialog>
         setState(() {});
       }
       if (cameraController.value.hasError) {
+        log.warning(
+            "Camera Controller Error:  ${cameraController.value.errorDescription}");
         showInSnackBar(
             'Camera error ${cameraController.value.errorDescription}');
       }
@@ -194,33 +198,16 @@ class _CameraDialogState extends State<CameraDialog>
             .then((double value) => _minAvailableZoom = value),*/
       ]);
     } on CameraException catch (e) {
+      log.warning("Camera Error", e);
       switch (e.code) {
         case 'CameraAccessDenied':
           showInSnackBar('You have denied camera access.');
-          break;
-        case 'CameraAccessDeniedWithoutPrompt':
-          // iOS only
-          showInSnackBar('Please go to Settings app to enable camera access.');
-          break;
-        case 'CameraAccessRestricted':
-          // iOS only
-          showInSnackBar('Camera access is restricted.');
-          break;
-        case 'AudioAccessDenied':
-          showInSnackBar('You have denied audio access.');
-          break;
-        case 'AudioAccessDeniedWithoutPrompt':
-          // iOS only
-          showInSnackBar('Please go to Settings app to enable audio access.');
-          break;
-        case 'AudioAccessRestricted':
-          // iOS only
-          showInSnackBar('Audio access is restricted.');
           break;
         default:
           _showCameraException(e);
           break;
       }
+      Navigator.of(context).pop();
     }
 
     if (mounted) {
@@ -246,7 +233,6 @@ class _CameraDialogState extends State<CameraDialog>
   Future<XFile?> takePicture() async {
     final CameraController? cameraController = controller;
     if (cameraController == null || !cameraController.value.isInitialized) {
-      showInSnackBar('Error: select a camera first.');
       return null;
     }
 
@@ -265,7 +251,7 @@ class _CameraDialogState extends State<CameraDialog>
   }
 
   void _showCameraException(CameraException e) {
-    log.severe("Camera error", e);
+    log.severe("Camera Error", e);
     showInSnackBar('Camera Error: ${e.code}\n${e.description}');
   }
 

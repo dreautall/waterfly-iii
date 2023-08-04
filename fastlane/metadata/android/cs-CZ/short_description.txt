@@ -1,0 +1,1 @@
+Neoficiální aplikace pro Firefly III, open source osobní správce financí.

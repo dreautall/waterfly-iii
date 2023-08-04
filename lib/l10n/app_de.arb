@@ -50,6 +50,29 @@
       }
     }
   },
+  "cameraErrorDenied": "Kamera-Berechtigung verweigert.",
+  "@cameraErrorDenied": {
+    "description": "Error shown when camera permission is denied."
+  },
+  "cameraErrorGeneric": "Kamera-Fehler: {description}",
+  "@cameraErrorGeneric": {
+    "description": "Generic Camera Error",
+    "placeholders": {
+      "description": {
+        "type": "String"
+      }
+    }
+  },
+  "cameraErrorInitialize": "Kamera konnte nicht gestartet werden: {description}",
+  "@cameraErrorInitialize": {
+    "description": "Error shown when camera cannot be initialized",
+    "placeholders": {
+      "description": {
+        "type": "String",
+        "example": "No camera found."
+      }
+    }
+  },
   "catOther": "Andere",
   "@catOther": {
     "description": "Category description for summary category 'Other'"
@@ -468,7 +491,7 @@
   "@settingsDialogDebugMailCreate": {
     "description": "Button to confirm mail creation after privacy disclaimer is shown."
   },
-  "settingsDialogDebugMailDisclaimer": "ACHTUNG: Ein E-Mail Entwurf wird mit angehängtem Fehlerprotokoll erstellt. Das Fehlerprotokoll kann sensitive Informationen wie zum Beispiel die URL deiner Firefly-Instanz enthalten (auch wenn ich versuche geheime Informationen wie den API-Schlüssel nicht zu protokollieren). Bitte lese vor dem Senden der Mail das Protokoll durch und zensiere alle Informationen, die du nicht teilen möchtest.\n\nBitte sende keine Fehlerprotokolle ohne vorherige Absprache mit mir via Mail/GitHub. Ich werde alle ohne Kontext eingesendete Protokolle aus Datenschutzgründen löschen. Lade die Protokolle nie auf GitHub oder anderswo hoch.",
+  "settingsDialogDebugMailDisclaimer": "ACHTUNG: Ein E-Mail Entwurf wird mit angehängtem Fehlerprotokoll erstellt. Das Fehlerprotokoll kann sensible Informationen wie zum Beispiel die URL deiner Firefly-Instanz enthalten (auch wenn ich versuche, geheime Informationen wie den API-Schlüssel nicht zu protokollieren). Bitte lese vor dem Senden der Mail das Protokoll durch und zensiere alle Informationen, die du nicht teilen möchtest.\n\nBitte sende keine Fehlerprotokolle ohne vorherige Absprache mit mir via Mail/GitHub. Ich werde alle ohne Kontext eingesendete Protokolle aus Datenschutzgründen löschen. Lade die Protokolle nie auf GitHub oder anderswo hoch.",
   "@settingsDialogDebugMailDisclaimer": {
     "description": "Privacy disclaimer shown before sending logs"
   },

@@ -394,14 +394,12 @@ class CameraResult extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    IconButton(
+                    IconButton.filledTonal(
                       icon: const Icon(Icons.close),
-                      color: Colors.white,
                       onPressed: () => backCallback(),
                     ),
-                    IconButton(
+                    IconButton.filledTonal(
                       icon: const Icon(Icons.check_circle),
-                      color: Colors.white,
                       iconSize: 72,
                       onPressed: () => okCallback(),
                     ),

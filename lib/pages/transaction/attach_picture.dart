@@ -155,11 +155,11 @@ class _CameraDialogState extends State<CameraDialog>
   }
 
   Future<void> onNewCameraSelected(CameraDescription cameraDescription) async {
-    /*if (controller != null) {
+    if (controller != null) {
       return controller!.setDescription(cameraDescription);
-    } else {*/
-    return _initializeCameraController(cameraDescription);
-    //}
+    } else {
+      return _initializeCameraController(cameraDescription);
+    }
   }
 
   Future<void> _initializeCameraController(
@@ -265,26 +265,11 @@ class _CameraDialogState extends State<CameraDialog>
 
   @override
   Widget build(BuildContext context) {
-    if (controller == null) {
-      for (final CameraDescription cameraDescription in widget.cameras) {
-        if (cameraDescription.lensDirection == CameraLensDirection.back) {
-          _initializeCameraController(cameraDescription);
-        }
-      }
-      if (controller == null) {
-        _initializeCameraController(widget.cameras.first);
-      }
-      if (controller == null) {
-        Navigator.of(context).pop();
-        return const SizedBox.shrink();
-      }
-    }
-
-    if (controller == null || !controller!.value.isInitialized) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
     if (imageFile != null) {
+      if (controller != null) {
+        controller!.dispose();
+        controller = null;
+      }
       return WillPopScope(
         onWillPop: () async {
           setState(() {
@@ -303,6 +288,25 @@ class _CameraDialogState extends State<CameraDialog>
           ),
         ),
       );
+    }
+
+    if (controller == null) {
+      for (final CameraDescription cameraDescription in widget.cameras) {
+        if (cameraDescription.lensDirection == CameraLensDirection.back) {
+          _initializeCameraController(cameraDescription);
+        }
+      }
+      if (controller == null) {
+        _initializeCameraController(widget.cameras.first);
+      }
+      if (controller == null) {
+        Navigator.of(context).pop();
+        return const SizedBox.shrink();
+      }
+    }
+
+    if (controller == null || !controller!.value.isInitialized) {
+      return const Center(child: CircularProgressIndicator());
     }
 
     return Scaffold(

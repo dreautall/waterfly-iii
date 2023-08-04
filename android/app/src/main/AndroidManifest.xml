@@ -210,6 +210,7 @@
         <package android:name="net.easypark.android"/>
         <package android:name="om.nu.production"/>
         <package android:name="om.todo1.mobile"/>
+        <package android:name="one.tomorrow.app"/>
         <package android:name="org.ping.sberbank.elba.mobile"/>
         <package android:name="org.toshi"/>
         <package android:name="org.westpac.bank"/>

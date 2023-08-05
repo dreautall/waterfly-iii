@@ -895,6 +895,7 @@ class _TransactionPageState extends State<TransactionPage>
                           transactionJournalId:
                               _transactionJournalIDs.elementAtOrNull(i),
                           type: _transactionType,
+                          reconciled: _reconciled,
                         ));
                       }
                       TransactionUpdate txUpdate = TransactionUpdate(
@@ -965,7 +966,7 @@ class _TransactionPageState extends State<TransactionPage>
                           sourceId: sourceId,
                           sourceName: sourceName,
                           tags: _tags[i].tags,
-                          reconciled: false,
+                          reconciled: _reconciled,
                         ));
                       }
                       final TransactionStore newTx = TransactionStore(

@@ -198,6 +198,9 @@
     "description": "Has never happened, no update etc."
   },
   "generalReconcile": "Reconciled",
+  "@generalReconcile": {
+    "description": "Booking has been confirmed/reconciled"
+  },
   "generalSum": "Sum",
   "@generalSum": {
     "description": "(Mathematical) Sum"

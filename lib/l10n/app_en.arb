@@ -197,6 +197,7 @@
   "@generalNever": {
     "description": "Has never happened, no update etc."
   },
+  "generalReconcile": "Reconciled",
   "generalSum": "Sum",
   "@generalSum": {
     "description": "(Mathematical) Sum"

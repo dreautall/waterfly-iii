@@ -67,6 +67,7 @@ class _TransactionPageState extends State<TransactionPage>
   final TextEditingController _dateTextController = TextEditingController();
   final TextEditingController _timeTextController = TextEditingController();
   CurrencyRead? _localCurrency;
+  bool _reconciled = false;
 
   // Withdrawal: splits have common source account (= own account)
   // Deposit: splits have common target account (= own account)
@@ -179,6 +180,9 @@ class _TransactionPageState extends State<TransactionPage>
           decimalPlaces: transactions.first.currencyDecimalPlaces,
         ),
       );
+
+      // Reconciled
+      _reconciled = transactions.first.reconciled ?? false;
 
       for (TransactionSplit trans in transactions) {
         // Always in card view
@@ -1762,16 +1766,22 @@ class _TransactionPageState extends State<TransactionPage>
               width: 48,
               child: Align(
                 alignment: Alignment.centerRight,
-                child: AnimatedOpacity(
-                  opacity: (_split) ? 1 : 0,
+                child: AnimatedSize(
                   duration: animDurationStandard,
                   curve: animCurveStandard,
-                  child: AnimatedSize(
-                    duration: animDurationStandard,
-                    curve: animCurveStandard,
-                    alignment: Alignment.topCenter,
-                    child: Column(
-                      children: <Widget>[
+                  alignment: Alignment.topCenter,
+                  child: Column(
+                    children: <Widget>[
+                      IconButton(
+                        icon: const Icon(Icons.done_outline),
+                        isSelected: _reconciled,
+                        selectedIcon: const Icon(Icons.done),
+                        onPressed: () => setState(
+                          () => _reconciled = !_reconciled,
+                        ),
+                        tooltip: S.of(context).generalReconcile,
+                      ),
+                      if (_split) ...<Widget>[
                         IconButton(
                           icon: const Icon(Icons.currency_exchange),
                           onPressed: _split
@@ -1840,7 +1850,7 @@ class _TransactionPageState extends State<TransactionPage>
                               : null,
                         ),
                       ],
-                    ),
+                    ],
                   ),
                 ),
               ),

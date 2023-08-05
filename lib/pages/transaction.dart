@@ -1781,6 +1781,7 @@ class _TransactionPageState extends State<TransactionPage>
                         ),
                         tooltip: S.of(context).generalReconcile,
                       ),
+                      hDivider,
                       if (_split) ...<Widget>[
                         IconButton(
                           icon: const Icon(Icons.currency_exchange),

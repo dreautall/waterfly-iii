@@ -1171,7 +1171,7 @@ class _TransactionPageState extends State<TransactionPage>
       Row(
         children: <Widget>[
           SizedBox(
-            width: 150,
+            width: 130,
             child: NumberInput(
               icon: const Icon(Icons.monetization_on),
               hintText: _foreignCurrency?.zero() ??

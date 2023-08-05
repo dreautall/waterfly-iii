@@ -252,7 +252,7 @@ class SSLCertDialog extends StatelessWidget {
             Navigator.of(context).pop();
           },
         ),
-        TextButton(
+        FilledButton(
           child: Text(MaterialLocalizations.of(context).saveButtonLabel),
           onPressed: () {
             Navigator.of(context).pop(textController.text);

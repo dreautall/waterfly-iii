@@ -96,6 +96,7 @@ class _TransactionPageState extends State<TransactionPage>
       <TextEditingController>[];
   final List<TextEditingController> _noteTextControllers =
       <TextEditingController>[];
+  final List<BillRead?> _bills = <BillRead?>[];
 
   // Individual for split transactions
   final List<TextEditingController> _titleTextControllers =
@@ -204,6 +205,24 @@ class _TransactionPageState extends State<TransactionPage>
 
         /// Notes
         _noteTextControllers.add(TextEditingController(text: trans.notes));
+
+        /// Bill
+        if ((trans.billId?.isNotEmpty ?? false) && trans.billId != "0") {
+          _bills.add(
+            BillRead(
+              type: "bill",
+              id: trans.billId ?? "",
+              attributes: Bill(
+                  name: trans.billName ?? "",
+                  amountMin: "",
+                  amountMax: "",
+                  date: DateTime.now(),
+                  repeatFreq: BillRepeatFrequency.swaggerGeneratedUnknown),
+            ),
+          );
+        } else {
+          _bills.add(null);
+        }
 
         // Individual for split transactions
         /// Title
@@ -592,6 +611,7 @@ class _TransactionPageState extends State<TransactionPage>
     _tags.removeAt(i);
     TextEditingController t4 = _tagsTextControllers.removeAt(i);
     TextEditingController t5 = _noteTextControllers.removeAt(i);
+    _bills.removeAt(i);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       t1.dispose();
@@ -663,6 +683,7 @@ class _TransactionPageState extends State<TransactionPage>
     _tags.add(Tags());
     _tagsTextControllers.add(TextEditingController());
     _noteTextControllers.add(TextEditingController());
+    _bills.add(null);
 
     _titleTextControllers.add(TextEditingController());
     _titleFocusNodes.add(FocusNode());
@@ -1781,6 +1802,16 @@ class _TransactionPageState extends State<TransactionPage>
                           () => _reconciled = !_reconciled,
                         ),
                         tooltip: S.of(context).generalReconcile,
+                      ),
+                      hDivider,
+                      IconButton(
+                        icon: const Icon(Icons.calendar_today),
+                        isSelected: _reconciled,
+                        selectedIcon: const Icon(Icons.event_available),
+                        onPressed: () => setState(
+                          () => _reconciled = !_reconciled,
+                        ),
+                        tooltip: "Link to Bill",
                       ),
                       hDivider,
                       if (_split) ...<Widget>[

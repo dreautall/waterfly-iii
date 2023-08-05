@@ -49,12 +49,11 @@ class _BillDialogState extends State<BillDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       icon: const Icon(Icons.calendar_today),
-      //title: Text(S.of(context).transactionDialogCurrencyTitle),
-      title: Text("Select bill"),
+      title: Text(S.of(context).transactionDialogBillTitle),
       clipBehavior: Clip.hardEdge,
       actions: <Widget>[
         TextButton(
-          child: Text("No bill"),
+          child: Text(S.of(context).transactionDialogBillNoBill),
           onPressed: () {
             Navigator.of(context).pop(
               BillRead(

@@ -1829,7 +1829,7 @@ class _TransactionPageState extends State<TransactionPage>
                             });
                           }
                         },
-                        tooltip: "Link to Bill",
+                        tooltip: S.of(context).transactionDialogBillTitle,
                       ),
                       hDivider,
                       if (_split) ...<Widget>[

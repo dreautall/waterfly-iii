@@ -670,6 +670,14 @@
   "@transactionDialogAttachmentsTitle": {
     "description": "Dialog Title: Attachments Dialog"
   },
+  "transactionDialogBillTitle": "Link to Bill",
+  "@transactionDialogBillTitle": {
+    "description": "Dialog Title: Link Bill to transaction"
+  },
+  "transactionDialogBillNoBill": "No bill",
+  "@transactionDialogBillNoBill": {
+    "description": "Button Label: no bill to be used"
+  },
   "transactionDialogCurrencyTitle": "Select currency",
   "@transactionDialogCurrencyTitle": {
     "description": "Dialog Title: Currency Selection"

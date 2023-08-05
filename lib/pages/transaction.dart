@@ -20,6 +20,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/transaction/attachments.dart';
+import 'package:waterflyiii/pages/transaction/bill.dart';
 import 'package:waterflyiii/pages/transaction/currencies.dart';
 import 'package:waterflyiii/pages/transaction/delete.dart';
 import 'package:waterflyiii/pages/transaction/tags.dart';
@@ -1806,11 +1807,28 @@ class _TransactionPageState extends State<TransactionPage>
                       hDivider,
                       IconButton(
                         icon: const Icon(Icons.calendar_today),
-                        isSelected: _reconciled,
+                        isSelected: _bills[i] != null,
                         selectedIcon: const Icon(Icons.event_available),
-                        onPressed: () => setState(
-                          () => _reconciled = !_reconciled,
-                        ),
+                        onPressed: () async {
+                          BillRead? newBill = await showDialog<BillRead>(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                BillDialog(currentBill: _bills[i]),
+                          );
+                          // Back button returns "null"
+                          if (newBill == null) {
+                            return;
+                          }
+                          // Delete bill returns id "0"
+                          if (newBill.id.isEmpty || newBill.id == "0") {
+                            newBill = null;
+                          }
+                          if (newBill != _bills[i]) {
+                            setState(() {
+                              _bills[i] = newBill;
+                            });
+                          }
+                        },
                         tooltip: "Link to Bill",
                       ),
                       hDivider,

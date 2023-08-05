@@ -165,10 +165,10 @@ packages:
     dependency: transitive
     description:
       name: camera_web
-      sha256: "6eb7b7f439ec8e48c2738408c7461df6e89a9dc42c91b7fb1586eb62b69c4672"
+      sha256: "894df2a4e9ddd77ffecee9553d5980eeabb8bf09d98e53934859e67dc367933b"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.2"
+    version: "0.3.2+1"
   characters:
     dependency: transitive
     description:

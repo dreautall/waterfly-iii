@@ -189,10 +189,10 @@ packages:
     dependency: "direct main"
     description:
       name: chopper
-      sha256: ea9cf4d3dc6731181d6ed15fb6482316b0ccaf176e2340e5174bf664c441c768
+      sha256: "64b8e3260b52b994317519b72ee98169f46253eff05e2e98c64212644077f412"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.1"
+    version: "7.0.2"
   chopper_generator:
     dependency: "direct dev"
     description:

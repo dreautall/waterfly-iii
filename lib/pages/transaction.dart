@@ -20,6 +20,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/transaction/attachments.dart';
+import 'package:waterflyiii/pages/transaction/bill.dart';
 import 'package:waterflyiii/pages/transaction/currencies.dart';
 import 'package:waterflyiii/pages/transaction/delete.dart';
 import 'package:waterflyiii/pages/transaction/tags.dart';
@@ -67,6 +68,7 @@ class _TransactionPageState extends State<TransactionPage>
   final TextEditingController _dateTextController = TextEditingController();
   final TextEditingController _timeTextController = TextEditingController();
   CurrencyRead? _localCurrency;
+  bool _reconciled = false;
 
   // Withdrawal: splits have common source account (= own account)
   // Deposit: splits have common target account (= own account)
@@ -95,6 +97,7 @@ class _TransactionPageState extends State<TransactionPage>
       <TextEditingController>[];
   final List<TextEditingController> _noteTextControllers =
       <TextEditingController>[];
+  final List<BillRead?> _bills = <BillRead?>[];
 
   // Individual for split transactions
   final List<TextEditingController> _titleTextControllers =
@@ -180,6 +183,9 @@ class _TransactionPageState extends State<TransactionPage>
         ),
       );
 
+      // Reconciled
+      _reconciled = transactions.first.reconciled ?? false;
+
       for (TransactionSplit trans in transactions) {
         // Always in card view
         /// Category
@@ -200,6 +206,24 @@ class _TransactionPageState extends State<TransactionPage>
 
         /// Notes
         _noteTextControllers.add(TextEditingController(text: trans.notes));
+
+        /// Bill
+        if ((trans.billId?.isNotEmpty ?? false) && trans.billId != "0") {
+          _bills.add(
+            BillRead(
+              type: "bill",
+              id: trans.billId ?? "",
+              attributes: Bill(
+                  name: trans.billName ?? "",
+                  amountMin: "",
+                  amountMax: "",
+                  date: DateTime.now(),
+                  repeatFreq: BillRepeatFrequency.swaggerGeneratedUnknown),
+            ),
+          );
+        } else {
+          _bills.add(null);
+        }
 
         // Individual for split transactions
         /// Title
@@ -588,6 +612,7 @@ class _TransactionPageState extends State<TransactionPage>
     _tags.removeAt(i);
     TextEditingController t4 = _tagsTextControllers.removeAt(i);
     TextEditingController t5 = _noteTextControllers.removeAt(i);
+    _bills.removeAt(i);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       t1.dispose();
@@ -659,6 +684,7 @@ class _TransactionPageState extends State<TransactionPage>
     _tags.add(Tags());
     _tagsTextControllers.add(TextEditingController());
     _noteTextControllers.add(TextEditingController());
+    _bills.add(null);
 
     _titleTextControllers.add(TextEditingController());
     _titleFocusNodes.add(FocusNode());
@@ -891,6 +917,7 @@ class _TransactionPageState extends State<TransactionPage>
                           transactionJournalId:
                               _transactionJournalIDs.elementAtOrNull(i),
                           type: _transactionType,
+                          reconciled: _reconciled,
                         ));
                       }
                       TransactionUpdate txUpdate = TransactionUpdate(
@@ -961,7 +988,7 @@ class _TransactionPageState extends State<TransactionPage>
                           sourceId: sourceId,
                           sourceName: sourceName,
                           tags: _tags[i].tags,
-                          reconciled: false,
+                          reconciled: _reconciled,
                         ));
                       }
                       final TransactionStore newTx = TransactionStore(
@@ -1762,16 +1789,50 @@ class _TransactionPageState extends State<TransactionPage>
               width: 48,
               child: Align(
                 alignment: Alignment.centerRight,
-                child: AnimatedOpacity(
-                  opacity: (_split) ? 1 : 0,
+                child: AnimatedSize(
                   duration: animDurationStandard,
                   curve: animCurveStandard,
-                  child: AnimatedSize(
-                    duration: animDurationStandard,
-                    curve: animCurveStandard,
-                    alignment: Alignment.topCenter,
-                    child: Column(
-                      children: <Widget>[
+                  alignment: Alignment.topCenter,
+                  child: Column(
+                    children: <Widget>[
+                      IconButton(
+                        icon: const Icon(Icons.done_outline),
+                        isSelected: _reconciled,
+                        selectedIcon: const Icon(Icons.done),
+                        onPressed: () => setState(
+                          () => _reconciled = !_reconciled,
+                        ),
+                        tooltip: S.of(context).generalReconcile,
+                      ),
+                      hDivider,
+                      IconButton(
+                        icon: const Icon(Icons.calendar_today),
+                        isSelected: _bills[i] != null,
+                        selectedIcon: const Icon(Icons.event_available),
+                        onPressed: () async {
+                          BillRead? newBill = await showDialog<BillRead>(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                BillDialog(currentBill: _bills[i]),
+                          );
+                          // Back button returns "null"
+                          if (newBill == null) {
+                            return;
+                          }
+                          // Delete bill returns id "0"
+                          if (newBill.id.isEmpty || newBill.id == "0") {
+                            newBill = null;
+                          }
+                          if (newBill != _bills[i]) {
+                            setState(() {
+                              _bills[i] = newBill;
+                            });
+                          }
+                        },
+                        tooltip: S.of(context).transactionDialogBillTitle,
+                      ),
+                      hDivider,
+                      if (_split) ...<Widget>[
                         IconButton(
                           icon: const Icon(Icons.currency_exchange),
                           onPressed: _split
@@ -1840,7 +1901,7 @@ class _TransactionPageState extends State<TransactionPage>
                               : null,
                         ),
                       ],
-                    ),
+                    ],
                   ),
                 ),
               ),

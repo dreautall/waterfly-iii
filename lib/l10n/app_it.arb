@@ -1,5 +1,6 @@
 {
   "@@locale": "it",
+  "@@x-reference": true,
   "accountRoleAssetCashWallet": "Portafoglio Contanti",
   "@accountRoleAssetCashWallet": {
     "description": "Firefly Translation String: account_role_cashWalletAsset"
@@ -47,6 +48,29 @@
       "period": {
         "type": "String",
         "example": "yearly"
+      }
+    }
+  },
+  "cameraErrorDenied": "Hai negato l'accesso alla fotocamera.",
+  "@cameraErrorDenied": {
+    "description": "Error shown when camera permission is denied."
+  },
+  "cameraErrorGeneric": "Errore Fotocamera: {description}",
+  "@cameraErrorGeneric": {
+    "description": "Generic Camera Error",
+    "placeholders": {
+      "description": {
+        "type": "String"
+      }
+    }
+  },
+  "cameraErrorInitialize": "Impossibile inizializzare la fotocamera: {description}",
+  "@cameraErrorInitialize": {
+    "description": "Error shown when camera cannot be initialized",
+    "placeholders": {
+      "description": {
+        "type": "String",
+        "example": "No camera found."
       }
     }
   },

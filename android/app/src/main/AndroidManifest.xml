@@ -199,6 +199,7 @@
         <package android:name="hr.binom.ecc.mobile"/>
         <package android:name="hu.netbank.netbankdroid"/>
         <package android:name="hu.otpbank.mobile"/>
+        <package android:name="in.amazon.mShop.android.shopping"/>
         <package android:name="it.bancomat.pay.user"/>
         <package android:name="it.beem.app"/>
         <package android:name="it.hype.app"/>

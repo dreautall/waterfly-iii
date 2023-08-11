@@ -521,8 +521,17 @@
     "description": "Currently selected language"
   },
   "settingsLockscreen": "Lockscreen",
+  "@settingsLockscreen": {
+    "description": "Setting if a lockscreen is shown (authentication is required on startup)"
+  },
   "settingsLockscreenHelp": "Require authenticiation on app startup",
+  "@settingsLockscreenHelp": {
+    "description": "Description for lockscreen setting"
+  },
   "settingsLockscreenInitial": "Please authenticate to enable the lock screen.",
+  "@settingsLockscreenInitial": {
+    "description": "Prompt to authenticate once to set up the lockscreen"
+  },
   "settingsNLAppAccount": "Default Account",
   "@settingsNLAppAccount": {
     "description": "Default account which will be used for the transaction."

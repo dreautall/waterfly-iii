@@ -1,5 +1,6 @@
 {
   "@@locale": "de",
+  "@@x-reference": true,
   "accountRoleAssetCashWallet": "Geldbörse",
   "@accountRoleAssetCashWallet": {
     "description": "Firefly Translation String: account_role_cashWalletAsset"
@@ -195,6 +196,10 @@
   "generalNever": "nie",
   "@generalNever": {
     "description": "Has never happened, no update etc."
+  },
+  "generalReconcile": "Abgeglichen",
+  "@generalReconcile": {
+    "description": "Booking has been confirmed/reconciled"
   },
   "generalSum": "Summe",
   "@generalSum": {
@@ -611,7 +616,7 @@
   "@settingsVersion": {
     "description": "Current App Version"
   },
-  "settingsVersionChecking": "Überprüfe...",
+  "settingsVersionChecking": "Überprüfe…",
   "@settingsVersionChecking": {
     "description": "Shown while checking for app version"
   },
@@ -664,6 +669,14 @@
   "transactionDialogAttachmentsTitle": "Anhänge",
   "@transactionDialogAttachmentsTitle": {
     "description": "Dialog Title: Attachments Dialog"
+  },
+  "transactionDialogBillTitle": "Mit Rechnung verknüpfen",
+  "@transactionDialogBillTitle": {
+    "description": "Dialog Title: Link Bill to transaction"
+  },
+  "transactionDialogBillNoBill": "Ohne Rechnung",
+  "@transactionDialogBillNoBill": {
+    "description": "Button Label: no bill to be used"
   },
   "transactionDialogCurrencyTitle": "Währung auswählen",
   "@transactionDialogCurrencyTitle": {

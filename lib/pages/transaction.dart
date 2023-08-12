@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 
 import 'package:badges/badges.dart' as badges;
 import 'package:chopper/chopper.dart' show Response;
+import 'package:version/version.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
@@ -992,11 +993,12 @@ class _TransactionPageState extends State<TransactionPage>
                         ));
                       }
                       final TransactionStore newTx = TransactionStore(
-                          groupTitle: _split ? _titleTextController.text : null,
-                          transactions: txS,
-                          applyRules: true,
-                          fireWebhooks: true,
-                          errorIfDuplicateHash: true);
+                        groupTitle: _split ? _titleTextController.text : null,
+                        transactions: txS,
+                        applyRules: true,
+                        fireWebhooks: true,
+                        errorIfDuplicateHash: true,
+                      );
                       resp = await api.v1TransactionsPost(body: newTx);
                     }
 
@@ -1795,16 +1797,22 @@ class _TransactionPageState extends State<TransactionPage>
                   alignment: Alignment.topCenter,
                   child: Column(
                     children: <Widget>[
-                      IconButton(
-                        icon: const Icon(Icons.done_outline),
-                        isSelected: _reconciled,
-                        selectedIcon: const Icon(Icons.done),
-                        onPressed: () => setState(
-                          () => _reconciled = !_reconciled,
+                      // Reconcile is broken before API V2.0.6
+                      // ref https://github.com/dreautall/waterfly-iii/issues/56
+                      // ref https://github.com/firefly-iii/firefly-iii/issues/7845
+                      if (context.read<FireflyService>().apiVersion! >=
+                          Version(2, 0, 6)) ...<Widget>[
+                        IconButton(
+                          icon: const Icon(Icons.done_outline),
+                          isSelected: _reconciled,
+                          selectedIcon: const Icon(Icons.done),
+                          onPressed: () => setState(
+                            () => _reconciled = !_reconciled,
+                          ),
+                          tooltip: S.of(context).generalReconcile,
                         ),
-                        tooltip: S.of(context).generalReconcile,
-                      ),
-                      hDivider,
+                        hDivider,
+                      ],
                       IconButton(
                         icon: const Icon(Icons.calendar_today),
                         isSelected: _bills[i] != null,

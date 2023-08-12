@@ -50,6 +50,29 @@
       }
     }
   },
+  "cameraErrorDenied": "Has denegado el acceso a la cámara.",
+  "@cameraErrorDenied": {
+    "description": "Error shown when camera permission is denied."
+  },
+  "cameraErrorGeneric": "Error de cámara: {description}",
+  "@cameraErrorGeneric": {
+    "description": "Generic Camera Error",
+    "placeholders": {
+      "description": {
+        "type": "String"
+      }
+    }
+  },
+  "cameraErrorInitialize": "No se puede iniciar la cámara: {description}",
+  "@cameraErrorInitialize": {
+    "description": "Error shown when camera cannot be initialized",
+    "placeholders": {
+      "description": {
+        "type": "String",
+        "example": "No camera found."
+      }
+    }
+  },
   "catOther": "Otros",
   "@catOther": {
     "description": "Category description for summary category 'Other'"
@@ -172,6 +195,10 @@
   "generalNever": "nunca",
   "@generalNever": {
     "description": "Has never happened, no update etc."
+  },
+  "generalReconcile": "Reconciliado",
+  "@generalReconcile": {
+    "description": "Booking has been confirmed/reconciled"
   },
   "generalSum": "Suma",
   "@generalSum": {
@@ -493,8 +520,17 @@
     "description": "Currently selected language"
   },
   "settingsLockscreen": "Pantalla de bloqueo",
+  "@settingsLockscreen": {
+    "description": "Setting if a lockscreen is shown (authentication is required on startup)"
+  },
   "settingsLockscreenHelp": "Requerir autenticación al iniciar la aplicación",
+  "@settingsLockscreenHelp": {
+    "description": "Description for lockscreen setting"
+  },
   "settingsLockscreenInitial": "Por favor, autentíquese para activar la pantalla de bloqueo.",
+  "@settingsLockscreenInitial": {
+    "description": "Prompt to authenticate once to set up the lockscreen"
+  },
   "settingsNLAppAccount": "Cuenta por defecto",
   "@settingsNLAppAccount": {
     "description": "Default account which will be used for the transaction."
@@ -641,6 +677,14 @@
   "transactionDialogAttachmentsTitle": "Archivos adjuntos",
   "@transactionDialogAttachmentsTitle": {
     "description": "Dialog Title: Attachments Dialog"
+  },
+  "transactionDialogBillTitle": "Enlace a la factura",
+  "@transactionDialogBillTitle": {
+    "description": "Dialog Title: Link Bill to transaction"
+  },
+  "transactionDialogBillNoBill": "Sin factura",
+  "@transactionDialogBillNoBill": {
+    "description": "Button Label: no bill to be used"
   },
   "transactionDialogCurrencyTitle": "Seleccionar divisa",
   "@transactionDialogCurrencyTitle": {

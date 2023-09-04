@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:quick_actions/quick_actions.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
@@ -87,6 +88,15 @@ class _SplashPageState extends State<SplashPage> {
       page = Container(
         alignment: const Alignment(0, 0),
         child: const CircularProgressIndicator(),
+      );
+      const QuickActions().setShortcutItems(
+        <ShortcutItem>[
+          ShortcutItem(
+            type: "action_transaction_add",
+            localizedTitle: S.of(context).transactionTitleAdd,
+            icon: "action_icon_add",
+          ),
+        ],
       );
     } else {
       log.finer(() => "_loginError available --> show error");

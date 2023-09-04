@@ -886,6 +886,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  quick_actions:
+    dependency: "direct main"
+    description:
+      name: quick_actions
+      sha256: "3930e1cf78a0574495b4ea741ee197323c4a9081321d6ae384b3bfcd84c7ea83"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.6"
+  quick_actions_android:
+    dependency: transitive
+    description:
+      name: quick_actions_android
+      sha256: f2ddc2c0cc5c001e87e62f6de06da18ebc75c6a06d26750f6f12276841c1585c
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.8"
+  quick_actions_ios:
+    dependency: transitive
+    description:
+      name: quick_actions_ios
+      sha256: f086cf98884421188c7c5c13f61b62aeb5b6fb88f197a0601db45108b1444ea6
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.7"
+  quick_actions_platform_interface:
+    dependency: transitive
+    description:
+      name: quick_actions_platform_interface
+      sha256: d2a8566b56eec49f93934528b62033906199c60f4ffaef0cba9ef02fcfed8a81
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   quiver:
     dependency: transitive
     description:

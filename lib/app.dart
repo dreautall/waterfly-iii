@@ -67,17 +67,14 @@ class _WaterflyAppState extends State<WaterflyApp> {
     quickActions.initialize((String shortcutType) {
       log.info("Was launched from QuickAction $shortcutType");
       _quickAction = shortcutType;
-      if (!_startup) {
-        log.finest(() => "App already started, pushing #2");
-        Navigator.push(
-          context,
+      if (!_startup && navigatorKey.currentState != null) {
+        log.finest(() => "App already started, pushing route");
+        navigatorKey.currentState!.push(
           MaterialPageRoute<Widget>(
             builder: (BuildContext context) => const TransactionPage(),
           ),
         );
-        log.finest(() => "done 1");
       }
-      log.finest(() => "done");
     });
     quickActions.clearShortcutItems();
   }

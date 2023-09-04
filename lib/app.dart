@@ -7,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:quick_actions/quick_actions.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:local_auth/local_auth.dart';
@@ -40,6 +41,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
   void initState() {
     super.initState();
 
+    // Notifications
     FlutterLocalNotificationsPlugin().initialize(
       const InitializationSettings(
         android: AndroidInitializationSettings('ic_stat_notification'),
@@ -60,6 +62,15 @@ class _WaterflyAppState extends State<WaterflyApp> {
         }
       },
     );
+
+    // Quick Actions
+    const QuickActions quickActions = QuickActions();
+    quickActions.initialize((String shortcutType) {
+      if (shortcutType == "action_transaction_add") {
+        // :TODO:
+      }
+    });
+    quickActions.clearShortcutItems();
   }
 
   @override

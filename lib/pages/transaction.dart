@@ -378,14 +378,15 @@ class _TransactionPageState extends State<TransactionPage>
               // extract amount
               // Check if string has a decimal separator
               final String amountStr = validMatch.namedGroup("amount") ?? "";
-              final int decimalSepPos = 
-                  amountStr.length >= 3 &&
-                  (amountStr[amountStr.length - 3] == "." ||
-                  amountStr[amountStr.length - 3] == ",") ?
-                  amountStr.length - 3 : amountStr.length - 2;
+              final int decimalSepPos = amountStr.length >= 3 &&
+                      (amountStr[amountStr.length - 3] == "." ||
+                          amountStr[amountStr.length - 3] == ",")
+                  ? amountStr.length - 3
+                  : amountStr.length - 2;
               final String decimalSep =
-                  amountStr.length >= decimalSepPos && decimalSepPos > 0 ? 
-                  amountStr[decimalSepPos] : "";
+                  amountStr.length >= decimalSepPos && decimalSepPos > 0
+                      ? amountStr[decimalSepPos]
+                      : "";
               if (decimalSep == "," || decimalSep == ".") {
                 final double wholes = double.tryParse(amountStr
                         .substring(0, decimalSepPos)
@@ -393,11 +394,12 @@ class _TransactionPageState extends State<TransactionPage>
                         .replaceAll(".", "")) ??
                     0;
                 final String decStr = amountStr
-                        .substring(decimalSepPos + 1)
-                        .replaceAll(",", "")
-                        .replaceAll(".", "");
+                    .substring(decimalSepPos + 1)
+                    .replaceAll(",", "")
+                    .replaceAll(".", "");
                 final double dec = double.tryParse(decStr) ?? 0;
-                amount = decStr.length == 1 ? wholes + dec / 10 : wholes + dec / 100;
+                amount =
+                    decStr.length == 1 ? wholes + dec / 10 : wholes + dec / 100;
               } else {
                 amount = double.tryParse(
                         amountStr.replaceAll(",", "").replaceAll(".", "")) ??

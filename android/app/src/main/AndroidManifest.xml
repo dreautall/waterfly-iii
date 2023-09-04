@@ -182,6 +182,7 @@
         <package android:name="consumer.cbsa.smartapp"/>
         <package android:name="de.dkb.portalapp"/>
         <package android:name="de.dwins.financeguru"/>
+        <package android:name="de.ingdiba.bankingapp"/>
         <package android:name="de.number26.android"/>
         <package android:name="es.bancosantander.apps"/>
         <package android:name="eu.netinfo.colpatria.system"/>

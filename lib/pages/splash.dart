@@ -109,13 +109,20 @@ class _SplashPageState extends State<SplashPage> {
           case AuthErrorApiKey:
           case AuthErrorNoInstance:
           case AuthErrorVersionInvalid:
-          case AuthErrorVersionTooLow:
             AuthError errorType = _loginError as AuthError;
             return errorType.cause;
           case AuthErrorStatusCode:
             AuthErrorStatusCode errorType = _loginError as AuthErrorStatusCode;
             errorDetails += "\n";
             errorDetails += S.of(context).errorStatusCode(errorType.code);
+            return errorType.cause;
+          case AuthErrorVersionTooLow:
+            AuthErrorVersionTooLow errorType =
+                _loginError as AuthErrorVersionTooLow;
+            errorDetails += "\n";
+            errorDetails += S
+                .of(context)
+                .errorMinAPIVersion(errorType.requiredVersion.toString());
             return errorType.cause;
           case HandshakeException:
             showCertButton = true;

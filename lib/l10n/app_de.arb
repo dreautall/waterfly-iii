@@ -104,6 +104,7 @@
   "@errorInvalidURL": {
     "description": "Error: URL is invalid"
   },
+  "errorMinAPIVersion": "Mindestens Firefly API-Version v{requiredVersion} benötigt. Bitte updaten.",
   "errorStatusCode": "Status-Code: {code}",
   "@errorStatusCode": {
     "description": "HTTP status code information on error",
@@ -679,13 +680,13 @@
   "@transactionDialogAttachmentsTitle": {
     "description": "Dialog Title: Attachments Dialog"
   },
-  "transactionDialogBillTitle": "Mit Rechnung verknüpfen",
-  "@transactionDialogBillTitle": {
-    "description": "Dialog Title: Link Bill to transaction"
-  },
   "transactionDialogBillNoBill": "Ohne Rechnung",
   "@transactionDialogBillNoBill": {
     "description": "Button Label: no bill to be used"
+  },
+  "transactionDialogBillTitle": "Mit Rechnung verknüpfen",
+  "@transactionDialogBillTitle": {
+    "description": "Dialog Title: Link Bill to transaction"
   },
   "transactionDialogCurrencyTitle": "Währung auswählen",
   "@transactionDialogCurrencyTitle": {

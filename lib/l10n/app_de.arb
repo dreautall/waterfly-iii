@@ -105,12 +105,22 @@
     "description": "Error: URL is invalid"
   },
   "errorMinAPIVersion": "Mindestens Firefly API-Version v{requiredVersion} benötigt. Bitte updaten.",
+  "@errorMinAPIVersion": {
+    "description": "Error: Required API version not met.",
+    "placeholders": {
+      "requiredVersion": {
+        "type": "String",
+        "example": "2.0.0"
+      }
+    }
+  },
   "errorStatusCode": "Status-Code: {code}",
   "@errorStatusCode": {
     "description": "HTTP status code information on error",
     "placeholders": {
       "code": {
-        "type": "int"
+        "type": "int",
+        "example": "500"
       }
     }
   },

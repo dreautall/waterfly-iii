@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import 'package:local_auth/local_auth.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:quick_actions/quick_actions.dart';
 
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/settings/debug.dart';
@@ -48,11 +49,22 @@ class SettingsPageState extends State<SettingsPage>
             showDialog<Locale?>(
               context: context,
               builder: (BuildContext context) => const LanguageDialog(),
-            ).then((Locale? locale) {
+            ).then((Locale? locale) async {
               if (locale == null) {
                 return;
               }
-              settings.setLocale(locale);
+              await settings.setLocale(locale);
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                const QuickActions().setShortcutItems(
+                  <ShortcutItem>[
+                    ShortcutItem(
+                      type: "action_transaction_add",
+                      localizedTitle: S.of(context).transactionTitleAdd,
+                      icon: "action_icon_add",
+                    ),
+                  ],
+                );
+              });
             });
           },
         ),

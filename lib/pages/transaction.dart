@@ -378,20 +378,28 @@ class _TransactionPageState extends State<TransactionPage>
               // extract amount
               // Check if string has a decimal separator
               final String amountStr = validMatch.namedGroup("amount") ?? "";
+              final int decimalSepPos = amountStr.length >= 3 &&
+                      (amountStr[amountStr.length - 3] == "." ||
+                          amountStr[amountStr.length - 3] == ",")
+                  ? amountStr.length - 3
+                  : amountStr.length - 2;
               final String decimalSep =
-                  amountStr.length >= 3 ? amountStr[amountStr.length - 3] : "";
+                  amountStr.length >= decimalSepPos && decimalSepPos > 0
+                      ? amountStr[decimalSepPos]
+                      : "";
               if (decimalSep == "," || decimalSep == ".") {
                 final double wholes = double.tryParse(amountStr
-                        .substring(0, amountStr.length - 3)
+                        .substring(0, decimalSepPos)
                         .replaceAll(",", "")
                         .replaceAll(".", "")) ??
                     0;
-                final double dec = double.tryParse(amountStr
-                        .substring(amountStr.length - 2)
-                        .replaceAll(",", "")
-                        .replaceAll(".", "")) ??
-                    0;
-                amount = wholes + dec / 100;
+                final String decStr = amountStr
+                    .substring(decimalSepPos + 1)
+                    .replaceAll(",", "")
+                    .replaceAll(".", "");
+                final double dec = double.tryParse(decStr) ?? 0;
+                amount =
+                    decStr.length == 1 ? wholes + dec / 10 : wholes + dec / 100;
               } else {
                 amount = double.tryParse(
                         amountStr.replaceAll(",", "").replaceAll(".", "")) ??

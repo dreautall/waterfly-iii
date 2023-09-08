@@ -7,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:quick_actions/quick_actions.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:local_auth/local_auth.dart';
@@ -33,13 +34,14 @@ class WaterflyApp extends StatefulWidget {
 
 class _WaterflyAppState extends State<WaterflyApp> {
   bool _startup = true;
-  bool _fromNotification = false;
-  late NotificationTransaction _notificationPayload;
+  String? _quickAction;
+  NotificationTransaction? _notificationPayload;
 
   @override
   void initState() {
     super.initState();
 
+    // Notifications
     FlutterLocalNotificationsPlugin().initialize(
       const InitializationSettings(
         android: AndroidInitializationSettings('ic_stat_notification'),
@@ -53,13 +55,28 @@ class _WaterflyAppState extends State<WaterflyApp> {
         if ((details?.didNotificationLaunchApp ?? false) &&
             (details?.notificationResponse?.payload?.isNotEmpty ?? false)) {
           log.info("Was launched from notification!");
-          _fromNotification = true;
           _notificationPayload = NotificationTransaction.fromJson(
             jsonDecode(details!.notificationResponse!.payload!),
           );
         }
       },
     );
+
+    // Quick Actions
+    const QuickActions quickActions = QuickActions();
+    quickActions.initialize((String shortcutType) {
+      log.info("Was launched from QuickAction $shortcutType");
+      _quickAction = shortcutType;
+      if (!_startup && navigatorKey.currentState != null) {
+        log.finest(() => "App already started, pushing route");
+        navigatorKey.currentState!.push(
+          MaterialPageRoute<Widget>(
+            builder: (BuildContext context) => const TransactionPage(),
+          ),
+        );
+      }
+    });
+    quickActions.clearShortcutItems();
   }
 
   @override
@@ -172,7 +189,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
                           f.storageSignInException != null))
                   ? const SplashPage()
                   : signedIn
-                      ? _fromNotification
+                      ? (_notificationPayload != null ||
+                              _quickAction == "action_transaction_add")
                           ? TransactionPage(notification: _notificationPayload)
                           : const NavPage()
                       : const LoginPage(),

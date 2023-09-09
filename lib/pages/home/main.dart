@@ -41,7 +41,7 @@ class _HomeMainState extends State<HomeMain>
   final Map<DateTime, double> lastMonthsEarned = <DateTime, double>{};
   final Map<DateTime, double> lastMonthsSpent = <DateTime, double>{};
   List<ChartDataSet> overviewChartData = <ChartDataSet>[];
-  final Map<String, Category> catChartData = <String, Category>{};
+  final List<InsightGroupEntry> catChartData = <InsightGroupEntry>[];
   final Map<String, Budget> budgetInfos = <String, Budget>{};
 
   final List<charts.Color> possibleChartColors = <charts.Color>[
@@ -311,33 +311,54 @@ class _HomeMainState extends State<HomeMain>
 
     final DateTime now = DateTime.now().toLocal().clearTime();
 
-    final Response<CategoryArray> respCatData = await api.v1CategoriesGet();
-    if (!respCatData.isSuccessful || respCatData.body == null) {
+    catChartData.clear();
+
+    final Response<InsightGroup> respCatIncomeData =
+        await api.v1InsightIncomeCategoryGet(
+      start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+    );
+    final Response<InsightGroup> respCatExpenseData =
+        await api.v1InsightExpenseCategoryGet(
+      start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+    );
+
+    if (!respCatExpenseData.isSuccessful || respCatExpenseData.body == null) {
       if (context.mounted) {
         throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respCatData.error?.toString() ?? ""),
+          S.of(context).errorAPIInvalidResponse(
+              respCatExpenseData.error?.toString() ?? ""),
         );
       } else {
         throw Exception(
-          "[nocontext] Invalid API response: ${respCatData.error}",
+          "[nocontext] Invalid API response: ${respCatExpenseData.error}",
         );
       }
     }
 
-    for (CategoryRead e in respCatData.body!.data) {
-      final Response<CategorySingle> respCat = await api.v1CategoriesIdGet(
-        id: e.id,
-        start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
-        end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-      );
-
-      if (!respCat.isSuccessful || respCat.body == null) {
+    Map<String, double> catIncomes = <String, double>{};
+    for (InsightGroupEntry cat
+        in respCatIncomeData.body ?? <InsightGroupEntry>[]) {
+      if (cat.id?.isEmpty ?? true) {
         continue;
       }
+      catIncomes[cat.id!] = cat.differenceFloat ?? 0;
+    }
 
-      catChartData[respCat.body!.data.id] = respCat.body!.data.attributes;
+    for (InsightGroupEntry cat in respCatExpenseData.body!) {
+      if (cat.id?.isEmpty ?? true) {
+        continue;
+      }
+      double amount = cat.differenceFloat ?? 0;
+      if (catIncomes.containsKey(cat.id)) {
+        amount += catIncomes[cat.id]!;
+      }
+      // Don't add "positive" categories, we want to show expenses
+      if (amount >= 0) {
+        continue;
+      }
+      catChartData.add(cat.copyWith(differenceFloat: amount));
     }
 
     return true;
@@ -1252,7 +1273,7 @@ class CategoryChart extends StatelessWidget {
     required this.possibleChartColors,
   });
 
-  final Map<String, Category> catChartData;
+  final List<InsightGroupEntry> catChartData;
   final List<charts.Color> possibleChartColors;
 
   @override
@@ -1261,24 +1282,17 @@ class CategoryChart extends StatelessWidget {
     CurrencyRead defaultCurrency =
         context.read<FireflyService>().defaultCurrency;
 
-    catChartData.forEach((_, Category e) {
-      double sum = 0;
-      if (e.spent == null) {
-        return;
-      }
-      for (CategorySpent f in e.spent!) {
-        sum += double.tryParse(f.sum ?? "") ?? 0;
-      }
-      if (sum == 0) {
-        return;
+    for (InsightGroupEntry e in catChartData) {
+      if ((e.name?.isEmpty ?? true) || e.differenceFloat == 0) {
+        continue;
       }
       data.add(
         LabelAmountChart(
-          e.name,
-          sum,
+          e.name!,
+          e.differenceFloat ?? 0,
         ),
       );
-    });
+    }
 
     data.sort((LabelAmountChart a, LabelAmountChart b) =>
         a.amount.compareTo(b.amount));

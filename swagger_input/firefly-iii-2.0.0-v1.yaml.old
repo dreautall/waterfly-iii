@@ -3,10 +3,10 @@ servers:
   - description: Firefly III demo site
     url: https://demo.firefly-iii.org/api
 info:
-  title: Firefly III API v2.0.7
+  title: Firefly III API v2.0.0
   description: |
-    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2023-09-01T17:55:04+00:00
-  version: "2.0.7"
+    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2023-03-05T14:16:31+00:00
+  version: "2.0.0"
   contact:
     name: James Cole
     email: james@firefly-iii.org
@@ -10509,7 +10509,7 @@ paths:
           name: code
           required: true
           schema:
-            type: string
+            type: integer
             example: GBP
           description: The currency code.
       responses:
@@ -13555,8 +13555,8 @@ components:
           example: "Asset account"
           description: Account type of the account found by the auto-complete search.
         currency_id:
-          type: int
-          format: int
+          type: string
+          format: string
           example: "12"
           description: ID for the currency used by this account.
         currency_name:
@@ -14032,7 +14032,6 @@ components:
     DataDestroyObject:
       type: string
       enum:
-        - not_assets_liabilities
         - budgets
         - bills
         - piggy_banks
@@ -14861,7 +14860,6 @@ components:
           format: date-time
           example: "2018-09-17T12:46:47+01:00"
           readOnly: true
-          description: "The timestamp for this date is always 23:59:59, to indicate it's the balance at the very END of that particular day."
         iban:
           type: string
           format: iban
@@ -14981,8 +14979,8 @@ components:
           description: Represents the opening balance, the initial amount this account holds.
         opening_balance_date:
           type: string
-          format: date-time
-          example: "2018-09-17T12:46:47+01:00"
+          format: date
+          example: "2018-09-17"
           nullable: true
           description: Represents the date of the opening balance.
         virtual_balance:
@@ -15023,8 +15021,8 @@ components:
         monthly_payment_date:
           nullable: true
           type: string
-          format: date-time
-          example: "2018-09-17T12:46:47+01:00"
+          format: date
+          example: "2018-09-17"
           description: "Mandatory when the account_role is ccAsset. Moment at which CC payment installments are asked for by the bank."
         liability_type:
           $ref: '#/components/schemas/LiabilityType'
@@ -15093,8 +15091,8 @@ components:
           example: "-1012.12"
         opening_balance_date:
           type: string
-          format: date-time
-          example: "2018-09-17T12:46:47+01:00"
+          format: date
+          example: "2018-09-17"
           nullable: true
         virtual_balance:
           type: string
@@ -15134,8 +15132,8 @@ components:
         monthly_payment_date:
           nullable: true
           type: string
-          format: date-time
-          example: "2018-09-17T12:46:47+01:00"
+          format: date
+          example: "2018-09-17"
           description: "Mandatory when the account_role is ccAsset. Moment at which CC payment installments are asked for by the bank."
         liability_type:
           $ref: '#/components/schemas/LiabilityType'
@@ -15259,7 +15257,6 @@ components:
           nullable: true
     AttachmentUpdate:
       type: object
-      required: []
       properties:
         filename:
           type: string
@@ -15368,10 +15365,6 @@ components:
           description: End date of the available budget.
     AvailableBudgetUpdate:
       type: object
-      required:
-        - amount
-        - start
-        - end
       properties:
         currency_id:
           type: string
@@ -15628,8 +15621,6 @@ components:
           description: The name of the group. NULL if no group.
     BillUpdate:
       type: object
-      required:
-        - name
       properties:
         currency_id:
           type: string
@@ -15802,8 +15793,6 @@ components:
           $ref: '#/components/schemas/AutoBudgetPeriod'
     BudgetUpdate:
       type: object
-      required:
-        - name
       properties:
         name:
           type: string
@@ -16039,8 +16028,6 @@ components:
           example: "Some example notes"
     CategoryUpdate:
       type: object
-      required:
-        - name
       properties:
         name:
           type: string
@@ -16055,9 +16042,9 @@ components:
       type: object
       properties:
         currency_id:
-          type: int
-          format: int
-          example: "5"
+          type: integer
+          format: int32
+          example: 5
         currency_code:
           type: string
           format: string
@@ -16080,8 +16067,8 @@ components:
       type: object
       properties:
         currency_id:
-          type: int
-          format: int
+          type: integer
+          format: int32
           example: "5"
         currency_code:
           type: string
@@ -16128,8 +16115,6 @@ components:
           description: "Order of the object group"
     ObjectGroupUpdate:
       type: object
-      required:
-        - title
       properties:
         title:
           type: string
@@ -16222,15 +16207,15 @@ components:
           readOnly: true
         start_date:
           type: string
-          format: date
-          example: "2018-09-17"
-          description: "The date you started with this piggy bank."
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
+          description: The date you started with this piggy bank.
         target_date:
           type: string
-          format: date
+          format: date-time
           nullable: true
-          example: "2018-09-17"
-          description: "The date you intend to finish saving money."
+          example: "2018-09-17T12:46:47+01:00"
+          description: The date you intend to finish saving money.
         order:
           type: integer
           format: int32
@@ -16298,7 +16283,7 @@ components:
           type: string
           format: date
           nullable: true
-          example: "2018-09-17"
+          example: "2020-09-17"
           description: The date you intend to finish saving money.
         order:
           type: integer
@@ -16366,7 +16351,7 @@ components:
           type: string
           format: date
           nullable: true
-          example: "2018-09-17"
+          example: "2020-09-17"
           description: The date you intend to finish saving money.
         order:
           type: integer
@@ -16494,20 +16479,20 @@ components:
           description: Not to be confused with the description of the actual transaction(s) being created.
         first_date:
           type: string
-          format: date
-          example: "2018-09-17"
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
           description: "First time the recurring transaction will fire. Must be after today."
         latest_date:
           type: string
-          format: date
-          example: "2018-09-17"
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
           description: "Last time the recurring transaction has fired."
           nullable: true
           readOnly: true
         repeat_until:
           type: string
-          format: date
-          example: "2018-09-17"
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
           description: "Date until the recurring transaction can fire. Use either this field or repetitions."
           nullable: true
         nr_of_repetitions:
@@ -16563,7 +16548,7 @@ components:
         first_date:
           type: string
           format: date
-          example: "2018-09-17"
+          example: "2017-09-17"
           description: "First time the recurring transaction will fire. Must be after today."
         repeat_until:
           type: string
@@ -16602,7 +16587,6 @@ components:
             $ref: '#/components/schemas/RecurrenceTransactionStore'
     RecurrenceUpdate:
       type: object
-      required: []
       properties:
         title:
           type: string
@@ -16616,7 +16600,7 @@ components:
         first_date:
           type: string
           format: date
-          example: "2018-09-17"
+          example: "2017-09-17"
           description: "First time the recurring transaction will fire."
         repeat_until:
           type: string
@@ -16752,7 +16736,6 @@ components:
             4. Skip to the next Monday.
     RecurrenceRepetitionUpdate:
       type: object
-      required: []
       properties:
         type:
           $ref: '#/components/schemas/RecurrenceRepetitionType'
@@ -16788,10 +16771,6 @@ components:
         - description
         - amount
       properties:
-        id:
-          type: string
-          format: string
-          example: "ID of the recurring transaction. Not to be confused with the ID of the recurrence itself."
         description:
           type: string
           format: string
@@ -16932,17 +16911,6 @@ components:
           format: string
           nullable: true
           description: Optional. Use either this or the piggy_bank_id
-        bill_id:
-          type: string
-          format: string
-          example: "123"
-          nullable: true
-          description: Optional. Use either this or the bill_name
-        bill_name:
-          type: string
-          format: string
-          nullable: true
-          description: Optional. Use either this or the bill_id
     RecurrenceTransactionStore:
       type: object
       required:
@@ -17024,22 +16992,9 @@ components:
           example: "123"
           nullable: true
           description: Optional.
-        bill_id:
-          type: string
-          format: string
-          example: "123"
-          nullable: true
-          description: Optional.
     RecurrenceTransactionUpdate:
       type: object
-      required:
-        - id
       properties:
-        id:
-          type: string
-          format: string
-          required: true
-          example: "ID of the recurring transaction. Not to be confused with the ID of the recurrence itself. Is marked as REQUIRED but can be skipped when there is only ONE transaction."
         description:
           type: string
           format: string
@@ -17106,12 +17061,6 @@ components:
           format: string
           example: "123"
           nullable: true
-        bill_id:
-          type: string
-          format: string
-          example: "123"
-          nullable: true
-          description: Optional.
     Rule:
       type: object
       required:
@@ -17241,7 +17190,6 @@ components:
             $ref: '#/components/schemas/RuleActionStore'
     RuleUpdate:
       type: object
-      required: []
       properties:
         title:
           type: string
@@ -17366,7 +17314,6 @@ components:
           description: When true, other actions will not be fired after this action has fired. Defaults to false.
     RuleActionUpdate:
       type: object
-      required: []
       properties:
         type:
           $ref: '#/components/schemas/RuleActionKeyword'
@@ -17448,7 +17395,6 @@ components:
           example: true
     RuleGroupUpdate:
       type: object
-      required: []
       properties:
         title:
           type: string
@@ -17545,7 +17491,6 @@ components:
           description: When true, other triggers will not be checked if this trigger was triggered. Defaults to false.
     RuleTriggerUpdate:
       type: object
-      required: []
       properties:
         type:
           $ref: '#/components/schemas/RuleTriggerKeyword'
@@ -17592,8 +17537,8 @@ components:
           description: The tag
         date:
           type: string
-          format: date
-          example: "2018-09-17"
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
           description: The date to which the tag is applicable.
           nullable: true
         description:
@@ -17662,7 +17607,6 @@ components:
     TagModelUpdate:
       title: A single tag
       type: object
-      required: []
       properties:
         tag:
           type: string
@@ -17780,7 +17724,6 @@ components:
           description: Supports 0-16 decimals.
     CurrencyUpdate:
       type: object
-      required: []
       properties:
         enabled:
           type: boolean
@@ -17847,7 +17790,6 @@ components:
             $ref: '#/components/schemas/TransactionSplitStore'
     TransactionUpdate:
       type: object
-      required: []
       properties:
         apply_rules:
           type: boolean
@@ -17952,7 +17894,6 @@ components:
           description: Optional. Some notes.
     TransactionLinkUpdate:
       type: object
-      required: []
       properties:
         link_type_id:
           type: string
@@ -18026,7 +17967,6 @@ components:
           format: string
           example: "(partially) pays for"
     LinkTypeUpdate:
-      required: []
       type: object
       properties:
         name:
@@ -18279,7 +18219,6 @@ components:
           nullable: true
     TransactionSplitUpdate:
       type: object
-      required: []
       properties:
         transaction_journal_id:
           type: string
@@ -18656,7 +18595,6 @@ components:
     WebhookUpdate:
       title: A single webhook
       type: object
-      required: []
       properties:
         active:
           type: boolean
@@ -19202,14 +19140,6 @@ components:
           type: string
           format: uri
           example: "https://demo.firefly-iii.org/api/v1/OBJECT?&page=1"
-        next:
-          type: string
-          format: uri
-          example: "https://demo.firefly-iii.org/api/v1/OBJECT?&page=3"
-        prev:
-          type: string
-          format: uri
-          example: "https://demo.firefly-iii.org/api/v1/OBJECT?&page=2"
         last:
           type: string
           format: uri
@@ -19471,7 +19401,7 @@ components:
           description: System generated identifier for original creator of transaction.
           readOnly: true
         recurrence_id:
-          type: string
+          type: String
           nullable: true
           format: string
           description: Reference to recurrence that made the transaction.

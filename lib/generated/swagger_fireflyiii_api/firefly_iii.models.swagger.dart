@@ -18,13 +18,14 @@ class AccountArray {
   factory AccountArray.fromJson(Map<String, dynamic> json) =>
       _$AccountArrayFromJson(json);
 
+  static const toJsonFactory = _$AccountArrayToJson;
+  Map<String, dynamic> toJson() => _$AccountArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <AccountRead>[])
   final List<AccountRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$AccountArrayFromJson;
-  static const toJsonFactory = _$AccountArrayToJson;
-  Map<String, dynamic> toJson() => _$AccountArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -53,13 +54,14 @@ class AttachmentArray {
   factory AttachmentArray.fromJson(Map<String, dynamic> json) =>
       _$AttachmentArrayFromJson(json);
 
+  static const toJsonFactory = _$AttachmentArrayToJson;
+  Map<String, dynamic> toJson() => _$AttachmentArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <AttachmentRead>[])
   final List<AttachmentRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$AttachmentArrayFromJson;
-  static const toJsonFactory = _$AttachmentArrayToJson;
-  Map<String, dynamic> toJson() => _$AttachmentArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -105,14 +107,15 @@ class AvailableBudgetArray {
   factory AvailableBudgetArray.fromJson(Map<String, dynamic> json) =>
       _$AvailableBudgetArrayFromJson(json);
 
+  static const toJsonFactory = _$AvailableBudgetArrayToJson;
+  Map<String, dynamic> toJson() => _$AvailableBudgetArrayToJson(this);
+
   @JsonKey(
       name: 'data', includeIfNull: false, defaultValue: <AvailableBudgetRead>[])
   final List<AvailableBudgetRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$AvailableBudgetArrayFromJson;
-  static const toJsonFactory = _$AvailableBudgetArrayToJson;
-  Map<String, dynamic> toJson() => _$AvailableBudgetArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -142,13 +145,14 @@ class BillArray {
   factory BillArray.fromJson(Map<String, dynamic> json) =>
       _$BillArrayFromJson(json);
 
+  static const toJsonFactory = _$BillArrayToJson;
+  Map<String, dynamic> toJson() => _$BillArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <BillRead>[])
   final List<BillRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$BillArrayFromJson;
-  static const toJsonFactory = _$BillArrayToJson;
-  Map<String, dynamic> toJson() => _$BillArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -177,13 +181,14 @@ class BudgetArray {
   factory BudgetArray.fromJson(Map<String, dynamic> json) =>
       _$BudgetArrayFromJson(json);
 
+  static const toJsonFactory = _$BudgetArrayToJson;
+  Map<String, dynamic> toJson() => _$BudgetArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <BudgetRead>[])
   final List<BudgetRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$BudgetArrayFromJson;
-  static const toJsonFactory = _$BudgetArrayToJson;
-  Map<String, dynamic> toJson() => _$BudgetArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -212,14 +217,15 @@ class BudgetLimitArray {
   factory BudgetLimitArray.fromJson(Map<String, dynamic> json) =>
       _$BudgetLimitArrayFromJson(json);
 
+  static const toJsonFactory = _$BudgetLimitArrayToJson;
+  Map<String, dynamic> toJson() => _$BudgetLimitArrayToJson(this);
+
   @JsonKey(
       name: 'data', includeIfNull: false, defaultValue: <BudgetLimitRead>[])
   final List<BudgetLimitRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$BudgetLimitArrayFromJson;
-  static const toJsonFactory = _$BudgetLimitArrayToJson;
-  Map<String, dynamic> toJson() => _$BudgetLimitArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -248,13 +254,14 @@ class CategoryArray {
   factory CategoryArray.fromJson(Map<String, dynamic> json) =>
       _$CategoryArrayFromJson(json);
 
+  static const toJsonFactory = _$CategoryArrayToJson;
+  Map<String, dynamic> toJson() => _$CategoryArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <CategoryRead>[])
   final List<CategoryRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$CategoryArrayFromJson;
-  static const toJsonFactory = _$CategoryArrayToJson;
-  Map<String, dynamic> toJson() => _$CategoryArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -286,6 +293,9 @@ class CurrencyArray {
   factory CurrencyArray.fromJson(Map<String, dynamic> json) =>
       _$CurrencyArrayFromJson(json);
 
+  static const toJsonFactory = _$CurrencyArrayToJson;
+  Map<String, dynamic> toJson() => _$CurrencyArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <CurrencyRead>[])
   final List<CurrencyRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -293,8 +303,6 @@ class CurrencyArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$CurrencyArrayFromJson;
-  static const toJsonFactory = _$CurrencyArrayToJson;
-  Map<String, dynamic> toJson() => _$CurrencyArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -331,6 +339,9 @@ class LinkTypeArray {
   factory LinkTypeArray.fromJson(Map<String, dynamic> json) =>
       _$LinkTypeArrayFromJson(json);
 
+  static const toJsonFactory = _$LinkTypeArrayToJson;
+  Map<String, dynamic> toJson() => _$LinkTypeArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <LinkTypeRead>[])
   final List<LinkTypeRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -338,8 +349,6 @@ class LinkTypeArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$LinkTypeArrayFromJson;
-  static const toJsonFactory = _$LinkTypeArrayToJson;
-  Map<String, dynamic> toJson() => _$LinkTypeArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -375,14 +384,15 @@ class ObjectGroupArray {
   factory ObjectGroupArray.fromJson(Map<String, dynamic> json) =>
       _$ObjectGroupArrayFromJson(json);
 
+  static const toJsonFactory = _$ObjectGroupArrayToJson;
+  Map<String, dynamic> toJson() => _$ObjectGroupArrayToJson(this);
+
   @JsonKey(
       name: 'data', includeIfNull: false, defaultValue: <ObjectGroupRead>[])
   final List<ObjectGroupRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$ObjectGroupArrayFromJson;
-  static const toJsonFactory = _$ObjectGroupArrayToJson;
-  Map<String, dynamic> toJson() => _$ObjectGroupArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -412,6 +422,9 @@ class PiggyBankArray {
   factory PiggyBankArray.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankArrayFromJson(json);
 
+  static const toJsonFactory = _$PiggyBankArrayToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <PiggyBankRead>[])
   final List<PiggyBankRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -419,8 +432,6 @@ class PiggyBankArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$PiggyBankArrayFromJson;
-  static const toJsonFactory = _$PiggyBankArrayToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -457,6 +468,9 @@ class PiggyBankEventArray {
   factory PiggyBankEventArray.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankEventArrayFromJson(json);
 
+  static const toJsonFactory = _$PiggyBankEventArrayToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankEventArrayToJson(this);
+
   @JsonKey(
       name: 'data', includeIfNull: false, defaultValue: <PiggyBankEventRead>[])
   final List<PiggyBankEventRead> data;
@@ -465,8 +479,6 @@ class PiggyBankEventArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$PiggyBankEventArrayFromJson;
-  static const toJsonFactory = _$PiggyBankEventArrayToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankEventArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -503,6 +515,9 @@ class PreferenceArray {
   factory PreferenceArray.fromJson(Map<String, dynamic> json) =>
       _$PreferenceArrayFromJson(json);
 
+  static const toJsonFactory = _$PreferenceArrayToJson;
+  Map<String, dynamic> toJson() => _$PreferenceArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <PreferenceRead>[])
   final List<PreferenceRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -510,8 +525,6 @@ class PreferenceArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$PreferenceArrayFromJson;
-  static const toJsonFactory = _$PreferenceArrayToJson;
-  Map<String, dynamic> toJson() => _$PreferenceArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -548,6 +561,9 @@ class RecurrenceArray {
   factory RecurrenceArray.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceArrayFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceArrayToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <RecurrenceRead>[])
   final List<RecurrenceRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -555,8 +571,6 @@ class RecurrenceArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$RecurrenceArrayFromJson;
-  static const toJsonFactory = _$RecurrenceArrayToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -593,6 +607,9 @@ class RuleArray {
   factory RuleArray.fromJson(Map<String, dynamic> json) =>
       _$RuleArrayFromJson(json);
 
+  static const toJsonFactory = _$RuleArrayToJson;
+  Map<String, dynamic> toJson() => _$RuleArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <RuleRead>[])
   final List<RuleRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -600,8 +617,6 @@ class RuleArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$RuleArrayFromJson;
-  static const toJsonFactory = _$RuleArrayToJson;
-  Map<String, dynamic> toJson() => _$RuleArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -637,6 +652,9 @@ class RuleGroupArray {
   factory RuleGroupArray.fromJson(Map<String, dynamic> json) =>
       _$RuleGroupArrayFromJson(json);
 
+  static const toJsonFactory = _$RuleGroupArrayToJson;
+  Map<String, dynamic> toJson() => _$RuleGroupArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <RuleGroupRead>[])
   final List<RuleGroupRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -644,8 +662,6 @@ class RuleGroupArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$RuleGroupArrayFromJson;
-  static const toJsonFactory = _$RuleGroupArrayToJson;
-  Map<String, dynamic> toJson() => _$RuleGroupArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -682,6 +698,9 @@ class TagArray {
   factory TagArray.fromJson(Map<String, dynamic> json) =>
       _$TagArrayFromJson(json);
 
+  static const toJsonFactory = _$TagArrayToJson;
+  Map<String, dynamic> toJson() => _$TagArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <TagRead>[])
   final List<TagRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -689,8 +708,6 @@ class TagArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$TagArrayFromJson;
-  static const toJsonFactory = _$TagArrayToJson;
-  Map<String, dynamic> toJson() => _$TagArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -726,6 +743,9 @@ class TransactionLinkArray {
   factory TransactionLinkArray.fromJson(Map<String, dynamic> json) =>
       _$TransactionLinkArrayFromJson(json);
 
+  static const toJsonFactory = _$TransactionLinkArrayToJson;
+  Map<String, dynamic> toJson() => _$TransactionLinkArrayToJson(this);
+
   @JsonKey(
       name: 'data', includeIfNull: false, defaultValue: <TransactionLinkRead>[])
   final List<TransactionLinkRead> data;
@@ -734,8 +754,6 @@ class TransactionLinkArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$TransactionLinkArrayFromJson;
-  static const toJsonFactory = _$TransactionLinkArrayToJson;
-  Map<String, dynamic> toJson() => _$TransactionLinkArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -772,6 +790,9 @@ class UserArray {
   factory UserArray.fromJson(Map<String, dynamic> json) =>
       _$UserArrayFromJson(json);
 
+  static const toJsonFactory = _$UserArrayToJson;
+  Map<String, dynamic> toJson() => _$UserArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <UserRead>[])
   final List<UserRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -779,8 +800,6 @@ class UserArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$UserArrayFromJson;
-  static const toJsonFactory = _$UserArrayToJson;
-  Map<String, dynamic> toJson() => _$UserArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -816,6 +835,9 @@ class WebhookArray {
   factory WebhookArray.fromJson(Map<String, dynamic> json) =>
       _$WebhookArrayFromJson(json);
 
+  static const toJsonFactory = _$WebhookArrayToJson;
+  Map<String, dynamic> toJson() => _$WebhookArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <WebhookRead>[])
   final List<WebhookRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -823,8 +845,6 @@ class WebhookArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$WebhookArrayFromJson;
-  static const toJsonFactory = _$WebhookArrayToJson;
-  Map<String, dynamic> toJson() => _$WebhookArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -860,14 +880,15 @@ class WebhookAttemptArray {
   factory WebhookAttemptArray.fromJson(Map<String, dynamic> json) =>
       _$WebhookAttemptArrayFromJson(json);
 
+  static const toJsonFactory = _$WebhookAttemptArrayToJson;
+  Map<String, dynamic> toJson() => _$WebhookAttemptArrayToJson(this);
+
   @JsonKey(
       name: 'data', includeIfNull: false, defaultValue: <WebhookAttemptRead>[])
   final List<WebhookAttemptRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$WebhookAttemptArrayFromJson;
-  static const toJsonFactory = _$WebhookAttemptArrayToJson;
-  Map<String, dynamic> toJson() => _$WebhookAttemptArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -897,14 +918,15 @@ class WebhookMessageArray {
   factory WebhookMessageArray.fromJson(Map<String, dynamic> json) =>
       _$WebhookMessageArrayFromJson(json);
 
+  static const toJsonFactory = _$WebhookMessageArrayToJson;
+  Map<String, dynamic> toJson() => _$WebhookMessageArrayToJson(this);
+
   @JsonKey(
       name: 'data', includeIfNull: false, defaultValue: <WebhookMessageRead>[])
   final List<WebhookMessageRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$WebhookMessageArrayFromJson;
-  static const toJsonFactory = _$WebhookMessageArrayToJson;
-  Map<String, dynamic> toJson() => _$WebhookMessageArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -941,6 +963,9 @@ class AutocompleteAccount {
   factory AutocompleteAccount.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteAccountFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteAccountToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteAccountToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -960,8 +985,6 @@ class AutocompleteAccount {
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int currencyDecimalPlaces;
   static const fromJsonFactory = _$AutocompleteAccountFromJson;
-  static const toJsonFactory = _$AutocompleteAccountToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteAccountToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1033,6 +1056,9 @@ class AutocompleteBill {
   factory AutocompleteBill.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteBillFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteBillToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteBillToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1040,8 +1066,6 @@ class AutocompleteBill {
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
   static const fromJsonFactory = _$AutocompleteBillFromJson;
-  static const toJsonFactory = _$AutocompleteBillToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteBillToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1074,13 +1098,14 @@ class AutocompleteBudget {
   factory AutocompleteBudget.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteBudgetFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteBudgetToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteBudgetToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   static const fromJsonFactory = _$AutocompleteBudgetFromJson;
-  static const toJsonFactory = _$AutocompleteBudgetToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteBudgetToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1109,13 +1134,14 @@ class AutocompleteCategory {
   factory AutocompleteCategory.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteCategoryFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteCategoryToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteCategoryToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   static const fromJsonFactory = _$AutocompleteCategoryFromJson;
-  static const toJsonFactory = _$AutocompleteCategoryToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteCategoryToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1147,6 +1173,9 @@ class AutocompleteCurrency {
   factory AutocompleteCurrency.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteCurrencyFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteCurrencyToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteCurrencyToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1158,8 +1187,6 @@ class AutocompleteCurrency {
   @JsonKey(name: 'decimal_places', includeIfNull: false)
   final int decimalPlaces;
   static const fromJsonFactory = _$AutocompleteCurrencyFromJson;
-  static const toJsonFactory = _$AutocompleteCurrencyToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteCurrencyToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1209,6 +1236,9 @@ class AutocompleteCurrencyCode {
   factory AutocompleteCurrencyCode.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteCurrencyCodeFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteCurrencyCodeToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteCurrencyCodeToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1220,8 +1250,6 @@ class AutocompleteCurrencyCode {
   @JsonKey(name: 'decimal_places', includeIfNull: false)
   final int decimalPlaces;
   static const fromJsonFactory = _$AutocompleteCurrencyCodeFromJson;
-  static const toJsonFactory = _$AutocompleteCurrencyCodeToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteCurrencyCodeToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1269,6 +1297,9 @@ class AutocompleteObjectGroup {
   factory AutocompleteObjectGroup.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteObjectGroupFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteObjectGroupToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteObjectGroupToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'title', includeIfNull: false)
@@ -1276,8 +1307,6 @@ class AutocompleteObjectGroup {
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   static const fromJsonFactory = _$AutocompleteObjectGroupFromJson;
-  static const toJsonFactory = _$AutocompleteObjectGroupToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteObjectGroupToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1315,6 +1344,9 @@ class AutocompletePiggy {
   factory AutocompletePiggy.fromJson(Map<String, dynamic> json) =>
       _$AutocompletePiggyFromJson(json);
 
+  static const toJsonFactory = _$AutocompletePiggyToJson;
+  Map<String, dynamic> toJson() => _$AutocompletePiggyToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1334,8 +1366,6 @@ class AutocompletePiggy {
   @JsonKey(name: 'object_group_title', includeIfNull: false)
   final String? objectGroupTitle;
   static const fromJsonFactory = _$AutocompletePiggyFromJson;
-  static const toJsonFactory = _$AutocompletePiggyToJson;
-  Map<String, dynamic> toJson() => _$AutocompletePiggyToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1414,6 +1444,9 @@ class AutocompletePiggyBalance {
   factory AutocompletePiggyBalance.fromJson(Map<String, dynamic> json) =>
       _$AutocompletePiggyBalanceFromJson(json);
 
+  static const toJsonFactory = _$AutocompletePiggyBalanceToJson;
+  Map<String, dynamic> toJson() => _$AutocompletePiggyBalanceToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1433,8 +1466,6 @@ class AutocompletePiggyBalance {
   @JsonKey(name: 'object_group_title', includeIfNull: false)
   final String? objectGroupTitle;
   static const fromJsonFactory = _$AutocompletePiggyBalanceFromJson;
-  static const toJsonFactory = _$AutocompletePiggyBalanceToJson;
-  Map<String, dynamic> toJson() => _$AutocompletePiggyBalanceToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1508,6 +1539,9 @@ class AutocompleteRecurrence {
   factory AutocompleteRecurrence.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteRecurrenceFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteRecurrenceToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteRecurrenceToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1515,8 +1549,6 @@ class AutocompleteRecurrence {
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
   static const fromJsonFactory = _$AutocompleteRecurrenceFromJson;
-  static const toJsonFactory = _$AutocompleteRecurrenceToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteRecurrenceToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1554,6 +1586,9 @@ class AutocompleteRule {
   factory AutocompleteRule.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteRuleFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteRuleToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteRuleToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1561,8 +1596,6 @@ class AutocompleteRule {
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
   static const fromJsonFactory = _$AutocompleteRuleFromJson;
-  static const toJsonFactory = _$AutocompleteRuleToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteRuleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1599,6 +1632,9 @@ class AutocompleteRuleGroup {
   factory AutocompleteRuleGroup.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteRuleGroupFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteRuleGroupToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteRuleGroupToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1606,8 +1642,6 @@ class AutocompleteRuleGroup {
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
   static const fromJsonFactory = _$AutocompleteRuleGroupFromJson;
-  static const toJsonFactory = _$AutocompleteRuleGroupToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteRuleGroupToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1645,6 +1679,9 @@ class AutocompleteTag {
   factory AutocompleteTag.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteTagFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteTagToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteTagToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1652,8 +1689,6 @@ class AutocompleteTag {
   @JsonKey(name: 'tag', includeIfNull: false)
   final String tag;
   static const fromJsonFactory = _$AutocompleteTagFromJson;
-  static const toJsonFactory = _$AutocompleteTagToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteTagToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1686,6 +1721,9 @@ class AutocompleteTransaction {
   factory AutocompleteTransaction.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteTransactionFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteTransactionToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteTransactionToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'transaction_group_id', includeIfNull: false)
@@ -1695,8 +1733,6 @@ class AutocompleteTransaction {
   @JsonKey(name: 'description', includeIfNull: false)
   final String description;
   static const fromJsonFactory = _$AutocompleteTransactionFromJson;
-  static const toJsonFactory = _$AutocompleteTransactionToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteTransactionToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1743,6 +1779,9 @@ class AutocompleteTransactionID {
   factory AutocompleteTransactionID.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteTransactionIDFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteTransactionIDToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteTransactionIDToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'transaction_group_id', includeIfNull: false)
@@ -1752,8 +1791,6 @@ class AutocompleteTransactionID {
   @JsonKey(name: 'description', includeIfNull: false)
   final String description;
   static const fromJsonFactory = _$AutocompleteTransactionIDFromJson;
-  static const toJsonFactory = _$AutocompleteTransactionIDToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteTransactionIDToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1799,6 +1836,9 @@ class AutocompleteTransactionType {
   factory AutocompleteTransactionType.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteTransactionTypeFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteTransactionTypeToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteTransactionTypeToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1806,8 +1846,6 @@ class AutocompleteTransactionType {
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   static const fromJsonFactory = _$AutocompleteTransactionTypeFromJson;
-  static const toJsonFactory = _$AutocompleteTransactionTypeToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteTransactionTypeToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1838,11 +1876,12 @@ class ChartDataPoint {
   factory ChartDataPoint.fromJson(Map<String, dynamic> json) =>
       _$ChartDataPointFromJson(json);
 
+  static const toJsonFactory = _$ChartDataPointToJson;
+  Map<String, dynamic> toJson() => _$ChartDataPointToJson(this);
+
   @JsonKey(name: 'key', includeIfNull: false)
   final String? key;
   static const fromJsonFactory = _$ChartDataPointFromJson;
-  static const toJsonFactory = _$ChartDataPointToJson;
-  Map<String, dynamic> toJson() => _$ChartDataPointToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1876,6 +1915,9 @@ class ChartDataSet {
   factory ChartDataSet.fromJson(Map<String, dynamic> json) =>
       _$ChartDataSetFromJson(json);
 
+  static const toJsonFactory = _$ChartDataSetToJson;
+  Map<String, dynamic> toJson() => _$ChartDataSetToJson(this);
+
   @JsonKey(name: 'label', includeIfNull: false)
   final String? label;
   @JsonKey(name: 'currency_id', includeIfNull: false)
@@ -1897,8 +1939,6 @@ class ChartDataSet {
   @JsonKey(name: 'entries', includeIfNull: false)
   final Object? entries;
   static const fromJsonFactory = _$ChartDataSetFromJson;
-  static const toJsonFactory = _$ChartDataSetToJson;
-  Map<String, dynamic> toJson() => _$ChartDataSetToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1978,6 +2018,9 @@ class InsightGroupEntry {
   factory InsightGroupEntry.fromJson(Map<String, dynamic> json) =>
       _$InsightGroupEntryFromJson(json);
 
+  static const toJsonFactory = _$InsightGroupEntryToJson;
+  Map<String, dynamic> toJson() => _$InsightGroupEntryToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1991,8 +2034,6 @@ class InsightGroupEntry {
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   static const fromJsonFactory = _$InsightGroupEntryFromJson;
-  static const toJsonFactory = _$InsightGroupEntryToJson;
-  Map<String, dynamic> toJson() => _$InsightGroupEntryToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2049,6 +2090,9 @@ class InsightTotalEntry {
   factory InsightTotalEntry.fromJson(Map<String, dynamic> json) =>
       _$InsightTotalEntryFromJson(json);
 
+  static const toJsonFactory = _$InsightTotalEntryToJson;
+  Map<String, dynamic> toJson() => _$InsightTotalEntryToJson(this);
+
   @JsonKey(name: 'difference', includeIfNull: false)
   final String? difference;
   @JsonKey(name: 'difference_float', includeIfNull: false)
@@ -2058,8 +2102,6 @@ class InsightTotalEntry {
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   static const fromJsonFactory = _$InsightTotalEntryFromJson;
-  static const toJsonFactory = _$InsightTotalEntryToJson;
-  Map<String, dynamic> toJson() => _$InsightTotalEntryToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2114,6 +2156,9 @@ class InsightTransferEntry {
   factory InsightTransferEntry.fromJson(Map<String, dynamic> json) =>
       _$InsightTransferEntryFromJson(json);
 
+  static const toJsonFactory = _$InsightTransferEntryToJson;
+  Map<String, dynamic> toJson() => _$InsightTransferEntryToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -2135,8 +2180,6 @@ class InsightTransferEntry {
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   static const fromJsonFactory = _$InsightTransferEntryFromJson;
-  static const toJsonFactory = _$InsightTransferEntryToJson;
-  Map<String, dynamic> toJson() => _$InsightTransferEntryToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2206,6 +2249,9 @@ class AccountRead {
   factory AccountRead.fromJson(Map<String, dynamic> json) =>
       _$AccountReadFromJson(json);
 
+  static const toJsonFactory = _$AccountReadToJson;
+  Map<String, dynamic> toJson() => _$AccountReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2213,8 +2259,6 @@ class AccountRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final Account attributes;
   static const fromJsonFactory = _$AccountReadFromJson;
-  static const toJsonFactory = _$AccountReadToJson;
-  Map<String, dynamic> toJson() => _$AccountReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2248,11 +2292,12 @@ class AccountSingle {
   factory AccountSingle.fromJson(Map<String, dynamic> json) =>
       _$AccountSingleFromJson(json);
 
+  static const toJsonFactory = _$AccountSingleToJson;
+  Map<String, dynamic> toJson() => _$AccountSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final AccountRead data;
   static const fromJsonFactory = _$AccountSingleFromJson;
-  static const toJsonFactory = _$AccountSingleToJson;
-  Map<String, dynamic> toJson() => _$AccountSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2280,6 +2325,9 @@ class AttachmentRead {
   factory AttachmentRead.fromJson(Map<String, dynamic> json) =>
       _$AttachmentReadFromJson(json);
 
+  static const toJsonFactory = _$AttachmentReadToJson;
+  Map<String, dynamic> toJson() => _$AttachmentReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2289,8 +2337,6 @@ class AttachmentRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$AttachmentReadFromJson;
-  static const toJsonFactory = _$AttachmentReadToJson;
-  Map<String, dynamic> toJson() => _$AttachmentReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2328,11 +2374,12 @@ class AttachmentSingle {
   factory AttachmentSingle.fromJson(Map<String, dynamic> json) =>
       _$AttachmentSingleFromJson(json);
 
+  static const toJsonFactory = _$AttachmentSingleToJson;
+  Map<String, dynamic> toJson() => _$AttachmentSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final AttachmentRead data;
   static const fromJsonFactory = _$AttachmentSingleFromJson;
-  static const toJsonFactory = _$AttachmentSingleToJson;
-  Map<String, dynamic> toJson() => _$AttachmentSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2359,6 +2406,9 @@ class AvailableBudgetRead {
   factory AvailableBudgetRead.fromJson(Map<String, dynamic> json) =>
       _$AvailableBudgetReadFromJson(json);
 
+  static const toJsonFactory = _$AvailableBudgetReadToJson;
+  Map<String, dynamic> toJson() => _$AvailableBudgetReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2366,8 +2416,6 @@ class AvailableBudgetRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final AvailableBudget attributes;
   static const fromJsonFactory = _$AvailableBudgetReadFromJson;
-  static const toJsonFactory = _$AvailableBudgetReadToJson;
-  Map<String, dynamic> toJson() => _$AvailableBudgetReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2402,11 +2450,12 @@ class AvailableBudgetSingle {
   factory AvailableBudgetSingle.fromJson(Map<String, dynamic> json) =>
       _$AvailableBudgetSingleFromJson(json);
 
+  static const toJsonFactory = _$AvailableBudgetSingleToJson;
+  Map<String, dynamic> toJson() => _$AvailableBudgetSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final AvailableBudgetRead data;
   static const fromJsonFactory = _$AvailableBudgetSingleFromJson;
-  static const toJsonFactory = _$AvailableBudgetSingleToJson;
-  Map<String, dynamic> toJson() => _$AvailableBudgetSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2433,6 +2482,9 @@ class BillRead {
   factory BillRead.fromJson(Map<String, dynamic> json) =>
       _$BillReadFromJson(json);
 
+  static const toJsonFactory = _$BillReadToJson;
+  Map<String, dynamic> toJson() => _$BillReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2440,8 +2492,6 @@ class BillRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final Bill attributes;
   static const fromJsonFactory = _$BillReadFromJson;
-  static const toJsonFactory = _$BillReadToJson;
-  Map<String, dynamic> toJson() => _$BillReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2473,11 +2523,12 @@ class BillSingle {
   factory BillSingle.fromJson(Map<String, dynamic> json) =>
       _$BillSingleFromJson(json);
 
+  static const toJsonFactory = _$BillSingleToJson;
+  Map<String, dynamic> toJson() => _$BillSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final BillRead data;
   static const fromJsonFactory = _$BillSingleFromJson;
-  static const toJsonFactory = _$BillSingleToJson;
-  Map<String, dynamic> toJson() => _$BillSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2504,6 +2555,9 @@ class BudgetLimitRead {
   factory BudgetLimitRead.fromJson(Map<String, dynamic> json) =>
       _$BudgetLimitReadFromJson(json);
 
+  static const toJsonFactory = _$BudgetLimitReadToJson;
+  Map<String, dynamic> toJson() => _$BudgetLimitReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2511,8 +2565,6 @@ class BudgetLimitRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final BudgetLimit attributes;
   static const fromJsonFactory = _$BudgetLimitReadFromJson;
-  static const toJsonFactory = _$BudgetLimitReadToJson;
-  Map<String, dynamic> toJson() => _$BudgetLimitReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2547,11 +2599,12 @@ class BudgetLimitSingle {
   factory BudgetLimitSingle.fromJson(Map<String, dynamic> json) =>
       _$BudgetLimitSingleFromJson(json);
 
+  static const toJsonFactory = _$BudgetLimitSingleToJson;
+  Map<String, dynamic> toJson() => _$BudgetLimitSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final BudgetLimitRead data;
   static const fromJsonFactory = _$BudgetLimitSingleFromJson;
-  static const toJsonFactory = _$BudgetLimitSingleToJson;
-  Map<String, dynamic> toJson() => _$BudgetLimitSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2578,6 +2631,9 @@ class BudgetRead {
   factory BudgetRead.fromJson(Map<String, dynamic> json) =>
       _$BudgetReadFromJson(json);
 
+  static const toJsonFactory = _$BudgetReadToJson;
+  Map<String, dynamic> toJson() => _$BudgetReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2585,8 +2641,6 @@ class BudgetRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final Budget attributes;
   static const fromJsonFactory = _$BudgetReadFromJson;
-  static const toJsonFactory = _$BudgetReadToJson;
-  Map<String, dynamic> toJson() => _$BudgetReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2620,11 +2674,12 @@ class BudgetSingle {
   factory BudgetSingle.fromJson(Map<String, dynamic> json) =>
       _$BudgetSingleFromJson(json);
 
+  static const toJsonFactory = _$BudgetSingleToJson;
+  Map<String, dynamic> toJson() => _$BudgetSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final BudgetRead data;
   static const fromJsonFactory = _$BudgetSingleFromJson;
-  static const toJsonFactory = _$BudgetSingleToJson;
-  Map<String, dynamic> toJson() => _$BudgetSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2651,6 +2706,9 @@ class CategoryRead {
   factory CategoryRead.fromJson(Map<String, dynamic> json) =>
       _$CategoryReadFromJson(json);
 
+  static const toJsonFactory = _$CategoryReadToJson;
+  Map<String, dynamic> toJson() => _$CategoryReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2658,8 +2716,6 @@ class CategoryRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final Category attributes;
   static const fromJsonFactory = _$CategoryReadFromJson;
-  static const toJsonFactory = _$CategoryReadToJson;
-  Map<String, dynamic> toJson() => _$CategoryReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2693,11 +2749,12 @@ class CategorySingle {
   factory CategorySingle.fromJson(Map<String, dynamic> json) =>
       _$CategorySingleFromJson(json);
 
+  static const toJsonFactory = _$CategorySingleToJson;
+  Map<String, dynamic> toJson() => _$CategorySingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final CategoryRead data;
   static const fromJsonFactory = _$CategorySingleFromJson;
-  static const toJsonFactory = _$CategorySingleToJson;
-  Map<String, dynamic> toJson() => _$CategorySingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2722,11 +2779,12 @@ class ConfigurationSingle {
   factory ConfigurationSingle.fromJson(Map<String, dynamic> json) =>
       _$ConfigurationSingleFromJson(json);
 
+  static const toJsonFactory = _$ConfigurationSingleToJson;
+  Map<String, dynamic> toJson() => _$ConfigurationSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final Configuration data;
   static const fromJsonFactory = _$ConfigurationSingleFromJson;
-  static const toJsonFactory = _$ConfigurationSingleToJson;
-  Map<String, dynamic> toJson() => _$ConfigurationSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2753,6 +2811,9 @@ class CurrencyRead {
   factory CurrencyRead.fromJson(Map<String, dynamic> json) =>
       _$CurrencyReadFromJson(json);
 
+  static const toJsonFactory = _$CurrencyReadToJson;
+  Map<String, dynamic> toJson() => _$CurrencyReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2760,8 +2821,6 @@ class CurrencyRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final Currency attributes;
   static const fromJsonFactory = _$CurrencyReadFromJson;
-  static const toJsonFactory = _$CurrencyReadToJson;
-  Map<String, dynamic> toJson() => _$CurrencyReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2795,11 +2854,12 @@ class CurrencySingle {
   factory CurrencySingle.fromJson(Map<String, dynamic> json) =>
       _$CurrencySingleFromJson(json);
 
+  static const toJsonFactory = _$CurrencySingleToJson;
+  Map<String, dynamic> toJson() => _$CurrencySingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final CurrencyRead data;
   static const fromJsonFactory = _$CurrencySingleFromJson;
-  static const toJsonFactory = _$CurrencySingleToJson;
-  Map<String, dynamic> toJson() => _$CurrencySingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2827,6 +2887,9 @@ class LinkTypeRead {
   factory LinkTypeRead.fromJson(Map<String, dynamic> json) =>
       _$LinkTypeReadFromJson(json);
 
+  static const toJsonFactory = _$LinkTypeReadToJson;
+  Map<String, dynamic> toJson() => _$LinkTypeReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2836,8 +2899,6 @@ class LinkTypeRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$LinkTypeReadFromJson;
-  static const toJsonFactory = _$LinkTypeReadToJson;
-  Map<String, dynamic> toJson() => _$LinkTypeReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2875,11 +2936,12 @@ class LinkTypeSingle {
   factory LinkTypeSingle.fromJson(Map<String, dynamic> json) =>
       _$LinkTypeSingleFromJson(json);
 
+  static const toJsonFactory = _$LinkTypeSingleToJson;
+  Map<String, dynamic> toJson() => _$LinkTypeSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final LinkTypeRead data;
   static const fromJsonFactory = _$LinkTypeSingleFromJson;
-  static const toJsonFactory = _$LinkTypeSingleToJson;
-  Map<String, dynamic> toJson() => _$LinkTypeSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2906,6 +2968,9 @@ class ObjectGroupRead {
   factory ObjectGroupRead.fromJson(Map<String, dynamic> json) =>
       _$ObjectGroupReadFromJson(json);
 
+  static const toJsonFactory = _$ObjectGroupReadToJson;
+  Map<String, dynamic> toJson() => _$ObjectGroupReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2913,8 +2978,6 @@ class ObjectGroupRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final ObjectGroup attributes;
   static const fromJsonFactory = _$ObjectGroupReadFromJson;
-  static const toJsonFactory = _$ObjectGroupReadToJson;
-  Map<String, dynamic> toJson() => _$ObjectGroupReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2949,11 +3012,12 @@ class ObjectGroupSingle {
   factory ObjectGroupSingle.fromJson(Map<String, dynamic> json) =>
       _$ObjectGroupSingleFromJson(json);
 
+  static const toJsonFactory = _$ObjectGroupSingleToJson;
+  Map<String, dynamic> toJson() => _$ObjectGroupSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final ObjectGroupRead data;
   static const fromJsonFactory = _$ObjectGroupSingleFromJson;
-  static const toJsonFactory = _$ObjectGroupSingleToJson;
-  Map<String, dynamic> toJson() => _$ObjectGroupSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2981,6 +3045,9 @@ class PiggyBankEventRead {
   factory PiggyBankEventRead.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankEventReadFromJson(json);
 
+  static const toJsonFactory = _$PiggyBankEventReadToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankEventReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2990,8 +3057,6 @@ class PiggyBankEventRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$PiggyBankEventReadFromJson;
-  static const toJsonFactory = _$PiggyBankEventReadToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankEventReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3035,6 +3100,9 @@ class PiggyBankRead {
   factory PiggyBankRead.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankReadFromJson(json);
 
+  static const toJsonFactory = _$PiggyBankReadToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -3044,8 +3112,6 @@ class PiggyBankRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$PiggyBankReadFromJson;
-  static const toJsonFactory = _$PiggyBankReadToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3083,11 +3149,12 @@ class PiggyBankSingle {
   factory PiggyBankSingle.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankSingleFromJson(json);
 
+  static const toJsonFactory = _$PiggyBankSingleToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final PiggyBankRead data;
   static const fromJsonFactory = _$PiggyBankSingleFromJson;
-  static const toJsonFactory = _$PiggyBankSingleToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3114,6 +3181,9 @@ class PreferenceRead {
   factory PreferenceRead.fromJson(Map<String, dynamic> json) =>
       _$PreferenceReadFromJson(json);
 
+  static const toJsonFactory = _$PreferenceReadToJson;
+  Map<String, dynamic> toJson() => _$PreferenceReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -3121,8 +3191,6 @@ class PreferenceRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final Preference attributes;
   static const fromJsonFactory = _$PreferenceReadFromJson;
-  static const toJsonFactory = _$PreferenceReadToJson;
-  Map<String, dynamic> toJson() => _$PreferenceReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3156,11 +3224,12 @@ class PreferenceSingle {
   factory PreferenceSingle.fromJson(Map<String, dynamic> json) =>
       _$PreferenceSingleFromJson(json);
 
+  static const toJsonFactory = _$PreferenceSingleToJson;
+  Map<String, dynamic> toJson() => _$PreferenceSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final PreferenceRead data;
   static const fromJsonFactory = _$PreferenceSingleFromJson;
-  static const toJsonFactory = _$PreferenceSingleToJson;
-  Map<String, dynamic> toJson() => _$PreferenceSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3188,6 +3257,9 @@ class RecurrenceRead {
   factory RecurrenceRead.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceReadFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceReadToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -3197,8 +3269,6 @@ class RecurrenceRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$RecurrenceReadFromJson;
-  static const toJsonFactory = _$RecurrenceReadToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3236,11 +3306,12 @@ class RecurrenceSingle {
   factory RecurrenceSingle.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceSingleFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceSingleToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final RecurrenceRead data;
   static const fromJsonFactory = _$RecurrenceSingleFromJson;
-  static const toJsonFactory = _$RecurrenceSingleToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3268,6 +3339,9 @@ class RuleGroupRead {
   factory RuleGroupRead.fromJson(Map<String, dynamic> json) =>
       _$RuleGroupReadFromJson(json);
 
+  static const toJsonFactory = _$RuleGroupReadToJson;
+  Map<String, dynamic> toJson() => _$RuleGroupReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -3277,8 +3351,6 @@ class RuleGroupRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$RuleGroupReadFromJson;
-  static const toJsonFactory = _$RuleGroupReadToJson;
-  Map<String, dynamic> toJson() => _$RuleGroupReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3316,11 +3388,12 @@ class RuleGroupSingle {
   factory RuleGroupSingle.fromJson(Map<String, dynamic> json) =>
       _$RuleGroupSingleFromJson(json);
 
+  static const toJsonFactory = _$RuleGroupSingleToJson;
+  Map<String, dynamic> toJson() => _$RuleGroupSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final RuleGroupRead data;
   static const fromJsonFactory = _$RuleGroupSingleFromJson;
-  static const toJsonFactory = _$RuleGroupSingleToJson;
-  Map<String, dynamic> toJson() => _$RuleGroupSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3348,6 +3421,9 @@ class RuleRead {
   factory RuleRead.fromJson(Map<String, dynamic> json) =>
       _$RuleReadFromJson(json);
 
+  static const toJsonFactory = _$RuleReadToJson;
+  Map<String, dynamic> toJson() => _$RuleReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -3357,8 +3433,6 @@ class RuleRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$RuleReadFromJson;
-  static const toJsonFactory = _$RuleReadToJson;
-  Map<String, dynamic> toJson() => _$RuleReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3396,11 +3470,12 @@ class RuleSingle {
   factory RuleSingle.fromJson(Map<String, dynamic> json) =>
       _$RuleSingleFromJson(json);
 
+  static const toJsonFactory = _$RuleSingleToJson;
+  Map<String, dynamic> toJson() => _$RuleSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final RuleRead data;
   static const fromJsonFactory = _$RuleSingleFromJson;
-  static const toJsonFactory = _$RuleSingleToJson;
-  Map<String, dynamic> toJson() => _$RuleSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3428,6 +3503,9 @@ class TagRead {
   factory TagRead.fromJson(Map<String, dynamic> json) =>
       _$TagReadFromJson(json);
 
+  static const toJsonFactory = _$TagReadToJson;
+  Map<String, dynamic> toJson() => _$TagReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -3437,8 +3515,6 @@ class TagRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$TagReadFromJson;
-  static const toJsonFactory = _$TagReadToJson;
-  Map<String, dynamic> toJson() => _$TagReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3476,11 +3552,12 @@ class TagSingle {
   factory TagSingle.fromJson(Map<String, dynamic> json) =>
       _$TagSingleFromJson(json);
 
+  static const toJsonFactory = _$TagSingleToJson;
+  Map<String, dynamic> toJson() => _$TagSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final TagRead data;
   static const fromJsonFactory = _$TagSingleFromJson;
-  static const toJsonFactory = _$TagSingleToJson;
-  Map<String, dynamic> toJson() => _$TagSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3508,6 +3585,9 @@ class TransactionLinkRead {
   factory TransactionLinkRead.fromJson(Map<String, dynamic> json) =>
       _$TransactionLinkReadFromJson(json);
 
+  static const toJsonFactory = _$TransactionLinkReadToJson;
+  Map<String, dynamic> toJson() => _$TransactionLinkReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -3517,8 +3597,6 @@ class TransactionLinkRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$TransactionLinkReadFromJson;
-  static const toJsonFactory = _$TransactionLinkReadToJson;
-  Map<String, dynamic> toJson() => _$TransactionLinkReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3559,11 +3637,12 @@ class TransactionLinkSingle {
   factory TransactionLinkSingle.fromJson(Map<String, dynamic> json) =>
       _$TransactionLinkSingleFromJson(json);
 
+  static const toJsonFactory = _$TransactionLinkSingleToJson;
+  Map<String, dynamic> toJson() => _$TransactionLinkSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final TransactionLinkRead data;
   static const fromJsonFactory = _$TransactionLinkSingleFromJson;
-  static const toJsonFactory = _$TransactionLinkSingleToJson;
-  Map<String, dynamic> toJson() => _$TransactionLinkSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3588,11 +3667,12 @@ class TransactionSingle {
   factory TransactionSingle.fromJson(Map<String, dynamic> json) =>
       _$TransactionSingleFromJson(json);
 
+  static const toJsonFactory = _$TransactionSingleToJson;
+  Map<String, dynamic> toJson() => _$TransactionSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final TransactionRead data;
   static const fromJsonFactory = _$TransactionSingleFromJson;
-  static const toJsonFactory = _$TransactionSingleToJson;
-  Map<String, dynamic> toJson() => _$TransactionSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3620,6 +3700,9 @@ class UserRead {
   factory UserRead.fromJson(Map<String, dynamic> json) =>
       _$UserReadFromJson(json);
 
+  static const toJsonFactory = _$UserReadToJson;
+  Map<String, dynamic> toJson() => _$UserReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -3629,8 +3712,6 @@ class UserRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$UserReadFromJson;
-  static const toJsonFactory = _$UserReadToJson;
-  Map<String, dynamic> toJson() => _$UserReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3670,6 +3751,9 @@ class WebhookAttemptRead {
   factory WebhookAttemptRead.fromJson(Map<String, dynamic> json) =>
       _$WebhookAttemptReadFromJson(json);
 
+  static const toJsonFactory = _$WebhookAttemptReadToJson;
+  Map<String, dynamic> toJson() => _$WebhookAttemptReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -3677,8 +3761,6 @@ class WebhookAttemptRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final WebhookAttempt attributes;
   static const fromJsonFactory = _$WebhookAttemptReadFromJson;
-  static const toJsonFactory = _$WebhookAttemptReadToJson;
-  Map<String, dynamic> toJson() => _$WebhookAttemptReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3713,11 +3795,12 @@ class WebhookAttemptSingle {
   factory WebhookAttemptSingle.fromJson(Map<String, dynamic> json) =>
       _$WebhookAttemptSingleFromJson(json);
 
+  static const toJsonFactory = _$WebhookAttemptSingleToJson;
+  Map<String, dynamic> toJson() => _$WebhookAttemptSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final WebhookAttemptRead data;
   static const fromJsonFactory = _$WebhookAttemptSingleFromJson;
-  static const toJsonFactory = _$WebhookAttemptSingleToJson;
-  Map<String, dynamic> toJson() => _$WebhookAttemptSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3744,6 +3827,9 @@ class WebhookMessageRead {
   factory WebhookMessageRead.fromJson(Map<String, dynamic> json) =>
       _$WebhookMessageReadFromJson(json);
 
+  static const toJsonFactory = _$WebhookMessageReadToJson;
+  Map<String, dynamic> toJson() => _$WebhookMessageReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -3751,8 +3837,6 @@ class WebhookMessageRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final WebhookMessage attributes;
   static const fromJsonFactory = _$WebhookMessageReadFromJson;
-  static const toJsonFactory = _$WebhookMessageReadToJson;
-  Map<String, dynamic> toJson() => _$WebhookMessageReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3787,11 +3871,12 @@ class WebhookMessageSingle {
   factory WebhookMessageSingle.fromJson(Map<String, dynamic> json) =>
       _$WebhookMessageSingleFromJson(json);
 
+  static const toJsonFactory = _$WebhookMessageSingleToJson;
+  Map<String, dynamic> toJson() => _$WebhookMessageSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final WebhookMessageRead data;
   static const fromJsonFactory = _$WebhookMessageSingleFromJson;
-  static const toJsonFactory = _$WebhookMessageSingleToJson;
-  Map<String, dynamic> toJson() => _$WebhookMessageSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3819,6 +3904,9 @@ class WebhookRead {
   factory WebhookRead.fromJson(Map<String, dynamic> json) =>
       _$WebhookReadFromJson(json);
 
+  static const toJsonFactory = _$WebhookReadToJson;
+  Map<String, dynamic> toJson() => _$WebhookReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -3828,8 +3916,6 @@ class WebhookRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$WebhookReadFromJson;
-  static const toJsonFactory = _$WebhookReadToJson;
-  Map<String, dynamic> toJson() => _$WebhookReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3867,11 +3953,12 @@ class WebhookSingle {
   factory WebhookSingle.fromJson(Map<String, dynamic> json) =>
       _$WebhookSingleFromJson(json);
 
+  static const toJsonFactory = _$WebhookSingleToJson;
+  Map<String, dynamic> toJson() => _$WebhookSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final WebhookRead data;
   static const fromJsonFactory = _$WebhookSingleFromJson;
-  static const toJsonFactory = _$WebhookSingleToJson;
-  Map<String, dynamic> toJson() => _$WebhookSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3925,6 +4012,9 @@ class Account {
 
   factory Account.fromJson(Map<String, dynamic> json) =>
       _$AccountFromJson(json);
+
+  static const toJsonFactory = _$AccountToJson;
+  Map<String, dynamic> toJson() => _$AccountToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -4019,8 +4109,6 @@ class Account {
   @JsonKey(name: 'zoom_level', includeIfNull: false)
   final int? zoomLevel;
   static const fromJsonFactory = _$AccountFromJson;
-  static const toJsonFactory = _$AccountToJson;
-  Map<String, dynamic> toJson() => _$AccountToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -4222,6 +4310,9 @@ class AccountStore {
   factory AccountStore.fromJson(Map<String, dynamic> json) =>
       _$AccountStoreFromJson(json);
 
+  static const toJsonFactory = _$AccountStoreToJson;
+  Map<String, dynamic> toJson() => _$AccountStoreToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   @JsonKey(
@@ -4239,8 +4330,7 @@ class AccountStore {
   final String? accountNumber;
   @JsonKey(name: 'opening_balance', includeIfNull: false)
   final String? openingBalance;
-  @JsonKey(
-      name: 'opening_balance_date', includeIfNull: false, toJson: _dateToJson)
+  @JsonKey(name: 'opening_balance_date', includeIfNull: false)
   final DateTime? openingBalanceDate;
   @JsonKey(name: 'virtual_balance', includeIfNull: false)
   final String? virtualBalance;
@@ -4268,8 +4358,7 @@ class AccountStore {
     fromJson: creditCardTypeFromJson,
   )
   final enums.CreditCardType? creditCardType;
-  @JsonKey(
-      name: 'monthly_payment_date', includeIfNull: false, toJson: _dateToJson)
+  @JsonKey(name: 'monthly_payment_date', includeIfNull: false)
   final DateTime? monthlyPaymentDate;
   @JsonKey(
     name: 'liability_type',
@@ -4303,8 +4392,6 @@ class AccountStore {
   @JsonKey(name: 'zoom_level', includeIfNull: false)
   final int? zoomLevel;
   static const fromJsonFactory = _$AccountStoreFromJson;
-  static const toJsonFactory = _$AccountStoreToJson;
-  Map<String, dynamic> toJson() => _$AccountStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -4466,6 +4553,9 @@ class AccountUpdate {
   factory AccountUpdate.fromJson(Map<String, dynamic> json) =>
       _$AccountUpdateFromJson(json);
 
+  static const toJsonFactory = _$AccountUpdateToJson;
+  Map<String, dynamic> toJson() => _$AccountUpdateToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   @JsonKey(name: 'iban', includeIfNull: false)
@@ -4476,8 +4566,7 @@ class AccountUpdate {
   final String? accountNumber;
   @JsonKey(name: 'opening_balance', includeIfNull: false)
   final String? openingBalance;
-  @JsonKey(
-      name: 'opening_balance_date', includeIfNull: false, toJson: _dateToJson)
+  @JsonKey(name: 'opening_balance_date', includeIfNull: false)
   final DateTime? openingBalanceDate;
   @JsonKey(name: 'virtual_balance', includeIfNull: false)
   final String? virtualBalance;
@@ -4505,8 +4594,7 @@ class AccountUpdate {
     fromJson: creditCardTypeFromJson,
   )
   final enums.CreditCardType? creditCardType;
-  @JsonKey(
-      name: 'monthly_payment_date', includeIfNull: false, toJson: _dateToJson)
+  @JsonKey(name: 'monthly_payment_date', includeIfNull: false)
   final DateTime? monthlyPaymentDate;
   @JsonKey(
     name: 'liability_type',
@@ -4533,8 +4621,6 @@ class AccountUpdate {
   @JsonKey(name: 'zoom_level', includeIfNull: false)
   final int? zoomLevel;
   static const fromJsonFactory = _$AccountUpdateFromJson;
-  static const toJsonFactory = _$AccountUpdateToJson;
-  Map<String, dynamic> toJson() => _$AccountUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -4676,6 +4762,9 @@ class Attachment {
   factory Attachment.fromJson(Map<String, dynamic> json) =>
       _$AttachmentFromJson(json);
 
+  static const toJsonFactory = _$AttachmentToJson;
+  Map<String, dynamic> toJson() => _$AttachmentToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -4706,8 +4795,6 @@ class Attachment {
   @JsonKey(name: 'size', includeIfNull: false)
   final int? size;
   static const fromJsonFactory = _$AttachmentFromJson;
-  static const toJsonFactory = _$AttachmentToJson;
-  Map<String, dynamic> toJson() => _$AttachmentToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -4788,6 +4875,9 @@ class AttachmentStore {
   factory AttachmentStore.fromJson(Map<String, dynamic> json) =>
       _$AttachmentStoreFromJson(json);
 
+  static const toJsonFactory = _$AttachmentStoreToJson;
+  Map<String, dynamic> toJson() => _$AttachmentStoreToJson(this);
+
   @JsonKey(name: 'filename', includeIfNull: false)
   final String filename;
   @JsonKey(
@@ -4804,8 +4894,6 @@ class AttachmentStore {
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   static const fromJsonFactory = _$AttachmentStoreFromJson;
-  static const toJsonFactory = _$AttachmentStoreToJson;
-  Map<String, dynamic> toJson() => _$AttachmentStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -4855,6 +4943,9 @@ class AttachmentUpdate {
   factory AttachmentUpdate.fromJson(Map<String, dynamic> json) =>
       _$AttachmentUpdateFromJson(json);
 
+  static const toJsonFactory = _$AttachmentUpdateToJson;
+  Map<String, dynamic> toJson() => _$AttachmentUpdateToJson(this);
+
   @JsonKey(name: 'filename', includeIfNull: false)
   final String? filename;
   @JsonKey(name: 'title', includeIfNull: false)
@@ -4862,8 +4953,6 @@ class AttachmentUpdate {
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   static const fromJsonFactory = _$AttachmentUpdateFromJson;
-  static const toJsonFactory = _$AttachmentUpdateToJson;
-  Map<String, dynamic> toJson() => _$AttachmentUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -4907,6 +4996,9 @@ class AvailableBudget {
   factory AvailableBudget.fromJson(Map<String, dynamic> json) =>
       _$AvailableBudgetFromJson(json);
 
+  static const toJsonFactory = _$AvailableBudgetToJson;
+  Map<String, dynamic> toJson() => _$AvailableBudgetToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -4936,8 +5028,6 @@ class AvailableBudget {
       defaultValue: <BudgetSpent>[])
   final List<BudgetSpent>? spentOutsideBudget;
   static const fromJsonFactory = _$AvailableBudgetFromJson;
-  static const toJsonFactory = _$AvailableBudgetToJson;
-  Map<String, dynamic> toJson() => _$AvailableBudgetToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5020,6 +5110,9 @@ class AvailableBudgetStore {
   factory AvailableBudgetStore.fromJson(Map<String, dynamic> json) =>
       _$AvailableBudgetStoreFromJson(json);
 
+  static const toJsonFactory = _$AvailableBudgetStoreToJson;
+  Map<String, dynamic> toJson() => _$AvailableBudgetStoreToJson(this);
+
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
@@ -5031,8 +5124,6 @@ class AvailableBudgetStore {
   @JsonKey(name: 'end', includeIfNull: false, toJson: _dateToJson)
   final DateTime end;
   static const fromJsonFactory = _$AvailableBudgetStoreFromJson;
-  static const toJsonFactory = _$AvailableBudgetStoreToJson;
-  Map<String, dynamic> toJson() => _$AvailableBudgetStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5074,27 +5165,28 @@ class AvailableBudgetUpdate {
   AvailableBudgetUpdate({
     this.currencyId,
     this.currencyCode,
-    this.amount,
-    this.start,
-    this.end,
+    required this.amount,
+    required this.start,
+    required this.end,
   });
 
   factory AvailableBudgetUpdate.fromJson(Map<String, dynamic> json) =>
       _$AvailableBudgetUpdateFromJson(json);
+
+  static const toJsonFactory = _$AvailableBudgetUpdateToJson;
+  Map<String, dynamic> toJson() => _$AvailableBudgetUpdateToJson(this);
 
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'amount', includeIfNull: false)
-  final String? amount;
+  final String amount;
   @JsonKey(name: 'start', includeIfNull: false, toJson: _dateToJson)
-  final DateTime? start;
+  final DateTime start;
   @JsonKey(name: 'end', includeIfNull: false, toJson: _dateToJson)
-  final DateTime? end;
+  final DateTime end;
   static const fromJsonFactory = _$AvailableBudgetUpdateFromJson;
-  static const toJsonFactory = _$AvailableBudgetUpdateToJson;
-  Map<String, dynamic> toJson() => _$AvailableBudgetUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5118,9 +5210,9 @@ extension $AvailableBudgetUpdateExtension on AvailableBudgetUpdate {
   AvailableBudgetUpdate copyWithWrapped(
       {Wrapped<String?>? currencyId,
       Wrapped<String?>? currencyCode,
-      Wrapped<String?>? amount,
-      Wrapped<DateTime?>? start,
-      Wrapped<DateTime?>? end}) {
+      Wrapped<String>? amount,
+      Wrapped<DateTime>? start,
+      Wrapped<DateTime>? end}) {
     return AvailableBudgetUpdate(
         currencyId: (currencyId != null ? currencyId.value : this.currencyId),
         currencyCode:
@@ -5161,6 +5253,9 @@ class Bill {
   });
 
   factory Bill.fromJson(Map<String, dynamic> json) => _$BillFromJson(json);
+
+  static const toJsonFactory = _$BillToJson;
+  Map<String, dynamic> toJson() => _$BillToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -5213,14 +5308,9 @@ class Bill {
   final String? objectGroupTitle;
   @JsonKey(name: 'pay_dates', includeIfNull: false, defaultValue: <DateTime>[])
   final List<DateTime>? payDates;
-  @JsonKey(
-      name: 'paid_dates',
-      includeIfNull: false,
-      defaultValue: <Bill$PaidDates>[])
-  final List<Bill$PaidDates>? paidDates;
+  @JsonKey(name: 'paid_dates', includeIfNull: false)
+  final List<Bill$PaidDates$Item>? paidDates;
   static const fromJsonFactory = _$BillFromJson;
-  static const toJsonFactory = _$BillToJson;
-  Map<String, dynamic> toJson() => _$BillToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5251,7 +5341,7 @@ extension $BillExtension on Bill {
       int? objectGroupOrder,
       String? objectGroupTitle,
       List<DateTime>? payDates,
-      List<Bill$PaidDates>? paidDates}) {
+      List<Bill$PaidDates$Item>? paidDates}) {
     return Bill(
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
@@ -5305,7 +5395,7 @@ extension $BillExtension on Bill {
       Wrapped<int?>? objectGroupOrder,
       Wrapped<String?>? objectGroupTitle,
       Wrapped<List<DateTime>?>? payDates,
-      Wrapped<List<Bill$PaidDates>?>? paidDates}) {
+      Wrapped<List<Bill$PaidDates$Item>?>? paidDates}) {
     return Bill(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
@@ -5371,6 +5461,9 @@ class BillStore {
   factory BillStore.fromJson(Map<String, dynamic> json) =>
       _$BillStoreFromJson(json);
 
+  static const toJsonFactory = _$BillStoreToJson;
+  Map<String, dynamic> toJson() => _$BillStoreToJson(this);
+
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
@@ -5405,8 +5498,6 @@ class BillStore {
   @JsonKey(name: 'object_group_title', includeIfNull: false)
   final String? objectGroupTitle;
   static const fromJsonFactory = _$BillStoreFromJson;
-  static const toJsonFactory = _$BillStoreToJson;
-  Map<String, dynamic> toJson() => _$BillStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5488,7 +5579,7 @@ class BillUpdate {
   BillUpdate({
     this.currencyId,
     this.currencyCode,
-    this.name,
+    required this.name,
     this.amountMin,
     this.amountMax,
     this.date,
@@ -5505,12 +5596,15 @@ class BillUpdate {
   factory BillUpdate.fromJson(Map<String, dynamic> json) =>
       _$BillUpdateFromJson(json);
 
+  static const toJsonFactory = _$BillUpdateToJson;
+  Map<String, dynamic> toJson() => _$BillUpdateToJson(this);
+
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'name', includeIfNull: false)
-  final String? name;
+  final String name;
   @JsonKey(name: 'amount_min', includeIfNull: false)
   final String? amountMin;
   @JsonKey(name: 'amount_max', includeIfNull: false)
@@ -5539,8 +5633,6 @@ class BillUpdate {
   @JsonKey(name: 'object_group_title', includeIfNull: false)
   final String? objectGroupTitle;
   static const fromJsonFactory = _$BillUpdateFromJson;
-  static const toJsonFactory = _$BillUpdateToJson;
-  Map<String, dynamic> toJson() => _$BillUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5582,7 +5674,7 @@ extension $BillUpdateExtension on BillUpdate {
   BillUpdate copyWithWrapped(
       {Wrapped<String?>? currencyId,
       Wrapped<String?>? currencyCode,
-      Wrapped<String?>? name,
+      Wrapped<String>? name,
       Wrapped<String?>? amountMin,
       Wrapped<String?>? amountMax,
       Wrapped<DateTime?>? date,
@@ -5636,6 +5728,9 @@ class Budget {
 
   factory Budget.fromJson(Map<String, dynamic> json) => _$BudgetFromJson(json);
 
+  static const toJsonFactory = _$BudgetToJson;
+  Map<String, dynamic> toJson() => _$BudgetToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -5671,8 +5766,6 @@ class Budget {
   @JsonKey(name: 'spent', includeIfNull: false, defaultValue: <BudgetSpent>[])
   final List<BudgetSpent>? spent;
   static const fromJsonFactory = _$BudgetFromJson;
-  static const toJsonFactory = _$BudgetToJson;
-  Map<String, dynamic> toJson() => _$BudgetToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5764,6 +5857,9 @@ class BudgetStore {
   factory BudgetStore.fromJson(Map<String, dynamic> json) =>
       _$BudgetStoreFromJson(json);
 
+  static const toJsonFactory = _$BudgetStoreToJson;
+  Map<String, dynamic> toJson() => _$BudgetStoreToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   @JsonKey(name: 'active', includeIfNull: false)
@@ -5793,8 +5889,6 @@ class BudgetStore {
   )
   final enums.AutoBudgetPeriod? autoBudgetPeriod;
   static const fromJsonFactory = _$BudgetStoreFromJson;
-  static const toJsonFactory = _$BudgetStoreToJson;
-  Map<String, dynamic> toJson() => _$BudgetStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5860,7 +5954,7 @@ extension $BudgetStoreExtension on BudgetStore {
 @JsonSerializable(explicitToJson: true)
 class BudgetUpdate {
   BudgetUpdate({
-    this.name,
+    required this.name,
     this.active,
     this.order,
     this.notes,
@@ -5874,8 +5968,11 @@ class BudgetUpdate {
   factory BudgetUpdate.fromJson(Map<String, dynamic> json) =>
       _$BudgetUpdateFromJson(json);
 
+  static const toJsonFactory = _$BudgetUpdateToJson;
+  Map<String, dynamic> toJson() => _$BudgetUpdateToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
-  final String? name;
+  final String name;
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
   @JsonKey(name: 'order', includeIfNull: false)
@@ -5903,8 +6000,6 @@ class BudgetUpdate {
   )
   final enums.AutoBudgetPeriod? autoBudgetPeriod;
   static const fromJsonFactory = _$BudgetUpdateFromJson;
-  static const toJsonFactory = _$BudgetUpdateToJson;
-  Map<String, dynamic> toJson() => _$BudgetUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5935,7 +6030,7 @@ extension $BudgetUpdateExtension on BudgetUpdate {
   }
 
   BudgetUpdate copyWithWrapped(
-      {Wrapped<String?>? name,
+      {Wrapped<String>? name,
       Wrapped<bool?>? active,
       Wrapped<int?>? order,
       Wrapped<String?>? notes,
@@ -5988,6 +6083,9 @@ class BudgetLimit {
   factory BudgetLimit.fromJson(Map<String, dynamic> json) =>
       _$BudgetLimitFromJson(json);
 
+  static const toJsonFactory = _$BudgetLimitToJson;
+  Map<String, dynamic> toJson() => _$BudgetLimitToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -6015,8 +6113,6 @@ class BudgetLimit {
   @JsonKey(name: 'spent', includeIfNull: false)
   final String? spent;
   static const fromJsonFactory = _$BudgetLimitFromJson;
-  static const toJsonFactory = _$BudgetLimitToJson;
-  Map<String, dynamic> toJson() => _$BudgetLimitToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6106,6 +6202,9 @@ class BudgetLimitStore {
   factory BudgetLimitStore.fromJson(Map<String, dynamic> json) =>
       _$BudgetLimitStoreFromJson(json);
 
+  static const toJsonFactory = _$BudgetLimitStoreToJson;
+  Map<String, dynamic> toJson() => _$BudgetLimitStoreToJson(this);
+
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
@@ -6121,8 +6220,6 @@ class BudgetLimitStore {
   @JsonKey(name: 'amount', includeIfNull: false)
   final String amount;
   static const fromJsonFactory = _$BudgetLimitStoreFromJson;
-  static const toJsonFactory = _$BudgetLimitStoreToJson;
-  Map<String, dynamic> toJson() => _$BudgetLimitStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6180,6 +6277,9 @@ class BudgetSpent {
   factory BudgetSpent.fromJson(Map<String, dynamic> json) =>
       _$BudgetSpentFromJson(json);
 
+  static const toJsonFactory = _$BudgetSpentToJson;
+  Map<String, dynamic> toJson() => _$BudgetSpentToJson(this);
+
   @JsonKey(name: 'sum', includeIfNull: false)
   final String? sum;
   @JsonKey(name: 'currency_id', includeIfNull: false)
@@ -6191,8 +6291,6 @@ class BudgetSpent {
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
   static const fromJsonFactory = _$BudgetSpentFromJson;
-  static const toJsonFactory = _$BudgetSpentToJson;
-  Map<String, dynamic> toJson() => _$BudgetSpentToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6248,6 +6346,9 @@ class Category {
   factory Category.fromJson(Map<String, dynamic> json) =>
       _$CategoryFromJson(json);
 
+  static const toJsonFactory = _$CategoryToJson;
+  Map<String, dynamic> toJson() => _$CategoryToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -6262,8 +6363,6 @@ class Category {
       name: 'earned', includeIfNull: false, defaultValue: <CategoryEarned>[])
   final List<CategoryEarned>? earned;
   static const fromJsonFactory = _$CategoryFromJson;
-  static const toJsonFactory = _$CategoryToJson;
-  Map<String, dynamic> toJson() => _$CategoryToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6313,13 +6412,14 @@ class CategoryStore {
   factory CategoryStore.fromJson(Map<String, dynamic> json) =>
       _$CategoryStoreFromJson(json);
 
+  static const toJsonFactory = _$CategoryStoreToJson;
+  Map<String, dynamic> toJson() => _$CategoryStoreToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   static const fromJsonFactory = _$CategoryStoreFromJson;
-  static const toJsonFactory = _$CategoryStoreToJson;
-  Map<String, dynamic> toJson() => _$CategoryStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6341,20 +6441,21 @@ extension $CategoryStoreExtension on CategoryStore {
 @JsonSerializable(explicitToJson: true)
 class CategoryUpdate {
   CategoryUpdate({
-    this.name,
+    required this.name,
     this.notes,
   });
 
   factory CategoryUpdate.fromJson(Map<String, dynamic> json) =>
       _$CategoryUpdateFromJson(json);
 
+  static const toJsonFactory = _$CategoryUpdateToJson;
+  Map<String, dynamic> toJson() => _$CategoryUpdateToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
-  final String? name;
+  final String name;
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   static const fromJsonFactory = _$CategoryUpdateFromJson;
-  static const toJsonFactory = _$CategoryUpdateToJson;
-  Map<String, dynamic> toJson() => _$CategoryUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6366,7 +6467,7 @@ extension $CategoryUpdateExtension on CategoryUpdate {
   }
 
   CategoryUpdate copyWithWrapped(
-      {Wrapped<String?>? name, Wrapped<String?>? notes}) {
+      {Wrapped<String>? name, Wrapped<String?>? notes}) {
     return CategoryUpdate(
         name: (name != null ? name.value : this.name),
         notes: (notes != null ? notes.value : this.notes));
@@ -6386,6 +6487,9 @@ class CategoryEarned {
   factory CategoryEarned.fromJson(Map<String, dynamic> json) =>
       _$CategoryEarnedFromJson(json);
 
+  static const toJsonFactory = _$CategoryEarnedToJson;
+  Map<String, dynamic> toJson() => _$CategoryEarnedToJson(this);
+
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final int? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
@@ -6397,8 +6501,6 @@ class CategoryEarned {
   @JsonKey(name: 'sum', includeIfNull: false)
   final String? sum;
   static const fromJsonFactory = _$CategoryEarnedFromJson;
-  static const toJsonFactory = _$CategoryEarnedToJson;
-  Map<String, dynamic> toJson() => _$CategoryEarnedToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6453,6 +6555,9 @@ class CategorySpent {
   factory CategorySpent.fromJson(Map<String, dynamic> json) =>
       _$CategorySpentFromJson(json);
 
+  static const toJsonFactory = _$CategorySpentToJson;
+  Map<String, dynamic> toJson() => _$CategorySpentToJson(this);
+
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final int? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
@@ -6464,8 +6569,6 @@ class CategorySpent {
   @JsonKey(name: 'sum', includeIfNull: false)
   final String? sum;
   static const fromJsonFactory = _$CategorySpentFromJson;
-  static const toJsonFactory = _$CategorySpentToJson;
-  Map<String, dynamic> toJson() => _$CategorySpentToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6519,6 +6622,9 @@ class ObjectGroup {
   factory ObjectGroup.fromJson(Map<String, dynamic> json) =>
       _$ObjectGroupFromJson(json);
 
+  static const toJsonFactory = _$ObjectGroupToJson;
+  Map<String, dynamic> toJson() => _$ObjectGroupToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -6528,8 +6634,6 @@ class ObjectGroup {
   @JsonKey(name: 'order', includeIfNull: false)
   final int order;
   static const fromJsonFactory = _$ObjectGroupFromJson;
-  static const toJsonFactory = _$ObjectGroupToJson;
-  Map<String, dynamic> toJson() => _$ObjectGroupToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6561,20 +6665,21 @@ extension $ObjectGroupExtension on ObjectGroup {
 @JsonSerializable(explicitToJson: true)
 class ObjectGroupUpdate {
   ObjectGroupUpdate({
-    this.title,
+    required this.title,
     this.order,
   });
 
   factory ObjectGroupUpdate.fromJson(Map<String, dynamic> json) =>
       _$ObjectGroupUpdateFromJson(json);
 
+  static const toJsonFactory = _$ObjectGroupUpdateToJson;
+  Map<String, dynamic> toJson() => _$ObjectGroupUpdateToJson(this);
+
   @JsonKey(name: 'title', includeIfNull: false)
-  final String? title;
+  final String title;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
   static const fromJsonFactory = _$ObjectGroupUpdateFromJson;
-  static const toJsonFactory = _$ObjectGroupUpdateToJson;
-  Map<String, dynamic> toJson() => _$ObjectGroupUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6587,7 +6692,7 @@ extension $ObjectGroupUpdateExtension on ObjectGroupUpdate {
   }
 
   ObjectGroupUpdate copyWithWrapped(
-      {Wrapped<String?>? title, Wrapped<int?>? order}) {
+      {Wrapped<String>? title, Wrapped<int?>? order}) {
     return ObjectGroupUpdate(
         title: (title != null ? title.value : this.title),
         order: (order != null ? order.value : this.order));
@@ -6624,6 +6729,9 @@ class PiggyBank {
   factory PiggyBank.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankFromJson(json);
 
+  static const toJsonFactory = _$PiggyBankToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -6652,9 +6760,9 @@ class PiggyBank {
   final String? leftToSave;
   @JsonKey(name: 'save_per_month', includeIfNull: false)
   final String? savePerMonth;
-  @JsonKey(name: 'start_date', includeIfNull: false)
+  @JsonKey(name: 'start_date', includeIfNull: false, toJson: _dateToJson)
   final DateTime? startDate;
-  @JsonKey(name: 'target_date', includeIfNull: false)
+  @JsonKey(name: 'target_date', includeIfNull: false, toJson: _dateToJson)
   final DateTime? targetDate;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
@@ -6669,8 +6777,6 @@ class PiggyBank {
   @JsonKey(name: 'object_group_title', includeIfNull: false)
   final String? objectGroupTitle;
   static const fromJsonFactory = _$PiggyBankFromJson;
-  static const toJsonFactory = _$PiggyBankToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6808,6 +6914,9 @@ class PiggyBankStore {
   factory PiggyBankStore.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankStoreFromJson(json);
 
+  static const toJsonFactory = _$PiggyBankStoreToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankStoreToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   @JsonKey(name: 'account_id', includeIfNull: false)
@@ -6831,8 +6940,6 @@ class PiggyBankStore {
   @JsonKey(name: 'object_group_title', includeIfNull: false)
   final String? objectGroupTitle;
   static const fromJsonFactory = _$PiggyBankStoreFromJson;
-  static const toJsonFactory = _$PiggyBankStoreToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6918,6 +7025,9 @@ class PiggyBankUpdate {
   factory PiggyBankUpdate.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankUpdateFromJson(json);
 
+  static const toJsonFactory = _$PiggyBankUpdateToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankUpdateToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
   @JsonKey(name: 'account_id', includeIfNull: false)
@@ -6945,8 +7055,6 @@ class PiggyBankUpdate {
   @JsonKey(name: 'object_group_title', includeIfNull: false)
   final String? objectGroupTitle;
   static const fromJsonFactory = _$PiggyBankUpdateFromJson;
-  static const toJsonFactory = _$PiggyBankUpdateToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7037,6 +7145,9 @@ class PiggyBankEvent {
   factory PiggyBankEvent.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankEventFromJson(json);
 
+  static const toJsonFactory = _$PiggyBankEventToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankEventToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -7056,8 +7167,6 @@ class PiggyBankEvent {
   @JsonKey(name: 'transaction_group_id', includeIfNull: false)
   final String? transactionGroupId;
   static const fromJsonFactory = _$PiggyBankEventFromJson;
-  static const toJsonFactory = _$PiggyBankEventToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankEventToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7131,6 +7240,9 @@ class Preference {
   factory Preference.fromJson(Map<String, dynamic> json) =>
       _$PreferenceFromJson(json);
 
+  static const toJsonFactory = _$PreferenceToJson;
+  Map<String, dynamic> toJson() => _$PreferenceToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -7140,8 +7252,6 @@ class Preference {
   @JsonKey(name: 'data', includeIfNull: false)
   final PolymorphicProperty data;
   static const fromJsonFactory = _$PreferenceFromJson;
-  static const toJsonFactory = _$PreferenceToJson;
-  Map<String, dynamic> toJson() => _$PreferenceToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7182,11 +7292,12 @@ class PreferenceUpdate {
   factory PreferenceUpdate.fromJson(Map<String, dynamic> json) =>
       _$PreferenceUpdateFromJson(json);
 
+  static const toJsonFactory = _$PreferenceUpdateToJson;
+  Map<String, dynamic> toJson() => _$PreferenceUpdateToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final PolymorphicProperty data;
   static const fromJsonFactory = _$PreferenceUpdateFromJson;
-  static const toJsonFactory = _$PreferenceUpdateToJson;
-  Map<String, dynamic> toJson() => _$PreferenceUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7224,6 +7335,9 @@ class Recurrence {
   factory Recurrence.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -7239,11 +7353,11 @@ class Recurrence {
   final String? title;
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
-  @JsonKey(name: 'first_date', includeIfNull: false)
+  @JsonKey(name: 'first_date', includeIfNull: false, toJson: _dateToJson)
   final DateTime? firstDate;
-  @JsonKey(name: 'latest_date', includeIfNull: false)
+  @JsonKey(name: 'latest_date', includeIfNull: false, toJson: _dateToJson)
   final DateTime? latestDate;
-  @JsonKey(name: 'repeat_until', includeIfNull: false)
+  @JsonKey(name: 'repeat_until', includeIfNull: false, toJson: _dateToJson)
   final DateTime? repeatUntil;
   @JsonKey(name: 'nr_of_repetitions', includeIfNull: false)
   final int? nrOfRepetitions;
@@ -7264,8 +7378,6 @@ class Recurrence {
       defaultValue: <RecurrenceTransaction>[])
   final List<RecurrenceTransaction>? transactions;
   static const fromJsonFactory = _$RecurrenceFromJson;
-  static const toJsonFactory = _$RecurrenceToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7362,6 +7474,9 @@ class RecurrenceStore {
   factory RecurrenceStore.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceStoreFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceStoreToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceStoreToJson(this);
+
   @JsonKey(
     name: 'type',
     includeIfNull: false,
@@ -7396,8 +7511,6 @@ class RecurrenceStore {
       defaultValue: <RecurrenceTransactionStore>[])
   final List<RecurrenceTransactionStore> transactions;
   static const fromJsonFactory = _$RecurrenceStoreFromJson;
-  static const toJsonFactory = _$RecurrenceStoreToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7481,6 +7594,9 @@ class RecurrenceUpdate {
   factory RecurrenceUpdate.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceUpdateFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceUpdateToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceUpdateToJson(this);
+
   @JsonKey(name: 'title', includeIfNull: false)
   final String? title;
   @JsonKey(name: 'description', includeIfNull: false)
@@ -7508,8 +7624,6 @@ class RecurrenceUpdate {
       defaultValue: <RecurrenceTransactionUpdate>[])
   final List<RecurrenceTransactionUpdate>? transactions;
   static const fromJsonFactory = _$RecurrenceUpdateFromJson;
-  static const toJsonFactory = _$RecurrenceUpdateToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7588,6 +7702,9 @@ class RecurrenceRepetition {
   factory RecurrenceRepetition.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceRepetitionFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceRepetitionToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceRepetitionToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
   @JsonKey(name: 'created_at', includeIfNull: false)
@@ -7613,8 +7730,6 @@ class RecurrenceRepetition {
       name: 'occurrences', includeIfNull: false, defaultValue: <DateTime>[])
   final List<DateTime>? occurrences;
   static const fromJsonFactory = _$RecurrenceRepetitionFromJson;
-  static const toJsonFactory = _$RecurrenceRepetitionToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceRepetitionToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7680,6 +7795,9 @@ class RecurrenceRepetitionStore {
   factory RecurrenceRepetitionStore.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceRepetitionStoreFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceRepetitionStoreToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceRepetitionStoreToJson(this);
+
   @JsonKey(
     name: 'type',
     includeIfNull: false,
@@ -7694,8 +7812,6 @@ class RecurrenceRepetitionStore {
   @JsonKey(name: 'weekend', includeIfNull: false)
   final int? weekend;
   static const fromJsonFactory = _$RecurrenceRepetitionStoreFromJson;
-  static const toJsonFactory = _$RecurrenceRepetitionStoreToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceRepetitionStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7739,6 +7855,9 @@ class RecurrenceRepetitionUpdate {
   factory RecurrenceRepetitionUpdate.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceRepetitionUpdateFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceRepetitionUpdateToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceRepetitionUpdateToJson(this);
+
   @JsonKey(
     name: 'type',
     includeIfNull: false,
@@ -7753,8 +7872,6 @@ class RecurrenceRepetitionUpdate {
   @JsonKey(name: 'weekend', includeIfNull: false)
   final int? weekend;
   static const fromJsonFactory = _$RecurrenceRepetitionUpdateFromJson;
-  static const toJsonFactory = _$RecurrenceRepetitionUpdateToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceRepetitionUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7789,6 +7906,7 @@ extension $RecurrenceRepetitionUpdateExtension on RecurrenceRepetitionUpdate {
 @JsonSerializable(explicitToJson: true)
 class RecurrenceTransaction {
   RecurrenceTransaction({
+    this.id,
     required this.description,
     required this.amount,
     this.foreignAmount,
@@ -7815,11 +7933,18 @@ class RecurrenceTransaction {
     this.tags,
     this.piggyBankId,
     this.piggyBankName,
+    this.billId,
+    this.billName,
   });
 
   factory RecurrenceTransaction.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceTransactionFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceTransactionToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceTransactionToJson(this);
+
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String? id;
   @JsonKey(name: 'description', includeIfNull: false)
   final String description;
   @JsonKey(name: 'amount', includeIfNull: false)
@@ -7882,9 +8007,11 @@ class RecurrenceTransaction {
   final String? piggyBankId;
   @JsonKey(name: 'piggy_bank_name', includeIfNull: false)
   final String? piggyBankName;
+  @JsonKey(name: 'bill_id', includeIfNull: false)
+  final String? billId;
+  @JsonKey(name: 'bill_name', includeIfNull: false)
+  final String? billName;
   static const fromJsonFactory = _$RecurrenceTransactionFromJson;
-  static const toJsonFactory = _$RecurrenceTransactionToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceTransactionToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7892,7 +8019,8 @@ class RecurrenceTransaction {
 
 extension $RecurrenceTransactionExtension on RecurrenceTransaction {
   RecurrenceTransaction copyWith(
-      {String? description,
+      {String? id,
+      String? description,
       String? amount,
       String? foreignAmount,
       String? currencyId,
@@ -7917,8 +8045,11 @@ extension $RecurrenceTransactionExtension on RecurrenceTransaction {
       enums.AccountTypeProperty? destinationType,
       List<String>? tags,
       String? piggyBankId,
-      String? piggyBankName}) {
+      String? piggyBankName,
+      String? billId,
+      String? billName}) {
     return RecurrenceTransaction(
+        id: id ?? this.id,
         description: description ?? this.description,
         amount: amount ?? this.amount,
         foreignAmount: foreignAmount ?? this.foreignAmount,
@@ -7947,11 +8078,14 @@ extension $RecurrenceTransactionExtension on RecurrenceTransaction {
         destinationType: destinationType ?? this.destinationType,
         tags: tags ?? this.tags,
         piggyBankId: piggyBankId ?? this.piggyBankId,
-        piggyBankName: piggyBankName ?? this.piggyBankName);
+        piggyBankName: piggyBankName ?? this.piggyBankName,
+        billId: billId ?? this.billId,
+        billName: billName ?? this.billName);
   }
 
   RecurrenceTransaction copyWithWrapped(
-      {Wrapped<String>? description,
+      {Wrapped<String?>? id,
+      Wrapped<String>? description,
       Wrapped<String>? amount,
       Wrapped<String?>? foreignAmount,
       Wrapped<String?>? currencyId,
@@ -7976,8 +8110,11 @@ extension $RecurrenceTransactionExtension on RecurrenceTransaction {
       Wrapped<enums.AccountTypeProperty?>? destinationType,
       Wrapped<List<String>?>? tags,
       Wrapped<String?>? piggyBankId,
-      Wrapped<String?>? piggyBankName}) {
+      Wrapped<String?>? piggyBankName,
+      Wrapped<String?>? billId,
+      Wrapped<String?>? billName}) {
     return RecurrenceTransaction(
+        id: (id != null ? id.value : this.id),
         description:
             (description != null ? description.value : this.description),
         amount: (amount != null ? amount.value : this.amount),
@@ -8028,7 +8165,9 @@ extension $RecurrenceTransactionExtension on RecurrenceTransaction {
         piggyBankId:
             (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
         piggyBankName:
-            (piggyBankName != null ? piggyBankName.value : this.piggyBankName));
+            (piggyBankName != null ? piggyBankName.value : this.piggyBankName),
+        billId: (billId != null ? billId.value : this.billId),
+        billName: (billName != null ? billName.value : this.billName));
   }
 }
 
@@ -8048,10 +8187,14 @@ class RecurrenceTransactionStore {
     required this.destinationId,
     this.tags,
     this.piggyBankId,
+    this.billId,
   });
 
   factory RecurrenceTransactionStore.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceTransactionStoreFromJson(json);
+
+  static const toJsonFactory = _$RecurrenceTransactionStoreToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceTransactionStoreToJson(this);
 
   @JsonKey(name: 'description', includeIfNull: false)
   final String description;
@@ -8079,9 +8222,9 @@ class RecurrenceTransactionStore {
   final List<String>? tags;
   @JsonKey(name: 'piggy_bank_id', includeIfNull: false)
   final String? piggyBankId;
+  @JsonKey(name: 'bill_id', includeIfNull: false)
+  final String? billId;
   static const fromJsonFactory = _$RecurrenceTransactionStoreFromJson;
-  static const toJsonFactory = _$RecurrenceTransactionStoreToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceTransactionStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8101,7 +8244,8 @@ extension $RecurrenceTransactionStoreExtension on RecurrenceTransactionStore {
       String? sourceId,
       String? destinationId,
       List<String>? tags,
-      String? piggyBankId}) {
+      String? piggyBankId,
+      String? billId}) {
     return RecurrenceTransactionStore(
         description: description ?? this.description,
         amount: amount ?? this.amount,
@@ -8115,7 +8259,8 @@ extension $RecurrenceTransactionStoreExtension on RecurrenceTransactionStore {
         sourceId: sourceId ?? this.sourceId,
         destinationId: destinationId ?? this.destinationId,
         tags: tags ?? this.tags,
-        piggyBankId: piggyBankId ?? this.piggyBankId);
+        piggyBankId: piggyBankId ?? this.piggyBankId,
+        billId: billId ?? this.billId);
   }
 
   RecurrenceTransactionStore copyWithWrapped(
@@ -8131,7 +8276,8 @@ extension $RecurrenceTransactionStoreExtension on RecurrenceTransactionStore {
       Wrapped<String>? sourceId,
       Wrapped<String>? destinationId,
       Wrapped<List<String>?>? tags,
-      Wrapped<String?>? piggyBankId}) {
+      Wrapped<String?>? piggyBankId,
+      Wrapped<String?>? billId}) {
     return RecurrenceTransactionStore(
         description:
             (description != null ? description.value : this.description),
@@ -8154,13 +8300,15 @@ extension $RecurrenceTransactionStoreExtension on RecurrenceTransactionStore {
             (destinationId != null ? destinationId.value : this.destinationId),
         tags: (tags != null ? tags.value : this.tags),
         piggyBankId:
-            (piggyBankId != null ? piggyBankId.value : this.piggyBankId));
+            (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
+        billId: (billId != null ? billId.value : this.billId));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class RecurrenceTransactionUpdate {
   RecurrenceTransactionUpdate({
+    required this.id,
     this.description,
     this.amount,
     this.foreignAmount,
@@ -8173,11 +8321,17 @@ class RecurrenceTransactionUpdate {
     this.destinationId,
     this.tags,
     this.piggyBankId,
+    this.billId,
   });
 
   factory RecurrenceTransactionUpdate.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceTransactionUpdateFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceTransactionUpdateToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceTransactionUpdateToJson(this);
+
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String id;
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
   @JsonKey(name: 'amount', includeIfNull: false)
@@ -8202,9 +8356,9 @@ class RecurrenceTransactionUpdate {
   final List<String>? tags;
   @JsonKey(name: 'piggy_bank_id', includeIfNull: false)
   final String? piggyBankId;
+  @JsonKey(name: 'bill_id', includeIfNull: false)
+  final String? billId;
   static const fromJsonFactory = _$RecurrenceTransactionUpdateFromJson;
-  static const toJsonFactory = _$RecurrenceTransactionUpdateToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceTransactionUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8212,7 +8366,8 @@ class RecurrenceTransactionUpdate {
 
 extension $RecurrenceTransactionUpdateExtension on RecurrenceTransactionUpdate {
   RecurrenceTransactionUpdate copyWith(
-      {String? description,
+      {String? id,
+      String? description,
       String? amount,
       String? foreignAmount,
       String? currencyId,
@@ -8223,8 +8378,10 @@ extension $RecurrenceTransactionUpdateExtension on RecurrenceTransactionUpdate {
       String? sourceId,
       String? destinationId,
       List<String>? tags,
-      String? piggyBankId}) {
+      String? piggyBankId,
+      String? billId}) {
     return RecurrenceTransactionUpdate(
+        id: id ?? this.id,
         description: description ?? this.description,
         amount: amount ?? this.amount,
         foreignAmount: foreignAmount ?? this.foreignAmount,
@@ -8236,11 +8393,13 @@ extension $RecurrenceTransactionUpdateExtension on RecurrenceTransactionUpdate {
         sourceId: sourceId ?? this.sourceId,
         destinationId: destinationId ?? this.destinationId,
         tags: tags ?? this.tags,
-        piggyBankId: piggyBankId ?? this.piggyBankId);
+        piggyBankId: piggyBankId ?? this.piggyBankId,
+        billId: billId ?? this.billId);
   }
 
   RecurrenceTransactionUpdate copyWithWrapped(
-      {Wrapped<String?>? description,
+      {Wrapped<String>? id,
+      Wrapped<String?>? description,
       Wrapped<String?>? amount,
       Wrapped<String?>? foreignAmount,
       Wrapped<String?>? currencyId,
@@ -8251,8 +8410,10 @@ extension $RecurrenceTransactionUpdateExtension on RecurrenceTransactionUpdate {
       Wrapped<String?>? sourceId,
       Wrapped<String?>? destinationId,
       Wrapped<List<String>?>? tags,
-      Wrapped<String?>? piggyBankId}) {
+      Wrapped<String?>? piggyBankId,
+      Wrapped<String?>? billId}) {
     return RecurrenceTransactionUpdate(
+        id: (id != null ? id.value : this.id),
         description:
             (description != null ? description.value : this.description),
         amount: (amount != null ? amount.value : this.amount),
@@ -8271,7 +8432,8 @@ extension $RecurrenceTransactionUpdateExtension on RecurrenceTransactionUpdate {
             (destinationId != null ? destinationId.value : this.destinationId),
         tags: (tags != null ? tags.value : this.tags),
         piggyBankId:
-            (piggyBankId != null ? piggyBankId.value : this.piggyBankId));
+            (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
+        billId: (billId != null ? billId.value : this.billId));
   }
 }
 
@@ -8294,6 +8456,9 @@ class Rule {
   });
 
   factory Rule.fromJson(Map<String, dynamic> json) => _$RuleFromJson(json);
+
+  static const toJsonFactory = _$RuleToJson;
+  Map<String, dynamic> toJson() => _$RuleToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -8328,8 +8493,6 @@ class Rule {
   @JsonKey(name: 'actions', includeIfNull: false, defaultValue: <RuleAction>[])
   final List<RuleAction> actions;
   static const fromJsonFactory = _$RuleFromJson;
-  static const toJsonFactory = _$RuleToJson;
-  Map<String, dynamic> toJson() => _$RuleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8422,6 +8585,9 @@ class RuleStore {
   factory RuleStore.fromJson(Map<String, dynamic> json) =>
       _$RuleStoreFromJson(json);
 
+  static const toJsonFactory = _$RuleStoreToJson;
+  Map<String, dynamic> toJson() => _$RuleStoreToJson(this);
+
   @JsonKey(name: 'title', includeIfNull: false)
   final String title;
   @JsonKey(name: 'description', includeIfNull: false)
@@ -8454,8 +8620,6 @@ class RuleStore {
       name: 'actions', includeIfNull: false, defaultValue: <RuleActionStore>[])
   final List<RuleActionStore> actions;
   static const fromJsonFactory = _$RuleStoreFromJson;
-  static const toJsonFactory = _$RuleStoreToJson;
-  Map<String, dynamic> toJson() => _$RuleStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8539,6 +8703,9 @@ class RuleUpdate {
   factory RuleUpdate.fromJson(Map<String, dynamic> json) =>
       _$RuleUpdateFromJson(json);
 
+  static const toJsonFactory = _$RuleUpdateToJson;
+  Map<String, dynamic> toJson() => _$RuleUpdateToJson(this);
+
   @JsonKey(name: 'title', includeIfNull: false)
   final String? title;
   @JsonKey(name: 'description', includeIfNull: false)
@@ -8569,8 +8736,6 @@ class RuleUpdate {
       name: 'actions', includeIfNull: false, defaultValue: <RuleActionUpdate>[])
   final List<RuleActionUpdate>? actions;
   static const fromJsonFactory = _$RuleUpdateFromJson;
-  static const toJsonFactory = _$RuleUpdateToJson;
-  Map<String, dynamic> toJson() => _$RuleUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8646,6 +8811,9 @@ class RuleAction {
   factory RuleAction.fromJson(Map<String, dynamic> json) =>
       _$RuleActionFromJson(json);
 
+  static const toJsonFactory = _$RuleActionToJson;
+  Map<String, dynamic> toJson() => _$RuleActionToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
   @JsonKey(name: 'created_at', includeIfNull: false)
@@ -8668,8 +8836,6 @@ class RuleAction {
   @JsonKey(name: 'stop_processing', includeIfNull: false, defaultValue: false)
   final bool? stopProcessing;
   static const fromJsonFactory = _$RuleActionFromJson;
-  static const toJsonFactory = _$RuleActionToJson;
-  Map<String, dynamic> toJson() => _$RuleActionToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8732,6 +8898,9 @@ class RuleActionStore {
   factory RuleActionStore.fromJson(Map<String, dynamic> json) =>
       _$RuleActionStoreFromJson(json);
 
+  static const toJsonFactory = _$RuleActionStoreToJson;
+  Map<String, dynamic> toJson() => _$RuleActionStoreToJson(this);
+
   @JsonKey(
     name: 'type',
     includeIfNull: false,
@@ -8748,8 +8917,6 @@ class RuleActionStore {
   @JsonKey(name: 'stop_processing', includeIfNull: false, defaultValue: false)
   final bool? stopProcessing;
   static const fromJsonFactory = _$RuleActionStoreFromJson;
-  static const toJsonFactory = _$RuleActionStoreToJson;
-  Map<String, dynamic> toJson() => _$RuleActionStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8800,6 +8967,9 @@ class RuleActionUpdate {
   factory RuleActionUpdate.fromJson(Map<String, dynamic> json) =>
       _$RuleActionUpdateFromJson(json);
 
+  static const toJsonFactory = _$RuleActionUpdateToJson;
+  Map<String, dynamic> toJson() => _$RuleActionUpdateToJson(this);
+
   @JsonKey(
     name: 'type',
     includeIfNull: false,
@@ -8816,8 +8986,6 @@ class RuleActionUpdate {
   @JsonKey(name: 'stop_processing', includeIfNull: false)
   final bool? stopProcessing;
   static const fromJsonFactory = _$RuleActionUpdateFromJson;
-  static const toJsonFactory = _$RuleActionUpdateToJson;
-  Map<String, dynamic> toJson() => _$RuleActionUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8869,6 +9037,9 @@ class RuleGroup {
   factory RuleGroup.fromJson(Map<String, dynamic> json) =>
       _$RuleGroupFromJson(json);
 
+  static const toJsonFactory = _$RuleGroupToJson;
+  Map<String, dynamic> toJson() => _$RuleGroupToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -8882,8 +9053,6 @@ class RuleGroup {
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
   static const fromJsonFactory = _$RuleGroupFromJson;
-  static const toJsonFactory = _$RuleGroupToJson;
-  Map<String, dynamic> toJson() => _$RuleGroupToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8936,6 +9105,9 @@ class RuleGroupStore {
   factory RuleGroupStore.fromJson(Map<String, dynamic> json) =>
       _$RuleGroupStoreFromJson(json);
 
+  static const toJsonFactory = _$RuleGroupStoreToJson;
+  Map<String, dynamic> toJson() => _$RuleGroupStoreToJson(this);
+
   @JsonKey(name: 'title', includeIfNull: false)
   final String title;
   @JsonKey(name: 'description', includeIfNull: false)
@@ -8945,8 +9117,6 @@ class RuleGroupStore {
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
   static const fromJsonFactory = _$RuleGroupStoreFromJson;
-  static const toJsonFactory = _$RuleGroupStoreToJson;
-  Map<String, dynamic> toJson() => _$RuleGroupStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8988,6 +9158,9 @@ class RuleGroupUpdate {
   factory RuleGroupUpdate.fromJson(Map<String, dynamic> json) =>
       _$RuleGroupUpdateFromJson(json);
 
+  static const toJsonFactory = _$RuleGroupUpdateToJson;
+  Map<String, dynamic> toJson() => _$RuleGroupUpdateToJson(this);
+
   @JsonKey(name: 'title', includeIfNull: false)
   final String? title;
   @JsonKey(name: 'description', includeIfNull: false)
@@ -8997,8 +9170,6 @@ class RuleGroupUpdate {
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
   static const fromJsonFactory = _$RuleGroupUpdateFromJson;
-  static const toJsonFactory = _$RuleGroupUpdateToJson;
-  Map<String, dynamic> toJson() => _$RuleGroupUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9044,6 +9215,9 @@ class RuleTrigger {
   factory RuleTrigger.fromJson(Map<String, dynamic> json) =>
       _$RuleTriggerFromJson(json);
 
+  static const toJsonFactory = _$RuleTriggerToJson;
+  Map<String, dynamic> toJson() => _$RuleTriggerToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
   @JsonKey(name: 'created_at', includeIfNull: false)
@@ -9066,8 +9240,6 @@ class RuleTrigger {
   @JsonKey(name: 'stop_processing', includeIfNull: false, defaultValue: false)
   final bool? stopProcessing;
   static const fromJsonFactory = _$RuleTriggerFromJson;
-  static const toJsonFactory = _$RuleTriggerToJson;
-  Map<String, dynamic> toJson() => _$RuleTriggerToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9130,6 +9302,9 @@ class RuleTriggerStore {
   factory RuleTriggerStore.fromJson(Map<String, dynamic> json) =>
       _$RuleTriggerStoreFromJson(json);
 
+  static const toJsonFactory = _$RuleTriggerStoreToJson;
+  Map<String, dynamic> toJson() => _$RuleTriggerStoreToJson(this);
+
   @JsonKey(
     name: 'type',
     includeIfNull: false,
@@ -9146,8 +9321,6 @@ class RuleTriggerStore {
   @JsonKey(name: 'stop_processing', includeIfNull: false, defaultValue: false)
   final bool? stopProcessing;
   static const fromJsonFactory = _$RuleTriggerStoreFromJson;
-  static const toJsonFactory = _$RuleTriggerStoreToJson;
-  Map<String, dynamic> toJson() => _$RuleTriggerStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9198,6 +9371,9 @@ class RuleTriggerUpdate {
   factory RuleTriggerUpdate.fromJson(Map<String, dynamic> json) =>
       _$RuleTriggerUpdateFromJson(json);
 
+  static const toJsonFactory = _$RuleTriggerUpdateToJson;
+  Map<String, dynamic> toJson() => _$RuleTriggerUpdateToJson(this);
+
   @JsonKey(
     name: 'type',
     includeIfNull: false,
@@ -9214,8 +9390,6 @@ class RuleTriggerUpdate {
   @JsonKey(name: 'stop_processing', includeIfNull: false)
   final bool? stopProcessing;
   static const fromJsonFactory = _$RuleTriggerUpdateFromJson;
-  static const toJsonFactory = _$RuleTriggerUpdateToJson;
-  Map<String, dynamic> toJson() => _$RuleTriggerUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9269,13 +9443,16 @@ class TagModel {
   factory TagModel.fromJson(Map<String, dynamic> json) =>
       _$TagModelFromJson(json);
 
+  static const toJsonFactory = _$TagModelToJson;
+  Map<String, dynamic> toJson() => _$TagModelToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
   final DateTime? updatedAt;
   @JsonKey(name: 'tag', includeIfNull: false)
   final String tag;
-  @JsonKey(name: 'date', includeIfNull: false)
+  @JsonKey(name: 'date', includeIfNull: false, toJson: _dateToJson)
   final DateTime? date;
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
@@ -9286,8 +9463,6 @@ class TagModel {
   @JsonKey(name: 'zoom_level', includeIfNull: false)
   final int? zoomLevel;
   static const fromJsonFactory = _$TagModelFromJson;
-  static const toJsonFactory = _$TagModelToJson;
-  Map<String, dynamic> toJson() => _$TagModelToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9350,6 +9525,9 @@ class TagModelStore {
   factory TagModelStore.fromJson(Map<String, dynamic> json) =>
       _$TagModelStoreFromJson(json);
 
+  static const toJsonFactory = _$TagModelStoreToJson;
+  Map<String, dynamic> toJson() => _$TagModelStoreToJson(this);
+
   @JsonKey(name: 'tag', includeIfNull: false)
   final String tag;
   @JsonKey(name: 'date', includeIfNull: false, toJson: _dateToJson)
@@ -9363,8 +9541,6 @@ class TagModelStore {
   @JsonKey(name: 'zoom_level', includeIfNull: false)
   final int? zoomLevel;
   static const fromJsonFactory = _$TagModelStoreFromJson;
-  static const toJsonFactory = _$TagModelStoreToJson;
-  Map<String, dynamic> toJson() => _$TagModelStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9419,6 +9595,9 @@ class TagModelUpdate {
   factory TagModelUpdate.fromJson(Map<String, dynamic> json) =>
       _$TagModelUpdateFromJson(json);
 
+  static const toJsonFactory = _$TagModelUpdateToJson;
+  Map<String, dynamic> toJson() => _$TagModelUpdateToJson(this);
+
   @JsonKey(name: 'tag', includeIfNull: false)
   final String? tag;
   @JsonKey(name: 'date', includeIfNull: false, toJson: _dateToJson)
@@ -9432,8 +9611,6 @@ class TagModelUpdate {
   @JsonKey(name: 'zoom_level', includeIfNull: false)
   final int? zoomLevel;
   static const fromJsonFactory = _$TagModelUpdateFromJson;
-  static const toJsonFactory = _$TagModelUpdateToJson;
-  Map<String, dynamic> toJson() => _$TagModelUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9490,6 +9667,9 @@ class Currency {
   factory Currency.fromJson(Map<String, dynamic> json) =>
       _$CurrencyFromJson(json);
 
+  static const toJsonFactory = _$CurrencyToJson;
+  Map<String, dynamic> toJson() => _$CurrencyToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -9507,8 +9687,6 @@ class Currency {
   @JsonKey(name: 'decimal_places', includeIfNull: false)
   final int? decimalPlaces;
   static const fromJsonFactory = _$CurrencyFromJson;
-  static const toJsonFactory = _$CurrencyToJson;
-  Map<String, dynamic> toJson() => _$CurrencyToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9571,6 +9749,9 @@ class CurrencyStore {
   factory CurrencyStore.fromJson(Map<String, dynamic> json) =>
       _$CurrencyStoreFromJson(json);
 
+  static const toJsonFactory = _$CurrencyStoreToJson;
+  Map<String, dynamic> toJson() => _$CurrencyStoreToJson(this);
+
   @JsonKey(name: 'enabled', includeIfNull: false, defaultValue: true)
   final bool? enabled;
   @JsonKey(name: 'default', includeIfNull: false)
@@ -9584,8 +9765,6 @@ class CurrencyStore {
   @JsonKey(name: 'decimal_places', includeIfNull: false)
   final int? decimalPlaces;
   static const fromJsonFactory = _$CurrencyStoreFromJson;
-  static const toJsonFactory = _$CurrencyStoreToJson;
-  Map<String, dynamic> toJson() => _$CurrencyStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9640,6 +9819,9 @@ class CurrencyUpdate {
   factory CurrencyUpdate.fromJson(Map<String, dynamic> json) =>
       _$CurrencyUpdateFromJson(json);
 
+  static const toJsonFactory = _$CurrencyUpdateToJson;
+  Map<String, dynamic> toJson() => _$CurrencyUpdateToJson(this);
+
   @JsonKey(name: 'enabled', includeIfNull: false)
   final bool? enabled;
   @JsonKey(name: 'default', includeIfNull: false)
@@ -9653,8 +9835,6 @@ class CurrencyUpdate {
   @JsonKey(name: 'decimal_places', includeIfNull: false)
   final int? decimalPlaces;
   static const fromJsonFactory = _$CurrencyUpdateFromJson;
-  static const toJsonFactory = _$CurrencyUpdateToJson;
-  Map<String, dynamic> toJson() => _$CurrencyUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9708,6 +9888,9 @@ class TransactionStore {
   factory TransactionStore.fromJson(Map<String, dynamic> json) =>
       _$TransactionStoreFromJson(json);
 
+  static const toJsonFactory = _$TransactionStoreToJson;
+  Map<String, dynamic> toJson() => _$TransactionStoreToJson(this);
+
   @JsonKey(name: 'error_if_duplicate_hash', includeIfNull: false)
   final bool? errorIfDuplicateHash;
   @JsonKey(name: 'apply_rules', includeIfNull: false)
@@ -9722,8 +9905,6 @@ class TransactionStore {
       defaultValue: <TransactionSplitStore>[])
   final List<TransactionSplitStore> transactions;
   static const fromJsonFactory = _$TransactionStoreFromJson;
-  static const toJsonFactory = _$TransactionStoreToJson;
-  Map<String, dynamic> toJson() => _$TransactionStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9775,6 +9956,9 @@ class TransactionUpdate {
   factory TransactionUpdate.fromJson(Map<String, dynamic> json) =>
       _$TransactionUpdateFromJson(json);
 
+  static const toJsonFactory = _$TransactionUpdateToJson;
+  Map<String, dynamic> toJson() => _$TransactionUpdateToJson(this);
+
   @JsonKey(name: 'apply_rules', includeIfNull: false)
   final bool? applyRules;
   @JsonKey(name: 'fire_webhooks', includeIfNull: false, defaultValue: true)
@@ -9787,8 +9971,6 @@ class TransactionUpdate {
       defaultValue: <TransactionSplitUpdate>[])
   final List<TransactionSplitUpdate>? transactions;
   static const fromJsonFactory = _$TransactionUpdateFromJson;
-  static const toJsonFactory = _$TransactionUpdateToJson;
-  Map<String, dynamic> toJson() => _$TransactionUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9837,6 +10019,9 @@ class TransactionLink {
   factory TransactionLink.fromJson(Map<String, dynamic> json) =>
       _$TransactionLinkFromJson(json);
 
+  static const toJsonFactory = _$TransactionLinkToJson;
+  Map<String, dynamic> toJson() => _$TransactionLinkToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -9852,8 +10037,6 @@ class TransactionLink {
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   static const fromJsonFactory = _$TransactionLinkFromJson;
-  static const toJsonFactory = _$TransactionLinkToJson;
-  Map<String, dynamic> toJson() => _$TransactionLinkToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9911,6 +10094,9 @@ class TransactionLinkStore {
   factory TransactionLinkStore.fromJson(Map<String, dynamic> json) =>
       _$TransactionLinkStoreFromJson(json);
 
+  static const toJsonFactory = _$TransactionLinkStoreToJson;
+  Map<String, dynamic> toJson() => _$TransactionLinkStoreToJson(this);
+
   @JsonKey(name: 'link_type_id', includeIfNull: false)
   final String linkTypeId;
   @JsonKey(name: 'link_type_name', includeIfNull: false)
@@ -9922,8 +10108,6 @@ class TransactionLinkStore {
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   static const fromJsonFactory = _$TransactionLinkStoreFromJson;
-  static const toJsonFactory = _$TransactionLinkStoreToJson;
-  Map<String, dynamic> toJson() => _$TransactionLinkStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9973,6 +10157,9 @@ class TransactionLinkUpdate {
   factory TransactionLinkUpdate.fromJson(Map<String, dynamic> json) =>
       _$TransactionLinkUpdateFromJson(json);
 
+  static const toJsonFactory = _$TransactionLinkUpdateToJson;
+  Map<String, dynamic> toJson() => _$TransactionLinkUpdateToJson(this);
+
   @JsonKey(name: 'link_type_id', includeIfNull: false)
   final String? linkTypeId;
   @JsonKey(name: 'link_type_name', includeIfNull: false)
@@ -9984,8 +10171,6 @@ class TransactionLinkUpdate {
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   static const fromJsonFactory = _$TransactionLinkUpdateFromJson;
-  static const toJsonFactory = _$TransactionLinkUpdateToJson;
-  Map<String, dynamic> toJson() => _$TransactionLinkUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -10034,6 +10219,9 @@ class LinkType {
   factory LinkType.fromJson(Map<String, dynamic> json) =>
       _$LinkTypeFromJson(json);
 
+  static const toJsonFactory = _$LinkTypeToJson;
+  Map<String, dynamic> toJson() => _$LinkTypeToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   @JsonKey(name: 'inward', includeIfNull: false)
@@ -10043,8 +10231,6 @@ class LinkType {
   @JsonKey(name: 'editable', includeIfNull: false)
   final bool? editable;
   static const fromJsonFactory = _$LinkTypeFromJson;
-  static const toJsonFactory = _$LinkTypeToJson;
-  Map<String, dynamic> toJson() => _$LinkTypeToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -10084,6 +10270,9 @@ class LinkTypeStore {
   factory LinkTypeStore.fromJson(Map<String, dynamic> json) =>
       _$LinkTypeStoreFromJson(json);
 
+  static const toJsonFactory = _$LinkTypeStoreToJson;
+  Map<String, dynamic> toJson() => _$LinkTypeStoreToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   @JsonKey(name: 'inward', includeIfNull: false)
@@ -10091,8 +10280,6 @@ class LinkTypeStore {
   @JsonKey(name: 'outward', includeIfNull: false)
   final String outward;
   static const fromJsonFactory = _$LinkTypeStoreFromJson;
-  static const toJsonFactory = _$LinkTypeStoreToJson;
-  Map<String, dynamic> toJson() => _$LinkTypeStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -10128,6 +10315,9 @@ class LinkTypeUpdate {
   factory LinkTypeUpdate.fromJson(Map<String, dynamic> json) =>
       _$LinkTypeUpdateFromJson(json);
 
+  static const toJsonFactory = _$LinkTypeUpdateToJson;
+  Map<String, dynamic> toJson() => _$LinkTypeUpdateToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
   @JsonKey(name: 'inward', includeIfNull: false)
@@ -10135,8 +10325,6 @@ class LinkTypeUpdate {
   @JsonKey(name: 'outward', includeIfNull: false)
   final String? outward;
   static const fromJsonFactory = _$LinkTypeUpdateFromJson;
-  static const toJsonFactory = _$LinkTypeUpdateToJson;
-  Map<String, dynamic> toJson() => _$LinkTypeUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -10211,6 +10399,9 @@ class TransactionSplitStore {
 
   factory TransactionSplitStore.fromJson(Map<String, dynamic> json) =>
       _$TransactionSplitStoreFromJson(json);
+
+  static const toJsonFactory = _$TransactionSplitStoreToJson;
+  Map<String, dynamic> toJson() => _$TransactionSplitStoreToJson(this);
 
   @JsonKey(
     name: 'type',
@@ -10304,8 +10495,6 @@ class TransactionSplitStore {
   @JsonKey(name: 'invoice_date', includeIfNull: false)
   final DateTime? invoiceDate;
   static const fromJsonFactory = _$TransactionSplitStoreFromJson;
-  static const toJsonFactory = _$TransactionSplitStoreToJson;
-  Map<String, dynamic> toJson() => _$TransactionSplitStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -10573,6 +10762,9 @@ class TransactionSplitUpdate {
   factory TransactionSplitUpdate.fromJson(Map<String, dynamic> json) =>
       _$TransactionSplitUpdateFromJson(json);
 
+  static const toJsonFactory = _$TransactionSplitUpdateToJson;
+  Map<String, dynamic> toJson() => _$TransactionSplitUpdateToJson(this);
+
   @JsonKey(name: 'transaction_journal_id', includeIfNull: false)
   final String? transactionJournalId;
   @JsonKey(
@@ -10677,8 +10869,6 @@ class TransactionSplitUpdate {
   @JsonKey(name: 'invoice_date', includeIfNull: false)
   final DateTime? invoiceDate;
   static const fromJsonFactory = _$TransactionSplitUpdateFromJson;
-  static const toJsonFactory = _$TransactionSplitUpdateToJson;
-  Map<String, dynamic> toJson() => _$TransactionSplitUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -10940,6 +11130,9 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
+  static const toJsonFactory = _$UserToJson;
+  Map<String, dynamic> toJson() => _$UserToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -10963,8 +11156,6 @@ class User {
   )
   final enums.UserRoleProperty? role;
   static const fromJsonFactory = _$UserFromJson;
-  static const toJsonFactory = _$UserToJson;
-  Map<String, dynamic> toJson() => _$UserToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11022,6 +11213,9 @@ class Webhook {
   factory Webhook.fromJson(Map<String, dynamic> json) =>
       _$WebhookFromJson(json);
 
+  static const toJsonFactory = _$WebhookToJson;
+  Map<String, dynamic> toJson() => _$WebhookToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -11056,8 +11250,6 @@ class Webhook {
   @JsonKey(name: 'url', includeIfNull: false)
   final String url;
   static const fromJsonFactory = _$WebhookFromJson;
-  static const toJsonFactory = _$WebhookToJson;
-  Map<String, dynamic> toJson() => _$WebhookToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11123,6 +11315,9 @@ class WebhookStore {
   factory WebhookStore.fromJson(Map<String, dynamic> json) =>
       _$WebhookStoreFromJson(json);
 
+  static const toJsonFactory = _$WebhookStoreToJson;
+  Map<String, dynamic> toJson() => _$WebhookStoreToJson(this);
+
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
   @JsonKey(name: 'title', includeIfNull: false)
@@ -11151,8 +11346,6 @@ class WebhookStore {
   @JsonKey(name: 'url', includeIfNull: false)
   final String url;
   static const fromJsonFactory = _$WebhookStoreFromJson;
-  static const toJsonFactory = _$WebhookStoreToJson;
-  Map<String, dynamic> toJson() => _$WebhookStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11207,6 +11400,9 @@ class WebhookUpdate {
   factory WebhookUpdate.fromJson(Map<String, dynamic> json) =>
       _$WebhookUpdateFromJson(json);
 
+  static const toJsonFactory = _$WebhookUpdateToJson;
+  Map<String, dynamic> toJson() => _$WebhookUpdateToJson(this);
+
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
   @JsonKey(name: 'title', includeIfNull: false)
@@ -11237,8 +11433,6 @@ class WebhookUpdate {
   @JsonKey(name: 'url', includeIfNull: false)
   final String? url;
   static const fromJsonFactory = _$WebhookUpdateFromJson;
-  static const toJsonFactory = _$WebhookUpdateToJson;
-  Map<String, dynamic> toJson() => _$WebhookUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11296,6 +11490,9 @@ class WebhookAttempt {
   factory WebhookAttempt.fromJson(Map<String, dynamic> json) =>
       _$WebhookAttemptFromJson(json);
 
+  static const toJsonFactory = _$WebhookAttemptToJson;
+  Map<String, dynamic> toJson() => _$WebhookAttemptToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -11309,8 +11506,6 @@ class WebhookAttempt {
   @JsonKey(name: 'response', includeIfNull: false)
   final String? response;
   static const fromJsonFactory = _$WebhookAttemptFromJson;
-  static const toJsonFactory = _$WebhookAttemptToJson;
-  Map<String, dynamic> toJson() => _$WebhookAttemptToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11367,6 +11562,9 @@ class WebhookMessage {
   factory WebhookMessage.fromJson(Map<String, dynamic> json) =>
       _$WebhookMessageFromJson(json);
 
+  static const toJsonFactory = _$WebhookMessageToJson;
+  Map<String, dynamic> toJson() => _$WebhookMessageToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -11382,8 +11580,6 @@ class WebhookMessage {
   @JsonKey(name: 'string', includeIfNull: false)
   final String? $string;
   static const fromJsonFactory = _$WebhookMessageFromJson;
-  static const toJsonFactory = _$WebhookMessageToJson;
-  Map<String, dynamic> toJson() => _$WebhookMessageToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11434,9 +11630,10 @@ class PolymorphicProperty {
   factory PolymorphicProperty.fromJson(Map<String, dynamic> json) =>
       _$PolymorphicPropertyFromJson(json);
 
-  static const fromJsonFactory = _$PolymorphicPropertyFromJson;
   static const toJsonFactory = _$PolymorphicPropertyToJson;
   Map<String, dynamic> toJson() => _$PolymorphicPropertyToJson(this);
+
+  static const fromJsonFactory = _$PolymorphicPropertyFromJson;
 
   @override
   String toString() => jsonEncode(this);
@@ -11451,9 +11648,10 @@ class BasicSummary {
   factory BasicSummary.fromJson(Map<String, dynamic> json) =>
       _$BasicSummaryFromJson(json);
 
-  static const fromJsonFactory = _$BasicSummaryFromJson;
   static const toJsonFactory = _$BasicSummaryToJson;
   Map<String, dynamic> toJson() => _$BasicSummaryToJson(this);
+
+  static const fromJsonFactory = _$BasicSummaryFromJson;
 
   @override
   String toString() => jsonEncode(this);
@@ -11477,6 +11675,9 @@ class BasicSummaryEntry {
   factory BasicSummaryEntry.fromJson(Map<String, dynamic> json) =>
       _$BasicSummaryEntryFromJson(json);
 
+  static const toJsonFactory = _$BasicSummaryEntryToJson;
+  Map<String, dynamic> toJson() => _$BasicSummaryEntryToJson(this);
+
   @JsonKey(name: 'key', includeIfNull: false)
   final String? key;
   @JsonKey(name: 'title', includeIfNull: false)
@@ -11498,8 +11699,6 @@ class BasicSummaryEntry {
   @JsonKey(name: 'sub_title', includeIfNull: false)
   final String? subTitle;
   static const fromJsonFactory = _$BasicSummaryEntryFromJson;
-  static const toJsonFactory = _$BasicSummaryEntryToJson;
-  Map<String, dynamic> toJson() => _$BasicSummaryEntryToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11574,6 +11773,9 @@ class Configuration {
   factory Configuration.fromJson(Map<String, dynamic> json) =>
       _$ConfigurationFromJson(json);
 
+  static const toJsonFactory = _$ConfigurationToJson;
+  Map<String, dynamic> toJson() => _$ConfigurationToJson(this);
+
   @JsonKey(
     name: 'title',
     includeIfNull: false,
@@ -11586,8 +11788,6 @@ class Configuration {
   @JsonKey(name: 'editable', includeIfNull: false)
   final bool editable;
   static const fromJsonFactory = _$ConfigurationFromJson;
-  static const toJsonFactory = _$ConfigurationToJson;
-  Map<String, dynamic> toJson() => _$ConfigurationToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11624,11 +11824,12 @@ class ConfigurationUpdate {
   factory ConfigurationUpdate.fromJson(Map<String, dynamic> json) =>
       _$ConfigurationUpdateFromJson(json);
 
+  static const toJsonFactory = _$ConfigurationUpdateToJson;
+  Map<String, dynamic> toJson() => _$ConfigurationUpdateToJson(this);
+
   @JsonKey(name: 'value', includeIfNull: false)
   final PolymorphicProperty value;
   static const fromJsonFactory = _$ConfigurationUpdateFromJson;
-  static const toJsonFactory = _$ConfigurationUpdateToJson;
-  Map<String, dynamic> toJson() => _$ConfigurationUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11656,6 +11857,9 @@ class CronResult {
   factory CronResult.fromJson(Map<String, dynamic> json) =>
       _$CronResultFromJson(json);
 
+  static const toJsonFactory = _$CronResultToJson;
+  Map<String, dynamic> toJson() => _$CronResultToJson(this);
+
   @JsonKey(name: 'recurring_transactions', includeIfNull: false)
   final CronResultRow? recurringTransactions;
   @JsonKey(name: 'auto_budgets', includeIfNull: false)
@@ -11663,8 +11867,6 @@ class CronResult {
   @JsonKey(name: 'telemetry', includeIfNull: false)
   final CronResultRow? telemetry;
   static const fromJsonFactory = _$CronResultFromJson;
-  static const toJsonFactory = _$CronResultToJson;
-  Map<String, dynamic> toJson() => _$CronResultToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11708,6 +11910,9 @@ class CronResultRow {
   factory CronResultRow.fromJson(Map<String, dynamic> json) =>
       _$CronResultRowFromJson(json);
 
+  static const toJsonFactory = _$CronResultRowToJson;
+  Map<String, dynamic> toJson() => _$CronResultRowToJson(this);
+
   @JsonKey(name: 'job_fired', includeIfNull: false)
   final bool? jobFired;
   @JsonKey(name: 'job_succeeded', includeIfNull: false)
@@ -11717,8 +11922,6 @@ class CronResultRow {
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   static const fromJsonFactory = _$CronResultRowFromJson;
-  static const toJsonFactory = _$CronResultRowToJson;
-  Map<String, dynamic> toJson() => _$CronResultRowToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11757,11 +11960,12 @@ class SystemInfo {
   factory SystemInfo.fromJson(Map<String, dynamic> json) =>
       _$SystemInfoFromJson(json);
 
+  static const toJsonFactory = _$SystemInfoToJson;
+  Map<String, dynamic> toJson() => _$SystemInfoToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final SystemInfo$Data? data;
   static const fromJsonFactory = _$SystemInfoFromJson;
-  static const toJsonFactory = _$SystemInfoToJson;
-  Map<String, dynamic> toJson() => _$SystemInfoToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11786,11 +11990,12 @@ class UserSingle {
   factory UserSingle.fromJson(Map<String, dynamic> json) =>
       _$UserSingleFromJson(json);
 
+  static const toJsonFactory = _$UserSingleToJson;
+  Map<String, dynamic> toJson() => _$UserSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final UserRead data;
   static const fromJsonFactory = _$UserSingleFromJson;
-  static const toJsonFactory = _$UserSingleToJson;
-  Map<String, dynamic> toJson() => _$UserSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11817,6 +12022,9 @@ class TransactionArray {
   factory TransactionArray.fromJson(Map<String, dynamic> json) =>
       _$TransactionArrayFromJson(json);
 
+  static const toJsonFactory = _$TransactionArrayToJson;
+  Map<String, dynamic> toJson() => _$TransactionArrayToJson(this);
+
   @JsonKey(
       name: 'data', includeIfNull: false, defaultValue: <TransactionRead>[])
   final List<TransactionRead> data;
@@ -11825,8 +12033,6 @@ class TransactionArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$TransactionArrayFromJson;
-  static const toJsonFactory = _$TransactionArrayToJson;
-  Map<String, dynamic> toJson() => _$TransactionArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11864,6 +12070,9 @@ class TransactionRead {
   factory TransactionRead.fromJson(Map<String, dynamic> json) =>
       _$TransactionReadFromJson(json);
 
+  static const toJsonFactory = _$TransactionReadToJson;
+  Map<String, dynamic> toJson() => _$TransactionReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -11873,8 +12082,6 @@ class TransactionRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$TransactionReadFromJson;
-  static const toJsonFactory = _$TransactionReadToJson;
-  Map<String, dynamic> toJson() => _$TransactionReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11911,11 +12118,12 @@ class Meta {
 
   factory Meta.fromJson(Map<String, dynamic> json) => _$MetaFromJson(json);
 
+  static const toJsonFactory = _$MetaToJson;
+  Map<String, dynamic> toJson() => _$MetaToJson(this);
+
   @JsonKey(name: 'pagination', includeIfNull: false)
   final Meta$Pagination? pagination;
   static const fromJsonFactory = _$MetaFromJson;
-  static const toJsonFactory = _$MetaToJson;
-  Map<String, dynamic> toJson() => _$MetaToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11941,11 +12149,12 @@ class ObjectLink {
   factory ObjectLink.fromJson(Map<String, dynamic> json) =>
       _$ObjectLinkFromJson(json);
 
+  static const toJsonFactory = _$ObjectLinkToJson;
+  Map<String, dynamic> toJson() => _$ObjectLinkToJson(this);
+
   @JsonKey(name: 'self', includeIfNull: false)
   final String? self;
   static const fromJsonFactory = _$ObjectLinkFromJson;
-  static const toJsonFactory = _$ObjectLinkToJson;
-  Map<String, dynamic> toJson() => _$ObjectLinkToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11966,41 +12175,55 @@ class PageLink {
   PageLink({
     this.self,
     this.first,
+    this.next,
+    this.prev,
     this.last,
   });
 
   factory PageLink.fromJson(Map<String, dynamic> json) =>
       _$PageLinkFromJson(json);
 
+  static const toJsonFactory = _$PageLinkToJson;
+  Map<String, dynamic> toJson() => _$PageLinkToJson(this);
+
   @JsonKey(name: 'self', includeIfNull: false)
   final String? self;
   @JsonKey(name: 'first', includeIfNull: false)
   final String? first;
+  @JsonKey(name: 'next', includeIfNull: false)
+  final String? next;
+  @JsonKey(name: 'prev', includeIfNull: false)
+  final String? prev;
   @JsonKey(name: 'last', includeIfNull: false)
   final String? last;
   static const fromJsonFactory = _$PageLinkFromJson;
-  static const toJsonFactory = _$PageLinkToJson;
-  Map<String, dynamic> toJson() => _$PageLinkToJson(this);
 
   @override
   String toString() => jsonEncode(this);
 }
 
 extension $PageLinkExtension on PageLink {
-  PageLink copyWith({String? self, String? first, String? last}) {
+  PageLink copyWith(
+      {String? self, String? first, String? next, String? prev, String? last}) {
     return PageLink(
         self: self ?? this.self,
         first: first ?? this.first,
+        next: next ?? this.next,
+        prev: prev ?? this.prev,
         last: last ?? this.last);
   }
 
   PageLink copyWithWrapped(
       {Wrapped<String?>? self,
       Wrapped<String?>? first,
+      Wrapped<String?>? next,
+      Wrapped<String?>? prev,
       Wrapped<String?>? last}) {
     return PageLink(
         self: (self != null ? self.value : this.self),
         first: (first != null ? first.value : this.first),
+        next: (next != null ? next.value : this.next),
+        prev: (prev != null ? prev.value : this.prev),
         last: (last != null ? last.value : this.last));
   }
 }
@@ -12018,6 +12241,9 @@ class Transaction {
   factory Transaction.fromJson(Map<String, dynamic> json) =>
       _$TransactionFromJson(json);
 
+  static const toJsonFactory = _$TransactionToJson;
+  Map<String, dynamic> toJson() => _$TransactionToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -12032,8 +12258,6 @@ class Transaction {
       defaultValue: <TransactionSplit>[])
   final List<TransactionSplit> transactions;
   static const fromJsonFactory = _$TransactionFromJson;
-  static const toJsonFactory = _$TransactionToJson;
-  Map<String, dynamic> toJson() => _$TransactionToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -12139,6 +12363,9 @@ class TransactionSplit {
   factory TransactionSplit.fromJson(Map<String, dynamic> json) =>
       _$TransactionSplitFromJson(json);
 
+  static const toJsonFactory = _$TransactionSplitToJson;
+  Map<String, dynamic> toJson() => _$TransactionSplitToJson(this);
+
   @JsonKey(name: 'user', includeIfNull: false)
   final String? user;
   @JsonKey(name: 'transaction_journal_id', includeIfNull: false)
@@ -12231,7 +12458,7 @@ class TransactionSplit {
   @JsonKey(name: 'original_source', includeIfNull: false)
   final String? originalSource;
   @JsonKey(name: 'recurrence_id', includeIfNull: false)
-  final Object? recurrenceId;
+  final String? recurrenceId;
   @JsonKey(name: 'recurrence_total', includeIfNull: false)
   final int? recurrenceTotal;
   @JsonKey(name: 'recurrence_count', includeIfNull: false)
@@ -12277,8 +12504,6 @@ class TransactionSplit {
   @JsonKey(name: 'has_attachments', includeIfNull: false)
   final bool? hasAttachments;
   static const fromJsonFactory = _$TransactionSplitFromJson;
-  static const toJsonFactory = _$TransactionSplitToJson;
-  Map<String, dynamic> toJson() => _$TransactionSplitToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -12324,7 +12549,7 @@ extension $TransactionSplitExtension on TransactionSplit {
       String? externalId,
       String? externalUrl,
       String? originalSource,
-      Object? recurrenceId,
+      String? recurrenceId,
       int? recurrenceTotal,
       int? recurrenceCount,
       String? bunqPaymentId,
@@ -12453,7 +12678,7 @@ extension $TransactionSplitExtension on TransactionSplit {
       Wrapped<String?>? externalId,
       Wrapped<String?>? externalUrl,
       Wrapped<String?>? originalSource,
-      Wrapped<Object?>? recurrenceId,
+      Wrapped<String?>? recurrenceId,
       Wrapped<int?>? recurrenceTotal,
       Wrapped<int?>? recurrenceCount,
       Wrapped<String?>? bunqPaymentId,
@@ -12597,13 +12822,14 @@ class BadRequest {
   factory BadRequest.fromJson(Map<String, dynamic> json) =>
       _$BadRequestFromJson(json);
 
+  static const toJsonFactory = _$BadRequestToJson;
+  Map<String, dynamic> toJson() => _$BadRequestToJson(this);
+
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   @JsonKey(name: 'exception', includeIfNull: false)
   final String? exception;
   static const fromJsonFactory = _$BadRequestFromJson;
-  static const toJsonFactory = _$BadRequestToJson;
-  Map<String, dynamic> toJson() => _$BadRequestToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -12634,13 +12860,14 @@ class InternalException {
   factory InternalException.fromJson(Map<String, dynamic> json) =>
       _$InternalExceptionFromJson(json);
 
+  static const toJsonFactory = _$InternalExceptionToJson;
+  Map<String, dynamic> toJson() => _$InternalExceptionToJson(this);
+
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   @JsonKey(name: 'exception', includeIfNull: false)
   final String? exception;
   static const fromJsonFactory = _$InternalExceptionFromJson;
-  static const toJsonFactory = _$InternalExceptionToJson;
-  Map<String, dynamic> toJson() => _$InternalExceptionToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -12671,13 +12898,14 @@ class NotFound {
   factory NotFound.fromJson(Map<String, dynamic> json) =>
       _$NotFoundFromJson(json);
 
+  static const toJsonFactory = _$NotFoundToJson;
+  Map<String, dynamic> toJson() => _$NotFoundToJson(this);
+
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   @JsonKey(name: 'exception', includeIfNull: false)
   final String? exception;
   static const fromJsonFactory = _$NotFoundFromJson;
-  static const toJsonFactory = _$NotFoundToJson;
-  Map<String, dynamic> toJson() => _$NotFoundToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -12708,13 +12936,14 @@ class Unauthenticated {
   factory Unauthenticated.fromJson(Map<String, dynamic> json) =>
       _$UnauthenticatedFromJson(json);
 
+  static const toJsonFactory = _$UnauthenticatedToJson;
+  Map<String, dynamic> toJson() => _$UnauthenticatedToJson(this);
+
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   @JsonKey(name: 'exception', includeIfNull: false)
   final String? exception;
   static const fromJsonFactory = _$UnauthenticatedFromJson;
-  static const toJsonFactory = _$UnauthenticatedToJson;
-  Map<String, dynamic> toJson() => _$UnauthenticatedToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -12745,13 +12974,14 @@ class ValidationError {
   factory ValidationError.fromJson(Map<String, dynamic> json) =>
       _$ValidationErrorFromJson(json);
 
+  static const toJsonFactory = _$ValidationErrorToJson;
+  Map<String, dynamic> toJson() => _$ValidationErrorToJson(this);
+
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   @JsonKey(name: 'errors', includeIfNull: false)
   final ValidationError$Errors? errors;
   static const fromJsonFactory = _$ValidationErrorFromJson;
-  static const toJsonFactory = _$ValidationErrorToJson;
-  Map<String, dynamic> toJson() => _$ValidationErrorToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -12771,8 +13001,6 @@ extension $ValidationErrorExtension on ValidationError {
   }
 }
 
-typedef Bill$PaidDates = List<Bill$PaidDates$Item>;
-
 @JsonSerializable(explicitToJson: true)
 class Bill$PaidDates$Item {
   Bill$PaidDates$Item({
@@ -12784,6 +13012,9 @@ class Bill$PaidDates$Item {
   factory Bill$PaidDates$Item.fromJson(Map<String, dynamic> json) =>
       _$Bill$PaidDates$ItemFromJson(json);
 
+  static const toJsonFactory = _$Bill$PaidDates$ItemToJson;
+  Map<String, dynamic> toJson() => _$Bill$PaidDates$ItemToJson(this);
+
   @JsonKey(name: 'transaction_group_id', includeIfNull: false)
   final String? transactionGroupId;
   @JsonKey(name: 'transaction_journal_id', includeIfNull: false)
@@ -12791,8 +13022,6 @@ class Bill$PaidDates$Item {
   @JsonKey(name: 'date', includeIfNull: false)
   final DateTime? date;
   static const fromJsonFactory = _$Bill$PaidDates$ItemFromJson;
-  static const toJsonFactory = _$Bill$PaidDates$ItemToJson;
-  Map<String, dynamic> toJson() => _$Bill$PaidDates$ItemToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -12837,6 +13066,9 @@ class SystemInfo$Data {
   factory SystemInfo$Data.fromJson(Map<String, dynamic> json) =>
       _$SystemInfo$DataFromJson(json);
 
+  static const toJsonFactory = _$SystemInfo$DataToJson;
+  Map<String, dynamic> toJson() => _$SystemInfo$DataToJson(this);
+
   @JsonKey(name: 'version', includeIfNull: false)
   final String? version;
   @JsonKey(name: 'api_version', includeIfNull: false)
@@ -12848,8 +13080,6 @@ class SystemInfo$Data {
   @JsonKey(name: 'driver', includeIfNull: false)
   final String? driver;
   static const fromJsonFactory = _$SystemInfo$DataFromJson;
-  static const toJsonFactory = _$SystemInfo$DataToJson;
-  Map<String, dynamic> toJson() => _$SystemInfo$DataToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -12898,6 +13128,9 @@ class Meta$Pagination {
   factory Meta$Pagination.fromJson(Map<String, dynamic> json) =>
       _$Meta$PaginationFromJson(json);
 
+  static const toJsonFactory = _$Meta$PaginationToJson;
+  Map<String, dynamic> toJson() => _$Meta$PaginationToJson(this);
+
   @JsonKey(name: 'total', includeIfNull: false)
   final int? total;
   @JsonKey(name: 'count', includeIfNull: false)
@@ -12909,8 +13142,6 @@ class Meta$Pagination {
   @JsonKey(name: 'total_pages', includeIfNull: false)
   final int? totalPages;
   static const fromJsonFactory = _$Meta$PaginationFromJson;
-  static const toJsonFactory = _$Meta$PaginationToJson;
-  Map<String, dynamic> toJson() => _$Meta$PaginationToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -12965,6 +13196,9 @@ class ValidationError$Errors {
   factory ValidationError$Errors.fromJson(Map<String, dynamic> json) =>
       _$ValidationError$ErrorsFromJson(json);
 
+  static const toJsonFactory = _$ValidationError$ErrorsToJson;
+  Map<String, dynamic> toJson() => _$ValidationError$ErrorsToJson(this);
+
   @JsonKey(name: 'email', includeIfNull: false, defaultValue: <String>[])
   final List<String>? email;
   @JsonKey(name: 'blocked', includeIfNull: false, defaultValue: <String>[])
@@ -12986,8 +13220,6 @@ class ValidationError$Errors {
   @JsonKey(name: 'date', includeIfNull: false, defaultValue: <String>[])
   final List<String>? date;
   static const fromJsonFactory = _$ValidationError$ErrorsFromJson;
-  static const toJsonFactory = _$ValidationError$ErrorsToJson;
-  Map<String, dynamic> toJson() => _$ValidationError$ErrorsToJson(this);
 
   @override
   String toString() => jsonEncode(this);

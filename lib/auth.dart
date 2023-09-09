@@ -21,6 +21,10 @@ class SSLHttpOverride extends HttpOverrides {
 
   @override
   HttpClient createHttpClient(SecurityContext? context) {
+    // Needed for issue #75
+    //context ??= SecurityContext.defaultContext;
+    //context.useCertificateChainBytes(chainBytes);
+    //context.usePrivateKeyBytes(keyBytes);
     return super.createHttpClient(context)
       ..badCertificateCallback = (X509Certificate cert, _, __) {
         log.fine("Using SSLHttpOverride");

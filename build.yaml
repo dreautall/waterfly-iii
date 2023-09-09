@@ -1,15 +1,16 @@
 targets:
   $default:
     sources:
-      - swagger_input/firefly-iii.yaml
+      - swagger_input/**
+      - $package$
+      - lib/$lib$
     builders:
       swagger_dart_code_generator:
         options:
           input_folder: "swagger_input/"
           output_folder: "lib/generated/swagger_fireflyiii_api/"
-          with_base_url: false
+          with_base_url: true
           separate_models: true
-          cut_from_model_names: v1
           override_equals_and_hashcode: false
           include_if_null: false
 #      json_serializable:

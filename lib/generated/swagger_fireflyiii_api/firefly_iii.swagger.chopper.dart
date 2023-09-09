@@ -6,8 +6,8 @@ part of 'firefly_iii.swagger.dart';
 // ChopperGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line, always_specify_types, prefer_const_declarations, unnecessary_brace_in_string_interps
-class _$FireflyIii extends FireflyIii {
+// ignore_for_file: always_put_control_body_on_new_line, always_specify_types, prefer_const_declarations, unnecessary_string_interpolations, unnecessary_brace_in_string_interps
+final class _$FireflyIii extends FireflyIii {
   _$FireflyIii([ChopperClient? client]) {
     if (client == null) return;
     this.client = client;
@@ -22,14 +22,14 @@ class _$FireflyIii extends FireflyIii {
     String? query,
     int? limit,
     String? date,
-    List<String?>? types,
+    List<Object?>? types,
   }) {
     final Uri $url = Uri.parse('/v1/autocomplete/accounts');
     final Map<String, dynamic> $params = <String, dynamic>{
       'query': query,
       'limit': limit,
       'date': date,
-      'types': types?.join(","),
+      'types': types,
     };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
@@ -3645,7 +3645,7 @@ class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<dynamic>> _v1CurrenciesCodeDisablePost({
     String? xTraceId,
-    required int? code,
+    required String? code,
   }) {
     final Uri $url = Uri.parse('/v1/currencies/${code}/disable');
     final Map<String, String> $headers = {
@@ -3700,18 +3700,24 @@ class _$FireflyIii extends FireflyIii {
   Future<Response<CurrencySingle>> _v1CurrenciesCodePut({
     String? xTraceId,
     required String? code,
-    required CurrencyUpdate? body,
+    required CurrencyUpdate body,
   }) {
     final Uri $url = Uri.parse('/v1/currencies/${code}');
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
-    final $body = body;
+    final List<PartValue> $parts = <PartValue>[
+      PartValue<CurrencyUpdate>(
+        'body',
+        body,
+      )
+    ];
     final Request $request = Request(
       'PUT',
       $url,
       client.baseUrl,
-      body: $body,
+      parts: $parts,
+      multipart: true,
       headers: $headers,
     );
     return client.send<CurrencySingle, CurrencySingle>($request);

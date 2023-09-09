@@ -9,6 +9,7 @@ import 'package:chopper/chopper.dart'
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:version/version.dart';
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
@@ -79,9 +80,11 @@ class AuthUser {
   late Uri _host;
   late String _apiKey;
   late FireflyIii _api;
+  late FireflyIiiV2 _apiV2;
 
   Uri get host => _host;
   FireflyIii get api => _api;
+  FireflyIiiV2 get apiV2 => _apiV2;
 
   final Logger log = Logger("Auth.AuthUser");
 
@@ -96,6 +99,24 @@ class AuthUser {
       interceptors: <dynamic>[
         (Request request) async {
           log.finest(() => "API query to ${request.url}");
+          request.followRedirects = false;
+          request.maxRedirects = 0;
+          return request.copyWith(headers: <String, String>{
+            ...request.headers,
+            ...headers(),
+          });
+        },
+        (Response<dynamic> response) async {
+          return response;
+        },
+      ],
+    );
+
+    _apiV2 = FireflyIiiV2.create(
+      baseUrl: _host,
+      interceptors: <dynamic>[
+        (Request request) async {
+          log.finest(() => "APIv2 query to ${request.url}");
           request.followRedirects = false;
           request.maxRedirects = 0;
           return request.copyWith(headers: <String, String>{
@@ -185,6 +206,14 @@ class FireflyService with ChangeNotifier {
       throw Exception("API unavailable");
     }
     return _currentUser!.api;
+  }
+
+  FireflyIiiV2 get apiV2 {
+    if (_currentUser?.apiV2 == null) {
+      signOut();
+      throw Exception("API unavailable");
+    }
+    return _currentUser!.apiV2;
   }
 
   late CurrencyRead defaultCurrency;

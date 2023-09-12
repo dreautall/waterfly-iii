@@ -10,6 +10,7 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:waterflyiii/animations.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -112,20 +113,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
   }
 
   Future<void> _fetchPage(int pageKey) async {
-    final TransStock stock = context.read<FireflyService>().transStock!;
-    /*final List<TransactionRead> transactionList =
-        await context.read<FireflyService>().transStock!.get(
-              page: pageKey,
-              end: DateFormat('yyyy-MM-dd', 'en_US')
-                  .format(DateTime.now().toLocal()),
-            );
-    final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
-    if (isLastPage) {
-      _pagingController.appendLastPage(transactionList);
-    } else {
-      _pagingController.appendPage(transactionList, pageKey + 1);
+    final TransStock? stock = context.read<FireflyService>().transStock;
+
+    if (stock == null) {
+      // Throw error
+      return;
     }
-    return;*/
 
     try {
       late List<TransactionRead> transactionList;
@@ -194,6 +187,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
       child: PagedListView<int, TransactionRead>(
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
+          animateTransitions: true,
+          transitionDuration: animDurationStandard,
           itemBuilder: transactionRowBuilder,
         ),
         //itemExtent: 80,

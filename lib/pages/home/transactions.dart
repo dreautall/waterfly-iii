@@ -9,7 +9,6 @@ import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show Response;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:waterflyiii/auth.dart';
@@ -112,6 +111,20 @@ class _HomeTransactionsState extends State<HomeTransactions>
   }
 
   Future<void> _fetchPage(int pageKey) async {
+    final List<TransactionRead> transactionList =
+        await context.read<FireflyService>().transStock!.get(
+              page: pageKey,
+              end: DateFormat('yyyy-MM-dd', 'en_US')
+                  .format(DateTime.now().toLocal()),
+            );
+    final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
+    if (isLastPage) {
+      _pagingController.appendLastPage(transactionList);
+    } else {
+      _pagingController.appendPage(transactionList, pageKey + 1);
+    }
+    return;
+    /*
     try {
       final FireflyIii api = context.read<FireflyService>().api;
       late Future<Response<TransactionArray>> searchFunc;
@@ -172,7 +185,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     } catch (e, stackTrace) {
       log.severe("_fetchPage($pageKey)", e, stackTrace);
       _pagingController.error = e;
-    }
+    }*/
   }
 
   @override

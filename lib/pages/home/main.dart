@@ -74,7 +74,7 @@ class _HomeMainState extends State<HomeMain>
     lastDaysIncome.clear();
 
     // With a new API the number of API calls is reduced from 14 to 2
-    if (context.read<FireflyService>().apiVersion! >= Version(2, 0, 6)) {
+    if (context.read<FireflyService>().apiVersion! >= Version(2, 0, 7)) {
       final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
 
       final List<int> accounts = <int>[];
@@ -113,7 +113,6 @@ class _HomeMainState extends State<HomeMain>
                 .toLocal()
                 .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
             final double value = double.tryParse(valueStr) ?? 0;
-            debugPrint("[${e.label}] $date: $value");
             if (e.label == "earned") {
               lastDaysIncome[date] = (lastDaysIncome[date] ?? 0) + value;
             } else if (e.label == "spent") {

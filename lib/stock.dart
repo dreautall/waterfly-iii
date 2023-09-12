@@ -12,7 +12,6 @@ class TransStock {
   final FireflyIii api;
 
   late Stock<String, TransactionRead> _singleStock;
-  Stock<String, TransactionRead> get singleStock => _singleStock;
 
   late Stock<String, List<String>> _getStock;
   late Stock<String, List<String>> _getAccountStock;
@@ -162,6 +161,9 @@ class TransStock {
     _getAccountStock.clearAll();
     _getSearchStock.clearAll();
   }
+
+  Future<void> setTransaction(TransactionRead transaction) =>
+      _singleSoT.write(transaction.id, transaction);
 }
 
 // ignore: camel_case_types

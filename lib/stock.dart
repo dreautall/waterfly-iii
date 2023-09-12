@@ -162,8 +162,18 @@ class TransStock {
     _getSearchStock.clearAll();
   }
 
-  Future<void> setTransaction(TransactionRead transaction) =>
-      _singleSoT.write(transaction.id, transaction);
+  Future<void> setTransaction(TransactionRead transaction) async {
+    TransactionRead? oldTransaction =
+        await _singleSoT.reader(transaction.id).first;
+    // if no old transaction (= new one) or date has changed, clear cache
+    if (oldTransaction == null ||
+        oldTransaction.attributes.transactions.first.date !=
+            transaction.attributes.transactions.first.date) {
+      clear();
+    }
+
+    return _singleSoT.write(transaction.id, transaction);
+  }
 }
 
 // ignore: camel_case_types

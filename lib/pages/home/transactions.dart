@@ -152,10 +152,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
         );
       } else if (widget.accountId != null || _filters.account != null) {
         transactionList = await stock.getAccount(
-            id: widget.accountId ?? _filters.account!.id,
-            page: pageKey,
-            end: DateFormat('yyyy-MM-dd', 'en_US')
-                .format(DateTime.now().toLocal()));
+          id: widget.accountId ?? _filters.account!.id,
+          page: pageKey,
+          end: DateFormat('yyyy-MM-dd', 'en_US')
+              .format(DateTime.now().toLocal()),
+        );
       } else {
         transactionList = await stock.get(
           page: pageKey,

@@ -2,44 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart' show Response;
-import 'package:flutter/material.dart';
 import 'package:stock/stock.dart';
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.enums.swagger.dart'
     as enums show TransactionTypeFilter;
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
-
-/*Future<TransactionArray> stockTransactionsGet({ String? xTraceId,
-    int? page,
-    String? start,
-    String? end,
-    enums.TransactionTypeFilter? type,}) {
-      return Fetcher.ofFuture<String, TransactionArray>(
-    (userId) => api.v1TransactionsGet(xTraceId: xTraceId, page: page, start: start, end: end, type: type),
-  );
-    }*/
-
-/*class STransactionSoT extends CachedSourceOfTruth<String, TransactionRead> {
-  STransactionSoT();
-}*/
-
-/*class DebugSoT extends CachedSourceOfTruth<String, List<String>> {
-  DebugSoT();
-
-  @override
-  @protected
-  Stream<List<String>?> reader(String key) async* {
-    debugPrint("reading $key");
-    yield* super.reader(key);
-  }
-
-  @override
-  @protected
-  Future<void> write(String key, List<String>? value) async {
-    debugPrint("writing $key: ${value?.length ?? 0}");
-    await super.write(key, value);
-  }
-}*/
 
 class TransStock {
   final FireflyIii api;
@@ -71,18 +38,13 @@ class TransStock {
           final _getOptions query = _getOptions.fromJson(jsonDecode(id));
           return api
               .v1TransactionsGet(
-            xTraceId: query.xTraceId,
-            page: query.page,
-            start: query.start,
-            end: query.end,
-            type: query.type,
-          )
-              .then<List<String>>((Response<TransactionArray> value) {
-            for (TransactionRead element in value.body!.data) {
-              _singleSoT.write(element.id, element);
-            }
-            return value.body!.data.map((TransactionRead e) => e.id).toList();
-          });
+                xTraceId: query.xTraceId,
+                page: query.page,
+                start: query.start,
+                end: query.end,
+                type: query.type,
+              )
+              .then<List<String>>(_onAPIValue);
         },
       ),
       sourceOfTruth: _listSoT,
@@ -93,20 +55,15 @@ class TransStock {
           final _getOptions query = _getOptions.fromJson(jsonDecode(id));
           return api
               .v1AccountsIdTransactionsGet(
-            xTraceId: query.xTraceId,
-            id: query.id,
-            page: query.page,
-            limit: query.limit,
-            start: query.start,
-            end: query.end,
-            type: query.type,
-          )
-              .then<List<String>>((Response<TransactionArray> value) {
-            for (TransactionRead element in value.body!.data) {
-              _singleSoT.write(element.id, element);
-            }
-            return value.body!.data.map((TransactionRead e) => e.id).toList();
-          });
+                xTraceId: query.xTraceId,
+                id: query.id,
+                page: query.page,
+                limit: query.limit,
+                start: query.start,
+                end: query.end,
+                type: query.type,
+              )
+              .then<List<String>>(_onAPIValue);
         },
       ),
       sourceOfTruth: _listSoT,
@@ -117,20 +74,25 @@ class TransStock {
           final _getOptions query = _getOptions.fromJson(jsonDecode(id));
           return api
               .v1SearchTransactionsGet(
-            xTraceId: query.xTraceId,
-            query: query.query,
-            page: query.page,
-          )
-              .then<List<String>>((Response<TransactionArray> value) {
-            for (TransactionRead element in value.body!.data) {
-              _singleSoT.write(element.id, element);
-            }
-            return value.body!.data.map((TransactionRead e) => e.id).toList();
-          });
+                xTraceId: query.xTraceId,
+                query: query.query,
+                page: query.page,
+              )
+              .then<List<String>>(_onAPIValue);
         },
       ),
       sourceOfTruth: _listSoT,
     );
+  }
+
+  FutureOr<List<String>> _onAPIValue(Response<TransactionArray> response) {
+    if (!response.isSuccessful || response.body == null) {
+      throw Exception(response.error ?? "empty body");
+    }
+    for (TransactionRead element in response.body!.data) {
+      _singleSoT.write(element.id, element);
+    }
+    return response.body!.data.map((TransactionRead e) => e.id).toList();
   }
 
   Future<List<TransactionRead>> get({
@@ -142,21 +104,13 @@ class TransStock {
   }) async {
     return _getStock
         .get(jsonEncode(_getOptions(
-      xTraceId: xTraceId,
-      page: page,
-      start: start,
-      end: end,
-      type: type,
-    )))
-        .then(
-      (List<String> list) async {
-        List<TransactionRead> result = <TransactionRead>[];
-        for (String element in list) {
-          result.add(await _singleStock.get(element));
-        }
-        return result;
-      },
-    );
+          xTraceId: xTraceId,
+          page: page,
+          start: start,
+          end: end,
+          type: type,
+        )))
+        .then(_onGetValue);
   }
 
   Future<List<TransactionRead>> getAccount({
@@ -170,23 +124,15 @@ class TransStock {
   }) async {
     return _getAccountStock
         .get(jsonEncode(_getOptions(
-      xTraceId: xTraceId,
-      id: id,
-      page: page,
-      limit: limit,
-      start: start,
-      end: end,
-      type: type,
-    )))
-        .then(
-      (List<String> list) async {
-        List<TransactionRead> result = <TransactionRead>[];
-        for (String element in list) {
-          result.add(await _singleStock.get(element));
-        }
-        return result;
-      },
-    );
+          xTraceId: xTraceId,
+          id: id,
+          page: page,
+          limit: limit,
+          start: start,
+          end: end,
+          type: type,
+        )))
+        .then(_onGetValue);
   }
 
   Future<List<TransactionRead>> getSearch({
@@ -196,19 +142,19 @@ class TransStock {
   }) async {
     return _getSearchStock
         .get(jsonEncode(_getOptions(
-      xTraceId: xTraceId,
-      query: query,
-      page: page,
-    )))
-        .then(
-      (List<String> list) async {
-        List<TransactionRead> result = <TransactionRead>[];
-        for (String element in list) {
-          result.add(await _singleStock.get(element));
-        }
-        return result;
-      },
-    );
+          xTraceId: xTraceId,
+          query: query,
+          page: page,
+        )))
+        .then(_onGetValue);
+  }
+
+  FutureOr<List<TransactionRead>> _onGetValue(List<String> list) async {
+    List<TransactionRead> result = <TransactionRead>[];
+    for (String element in list) {
+      result.add(await _singleStock.get(element));
+    }
+    return result;
   }
 
   void clear() {
@@ -220,16 +166,14 @@ class TransStock {
 
 // ignore: camel_case_types
 class _getOptions {
-  final String? xTraceId;
-  final int? page;
-  final String? start;
-  final String? end;
-  final enums.TransactionTypeFilter? type;
-  // exclusive for getAccount
-  final String? id;
-  final int? limit;
-  // exlusive for getSearch
-  final String? query;
+  final String? xTraceId; // get, getAccount, getSearch
+  final int? page; // get, getAccount, getSearch
+  final String? start; // get, getAccount
+  final String? end; // get, getAccount
+  final enums.TransactionTypeFilter? type; // get, getAccount
+  final String? id; // getAccount
+  final int? limit; // getAccount
+  final String? query; // getSearch
 
   _getOptions({
     this.xTraceId,

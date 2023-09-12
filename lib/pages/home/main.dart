@@ -113,7 +113,6 @@ class _HomeMainState extends State<HomeMain>
                 .toLocal()
                 .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
             final double value = double.tryParse(valueStr) ?? 0;
-            debugPrint("[${e.label}] $date: $value");
             if (e.label == "earned") {
               lastDaysIncome[date] = (lastDaysIncome[date] ?? 0) + value;
             } else if (e.label == "spent") {

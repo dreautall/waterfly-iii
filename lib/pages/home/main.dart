@@ -74,7 +74,7 @@ class _HomeMainState extends State<HomeMain>
     lastDaysIncome.clear();
 
     // With a new API the number of API calls is reduced from 14 to 2
-    if (context.read<FireflyService>().apiVersion! >= Version(2, 0, 6)) {
+    if (context.read<FireflyService>().apiVersion! >= Version(2, 0, 7)) {
       final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
 
       final List<int> accounts = <int>[];

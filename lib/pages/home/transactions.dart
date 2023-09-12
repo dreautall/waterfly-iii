@@ -18,6 +18,7 @@ import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/pages/transaction/delete.dart';
+import 'package:waterflyiii/stock.dart';
 
 class HomeTransactions extends StatefulWidget {
   const HomeTransactions({Key? key, this.accountId}) : super(key: key);
@@ -111,7 +112,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
   }
 
   Future<void> _fetchPage(int pageKey) async {
-    final List<TransactionRead> transactionList =
+    final TransStock stock = context.read<FireflyService>().transStock!;
+    /*final List<TransactionRead> transactionList =
         await context.read<FireflyService>().transStock!.get(
               page: pageKey,
               end: DateFormat('yyyy-MM-dd', 'en_US')
@@ -123,11 +125,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
     } else {
       _pagingController.appendPage(transactionList, pageKey + 1);
     }
-    return;
-    /*
+    return;*/
+
     try {
-      final FireflyIii api = context.read<FireflyService>().api;
-      late Future<Response<TransactionArray>> searchFunc;
+      late List<TransactionRead> transactionList;
+
       if (_filters.hasFilters) {
         String query = _filters.text ?? "";
         if (_filters.account != null) {
@@ -144,38 +146,23 @@ class _HomeTransactionsState extends State<HomeTransactions>
           query = "budget_is:\"${_filters.budget!.attributes.name}\" $query";
         }
         log.fine(() => "Search query: $query");
-        searchFunc = api.v1SearchTransactionsGet(
+        transactionList = await stock.getSearch(
           query: query,
           page: pageKey,
         );
+      } else if (widget.accountId != null || _filters.account != null) {
+        transactionList = await stock.getAccount(
+            id: widget.accountId ?? _filters.account!.id,
+            page: pageKey,
+            end: DateFormat('yyyy-MM-dd', 'en_US')
+                .format(DateTime.now().toLocal()));
       } else {
-        searchFunc = (widget.accountId != null || _filters.account != null)
-            ? api.v1AccountsIdTransactionsGet(
-                id: widget.accountId ?? _filters.account!.id,
-                page: pageKey,
-                end: DateFormat('yyyy-MM-dd', 'en_US')
-                    .format(DateTime.now().toLocal()))
-            : api.v1TransactionsGet(
-                page: pageKey,
-                end: DateFormat('yyyy-MM-dd', 'en_US')
-                    .format(DateTime.now().toLocal()),
-              );
+        transactionList = await stock.get(
+          page: pageKey,
+          end: DateFormat('yyyy-MM-dd', 'en_US')
+              .format(DateTime.now().toLocal()),
+        );
       }
-      final Response<TransactionArray> response = await searchFunc;
-      if (!response.isSuccessful || response.body == null) {
-        if (context.mounted) {
-          throw Exception(
-            S
-                .of(context)
-                .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-          );
-        } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${response.error}",
-          );
-        }
-      }
-      final List<TransactionRead> transactionList = response.body!.data;
       final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
       if (isLastPage) {
         _pagingController.appendLastPage(transactionList);
@@ -185,7 +172,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     } catch (e, stackTrace) {
       log.severe("_fetchPage($pageKey)", e, stackTrace);
       _pagingController.error = e;
-    }*/
+    }
   }
 
   @override
@@ -200,6 +187,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       onRefresh: () => Future<void>.sync(() {
         _rowsWithDate = <int>[];
         _lastDate = null;
+        context.read<FireflyService>().transStock!.clear();
         return _pagingController.refresh();
       }),
       child: PagedListView<int, TransactionRead>(

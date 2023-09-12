@@ -1,0 +1,1 @@
+* Bugfix to fix chart loading error.

@@ -104,12 +104,23 @@
   "@errorInvalidURL": {
     "description": "Error: URL is invalid"
   },
+  "errorMinAPIVersion": "È richiesta almeno la versione API v{requiredVersion} su Firefly. Per favore, aggiornare.",
+  "@errorMinAPIVersion": {
+    "description": "Error: Required API version not met.",
+    "placeholders": {
+      "requiredVersion": {
+        "type": "String",
+        "example": "2.0.0"
+      }
+    }
+  },
   "errorStatusCode": "Codice di stato: {code}",
   "@errorStatusCode": {
     "description": "HTTP status code information on error",
     "placeholders": {
       "code": {
-        "type": "int"
+        "type": "int",
+        "example": "500"
       }
     }
   },
@@ -196,6 +207,10 @@
   "generalNever": "mai",
   "@generalNever": {
     "description": "Has never happened, no update etc."
+  },
+  "generalReconcile": "Contabilizzato",
+  "@generalReconcile": {
+    "description": "Booking has been confirmed/reconciled"
   },
   "generalSum": "Totale",
   "@generalSum": {
@@ -517,8 +532,17 @@
     "description": "Currently selected language"
   },
   "settingsLockscreen": "Schermata di blocco",
+  "@settingsLockscreen": {
+    "description": "Setting if a lockscreen is shown (authentication is required on startup)"
+  },
   "settingsLockscreenHelp": "Richiedi l'autenticazione all'avvio dell'app",
+  "@settingsLockscreenHelp": {
+    "description": "Description for lockscreen setting"
+  },
   "settingsLockscreenInitial": "Si prega di autenticarsi per abilitare la schermata di blocco.",
+  "@settingsLockscreenInitial": {
+    "description": "Prompt to authenticate once to set up the lockscreen"
+  },
   "settingsNLAppAccount": "Conto Predefinito",
   "@settingsNLAppAccount": {
     "description": "Default account which will be used for the transaction."
@@ -665,6 +689,14 @@
   "transactionDialogAttachmentsTitle": "Allegati",
   "@transactionDialogAttachmentsTitle": {
     "description": "Dialog Title: Attachments Dialog"
+  },
+  "transactionDialogBillNoBill": "Nessuna Bolletta",
+  "@transactionDialogBillNoBill": {
+    "description": "Button Label: no bill to be used"
+  },
+  "transactionDialogBillTitle": "Bolletta Collegata",
+  "@transactionDialogBillTitle": {
+    "description": "Dialog Title: Link Bill to transaction"
   },
   "transactionDialogCurrencyTitle": "Seleziona la valuta",
   "@transactionDialogCurrencyTitle": {

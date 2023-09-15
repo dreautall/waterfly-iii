@@ -20,6 +20,11 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii_v2.swagger.dart'
     as api_v2;
+import 'package:waterflyiii/pages/home/main_charts/category.dart';
+import 'package:waterflyiii/pages/home/main_charts/lastdays.dart';
+import 'package:waterflyiii/pages/home/main_charts/netearnings.dart';
+import 'package:waterflyiii/pages/home/main_charts/summary.dart';
+import 'package:waterflyiii/widgets/charts.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({super.key});
@@ -50,9 +55,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastDays() async {
-    /*if (lastDaysExpense.isNotEmpty) {
+    if (lastDaysExpense.isNotEmpty) {
       return true;
-    }*/
+    }
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -170,9 +175,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchOverviewChart() async {
-    /*if (overviewChartData.isNotEmpty) {
+    if (overviewChartData.isNotEmpty) {
       return true;
-    }*/
+    }
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -205,9 +210,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastMonths() async {
-    /*if (lastMonthsExpense.isNotEmpty) {
+    if (lastMonthsExpense.isNotEmpty) {
       return true;
-    }*/
+    }
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -293,9 +298,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchCategories() async {
-    /*if (catChartData.isNotEmpty) {
+    if (catChartData.isNotEmpty) {
       return true;
-    }*/
+    }
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -488,16 +493,6 @@ class _HomeMainState extends State<HomeMain>
         cacheExtent: 1000,
         padding: const EdgeInsets.all(8),
         children: <Widget>[
-          /*ChartCard(
-            title: "Balance Chart",
-            future: _fetchBalance(),
-            height: 175,
-            child: () => CategoryChart(
-              catChartData: catChartData,
-              possibleChartColors: possibleChartColors,
-            ),
-          ),
-          const SizedBox(height: 8),*/
           ChartCard(
             title: S.of(context).homeMainChartDailyTitle,
             future: _fetchLastDays(),
@@ -527,7 +522,7 @@ class _HomeMainState extends State<HomeMain>
             height: 125,
             child: () => LastDaysChart(
               expenses: lastDaysExpense,
-              income: lastDaysIncome,
+              incomes: lastDaysIncome,
             ),
           ),
           const SizedBox(height: 8),

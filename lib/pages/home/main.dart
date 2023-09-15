@@ -11,16 +11,15 @@ import 'package:provider/provider.dart';
 import 'package:chopper/chopper.dart' show Response;
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
+import 'package:version/version.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
-import 'package:waterflyiii/pages/home/main_charts/category.dart';
-import 'package:waterflyiii/pages/home/main_charts/lastdays.dart';
-import 'package:waterflyiii/pages/home/main_charts/netearnings.dart';
-import 'package:waterflyiii/pages/home/main_charts/summary.dart';
-import 'package:waterflyiii/widgets/charts.dart';
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii_v2.swagger.dart'
+    as api_v2;
 
 class HomeMain extends StatefulWidget {
   const HomeMain({super.key});
@@ -33,16 +32,16 @@ class _HomeMainState extends State<HomeMain>
     with AutomaticKeepAliveClientMixin {
   final Logger log = Logger("Pages.Home.Main");
 
-  final Map<DateTime, InsightTotalEntry> lastDaysExpense =
-      <DateTime, InsightTotalEntry>{};
-  final Map<DateTime, InsightTotalEntry> lastDaysIncome =
-      <DateTime, InsightTotalEntry>{};
+  final Map<DateTime, double> lastDaysExpense = <DateTime, double>{};
+  final Map<DateTime, double> lastDaysIncome = <DateTime, double>{};
   final Map<DateTime, InsightTotalEntry> lastMonthsExpense =
       <DateTime, InsightTotalEntry>{};
   final Map<DateTime, InsightTotalEntry> lastMonthsIncome =
       <DateTime, InsightTotalEntry>{};
+  final Map<DateTime, double> lastMonthsEarned = <DateTime, double>{};
+  final Map<DateTime, double> lastMonthsSpent = <DateTime, double>{};
   List<ChartDataSet> overviewChartData = <ChartDataSet>[];
-  final Map<String, Category> catChartData = <String, Category>{};
+  final List<InsightGroupEntry> catChartData = <InsightGroupEntry>[];
   final Map<String, Budget> budgetInfos = <String, Budget>{};
 
   @override
@@ -51,81 +50,139 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastDays() async {
-    if (lastDaysIncome.isNotEmpty) {
-      return true; // :DEBUG:
-    }
+    /*if (lastDaysExpense.isNotEmpty) {
+      return true;
+    }*/
+
     final FireflyIii api = context.read<FireflyService>().api;
 
     // Use noon due to dailylight saving time
     final DateTime now = DateTime.now()
         .toLocal()
         .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
-    final List<DateTime> lastDays = <DateTime>[];
-    for (int i = 0; i < 7; i++) {
-      lastDays.add(now.subtract(Duration(days: i)));
-    }
 
     lastDaysExpense.clear();
     lastDaysIncome.clear();
-    for (DateTime e in lastDays) {
-      final Response<InsightTotal> respInsightExpense =
-          await api.v1InsightExpenseTotalGet(
-        start: DateFormat('yyyy-MM-dd').format(e),
-        end: DateFormat('yyyy-MM-dd').format(e),
+
+    // With a new API the number of API calls is reduced from 14 to 2
+    if (context.read<FireflyService>().apiVersion! >= Version(2, 0, 7)) {
+      final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
+
+      final List<int> accounts = <int>[];
+      final Response<AccountArray> respAccounts =
+          await api.v1AccountsGet(type: AccountTypeFilter.asset);
+      respAccounts.body?.data.forEach(
+        (AccountRead element) => accounts.add(int.parse(element.id)),
       );
-      if (!respInsightExpense.isSuccessful || respInsightExpense.body == null) {
+
+      final Response<List<api_v2.ChartDataSetV2>> respBalanceData =
+          await apiV2.v2ChartBalanceBalanceGet(
+        start: DateFormat('yyyy-MM-dd', 'en_US')
+            .format(now.copyWith(day: now.day - 6)),
+        end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        accounts: accounts,
+        period: api_v2.PeriodProperty.value_1d,
+      );
+      if (!respBalanceData.isSuccessful || respBalanceData.body == null) {
         if (context.mounted) {
           throw Exception(
             S.of(context).errorAPIInvalidResponse(
-                respInsightExpense.error?.toString() ?? ""),
+                respBalanceData.error?.toString() ?? ""),
           );
         } else {
           throw Exception(
-            "[nocontext] Invalid API response: ${respInsightExpense.error}",
+            "[nocontext] Invalid API response: ${respBalanceData.error}",
           );
         }
       }
-      lastDaysExpense[e] = respInsightExpense.body!.isNotEmpty
-          ? respInsightExpense.body!.first
-          : InsightTotalEntry(differenceFloat: 0);
-      final Response<InsightTotal> respInsightIncome =
-          await api.v1InsightIncomeTotalGet(
-        start: DateFormat('yyyy-MM-dd').format(e),
-        end: DateFormat('yyyy-MM-dd').format(e),
-      );
-      if (!respInsightIncome.isSuccessful || respInsightIncome.body == null) {
-        if (context.mounted) {
-          throw Exception(
-            S.of(context).errorAPIInvalidResponse(
-                respInsightIncome.error?.toString() ?? ""),
-          );
-        } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${respInsightIncome.error}",
-          );
-        }
+
+      for (api_v2.ChartDataSetV2 e in respBalanceData.body!) {
+        final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
+        entries.forEach(
+          (String dateStr, dynamic valueStr) {
+            final DateTime date = DateTime.parse(dateStr)
+                .toLocal()
+                .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
+            final double value = double.tryParse(valueStr) ?? 0;
+            if (e.label == "earned") {
+              lastDaysIncome[date] = (lastDaysIncome[date] ?? 0) + value;
+            } else if (e.label == "spent") {
+              lastDaysExpense[date] = (lastDaysExpense[date] ?? 0) + value;
+            }
+          },
+        );
       }
-      lastDaysIncome[e] = respInsightIncome.body!.isNotEmpty
-          ? respInsightIncome.body!.first
-          : InsightTotalEntry(differenceFloat: 0);
+    } else {
+      // Old Method (before API v2.0.6 (Firefly III v6.0.20))
+      final List<DateTime> lastDays = <DateTime>[];
+      for (int i = 0; i < 7; i++) {
+        lastDays.add(now.subtract(Duration(days: i)));
+      }
+
+      for (DateTime e in lastDays) {
+        final Response<InsightTotal> respInsightExpense =
+            await api.v1InsightExpenseTotalGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(e),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(e),
+        );
+        if (!respInsightExpense.isSuccessful ||
+            respInsightExpense.body == null) {
+          if (context.mounted) {
+            throw Exception(
+              S.of(context).errorAPIInvalidResponse(
+                  respInsightExpense.error?.toString() ?? ""),
+            );
+          } else {
+            throw Exception(
+              "[nocontext] Invalid API response: ${respInsightExpense.error}",
+            );
+          }
+        }
+
+        lastDaysExpense[e] = (respInsightExpense.body?.isNotEmpty ?? false)
+            ? respInsightExpense.body?.first.differenceFloat ?? 0
+            : 0;
+
+        final Response<InsightTotal> respInsightIncome =
+            await api.v1InsightIncomeTotalGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(e),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(e),
+        );
+        if (!respInsightIncome.isSuccessful || respInsightIncome.body == null) {
+          if (context.mounted) {
+            throw Exception(
+              S.of(context).errorAPIInvalidResponse(
+                  respInsightIncome.error?.toString() ?? ""),
+            );
+          } else {
+            throw Exception(
+              "[nocontext] Invalid API response: ${respInsightIncome.error}",
+            );
+          }
+        }
+        lastDaysIncome[e] = (respInsightIncome.body?.isNotEmpty ?? false)
+            ? respInsightIncome.body?.first.differenceFloat ?? 0
+            : 0;
+      }
     }
 
     return true;
   }
 
   Future<bool> _fetchOverviewChart() async {
-    if (overviewChartData.isNotEmpty) {
-      return true; // :DEBUG:
-    }
+    /*if (overviewChartData.isNotEmpty) {
+      return true;
+    }*/
+
     final FireflyIii api = context.read<FireflyService>().api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
 
     final Response<ChartLine> respChartData =
         await api.v1ChartAccountOverviewGet(
-      start:
-          DateFormat('yyyy-MM-dd').format(now.copyWith(month: now.month - 3)),
-      end: DateFormat('yyyy-MM-dd').format(now),
+      start: DateFormat('yyyy-MM-dd', 'en_US')
+          .format(now.copyWith(month: now.month - 3)),
+      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
     );
     if (!respChartData.isSuccessful ||
         respChartData.body == null ||
@@ -148,9 +205,10 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastMonths() async {
-    if (lastMonthsExpense.isNotEmpty) {
-      return true; // :DEBUG:
-    }
+    /*if (lastMonthsExpense.isNotEmpty) {
+      return true;
+    }*/
+
     final FireflyIii api = context.read<FireflyService>().api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
@@ -173,8 +231,8 @@ class _HomeMainState extends State<HomeMain>
       }
       final Response<InsightTotal> respInsightExpense =
           await api.v1InsightExpenseTotalGet(
-        start: DateFormat('yyyy-MM-dd').format(start),
-        end: DateFormat('yyyy-MM-dd').format(end),
+        start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
+        end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
       );
       if (!respInsightExpense.isSuccessful || respInsightExpense.body == null) {
         if (context.mounted) {
@@ -193,8 +251,8 @@ class _HomeMainState extends State<HomeMain>
           : InsightTotalEntry(differenceFloat: 0);
       final Response<InsightTotal> respInsightIncome =
           await api.v1InsightIncomeTotalGet(
-        start: DateFormat('yyyy-MM-dd').format(start),
-        end: DateFormat('yyyy-MM-dd').format(end),
+        start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
+        end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
       );
       if (!respInsightIncome.isSuccessful || respInsightIncome.body == null) {
         if (context.mounted) {
@@ -213,7 +271,7 @@ class _HomeMainState extends State<HomeMain>
           : InsightTotalEntry(differenceFloat: 0);
     }
 
-    // If too big digits are present (>10000), only show two columns to avoid
+    // If too big digits are present (>=100000), only show two columns to avoid
     // wrapping issues. See #30.
     double maxNum = 0;
     lastMonthsIncome.forEach((_, InsightTotalEntry value) {
@@ -226,49 +284,71 @@ class _HomeMainState extends State<HomeMain>
         maxNum = value.differenceFloat ?? 0;
       }
     });
-    if (maxNum > 10000) {
+    if (maxNum >= 100000) {
       lastMonthsIncome.remove(lastMonthsIncome.keys.first);
-      lastMonthsExpense.remove(lastMonthsIncome.keys.first);
+      lastMonthsExpense.remove(lastMonthsExpense.keys.first);
     }
 
     return true;
   }
 
   Future<bool> _fetchCategories() async {
-    if (catChartData.isNotEmpty) {
-      return true; // :DEBUG:
-    }
+    /*if (catChartData.isNotEmpty) {
+      return true;
+    }*/
+
     final FireflyIii api = context.read<FireflyService>().api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
 
-    final Response<CategoryArray> respCatData = await api.v1CategoriesGet();
-    if (!respCatData.isSuccessful || respCatData.body == null) {
+    catChartData.clear();
+
+    final Response<InsightGroup> respCatIncomeData =
+        await api.v1InsightIncomeCategoryGet(
+      start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+    );
+    final Response<InsightGroup> respCatExpenseData =
+        await api.v1InsightExpenseCategoryGet(
+      start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+    );
+
+    if (!respCatExpenseData.isSuccessful || respCatExpenseData.body == null) {
       if (context.mounted) {
         throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respCatData.error?.toString() ?? ""),
+          S.of(context).errorAPIInvalidResponse(
+              respCatExpenseData.error?.toString() ?? ""),
         );
       } else {
         throw Exception(
-          "[nocontext] Invalid API response: ${respCatData.error}",
+          "[nocontext] Invalid API response: ${respCatExpenseData.error}",
         );
       }
     }
 
-    for (CategoryRead e in respCatData.body!.data) {
-      final Response<CategorySingle> respCat = await api.v1CategoriesIdGet(
-        id: e.id,
-        start: DateFormat('yyyy-MM-dd').format(now.copyWith(day: 1)),
-        end: DateFormat('yyyy-MM-dd').format(now),
-      );
-
-      if (!respCat.isSuccessful || respCat.body == null) {
+    Map<String, double> catIncomes = <String, double>{};
+    for (InsightGroupEntry cat
+        in respCatIncomeData.body ?? <InsightGroupEntry>[]) {
+      if (cat.id?.isEmpty ?? true) {
         continue;
       }
+      catIncomes[cat.id!] = cat.differenceFloat ?? 0;
+    }
 
-      catChartData[respCat.body!.data.id] = respCat.body!.data.attributes;
+    for (InsightGroupEntry cat in respCatExpenseData.body!) {
+      if (cat.id?.isEmpty ?? true) {
+        continue;
+      }
+      double amount = cat.differenceFloat ?? 0;
+      if (catIncomes.containsKey(cat.id)) {
+        amount += catIncomes[cat.id]!;
+      }
+      // Don't add "positive" categories, we want to show expenses
+      if (amount >= 0) {
+        continue;
+      }
+      catChartData.add(cat.copyWith(differenceFloat: amount));
     }
 
     return true;
@@ -298,8 +378,8 @@ class _HomeMainState extends State<HomeMain>
 
     final DateTime now = DateTime.now().toLocal().clearTime();
     final Response<BudgetLimitArray> respBudgets = await api.v1BudgetLimitsGet(
-      start: DateFormat('yyyy-MM-dd').format(now.copyWith(day: 1)),
-      end: DateFormat('yyyy-MM-dd').format(now),
+      start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
     );
 
     if (!respBudgets.isSuccessful || respBudgets.body == null) {
@@ -337,6 +417,56 @@ class _HomeMainState extends State<HomeMain>
     return respBudgets.body!.data;
   }
 
+  /*Future<bool> _fetchBalance() async {
+    final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
+
+    final DateTime now = DateTime.now().toLocal().clearTime();
+
+    lastMonthsEarned.clear();
+    lastMonthsSpent.clear();
+
+    final Response<List<api_v2.ChartDataSetV2>> respBalanceData =
+        await apiV2.v2ChartBalanceBalanceGet(
+      start: DateFormat('yyyy-MM-dd', 'en_US')
+          //.format(now.copyWith(year: now.year - 1)),
+          .format(now.copyWith(day: now.day - 7)),
+      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+      accounts: <int>[1, 3],
+      period: api_v2.PeriodProperty.value_1d,
+    );
+    if (!respBalanceData.isSuccessful || respBalanceData.body == null) {
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(respBalanceData.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${respBalanceData.error}",
+        );
+      }
+    }
+
+    for (api_v2.ChartDataSetV2 e in respBalanceData.body!) {
+      final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
+      entries.forEach(
+        (String dateStr, dynamic valueStr) {
+          final DateTime date = DateTime.parse(dateStr).toLocal();
+          final double value = double.tryParse(valueStr) ?? 0;
+          debugPrint("[${e.label}] $date: $value");
+          if (e.label == "earned") {
+            lastMonthsEarned[date] = (lastMonthsEarned[date] ?? 0) + value;
+          } else if (e.label == "spent") {
+            lastMonthsSpent[date] = (lastMonthsSpent[date] ?? 0) + value;
+          }
+        },
+      );
+    }
+
+    return true;
+  }*/
+
   Future<void> _refreshStats() async {
     setState(() {});
   }
@@ -358,24 +488,31 @@ class _HomeMainState extends State<HomeMain>
         cacheExtent: 1000,
         padding: const EdgeInsets.all(8),
         children: <Widget>[
+          /*ChartCard(
+            title: "Balance Chart",
+            future: _fetchBalance(),
+            height: 175,
+            child: () => CategoryChart(
+              catChartData: catChartData,
+              possibleChartColors: possibleChartColors,
+            ),
+          ),
+          const SizedBox(height: 8),*/
           ChartCard(
             title: S.of(context).homeMainChartDailyTitle,
             future: _fetchLastDays(),
             summary: () {
               double sevenDayTotal = 0;
-              lastDaysExpense.forEach((DateTime _, InsightTotalEntry e) =>
-                  sevenDayTotal -= (e.differenceFloat ?? 0).abs());
-              lastDaysIncome.forEach((DateTime _, InsightTotalEntry e) =>
-                  sevenDayTotal += (e.differenceFloat ?? 0).abs());
+              lastDaysExpense
+                  .forEach((DateTime _, double e) => sevenDayTotal -= e.abs());
+              lastDaysIncome
+                  .forEach((DateTime _, double e) => sevenDayTotal += e.abs());
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(S.of(context).homeMainChartDailyAvg),
                   Text(
-                    defaultCurrency.fmt(
-                      sevenDayTotal / 7,
-                      locale: S.of(context).localeName,
-                    ),
+                    defaultCurrency.fmt(sevenDayTotal / 7),
                     style: TextStyle(
                       color: sevenDayTotal < 0 ? Colors.red : Colors.green,
                       fontWeight: FontWeight.bold,
@@ -465,10 +602,7 @@ class _HomeMainState extends State<HomeMain>
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          currency.fmt(
-                            balance,
-                            locale: S.of(context).localeName,
-                          ),
+                          currency.fmt(balance),
                           style: TextStyle(
                             color: (balance < 0) ? Colors.red : Colors.green,
                             fontWeight: FontWeight.bold,
@@ -514,10 +648,7 @@ class _HomeMainState extends State<HomeMain>
                           (DateTime e) => Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              DateFormat(
-                                DateFormat.MONTH,
-                                S.of(context).localeName,
-                              ).format(e),
+                              DateFormat(DateFormat.MONTH).format(e),
                               style: Theme.of(context).textTheme.labelLarge,
                             ),
                           ),
@@ -542,10 +673,7 @@ class _HomeMainState extends State<HomeMain>
                           (MapEntry<DateTime, InsightTotalEntry> e) => Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              defaultCurrency.fmt(
-                                e.value.differenceFloat ?? 0,
-                                locale: S.of(context).localeName,
-                              ),
+                              defaultCurrency.fmt(e.value.differenceFloat ?? 0),
                               style: const TextStyle(
                                 fontFeatures: <FontFeature>[
                                   FontFeature.tabularFigures()
@@ -574,10 +702,7 @@ class _HomeMainState extends State<HomeMain>
                           (MapEntry<DateTime, InsightTotalEntry> e) => Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              defaultCurrency.fmt(
-                                e.value.differenceFloat ?? 0,
-                                locale: S.of(context).localeName,
-                              ),
+                              defaultCurrency.fmt(e.value.differenceFloat ?? 0),
                               style: const TextStyle(
                                 fontFeatures: <FontFeature>[
                                   FontFeature.tabularFigures()
@@ -607,10 +732,7 @@ class _HomeMainState extends State<HomeMain>
                         return Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            defaultCurrency.fmt(
-                              sum,
-                              locale: S.of(context).localeName,
-                            ),
+                            defaultCurrency.fmt(sum),
                             style: TextStyle(
                               color: (sum < 0) ? Colors.red : Colors.green,
                               fontWeight: FontWeight.bold,
@@ -762,13 +884,11 @@ class BudgetList extends StatelessWidget {
                           currency.fmt(
                             (available - spent).abs(),
                             decimalDigits: 0,
-                            locale: S.of(context).localeName,
                           ),
                           (spent > available) ? "over" : "leftfrom",
                           currency.fmt(
                             available,
                             decimalDigits: 0,
-                            locale: S.of(context).localeName,
                           ),
                         ),
                     style: Theme.of(context)

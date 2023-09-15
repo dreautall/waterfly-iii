@@ -153,8 +153,18 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
               child: GestureDetector(
-                onTap: () {
-                  context.read<FireflyService>().signOut();
+                onTap: () async {
+                  final FireflyService ff = context.read<FireflyService>();
+                  bool? ok = await showDialog<bool>(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        const LogoutConfirmDialog(),
+                  );
+                  if (!(ok ?? false)) {
+                    return;
+                  }
+
+                  ff.signOut();
                 },
                 child: Text(
                   S.of(context).formButtonLogout,
@@ -180,6 +190,36 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
         ),
         floatingActionButton: context.select((NavPageElements n) => n.fab),
       ),
+    );
+  }
+}
+
+class LogoutConfirmDialog extends StatelessWidget {
+  const LogoutConfirmDialog({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      icon: const Icon(Icons.logout),
+      title: Text(S.of(context).formButtonLogout),
+      clipBehavior: Clip.hardEdge,
+      actions: <Widget>[
+        TextButton(
+          child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        FilledButton(
+          child: Text(S.of(context).formButtonLogout),
+          onPressed: () {
+            Navigator.of(context).pop(true);
+          },
+        ),
+      ],
+      content: Text(S.of(context).logoutConfirmation),
     );
   }
 }

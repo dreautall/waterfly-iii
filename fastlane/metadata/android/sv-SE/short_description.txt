@@ -1,0 +1,1 @@
+Inofficiell app för Firefly III, en privatekonomihanterare med öppen källkod.

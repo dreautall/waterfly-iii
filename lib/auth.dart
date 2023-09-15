@@ -8,10 +8,13 @@ import 'package:chopper/chopper.dart'
     show Request, Response, StripStringExtension;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:version/version.dart';
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 final Logger log = Logger("Auth");
+final Version minApiVersion = Version(2, 0, 0);
 
 class SSLHttpOverride extends HttpOverrides {
   SSLHttpOverride(this.validCert);
@@ -19,6 +22,10 @@ class SSLHttpOverride extends HttpOverrides {
 
   @override
   HttpClient createHttpClient(SecurityContext? context) {
+    // Needed for issue #75
+    //context ??= SecurityContext.defaultContext;
+    //context.useCertificateChainBytes(chainBytes);
+    //context.usePrivateKeyBytes(keyBytes);
     return super.createHttpClient(context)
       ..badCertificateCallback = (X509Certificate cert, _, __) {
         log.fine("Using SSLHttpOverride");
@@ -28,6 +35,7 @@ class SSLHttpOverride extends HttpOverrides {
   }
 }
 
+// :TODO: translate strings. cause returns just an identifier for the translation.
 class AuthError implements Exception {
   const AuthError(this.cause);
 
@@ -42,6 +50,17 @@ class AuthErrorHost extends AuthError {
 
 class AuthErrorApiKey extends AuthError {
   const AuthErrorApiKey() : super("Invalid API key");
+}
+
+class AuthErrorVersionInvalid extends AuthError {
+  const AuthErrorVersionInvalid() : super("Invalid Firefly API version");
+}
+
+class AuthErrorVersionTooLow extends AuthError {
+  const AuthErrorVersionTooLow(this.requiredVersion)
+      : super("Firefly API version too low");
+
+  final Version requiredVersion;
 }
 
 class AuthErrorStatusCode extends AuthError {
@@ -61,9 +80,11 @@ class AuthUser {
   late Uri _host;
   late String _apiKey;
   late FireflyIii _api;
+  late FireflyIiiV2 _apiV2;
 
   Uri get host => _host;
   FireflyIii get api => _api;
+  FireflyIiiV2 get apiV2 => _apiV2;
 
   final Logger log = Logger("Auth.AuthUser");
 
@@ -78,6 +99,24 @@ class AuthUser {
       interceptors: <dynamic>[
         (Request request) async {
           log.finest(() => "API query to ${request.url}");
+          request.followRedirects = false;
+          request.maxRedirects = 0;
+          return request.copyWith(headers: <String, String>{
+            ...request.headers,
+            ...headers(),
+          });
+        },
+        (Response<dynamic> response) async {
+          return response;
+        },
+      ],
+    );
+
+    _apiV2 = FireflyIiiV2.create(
+      baseUrl: _host,
+      interceptors: <dynamic>[
+        (Request request) async {
+          log.finest(() => "APIv2 query to ${request.url}");
           request.followRedirects = false;
           request.maxRedirects = 0;
           return request.copyWith(headers: <String, String>{
@@ -157,6 +196,8 @@ class FireflyService with ChangeNotifier {
   String? get lastTriedHost => _lastTriedHost;
   Object? _storageSignInException;
   Object? get storageSignInException => _storageSignInException;
+  Version? _apiVersion;
+  Version? get apiVersion => _apiVersion;
 
   bool get hasApi => (_currentUser?.api != null) ? true : false;
   FireflyIii get api {
@@ -165,6 +206,14 @@ class FireflyService with ChangeNotifier {
       throw Exception("API unavailable");
     }
     return _currentUser!.api;
+  }
+
+  FireflyIiiV2 get apiV2 {
+    if (_currentUser?.apiV2 == null) {
+      signOut();
+      throw Exception("API unavailable");
+    }
+    return _currentUser!.apiV2;
   }
 
   late CurrencyRead defaultCurrency;
@@ -195,8 +244,7 @@ class FireflyService with ChangeNotifier {
     }
 
     try {
-      final bool success = await signIn(apiHost, apiKey, cert);
-      return success;
+      return await signIn(apiHost, apiKey, cert);
     } catch (e) {
       _storageSignInException = e;
       log.finest(() => "notify FireflyService->signInFromStorage");
@@ -235,6 +283,17 @@ class FireflyService with ChangeNotifier {
 
     Response<CurrencySingle> currencyInfo = await api.v1CurrenciesDefaultGet();
     defaultCurrency = currencyInfo.body!.data;
+
+    Response<SystemInfo> about = await api.v1AboutGet();
+    try {
+      _apiVersion = Version.parse(about.body?.data?.apiVersion ?? "");
+    } on FormatException {
+      throw const AuthErrorVersionInvalid();
+    }
+    log.info(() => "Firefly API version $_apiVersion");
+    if (apiVersion == null || apiVersion! < minApiVersion) {
+      throw AuthErrorVersionTooLow(minApiVersion);
+    }
 
     _signedIn = true;
     log.finest(() => "notify FireflyService->signIn");

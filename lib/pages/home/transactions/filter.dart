@@ -19,6 +19,7 @@ class TransactionFilters with ChangeNotifier {
     this.currency,
     this.category,
     this.budget,
+    this.bill,
   });
 
   AccountRead? account;
@@ -26,6 +27,7 @@ class TransactionFilters with ChangeNotifier {
   CurrencyRead? currency;
   CategoryRead? category;
   BudgetRead? budget;
+  BillRead? bill;
 
   bool _hasFilters = false;
   bool get hasFilters => _hasFilters;
@@ -35,7 +37,8 @@ class TransactionFilters with ChangeNotifier {
         text != null ||
         currency != null ||
         category != null ||
-        budget != null;
+        budget != null ||
+        bill != null;
     log.finest(() => "notify TransactionFilters, filters? $hasFilters");
     notifyListeners();
   }
@@ -46,6 +49,7 @@ class TransactionFilters with ChangeNotifier {
     CurrencyRead? currency,
     CategoryRead? category,
     BudgetRead? budget,
+    BillRead? bill,
   }) =>
       TransactionFilters(
         account: account ?? this.account,
@@ -53,7 +57,17 @@ class TransactionFilters with ChangeNotifier {
         currency: currency ?? this.currency,
         category: category ?? this.category,
         budget: budget ?? this.budget,
+        bill: bill ?? this.bill,
       );
+
+  void reset() {
+    account = null;
+    text = null;
+    currency = null;
+    category = null;
+    budget = null;
+    bill = null;
+  }
 }
 
 class FilterData {
@@ -62,12 +76,14 @@ class FilterData {
     this.currencies,
     this.categories,
     this.budgets,
+    this.bills,
   );
 
   final List<AccountRead> accounts;
   final List<CurrencyRead> currencies;
   final List<CategoryRead> categories;
   final List<BudgetRead> budgets;
+  final List<BillRead> bills;
 }
 
 class FilterDialog extends StatelessWidget {
@@ -146,11 +162,28 @@ class FilterDialog extends StatelessWidget {
       }
     }
 
+    // Bills
+    final Response<BillArray> respBills = await api.v1BillsGet();
+    if (!respBills.isSuccessful || respBills.body == null) {
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(respBills.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${respBills.error}",
+        );
+      }
+    }
+
     return FilterData(
       respAccounts.body!.data,
       respCurrencies.body!.data,
       respCats.body!.data,
       respBudgets.body!.data,
+      respBills.body!.data,
     );
   }
 
@@ -170,7 +203,14 @@ class FilterDialog extends StatelessWidget {
             Navigator.of(context).pop();
           },
         ),
-        TextButton(
+        OutlinedButton(
+          child: Text(S.of(context).generalReset),
+          onPressed: () {
+            filters.reset();
+            Navigator.of(context).pop(true);
+          },
+        ),
+        FilledButton(
           child: Text(MaterialLocalizations.of(context).saveButtonLabel),
           onPressed: () {
             Navigator.of(context).pop(true);
@@ -231,7 +271,7 @@ class FilterDialog extends StatelessWidget {
                       ),
                       label:
                           S.of(context).homeTransactionsDialogFilterAccountsAll,
-                    )
+                    ),
                   ];
                   AccountRead? currentAccount = accountOptions.first.value;
                   for (AccountRead e in snapshot.data!.accounts) {
@@ -279,7 +319,7 @@ class FilterDialog extends StatelessWidget {
                       label: S
                           .of(context)
                           .homeTransactionsDialogFilterCurrenciesAll,
-                    )
+                    ),
                   ];
                   CurrencyRead? currentCurrency = currencyOptions.first.value;
                   for (CurrencyRead e in snapshot.data!.currencies) {
@@ -325,9 +365,26 @@ class FilterDialog extends StatelessWidget {
                       label: S
                           .of(context)
                           .homeTransactionsDialogFilterCategoriesAll,
-                    )
+                    ),
+                    DropdownMenuEntry<CategoryRead>(
+                      value: CategoryRead(
+                        id: "-1",
+                        type: "dummy",
+                        attributes: Category(
+                          name: S
+                              .of(context)
+                              .homeTransactionsDialogFilterCategoryUnset,
+                        ),
+                      ),
+                      label: S
+                          .of(context)
+                          .homeTransactionsDialogFilterCategoryUnset,
+                    ),
                   ];
                   CategoryRead? currentCategory = categoryOptions.first.value;
+                  if (filters.category?.id == "-1") {
+                    currentCategory = categoryOptions.last.value;
+                  }
                   for (CategoryRead e in snapshot.data!.categories) {
                     categoryOptions.add(DropdownMenuEntry<CategoryRead>(
                       value: e,
@@ -370,9 +427,25 @@ class FilterDialog extends StatelessWidget {
                       ),
                       label:
                           S.of(context).homeTransactionsDialogFilterBudgetsAll,
-                    )
+                    ),
+                    DropdownMenuEntry<BudgetRead>(
+                      value: BudgetRead(
+                        id: "-1",
+                        type: "dummy",
+                        attributes: Budget(
+                          name: S
+                              .of(context)
+                              .homeTransactionsDialogFilterBudgetUnset,
+                        ),
+                      ),
+                      label:
+                          S.of(context).homeTransactionsDialogFilterBudgetUnset,
+                    ),
                   ];
                   BudgetRead? currentBudget = budgetOptions.first.value;
+                  if (filters.budget?.id == "-1") {
+                    currentBudget = budgetOptions.last.value;
+                  }
                   for (BudgetRead e in snapshot.data!.budgets) {
                     budgetOptions.add(DropdownMenuEntry<BudgetRead>(
                       value: e,
@@ -386,13 +459,83 @@ class FilterDialog extends StatelessWidget {
                     DropdownMenu<BudgetRead>(
                       initialSelection: currentBudget,
                       leadingIcon: const Icon(Icons.payments),
-                      label: Text(S.of(context).generalCategory),
+                      label: Text(S.of(context).generalBudget),
                       dropdownMenuEntries: budgetOptions,
                       onSelected: (BudgetRead? budget) {
                         if ((budget?.id ?? "0") == "0") {
                           filters.budget = null;
                         } else {
                           filters.budget = budget;
+                        }
+                      },
+                      width: inputWidth,
+                    ),
+                  );
+                  child.add(const SizedBox(height: 12));
+
+                  // Bill Select
+                  final List<DropdownMenuEntry<BillRead>> billOptions =
+                      <DropdownMenuEntry<BillRead>>[
+                    DropdownMenuEntry<BillRead>(
+                      value: BillRead(
+                        id: "0",
+                        type: "dummy",
+                        attributes: Bill(
+                          amountMax: "0",
+                          amountMin: "0",
+                          date: DateTime.now(),
+                          repeatFreq:
+                              BillRepeatFrequency.swaggerGeneratedUnknown,
+                          name: S
+                              .of(context)
+                              .homeTransactionsDialogFilterBillsAll,
+                        ),
+                      ),
+                      label: S.of(context).homeTransactionsDialogFilterBillsAll,
+                    ),
+                    DropdownMenuEntry<BillRead>(
+                      value: BillRead(
+                        id: "-1",
+                        type: "dummy",
+                        attributes: Bill(
+                          amountMax: "0",
+                          amountMin: "0",
+                          date: DateTime.now(),
+                          repeatFreq:
+                              BillRepeatFrequency.swaggerGeneratedUnknown,
+                          name: S
+                              .of(context)
+                              .homeTransactionsDialogFilterBillUnset,
+                        ),
+                      ),
+                      label:
+                          S.of(context).homeTransactionsDialogFilterBillUnset,
+                    ),
+                  ];
+                  BillRead? currentBill = billOptions.first.value;
+                  if (filters.bill?.id == "-1") {
+                    currentBill = billOptions.last.value;
+                  }
+                  for (BillRead e in snapshot.data!.bills) {
+                    billOptions.add(DropdownMenuEntry<BillRead>(
+                      value: e,
+                      label: e.attributes.name,
+                    ));
+                    if (filters.bill?.id == e.id) {
+                      currentBill = e;
+                    }
+                  }
+                  child.add(
+                    DropdownMenu<BillRead>(
+                      initialSelection: currentBill,
+                      leadingIcon: const Icon(Icons.calendar_today),
+                      label: Text(S.of(context).generalBill),
+                      dropdownMenuEntries: billOptions,
+                      onSelected: (BillRead? bill) {
+                        if ((bill?.id ?? "0") == "0") {
+                          filters.bill = null;
+                        } else {
+                          filters.bill = bill;
                         }
                       },
                       width: inputWidth,

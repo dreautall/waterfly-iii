@@ -1,9 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:collection/collection.dart';
 
 enum DataDestroyObject {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
 
+  @JsonValue('not_assets_liabilities')
+  notAssetsLiabilities('not_assets_liabilities'),
   @JsonValue('budgets')
   budgets('budgets'),
   @JsonValue('bills')

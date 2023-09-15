@@ -1,0 +1,5 @@
+- Füge ein Bild zu einer Transaktion hinzu
+- Verknüpfe eine Transaktion mit einer Rechnung oder gleiche sie ab (aktuelle Firefly-Version benötigt)
+- App-Verknüpfung um eine Transaktion hinzuzufügen (lange auf das App-Icon drücken)
+- Zusätzliche Banking-Apps hinzugefügt
+- Mehrere Verbesserungen "unter der Haube" für schnellere Ladezeiten & Fehlerbehebungen

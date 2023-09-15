@@ -1,0 +1,3 @@
+- Die Benachrichtigungsfunktion unterstützt zusätzliche Banking-device_apps
+- Neue Übersetzung: Brasilianisch - vielen Dank!
+- Fehlerbehebungen

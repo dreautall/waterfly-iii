@@ -59,6 +59,15 @@ class TransactionFilters with ChangeNotifier {
         budget: budget ?? this.budget,
         bill: bill ?? this.bill,
       );
+
+  void reset() {
+    account = null;
+    text = null;
+    currency = null;
+    category = null;
+    budget = null;
+    bill = null;
+  }
 }
 
 class FilterData {
@@ -192,6 +201,13 @@ class FilterDialog extends StatelessWidget {
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
           onPressed: () {
             Navigator.of(context).pop();
+          },
+        ),
+        OutlinedButton(
+          child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
+          onPressed: () {
+            filters.reset();
+            Navigator.of(context).pop(true);
           },
         ),
         FilledButton(
@@ -362,6 +378,9 @@ class FilterDialog extends StatelessWidget {
                     ),
                   ];
                   CategoryRead? currentCategory = categoryOptions.first.value;
+                  if (filters.category?.id == "-1") {
+                    currentCategory = categoryOptions.last.value;
+                  }
                   for (CategoryRead e in snapshot.data!.categories) {
                     categoryOptions.add(DropdownMenuEntry<CategoryRead>(
                       value: e,
@@ -417,6 +436,9 @@ class FilterDialog extends StatelessWidget {
                     ),
                   ];
                   BudgetRead? currentBudget = budgetOptions.first.value;
+                  if (filters.budget?.id == "-1") {
+                    currentBudget = budgetOptions.last.value;
+                  }
                   for (BudgetRead e in snapshot.data!.budgets) {
                     budgetOptions.add(DropdownMenuEntry<BudgetRead>(
                       value: e,
@@ -479,6 +501,9 @@ class FilterDialog extends StatelessWidget {
                     ),
                   ];
                   BillRead? currentBill = billOptions.first.value;
+                  if (filters.bill?.id == "-1") {
+                    currentBill = billOptions.last.value;
+                  }
                   for (BillRead e in snapshot.data!.bills) {
                     billOptions.add(DropdownMenuEntry<BillRead>(
                       value: e,

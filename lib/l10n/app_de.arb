@@ -168,9 +168,13 @@
   "@generalBalance": {
     "description": "(Account) Balance"
   },
+  "generalBill": "Rechnung",
+  "@generalBill": {
+    "description": "Bill"
+  },
   "generalBudget": "Budget",
   "@generalBudget": {
-    "description": "(Monetary) Budget)"
+    "description": "(Monetary) Budget"
   },
   "generalCategory": "Kategorie",
   "@generalCategory": {
@@ -211,6 +215,10 @@
   "generalReconcile": "Abgeglichen",
   "@generalReconcile": {
     "description": "Booking has been confirmed/reconciled"
+  },
+  "generalReset": "Zurücksetzen",
+  "@generalReset": {
+    "description": "Reset something (i.e. set filters)"
   },
   "generalSum": "Summe",
   "@generalSum": {
@@ -384,13 +392,29 @@
   "@homeTransactionsDialogFilterAccountsAll": {
     "description": "Don't filter for a specific account (default entry)"
   },
+  "homeTransactionsDialogFilterBillsAll": "<Alle Rechnungen>",
+  "@homeTransactionsDialogFilterBillsAll": {
+    "description": "Don't filter for a specific bill (default entry)"
+  },
+  "homeTransactionsDialogFilterBillUnset": "<Ohne Rechnung>",
+  "@homeTransactionsDialogFilterBillUnset": {
+    "description": "Filter for unset bills"
+  },
   "homeTransactionsDialogFilterBudgetsAll": "<Alle Budgets>",
   "@homeTransactionsDialogFilterBudgetsAll": {
     "description": "Don't filter for a specific budget (default entry)"
   },
+  "homeTransactionsDialogFilterBudgetUnset": "<Ohne Budget>",
+  "@homeTransactionsDialogFilterBudgetUnset": {
+    "description": "Filter for unset budgets"
+  },
   "homeTransactionsDialogFilterCategoriesAll": "<Alle Kategorien>",
   "@homeTransactionsDialogFilterCategoriesAll": {
     "description": "Don't filter for a specific category (default entry)"
+  },
+  "homeTransactionsDialogFilterCategoryUnset": "<Ohne Kategorie>",
+  "@homeTransactionsDialogFilterCategoryUnset": {
+    "description": "Filter for unset categories"
   },
   "homeTransactionsDialogFilterCurrenciesAll": "<Alle Währungen>",
   "@homeTransactionsDialogFilterCurrenciesAll": {
@@ -636,7 +660,7 @@
   "@settingsVersion": {
     "description": "Current App Version"
   },
-  "settingsVersionChecking": "Überprüfe…",
+  "settingsVersionChecking": "überprüfe…",
   "@settingsVersionChecking": {
     "description": "Shown while checking for app version"
   },

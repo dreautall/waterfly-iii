@@ -168,9 +168,13 @@
   "@generalBalance": {
     "description": "(Account) Balance"
   },
+  "generalBill": "Bill",
+  "@generalBill": {
+    "description": "Bill"
+  },
   "generalBudget": "Budget",
   "@generalBudget": {
-    "description": "(Monetary) Budget)"
+    "description": "(Monetary) Budget"
   },
   "generalCategory": "Category",
   "@generalCategory": {
@@ -211,6 +215,10 @@
   "generalReconcile": "Reconciled",
   "@generalReconcile": {
     "description": "Booking has been confirmed/reconciled"
+  },
+  "generalReset": "Reset",
+  "@generalReset": {
+    "description": "Reset something (i.e. set filters)"
   },
   "generalSum": "Sum",
   "@generalSum": {
@@ -384,13 +392,29 @@
   "@homeTransactionsDialogFilterAccountsAll": {
     "description": "Don't filter for a specific account (default entry)"
   },
+  "homeTransactionsDialogFilterBillsAll": "<All Bills>",
+  "@homeTransactionsDialogFilterBillsAll": {
+    "description": "Don't filter for a specific bill (default entry)"
+  },
+  "homeTransactionsDialogFilterBillUnset": "<No Bill set>",
+  "@homeTransactionsDialogFilterBillUnset": {
+    "description": "Filter for unset bills"
+  },
   "homeTransactionsDialogFilterBudgetsAll": "<All Budgets>",
   "@homeTransactionsDialogFilterBudgetsAll": {
     "description": "Don't filter for a specific budget (default entry)"
   },
+  "homeTransactionsDialogFilterBudgetUnset": "<No Budget set>",
+  "@homeTransactionsDialogFilterBudgetUnset": {
+    "description": "Filter for unset budgets"
+  },
   "homeTransactionsDialogFilterCategoriesAll": "<All Categories>",
   "@homeTransactionsDialogFilterCategoriesAll": {
     "description": "Don't filter for a specific category (default entry)"
+  },
+  "homeTransactionsDialogFilterCategoryUnset": "<No Category set>",
+  "@homeTransactionsDialogFilterCategoryUnset": {
+    "description": "Filter for unset categories"
   },
   "homeTransactionsDialogFilterCurrenciesAll": "<All Currencies>",
   "@homeTransactionsDialogFilterCurrenciesAll": {

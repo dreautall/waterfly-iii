@@ -17,14 +17,14 @@ extension CurrencyFormat on CurrencyRead {
     int? decimalDigits,
   }) =>
       NumberFormat.currency(
-        locale: locale,
+        locale: locale ?? Intl.defaultLocale,
         name: attributes.code,
         decimalDigits: decimalDigits ?? attributes.decimalPlaces,
         symbol: forceCode ? null : attributes.symbol,
       ).format(amount);
 
   String zero({String? locale}) => NumberFormat.currency(
-        locale: locale,
+        locale: locale ?? Intl.defaultLocale,
         name: "",
         symbol: "",
         decimalDigits: attributes.decimalPlaces,

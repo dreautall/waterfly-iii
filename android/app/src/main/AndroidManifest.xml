@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.dreautall.waterflyiii">
-    <application android:label="Waterfly III" android:name="${applicationName}" android:icon="@mipmap/ic_launcher" android:enableOnBackInvokedCallback="true">
+    <application android:label="Waterfly III" android:name="${applicationName}" android:icon="@mipmap/ic_launcher" android:enableOnBackInvokedCallback="false">
         <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
@@ -19,6 +19,7 @@
     <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
 
     <!-- Queries, used by url_launcher -->
     <queries>
@@ -42,6 +43,9 @@
         <package android:name="air.app.scb.breeze.android.main.in.prod"/>
         <package android:name="air.app.scb.breeze.android.main.sg.prod"/>
         <package android:name="am.vtb.mobilebank"/>
+        <package android:name="au.com.bank86400"/>
+        <package android:name="au.com.boq.mobilebanking"/>
+        <package android:name="au.com.nab.mobile"/>
         <package android:name="au.com.up.money"/>
         <package android:name="bank.discovery.banking.production.release"/>
         <package android:name="br.com.bb.android"/>
@@ -80,6 +84,7 @@
         <package android:name="com.bnpp.hellobank"/>
         <package android:name="com.boursorama.android.clients"/>
         <package android:name="com.bpi.ng.mobilebanking"/>
+        <package android:name="com.c6bank.app"/>
         <package android:name="com.chase.sig.android"/>
         <package android:name="com.chinatrust.mobilebank"/>
         <package android:name="com.citi.citimobile"/>
@@ -169,6 +174,7 @@
         <package android:name="com.unicredit"/>
         <package android:name="com.vipera.chebanca"/>
         <package android:name="com.vipera.ts.starter.MashreqAE"/>
+        <package android:name="com.wave.personal"/>
         <package android:name="com.whatsapp"/>
         <package android:name="com.willmobile.mobilebank.fcb"/>
         <package android:name="com.ykb.android"/>
@@ -176,6 +182,7 @@
         <package android:name="consumer.cbsa.smartapp"/>
         <package android:name="de.dkb.portalapp"/>
         <package android:name="de.dwins.financeguru"/>
+        <package android:name="de.ingdiba.bankingapp"/>
         <package android:name="de.number26.android"/>
         <package android:name="es.bancosantander.apps"/>
         <package android:name="eu.netinfo.colpatria.system"/>
@@ -193,7 +200,9 @@
         <package android:name="hr.binom.ecc.mobile"/>
         <package android:name="hu.netbank.netbankdroid"/>
         <package android:name="hu.otpbank.mobile"/>
+        <package android:name="in.amazon.mShop.android.shopping"/>
         <package android:name="it.bancomat.pay.user"/>
+        <package android:name="it.beem.app"/>
         <package android:name="it.hype.app"/>
         <package android:name="it.icbpi.mobile"/>
         <package android:name="it.ingdirect.app"/>
@@ -203,8 +212,10 @@
         <package android:name="net.easypark.android"/>
         <package android:name="om.nu.production"/>
         <package android:name="om.todo1.mobile"/>
+        <package android:name="one.tomorrow.app"/>
         <package android:name="org.ping.sberbank.elba.mobile"/>
         <package android:name="org.toshi"/>
+        <package android:name="org.westpac.bank"/>
         <package android:name="pe.com.interbank.mobilebanking"/>
         <package android:name="pe.com.scotiabank.blpm.android.client"/>
         <package android:name="pl.mbank"/>

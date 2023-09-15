@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
@@ -34,6 +35,7 @@ class NotificationAppSettings {
 class SettingsProvider with ChangeNotifier {
   static const String settingDebug = "DEBUG";
   static const String settingLocale = "LOCALE";
+  static const String settingLock = "LOCK";
   static const String settingNLKnownApps = "NL_KNOWNAPPS";
   static const String settingNLUsedApps = "NL_USEDAPPS";
   static const String settingNLAppPrefix = "NL_APP_";
@@ -41,16 +43,22 @@ class SettingsProvider with ChangeNotifier {
   static const String settingThemeDark = "DARK";
   static const String settingThemeLight = "LIGHT";
   static const String settingThemeSystem = "SYSTEM";
+  static const String settingDynamicColors = "DYNAMICCOLORS";
 
   ThemeMode _theme = ThemeMode.system;
-  ThemeMode get getTheme => _theme;
+  ThemeMode get theme => _theme;
+  bool _dynamicColors = false;
+  bool get dynamicColors => _dynamicColors;
 
   Locale? _locale;
-  Locale? get getLocale => _locale;
+  Locale? get locale => _locale;
 
   bool _debug = false;
   bool get debug => _debug;
   StreamSubscription<LogRecord>? _debugLogger;
+
+  bool _lock = false;
+  bool get lock => _lock;
 
   bool _loaded = false;
   bool get loaded => _loaded;
@@ -75,13 +83,15 @@ class SettingsProvider with ChangeNotifier {
       default:
         _theme = ThemeMode.system;
     }
+    _dynamicColors = prefs.getBool(settingDynamicColors) ?? false;
+    log.config("read dynamic colors $dynamicColors");
 
-    final Locale locale = Locale.fromSubtags(
-      languageCode: prefs.getString(settingLocale) ?? "unset",
-    );
+    final String? countryCode = Intl.defaultLocale?.split("_").last;
+    final Locale locale = Locale(prefs.getString(settingLocale) ?? "unset");
     log.config("read locale $locale");
     if (S.supportedLocales.contains(locale)) {
       _locale = locale;
+      Intl.defaultLocale = "${locale.languageCode}_$countryCode";
     } else {
       _locale = const Locale('en');
     }
@@ -94,6 +104,9 @@ class SettingsProvider with ChangeNotifier {
     } else {
       Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
     }
+
+    _lock = prefs.getBool(settingLock) ?? false;
+    log.config("read lock $lock");
 
     _notificationApps = prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
@@ -127,7 +140,9 @@ class SettingsProvider with ChangeNotifier {
     }
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _locale = locale;
+    _locale = Locale(locale.languageCode);
+    final String? countryCode = Intl.defaultLocale?.split("_").last;
+    Intl.defaultLocale = "${locale.languageCode}_$countryCode";
     await prefs.setString(settingLocale, locale.languageCode);
 
     log.finest(() => "notify SettingsProvider->setLocale()");
@@ -153,6 +168,32 @@ class SettingsProvider with ChangeNotifier {
     }
 
     log.finest(() => "notify SettingsProvider->setDebug()");
+    notifyListeners();
+  }
+
+  Future<void> setLock(bool lock) async {
+    if (lock == _lock) {
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _lock = lock;
+    await prefs.setBool(settingLock, lock);
+
+    log.finest(() => "notify SettingsProvider->setLock()");
+    notifyListeners();
+  }
+
+  Future<void> setDynamicColors(bool dynamicColors) async {
+    if (dynamicColors == _dynamicColors) {
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _dynamicColors = dynamicColors;
+    await prefs.setBool(settingDynamicColors, dynamicColors);
+
+    log.finest(() => "notify SettingsProvider->dynamicColors()");
     notifyListeners();
   }
 

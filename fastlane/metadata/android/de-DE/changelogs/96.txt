@@ -1,0 +1,2 @@
+- App-Sperre mit Fingerabdruck o.ä.
+- Fehlerbehebungen

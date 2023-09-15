@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 env:
-  JAVA_VERSION: "12.x"
+  JAVA_VERSION: "17.x"
   FLUTTER_CHANNEL: "stable"
   PROPERTIES_PATH: "./android/key.properties"
 

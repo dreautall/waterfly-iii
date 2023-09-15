@@ -1,0 +1,5 @@
+- Add a Picture to a Transaction
+- Link Transaction to Bill & Reconcile (up-to-date Firefly version required)
+- App Shortcut to add transaction (long-press app icon in launcher)
+- Additional Banking Apps added
+- Various "under the hood" improvements for faster loading times & bugfixes

@@ -42,6 +42,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
   );
 
   DateTime? _lastDate;
+  List<int> _rowsWithDate = <int>[];
 
   final TransactionFilters _filters = TransactionFilters();
 
@@ -84,6 +85,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     _filters.category = oldFilters.category;
                     _filters.currency = oldFilters.currency;
                     _filters.text = oldFilters.text;
+                    _filters.bill = oldFilters.bill;
 
                     return;
                   }
@@ -91,6 +93,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     return;
                   }
                   _filters.updateFilters();
+                  _rowsWithDate = <int>[];
+                  _lastDate = null;
                   _pagingController.refresh();
                 },
               ),
@@ -121,11 +125,26 @@ class _HomeTransactionsState extends State<HomeTransactions>
           query = "currency_is:${_filters.currency!.attributes.code} $query";
         }
         if (_filters.category != null) {
-          query =
-              "category_is:\"${_filters.category!.attributes.name}\" $query";
+          if (_filters.category!.id == "-1") {
+            query = "has_no_category:true $query";
+          } else {
+            query =
+                "category_is:\"${_filters.category!.attributes.name}\" $query";
+          }
         }
         if (_filters.budget != null) {
-          query = "budget_is:\"${_filters.budget!.attributes.name}\" $query";
+          if (_filters.budget!.id == "-1") {
+            query = "has_no_budget:true $query";
+          } else {
+            query = "budget_is:\"${_filters.budget!.attributes.name}\" $query";
+          }
+        }
+        if (_filters.bill != null) {
+          if (_filters.bill!.id == "-1") {
+            query = "has_no_bill:true $query";
+          } else {
+            query = "bill_is:\"${_filters.bill!.attributes.name}\" $query";
+          }
         }
         log.fine(() => "Search query: $query");
         searchFunc = api.v1SearchTransactionsGet(
@@ -137,10 +156,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
             ? api.v1AccountsIdTransactionsGet(
                 id: widget.accountId ?? _filters.account!.id,
                 page: pageKey,
-                end: DateFormat('yyyy-MM-dd').format(DateTime.now().toLocal()))
+                end: DateFormat('yyyy-MM-dd', 'en_US')
+                    .format(DateTime.now().toLocal()))
             : api.v1TransactionsGet(
                 page: pageKey,
-                end: DateFormat('yyyy-MM-dd').format(DateTime.now().toLocal()),
+                end: DateFormat('yyyy-MM-dd', 'en_US')
+                    .format(DateTime.now().toLocal()),
               );
       }
       final Response<TransactionArray> response = await searchFunc;
@@ -179,7 +200,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
     super.build(context);
 
     return RefreshIndicator(
-      onRefresh: () => Future<void>.sync(() => _pagingController.refresh()),
+      onRefresh: () => Future<void>.sync(() {
+        _rowsWithDate = <int>[];
+        _lastDate = null;
+        return _pagingController.refresh();
+      }),
       child: PagedListView<int, TransactionRead>(
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
@@ -332,10 +357,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     if (foreignAmounts.isNotEmpty) {
       foreignAmounts.forEach((String cur, double amount) {
         if (foreignCurrencies.containsKey(cur)) {
-          foreignText += "${foreignCurrencies[cur]!.fmt(
-            amount,
-            locale: S.of(context).localeName,
-          )} ";
+          foreignText += "${foreignCurrencies[cur]!.fmt(amount)} ";
         }
       });
       foreignText += " ";
@@ -380,6 +402,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     ),
                   );
                   if (ok ?? false) {
+                    _rowsWithDate = <int>[];
+                    _lastDate = null;
                     _pagingController.refresh();
                   }
                 },
@@ -407,6 +431,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   await api.v1TransactionsIdDelete(
                     id: item.id,
                   );
+                  _rowsWithDate = <int>[];
+                  _lastDate = null;
                   _pagingController.refresh();
                 },
                 child: Row(
@@ -465,10 +491,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                         ),
                   ),
                 TextSpan(
-                  text: currency.fmt(
-                    amount,
-                    locale: S.of(context).localeName,
-                  ),
+                  text: currency.fmt(amount),
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: transactions.first.type.color,
                     fontFeatures: const <FontFeature>[
@@ -500,6 +523,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
       ),
       onClosed: (bool? refresh) {
         if (refresh ?? false == true) {
+          _rowsWithDate = <int>[];
+          _lastDate = null;
           _pagingController.refresh();
         }
       },
@@ -509,21 +534,22 @@ class _HomeTransactionsState extends State<HomeTransactions>
     DateTime date = transactions.first.date.toLocal();
     // Show Date Banner when:
     // 1. _lastDate is not set (= first element)
-    // 2. _lastDate has a different day than current date (= date changed)
-    // 3. _lastDate day is older than current date day. As the list is sorted by
-    //    time, this should not happen, and means _lastDate just wasn't properly
-    //    cleared
+    // 2. _lastDate has a different day than current date (= date changed) and
+    //    is an earlier date (= scrolling down)
+    // 3. index indicates we have to.
     if (_lastDate == null ||
-        _lastDate!.clearTime() != date.clearTime() ||
-        _lastDate!.clearTime().isBefore(date.clearTime())) {
+        (_lastDate!.clearTime() != date.clearTime() &&
+            date.clearTime().isBefore(_lastDate!.clearTime())) ||
+        _rowsWithDate.contains(index)) {
       // Add date row
+      _rowsWithDate.add(index);
       transactionWidget = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 0, 8),
             child: Text(
-              DateFormat.yMd(S.of(context).localeName).format(date),
+              DateFormat.yMd().format(date),
               style: Theme.of(context).textTheme.labelLarge,
             ),
           ),

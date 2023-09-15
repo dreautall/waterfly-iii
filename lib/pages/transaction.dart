@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +12,16 @@ import 'package:provider/provider.dart';
 
 import 'package:badges/badges.dart' as badges;
 import 'package:chopper/chopper.dart' show Response;
+import 'package:version/version.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/notificationlistener.dart';
+import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/transaction/attachments.dart';
+import 'package:waterflyiii/pages/transaction/bill.dart';
 import 'package:waterflyiii/pages/transaction/currencies.dart';
 import 'package:waterflyiii/pages/transaction/delete.dart';
 import 'package:waterflyiii/pages/transaction/tags.dart';
@@ -64,6 +69,7 @@ class _TransactionPageState extends State<TransactionPage>
   final TextEditingController _dateTextController = TextEditingController();
   final TextEditingController _timeTextController = TextEditingController();
   CurrencyRead? _localCurrency;
+  bool _reconciled = false;
 
   // Withdrawal: splits have common source account (= own account)
   // Deposit: splits have common target account (= own account)
@@ -92,6 +98,7 @@ class _TransactionPageState extends State<TransactionPage>
       <TextEditingController>[];
   final List<TextEditingController> _noteTextControllers =
       <TextEditingController>[];
+  final List<BillRead?> _bills = <BillRead?>[];
 
   // Individual for split transactions
   final List<TextEditingController> _titleTextControllers =
@@ -177,6 +184,9 @@ class _TransactionPageState extends State<TransactionPage>
         ),
       );
 
+      // Reconciled
+      _reconciled = transactions.first.reconciled ?? false;
+
       for (TransactionSplit trans in transactions) {
         // Always in card view
         /// Category
@@ -197,6 +207,24 @@ class _TransactionPageState extends State<TransactionPage>
 
         /// Notes
         _noteTextControllers.add(TextEditingController(text: trans.notes));
+
+        /// Bill
+        if ((trans.billId?.isNotEmpty ?? false) && trans.billId != "0") {
+          _bills.add(
+            BillRead(
+              type: "bill",
+              id: trans.billId ?? "",
+              attributes: Bill(
+                  name: trans.billName ?? "",
+                  amountMin: "",
+                  amountMax: "",
+                  date: DateTime.now(),
+                  repeatFreq: BillRepeatFrequency.swaggerGeneratedUnknown),
+            ),
+          );
+        } else {
+          _bills.add(null);
+        }
 
         // Individual for split transactions
         /// Title
@@ -298,9 +326,8 @@ class _TransactionPageState extends State<TransactionPage>
         if (widget.notification != null) {
           final FireflyIii api = context.read<FireflyService>().api;
           final SettingsProvider settings = context.read<SettingsProvider>();
-          final String locale = S.of(context).localeName;
 
-          log.info("Got notification ${widget.notification}");
+          log.info("Got notification ${widget.notification?.title}");
           CurrencyRead? currency;
           double amount = 0;
 
@@ -351,20 +378,28 @@ class _TransactionPageState extends State<TransactionPage>
               // extract amount
               // Check if string has a decimal separator
               final String amountStr = validMatch.namedGroup("amount") ?? "";
+              final int decimalSepPos = amountStr.length >= 3 &&
+                      (amountStr[amountStr.length - 3] == "." ||
+                          amountStr[amountStr.length - 3] == ",")
+                  ? amountStr.length - 3
+                  : amountStr.length - 2;
               final String decimalSep =
-                  amountStr.length >= 3 ? amountStr[amountStr.length - 3] : "";
+                  amountStr.length >= decimalSepPos && decimalSepPos > 0
+                      ? amountStr[decimalSepPos]
+                      : "";
               if (decimalSep == "," || decimalSep == ".") {
                 final double wholes = double.tryParse(amountStr
-                        .substring(0, amountStr.length - 3)
+                        .substring(0, decimalSepPos)
                         .replaceAll(",", "")
                         .replaceAll(".", "")) ??
                     0;
-                final double dec = double.tryParse(amountStr
-                        .substring(amountStr.length - 2)
-                        .replaceAll(",", "")
-                        .replaceAll(".", "")) ??
-                    0;
-                amount = wholes + dec / 100;
+                final String decStr = amountStr
+                    .substring(decimalSepPos + 1)
+                    .replaceAll(",", "")
+                    .replaceAll(".", "");
+                final double dec = double.tryParse(decStr) ?? 0;
+                amount =
+                    decStr.length == 1 ? wholes + dec / 10 : wholes + dec / 100;
               } else {
                 amount = double.tryParse(
                         amountStr.replaceAll(",", "").replaceAll(".", "")) ??
@@ -382,8 +417,8 @@ class _TransactionPageState extends State<TransactionPage>
           // Set title & date
           _titleTextController.text = widget.notification!.title;
           _date = widget.notification!.date;
-          _dateTextController.text = DateFormat.yMMMMd(locale).format(_date);
-          _timeTextController.text = DateFormat.Hm(locale).format(_date);
+          _dateTextController.text = DateFormat.yMMMMd().format(_date);
+          _timeTextController.text = DateFormat.Hm().format(_date);
 
           // Check currency
           if (currency == _localCurrency) {
@@ -422,10 +457,10 @@ class _TransactionPageState extends State<TransactionPage>
       });
     }
 
-    _dateTextController.text =
-        DateFormat.yMMMMd(S.of(context).localeName).format(_date);
-    _timeTextController.text =
-        DateFormat.Hm(S.of(context).localeName).format(_date);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _dateTextController.text = DateFormat.yMMMMd().format(_date);
+      _timeTextController.text = DateFormat.Hm().format(_date);
+    });
 
     // focus node listener for ownaccount
     _ownAccountFocusNode.addListener(() async {
@@ -537,8 +572,12 @@ class _TransactionPageState extends State<TransactionPage>
   void updateTransactionAmounts() {
     // Individual for split transactions, show common for single transaction
     /// local amount
-    _localAmountTextController.text = _localAmounts.sum
-        .toStringAsFixed(_localCurrency?.attributes.decimalPlaces ?? 2);
+    if (_localAmounts.sum != 0) {
+      _localAmountTextController.text = _localAmounts.sum
+          .toStringAsFixed(_localCurrency?.attributes.decimalPlaces ?? 2);
+    } else {
+      _localAmountTextController.text = "";
+    }
 
     /// foreign amount & currency
     _foreignCurrency = _foreignCurrencies.first;
@@ -546,8 +585,12 @@ class _TransactionPageState extends State<TransactionPage>
         _foreignCurrencies.every(
             (CurrencyRead? e) => e != null && e.id == _foreignCurrency!.id)) {
       // all same foreign currency --> ok to show in summary
-      _foreignAmountTextController.text = _foreignAmounts.sum
-          .toStringAsFixed(_foreignCurrency?.attributes.decimalPlaces ?? 2);
+      if (_foreignAmounts.sum != 0) {
+        _foreignAmountTextController.text = _foreignAmounts.sum
+            .toStringAsFixed(_foreignCurrency?.attributes.decimalPlaces ?? 2);
+      } else {
+        _foreignAmountTextController.text = "";
+      }
     } else {
       _foreignCurrency = null;
     }
@@ -578,6 +621,7 @@ class _TransactionPageState extends State<TransactionPage>
     _tags.removeAt(i);
     TextEditingController t4 = _tagsTextControllers.removeAt(i);
     TextEditingController t5 = _noteTextControllers.removeAt(i);
+    _bills.removeAt(i);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       t1.dispose();
@@ -649,6 +693,7 @@ class _TransactionPageState extends State<TransactionPage>
     _tags.add(Tags());
     _tagsTextControllers.add(TextEditingController());
     _noteTextControllers.add(TextEditingController());
+    _bills.add(null);
 
     _titleTextControllers.add(TextEditingController());
     _titleFocusNodes.add(FocusNode());
@@ -797,6 +842,7 @@ class _TransactionPageState extends State<TransactionPage>
                         ScaffoldMessenger.of(context);
                     final FireflyIii api = context.read<FireflyService>().api;
                     final NavigatorState nav = Navigator.of(context);
+                    final AuthUser? user = context.read<FireflyService>().user;
 
                     // Sanity checks
                     String? error;
@@ -806,6 +852,9 @@ class _TransactionPageState extends State<TransactionPage>
                     }
                     if (_titleTextController.text.isEmpty) {
                       error = S.of(context).transactionErrorTitle;
+                    }
+                    if (user == null) {
+                      error = S.of(context).errorAPIUnavailable;
                     }
                     if (error != null) {
                       msg.showSnackBar(SnackBar(
@@ -877,6 +926,7 @@ class _TransactionPageState extends State<TransactionPage>
                           transactionJournalId:
                               _transactionJournalIDs.elementAtOrNull(i),
                           type: _transactionType,
+                          reconciled: _reconciled,
                         ));
                       }
                       TransactionUpdate txUpdate = TransactionUpdate(
@@ -947,15 +997,16 @@ class _TransactionPageState extends State<TransactionPage>
                           sourceId: sourceId,
                           sourceName: sourceName,
                           tags: _tags[i].tags,
-                          reconciled: false,
+                          reconciled: _reconciled,
                         ));
                       }
                       final TransactionStore newTx = TransactionStore(
-                          groupTitle: _split ? _titleTextController.text : null,
-                          transactions: txS,
-                          applyRules: true,
-                          fireWebhooks: true,
-                          errorIfDuplicateHash: true);
+                        groupTitle: _split ? _titleTextController.text : null,
+                        transactions: txS,
+                        applyRules: true,
+                        fireWebhooks: true,
+                        errorIfDuplicateHash: true,
+                      );
                       resp = await api.v1TransactionsPost(body: newTx);
                     }
 
@@ -989,6 +1040,72 @@ class _TransactionPageState extends State<TransactionPage>
                       return;
                     }
 
+                    // Upload attachments if required
+                    if ((_attachments?.isNotEmpty ?? false) &&
+                        _transactionJournalIDs
+                                .firstWhereOrNull((String? e) => e != null) ==
+                            null) {
+                      log.fine(() =>
+                          "uploading ${_attachments!.length} attachments");
+                      TransactionSplit? tx = resp
+                          .body?.data.attributes.transactions
+                          .firstWhereOrNull((TransactionSplit e) =>
+                              e.transactionJournalId != null);
+                      if (tx != null) {
+                        String txId = tx.transactionJournalId!;
+                        log.finest(() => "uploading to txId $txId");
+                        for (AttachmentRead attachment in _attachments!) {
+                          log.finest(() =>
+                              "uploading attachment ${attachment.id}: ${attachment.attributes.filename}");
+                          final Response<AttachmentSingle> respAttachment =
+                              await api.v1AttachmentsPost(
+                            body: AttachmentStore(
+                              filename: attachment.attributes.filename,
+                              attachableType: AttachableType.transactionjournal,
+                              attachableId: txId,
+                            ),
+                          );
+                          if (!respAttachment.isSuccessful ||
+                              respAttachment.body == null) {
+                            log.warning(() => "error uploading attachment");
+                            continue;
+                          }
+                          final AttachmentRead newAttachment =
+                              respAttachment.body!.data;
+                          log.finest(
+                              () => "attachment id is ${newAttachment.id}");
+                          final HttpClientRequest request =
+                              await HttpClient().postUrl(
+                            Uri.parse(newAttachment.attributes.uploadUrl!),
+                          );
+                          user!.headers().forEach(
+                                (String key, String value) =>
+                                    request.headers.add(key, value),
+                              );
+                          request.headers.set(HttpHeaders.contentTypeHeader,
+                              "application/octet-stream");
+                          final Stream<List<int>> listenStream =
+                              File(attachment.attributes.uploadUrl!)
+                                  .openRead()
+                                  .transform(
+                                    StreamTransformer<List<int>,
+                                        List<int>>.fromHandlers(
+                                      handleData: (List<int> data,
+                                          EventSink<List<int>> sink) {
+                                        sink.add(data);
+                                      },
+                                      handleDone: (EventSink<List<int>> sink) {
+                                        sink.close();
+                                      },
+                                    ),
+                                  );
+                          await request.addStream(listenStream);
+                          await request.close();
+                          log.fine(() => "done uploading attachment");
+                        }
+                      }
+                    }
+
                     if (nav.canPop()) {
                       nav.pop(true);
                     } else {
@@ -996,6 +1113,11 @@ class _TransactionPageState extends State<TransactionPage>
                       // https://stackoverflow.com/questions/45109557/flutter-how-to-programmatically-exit-the-app
                       SystemChannels.platform
                           .invokeMethod('SystemNavigator.pop');
+                      nav.pushReplacement(
+                        MaterialPageRoute<bool>(
+                          builder: (BuildContext context) => const NavPage(),
+                        ),
+                      );
                     }
                   },
             child: Text(MaterialLocalizations.of(context).saveButtonLabel),
@@ -1060,22 +1182,14 @@ class _TransactionPageState extends State<TransactionPage>
               icon: Icons.attach_file,
               tooltip: S.of(context).transactionAttachments,
               onPressed: () async {
-                String? txId = _transactionJournalIDs
-                    .firstWhereOrNull((String? element) => element != null);
-                if (txId == null) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(S.of(context).transactionErrorSaveFirst),
-                    behavior: SnackBarBehavior.floating,
-                  ));
-                  return;
-                }
                 List<AttachmentRead> dialogAttachments =
                     _attachments ?? <AttachmentRead>[];
                 await showDialog<List<AttachmentRead>>(
                   context: context,
                   builder: (BuildContext context) => AttachmentDialog(
                     attachments: dialogAttachments,
-                    transactionId: txId,
+                    transactionId: _transactionJournalIDs
+                        .firstWhereOrNull((String? element) => element != null),
                   ),
                 );
                 setState(() {
@@ -1094,10 +1208,12 @@ class _TransactionPageState extends State<TransactionPage>
       Row(
         children: <Widget>[
           SizedBox(
-            width: 150,
+            width: 130,
             child: NumberInput(
               icon: const Icon(Icons.monetization_on),
-              hintText: "0.00",
+              hintText: _foreignCurrency?.zero() ??
+                  _localCurrency?.zero() ??
+                  NumberFormat.currency(decimalDigits: 2).format(0),
               decimals: _foreignCurrency?.attributes.decimalPlaces ??
                   _localCurrency?.attributes.decimalPlaces ??
                   2,
@@ -1133,10 +1249,14 @@ class _TransactionPageState extends State<TransactionPage>
                         "foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
                     if (_foreignAmounts[i] == 0) {
                       _foreignAmounts[i] = _localAmounts[i];
-                      _foreignAmountTextControllers[i].text = _foreignAmounts[i]
-                          .toStringAsFixed(
-                              _foreignCurrencies[i]?.attributes.decimalPlaces ??
-                                  2);
+                      if (_foreignAmounts[i] != 0) {
+                        _foreignAmountTextControllers[i].text =
+                            _foreignAmounts[i].toStringAsFixed(
+                                _foreignCurrencies[i]
+                                        ?.attributes
+                                        .decimalPlaces ??
+                                    2);
+                      }
                     }
                   }
                 }
@@ -1154,12 +1274,8 @@ class _TransactionPageState extends State<TransactionPage>
               child: NumberInput(
                 controller: _localAmountTextController,
                 disabled: _split,
-                hintText:
-                    _localCurrency?.zero(locale: S.of(context).localeName) ??
-                        NumberFormat.currency(
-                          decimalDigits: 2,
-                          locale: S.of(context).localeName,
-                        ).format(0),
+                hintText: _localCurrency?.zero() ??
+                    NumberFormat.currency(decimalDigits: 2).format(0),
                 decimals: _localCurrency?.attributes.decimalPlaces ?? 2,
                 prefixText: "${_localCurrency?.attributes.code} ",
                 onChanged: (String string) =>
@@ -1362,7 +1478,7 @@ class _TransactionPageState extends State<TransactionPage>
       // Date/Time select might overflow, so we need to be able to scroll horizontally.
       SizedBox(
         height:
-            56, // 56 is measured height from layout inspector of a normal row.
+            64, // 64 is measured height from layout inspector of a normal row.
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: <Widget>[
@@ -1395,8 +1511,7 @@ class _TransactionPageState extends State<TransactionPage>
                       day: pickedDate.day,
                     );
                     _dateTextController.text =
-                        DateFormat.yMMMMd(S.of(context).localeName)
-                            .format(_date);
+                        DateFormat.yMMMMd().format(_date);
                   });
                 },
               ),
@@ -1422,8 +1537,7 @@ class _TransactionPageState extends State<TransactionPage>
 
                   setState(() {
                     _date = _date.setTimeOfDay(pickedTime);
-                    _timeTextController.text =
-                        DateFormat.Hm(S.of(context).localeName).format(_date);
+                    _timeTextController.text = DateFormat.Hm().format(_date);
                   });
                 },
               ),
@@ -1607,16 +1721,10 @@ class _TransactionPageState extends State<TransactionPage>
                                   controller: (_foreignCurrencies[i] != null)
                                       ? _foreignAmountTextControllers[i]
                                       : _localAmountTextControllers[i],
-                                  hintText: _foreignCurrencies[i]?.zero(
-                                        locale: S.of(context).localeName,
-                                      ) ??
-                                      _localCurrency?.zero(
-                                        locale: S.of(context).localeName,
-                                      ) ??
-                                      NumberFormat.currency(
-                                        decimalDigits: 2,
-                                        locale: S.of(context).localeName,
-                                      ).format(0),
+                                  hintText: _foreignCurrencies[i]?.zero() ??
+                                      _localCurrency?.zero() ??
+                                      NumberFormat.currency(decimalDigits: 2)
+                                          .format(0),
                                   decimals: _foreignCurrencies[i]
                                           ?.attributes
                                           .decimalPlaces ??
@@ -1652,13 +1760,9 @@ class _TransactionPageState extends State<TransactionPage>
                                 child: NumberInput(
                                   icon: const Icon(Icons.currency_exchange),
                                   controller: _localAmountTextControllers[i],
-                                  hintText: _localCurrency?.zero(
-                                        locale: S.of(context).localeName,
-                                      ) ??
-                                      NumberFormat.currency(
-                                        decimalDigits: 2,
-                                        locale: S.of(context).localeName,
-                                      ).format(0),
+                                  hintText: _localCurrency?.zero() ??
+                                      NumberFormat.currency(decimalDigits: 2)
+                                          .format(0),
                                   decimals: _localCurrency
                                           ?.attributes.decimalPlaces ??
                                       2,
@@ -1695,16 +1799,56 @@ class _TransactionPageState extends State<TransactionPage>
               width: 48,
               child: Align(
                 alignment: Alignment.centerRight,
-                child: AnimatedOpacity(
-                  opacity: (_split) ? 1 : 0,
+                child: AnimatedSize(
                   duration: animDurationStandard,
                   curve: animCurveStandard,
-                  child: AnimatedSize(
-                    duration: animDurationStandard,
-                    curve: animCurveStandard,
-                    alignment: Alignment.topCenter,
-                    child: Column(
-                      children: <Widget>[
+                  alignment: Alignment.topCenter,
+                  child: Column(
+                    children: <Widget>[
+                      // Reconcile is broken before API V2.0.6
+                      // ref https://github.com/dreautall/waterfly-iii/issues/56
+                      // ref https://github.com/firefly-iii/firefly-iii/issues/7845
+                      if (context.read<FireflyService>().apiVersion! >=
+                          Version(2, 0, 6)) ...<Widget>[
+                        IconButton(
+                          icon: const Icon(Icons.done_outline),
+                          isSelected: _reconciled,
+                          selectedIcon: const Icon(Icons.done),
+                          onPressed: () => setState(
+                            () => _reconciled = !_reconciled,
+                          ),
+                          tooltip: S.of(context).generalReconcile,
+                        ),
+                        hDivider,
+                      ],
+                      IconButton(
+                        icon: const Icon(Icons.calendar_today),
+                        isSelected: _bills[i] != null,
+                        selectedIcon: const Icon(Icons.event_available),
+                        onPressed: () async {
+                          BillRead? newBill = await showDialog<BillRead>(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                BillDialog(currentBill: _bills[i]),
+                          );
+                          // Back button returns "null"
+                          if (newBill == null) {
+                            return;
+                          }
+                          // Delete bill returns id "0"
+                          if (newBill.id.isEmpty || newBill.id == "0") {
+                            newBill = null;
+                          }
+                          if (newBill != _bills[i]) {
+                            setState(() {
+                              _bills[i] = newBill;
+                            });
+                          }
+                        },
+                        tooltip: S.of(context).transactionDialogBillTitle,
+                      ),
+                      hDivider,
+                      if (_split) ...<Widget>[
                         IconButton(
                           icon: const Icon(Icons.currency_exchange),
                           onPressed: _split
@@ -1773,7 +1917,7 @@ class _TransactionPageState extends State<TransactionPage>
                               : null,
                         ),
                       ],
-                    ),
+                    ],
                   ),
                 ),
               ),

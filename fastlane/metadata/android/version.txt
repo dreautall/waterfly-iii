@@ -1,2 +1,2 @@
-versionName=0.1.5-beta
-versionCode=71
+versionName=0.1.12-beta
+versionCode=158

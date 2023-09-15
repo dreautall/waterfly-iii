@@ -171,6 +171,9 @@ class _CameraDialogState extends State<CameraDialog>
       imageFormatGroup: ImageFormatGroup.jpeg,
     );
 
+    final S l10n = S.of(context);
+    final NavigatorState nav = Navigator.of(context);
+
     controller = cameraController;
 
     // If the controller is updated then update the UI.
@@ -206,13 +209,13 @@ class _CameraDialogState extends State<CameraDialog>
       log.warning("Camera Error", e);
       switch (e.code) {
         case 'CameraAccessDenied':
-          showInSnackBar(S.of(context).cameraErrorDenied);
+          showInSnackBar(l10n.cameraErrorDenied);
           break;
         default:
           _showCameraException(e);
           break;
       }
-      Navigator.of(context).pop();
+      nav.pop();
     }
 
     if (mounted) {

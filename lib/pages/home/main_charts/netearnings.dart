@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 import 'package:community_charts_flutter/community_charts_flutter.dart'
@@ -27,10 +26,7 @@ class NetEarningsChart extends StatelessWidget {
     income.forEach((DateTime key, InsightTotalEntry value) {
       incomeChartData.add(
         LabelAmountChart(
-          DateFormat(
-            DateFormat.YEAR_MONTH,
-            S.of(context).localeName,
-          ).format(key),
+          DateFormat(DateFormat.YEAR_MONTH).format(key),
           value.differenceFloat ?? 0,
         ),
       );
@@ -38,10 +34,7 @@ class NetEarningsChart extends StatelessWidget {
     expenses.forEach((DateTime key, InsightTotalEntry value) {
       expenseChartData.add(
         LabelAmountChart(
-          DateFormat(
-            DateFormat.YEAR_MONTH,
-            S.of(context).localeName,
-          ).format(key),
+          DateFormat(DateFormat.YEAR_MONTH).format(key),
           value.differenceFloat ?? 0,
         ),
       );

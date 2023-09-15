@@ -17,7 +17,7 @@ class CategoryChart extends StatelessWidget {
     required this.data,
   });
 
-  final Map<String, Category> data;
+  final List<InsightGroupEntry> data;
 
   @override
   Widget build(BuildContext context) {
@@ -25,24 +25,17 @@ class CategoryChart extends StatelessWidget {
     CurrencyRead defaultCurrency =
         context.read<FireflyService>().defaultCurrency;
 
-    data.forEach((_, Category e) {
-      double sum = 0;
-      if (e.spent == null) {
-        return;
-      }
-      for (CategorySpent f in e.spent!) {
-        sum += double.tryParse(f.sum ?? "") ?? 0;
-      }
-      if (sum == 0) {
-        return;
+    for (InsightGroupEntry e in data) {
+      if ((e.name?.isEmpty ?? true) || e.differenceFloat == 0) {
+        continue;
       }
       chartData.add(
         LabelAmountChart(
-          e.name,
-          sum,
+          e.name!,
+          e.differenceFloat ?? 0,
         ),
       );
-    });
+    }
 
     chartData.sort((LabelAmountChart a, LabelAmountChart b) =>
         a.amount.compareTo(b.amount));
@@ -113,12 +106,7 @@ class CategoryChart extends StatelessWidget {
             legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
             desiredMaxRows: 6,
             measureFormatter: (num? value) {
-              return value == null
-                  ? '-'
-                  : defaultCurrency.fmt(
-                      value,
-                      locale: S.of(context).localeName,
-                    );
+              return value == null ? '-' : defaultCurrency.fmt(value);
             },
             entryTextStyle: charts.TextStyleSpec(
               fontSize:

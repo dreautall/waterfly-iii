@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -16,11 +15,11 @@ class LastDaysChart extends StatelessWidget {
   const LastDaysChart({
     super.key,
     required this.expenses,
-    required this.income,
+    required this.incomes,
   });
 
-  final Map<DateTime, InsightTotalEntry> expenses;
-  final Map<DateTime, InsightTotalEntry> income;
+  final Map<DateTime, double> expenses;
+  final Map<DateTime, double> incomes;
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +38,13 @@ class LastDaysChart extends StatelessWidget {
     final List<LabelAmountChart> chartData = <LabelAmountChart>[];
 
     for (DateTime e in lastDays.reversed) {
-      if (!expenses.containsKey(e) || !income.containsKey(e)) {
+      if (!expenses.containsKey(e) || !incomes.containsKey(e)) {
         continue;
       }
-      InsightTotalEntry dayExpenses = expenses[e]!;
-      InsightTotalEntry dayIncome = income[e]!;
+      double expense = expenses[e]!;
+      double income = incomes[e]!;
 
-      double diff =
-          (dayIncome.differenceFloat ?? 0) + (dayExpenses.differenceFloat ?? 0);
+      double diff = income + expense;
 
       // Don't show currency when numbers are too big, see #29
       if (diff > 1000) {
@@ -54,12 +52,7 @@ class LastDaysChart extends StatelessWidget {
       }
 
       chartData.add(
-        LabelAmountChart(
-            DateFormat(
-              DateFormat.ABBR_WEEKDAY,
-              S.of(context).localeName,
-            ).format(e),
-            diff),
+        LabelAmountChart(DateFormat(DateFormat.ABBR_WEEKDAY).format(e), diff),
       );
     }
 
@@ -77,7 +70,6 @@ class LastDaysChart extends StatelessWidget {
               ? defaultCurrency.fmt(
                   entry.amount.abs(),
                   decimalDigits: 0,
-                  locale: S.of(context).localeName,
                 )
               : entry.amount.abs().toStringAsFixed(0),
           outsideLabelStyleAccessorFn: (_, __) => charts.TextStyleSpec(

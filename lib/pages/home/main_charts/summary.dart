@@ -29,7 +29,6 @@ class SummaryChart extends StatelessWidget {
     final List<charts.Series<TimeSeriesChart, DateTime>> chartData =
         <charts.Series<TimeSeriesChart, DateTime>>[];
     final List<charts.TickSpec<DateTime>> ticks = <charts.TickSpec<DateTime>>[];
-    final List<DateTime> addedTicks = <DateTime>[];
 
     for (ChartDataSet e in data) {
       final List<TimeSeriesChart> accountData = <TimeSeriesChart>[];
@@ -38,15 +37,12 @@ class SummaryChart extends StatelessWidget {
       DateTime? prevDate;
       entries.forEach((String key, dynamic value) {
         final DateTime date = DateTime.parse(key);
-        DateTime? tickDate;
         if (prevDate != null && date.month != prevDate!.month) {
-          tickDate = DateTime(date.year, date.month, 1);
+          ticks.add(
+              charts.TickSpec<DateTime>(DateTime(date.year, date.month, 1)));
         } else if (prevDate != null && date.day >= 15 && prevDate!.day < 15) {
-          tickDate = DateTime(date.year, date.month, 15);
-        }
-        if (tickDate != null && !addedTicks.contains(tickDate)) {
-          ticks.add(charts.TickSpec<DateTime>(tickDate));
-          addedTicks.add(tickDate);
+          ticks.add(
+              charts.TickSpec<DateTime>(DateTime(date.year, date.month, 15)));
         }
         accountData.add(TimeSeriesChart(
           date,
@@ -90,10 +86,7 @@ class SummaryChart extends StatelessWidget {
         domainAxis: charts.DateTimeAxisSpec(
           tickFormatterSpec:
               charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
-            DateFormat(
-              DateFormat.ABBR_MONTH_DAY,
-              S.of(context).localeName,
-            ),
+            DateFormat(DateFormat.ABBR_MONTH_DAY),
           ),
           tickProviderSpec: charts.StaticDateTimeTickProviderSpec(ticks),
           renderSpec: charts.SmallTickRendererSpec<DateTime>(

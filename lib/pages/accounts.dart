@@ -208,9 +208,17 @@ class _AccountDetailsState extends State<AccountDetails>
                 break;
               case AccountTypeFilter.expense:
                 subtitle = account.attributes.iban ?? "";
+                // Switch sign, see #96
+                if (currentAmount != 0) {
+                  currentAmount *= -1;
+                }
                 break;
               case AccountTypeFilter.revenue:
                 subtitle = account.attributes.iban ?? "";
+                // Switch sign, see #96
+                if (currentAmount != 0) {
+                  currentAmount *= -1;
+                }
                 break;
               case AccountTypeFilter.liabilities:
                 switch (account.attributes.liabilityType) {
@@ -295,10 +303,7 @@ class _AccountDetailsState extends State<AccountDetails>
                     style: Theme.of(context).textTheme.bodyMedium,
                     children: <InlineSpan>[
                       TextSpan(
-                        text: currency.fmt(
-                          currentAmount,
-                          locale: S.of(context).localeName,
-                        ),
+                        text: currency.fmt(currentAmount),
                         style:
                             Theme.of(context).textTheme.titleMedium!.copyWith(
                           color:
@@ -312,10 +317,9 @@ class _AccountDetailsState extends State<AccountDetails>
                       const TextSpan(text: "\n"),
                       TextSpan(
                         text: account.attributes.currentBalanceDate != null
-                            ? DateFormat.yMd(S.of(context).localeName)
-                                .add_Hms()
-                                .format(account.attributes.currentBalanceDate!
-                                    .toLocal())
+                            ? DateFormat.yMd().add_Hms().format(account
+                                .attributes.currentBalanceDate!
+                                .toLocal())
                             : S.of(context).generalNever,
                       ),
                     ],

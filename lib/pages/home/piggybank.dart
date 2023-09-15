@@ -170,10 +170,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                       style: Theme.of(context).textTheme.bodyMedium,
                       children: <InlineSpan>[
                         TextSpan(
-                          text: currency.fmt(
-                            currentAmount,
-                            locale: S.of(context).localeName,
-                          ),
+                          text: currency.fmt(currentAmount),
                           style:
                               Theme.of(context).textTheme.titleMedium!.copyWith(
                             color:
@@ -191,10 +188,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                             ? TextSpan(
                                 text: S.of(context).numPercentOf(
                                       (piggy.attributes.percentage ?? 0) / 100,
-                                      currency.fmt(
-                                        targetAmount,
-                                        locale: S.of(context).localeName,
-                                      ),
+                                      currency.fmt(targetAmount),
                                     ))
                             : const TextSpan(),
                       ],
@@ -314,22 +308,13 @@ class _PiggyDetailsState extends State<PiggyDetails> {
     String infoText = "";
 
     if (targetAmount != 0) {
-      infoText += S.of(context).homePiggyTarget(currency.fmt(
-            targetAmount,
-            locale: S.of(context).localeName,
-          ));
+      infoText += S.of(context).homePiggyTarget(currency.fmt(targetAmount));
       infoText += "\n";
     }
-    infoText += S.of(context).homePiggySaved(currency.fmt(
-          currentAmount,
-          locale: S.of(context).localeName,
-        ));
+    infoText += S.of(context).homePiggySaved(currency.fmt(currentAmount));
     infoText += "\n";
     if (leftAmount != 0) {
-      infoText += S.of(context).homePiggyRemaining(currency.fmt(
-            leftAmount,
-            locale: S.of(context).localeName,
-          ));
+      infoText += S.of(context).homePiggyRemaining(currency.fmt(leftAmount));
       infoText += "\n";
     }
     if (startDate != null) {
@@ -367,6 +352,103 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                       child: Text(S.of(context).homeTransactionsEmpty),
                     );
                   }
+                  final List<charts.Series<TimeSeriesChart, DateTime>>
+                      chartData = <charts.Series<TimeSeriesChart, DateTime>>[];
+                  final List<charts.TickSpec<DateTime>> ticks =
+                      <charts.TickSpec<DateTime>>[];
+                  final List<TimeSeriesChart> data = <TimeSeriesChart>[];
+
+                  double total = 0;
+
+                  if (currentPiggy.attributes.startDate != null) {
+                    data.add(TimeSeriesChart(
+                      currentPiggy.attributes.startDate!,
+                      0,
+                    ));
+                    ticks.add(charts.TickSpec<DateTime>(
+                        currentPiggy.attributes.startDate!.toLocal()));
+                  }
+
+                  for (PiggyBankEventRead e in snapshot.data!) {
+                    final DateTime? date =
+                        e.attributes.createdAt ?? e.attributes.updatedAt;
+                    final double amount =
+                        double.tryParse(e.attributes.amount ?? "") ?? 0;
+                    if (date == null || amount == 0) {
+                      continue;
+                    }
+                    total += amount;
+                    data.add(TimeSeriesChart(date, total));
+                    ticks.add(charts.TickSpec<DateTime>(date.toLocal()));
+                  }
+                  chartData.add(
+                    charts.Series<TimeSeriesChart, DateTime>(
+                      id: currentPiggy.id,
+                      domainFn: (TimeSeriesChart d, _) => d.time.toLocal(),
+                      measureFn: (TimeSeriesChart d, _) => d.value,
+                      data: data,
+                    ),
+                  );
+
+                  final charts.TimeSeriesChart chart = charts.TimeSeriesChart(
+                    chartData,
+                    animate: true,
+                    primaryMeasureAxis: charts.NumericAxisSpec(
+                      tickProviderSpec:
+                          const charts.BasicNumericTickProviderSpec(
+                        //desiredTickCount: 6,
+                        desiredMaxTickCount: 6,
+                        desiredMinTickCount: 4,
+                        zeroBound: true,
+                      ),
+                      renderSpec: charts.SmallTickRendererSpec<num>(
+                        labelStyle: charts.TextStyleSpec(
+                          color: charts.ColorUtil.fromDartColor(
+                              Theme.of(context).colorScheme.onSurfaceVariant),
+                        ),
+                      ),
+                    ),
+                    domainAxis: charts.DateTimeAxisSpec(
+                      tickFormatterSpec:
+                          charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
+                        DateFormat(DateFormat.ABBR_MONTH_DAY),
+                      ),
+                      tickProviderSpec:
+                          const charts.AutoDateTimeTickProviderSpec(
+                              includeTime: false),
+                      renderSpec: charts.SmallTickRendererSpec<DateTime>(
+                        labelStyle: charts.TextStyleSpec(
+                          color: charts.ColorUtil.fromDartColor(
+                              Theme.of(context).colorScheme.onSurfaceVariant),
+                        ),
+                      ),
+                    ),
+                    defaultRenderer: charts.LineRendererConfig<DateTime>(
+                        includePoints: true),
+                    behaviors: targetAmount != 0
+                        ? <charts.ChartBehavior<DateTime>>[
+                            charts.RangeAnnotation<DateTime>(
+                              <charts.LineAnnotationSegment<num>>[
+                                charts.LineAnnotationSegment<num>(
+                                  targetAmount,
+                                  charts.RangeAnnotationAxisType.measure,
+                                  color: charts
+                                      .MaterialPalette.deepOrange.shadeDefault,
+                                  labelAnchor:
+                                      charts.AnnotationLabelAnchor.start,
+                                  startLabel: S.of(context).generalTarget,
+                                  labelStyleSpec: charts.TextStyleSpec(
+                                    color: charts.ColorUtil.fromDartColor(
+                                        Theme.of(context)
+                                            .colorScheme
+                                            .onSurfaceVariant),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ]
+                        : <charts.ChartBehavior<DateTime>>[],
+                  );
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -416,6 +498,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
               },
               child: const Icon(Icons.price_change_outlined),
             ),
+            const SizedBox(width: 12),
           ],
         ),
       ],
@@ -480,12 +563,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(S.of(context).homePiggySaved(
-                    currency.fmt(
-                      currentAmount,
-                      locale: S.of(context).localeName,
-                    ),
-                  )),
+              Text(S.of(context).homePiggySaved(currency.fmt(currentAmount))),
               const SizedBox(height: 16),
               Row(
                 children: <Widget>[
@@ -597,6 +675,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
               },
               child: Text(MaterialLocalizations.of(context).saveButtonLabel),
             ),
+            const SizedBox(width: 12),
           ],
         ),
       ],

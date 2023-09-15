@@ -1,0 +1,3 @@
+- Material You Dynamic Color Support
+- French Translation
+- Bugfixes

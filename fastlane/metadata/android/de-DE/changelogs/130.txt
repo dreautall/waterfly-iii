@@ -1,0 +1,7 @@
+- Mindestens Firefly v6.0.0 wird benötigt!
+- Neue Übersetzungen - vielen Dank an alle Unterstützer!
+  - Spanish, Italian, Chinese, Romanian
+- Anhänge können jetzt beim Erstellen einer Transaktion hinzugefügt werden
+- Verbessertes Verhalten der App nach dem Hinzufügen einer Transaktion über die Benachrichtigung
+- Bestätigungs-Fenster beim Logout
+- Fehlerbehebungen

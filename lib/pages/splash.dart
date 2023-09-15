@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:quick_actions/quick_actions.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
@@ -88,6 +89,15 @@ class _SplashPageState extends State<SplashPage> {
         alignment: const Alignment(0, 0),
         child: const CircularProgressIndicator(),
       );
+      const QuickActions().setShortcutItems(
+        <ShortcutItem>[
+          ShortcutItem(
+            type: "action_transaction_add",
+            localizedTitle: S.of(context).transactionTitleAdd,
+            icon: "action_icon_add",
+          ),
+        ],
+      );
     } else {
       log.finer(() => "_loginError available --> show error");
       bool showCertButton = false;
@@ -98,12 +108,21 @@ class _SplashPageState extends State<SplashPage> {
           case AuthErrorHost:
           case AuthErrorApiKey:
           case AuthErrorNoInstance:
+          case AuthErrorVersionInvalid:
             AuthError errorType = _loginError as AuthError;
             return errorType.cause;
           case AuthErrorStatusCode:
             AuthErrorStatusCode errorType = _loginError as AuthErrorStatusCode;
             errorDetails += "\n";
             errorDetails += S.of(context).errorStatusCode(errorType.code);
+            return errorType.cause;
+          case AuthErrorVersionTooLow:
+            AuthErrorVersionTooLow errorType =
+                _loginError as AuthErrorVersionTooLow;
+            errorDetails += "\n";
+            errorDetails += S
+                .of(context)
+                .errorMinAPIVersion(errorType.requiredVersion.toString());
             return errorType.cause;
           case HandshakeException:
             showCertButton = true;
@@ -250,7 +269,7 @@ class SSLCertDialog extends StatelessWidget {
             Navigator.of(context).pop();
           },
         ),
-        TextButton(
+        FilledButton(
           child: Text(MaterialLocalizations.of(context).saveButtonLabel),
           onPressed: () {
             Navigator.of(context).pop(textController.text);

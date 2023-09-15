@@ -1,0 +1,7 @@
+- Minimum Firefly v6.0.0 required for this release - a check is done on startup!
+- New Translations - thank you to all contributors!
+  - Spanish, Italian, Chinese, Romanian
+- Allow to add attachments during transaction creation
+- Improvements to app behavior after a transaction is added from a notification
+- Confirmation window for logout
+- Bugfixes

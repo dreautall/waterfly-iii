@@ -205,7 +205,7 @@ class _TagDialogState extends State<TagDialog> {
             Navigator.pop(context);
           },
         ),
-        TextButton(
+        FilledButton(
           child: Text(MaterialLocalizations.of(context).saveButtonLabel),
           onPressed: () {
             Navigator.pop(context, _newSelectedTags);

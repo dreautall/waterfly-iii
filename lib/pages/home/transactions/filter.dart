@@ -204,7 +204,7 @@ class FilterDialog extends StatelessWidget {
           },
         ),
         OutlinedButton(
-          child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
+          child: Text(S.of(context).generalReset),
           onPressed: () {
             filters.reset();
             Navigator.of(context).pop(true);
@@ -371,10 +371,14 @@ class FilterDialog extends StatelessWidget {
                         id: "-1",
                         type: "dummy",
                         attributes: Category(
-                          name: "<No Category set>",
+                          name: S
+                              .of(context)
+                              .homeTransactionsDialogFilterCategoryUnset,
                         ),
                       ),
-                      label: "<No Category set>",
+                      label: S
+                          .of(context)
+                          .homeTransactionsDialogFilterCategoryUnset,
                     ),
                   ];
                   CategoryRead? currentCategory = categoryOptions.first.value;
@@ -429,10 +433,13 @@ class FilterDialog extends StatelessWidget {
                         id: "-1",
                         type: "dummy",
                         attributes: Budget(
-                          name: "<No Budget set>",
+                          name: S
+                              .of(context)
+                              .homeTransactionsDialogFilterBudgetUnset,
                         ),
                       ),
-                      label: "<No Budget set>",
+                      label:
+                          S.of(context).homeTransactionsDialogFilterBudgetUnset,
                     ),
                   ];
                   BudgetRead? currentBudget = budgetOptions.first.value;
@@ -479,10 +486,12 @@ class FilterDialog extends StatelessWidget {
                           date: DateTime.now(),
                           repeatFreq:
                               BillRepeatFrequency.swaggerGeneratedUnknown,
-                          name: "<All Bills>",
+                          name: S
+                              .of(context)
+                              .homeTransactionsDialogFilterBillsAll,
                         ),
                       ),
-                      label: "<All Bills>",
+                      label: S.of(context).homeTransactionsDialogFilterBillsAll,
                     ),
                     DropdownMenuEntry<BillRead>(
                       value: BillRead(
@@ -494,10 +503,13 @@ class FilterDialog extends StatelessWidget {
                           date: DateTime.now(),
                           repeatFreq:
                               BillRepeatFrequency.swaggerGeneratedUnknown,
-                          name: "<No Bill set>",
+                          name: S
+                              .of(context)
+                              .homeTransactionsDialogFilterBillUnset,
                         ),
                       ),
-                      label: "<No Bill set>",
+                      label:
+                          S.of(context).homeTransactionsDialogFilterBillUnset,
                     ),
                   ];
                   BillRead? currentBill = billOptions.first.value;
@@ -517,7 +529,7 @@ class FilterDialog extends StatelessWidget {
                     DropdownMenu<BillRead>(
                       initialSelection: currentBill,
                       leadingIcon: const Icon(Icons.calendar_today),
-                      label: Text("Bill"),
+                      label: Text(S.of(context).generalBill),
                       dropdownMenuEntries: billOptions,
                       onSelected: (BillRead? bill) {
                         if ((bill?.id ?? "0") == "0") {

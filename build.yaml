@@ -13,6 +13,3 @@ targets:
           separate_models: true
           override_equals_and_hashcode: false
           include_if_null: false
-#      json_serializable:
-#        generate_for:
-#          - "lib/swagger_fireflyiii_api/firefly_iii.models.swagger.dart"

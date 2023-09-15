@@ -124,11 +124,19 @@ class _HomeTransactionsState extends State<HomeTransactions>
           query = "currency_is:${_filters.currency!.attributes.code} $query";
         }
         if (_filters.category != null) {
-          query =
-              "category_is:\"${_filters.category!.attributes.name}\" $query";
+          if (_filters.category!.id == "-1") {
+            query = "has_no_category:true $query";
+          } else {
+            query =
+                "category_is:\"${_filters.category!.attributes.name}\" $query";
+          }
         }
         if (_filters.budget != null) {
-          query = "budget_is:\"${_filters.budget!.attributes.name}\" $query";
+          if (_filters.budget!.id == "-1") {
+            query = "has_no_budget:true $query";
+          } else {
+            query = "budget_is:\"${_filters.budget!.attributes.name}\" $query";
+          }
         }
         log.fine(() => "Search query: $query");
         searchFunc = api.v1SearchTransactionsGet(

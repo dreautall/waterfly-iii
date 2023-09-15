@@ -231,7 +231,7 @@ class FilterDialog extends StatelessWidget {
                       ),
                       label:
                           S.of(context).homeTransactionsDialogFilterAccountsAll,
-                    )
+                    ),
                   ];
                   AccountRead? currentAccount = accountOptions.first.value;
                   for (AccountRead e in snapshot.data!.accounts) {
@@ -279,7 +279,7 @@ class FilterDialog extends StatelessWidget {
                       label: S
                           .of(context)
                           .homeTransactionsDialogFilterCurrenciesAll,
-                    )
+                    ),
                   ];
                   CurrencyRead? currentCurrency = currencyOptions.first.value;
                   for (CurrencyRead e in snapshot.data!.currencies) {
@@ -325,7 +325,17 @@ class FilterDialog extends StatelessWidget {
                       label: S
                           .of(context)
                           .homeTransactionsDialogFilterCategoriesAll,
-                    )
+                    ),
+                    DropdownMenuEntry<CategoryRead>(
+                      value: CategoryRead(
+                        id: "-1",
+                        type: "dummy",
+                        attributes: Category(
+                          name: "<No Category set>",
+                        ),
+                      ),
+                      label: "<No Category set>",
+                    ),
                   ];
                   CategoryRead? currentCategory = categoryOptions.first.value;
                   for (CategoryRead e in snapshot.data!.categories) {
@@ -370,7 +380,17 @@ class FilterDialog extends StatelessWidget {
                       ),
                       label:
                           S.of(context).homeTransactionsDialogFilterBudgetsAll,
-                    )
+                    ),
+                    DropdownMenuEntry<BudgetRead>(
+                      value: BudgetRead(
+                        id: "-1",
+                        type: "dummy",
+                        attributes: Budget(
+                          name: "<No Budget set>",
+                        ),
+                      ),
+                      label: "<No Budget set>",
+                    ),
                   ];
                   BudgetRead? currentBudget = budgetOptions.first.value;
                   for (BudgetRead e in snapshot.data!.budgets) {

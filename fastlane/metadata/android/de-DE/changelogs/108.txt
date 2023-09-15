@@ -1,0 +1,3 @@
+- Dynamische Farben (Material You) werden jetzt unterstützt
+- Französische Übersetzung
+- Fehlerbehebungen

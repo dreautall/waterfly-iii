@@ -2,6 +2,7 @@ arb-dir: lib/l10n
 template-arb-file: app_en.arb
 output-localization-file: app_localizations.dart
 nullable-getter: false
+required-resource-attributes: true
 untranslated-messages-file: build/l10n_untranslated.json
 output-class: S
 format: true

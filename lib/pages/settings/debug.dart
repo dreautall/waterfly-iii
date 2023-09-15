@@ -25,14 +25,14 @@ class DebugDialog extends StatelessWidget {
           child: Text(S.of(context).settingsDialogDebugInfo),
         ),
         SwitchListTile(
-          value: context.watch<SettingsProvider>().debug,
+          value: context.select((SettingsProvider s) => s.debug),
           onChanged: (bool value) =>
               context.read<SettingsProvider>().setDebug(value),
           title: Text(S.of(context).settingsDialogDebugTitle),
           secondary: const Icon(Icons.bug_report),
         ),
         ListTile(
-          enabled: context.watch<SettingsProvider>().debug,
+          enabled: context.select((SettingsProvider s) => s.debug),
           isThreeLine: false,
           leading: const Icon(Icons.send),
           title: Text(S.of(context).settingsDialogDebugSendButton),

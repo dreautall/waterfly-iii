@@ -51,6 +51,29 @@
       }
     }
   },
+  "cameraErrorDenied": "You have denied camera access.",
+  "@cameraErrorDenied": {
+    "description": "Error shown when camera permission is denied."
+  },
+  "cameraErrorGeneric": "Camera Error: {description}",
+  "@cameraErrorGeneric": {
+    "description": "Generic Camera Error",
+    "placeholders": {
+      "description": {
+        "type": "String"
+      }
+    }
+  },
+  "cameraErrorInitialize": "Cannot initialize Camera: {description}",
+  "@cameraErrorInitialize": {
+    "description": "Error shown when camera cannot be initialized",
+    "placeholders": {
+      "description": {
+        "type": "String",
+        "example": "No camera found."
+      }
+    }
+  },
   "catOther": "Other",
   "@catOther": {
     "description": "Category description for summary category 'Other'"
@@ -81,12 +104,23 @@
   "@errorInvalidURL": {
     "description": "Error: URL is invalid"
   },
+  "errorMinAPIVersion": "Minimum Firefly API Version v{requiredVersion} required. Please upgrade.",
+  "@errorMinAPIVersion": {
+    "description": "Error: Required API version not met.",
+    "placeholders": {
+      "requiredVersion": {
+        "type": "String",
+        "example": "2.0.0"
+      }
+    }
+  },
   "errorStatusCode": "Status Code: {code}",
   "@errorStatusCode": {
     "description": "HTTP status code information on error",
     "placeholders": {
       "code": {
-        "type": "int"
+        "type": "int",
+        "example": "500"
       }
     }
   },
@@ -142,11 +176,15 @@
         "format": "yMd",
         "example": "2023-05-13"
       }
-    }
+    },
+  },
+  "generalBill": "Bill",
+  "@generalBill": {
+    "description": "Bill"
   },
   "generalBudget": "Budget",
   "@generalBudget": {
-    "description": "(Monetary) Budget)"
+    "description": "(Monetary) Budget"
   },
   "generalCategory": "Category",
   "@generalCategory": {
@@ -183,6 +221,14 @@
   "generalNever": "never",
   "@generalNever": {
     "description": "Has never happened, no update etc."
+  },
+  "generalReconcile": "Reconciled",
+  "@generalReconcile": {
+    "description": "Booking has been confirmed/reconciled"
+  },
+  "generalReset": "Reset",
+  "@generalReset": {
+    "description": "Reset something (i.e. set filters)"
   },
   "generalSum": "Sum",
   "@generalSum": {
@@ -356,13 +402,29 @@
   "@homeTransactionsDialogFilterAccountsAll": {
     "description": "Don't filter for a specific account (default entry)"
   },
+  "homeTransactionsDialogFilterBillsAll": "<All Bills>",
+  "@homeTransactionsDialogFilterBillsAll": {
+    "description": "Don't filter for a specific bill (default entry)"
+  },
+  "homeTransactionsDialogFilterBillUnset": "<No Bill set>",
+  "@homeTransactionsDialogFilterBillUnset": {
+    "description": "Filter for unset bills"
+  },
   "homeTransactionsDialogFilterBudgetsAll": "<All Budgets>",
   "@homeTransactionsDialogFilterBudgetsAll": {
     "description": "Don't filter for a specific budget (default entry)"
   },
+  "homeTransactionsDialogFilterBudgetUnset": "<No Budget set>",
+  "@homeTransactionsDialogFilterBudgetUnset": {
+    "description": "Filter for unset budgets"
+  },
   "homeTransactionsDialogFilterCategoriesAll": "<All Categories>",
   "@homeTransactionsDialogFilterCategoriesAll": {
     "description": "Don't filter for a specific category (default entry)"
+  },
+  "homeTransactionsDialogFilterCategoryUnset": "<No Category set>",
+  "@homeTransactionsDialogFilterCategoryUnset": {
+    "description": "Filter for unset categories"
   },
   "homeTransactionsDialogFilterCurrenciesAll": "<All Currencies>",
   "@homeTransactionsDialogFilterCurrenciesAll": {
@@ -425,6 +487,10 @@
   "loginWelcome": "Welcome to Waterfly III",
   "@loginWelcome": {
     "description": "Login screen welcome banner"
+  },
+  "logoutConfirmation": "Are you sure you want to log out?",
+  "@logoutConfirmation": {
+    "description": "Get user confirmation if he really wants to log out"
   },
   "navigationAccounts": "Accounts",
   "@navigationAccounts": {
@@ -498,6 +564,18 @@
   "settingsLanguage": "Language",
   "@settingsLanguage": {
     "description": "Currently selected language"
+  },
+  "settingsLockscreen": "Lockscreen",
+  "@settingsLockscreen": {
+    "description": "Setting if a lockscreen is shown (authentication is required on startup)"
+  },
+  "settingsLockscreenHelp": "Require authenticiation on app startup",
+  "@settingsLockscreenHelp": {
+    "description": "Description for lockscreen setting"
+  },
+  "settingsLockscreenInitial": "Please authenticate to enable the lock screen.",
+  "@settingsLockscreenInitial": {
+    "description": "Prompt to authenticate once to set up the lockscreen"
   },
   "settingsNLAppAccount": "Default Account",
   "@settingsNLAppAccount": {
@@ -574,6 +652,10 @@
   "@settingsTheme": {
     "description": "App theme (dark or light)"
   },
+  "settingsThemeDynamicColors": "Dynamic Colors",
+  "@settingsThemeDynamicColors": {
+    "description": "Material You Dynamic Colors feature"
+  },
   "settingsThemeValue": "{theme, select, dark{Dark Mode} light{Light Mode} other{System Default}}",
   "@settingsThemeValue": {
     "description": "Currently selected theme (either dark, light or system)",
@@ -588,7 +670,7 @@
   "@settingsVersion": {
     "description": "Current App Version"
   },
-  "settingsVersionChecking": "checking...",
+  "settingsVersionChecking": "checking…",
   "@settingsVersionChecking": {
     "description": "Shown while checking for app version"
   },
@@ -641,6 +723,14 @@
   "transactionDialogAttachmentsTitle": "Attachments",
   "@transactionDialogAttachmentsTitle": {
     "description": "Dialog Title: Attachments Dialog"
+  },
+  "transactionDialogBillNoBill": "No bill",
+  "@transactionDialogBillNoBill": {
+    "description": "Button Label: no bill to be used"
+  },
+  "transactionDialogBillTitle": "Link to Bill",
+  "@transactionDialogBillTitle": {
+    "description": "Dialog Title: Link Bill to transaction"
   },
   "transactionDialogCurrencyTitle": "Select currency",
   "@transactionDialogCurrencyTitle": {

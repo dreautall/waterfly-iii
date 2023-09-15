@@ -1,0 +1,2111 @@
+openapi: 3.0.0
+servers:
+  - description: Firefly III demo site
+    url: https://demo.firefly-iii.org/api
+info:
+  title: Firefly III API v2.0.7
+  description: |
+    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2023-09-01T17:55:04+00:00
+  version: "2.0.7"
+  contact:
+    name: James Cole
+    email: james@firefly-iii.org
+    url: https://firefly-iii.org
+  license:
+    name: AGPLv3
+    url: 'https://www.gnu.org/licenses/agpl-3.0.en.html'
+tags:
+- name: accounts
+  description: Endpoints that deliver all of the user&#039;s asset, expense and other accounts
+    (and the metadata) together with related transactions, piggy banks and other objects.
+    Also delivers endpoints for CRUD operations for accounts.
+- name: budgets
+  description: Endpoints to manage a user&#039;s budgets and get info on the related objects,
+    like limits.
+- name: charts
+  description: The &quot;charts&quot; endpoints deliver optimised data for charts and graphs.
+- name: net-worth
+  description: Shows you the net worth of the current user.
+- name: preferences
+  description: These endpoints can be used to manage the user&#039;s preferences, including
+    some hidden ones.
+- name: transactions-sum
+  description: Endpoints to sum transactions based on various properties.
+
+paths:
+  /v2/chart/account/dashboard:
+    get:
+      tags:
+        - charts
+      summary: Dashboard chart with asset account balance information.
+      description: |
+        This endpoint returns the data required to generate a chart with basic asset account balance information. By default it contains the users frontpage accounts OR all the user's asset accounts if this preference is empty.
+      operationId: getChartAccountOverview
+      parameters:
+        - name: X-Trace-Id
+          in: header
+          description: Unique identifier associated with this request.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: start
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: end
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthenticated'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        500:
+          description: Internal exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalException'
+        200:
+          description: Chart information. Check out the model for more details. Each main entry is a set of data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChartLineV2'
+  /v2/chart/balance/balance:
+    get:
+      tags:
+        - charts
+      summary: A chart that contains spent/earned amounts
+      description: |
+        The chart contains spent/earned amounts for the given date range, grouped by the given period, and collected for the given accounts.
+      operationId: getBalanceChart
+      parameters:
+        - name: X-Trace-Id
+          in: header
+          description: Unique identifier associated with this request.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: start
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: end
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: accounts[]
+          description: |
+            An array of accounts that should be included. Example: accounts[]=1&accounts[]=2
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int32
+        - in: query
+          name: period
+          description: The period by which the results must be grouped.
+          required: true
+          schema:
+            $ref: '#/components/schemas/PeriodProperty'
+      responses:
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthenticated'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        500:
+          description: Internal exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalException'
+        200:
+          description: Chart information. Check out the model for more details. Each main entry is a set of data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChartLineV2'
+  /v2/accounts/{id}/transactions:
+    get:
+      tags:
+        - accounts
+      summary: List all transactions related to the account.
+      description: |
+        This endpoint returns a list of all the transactions connected to the account.
+      operationId: listTransactionByAccount
+      parameters:
+        - name: X-Trace-Id
+          in: header
+          description: Unique identifier associated with this request.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
+            format: int32
+            example: 1
+  
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: "123"
+          description: The ID of the account.
+        - in: query
+          name: limit
+          description: Limits the number of results on one page.
+          required: false
+          schema:
+            type: integer
+            example: 5
+        - in: query
+          name: start
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: false
+          schema:
+            type: string
+            format: date
+            example: "2018-09-17"
+        - in: query
+          name: end
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: false
+          schema:
+            type: string
+            format: date
+            example: "2018-09-17"
+        - in: query
+          name: type
+          description: Optional filter on the transaction type(s) returned.
+          required: false
+          schema:
+            $ref: '#/components/schemas/TransactionTypeFilter'
+      responses:
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthenticated'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        500:
+          description: Internal exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalException'
+        422:
+          description: 'Validation error. The body will have the exact details.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        200:
+          description: A list of transactions
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/TransactionArray'
+  /v2/bills/sum/paid:
+    get:
+      tags:
+        - transactions-sum
+      operationId: getBillsPaidTrSum
+      summary: Returns the sum of the bills already paid in the period indicated.
+      parameters:
+        - name: X-Trace-Id
+          in: header
+          description: Unique identifier associated with this request.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: start
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: end
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+      description: |
+        This endpoint sums up (by currency) the transactions linked to bills paid in the given period.
+      responses:
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthenticated'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        500:
+          description: Internal exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalException'
+        422:
+          description: 'Validation error. The body will have the exact details.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        200:
+          description: An array of sums.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionSumArray'
+  /v2/bills/sum/unpaid:
+    get:
+      tags:
+        - transactions-sum
+      operationId: getBillsUnpaidTrSum
+      summary: Returns the sum of the bills not yet paid in the period indicated.
+      parameters:
+        - name: X-Trace-Id
+          in: header
+          description: Unique identifier associated with this request.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: start
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: end
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+      description: |
+        This endpoint sums up (by currency) the transactions linked to bills unpaid in the given period.
+      responses:
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthenticated'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        500:
+          description: Internal exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalException'
+        422:
+          description: 'Validation error. The body will have the exact details.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        200:
+          description: An array of sums.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionSumArray'
+  /v2/budgets:
+    get:
+      summary: List all budgets.
+      description: List all the budgets the user has made.
+      operationId: listBudgets
+      tags:
+        - budgets
+      parameters:
+        - name: X-Trace-Id
+          in: header
+          description: Unique identifier associated with this request.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
+      responses:
+        200:
+          description: A list of budgets.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/BudgetV2Array'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthenticated'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        500:
+          description: Internal exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalException'
+  /v2/budgets/{id}/limits:
+    get:
+      operationId: listBudgetLimitByBudget
+      description: |
+        Get all budget limits for this budget.
+      summary: Get all limits for a budget.
+      tags:
+        - budgets
+      parameters:
+        - name: X-Trace-Id
+          in: header
+          description: Unique identifier associated with this request.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: start
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: end
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: "123"
+          description: The ID of the requested budget.
+      responses:
+        200:
+          description: A list of budget limits applicable to this budget.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/BudgetLimitV2Array'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthenticated'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        500:
+          description: Internal exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalException'
+  /v2/budgets/{id}/budgeted:
+    get:
+      tags:
+        - budgets
+      operationId: getBudgetedForBudget
+      summary: Returns the budgeted amount for the given budget in the given period.
+      description: |
+        Returns the budgeted amount for the given budget in the given period.
+      parameters:
+        - name: X-Trace-Id
+          in: header
+          description: Unique identifier associated with this request.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: start
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: end
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
+            format: int32
+            example: 1
+  
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: "123"
+          description: The ID of the budget.
+      responses:
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthenticated'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        500:
+          description: Internal exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalException'
+        422:
+          description: 'Validation error. The body will have the exact details.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        200:
+          description: An array of sums.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionSumArray'
+  /v2/budgets/{id}/spent:
+    get:
+      tags:
+        - budgets
+      operationId: getSpentForBudget
+      summary: Returns the spent amount for the given budget in the given period.
+      description: |
+        Returns the spent amount for the given budget in the given period.
+      parameters:
+        - name: X-Trace-Id
+          in: header
+          description: Unique identifier associated with this request.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: start
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: end
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
+            format: int32
+            example: 1
+  
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: "123"
+          description: The ID of the budget.
+      responses:
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthenticated'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        500:
+          description: Internal exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalException'
+        422:
+          description: 'Validation error. The body will have the exact details.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        200:
+          description: An array of sums.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionSumArray'
+  /v2/budgets/sum/budgeted:
+    get:
+      tags:
+        - budgets
+      operationId: getBudgetedForBudgets
+      summary: Returns the budgeted amount for all budgets in the given period.
+      description: |
+        Returns the budgeted amount for all budgets in the given period.
+      parameters:
+        - name: X-Trace-Id
+          in: header
+          description: Unique identifier associated with this request.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: start
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: end
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
+            format: int32
+            example: 1
+  
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: "123"
+          description: The ID of the budget.
+      responses:
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthenticated'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        500:
+          description: Internal exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalException'
+        422:
+          description: 'Validation error. The body will have the exact details.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        200:
+          description: An array of sums.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionSumArray'
+  /v2/budgets/sum/spent:
+    get:
+      tags:
+        - budgets
+      operationId: getSpentForBudgets
+      summary: Returns the spent amount for all budgets in the given period.
+      description: |
+        Returns the spent amount for all budgets in the given period.
+      parameters:
+        - name: X-Trace-Id
+          in: header
+          description: Unique identifier associated with this request.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: start
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: end
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
+            format: int32
+            example: 1
+  
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: "123"
+          description: The ID of the budget.
+      responses:
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthenticated'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        500:
+          description: Internal exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalException'
+        422:
+          description: 'Validation error. The body will have the exact details.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        200:
+          description: An array of sums.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionSumArray'
+  /v2/preferences/{name}:
+    get:
+      summary: Return a single preference.
+      description: Return a single preference and the value.
+      operationId: getPreference
+      parameters:
+        - name: X-Trace-Id
+          in: header
+          description: Unique identifier associated with this request.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+            format: string
+            example: currencyPreference
+          description: The name of the preference.
+      tags:
+        - preferences
+      responses:
+        200:
+          description: A single preference.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSingle'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthenticated'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        500:
+          description: Internal exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalException'
+  /v2/net-worth:
+    get:
+      tags:
+        - net-worth
+      summary: Shows the net worth
+      description: |
+        Shows a multi-currency overview of the user's net worth.
+      operationId: getNetWorth
+      parameters:
+        - name: X-Trace-Id
+          in: header
+          description: Unique identifier associated with this request.
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: date
+          description: |
+            A date formatted YYYY-MM-DD.
+          required: true
+          schema:
+            type: string
+            format: date
+  
+      responses:
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthenticated'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        500:
+          description: Internal exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalException'
+        422:
+          description: 'Validation error. The body will have the exact details.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        200:
+          description: An array of net worths.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionSumArray'
+components:
+  schemas:
+    TransactionSum:
+      type: object
+      properties:
+        id:
+          type: string
+          format: string
+          example: "12"
+          description: "ID of the currency of this sum."
+        name:
+          type: string
+          format: string
+          example: "Euro"
+          description: "Currency name associated with this sum."
+        symbol:
+          type: string
+          format: string
+          example: "$"
+          description: "Currency symbol associated with this sum."
+        code:
+          type: string
+          format: string
+          example: "EUR"
+          description: "Currency code associated with this sum."
+        decimal_places:
+          type: integer
+          format: int32
+          example: 2
+          description: "Number of decimal places for the currency associated with this sum."
+        sum:
+          type: string
+          format: string
+          example: "12.34"
+          description: "Sum as a string. Can also be negative"
+        converted:
+          type: boolean
+          format: boolean
+          example: false
+          description: "Indicates if this sum was converted to the user's native (default) currency. When false, the native_* fields will still be present and filled."
+        native_sum:
+          type: string
+          format: string
+          example: "12.34"
+          description: "Sum as a string, expressed in the user's native (default) currency. Can also be negative"
+        native_id:
+          type: string
+          format: string
+          example: "1"
+          description: "The ID of the user's native (default) currency."
+        native_name:
+          type: string
+          format: string
+          example: "US Dollar"
+          description: "The name of the user's native (default) currency"
+        native_symbol:
+          type: string
+          format: string
+          example: "$"
+          description: "Currency symbol associated with this amount."
+        native_code:
+          type: string
+          format: string
+          example: "EUR"
+          description: "The currency code of the user's native (default) currency."
+        native_decimal_places:
+          type: integer
+          format: int32
+          example: 2
+          description: "Number of decimal places for this currency."
+    TransactionSumArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/TransactionSum'
+    BudgetLimitV2:
+      type: object
+      required:
+        - amount
+        - start
+        - end
+        - budget_id
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
+          readOnly: true
+        start:
+          type: string
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
+          description: Start date of the budget limit.
+        end:
+          type: string
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
+          description: End date of the budget limit.
+        currency_id:
+          type: string
+          format: string
+          example: "5"
+          description: Use either currency_id or currency_code. Defaults to the user's default currency.
+        currency_code:
+          type: string
+          format: string
+          example: EUR
+          description: Use either currency_id or currency_code. Defaults to the user's default currency.
+        currency_name:
+          type: string
+          format: string
+          example: "Euro"
+          readOnly: true
+        currency_symbol:
+          type: string
+          format: string
+          example: "$"
+          readOnly: true
+        currency_decimal_places:
+          type: integer
+          format: int32
+          example: 2
+          readOnly: true
+        budget_id:
+          type: string
+          format: string
+          example: "23"
+          description: The budget ID of the associated budget.
+          readOnly: true
+        period:
+          type: string
+          format: string
+          example: "monthly"
+          nullable: true
+          readOnly: true
+          description: Period of the budget limit. Only used when auto-generated by auto-budget.
+        amount:
+          type: string
+          format: amount
+          example: "123.45"
+    BudgetLimitV2Array:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BudgetLimitReadV2'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    BudgetLimitReadV2:
+      type: object
+      required:
+        - type
+        - id
+        - attributes
+      properties:
+        type:
+          type: string
+          format: string
+          example: "budget_limits"
+          description: "Immutable value"
+        id:
+          type: string
+          format: string
+          example: "2"
+        attributes:
+          $ref: '#/components/schemas/BudgetLimitV2'
+    BudgetV2:
+      type: object
+      required:
+        - name
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
+          readOnly: true
+        name:
+          type: string
+          format: string
+          example: "Bills"
+        active:
+          type: boolean
+          format: boolean
+          example: false
+        order:
+          type: integer
+          format: int32
+          example: 5
+          readOnly: true
+    BudgetV2Array:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BudgetV2Read'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    BudgetV2Read:
+      type: object
+      required:
+        - type
+        - id
+        - attributes
+      properties:
+        type:
+          type: string
+          format: string
+          example: "budgets"
+          description: "Immutable value"
+        id:
+          type: string
+          format: string
+          example: "2"
+        attributes:
+          $ref: '#/components/schemas/BudgetV2'
+    ChartDataPointV2:
+      type: object
+      properties:
+        key:
+          type: string
+          format: string
+          example: "value"
+          description: "The key is the label of the value, so for example: '2018-01-01' => 13 or 'Groceries' => -123. For date-related charts, this is always a Atom date."
+    ChartDataSetV2:
+      type: object
+      properties:
+        label:
+          type: string
+          format: string
+          example: "earned-EUR"
+          description: "This is the label of the current data-set. It can refer to an object by name, or a collected set of data."
+        currency_id:
+          type: string
+          format: string
+          example: "5"
+          description: "The currency ID of the currency associated to the data in the entries."
+        currency_code:
+          type: string
+          format: string
+          example: "EUR"
+        currency_symbol:
+          type: string
+          format: string
+          example: "$"
+        currency_decimal_places:
+          type: integer
+          format: int32
+          example: 2
+          description: "Number of decimals for the currency associated to the data in the entries."
+        native_id:
+          type: string
+          format: string
+          example: "5"
+          description: "The currency ID of the user's native (default) currency."
+        native_code:
+          type: string
+          format: string
+          example: "EUR"
+          description: "The currency code of the user's native (default) currency."
+        native_symbol:
+          type: string
+          format: string
+          example: "$"
+          description: "The currency symbol of the user's native (default) currency."
+        native_decimal_places:
+          type: integer
+          format: int32
+          example: 2
+          description: "Number of decimals for the native (default) currency of the user."
+        start:
+          type: string
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
+          description: "Holds the date and time of start of the range of data collected. It could be there was no data for this point in time, but this is the start of the requested range."
+        end:
+          type: string
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
+          description: "Holds the date and time of END of the range of data collected. It could be there was no data for this point in time, but this is the end of the requested range."
+        period:
+          $ref: '#/components/schemas/ChartV2PeriodProperty'
+        entries:
+          type: object
+          description: "The actual entries for this data set. They 'key' value is the label for the data point. The value is the actual (numerical) value."
+          items:
+            $ref: '#/components/schemas/ChartDataPointV2'
+        native_entries:
+          type: object
+          description: "The entries for this data set converted to the user's native (default) currency. They 'key' value is the label for the data point. The value is the actual (numerical) value."
+          items:
+            $ref: '#/components/schemas/ChartDataPointV2'
+    ChartLineV2:
+      type: array
+      items:
+        $ref: '#/components/schemas/ChartDataSetV2'
+    ChartV2PeriodProperty:
+      type: string
+      format: string
+      example: "1M"
+      description: "This field denotes the period in which the chart data is split up. If the period is not relevant, because the chart is not time-based, it will be NULL."
+      nullable: true
+      enum:
+        - 1D
+        - 1W
+        - 1M
+        - 3M
+        - 6M
+        - 1Y
+    Preference:
+      type: object
+      required:
+        - name
+        - data
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
+          readOnly: true
+        name:
+          type: string
+          format: string
+          example: currencyPreference
+        data:
+          $ref: '#/components/schemas/PolymorphicProperty'
+          example: "EUR"
+          description: "The actual preference content."
+    PreferenceRead:
+      type: object
+      required:
+        - type
+        - id
+        - attributes
+      properties:
+        type:
+          type: string
+          format: string
+          example: "preferences"
+          description: "Immutable value"
+        id:
+          type: string
+          format: string
+          example: "2"
+        attributes:
+          $ref: '#/components/schemas/Preference'
+    PreferenceSingle:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          $ref: '#/components/schemas/PreferenceRead'
+    PeriodProperty:
+      type: string
+      enum:
+        - 1D
+        - 1W
+        - 1M
+        - 3M
+        - 6M
+        - 1Y
+    PolymorphicProperty:
+      oneOf:
+        - type: boolean
+        - type: string
+        - type: object
+        - type: array
+          items:
+            $ref: '#/components/schemas/StringArrayItem'
+    StringArrayItem:
+      type: string
+      format: string
+    TransactionArray:
+      type: object
+      required:
+        - data
+        - meta
+        - links
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionRead'
+        meta:
+          $ref: '#/components/schemas/Meta'
+        links:
+          $ref: '#/components/schemas/PageLink'
+    TransactionRead:
+      type: object
+      required:
+        - type
+        - id
+        - attributes
+        - links
+      properties:
+        type:
+          type: string
+          format: string
+          example: "transactions"
+          description: "Immutable value"
+        id:
+          type: string
+          format: string
+          example: "2"
+        attributes:
+          $ref: '#/components/schemas/Transaction'
+        links:
+          $ref: '#/components/schemas/ObjectLink'
+    Meta:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            total:
+              type: integer
+              example: 3
+            count:
+              type: integer
+              example: 20
+            per_page:
+              type: integer
+              example: 100
+            current_page:
+              type: integer
+              example: 1
+            total_pages:
+              type: integer
+              example: 1
+    ObjectLink:
+      type: object
+      properties:
+        self:
+          type: string
+          format: uri
+          example: "https://demo.firefly-iii.org/api/v1/OBJECTS/1"
+    PageLink:
+      type: object
+      properties:
+        self:
+          type: string
+          format: uri
+          example: "https://demo.firefly-iii.org/api/v1/OBJECT?&page=4"
+        first:
+          type: string
+          format: uri
+          example: "https://demo.firefly-iii.org/api/v1/OBJECT?&page=1"
+        next:
+          type: string
+          format: uri
+          example: "https://demo.firefly-iii.org/api/v1/OBJECT?&page=3"
+        prev:
+          type: string
+          format: uri
+          example: "https://demo.firefly-iii.org/api/v1/OBJECT?&page=2"
+        last:
+          type: string
+          format: uri
+          example: "https://demo.firefly-iii.org/api/v1/OBJECT?&page=12"
+    Transaction:
+      type: object
+      required:
+        - transactions
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
+          readOnly: true
+        user:
+          type: string
+          format: string
+          example: "3"
+          description: "User ID"
+          readOnly: true
+        group_title:
+          type: string
+          format: string
+          description: "Title of the transaction if it has been split in more than one piece. Empty otherwise."
+          example: "Split transaction title."
+          readOnly: false
+          nullable: true
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionSplit'
+    TransactionSplit:
+      type: object
+      required:
+        - amount
+        - source_id
+        - destination_id
+        - date
+        - description
+        - type
+      properties:
+        user:
+          type: string
+          format: string
+          example: "3"
+          description: "User ID"
+          readOnly: true
+        transaction_journal_id:
+          type: string
+          format: string
+          example: "10421"
+          description: |
+            ID of the underlying transaction journal. Each transaction consists of a transaction group (see the top ID) and one or more journals
+            making up the splits of the transaction.
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/TransactionTypeProperty'
+        date:
+          type: string
+          format: date-time
+          example: "2018-09-17T12:46:47+01:00"
+          description: "Date of the transaction"
+        order:
+          type: integer
+          format: int32
+          example: 0
+          nullable: true
+          description: "Order of this entry in the list of transactions."
+        currency_id:
+          type: string
+          format: string
+          example: "12"
+          nullable: true
+          description: Currency ID. Default is the source account's currency, or the user's default currency. Can be used instead of currency_code.
+        currency_code:
+          type: string
+          format: string
+          example: EUR
+          nullable: true
+          description: Currency code. Default is the source account's currency, or the user's default currency. Can be used instead of currency_id.
+        currency_symbol:
+          type: string
+          format: string
+          example: "$"
+          readOnly: true
+        currency_name:
+          type: string
+          format: string
+          example: "Euro"
+          readOnly: true
+        currency_decimal_places:
+          type: integer
+          format: int32
+          example: 2
+          description: Number of decimals used in this currency.
+          readOnly: true
+        foreign_currency_id:
+          type: string
+          format: string
+          example: "17"
+          nullable: true
+          description: Currency ID of the foreign currency. Default is null. Is required when you submit a foreign amount.
+        foreign_currency_code:
+          type: string
+          format: string
+          example: USD
+          description: Currency code of the foreign currency. Default is NULL. Can be used instead of the foreign_currency_id, but this or the ID is required when submitting a foreign amount.
+          nullable: true
+        foreign_currency_symbol:
+          type: string
+          format: string
+          example: "$"
+          nullable: true
+          readOnly: true
+        foreign_currency_decimal_places:
+          type: integer
+          format: int32
+          example: 2
+          description: Number of decimals in the currency
+          nullable: true
+          readOnly: true
+        amount:
+          type: string
+          format: amount
+          example: "123.45"
+          description: "Amount of the transaction."
+        foreign_amount:
+          type: string
+          format: amount
+          example: "123.45"
+          nullable: true
+          description: The amount in a foreign currency.
+        description:
+          type: string
+          format: string
+          example: "Vegetables"
+          description: "Description of the transaction."
+        source_id:
+          type: string
+          format: string
+          example: "2"
+          nullable: true
+          description: "ID of the source account. For a withdrawal or a transfer, this must always be an asset account. For deposits, this must be a revenue account."
+        source_name:
+          type: string
+          format: string
+          example: "Checking account"
+          nullable: true
+          description: "Name of the source account. For a withdrawal or a transfer, this must always be an asset account. For deposits, this must be a revenue account. Can be used instead of the source_id. If the transaction is a deposit, the source_name can be filled in freely: the account will be created based on the name."
+        source_iban:
+          type: string
+          format: string
+          example: "NL02ABNA0123456789"
+          nullable: true
+          readOnly: true
+        source_type:
+          $ref: '#/components/schemas/AccountTypeProperty'
+        destination_id:
+          type: string
+          format: string
+          example: "2"
+          nullable: true
+          description: "ID of the destination account. For a deposit or a transfer, this must always be an asset account. For withdrawals this must be an expense account."
+        destination_name:
+          type: string
+          format: string
+          example: "Buy and Large"
+          nullable: true
+          description: "Name of the destination account. You can submit the name instead of the ID. For everything except transfers, the account will be auto-generated if unknown, so submitting a name is enough."
+        destination_iban:
+          type: string
+          format: string
+          example: "NL02ABNA0123456789"
+          nullable: true
+          readOnly: true
+        destination_type:
+          $ref: '#/components/schemas/AccountTypeProperty'
+        budget_id:
+          type: string
+          format: string
+          nullable: true
+          example: "4"
+          description: The budget ID for this transaction.
+        budget_name:
+          type: string
+          format: string
+          example: Groceries
+          description: The name of the budget to be used. If the budget name is unknown, the ID will be used or the value will be ignored.
+          nullable: true
+          readOnly: true
+        category_id:
+          type: string
+          format: string
+          nullable: true
+          example: "43"
+          description: The category ID for this transaction.
+        category_name:
+          type: string
+          format: string
+          example: Groceries
+          nullable: true
+          description: "The name of the category to be used. If the category is unknown, it will be created. If the ID and the name point to different categories, the ID overrules the name."
+        bill_id:
+          type: string
+          format: string
+          nullable: true
+          example: "111"
+          description: Optional. Use either this or the bill_name
+        bill_name:
+          type: string
+          format: string
+          example: "Monthly rent"
+          nullable: true
+          description: Optional. Use either this or the bill_id
+        reconciled:
+          type: boolean
+          format: boolean
+          example: false
+          description: "If the transaction has been reconciled already. When you set this, the amount can no longer be edited by the user."
+        notes:
+          type: string
+          format: string
+          example: "Some example notes"
+          nullable: true
+        tags:
+          type: array
+          nullable: true
+          example:
+          description: Array of tags.
+          items:
+            type: string
+            format: string
+            description: Tag.
+            example: Barbecue preparation
+        internal_reference:
+          type: string
+          format: string
+          nullable: true
+          description: Reference to internal reference of other systems.
+        external_id:
+          type: string
+          nullable: true
+          format: string
+          description: Reference to external ID in other systems.
+        external_url:
+          type: string
+          format: string
+          nullable: true
+          description: External, custom URL for this transaction.
+        original_source:
+          type: string
+          nullable: true
+          format: string
+          description: System generated identifier for original creator of transaction.
+          readOnly: true
+        recurrence_id:
+          type: integer
+          nullable: true
+          format: int32
+          description: Reference to recurrence that made the transaction.
+          readOnly: true
+        recurrence_total:
+          type: integer
+          format: int32
+          example: 0
+          description: "Total number of transactions expected to be created by this recurrence repetition. Will be 0 if infinite."
+          readOnly: true
+          nullable: true
+        recurrence_count:
+          type: integer
+          format: int32
+          example: 12
+          description: "The # of the current transaction created under this recurrence."
+          readOnly: true
+          nullable: true
+        bunq_payment_id:
+          type: string
+          nullable: true
+          format: string
+          description: Internal ID of bunq transaction. DEPRECATED
+        import_hash_v2:
+          type: string
+          nullable: true
+          format: string
+          description: Hash value of original import transaction (for duplicate detection).
+          readOnly: true
+        sepa_cc:
+          type: string
+          format: string
+          nullable: true
+          description: SEPA Clearing Code
+        sepa_ct_op:
+          type: string
+          format: string
+          description: SEPA Opposing Account Identifier
+          nullable: true
+        sepa_ct_id:
+          type: string
+          format: string
+          nullable: true
+          description: SEPA end-to-end Identifier
+        sepa_db:
+          type: string
+          format: string
+          nullable: true
+          description: SEPA mandate identifier
+        sepa_country:
+          type: string
+          nullable: true
+          format: string
+          description: SEPA Country
+        sepa_ep:
+          type: string
+          nullable: true
+          format: string
+          description: SEPA External Purpose indicator
+        sepa_ci:
+          type: string
+          format: string
+          nullable: true
+          description: SEPA Creditor Identifier
+        sepa_batch_id:
+          type: string
+          format: string
+          nullable: true
+          description: SEPA Batch ID
+        interest_date:
+          type: string
+          format: date-time
+          nullable: true
+        book_date:
+          type: string
+          format: date-time
+          nullable: true
+        process_date:
+          type: string
+          format: date-time
+          nullable: true
+        due_date:
+          type: string
+          format: date-time
+          nullable: true
+        payment_date:
+          type: string
+          format: date-time
+          nullable: true
+        invoice_date:
+          type: string
+          format: date-time
+          nullable: true
+        latitude:
+          type: number
+          format: double
+          example: 51.983333
+          nullable: true
+          description: Latitude of the transaction's location, if applicable. Can be used to draw a map.
+        longitude:
+          type: number
+          format: double
+          example: 5.916667
+          nullable: true
+          description: Latitude of the transaction's location, if applicable. Can be used to draw a map.
+        zoom_level:
+          type: integer
+          format: int32
+          example: 6
+          nullable: true
+          description: "Zoom level for the map, if drawn. This to set the box right. Unfortunately this is a proprietary value because each map provider has different zoom levels."
+        has_attachments:
+          type: boolean
+          format: boolean
+          example: false
+          description: "If the transaction has attachments."
+    BadRequest:
+      type: object
+      properties:
+        message:
+          type: string
+          format: string
+          example: "Bad Request"
+        exception:
+          type: string
+          format: string
+          example: "BadRequestHttpException"
+    CreditCardType:
+      type: string
+      format: string
+      example: monthlyFull
+      description: "Mandatory when the account_role is ccAsset. Can only be monthlyFull or null."
+      nullable: true
+      enum:
+        - monthlyFull
+        - null
+    InterestPeriod:
+      type: string
+      format: string
+      example: monthly
+      description: "Mandatory when type is liability. Period over which the interest is calculated."
+      nullable: true
+      enum:
+        - weekly
+        - monthly
+        - quarterly
+        - half-year
+        - yearly
+        - null
+    InternalException:
+      type: object
+      properties:
+        message:
+          type: string
+          format: string
+          example: "Internal Exception"
+        exception:
+          type: string
+          format: string
+          example: "InternalException"
+    LiabilityDirection:
+      type: string
+      format: string
+      example: credit
+      description: "'credit' indicates somebody owes you the liability. 'debit' Indicates you owe this debt yourself. Works only for liabiltiies."
+      nullable: true
+      enum:
+        - credit
+        - debit
+        - null
+    LiabilityType:
+      type: string
+      format: string
+      example: "loan"
+      description: "Mandatory when type is liability. Specifies the exact type."
+      nullable: true
+      enum:
+        - loan
+        - debt
+        - mortgage
+        - null
+    NotFound:
+      type: object
+      properties:
+        message:
+          type: string
+          format: string
+          example: "Resource not found"
+        exception:
+          type: string
+          format: string
+          example: "NotFoundHttpException"
+    Unauthenticated:
+      type: object
+      properties:
+        message:
+          type: string
+          format: string
+          example: "Unauthenticated"
+        exception:
+          type: string
+          format: string
+          example: "AuthenticationException"
+    ValidationError:
+      type: object
+      properties:
+        message:
+          type: string
+          format: string
+          example: "The given data was invalid."
+        errors:
+          type: object
+          properties:
+            email:
+              type: array
+              items:
+                type: string
+                format: string
+            blocked:
+              type: array
+              items:
+                type: string
+                format: string
+            role:
+              type: array
+              items:
+                type: string
+                format: string
+            blocked_code:
+              type: array
+              items:
+                type: string
+                format: string
+            name:
+              type: array
+              items:
+                type: string
+                format: string
+            type:
+              type: array
+              items:
+                type: string
+                format: string
+            iban:
+              type: array
+              items:
+                type: string
+                format: string
+            start:
+              type: array
+              items:
+                type: string
+                format: string
+            end:
+              type: array
+              items:
+                  type: string
+                  format: string
+            date:
+              type: array
+              items:
+                type: string
+                format: string
+    AccountRoleProperty:
+      type: string
+      format: string
+      example: "defaultAsset"
+      description: "Is only mandatory when the type is asset."
+      nullable: true
+      enum:
+        - defaultAsset
+        - sharedAsset
+        - savingAsset
+        - ccAsset
+        - cashWalletAsset
+        - null
+    AccountTypeProperty:
+      type: string
+      format: string
+      example: "Asset account"
+      readOnly: true
+      enum:
+        - Default account
+        - Cash account
+        - Asset account
+        - Expense account
+        - Revenue account
+        - Initial balance account
+        - Beneficiary account
+        - Import account
+        - Reconciliation account
+        - Loan
+        - Debt
+        - Mortgage
+    ShortAccountTypeProperty:
+      type: string
+      format: string
+      example: "asset"
+      description: "Can only be one one these account types. import, initial-balance and reconciliation cannot be set manually."
+      enum:
+        - asset
+        - expense
+        - import
+        - revenue
+        - cash
+        - liability
+        - liabilities
+        - "initial-balance"
+        - reconciliation
+    TransactionTypeProperty:
+      type: string
+      format: string
+      example: "withdrawal"
+      enum:
+        - withdrawal
+        - deposit
+        - transfer
+        - reconciliation
+        - opening balance
+    AccountTypeFilter:
+      type: string
+      enum:
+        - all
+        - asset
+        - cash
+        - expense
+        - revenue
+        - special
+        - hidden
+        - liability
+        - liabilities
+        - Default account
+        - Cash account
+        - Asset account
+        - Expense account
+        - Revenue account
+        - Initial balance account
+        - Beneficiary account
+        - Import account
+        - Reconciliation account
+        - Loan
+        - Debt
+        - Mortgage
+    TransactionTypeFilter:
+      type: string
+      enum:
+        - all
+        - withdrawal
+        - withdrawals
+        - expense
+        - deposit
+        - deposits
+        - income
+        - transfer
+        - transfers
+        - opening_balance
+        - reconciliation
+        - special
+        - specials
+        - default
+  securitySchemes:
+    firefly_iii_auth:
+      type: oauth2
+      description: Default OAuth2 flow
+      flows:
+        authorizationCode:
+          authorizationUrl: https://demo.firefly-iii.org/oauth/authorize
+          tokenUrl: https://demo.firefly-iii.org/oauth/token
+          refreshUrl: https://demo.firefly-iii.org/oauth/token
+          scopes: {}
+    local_bearer_auth:
+      description: Optional Bearer token flow
+      type: http
+      scheme: bearer
+security:
+  - firefly_iii_auth: []

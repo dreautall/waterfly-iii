@@ -1,0 +1,745 @@
+{
+  "@@locale": "zh",
+  "accountRoleAssetCashWallet": "现金钱包",
+  "@accountRoleAssetCashWallet": {
+    "description": "Firefly Translation String: account_role_cashWalletAsset"
+  },
+  "accountRoleAssetCC": "信用卡",
+  "@accountRoleAssetCC": {
+    "description": "Firefly Translation String: account_role_ccAsset"
+  },
+  "accountRoleAssetDefault": "默认资产账户",
+  "@accountRoleAssetDefault": {
+    "description": "Firefly Translation String: account_role_defaultAsset"
+  },
+  "accountRoleAssetSavings": "储蓄账户",
+  "@accountRoleAssetSavings": {
+    "description": "Firefly Translation String: account_role_savingAsset"
+  },
+  "accountRoleAssetShared": "共用资产账户",
+  "@accountRoleAssetShared": {
+    "description": "Firefly Translation String: account_role_sharedAsset"
+  },
+  "accountsLabelAsset": "资产账户",
+  "@accountsLabelAsset": {
+    "description": "Firefly Translation String: asset_accounts"
+  },
+  "accountsLabelExpense": "支出账户",
+  "@accountsLabelExpense": {
+    "description": "Firefly Translation String: expense_accounts"
+  },
+  "accountsLabelLiabilities": "负债",
+  "@accountsLabelLiabilities": {
+    "description": "Firefly Translation String: liabilities_accounts"
+  },
+  "accountsLabelRevenue": "收入账户",
+  "@accountsLabelRevenue": {
+    "description": "Firefly Translation String: revenue_accounts"
+  },
+  "accountsLiabilitiesInterest": "{interest}% interest per {period, select, weekly{week} monthly{month} quarterly{quarter} halfyear{half-year} yearly{year} other{unknown}}",
+  "@accountsLiabilitiesInterest": {
+    "description": "Interest in a certain period",
+    "placeholders": {
+      "interest": {
+        "type": "double",
+        "example": "1.2"
+      },
+      "period": {
+        "type": "String",
+        "example": "yearly"
+      }
+    }
+  },
+  "catOther": "其他",
+  "@catOther": {
+    "description": "Category description for summary category 'Other'"
+  },
+  "errorAPIInvalidResponse": "API 的无效响应: {message}",
+  "@errorAPIInvalidResponse": {
+    "description": "Invalid API response error",
+    "placeholders": {
+      "message": {
+        "type": "String",
+        "example": "API could not be reached."
+      }
+    }
+  },
+  "errorAPIUnavailable": "API不可用",
+  "@errorAPIUnavailable": {
+    "description": "Error thrown when API is unavailable."
+  },
+  "errorFieldRequired": "此字段是必需项.",
+  "@errorFieldRequired": {
+    "description": "Error: Required field was left empty."
+  },
+  "errorInvalidSSLCert": "SSL 证书无效",
+  "@errorInvalidSSLCert": {
+    "description": "Error: SSL certificate is invalid"
+  },
+  "errorInvalidURL": "地址无效",
+  "@errorInvalidURL": {
+    "description": "Error: URL is invalid"
+  },
+  "errorStatusCode": "状态代码：{code}",
+  "@errorStatusCode": {
+    "description": "HTTP status code information on error",
+    "placeholders": {
+      "code": {
+        "type": "int"
+      }
+    }
+  },
+  "errorUnknown": "未知错误",
+  "@errorUnknown": {
+    "description": "Error without further information occurred."
+  },
+  "formButtonHelp": "帮助",
+  "@formButtonHelp": {
+    "description": "Button Label: Help"
+  },
+  "formButtonLogin": "登录",
+  "@formButtonLogin": {
+    "description": "Button Label: Login"
+  },
+  "formButtonLogout": "登出",
+  "@formButtonLogout": {
+    "description": "Button Label: Logout"
+  },
+  "formButtonRemove": "移除",
+  "@formButtonRemove": {
+    "description": "Button Label: Remove"
+  },
+  "formButtonResetLogin": "重置登录",
+  "@formButtonResetLogin": {
+    "description": "Button Label: Reset login form (when error is shown)"
+  },
+  "formButtonTransactionAdd": "添加交易",
+  "@formButtonTransactionAdd": {
+    "description": "Button Label: Add Transaction"
+  },
+  "formButtonTryAgain": "再试一次",
+  "@formButtonTryAgain": {
+    "description": "Button Label: Try that thing again (login etc)"
+  },
+  "formButtonUpload": "上传",
+  "@formButtonUpload": {
+    "description": "Button Label: Upload (file etc.)"
+  },
+  "generalAccount": "账户",
+  "@generalAccount": {
+    "description": "Asset/Debt (Bank) Account"
+  },
+  "generalBalance": "金额",
+  "@generalBalance": {
+    "description": "(Account) Balance"
+  },
+  "generalBudget": "预算",
+  "@generalBudget": {
+    "description": "(Monetary) Budget)"
+  },
+  "generalCategory": "类别",
+  "@generalCategory": {
+    "description": "Category (of transaction etc.)."
+  },
+  "generalCurrency": "货币",
+  "@generalCurrency": {
+    "description": "(Money) Currency"
+  },
+  "generalDefault": "default",
+  "@generalDefault": {
+    "description": "Indicates that something is the default choice"
+  },
+  "generalDismiss": "放弃",
+  "@generalDismiss": {
+    "description": "Dismiss window/dialog without action"
+  },
+  "generalError": "错误",
+  "@generalError": {
+    "description": "Error (title in dialogs etc.)"
+  },
+  "generalExpenses": "支出",
+  "@generalExpenses": {
+    "description": "(Account) Expenses"
+  },
+  "generalIncome": "收入",
+  "@generalIncome": {
+    "description": "(Account) Info"
+  },
+  "generalMultiple": "多个",
+  "@generalMultiple": {
+    "description": "Multiples of a single thing (e.g. source accounts) are existing"
+  },
+  "generalNever": "永不",
+  "@generalNever": {
+    "description": "Has never happened, no update etc."
+  },
+  "generalSum": "总额",
+  "@generalSum": {
+    "description": "(Mathematical) Sum"
+  },
+  "generalTarget": "目标",
+  "@generalTarget": {
+    "description": "Target value (i.e. a sum to save)"
+  },
+  "generalUnknown": "未知",
+  "@generalUnknown": {
+    "description": "Something is unknown."
+  },
+  "homeMainBudgetInterval": " ({from} to {to}, {period})",
+  "@homeMainBudgetInterval": {
+    "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
+    "placeholders": {
+      "from": {
+        "type": "DateTime",
+        "format": "MMMd",
+        "example": "May 13"
+      },
+      "to": {
+        "type": "DateTime",
+        "format": "MMMd",
+        "example": "May 17"
+      },
+      "period": {
+        "type": "String",
+        "example": "weekly"
+      }
+    }
+  },
+  "homeMainBudgetSum": "{current} {status, select, over{over} other{left from}} {available}",
+  "@homeMainBudgetSum": {
+    "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
+    "placeholders": {
+      "current": {
+        "type": "String",
+        "example": "12.34€"
+      },
+      "status": {
+        "type": "String",
+        "example": "left from"
+      },
+      "available": {
+        "type": "String",
+        "example": "12.34€"
+      }
+    }
+  },
+  "homeMainBudgetTitle": "本月预算",
+  "@homeMainBudgetTitle": {
+    "description": "Title: Budgets for current month"
+  },
+  "homeMainChartAccountsTitle": "帐户概览",
+  "@homeMainChartAccountsTitle": {
+    "description": "Chart Label: Account Summary"
+  },
+  "homeMainChartCategoriesTitle": "当月类别摘要",
+  "@homeMainChartCategoriesTitle": {
+    "description": "Chart Label: Category Summary"
+  },
+  "homeMainChartDailyAvg": "7日均线",
+  "@homeMainChartDailyAvg": {
+    "description": "Text for last week average spent"
+  },
+  "homeMainChartDailyTitle": "每日总结",
+  "@homeMainChartDailyTitle": {
+    "description": "Chart Label: Daily Summary"
+  },
+  "homeMainChartNetearningsTitle": "净收入",
+  "@homeMainChartNetearningsTitle": {
+    "description": "Chart Label: Net Earnings"
+  },
+  "homePiggyAdjustDialogTitle": "存钱/花钱",
+  "@homePiggyAdjustDialogTitle": {
+    "description": "Title of the dialog where money can be added/removed to a piggy bank."
+  },
+  "homePiggyDateStart": "开始日期:{date}",
+  "@homePiggyDateStart": {
+    "description": "Start of the piggy bank",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "March 12, 2023"
+      }
+    }
+  },
+  "homePiggyDateTarget": "付款期限：{date}",
+  "@homePiggyDateTarget": {
+    "description": "Set target date of the piggy bank (when saving should be finished)",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "March 12, 2023"
+      }
+    }
+  },
+  "homePiggyLinked": "关联账号 {account}",
+  "@homePiggyLinked": {
+    "description": "Piggy bank is linked to asset account {account}.",
+    "placeholders": {
+      "account": {
+        "type": "String",
+        "example": "Awesome Bank Account"
+      }
+    }
+  },
+  "homePiggyNoAccounts": "没有设立存钱罐。",
+  "@homePiggyNoAccounts": {
+    "description": "Information that no piggy banks are existing"
+  },
+  "homePiggyNoAccountsSubtitle": "在网络界面中创建一些！",
+  "@homePiggyNoAccountsSubtitle": {
+    "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
+  },
+  "homePiggyRemaining": "留下来保存: {amount}",
+  "@homePiggyRemaining": {
+    "description": "How much money is left to save",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€12.34"
+      }
+    }
+  },
+  "homePiggySaved": "到目前为止已保存: {amount}",
+  "@homePiggySaved": {
+    "description": "How much money already was saved",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€12.34"
+      }
+    }
+  },
+  "homePiggyTarget": "收费金额: {amount}%",
+  "@homePiggyTarget": {
+    "description": "How much money should be saved",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€12.34"
+      }
+    }
+  },
+  "homeTabLabelBalance": "资产负债表",
+  "@homeTabLabelBalance": {
+    "description": "Tab Label: Balance Sheet page"
+  },
+  "homeTabLabelMain": "主要的",
+  "@homeTabLabelMain": {
+    "description": "Tab Label: Start page (\"main\")"
+  },
+  "homeTabLabelPiggybanks": "存钱罐",
+  "@homeTabLabelPiggybanks": {
+    "description": "Tab Label: Piggy Banks page"
+  },
+  "homeTabLabelTransactions": "交易记录",
+  "@homeTabLabelTransactions": {
+    "description": "Tab Label: Transactions page"
+  },
+  "homeTransactionsActionFilter": "过滤列表",
+  "@homeTransactionsActionFilter": {
+    "description": "Action Button Label: Filter list."
+  },
+  "homeTransactionsDialogFilterAccountsAll": "<All Accounts>",
+  "@homeTransactionsDialogFilterAccountsAll": {
+    "description": "Don't filter for a specific account (default entry)"
+  },
+  "homeTransactionsDialogFilterBudgetsAll": "<All Budgets>",
+  "@homeTransactionsDialogFilterBudgetsAll": {
+    "description": "Don't filter for a specific budget (default entry)"
+  },
+  "homeTransactionsDialogFilterCategoriesAll": "<All Categories>",
+  "@homeTransactionsDialogFilterCategoriesAll": {
+    "description": "Don't filter for a specific category (default entry)"
+  },
+  "homeTransactionsDialogFilterCurrenciesAll": "<All Currencies>",
+  "@homeTransactionsDialogFilterCurrenciesAll": {
+    "description": "Don't filter for a specific currency (default entry)"
+  },
+  "homeTransactionsDialogFilterSearch": "搜索条件",
+  "@homeTransactionsDialogFilterSearch": {
+    "description": "Search term for filter"
+  },
+  "homeTransactionsDialogFilterTitle": "选择筛选项",
+  "@homeTransactionsDialogFilterTitle": {
+    "description": "Title of Filter Dialog"
+  },
+  "homeTransactionsEmpty": "未找到交易记录",
+  "@homeTransactionsEmpty": {
+    "description": "Message when no transactions are found."
+  },
+  "homeTransactionsMultipleCategories": "{num} 类别",
+  "@homeTransactionsMultipleCategories": {
+    "description": "$num categories for the transaction.",
+    "placeholders": {
+      "num": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+  "liabilityDirectionCredit": "我欠了这笔债务",
+  "@liabilityDirectionCredit": {
+    "description": "Firefly Translation String: liability_direction_credit"
+  },
+  "liabilityDirectionDebit": "我欠这笔债务",
+  "@liabilityDirectionDebit": {
+    "description": "Firefly Translation String: liability_direction_debit"
+  },
+  "liabilityTypeDebt": "债务",
+  "@liabilityTypeDebt": {
+    "description": "Firefly Translation String: account_type_debt"
+  },
+  "liabilityTypeLoan": "贷款",
+  "@liabilityTypeLoan": {
+    "description": "Firefly Translation String: account_type_loan"
+  },
+  "liabilityTypeMortgage": "抵押",
+  "@liabilityTypeMortgage": {
+    "description": "Firefly Translation String: account_type_mortgage"
+  },
+  "loginAbout": "要生产性地使用 WaterFly III，您需要您自己的服务器与 Fifly III 实例或家庭助手的 Firefly III附加组件。\n\n请输入完整的URL以及个人访问令牌(设置 -> 个人资料-> OAuth -> 个人访问令牌)。",
+  "@loginAbout": {
+    "description": "Login screen welcome description"
+  },
+  "loginFormLabelAPIKey": "无效的 API 密钥",
+  "@loginFormLabelAPIKey": {
+    "description": "Login Form: Label for API Key field"
+  },
+  "loginFormLabelHost": "主机URL",
+  "@loginFormLabelHost": {
+    "description": "Login Form: Label for Host field"
+  },
+  "loginWelcome": "欢迎使用 Firefly III！",
+  "@loginWelcome": {
+    "description": "Login screen welcome banner"
+  },
+  "navigationAccounts": "帐户",
+  "@navigationAccounts": {
+    "description": "Navigation Label: Accounts Page"
+  },
+  "navigationMain": "主仪表盘",
+  "@navigationMain": {
+    "description": "Navigation Label: Main Dashboard"
+  },
+  "navigationSettings": "设置",
+  "@navigationSettings": {
+    "description": "Navigation Label: Settings"
+  },
+  "numPercent": "{num}",
+  "@numPercent": {
+    "description": "Number formatted as percentage",
+    "placeholders": {
+      "num": {
+        "type": "double",
+        "format": "decimalPercentPattern",
+        "optionalParameters": {
+          "decimalDigits": 0
+        }
+      }
+    }
+  },
+  "numPercentOf": "{perc} of {of}",
+  "@numPercentOf": {
+    "description": "Number formatted as percentage, with total amount provided",
+    "placeholders": {
+      "perc": {
+        "type": "double",
+        "format": "decimalPercentPattern",
+        "optionalParameters": {
+          "decimalDigits": 0
+        }
+      },
+      "of": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsDialogDebugInfo": "您可以在此启用并发送调试日志。 这些会对性能产生不良影响，所以请不要启用它们，除非你建议这样做。 禁用日志将删除存储的日志。",
+  "@settingsDialogDebugInfo": {
+    "description": "Information about debug logs and their impact."
+  },
+  "settingsDialogDebugMailCreate": "创建电子邮件",
+  "@settingsDialogDebugMailCreate": {
+    "description": "Button to confirm mail creation after privacy disclaimer is shown."
+  },
+  "settingsDialogDebugMailDisclaimer": "警告：邮件草稿将与日志文件一起打开(文本格式)。 日志可能包含敏感信息 例如您的 Frefly 实例的主机名 (尽管我试图避免记录任何秘密，如api 密钥)。 请仔细阅读日志并检查您不想分享的任何信息和/或与您想报告的问题无关。\n\n请不要在没有事先同意的情况下通过邮件/GitHub 发送日志。 出于隐私原因，我将删除没有上下文发送的任何日志。永远不要上传不受检查的日志到 GitHub 或其他地方。",
+  "@settingsDialogDebugMailDisclaimer": {
+    "description": "Privacy disclaimer shown before sending logs"
+  },
+  "settingsDialogDebugSendButton": "通过邮件发送日志",
+  "@settingsDialogDebugSendButton": {
+    "description": "Button to send logs via E-Mail"
+  },
+  "settingsDialogDebugTitle": "调试日志",
+  "@settingsDialogDebugTitle": {
+    "description": "Dialog title: Debug Logs"
+  },
+  "settingsDialogLanguageTitle": "选择语言",
+  "@settingsDialogLanguageTitle": {
+    "description": "Dialog title: Select Language"
+  },
+  "settingsDialogThemeTitle": "选择主题",
+  "@settingsDialogThemeTitle": {
+    "description": "Dialog title: Select theme"
+  },
+  "settingsLanguage": "切换语言",
+  "@settingsLanguage": {
+    "description": "Currently selected language"
+  },
+  "settingsLockscreen": "锁屏选项",
+  "settingsLockscreenHelp": "应用程序启动时需要进行身份验证",
+  "settingsLockscreenInitial": "请验证以启用锁屏界面。",
+  "settingsNLAppAccount": "默认账户",
+  "@settingsNLAppAccount": {
+    "description": "Default account which will be used for the transaction."
+  },
+  "settingsNLAppAccountDynamic": "<Dynamic>",
+  "@settingsNLAppAccountDynamic": {
+    "description": "Account will be selected dynamically by the content of the notification."
+  },
+  "settingsNLAppAdd": "添加应用",
+  "@settingsNLAppAdd": {
+    "description": "Button title to add a new app."
+  },
+  "settingsNLAppAddHelp": "点击添加一个应用来收听。只有合格的应用才会显示在列表中。",
+  "@settingsNLAppAddHelp": {
+    "description": "Help text below adding the new app button."
+  },
+  "settingsNLAppAddInfo": "在您接收手机通知以添加应用程序到此列表的交易中。 如果应用程序仍未显示, 请向app@vogt.pw报告。",
+  "@settingsNLAppAddInfo": {
+    "description": "Help text when no more app is available to add."
+  },
+  "settingsNLDescription": "此服务允许您从传入推送通知中获取交易细节。 此外，您可以选择一个交易应该分配给的默认账户 - 如果没有设置值。 它试图从通知中提取一个帐户。",
+  "@settingsNLDescription": {
+    "description": "Description text for the notification listener service."
+  },
+  "settingsNLPermissionGrant": "轻触来授予权限。",
+  "@settingsNLPermissionGrant": {
+    "description": "Indicates user should tap the text to grant certain permissions (notification access)."
+  },
+  "settingsNLPermissionNotGranted": "未授予权限",
+  "@settingsNLPermissionNotGranted": {
+    "description": "A requested permission was not granted."
+  },
+  "settingsNLPermissionRemove": "移除权限",
+  "@settingsNLPermissionRemove": {
+    "description": "Dialog title asking if permission should be removed."
+  },
+  "settingsNLPermissionRemoveHelp": "要禁用此服务，请点击应用并删除下一个屏幕中的权限。",
+  "@settingsNLPermissionRemoveHelp": {
+    "description": "Dialog text giving hint how to remove the permission."
+  },
+  "settingsNLServiceChecking": "正在检查状态...",
+  "@settingsNLServiceChecking": {
+    "description": "Checking the status of the background service"
+  },
+  "settingsNLServiceCheckingError": "检查状态时出错：{error}",
+  "@settingsNLServiceCheckingError": {
+    "description": "An error occurred while checking the service status",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "description": "Error details",
+        "example": "Timeout"
+      }
+    }
+  },
+  "settingsNLServiceRunning": "服务正在运行",
+  "@settingsNLServiceRunning": {
+    "description": "A background service is running normally."
+  },
+  "settingsNLServiceStatus": "服务状态",
+  "@settingsNLServiceStatus": {
+    "description": "Status of a background service."
+  },
+  "settingsNLServiceStopped": "服务已停止",
+  "@settingsNLServiceStopped": {
+    "description": "A background service is stopped."
+  },
+  "settingsNotificationListener": "提示监听服务",
+  "@settingsNotificationListener": {
+    "description": "Setting for the notification listener service."
+  },
+  "settingsTheme": "应用主题",
+  "@settingsTheme": {
+    "description": "App theme (dark or light)"
+  },
+  "settingsThemeDynamicColors": "动态取色",
+  "@settingsThemeDynamicColors": {
+    "description": "Material You Dynamic Colors feature"
+  },
+  "settingsThemeValue": "{theme, select, dark{暗色模式} light{光明模式} other{系统默认}}",
+  "@settingsThemeValue": {
+    "description": "Currently selected theme (either dark, light or system)",
+    "placeholders": {
+      "theme": {
+        "type": "String",
+        "example": "ThemeMode.dark"
+      }
+    }
+  },
+  "settingsVersion": "应用版本",
+  "@settingsVersion": {
+    "description": "Current App Version"
+  },
+  "settingsVersionChecking": "正在检查…",
+  "@settingsVersionChecking": {
+    "description": "Shown while checking for app version"
+  },
+  "splashCustomSSLCert": "自定义 SSL 证书",
+  "@splashCustomSSLCert": {
+    "description": "Button text & Dialog title for using a custom SSL certificate"
+  },
+  "splashFormLabelCustomSSLCertPEM": "证书文件 (*. cer)",
+  "@splashFormLabelCustomSSLCertPEM": {
+    "description": "Label for certificate file text input in PEM format"
+  },
+  "transactionAttachments": "附件",
+  "@transactionAttachments": {
+    "description": "Button Label: Attachments"
+  },
+  "transactionDeleteConfirm": "确定删除此项交易？",
+  "@transactionDeleteConfirm": {
+    "description": "Confirmation text to delete transaction"
+  },
+  "transactionDialogAttachmentsDelete": "删除附件",
+  "@transactionDialogAttachmentsDelete": {
+    "description": "Button Label: Delete Attachment"
+  },
+  "transactionDialogAttachmentsDeleteConfirm": "确认删除此附件？",
+  "@transactionDialogAttachmentsDeleteConfirm": {
+    "description": "Confirmation text to delete attachment"
+  },
+  "transactionDialogAttachmentsErrorDownload": "无法下载文件。",
+  "@transactionDialogAttachmentsErrorDownload": {
+    "description": "Snackbar Text: File download failed."
+  },
+  "transactionDialogAttachmentsErrorOpen": "无法打开文件: {error}",
+  "@transactionDialogAttachmentsErrorOpen": {
+    "description": "Snackbar Text: File could not be opened, with reason.",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionDialogAttachmentsErrorUpload": "无法打开文件: {error}",
+  "@transactionDialogAttachmentsErrorUpload": {
+    "description": "Snackbar Text: File could not be uploaded, with reason.",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionDialogAttachmentsTitle": "附件",
+  "@transactionDialogAttachmentsTitle": {
+    "description": "Dialog Title: Attachments Dialog"
+  },
+  "transactionDialogCurrencyTitle": "选择货币种类",
+  "@transactionDialogCurrencyTitle": {
+    "description": "Dialog Title: Currency Selection"
+  },
+  "transactionDialogTagsAdd": "添加标签",
+  "@transactionDialogTagsAdd": {
+    "description": "Button Label: Add Tag"
+  },
+  "transactionDialogTagsHint": "按标签搜索",
+  "@transactionDialogTagsHint": {
+    "description": "Hint Text for search tag field"
+  },
+  "transactionDialogTagsTitle": "选择标签",
+  "@transactionDialogTagsTitle": {
+    "description": "Dialog Title: Select Tags"
+  },
+  "transactionDuplicate": "创建副本",
+  "@transactionDuplicate": {
+    "description": "Menu Label: Duplicate item"
+  },
+  "transactionErrorInvalidAccount": "帐户无效",
+  "@transactionErrorInvalidAccount": {
+    "description": "Transaction Save Error: Invalid account"
+  },
+  "transactionErrorInvalidBudget": "无效的预算",
+  "@transactionErrorInvalidBudget": {
+    "description": "Transaction Save Error: Invalid budget"
+  },
+  "transactionErrorSaveFirst": "请先保存当前设置。",
+  "@transactionErrorSaveFirst": {
+    "description": "Transaction Hint Error: Needs to be saved"
+  },
+  "transactionErrorTitle": "请输入标题",
+  "@transactionErrorTitle": {
+    "description": "Transaction Save Error: No title provided"
+  },
+  "transactionFormLabelAccountDestination": "目标账户",
+  "@transactionFormLabelAccountDestination": {
+    "description": "Transaction Form: Label for destination account for transfer transaction"
+  },
+  "transactionFormLabelAccountForeign": "外部账户",
+  "@transactionFormLabelAccountForeign": {
+    "description": "Transaction Form: Label for foreign (other) account"
+  },
+  "transactionFormLabelAccountOwn": "自有账号",
+  "@transactionFormLabelAccountOwn": {
+    "description": "Transaction Form: Label for own account"
+  },
+  "transactionFormLabelAccountSource": "来源账户",
+  "@transactionFormLabelAccountSource": {
+    "description": "Transaction Form: Label for source account for transfer transaction"
+  },
+  "transactionFormLabelNotes": "备注",
+  "@transactionFormLabelNotes": {
+    "description": "Transaction Form: Label for notes field"
+  },
+  "transactionFormLabelTags": "标签",
+  "@transactionFormLabelTags": {
+    "description": "Transaction Form: Label for tags field"
+  },
+  "transactionFormLabelTitle": "交易名称",
+  "@transactionFormLabelTitle": {
+    "description": "Transaction Form: Label for title field"
+  },
+  "transactionSplitAdd": "拆分交易",
+  "@transactionSplitAdd": {
+    "description": "Button Label: Add a split"
+  },
+  "transactionSplitChangeCurrency": "更改基本货币",
+  "@transactionSplitChangeCurrency": {
+    "description": "Hint Text: Change currency for a single split"
+  },
+  "transactionSplitChangeTarget": "更改拆分目标账户",
+  "@transactionSplitChangeTarget": {
+    "description": "Hint Text: Change target account for single split"
+  },
+  "transactionSplitDelete": "删除拆分",
+  "@transactionSplitDelete": {
+    "description": "Hint Text: Delete single split"
+  },
+  "transactionTitleAdd": "添加交易",
+  "@transactionTitleAdd": {
+    "description": "Title: Add a new transaction"
+  },
+  "transactionTitleDelete": "删除交易",
+  "@transactionTitleDelete": {
+    "description": "Title: Delete existing transaction"
+  },
+  "transactionTitleEdit": "编辑交易",
+  "@transactionTitleEdit": {
+    "description": "Title: Edit existing transaction"
+  },
+  "transactionTypeDeposit": "存款",
+  "@transactionTypeDeposit": {
+    "description": "Deposit transaction type"
+  },
+  "transactionTypeTransfer": "转帐",
+  "@transactionTypeTransfer": {
+    "description": "Transfer transaction type"
+  },
+  "transactionTypeWithdrawal": "取款",
+  "@transactionTypeWithdrawal": {
+    "description": "Withdrawal transaction type"
+  }
+}

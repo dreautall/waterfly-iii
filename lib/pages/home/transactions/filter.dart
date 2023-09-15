@@ -19,6 +19,7 @@ class TransactionFilters with ChangeNotifier {
     this.currency,
     this.category,
     this.budget,
+    this.bill,
   });
 
   AccountRead? account;
@@ -26,6 +27,7 @@ class TransactionFilters with ChangeNotifier {
   CurrencyRead? currency;
   CategoryRead? category;
   BudgetRead? budget;
+  BillRead? bill;
 
   bool _hasFilters = false;
   bool get hasFilters => _hasFilters;
@@ -35,7 +37,8 @@ class TransactionFilters with ChangeNotifier {
         text != null ||
         currency != null ||
         category != null ||
-        budget != null;
+        budget != null ||
+        bill != null;
     log.finest(() => "notify TransactionFilters, filters? $hasFilters");
     notifyListeners();
   }
@@ -46,6 +49,7 @@ class TransactionFilters with ChangeNotifier {
     CurrencyRead? currency,
     CategoryRead? category,
     BudgetRead? budget,
+    BillRead? bill,
   }) =>
       TransactionFilters(
         account: account ?? this.account,
@@ -53,6 +57,7 @@ class TransactionFilters with ChangeNotifier {
         currency: currency ?? this.currency,
         category: category ?? this.category,
         budget: budget ?? this.budget,
+        bill: bill ?? this.bill,
       );
 }
 
@@ -62,12 +67,14 @@ class FilterData {
     this.currencies,
     this.categories,
     this.budgets,
+    this.bills,
   );
 
   final List<AccountRead> accounts;
   final List<CurrencyRead> currencies;
   final List<CategoryRead> categories;
   final List<BudgetRead> budgets;
+  final List<BillRead> bills;
 }
 
 class FilterDialog extends StatelessWidget {
@@ -146,11 +153,28 @@ class FilterDialog extends StatelessWidget {
       }
     }
 
+    // Bills
+    final Response<BillArray> respBills = await api.v1BillsGet();
+    if (!respBills.isSuccessful || respBills.body == null) {
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(respBills.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${respBills.error}",
+        );
+      }
+    }
+
     return FilterData(
       respAccounts.body!.data,
       respCurrencies.body!.data,
       respCats.body!.data,
       respBudgets.body!.data,
+      respBills.body!.data,
     );
   }
 
@@ -406,13 +430,75 @@ class FilterDialog extends StatelessWidget {
                     DropdownMenu<BudgetRead>(
                       initialSelection: currentBudget,
                       leadingIcon: const Icon(Icons.payments),
-                      label: Text(S.of(context).generalCategory),
+                      label: Text(S.of(context).generalBudget),
                       dropdownMenuEntries: budgetOptions,
                       onSelected: (BudgetRead? budget) {
                         if ((budget?.id ?? "0") == "0") {
                           filters.budget = null;
                         } else {
                           filters.budget = budget;
+                        }
+                      },
+                      width: inputWidth,
+                    ),
+                  );
+                  child.add(const SizedBox(height: 12));
+
+                  // Bill Select
+                  final List<DropdownMenuEntry<BillRead>> billOptions =
+                      <DropdownMenuEntry<BillRead>>[
+                    DropdownMenuEntry<BillRead>(
+                      value: BillRead(
+                        id: "0",
+                        type: "dummy",
+                        attributes: Bill(
+                          amountMax: "0",
+                          amountMin: "0",
+                          date: DateTime.now(),
+                          repeatFreq:
+                              BillRepeatFrequency.swaggerGeneratedUnknown,
+                          name: "<All Bills>",
+                        ),
+                      ),
+                      label: "<All Bills>",
+                    ),
+                    DropdownMenuEntry<BillRead>(
+                      value: BillRead(
+                        id: "-1",
+                        type: "dummy",
+                        attributes: Bill(
+                          amountMax: "0",
+                          amountMin: "0",
+                          date: DateTime.now(),
+                          repeatFreq:
+                              BillRepeatFrequency.swaggerGeneratedUnknown,
+                          name: "<No Bill set>",
+                        ),
+                      ),
+                      label: "<No Bill set>",
+                    ),
+                  ];
+                  BillRead? currentBill = billOptions.first.value;
+                  for (BillRead e in snapshot.data!.bills) {
+                    billOptions.add(DropdownMenuEntry<BillRead>(
+                      value: e,
+                      label: e.attributes.name,
+                    ));
+                    if (filters.bill?.id == e.id) {
+                      currentBill = e;
+                    }
+                  }
+                  child.add(
+                    DropdownMenu<BillRead>(
+                      initialSelection: currentBill,
+                      leadingIcon: const Icon(Icons.calendar_today),
+                      label: Text("Bill"),
+                      dropdownMenuEntries: billOptions,
+                      onSelected: (BillRead? bill) {
+                        if ((bill?.id ?? "0") == "0") {
+                          filters.bill = null;
+                        } else {
+                          filters.bill = bill;
                         }
                       },
                       width: inputWidth,

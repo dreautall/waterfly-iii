@@ -85,6 +85,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     _filters.category = oldFilters.category;
                     _filters.currency = oldFilters.currency;
                     _filters.text = oldFilters.text;
+                    _filters.bill = oldFilters.bill;
 
                     return;
                   }
@@ -136,6 +137,13 @@ class _HomeTransactionsState extends State<HomeTransactions>
             query = "has_no_budget:true $query";
           } else {
             query = "budget_is:\"${_filters.budget!.attributes.name}\" $query";
+          }
+        }
+        if (_filters.bill != null) {
+          if (_filters.bill!.id == "-1") {
+            query = "has_no_bill:true $query";
+          } else {
+            query = "bill_is:\"${_filters.bill!.attributes.name}\" $query";
           }
         }
         log.fine(() => "Search query: $query");

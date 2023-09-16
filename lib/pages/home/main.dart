@@ -46,7 +46,6 @@ class _HomeMainState extends State<HomeMain>
       <DateTime, InsightTotalEntry>{};
   final Map<DateTime, double> lastMonthsEarned = <DateTime, double>{};
   final Map<DateTime, double> lastMonthsSpent = <DateTime, double>{};
-  final Map<DateTime, double> lastMonthsBalance = <DateTime, double>{};
   final Map<DateTime, double> lastMonthsAssets = <DateTime, double>{};
   final Map<DateTime, double> lastMonthsLiabilities = <DateTime, double>{};
   List<ChartDataSet> overviewChartData = <ChartDataSet>[];
@@ -427,6 +426,10 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchBalance() async {
+    if (lastMonthsEarned.isNotEmpty) {
+      return true;
+    }
+
     final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
     final DateTime now = DateTime.now().toLocal().clearTime();
     final DateTime end = now.copyWith(
@@ -440,7 +443,7 @@ class _HomeMainState extends State<HomeMain>
         //now.copyWith(year: now.year - 1),
         //now.copyWith(day: now.day - 7),
         now.copyWith(
-      month: now.month - 5,
+      month: now.month - 11,
       day: 1,
       hour: 0,
       minute: 0,
@@ -451,7 +454,6 @@ class _HomeMainState extends State<HomeMain>
 
     lastMonthsEarned.clear();
     lastMonthsSpent.clear();
-    lastMonthsBalance.clear();
     lastMonthsAssets.clear();
     lastMonthsLiabilities.clear();
 
@@ -481,7 +483,6 @@ class _HomeMainState extends State<HomeMain>
           final DateTime date = DateTime.parse(dateStr).toLocal();
           if (date.day == 1) {
             final double value = double.tryParse(valueStr) ?? 0;
-            lastMonthsBalance[date] = (lastMonthsBalance[date] ?? 0) + value;
             if (value > 0) {
               lastMonthsAssets[date] = (lastMonthsAssets[date] ?? 0) + value;
             }
@@ -493,10 +494,6 @@ class _HomeMainState extends State<HomeMain>
         },
       );
     }
-
-    lastMonthsBalance.forEach((DateTime key, double value) {
-      debugPrint("[balance] $key: $value");
-    });
 
     final Response<List<api_v2.ChartDataSetV2>> respEarnedSpentData =
         await apiV2.v2ChartBalanceBalanceGet(
@@ -525,7 +522,6 @@ class _HomeMainState extends State<HomeMain>
         (String dateStr, dynamic valueStr) {
           final DateTime date = DateTime.parse(dateStr).toLocal();
           final double value = double.tryParse(valueStr) ?? 0;
-          debugPrint("[${e.label}] $date: $value");
           if (e.label == "earned") {
             lastMonthsEarned[date] = (lastMonthsEarned[date] ?? 0) + value;
           } else if (e.label == "spent") {
@@ -938,9 +934,8 @@ class _HomeMainState extends State<HomeMain>
               ],
             ),
             child: () => NetWorthChart(
-              earned: lastMonthsEarned,
-              spent: lastMonthsSpent,
-              balance: lastMonthsBalance,
+              assets: lastMonthsAssets,
+              liabilities: lastMonthsLiabilities,
             ),
           ),
           const SizedBox(height: 8),

@@ -260,9 +260,6 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                       width: MediaQuery.of(context).size.width,
                       child: SfCartesianChart(
                         primaryXAxis: DateTimeAxis(
-                          autoScrollingDelta: 11,
-                          autoScrollingMode: AutoScrollingMode.end,
-                          autoScrollingDeltaType: DateTimeIntervalType.months,
                           enableAutoIntervalOnZooming: true,
                           labelStyle:
                               Theme.of(context).textTheme.labelMedium?.copyWith(
@@ -274,6 +271,8 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                                   .colorScheme
                                   .onSurfaceVariant),
                           minorTicksPerInterval: 3,
+                          zoomFactor: 0.09,
+                          zoomPosition: 1,
                         ),
                         primaryYAxis: NumericAxis(
                           labelStyle:

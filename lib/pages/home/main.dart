@@ -458,7 +458,7 @@ class _HomeMainState extends State<HomeMain>
     final Response<List<api_v2.ChartDataSetV2>> respBalanceData =
         await apiV2.v2ChartAccountDashboardGet(
       start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
-      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+      end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
     );
     if (!respBalanceData.isSuccessful || respBalanceData.body == null) {
       if (context.mounted) {
@@ -809,134 +809,136 @@ class _HomeMainState extends State<HomeMain>
             ),
           ),
           const SizedBox(height: 8),
-          ChartCard(
-            title: "Net Worth",
-            future: _fetchBalance(),
-            summary: () => Table(
-              border: TableBorder.all(), // :DEBUG:
-              columnWidths: const <int, TableColumnWidth>{
-                0: FixedColumnWidth(24),
-                1: IntrinsicColumnWidth(),
-                2: FlexColumnWidth(),
-                3: FlexColumnWidth(),
-                4: FlexColumnWidth(),
-              },
-              children: <TableRow>[
-                TableRow(
-                  children: <Widget>[
-                    const SizedBox.shrink(),
-                    const SizedBox.shrink(),
-                    ...lastMonthsAssets.keys.toList().reversed.take(3).map(
-                          (DateTime e) => Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              DateFormat(DateFormat.MONTH).format(e),
-                              style: Theme.of(context).textTheme.labelLarge,
+          if (context.read<FireflyService>().apiVersion! >= Version(2, 0, 7))
+            ChartCard(
+              title: "Net Worth",
+              future: _fetchBalance(),
+              summary: () => Table(
+                //border: TableBorder.all(), // :DEBUG:
+                columnWidths: const <int, TableColumnWidth>{
+                  0: FixedColumnWidth(24),
+                  1: IntrinsicColumnWidth(),
+                  2: FlexColumnWidth(),
+                  3: FlexColumnWidth(),
+                  4: FlexColumnWidth(),
+                },
+                children: <TableRow>[
+                  TableRow(
+                    children: <Widget>[
+                      const SizedBox.shrink(),
+                      const SizedBox.shrink(),
+                      ...lastMonthsAssets.keys.toList().reversed.take(3).map(
+                            (DateTime e) => Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                DateFormat(DateFormat.MONTH).format(e),
+                                style: Theme.of(context).textTheme.labelLarge,
+                              ),
                             ),
                           ),
-                        ),
-                  ],
-                ),
-                TableRow(
-                  children: <Widget>[
-                    const Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "⬤",
-                        style: TextStyle(
-                          color: Colors.green,
-                          textBaseline: TextBaseline.ideographic,
-                          height: 1.3,
+                    ],
+                  ),
+                  TableRow(
+                    children: <Widget>[
+                      const Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "⬤",
+                          style: TextStyle(
+                            color: Colors.green,
+                            textBaseline: TextBaseline.ideographic,
+                            height: 1.3,
+                          ),
                         ),
                       ),
-                    ),
-                    Text("Assets"),
-                    ...lastMonthsAssets.entries.toList().reversed.take(3).map(
-                          (MapEntry<DateTime, double> e) => Align(
+                      Text("Assets"),
+                      ...lastMonthsAssets.entries.toList().reversed.take(3).map(
+                            (MapEntry<DateTime, double> e) => Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                defaultCurrency.fmt(e.value),
+                                style: const TextStyle(
+                                  fontFeatures: <FontFeature>[
+                                    FontFeature.tabularFigures()
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                    ],
+                  ),
+                  TableRow(
+                    children: <Widget>[
+                      const Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "⬤",
+                          style: TextStyle(
+                            color: Colors.red,
+                            textBaseline: TextBaseline.ideographic,
+                            height: 1.3,
+                          ),
+                        ),
+                      ),
+                      Text("Liabilities"),
+                      ...lastMonthsLiabilities.entries
+                          .toList()
+                          .reversed
+                          .take(3)
+                          .map(
+                            (MapEntry<DateTime, double> e) => Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                defaultCurrency.fmt(e.value),
+                                style: const TextStyle(
+                                  fontFeatures: <FontFeature>[
+                                    FontFeature.tabularFigures()
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                    ],
+                  ),
+                  TableRow(
+                    children: <Widget>[
+                      const SizedBox.shrink(),
+                      Text(
+                        S.of(context).generalSum,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      ...lastMonthsAssets.entries.toList().reversed.take(3).map(
+                        (MapEntry<DateTime, double> e) {
+                          final double assets = e.value;
+                          final double liabilities =
+                              lastMonthsLiabilities[e.key] ?? 0;
+                          double sum = assets + liabilities;
+                          return Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              defaultCurrency.fmt(e.value),
-                              style: const TextStyle(
-                                fontFeatures: <FontFeature>[
+                              defaultCurrency.fmt(sum),
+                              style: TextStyle(
+                                color: (sum < 0) ? Colors.red : Colors.green,
+                                fontWeight: FontWeight.bold,
+                                fontFeatures: const <FontFeature>[
                                   FontFeature.tabularFigures()
                                 ],
                               ),
                             ),
-                          ),
-                        ),
-                  ],
-                ),
-                TableRow(
-                  children: <Widget>[
-                    const Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "⬤",
-                        style: TextStyle(
-                          color: Colors.red,
-                          textBaseline: TextBaseline.ideographic,
-                          height: 1.3,
-                        ),
+                          );
+                        },
                       ),
-                    ),
-                    Text("Liabilities"),
-                    ...lastMonthsLiabilities.entries
-                        .toList()
-                        .reversed
-                        .take(3)
-                        .map(
-                          (MapEntry<DateTime, double> e) => Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              defaultCurrency.fmt(e.value),
-                              style: const TextStyle(
-                                fontFeatures: <FontFeature>[
-                                  FontFeature.tabularFigures()
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                  ],
-                ),
-                TableRow(
-                  children: <Widget>[
-                    const SizedBox.shrink(),
-                    Text(
-                      S.of(context).generalSum,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    ...lastMonthsAssets.entries.toList().reversed.take(3).map(
-                      (MapEntry<DateTime, double> e) {
-                        final double assets = e.value;
-                        final double liabilities =
-                            lastMonthsLiabilities[e.key] ?? 0;
-                        double sum = assets + liabilities;
-                        return Align(
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            defaultCurrency.fmt(sum),
-                            style: TextStyle(
-                              color: (sum < 0) ? Colors.red : Colors.green,
-                              fontWeight: FontWeight.bold,
-                              fontFeatures: const <FontFeature>[
-                                FontFeature.tabularFigures()
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
+              child: () => NetWorthChart(
+                assets: lastMonthsAssets,
+                liabilities: lastMonthsLiabilities,
+              ),
             ),
-            child: () => NetWorthChart(
-              assets: lastMonthsAssets,
-              liabilities: lastMonthsLiabilities,
-            ),
-          ),
-          const SizedBox(height: 8),
+          if (context.read<FireflyService>().apiVersion! >= Version(2, 0, 7))
+            const SizedBox(height: 8),
           AnimatedHeight(
             child: Card(
               clipBehavior: Clip.hardEdge,

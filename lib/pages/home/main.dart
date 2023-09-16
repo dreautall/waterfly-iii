@@ -450,8 +450,6 @@ class _HomeMainState extends State<HomeMain>
       second: 0,
     );
 
-    debugPrint("Start: $start, End: $end");
-
     lastMonthsEarned.clear();
     lastMonthsSpent.clear();
     lastMonthsAssets.clear();
@@ -494,7 +492,7 @@ class _HomeMainState extends State<HomeMain>
         },
       );
     }
-
+/*
     final Response<List<api_v2.ChartDataSetV2>> respEarnedSpentData =
         await apiV2.v2ChartBalanceBalanceGet(
       start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
@@ -529,7 +527,7 @@ class _HomeMainState extends State<HomeMain>
           }
         },
       );
-    }
+    }*/
 
     return true;
   }

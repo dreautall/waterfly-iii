@@ -7,8 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
-import 'package:community_charts_flutter/community_charts_flutter.dart'
-    as charts;
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:waterflyiii/animations.dart';
@@ -29,28 +27,19 @@ class SummaryChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<ChartSeries<TimeSeriesChart, DateTime>> chartData =
         <ChartSeries<TimeSeriesChart, DateTime>>[];
-    final List<charts.TickSpec<DateTime>> ticks = <charts.TickSpec<DateTime>>[];
 
     for (ChartDataSet e in data) {
       final List<TimeSeriesChart> accountData = <TimeSeriesChart>[];
 
       final Map<String, dynamic> entries = e.entries! as Map<String, dynamic>;
-      DateTime? prevDate;
-      entries.forEach((String key, dynamic value) {
-        final DateTime date = DateTime.parse(key);
-        if (prevDate != null && date.month != prevDate!.month) {
-          ticks.add(
-              charts.TickSpec<DateTime>(DateTime(date.year, date.month, 1)));
-        } else if (prevDate != null && date.day >= 15 && prevDate!.day < 15) {
-          ticks.add(
-              charts.TickSpec<DateTime>(DateTime(date.year, date.month, 15)));
-        }
-        accountData.add(TimeSeriesChart(
-          date,
-          double.tryParse(value) ?? 0,
-        ));
-        prevDate = date;
-      });
+      entries.forEach(
+        (String key, dynamic value) => accountData.add(
+          TimeSeriesChart(
+            DateTime.parse(key),
+            double.tryParse(value) ?? 0,
+          ),
+        ),
+      );
 
       chartData.add(
         LineSeries<TimeSeriesChart, DateTime>(
@@ -208,36 +197,20 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                 snapshot.hasData) {
               final List<ChartSeries<TimeSeriesChart, DateTime>> chartData =
                   <ChartSeries<TimeSeriesChart, DateTime>>[];
-              final List<charts.TickSpec<DateTime>> ticks =
-                  <charts.TickSpec<DateTime>>[];
-              final List<DateTime> addedTicks = <DateTime>[];
 
               for (ChartDataSet e in snapshot.data!) {
                 final List<TimeSeriesChart> data = <TimeSeriesChart>[];
 
                 final Map<String, dynamic> entries =
                     e.entries! as Map<String, dynamic>;
-                DateTime? prevDate;
-                entries.forEach((String key, dynamic value) {
-                  final DateTime date = DateTime.parse(key);
-                  DateTime? tickDate;
-                  if (prevDate != null && date.month != prevDate!.month) {
-                    tickDate = DateTime(date.year, date.month, 1);
-                  } else if (prevDate != null &&
-                      date.day >= 15 &&
-                      prevDate!.day < 15) {
-                    tickDate = DateTime(date.year, date.month, 15);
-                  }
-                  if (tickDate != null && !addedTicks.contains(tickDate)) {
-                    ticks.add(charts.TickSpec<DateTime>(tickDate));
-                    addedTicks.add(tickDate);
-                  }
-                  data.add(TimeSeriesChart(
-                    date,
-                    double.tryParse(value) ?? 0,
-                  ));
-                  prevDate = date;
-                });
+                entries.forEach(
+                  (String key, dynamic value) => data.add(
+                    TimeSeriesChart(
+                      DateTime.parse(key),
+                      double.tryParse(value) ?? 0,
+                    ),
+                  ),
+                );
 
                 chartData.add(
                   FastLineSeries<TimeSeriesChart, DateTime>(
@@ -392,9 +365,8 @@ class SummaryTable extends StatelessWidget {
                       child: Text(
                         "⬤",
                         style: TextStyle(
-                          color: charts.ColorUtil.toDartColor(
-                            possibleChartColors[i % possibleChartColors.length],
-                          ),
+                          color: possibleChartColorsDart[
+                              i % possibleChartColorsDart.length],
                           textBaseline: TextBaseline.ideographic,
                           height: 1.3,
                         ),

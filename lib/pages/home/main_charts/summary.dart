@@ -29,21 +29,9 @@ class SummaryChart extends StatelessWidget {
         <ChartSeries<TimeSeriesChart, DateTime>>[];
 
     for (ChartDataSet e in data) {
-      final List<TimeSeriesChart> accountData = <TimeSeriesChart>[];
-
-      final Map<String, dynamic> entries = e.entries! as Map<String, dynamic>;
-      entries.forEach(
-        (String key, dynamic value) => accountData.add(
-          TimeSeriesChart(
-            DateTime.parse(key),
-            double.tryParse(value) ?? 0,
-          ),
-        ),
-      );
-
       chartData.add(
         LineSeries<TimeSeriesChart, DateTime>(
-          dataSource: accountData,
+          dataSource: e.toChart(),
           xValueMapper: (TimeSeriesChart data, _) => data.time,
           yValueMapper: (TimeSeriesChart data, _) => data.value,
           legendItemText: e.label,
@@ -102,7 +90,7 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
     final Response<ChartLine> respChartData =
         await api.v1ChartAccountOverviewGet(
       start:
-          DateFormat('yyyy-MM-dd').format(now.copyWith(month: now.month - 24)),
+          DateFormat('yyyy-MM-dd').format(now.copyWith(month: now.month - 36)),
       end: DateFormat('yyyy-MM-dd').format(now),
     );
     if (!respChartData.isSuccessful ||
@@ -132,16 +120,18 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
           (e.endDate != null && e.endDate!.isAfter(latestDate))) {
         latestDate = e.endDate;
       }
-      currencies.add(CurrencyRead(
-        id: e.currencyId ?? "0",
-        type: "currencies",
-        attributes: Currency(
-          code: e.currencyCode ?? "",
-          name: "",
-          symbol: e.currencySymbol ?? "",
-          decimalPlaces: e.currencyDecimalPlaces,
+      currencies.add(
+        CurrencyRead(
+          id: e.currencyId ?? "0",
+          type: "currencies",
+          attributes: Currency(
+            code: e.currencyCode ?? "",
+            name: "",
+            symbol: e.currencySymbol ?? "",
+            decimalPlaces: e.currencyDecimalPlaces,
+          ),
         ),
-      ));
+      );
       final Map<String, dynamic> entries = e.entries! as Map<String, dynamic>;
       balances.add(double.tryParse(entries.entries.last.value) ?? 0);
       accounts.add(e.label!);
@@ -169,19 +159,6 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
     date.value = args.chartPointInfo.chartDataPoint!.x.toLocal();
   }
 
-  /*Widget loadMoreCallback(BuildContext context, ChartSwipeDirection direction) {
-    if (direction == ChartSwipeDirection.end) {
-      return const SizedBox.shrink();
-    }
-    return FutureBuilder<bool>(
-      future: Future.delayed(Duration(seconds: 5), () => true),
-      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) =>
-          snapshot.connectionState != ConnectionState.done
-              ? const CircularProgressIndicator()
-              : const SizedBox.shrink(),
-    );
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
@@ -199,22 +176,12 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                   <ChartSeries<TimeSeriesChart, DateTime>>[];
 
               for (ChartDataSet e in snapshot.data!) {
-                final List<TimeSeriesChart> data = <TimeSeriesChart>[];
-
-                final Map<String, dynamic> entries =
-                    e.entries! as Map<String, dynamic>;
-                entries.forEach(
-                  (String key, dynamic value) => data.add(
-                    TimeSeriesChart(
-                      DateTime.parse(key),
-                      double.tryParse(value) ?? 0,
-                    ),
-                  ),
-                );
-
+                if (e.label == null || e.label!.isEmpty) {
+                  continue;
+                }
                 chartData.add(
                   FastLineSeries<TimeSeriesChart, DateTime>(
-                    dataSource: data,
+                    dataSource: e.toChart(),
                     xValueMapper: (TimeSeriesChart data, _) => data.time,
                     yValueMapper: (TimeSeriesChart data, _) => data.value,
                     legendItemText: e.label,
@@ -282,7 +249,6 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                         ),
                         onTrackballPositionChanging: (TrackballArgs args) =>
                             trackballPositionChange(args, chartData),
-                        //loadMoreIndicatorBuilder: loadMoreCallback,
                       ),
                     ),
                   ),

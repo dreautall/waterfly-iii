@@ -32,6 +32,11 @@ final List<charts.Color> possibleChartColors = <charts.Color>[
   charts.MaterialPalette.cyan.shadeDefault,
 ];
 
+final List<Color> possibleChartColorsDart = <Color>[
+  ...possibleChartColors
+      .map((charts.Color c) => charts.ColorUtil.toDartColor(c))
+];
+
 class TextSymbolRenderer extends charts.CircleSymbolRenderer {
   TextSymbolRenderer(
     this.printFunc,

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
 
-import 'package:community_charts_flutter/community_charts_flutter.dart'
-    as charts;
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:waterflyiii/animations.dart';
-import 'package:waterflyiii/auth.dart';
-import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
@@ -22,8 +18,6 @@ class CategoryChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<LabelAmountChart> chartData = <LabelAmountChart>[];
-    CurrencyRead defaultCurrency =
-        context.read<FireflyService>().defaultCurrency;
 
     for (InsightGroupEntry e in data) {
       if ((e.name?.isEmpty ?? true) || e.differenceFloat == 0) {
@@ -54,67 +48,41 @@ class CategoryChart extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(left: 12),
-      child: charts.PieChart<String>(
-        <charts.Series<LabelAmountChart, String>>[
-          charts.Series<LabelAmountChart, String>(
-            id: 'Categories',
-            domainFn: (LabelAmountChart entry, _) => entry.label,
-            measureFn: (LabelAmountChart entry, _) => entry.amount.abs(),
-            data: chartData,
-            labelAccessorFn: (LabelAmountChart entry, _) =>
-                entry.amount.abs().toStringAsFixed(0),
-            /*defaultCurrency.fmt(
-              entry.amount.abs(),
-              locale: S.of(context).localeName,
-              decimalDigits: 0,
-            ),*/
-            colorFn: (_, int? i) => possibleChartColors[i ?? 5],
-          ),
-        ],
-        animate: true,
-        animationDuration: animDurationEmphasized,
-        defaultRenderer: charts.ArcRendererConfig<String>(
-          arcRendererDecorators: <charts.ArcLabelDecorator<String>>[
-            charts.ArcLabelDecorator<String>(
-              insideLabelStyleSpec: charts.TextStyleSpec(
-                fontSize:
-                    Theme.of(context).textTheme.labelSmall!.fontSize!.round(),
+      child: SfCircularChart(
+        legend: Legend(
+          isVisible: true,
+          position: LegendPosition.right,
+          itemPadding: 4,
+          textStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
+                fontWeight: FontWeight.normal,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
-              outsideLabelStyleSpec: charts.TextStyleSpec(
-                fontSize:
-                    Theme.of(context).textTheme.labelSmall!.fontSize!.round(),
-                color: charts.ColorUtil.fromDartColor(
-                  Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-              ),
-              leaderLineStyleSpec: charts.ArcLabelLeaderLineStyleSpec(
-                length: 10.0,
-                thickness: 1.0,
-                color: charts.ColorUtil.fromDartColor(
-                  Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-              ),
-            )
-          ],
+          alignment: ChartAlignment.center,
+          isResponsive: true,
         ),
-        behaviors: <charts.ChartBehavior<String>>[
-          charts.DatumLegend<String>(
-            position: charts.BehaviorPosition.end,
-            horizontalFirst: false,
-            cellPadding: const EdgeInsets.only(right: 4, bottom: 4),
-            showMeasures: false, // Not formattable :(
-            legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
-            desiredMaxRows: 6,
-            measureFormatter: (num? value) {
-              return value == null ? '-' : defaultCurrency.fmt(value);
-            },
-            entryTextStyle: charts.TextStyleSpec(
-              fontSize:
-                  Theme.of(context).textTheme.labelMedium!.fontSize!.round(),
+        series: <CircularSeries<LabelAmountChart, String>>[
+          PieSeries<LabelAmountChart, String>(
+            dataSource: chartData,
+            xValueMapper: (LabelAmountChart data, _) => data.label,
+            yValueMapper: (LabelAmountChart data, _) => data.amount.abs(),
+            dataLabelMapper: (LabelAmountChart data, _) =>
+                data.amount.abs().toStringAsFixed(0),
+            dataLabelSettings: DataLabelSettings(
+              isVisible: true,
+              textStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
+                    fontWeight: FontWeight.normal,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+              connectorLineSettings: ConnectorLineSettings(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
+            animationDuration:
+                animDurationEmphasized.inMilliseconds.toDouble() * 2,
           ),
         ],
-        defaultInteractions: false,
+        palette: possibleChartColorsDart,
+        margin: EdgeInsets.zero,
       ),
     );
   }

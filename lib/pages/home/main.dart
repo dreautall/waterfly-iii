@@ -979,9 +979,11 @@ class ChartCard extends StatelessWidget {
                         color: Theme.of(context).colorScheme.surfaceVariant,
                       ),
                       child: SizedBox(
-                        height: height,
-                        child: child(),
-                      ),
+                          height: height,
+                          child: onTap != null
+                              // AbsorbPointer fixes SfChart invalidating the onTap feedback
+                              ? AbsorbPointer(child: child())
+                              : child()),
                     ),
                     ...summaryWidgets,
                   ],

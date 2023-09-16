@@ -9,11 +9,30 @@ import 'package:community_charts_flutter/src/text_style.dart' as charts_style;
 // ignore: implementation_imports
 import 'package:community_charts_flutter/src/text_element.dart' as charts_text;
 
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+
 class TimeSeriesChart {
   final DateTime time;
   final double value;
 
   TimeSeriesChart(this.time, this.value);
+}
+
+extension ConvertChartDataSet on ChartDataSet {
+  List<TimeSeriesChart> toChart() {
+    final List<TimeSeriesChart> data = <TimeSeriesChart>[];
+
+    final Map<String, dynamic> e = entries! as Map<String, dynamic>;
+    e.forEach(
+      (String key, dynamic value) => data.add(
+        TimeSeriesChart(
+          DateTime.parse(key),
+          double.tryParse(value) ?? 0,
+        ),
+      ),
+    );
+    return data;
+  }
 }
 
 class LabelAmountChart {

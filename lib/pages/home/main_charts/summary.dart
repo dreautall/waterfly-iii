@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:chopper/chopper.dart' show Response;
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
@@ -144,6 +145,10 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
       }
     }
 
+    currencies.clear();
+    balances.clear();
+    accounts.clear();
+
     // Initialize table variables
     DateTime? latestDate;
     for (ChartDataSet e in respChartData.body!) {
@@ -173,6 +178,34 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
     return respChartData.body!;
   }
 
+  void trackballPositionChange(TrackballArgs args,
+      List<ChartSeries<TimeSeriesChart, DateTime>> chartData) {
+    if (args.chartPointInfo.chartDataPoint == null) {
+      return;
+    }
+
+    int i = 0;
+    for (ChartSeries<TimeSeriesChart, DateTime> chart in chartData) {
+      balances[i] =
+          chart.dataSource![args.chartPointInfo.dataPointIndex!].value;
+      i++;
+    }
+    date.value = args.chartPointInfo.chartDataPoint!.x.toLocal();
+  }
+
+  /*Widget loadMoreCallback(BuildContext context, ChartSwipeDirection direction) {
+    if (direction == ChartSwipeDirection.end) {
+      return const SizedBox.shrink();
+    }
+    return FutureBuilder<bool>(
+      future: Future.delayed(Duration(seconds: 5), () => true),
+      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) =>
+          snapshot.connectionState != ConnectionState.done
+              ? const CircularProgressIndicator()
+              : const SizedBox.shrink(),
+    );
+  }*/
+
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
@@ -186,8 +219,8 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
               AsyncSnapshot<List<ChartDataSet>> snapshot) {
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData) {
-              final List<charts.Series<TimeSeriesChart, DateTime>> chartData =
-                  <charts.Series<TimeSeriesChart, DateTime>>[];
+              final List<ChartSeries<TimeSeriesChart, DateTime>> chartData =
+                  <ChartSeries<TimeSeriesChart, DateTime>>[];
               final List<charts.TickSpec<DateTime>> ticks =
                   <charts.TickSpec<DateTime>>[];
               final List<DateTime> addedTicks = <DateTime>[];
@@ -220,13 +253,13 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                 });
 
                 chartData.add(
-                  charts.Series<TimeSeriesChart, DateTime>(
-                    id: e.label!,
-                    seriesColor: possibleChartColors[
-                        chartData.length % possibleChartColors.length],
-                    domainFn: (TimeSeriesChart summary, _) => summary.time,
-                    measureFn: (TimeSeriesChart summary, _) => summary.value,
-                    data: data,
+                  FastLineSeries<TimeSeriesChart, DateTime>(
+                    dataSource: data,
+                    xValueMapper: (TimeSeriesChart data, _) => data.time,
+                    yValueMapper: (TimeSeriesChart data, _) => data.value,
+                    legendItemText: e.label,
+                    animationDuration:
+                        animDurationEmphasized.inMilliseconds.toDouble() * 2,
                   ),
                 );
               }
@@ -238,87 +271,39 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                     child: SizedBox(
                       height: 300,
                       width: MediaQuery.of(context).size.width,
-                      child: charts.TimeSeriesChart(
-                        chartData,
-                        animate: true,
-                        animationDuration: animDurationEmphasized,
-                        primaryMeasureAxis: charts.NumericAxisSpec(
-                          tickProviderSpec:
-                              const charts.BasicNumericTickProviderSpec(
-                            //desiredTickCount: 6,
-                            desiredMaxTickCount: 6,
-                            desiredMinTickCount: 4,
-                          ),
-                          renderSpec: charts.SmallTickRendererSpec<num>(
-                            labelStyle: charts.TextStyleSpec(
-                              color: charts.ColorUtil.fromDartColor(
-                                Theme.of(context).colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                          ),
+                      child: SfCartesianChart(
+                        primaryXAxis: DateTimeAxis(
+                          autoScrollingDelta: 11,
+                          autoScrollingMode: AutoScrollingMode.end,
+                          autoScrollingDeltaType: DateTimeIntervalType.months,
+                          enableAutoIntervalOnZooming: true,
                         ),
-                        domainAxis: charts.DateTimeAxisSpec(
-                          tickFormatterSpec: charts
-                              .BasicDateTimeTickFormatterSpec.fromDateFormat(
-                            DateFormat(
-                              DateFormat.ABBR_MONTH_DAY,
-                              S.of(context).localeName,
-                            ),
-                          ),
-                          tickProviderSpec:
-                              charts.StaticDateTimeTickProviderSpec(ticks),
-                          renderSpec: charts.SmallTickRendererSpec<DateTime>(
-                            labelStyle: charts.TextStyleSpec(
-                              color: charts.ColorUtil.fromDartColor(
-                                Theme.of(context).colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                          ),
-                          viewport: charts.DateTimeExtents(
-                            start: DateTime.now()
-                                .toLocal()
-                                .subtract(const Duration(days: 90)),
-                            end: DateTime.now().toLocal(),
-                          ),
+                        series: chartData,
+                        enableAxisAnimation: true,
+                        palette: possibleChartColorsDart,
+                        tooltipBehavior: TooltipBehavior(
+                          enable: false,
                         ),
-                        behaviors: <charts.ChartBehavior<DateTime>>[
-                          charts.PanAndZoomBehavior<DateTime>(),
-                          charts.LinePointHighlighter<DateTime>(
-                            selectionModelType: charts.SelectionModelType.info,
-                            showHorizontalFollowLine: charts
-                                .LinePointHighlighterFollowLineType.nearest,
-                            showVerticalFollowLine: charts
-                                .LinePointHighlighterFollowLineType.nearest,
-                            drawFollowLinesAcrossChart: false,
+                        crosshairBehavior: CrosshairBehavior(enable: false),
+                        zoomPanBehavior: ZoomPanBehavior(
+                          enablePanning: true,
+                          enablePinching: true,
+                          zoomMode: ZoomMode.x,
+                          enableDoubleTapZooming: true,
+                        ),
+                        trackballBehavior: TrackballBehavior(
+                          enable: true,
+                          activationMode: ActivationMode.longPress,
+                          lineType: TrackballLineType.vertical,
+                          tooltipDisplayMode: TrackballDisplayMode.none,
+                          markerSettings: const TrackballMarkerSettings(
+                            markerVisibility: TrackballVisibilityMode.visible,
                           ),
-                          charts.SelectNearest<DateTime>(
-                            selectionModelType: charts.SelectionModelType.info,
-                            eventTrigger: charts.SelectionTrigger.pressHold,
-                          ),
-                        ],
-                        defaultInteractions: false,
-                        selectionModels: <charts
-                            .SelectionModelConfig<DateTime>>[
-                          charts.SelectionModelConfig<DateTime>(
-                            type: charts.SelectionModelType.info,
-                            changedListener:
-                                (charts.SelectionModel<DateTime> model) {
-                              if (model.hasDatumSelection) {
-                                for (charts.SeriesDatum<DateTime> datum
-                                    in model.selectedDatum) {
-                                  final int i =
-                                      accounts.indexOf(datum.series.id);
-                                  if (i == -1) {
-                                    continue;
-                                  }
-                                  balances[i] = datum.datum.value;
-                                }
-                                date.value =
-                                    model.selectedDatum.first.datum.time;
-                              }
-                            },
-                          )
-                        ],
+                          shouldAlwaysShow: true,
+                        ),
+                        onTrackballPositionChanging: (TrackballArgs args) =>
+                            trackballPositionChange(args, chartData),
+                        //loadMoreIndicatorBuilder: loadMoreCallback,
                       ),
                     ),
                   ),

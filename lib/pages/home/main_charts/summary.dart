@@ -27,8 +27,8 @@ class SummaryChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<charts.Series<TimeSeriesChart, DateTime>> chartData =
-        <charts.Series<TimeSeriesChart, DateTime>>[];
+    final List<ChartSeries<TimeSeriesChart, DateTime>> chartData =
+        <ChartSeries<TimeSeriesChart, DateTime>>[];
     final List<charts.TickSpec<DateTime>> ticks = <charts.TickSpec<DateTime>>[];
 
     for (ChartDataSet e in data) {
@@ -53,52 +53,39 @@ class SummaryChart extends StatelessWidget {
       });
 
       chartData.add(
-        charts.Series<TimeSeriesChart, DateTime>(
-          id: e.label!,
-          seriesColor: possibleChartColors[
-              chartData.length % possibleChartColors.length],
-          domainFn: (TimeSeriesChart summary, _) => summary.time,
-          measureFn: (TimeSeriesChart summary, _) => summary.value,
-          data: accountData,
+        LineSeries<TimeSeriesChart, DateTime>(
+          dataSource: accountData,
+          xValueMapper: (TimeSeriesChart data, _) => data.time,
+          yValueMapper: (TimeSeriesChart data, _) => data.value,
+          legendItemText: e.label,
+          animationDuration:
+              animDurationEmphasized.inMilliseconds.toDouble() * 2,
         ),
       );
     }
 
     return Padding(
       padding: const EdgeInsets.only(left: 12),
-      child: charts.TimeSeriesChart(
-        chartData,
-        animate: true,
-        animationDuration: animDurationEmphasized,
-        primaryMeasureAxis: charts.NumericAxisSpec(
-          tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-            //desiredTickCount: 6,
-            desiredMaxTickCount: 6,
-            desiredMinTickCount: 4,
-          ),
-          renderSpec: charts.SmallTickRendererSpec<num>(
-            labelStyle: charts.TextStyleSpec(
-              color: charts.ColorUtil.fromDartColor(
-                Theme.of(context).colorScheme.onSurfaceVariant,
+      child: SfCartesianChart(
+        primaryXAxis: DateTimeAxis(
+          labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+                fontWeight: FontWeight.normal,
               ),
-            ),
-          ),
+          dateFormat: DateFormat(DateFormat.ABBR_MONTH_DAY),
+          axisLine:
+              AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
+          minorTicksPerInterval: 1,
         ),
-        domainAxis: charts.DateTimeAxisSpec(
-          tickFormatterSpec:
-              charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
-            DateFormat(DateFormat.ABBR_MONTH_DAY),
-          ),
-          tickProviderSpec: charts.StaticDateTimeTickProviderSpec(ticks),
-          renderSpec: charts.SmallTickRendererSpec<DateTime>(
-            labelStyle: charts.TextStyleSpec(
-              color: charts.ColorUtil.fromDartColor(
-                Theme.of(context).colorScheme.onSurfaceVariant,
+        primaryYAxis: NumericAxis(
+          labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+                fontWeight: FontWeight.normal,
               ),
-            ),
-          ),
+          axisLine:
+              AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
-        defaultInteractions: false,
+        series: chartData,
+        palette: possibleChartColorsDart,
+        enableAxisAnimation: true,
       ),
     );
   }
@@ -277,6 +264,26 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                           autoScrollingMode: AutoScrollingMode.end,
                           autoScrollingDeltaType: DateTimeIntervalType.months,
                           enableAutoIntervalOnZooming: true,
+                          labelStyle:
+                              Theme.of(context).textTheme.labelMedium?.copyWith(
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                          dateFormat: DateFormat(DateFormat.ABBR_MONTH_DAY),
+                          axisLine: AxisLine(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant),
+                          minorTicksPerInterval: 3,
+                        ),
+                        primaryYAxis: NumericAxis(
+                          labelStyle:
+                              Theme.of(context).textTheme.labelMedium?.copyWith(
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                          axisLine: AxisLine(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant),
                         ),
                         series: chartData,
                         enableAxisAnimation: true,

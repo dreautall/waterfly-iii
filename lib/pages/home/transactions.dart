@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:version/version.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -158,11 +159,20 @@ class _HomeTransactionsState extends State<HomeTransactions>
                 id: widget.accountId ?? _filters.account!.id,
                 page: pageKey,
                 end: DateFormat('yyyy-MM-dd', 'en_US')
-                    .format(DateTime.now().toLocal()))
+                    .format(DateTime.now().toLocal()),
+                start: (context.read<FireflyService>().apiVersion! >=
+                        Version(2, 0, 9))
+                    ? null
+                    : "1900-01-01",
+              )
             : api.v1TransactionsGet(
                 page: pageKey,
                 end: DateFormat('yyyy-MM-dd', 'en_US')
                     .format(DateTime.now().toLocal()),
+                start: (context.read<FireflyService>().apiVersion! >=
+                        Version(2, 0, 9))
+                    ? null
+                    : "1900-01-01",
               );
       }
       final Response<TransactionArray> response = await searchFunc;

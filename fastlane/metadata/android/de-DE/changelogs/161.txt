@@ -1,0 +1,3 @@
+- Hotfix für das Autovervollständigen der Accounts in der neusten Firefly-Version.
+
+Es wird nicht empfohlen zu updaten, solange die Firefly-Version nicht aktuell (v6.0.24) ist!

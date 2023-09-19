@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:waterflyiii/animations.dart';
+import 'package:version/version.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -86,6 +87,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     _filters.category = oldFilters.category;
                     _filters.currency = oldFilters.currency;
                     _filters.text = oldFilters.text;
+                    _filters.bill = oldFilters.bill;
 
                     return;
                   }
@@ -132,12 +134,28 @@ class _HomeTransactionsState extends State<HomeTransactions>
           query = "currency_is:${_filters.currency!.attributes.code} $query";
         }
         if (_filters.category != null) {
-          query =
-              "category_is:\"${_filters.category!.attributes.name}\" $query";
+          if (_filters.category!.id == "-1") {
+            query = "has_no_category:true $query";
+          } else {
+            query =
+                "category_is:\"${_filters.category!.attributes.name}\" $query";
+          }
         }
         if (_filters.budget != null) {
-          query = "budget_is:\"${_filters.budget!.attributes.name}\" $query";
+          if (_filters.budget!.id == "-1") {
+            query = "has_no_budget:true $query";
+          } else {
+            query = "budget_is:\"${_filters.budget!.attributes.name}\" $query";
+          }
         }
+        if (_filters.bill != null) {
+          if (_filters.bill!.id == "-1") {
+            query = "has_no_bill:true $query";
+          } else {
+            query = "bill_is:\"${_filters.bill!.attributes.name}\" $query";
+          }
+        }
+        query = "date_before:today $query ";
         log.fine(() => "Search query: $query");
         transactionList = await stock.getSearch(
           query: query,
@@ -149,12 +167,20 @@ class _HomeTransactionsState extends State<HomeTransactions>
           page: pageKey,
           end: DateFormat('yyyy-MM-dd', 'en_US')
               .format(DateTime.now().toLocal()),
+          start:
+              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
+                  ? null
+                  : "1900-01-01",
         );
       } else {
         transactionList = await stock.get(
           page: pageKey,
           end: DateFormat('yyyy-MM-dd', 'en_US')
               .format(DateTime.now().toLocal()),
+          start:
+              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
+                  ? null
+                  : "1900-01-01",
         );
       }
       final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;

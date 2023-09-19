@@ -43,6 +43,7 @@
         <package android:name="air.app.scb.breeze.android.main.in.prod"/>
         <package android:name="air.app.scb.breeze.android.main.sg.prod"/>
         <package android:name="am.vtb.mobilebank"/>
+        <package android:name="at.erstebank.george"/>
         <package android:name="au.com.bank86400"/>
         <package android:name="au.com.boq.mobilebanking"/>
         <package android:name="au.com.nab.mobile"/>

@@ -367,7 +367,7 @@ AutocompleteAccount _$AutocompleteAccountFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       nameWithBalance: json['name_with_balance'] as String,
       type: json['type'] as String,
-      currencyId: json['currency_id'] as int,
+      currencyId: json['currency_id'] as String,
       currencyName: json['currency_name'] as String,
       currencyCode: json['currency_code'] as String,
       currencySymbol: json['currency_symbol'] as String,
@@ -2337,7 +2337,7 @@ Map<String, dynamic> _$CategoryUpdateToJson(CategoryUpdate instance) {
 
 CategoryEarned _$CategoryEarnedFromJson(Map<String, dynamic> json) =>
     CategoryEarned(
-      currencyId: json['currency_id'] as int?,
+      currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
       currencyDecimalPlaces: json['currency_decimal_places'] as int?,
@@ -2363,7 +2363,7 @@ Map<String, dynamic> _$CategoryEarnedToJson(CategoryEarned instance) {
 
 CategorySpent _$CategorySpentFromJson(Map<String, dynamic> json) =>
     CategorySpent(
-      currencyId: json['currency_id'] as int?,
+      currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
       currencyDecimalPlaces: json['currency_decimal_places'] as int?,

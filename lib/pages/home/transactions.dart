@@ -146,6 +146,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
             query = "bill_is:\"${_filters.bill!.attributes.name}\" $query";
           }
         }
+        query = "date_before:today $query ";
         log.fine(() => "Search query: $query");
         searchFunc = api.v1SearchTransactionsGet(
           query: query,

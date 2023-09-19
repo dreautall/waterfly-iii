@@ -31,7 +31,6 @@ class _AccountsPageState extends State<AccountsPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final Logger log = Logger("Pages.Accounts.Page");
-  final ValueNotifier<bool> _searchVisible = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -51,37 +50,6 @@ class _AccountsPageState extends State<AccountsPage>
           Tab(text: S.of(context).accountsLabelLiabilities),
         ],
       );
-      context.read<NavPageElements>().appBarActions = <Widget>[
-        ChangeNotifierProvider<ValueNotifier<bool>>.value(
-          value: _searchVisible,
-          builder: (BuildContext context, _) => IconButton(
-            icon: const Icon(Icons.search),
-            selectedIcon: Icon(
-              Icons.search_outlined,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            isSelected: context.watch<ValueNotifier<bool>>().value,
-            tooltip: MaterialLocalizations.of(context).searchFieldLabel,
-            onPressed: () async {
-              if (!_searchVisible.value) {
-                context.read<NavPageElements>().appBarTitle = TextField(
-                  decoration: InputDecoration(
-                    hintText:
-                        "${MaterialLocalizations.of(context).searchFieldLabel}…",
-                  ),
-                  autofocus: true,
-                );
-              } else {
-                context.read<NavPageElements>().appBarTitle =
-                    Text(S.of(context).navigationAccounts);
-              }
-              setState(() {
-                _searchVisible.value = !_searchVisible.value;
-              });
-            },
-          ),
-        ),
-      ];
       // Call once to set fab/page actions
       _handleTabChange();
     });
@@ -140,6 +108,8 @@ class _AccountDetailsState extends State<AccountDetails>
     firstPageKey: 1,
     invisibleItemsThreshold: 10,
   );
+  final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
 
   final Logger log = Logger("Pages.Accounts.Details");
 
@@ -149,6 +119,53 @@ class _AccountDetailsState extends State<AccountDetails>
 
     _pagingController.addPageRequestListener((int pageKey) {
       _fetchPage(pageKey);
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<NavPageElements>().appBarTitle =
+          Text(S.of(context).navigationAccounts);
+      context.read<NavPageElements>().appBarActions = <Widget>[
+        ChangeNotifierProvider<ValueNotifier<bool>>.value(
+          value: ValueNotifier<bool>(false),
+          builder: (BuildContext context, _) => IconButton(
+            icon: const Icon(Icons.search),
+            selectedIcon: Icon(
+              Icons.search_outlined,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            isSelected: context.watch<ValueNotifier<bool>>().value,
+            tooltip: MaterialLocalizations.of(context).searchFieldLabel,
+            onPressed: () async {
+              log.finest(() => "pressed search button");
+              ValueNotifier<bool> searchVisible =
+                  context.read<ValueNotifier<bool>>();
+              if (!searchVisible.value) {
+                context.read<NavPageElements>().appBarTitle = TextField(
+                  controller: _searchController,
+                  focusNode: _searchFocusNode,
+                  decoration: InputDecoration(
+                    hintText:
+                        "${MaterialLocalizations.of(context).searchFieldLabel}…",
+                    suffixIcon: IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          _searchController.clear();
+                          _pagingController.refresh();
+                          _searchFocusNode.requestFocus();
+                        }),
+                  ),
+                  autofocus: true,
+                  onSubmitted: (_) => _pagingController.refresh(),
+                );
+              } else {
+                context.read<NavPageElements>().appBarTitle =
+                    Text(S.of(context).navigationAccounts);
+              }
+              searchVisible.value = !searchVisible.value;
+            },
+          ),
+        ),
+      ];
     });
   }
 
@@ -162,10 +179,20 @@ class _AccountDetailsState extends State<AccountDetails>
   Future<void> _fetchPage(int pageKey) async {
     try {
       final FireflyIii api = context.read<FireflyService>().api;
-      final Response<AccountArray> respAccounts = await api.v1AccountsGet(
-        type: widget.accountType,
-        page: pageKey,
-      );
+      late Response<AccountArray> respAccounts;
+      if (_searchController.text.isNotEmpty) {
+        respAccounts = await api.v1SearchAccountsGet(
+          type: widget.accountType,
+          page: pageKey,
+          query: _searchController.text,
+          field: AccountSearchFieldFilter.all,
+        );
+      } else {
+        respAccounts = await api.v1AccountsGet(
+          type: widget.accountType,
+          page: pageKey,
+        );
+      }
       if (!respAccounts.isSuccessful || respAccounts.body == null) {
         if (context.mounted) {
           throw Exception(
@@ -195,7 +222,7 @@ class _AccountDetailsState extends State<AccountDetails>
   }
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 
   @override
   Widget build(BuildContext context) {

@@ -41,16 +41,17 @@ class _AccountsPageState extends State<AccountsPage>
     _tabController.addListener(_handleTabChange);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<NavPageElements>().setAppBarBottom(TabBar(
-            isScrollable: true,
-            controller: _tabController,
-            tabs: <Tab>[
-              Tab(text: S.of(context).accountsLabelAsset),
-              Tab(text: S.of(context).accountsLabelExpense),
-              Tab(text: S.of(context).accountsLabelRevenue),
-              Tab(text: S.of(context).accountsLabelLiabilities),
-            ],
-          ));
+      context.read<NavPageElements>().appBarBottom = TabBar(
+        isScrollable: true,
+        controller: _tabController,
+        tabs: <Tab>[
+          Tab(text: S.of(context).accountsLabelAsset),
+          Tab(text: S.of(context).accountsLabelExpense),
+          Tab(text: S.of(context).accountsLabelRevenue),
+          Tab(text: S.of(context).accountsLabelLiabilities),
+        ],
+      );
+      //context.read<NavPageElements>().appBarActions =
       // Call once to set fab/page actions
       _handleTabChange();
     });

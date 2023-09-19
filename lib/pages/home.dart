@@ -74,16 +74,16 @@ class HomePageState extends State<HomePage>
         },
       );
 
-      context.read<NavPageElements>().setAppBarBottom(TabBar(
-            isScrollable: true,
-            controller: _tabController,
-            tabs: <Tab>[
-              Tab(text: S.of(context).homeTabLabelMain),
-              Tab(text: S.of(context).homeTabLabelTransactions),
-              Tab(text: S.of(context).homeTabLabelBalance),
-              Tab(text: S.of(context).homeTabLabelPiggybanks),
-            ],
-          ));
+      context.read<NavPageElements>().appBarBottom = TabBar(
+        isScrollable: true,
+        controller: _tabController,
+        tabs: <Tab>[
+          Tab(text: S.of(context).homeTabLabelMain),
+          Tab(text: S.of(context).homeTabLabelTransactions),
+          Tab(text: S.of(context).homeTabLabelBalance),
+          Tab(text: S.of(context).homeTabLabelPiggybanks),
+        ],
+      );
       // Call once to set fab/page actions
       _handleTabChange();
     });
@@ -100,11 +100,10 @@ class HomePageState extends State<HomePage>
   void _handleTabChange() {
     if (!_tabController.indexIsChanging) {
       log.finer(() => "_handleTabChange(${_tabController.index})");
-      context
-          .read<NavPageElements>()
-          .setFab((_tabController.index < 2) ? _newTransactionFab : null);
-      context.read<NavPageElements>().setAppBarActions(
-          _actions.get(tabPages[_tabController.index].key ?? const Key('')));
+      context.read<NavPageElements>().fab =
+          (_tabController.index < 2) ? _newTransactionFab : null;
+      context.read<NavPageElements>().appBarActions =
+          _actions.get(tabPages[_tabController.index].key ?? const Key(''));
     }
   }
 

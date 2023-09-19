@@ -3,10 +3,12 @@ servers:
   - description: Firefly III demo site
     url: https://demo.firefly-iii.org/api
 info:
-  title: Firefly III API v2.0.7
+  title: Firefly III API v2.0.8
   description: |
-    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2023-09-01T17:55:04+00:00
-  version: "2.0.7"
+    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2023-09-16T02:55:22+00:00
+
+    Please keep in mind that the demo site does not accept requests from curl, colly, wget, etc. You must use a browser or a tool like Postman to make requests. Too many script kiddies out there, sorry about that.
+  version: "2.0.8"
   contact:
     name: James Cole
     email: james@firefly-iii.org
@@ -13555,8 +13557,8 @@ components:
           example: "Asset account"
           description: Account type of the account found by the auto-complete search.
         currency_id:
-          type: int
-          format: int
+          type: string
+          format: string
           example: "12"
           description: ID for the currency used by this account.
         currency_name:
@@ -16055,8 +16057,8 @@ components:
       type: object
       properties:
         currency_id:
-          type: int
-          format: int
+          type: string
+          format: string
           example: "5"
         currency_code:
           type: string
@@ -16080,8 +16082,8 @@ components:
       type: object
       properties:
         currency_id:
-          type: int
-          format: int
+          type: string
+          format: string
           example: "5"
         currency_code:
           type: string

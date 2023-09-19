@@ -975,7 +975,7 @@ class AutocompleteAccount {
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'currency_id', includeIfNull: false)
-  final int currencyId;
+  final String currencyId;
   @JsonKey(name: 'currency_name', includeIfNull: false)
   final String currencyName;
   @JsonKey(name: 'currency_code', includeIfNull: false)
@@ -996,7 +996,7 @@ extension $AutocompleteAccountExtension on AutocompleteAccount {
       String? name,
       String? nameWithBalance,
       String? type,
-      int? currencyId,
+      String? currencyId,
       String? currencyName,
       String? currencyCode,
       String? currencySymbol,
@@ -1019,7 +1019,7 @@ extension $AutocompleteAccountExtension on AutocompleteAccount {
       Wrapped<String>? name,
       Wrapped<String>? nameWithBalance,
       Wrapped<String>? type,
-      Wrapped<int>? currencyId,
+      Wrapped<String>? currencyId,
       Wrapped<String>? currencyName,
       Wrapped<String>? currencyCode,
       Wrapped<String>? currencySymbol,
@@ -6491,7 +6491,7 @@ class CategoryEarned {
   Map<String, dynamic> toJson() => _$CategoryEarnedToJson(this);
 
   @JsonKey(name: 'currency_id', includeIfNull: false)
-  final int? currencyId;
+  final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'currency_symbol', includeIfNull: false)
@@ -6508,7 +6508,7 @@ class CategoryEarned {
 
 extension $CategoryEarnedExtension on CategoryEarned {
   CategoryEarned copyWith(
-      {int? currencyId,
+      {String? currencyId,
       String? currencyCode,
       String? currencySymbol,
       int? currencyDecimalPlaces,
@@ -6523,7 +6523,7 @@ extension $CategoryEarnedExtension on CategoryEarned {
   }
 
   CategoryEarned copyWithWrapped(
-      {Wrapped<int?>? currencyId,
+      {Wrapped<String?>? currencyId,
       Wrapped<String?>? currencyCode,
       Wrapped<String?>? currencySymbol,
       Wrapped<int?>? currencyDecimalPlaces,
@@ -6559,7 +6559,7 @@ class CategorySpent {
   Map<String, dynamic> toJson() => _$CategorySpentToJson(this);
 
   @JsonKey(name: 'currency_id', includeIfNull: false)
-  final int? currencyId;
+  final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'currency_symbol', includeIfNull: false)
@@ -6576,7 +6576,7 @@ class CategorySpent {
 
 extension $CategorySpentExtension on CategorySpent {
   CategorySpent copyWith(
-      {int? currencyId,
+      {String? currencyId,
       String? currencyCode,
       String? currencySymbol,
       int? currencyDecimalPlaces,
@@ -6591,7 +6591,7 @@ extension $CategorySpentExtension on CategorySpent {
   }
 
   CategorySpent copyWithWrapped(
-      {Wrapped<int?>? currencyId,
+      {Wrapped<String?>? currencyId,
       Wrapped<String?>? currencyCode,
       Wrapped<String?>? currencySymbol,
       Wrapped<int?>? currencyDecimalPlaces,

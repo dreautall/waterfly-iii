@@ -30,8 +30,8 @@ class AccountsPage extends StatefulWidget {
 class _AccountsPageState extends State<AccountsPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-
   final Logger log = Logger("Pages.Accounts.Page");
+  final ValueNotifier<bool> _searchVisible = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -51,7 +51,37 @@ class _AccountsPageState extends State<AccountsPage>
           Tab(text: S.of(context).accountsLabelLiabilities),
         ],
       );
-      //context.read<NavPageElements>().appBarActions =
+      context.read<NavPageElements>().appBarActions = <Widget>[
+        ChangeNotifierProvider<ValueNotifier<bool>>.value(
+          value: _searchVisible,
+          builder: (BuildContext context, _) => IconButton(
+            icon: const Icon(Icons.search),
+            selectedIcon: Icon(
+              Icons.search_outlined,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            isSelected: context.watch<ValueNotifier<bool>>().value,
+            tooltip: MaterialLocalizations.of(context).searchFieldLabel,
+            onPressed: () async {
+              if (!_searchVisible.value) {
+                context.read<NavPageElements>().appBarTitle = TextField(
+                  decoration: InputDecoration(
+                    hintText:
+                        "${MaterialLocalizations.of(context).searchFieldLabel}…",
+                  ),
+                  autofocus: true,
+                );
+              } else {
+                context.read<NavPageElements>().appBarTitle =
+                    Text(S.of(context).navigationAccounts);
+              }
+              setState(() {
+                _searchVisible.value = !_searchVisible.value;
+              });
+            },
+          ),
+        ),
+      ];
       // Call once to set fab/page actions
       _handleTabChange();
     });

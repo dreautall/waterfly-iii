@@ -11,7 +11,7 @@ import 'package:waterflyiii/pages/home/transactions.dart';
 
 Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
   late double currentAmount;
-  if (account.attributes.type == AccountTypeFilter.liability) {
+  if (account.attributes.type == ShortAccountTypeProperty.liability) {
     currentAmount = double.tryParse(account.attributes.currentDebt ?? "") ?? 0;
   } else {
     currentAmount =
@@ -30,28 +30,28 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
 
   late String subtitle;
   switch (account.attributes.type) {
-    case AccountTypeFilter.asset:
+    case ShortAccountTypeProperty.asset:
       subtitle = account.attributes.accountRole?.friendlyName(context) ??
           S.of(context).generalUnknown;
       if (account.attributes.iban != null) {
         subtitle += "\nIBAN: ${account.attributes.iban!}";
       }
       break;
-    case AccountTypeFilter.expense:
+    case ShortAccountTypeProperty.expense:
       subtitle = account.attributes.iban ?? "";
       // Switch sign, see #96
       if (currentAmount != 0) {
         currentAmount *= -1;
       }
       break;
-    case AccountTypeFilter.revenue:
+    case ShortAccountTypeProperty.revenue:
       subtitle = account.attributes.iban ?? "";
       // Switch sign, see #96
       if (currentAmount != 0) {
         currentAmount *= -1;
       }
       break;
-    case AccountTypeFilter.liabilities:
+    case ShortAccountTypeProperty.liabilities:
       switch (account.attributes.liabilityType) {
         case LiabilityType.debt:
           subtitle = S.of(context).liabilityTypeDebt;
@@ -117,13 +117,13 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
       ),
       subtitle: Text(
         subtitle,
-        maxLines: account.attributes.type == AccountTypeFilter.asset ||
-                account.attributes.type == AccountTypeFilter.liabilities
+        maxLines: account.attributes.type == ShortAccountTypeProperty.asset ||
+                account.attributes.type == ShortAccountTypeProperty.liabilities
             ? 2
             : 1,
       ),
-      isThreeLine: account.attributes.type == AccountTypeFilter.asset ||
-          account.attributes.type == AccountTypeFilter.liabilities,
+      isThreeLine: account.attributes.type == ShortAccountTypeProperty.asset ||
+          account.attributes.type == ShortAccountTypeProperty.liabilities,
       trailing: RichText(
         textAlign: TextAlign.end,
         maxLines: 2,

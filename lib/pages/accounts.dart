@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:animations/animations.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -13,6 +14,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/home/accounts/search.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 
@@ -108,8 +110,6 @@ class _AccountDetailsState extends State<AccountDetails>
     firstPageKey: 1,
     invisibleItemsThreshold: 10,
   );
-  final TextEditingController _searchController = TextEditingController();
-  final FocusNode _searchFocusNode = FocusNode();
 
   final Logger log = Logger("Pages.Accounts.Details");
 
@@ -122,48 +122,21 @@ class _AccountDetailsState extends State<AccountDetails>
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<NavPageElements>().appBarTitle =
-          Text(S.of(context).navigationAccounts);
       context.read<NavPageElements>().appBarActions = <Widget>[
-        ChangeNotifierProvider<ValueNotifier<bool>>.value(
-          value: ValueNotifier<bool>(false),
-          builder: (BuildContext context, _) => IconButton(
-            icon: const Icon(Icons.search),
-            selectedIcon: Icon(
-              Icons.search_outlined,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            isSelected: context.watch<ValueNotifier<bool>>().value,
-            tooltip: MaterialLocalizations.of(context).searchFieldLabel,
-            onPressed: () async {
-              log.finest(() => "pressed search button");
-              ValueNotifier<bool> searchVisible =
-                  context.read<ValueNotifier<bool>>();
-              if (!searchVisible.value) {
-                context.read<NavPageElements>().appBarTitle = TextField(
-                  controller: _searchController,
-                  focusNode: _searchFocusNode,
-                  decoration: InputDecoration(
-                    hintText:
-                        "${MaterialLocalizations.of(context).searchFieldLabel}…",
-                    suffixIcon: IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          _searchController.clear();
-                          _pagingController.refresh();
-                          _searchFocusNode.requestFocus();
-                        }),
-                  ),
-                  autofocus: true,
-                  onSubmitted: (_) => _pagingController.refresh(),
-                );
-              } else {
-                context.read<NavPageElements>().appBarTitle =
-                    Text(S.of(context).navigationAccounts);
-              }
-              searchVisible.value = !searchVisible.value;
-            },
-          ),
+        IconButton(
+          icon: const Icon(Icons.search),
+          tooltip: MaterialLocalizations.of(context).searchFieldLabel,
+          onPressed: () {
+            log.finest(() => "pressed search button");
+            Navigator.of(context).push(
+              CupertinoPageRoute<bool>(
+                builder: (BuildContext context) => AccountSearch(
+                  type: widget.accountType,
+                ),
+                fullscreenDialog: false,
+              ),
+            );
+          },
         ),
       ];
     });
@@ -179,20 +152,11 @@ class _AccountDetailsState extends State<AccountDetails>
   Future<void> _fetchPage(int pageKey) async {
     try {
       final FireflyIii api = context.read<FireflyService>().api;
-      late Response<AccountArray> respAccounts;
-      if (_searchController.text.isNotEmpty) {
-        respAccounts = await api.v1SearchAccountsGet(
-          type: widget.accountType,
-          page: pageKey,
-          query: _searchController.text,
-          field: AccountSearchFieldFilter.all,
-        );
-      } else {
-        respAccounts = await api.v1AccountsGet(
-          type: widget.accountType,
-          page: pageKey,
-        );
-      }
+
+      final Response<AccountArray> respAccounts = await api.v1AccountsGet(
+        type: widget.accountType,
+        page: pageKey,
+      );
       if (!respAccounts.isSuccessful || respAccounts.body == null) {
         if (context.mounted) {
           throw Exception(
@@ -222,7 +186,7 @@ class _AccountDetailsState extends State<AccountDetails>
   }
 
   @override
-  bool get wantKeepAlive => false;
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {

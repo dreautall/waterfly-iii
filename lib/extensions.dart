@@ -349,3 +349,20 @@ extension DateTimeExtension on DateTime {
 
   TimeOfDay getTimeOfDay() => TimeOfDay.fromDateTime(this);
 }
+
+extension AccountTypeFilterIcon on AccountTypeFilter {
+  IconData icon() {
+    switch (this) {
+      case AccountTypeFilter.asset:
+        return Icons.money_outlined;
+      case AccountTypeFilter.expense:
+        return Icons.shopping_cart;
+      case AccountTypeFilter.revenue:
+        return Icons.download;
+      case AccountTypeFilter.liabilities:
+        return Icons.payment_outlined;
+      default:
+        return Icons.question_mark;
+    }
+  }
+}

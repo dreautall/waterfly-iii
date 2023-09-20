@@ -9,6 +9,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/home/accounts/row.dart';
 
 class AccountSearch extends StatefulWidget {
   const AccountSearch({
@@ -117,6 +118,7 @@ class _AccountSearchState extends State<AccountSearch> {
             setState(() {
               currentFilter = null;
             });
+            _pagingController.refresh();
           },
           selected: true,
         ),
@@ -131,6 +133,7 @@ class _AccountSearchState extends State<AccountSearch> {
               setState(() {
                 currentFilter = accType;
               });
+              _pagingController.refresh();
             },
             avatar: Icon(accType.icon()),
           ),
@@ -162,7 +165,14 @@ class _AccountSearchState extends State<AccountSearch> {
               children: chips,
             ),
           ),
-          Placeholder(),
+          Expanded(
+            child: PagedListView<int, AccountRead>(
+              pagingController: _pagingController,
+              builderDelegate: PagedChildBuilderDelegate<AccountRead>(
+                itemBuilder: accountRowBuilder,
+              ),
+            ),
+          ),
         ],
       ),
     );

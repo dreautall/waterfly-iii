@@ -44,9 +44,8 @@ class _HomePiggybankState extends State<HomePiggybank>
   void initState() {
     super.initState();
 
-    _pagingController.addPageRequestListener((int pageKey) {
-      _fetchPage(pageKey);
-    });
+    _pagingController
+        .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
   }
 
   @override

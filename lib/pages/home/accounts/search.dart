@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:waterflyiii/animations.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -111,46 +112,57 @@ class _AccountSearchState extends State<AccountSearch> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> chips = <Widget>[];
-    if (currentFilter != null) {
+    for (AccountTypeFilter accType in potentialFilters) {
       chips.add(
-        FilterChip(
-          label: Text(currentFilter!.friendlyName(context)),
-          onSelected: (bool selected) {
-            log.finest(() => "current chip $currentFilter now $selected");
-            setState(() {
-              currentFilter = null;
-              if (_searchController.text.isEmpty) {
-                _searched = false;
-                _searchFocusNode.requestFocus();
-              } else {
-                _pagingController.refresh();
-              }
-            });
-          },
-          selected: true,
-          visualDensity: const VisualDensity(vertical: -2),
+        AnimatedSize(
+          duration: animDurationEmphasized,
+          curve: animCurveEmphasized,
+          alignment: Alignment.center,
+          child: SizedBox(
+            height: 40,
+            child: currentFilter == accType
+                ? FilterChip(
+                    label: Text(currentFilter!.friendlyName(context)),
+                    onSelected: (bool selected) {
+                      log.finest(
+                          () => "current chip $currentFilter now $selected");
+                      setState(() {
+                        currentFilter = null;
+                        if (_searchController.text.isEmpty) {
+                          _searched = false;
+                          _searchFocusNode.requestFocus();
+                        } else {
+                          _pagingController.refresh();
+                        }
+                      });
+                    },
+                    selected: true,
+                    visualDensity: const VisualDensity(vertical: -2),
+                  )
+                : currentFilter == null
+                    ? ActionChip(
+                        label: Text(accType.friendlyName(context)),
+                        onPressed: () {
+                          log.finest(() => "chip $accType selected");
+                          setState(() {
+                            currentFilter = accType;
+                            _searched = true;
+                          });
+                          _pagingController.refresh();
+                          FocusScope.of(context).unfocus();
+                        },
+                        avatar: Icon(accType.icon()),
+                        visualDensity: const VisualDensity(vertical: -2),
+                      )
+                    : const SizedBox.shrink(),
+          ),
         ),
       );
-    } else {
-      for (AccountTypeFilter accType in potentialFilters) {
-        chips.add(
-          ActionChip(
-            label: Text(accType.friendlyName(context)),
-            onPressed: () {
-              log.finest(() => "chip $accType selected");
-              setState(() {
-                currentFilter = accType;
-                _searched = true;
-              });
-              _pagingController.refresh();
-              FocusScope.of(context).unfocus();
-            },
-            avatar: Icon(accType.icon()),
-            visualDensity: const VisualDensity(vertical: -2),
-          ),
-        );
+      if (currentFilter == null) {
         chips.add(const SizedBox(width: 8));
       }
+    }
+    if (currentFilter == null) {
       chips.removeLast();
     }
 

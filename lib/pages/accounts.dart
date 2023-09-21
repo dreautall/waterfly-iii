@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:waterflyiii/animations.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
@@ -55,12 +56,30 @@ class _AccountsPageState extends State<AccountsPage>
           onPressed: () {
             log.finest(() => "pressed search button");
             Navigator.of(context).push(
-              CupertinoPageRoute<bool>(
+              PageRouteBuilder<Widget>(
+                pageBuilder: (BuildContext context, _, __) => AccountSearch(
+                  type: _accountTypes[_tabController.index],
+                ),
+                transitionDuration: animDurationEmphasizedDecelerate,
+                reverseTransitionDuration: animDurationEmphasizedAccelerate,
+                transitionsBuilder: (BuildContext context,
+                        Animation<double> primaryAnimation,
+                        Animation<double> secondaryAnimation,
+                        Widget child) =>
+                    SharedAxisTransition(
+                  animation: primaryAnimation,
+                  secondaryAnimation: secondaryAnimation,
+                  transitionType: SharedAxisTransitionType.horizontal,
+                  child: child,
+                ),
+              ),
+
+              /*    CupertinoPageRoute<bool>(
                 builder: (BuildContext context) => AccountSearch(
                   type: _accountTypes[_tabController.index],
                 ),
                 fullscreenDialog: false,
-              ),
+              ),*/
             );
           },
         ),
@@ -132,9 +151,8 @@ class _AccountDetailsState extends State<AccountDetails>
   void initState() {
     super.initState();
 
-    _pagingController.addPageRequestListener((int pageKey) {
-      _fetchPage(pageKey);
-    });
+    _pagingController
+        .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
   }
 
   @override

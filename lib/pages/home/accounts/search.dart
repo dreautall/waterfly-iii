@@ -41,7 +41,7 @@ class _AccountSearchState extends State<AccountSearch> {
     AccountTypeFilter.liabilities
   ];
 
-  String _lastSearch = "";
+  bool _searched = false;
 
   final Logger log = Logger("Pages.Accounts.Search");
 
@@ -50,10 +50,8 @@ class _AccountSearchState extends State<AccountSearch> {
     super.initState();
 
     currentFilter = widget.type;
-
-    _pagingController.addPageRequestListener((int pageKey) {
-      _fetchPage(pageKey);
-    });
+    _pagingController
+        .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
   }
 
   @override
@@ -74,7 +72,6 @@ class _AccountSearchState extends State<AccountSearch> {
           query: _searchController.text,
           field: AccountSearchFieldFilter.all,
         );
-        _lastSearch = _searchController.text;
       } else {
         respAccounts = await api.v1AccountsGet(
           type: currentFilter,
@@ -122,8 +119,13 @@ class _AccountSearchState extends State<AccountSearch> {
             log.finest(() => "current chip $currentFilter now $selected");
             setState(() {
               currentFilter = null;
+              if (_searchController.text.isEmpty) {
+                _searched = false;
+                _searchFocusNode.requestFocus();
+              } else {
+                _pagingController.refresh();
+              }
             });
-            _pagingController.refresh();
           },
           selected: true,
           visualDensity: const VisualDensity(vertical: -2),
@@ -138,8 +140,10 @@ class _AccountSearchState extends State<AccountSearch> {
               log.finest(() => "chip $accType selected");
               setState(() {
                 currentFilter = accType;
+                _searched = true;
               });
               _pagingController.refresh();
+              FocusScope.of(context).unfocus();
             },
             avatar: Icon(accType.icon()),
             visualDensity: const VisualDensity(vertical: -2),
@@ -149,6 +153,7 @@ class _AccountSearchState extends State<AccountSearch> {
       }
       chips.removeLast();
     }
+
     return Scaffold(
       appBar: AppBar(
         title: TextField(
@@ -162,20 +167,23 @@ class _AccountSearchState extends State<AccountSearch> {
                     icon: const Icon(Icons.clear),
                     onPressed: () {
                       _searchController.clear();
-                      if (_lastSearch.isNotEmpty) {
-                        _pagingController.refresh();
-                      }
-
                       _searchFocusNode.requestFocus();
                       setState(() {
-                        _lastSearch = "";
+                        _searched = false;
                       });
                     })
                 : null,
           ),
           autofocus: true,
           onChanged: (_) => setState(() {}),
-          onSubmitted: (_) => _pagingController.refresh(),
+          onSubmitted: (_) {
+            if (!_searched) {
+              setState(() {
+                _searched = true;
+              });
+            }
+            _pagingController.refresh();
+          },
         ),
       ),
       body: Column(
@@ -189,12 +197,14 @@ class _AccountSearchState extends State<AccountSearch> {
             ),
           ),
           Expanded(
-            child: PagedListView<int, AccountRead>(
-              pagingController: _pagingController,
-              builderDelegate: PagedChildBuilderDelegate<AccountRead>(
-                itemBuilder: accountRowBuilder,
-              ),
-            ),
+            child: _searched
+                ? PagedListView<int, AccountRead>(
+                    pagingController: _pagingController,
+                    builderDelegate: PagedChildBuilderDelegate<AccountRead>(
+                      itemBuilder: accountRowBuilder,
+                    ),
+                  )
+                : const SizedBox.expand(),
           ),
         ],
       ),

@@ -52,9 +52,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
   void initState() {
     super.initState();
 
-    _pagingController.addPageRequestListener((int pageKey) {
-      _fetchPage(pageKey);
-    });
+    _pagingController
+        .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
 
     // Only add button when in own tab
     if (widget.accountId == null) {

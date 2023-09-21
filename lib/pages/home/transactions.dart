@@ -189,12 +189,16 @@ class _HomeTransactionsState extends State<HomeTransactions>
           );
         }
       }
-      final List<TransactionRead> transactionList = response.body!.data;
-      final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
-      if (isLastPage) {
-        _pagingController.appendLastPage(transactionList);
-      } else {
-        _pagingController.appendPage(transactionList, pageKey + 1);
+
+      if (mounted) {
+        final List<TransactionRead> transactionList = response.body!.data;
+        final bool isLastPage =
+            transactionList.length < _numberOfPostsPerRequest;
+        if (isLastPage) {
+          _pagingController.appendLastPage(transactionList);
+        } else {
+          _pagingController.appendPage(transactionList, pageKey + 1);
+        }
       }
     } catch (e, stackTrace) {
       log.severe("_fetchPage($pageKey)", e, stackTrace);

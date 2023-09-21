@@ -76,13 +76,15 @@ class _HomePiggybankState extends State<HomePiggybank>
         }
       }
 
-      final List<PiggyBankRead> piggyList = respAccounts.body!.data;
-      final bool isLastPage = piggyList.length < _numberOfItemsPerRequest;
-      if (isLastPage) {
-        _pagingController.appendLastPage(piggyList);
-      } else {
-        final int nextPageKey = pageKey + 1;
-        _pagingController.appendPage(piggyList, nextPageKey);
+      if (mounted) {
+        final List<PiggyBankRead> piggyList = respAccounts.body!.data;
+        final bool isLastPage = piggyList.length < _numberOfItemsPerRequest;
+        if (isLastPage) {
+          _pagingController.appendLastPage(piggyList);
+        } else {
+          final int nextPageKey = pageKey + 1;
+          _pagingController.appendPage(piggyList, nextPageKey);
+        }
       }
     } catch (e, stackTrace) {
       log.severe("_fetchPage($pageKey)", e, stackTrace);

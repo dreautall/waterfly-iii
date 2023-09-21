@@ -47,6 +47,25 @@ class _AccountsPageState extends State<AccountsPage>
           Tab(text: S.of(context).accountsLabelLiabilities),
         ],
       );
+
+      context.read<NavPageElements>().appBarActions = <Widget>[
+        IconButton(
+          icon: const Icon(Icons.search),
+          tooltip: MaterialLocalizations.of(context).searchFieldLabel,
+          onPressed: () {
+            log.finest(() => "pressed search button");
+            Navigator.of(context).push(
+              CupertinoPageRoute<bool>(
+                builder: (BuildContext context) => AccountSearch(
+                  type: _accountTypes[_tabController.index],
+                ),
+                fullscreenDialog: false,
+              ),
+            );
+          },
+        ),
+      ];
+
       // Call once to set fab/page actions
       _handleTabChange();
     });
@@ -66,21 +85,22 @@ class _AccountsPageState extends State<AccountsPage>
     }
   }
 
-  late List<Tab> tabs;
-
-  static const List<Widget> tabPages = <Widget>[
-    AccountDetails(accountType: AccountTypeFilter.asset),
-    AccountDetails(accountType: AccountTypeFilter.expense),
-    AccountDetails(accountType: AccountTypeFilter.revenue),
-    AccountDetails(accountType: AccountTypeFilter.liabilities),
+  static const List<AccountTypeFilter> _accountTypes = <AccountTypeFilter>[
+    AccountTypeFilter.asset,
+    AccountTypeFilter.expense,
+    AccountTypeFilter.revenue,
+    AccountTypeFilter.liabilities,
   ];
+  final List<Widget> _tabPages = _accountTypes
+      .map<Widget>((AccountTypeFilter t) => AccountDetails(accountType: t))
+      .toList();
 
   @override
   Widget build(BuildContext context) {
     log.fine(() => "build(tab: ${_tabController.index})");
     return TabBarView(
       controller: _tabController,
-      children: tabPages,
+      children: _tabPages,
     );
   }
 }
@@ -114,26 +134,6 @@ class _AccountDetailsState extends State<AccountDetails>
 
     _pagingController.addPageRequestListener((int pageKey) {
       _fetchPage(pageKey);
-    });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<NavPageElements>().appBarActions = <Widget>[
-        IconButton(
-          icon: const Icon(Icons.search),
-          tooltip: MaterialLocalizations.of(context).searchFieldLabel,
-          onPressed: () {
-            log.finest(() => "pressed search button");
-            Navigator.of(context).push(
-              CupertinoPageRoute<bool>(
-                builder: (BuildContext context) => AccountSearch(
-                  type: widget.accountType,
-                ),
-                fullscreenDialog: false,
-              ),
-            );
-          },
-        ),
-      ];
     });
   }
 

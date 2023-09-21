@@ -95,13 +95,15 @@ class _AccountSearchState extends State<AccountSearch> {
         }
       }
 
-      final List<AccountRead> accountList = respAccounts.body!.data;
-      final bool isLastPage = accountList.length < _numberOfItemsPerRequest;
-      if (isLastPage) {
-        _pagingController.appendLastPage(accountList);
-      } else {
-        final int nextPageKey = pageKey + 1;
-        _pagingController.appendPage(accountList, nextPageKey);
+      if (mounted) {
+        final List<AccountRead> accountList = respAccounts.body!.data;
+        final bool isLastPage = accountList.length < _numberOfItemsPerRequest;
+        if (isLastPage) {
+          _pagingController.appendLastPage(accountList);
+        } else {
+          final int nextPageKey = pageKey + 1;
+          _pagingController.appendPage(accountList, nextPageKey);
+        }
       }
     } catch (e, stackTrace) {
       log.severe("_fetchPage($pageKey)", e, stackTrace);

@@ -115,7 +115,7 @@ class _AccountSearchState extends State<AccountSearch> {
     if (currentFilter != null) {
       chips.add(
         FilterChip(
-          label: Text(currentFilter!.name),
+          label: Text(currentFilter!.friendlyName(context)),
           onSelected: (bool selected) {
             log.finest(() => "current chip $currentFilter now $selected");
             setState(() {
@@ -131,7 +131,7 @@ class _AccountSearchState extends State<AccountSearch> {
       for (AccountTypeFilter accType in potentialFilters) {
         chips.add(
           ActionChip(
-            label: Text(accType.name),
+            label: Text(accType.friendlyName(context)),
             onPressed: () {
               log.finest(() => "chip $accType selected");
               setState(() {

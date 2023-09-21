@@ -26,6 +26,7 @@ import 'package:waterflyiii/pages/transaction/currencies.dart';
 import 'package:waterflyiii/pages/transaction/delete.dart';
 import 'package:waterflyiii/pages/transaction/tags.dart';
 import 'package:waterflyiii/settings.dart';
+import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
@@ -843,6 +844,8 @@ class _TransactionPageState extends State<TransactionPage>
                     final FireflyIii api = context.read<FireflyService>().api;
                     final NavigatorState nav = Navigator.of(context);
                     final AuthUser? user = context.read<FireflyService>().user;
+                    final TransStock? stock =
+                        context.read<FireflyService>().transStock;
 
                     // Sanity checks
                     String? error;
@@ -853,7 +856,7 @@ class _TransactionPageState extends State<TransactionPage>
                     if (_titleTextController.text.isEmpty) {
                       error = S.of(context).transactionErrorTitle;
                     }
-                    if (user == null) {
+                    if (user == null || stock == null) {
                       error = S.of(context).errorAPIUnavailable;
                     }
                     if (error != null) {
@@ -1039,6 +1042,9 @@ class _TransactionPageState extends State<TransactionPage>
                       });
                       return;
                     }
+
+                    // Update stock
+                    await stock!.setTransaction(resp.body!.data);
 
                     // Upload attachments if required
                     if ((_attachments?.isNotEmpty ?? false) &&

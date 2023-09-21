@@ -12,6 +12,7 @@ import 'package:version/version.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/stock.dart';
 
 final Logger log = Logger("Auth");
 final Version minApiVersion = Version(2, 0, 0);
@@ -199,6 +200,9 @@ class FireflyService with ChangeNotifier {
   Version? _apiVersion;
   Version? get apiVersion => _apiVersion;
 
+  TransStock? _transStock;
+  TransStock? get transStock => _transStock;
+
   bool get hasApi => (_currentUser?.api != null) ? true : false;
   FireflyIii get api {
     if (_currentUser?.api == null) {
@@ -296,6 +300,7 @@ class FireflyService with ChangeNotifier {
     }
 
     _signedIn = true;
+    _transStock = TransStock(api);
     log.finest(() => "notify FireflyService->signIn");
     notifyListeners();
 

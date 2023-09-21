@@ -2,7 +2,7 @@ name: waterflyiii
 description: WaterFly III, a mobile client for Firefly III
 publish_to: 'none'
 
-version: 0.1.13-beta
+version: 0.1.13-alphacache+1610001
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -45,6 +45,7 @@ dependencies:
   version: ^3.0.2
   camera: ^0.10.5+2
   quick_actions: ^1.0.6
+  stock: ^1.0.1
 
 dev_dependencies:
   flutter_lints: ^2.0.2

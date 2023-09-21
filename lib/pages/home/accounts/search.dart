@@ -41,6 +41,8 @@ class _AccountSearchState extends State<AccountSearch> {
     AccountTypeFilter.liabilities
   ];
 
+  String _lastSearch = "";
+
   final Logger log = Logger("Pages.Accounts.Search");
 
   @override
@@ -72,6 +74,7 @@ class _AccountSearchState extends State<AccountSearch> {
           query: _searchController.text,
           field: AccountSearchFieldFilter.all,
         );
+        _lastSearch = _searchController.text;
       } else {
         respAccounts = await api.v1AccountsGet(
           type: currentFilter,
@@ -121,6 +124,7 @@ class _AccountSearchState extends State<AccountSearch> {
             _pagingController.refresh();
           },
           selected: true,
+          visualDensity: const VisualDensity(vertical: -2),
         ),
       );
     } else {
@@ -136,9 +140,10 @@ class _AccountSearchState extends State<AccountSearch> {
               _pagingController.refresh();
             },
             avatar: Icon(accType.icon()),
+            visualDensity: const VisualDensity(vertical: -2),
           ),
         );
-        chips.add(const SizedBox(width: 16));
+        chips.add(const SizedBox(width: 8));
       }
       chips.removeLast();
     }
@@ -150,18 +155,34 @@ class _AccountSearchState extends State<AccountSearch> {
           decoration: InputDecoration(
             hintText: MaterialLocalizations.of(context).searchFieldLabel,
             border: InputBorder.none,
+            suffixIcon: _searchController.text.isNotEmpty
+                ? IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      _searchController.clear();
+                      if (_lastSearch.isNotEmpty) {
+                        _pagingController.refresh();
+                      }
+
+                      _searchFocusNode.requestFocus();
+                      setState(() {
+                        _lastSearch = "";
+                      });
+                    })
+                : null,
           ),
           autofocus: true,
+          onChanged: (_) => setState(() {}),
           onSubmitted: (_) => _pagingController.refresh(),
         ),
       ),
       body: Column(
         children: <Widget>[
           SizedBox(
-            height: 48 + 16 + 16,
+            height: 40 + 8 + 8,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               children: chips,
             ),
           ),

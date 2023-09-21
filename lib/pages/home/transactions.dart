@@ -183,9 +183,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   : "1900-01-01",
         );
       }
-      
+
       if (mounted) {
-        final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
+        final bool isLastPage =
+            transactionList.length < _numberOfPostsPerRequest;
         if (isLastPage) {
           _pagingController.appendLastPage(transactionList);
         } else {

@@ -388,7 +388,7 @@
   "@homeTransactionsActionFilter": {
     "description": "Action Button Label: Filter list."
   },
-  "homeTransactionsDialogFilterAccountsAll": "<All Accounts>",
+  "homeTransactionsDialogFilterAccountsAll": "<Alla konton>",
   "@homeTransactionsDialogFilterAccountsAll": {
     "description": "Don't filter for a specific account (default entry)"
   },
@@ -400,7 +400,7 @@
   "@homeTransactionsDialogFilterBillUnset": {
     "description": "Filter for unset bills"
   },
-  "homeTransactionsDialogFilterBudgetsAll": "<All Budgets>",
+  "homeTransactionsDialogFilterBudgetsAll": "<All budgetar>",
   "@homeTransactionsDialogFilterBudgetsAll": {
     "description": "Don't filter for a specific budget (default entry)"
   },
@@ -408,7 +408,7 @@
   "@homeTransactionsDialogFilterBudgetUnset": {
     "description": "Filter for unset budgets"
   },
-  "homeTransactionsDialogFilterCategoriesAll": "<All Categories>",
+  "homeTransactionsDialogFilterCategoriesAll": "<All kategorier>",
   "@homeTransactionsDialogFilterCategoriesAll": {
     "description": "Don't filter for a specific category (default entry)"
   },
@@ -416,7 +416,7 @@
   "@homeTransactionsDialogFilterCategoryUnset": {
     "description": "Filter for unset categories"
   },
-  "homeTransactionsDialogFilterCurrenciesAll": "<All Currencies>",
+  "homeTransactionsDialogFilterCurrenciesAll": "<Alla valutor>",
   "@homeTransactionsDialogFilterCurrenciesAll": {
     "description": "Don't filter for a specific currency (default entry)"
   },
@@ -762,11 +762,11 @@
   "@transactionFormLabelAccountDestination": {
     "description": "Transaction Form: Label for destination account for transfer transaction"
   },
-  "transactionFormLabelAccountForeign": "Mottagarkonto",
+  "transactionFormLabelAccountForeign": "Destinationskonto",
   "@transactionFormLabelAccountForeign": {
     "description": "Transaction Form: Label for foreign (other) account"
   },
-  "transactionFormLabelAccountOwn": "Eget konto",
+  "transactionFormLabelAccountOwn": "Källkonto",
   "@transactionFormLabelAccountOwn": {
     "description": "Transaction Form: Label for own account"
   },
@@ -782,7 +782,7 @@
   "@transactionFormLabelTags": {
     "description": "Transaction Form: Label for tags field"
   },
-  "transactionFormLabelTitle": "Transaktionens titel",
+  "transactionFormLabelTitle": "Transaktionstitel",
   "@transactionFormLabelTitle": {
     "description": "Transaction Form: Label for title field"
   },

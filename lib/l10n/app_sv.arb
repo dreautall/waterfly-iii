@@ -762,7 +762,7 @@
   "@transactionFormLabelAccountDestination": {
     "description": "Transaction Form: Label for destination account for transfer transaction"
   },
-  "transactionFormLabelAccountForeign": "Destinationskonto",
+  "transactionFormLabelAccountForeign": "Mottagarkonto",
   "@transactionFormLabelAccountForeign": {
     "description": "Transaction Form: Label for foreign (other) account"
   },

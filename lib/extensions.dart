@@ -350,6 +350,20 @@ extension DateTimeExtension on DateTime {
   TimeOfDay getTimeOfDay() => TimeOfDay.fromDateTime(this);
 }
 
+extension ListStringIgnoreCase on List<String> {
+  bool containsIgnoreCase(String? element) {
+    for (String e in this) {
+      if (e.toLowerCase() == element?.toLowerCase()) return true;
+    }
+    return false;
+  }
+}
+
+extension StringIgnoreCase on String {
+  bool containsIgnoreCase(String? a) =>
+      a == null || toLowerCase().contains(a.toLowerCase());
+}
+
 extension AccountTypeFilterIcon on AccountTypeFilter {
   IconData icon() {
     switch (this) {

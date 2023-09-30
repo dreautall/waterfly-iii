@@ -27,7 +27,7 @@ dependencies:
   badges: ^3.1.2
   filesize: ^2.0.1
   community_charts_flutter: ^1.0.1
-  open_filex: ^4.3.2
+  open_filex: ^4.3.4
   file_picker: ^5.3.4
   animations: ^2.0.7
   flutter_local_notifications: ^15.1.1

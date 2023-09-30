@@ -21,13 +21,13 @@ class Tags {
   List<String> get tags => _tags;
 
   void add(String tag) {
-    if (!_tags.contains(tag)) {
+    if (!_tags.containsIgnoreCase(tag)) {
       _tags.add(tag);
     }
   }
 
   void remove(String tag) {
-    if (_tags.contains(tag)) {
+    if (_tags.containsIgnoreCase(tag)) {
       _tags.remove(tag);
     }
   }
@@ -177,11 +177,11 @@ class _TagDialogState extends State<TagDialog> {
       return;
     }
     _newTagTextController.clear();
-    if (_newSelectedTags.contains(value)) {
+    if (_newSelectedTags.containsIgnoreCase(value)) {
       setState(() {});
       return;
     }
-    if (allTags.contains(value)) {
+    if (allTags.containsIgnoreCase(value)) {
       setState(() {
         _newSelectedTags.add(value);
       });
@@ -223,13 +223,14 @@ class _TagDialogState extends State<TagDialog> {
             return StatefulBuilder(
               builder: (BuildContext context, StateSetter setAlertState) {
                 showAddTag = _newTagTextController.text.isNotEmpty &&
-                    !_newSelectedTags.contains(_newTagTextController.text);
+                    !_newSelectedTags
+                        .containsIgnoreCase(_newTagTextController.text);
                 allTags.sort((String a, String b) {
-                  if (_newSelectedTags.contains(a) &&
-                      !_newSelectedTags.contains(b)) {
+                  if (_newSelectedTags.containsIgnoreCase(a) &&
+                      !_newSelectedTags.containsIgnoreCase(b)) {
                     return -1;
-                  } else if (!_newSelectedTags.contains(a) &&
-                      _newSelectedTags.contains(b)) {
+                  } else if (!_newSelectedTags.containsIgnoreCase(a) &&
+                      _newSelectedTags.containsIgnoreCase(b)) {
                     return 1;
                   } else {
                     return a.toLowerCase().compareTo(b.toLowerCase());
@@ -266,19 +267,19 @@ class _TagDialogState extends State<TagDialog> {
                 ];
                 for (String tag in allTags) {
                   if (_newTagTextController.text.isNotEmpty &&
-                      !tag.contains(_newTagTextController.text)) {
+                      !tag.containsIgnoreCase(_newTagTextController.text)) {
                     continue;
                   }
                   child.add(CheckboxListTile(
-                    value: _newSelectedTags.contains(tag),
+                    value: _newSelectedTags.containsIgnoreCase(tag),
                     onChanged: (bool? selected) {
                       setAlertState(
                         () {
                           if ((selected == null || !selected) &&
-                              _newSelectedTags.contains(tag)) {
+                              _newSelectedTags.containsIgnoreCase(tag)) {
                             _newSelectedTags.remove(tag);
                           } else if ((selected != null && selected) &&
-                              !_newSelectedTags.contains(tag)) {
+                              !_newSelectedTags.containsIgnoreCase(tag)) {
                             _newSelectedTags.add(tag);
                           }
                         },

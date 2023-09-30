@@ -1,43 +1,43 @@
 {
-  "@@locale": "sv-SE",
+  "@@locale": "ca",
   "@@x-reference": true,
-  "accountRoleAssetCashWallet": "Plånbok",
+  "accountRoleAssetCashWallet": "Cartera d'Efectiu",
   "@accountRoleAssetCashWallet": {
     "description": "Firefly Translation String: account_role_cashWalletAsset"
   },
-  "accountRoleAssetCC": "Kreditkort",
+  "accountRoleAssetCC": "Targeta de crèdit",
   "@accountRoleAssetCC": {
     "description": "Firefly Translation String: account_role_ccAsset"
   },
-  "accountRoleAssetDefault": "Förvalt tillgångskonto",
+  "accountRoleAssetDefault": "Compte d'actius per defecte",
   "@accountRoleAssetDefault": {
     "description": "Firefly Translation String: account_role_defaultAsset"
   },
-  "accountRoleAssetSavings": "Sparkonto",
+  "accountRoleAssetSavings": "Compte d'estalvis",
   "@accountRoleAssetSavings": {
     "description": "Firefly Translation String: account_role_savingAsset"
   },
-  "accountRoleAssetShared": "Delat tillgångskonto",
+  "accountRoleAssetShared": "Compte d'actius compartit",
   "@accountRoleAssetShared": {
     "description": "Firefly Translation String: account_role_sharedAsset"
   },
-  "accountsLabelAsset": "Tillgångskonton",
+  "accountsLabelAsset": "Comptes d'Actius",
   "@accountsLabelAsset": {
     "description": "Firefly Translation String: asset_accounts"
   },
-  "accountsLabelExpense": "Kostnadskonton",
+  "accountsLabelExpense": "Comptes de Despeses",
   "@accountsLabelExpense": {
     "description": "Firefly Translation String: expense_accounts"
   },
-  "accountsLabelLiabilities": "Skulder",
+  "accountsLabelLiabilities": "Passius",
   "@accountsLabelLiabilities": {
     "description": "Firefly Translation String: liabilities_accounts"
   },
-  "accountsLabelRevenue": "Intäktskonton",
+  "accountsLabelRevenue": "Comptes d'Ingressos",
   "@accountsLabelRevenue": {
     "description": "Firefly Translation String: revenue_accounts"
   },
-  "accountsLiabilitiesInterest": "{interest}% ränta per {period, select, weekly{vecka} monthly{månad} quarterly{kvartal} halfyear{halvår} yearly{år} other{okänd}}",
+  "accountsLiabilitiesInterest": "{interest}% d'interès per {period, select, weekly{setmana} monthly{mes} quarterly{quadrimestre} halfyear{mig any} yearly{any} other{desconegut}}",
   "@accountsLiabilitiesInterest": {
     "description": "Interest in a certain period",
     "placeholders": {
@@ -51,11 +51,11 @@
       }
     }
   },
-  "cameraErrorDenied": "Du har nekat kameraåtkomst.",
+  "cameraErrorDenied": "Has denegat l'accés a la càmera.",
   "@cameraErrorDenied": {
     "description": "Error shown when camera permission is denied."
   },
-  "cameraErrorGeneric": "Kamerafel: {description}",
+  "cameraErrorGeneric": "Error de càmera: {description}",
   "@cameraErrorGeneric": {
     "description": "Generic Camera Error",
     "placeholders": {
@@ -64,7 +64,7 @@
       }
     }
   },
-  "cameraErrorInitialize": "Kan inte initiera kameran: {description}",
+  "cameraErrorInitialize": "No s'ha pogut inicialitzar la càmera: {description}",
   "@cameraErrorInitialize": {
     "description": "Error shown when camera cannot be initialized",
     "placeholders": {
@@ -74,11 +74,11 @@
       }
     }
   },
-  "catOther": "Övrigt",
+  "catOther": "Altres",
   "@catOther": {
     "description": "Category description for summary category 'Other'"
   },
-  "errorAPIInvalidResponse": "Ogiltigt svar från API: {message}",
+  "errorAPIInvalidResponse": "Resposta de l'API invàlida: {message}",
   "@errorAPIInvalidResponse": {
     "description": "Invalid API response error",
     "placeholders": {
@@ -88,23 +88,23 @@
       }
     }
   },
-  "errorAPIUnavailable": "API inte tillgängligt",
+  "errorAPIUnavailable": "API no disponible",
   "@errorAPIUnavailable": {
     "description": "Error thrown when API is unavailable."
   },
-  "errorFieldRequired": "Detta fält är obligatoriskt.",
+  "errorFieldRequired": "Aquest camp és obligatori.",
   "@errorFieldRequired": {
     "description": "Error: Required field was left empty."
   },
-  "errorInvalidSSLCert": "Ogiltigt SSL-certifikat",
+  "errorInvalidSSLCert": "Certificat SSL invàlid",
   "@errorInvalidSSLCert": {
     "description": "Error: SSL certificate is invalid"
   },
-  "errorInvalidURL": "Ogiltig URL",
+  "errorInvalidURL": "URL invàlida",
   "@errorInvalidURL": {
     "description": "Error: URL is invalid"
   },
-  "errorMinAPIVersion": "Minsta Firefly API Version v{requiredVersion} krävs. Vänligen uppdatera Firefly.",
+  "errorMinAPIVersion": "Cal disposar com a mínim de la versió v{requiredVersion} de Firefly. Per favor, actualitza.",
   "@errorMinAPIVersion": {
     "description": "Error: Required API version not met.",
     "placeholders": {
@@ -114,7 +114,7 @@
       }
     }
   },
-  "errorStatusCode": "Statuskod: {code}",
+  "errorStatusCode": "Codi d'Estat: {code}",
   "@errorStatusCode": {
     "description": "HTTP status code information on error",
     "placeholders": {
@@ -124,115 +124,115 @@
       }
     }
   },
-  "errorUnknown": "Okänt fel.",
+  "errorUnknown": "Error desconegut.",
   "@errorUnknown": {
     "description": "Error without further information occurred."
   },
-  "formButtonHelp": "Hjälp",
+  "formButtonHelp": "Ajuda",
   "@formButtonHelp": {
     "description": "Button Label: Help"
   },
-  "formButtonLogin": "Logga in",
+  "formButtonLogin": "Accedir",
   "@formButtonLogin": {
     "description": "Button Label: Login"
   },
-  "formButtonLogout": "Logga ut",
+  "formButtonLogout": "Tanca la Sessió",
   "@formButtonLogout": {
     "description": "Button Label: Logout"
   },
-  "formButtonRemove": "Ta bort",
+  "formButtonRemove": "Elimina",
   "@formButtonRemove": {
     "description": "Button Label: Remove"
   },
-  "formButtonResetLogin": "Återställ inloggning",
+  "formButtonResetLogin": "Reinicia l'inici de sessió",
   "@formButtonResetLogin": {
     "description": "Button Label: Reset login form (when error is shown)"
   },
-  "formButtonTransactionAdd": "Lägg till transaktion",
+  "formButtonTransactionAdd": "Afegir Transacció",
   "@formButtonTransactionAdd": {
     "description": "Button Label: Add Transaction"
   },
-  "formButtonTryAgain": "Försök igen",
+  "formButtonTryAgain": "Torna a provar",
   "@formButtonTryAgain": {
     "description": "Button Label: Try that thing again (login etc)"
   },
-  "formButtonUpload": "Ladda upp",
+  "formButtonUpload": "Penjar",
   "@formButtonUpload": {
     "description": "Button Label: Upload (file etc.)"
   },
-  "generalAccount": "Konto",
+  "generalAccount": "Compte",
   "@generalAccount": {
     "description": "Asset/Debt (Bank) Account"
   },
-  "generalBalance": "Balans",
+  "generalBalance": "Balanç",
   "@generalBalance": {
     "description": "(Account) Balance"
   },
-  "generalBill": "Räkning",
+  "generalBill": "Factura",
   "@generalBill": {
     "description": "Bill"
   },
-  "generalBudget": "Budget",
+  "generalBudget": "Pressupost",
   "@generalBudget": {
     "description": "(Monetary) Budget"
   },
-  "generalCategory": "Kategori",
+  "generalCategory": "Categoria",
   "@generalCategory": {
     "description": "Category (of transaction etc.)."
   },
-  "generalCurrency": "Valuta",
+  "generalCurrency": "Moneda",
   "@generalCurrency": {
     "description": "(Money) Currency"
   },
-  "generalDefault": "förvald",
+  "generalDefault": "per defecte",
   "@generalDefault": {
     "description": "Indicates that something is the default choice"
   },
-  "generalDismiss": "Stäng",
+  "generalDismiss": "Ignora",
   "@generalDismiss": {
     "description": "Dismiss window/dialog without action"
   },
-  "generalError": "Fel",
+  "generalError": "Error",
   "@generalError": {
     "description": "Error (title in dialogs etc.)"
   },
-  "generalExpenses": "Utgifter",
+  "generalExpenses": "Despeses",
   "@generalExpenses": {
     "description": "(Account) Expenses"
   },
-  "generalIncome": "Inkomst",
+  "generalIncome": "Ingressos",
   "@generalIncome": {
     "description": "(Account) Info"
   },
-  "generalMultiple": "multipla",
+  "generalMultiple": "múltiples",
   "@generalMultiple": {
     "description": "Multiples of a single thing (e.g. source accounts) are existing"
   },
-  "generalNever": "aldrig",
+  "generalNever": "mai",
   "@generalNever": {
     "description": "Has never happened, no update etc."
   },
-  "generalReconcile": "Avstämt",
+  "generalReconcile": "Consolidat",
   "@generalReconcile": {
     "description": "Booking has been confirmed/reconciled"
   },
-  "generalReset": "Återställ",
+  "generalReset": "Restableix",
   "@generalReset": {
     "description": "Reset something (i.e. set filters)"
   },
-  "generalSum": "Summa",
+  "generalSum": "Suma",
   "@generalSum": {
     "description": "(Mathematical) Sum"
   },
-  "generalTarget": "Mål",
+  "generalTarget": "Destí",
   "@generalTarget": {
     "description": "Target value (i.e. a sum to save)"
   },
-  "generalUnknown": "Okänt",
+  "generalUnknown": "Desconegut",
   "@generalUnknown": {
     "description": "Something is unknown."
   },
-  "homeMainBudgetInterval": " ({from} till {to}, {period})",
+  "homeMainBudgetInterval": " ({from} fins a {to}, {period})",
   "@homeMainBudgetInterval": {
     "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
     "placeholders": {
@@ -252,7 +252,7 @@
       }
     }
   },
-  "homeMainBudgetSum": "{current} {status, select, over{över} other{kvar från}} {available}",
+  "homeMainBudgetSum": "{current} {status, select, over{per damunt de} other{queden de}} {available}",
   "@homeMainBudgetSum": {
     "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
     "placeholders": {
@@ -270,35 +270,35 @@
       }
     }
   },
-  "homeMainBudgetTitle": "Budgetar för den aktuella månaden",
+  "homeMainBudgetTitle": "Pressupostos per al mes actual",
   "@homeMainBudgetTitle": {
     "description": "Title: Budgets for current month"
   },
-  "homeMainChartAccountsTitle": "Kontosammanfattning",
+  "homeMainChartAccountsTitle": "Resum del Compte",
   "@homeMainChartAccountsTitle": {
     "description": "Chart Label: Account Summary"
   },
-  "homeMainChartCategoriesTitle": "Kategorisammanfattning för aktuell månad",
+  "homeMainChartCategoriesTitle": "Resum de la Categoria per a aquest mes",
   "@homeMainChartCategoriesTitle": {
     "description": "Chart Label: Category Summary"
   },
-  "homeMainChartDailyAvg": "7 dagars genomsnitt",
+  "homeMainChartDailyAvg": "Mitjana de 7 dies",
   "@homeMainChartDailyAvg": {
     "description": "Text for last week average spent"
   },
-  "homeMainChartDailyTitle": "Daglig sammanfattning",
+  "homeMainChartDailyTitle": "Resum Diari",
   "@homeMainChartDailyTitle": {
     "description": "Chart Label: Daily Summary"
   },
-  "homeMainChartNetearningsTitle": "Nettoinkomst",
+  "homeMainChartNetearningsTitle": "Ingressos Nets",
   "@homeMainChartNetearningsTitle": {
     "description": "Chart Label: Net Earnings"
   },
-  "homePiggyAdjustDialogTitle": "Spara/spendera pengar",
+  "homePiggyAdjustDialogTitle": "Estalvia/Gasta Diners",
   "@homePiggyAdjustDialogTitle": {
     "description": "Title of the dialog where money can be added/removed to a piggy bank."
   },
-  "homePiggyDateStart": "Startdatum: {date}",
+  "homePiggyDateStart": "Data d'inici: {date}",
   "@homePiggyDateStart": {
     "description": "Start of the piggy bank",
     "placeholders": {
@@ -309,7 +309,7 @@
       }
     }
   },
-  "homePiggyDateTarget": "Måldatum: {date}",
+  "homePiggyDateTarget": "Data objectiu: {date}",
   "@homePiggyDateTarget": {
     "description": "Set target date of the piggy bank (when saving should be finished)",
     "placeholders": {
@@ -320,7 +320,7 @@
       }
     }
   },
-  "homePiggyLinked": "Länkad till {account}",
+  "homePiggyLinked": "Enllaçada a {account}",
   "@homePiggyLinked": {
     "description": "Piggy bank is linked to asset account {account}.",
     "placeholders": {
@@ -330,15 +330,15 @@
       }
     }
   },
-  "homePiggyNoAccounts": "Inga spargrisar har inrättats.",
+  "homePiggyNoAccounts": "No s'ha configurat cap guardiola.",
   "@homePiggyNoAccounts": {
     "description": "Information that no piggy banks are existing"
   },
-  "homePiggyNoAccountsSubtitle": "Skapa några i webbgränssnittet!",
+  "homePiggyNoAccountsSubtitle": "Crea'n una a la interfície web!",
   "@homePiggyNoAccountsSubtitle": {
     "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
   },
-  "homePiggyRemaining": "Kvar att spara: {amount}",
+  "homePiggyRemaining": "Queda per estalviar: {amount}",
   "@homePiggyRemaining": {
     "description": "How much money is left to save",
     "placeholders": {
@@ -348,7 +348,7 @@
       }
     }
   },
-  "homePiggySaved": "Sparat hittills: {amount}",
+  "homePiggySaved": "Has estalviat: {amount}",
   "@homePiggySaved": {
     "description": "How much money already was saved",
     "placeholders": {
@@ -358,7 +358,7 @@
       }
     }
   },
-  "homePiggyTarget": "Målbelopp: {amount}",
+  "homePiggyTarget": "Quantitat objectiu: {amount}",
   "@homePiggyTarget": {
     "description": "How much money should be saved",
     "placeholders": {
@@ -368,71 +368,71 @@
       }
     }
   },
-  "homeTabLabelBalance": "Balansräkning",
+  "homeTabLabelBalance": "Fulla de Balanços",
   "@homeTabLabelBalance": {
     "description": "Tab Label: Balance Sheet page"
   },
-  "homeTabLabelMain": "Start",
+  "homeTabLabelMain": "Principal",
   "@homeTabLabelMain": {
     "description": "Tab Label: Start page (\"main\")"
   },
-  "homeTabLabelPiggybanks": "Spargris",
+  "homeTabLabelPiggybanks": "Guardioles",
   "@homeTabLabelPiggybanks": {
     "description": "Tab Label: Piggy Banks page"
   },
-  "homeTabLabelTransactions": "Transaktioner",
+  "homeTabLabelTransactions": "Transaccions",
   "@homeTabLabelTransactions": {
     "description": "Tab Label: Transactions page"
   },
-  "homeTransactionsActionFilter": "Filtrera listan",
+  "homeTransactionsActionFilter": "Llista de filtres",
   "@homeTransactionsActionFilter": {
     "description": "Action Button Label: Filter list."
   },
-  "homeTransactionsDialogFilterAccountsAll": "<Alla konton>",
+  "homeTransactionsDialogFilterAccountsAll": "<Tots els Comptes>",
   "@homeTransactionsDialogFilterAccountsAll": {
     "description": "Don't filter for a specific account (default entry)"
   },
-  "homeTransactionsDialogFilterBillsAll": "<Alla räkningar>",
+  "homeTransactionsDialogFilterBillsAll": "<Totes les Factures>",
   "@homeTransactionsDialogFilterBillsAll": {
     "description": "Don't filter for a specific bill (default entry)"
   },
-  "homeTransactionsDialogFilterBillUnset": "<Utan räkning>",
+  "homeTransactionsDialogFilterBillUnset": "<Cap Factura establerta>",
   "@homeTransactionsDialogFilterBillUnset": {
     "description": "Filter for unset bills"
   },
-  "homeTransactionsDialogFilterBudgetsAll": "<All budgetar>",
+  "homeTransactionsDialogFilterBudgetsAll": "<Tots els Pressupostos>",
   "@homeTransactionsDialogFilterBudgetsAll": {
     "description": "Don't filter for a specific budget (default entry)"
   },
-  "homeTransactionsDialogFilterBudgetUnset": "<Utan budget>",
+  "homeTransactionsDialogFilterBudgetUnset": "<Cap Pressupost establert>",
   "@homeTransactionsDialogFilterBudgetUnset": {
     "description": "Filter for unset budgets"
   },
-  "homeTransactionsDialogFilterCategoriesAll": "<All kategorier>",
+  "homeTransactionsDialogFilterCategoriesAll": "<Totes les Categories>",
   "@homeTransactionsDialogFilterCategoriesAll": {
     "description": "Don't filter for a specific category (default entry)"
   },
-  "homeTransactionsDialogFilterCategoryUnset": "<Utan kategori>",
+  "homeTransactionsDialogFilterCategoryUnset": "<Cap Categoria establerta>",
   "@homeTransactionsDialogFilterCategoryUnset": {
     "description": "Filter for unset categories"
   },
-  "homeTransactionsDialogFilterCurrenciesAll": "<Alla valutor>",
+  "homeTransactionsDialogFilterCurrenciesAll": "<Totes les Monedes>",
   "@homeTransactionsDialogFilterCurrenciesAll": {
     "description": "Don't filter for a specific currency (default entry)"
   },
-  "homeTransactionsDialogFilterSearch": "Sökord",
+  "homeTransactionsDialogFilterSearch": "Cerca un terme",
   "@homeTransactionsDialogFilterSearch": {
     "description": "Search term for filter"
   },
-  "homeTransactionsDialogFilterTitle": "Välj filter",
+  "homeTransactionsDialogFilterTitle": "Selecciona filtres",
   "@homeTransactionsDialogFilterTitle": {
     "description": "Title of Filter Dialog"
   },
-  "homeTransactionsEmpty": "Inga transaktioner hittade.",
+  "homeTransactionsEmpty": "No s'ha trobat cap transacció.",
   "@homeTransactionsEmpty": {
     "description": "Message when no transactions are found."
   },
-  "homeTransactionsMultipleCategories": "{num} kategorier",
+  "homeTransactionsMultipleCategories": "{num} categories",
   "@homeTransactionsMultipleCategories": {
     "description": "$num categories for the transaction.",
     "placeholders": {
@@ -442,55 +442,55 @@
       }
     }
   },
-  "liabilityDirectionCredit": "Jag är skyldig denna skuld",
+  "liabilityDirectionCredit": "Se'm deu aquest deute",
   "@liabilityDirectionCredit": {
     "description": "Firefly Translation String: liability_direction_credit"
   },
-  "liabilityDirectionDebit": "Jag har denna skuld",
+  "liabilityDirectionDebit": "Dec aquest deute",
   "@liabilityDirectionDebit": {
     "description": "Firefly Translation String: liability_direction_debit"
   },
-  "liabilityTypeDebt": "Skuld",
+  "liabilityTypeDebt": "Deute",
   "@liabilityTypeDebt": {
     "description": "Firefly Translation String: account_type_debt"
   },
-  "liabilityTypeLoan": "Lån",
+  "liabilityTypeLoan": "Préstec",
   "@liabilityTypeLoan": {
     "description": "Firefly Translation String: account_type_loan"
   },
-  "liabilityTypeMortgage": "Bolån",
+  "liabilityTypeMortgage": "Hipoteca",
   "@liabilityTypeMortgage": {
     "description": "Firefly Translation String: account_type_mortgage"
   },
-  "loginAbout": "För att använda Waterfly III på ett produktivt sätt behöver du din egen server med en Firefly III instans eller Firefly III-tillägget för Home Assistant.\n\nAnge hela URL: en samt en personlig åtkomst-token (inställningar -> Profil -> OAuth -> Personlig åtkomst-token) nedan.",
+  "loginAbout": "Per a fer servir Waterfly III adequadament cal que tingues el teu propi servidor de Firefly III o l'add-on de Firefly III a Home Assistant.\n\nPer favor, introdueix la URL completa a més del token d'accés (Configuració -> Perfil -> OAuth -> Token d'Accés Personal) a sota.",
   "@loginAbout": {
     "description": "Login screen welcome description"
   },
-  "loginFormLabelAPIKey": "Giltig API-nyckel",
+  "loginFormLabelAPIKey": "Clau d'API vàlida",
   "@loginFormLabelAPIKey": {
     "description": "Login Form: Label for API Key field"
   },
-  "loginFormLabelHost": "Värd URL",
+  "loginFormLabelHost": "URL d'allotjament",
   "@loginFormLabelHost": {
     "description": "Login Form: Label for Host field"
   },
-  "loginWelcome": "Välkommen till Waterfly III",
+  "loginWelcome": "Benvingut/da a Waterfly III",
   "@loginWelcome": {
     "description": "Login screen welcome banner"
   },
-  "logoutConfirmation": "Är du säker på att du vill logga ut?",
+  "logoutConfirmation": "Segur que vols tancar la sessió?",
   "@logoutConfirmation": {
     "description": "Get user confirmation if he really wants to log out"
   },
-  "navigationAccounts": "Konton",
+  "navigationAccounts": "Comptes",
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"
   },
-  "navigationMain": "Kontrollpanel",
+  "navigationMain": "Tauler de control Principal",
   "@navigationMain": {
     "description": "Navigation Label: Main Dashboard"
   },
-  "navigationSettings": "Inställningar",
+  "navigationSettings": "Configuració",
   "@navigationSettings": {
     "description": "Navigation Label: Settings"
   },
@@ -507,7 +507,7 @@
       }
     }
   },
-  "numPercentOf": "{perc} av {of}",
+  "numPercentOf": "{perc} de {of}",
   "@numPercentOf": {
     "description": "Number formatted as percentage, with total amount provided",
     "placeholders": {
@@ -523,51 +523,51 @@
       }
     }
   },
-  "settingsDialogDebugInfo": "Du kan aktivera och skicka felsökningsloggar här. Dessa har en dålig inverkan på prestandan, så var snäll och aktivera dem inte om du inte rekommenderas att göra det. Inaktivering av loggning kommer att ta bort den lagrade loggen.",
+  "settingsDialogDebugInfo": "Pots habilitar i enviar registres des d'ací. Aquests poden tenir un impacte sobre el rendiment de l'aplicació, així que no ho actives si no se t'ha demanat. Deshabilitar els registres eliminarà els que hi puguin haver desats.",
   "@settingsDialogDebugInfo": {
     "description": "Information about debug logs and their impact."
   },
-  "settingsDialogDebugMailCreate": "Skapa e-post",
+  "settingsDialogDebugMailCreate": "Crear correu electrònic",
   "@settingsDialogDebugMailCreate": {
     "description": "Button to confirm mail creation after privacy disclaimer is shown."
   },
-  "settingsDialogDebugMailDisclaimer": "VARNING: Ett e-postutkast öppnas med loggfilen bifogad (i textformat). Loggarna kan innehålla känslig information, såsom värdnamnet för din Firefly instans (även om jag försöker undvika loggning av några hemligheter, såsom api nyckel). Läs igenom loggen noga och censurera all information som du inte vill dela och/eller inte är relevant för det problem du vill rapportera.\n\nSkicka inte in loggar utan föregående överenskommelse via mail/GitHub. Jag kommer att ta bort alla loggar som skickas utan kontext av sekretessskäl. Ladda aldrig upp loggen ocensurerad till GitHub eller någon annanstans.",
+  "settingsDialogDebugMailDisclaimer": "ADVERTIMENT: s'obrirà un esborrany de correu amb el fitxer de registre adjunt (en format de text). Els registres poden contenir informació sensible, com ara el nom d'amfitrió de la vostra instància de Firefly (tot i que intento evitar el registre de qualsevol secret, com ara la clau API). Si us plau, llegiu atentament el registre i censureu qualsevol informació que no vulgueu compartir i/o que no sigui rellevant per al problema que voleu informar.\n\nSi us plau, no envieu registres sense un acord previ per correu electrònic/GitHub per fer-ho. Suprimiré tots els registres enviats sense context per motius de privadesa. No carregueu mai el registre sense censura a GitHub ni a cap altre lloc.",
   "@settingsDialogDebugMailDisclaimer": {
     "description": "Privacy disclaimer shown before sending logs"
   },
-  "settingsDialogDebugSendButton": "Skicka loggar via e-post",
+  "settingsDialogDebugSendButton": "Envia registres per Correu Electrònic",
   "@settingsDialogDebugSendButton": {
     "description": "Button to send logs via E-Mail"
   },
-  "settingsDialogDebugTitle": "Felsökningsloggar",
+  "settingsDialogDebugTitle": "Registres de depuració",
   "@settingsDialogDebugTitle": {
     "description": "Dialog title: Debug Logs"
   },
-  "settingsDialogLanguageTitle": "Välj språk",
+  "settingsDialogLanguageTitle": "Selecciona un idioma",
   "@settingsDialogLanguageTitle": {
     "description": "Dialog title: Select Language"
   },
-  "settingsDialogThemeTitle": "Välj tema",
+  "settingsDialogThemeTitle": "Selecciona un Tema",
   "@settingsDialogThemeTitle": {
     "description": "Dialog title: Select theme"
   },
-  "settingsLanguage": "Språk",
+  "settingsLanguage": "Idioma",
   "@settingsLanguage": {
     "description": "Currently selected language"
   },
-  "settingsLockscreen": "Låsskärm",
+  "settingsLockscreen": "Pantalla de Bloqueig",
   "@settingsLockscreen": {
     "description": "Setting if a lockscreen is shown (authentication is required on startup)"
   },
-  "settingsLockscreenHelp": "Kräv autentisering vid appstart",
+  "settingsLockscreenHelp": "Requereix autenticació en iniciar l'aplicació",
   "@settingsLockscreenHelp": {
     "description": "Description for lockscreen setting"
   },
-  "settingsLockscreenInitial": "Vänligen autentisera för att aktivera låsskärmen.",
+  "settingsLockscreenInitial": "Per favor, autentica't per habilitar la pantalla de bloqueig.",
   "@settingsLockscreenInitial": {
     "description": "Prompt to authenticate once to set up the lockscreen"
   },
-  "settingsNLAppAccount": "Förvalt konto",
+  "settingsNLAppAccount": "Compte per Defecte",
   "@settingsNLAppAccount": {
     "description": "Default account which will be used for the transaction."
   },
@@ -575,43 +575,43 @@
   "@settingsNLAppAccountDynamic": {
     "description": "Account will be selected dynamically by the content of the notification."
   },
-  "settingsNLAppAdd": "Lägg till app",
+  "settingsNLAppAdd": "Afegir Aplicació",
   "@settingsNLAppAdd": {
     "description": "Button title to add a new app."
   },
-  "settingsNLAppAddHelp": "Klicka för att lägga till en app att lyssna efter. Endast kvalificerade appar visas i listan.",
+  "settingsNLAppAddHelp": "Toca per afegir una aplicació a la qual escoltar. Només es mostraran les aplicacions compatibles.",
   "@settingsNLAppAddHelp": {
     "description": "Help text below adding the new app button."
   },
-  "settingsNLAppAddInfo": "Gör några transaktioner där du får telefonaviseringar för att lägga till appar i den här listan. Om appen fortfarande inte dyker upp, vänligen rapportera det till app@vogt.pw.",
+  "settingsNLAppAddInfo": "Fes algunes transaccions de les aplicacions on rebis notificacions per afegir-les a la llista. Si encara no es mostren, per favor informa app@vogt.pw.",
   "@settingsNLAppAddInfo": {
     "description": "Help text when no more app is available to add."
   },
-  "settingsNLDescription": "Den här tjänsten låter dig hämta transaktionsdetaljer från inkommande pushnotifikationer. Du kan även välja ett förvalt konto som transaktionen ska göras på - om inget värde ges försöker den extrahera kontot från notifikationen.",
+  "settingsNLDescription": "Aquest servei et permet obtenir detalls de transaccions a partir de notificacions. Addicionalment, pots seleccionar un compte per defecte al qual assignar les transaccions - si no s'estableix cap valor, s'intenta extreure el compte de la notificació.",
   "@settingsNLDescription": {
     "description": "Description text for the notification listener service."
   },
-  "settingsNLPermissionGrant": "Tryck för att bevilja tillstånd.",
+  "settingsNLPermissionGrant": "Toca per a donar permís.",
   "@settingsNLPermissionGrant": {
     "description": "Indicates user should tap the text to grant certain permissions (notification access)."
   },
-  "settingsNLPermissionNotGranted": "Behörighet inte beviljad.",
+  "settingsNLPermissionNotGranted": "Permís no concedit.",
   "@settingsNLPermissionNotGranted": {
     "description": "A requested permission was not granted."
   },
-  "settingsNLPermissionRemove": "Ta bort behörigheten?",
+  "settingsNLPermissionRemove": "Eliminar permís?",
   "@settingsNLPermissionRemove": {
     "description": "Dialog title asking if permission should be removed."
   },
-  "settingsNLPermissionRemoveHelp": "För att avaktivera den här tjänsten, tryck på appen och ta bort behörigheterna på den nästa skärmen.",
+  "settingsNLPermissionRemoveHelp": "Per a deshabilitar aquest servei, toca en l'app i elimina els permisos a la pantalla següent.",
   "@settingsNLPermissionRemoveHelp": {
     "description": "Dialog text giving hint how to remove the permission."
   },
-  "settingsNLServiceChecking": "Kontrollerar status…",
+  "settingsNLServiceChecking": "Comprovant l'estat…",
   "@settingsNLServiceChecking": {
     "description": "Checking the status of the background service"
   },
-  "settingsNLServiceCheckingError": "Fel vid kontroll av status: {error}",
+  "settingsNLServiceCheckingError": "No s'ha pogut comprovar l'estat: {error}",
   "@settingsNLServiceCheckingError": {
     "description": "An error occurred while checking the service status",
     "placeholders": {
@@ -622,31 +622,31 @@
       }
     }
   },
-  "settingsNLServiceRunning": "Tjänsten körs.",
+  "settingsNLServiceRunning": "El servei s'està executant.",
   "@settingsNLServiceRunning": {
     "description": "A background service is running normally."
   },
-  "settingsNLServiceStatus": "Tjänstestatus",
+  "settingsNLServiceStatus": "Estat del Servei",
   "@settingsNLServiceStatus": {
     "description": "Status of a background service."
   },
-  "settingsNLServiceStopped": "Tjänsten är stoppad.",
+  "settingsNLServiceStopped": "El servei s'ha detingut.",
   "@settingsNLServiceStopped": {
     "description": "A background service is stopped."
   },
-  "settingsNotificationListener": "Notifikationslyssningstjänst",
+  "settingsNotificationListener": "Servei d'escolta de notificacions",
   "@settingsNotificationListener": {
     "description": "Setting for the notification listener service."
   },
-  "settingsTheme": "Apptema",
+  "settingsTheme": "Tema de l'aplicació",
   "@settingsTheme": {
     "description": "App theme (dark or light)"
   },
-  "settingsThemeDynamicColors": "Dynamiska färger",
+  "settingsThemeDynamicColors": "Colors Dinàmics",
   "@settingsThemeDynamicColors": {
     "description": "Material You Dynamic Colors feature"
   },
-  "settingsThemeValue": "{theme, select, dark{Mörkt läge} light{Ljust läge} other{Systemstandard}}",
+  "settingsThemeValue": "{theme, select, dark{Tema Obscur} light{Tema Clar} other{Per defecte}}",
   "@settingsThemeValue": {
     "description": "Currently selected theme (either dark, light or system)",
     "placeholders": {
@@ -656,43 +656,43 @@
       }
     }
   },
-  "settingsVersion": "Appversion",
+  "settingsVersion": "Versió de l'aplicació",
   "@settingsVersion": {
     "description": "Current App Version"
   },
-  "settingsVersionChecking": "kontrollerar…",
+  "settingsVersionChecking": "comprovant…",
   "@settingsVersionChecking": {
     "description": "Shown while checking for app version"
   },
-  "splashCustomSSLCert": "Anpassat SSL-certifikat",
+  "splashCustomSSLCert": "Certificat SSL personalitzat",
   "@splashCustomSSLCert": {
     "description": "Button text & Dialog title for using a custom SSL certificate"
   },
-  "splashFormLabelCustomSSLCertPEM": "Certifikatfil (PEM)",
+  "splashFormLabelCustomSSLCertPEM": "Fitxer de Certificat (PEM)",
   "@splashFormLabelCustomSSLCertPEM": {
     "description": "Label for certificate file text input in PEM format"
   },
-  "transactionAttachments": "Bilagor",
+  "transactionAttachments": "Adjunts",
   "@transactionAttachments": {
     "description": "Button Label: Attachments"
   },
-  "transactionDeleteConfirm": "Är du säker att du vill radera denna transaktion?",
+  "transactionDeleteConfirm": "Segur que vols eliminar aquesta transacció?",
   "@transactionDeleteConfirm": {
     "description": "Confirmation text to delete transaction"
   },
-  "transactionDialogAttachmentsDelete": "Ta bort bifogad fil",
+  "transactionDialogAttachmentsDelete": "Elimina l'adjunt",
   "@transactionDialogAttachmentsDelete": {
     "description": "Button Label: Delete Attachment"
   },
-  "transactionDialogAttachmentsDeleteConfirm": "Är du säker på att du vill radera bilagan?",
+  "transactionDialogAttachmentsDeleteConfirm": "Segur que vols eliminar aquest adjunt?",
   "@transactionDialogAttachmentsDeleteConfirm": {
     "description": "Confirmation text to delete attachment"
   },
-  "transactionDialogAttachmentsErrorDownload": "Kunde inte ladda ner filen.",
+  "transactionDialogAttachmentsErrorDownload": "No s'ha pogut baixar el fitxer.",
   "@transactionDialogAttachmentsErrorDownload": {
     "description": "Snackbar Text: File download failed."
   },
-  "transactionDialogAttachmentsErrorOpen": "Kunde inte öppna filen: {error}",
+  "transactionDialogAttachmentsErrorOpen": "No s'ha pogut obrir el fitxer: {error}",
   "@transactionDialogAttachmentsErrorOpen": {
     "description": "Snackbar Text: File could not be opened, with reason.",
     "placeholders": {
@@ -701,7 +701,7 @@
       }
     }
   },
-  "transactionDialogAttachmentsErrorUpload": "Kunde inte ladda upp filen: {error}",
+  "transactionDialogAttachmentsErrorUpload": "No s'ha pogut penjar el fitxer: {error}",
   "@transactionDialogAttachmentsErrorUpload": {
     "description": "Snackbar Text: File could not be uploaded, with reason.",
     "placeholders": {
@@ -710,119 +710,119 @@
       }
     }
   },
-  "transactionDialogAttachmentsTitle": "Bilagor",
+  "transactionDialogAttachmentsTitle": "Adjunts",
   "@transactionDialogAttachmentsTitle": {
     "description": "Dialog Title: Attachments Dialog"
   },
-  "transactionDialogBillNoBill": "Ingen faktura",
+  "transactionDialogBillNoBill": "Cap factura",
   "@transactionDialogBillNoBill": {
     "description": "Button Label: no bill to be used"
   },
-  "transactionDialogBillTitle": "Länk till faktura",
+  "transactionDialogBillTitle": "Enllaça a una factura",
   "@transactionDialogBillTitle": {
     "description": "Dialog Title: Link Bill to transaction"
   },
-  "transactionDialogCurrencyTitle": "Välj valuta",
+  "transactionDialogCurrencyTitle": "Tria una Moneda",
   "@transactionDialogCurrencyTitle": {
     "description": "Dialog Title: Currency Selection"
   },
-  "transactionDialogTagsAdd": "Lägg till Tagg",
+  "transactionDialogTagsAdd": "Afegir Etiqueta",
   "@transactionDialogTagsAdd": {
     "description": "Button Label: Add Tag"
   },
-  "transactionDialogTagsHint": "Sök/Lägg till tagg",
+  "transactionDialogTagsHint": "Cerca/Afegeix una Etiqueta",
   "@transactionDialogTagsHint": {
     "description": "Hint Text for search tag field"
   },
-  "transactionDialogTagsTitle": "Välj taggar",
+  "transactionDialogTagsTitle": "Selecciona Etiquetes",
   "@transactionDialogTagsTitle": {
     "description": "Dialog Title: Select Tags"
   },
-  "transactionDuplicate": "Dubblett",
+  "transactionDuplicate": "Duplicada",
   "@transactionDuplicate": {
     "description": "Menu Label: Duplicate item"
   },
-  "transactionErrorInvalidAccount": "Ogiltigt konto",
+  "transactionErrorInvalidAccount": "Compte Invàlid",
   "@transactionErrorInvalidAccount": {
     "description": "Transaction Save Error: Invalid account"
   },
-  "transactionErrorInvalidBudget": "Ogiltig budget",
+  "transactionErrorInvalidBudget": "Pressupost Invàlid",
   "@transactionErrorInvalidBudget": {
     "description": "Transaction Save Error: Invalid budget"
   },
-  "transactionErrorSaveFirst": "Vänligen spara transaktionen först.",
+  "transactionErrorSaveFirst": "Per favor, desa la transacció primer.",
   "@transactionErrorSaveFirst": {
     "description": "Transaction Hint Error: Needs to be saved"
   },
-  "transactionErrorTitle": "Vänligen ange en titel.",
+  "transactionErrorTitle": "Per favor, introdueix un títol.",
   "@transactionErrorTitle": {
     "description": "Transaction Save Error: No title provided"
   },
-  "transactionFormLabelAccountDestination": "Till konto",
+  "transactionFormLabelAccountDestination": "Compte de destí",
   "@transactionFormLabelAccountDestination": {
     "description": "Transaction Form: Label for destination account for transfer transaction"
   },
-  "transactionFormLabelAccountForeign": "Mottagarkonto",
+  "transactionFormLabelAccountForeign": "Compte estranger",
   "@transactionFormLabelAccountForeign": {
     "description": "Transaction Form: Label for foreign (other) account"
   },
-  "transactionFormLabelAccountOwn": "Källkonto",
+  "transactionFormLabelAccountOwn": "Compte propi",
   "@transactionFormLabelAccountOwn": {
     "description": "Transaction Form: Label for own account"
   },
-  "transactionFormLabelAccountSource": "Källkonto",
+  "transactionFormLabelAccountSource": "Compte d'origen",
   "@transactionFormLabelAccountSource": {
     "description": "Transaction Form: Label for source account for transfer transaction"
   },
-  "transactionFormLabelNotes": "Anteckningar",
+  "transactionFormLabelNotes": "Notes",
   "@transactionFormLabelNotes": {
     "description": "Transaction Form: Label for notes field"
   },
-  "transactionFormLabelTags": "Taggar",
+  "transactionFormLabelTags": "Etiquetes",
   "@transactionFormLabelTags": {
     "description": "Transaction Form: Label for tags field"
   },
-  "transactionFormLabelTitle": "Transaktionstitel",
+  "transactionFormLabelTitle": "Títol de la Transacció",
   "@transactionFormLabelTitle": {
     "description": "Transaction Form: Label for title field"
   },
-  "transactionSplitAdd": "Lägg till delad transaktion",
+  "transactionSplitAdd": "Afegeix una transacció dividida",
   "@transactionSplitAdd": {
     "description": "Button Label: Add a split"
   },
-  "transactionSplitChangeCurrency": "Ändra delad valuta",
+  "transactionSplitChangeCurrency": "Canvia la moneda de la divisió",
   "@transactionSplitChangeCurrency": {
     "description": "Hint Text: Change currency for a single split"
   },
-  "transactionSplitChangeTarget": "Ändra delat målkonto",
+  "transactionSplitChangeTarget": "Canvia el compte destí de la divisió",
   "@transactionSplitChangeTarget": {
     "description": "Hint Text: Change target account for single split"
   },
-  "transactionSplitDelete": "Ta bort delning",
+  "transactionSplitDelete": "Elimina la divisió",
   "@transactionSplitDelete": {
     "description": "Hint Text: Delete single split"
   },
-  "transactionTitleAdd": "Lägg till transaktion",
+  "transactionTitleAdd": "Afegir Transacció",
   "@transactionTitleAdd": {
     "description": "Title: Add a new transaction"
   },
-  "transactionTitleDelete": "Ta bort transaktion",
+  "transactionTitleDelete": "Elimina la Transacció",
   "@transactionTitleDelete": {
     "description": "Title: Delete existing transaction"
   },
-  "transactionTitleEdit": "Ändra transaktion",
+  "transactionTitleEdit": "Edita la Transacció",
   "@transactionTitleEdit": {
     "description": "Title: Edit existing transaction"
   },
-  "transactionTypeDeposit": "Insättning",
+  "transactionTypeDeposit": "Ingrés",
   "@transactionTypeDeposit": {
     "description": "Deposit transaction type"
   },
-  "transactionTypeTransfer": "Överföring",
+  "transactionTypeTransfer": "Transferència",
   "@transactionTypeTransfer": {
     "description": "Transfer transaction type"
   },
-  "transactionTypeWithdrawal": "Uttag",
+  "transactionTypeWithdrawal": "Retirada",
   "@transactionTypeWithdrawal": {
     "description": "Withdrawal transaction type"
   }

@@ -260,8 +260,8 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                                   NumberFormat()
                                       .format(double.parse(args.text)),
                                   args.textStyle),
-                          visibleMinimum: min,
-                          visibleMaximum: max,
+                          minimum: min,
+                          maximum: max,
                           decimalPlaces: 0,
                         ),
                         series: <ChartSeries<WFChartData, String>>[

@@ -683,7 +683,7 @@ class _HomeMainState extends State<HomeMain>
           ),
           const SizedBox(height: 8),
           ChartCard(
-            title: S.of(context).homeMainChartNetearningsTitle,
+            title: S.of(context).homeMainChartNetEarningsTitle,
             future: _fetchLastMonths(),
             summary: () => Table(
               // border: TableBorder.all(), // :DEBUG:
@@ -811,7 +811,7 @@ class _HomeMainState extends State<HomeMain>
           const SizedBox(height: 8),
           if (context.read<FireflyService>().apiVersion! >= Version(2, 0, 7))
             ChartCard(
-              title: "Net Worth",
+              title: S.of(context).homeMainChartNetWorthTitle,
               future: _fetchBalance(),
               summary: () => Table(
                 //border: TableBorder.all(), // :DEBUG:
@@ -851,7 +851,7 @@ class _HomeMainState extends State<HomeMain>
                           ),
                         ),
                       ),
-                      Text("Assets"),
+                      Text(S.of(context).generalAssets),
                       ...lastMonthsAssets.entries.toList().reversed.take(3).map(
                             (MapEntry<DateTime, double> e) => Align(
                               alignment: Alignment.centerRight,
@@ -880,7 +880,7 @@ class _HomeMainState extends State<HomeMain>
                           ),
                         ),
                       ),
-                      Text("Liabilities"),
+                      Text(S.of(context).generalLiabilities),
                       ...lastMonthsLiabilities.entries
                           .toList()
                           .reversed

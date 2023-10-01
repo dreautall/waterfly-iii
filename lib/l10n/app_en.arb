@@ -164,6 +164,10 @@
   "@generalAccount": {
     "description": "Asset/Debt (Bank) Account"
   },
+  "generalAssets": "Assets",
+  "@generalAssets": {
+    "description": "(Monetary) Assets"
+  },
   "generalBalance": "Balance",
   "@generalBalance": {
     "description": "(Account) Balance"
@@ -213,6 +217,10 @@
   "generalIncome": "Income",
   "@generalIncome": {
     "description": "(Account) Info"
+  },
+  "generalLiabilities": "Liabilities",
+  "@generalLiabilities": {
+    "description": "Firefly Translation String: liabilities"
   },
   "generalMultiple": "multiple",
   "@generalMultiple": {
@@ -300,9 +308,13 @@
   "@homeMainChartDailyTitle": {
     "description": "Chart Label: Daily Summary"
   },
-  "homeMainChartNetearningsTitle": "Net Earnings",
-  "@homeMainChartNetearningsTitle": {
+  "homeMainChartNetEarningsTitle": "Net Earnings",
+  "@homeMainChartNetEarningsTitle": {
     "description": "Chart Label: Net Earnings"
+  },
+  "homeMainChartNetWorthTitle": "Net Worth",
+  "@homeMainChartNetWorthTitle": {
+    "description": "Chart Label: Net Worth"
   },
   "homePiggyAdjustDialogTitle": "Save/Spend Money",
   "@homePiggyAdjustDialogTitle": {

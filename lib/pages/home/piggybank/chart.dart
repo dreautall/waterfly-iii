@@ -135,6 +135,8 @@ class _PiggyChartState extends State<PiggyChart> {
             AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
         plotBands: targetAnnotation,
         maximum: targetAmount != 0 ? targetAmount : null,
+        axisLabelFormatter: (AxisLabelRenderDetails args) => ChartAxisLabel(
+            NumberFormat().format(double.parse(args.text)), args.textStyle),
       ),
       series: chartData,
       palette: possibleChartColorsDart,

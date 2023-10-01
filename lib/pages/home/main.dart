@@ -58,9 +58,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastDays() async {
-    if (lastDaysExpense.isNotEmpty) {
+    /*if (lastDaysExpense.isNotEmpty) { // :DEBUG:
       return true;
-    }
+    }*/
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -178,9 +178,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchOverviewChart() async {
-    if (overviewChartData.isNotEmpty) {
+    /*if (overviewChartData.isNotEmpty) { // :DEBUG:
       return true;
-    }
+    }*/
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -213,9 +213,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastMonths() async {
-    if (lastMonthsExpense.isNotEmpty) {
+    /*if (lastMonthsExpense.isNotEmpty) { // :DEBUG:
       return true;
-    }
+    }*/
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -301,9 +301,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchCategories() async {
-    if (catChartData.isNotEmpty) {
+    /*if (catChartData.isNotEmpty) { // :DEBUG:
       return true;
-    }
+    }*/
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -426,9 +426,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchBalance() async {
-    if (lastMonthsEarned.isNotEmpty) {
+    /*if (lastMonthsEarned.isNotEmpty) { // :DEBUG:
       return true;
-    }
+    }*/
 
     final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
     final DateTime now = DateTime.now().toLocal().clearTime();
@@ -492,42 +492,6 @@ class _HomeMainState extends State<HomeMain>
         },
       );
     }
-/*
-    final Response<List<api_v2.ChartDataSetV2>> respEarnedSpentData =
-        await apiV2.v2ChartBalanceBalanceGet(
-      start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
-      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-      accounts: <int>[1, 3],
-      //period: api_v2.PeriodProperty.value_1d,
-      period: api_v2.PeriodProperty.value_1m,
-    );
-    if (!respEarnedSpentData.isSuccessful || respEarnedSpentData.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S.of(context).errorAPIInvalidResponse(
-              respEarnedSpentData.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respEarnedSpentData.error}",
-        );
-      }
-    }
-
-    for (api_v2.ChartDataSetV2 e in respEarnedSpentData.body!) {
-      final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
-      entries.forEach(
-        (String dateStr, dynamic valueStr) {
-          final DateTime date = DateTime.parse(dateStr).toLocal();
-          final double value = double.tryParse(valueStr) ?? 0;
-          if (e.label == "earned") {
-            lastMonthsEarned[date] = (lastMonthsEarned[date] ?? 0) + value;
-          } else if (e.label == "spent") {
-            lastMonthsSpent[date] = (lastMonthsSpent[date] ?? 0) + value;
-          }
-        },
-      );
-    }*/
 
     return true;
   }

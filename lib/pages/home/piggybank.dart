@@ -358,6 +358,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: SizedBox(
                       height: 300,
+                      width: MediaQuery.of(context).size.width,
                       child: PiggyChart(currentPiggy, snapshot.data!),
                     ),
                   );

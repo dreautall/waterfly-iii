@@ -3,8 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 
-import 'package:community_charts_flutter/community_charts_flutter.dart'
-    as charts;
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:waterflyiii/animations.dart';
 
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
@@ -51,17 +51,12 @@ class _PiggyChartState extends State<PiggyChart> {
         double.tryParse(widget.piggy.attributes.targetAmount ?? "") ?? 0;
   }
 
-  String chartLabel() {
-    return "${DateFormat(
-      DateFormat.ABBR_MONTH_DAY,
-      S.of(context).localeName,
-    ).format(selectedTime ?? DateTime.now().toLocal())}: ${currency.fmt(selectedValue ?? 0)}";
-  }
-
   @override
   Widget build(BuildContext context) {
-    final List<charts.Series<TimeSeriesChart, DateTime>> chartData =
-        <charts.Series<TimeSeriesChart, DateTime>>[];
+    log.finest(() => "build()");
+
+    final List<ChartSeries<TimeSeriesChart, DateTime>> chartData =
+        <ChartSeries<TimeSeriesChart, DateTime>>[];
     final List<TimeSeriesChart> data = <TimeSeriesChart>[];
 
     double total = 0;
@@ -83,117 +78,83 @@ class _PiggyChartState extends State<PiggyChart> {
       data.add(TimeSeriesChart(date, total));
     }
     data.add(TimeSeriesChart(DateTime.now().toLocal(), total));
+
     chartData.add(
-      charts.Series<TimeSeriesChart, DateTime>(
-        id: widget.piggy.id,
-        domainFn: (TimeSeriesChart d, _) => d.time.toLocal(),
-        measureFn: (TimeSeriesChart d, _) => d.value,
-        data: data,
+      LineSeries<TimeSeriesChart, DateTime>(
+        dataSource: data,
+        xValueMapper: (TimeSeriesChart data, _) => data.time,
+        yValueMapper: (TimeSeriesChart data, _) => data.value,
+        legendItemText: widget.piggy.id,
+        animationDuration: animDurationEmphasized.inMilliseconds.toDouble() * 2,
+        color: Colors.blue,
+        markerSettings: const MarkerSettings(
+          isVisible: true,
+          borderWidth: 0,
+          color: Colors.blue,
+        ),
       ),
     );
 
-    final List<charts.LineAnnotationSegment<Object>> chartAnnotations =
-        <charts.LineAnnotationSegment<Object>>[];
-
+    final List<PlotBand> targetAnnotation = <PlotBand>[];
     if (targetAmount != 0) {
-      chartAnnotations.add(
-        charts.LineAnnotationSegment<num>(
-          targetAmount,
-          charts.RangeAnnotationAxisType.measure,
-          color: charts.MaterialPalette.deepOrange.shadeDefault,
-          labelAnchor: charts.AnnotationLabelAnchor.start,
-          startLabel: S.of(context).generalTarget,
-          labelStyleSpec: charts.TextStyleSpec(
-            color: charts.ColorUtil.fromDartColor(
-              Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ),
-      );
-    }
-    if (widget.piggy.attributes.targetDate != null) {
-      chartAnnotations.add(
-        charts.LineAnnotationSegment<DateTime>(
-          widget.piggy.attributes.targetDate!,
-          charts.RangeAnnotationAxisType.domain,
-          color: charts.MaterialPalette.deepOrange.shadeDefault,
-          labelAnchor: charts.AnnotationLabelAnchor.start,
-          startLabel: S.of(context).generalTarget,
-          labelStyleSpec: charts.TextStyleSpec(
-            color: charts.ColorUtil.fromDartColor(
-              Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-          ),
+      targetAnnotation.add(
+        PlotBand(
+          start: targetAmount,
+          end: targetAmount,
+          borderColor: Colors.deepOrange,
+          borderWidth: 3,
+          text: S.of(context).generalTarget,
+          textAngle: 0,
+          textStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+                fontWeight: FontWeight.normal,
+                color: Colors.deepOrange,
+              ),
+          verticalTextAlignment: TextAnchor.start,
+          horizontalTextAlignment: TextAnchor.start,
+          verticalTextPadding: '-1%',
+          horizontalTextPadding: '1%',
         ),
       );
     }
 
-    return charts.TimeSeriesChart(
-      chartData,
-      animate: true,
-      primaryMeasureAxis: charts.NumericAxisSpec(
-        tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-          //desiredTickCount: 6,
-          desiredMaxTickCount: 6,
-          desiredMinTickCount: 4,
-          zeroBound: true,
-        ),
-        renderSpec: charts.SmallTickRendererSpec<num>(
-          labelStyle: charts.TextStyleSpec(
-            color: charts.ColorUtil.fromDartColor(
-                Theme.of(context).colorScheme.onSurfaceVariant),
-          ),
-        ),
-      ),
-      domainAxis: charts.DateTimeAxisSpec(
-        tickFormatterSpec: charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
-          DateFormat(
-            DateFormat.ABBR_MONTH_DAY,
-            S.of(context).localeName,
-          ),
-        ),
-        tickProviderSpec:
-            const charts.AutoDateTimeTickProviderSpec(includeTime: false),
-        renderSpec: charts.SmallTickRendererSpec<DateTime>(
-          labelStyle: charts.TextStyleSpec(
-            color: charts.ColorUtil.fromDartColor(
-              Theme.of(context).colorScheme.onSurfaceVariant,
+    return SfCartesianChart(
+      primaryXAxis: DateTimeAxis(
+        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+              fontWeight: FontWeight.normal,
             ),
-          ),
-        ),
+        dateFormat: DateFormat(DateFormat.ABBR_MONTH_DAY),
+        axisLine:
+            AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
+        minorTicksPerInterval: 1,
       ),
-      defaultRenderer: charts.LineRendererConfig<DateTime>(
-        includePoints: true,
+      primaryYAxis: NumericAxis(
+        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+              fontWeight: FontWeight.normal,
+            ),
+        axisLine:
+            AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
+        plotBands: targetAnnotation,
+        maximum: targetAmount != 0 ? targetAmount : null,
       ),
-      behaviors: <charts.ChartBehavior<DateTime>>[
-        charts.RangeAnnotation<DateTime>(
-          chartAnnotations,
+      series: chartData,
+      palette: possibleChartColorsDart,
+      enableAxisAnimation: true,
+      trackballBehavior: TrackballBehavior(
+        enable: true,
+        activationMode: ActivationMode.longPress,
+        lineType: TrackballLineType.vertical,
+        tooltipSettings: InteractiveTooltip(
+          decimalPlaces: currency.attributes.decimalPlaces ?? 2,
+          format:
+              "point.x ${currency.fmt(123, decimalDigits: 0).replaceAll("123", "point.y")}",
+          canShowMarker: false,
         ),
-        charts.LinePointHighlighter<DateTime>(
-          showHorizontalFollowLine:
-              charts.LinePointHighlighterFollowLineType.nearest,
-          showVerticalFollowLine:
-              charts.LinePointHighlighterFollowLineType.nearest,
-          drawFollowLinesAcrossChart: false,
-          symbolRenderer: TextSymbolRenderer(chartLabel, context),
+        tooltipDisplayMode: TrackballDisplayMode.nearestPoint,
+        markerSettings: const TrackballMarkerSettings(
+          markerVisibility: TrackballVisibilityMode.visible,
         ),
-        charts.SelectNearest<DateTime>(
-          eventTrigger: charts.SelectionTrigger.tapAndDrag,
-        ),
-      ],
-      selectionModels: <charts.SelectionModelConfig<DateTime>>[
-        charts.SelectionModelConfig<DateTime>(
-          type: charts.SelectionModelType.info,
-          changedListener: (charts.SelectionModel<DateTime> model) {
-            if (model.hasDatumSelection) {
-              selectedTime = model.selectedDatum[0].datum.time;
-              selectedValue = model.selectedDatum[0].datum.value;
-            } else {
-              selectedTime = selectedValue = null;
-            }
-          },
-        )
-      ],
+        shouldAlwaysShow: true,
+      ),
     );
   }
 }

@@ -1,0 +1,8 @@
+- Verbesserte Charts auf der Startseite
+  - Verbesserte Geschwindigkeit & Lesbarkeit
+  - Neuer Chart: Nettovermögen
+  - Ausführlicher Chart nach tippen auf die Konto-Übersicht
+  - Wasserfall-Chart nach tippen auf den Überschuss-Chart
+- Verbesserte Geschwindigkeit durch zwischenspeichern der Transaktionsliste
+- Suche in der Konten-Ansicht
+- Fehlerbehebungen

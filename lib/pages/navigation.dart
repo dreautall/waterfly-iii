@@ -140,6 +140,9 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
         drawer: NavigationDrawer(
           selectedIndex: screenIndex,
           onDestinationSelected: (int index) {
+            if (screenIndex == index) {
+              return;
+            }
             context.read<NavPageElements>().appBarActions = null;
             context.read<NavPageElements>().appBarBottom = null;
             context.read<NavPageElements>().fab = null;

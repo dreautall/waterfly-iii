@@ -113,29 +113,26 @@ class NetWorthChart extends StatelessWidget {
       ),
     );
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 12),
-      child: SfCartesianChart(
-        primaryXAxis: CategoryAxis(
-          labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                fontWeight: FontWeight.normal,
-              ),
-          axisLine:
-              AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
-        ),
-        primaryYAxis: NumericAxis(
-          labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                fontWeight: FontWeight.normal,
-              ),
-          axisLine:
-              AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
-          axisLabelFormatter: (AxisLabelRenderDetails args) => ChartAxisLabel(
-              NumberFormat().format(double.parse(args.text)), args.textStyle),
-        ),
-        series: chartData,
-        enableAxisAnimation: true,
-        enableSideBySideSeriesPlacement: false,
+    return SfCartesianChart(
+      primaryXAxis: CategoryAxis(
+        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+              fontWeight: FontWeight.normal,
+            ),
+        axisLine:
+            AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
       ),
+      primaryYAxis: NumericAxis(
+        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+              fontWeight: FontWeight.normal,
+            ),
+        axisLine:
+            AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
+        axisLabelFormatter: (AxisLabelRenderDetails args) => ChartAxisLabel(
+            NumberFormat().format(double.parse(args.text)), args.textStyle),
+      ),
+      series: chartData,
+      enableAxisAnimation: true,
+      enableSideBySideSeriesPlacement: false,
     );
   }
 }

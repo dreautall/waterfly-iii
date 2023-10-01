@@ -41,31 +41,28 @@ class SummaryChart extends StatelessWidget {
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 12),
-      child: SfCartesianChart(
-        primaryXAxis: DateTimeAxis(
-          labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                fontWeight: FontWeight.normal,
-              ),
-          dateFormat: DateFormat(DateFormat.ABBR_MONTH_DAY),
-          axisLine:
-              AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
-          minorTicksPerInterval: 1,
-        ),
-        primaryYAxis: NumericAxis(
-          labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                fontWeight: FontWeight.normal,
-              ),
-          axisLine:
-              AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
-          axisLabelFormatter: (AxisLabelRenderDetails args) => ChartAxisLabel(
-              NumberFormat().format(double.parse(args.text)), args.textStyle),
-        ),
-        series: chartData,
-        palette: possibleChartColorsDart,
-        enableAxisAnimation: true,
+    return SfCartesianChart(
+      primaryXAxis: DateTimeAxis(
+        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+              fontWeight: FontWeight.normal,
+            ),
+        dateFormat: DateFormat(DateFormat.ABBR_MONTH_DAY),
+        axisLine:
+            AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
+        minorTicksPerInterval: 1,
       ),
+      primaryYAxis: NumericAxis(
+        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+              fontWeight: FontWeight.normal,
+            ),
+        axisLine:
+            AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
+        axisLabelFormatter: (AxisLabelRenderDetails args) => ChartAxisLabel(
+            NumberFormat().format(double.parse(args.text)), args.textStyle),
+      ),
+      series: chartData,
+      palette: possibleChartColorsDart,
+      enableAxisAnimation: true,
     );
   }
 }

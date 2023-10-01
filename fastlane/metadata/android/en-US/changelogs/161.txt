@@ -1,0 +1,3 @@
+- Hotfix for account autocomplete with latest Firefly version.
+
+Update is not recommended unless you installed the latest Firefly update (v6.0.24)! 

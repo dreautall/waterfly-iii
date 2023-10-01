@@ -9,8 +9,9 @@ import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show Response;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:waterflyiii/animations.dart';
+import 'package:version/version.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -19,6 +20,7 @@ import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/pages/transaction/delete.dart';
+import 'package:waterflyiii/stock.dart';
 
 class HomeTransactions extends StatefulWidget {
   const HomeTransactions({Key? key, this.accountId}) : super(key: key);
@@ -50,9 +52,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
   void initState() {
     super.initState();
 
-    _pagingController.addPageRequestListener((int pageKey) {
-      _fetchPage(pageKey);
-    });
+    _pagingController
+        .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
 
     // Only add button when in own tab
     if (widget.accountId == null) {
@@ -113,9 +114,16 @@ class _HomeTransactionsState extends State<HomeTransactions>
   }
 
   Future<void> _fetchPage(int pageKey) async {
+    final TransStock? stock = context.read<FireflyService>().transStock;
+
+    if (stock == null) {
+      // Throw error
+      return;
+    }
+
     try {
-      final FireflyIii api = context.read<FireflyService>().api;
-      late Future<Response<TransactionArray>> searchFunc;
+      late List<TransactionRead> transactionList;
+
       if (_filters.hasFilters) {
         String query = _filters.text ?? "";
         if (_filters.account != null) {
@@ -146,44 +154,43 @@ class _HomeTransactionsState extends State<HomeTransactions>
             query = "bill_is:\"${_filters.bill!.attributes.name}\" $query";
           }
         }
+        query = "date_before:today $query ";
         log.fine(() => "Search query: $query");
-        searchFunc = api.v1SearchTransactionsGet(
+        transactionList = await stock.getSearch(
           query: query,
           page: pageKey,
         );
+      } else if (widget.accountId != null || _filters.account != null) {
+        transactionList = await stock.getAccount(
+          id: widget.accountId ?? _filters.account!.id,
+          page: pageKey,
+          end: DateFormat('yyyy-MM-dd', 'en_US')
+              .format(DateTime.now().toLocal()),
+          start:
+              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
+                  ? null
+                  : "1900-01-01",
+        );
       } else {
-        searchFunc = (widget.accountId != null || _filters.account != null)
-            ? api.v1AccountsIdTransactionsGet(
-                id: widget.accountId ?? _filters.account!.id,
-                page: pageKey,
-                end: DateFormat('yyyy-MM-dd', 'en_US')
-                    .format(DateTime.now().toLocal()))
-            : api.v1TransactionsGet(
-                page: pageKey,
-                end: DateFormat('yyyy-MM-dd', 'en_US')
-                    .format(DateTime.now().toLocal()),
-              );
+        transactionList = await stock.get(
+          page: pageKey,
+          end: DateFormat('yyyy-MM-dd', 'en_US')
+              .format(DateTime.now().toLocal()),
+          start:
+              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
+                  ? null
+                  : "1900-01-01",
+        );
       }
-      final Response<TransactionArray> response = await searchFunc;
-      if (!response.isSuccessful || response.body == null) {
-        if (context.mounted) {
-          throw Exception(
-            S
-                .of(context)
-                .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-          );
+
+      if (mounted) {
+        final bool isLastPage =
+            transactionList.length < _numberOfPostsPerRequest;
+        if (isLastPage) {
+          _pagingController.appendLastPage(transactionList);
         } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${response.error}",
-          );
+          _pagingController.appendPage(transactionList, pageKey + 1);
         }
-      }
-      final List<TransactionRead> transactionList = response.body!.data;
-      final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
-      if (isLastPage) {
-        _pagingController.appendLastPage(transactionList);
-      } else {
-        _pagingController.appendPage(transactionList, pageKey + 1);
       }
     } catch (e, stackTrace) {
       log.severe("_fetchPage($pageKey)", e, stackTrace);
@@ -203,11 +210,14 @@ class _HomeTransactionsState extends State<HomeTransactions>
       onRefresh: () => Future<void>.sync(() {
         _rowsWithDate = <int>[];
         _lastDate = null;
+        context.read<FireflyService>().transStock!.clear();
         return _pagingController.refresh();
       }),
       child: PagedListView<int, TransactionRead>(
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
+          animateTransitions: true,
+          transitionDuration: animDurationStandard,
           itemBuilder: transactionRowBuilder,
         ),
         //itemExtent: 80,

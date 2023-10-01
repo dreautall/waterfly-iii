@@ -170,6 +170,10 @@ class _WaterflyAppState extends State<WaterflyApp> {
                         ? cSchemeDynamicLight?.harmonized() ?? cSchemeLight
                         : cSchemeLight,
                 useMaterial3: true,
+                // See https://github.com/flutter/flutter/issues/131042#issuecomment-1690737834
+                appBarTheme: const AppBarTheme(
+                  shape: RoundedRectangleBorder(),
+                ),
               ),
               darkTheme: ThemeData(
                 brightness: Brightness.dark,

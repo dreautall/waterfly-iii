@@ -26,37 +26,51 @@ class NavDestination {
 }
 
 class NavPageElements with ChangeNotifier {
-  List<Widget>? appBarActions;
-  PreferredSizeWidget? appBarBottom;
-  Widget? fab;
-
-  void setAppBarActions(List<Widget>? actions) {
-    if (actions == appBarActions) {
+  List<Widget>? _appBarActions;
+  List<Widget>? get appBarActions => _appBarActions;
+  set appBarActions(List<Widget>? value) {
+    if (value == appBarActions) {
       log.finer(() => "NavPageElements->setAppBarActions equal, skipping");
       return;
     }
-    appBarActions = actions;
+    _appBarActions = value;
     log.finest(() => "notify NavPageElements->setAppBarActions()");
     notifyListeners();
   }
 
-  void setAppBarBottom(PreferredSizeWidget? bottom) {
-    if (bottom == appBarBottom) {
+  PreferredSizeWidget? _appBarBottom;
+  PreferredSizeWidget? get appBarBottom => _appBarBottom;
+  set appBarBottom(PreferredSizeWidget? value) {
+    if (value == appBarBottom) {
       log.finer(() => "NavPageElements->setAppBarBottom equal, skipping");
       return;
     }
-    appBarBottom = bottom;
+    _appBarBottom = value;
     log.finest(() => "notify NavPageElements->setAppBarBottom()");
     notifyListeners();
   }
 
-  void setFab(Widget? newFab) {
-    if (newFab == fab) {
+  Widget? _fab;
+  Widget? get fab => _fab;
+  set fab(Widget? value) {
+    if (value == fab) {
       log.finer(() => "NavPageElements->setFab equal, skipping");
       return;
     }
-    fab = newFab;
+    _fab = value;
     log.finest(() => "notify NavPageElements->setFab()");
+    notifyListeners();
+  }
+
+  Widget? _appBarTitle;
+  Widget? get appBarTitle => _appBarTitle;
+  set appBarTitle(Widget? value) {
+    if (value == appBarTitle) {
+      log.finer(() => "NavPageElements->setAppBarTitle equal, skipping");
+      return;
+    }
+    _appBarTitle = value;
+    log.finest(() => "notify NavPageElements->setAppBarTitle()");
     notifyListeners();
   }
 }
@@ -119,20 +133,25 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
       create: (_) => NavPageElements(),
       builder: (BuildContext context, _) => Scaffold(
         appBar: AppBar(
-          title: Text(currentPage.label),
+          title: context.select((NavPageElements n) => n.appBarTitle),
           actions: context.select((NavPageElements n) => n.appBarActions),
           bottom: context.select((NavPageElements n) => n.appBarBottom),
         ),
         drawer: NavigationDrawer(
           selectedIndex: screenIndex,
           onDestinationSelected: (int index) {
-            context.read<NavPageElements>().setAppBarActions(null);
-            context.read<NavPageElements>().setAppBarBottom(null);
-            context.read<NavPageElements>().setFab(null);
+            Navigator.pop(context); // closes the drawer
+            if (screenIndex == index) {
+              return;
+            }
+            context.read<NavPageElements>().appBarActions = null;
+            context.read<NavPageElements>().appBarBottom = null;
+            context.read<NavPageElements>().fab = null;
+            context.read<NavPageElements>().appBarTitle =
+                Text(navDestinations[index].label);
             setState(() {
               screenIndex = index;
             });
-            Navigator.pop(context); // closes the drawer
           },
           children: <Widget>[
             Padding(

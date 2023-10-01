@@ -7,7 +7,7 @@ Funkcje:
 - Lista transakcji z filtrami
 - Dodaj i edytuj transakcje z auto uzupełnianiem, w tym załączniki, dzielone transakcje i wsparcie dla wielu walut
 - Wsparcie Skarbonek (zobacz i dodaj pieniądze)
-- Usługa nasłuchiwania powiadomień w celu łatwego tworzenia nowych transakcji na podstawie przychodzących powiadomień (np. z Google Pay lub Twojej aplikacji bankowej)
+- Usługa nasłuchiwania powiadomień w celu łatwego tworzenia nowych transakcji na podstawie przychodzących powiadomień (np.
 - Całkowicie open source: https://github.com/dreautall/waterfly-iii
 - Brak reklam lub trackerów
 

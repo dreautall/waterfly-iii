@@ -164,9 +164,23 @@
   "@generalAccount": {
     "description": "Asset/Debt (Bank) Account"
   },
+  "generalAssets": "Vermögen",
+  "@generalAssets": {
+    "description": "(Monetary) Assets"
+  },
   "generalBalance": "Kontostand",
   "@generalBalance": {
     "description": "(Account) Balance"
+  },
+  "generalBalanceOn": "Kontostand am {date}",
+  "@generalBalanceOn": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd",
+        "example": "2023-05-13"
+      }
+    }
   },
   "generalBill": "Rechnung",
   "@generalBill": {
@@ -203,6 +217,10 @@
   "generalIncome": "Einnahmen",
   "@generalIncome": {
     "description": "(Account) Info"
+  },
+  "generalLiabilities": "Verbindlichkeiten",
+  "@generalLiabilities": {
+    "description": "Firefly Translation String: liabilities"
   },
   "generalMultiple": "mehrere",
   "@generalMultiple": {
@@ -290,9 +308,13 @@
   "@homeMainChartDailyTitle": {
     "description": "Chart Label: Daily Summary"
   },
-  "homeMainChartNetearningsTitle": "Überschuss",
-  "@homeMainChartNetearningsTitle": {
+  "homeMainChartNetEarningsTitle": "Überschuss",
+  "@homeMainChartNetEarningsTitle": {
     "description": "Chart Label: Net Earnings"
+  },
+  "homeMainChartNetWorthTitle": "Nettovermögen",
+  "@homeMainChartNetWorthTitle": {
+    "description": "Chart Label: Net Worth"
   },
   "homePiggyAdjustDialogTitle": "Geld sparen/ausgeben",
   "@homePiggyAdjustDialogTitle": {

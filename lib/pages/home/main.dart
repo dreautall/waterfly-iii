@@ -803,6 +803,10 @@ class _HomeMainState extends State<HomeMain>
                 ),
               ],
             ),
+            onTap: () => showDialog<void>(
+              context: context,
+              builder: (BuildContext context) => const NetEarningsChartPopup(),
+            ),
             child: () => NetEarningsChart(
               expenses: lastMonthsExpense,
               income: lastMonthsIncome,

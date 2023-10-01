@@ -168,7 +168,32 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
     final DateTime currentMonth = now.copyWith(month: now.month - monthOffset);
 
     return SimpleDialog(
-      title: Text(DateFormat.yMMMM().format(currentMonth)),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(DateFormat.yMMMM().format(currentMonth)),
+          Row(
+            children: <Widget>[
+              IconButton(
+                onPressed: () => setState(() {
+                  monthOffset++;
+                }),
+                icon: const Icon(Icons.arrow_back),
+              ),
+              IconButton(
+                onPressed: monthOffset == 0
+                    ? null
+                    : () => setState(() {
+                          if (monthOffset != 0) {
+                            monthOffset--;
+                          }
+                        }),
+                icon: const Icon(Icons.arrow_forward),
+              ),
+            ],
+          ),
+        ],
+      ),
       clipBehavior: Clip.hardEdge,
       insetPadding: const EdgeInsets.all(12),
       children: <Widget>[
@@ -206,7 +231,7 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                   Padding(
                     padding: const EdgeInsets.only(left: 12),
                     child: SizedBox(
-                      height: 300,
+                      height: 400,
                       width: MediaQuery.of(context).size.width,
                       child: SfCartesianChart(
                         primaryXAxis: CategoryAxis(
@@ -235,8 +260,9 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                                   NumberFormat()
                                       .format(double.parse(args.text)),
                                   args.textStyle),
-                          minimum: min,
-                          maximum: max,
+                          visibleMinimum: min,
+                          visibleMaximum: max,
+                          decimalPlaces: 0,
                         ),
                         series: <ChartSeries<WFChartData, String>>[
                           WaterfallSeries<WFChartData, String>(

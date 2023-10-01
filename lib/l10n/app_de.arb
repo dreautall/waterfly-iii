@@ -168,6 +168,7 @@
   "@generalBalance": {
     "description": "(Account) Balance"
   },
+  "generalBalanceOn": "Kontostand am {date}",
   "generalBill": "Rechnung",
   "@generalBill": {
     "description": "Bill"

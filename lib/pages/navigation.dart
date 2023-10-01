@@ -140,6 +140,10 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
         drawer: NavigationDrawer(
           selectedIndex: screenIndex,
           onDestinationSelected: (int index) {
+            Navigator.pop(context); // closes the drawer
+            if (screenIndex == index) {
+              return;
+            }
             context.read<NavPageElements>().appBarActions = null;
             context.read<NavPageElements>().appBarBottom = null;
             context.read<NavPageElements>().fab = null;
@@ -148,7 +152,6 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
             setState(() {
               screenIndex = index;
             });
-            Navigator.pop(context); // closes the drawer
           },
           children: <Widget>[
             Padding(

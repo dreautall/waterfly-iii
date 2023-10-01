@@ -1,0 +1,15 @@
+Waterfly III és una aplicació no oficial per a la vostra pròpia instància de Firefly III, un gestor financer gratuït i de codi obert.
+
+Aquesta aplicació requereix una instància de Firefly III autoallotjada al vostre propi servidor, visiteu https://www.firefly-iii.org/ per obtenir més informació sobre el programari. Només és una aplicació de client i no pot funcionar de manera independent!
+
+Funcions:
+- Tauler amb gràfics i visió general del pressupost
+- Llista de transaccions amb filtres
+- Afegeix i edita transaccions amb autocompleció, incloent-hi adjunts, transaccions partides i suport per a diverses monedes
+- Suport per a Guardioles (visualitza i afegeix diners)
+- Servei d'escolta de notificacions per crear fàcilment noves transaccions basades en les notificacions entrants (p. ex., de Google Pay o de la vostra aplicació bancària)
+- Completament de codi obert: https://github.com/dreautall/waterfly-iii
+- Sense anuncis ni rastrejadors
+
+Contribució:
+Si trobes algun error o trobes a faltar alguna funció, pots fer propostes a través de Play Store, correu electrònic o GitHub.

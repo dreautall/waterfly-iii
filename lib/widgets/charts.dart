@@ -126,3 +126,11 @@ class TextSymbolRenderer extends charts.CircleSymbolRenderer {
     );
   }
 }
+
+class WFChartData {
+  WFChartData(this.label, [this.value, this.isIntermediate, this.isTotal]);
+  final String label;
+  final double? value;
+  final bool? isIntermediate;
+  final bool? isTotal;
+}

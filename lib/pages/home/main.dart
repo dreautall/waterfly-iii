@@ -875,7 +875,13 @@ class _HomeMainState extends State<HomeMain>
                         S.of(context).generalSum,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      ...lastMonthsAssets.entries.toList().reversed.take(3).map(
+                      ...lastMonthsAssets.entries
+                          .toList()
+                          .reversed
+                          .take(3)
+                          .toList()
+                          .reversed
+                          .map(
                         (MapEntry<DateTime, double> e) {
                           final double assets = e.value;
                           final double liabilities =

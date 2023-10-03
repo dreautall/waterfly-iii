@@ -44,10 +44,10 @@ class _HomeMainState extends State<HomeMain>
       <DateTime, InsightTotalEntry>{};
   final Map<DateTime, InsightTotalEntry> lastMonthsIncome =
       <DateTime, InsightTotalEntry>{};
-  final Map<DateTime, double> lastMonthsEarned = <DateTime, double>{};
-  final Map<DateTime, double> lastMonthsSpent = <DateTime, double>{};
-  final Map<DateTime, double> lastMonthsAssets = <DateTime, double>{};
-  final Map<DateTime, double> lastMonthsLiabilities = <DateTime, double>{};
+  Map<DateTime, double> lastMonthsEarned = <DateTime, double>{};
+  Map<DateTime, double> lastMonthsSpent = <DateTime, double>{};
+  Map<DateTime, double> lastMonthsAssets = <DateTime, double>{};
+  Map<DateTime, double> lastMonthsLiabilities = <DateTime, double>{};
   List<ChartDataSet> overviewChartData = <ChartDataSet>[];
   final List<InsightGroupEntry> catChartData = <InsightGroupEntry>[];
   final Map<String, Budget> budgetInfos = <String, Budget>{};
@@ -493,6 +493,50 @@ class _HomeMainState extends State<HomeMain>
       );
     }
 
+    if (lastMonthsEarned.length < 3) {
+      final DateTime lastDate = now.copyWith(day: 1);
+      for (int i = 0; i < 12; i++) {
+        final DateTime newDate = lastDate.copyWith(month: lastDate.month - i);
+        lastMonthsEarned[newDate] = lastMonthsEarned[newDate] ?? 0;
+      }
+    }
+    lastMonthsEarned = Map<DateTime, double>.fromEntries(
+        lastMonthsEarned.entries.toList()
+          ..sortBy((MapEntry<DateTime, double> e) => e.key));
+
+    if (lastMonthsSpent.length < 3) {
+      final DateTime lastDate = now.copyWith(day: 1);
+      for (int i = 0; i < 12; i++) {
+        final DateTime newDate = lastDate.copyWith(month: lastDate.month - i);
+        lastMonthsSpent[newDate] = lastMonthsSpent[newDate] ?? 0;
+      }
+    }
+    lastMonthsSpent = Map<DateTime, double>.fromEntries(
+        lastMonthsSpent.entries.toList()
+          ..sortBy((MapEntry<DateTime, double> e) => e.key));
+
+    if (lastMonthsAssets.length < 12) {
+      final DateTime lastDate = now.copyWith(day: 1);
+      for (int i = 0; i < 12; i++) {
+        final DateTime newDate = lastDate.copyWith(month: lastDate.month - i);
+        lastMonthsAssets[newDate] = lastMonthsAssets[newDate] ?? 0;
+      }
+    }
+    lastMonthsAssets = Map<DateTime, double>.fromEntries(
+        lastMonthsAssets.entries.toList()
+          ..sortBy((MapEntry<DateTime, double> e) => e.key));
+
+    if (lastMonthsLiabilities.length < 12) {
+      final DateTime lastDate = now.copyWith(day: 1);
+      for (int i = 0; i < 12; i++) {
+        final DateTime newDate = lastDate.copyWith(month: lastDate.month - i);
+        lastMonthsLiabilities[newDate] = lastMonthsLiabilities[newDate] ?? 0;
+      }
+    }
+    lastMonthsLiabilities = Map<DateTime, double>.fromEntries(
+        lastMonthsLiabilities.entries.toList()
+          ..sortBy((MapEntry<DateTime, double> e) => e.key));
+
     return true;
   }
 
@@ -795,7 +839,13 @@ class _HomeMainState extends State<HomeMain>
                     children: <Widget>[
                       const SizedBox.shrink(),
                       const SizedBox.shrink(),
-                      ...lastMonthsAssets.keys.toList().reversed.take(3).map(
+                      ...lastMonthsAssets.keys
+                          .toList()
+                          .reversed
+                          .take(3)
+                          .toList()
+                          .reversed
+                          .map(
                             (DateTime e) => Align(
                               alignment: Alignment.centerRight,
                               child: Text(
@@ -820,7 +870,13 @@ class _HomeMainState extends State<HomeMain>
                         ),
                       ),
                       Text(S.of(context).generalAssets),
-                      ...lastMonthsAssets.entries.toList().reversed.take(3).map(
+                      ...lastMonthsAssets.entries
+                          .toList()
+                          .reversed
+                          .take(3)
+                          .toList()
+                          .reversed
+                          .map(
                             (MapEntry<DateTime, double> e) => Align(
                               alignment: Alignment.centerRight,
                               child: Text(
@@ -853,6 +909,8 @@ class _HomeMainState extends State<HomeMain>
                           .toList()
                           .reversed
                           .take(3)
+                          .toList()
+                          .reversed
                           .map(
                             (MapEntry<DateTime, double> e) => Align(
                               alignment: Alignment.centerRight,

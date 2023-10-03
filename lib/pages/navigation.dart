@@ -26,6 +26,9 @@ class NavDestination {
 }
 
 class NavPageElements with ChangeNotifier {
+  NavPageElements(this.defaultTitle);
+  final Widget defaultTitle;
+
   List<Widget>? _appBarActions;
   List<Widget>? get appBarActions => _appBarActions;
   set appBarActions(List<Widget>? value) {
@@ -63,8 +66,8 @@ class NavPageElements with ChangeNotifier {
   }
 
   Widget? _appBarTitle;
-  Widget? get appBarTitle => _appBarTitle;
-  set appBarTitle(Widget? value) {
+  Widget get appBarTitle => _appBarTitle ?? defaultTitle;
+  set appBarTitle(Widget value) {
     if (value == appBarTitle) {
       log.finer(() => "NavPageElements->setAppBarTitle equal, skipping");
       return;
@@ -130,7 +133,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
     log.finest(() => "nav build(page: $screenIndex)");
 
     return ChangeNotifierProvider<NavPageElements>(
-      create: (_) => NavPageElements(),
+      create: (_) => NavPageElements(Text(navDestinations[0].label)),
       builder: (BuildContext context, _) => Scaffold(
         appBar: AppBar(
           title: context.select((NavPageElements n) => n.appBarTitle),

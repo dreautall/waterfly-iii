@@ -475,7 +475,7 @@ class _HomeMainState extends State<HomeMain>
       final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
       entries.forEach(
         (String dateStr, dynamic valueStr) {
-          final DateTime date = DateTime.parse(dateStr).toLocal();
+          DateTime date = DateTime.parse(dateStr).toLocal();
           if (
               // Current month: take current day
               (date.month == now.month &&
@@ -486,6 +486,9 @@ class _HomeMainState extends State<HomeMain>
                       date.year != now.year &&
                       date.copyWith(day: date.day + 1).month != date.month)) {
             final double value = double.tryParse(valueStr) ?? 0;
+            // We don't really care about the exact date. Always using the first
+            // ensures the loops below to fill up gaps work properly.
+            date = date.copyWith(day: 1);
             if (value > 0) {
               lastMonthsAssets[date] = (lastMonthsAssets[date] ?? 0) + value;
             }

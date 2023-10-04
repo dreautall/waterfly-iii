@@ -154,7 +154,7 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.PLAYSTORE_ACCOUNT_KEY }}
           packageName: com.dreautall.waterflyiii
           releaseFiles: ./artifacts/app-release.aab
-          debugSymbols: ./artifacts/aab-debug-symbols.
+          debugSymbols: ./artifacts/aab-debug-symbols.zip
           mappingFile: ./artifacts/mapping.txt
           track: internal
           status: completed

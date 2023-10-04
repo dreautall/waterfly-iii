@@ -386,10 +386,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_local_notifications
-      sha256: "3002092e5b8ce2f86c3361422e52e6db6776c23ee21e0b2f71b892bf4259ef04"
+      sha256: "501ed9d54f1c8c0535b7991bade36f9e7e3b45a2346401f03775c1ec7a3c06ae"
       url: "https://pub.dev"
     source: hosted
-    version: "15.1.1"
+    version: "15.1.2"
   flutter_local_notifications_linux:
     dependency: transitive
     description:
@@ -1111,18 +1111,18 @@ packages:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_charts
-      sha256: a545f93f76f2822985a7481c9a6664e989268768215485009eb0e40d35822c34
+      sha256: "41e51c7ee9d30f8a25e087b5dcfc61bf4da568ddaf846bb256ca11221414df18"
       url: "https://pub.dev"
     source: hosted
-    version: "23.1.38"
+    version: "23.1.39"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: "295954bc4bda923c88f361da35611801b56f4258179aa355730b236e4ae3ec60"
+      sha256: "505a07deaeb326ae9af5ee4e50937b7563cbb639982e760c26f3511b4fa535d5"
       url: "https://pub.dev"
     source: hosted
-    version: "23.1.38"
+    version: "23.1.39"
   term_glyph:
     dependency: transitive
     description:

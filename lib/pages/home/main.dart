@@ -439,10 +439,7 @@ class _HomeMainState extends State<HomeMain>
       minute: 59,
       second: 59,
     );
-    final DateTime start =
-        //now.copyWith(year: now.year - 1),
-        //now.copyWith(day: now.day - 7),
-        now.copyWith(
+    final DateTime start = now.copyWith(
       month: now.month - 11,
       day: 1,
       hour: 0,
@@ -479,7 +476,15 @@ class _HomeMainState extends State<HomeMain>
       entries.forEach(
         (String dateStr, dynamic valueStr) {
           final DateTime date = DateTime.parse(dateStr).toLocal();
-          if (date.day == 1) {
+          if (
+              // Current month: take current day
+              (date.month == now.month &&
+                      date.year == now.year &&
+                      date.day == now.day) ||
+                  // Other month: take last day of month
+                  (date.month != now.month &&
+                      date.year != now.year &&
+                      date.copyWith(day: date.day + 1).month != date.month)) {
             final double value = double.tryParse(valueStr) ?? 0;
             if (value > 0) {
               lastMonthsAssets[date] = (lastMonthsAssets[date] ?? 0) + value;
@@ -495,7 +500,7 @@ class _HomeMainState extends State<HomeMain>
 
     if (lastMonthsEarned.length < 3) {
       final DateTime lastDate = now.copyWith(day: 1);
-      for (int i = 0; i < 12; i++) {
+      for (int i = 0; i < 3; i++) {
         final DateTime newDate = lastDate.copyWith(month: lastDate.month - i);
         lastMonthsEarned[newDate] = lastMonthsEarned[newDate] ?? 0;
       }
@@ -506,7 +511,7 @@ class _HomeMainState extends State<HomeMain>
 
     if (lastMonthsSpent.length < 3) {
       final DateTime lastDate = now.copyWith(day: 1);
-      for (int i = 0; i < 12; i++) {
+      for (int i = 0; i < 3; i++) {
         final DateTime newDate = lastDate.copyWith(month: lastDate.month - i);
         lastMonthsSpent[newDate] = lastMonthsSpent[newDate] ?? 0;
       }

@@ -483,7 +483,6 @@ class _HomeMainState extends State<HomeMain>
                       date.day == now.day) ||
                   // Other month: take last day of month
                   (date.month != now.month &&
-                      date.year != now.year &&
                       date.copyWith(day: date.day + 1).month != date.month)) {
             final double value = double.tryParse(valueStr) ?? 0;
             // We don't really care about the exact date. Always using the first

@@ -66,7 +66,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                     bool granted = await FlutterLocalNotificationsPlugin()
                             .resolvePlatformSpecificImplementation<
                                 AndroidFlutterLocalNotificationsPlugin>()!
-                            .requestPermission() ??
+                            .requestNotificationsPermission() ??
                         false;
                     if (!granted) {
                       msg.showSnackBar(SnackBar(
@@ -85,7 +85,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                     await FlutterLocalNotificationsPlugin()
                         .resolvePlatformSpecificImplementation<
                             AndroidFlutterLocalNotificationsPlugin>()!
-                        .requestPermission();
+                        .requestNotificationsPermission();
                   };
                 } else if (!snapshot.data!.serviceRunning) {
                   subtitle = l10n.settingsNLServiceStopped;

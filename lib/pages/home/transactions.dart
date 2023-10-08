@@ -184,9 +184,14 @@ class _HomeTransactionsState extends State<HomeTransactions>
       }
 
       if (mounted) {
-        final bool isLastPage =
-            transactionList.length < _numberOfPostsPerRequest;
-        if (isLastPage) {
+        // check if it is the last page
+        if (transactionList.length < _numberOfPostsPerRequest) {
+          transactionList.add(TransactionRead(
+            type: "WF3_DUMMY_SPACING_ELEMENT",
+            id: "WF3_DUMMY_SPACING_ELEMENT",
+            attributes: Transaction(transactions: <TransactionSplit>[]),
+            links: ObjectLink(),
+          ));
           _pagingController.appendLastPage(transactionList);
         } else {
           _pagingController.appendPage(transactionList, pageKey + 1);
@@ -230,6 +235,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
     TransactionRead item,
     int index,
   ) {
+    if (item.type == "WF3_DUMMY_SPACING_ELEMENT" &&
+        item.id == "WF3_DUMMY_SPACING_ELEMENT") {
+      return const SizedBox(height: 68);
+    }
     List<TransactionSplit> transactions = item.attributes.transactions;
     if (transactions.isEmpty) {
       return Text(S.of(context).homeTransactionsEmpty);

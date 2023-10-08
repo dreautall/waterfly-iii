@@ -29,10 +29,10 @@ packages:
     dependency: transitive
     description:
       name: archive
-      sha256: "06a96f1249f38a00435b3b0c9a3246d934d7dbc8183fc7c9e56989860edb99d4"
+      sha256: ca12e6c9ac022f33fd89128e7007fb5e97ab6e814d4fa05dd8d4f2db1e3c69cb
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.4"
+    version: "3.4.5"
   args:
     dependency: transitive
     description:
@@ -189,18 +189,18 @@ packages:
     dependency: "direct main"
     description:
       name: chopper
-      sha256: "108c484dd55e4d0bf153a33ff097c4f58cd8090964d1f9bf38ce88059e51e7fa"
+      sha256: "5eeeec0feb99829b22fc6935c61296ad7e6467355ee13842921ec2a4bc849371"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.6"
+    version: "7.0.7+1"
   chopper_generator:
     dependency: "direct dev"
     description:
       name: chopper_generator
-      sha256: "7d035558544c6450e7d5bbaf938c2bceca900041a8feec346a3c369cae472193"
+      sha256: "2951afbe1cf92034f1a1add0c0bad90106646d521d40db4c29a7ec488da934b3"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.4"
+    version: "7.0.5+1"
   clock:
     dependency: transitive
     description:
@@ -386,10 +386,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_local_notifications
-      sha256: "501ed9d54f1c8c0535b7991bade36f9e7e3b45a2346401f03775c1ec7a3c06ae"
+      sha256: "6d11ea777496061e583623aaf31923f93a9409ef8fcaeeefdd6cd78bf4fe5bb3"
       url: "https://pub.dev"
     source: hosted
-    version: "15.1.2"
+    version: "16.1.0"
   flutter_local_notifications_linux:
     dependency: transitive
     description:

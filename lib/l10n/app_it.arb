@@ -164,13 +164,31 @@
   "@generalAccount": {
     "description": "Asset/Debt (Bank) Account"
   },
+  "generalAssets": "Attivi",
+  "@generalAssets": {
+    "description": "(Monetary) Assets"
+  },
   "generalBalance": "Saldo",
   "@generalBalance": {
     "description": "(Account) Balance"
   },
+  "generalBalanceOn": "Saldo al {date}",
+  "@generalBalanceOn": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd",
+        "example": "2023-05-13"
+      }
+    }
+  },
+  "generalBill": "Bolletta",
+  "@generalBill": {
+    "description": "Bill"
+  },
   "generalBudget": "Bilancio",
   "@generalBudget": {
-    "description": "(Monetary) Budget)"
+    "description": "(Monetary) Budget"
   },
   "generalCategory": "Categoria",
   "@generalCategory": {
@@ -200,6 +218,10 @@
   "@generalIncome": {
     "description": "(Account) Info"
   },
+  "generalLiabilities": "Passività",
+  "@generalLiabilities": {
+    "description": "Firefly Translation String: liabilities"
+  },
   "generalMultiple": "molteplice",
   "@generalMultiple": {
     "description": "Multiples of a single thing (e.g. source accounts) are existing"
@@ -211,6 +233,10 @@
   "generalReconcile": "Contabilizzato",
   "@generalReconcile": {
     "description": "Booking has been confirmed/reconciled"
+  },
+  "generalReset": "Reimposta",
+  "@generalReset": {
+    "description": "Reset something (i.e. set filters)"
   },
   "generalSum": "Totale",
   "@generalSum": {
@@ -282,9 +308,13 @@
   "@homeMainChartDailyTitle": {
     "description": "Chart Label: Daily Summary"
   },
-  "homeMainChartNetearningsTitle": "Guadagni Netti",
-  "@homeMainChartNetearningsTitle": {
+  "homeMainChartNetEarningsTitle": "Utili Netti",
+  "@homeMainChartNetEarningsTitle": {
     "description": "Chart Label: Net Earnings"
+  },
+  "homeMainChartNetWorthTitle": "Patrimonio",
+  "@homeMainChartNetWorthTitle": {
+    "description": "Chart Label: Net Worth"
   },
   "homePiggyAdjustDialogTitle": "Risparmia/Spendi Denaro",
   "@homePiggyAdjustDialogTitle": {
@@ -384,13 +414,29 @@
   "@homeTransactionsDialogFilterAccountsAll": {
     "description": "Don't filter for a specific account (default entry)"
   },
+  "homeTransactionsDialogFilterBillsAll": "<Tutte le bollette>",
+  "@homeTransactionsDialogFilterBillsAll": {
+    "description": "Don't filter for a specific bill (default entry)"
+  },
+  "homeTransactionsDialogFilterBillUnset": "<Nessuna bolletta>",
+  "@homeTransactionsDialogFilterBillUnset": {
+    "description": "Filter for unset bills"
+  },
   "homeTransactionsDialogFilterBudgetsAll": "<Tutti i bilanci>",
   "@homeTransactionsDialogFilterBudgetsAll": {
     "description": "Don't filter for a specific budget (default entry)"
   },
+  "homeTransactionsDialogFilterBudgetUnset": "<Nessun bilancio>",
+  "@homeTransactionsDialogFilterBudgetUnset": {
+    "description": "Filter for unset budgets"
+  },
   "homeTransactionsDialogFilterCategoriesAll": "<Tutte le categorie>",
   "@homeTransactionsDialogFilterCategoriesAll": {
     "description": "Don't filter for a specific category (default entry)"
+  },
+  "homeTransactionsDialogFilterCategoryUnset": "<Nessuna categoria>",
+  "@homeTransactionsDialogFilterCategoryUnset": {
+    "description": "Filter for unset categories"
   },
   "homeTransactionsDialogFilterCurrenciesAll": "<Tutte le valute>",
   "@homeTransactionsDialogFilterCurrenciesAll": {

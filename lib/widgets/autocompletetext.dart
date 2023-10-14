@@ -48,7 +48,7 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
         focusNode: focusNode,
         onSelected: onSelected,
         displayStringForOption: displayStringForOption,
-        fieldViewBuilder: (BuildContext ctx,
+        fieldViewBuilder: (BuildContext context,
                 TextEditingController textEditingController,
                 FocusNode focusNode,
                 void onFieldSubmitted) =>
@@ -73,7 +73,9 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
           style: disabled
               ? style?.copyWith(color: Theme.of(context).disabledColor)
               : style,
-          onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+          onTapOutside: (_) => Actions.invoke(
+              FocusManager.instance.primaryFocus?.context ?? context,
+              const DismissIntent()),
         ),
         optionsViewBuilder: (BuildContext context,
                 void Function(T) onOptionSelected, Iterable<T> options) =>

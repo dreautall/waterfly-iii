@@ -265,7 +265,12 @@ class _TagDialogState extends State<TagDialog> {
                   ),
                   const Divider(),
                 ];
-                for (String tag in allTags) {
+                final Iterable<String> filteredTags = allTags.where(
+                    (String t) =>
+                        _newTagTextController.text.isEmpty ||
+                        (_newTagTextController.text.isNotEmpty &&
+                            t.containsIgnoreCase(_newTagTextController.text)));
+                for (String tag in filteredTags) {
                   if (_newTagTextController.text.isNotEmpty &&
                       !tag.containsIgnoreCase(_newTagTextController.text)) {
                     continue;
@@ -281,6 +286,12 @@ class _TagDialogState extends State<TagDialog> {
                           } else if ((selected != null && selected) &&
                               !_newSelectedTags.containsIgnoreCase(tag)) {
                             _newSelectedTags.add(tag);
+                            if (filteredTags
+                                .where((String t) =>
+                                    !_newSelectedTags.containsIgnoreCase(t))
+                                .isEmpty) {
+                              _newTagTextController.text = "";
+                            }
                           }
                         },
                       );

@@ -446,7 +446,8 @@ class _TransactionPageState extends State<TransactionPage>
           final String settingAppId = appSettings.defaultAccountId ?? "0";
           for (AccountRead acc in response.body!.data) {
             if (acc.id == settingAppId ||
-                widget.notification!.body.contains(acc.attributes.name)) {
+                widget.notification!.body
+                    .containsIgnoreCase(acc.attributes.name)) {
               _ownAccountTextController.text = acc.attributes.name;
               _ownAccountId = acc.id;
               break;

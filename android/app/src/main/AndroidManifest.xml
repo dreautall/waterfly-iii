@@ -211,6 +211,7 @@
         <package android:name="md.maib.maibank"/>
         <package android:name="mx.com.hsbc.controltotal"/>
         <package android:name="net.easypark.android"/>
+        <package android:name="nl.rabomobiel"/>
         <package android:name="om.nu.production"/>
         <package android:name="om.todo1.mobile"/>
         <package android:name="one.tomorrow.app"/>

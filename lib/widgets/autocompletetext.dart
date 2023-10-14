@@ -73,9 +73,14 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
           style: disabled
               ? style?.copyWith(color: Theme.of(context).disabledColor)
               : style,
-          onTapOutside: (_) => Actions.invoke(
-              FocusManager.instance.primaryFocus?.context ?? context,
-              const DismissIntent()),
+          onTapOutside: (_) {
+            final BuildContext? ctx =
+                FocusManager.instance.primaryFocus?.context;
+            if (!focusNode.hasFocus || ctx == null) {
+              return;
+            }
+            Actions.invoke(ctx, const DismissIntent());
+          },
         ),
         optionsViewBuilder: (BuildContext context,
                 void Function(T) onOptionSelected, Iterable<T> options) =>

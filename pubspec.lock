@@ -1071,10 +1071,10 @@ packages:
     dependency: "direct main"
     description:
       name: stock
-      sha256: d758d358cef7777e9bdb5037c028c51d8df0c3876acaad97aec33f72b6585505
+      sha256: ce29d71f31b426122d04fccaaa7aca3b9c629b1ab71415dcdc137b8f1421e571
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.1.0"
   stream_channel:
     dependency: transitive
     description:

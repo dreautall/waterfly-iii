@@ -46,7 +46,7 @@ dependencies:
   camera: ^0.10.5+2
   quick_actions: ^1.0.6
   stock: ^1.0.1
-  syncfusion_flutter_charts: ^23.1.36
+  syncfusion_flutter_charts: ^23.1.40
 
 dev_dependencies:
   flutter_lints: ^2.0.2

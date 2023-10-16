@@ -181,6 +181,7 @@
         <package android:name="com.ykb.android"/>
         <package android:name="com.zen.application"/>
         <package android:name="consumer.cbsa.smartapp"/>
+        <package android:name="cz.mbank"/>
         <package android:name="de.dkb.portalapp"/>
         <package android:name="de.dwins.financeguru"/>
         <package android:name="de.ingdiba.bankingapp"/>

@@ -1103,10 +1103,10 @@ packages:
     dependency: "direct dev"
     description:
       name: swagger_dart_code_generator
-      sha256: ae7d9530247dc708148eddac401b1c1ec74d6e31bb53c52cceee21c91bb8e3f9
+      sha256: "933181402388cbccdfa470d5dadd4a49c5e89d8d209659c43c7359c9e66d1005"
       url: "https://pub.dev"
     source: hosted
-    version: "2.11.12"
+    version: "2.11.13"
   syncfusion_flutter_charts:
     dependency: "direct main"
     description:

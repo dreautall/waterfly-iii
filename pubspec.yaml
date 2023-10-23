@@ -26,7 +26,7 @@ dependencies:
   infinite_scroll_pagination: ^4.0.0
   badges: ^3.1.2
   filesize: ^2.0.1
-  community_charts_flutter: ^1.0.1
+  community_charts_flutter: ^1.0.2
   open_filex: ^4.3.4
   file_picker: ^6.0.0
   animations: ^2.0.7

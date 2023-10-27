@@ -23,7 +23,7 @@ import 'package:waterflyiii/pages/transaction/delete.dart';
 import 'package:waterflyiii/stock.dart';
 
 class HomeTransactions extends StatefulWidget {
-  const HomeTransactions({Key? key, this.accountId}) : super(key: key);
+  const HomeTransactions({super.key, this.accountId});
 
   final String? accountId;
 

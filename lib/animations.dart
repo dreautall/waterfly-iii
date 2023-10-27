@@ -19,7 +19,7 @@ const Duration animDurationStandardAccelerate = Duration(milliseconds: 200);
 const Curve animCurveStandardAccelerate = Cubic(0.3, 0, 1, 1);
 
 class AnimatedHeight extends StatelessWidget {
-  const AnimatedHeight({Key? key, required this.child}) : super(key: key);
+  const AnimatedHeight({super.key, required this.child});
 
   final Widget child;
 

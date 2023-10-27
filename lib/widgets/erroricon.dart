@@ -4,7 +4,7 @@ import 'package:logging/logging.dart';
 final Logger log = Logger("Widgets.ErrorIcon");
 
 class ErrorIcon extends StatelessWidget {
-  const ErrorIcon(this._isError, {Key? key}) : super(key: key);
+  const ErrorIcon(this._isError, {super.key});
 
   final bool _isError;
   bool get isError => _isError;

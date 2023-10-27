@@ -13,7 +13,7 @@ import 'package:waterflyiii/widgets/logo.dart';
 final Logger log = Logger("Pages.Splash");
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({Key? key, this.host, this.apiKey}) : super(key: key);
+  const SplashPage({super.key, this.host, this.apiKey});
 
   final String? host;
   final String? apiKey;

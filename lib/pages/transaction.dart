@@ -35,12 +35,12 @@ final Logger log = Logger("Pages.Transaction");
 
 class TransactionPage extends StatefulWidget {
   const TransactionPage({
-    Key? key,
+    super.key,
     this.transaction,
     this.transactionId,
     this.notification,
     this.clone = false,
-  }) : super(key: key);
+  });
 
   final String? transactionId;
   final TransactionRead? transaction;

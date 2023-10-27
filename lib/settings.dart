@@ -302,6 +302,7 @@ class SettingsProvider with ChangeNotifier {
     NotificationAppSettings settings,
   ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    debugPrint("updating ${jsonEncode(settings)}");
     await prefs.setString(
         "$settingNLAppPrefix$packageName", jsonEncode(settings));
   }

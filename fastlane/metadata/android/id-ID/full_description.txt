@@ -1,0 +1,15 @@
+Waterfly III adalah aplikasi tidak resmi untuk instansi Firefly III, manager keuangan gratis dan open source.
+
+Aplikasi ini membutuhkan instansi Firefly III dihosting sendiri pada server anda, silahkan kunjungi https://www.firefly-iii.org/ untuk informasi lebih lanjut. Ini hanya aplikasi pendukung dan tidak dapat berjalan sendiri!
+
+Fitur:
+- Dasbor dengan grafik & ikhtisar anggaran
+- Daftar transaksi dengan filter
+- Tambah & ubah transaksi dengan pelengkapan otomatis, termasuk lampiran, transaksi terpisah & dukungan multi mata uang
+- Dukungan Celengan (lihat & tambah uang)
+- Layanan Pendengan Notifikasi untuk membuat transaksi baru berdasarkan notifikasi masuk dengan mudah (misalnya dari Google Pay atau aplikasi banking anda)
+- Open source sepenuhnya: https://github.com/dreautall/waterfly-iii
+- Tanpa iklan maupun pelacak
+
+Kontribusi:
+Jika anda menemukan bug atau butuh fitur, jangan ragu memberikan masukan di play store, kirimkan saya email atau buka masalah di GitHub.

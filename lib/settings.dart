@@ -17,18 +17,22 @@ class NotificationAppSettings {
   NotificationAppSettings(
     this.appName, {
     this.defaultAccountId,
+    this.includeTitle = true,
   });
 
   final String appName;
   String? defaultAccountId;
+  bool includeTitle = true;
 
   NotificationAppSettings.fromJson(Map<String, dynamic> json)
       : appName = json['appName'],
-        defaultAccountId = json['defaultAccountId'];
+        defaultAccountId = json['defaultAccountId'],
+        includeTitle = json['includeTitle'] ?? true;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'appName': appName,
         'defaultAccountId': defaultAccountId,
+        'includeTitle': includeTitle,
       };
 }
 

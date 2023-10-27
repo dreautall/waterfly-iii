@@ -415,11 +415,22 @@ class _TransactionPageState extends State<TransactionPage>
           // Fallback solution
           currency ??= _localCurrency;
 
-          // Set title & date
-          _titleTextController.text = widget.notification!.title;
+          // Set date
           _date = widget.notification!.date;
           _dateTextController.text = DateFormat.yMMMMd().format(_date);
           _timeTextController.text = DateFormat.Hm().format(_date);
+
+          // Title & Note
+          _noteTextControllers[0].text = widget.notification!.body;
+          final NotificationAppSettings appSettings = await settings
+              .notificationGetAppSettings(widget.notification!.appName);
+          if (appSettings.includeTitle) {
+            _titleTextController.text = widget.notification!.title;
+          } else {
+            _titleTextController.text = "";
+            _noteTextControllers[0].text =
+                "${widget.notification!.title} - ${_noteTextControllers[0].text}";
+          }
 
           // Check currency
           if (currency == _localCurrency) {
@@ -432,7 +443,6 @@ class _TransactionPageState extends State<TransactionPage>
             _foreignAmountTextController.text =
                 amount.toStringAsFixed(currency?.attributes.decimalPlaces ?? 2);
           }
-          _noteTextControllers[0].text = widget.notification!.body;
 
           // Check account
           final Response<AccountArray> response =
@@ -441,8 +451,6 @@ class _TransactionPageState extends State<TransactionPage>
             log.warning("api account fetch failed");
             return;
           }
-          final NotificationAppSettings appSettings = await settings
-              .notificationGetAppSettings(widget.notification!.appName);
           final String settingAppId = appSettings.defaultAccountId ?? "0";
           for (AccountRead acc in response.body!.data) {
             if (acc.id == settingAppId ||

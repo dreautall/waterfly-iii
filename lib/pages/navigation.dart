@@ -79,7 +79,7 @@ class NavPageElements with ChangeNotifier {
 }
 
 class NavPage extends StatefulWidget {
-  const NavPage({Key? key}) : super(key: key);
+  const NavPage({super.key});
 
   @override
   State<NavPage> createState() => NavPageState();

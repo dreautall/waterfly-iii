@@ -26,7 +26,7 @@ final GlobalKey<NavigatorState> navigatorKey =
     GlobalKey<NavigatorState>(debugLabel: "Main Navigator");
 
 class WaterflyApp extends StatefulWidget {
-  const WaterflyApp({Key? key}) : super(key: key);
+  const WaterflyApp({super.key});
 
   @override
   State<WaterflyApp> createState() => _WaterflyAppState();

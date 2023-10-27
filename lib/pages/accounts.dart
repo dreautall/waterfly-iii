@@ -125,10 +125,7 @@ class _AccountsPageState extends State<AccountsPage>
 }
 
 class AccountDetails extends StatefulWidget {
-  const AccountDetails({
-    Key? key,
-    required this.accountType,
-  }) : super(key: key);
+  const AccountDetails({super.key, required this.accountType});
 
   final AccountTypeFilter accountType;
 

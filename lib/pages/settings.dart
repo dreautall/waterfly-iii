@@ -19,7 +19,7 @@ import 'package:waterflyiii/settings.dart';
 final Logger log = Logger("Pages.Settings");
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
   State<SettingsPage> createState() => SettingsPageState();

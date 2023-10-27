@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
@@ -17,7 +17,6 @@ import 'package:open_filex/open_filex.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
-import 'package:waterflyiii/pages/transaction/attach_picture.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
 
 class AttachmentDialog extends StatefulWidget {
@@ -374,51 +373,26 @@ class _AttachmentDialogState extends State<AttachmentDialog>
           ),
           FilledButton(
             onPressed: () async {
-              final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
-              final S l10n = S.of(context);
-              final BuildContext ctx = context;
-              late List<CameraDescription> cameras = <CameraDescription>[];
-              try {
-                WidgetsFlutterBinding.ensureInitialized();
-                cameras = await availableCameras();
-                if (cameras.isEmpty) {
-                  throw CameraException("404", "No camera found.");
-                }
-              } on CameraException catch (e) {
-                log.warning("Could not get camera list", e);
-                msg.showSnackBar(SnackBar(
-                  content: Text(
-                    l10n.cameraErrorInitialize(
-                        e.description ?? l10n.errorUnknown),
-                  ),
-                  behavior: SnackBarBehavior.floating,
-                ));
+              final ImagePicker picker = ImagePicker();
+              final XFile? imageFile =
+                  await picker.pickImage(source: ImageSource.camera);
+
+              if (imageFile == null) {
+                log.finest(() => "no image returned");
                 return;
               }
 
+              log.finer(() => "Image ${imageFile.path} will be uploaded");
+              final PlatformFile file = PlatformFile(
+                path: imageFile.path,
+                name: imageFile.name,
+                size: await imageFile.length(),
+              );
               if (mounted) {
-                final XFile? imageFile = await showDialog<XFile>(
-                  context: ctx,
-                  builder: (BuildContext context) =>
-                      CameraDialog(cameras: cameras),
-                );
-                if (imageFile == null) {
-                  log.finest(() => "no image returned");
-                  return;
-                }
-
-                log.finer(() => "Image ${imageFile.path} will be uploaded");
-                final PlatformFile file = PlatformFile(
-                  path: imageFile.path,
-                  name: imageFile.name,
-                  size: await imageFile.length(),
-                );
-                if (mounted) {
-                  if (widget.transactionId == null) {
-                    fakeUploadAttachment(context, file);
-                  } else {
-                    uploadAttachment(context, file);
-                  }
+                if (widget.transactionId == null) {
+                  fakeUploadAttachment(context, file);
+                } else {
+                  uploadAttachment(context, file);
                 }
               }
             },

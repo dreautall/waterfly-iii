@@ -105,26 +105,23 @@ class _SplashPageState extends State<SplashPage> {
           "Host: ${context.read<FireflyService>().lastTriedHost}";
       final String errorDescription = () {
         switch (_loginError.runtimeType) {
-          case AuthErrorHost:
-          case AuthErrorApiKey:
-          case AuthErrorNoInstance:
-          case AuthErrorVersionInvalid:
+          case AuthErrorHost _:
+          case AuthErrorApiKey _:
+          case AuthErrorNoInstance _:
+          case AuthErrorVersionInvalid _:
             AuthError errorType = _loginError as AuthError;
             return errorType.cause;
-          case AuthErrorStatusCode:
-            AuthErrorStatusCode errorType = _loginError as AuthErrorStatusCode;
+          case AuthErrorStatusCode errorType:
             errorDetails += "\n";
             errorDetails += S.of(context).errorStatusCode(errorType.code);
             return errorType.cause;
-          case AuthErrorVersionTooLow:
-            AuthErrorVersionTooLow errorType =
-                _loginError as AuthErrorVersionTooLow;
+          case AuthErrorVersionTooLow errorType:
             errorDetails += "\n";
             errorDetails += S
                 .of(context)
                 .errorMinAPIVersion(errorType.requiredVersion.toString());
             return errorType.cause;
-          case HandshakeException:
+          case HandshakeException _:
             showCertButton = true;
             return S.of(context).errorInvalidSSLCert;
           default:

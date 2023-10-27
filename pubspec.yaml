@@ -43,10 +43,10 @@ dependencies:
   dynamic_color: ^1.6.8
   material_color_utilities: ^0.5.0
   version: ^3.0.2
-  camera: ^0.10.5+2
   quick_actions: ^1.0.6
   stock: ^1.1.0
   syncfusion_flutter_charts: ^23.1.41
+  image_picker: ^1.0.4
 
 dev_dependencies:
   flutter_lints: ^3.0.0

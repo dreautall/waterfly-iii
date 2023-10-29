@@ -1203,6 +1203,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  translations_cleaner:
+    dependency: "direct dev"
+    description:
+      name: translations_cleaner
+      sha256: "060f4a8cd782e271509719741dd3540fe81ddaad49bd79e1d8fc4598299a6b84"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5"
   typed_data:
     dependency: transitive
     description:

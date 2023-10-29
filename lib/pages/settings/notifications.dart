@@ -358,7 +358,6 @@ class _AppCardState extends State<AppCard> {
                     isThreeLine: false,
                     value: widget.settings.includeTitle,
                     onChanged: (bool? value) async {
-                      debugPrint("updating with $value");
                       setState(() {
                         widget.settings.includeTitle = value ?? true;
                       });

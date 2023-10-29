@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -276,10 +277,12 @@ class SettingsProvider with ChangeNotifier {
     }
     final List<String> apps =
         prefs.getStringList(settingNLUsedApps) ?? <String>[];
-    _notificationApps = apps;
+    if (!const ListEquality<String>().equals(apps, _notificationApps)) {
+      _notificationApps = apps;
 
-    log.finest(() => "notify SettingsProvider->notificationUsedApps()");
-    notifyListeners();
+      log.finest(() => "notify SettingsProvider->notificationUsedApps()");
+      notifyListeners();
+    }
 
     return _notificationApps;
   }
@@ -302,7 +305,6 @@ class SettingsProvider with ChangeNotifier {
     NotificationAppSettings settings,
   ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    debugPrint("updating ${jsonEncode(settings)}");
     await prefs.setString(
         "$settingNLAppPrefix$packageName", jsonEncode(settings));
   }

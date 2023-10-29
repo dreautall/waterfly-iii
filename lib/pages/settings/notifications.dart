@@ -353,8 +353,7 @@ class _AppCardState extends State<AppCard> {
                   ),
                   const SizedBox(height: 16),
                   CheckboxListTile(
-                    title: Text("Prefill transaction title"),
-                    subtitle: Text("with nofication title"),
+                    title: Text(S.of(context).settingsNLPrefillTXTitle),
                     isThreeLine: false,
                     value: widget.settings.includeTitle,
                     onChanged: (bool? value) async {

@@ -983,15 +983,18 @@ class _HomeMainState extends State<HomeMain>
           if (context.read<FireflyService>().apiVersion! >= Version(2, 0, 7))
             const SizedBox(height: 8),
           AnimatedHeight(
-            child: Card(
-              clipBehavior: Clip.hardEdge,
-              child: FutureBuilder<List<BudgetLimitRead>>(
-                future: _fetchBudgets(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<BudgetLimitRead>> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done &&
-                      snapshot.hasData) {
-                    return Column(
+            child: FutureBuilder<List<BudgetLimitRead>>(
+              future: _fetchBudgets(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<BudgetLimitRead>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData) {
+                  if (snapshot.data!.isEmpty) {
+                    return const SizedBox.shrink();
+                  }
+                  return Card(
+                    clipBehavior: Clip.hardEdge,
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Padding(
@@ -1006,19 +1009,22 @@ class _HomeMainState extends State<HomeMain>
                           snapshot: snapshot,
                         ),
                       ],
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text(snapshot.error!.toString());
-                  } else {
-                    return const Padding(
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text(snapshot.error!.toString());
+                } else {
+                  return const Card(
+                    clipBehavior: Clip.hardEdge,
+                    child: Padding(
                       padding: EdgeInsets.all(8),
                       child: Center(
                         child: CircularProgressIndicator(),
                       ),
-                    );
-                  }
-                },
-              ),
+                    ),
+                  );
+                }
+              },
             ),
           ),
           const SizedBox(height: 68),

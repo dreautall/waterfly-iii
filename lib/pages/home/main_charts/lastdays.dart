@@ -29,7 +29,11 @@ class LastDaysChart extends StatelessWidget {
         .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
     final List<DateTime> lastDays = <DateTime>[];
     for (int i = 0; i < 7; i++) {
-      lastDays.add(now.subtract(Duration(days: i)));
+      lastDays.add(
+        now
+            .subtract(Duration(days: i))
+            .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0)),
+      );
     }
     bool showCurrency = true;
     CurrencyRead defaultCurrency =

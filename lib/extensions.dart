@@ -395,3 +395,19 @@ extension AccountTypeFilterIcon on AccountTypeFilter {
     }
   }
 }
+
+extension BillAmountAvg on Bill {
+  double avgAmount() {
+    final double amountMax = (double.tryParse(this.amountMax) ?? 0).abs();
+    final double amountMin = (double.tryParse(this.amountMin) ?? 0).abs();
+    if (amountMax == 0) {
+      return amountMin;
+    }
+    if (amountMin == 0) {
+      return amountMax;
+    }
+
+    // Same as Firefly Source Code
+    return (amountMin + amountMax) / 2;
+  }
+}

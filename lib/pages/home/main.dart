@@ -58,9 +58,10 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastDays() async {
-    /*if (lastDaysExpense.isNotEmpty) { // :DEBUG:
+    if (lastDaysExpense.isNotEmpty) {
+      // :DEBUG:
       return true;
-    }*/
+    }
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -182,9 +183,10 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchOverviewChart() async {
-    /*if (overviewChartData.isNotEmpty) { // :DEBUG:
+    if (overviewChartData.isNotEmpty) {
+      // :DEBUG:
       return true;
-    }*/
+    }
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -217,9 +219,10 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastMonths() async {
-    /*if (lastMonthsExpense.isNotEmpty) { // :DEBUG:
+    if (lastMonthsExpense.isNotEmpty) {
+      // :DEBUG:
       return true;
-    }*/
+    }
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -305,9 +308,10 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchCategories() async {
-    /*if (catChartData.isNotEmpty) { // :DEBUG:
+    if (catChartData.isNotEmpty) {
+      // :DEBUG:
       return true;
-    }*/
+    }
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -429,10 +433,44 @@ class _HomeMainState extends State<HomeMain>
     return respBudgets.body!.data;
   }
 
+  Future<List<BillRead>> _fetchBills() async {
+    final FireflyIii api = context.read<FireflyService>().api;
+
+    final DateTime now = DateTime.now().toLocal().clearTime();
+    final DateTime end = now.copyWith(day: now.day + 7);
+
+    final Response<BillArray> respBills = await api.v1BillsGet(
+      start: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+      end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
+    );
+    if (!respBills.isSuccessful || respBills.body == null) {
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(respBills.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${respBills.error}",
+        );
+      }
+    }
+    debugPrint(end.toIso8601String());
+    return respBills.body!.data
+        .where((BillRead e) => (e.attributes.nextExpectedMatch ??
+                DateTime.fromMicrosecondsSinceEpoch(0))
+            .toLocal()
+            .clearTime()
+            .isBefore(end.copyWith(day: end.day + 1)))
+        .toList(growable: false);
+  }
+
   Future<bool> _fetchBalance() async {
-    /*if (lastMonthsEarned.isNotEmpty) { // :DEBUG:
+    if (lastMonthsEarned.isNotEmpty) {
+      // :DEBUG:
       return true;
-    }*/
+    }
 
     final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
     final DateTime now = DateTime.now().toLocal().clearTime();
@@ -994,6 +1032,7 @@ class _HomeMainState extends State<HomeMain>
                   }
                   return Card(
                     clipBehavior: Clip.hardEdge,
+                    margin: const EdgeInsets.fromLTRB(4, 4, 4, 12),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -1006,6 +1045,52 @@ class _HomeMainState extends State<HomeMain>
                         ),
                         BudgetList(
                           budgetInfos: budgetInfos,
+                          snapshot: snapshot,
+                        ),
+                      ],
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text(snapshot.error!.toString());
+                } else {
+                  return const Card(
+                    clipBehavior: Clip.hardEdge,
+                    margin: EdgeInsets.only(bottom: 8),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(4, 4, 4, 12),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
+          // No sizedbox, done via margins on (maybe hidden) budget card view
+          AnimatedHeight(
+            child: FutureBuilder<List<BillRead>>(
+              future: _fetchBills(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<BillRead>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData) {
+                  if (snapshot.data!.isEmpty) {
+                    return const SizedBox.shrink();
+                  }
+                  return Card(
+                    clipBehavior: Clip.hardEdge,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Text(
+                            "Bills for the next week",
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
+                        BillList(
                           snapshot: snapshot,
                         ),
                       ],
@@ -1137,6 +1222,111 @@ class BudgetList extends StatelessWidget {
                 backgroundColor: bgColor,
                 value: value,
               ));
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: widgets,
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class BillList extends StatelessWidget {
+  const BillList({
+    super.key,
+    required this.snapshot,
+  });
+
+  final AsyncSnapshot<List<BillRead>> snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            final List<Widget> widgets = <Widget>[];
+            snapshot.data!.sort((BillRead a, BillRead b) {
+              final int dateCompare = (a.attributes.nextExpectedMatch ??
+                      DateTime.now())
+                  .compareTo(b.attributes.nextExpectedMatch ?? DateTime.now());
+              if (dateCompare != 0) {
+                return dateCompare;
+              }
+              final int orderCompare =
+                  (a.attributes.order ?? 0).compareTo(b.attributes.order ?? 0);
+              if (orderCompare != 0) {
+                return orderCompare;
+              }
+              return a.attributes
+                  .avgAmount()
+                  .compareTo(b.attributes.avgAmount());
+            });
+
+            DateTime lastDate =
+                (snapshot.data!.first.attributes.nextExpectedMatch ??
+                        DateTime.now())
+                    .subtract(const Duration(days: 1));
+            for (BillRead bill in snapshot.data!) {
+              if (!(bill.attributes.active ?? false)) {
+                continue;
+              }
+
+              final DateTime nextMatch =
+                  bill.attributes.nextExpectedMatch?.toLocal() ??
+                      DateTime.now();
+              debugPrint(nextMatch.toIso8601String());
+              debugPrint(bill.attributes.nextExpectedMatchDiff);
+              final CurrencyRead currency = CurrencyRead(
+                id: bill.attributes.currencyId ?? "0",
+                type: "currencies",
+                attributes: Currency(
+                  code: bill.attributes.currencyCode ?? "",
+                  name: "",
+                  symbol: bill.attributes.currencySymbol ?? "",
+                  decimalPlaces: bill.attributes.currencyDecimalPlaces,
+                ),
+              );
+
+              if (nextMatch != lastDate) {
+                if (widgets.isNotEmpty) {
+                  widgets.add(const SizedBox(height: 8));
+                }
+                widgets.add(
+                  RichText(
+                    text: TextSpan(
+                      text: DateFormat.yMd().format(nextMatch),
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ),
+                );
+                lastDate = nextMatch;
+              }
+              widgets.add(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      bill.attributes.name,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    Text(
+                      currency.fmt(bill.attributes.avgAmount()),
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontFeatures: <FontFeature>[
+                          FontFeature.tabularFigures()
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
             }
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -186,7 +186,8 @@ class _TransactionPageState extends State<TransactionPage>
       );
 
       // Reconciled
-      _reconciled = transactions.first.reconciled ?? false;
+      _reconciled =
+          widget.clone ? false : transactions.first.reconciled ?? false;
 
       for (TransactionSplit trans in transactions) {
         // Always in card view
@@ -284,10 +285,13 @@ class _TransactionPageState extends State<TransactionPage>
         }
 
         //// Journal ID
-        _transactionJournalIDs.add(trans.transactionJournalId);
+        _transactionJournalIDs
+            .add(widget.clone ? null : trans.transactionJournalId);
 
         //// Attachments
-        _hasAttachments = _hasAttachments || (trans.hasAttachments ?? false);
+        _hasAttachments = widget.clone
+            ? false
+            : _hasAttachments || (trans.hasAttachments ?? false);
 
         // Card Animations
         _cardsAnimationController.add(AnimationController(

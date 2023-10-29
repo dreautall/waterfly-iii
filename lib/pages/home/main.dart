@@ -124,7 +124,11 @@ class _HomeMainState extends State<HomeMain>
       // Old Method (before API v2.0.6 (Firefly III v6.0.20))
       final List<DateTime> lastDays = <DateTime>[];
       for (int i = 0; i < 7; i++) {
-        lastDays.add(now.subtract(Duration(days: i)));
+        lastDays.add(
+          now
+              .subtract(Duration(days: i))
+              .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0)),
+        );
       }
 
       for (DateTime e in lastDays) {

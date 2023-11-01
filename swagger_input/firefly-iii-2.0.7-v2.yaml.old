@@ -3,12 +3,10 @@ servers:
   - description: Firefly III demo site
     url: https://demo.firefly-iii.org/api
 info:
-  title: Firefly III API v2.0.10
+  title: Firefly III API v2.0.7
   description: |
-    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2023-10-15T12:13:25+00:00
-
-    Please keep in mind that the demo site does not accept requests from curl, colly, wget, etc. You must use a browser or a tool like Postman to make requests. Too many script kiddies out there, sorry about that.
-  version: "2.0.10"
+    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2023-09-01T17:55:04+00:00
+  version: "2.0.7"
   contact:
     name: James Cole
     email: james@firefly-iii.org
@@ -204,15 +202,6 @@ paths:
             format: int32
             example: 1
   
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
         - in: path
           name: id
           required: true
@@ -220,6 +209,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the account.
+        - in: query
+          name: limit
+          description: Limits the number of results on one page.
+          required: false
+          schema:
+            type: integer
+            example: 5
         - in: query
           name: start
           description: |
@@ -435,23 +431,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
       responses:
         200:
           description: A list of budgets.
@@ -585,6 +570,15 @@ paths:
           schema:
             type: string
             format: date
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
+            format: int32
+            example: 1
+  
         - in: path
           name: id
           required: true
@@ -661,6 +655,15 @@ paths:
           schema:
             type: string
             format: date
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
+            format: int32
+            example: 1
+  
         - in: path
           name: id
           required: true
@@ -737,6 +740,15 @@ paths:
           schema:
             type: string
             format: date
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
+            format: int32
+            example: 1
+  
         - in: path
           name: id
           required: true
@@ -813,6 +825,15 @@ paths:
           schema:
             type: string
             format: date
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
+            format: int32
+            example: 1
+  
         - in: path
           name: id
           required: true
@@ -1320,6 +1341,8 @@ components:
           example: currencyPreference
         data:
           $ref: '#/components/schemas/PolymorphicProperty'
+          example: "EUR"
+          description: "The actual preference content."
     PreferenceRead:
       type: object
       required:
@@ -2086,5 +2109,3 @@ components:
       scheme: bearer
 security:
   - firefly_iii_auth: []
-  - local_bearer_auth: []
-    

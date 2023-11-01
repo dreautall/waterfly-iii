@@ -1326,17 +1326,17 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<TransactionArray>> _v1AccountsIdTransactionsGet({
     String? xTraceId,
-    required String? id,
-    int? page,
     int? limit,
+    int? page,
+    required String? id,
     String? start,
     String? end,
     String? type,
   }) {
     final Uri $url = Uri.parse('/v1/accounts/${id}/transactions');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'page': page,
       'limit': limit,
+      'page': page,
       'start': start,
       'end': end,
       'type': type,
@@ -1357,11 +1357,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<AttachmentArray>> _v1AccountsIdAttachmentsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     final Uri $url = Uri.parse('/v1/accounts/${id}/attachments');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -1378,11 +1382,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<PiggyBankArray>> _v1AccountsIdPiggyBanksGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     final Uri $url = Uri.parse('/v1/accounts/${id}/piggy-banks');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -1399,12 +1407,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<AccountArray>> _v1AccountsGet({
     String? xTraceId,
+    int? limit,
     int? page,
     String? date,
     String? type,
   }) {
     final Uri $url = Uri.parse('/v1/accounts');
     final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
       'page': page,
       'date': date,
       'type': type,
@@ -1505,10 +1515,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<AttachmentArray>> _v1AttachmentsGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     final Uri $url = Uri.parse('/v1/attachments');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -1641,12 +1655,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<AvailableBudgetArray>> _v1AvailableBudgetsGet({
     String? xTraceId,
+    int? limit,
     int? page,
     String? start,
     String? end,
   }) {
     final Uri $url = Uri.parse('/v1/available-budgets');
     final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
       'page': page,
       'start': start,
       'end': end,
@@ -1685,11 +1701,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<AttachmentArray>> _v1BillsIdAttachmentsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     final Uri $url = Uri.parse('/v1/bills/${id}/attachments');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -1751,12 +1771,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<BillArray>> _v1BillsGet({
     String? xTraceId,
+    int? limit,
     int? page,
     String? start,
     String? end,
   }) {
     final Uri $url = Uri.parse('/v1/bills');
     final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
       'page': page,
       'start': start,
       'end': end,
@@ -1861,14 +1883,16 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<TransactionArray>> _v1BudgetsIdLimitsLimitIdTransactionsGet({
     String? xTraceId,
+    int? limit,
+    int? page,
     required String? id,
     required String? limitId,
-    int? page,
     String? type,
   }) {
     final Uri $url =
         Uri.parse('/v1/budgets/${id}/limits/${limitId}/transactions');
     final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
       'page': page,
       'type': type,
     };
@@ -2018,9 +2042,9 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<TransactionArray>> _v1BudgetsIdTransactionsGet({
     String? xTraceId,
-    required String? id,
     int? limit,
     int? page,
+    required String? id,
     String? start,
     String? end,
     String? type,
@@ -2049,11 +2073,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<AttachmentArray>> _v1BudgetsIdAttachmentsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     final Uri $url = Uri.parse('/v1/budgets/${id}/attachments');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -2070,12 +2098,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<BudgetArray>> _v1BudgetsGet({
     String? xTraceId,
+    int? limit,
     int? page,
     String? start,
     String? end,
   }) {
     final Uri $url = Uri.parse('/v1/budgets');
     final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
       'page': page,
       'start': start,
       'end': end,
@@ -2180,14 +2210,16 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<TransactionArray>> _v1CategoriesIdTransactionsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
     String? start,
     String? end,
     String? type,
   }) {
     final Uri $url = Uri.parse('/v1/categories/${id}/transactions');
     final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
       'page': page,
       'start': start,
       'end': end,
@@ -2209,11 +2241,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<AttachmentArray>> _v1CategoriesIdAttachmentsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     final Uri $url = Uri.parse('/v1/categories/${id}/attachments');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -2230,10 +2266,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<CategoryArray>> _v1CategoriesGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     final Uri $url = Uri.parse('/v1/categories');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -2334,14 +2374,16 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<TransactionArray>> _v1LinkTypesIdTransactionsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
     String? start,
     String? end,
     String? type,
   }) {
     final Uri $url = Uri.parse('/v1/link-types/${id}/transactions');
     final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
       'page': page,
       'start': start,
       'end': end,
@@ -2363,10 +2405,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<LinkTypeArray>> _v1LinkTypesGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     final Uri $url = Uri.parse('/v1/link-types');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -2460,10 +2506,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<TransactionLinkArray>> _v1TransactionLinksGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     final Uri $url = Uri.parse('/v1/transaction-links');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -2557,11 +2607,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<PiggyBankArray>> _v1ObjectGroupsIdPiggyBanksGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     final Uri $url = Uri.parse('/v1/object-groups/${id}/piggy-banks');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -2578,11 +2632,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<BillArray>> _v1ObjectGroupsIdBillsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     final Uri $url = Uri.parse('/v1/object-groups/${id}/bills');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -2599,10 +2657,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<ObjectGroupArray>> _v1ObjectGroupsGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     final Uri $url = Uri.parse('/v1/object-groups');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -2676,11 +2738,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<PiggyBankEventArray>> _v1PiggyBanksIdEventsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     final Uri $url = Uri.parse('/v1/piggy-banks/${id}/events');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -2697,11 +2763,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<AttachmentArray>> _v1PiggyBanksIdAttachmentsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     final Uri $url = Uri.parse('/v1/piggy-banks/${id}/attachments');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -2718,10 +2788,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<PiggyBankArray>> _v1PiggyBanksGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     final Uri $url = Uri.parse('/v1/piggy-banks');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -2815,14 +2889,16 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<TransactionArray>> _v1RecurrencesIdTransactionsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
     String? start,
     String? end,
     String? type,
   }) {
     final Uri $url = Uri.parse('/v1/recurrences/${id}/transactions');
     final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
       'page': page,
       'start': start,
       'end': end,
@@ -2844,10 +2920,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<RecurrenceArray>> _v1RecurrencesGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     final Uri $url = Uri.parse('/v1/recurrences');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -2941,11 +3021,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<RuleArray>> _v1RuleGroupsIdRulesGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     final Uri $url = Uri.parse('/v1/rule-groups/${id}/rules');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -2962,8 +3046,9 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<TransactionArray>> _v1RuleGroupsIdTestGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
     String? start,
     String? end,
     int? searchLimit,
@@ -2972,6 +3057,7 @@ final class _$FireflyIii extends FireflyIii {
   }) {
     final Uri $url = Uri.parse('/v1/rule-groups/${id}/test');
     final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
       'page': page,
       'start': start,
       'end': end,
@@ -3022,10 +3108,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<RuleGroupArray>> _v1RuleGroupsGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     final Uri $url = Uri.parse('/v1/rule-groups');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -3173,10 +3263,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<RuleArray>> _v1RulesGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     final Uri $url = Uri.parse('/v1/rules');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -3270,11 +3364,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<AttachmentArray>> _v1TagsTagAttachmentsGet({
     String? xTraceId,
-    required String? tag,
+    int? limit,
     int? page,
+    required String? tag,
   }) {
     final Uri $url = Uri.parse('/v1/tags/${tag}/attachments');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -3291,14 +3389,16 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<TransactionArray>> _v1TagsTagTransactionsGet({
     String? xTraceId,
-    required String? tag,
+    int? limit,
     int? page,
+    required String? tag,
     String? start,
     String? end,
     String? type,
   }) {
     final Uri $url = Uri.parse('/v1/tags/${tag}/transactions');
     final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
       'page': page,
       'start': start,
       'end': end,
@@ -3320,10 +3420,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<TagArray>> _v1TagsGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     final Uri $url = Uri.parse('/v1/tags');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -3360,11 +3464,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<TagSingle>> _v1TagsTagGet({
     String? xTraceId,
-    required String? tag,
+    int? limit,
     int? page,
+    required String? tag,
   }) {
     final Uri $url = Uri.parse('/v1/tags/${tag}');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -3420,13 +3528,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<AccountArray>> _v1CurrenciesCodeAccountsGet({
     String? xTraceId,
-    required String? code,
+    int? limit,
     int? page,
+    required String? code,
     String? date,
     String? type,
   }) {
     final Uri $url = Uri.parse('/v1/currencies/${code}/accounts');
     final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
       'page': page,
       'date': date,
       'type': type,
@@ -3447,11 +3557,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<AvailableBudgetArray>> _v1CurrenciesCodeAvailableBudgetsGet({
     String? xTraceId,
-    required String? code,
+    int? limit,
     int? page,
+    required String? code,
   }) {
     final Uri $url = Uri.parse('/v1/currencies/${code}/available-budgets');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -3468,11 +3582,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<BillArray>> _v1CurrenciesCodeBillsGet({
     String? xTraceId,
-    required String? code,
+    int? limit,
     int? page,
+    required String? code,
   }) {
     final Uri $url = Uri.parse('/v1/currencies/${code}/bills');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -3489,13 +3607,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<BudgetLimitArray>> _v1CurrenciesCodeBudgetLimitsGet({
     String? xTraceId,
-    required String? code,
+    int? limit,
     int? page,
+    required String? code,
     String? start,
     String? end,
   }) {
     final Uri $url = Uri.parse('/v1/currencies/${code}/budget_limits');
     final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
       'page': page,
       'start': start,
       'end': end,
@@ -3516,11 +3636,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<RecurrenceArray>> _v1CurrenciesCodeRecurrencesGet({
     String? xTraceId,
-    required String? code,
+    int? limit,
     int? page,
+    required String? code,
   }) {
     final Uri $url = Uri.parse('/v1/currencies/${code}/recurrences');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -3537,11 +3661,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<RuleArray>> _v1CurrenciesCodeRulesGet({
     String? xTraceId,
-    required String? code,
+    int? limit,
     int? page,
+    required String? code,
   }) {
     final Uri $url = Uri.parse('/v1/currencies/${code}/rules');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -3558,14 +3686,16 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<TransactionArray>> _v1CurrenciesCodeTransactionsGet({
     String? xTraceId,
-    required String? code,
+    int? limit,
     int? page,
+    required String? code,
     String? start,
     String? end,
     String? type,
   }) {
     final Uri $url = Uri.parse('/v1/currencies/${code}/transactions');
     final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
       'page': page,
       'start': start,
       'end': end,
@@ -3587,10 +3717,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<CurrencyArray>> _v1CurrenciesGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     final Uri $url = Uri.parse('/v1/currencies');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -3759,11 +3893,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<TransactionLinkArray>> _v1TransactionJournalsIdLinksGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     final Uri $url = Uri.parse('/v1/transaction-journals/${id}/links');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -3816,11 +3954,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<AttachmentArray>> _v1TransactionsIdAttachmentsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     final Uri $url = Uri.parse('/v1/transactions/${id}/attachments');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -3837,11 +3979,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<PiggyBankEventArray>> _v1TransactionsIdPiggyBankEventsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     final Uri $url = Uri.parse('/v1/transactions/${id}/piggy-bank-events');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -3858,6 +4004,7 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<TransactionArray>> _v1TransactionsGet({
     String? xTraceId,
+    int? limit,
     int? page,
     String? start,
     String? end,
@@ -3865,6 +4012,7 @@ final class _$FireflyIii extends FireflyIii {
   }) {
     final Uri $url = Uri.parse('/v1/transactions');
     final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
       'page': page,
       'start': start,
       'end': end,
@@ -3963,6 +4111,7 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<AccountArray>> _v1SearchAccountsGet({
     String? xTraceId,
+    int? limit,
     int? page,
     required String? query,
     String? type,
@@ -3970,6 +4119,7 @@ final class _$FireflyIii extends FireflyIii {
   }) {
     final Uri $url = Uri.parse('/v1/search/accounts');
     final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
       'page': page,
       'query': query,
       'type': type,
@@ -3991,13 +4141,15 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<TransactionArray>> _v1SearchTransactionsGet({
     String? xTraceId,
-    required String? query,
+    int? limit,
     int? page,
+    required String? query,
   }) {
     final Uri $url = Uri.parse('/v1/search/transactions');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'query': query,
+      'limit': limit,
       'page': page,
+      'query': query,
     };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
@@ -4151,10 +4303,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<UserArray>> _v1UsersGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     final Uri $url = Uri.parse('/v1/users');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -4248,10 +4404,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<PreferenceArray>> _v1PreferencesGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     final Uri $url = Uri.parse('/v1/preferences');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -4384,13 +4544,17 @@ final class _$FireflyIii extends FireflyIii {
   Future<Response<WebhookAttemptArray>>
       _v1WebhooksIdMessagesMessageIdAttemptsGet({
     String? xTraceId,
+    int? limit,
+    int? page,
     required String? id,
     required int? messageId,
-    int? page,
   }) {
     final Uri $url =
         Uri.parse('/v1/webhooks/${id}/messages/${messageId}/attempts');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -4469,10 +4633,14 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<WebhookArray>> _v1WebhooksGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     final Uri $url = Uri.parse('/v1/webhooks');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };

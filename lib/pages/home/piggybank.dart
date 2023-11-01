@@ -104,30 +104,30 @@ class _HomePiggybankState extends State<HomePiggybank>
         builderDelegate: PagedChildBuilderDelegate<PiggyBankRead>(
           itemBuilder: (BuildContext context, PiggyBankRead piggy, int index) {
             final double currentAmount =
-                double.tryParse(piggy.attributes.currentAmount ?? "") ?? 0;
+                double.tryParse(piggy.attributes.currentAmount) ?? 0;
             final CurrencyRead currency = CurrencyRead(
-              id: piggy.attributes.currencyId ?? "0",
+              id: piggy.attributes.currencyId,
               type: "currencies",
-              attributes: Currency(
-                code: piggy.attributes.currencyCode ?? "",
+              attributes: currencyS(
+                code: piggy.attributes.currencyCode,
                 name: "",
-                symbol: piggy.attributes.currencySymbol ?? "",
+                symbol: piggy.attributes.currencySymbol,
                 decimalPlaces: piggy.attributes.currencyDecimalPlaces,
               ),
             );
             final double targetAmount =
-                double.tryParse(piggy.attributes.targetAmount ?? "") ?? 0;
-            if (!(piggy.attributes.active ?? false)) {
+                double.tryParse(piggy.attributes.targetAmount) ?? 0;
+            if (!piggy.attributes.active) {
               return const SizedBox.shrink();
             }
             return Column(
               children: <Widget>[
                 ListTile(
                   title: Text(piggy.attributes.name),
-                  subtitle: (piggy.attributes.accountName != null)
+                  subtitle: (piggy.attributes.accountName.isNotEmpty)
                       ? Text(S
                           .of(context)
-                          .homePiggyLinked(piggy.attributes.accountName!))
+                          .homePiggyLinked(piggy.attributes.accountName))
                       : const Text(""),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
@@ -272,8 +272,8 @@ class _PiggyDetailsState extends State<PiggyDetails> {
       }
     }
 
-    return resp.body!.data.sortedBy<DateTime>((PiggyBankEventRead e) =>
-        e.attributes.createdAt ?? e.attributes.updatedAt ?? DateTime.now());
+    return resp.body!.data
+        .sortedBy<DateTime>((PiggyBankEventRead e) => e.attributes.createdAt);
   }
 
   late PiggyBankRead currentPiggy;
@@ -288,20 +288,20 @@ class _PiggyDetailsState extends State<PiggyDetails> {
   @override
   Widget build(BuildContext context) {
     final double currentAmount =
-        double.tryParse(currentPiggy.attributes.currentAmount ?? "") ?? 0;
+        double.tryParse(currentPiggy.attributes.currentAmount) ?? 0;
     final double targetAmount =
-        double.tryParse(currentPiggy.attributes.targetAmount ?? "") ?? 0;
+        double.tryParse(currentPiggy.attributes.targetAmount) ?? 0;
     final double leftAmount =
         double.tryParse(currentPiggy.attributes.leftToSave ?? "") ?? 0;
-    final DateTime? startDate = currentPiggy.attributes.startDate?.toLocal();
+    final DateTime startDate = currentPiggy.attributes.startDate.toLocal();
     final DateTime? targetDate = currentPiggy.attributes.targetDate?.toLocal();
     final CurrencyRead currency = CurrencyRead(
-      id: currentPiggy.attributes.currencyId ?? "0",
+      id: currentPiggy.attributes.currencyId,
       type: "currencies",
-      attributes: Currency(
-        code: currentPiggy.attributes.currencyCode ?? "",
+      attributes: currencyS(
+        code: currentPiggy.attributes.currencyCode,
         name: "",
-        symbol: currentPiggy.attributes.currencySymbol ?? "",
+        symbol: currentPiggy.attributes.currencySymbol,
         decimalPlaces: currentPiggy.attributes.currencyDecimalPlaces,
       ),
     );
@@ -318,7 +318,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
       infoText += S.of(context).homePiggyRemaining(currency.fmt(leftAmount));
       infoText += "\n";
     }
-    if (startDate != null) {
+    if (startDate.millisecondsSinceEpoch != 0) {
       infoText += S.of(context).homePiggyDateStart(startDate);
       infoText += "\n";
     }
@@ -436,15 +436,14 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
   void initState() {
     super.initState();
 
-    currentAmount =
-        double.tryParse(widget.piggy.attributes.currentAmount ?? "") ?? 0;
+    currentAmount = double.tryParse(widget.piggy.attributes.currentAmount) ?? 0;
     currency = CurrencyRead(
-      id: widget.piggy.attributes.currencyId ?? "0",
+      id: widget.piggy.attributes.currencyId,
       type: "currencies",
-      attributes: Currency(
-        code: widget.piggy.attributes.currencyCode ?? "",
+      attributes: currencyS(
+        code: widget.piggy.attributes.currencyCode,
         name: "",
-        symbol: widget.piggy.attributes.currencySymbol ?? "",
+        symbol: widget.piggy.attributes.currencySymbol,
         decimalPlaces: widget.piggy.attributes.currencyDecimalPlaces,
       ),
     );
@@ -492,7 +491,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                     child: NumberInput(
                       controller: _amountTextController,
                       hintText: "0.00",
-                      decimals: currency.attributes.decimalPlaces ?? 2,
+                      decimals: currency.attributes.decimalPlaces,
                       prefixText: "${currency.attributes.code} ",
                     ),
                   ),
@@ -533,8 +532,15 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                     await api.v1PiggyBanksIdPut(
                   id: widget.piggy.id,
                   body: PiggyBankUpdate(
-                    currentAmount: totalAmount.toStringAsFixed(
-                        currency.attributes.decimalPlaces ?? 2),
+                    currentAmount: totalAmount
+                        .toStringAsFixed(currency.attributes.decimalPlaces),
+                    name: widget.piggy.attributes.name,
+                    accountId: widget.piggy.attributes.accountId,
+                    currencyId: widget.piggy.attributes.currencyId,
+                    currencyCode: widget.piggy.attributes.currencyCode,
+                    startDate: widget.piggy.attributes.startDate,
+                    order: widget.piggy.attributes.order,
+                    active: widget.piggy.attributes.active,
                   ),
                 );
                 if (!resp.isSuccessful || resp.body == null) {
@@ -542,10 +548,11 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                   try {
                     ValidationError valError = ValidationError.fromJson(
                         json.decode(resp.error.toString()));
-                    if (context.mounted) {
-                      error = valError.message ?? S.of(context).errorUnknown;
-                    } else {
-                      error = "[nocontext] Unknown error";
+                    error = valError.message;
+                    if (error.isEmpty) {
+                      error = (context.mounted)
+                          ? S.of(context).errorUnknown
+                          : "[nocontext] Unknown error";
                     }
                   } catch (e) {
                     if (context.mounted) {

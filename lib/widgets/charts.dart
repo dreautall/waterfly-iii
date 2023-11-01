@@ -22,7 +22,7 @@ extension ConvertChartDataSet on ChartDataSet {
   List<TimeSeriesChart> toChart() {
     final List<TimeSeriesChart> data = <TimeSeriesChart>[];
 
-    final Map<String, dynamic> e = entries! as Map<String, dynamic>;
+    final Map<String, dynamic> e = entries as Map<String, dynamic>;
     e.forEach(
       (String key, dynamic value) => data.add(
         TimeSeriesChart(

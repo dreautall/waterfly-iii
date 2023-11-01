@@ -33,7 +33,7 @@ class NetEarningsChart extends StatelessWidget {
       incomeChartData.add(
         LabelAmountChart(
           DateFormat(DateFormat.YEAR_MONTH).format(key),
-          value.differenceFloat ?? 0,
+          value.differenceFloat,
         ),
       );
     });
@@ -41,7 +41,7 @@ class NetEarningsChart extends StatelessWidget {
       expenseChartData.add(
         LabelAmountChart(
           DateFormat(DateFormat.YEAR_MONTH).format(key),
-          value.differenceFloat ?? 0,
+          value.differenceFloat,
         ),
       );
     });
@@ -144,17 +144,17 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
     }
 
     for (InsightGroupEntry cat in respCatIncomeData.body!) {
-      if ((cat.name?.isEmpty ?? true) || cat.differenceFloat == 0) {
+      if (cat.name.isEmpty || cat.differenceFloat == 0) {
         continue;
       }
-      chartData[cat.name!] = cat.differenceFloat!;
+      chartData[cat.name] = cat.differenceFloat;
     }
     for (InsightGroupEntry cat in respCatExpenseData.body!) {
-      if ((cat.name?.isEmpty ?? true) || cat.differenceFloat == 0) {
+      if (cat.name.isEmpty || cat.differenceFloat == 0) {
         continue;
       }
       double income = chartData.remove(cat.name) ?? 0;
-      chartData[cat.name!] = cat.differenceFloat! + income;
+      chartData[cat.name] = cat.differenceFloat + income;
     }
 
     return chartData;

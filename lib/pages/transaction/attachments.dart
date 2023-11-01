@@ -59,7 +59,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     final String filePath = "${tmpPath.path}/${attachment.attributes.filename}";
 
     final HttpClientRequest request = await HttpClient().getUrl(
-      Uri.parse(attachment.attributes.downloadUrl!),
+      Uri.parse(attachment.attributes.downloadUrl),
     );
     user.headers().forEach(
           (String key, String value) => request.headers.add(key, value),
@@ -75,7 +75,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     }
     total = resp.headers.contentLength;
     if (total == 0) {
-      total = attachment.attributes.size ?? 0;
+      total = attachment.attributes.size;
     }
     resp.listen(
       (List<int> value) {
@@ -153,6 +153,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     final Response<AttachmentSingle> respAttachment =
         await api.v1AttachmentsPost(
       body: AttachmentStore(
+        title: file.name,
         filename: file.name,
         attachableType: AttachableType.transactionjournal,
         attachableId: widget.transactionId!,
@@ -163,7 +164,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       try {
         ValidationError valError = ValidationError.fromJson(
             json.decode(respAttachment.error.toString()));
-        error = valError.message ?? l10n.errorUnknown;
+        error = valError.message;
+        if (error.isEmpty) error = l10n.errorUnknown;
       } catch (_) {
         error = l10n.errorUnknown;
       }
@@ -185,7 +187,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     });
 
     final HttpClientRequest request = await HttpClient().postUrl(
-      Uri.parse(newAttachment.attributes.uploadUrl!),
+      Uri.parse(newAttachment.attributes.uploadUrl),
     );
     user.headers().forEach(
           (String key, String value) => request.headers.add(key, value),
@@ -230,7 +232,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       final String respString = await resp.transform(utf8.decoder).join();
       ValidationError valError =
           ValidationError.fromJson(json.decode(respString));
-      error = valError.message ?? l10n.errorUnknown;
+      error = valError.message;
+      if (error.isEmpty) error = l10n.errorUnknown;
     } catch (_) {
       error = l10n.errorUnknown;
     }
@@ -286,11 +289,17 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       attributes: Attachment(
         attachableType: AttachableType.transactionjournal,
         attachableId: "FAKE",
+        title: file.name,
         filename: file.name,
-        uploadUrl: file.path,
+        uploadUrl: file.path ?? "",
         size: file.size,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        md5: "",
+        downloadUrl: "",
+        mime: "",
       ),
-      links: ObjectLink(),
+      links: const ObjectLink(self: ""),
     );
     setState(() {
       widget.attachments.add(newAttachment);
@@ -304,13 +313,10 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     for (int i = 0; i < widget.attachments.length; i++) {
       AttachmentRead attachment = widget.attachments[i];
       String subtitle = "";
-      DateTime? modDate =
-          attachment.attributes.updatedAt ?? attachment.attributes.createdAt;
-      if (modDate != null) {
-        subtitle = DateFormat.yMd().add_Hms().format(modDate.toLocal());
-      }
+      DateTime modDate = attachment.attributes.updatedAt;
+      subtitle = DateFormat.yMd().add_Hms().format(modDate.toLocal());
 
-      if (attachment.attributes.size != null) {
+      if (attachment.attributes.size != 0) {
         subtitle = "$subtitle (${filesize(attachment.attributes.size)})";
       }
       childs.add(ListTile(
@@ -326,7 +332,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                   : () async => downloadAttachment(context, attachment, i),
         ),
         title: Text(
-          attachment.attributes.title ?? attachment.attributes.filename,
+          attachment.attributes.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),

@@ -10,6 +10,7 @@ import 'package:chopper/chopper.dart';
 import 'client_mapping.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;
 import 'firefly_iii.enums.swagger.dart' as enums;
 export 'firefly_iii.enums.swagger.dart';
@@ -1640,17 +1641,17 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all transactions related to the account.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param id The ID of the account.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  ///@param limit Limits the number of results on one page.
+  ///@param id The ID of the account.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param type Optional filter on the transaction type(s) returned.
   Future<chopper.Response<TransactionArray>> v1AccountsIdTransactionsGet({
     String? xTraceId,
-    required String? id,
-    int? page,
     int? limit,
+    int? page,
+    required String? id,
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
@@ -1660,9 +1661,9 @@ abstract class FireflyIii extends ChopperService {
 
     return _v1AccountsIdTransactionsGet(
         xTraceId: xTraceId?.toString(),
-        id: id,
-        page: page,
         limit: limit,
+        page: page,
+        id: id,
         start: start,
         end: end,
         type: type?.value?.toString());
@@ -1670,18 +1671,18 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all transactions related to the account.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param id The ID of the account.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  ///@param limit Limits the number of results on one page.
+  ///@param id The ID of the account.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param type Optional filter on the transaction type(s) returned.
   @Get(path: '/v1/accounts/{id}/transactions')
   Future<chopper.Response<TransactionArray>> _v1AccountsIdTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
-    @Query('page') int? page,
     @Query('limit') int? limit,
+    @Query('page') int? page,
+    @Path('id') required String? id,
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
@@ -1689,65 +1690,75 @@ abstract class FireflyIii extends ChopperService {
 
   ///Lists all attachments.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the account.
-  ///@param page Page number. The default pagination is 50.
   Future<chopper.Response<AttachmentArray>> v1AccountsIdAttachmentsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     generatedMapping.putIfAbsent(
         AttachmentArray, () => AttachmentArray.fromJsonFactory);
 
     return _v1AccountsIdAttachmentsGet(
-        xTraceId: xTraceId?.toString(), id: id, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, id: id);
   }
 
   ///Lists all attachments.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the account.
-  ///@param page Page number. The default pagination is 50.
   @Get(path: '/v1/accounts/{id}/attachments')
   Future<chopper.Response<AttachmentArray>> _v1AccountsIdAttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
   });
 
   ///List all piggy banks related to the account.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param id The ID of the account.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
+  ///@param id The ID of the account.
   Future<chopper.Response<PiggyBankArray>> v1AccountsIdPiggyBanksGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     generatedMapping.putIfAbsent(
         PiggyBankArray, () => PiggyBankArray.fromJsonFactory);
 
     return _v1AccountsIdPiggyBanksGet(
-        xTraceId: xTraceId?.toString(), id: id, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, id: id);
   }
 
   ///List all piggy banks related to the account.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param id The ID of the account.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
+  ///@param id The ID of the account.
   @Get(path: '/v1/accounts/{id}/piggy-banks')
   Future<chopper.Response<PiggyBankArray>> _v1AccountsIdPiggyBanksGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
   });
 
   ///List all accounts.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
   ///@param type Optional filter on the account type(s) returned
   Future<chopper.Response<AccountArray>> v1AccountsGet({
     String? xTraceId,
+    int? limit,
     int? page,
     String? date,
     enums.AccountTypeFilter? type,
@@ -1757,6 +1768,7 @@ abstract class FireflyIii extends ChopperService {
 
     return _v1AccountsGet(
         xTraceId: xTraceId?.toString(),
+        limit: limit,
         page: page,
         date: date,
         type: type?.value?.toString());
@@ -1764,12 +1776,14 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all accounts.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
   ///@param type Optional filter on the account type(s) returned
   @Get(path: '/v1/accounts')
   Future<chopper.Response<AccountArray>> _v1AccountsGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
     @Query('date') String? date,
     @Query('type') String? type,
@@ -1872,23 +1886,28 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all attachments.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<AttachmentArray>> v1AttachmentsGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
         AttachmentArray, () => AttachmentArray.fromJsonFactory);
 
-    return _v1AttachmentsGet(xTraceId: xTraceId?.toString(), page: page);
+    return _v1AttachmentsGet(
+        xTraceId: xTraceId?.toString(), limit: limit, page: page);
   }
 
   ///List all attachments.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v1/attachments')
   Future<chopper.Response<AttachmentArray>> _v1AttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
   });
 
@@ -2030,11 +2049,13 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all available budget amounts.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   Future<chopper.Response<AvailableBudgetArray>> v1AvailableBudgetsGet({
     String? xTraceId,
+    int? limit,
     int? page,
     String? start,
     String? end,
@@ -2043,17 +2064,23 @@ abstract class FireflyIii extends ChopperService {
         AvailableBudgetArray, () => AvailableBudgetArray.fromJsonFactory);
 
     return _v1AvailableBudgetsGet(
-        xTraceId: xTraceId?.toString(), page: page, start: start, end: end);
+        xTraceId: xTraceId?.toString(),
+        limit: limit,
+        page: page,
+        start: start,
+        end: end);
   }
 
   ///List all available budget amounts.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   @Get(path: '/v1/available-budgets')
   Future<chopper.Response<AvailableBudgetArray>> _v1AvailableBudgetsGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
     @Query('start') String? start,
     @Query('end') String? end,
@@ -2083,29 +2110,33 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all attachments uploaded to the bill.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the bill.
-  ///@param page Page number. The default pagination is 50.
   Future<chopper.Response<AttachmentArray>> v1BillsIdAttachmentsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     generatedMapping.putIfAbsent(
         AttachmentArray, () => AttachmentArray.fromJsonFactory);
 
     return _v1BillsIdAttachmentsGet(
-        xTraceId: xTraceId?.toString(), id: id, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, id: id);
   }
 
   ///List all attachments uploaded to the bill.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the bill.
-  ///@param page Page number. The default pagination is 50.
   @Get(path: '/v1/bills/{id}/attachments')
   Future<chopper.Response<AttachmentArray>> _v1BillsIdAttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
   });
 
   ///List all rules associated with the bill.
@@ -2170,11 +2201,13 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all bills.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param start A date formatted YYYY-MM-DD. If it is are added to the request, Firefly III will calculate the appropriate payment and paid dates.
   ///@param end A date formatted YYYY-MM-DD. If it is added to the request, Firefly III will calculate the appropriate payment and paid dates.
   Future<chopper.Response<BillArray>> v1BillsGet({
     String? xTraceId,
+    int? limit,
     int? page,
     String? start,
     String? end,
@@ -2182,17 +2215,23 @@ abstract class FireflyIii extends ChopperService {
     generatedMapping.putIfAbsent(BillArray, () => BillArray.fromJsonFactory);
 
     return _v1BillsGet(
-        xTraceId: xTraceId?.toString(), page: page, start: start, end: end);
+        xTraceId: xTraceId?.toString(),
+        limit: limit,
+        page: page,
+        start: start,
+        end: end);
   }
 
   ///List all bills.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param start A date formatted YYYY-MM-DD. If it is are added to the request, Firefly III will calculate the appropriate payment and paid dates.
   ///@param end A date formatted YYYY-MM-DD. If it is added to the request, Firefly III will calculate the appropriate payment and paid dates.
   @Get(path: '/v1/bills')
   Future<chopper.Response<BillArray>> _v1BillsGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
     @Query('start') String? start,
     @Query('end') String? end,
@@ -2297,16 +2336,18 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all transactions by a budget limit ID.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
   ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
-  ///@param page Page number. The default pagination is 50.
   ///@param type Optional filter on the transaction type(s) returned
   Future<chopper.Response<TransactionArray>>
       v1BudgetsIdLimitsLimitIdTransactionsGet({
     String? xTraceId,
+    int? limit,
+    int? page,
     required String? id,
     required String? limitId,
-    int? page,
     enums.TransactionTypeFilter? type,
   }) {
     generatedMapping.putIfAbsent(
@@ -2314,25 +2355,28 @@ abstract class FireflyIii extends ChopperService {
 
     return _v1BudgetsIdLimitsLimitIdTransactionsGet(
         xTraceId: xTraceId?.toString(),
+        limit: limit,
+        page: page,
         id: id,
         limitId: limitId,
-        page: page,
         type: type?.value?.toString());
   }
 
   ///List all transactions by a budget limit ID.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
   ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
-  ///@param page Page number. The default pagination is 50.
   ///@param type Optional filter on the transaction type(s) returned
   @Get(path: '/v1/budgets/{id}/limits/{limitId}/transactions')
   Future<chopper.Response<TransactionArray>>
       _v1BudgetsIdLimitsLimitIdTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
+    @Query('page') int? page,
     @Path('id') required String? id,
     @Path('limitId') required String? limitId,
-    @Query('page') int? page,
     @Query('type') String? type,
   });
 
@@ -2507,17 +2551,17 @@ abstract class FireflyIii extends ChopperService {
 
   ///All transactions to a budget.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the budget.
-  ///@param limit Limits the number of results on one page.
-  ///@param page Page number. The default pagination is 50.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param type Optional filter on the transaction type(s) returned
   Future<chopper.Response<TransactionArray>> v1BudgetsIdTransactionsGet({
     String? xTraceId,
-    required String? id,
     int? limit,
     int? page,
+    required String? id,
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
@@ -2527,9 +2571,9 @@ abstract class FireflyIii extends ChopperService {
 
     return _v1BudgetsIdTransactionsGet(
         xTraceId: xTraceId?.toString(),
-        id: id,
         limit: limit,
         page: page,
+        id: id,
         start: start,
         end: end,
         type: type?.value?.toString());
@@ -2537,18 +2581,18 @@ abstract class FireflyIii extends ChopperService {
 
   ///All transactions to a budget.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the budget.
-  ///@param limit Limits the number of results on one page.
-  ///@param page Page number. The default pagination is 50.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param type Optional filter on the transaction type(s) returned
   @Get(path: '/v1/budgets/{id}/transactions')
   Future<chopper.Response<TransactionArray>> _v1BudgetsIdTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
@@ -2556,38 +2600,44 @@ abstract class FireflyIii extends ChopperService {
 
   ///Lists all attachments of a budget.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the budget.
-  ///@param page Page number. The default pagination is 50.
   Future<chopper.Response<AttachmentArray>> v1BudgetsIdAttachmentsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     generatedMapping.putIfAbsent(
         AttachmentArray, () => AttachmentArray.fromJsonFactory);
 
     return _v1BudgetsIdAttachmentsGet(
-        xTraceId: xTraceId?.toString(), id: id, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, id: id);
   }
 
   ///Lists all attachments of a budget.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the budget.
-  ///@param page Page number. The default pagination is 50.
   @Get(path: '/v1/budgets/{id}/attachments')
   Future<chopper.Response<AttachmentArray>> _v1BudgetsIdAttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
   });
 
   ///List all budgets.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param start A date formatted YYYY-MM-DD, to get info on how much the user has spent. You must submit both start and end.
   ///@param end A date formatted YYYY-MM-DD, to get info on how much the user has spent. You must submit both start and end.
   Future<chopper.Response<BudgetArray>> v1BudgetsGet({
     String? xTraceId,
+    int? limit,
     int? page,
     String? start,
     String? end,
@@ -2596,17 +2646,23 @@ abstract class FireflyIii extends ChopperService {
         BudgetArray, () => BudgetArray.fromJsonFactory);
 
     return _v1BudgetsGet(
-        xTraceId: xTraceId?.toString(), page: page, start: start, end: end);
+        xTraceId: xTraceId?.toString(),
+        limit: limit,
+        page: page,
+        start: start,
+        end: end);
   }
 
   ///List all budgets.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param start A date formatted YYYY-MM-DD, to get info on how much the user has spent. You must submit both start and end.
   ///@param end A date formatted YYYY-MM-DD, to get info on how much the user has spent. You must submit both start and end.
   @Get(path: '/v1/budgets')
   Future<chopper.Response<BudgetArray>> _v1BudgetsGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
     @Query('start') String? start,
     @Query('end') String? end,
@@ -2714,15 +2770,17 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all transactions in a category.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the category.
-  ///@param page Page number. The default pagination is per 50.
   ///@param start A date formatted YYYY-MM-DD, to limit the result list.
   ///@param end A date formatted YYYY-MM-DD, to limit the result list.
   ///@param type Optional filter on the transaction type(s) returned
   Future<chopper.Response<TransactionArray>> v1CategoriesIdTransactionsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
@@ -2732,8 +2790,9 @@ abstract class FireflyIii extends ChopperService {
 
     return _v1CategoriesIdTransactionsGet(
         xTraceId: xTraceId?.toString(),
-        id: id,
+        limit: limit,
         page: page,
+        id: id,
         start: start,
         end: end,
         type: type?.value?.toString());
@@ -2741,16 +2800,18 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all transactions in a category.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the category.
-  ///@param page Page number. The default pagination is per 50.
   ///@param start A date formatted YYYY-MM-DD, to limit the result list.
   ///@param end A date formatted YYYY-MM-DD, to limit the result list.
   ///@param type Optional filter on the transaction type(s) returned
   @Get(path: '/v1/categories/{id}/transactions')
   Future<chopper.Response<TransactionArray>> _v1CategoriesIdTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
@@ -2758,50 +2819,59 @@ abstract class FireflyIii extends ChopperService {
 
   ///Lists all attachments.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the category.
-  ///@param page Page number. The default pagination is 50.
   Future<chopper.Response<AttachmentArray>> v1CategoriesIdAttachmentsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     generatedMapping.putIfAbsent(
         AttachmentArray, () => AttachmentArray.fromJsonFactory);
 
     return _v1CategoriesIdAttachmentsGet(
-        xTraceId: xTraceId?.toString(), id: id, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, id: id);
   }
 
   ///Lists all attachments.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the category.
-  ///@param page Page number. The default pagination is 50.
   @Get(path: '/v1/categories/{id}/attachments')
   Future<chopper.Response<AttachmentArray>> _v1CategoriesIdAttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
   });
 
   ///List all categories.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<CategoryArray>> v1CategoriesGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
         CategoryArray, () => CategoryArray.fromJsonFactory);
 
-    return _v1CategoriesGet(xTraceId: xTraceId?.toString(), page: page);
+    return _v1CategoriesGet(
+        xTraceId: xTraceId?.toString(), limit: limit, page: page);
   }
 
   ///List all categories.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v1/categories')
   Future<chopper.Response<CategoryArray>> _v1CategoriesGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
   });
 
@@ -2908,15 +2978,17 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all transactions under this link type.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param id The ID of the link type.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
+  ///@param id The ID of the link type.
   ///@param start A date formatted YYYY-MM-DD, to limit the results.
   ///@param end A date formatted YYYY-MM-DD, to limit the results.
   ///@param type Optional filter on the transaction type(s) returned.
   Future<chopper.Response<TransactionArray>> v1LinkTypesIdTransactionsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
@@ -2926,8 +2998,9 @@ abstract class FireflyIii extends ChopperService {
 
     return _v1LinkTypesIdTransactionsGet(
         xTraceId: xTraceId?.toString(),
-        id: id,
+        limit: limit,
         page: page,
+        id: id,
         start: start,
         end: end,
         type: type?.value?.toString());
@@ -2935,16 +3008,18 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all transactions under this link type.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param id The ID of the link type.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
+  ///@param id The ID of the link type.
   ///@param start A date formatted YYYY-MM-DD, to limit the results.
   ///@param end A date formatted YYYY-MM-DD, to limit the results.
   ///@param type Optional filter on the transaction type(s) returned.
   @Get(path: '/v1/link-types/{id}/transactions')
   Future<chopper.Response<TransactionArray>> _v1LinkTypesIdTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
@@ -2952,23 +3027,28 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all types of links.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50 items.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<LinkTypeArray>> v1LinkTypesGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
         LinkTypeArray, () => LinkTypeArray.fromJsonFactory);
 
-    return _v1LinkTypesGet(xTraceId: xTraceId?.toString(), page: page);
+    return _v1LinkTypesGet(
+        xTraceId: xTraceId?.toString(), limit: limit, page: page);
   }
 
   ///List all types of links.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50 items.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v1/link-types')
   Future<chopper.Response<LinkTypeArray>> _v1LinkTypesGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
   });
 
@@ -3066,23 +3146,28 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all transaction links.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<TransactionLinkArray>> v1TransactionLinksGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
         TransactionLinkArray, () => TransactionLinkArray.fromJsonFactory);
 
-    return _v1TransactionLinksGet(xTraceId: xTraceId?.toString(), page: page);
+    return _v1TransactionLinksGet(
+        xTraceId: xTraceId?.toString(), limit: limit, page: page);
   }
 
   ///List all transaction links.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v1/transaction-links')
   Future<chopper.Response<TransactionLinkArray>> _v1TransactionLinksGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
   });
 
@@ -3180,76 +3265,89 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all piggy banks related to the object group.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param id The ID of the account.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
+  ///@param id The ID of the account.
   Future<chopper.Response<PiggyBankArray>> v1ObjectGroupsIdPiggyBanksGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     generatedMapping.putIfAbsent(
         PiggyBankArray, () => PiggyBankArray.fromJsonFactory);
 
     return _v1ObjectGroupsIdPiggyBanksGet(
-        xTraceId: xTraceId?.toString(), id: id, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, id: id);
   }
 
   ///List all piggy banks related to the object group.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param id The ID of the account.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
+  ///@param id The ID of the account.
   @Get(path: '/v1/object-groups/{id}/piggy-banks')
   Future<chopper.Response<PiggyBankArray>> _v1ObjectGroupsIdPiggyBanksGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
   });
 
   ///List all bills with this object group.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param id The ID of the account.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
+  ///@param id The ID of the account.
   Future<chopper.Response<BillArray>> v1ObjectGroupsIdBillsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     generatedMapping.putIfAbsent(BillArray, () => BillArray.fromJsonFactory);
 
     return _v1ObjectGroupsIdBillsGet(
-        xTraceId: xTraceId?.toString(), id: id, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, id: id);
   }
 
   ///List all bills with this object group.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param id The ID of the account.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
+  ///@param id The ID of the account.
   @Get(path: '/v1/object-groups/{id}/bills')
   Future<chopper.Response<BillArray>> _v1ObjectGroupsIdBillsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
   });
 
   ///List all oject groups.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<ObjectGroupArray>> v1ObjectGroupsGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
         ObjectGroupArray, () => ObjectGroupArray.fromJsonFactory);
 
-    return _v1ObjectGroupsGet(xTraceId: xTraceId?.toString(), page: page);
+    return _v1ObjectGroupsGet(
+        xTraceId: xTraceId?.toString(), limit: limit, page: page);
   }
 
   ///List all oject groups.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v1/object-groups')
   Future<chopper.Response<ObjectGroupArray>> _v1ObjectGroupsGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
   });
 
@@ -3324,77 +3422,90 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all events linked to a piggy bank.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the piggy bank
-  ///@param page Page number. The default pagination is 50.
   Future<chopper.Response<PiggyBankEventArray>> v1PiggyBanksIdEventsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     generatedMapping.putIfAbsent(
         PiggyBankEventArray, () => PiggyBankEventArray.fromJsonFactory);
 
     return _v1PiggyBanksIdEventsGet(
-        xTraceId: xTraceId?.toString(), id: id, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, id: id);
   }
 
   ///List all events linked to a piggy bank.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the piggy bank
-  ///@param page Page number. The default pagination is 50.
   @Get(path: '/v1/piggy-banks/{id}/events')
   Future<chopper.Response<PiggyBankEventArray>> _v1PiggyBanksIdEventsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
   });
 
   ///Lists all attachments.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the piggy bank.
-  ///@param page Page number. The default pagination is 50.
   Future<chopper.Response<AttachmentArray>> v1PiggyBanksIdAttachmentsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     generatedMapping.putIfAbsent(
         AttachmentArray, () => AttachmentArray.fromJsonFactory);
 
     return _v1PiggyBanksIdAttachmentsGet(
-        xTraceId: xTraceId?.toString(), id: id, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, id: id);
   }
 
   ///Lists all attachments.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the piggy bank.
-  ///@param page Page number. The default pagination is 50.
   @Get(path: '/v1/piggy-banks/{id}/attachments')
   Future<chopper.Response<AttachmentArray>> _v1PiggyBanksIdAttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
   });
 
   ///List all piggy banks.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<PiggyBankArray>> v1PiggyBanksGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
         PiggyBankArray, () => PiggyBankArray.fromJsonFactory);
 
-    return _v1PiggyBanksGet(xTraceId: xTraceId?.toString(), page: page);
+    return _v1PiggyBanksGet(
+        xTraceId: xTraceId?.toString(), limit: limit, page: page);
   }
 
   ///List all piggy banks.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v1/piggy-banks')
   Future<chopper.Response<PiggyBankArray>> _v1PiggyBanksGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
   });
 
@@ -3492,15 +3603,17 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all transactions created by a recurring transaction.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the recurring transaction.
-  ///@param page Page number. The default pagination is 50.
   ///@param start A date formatted YYYY-MM-DD. Both the start and end date must be present.
   ///@param end A date formatted YYYY-MM-DD. Both the start and end date must be present.
   ///@param type Optional filter on the transaction type(s) returned
   Future<chopper.Response<TransactionArray>> v1RecurrencesIdTransactionsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
@@ -3510,8 +3623,9 @@ abstract class FireflyIii extends ChopperService {
 
     return _v1RecurrencesIdTransactionsGet(
         xTraceId: xTraceId?.toString(),
-        id: id,
+        limit: limit,
         page: page,
+        id: id,
         start: start,
         end: end,
         type: type?.value?.toString());
@@ -3519,16 +3633,18 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all transactions created by a recurring transaction.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the recurring transaction.
-  ///@param page Page number. The default pagination is 50.
   ///@param start A date formatted YYYY-MM-DD. Both the start and end date must be present.
   ///@param end A date formatted YYYY-MM-DD. Both the start and end date must be present.
   ///@param type Optional filter on the transaction type(s) returned
   @Get(path: '/v1/recurrences/{id}/transactions')
   Future<chopper.Response<TransactionArray>> _v1RecurrencesIdTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
@@ -3536,23 +3652,28 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all recurring transactions.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<RecurrenceArray>> v1RecurrencesGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
         RecurrenceArray, () => RecurrenceArray.fromJsonFactory);
 
-    return _v1RecurrencesGet(xTraceId: xTraceId?.toString(), page: page);
+    return _v1RecurrencesGet(
+        xTraceId: xTraceId?.toString(), limit: limit, page: page);
   }
 
   ///List all recurring transactions.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v1/recurrences')
   Future<chopper.Response<RecurrenceArray>> _v1RecurrencesGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
   });
 
@@ -3650,34 +3771,39 @@ abstract class FireflyIii extends ChopperService {
 
   ///List rules in this rule group.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the rule group.
-  ///@param page Page number. The default pagination is 50.
   Future<chopper.Response<RuleArray>> v1RuleGroupsIdRulesGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     generatedMapping.putIfAbsent(RuleArray, () => RuleArray.fromJsonFactory);
 
     return _v1RuleGroupsIdRulesGet(
-        xTraceId: xTraceId?.toString(), id: id, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, id: id);
   }
 
   ///List rules in this rule group.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the rule group.
-  ///@param page Page number. The default pagination is 50.
   @Get(path: '/v1/rule-groups/{id}/rules')
   Future<chopper.Response<RuleArray>> _v1RuleGroupsIdRulesGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
   });
 
   ///Test which transactions would be hit by the rule group. No changes will be made.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the rule group.
-  ///@param page Page number. The default pagination is 50 items.
   ///@param start A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
   ///@param end A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
   ///@param search_limit Maximum number of transactions Firefly III will try. Don't set this too high, or it will take Firefly III very long to run the test. I suggest a max of 200.
@@ -3685,8 +3811,9 @@ abstract class FireflyIii extends ChopperService {
   ///@param accounts[] Limit the testing of the rule group to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
   Future<chopper.Response<TransactionArray>> v1RuleGroupsIdTestGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
     String? start,
     String? end,
     int? searchLimit,
@@ -3698,8 +3825,9 @@ abstract class FireflyIii extends ChopperService {
 
     return _v1RuleGroupsIdTestGet(
         xTraceId: xTraceId?.toString(),
-        id: id,
+        limit: limit,
         page: page,
+        id: id,
         start: start,
         end: end,
         searchLimit: searchLimit,
@@ -3709,8 +3837,9 @@ abstract class FireflyIii extends ChopperService {
 
   ///Test which transactions would be hit by the rule group. No changes will be made.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the rule group.
-  ///@param page Page number. The default pagination is 50 items.
   ///@param start A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
   ///@param end A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
   ///@param search_limit Maximum number of transactions Firefly III will try. Don't set this too high, or it will take Firefly III very long to run the test. I suggest a max of 200.
@@ -3719,8 +3848,9 @@ abstract class FireflyIii extends ChopperService {
   @Get(path: '/v1/rule-groups/{id}/test')
   Future<chopper.Response<TransactionArray>> _v1RuleGroupsIdTestGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('search_limit') int? searchLimit,
@@ -3769,23 +3899,28 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all rule groups.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<RuleGroupArray>> v1RuleGroupsGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
         RuleGroupArray, () => RuleGroupArray.fromJsonFactory);
 
-    return _v1RuleGroupsGet(xTraceId: xTraceId?.toString(), page: page);
+    return _v1RuleGroupsGet(
+        xTraceId: xTraceId?.toString(), limit: limit, page: page);
   }
 
   ///List all rule groups.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v1/rule-groups')
   Future<chopper.Response<RuleGroupArray>> _v1RuleGroupsGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
   });
 
@@ -3961,22 +4096,27 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all rules.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<RuleArray>> v1RulesGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     generatedMapping.putIfAbsent(RuleArray, () => RuleArray.fromJsonFactory);
 
-    return _v1RulesGet(xTraceId: xTraceId?.toString(), page: page);
+    return _v1RulesGet(
+        xTraceId: xTraceId?.toString(), limit: limit, page: page);
   }
 
   ///List all rules.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v1/rules')
   Future<chopper.Response<RuleArray>> _v1RulesGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
   });
 
@@ -4070,42 +4210,48 @@ abstract class FireflyIii extends ChopperService {
 
   ///Lists all attachments.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param tag Either the tag itself or the tag ID.
-  ///@param page Page number. The default pagination is 50.
   Future<chopper.Response<AttachmentArray>> v1TagsTagAttachmentsGet({
     String? xTraceId,
-    required String? tag,
+    int? limit,
     int? page,
+    required String? tag,
   }) {
     generatedMapping.putIfAbsent(
         AttachmentArray, () => AttachmentArray.fromJsonFactory);
 
     return _v1TagsTagAttachmentsGet(
-        xTraceId: xTraceId?.toString(), tag: tag, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, tag: tag);
   }
 
   ///Lists all attachments.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param tag Either the tag itself or the tag ID.
-  ///@param page Page number. The default pagination is 50.
   @Get(path: '/v1/tags/{tag}/attachments')
   Future<chopper.Response<AttachmentArray>> _v1TagsTagAttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('tag') required String? tag,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('tag') required String? tag,
   });
 
   ///List all transactions with this tag.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param tag Either the tag itself or the tag ID.
-  ///@param page Page number. The default pagination is 50.
   ///@param start A date formatted YYYY-MM-DD. This is the start date of the selected range (inclusive).
   ///@param end A date formatted YYYY-MM-DD. This is the end date of the selected range (inclusive).
   ///@param type Optional filter on the transaction type(s) returned.
   Future<chopper.Response<TransactionArray>> v1TagsTagTransactionsGet({
     String? xTraceId,
-    required String? tag,
+    int? limit,
     int? page,
+    required String? tag,
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
@@ -4115,8 +4261,9 @@ abstract class FireflyIii extends ChopperService {
 
     return _v1TagsTagTransactionsGet(
         xTraceId: xTraceId?.toString(),
-        tag: tag,
+        limit: limit,
         page: page,
+        tag: tag,
         start: start,
         end: end,
         type: type?.value?.toString());
@@ -4124,16 +4271,18 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all transactions with this tag.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param tag Either the tag itself or the tag ID.
-  ///@param page Page number. The default pagination is 50.
   ///@param start A date formatted YYYY-MM-DD. This is the start date of the selected range (inclusive).
   ///@param end A date formatted YYYY-MM-DD. This is the end date of the selected range (inclusive).
   ///@param type Optional filter on the transaction type(s) returned.
   @Get(path: '/v1/tags/{tag}/transactions')
   Future<chopper.Response<TransactionArray>> _v1TagsTagTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('tag') required String? tag,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('tag') required String? tag,
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
@@ -4141,22 +4290,26 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all tags.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<TagArray>> v1TagsGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     generatedMapping.putIfAbsent(TagArray, () => TagArray.fromJsonFactory);
 
-    return _v1TagsGet(xTraceId: xTraceId?.toString(), page: page);
+    return _v1TagsGet(xTraceId: xTraceId?.toString(), limit: limit, page: page);
   }
 
   ///List all tags.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v1/tags')
   Future<chopper.Response<TagArray>> _v1TagsGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
   });
 
@@ -4184,27 +4337,32 @@ abstract class FireflyIii extends ChopperService {
 
   ///Get a single tag.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
-  ///@param page Page number
   Future<chopper.Response<TagSingle>> v1TagsTagGet({
     String? xTraceId,
-    required String? tag,
+    int? limit,
     int? page,
+    required String? tag,
   }) {
     generatedMapping.putIfAbsent(TagSingle, () => TagSingle.fromJsonFactory);
 
-    return _v1TagsTagGet(xTraceId: xTraceId?.toString(), tag: tag, page: page);
+    return _v1TagsTagGet(
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, tag: tag);
   }
 
   ///Get a single tag.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
-  ///@param page Page number
   @Get(path: '/v1/tags/{tag}')
   Future<chopper.Response<TagSingle>> _v1TagsTagGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('tag') required String? tag,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('tag') required String? tag,
   });
 
   ///Update existing tag.
@@ -4254,14 +4412,16 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all accounts with this currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
   ///@param type Optional filter on the account type(s) returned
   Future<chopper.Response<AccountArray>> v1CurrenciesCodeAccountsGet({
     String? xTraceId,
-    required String? code,
+    int? limit,
     int? page,
+    required String? code,
     String? date,
     enums.AccountTypeFilter? type,
   }) {
@@ -4270,92 +4430,105 @@ abstract class FireflyIii extends ChopperService {
 
     return _v1CurrenciesCodeAccountsGet(
         xTraceId: xTraceId?.toString(),
-        code: code,
+        limit: limit,
         page: page,
+        code: code,
         date: date,
         type: type?.value?.toString());
   }
 
   ///List all accounts with this currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
   ///@param type Optional filter on the account type(s) returned
   @Get(path: '/v1/currencies/{code}/accounts')
   Future<chopper.Response<AccountArray>> _v1CurrenciesCodeAccountsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('code') required String? code,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('code') required String? code,
     @Query('date') String? date,
     @Query('type') String? type,
   });
 
   ///List all available budgets with this currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50
   Future<chopper.Response<AvailableBudgetArray>>
       v1CurrenciesCodeAvailableBudgetsGet({
     String? xTraceId,
-    required String? code,
+    int? limit,
     int? page,
+    required String? code,
   }) {
     generatedMapping.putIfAbsent(
         AvailableBudgetArray, () => AvailableBudgetArray.fromJsonFactory);
 
     return _v1CurrenciesCodeAvailableBudgetsGet(
-        xTraceId: xTraceId?.toString(), code: code, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, code: code);
   }
 
   ///List all available budgets with this currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50
   @Get(path: '/v1/currencies/{code}/available-budgets')
   Future<chopper.Response<AvailableBudgetArray>>
       _v1CurrenciesCodeAvailableBudgetsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('code') required String? code,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('code') required String? code,
   });
 
   ///List all bills with this currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50.
   Future<chopper.Response<BillArray>> v1CurrenciesCodeBillsGet({
     String? xTraceId,
-    required String? code,
+    int? limit,
     int? page,
+    required String? code,
   }) {
     generatedMapping.putIfAbsent(BillArray, () => BillArray.fromJsonFactory);
 
     return _v1CurrenciesCodeBillsGet(
-        xTraceId: xTraceId?.toString(), code: code, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, code: code);
   }
 
   ///List all bills with this currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50.
   @Get(path: '/v1/currencies/{code}/bills')
   Future<chopper.Response<BillArray>> _v1CurrenciesCodeBillsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('code') required String? code,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('code') required String? code,
   });
 
   ///List all budget limits with this currency
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50.
   ///@param start Start date for the budget limit list.
   ///@param end End date for the budget limit list.
   Future<chopper.Response<BudgetLimitArray>> v1CurrenciesCodeBudgetLimitsGet({
     String? xTraceId,
-    required String? code,
+    int? limit,
     int? page,
+    required String? code,
     String? start,
     String? end,
   }) {
@@ -4364,91 +4537,104 @@ abstract class FireflyIii extends ChopperService {
 
     return _v1CurrenciesCodeBudgetLimitsGet(
         xTraceId: xTraceId?.toString(),
-        code: code,
+        limit: limit,
         page: page,
+        code: code,
         start: start,
         end: end);
   }
 
   ///List all budget limits with this currency
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50.
   ///@param start Start date for the budget limit list.
   ///@param end End date for the budget limit list.
   @Get(path: '/v1/currencies/{code}/budget_limits')
   Future<chopper.Response<BudgetLimitArray>> _v1CurrenciesCodeBudgetLimitsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('code') required String? code,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('code') required String? code,
     @Query('start') String? start,
     @Query('end') String? end,
   });
 
   ///List all recurring transactions with this currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50.
   Future<chopper.Response<RecurrenceArray>> v1CurrenciesCodeRecurrencesGet({
     String? xTraceId,
-    required String? code,
+    int? limit,
     int? page,
+    required String? code,
   }) {
     generatedMapping.putIfAbsent(
         RecurrenceArray, () => RecurrenceArray.fromJsonFactory);
 
     return _v1CurrenciesCodeRecurrencesGet(
-        xTraceId: xTraceId?.toString(), code: code, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, code: code);
   }
 
   ///List all recurring transactions with this currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  ///@param page Page number. The default pagination is 50.
   @Get(path: '/v1/currencies/{code}/recurrences')
   Future<chopper.Response<RecurrenceArray>> _v1CurrenciesCodeRecurrencesGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('code') required String? code,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('code') required String? code,
   });
 
   ///List all rules with this currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  ///@param page Page number. The default pagination per 50.
   Future<chopper.Response<RuleArray>> v1CurrenciesCodeRulesGet({
     String? xTraceId,
-    required String? code,
+    int? limit,
     int? page,
+    required String? code,
   }) {
     generatedMapping.putIfAbsent(RuleArray, () => RuleArray.fromJsonFactory);
 
     return _v1CurrenciesCodeRulesGet(
-        xTraceId: xTraceId?.toString(), code: code, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, code: code);
   }
 
   ///List all rules with this currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  ///@param page Page number. The default pagination per 50.
   @Get(path: '/v1/currencies/{code}/rules')
   Future<chopper.Response<RuleArray>> _v1CurrenciesCodeRulesGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('code') required String? code,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('code') required String? code,
   });
 
   ///List all transactions with this currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  ///@param page Page number. The default pagination is per 50.
   ///@param start A date formatted YYYY-MM-DD, to limit the list of transactions.
   ///@param end A date formatted YYYY-MM-DD, to limit the list of transactions.
   ///@param type Optional filter on the transaction type(s) returned
   Future<chopper.Response<TransactionArray>> v1CurrenciesCodeTransactionsGet({
     String? xTraceId,
-    required String? code,
+    int? limit,
     int? page,
+    required String? code,
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
@@ -4458,8 +4644,9 @@ abstract class FireflyIii extends ChopperService {
 
     return _v1CurrenciesCodeTransactionsGet(
         xTraceId: xTraceId?.toString(),
-        code: code,
+        limit: limit,
         page: page,
+        code: code,
         start: start,
         end: end,
         type: type?.value?.toString());
@@ -4467,16 +4654,18 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all transactions with this currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  ///@param page Page number. The default pagination is per 50.
   ///@param start A date formatted YYYY-MM-DD, to limit the list of transactions.
   ///@param end A date formatted YYYY-MM-DD, to limit the list of transactions.
   ///@param type Optional filter on the transaction type(s) returned
   @Get(path: '/v1/currencies/{code}/transactions')
   Future<chopper.Response<TransactionArray>> _v1CurrenciesCodeTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('code') required String? code,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('code') required String? code,
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
@@ -4484,23 +4673,28 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all currencies.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<CurrencyArray>> v1CurrenciesGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
         CurrencyArray, () => CurrencyArray.fromJsonFactory);
 
-    return _v1CurrenciesGet(xTraceId: xTraceId?.toString(), page: page);
+    return _v1CurrenciesGet(
+        xTraceId: xTraceId?.toString(), limit: limit, page: page);
   }
 
   ///List all currencies.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v1/currencies')
   Future<chopper.Response<CurrencyArray>> _v1CurrenciesGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
   });
 
@@ -4684,31 +4878,35 @@ abstract class FireflyIii extends ChopperService {
 
   ///Lists all the transaction links for an individual journal (individual split).
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the transaction journal / the split.
-  ///@param page Page number. The default pagination is 50.
   Future<chopper.Response<TransactionLinkArray>>
       v1TransactionJournalsIdLinksGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     generatedMapping.putIfAbsent(
         TransactionLinkArray, () => TransactionLinkArray.fromJsonFactory);
 
     return _v1TransactionJournalsIdLinksGet(
-        xTraceId: xTraceId?.toString(), id: id, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, id: id);
   }
 
   ///Lists all the transaction links for an individual journal (individual split).
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the transaction journal / the split.
-  ///@param page Page number. The default pagination is 50.
   @Get(path: '/v1/transaction-journals/{id}/links')
   Future<chopper.Response<TransactionLinkArray>>
       _v1TransactionJournalsIdLinksGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
   });
 
   ///Get a single transaction, based on one of the underlying transaction journals (transaction splits).
@@ -4755,69 +4953,79 @@ abstract class FireflyIii extends ChopperService {
 
   ///Lists all attachments.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the transaction.
-  ///@param page Page number. The default pagination is 50.
   Future<chopper.Response<AttachmentArray>> v1TransactionsIdAttachmentsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     generatedMapping.putIfAbsent(
         AttachmentArray, () => AttachmentArray.fromJsonFactory);
 
     return _v1TransactionsIdAttachmentsGet(
-        xTraceId: xTraceId?.toString(), id: id, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, id: id);
   }
 
   ///Lists all attachments.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the transaction.
-  ///@param page Page number. The default pagination is 50.
   @Get(path: '/v1/transactions/{id}/attachments')
   Future<chopper.Response<AttachmentArray>> _v1TransactionsIdAttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
   });
 
   ///Lists all piggy bank events.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the transaction.
-  ///@param page Page number. The default pagination is 50.
   Future<chopper.Response<PiggyBankEventArray>>
       v1TransactionsIdPiggyBankEventsGet({
     String? xTraceId,
-    required String? id,
+    int? limit,
     int? page,
+    required String? id,
   }) {
     generatedMapping.putIfAbsent(
         PiggyBankEventArray, () => PiggyBankEventArray.fromJsonFactory);
 
     return _v1TransactionsIdPiggyBankEventsGet(
-        xTraceId: xTraceId?.toString(), id: id, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, id: id);
   }
 
   ///Lists all piggy bank events.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the transaction.
-  ///@param page Page number. The default pagination is 50.
   @Get(path: '/v1/transactions/{id}/piggy-bank-events')
   Future<chopper.Response<PiggyBankEventArray>>
       _v1TransactionsIdPiggyBankEventsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Path('id') required String? id,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Path('id') required String? id,
   });
 
   ///List all the user's transactions.
   ///
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param start A date formatted YYYY-MM-DD. This is the start date of the selected range (inclusive).
   ///@param end A date formatted YYYY-MM-DD. This is the end date of the selected range (inclusive).
   ///@param type Optional filter on the transaction type(s) returned.
   Future<chopper.Response<TransactionArray>> v1TransactionsGet({
     String? xTraceId,
+    int? limit,
     int? page,
     String? start,
     String? end,
@@ -4828,6 +5036,7 @@ abstract class FireflyIii extends ChopperService {
 
     return _v1TransactionsGet(
         xTraceId: xTraceId?.toString(),
+        limit: limit,
         page: page,
         start: start,
         end: end,
@@ -4837,13 +5046,15 @@ abstract class FireflyIii extends ChopperService {
   ///List all the user's transactions.
   ///
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param start A date formatted YYYY-MM-DD. This is the start date of the selected range (inclusive).
   ///@param end A date formatted YYYY-MM-DD. This is the end date of the selected range (inclusive).
   ///@param type Optional filter on the transaction type(s) returned.
   @Get(path: '/v1/transactions')
   Future<chopper.Response<TransactionArray>> _v1TransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
     @Query('start') String? start,
     @Query('end') String? end,
@@ -4944,12 +5155,14 @@ abstract class FireflyIii extends ChopperService {
 
   ///Search for accounts
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param query The query you wish to search for.
   ///@param type The type of accounts you wish to limit the search to.
   ///@param field The account field(s) you want to search in.
   Future<chopper.Response<AccountArray>> v1SearchAccountsGet({
     String? xTraceId,
+    int? limit,
     int? page,
     required String? query,
     enums.AccountTypeFilter? type,
@@ -4960,6 +5173,7 @@ abstract class FireflyIii extends ChopperService {
 
     return _v1SearchAccountsGet(
         xTraceId: xTraceId?.toString(),
+        limit: limit,
         page: page,
         query: query,
         type: type?.value?.toString(),
@@ -4968,13 +5182,15 @@ abstract class FireflyIii extends ChopperService {
 
   ///Search for accounts
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param query The query you wish to search for.
   ///@param type The type of accounts you wish to limit the search to.
   ///@param field The account field(s) you want to search in.
   @Get(path: '/v1/search/accounts')
   Future<chopper.Response<AccountArray>> _v1SearchAccountsGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
     @Query('query') required String? query,
     @Query('type') String? type,
@@ -4983,29 +5199,33 @@ abstract class FireflyIii extends ChopperService {
 
   ///Search for transactions
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param query The query you wish to search for.
-  ///@param page Page number. The default pagination is 50
   Future<chopper.Response<TransactionArray>> v1SearchTransactionsGet({
     String? xTraceId,
-    required String? query,
+    int? limit,
     int? page,
+    required String? query,
   }) {
     generatedMapping.putIfAbsent(
         TransactionArray, () => TransactionArray.fromJsonFactory);
 
     return _v1SearchTransactionsGet(
-        xTraceId: xTraceId?.toString(), query: query, page: page);
+        xTraceId: xTraceId?.toString(), limit: limit, page: page, query: query);
   }
 
   ///Search for transactions
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param query The query you wish to search for.
-  ///@param page Page number. The default pagination is 50
   @Get(path: '/v1/search/transactions')
   Future<chopper.Response<TransactionArray>> _v1SearchTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
-    @Query('query') required String? query,
+    @Query('limit') int? limit,
     @Query('page') int? page,
+    @Query('query') required String? query,
   });
 
   ///Returns basic sums of the users data.
@@ -5174,22 +5394,27 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all users.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page The page number, if necessary. The default pagination is 50, so 50 users per page.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<UserArray>> v1UsersGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     generatedMapping.putIfAbsent(UserArray, () => UserArray.fromJsonFactory);
 
-    return _v1UsersGet(xTraceId: xTraceId?.toString(), page: page);
+    return _v1UsersGet(
+        xTraceId: xTraceId?.toString(), limit: limit, page: page);
   }
 
   ///List all users.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page The page number, if necessary. The default pagination is 50, so 50 users per page.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v1/users')
   Future<chopper.Response<UserArray>> _v1UsersGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
   });
 
@@ -5283,23 +5508,28 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all users preferences.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<PreferenceArray>> v1PreferencesGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
         PreferenceArray, () => PreferenceArray.fromJsonFactory);
 
-    return _v1PreferencesGet(xTraceId: xTraceId?.toString(), page: page);
+    return _v1PreferencesGet(
+        xTraceId: xTraceId?.toString(), limit: limit, page: page);
   }
 
   ///List all users preferences.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v1/preferences')
   Future<chopper.Response<PreferenceArray>> _v1PreferencesGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
   });
 
@@ -5453,38 +5683,43 @@ abstract class FireflyIii extends ChopperService {
 
   ///Get all the failed attempts of a single webhook message.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
-  ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<WebhookAttemptArray>>
       v1WebhooksIdMessagesMessageIdAttemptsGet({
     String? xTraceId,
+    int? limit,
+    int? page,
     required String? id,
     required int? messageId,
-    int? page,
   }) {
     generatedMapping.putIfAbsent(
         WebhookAttemptArray, () => WebhookAttemptArray.fromJsonFactory);
 
     return _v1WebhooksIdMessagesMessageIdAttemptsGet(
         xTraceId: xTraceId?.toString(),
+        limit: limit,
+        page: page,
         id: id,
-        messageId: messageId,
-        page: page);
+        messageId: messageId);
   }
 
   ///Get all the failed attempts of a single webhook message.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
-  ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v1/webhooks/{id}/messages/{messageId}/attempts')
   Future<chopper.Response<WebhookAttemptArray>>
       _v1WebhooksIdMessagesMessageIdAttemptsGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
+    @Query('page') int? page,
     @Path('id') required String? id,
     @Path('messageId') required int? messageId,
-    @Query('page') int? page,
   });
 
   ///Get a single failed attempt from a single webhook message.
@@ -5580,23 +5815,28 @@ abstract class FireflyIii extends ChopperService {
 
   ///List all webhooks.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page The page number, if necessary. The default pagination is 50, so 50 webhooks per page.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<WebhookArray>> v1WebhooksGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
         WebhookArray, () => WebhookArray.fromJsonFactory);
 
-    return _v1WebhooksGet(xTraceId: xTraceId?.toString(), page: page);
+    return _v1WebhooksGet(
+        xTraceId: xTraceId?.toString(), limit: limit, page: page);
   }
 
   ///List all webhooks.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page The page number, if necessary. The default pagination is 50, so 50 webhooks per page.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v1/webhooks')
   Future<chopper.Response<WebhookArray>> _v1WebhooksGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
   });
 
@@ -5744,6 +5984,16 @@ class $JsonSerializableConverter extends chopper.JsonConverter {
       // In rare cases, when let's say 204 (no content) is returned -
       // we cannot decode the missing json with the result type specified
       return chopper.Response(response.base, null, error: response.error);
+    }
+
+    if (ResultType == String) {
+      return response.copyWith();
+    }
+
+    if (ResultType == DateTime) {
+      return response.copyWith(
+          body: DateTime.parse((response.body as String).replaceAll('"', ''))
+              as ResultType);
     }
 
     final jsonRes = await super.convertResponse(response);

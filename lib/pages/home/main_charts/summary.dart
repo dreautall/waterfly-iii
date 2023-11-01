@@ -115,25 +115,24 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
     // Initialize table variables
     DateTime? latestDate;
     for (ChartDataSet e in respChartData.body!) {
-      if (latestDate == null ||
-          (e.endDate != null && e.endDate!.isAfter(latestDate))) {
+      if (latestDate == null || e.endDate.isAfter(latestDate)) {
         latestDate = e.endDate;
       }
       currencies.add(
         CurrencyRead(
-          id: e.currencyId ?? "0",
+          id: e.currencyId,
           type: "currencies",
-          attributes: Currency(
-            code: e.currencyCode ?? "",
+          attributes: currencyS(
+            code: e.currencyCode,
             name: "",
-            symbol: e.currencySymbol ?? "",
+            symbol: e.currencySymbol,
             decimalPlaces: e.currencyDecimalPlaces,
           ),
         ),
       );
-      final Map<String, dynamic> entries = e.entries! as Map<String, dynamic>;
+      final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
       balances.add(double.tryParse(entries.entries.last.value) ?? 0);
-      accounts.add(e.label!);
+      accounts.add(e.label);
     }
     if (latestDate == null) {
       date.value == DateTime.now().toLocal();
@@ -175,7 +174,7 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                   <ChartSeries<TimeSeriesChart, DateTime>>[];
 
               for (ChartDataSet e in snapshot.data!) {
-                if (e.label == null || e.label!.isEmpty) {
+                if (e.label.isEmpty) {
                   continue;
                 }
                 chartData.add(

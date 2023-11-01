@@ -4884,8 +4884,8 @@ Map<String, dynamic> _$ValidationErrorToJson(ValidationError instance) {
 
 Bill$PaidDates$Item _$Bill$PaidDates$ItemFromJson(Map<String, dynamic> json) =>
     Bill$PaidDates$Item(
-      transactionGroupId: json['transaction_group_id'] as String?,
-      transactionJournalId: json['transaction_journal_id'] as String?,
+      transactionGroupId: json['transaction_group_id'] as int?,
+      transactionJournalId: json['transaction_journal_id'] as int?,
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
     );

@@ -223,6 +223,20 @@
     "@generalUnknown": {
         "description": "Something is unknown."
     },
+    "homeMainBillsTitle": "Bills for the next week",
+    "@homeMainBillsTitle": {
+        "description": "Title: Bills for the next week"
+    },
+    "homeMainBillsInterval": " ({period, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-year} yearly{yearly} other{unknown}})",
+    "@homeMainBillsInterval": {
+        "description": "bill interval type",
+        "placeholders": {
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
     "homeMainBudgetInterval": " ({from} to {to}, {period})",
     "@homeMainBudgetInterval": {
         "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",

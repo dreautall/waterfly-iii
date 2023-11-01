@@ -965,7 +965,7 @@ class _TransactionPageState extends State<TransactionPage>
                           sourceName: sourceName,
                           tags: _tags[i].tags,
                           transactionJournalId:
-                              _transactionJournalIDs.elementAtOrNull(i) ?? "",
+                              _transactionJournalIDs.elementAtOrNull(i) ?? "0",
                           type: _transactionType,
                           reconciled: _reconciled,
                           currencyName: "",

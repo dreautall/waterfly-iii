@@ -1572,7 +1572,7 @@ Attachment _$AttachmentFromJson(Map<String, dynamic> json) => Attachment(
       filename: json['filename'] as String,
       downloadUrl: json['download_url'] as String,
       uploadUrl: json['upload_url'] as String,
-      title: json['title'] as String,
+      title: json['title'] as String?,
       notes: json['notes'] as String?,
       mime: json['mime'] as String,
       size: json['size'] as int,
@@ -1597,7 +1597,7 @@ Map<String, dynamic> _$AttachmentToJson(Attachment instance) {
   val['filename'] = instance.filename;
   val['download_url'] = instance.downloadUrl;
   val['upload_url'] = instance.uploadUrl;
-  val['title'] = instance.title;
+  writeNotNull('title', instance.title);
   writeNotNull('notes', instance.notes);
   val['mime'] = instance.mime;
   val['size'] = instance.size;
@@ -1704,8 +1704,12 @@ Bill _$BillFromJson(Map<String, dynamic> json) => Bill(
       amountMin: json['amount_min'] as String,
       amountMax: json['amount_max'] as String,
       date: DateTime.parse(json['date'] as String),
-      endDate: DateTime.parse(json['end_date'] as String),
-      extensionDate: DateTime.parse(json['extension_date'] as String),
+      endDate: json['end_date'] == null
+          ? null
+          : DateTime.parse(json['end_date'] as String),
+      extensionDate: json['extension_date'] == null
+          ? null
+          : DateTime.parse(json['extension_date'] as String),
       repeatFreq: billRepeatFrequencyFromJson(json['repeat_freq']),
       skip: json['skip'] as int,
       active: json['active'] as bool,
@@ -1739,8 +1743,6 @@ Map<String, dynamic> _$BillToJson(Bill instance) {
     'amount_min': instance.amountMin,
     'amount_max': instance.amountMax,
     'date': instance.date.toIso8601String(),
-    'end_date': instance.endDate.toIso8601String(),
-    'extension_date': instance.extensionDate.toIso8601String(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -1749,6 +1751,8 @@ Map<String, dynamic> _$BillToJson(Bill instance) {
     }
   }
 
+  writeNotNull('end_date', instance.endDate?.toIso8601String());
+  writeNotNull('extension_date', instance.extensionDate?.toIso8601String());
   writeNotNull('repeat_freq', billRepeatFrequencyToJson(instance.repeatFreq));
   val['skip'] = instance.skip;
   val['active'] = instance.active;
@@ -2338,22 +2342,31 @@ PiggyBankEvent _$PiggyBankEventFromJson(Map<String, dynamic> json) =>
       currencySymbol: json['currency_symbol'] as String,
       currencyDecimalPlaces: json['currency_decimal_places'] as int,
       amount: json['amount'] as String,
-      transactionJournalId: json['transaction_journal_id'] as String,
-      transactionGroupId: json['transaction_group_id'] as String,
+      transactionJournalId: json['transaction_journal_id'] as String?,
+      transactionGroupId: json['transaction_group_id'] as String?,
     );
 
-Map<String, dynamic> _$PiggyBankEventToJson(PiggyBankEvent instance) =>
-    <String, dynamic>{
-      'created_at': instance.createdAt.toIso8601String(),
-      'updated_at': instance.updatedAt.toIso8601String(),
-      'currency_id': instance.currencyId,
-      'currency_code': instance.currencyCode,
-      'currency_symbol': instance.currencySymbol,
-      'currency_decimal_places': instance.currencyDecimalPlaces,
-      'amount': instance.amount,
-      'transaction_journal_id': instance.transactionJournalId,
-      'transaction_group_id': instance.transactionGroupId,
-    };
+Map<String, dynamic> _$PiggyBankEventToJson(PiggyBankEvent instance) {
+  final val = <String, dynamic>{
+    'created_at': instance.createdAt.toIso8601String(),
+    'updated_at': instance.updatedAt.toIso8601String(),
+    'currency_id': instance.currencyId,
+    'currency_code': instance.currencyCode,
+    'currency_symbol': instance.currencySymbol,
+    'currency_decimal_places': instance.currencyDecimalPlaces,
+    'amount': instance.amount,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('transaction_journal_id', instance.transactionJournalId);
+  writeNotNull('transaction_group_id', instance.transactionGroupId);
+  return val;
+}
 
 Preference _$PreferenceFromJson(Map<String, dynamic> json) => Preference(
       createdAt: DateTime.parse(json['created_at'] as String),
@@ -4233,7 +4246,7 @@ TransactionSplit _$TransactionSplitFromJson(Map<String, dynamic> json) =>
       externalId: json['external_id'] as String?,
       externalUrl: json['external_url'] as String?,
       originalSource: json['original_source'] as String?,
-      recurrenceId: json['recurrence_id'] as int?,
+      recurrenceId: json['recurrence_id'] as String?,
       recurrenceTotal: json['recurrence_total'] as int?,
       recurrenceCount: json['recurrence_count'] as int?,
       bunqPaymentId: json['bunq_payment_id'] as String?,

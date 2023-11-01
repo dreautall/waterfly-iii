@@ -15796,6 +15796,7 @@ components:
           type: string
           format: string
           example: "Some PDF file"
+          nullable: true
         notes:
           type: string
           format: string
@@ -15975,11 +15976,13 @@ components:
           format: date-time
           example: "2018-09-17T12:46:47+01:00"
           description: "The date after which this bill is no longer valid or applicable"
+          nullable: true
         extension_date:
           type: string
           format: date-time
           example: "2018-09-17T12:46:47+01:00"
           description: "The date before which the bill must be renewed (or cancelled)"
+          nullable: true
         repeat_freq:
           $ref: '#/components/schemas/BillRepeatFrequency'
         skip:
@@ -16934,11 +16937,13 @@ components:
           format: string
           example: "4291"
           description: The journal associated with the event.
+          nullable: true
         transaction_group_id:
           type: string
           format: string
           example: "4291"
           description: The transaction group associated with the event.
+          nullable: true
     Preference:
       type: object
       required:
@@ -19932,9 +19937,9 @@ components:
           description: System generated identifier for original creator of transaction.
           readOnly: true
         recurrence_id:
-          type: integer
+          type: string
           nullable: true
-          format: int32
+          format: string
           description: Reference to recurrence that made the transaction.
           readOnly: true
         recurrence_total:

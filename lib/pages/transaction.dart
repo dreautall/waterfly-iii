@@ -692,7 +692,7 @@ class _TransactionPageState extends State<TransactionPage>
     setState(() {
       // As firefly doesn't allow editing accounts or sums when reconciled,
       // deactivate reconciled.
-      _reconciled = false;
+      _initiallyReconciled = false;
       _split = (_localAmounts.length > 1);
     });
   }
@@ -750,7 +750,7 @@ class _TransactionPageState extends State<TransactionPage>
     setState(() {
       // As firefly doesn't allow editing accounts or sums when reconciled,
       // deactivate reconciled.
-      _reconciled = false;
+      _initiallyReconciled = false;
       _split = (_localAmounts.length > 1);
     });
 

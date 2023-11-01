@@ -456,7 +456,7 @@ class _HomeMainState extends State<HomeMain>
         );
       }
     }
-    debugPrint(end.toIso8601String());
+
     return respBills.body!.data
         .where((BillRead e) => (e.attributes.nextExpectedMatch ??
                 DateTime.fromMicrosecondsSinceEpoch(0))
@@ -1086,7 +1086,7 @@ class _HomeMainState extends State<HomeMain>
                         Padding(
                           padding: const EdgeInsets.all(12),
                           child: Text(
-                            "Bills for the next week",
+                            S.of(context).homeMainBillsTitle,
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ),
@@ -1279,8 +1279,6 @@ class BillList extends StatelessWidget {
               final DateTime nextMatch =
                   bill.attributes.nextExpectedMatch?.toLocal() ??
                       DateTime.now();
-              debugPrint(nextMatch.toIso8601String());
-              debugPrint(bill.attributes.nextExpectedMatchDiff);
               final CurrencyRead currency = CurrencyRead(
                 id: bill.attributes.currencyId ?? "0",
                 type: "currencies",
@@ -1297,11 +1295,9 @@ class BillList extends StatelessWidget {
                   widgets.add(const SizedBox(height: 8));
                 }
                 widgets.add(
-                  RichText(
-                    text: TextSpan(
-                      text: DateFormat.yMd().format(nextMatch),
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
+                  Text(
+                    DateFormat.yMd().format(nextMatch),
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 );
                 lastDate = nextMatch;
@@ -1310,9 +1306,21 @@ class BillList extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      bill.attributes.name,
-                      style: Theme.of(context).textTheme.titleSmall,
+                    RichText(
+                      text: TextSpan(
+                        children: <InlineSpan>[
+                          TextSpan(
+                            text: bill.attributes.name,
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                          TextSpan(
+                            text: S.of(context).homeMainBillsInterval(
+                                  bill.attributes.repeatFreq.value ?? "",
+                                ),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ],
+                      ),
                     ),
                     Text(
                       currency.fmt(bill.attributes.avgAmount()),

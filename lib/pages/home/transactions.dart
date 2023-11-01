@@ -457,6 +457,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   );
                   _rowsWithDate = <int>[];
                   _lastDate = null;
+                  if (context.mounted) {
+                    context.read<FireflyService>().transStock!.clear();
+                  }
                   _pagingController.refresh();
                 },
                 child: Row(

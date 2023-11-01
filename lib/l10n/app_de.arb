@@ -223,6 +223,20 @@
     "@generalUnknown": {
         "description": "Something is unknown."
     },
+    "homeMainBillsTitle": "Rechnungen in der nächsten Woche",
+    "@homeMainBillsTitle": {
+        "description": "Title: Bills for the next week"
+    },
+    "homeMainBillsInterval": " ({period, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}})",
+    "@homeMainBillsInterval": {
+        "description": "bill interval type",
+        "placeholders": {
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
     "homeMainBudgetInterval": " ({from} bis {to}, {period})",
     "@homeMainBudgetInterval": {
         "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
@@ -601,6 +615,10 @@
     "settingsNLPermissionRemoveHelp": "Um den Dienst zu deaktivieren, klicke auf die App und entferne die Berechtigungen im nächsten Bildschirm.",
     "@settingsNLPermissionRemoveHelp": {
         "description": "Dialog text giving hint how to remove the permission."
+    },
+    "settingsNLPrefillTXTitle": "Transaktionstitel mit Benachrichtigungstitel befüllen",
+    "@settingsNLPrefillTXTitle": {
+        "description": "First line for setting to use pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "Status wird geprüft…",
     "@settingsNLServiceChecking": {

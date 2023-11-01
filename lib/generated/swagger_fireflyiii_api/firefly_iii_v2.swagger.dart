@@ -10,6 +10,7 @@ import 'package:chopper/chopper.dart';
 import 'client_mapping.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;
 import 'firefly_iii_v2.enums.swagger.dart' as enums;
 export 'firefly_iii_v2.enums.swagger.dart';
@@ -114,16 +115,16 @@ abstract class FireflyIiiV2 extends ChopperService {
   ///List all transactions related to the account.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param page Page number. The default pagination is per 50 items.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param id The ID of the account.
-  ///@param limit Limits the number of results on one page.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param type Optional filter on the transaction type(s) returned.
   Future<chopper.Response<TransactionArray>> v2AccountsIdTransactionsGet({
     String? xTraceId,
     int? page,
-    required String? id,
     int? limit,
+    required String? id,
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
@@ -134,8 +135,8 @@ abstract class FireflyIiiV2 extends ChopperService {
     return _v2AccountsIdTransactionsGet(
         xTraceId: xTraceId?.toString(),
         page: page,
-        id: id,
         limit: limit,
+        id: id,
         start: start,
         end: end,
         type: type?.value?.toString());
@@ -144,8 +145,8 @@ abstract class FireflyIiiV2 extends ChopperService {
   ///List all transactions related to the account.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param page Page number. The default pagination is per 50 items.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param id The ID of the account.
-  ///@param limit Limits the number of results on one page.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param type Optional filter on the transaction type(s) returned.
@@ -153,8 +154,8 @@ abstract class FireflyIiiV2 extends ChopperService {
   Future<chopper.Response<TransactionArray>> _v2AccountsIdTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('page') int? page,
-    @Path('id') required String? id,
     @Query('limit') int? limit,
+    @Path('id') required String? id,
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
@@ -216,23 +217,28 @@ abstract class FireflyIiiV2 extends ChopperService {
 
   ///List all budgets.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   Future<chopper.Response<BudgetV2Array>> v2BudgetsGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     generatedMapping.putIfAbsent(
         BudgetV2Array, () => BudgetV2Array.fromJsonFactory);
 
-    return _v2BudgetsGet(xTraceId: xTraceId?.toString(), page: page);
+    return _v2BudgetsGet(
+        xTraceId: xTraceId?.toString(), limit: limit, page: page);
   }
 
   ///List all budgets.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param page Page number. The default pagination is 50.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   @Get(path: '/v2/budgets')
   Future<chopper.Response<BudgetV2Array>> _v2BudgetsGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
     @Query('page') int? page,
   });
 
@@ -271,38 +277,30 @@ abstract class FireflyIiiV2 extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the budget.
   Future<chopper.Response<TransactionSumArray>> v2BudgetsIdBudgetedGet({
     String? xTraceId,
     required String? start,
     required String? end,
-    int? page,
     required String? id,
   }) {
     generatedMapping.putIfAbsent(
         TransactionSum, () => TransactionSum.fromJsonFactory);
 
     return _v2BudgetsIdBudgetedGet(
-        xTraceId: xTraceId?.toString(),
-        start: start,
-        end: end,
-        page: page,
-        id: id);
+        xTraceId: xTraceId?.toString(), start: start, end: end, id: id);
   }
 
   ///Returns the budgeted amount for the given budget in the given period.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the budget.
   @Get(path: '/v2/budgets/{id}/budgeted')
   Future<chopper.Response<TransactionSumArray>> _v2BudgetsIdBudgetedGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
-    @Query('page') int? page,
     @Path('id') required String? id,
   });
 
@@ -310,38 +308,30 @@ abstract class FireflyIiiV2 extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the budget.
   Future<chopper.Response<TransactionSumArray>> v2BudgetsIdSpentGet({
     String? xTraceId,
     required String? start,
     required String? end,
-    int? page,
     required String? id,
   }) {
     generatedMapping.putIfAbsent(
         TransactionSum, () => TransactionSum.fromJsonFactory);
 
     return _v2BudgetsIdSpentGet(
-        xTraceId: xTraceId?.toString(),
-        start: start,
-        end: end,
-        page: page,
-        id: id);
+        xTraceId: xTraceId?.toString(), start: start, end: end, id: id);
   }
 
   ///Returns the spent amount for the given budget in the given period.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the budget.
   @Get(path: '/v2/budgets/{id}/spent')
   Future<chopper.Response<TransactionSumArray>> _v2BudgetsIdSpentGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
-    @Query('page') int? page,
     @Path('id') required String? id,
   });
 
@@ -349,38 +339,30 @@ abstract class FireflyIiiV2 extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the budget.
   Future<chopper.Response<TransactionSumArray>> v2BudgetsSumBudgetedGet({
     String? xTraceId,
     required String? start,
     required String? end,
-    int? page,
     required String? id,
   }) {
     generatedMapping.putIfAbsent(
         TransactionSum, () => TransactionSum.fromJsonFactory);
 
     return _v2BudgetsSumBudgetedGet(
-        xTraceId: xTraceId?.toString(),
-        start: start,
-        end: end,
-        page: page,
-        id: id);
+        xTraceId: xTraceId?.toString(), start: start, end: end, id: id);
   }
 
   ///Returns the budgeted amount for all budgets in the given period.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the budget.
   @Get(path: '/v2/budgets/sum/budgeted')
   Future<chopper.Response<TransactionSumArray>> _v2BudgetsSumBudgetedGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
-    @Query('page') int? page,
     @Path('id') required String? id,
   });
 
@@ -388,38 +370,30 @@ abstract class FireflyIiiV2 extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the budget.
   Future<chopper.Response<TransactionSumArray>> v2BudgetsSumSpentGet({
     String? xTraceId,
     required String? start,
     required String? end,
-    int? page,
     required String? id,
   }) {
     generatedMapping.putIfAbsent(
         TransactionSum, () => TransactionSum.fromJsonFactory);
 
     return _v2BudgetsSumSpentGet(
-        xTraceId: xTraceId?.toString(),
-        start: start,
-        end: end,
-        page: page,
-        id: id);
+        xTraceId: xTraceId?.toString(), start: start, end: end, id: id);
   }
 
   ///Returns the spent amount for all budgets in the given period.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the budget.
   @Get(path: '/v2/budgets/sum/spent')
   Future<chopper.Response<TransactionSumArray>> _v2BudgetsSumSpentGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
-    @Query('page') int? page,
     @Path('id') required String? id,
   });
 
@@ -520,6 +494,16 @@ class $JsonSerializableConverter extends chopper.JsonConverter {
       // In rare cases, when let's say 204 (no content) is returned -
       // we cannot decode the missing json with the result type specified
       return chopper.Response(response.base, null, error: response.error);
+    }
+
+    if (ResultType == String) {
+      return response.copyWith();
+    }
+
+    if (ResultType == DateTime) {
+      return response.copyWith(
+          body: DateTime.parse((response.body as String).replaceAll('"', ''))
+              as ResultType);
     }
 
     final jsonRes = await super.convertResponse(response);

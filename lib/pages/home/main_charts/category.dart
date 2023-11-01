@@ -20,13 +20,13 @@ class CategoryChart extends StatelessWidget {
     List<LabelAmountChart> chartData = <LabelAmountChart>[];
 
     for (InsightGroupEntry e in data) {
-      if ((e.name?.isEmpty ?? true) || e.differenceFloat == 0) {
+      if (e.name.isEmpty || e.differenceFloat == 0) {
         continue;
       }
       chartData.add(
         LabelAmountChart(
-          e.name!,
-          e.differenceFloat ?? 0,
+          e.name,
+          e.differenceFloat,
         ),
       );
     }

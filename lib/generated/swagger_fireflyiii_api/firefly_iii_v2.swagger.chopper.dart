@@ -72,8 +72,8 @@ final class _$FireflyIiiV2 extends FireflyIiiV2 {
   Future<Response<TransactionArray>> _v2AccountsIdTransactionsGet({
     String? xTraceId,
     int? page,
-    required String? id,
     int? limit,
+    required String? id,
     String? start,
     String? end,
     String? type,
@@ -150,10 +150,14 @@ final class _$FireflyIiiV2 extends FireflyIiiV2 {
   @override
   Future<Response<BudgetV2Array>> _v2BudgetsGet({
     String? xTraceId,
+    int? limit,
     int? page,
   }) {
     final Uri $url = Uri.parse('/v2/budgets');
-    final Map<String, dynamic> $params = <String, dynamic>{'page': page};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -197,14 +201,12 @@ final class _$FireflyIiiV2 extends FireflyIiiV2 {
     String? xTraceId,
     required String? start,
     required String? end,
-    int? page,
     required String? id,
   }) {
     final Uri $url = Uri.parse('/v2/budgets/${id}/budgeted');
     final Map<String, dynamic> $params = <String, dynamic>{
       'start': start,
       'end': end,
-      'page': page,
     };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
@@ -224,14 +226,12 @@ final class _$FireflyIiiV2 extends FireflyIiiV2 {
     String? xTraceId,
     required String? start,
     required String? end,
-    int? page,
     required String? id,
   }) {
     final Uri $url = Uri.parse('/v2/budgets/${id}/spent');
     final Map<String, dynamic> $params = <String, dynamic>{
       'start': start,
       'end': end,
-      'page': page,
     };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
@@ -251,14 +251,12 @@ final class _$FireflyIiiV2 extends FireflyIiiV2 {
     String? xTraceId,
     required String? start,
     required String? end,
-    int? page,
     required String? id,
   }) {
     final Uri $url = Uri.parse('/v2/budgets/sum/budgeted');
     final Map<String, dynamic> $params = <String, dynamic>{
       'start': start,
       'end': end,
-      'page': page,
     };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
@@ -278,14 +276,12 @@ final class _$FireflyIiiV2 extends FireflyIiiV2 {
     String? xTraceId,
     required String? start,
     required String? end,
-    int? page,
     required String? id,
   }) {
     final Uri $url = Uri.parse('/v2/budgets/sum/spent');
     final Map<String, dynamic> $params = <String, dynamic>{
       'start': start,
       'end': end,
-      'page': page,
     };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,

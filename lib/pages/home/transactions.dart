@@ -189,8 +189,13 @@ class _HomeTransactionsState extends State<HomeTransactions>
           transactionList.add(TransactionRead(
             type: "WF3_DUMMY_SPACING_ELEMENT",
             id: "WF3_DUMMY_SPACING_ELEMENT",
-            attributes: Transaction(transactions: <TransactionSplit>[]),
-            links: ObjectLink(),
+            attributes: Transaction(
+              transactions: <TransactionSplit>[],
+              createdAt: DateTime.now(),
+              updatedAt: DateTime.now(),
+              user: "",
+            ),
+            links: const ObjectLink(self: ""),
           ));
           _pagingController.appendLastPage(transactionList);
         } else {
@@ -268,7 +273,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
         }
         notes += trans.notes!.trim();
       }
-      if (trans.hasAttachments ?? false) {
+      if (trans.hasAttachments) {
         hasAttachments = true;
       }
       amount += double.parse(trans.amount);
@@ -282,11 +287,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
           foreignCurrencies[foreignSymbol] = CurrencyRead(
             id: trans.foreignCurrencyId ?? "0",
             type: "currencies",
-            attributes: Currency(
+            attributes: currencyS(
               code: trans.foreignCurrencyCode ?? "",
               name: "",
               symbol: trans.foreignCurrencySymbol ?? "",
-              decimalPlaces: trans.foreignCurrencyDecimalPlaces,
+              decimalPlaces: trans.foreignCurrencyDecimalPlaces ?? 2,
             ),
           );
         }
@@ -362,14 +367,14 @@ class _HomeTransactionsState extends State<HomeTransactions>
       );
     }
 
-    reconciled = transactions.first.reconciled ?? false;
+    reconciled = transactions.first.reconciled;
     final CurrencyRead currency = CurrencyRead(
       id: transactions.first.currencyId ?? "0",
       type: "currencies",
-      attributes: Currency(
+      attributes: currencyS(
         code: transactions.first.currencyCode ?? "",
-        name: transactions.first.currencyName ?? "",
-        symbol: transactions.first.currencySymbol ?? "",
+        name: transactions.first.currencyName,
+        symbol: transactions.first.currencySymbol,
         decimalPlaces: transactions.first.currencyDecimalPlaces,
       ),
     );

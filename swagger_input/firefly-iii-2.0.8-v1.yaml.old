@@ -3,12 +3,12 @@ servers:
   - description: Firefly III demo site
     url: https://demo.firefly-iii.org/api
 info:
-  title: Firefly III API v2.0.10
+  title: Firefly III API v2.0.8
   description: |
-    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2023-10-15T12:13:25+00:00
+    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2023-09-16T02:55:22+00:00
 
     Please keep in mind that the demo site does not accept requests from curl, colly, wget, etc. You must use a browser or a tool like Postman to make requests. Too many script kiddies out there, sorry about that.
-  version: "2.0.10"
+  version: "2.0.8"
   contact:
     name: James Cole
     email: james@firefly-iii.org
@@ -3737,24 +3737,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -3762,6 +3744,20 @@ paths:
             type: string
             example: "123"
           description: The ID of the account.
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          description: Limits the number of results on one page.
+          required: false
+          schema:
+            type: integer
+            example: 5
         - in: query
           name: start
           description: |
@@ -3832,24 +3828,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -3857,6 +3835,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the account.
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         401:
           description: Unauthenticated
@@ -3904,24 +3889,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -3929,6 +3896,12 @@ paths:
             type: string
             example: "123"
           description: The ID of the account.
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
       responses:
         401:
           description: Unauthenticated
@@ -3977,15 +3950,6 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
           description: Page number. The default pagination is per 50 items.
           required: false
@@ -3993,7 +3957,6 @@ paths:
             type: integer
             format: int32
             example: 1
-  
         - in: query
           name: date
           description: |
@@ -4297,23 +4260,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
       responses:
         401:
           description: Unauthenticated
@@ -4713,23 +4665,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
         - in: query
           name: start
           description: |
@@ -4847,24 +4788,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -4872,6 +4795,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the bill.
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         401:
           description: Unauthenticated
@@ -5049,23 +4979,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
         - in: query
           name: start
           description: |
@@ -5378,24 +5297,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -5410,6 +5311,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the budget limit. The budget limit MUST be associated to the budget ID.
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
         - in: query
           name: type
           description: Optional filter on the transaction type(s) returned
@@ -5857,24 +5765,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -5882,6 +5772,20 @@ paths:
             type: string
             example: "123"
           description: The ID of the budget.
+        - in: query
+          name: limit
+          description: Limits the number of results on one page.
+          required: false
+          schema:
+            type: integer
+            example: 5
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
         - in: query
           name: start
           description: |
@@ -5952,24 +5856,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -5977,6 +5863,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the budget.
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         200:
           description: A list of attachments
@@ -6024,23 +5917,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
         - in: query
           name: start
           description: |
@@ -6353,24 +6235,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -6378,6 +6242,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the category.
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
         - in: query
           name: start
           description: |
@@ -6448,24 +6319,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -6473,7 +6326,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the category.
-  
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         200:
           description: A list of attachments
@@ -6521,23 +6380,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
       responses:
         200:
           description: A list of categories.
@@ -6833,24 +6681,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -6858,6 +6688,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the link type.
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
+            example: 1
         - in: query
           name: start
           description: |
@@ -6930,23 +6767,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50 items.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
       responses:
         200:
           description: A list of link types.
@@ -7228,23 +7054,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
           description: Page number. The default pagination is per 50 items.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
       responses:
         200:
           description: A list of transaction links
@@ -7525,24 +7340,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -7550,7 +7347,12 @@ paths:
             type: string
             example: "123"
           description: The ID of the account.
-  
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
       responses:
         200:
           description: A list of piggy banks
@@ -7597,24 +7399,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -7622,6 +7406,12 @@ paths:
             type: string
             example: "123"
           description: The ID of the account.
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
       responses:
         200:
           description: A list of bills.
@@ -7669,23 +7459,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
       responses:
         200:
           description: A list of object groups
@@ -7901,24 +7680,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -7926,7 +7687,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the piggy bank
-  
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         200:
           description: A list of piggy bank related events
@@ -7973,24 +7740,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -7998,7 +7747,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the piggy bank.
-  
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         200:
           description: A list of attachments
@@ -8046,24 +7801,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
-  
       responses:
         200:
           description: A list of piggy banks
@@ -8340,24 +8083,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -8365,7 +8090,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the recurring transaction.
-  
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
         - in: query
           name: start
           description: |
@@ -8437,23 +8168,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
       responses:
         200:
           description: A list of recurring transactions.
@@ -8730,24 +8450,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -8755,7 +8457,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the rule group.
-  
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         200:
           description: A list of rules.
@@ -8802,24 +8510,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -8827,6 +8517,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the rule group.
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50 items.
+          required: false
+          schema:
+            type: integer
+            example: 1
         - in: query
           name: start
           description: |
@@ -8997,23 +8694,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
       responses:
         200:
           description: A list of rule groups.
@@ -9453,23 +9139,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
       responses:
         200:
           description: A list of rules
@@ -9746,24 +9421,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: tag
           description: Either the tag itself or the tag ID.
@@ -9772,7 +9429,13 @@ paths:
             type: string
             format: string
             example: groceries
-  
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         200:
           description: A list of attachments
@@ -9819,24 +9482,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: tag
           description: Either the tag itself or the tag ID.
@@ -9845,6 +9490,13 @@ paths:
             type: string
             format: string
             example: groceries
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
         - in: query
           name: start
           description: |
@@ -9916,24 +9568,11 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number
           required: false
           schema:
             type: integer
-            format: int32
-            example: 1
-  
-  
       responses:
         200:
           description: A list of tags
@@ -10039,24 +9678,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: tag
           description: Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
@@ -10065,6 +9686,12 @@ paths:
             type: string
             format: string
             example: groceries
+        - in: query
+          name: page
+          description: Page number
+          required: false
+          schema:
+            type: integer
       tags:
         - tags
       responses:
@@ -10231,24 +9858,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: code
           required: true
@@ -10257,6 +9866,13 @@ paths:
             format: string
             example: USD
           description: The currency code.
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
         - in: query
           name: date
           description: |
@@ -10317,24 +9933,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: code
           required: true
@@ -10343,7 +9941,13 @@ paths:
             format: string
             example: EUR
           description: The currency code.
-  
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         200:
           description: A list of available budgets
@@ -10390,24 +9994,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: code
           required: true
@@ -10416,7 +10002,13 @@ paths:
             format: string
             example: USD
           description: The currency code.
-  
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         200:
           description: A list of bills.
@@ -10463,24 +10055,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: code
           required: true
@@ -10489,6 +10063,13 @@ paths:
             format: string
             example: USD
           description: The currency code.
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
         - in: query
           name: start
           description: Start date for the budget limit list.
@@ -10551,24 +10132,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: code
           required: true
@@ -10577,6 +10140,13 @@ paths:
             format: string
             example: EUR
           description: The currency code.
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         200:
           description: A list of recurring transactions
@@ -10623,24 +10193,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: code
           required: true
@@ -10649,6 +10201,13 @@ paths:
             format: string
             example: USD
           description: The currency code.
+        - in: query
+          name: page
+          description: Page number. The default pagination per 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         200:
           description: A list of rules
@@ -10695,24 +10254,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: code
           required: true
@@ -10721,6 +10262,13 @@ paths:
             format: string
             example: USD
           description: The currency code.
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
         - in: query
           name: start
           description: |
@@ -10792,23 +10340,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
       responses:
         200:
           description: A list of currencies.
@@ -11297,24 +10834,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -11322,7 +10841,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the transaction journal / the split.
-  
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         200:
           description: A list of transaction links.
@@ -11470,24 +10995,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -11495,7 +11002,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the transaction.
-  
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         200:
           description: A list of attachments
@@ -11542,24 +11055,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -11567,7 +11062,13 @@ paths:
             type: string
             example: "123"
           description: The ID of the transaction.
-  
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50.
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         200:
           description: A list of piggy bank events.
@@ -11616,23 +11117,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
         - in: query
           name: start
           description: |
@@ -11934,23 +11424,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
         - in: query
           name: query
           description: The query you wish to search for.
@@ -12020,31 +11499,19 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
-        - in: query
           name: query
           description: The query you wish to search for.
           required: true
           schema:
             type: string
             example: "groceries"
-  
+        - in: query
+          name: page
+          description: Page number. The default pagination is 50
+          required: false
+          schema:
+            type: integer
+            example: 1
       responses:
         200:
           description: A list of transactions.
@@ -12502,23 +11969,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: The page number, if necessary. The default pagination is 50, so 50 users per page.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
       responses:
         200:
           description: A list of users.
@@ -12797,23 +12253,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: Page number. The default pagination is 50.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
       responses:
         200:
           description: A list of preferences.
@@ -13210,24 +12655,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
-          name: page
-          description: Page number. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 1
-  
         - in: path
           name: id
           required: true
@@ -13242,7 +12669,14 @@ paths:
             type: integer
             example: 1
           description: The webhook message ID.
-  
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
+            format: int32
+            example: 1
       tags:
         - webhooks
       responses:
@@ -13452,23 +12886,12 @@ paths:
             type: string
             format: uuid
         - in: query
-          name: limit
-          description: Number of items per page. The default pagination is per 50 items.
-          required: false
-          schema:
-            type: integer
-            format: int32
-            example: 10
-  
-        - in: query
           name: page
-          description: Page number. The default pagination is per 50 items.
+          description: The page number, if necessary. The default pagination is 50, so 50 webhooks per page.
           required: false
           schema:
             type: integer
-            format: int32
             example: 1
-  
       responses:
         200:
           description: A list of webhooks.
@@ -14639,8 +14062,6 @@ components:
         - id
     ConfigValueFilter:
       type: string
-      example: "configuration.is_demo_site"
-      description: "Title of the configuration value."
       enum:
         - configuration.is_demo_site
         - configuration.permission_update_check
@@ -15840,6 +15261,7 @@ components:
           nullable: true
     AttachmentUpdate:
       type: object
+      required: []
       properties:
         filename:
           type: string
@@ -15915,6 +15337,68 @@ components:
           items:
             $ref: '#/components/schemas/BudgetSpent'
           readOnly: true
+    AvailableBudgetStore:
+      type: object
+      required:
+        - amount
+        - start
+        - end
+      properties:
+        currency_id:
+          type: string
+          format: string
+          example: "5"
+          description: Use either currency_id or currency_code.
+        currency_code:
+          type: string
+          format: string
+          example: EUR
+          description: Use either currency_id or currency_code.
+        amount:
+          type: string
+          format: amount
+          example: "123.45"
+        start:
+          type: string
+          format: date
+          example: "2017-09-17"
+          description: Start date of the available budget.
+        end:
+          type: string
+          format: date
+          example: "2017-09-17"
+          description: End date of the available budget.
+    AvailableBudgetUpdate:
+      type: object
+      required:
+        - amount
+        - start
+        - end
+      properties:
+        currency_id:
+          type: string
+          format: string
+          example: "5"
+          description: Use either currency_id or currency_code.
+        currency_code:
+          type: string
+          format: string
+          example: EUR
+          description: Use either currency_id or currency_code.
+        amount:
+          type: string
+          format: amount
+          example: "123.45"
+        start:
+          type: string
+          format: date
+          example: "2017-09-17"
+          description: Start date of the available budget.
+        end:
+          type: string
+          format: date
+          example: "2017-09-17"
+          description: End date of the available budget.
     Bill:
       type: object
       required:
@@ -16053,14 +15537,14 @@ components:
             readOnly: true
             properties:
               transaction_group_id:
-                type: string
-                format: string
+                type: int
+                format: int
                 example: "123"
                 description: "Transaction group ID of the paid bill."
                 readOnly: true
               transaction_journal_id:
-                type: string
-                format: string
+                type: int
+                format: int
                 example: "123"
                 description: "Transaction journal ID of the paid bill."
                 readOnly: true
@@ -16541,6 +16025,20 @@ components:
           readOnly: true
           items:
             $ref: '#/components/schemas/CategoryEarned'
+    CategoryStore:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          format: string
+          example: "Lunch"
+        notes:
+          type: string
+          format: string
+          nullable: true
+          example: "Some example notes"
     CategoryUpdate:
       type: object
       required:
@@ -16961,6 +16459,8 @@ components:
           example: currencyPreference
         data:
           $ref: '#/components/schemas/PolymorphicProperty'
+          example: "EUR"
+          description: "The actual preference content."
     PreferenceUpdate:
       type: object
       required:
@@ -16968,6 +16468,8 @@ components:
       properties:
         data:
           $ref: '#/components/schemas/PolymorphicProperty'
+          example: "EUR"
+          description: "The actual preference content."
     Recurrence:
       type: object
       properties:
@@ -17102,6 +16604,7 @@ components:
             $ref: '#/components/schemas/RecurrenceTransactionStore'
     RecurrenceUpdate:
       type: object
+      required: []
       properties:
         title:
           type: string
@@ -17251,6 +16754,7 @@ components:
             4. Skip to the next Monday.
     RecurrenceRepetitionUpdate:
       type: object
+      required: []
       properties:
         type:
           $ref: '#/components/schemas/RecurrenceRepetitionType'
@@ -17536,6 +17040,7 @@ components:
         id:
           type: string
           format: string
+          required: true
           example: "ID of the recurring transaction. Not to be confused with the ID of the recurrence itself. Is marked as REQUIRED but can be skipped when there is only ONE transaction."
         description:
           type: string
@@ -17738,6 +17243,7 @@ components:
             $ref: '#/components/schemas/RuleActionStore'
     RuleUpdate:
       type: object
+      required: []
       properties:
         title:
           type: string
@@ -17862,6 +17368,7 @@ components:
           description: When true, other actions will not be fired after this action has fired. Defaults to false.
     RuleActionUpdate:
       type: object
+      required: []
       properties:
         type:
           $ref: '#/components/schemas/RuleActionKeyword'
@@ -17943,6 +17450,7 @@ components:
           example: true
     RuleGroupUpdate:
       type: object
+      required: []
       properties:
         title:
           type: string
@@ -18039,6 +17547,7 @@ components:
           description: When true, other triggers will not be checked if this trigger was triggered. Defaults to false.
     RuleTriggerUpdate:
       type: object
+      required: []
       properties:
         type:
           $ref: '#/components/schemas/RuleTriggerKeyword'
@@ -18155,6 +17664,7 @@ components:
     TagModelUpdate:
       title: A single tag
       type: object
+      required: []
       properties:
         tag:
           type: string
@@ -18272,6 +17782,7 @@ components:
           description: Supports 0-16 decimals.
     CurrencyUpdate:
       type: object
+      required: []
       properties:
         enabled:
           type: boolean
@@ -18338,6 +17849,7 @@ components:
             $ref: '#/components/schemas/TransactionSplitStore'
     TransactionUpdate:
       type: object
+      required: []
       properties:
         apply_rules:
           type: boolean
@@ -18442,6 +17954,7 @@ components:
           description: Optional. Some notes.
     TransactionLinkUpdate:
       type: object
+      required: []
       properties:
         link_type_id:
           type: string
@@ -18495,7 +18008,27 @@ components:
           format: boolean
           example: false
           readOnly: true
+    LinkTypeStore:
+      type: object
+      required:
+        - name
+        - inward
+        - outward
+      properties:
+        name:
+          type: string
+          format: string
+          example: "Paid"
+        inward:
+          type: string
+          format: string
+          example: "is (partially) paid for by"
+        outward:
+          type: string
+          format: string
+          example: "(partially) pays for"
     LinkTypeUpdate:
+      required: []
       type: object
       properties:
         name:
@@ -18748,6 +18281,7 @@ components:
           nullable: true
     TransactionSplitUpdate:
       type: object
+      required: []
       properties:
         transaction_journal_id:
           type: string
@@ -19124,6 +18658,7 @@ components:
     WebhookUpdate:
       title: A single webhook
       type: object
+      required: []
       properties:
         active:
           type: boolean
@@ -19380,11 +18915,13 @@ components:
       enum:
         - "store-journal"
         - "update-journal"
+    StringArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/StringArrayItem'
     StringArrayItem:
       type: string
       format: string
-      example: "EUR"
-      description: "The actual preference content."
     UserBlockedCodeProperty:
       type: string
       format: string
@@ -19495,9 +19032,13 @@ components:
         - editable
       properties:
         title:
+          example: "configuration.is_demo_site"
+          description: "Title of the configuration value."
           $ref: '#/components/schemas/ConfigValueFilter'
         value:
           $ref: '#/components/schemas/PolymorphicProperty'
+          example: "some-variable"
+          description: "Content of the configuration variable. Is very dynamic and can be anything from booleans to arrays."
         editable:
           type: boolean
           format: boolean
@@ -19511,6 +19052,8 @@ components:
       properties:
         value:
           $ref: '#/components/schemas/PolymorphicProperty'
+          example: "Some-new-config var"
+          description: Can be a number, a string, boolean or object. This depends on the actual configuration value.
     CronResult:
       type: object
       properties:
@@ -19932,9 +19475,9 @@ components:
           description: System generated identifier for original creator of transaction.
           readOnly: true
         recurrence_id:
-          type: integer
+          type: string
           nullable: true
-          format: int32
+          format: string
           description: Reference to recurrence that made the transaction.
           readOnly: true
         recurrence_total:
@@ -20309,5 +19852,3 @@ components:
       scheme: bearer
 security:
   - firefly_iii_auth: []
-  - local_bearer_auth: []
-    

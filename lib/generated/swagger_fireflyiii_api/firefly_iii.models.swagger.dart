@@ -4753,7 +4753,7 @@ class Attachment {
     required this.filename,
     required this.downloadUrl,
     required this.uploadUrl,
-    required this.title,
+    this.title,
     this.notes,
     required this.mime,
     required this.size,
@@ -4787,7 +4787,7 @@ class Attachment {
   @JsonKey(name: 'upload_url', includeIfNull: false)
   final String uploadUrl;
   @JsonKey(name: 'title', includeIfNull: false)
-  final String title;
+  final String? title;
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   @JsonKey(name: 'mime', includeIfNull: false)
@@ -4838,7 +4838,7 @@ extension $AttachmentExtension on Attachment {
       Wrapped<String>? filename,
       Wrapped<String>? downloadUrl,
       Wrapped<String>? uploadUrl,
-      Wrapped<String>? title,
+      Wrapped<String?>? title,
       Wrapped<String?>? notes,
       Wrapped<String>? mime,
       Wrapped<int>? size}) {
@@ -5110,8 +5110,8 @@ class Bill {
     required this.amountMin,
     required this.amountMax,
     required this.date,
-    required this.endDate,
-    required this.extensionDate,
+    this.endDate,
+    this.extensionDate,
     required this.repeatFreq,
     required this.skip,
     required this.active,
@@ -5152,9 +5152,9 @@ class Bill {
   @JsonKey(name: 'date', includeIfNull: false)
   final DateTime date;
   @JsonKey(name: 'end_date', includeIfNull: false)
-  final DateTime endDate;
+  final DateTime? endDate;
   @JsonKey(name: 'extension_date', includeIfNull: false)
-  final DateTime extensionDate;
+  final DateTime? extensionDate;
   @JsonKey(
     name: 'repeat_freq',
     includeIfNull: false,
@@ -5256,8 +5256,8 @@ extension $BillExtension on Bill {
       Wrapped<String>? amountMin,
       Wrapped<String>? amountMax,
       Wrapped<DateTime>? date,
-      Wrapped<DateTime>? endDate,
-      Wrapped<DateTime>? extensionDate,
+      Wrapped<DateTime?>? endDate,
+      Wrapped<DateTime?>? extensionDate,
       Wrapped<enums.BillRepeatFrequency>? repeatFreq,
       Wrapped<int>? skip,
       Wrapped<bool>? active,
@@ -6976,8 +6976,8 @@ class PiggyBankEvent {
     required this.currencySymbol,
     required this.currencyDecimalPlaces,
     required this.amount,
-    required this.transactionJournalId,
-    required this.transactionGroupId,
+    this.transactionJournalId,
+    this.transactionGroupId,
   });
 
   factory PiggyBankEvent.fromJson(Map<String, dynamic> json) =>
@@ -7001,9 +7001,9 @@ class PiggyBankEvent {
   @JsonKey(name: 'amount', includeIfNull: false)
   final String amount;
   @JsonKey(name: 'transaction_journal_id', includeIfNull: false)
-  final String transactionJournalId;
+  final String? transactionJournalId;
   @JsonKey(name: 'transaction_group_id', includeIfNull: false)
-  final String transactionGroupId;
+  final String? transactionGroupId;
   static const fromJsonFactory = _$PiggyBankEventFromJson;
 
   @override
@@ -7042,8 +7042,8 @@ extension $PiggyBankEventExtension on PiggyBankEvent {
       Wrapped<String>? currencySymbol,
       Wrapped<int>? currencyDecimalPlaces,
       Wrapped<String>? amount,
-      Wrapped<String>? transactionJournalId,
-      Wrapped<String>? transactionGroupId}) {
+      Wrapped<String?>? transactionJournalId,
+      Wrapped<String?>? transactionGroupId}) {
     return PiggyBankEvent(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
@@ -12249,7 +12249,7 @@ class TransactionSplit {
   @JsonKey(name: 'original_source', includeIfNull: false)
   final String? originalSource;
   @JsonKey(name: 'recurrence_id', includeIfNull: false)
-  final int? recurrenceId;
+  final String? recurrenceId;
   @JsonKey(name: 'recurrence_total', includeIfNull: false)
   final int? recurrenceTotal;
   @JsonKey(name: 'recurrence_count', includeIfNull: false)
@@ -12340,7 +12340,7 @@ extension $TransactionSplitExtension on TransactionSplit {
       String? externalId,
       String? externalUrl,
       String? originalSource,
-      int? recurrenceId,
+      String? recurrenceId,
       int? recurrenceTotal,
       int? recurrenceCount,
       String? bunqPaymentId,
@@ -12469,7 +12469,7 @@ extension $TransactionSplitExtension on TransactionSplit {
       Wrapped<String?>? externalId,
       Wrapped<String?>? externalUrl,
       Wrapped<String?>? originalSource,
-      Wrapped<int?>? recurrenceId,
+      Wrapped<String?>? recurrenceId,
       Wrapped<int?>? recurrenceTotal,
       Wrapped<int?>? recurrenceCount,
       Wrapped<String?>? bunqPaymentId,

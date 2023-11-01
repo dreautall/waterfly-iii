@@ -289,7 +289,6 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       attributes: Attachment(
         attachableType: AttachableType.transactionjournal,
         attachableId: "FAKE",
-        title: file.name,
         filename: file.name,
         uploadUrl: file.path ?? "",
         size: file.size,
@@ -332,7 +331,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                   : () async => downloadAttachment(context, attachment, i),
         ),
         title: Text(
-          attachment.attributes.title,
+          attachment.attributes.title ?? attachment.attributes.filename,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),

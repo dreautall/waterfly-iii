@@ -13016,9 +13016,9 @@ class Bill$PaidDates$Item {
   Map<String, dynamic> toJson() => _$Bill$PaidDates$ItemToJson(this);
 
   @JsonKey(name: 'transaction_group_id', includeIfNull: false)
-  final String? transactionGroupId;
+  final int? transactionGroupId;
   @JsonKey(name: 'transaction_journal_id', includeIfNull: false)
-  final String? transactionJournalId;
+  final int? transactionJournalId;
   @JsonKey(name: 'date', includeIfNull: false)
   final DateTime? date;
   static const fromJsonFactory = _$Bill$PaidDates$ItemFromJson;
@@ -13029,9 +13029,7 @@ class Bill$PaidDates$Item {
 
 extension $Bill$PaidDates$ItemExtension on Bill$PaidDates$Item {
   Bill$PaidDates$Item copyWith(
-      {String? transactionGroupId,
-      String? transactionJournalId,
-      DateTime? date}) {
+      {int? transactionGroupId, int? transactionJournalId, DateTime? date}) {
     return Bill$PaidDates$Item(
         transactionGroupId: transactionGroupId ?? this.transactionGroupId,
         transactionJournalId: transactionJournalId ?? this.transactionJournalId,
@@ -13039,8 +13037,8 @@ extension $Bill$PaidDates$ItemExtension on Bill$PaidDates$Item {
   }
 
   Bill$PaidDates$Item copyWithWrapped(
-      {Wrapped<String?>? transactionGroupId,
-      Wrapped<String?>? transactionJournalId,
+      {Wrapped<int?>? transactionGroupId,
+      Wrapped<int?>? transactionJournalId,
       Wrapped<DateTime?>? date}) {
     return Bill$PaidDates$Item(
         transactionGroupId: (transactionGroupId != null

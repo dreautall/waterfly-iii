@@ -15537,14 +15537,14 @@ components:
             readOnly: true
             properties:
               transaction_group_id:
-                type: string
-                format: string
+                type: int
+                format: int
                 example: "123"
                 description: "Transaction group ID of the paid bill."
                 readOnly: true
               transaction_journal_id:
-                type: string
-                format: string
+                type: int
+                format: int
                 example: "123"
                 description: "Transaction journal ID of the paid bill."
                 readOnly: true

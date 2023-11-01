@@ -71,6 +71,7 @@ class _TransactionPageState extends State<TransactionPage>
   final TextEditingController _timeTextController = TextEditingController();
   CurrencyRead? _localCurrency;
   bool _reconciled = false;
+  bool _initiallyReconciled = false;
 
   // Withdrawal: splits have common source account (= own account)
   // Deposit: splits have common target account (= own account)
@@ -316,6 +317,13 @@ class _TransactionPageState extends State<TransactionPage>
         updateTransactionAmounts();
         splitTransactionCheckAccounts();
       });
+
+      // Firefly v6.0.30 (API v2.0.11) and up:
+      // API will no longer accept changes to amount and account fields for reconciled transactions
+      if (_reconciled &&
+          context.read<FireflyService>().apiVersion! >= Version(2, 0, 11)) {
+        _initiallyReconciled = true;
+      }
 
       _split = (_localAmounts.length > 1);
     } else {
@@ -682,6 +690,9 @@ class _TransactionPageState extends State<TransactionPage>
     log.finer(() => "remaining split #: ${_localAmounts.length}");
 
     setState(() {
+      // As firefly doesn't allow editing accounts or sums when reconciled,
+      // deactivate reconciled.
+      _reconciled = false;
       _split = (_localAmounts.length > 1);
     });
   }
@@ -737,6 +748,9 @@ class _TransactionPageState extends State<TransactionPage>
     log.finer(() => "new split #: ${_localAmounts.length}");
 
     setState(() {
+      // As firefly doesn't allow editing accounts or sums when reconciled,
+      // deactivate reconciled.
+      _reconciled = false;
       _split = (_localAmounts.length > 1);
     });
 
@@ -1240,7 +1254,7 @@ class _TransactionPageState extends State<TransactionPage>
               controller: (_foreignCurrency != null)
                   ? _foreignAmountTextController
                   : _localAmountTextController,
-              disabled: _split,
+              disabled: _split || (_reconciled && _initiallyReconciled),
               onChanged: (String string) => (_foreignCurrency != null)
                   ? _foreignAmounts[0] = double.tryParse(string) ?? 0
                   : _localAmounts[0] = double.tryParse(string) ?? 0,
@@ -1248,40 +1262,42 @@ class _TransactionPageState extends State<TransactionPage>
           ),
           vDivider,
           FilledButton(
-            onPressed: () async {
-              CurrencyRead? newCurrency = await showDialog<CurrencyRead>(
-                context: context,
-                builder: (BuildContext context) => CurrencyDialog(
-                  currentCurrency: _foreignCurrency ?? _localCurrency!,
-                ),
-              );
-              if (newCurrency == null) {
-                return;
-              }
-              setState(() {
-                for (int i = 0; i < _foreignCurrencies.length; i++) {
-                  if (newCurrency.id == _localCurrency!.id) {
-                    _foreignCurrencies[i] = null;
-                  } else {
-                    _foreignCurrencies[i] = newCurrency;
-                    log.finest(() =>
-                        "foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
-                    if (_foreignAmounts[i] == 0) {
-                      _foreignAmounts[i] = _localAmounts[i];
-                      if (_foreignAmounts[i] != 0) {
-                        _foreignAmountTextControllers[i].text =
-                            _foreignAmounts[i].toStringAsFixed(
-                                _foreignCurrencies[i]
-                                        ?.attributes
-                                        .decimalPlaces ??
-                                    2);
-                      }
+            onPressed: _reconciled && _initiallyReconciled
+                ? null
+                : () async {
+                    CurrencyRead? newCurrency = await showDialog<CurrencyRead>(
+                      context: context,
+                      builder: (BuildContext context) => CurrencyDialog(
+                        currentCurrency: _foreignCurrency ?? _localCurrency!,
+                      ),
+                    );
+                    if (newCurrency == null) {
+                      return;
                     }
-                  }
-                }
-              });
-              updateTransactionAmounts();
-            },
+                    setState(() {
+                      for (int i = 0; i < _foreignCurrencies.length; i++) {
+                        if (newCurrency.id == _localCurrency!.id) {
+                          _foreignCurrencies[i] = null;
+                        } else {
+                          _foreignCurrencies[i] = newCurrency;
+                          log.finest(() =>
+                              "foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
+                          if (_foreignAmounts[i] == 0) {
+                            _foreignAmounts[i] = _localAmounts[i];
+                            if (_foreignAmounts[i] != 0) {
+                              _foreignAmountTextControllers[i].text =
+                                  _foreignAmounts[i].toStringAsFixed(
+                                      _foreignCurrencies[i]
+                                              ?.attributes
+                                              .decimalPlaces ??
+                                          2);
+                            }
+                          }
+                        }
+                      }
+                    });
+                    updateTransactionAmounts();
+                  },
             //style: FilledButton.styleFrom(textStyle: Theme.of(context).textTheme.headlineLarge,),
             child: Text(_foreignCurrency?.attributes.code ??
                 _localCurrency?.attributes.code ??
@@ -1318,7 +1334,8 @@ class _TransactionPageState extends State<TransactionPage>
                   : S.of(context).transactionFormLabelAccountForeign,
               //labelIcon: Icons.account_balance,
               textController: _otherAccountTextController,
-              disabled: showAccountSelection,
+              disabled:
+                  showAccountSelection || (_reconciled && _initiallyReconciled),
               focusNode: _otherAccountFocusNode,
               onChanged: (String text) {
                 for (TextEditingController e in _otherAccountTextControllers) {
@@ -1486,6 +1503,7 @@ class _TransactionPageState extends State<TransactionPage>
                   return const Iterable<AutocompleteAccount>.empty();
                 }
               },
+              disabled: _reconciled && _initiallyReconciled,
             ),
           ),
         ],
@@ -1579,7 +1597,8 @@ class _TransactionPageState extends State<TransactionPage>
     childs.add(hDivider);
     childs.add(
       FilledButton.icon(
-        onPressed: () => splitTransactionAdd(),
+        onPressed: () =>
+            _reconciled && _initiallyReconciled ? null : splitTransactionAdd(),
         label: Text(S.of(context).transactionSplitAdd),
         icon: const Icon(Icons.call_split),
       ),
@@ -1762,6 +1781,7 @@ class _TransactionPageState extends State<TransactionPage>
                                     }
                                     splitTransactionCalculateAmount();
                                   },
+                                  disabled: _reconciled && _initiallyReconciled,
                                 ),
                               ),
                             ],
@@ -1792,6 +1812,7 @@ class _TransactionPageState extends State<TransactionPage>
                                         double.tryParse(string) ?? 0;
                                     splitTransactionCalculateAmount();
                                   },
+                                  disabled: _reconciled && _initiallyReconciled,
                                 ),
                               ),
                             ],
@@ -1834,7 +1855,10 @@ class _TransactionPageState extends State<TransactionPage>
                           isSelected: _reconciled,
                           selectedIcon: const Icon(Icons.done),
                           onPressed: () => setState(
-                            () => _reconciled = !_reconciled,
+                            () {
+                              _reconciled = !_reconciled;
+                              _initiallyReconciled = false;
+                            },
                           ),
                           tooltip: S.of(context).generalReconcile,
                         ),
@@ -1870,7 +1894,8 @@ class _TransactionPageState extends State<TransactionPage>
                       if (_split) ...<Widget>[
                         IconButton(
                           icon: const Icon(Icons.currency_exchange),
-                          onPressed: _split
+                          onPressed: _split &&
+                                  !(_reconciled && _initiallyReconciled)
                               ? () async {
                                   CurrencyRead? newCurrency =
                                       await showDialog<CurrencyRead>(
@@ -1909,7 +1934,9 @@ class _TransactionPageState extends State<TransactionPage>
                         if (!showAccountSelection) ...<Widget>[
                           IconButton(
                             icon: const Icon(Icons.add_business),
-                            onPressed: _split && !showAccountSelection
+                            onPressed: _split &&
+                                    !showAccountSelection &&
+                                    !(_reconciled && _initiallyReconciled)
                                 ? () {
                                     log.fine(
                                         () => "adding separate account for $i");
@@ -1925,12 +1952,13 @@ class _TransactionPageState extends State<TransactionPage>
                         ],
                         IconButton(
                           icon: const Icon(Icons.delete),
-                          onPressed: _split
-                              ? () {
-                                  log.fine(() => "marking $i for deletion");
-                                  _cardsAnimationController[i].reverse();
-                                }
-                              : null,
+                          onPressed:
+                              _split && !(_reconciled && _initiallyReconciled)
+                                  ? () {
+                                      log.fine(() => "marking $i for deletion");
+                                      _cardsAnimationController[i].reverse();
+                                    }
+                                  : null,
                           tooltip: (_split)
                               ? S.of(context).transactionSplitDelete
                               : null,

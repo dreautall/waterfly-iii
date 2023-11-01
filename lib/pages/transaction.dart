@@ -1044,8 +1044,6 @@ class _TransactionPageState extends State<TransactionPage>
                           sourceName: sourceName,
                           tags: _tags[i].tags,
                           reconciled: _reconciled,
-                          piggyBankId: 0,
-                          piggyBankName: "",
                         ));
                       }
                       final TransactionStore newTx = TransactionStore(

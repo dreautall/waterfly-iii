@@ -10164,8 +10164,8 @@ class TransactionSplitStore {
     this.destinationId,
     this.destinationName,
     required this.reconciled,
-    required this.piggyBankId,
-    required this.piggyBankName,
+    this.piggyBankId,
+    this.piggyBankName,
     this.billId,
     this.billName,
     this.tags,
@@ -10240,9 +10240,9 @@ class TransactionSplitStore {
   @JsonKey(name: 'reconciled', includeIfNull: false)
   final bool reconciled;
   @JsonKey(name: 'piggy_bank_id', includeIfNull: false)
-  final int piggyBankId;
+  final int? piggyBankId;
   @JsonKey(name: 'piggy_bank_name', includeIfNull: false)
-  final String piggyBankName;
+  final String? piggyBankName;
   @JsonKey(name: 'bill_id', includeIfNull: false)
   final String? billId;
   @JsonKey(name: 'bill_name', includeIfNull: false)
@@ -10404,8 +10404,8 @@ extension $TransactionSplitStoreExtension on TransactionSplitStore {
       Wrapped<String?>? destinationId,
       Wrapped<String?>? destinationName,
       Wrapped<bool>? reconciled,
-      Wrapped<int>? piggyBankId,
-      Wrapped<String>? piggyBankName,
+      Wrapped<int?>? piggyBankId,
+      Wrapped<String?>? piggyBankName,
       Wrapped<String?>? billId,
       Wrapped<String?>? billName,
       Wrapped<List<String>?>? tags,

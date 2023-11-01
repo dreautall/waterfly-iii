@@ -3550,8 +3550,8 @@ TransactionSplitStore _$TransactionSplitStoreFromJson(
       destinationId: json['destination_id'] as String?,
       destinationName: json['destination_name'] as String?,
       reconciled: json['reconciled'] as bool,
-      piggyBankId: json['piggy_bank_id'] as int,
-      piggyBankName: json['piggy_bank_name'] as String,
+      piggyBankId: json['piggy_bank_id'] as int?,
+      piggyBankName: json['piggy_bank_name'] as String?,
       billId: json['bill_id'] as String?,
       billName: json['bill_name'] as String?,
       tags:
@@ -3619,8 +3619,8 @@ Map<String, dynamic> _$TransactionSplitStoreToJson(
   writeNotNull('destination_id', instance.destinationId);
   writeNotNull('destination_name', instance.destinationName);
   val['reconciled'] = instance.reconciled;
-  val['piggy_bank_id'] = instance.piggyBankId;
-  val['piggy_bank_name'] = instance.piggyBankName;
+  writeNotNull('piggy_bank_id', instance.piggyBankId);
+  writeNotNull('piggy_bank_name', instance.piggyBankName);
   writeNotNull('bill_id', instance.billId);
   writeNotNull('bill_name', instance.billName);
   writeNotNull('tags', instance.tags);

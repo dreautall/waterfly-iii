@@ -1189,7 +1189,9 @@ class BudgetList extends StatelessWidget {
                         text: S.of(context).homeMainBudgetInterval(
                               budget.attributes.start.toLocal(),
                               budget.attributes.end.toLocal(),
-                              budget.attributes.period ?? "",
+                              budget.attributes.period ??
+                                  budgetInfo.autoBudgetPeriod?.value ??
+                                  "",
                             ),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),

@@ -1186,13 +1186,16 @@ class BudgetList extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       TextSpan(
-                        text: S.of(context).homeMainBudgetInterval(
-                              budget.attributes.start.toLocal(),
-                              budget.attributes.end.toLocal(),
-                              budget.attributes.period ??
-                                  budgetInfo.autoBudgetPeriod?.value ??
-                                  "",
-                            ),
+                        text: budget.attributes.period?.isNotEmpty ?? false
+                            ? S.of(context).homeMainBudgetInterval(
+                                  budget.attributes.start.toLocal(),
+                                  budget.attributes.end.toLocal(),
+                                  budget.attributes.period!,
+                                )
+                            : S.of(context).homeMainBudgetIntervalSingle(
+                                  budget.attributes.start.toLocal(),
+                                  budget.attributes.end.toLocal(),
+                                ),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],

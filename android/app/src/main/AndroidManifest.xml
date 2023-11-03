@@ -148,6 +148,7 @@
         <package android:name="com.paypal.android.p2pmobile"/>
         <package android:name="com.phonepe.app"/>
         <package android:name="com.rappi.restaurants"/>
+        <package android:name="com.rbc.mobile.android"/>
         <package android:name="com.rbs.mobile.android.natwest"/>
         <package android:name="com.rbs.mobile.android.rbs"/>
         <package android:name="com.remitly.androidapp"/>

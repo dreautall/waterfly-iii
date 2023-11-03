@@ -257,6 +257,22 @@
             }
         }
     },
+    "homeMainBudgetIntervalSingle": " ({from} bis {to})",
+    "@homeMainBudgetIntervalSingle": {
+        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
+            }
+        }
+    },
     "homeMainBudgetSum": "{current} {status, select, over{über} other{bis}} {available}",
     "@homeMainBudgetSum": {
         "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",

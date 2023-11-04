@@ -45,6 +45,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   DateTime? _lastDate;
   List<int> _rowsWithDate = <int>[];
+  late TransStock stock;
 
   final TransactionFilters _filters = TransactionFilters();
 
@@ -104,13 +105,20 @@ class _HomeTransactionsState extends State<HomeTransactions>
         );
       });
     }
+
+    stock = context.read<FireflyService>().transStock!;
   }
 
   @override
   void dispose() {
+    stock.removeListener(notifRefresh);
     _pagingController.dispose();
 
     super.dispose();
+  }
+
+  void notifRefresh() {
+    _pagingController.refresh();
   }
 
   Future<void> _fetchPage(int pageKey) async {

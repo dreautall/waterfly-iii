@@ -2,13 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart' show Response;
+import 'package:flutter/material.dart';
 import 'package:stock/stock.dart';
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.enums.swagger.dart'
     as enums show TransactionTypeFilter;
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
-class TransStock {
+class TransStock with ChangeNotifier {
   final FireflyIii api;
 
   late Stock<String, TransactionRead> _singleStock;
@@ -160,6 +161,7 @@ class TransStock {
     _getStock.clearAll();
     _getAccountStock.clearAll();
     _getSearchStock.clearAll();
+    notifyListeners();
   }
 
   Future<void> setTransaction(TransactionRead transaction) async {

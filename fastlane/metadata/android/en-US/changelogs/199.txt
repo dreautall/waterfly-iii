@@ -1,0 +1,6 @@
+- Fix camera attachment to transaction
+- Additional options for notification listener
+- Net Worth chart fixes
+- New translations: Indonesian & Hungarian
+- New banking support for notification listener
+- Bugfixes

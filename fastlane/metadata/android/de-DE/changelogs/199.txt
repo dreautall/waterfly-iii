@@ -1,0 +1,5 @@
+- Fehler für Bild-Anhang für Transaktionen behoben
+- Zusätzliche Optionen für den Benachrichtungs-Service
+- Neue Übersetzungen: Indonesisch & Ungarisch
+- Neue Banken für den Benachrichtungs-Service
+- Fehlerbehebungen

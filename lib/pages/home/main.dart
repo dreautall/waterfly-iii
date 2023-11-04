@@ -58,10 +58,10 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastDays() async {
-    if (lastDaysExpense.isNotEmpty) {
+    /*if (lastDaysExpense.isNotEmpty) {
       // :DEBUG:
       return true;
-    }
+    }*/
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -183,10 +183,10 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchOverviewChart() async {
-    if (overviewChartData.isNotEmpty) {
+    /*if (overviewChartData.isNotEmpty) {
       // :DEBUG:
       return true;
-    }
+    }*/
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -219,10 +219,10 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastMonths() async {
-    if (lastMonthsExpense.isNotEmpty) {
+    /*if (lastMonthsExpense.isNotEmpty) {
       // :DEBUG:
       return true;
-    }
+    }*/
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -318,10 +318,10 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchCategories() async {
-    if (catChartData.isNotEmpty) {
+    /*if (catChartData.isNotEmpty) {
       // :DEBUG:
       return true;
-    }
+    }*/
 
     final FireflyIii api = context.read<FireflyService>().api;
 
@@ -477,10 +477,10 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchBalance() async {
-    if (lastMonthsEarned.isNotEmpty) {
+    /*if (lastMonthsEarned.isNotEmpty) {
       // :DEBUG:
       return true;
-    }
+    }*/
 
     final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
     final DateTime now = DateTime.now().toLocal().clearTime();

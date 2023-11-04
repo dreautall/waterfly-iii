@@ -443,7 +443,7 @@ class _HomeMainState extends State<HomeMain>
     return respBudgets.body!.data;
   }
 
-  Future<List<BillRead>> _fetchBills() async {
+  /*Future<List<BillRead>> _fetchBills() async {
     final FireflyIii api = context.read<FireflyService>().api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
@@ -474,7 +474,7 @@ class _HomeMainState extends State<HomeMain>
             .clearTime()
             .isBefore(end.copyWith(day: end.day + 1)))
         .toList(growable: false);
-  }
+  }*/
 
   Future<bool> _fetchBalance() async {
     /*if (lastMonthsEarned.isNotEmpty) {
@@ -1077,6 +1077,8 @@ class _HomeMainState extends State<HomeMain>
             ),
           ),
           // No sizedbox, done via margins on (maybe hidden) budget card view
+          /* Disabled until https://github.com/firefly-iii/firefly-iii/issues/8115
+             is fixed 
           AnimatedHeight(
             child: FutureBuilder<List<BillRead>>(
               future: _fetchBills(),
@@ -1120,7 +1122,7 @@ class _HomeMainState extends State<HomeMain>
                 }
               },
             ),
-          ),
+          ),*/
           const SizedBox(height: 68),
         ],
       ),

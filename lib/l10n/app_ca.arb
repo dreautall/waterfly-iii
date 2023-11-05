@@ -137,9 +137,23 @@
     "@generalAccount": {
         "description": "Asset/Debt (Bank) Account"
     },
+    "generalAssets": "Actius",
+    "@generalAssets": {
+        "description": "(Monetary) Assets"
+    },
     "generalBalance": "Balanç",
     "@generalBalance": {
         "description": "(Account) Balance"
+    },
+    "generalBalanceOn": "Balanç el {date}",
+    "@generalBalanceOn": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMd",
+                "example": "2023-05-13"
+            }
+        }
     },
     "generalBill": "Factura",
     "@generalBill": {
@@ -177,6 +191,10 @@
     "@generalIncome": {
         "description": "(Account) Info"
     },
+    "generalLiabilities": "Passius",
+    "@generalLiabilities": {
+        "description": "Firefly Translation String: liabilities"
+    },
     "generalMultiple": "múltiples",
     "@generalMultiple": {
         "description": "Multiples of a single thing (e.g. source accounts) are existing"
@@ -205,6 +223,20 @@
     "@generalUnknown": {
         "description": "Something is unknown."
     },
+    "homeMainBillsTitle": "Factures per a la pròxima setmana",
+    "@homeMainBillsTitle": {
+        "description": "Title: Bills for the next week"
+    },
+    "homeMainBillsInterval": " ({period, select, weekly{setmanalment} monthly{mensualment} quarterly{quatrimestralment} halfyear{semestralment} yearly{anualment} other{desconegut}})",
+    "@homeMainBillsInterval": {
+        "description": "bill interval type",
+        "placeholders": {
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
     "homeMainBudgetInterval": " ({from} fins a {to}, {period})",
     "@homeMainBudgetInterval": {
         "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
@@ -222,6 +254,22 @@
             "period": {
                 "type": "String",
                 "example": "weekly"
+            }
+        }
+    },
+    "homeMainBudgetIntervalSingle": " ({from} fins a {to})",
+    "@homeMainBudgetIntervalSingle": {
+        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
             }
         }
     },
@@ -262,6 +310,14 @@
     "homeMainChartDailyTitle": "Resum Diari",
     "@homeMainChartDailyTitle": {
         "description": "Chart Label: Daily Summary"
+    },
+    "homeMainChartNetEarningsTitle": "Ingressos Nets",
+    "@homeMainChartNetEarningsTitle": {
+        "description": "Chart Label: Net Earnings"
+    },
+    "homeMainChartNetWorthTitle": "Valor Net",
+    "@homeMainChartNetWorthTitle": {
+        "description": "Chart Label: Net Worth"
     },
     "homePiggyAdjustDialogTitle": "Estalvia/Gasta Diners",
     "@homePiggyAdjustDialogTitle": {
@@ -575,6 +631,10 @@
     "settingsNLPermissionRemoveHelp": "Per a deshabilitar aquest servei, toca en l'app i elimina els permisos a la pantalla següent.",
     "@settingsNLPermissionRemoveHelp": {
         "description": "Dialog text giving hint how to remove the permission."
+    },
+    "settingsNLPrefillTXTitle": "Emplena automàticament el títol de la transacció amb el títol de la notificació",
+    "@settingsNLPrefillTXTitle": {
+        "description": "First line for setting to use pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "Comprovant l'estat…",
     "@settingsNLServiceChecking": {

@@ -161,6 +161,8 @@ class SettingsPageState extends State<SettingsPage>
                 subtitle = l10n.settingsNLServiceRunning;
               }
             } else if (snapshot.hasError) {
+              log.severe("error getting nlStatus", snapshot.error,
+                  snapshot.stackTrace);
               subtitle = S
                   .of(context)
                   .settingsNLServiceCheckingError(snapshot.error.toString());

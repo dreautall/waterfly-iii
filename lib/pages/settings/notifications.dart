@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
@@ -23,6 +24,7 @@ class SettingsNotifications extends StatefulWidget {
 
 class _SettingsNotificationsState extends State<SettingsNotifications> {
   NotificationListenerStatus? status;
+  final Logger log = Logger("Notifications.Settings");
 
   @override
   void initState() {
@@ -128,6 +130,8 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                   };
                 }
               } else if (snapshot.hasError) {
+                log.severe("error updating status", snapshot.error,
+                    snapshot.stackTrace);
                 subtitle = S
                     .of(context)
                     .settingsNLServiceCheckingError(snapshot.error.toString());
@@ -223,6 +227,8 @@ class NotificationApps extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Logger log = Logger("Notifications.Apps");
+
     return FutureBuilder<AccountArray>(
       future: _getAccounts(context),
       builder: (BuildContext context, AsyncSnapshot<AccountArray> snapshot) {
@@ -247,6 +253,8 @@ class NotificationApps extends StatelessWidget {
                           settings: snap.data!,
                         );
                       } else if (snapshot.hasError) {
+                        log.severe("error getting app settings", snapshot.error,
+                            snapshot.stackTrace);
                         return const SizedBox.shrink();
                       } else {
                         return const CircularProgressIndicator();
@@ -258,6 +266,8 @@ class NotificationApps extends StatelessWidget {
             ],
           );
         } else if (snapshot.hasError) {
+          log.severe(
+              "error getting accounts", snapshot.error, snapshot.stackTrace);
           return Text(S
               .of(context)
               .settingsNLServiceCheckingError(snapshot.error.toString()));
@@ -415,6 +425,8 @@ class AppDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Logger log = Logger("Notifications.AppDialog");
+
     return SimpleDialog(
       title: Text(S.of(context).settingsNLAppAdd),
       clipBehavior: Clip.hardEdge,
@@ -441,6 +453,8 @@ class AppDialog extends StatelessWidget {
                 children: child,
               );
             } else if (snapshot.hasError) {
+              log.severe("error getting app settings", snapshot.error,
+                  snapshot.stackTrace);
               Navigator.pop(context);
               return const SizedBox.shrink();
             } else {
@@ -465,6 +479,8 @@ class AppDialogEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Logger log = Logger("Notifications.AppDialog.Entry");
+
     return FutureBuilder<Application?>(
       future: DeviceApps.getApp(app, true),
       builder: (BuildContext context, AsyncSnapshot<Application?> snapshot) {
@@ -491,6 +507,8 @@ class AppDialogEntry extends StatelessWidget {
             },
           );
         } else if (snapshot.hasError) {
+          log.severe(
+              "error getting app details", snapshot.error, snapshot.stackTrace);
           return const SizedBox.shrink();
         } else {
           return const CircularProgressIndicator();

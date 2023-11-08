@@ -363,7 +363,8 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                     ),
                   );
                 } else if (snapshot.hasError) {
-                  log.severe("error encountered, popping view", snapshot.error);
+                  log.severe("error fetching chart", snapshot.error,
+                      snapshot.stackTrace);
                   Navigator.of(context).pop();
                   return const SizedBox.shrink();
                 } else {

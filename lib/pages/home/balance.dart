@@ -164,6 +164,8 @@ class _HomeBalanceState extends State<HomeBalance>
               ],
             );
           } else if (snapshot.hasError) {
+            log.severe(
+                "error fetching accounts", snapshot.error, snapshot.stackTrace);
             return Text(snapshot.error!.toString());
           } else {
             return const Padding(

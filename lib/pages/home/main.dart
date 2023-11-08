@@ -1060,6 +1060,8 @@ class _HomeMainState extends State<HomeMain>
                     ),
                   );
                 } else if (snapshot.hasError) {
+                  log.severe("error fetching budgets", snapshot.error,
+                      snapshot.stackTrace);
                   return Text(snapshot.error!.toString());
                 } else {
                   return const Card(
@@ -1108,6 +1110,8 @@ class _HomeMainState extends State<HomeMain>
                     ),
                   );
                 } else if (snapshot.hasError) {
+                  log.severe("error fetching bills", snapshot.error,
+                      snapshot.stackTrace);
                   return Text(snapshot.error!.toString());
                 } else {
                   return const Card(
@@ -1443,7 +1447,7 @@ class ChartCard extends StatelessWidget {
                 ),
               );
             } else if (snapshot.hasError) {
-              log.severe("Error getting chart card data", snapshot.error,
+              log.severe("error getting chart card data", snapshot.error,
                   snapshot.stackTrace);
               return Text(snapshot.error!.toString());
             } else {

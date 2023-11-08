@@ -272,7 +272,7 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                 ],
               );
             } else if (snapshot.hasError) {
-              log.severe("Error getting chart card data", snapshot.error,
+              log.severe("error getting chart card data", snapshot.error,
                   snapshot.stackTrace);
               Navigator.of(context).pop();
               return const SizedBox.shrink();

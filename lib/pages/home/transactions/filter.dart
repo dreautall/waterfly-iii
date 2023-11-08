@@ -618,6 +618,8 @@ class FilterDialog extends StatelessWidget {
                     ),
                   );
                 } else if (snapshot.hasError) {
+                  log.severe("error getting filter data", snapshot.error,
+                      snapshot.stackTrace);
                   Navigator.pop(context);
                   return const SizedBox.shrink();
                 } else {

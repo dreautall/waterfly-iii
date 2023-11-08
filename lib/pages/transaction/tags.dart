@@ -312,6 +312,8 @@ class _TagDialogState extends State<TagDialog> {
               },
             );
           } else if (snapshot.hasError) {
+            log.severe(
+                "error getting tags", snapshot.error, snapshot.stackTrace);
             Navigator.pop(context);
             return const CircularProgressIndicator();
           } else {

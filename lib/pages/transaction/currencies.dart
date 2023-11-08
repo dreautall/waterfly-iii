@@ -73,6 +73,8 @@ class CurrencyDialog extends StatelessWidget {
                 children: child,
               );
             } else if (snapshot.hasError) {
+              log.severe("error getting currencies", snapshot.error,
+                  snapshot.stackTrace);
               Navigator.pop(context);
               return const CircularProgressIndicator();
             } else {

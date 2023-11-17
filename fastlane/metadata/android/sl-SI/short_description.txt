@@ -1,0 +1,1 @@
+Neuradna aplikacija za Firefly III, odprtokodnega upravitelja osebnih financ.

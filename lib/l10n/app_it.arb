@@ -223,6 +223,20 @@
     "@generalUnknown": {
         "description": "Something is unknown."
     },
+    "homeMainBillsTitle": "Bollette per la prossima settimana",
+    "@homeMainBillsTitle": {
+        "description": "Title: Bills for the next week"
+    },
+    "homeMainBillsInterval": " ({period, select, weekly{settimanale} monthly{mensile} quarterly{trimestrale} halfyear{semestrale} yearly{annuale} other{sconosciuto}})",
+    "@homeMainBillsInterval": {
+        "description": "bill interval type",
+        "placeholders": {
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
     "homeMainBudgetInterval": " (da {from} a {to}, {period})",
     "@homeMainBudgetInterval": {
         "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
@@ -240,6 +254,22 @@
             "period": {
                 "type": "String",
                 "example": "weekly"
+            }
+        }
+    },
+    "homeMainBudgetIntervalSingle": " (da {from} al {to})",
+    "@homeMainBudgetIntervalSingle": {
+        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
             }
         }
     },
@@ -601,6 +631,10 @@
     "settingsNLPermissionRemoveHelp": "Per disabilitare questo servizio, fare clic sull'app e rimuovi i permessi nella schermata successiva.",
     "@settingsNLPermissionRemoveHelp": {
         "description": "Dialog text giving hint how to remove the permission."
+    },
+    "settingsNLPrefillTXTitle": "Compila il titolo della transazione con il titolo della notifica",
+    "@settingsNLPrefillTXTitle": {
+        "description": "First line for setting to use pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "Controllo dello stato…",
     "@settingsNLServiceChecking": {

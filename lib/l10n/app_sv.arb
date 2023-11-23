@@ -1,5 +1,5 @@
 {
-    "@@locale": "sv",
+    "@@locale": "sv-SE",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "Plånbok",
     "@accountRoleAssetCashWallet": {
@@ -137,9 +137,23 @@
     "@generalAccount": {
         "description": "Asset/Debt (Bank) Account"
     },
+    "generalAssets": "Tillgångar",
+    "@generalAssets": {
+        "description": "(Monetary) Assets"
+    },
     "generalBalance": "Balans",
     "@generalBalance": {
         "description": "(Account) Balance"
+    },
+    "generalBalanceOn": "Saldo för {date}",
+    "@generalBalanceOn": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMd",
+                "example": "2023-05-13"
+            }
+        }
     },
     "generalBill": "Räkning",
     "@generalBill": {
@@ -177,6 +191,10 @@
     "@generalIncome": {
         "description": "(Account) Info"
     },
+    "generalLiabilities": "Skulder",
+    "@generalLiabilities": {
+        "description": "Firefly Translation String: liabilities"
+    },
     "generalMultiple": "multipla",
     "@generalMultiple": {
         "description": "Multiples of a single thing (e.g. source accounts) are existing"
@@ -205,6 +223,20 @@
     "@generalUnknown": {
         "description": "Something is unknown."
     },
+    "homeMainBillsTitle": "Räkningar inför nästa vecka",
+    "@homeMainBillsTitle": {
+        "description": "Title: Bills for the next week"
+    },
+    "homeMainBillsInterval": " ({period, select, weekly{veckovis} monthly{månadsvis} quarterly{kvartalsvis} halfyear{årligen} yearly{} other{okänd}})",
+    "@homeMainBillsInterval": {
+        "description": "bill interval type",
+        "placeholders": {
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
     "homeMainBudgetInterval": " ({from} till {to}, {period})",
     "@homeMainBudgetInterval": {
         "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
@@ -222,6 +254,22 @@
             "period": {
                 "type": "String",
                 "example": "weekly"
+            }
+        }
+    },
+    "homeMainBudgetIntervalSingle": " ({from} till {to})",
+    "@homeMainBudgetIntervalSingle": {
+        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
             }
         }
     },
@@ -262,6 +310,14 @@
     "homeMainChartDailyTitle": "Daglig sammanfattning",
     "@homeMainChartDailyTitle": {
         "description": "Chart Label: Daily Summary"
+    },
+    "homeMainChartNetEarningsTitle": "Nettoinkomst",
+    "@homeMainChartNetEarningsTitle": {
+        "description": "Chart Label: Net Earnings"
+    },
+    "homeMainChartNetWorthTitle": "Nettoförmögenhet",
+    "@homeMainChartNetWorthTitle": {
+        "description": "Chart Label: Net Worth"
     },
     "homePiggyAdjustDialogTitle": "Spara/spendera pengar",
     "@homePiggyAdjustDialogTitle": {
@@ -575,6 +631,10 @@
     "settingsNLPermissionRemoveHelp": "För att avaktivera den här tjänsten, tryck på appen och ta bort behörigheterna på den nästa skärmen.",
     "@settingsNLPermissionRemoveHelp": {
         "description": "Dialog text giving hint how to remove the permission."
+    },
+    "settingsNLPrefillTXTitle": "Fyll i transaktionstiteln med nofikationstiteln i förväg",
+    "@settingsNLPrefillTXTitle": {
+        "description": "First line for setting to use pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "Kontrollerar status…",
     "@settingsNLServiceChecking": {

@@ -15,7 +15,7 @@ dependencies:
   async: any
   intl: any
   path_provider: ^2.0.13
-  collection: ^1.17.0
+  collection: ^1.18.0
   flutter_secure_storage: ^9.0.0
   provider: ^6.1.1
   shared_preferences: ^2.2.2

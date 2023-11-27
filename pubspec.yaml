@@ -45,7 +45,7 @@ dependencies:
   version: ^3.0.2
   quick_actions: ^1.0.6
   stock: ^1.1.0
-  syncfusion_flutter_charts: ^23.2.4
+  syncfusion_flutter_charts: ^23.2.5
   image_picker: ^1.0.4
 
 dev_dependencies:

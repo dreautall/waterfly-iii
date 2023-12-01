@@ -30,7 +30,7 @@ dependencies:
   open_filex: ^4.3.4
   file_picker: ^6.0.0
   animations: ^2.0.7
-  flutter_local_notifications: ^16.1.0
+  flutter_local_notifications: ^16.2.0
   notifications_listener_service:
     git:
       url: https://github.com/dreautall/notification_listener_service.git

@@ -120,6 +120,7 @@
         <package android:name="com.grability.rappi"/>
         <package android:name="com.grabtaxi.driver"/>
         <package android:name="com.grabtaxi.passenger"/>
+        <package android:name="com.hrc.eb.mobile.android.hibismobiledh"/>
         <package android:name="com.idamob.tinkoff.android"/>
         <package android:name="com.ie.capitalone.uk"/>
         <package android:name="com.illimity.mobile.rtl"/>
@@ -229,6 +230,7 @@
         <package android:name="ru.nspk.mirpay"/>
         <package android:name="ru.sberbankmobile"/>
         <package android:name="ru.vtb24.mobilebanking.android"/>
+        <package android:name="si.delavskahranilnica.dhdenarnik"/>
         <package android:name="tw.com.hncb.sny"/>
         <package android:name="ua.alfabank.mobile.android"/>
         <package android:name="ua.aval.dbo.client.android"/>

@@ -120,6 +120,7 @@
         <package android:name="com.grability.rappi"/>
         <package android:name="com.grabtaxi.driver"/>
         <package android:name="com.grabtaxi.passenger"/>
+        <package android:name="com.grppl.android.shell.CMBlloydsTSB73"/>
         <package android:name="com.hrc.eb.mobile.android.hibismobiledh"/>
         <package android:name="com.idamob.tinkoff.android"/>
         <package android:name="com.ie.capitalone.uk"/>

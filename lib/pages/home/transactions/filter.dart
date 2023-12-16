@@ -9,6 +9,7 @@ import 'package:chopper/chopper.dart' show Response;
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/settings.dart';
 
 final Logger log = Logger("Pages.Home.Transaction.Filter");
 
@@ -192,6 +193,8 @@ class FilterDialog extends StatelessWidget {
     final Logger log = Logger("Pages.Home.Transaction.Filter.Dialog");
 
     log.finest(() => "build()");
+    final bool oldShowFutureTXs =
+        context.read<SettingsProvider>().showFutureTXs;
     return AlertDialog(
       icon: const Icon(Icons.tune),
       title: Text(S.of(context).homeTransactionsDialogFilterTitle),
@@ -200,6 +203,7 @@ class FilterDialog extends StatelessWidget {
         TextButton(
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
           onPressed: () {
+            context.read<SettingsProvider>().setShowFutureTXs(oldShowFutureTXs);
             Navigator.of(context).pop();
           },
         ),
@@ -207,6 +211,7 @@ class FilterDialog extends StatelessWidget {
           child: Text(S.of(context).generalReset),
           onPressed: () {
             filters.reset();
+            context.read<SettingsProvider>().setShowFutureTXs(false);
             Navigator.of(context).pop(true);
           },
         ),
@@ -229,6 +234,21 @@ class FilterDialog extends StatelessWidget {
                   List<Widget> child = <Widget>[];
                   final double inputWidth =
                       MediaQuery.of(context).size.width - 128 - 24;
+
+                  // Show future TXs
+                  child.add(
+                    SizedBox(
+                      width: inputWidth,
+                      child: CheckboxListTile(
+                        value: context.watch<SettingsProvider>().showFutureTXs,
+                        onChanged: (bool? value) => context
+                            .read<SettingsProvider>()
+                            .setShowFutureTXs(value ?? false),
+                        title: Text("Show future transactions"),
+                      ),
+                    ),
+                  );
+                  child.add(const SizedBox(height: 12));
 
                   // Search Term
                   child.add(

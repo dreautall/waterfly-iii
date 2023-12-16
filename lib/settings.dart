@@ -41,6 +41,7 @@ class SettingsProvider with ChangeNotifier {
   static const String settingDebug = "DEBUG";
   static const String settingLocale = "LOCALE";
   static const String settingLock = "LOCK";
+  static const String settingShowFutureTXs = "SHOWFUTURETXS";
   static const String settingNLKnownApps = "NL_KNOWNAPPS";
   static const String settingNLUsedApps = "NL_USEDAPPS";
   static const String settingNLAppPrefix = "NL_APP_";
@@ -64,6 +65,9 @@ class SettingsProvider with ChangeNotifier {
 
   bool _lock = false;
   bool get lock => _lock;
+
+  bool _showFutureTXs = false;
+  bool get showFutureTXs => _showFutureTXs;
 
   bool _loaded = false;
   bool get loaded => _loaded;
@@ -112,6 +116,9 @@ class SettingsProvider with ChangeNotifier {
 
     _lock = prefs.getBool(settingLock) ?? false;
     log.config("read lock $lock");
+
+    _showFutureTXs = prefs.getBool(settingShowFutureTXs) ?? false;
+    log.config("read showFutureTXs $showFutureTXs");
 
     _notificationApps = prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
@@ -186,6 +193,19 @@ class SettingsProvider with ChangeNotifier {
     await prefs.setBool(settingLock, lock);
 
     log.finest(() => "notify SettingsProvider->setLock()");
+    notifyListeners();
+  }
+
+  Future<void> setShowFutureTXs(bool showFutureTXs) async {
+    if (showFutureTXs == _showFutureTXs) {
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _showFutureTXs = showFutureTXs;
+    await prefs.setBool(settingShowFutureTXs, showFutureTXs);
+
+    log.finest(() => "notify SettingsProvider->setShowFutureTXs()");
     notifyListeners();
   }
 

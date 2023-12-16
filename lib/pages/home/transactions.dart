@@ -20,6 +20,7 @@ import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/pages/transaction/delete.dart';
+import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
 
 class HomeTransactions extends StatefulWidget {
@@ -74,6 +75,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                 tooltip: S.of(context).homeTransactionsActionFilter,
                 onPressed: () async {
                   TransactionFilters oldFilters = _filters.copyWith();
+                  final SettingsProvider settings =
+                      context.read<SettingsProvider>();
+                  final bool oldShowFutureTXs = settings.showFutureTXs;
                   bool? ok = await showDialog<bool>(
                     context: context,
                     builder: (BuildContext context) => FilterDialog(
@@ -82,6 +86,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     ),
                   );
                   if (ok == null || !ok) {
+                    if (settings.showFutureTXs != oldShowFutureTXs) {
+                      settings.setShowFutureTXs(oldShowFutureTXs);
+                      _pagingController.refresh();
+                    }
                     _filters.account = oldFilters.account;
                     _filters.budget = oldFilters.budget;
                     _filters.category = oldFilters.category;
@@ -91,7 +99,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
                     return;
                   }
-                  if (oldFilters == _filters) {
+                  if (oldFilters == _filters &&
+                      settings.showFutureTXs == oldShowFutureTXs) {
                     return;
                   }
                   _filters.updateFilters();
@@ -172,8 +181,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
         transactionList = await stock.getAccount(
           id: widget.accountId ?? _filters.account!.id,
           page: pageKey,
-          end: DateFormat('yyyy-MM-dd', 'en_US')
-              .format(DateTime.now().toLocal()),
+          end: context.read<SettingsProvider>().showFutureTXs
+              ? null
+              : DateFormat('yyyy-MM-dd', 'en_US')
+                  .format(DateTime.now().toLocal()),
           start:
               (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
                   ? null
@@ -182,8 +193,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
       } else {
         transactionList = await stock.get(
           page: pageKey,
-          end: DateFormat('yyyy-MM-dd', 'en_US')
-              .format(DateTime.now().toLocal()),
+          end: context.read<SettingsProvider>().showFutureTXs
+              ? null
+              : DateFormat('yyyy-MM-dd', 'en_US')
+                  .format(DateTime.now().toLocal()),
           start:
               (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
                   ? null

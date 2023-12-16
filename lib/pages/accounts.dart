@@ -41,6 +41,7 @@ class _AccountsPageState extends State<AccountsPage>
       context.read<NavPageElements>().appBarBottom = TabBar(
         isScrollable: true,
         controller: _tabController,
+        tabAlignment: TabAlignment.start,
         tabs: <Tab>[
           Tab(text: S.of(context).accountsLabelAsset),
           Tab(text: S.of(context).accountsLabelExpense),

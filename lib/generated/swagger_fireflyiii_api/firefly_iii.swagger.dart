@@ -28,6 +28,7 @@ abstract class FireflyIii extends ChopperService {
     ChopperClient? client,
     http.Client? httpClient,
     Authenticator? authenticator,
+    ErrorConverter? errorConverter,
     Converter? converter,
     Uri? baseUrl,
     Iterable<dynamic>? interceptors,
@@ -42,6 +43,7 @@ abstract class FireflyIii extends ChopperService {
         interceptors: interceptors ?? [],
         client: httpClient,
         authenticator: authenticator,
+        errorConverter: errorConverter,
         baseUrl: baseUrl ?? Uri.parse('http://'));
     return _$FireflyIii(newClient);
   }
@@ -4818,7 +4820,7 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<CurrencySingle>> v1CurrenciesCodePut({
     String? xTraceId,
     required String? code,
-    required CurrencyUpdate body,
+    required Map<String, String> body,
   }) {
     generatedMapping.putIfAbsent(
         CurrencySingle, () => CurrencySingle.fromJsonFactory);
@@ -4832,13 +4834,13 @@ abstract class FireflyIii extends ChopperService {
   ///@param code The currency code.
   @Put(
     path: '/v1/currencies/{code}',
-    optionalBody: true,
+    headers: {contentTypeKey: formEncodedHeaders},
   )
-  @Multipart()
+  @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
   Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodePut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
-    @Part() required CurrencyUpdate body,
+    @Body() required Map<String, String> body,
   });
 
   ///Delete a currency.

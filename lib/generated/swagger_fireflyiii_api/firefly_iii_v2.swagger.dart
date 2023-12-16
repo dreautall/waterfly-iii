@@ -28,6 +28,7 @@ abstract class FireflyIiiV2 extends ChopperService {
     ChopperClient? client,
     http.Client? httpClient,
     Authenticator? authenticator,
+    ErrorConverter? errorConverter,
     Converter? converter,
     Uri? baseUrl,
     Iterable<dynamic>? interceptors,
@@ -42,6 +43,7 @@ abstract class FireflyIiiV2 extends ChopperService {
         interceptors: interceptors ?? [],
         client: httpClient,
         authenticator: authenticator,
+        errorConverter: errorConverter,
         baseUrl: baseUrl ?? Uri.parse('http://'));
     return _$FireflyIiiV2(newClient);
   }

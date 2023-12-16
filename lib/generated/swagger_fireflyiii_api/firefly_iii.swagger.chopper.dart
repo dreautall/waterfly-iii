@@ -29,7 +29,7 @@ final class _$FireflyIii extends FireflyIii {
       'query': query,
       'limit': limit,
       'date': date,
-      'types': types?.join(","),
+      'types': types,
     };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
@@ -3834,27 +3834,25 @@ final class _$FireflyIii extends FireflyIii {
   Future<Response<CurrencySingle>> _v1CurrenciesCodePut({
     String? xTraceId,
     required String? code,
-    required CurrencyUpdate body,
+    required Map<String, String> body,
   }) {
     final Uri $url = Uri.parse('/v1/currencies/${code}');
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
+      'content-type': 'application/x-www-form-urlencoded',
     };
-    final List<PartValue> $parts = <PartValue>[
-      PartValue<CurrencyUpdate>(
-        'body',
-        body,
-      )
-    ];
+    final $body = body;
     final Request $request = Request(
       'PUT',
       $url,
       client.baseUrl,
-      parts: $parts,
-      multipart: true,
+      body: $body,
       headers: $headers,
     );
-    return client.send<CurrencySingle, CurrencySingle>($request);
+    return client.send<CurrencySingle, CurrencySingle>(
+      $request,
+      requestConverter: FormUrlEncodedConverter.requestFactory,
+    );
   }
 
   @override

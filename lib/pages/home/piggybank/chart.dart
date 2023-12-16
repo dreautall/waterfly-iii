@@ -38,16 +38,17 @@ class _PiggyChartState extends State<PiggyChart> {
     super.initState();
 
     currency = CurrencyRead(
-      id: widget.piggy.attributes.currencyId,
+      id: widget.piggy.attributes.currencyId ?? "0",
       type: "currencies",
-      attributes: currencyS(
-        code: widget.piggy.attributes.currencyCode,
+      attributes: Currency(
+        code: widget.piggy.attributes.currencyCode ?? "",
         name: "",
-        symbol: widget.piggy.attributes.currencySymbol,
+        symbol: widget.piggy.attributes.currencySymbol ?? "",
         decimalPlaces: widget.piggy.attributes.currencyDecimalPlaces,
       ),
     );
-    targetAmount = double.tryParse(widget.piggy.attributes.targetAmount) ?? 0;
+    targetAmount =
+        double.tryParse(widget.piggy.attributes.targetAmount ?? "") ?? 0;
   }
 
   @override
@@ -60,17 +61,17 @@ class _PiggyChartState extends State<PiggyChart> {
 
     double total = 0;
 
-    if (widget.piggy.attributes.startDate.microsecondsSinceEpoch != 0) {
+    if (widget.piggy.attributes.startDate != null) {
       data.add(TimeSeriesChart(
-        widget.piggy.attributes.startDate,
+        widget.piggy.attributes.startDate!,
         0,
       ));
     }
 
     for (PiggyBankEventRead e in widget.data) {
-      final DateTime date = e.attributes.createdAt;
-      final double amount = double.tryParse(e.attributes.amount) ?? 0;
-      if (date.microsecondsSinceEpoch == 0 || amount == 0) {
+      final DateTime? date = e.attributes.createdAt ?? e.attributes.updatedAt;
+      final double amount = double.tryParse(e.attributes.amount ?? "") ?? 0;
+      if (date == null || amount == 0) {
         continue;
       }
       total += amount;
@@ -145,7 +146,7 @@ class _PiggyChartState extends State<PiggyChart> {
         activationMode: ActivationMode.longPress,
         lineType: TrackballLineType.vertical,
         tooltipSettings: InteractiveTooltip(
-          decimalPlaces: currency.attributes.decimalPlaces,
+          decimalPlaces: currency.attributes.decimalPlaces ?? 2,
           format:
               "point.x ${currency.fmt(123, decimalDigits: 0).replaceAll("123", "point.y")}",
           canShowMarker: false,

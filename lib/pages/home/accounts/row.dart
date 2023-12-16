@@ -14,15 +14,16 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
   if (account.attributes.type == ShortAccountTypeProperty.liability) {
     currentAmount = double.tryParse(account.attributes.currentDebt ?? "") ?? 0;
   } else {
-    currentAmount = double.tryParse(account.attributes.currentBalance) ?? 0;
+    currentAmount =
+        double.tryParse(account.attributes.currentBalance ?? "") ?? 0;
   }
   final CurrencyRead currency = CurrencyRead(
-    id: account.attributes.currencyId,
+    id: account.attributes.currencyId ?? "0",
     type: "currencies",
-    attributes: currencyS(
-      code: account.attributes.currencyCode,
+    attributes: Currency(
+      code: account.attributes.currencyCode ?? "",
       name: "",
-      symbol: account.attributes.currencySymbol,
+      symbol: account.attributes.currencySymbol ?? "",
       decimalPlaces: account.attributes.currencyDecimalPlaces,
     ),
   );
@@ -139,18 +140,16 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
             ),
             const TextSpan(text: "\n"),
             TextSpan(
-              text: account.attributes.currentBalanceDate
-                          .microsecondsSinceEpoch !=
-                      0
+              text: account.attributes.currentBalanceDate != null
                   ? DateFormat.yMd()
                       .add_Hms()
-                      .format(account.attributes.currentBalanceDate.toLocal())
+                      .format(account.attributes.currentBalanceDate!.toLocal())
                   : S.of(context).generalNever,
             ),
           ],
         ),
       ),
-      enabled: account.attributes.active,
+      enabled: account.attributes.active ?? true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16),

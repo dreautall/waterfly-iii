@@ -263,12 +263,7 @@ class _HomeMainState extends State<HomeMain>
       }
       lastMonthsExpense[e] = respInsightExpense.body!.isNotEmpty
           ? respInsightExpense.body!.first
-          : const InsightTotalEntry(
-              differenceFloat: 0,
-              difference: "",
-              currencyId: "",
-              currencyCode: "",
-            );
+          : const InsightTotalEntry(differenceFloat: 0);
       final Response<InsightTotal> respInsightIncome =
           await api.v1InsightIncomeTotalGet(
         start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
@@ -288,25 +283,20 @@ class _HomeMainState extends State<HomeMain>
       }
       lastMonthsIncome[e] = respInsightIncome.body!.isNotEmpty
           ? respInsightIncome.body!.first
-          : const InsightTotalEntry(
-              differenceFloat: 0,
-              difference: "",
-              currencyId: "",
-              currencyCode: "",
-            );
+          : const InsightTotalEntry(differenceFloat: 0);
     }
 
     // If too big digits are present (>=100000), only show two columns to avoid
     // wrapping issues. See #30.
     double maxNum = 0;
     lastMonthsIncome.forEach((_, InsightTotalEntry value) {
-      if (value.differenceFloat > maxNum) {
-        maxNum = value.differenceFloat;
+      if ((value.differenceFloat ?? 0) > maxNum) {
+        maxNum = value.differenceFloat ?? 0;
       }
     });
     lastMonthsExpense.forEach((_, InsightTotalEntry value) {
-      if (value.differenceFloat > maxNum) {
-        maxNum = value.differenceFloat;
+      if ((value.differenceFloat ?? 0) > maxNum) {
+        maxNum = value.differenceFloat ?? 0;
       }
     });
     if (maxNum >= 100000) {
@@ -356,17 +346,17 @@ class _HomeMainState extends State<HomeMain>
     Map<String, double> catIncomes = <String, double>{};
     for (InsightGroupEntry cat
         in respCatIncomeData.body ?? <InsightGroupEntry>[]) {
-      if (cat.id.isEmpty) {
+      if (cat.id?.isEmpty ?? true) {
         continue;
       }
-      catIncomes[cat.id] = cat.differenceFloat;
+      catIncomes[cat.id!] = cat.differenceFloat ?? 0;
     }
 
     for (InsightGroupEntry cat in respCatExpenseData.body!) {
-      if (cat.id.isEmpty) {
+      if (cat.id?.isEmpty ?? true) {
         continue;
       }
-      double amount = cat.differenceFloat;
+      double amount = cat.differenceFloat ?? 0;
       if (catIncomes.containsKey(cat.id)) {
         amount += catIncomes[cat.id]!;
       }
@@ -433,7 +423,7 @@ class _HomeMainState extends State<HomeMain>
       } else if (budgetA == null && budgetB == null) {
         return 0;
       }
-      int compare = (budgetA!.order).compareTo(budgetB!.order);
+      int compare = (budgetA!.order ?? -1).compareTo(budgetB!.order ?? -1);
       if (compare != 0) {
         return compare;
       }
@@ -695,12 +685,12 @@ class _HomeMainState extends State<HomeMain>
                   final double balance =
                       double.tryParse(entries.entries.last.value) ?? 0;
                   final CurrencyRead currency = CurrencyRead(
-                    id: e.currencyId,
+                    id: e.currencyId ?? "0",
                     type: "currencies",
-                    attributes: currencyS(
-                      code: e.currencyCode,
+                    attributes: Currency(
+                      code: e.currencyCode ?? "",
                       name: "",
-                      symbol: e.currencySymbol,
+                      symbol: e.currencySymbol ?? "",
                       decimalPlaces: e.currencyDecimalPlaces,
                     ),
                   );
@@ -720,7 +710,7 @@ class _HomeMainState extends State<HomeMain>
                           ),
                         ),
                       ),
-                      Text(e.label),
+                      Text(e.label!),
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
@@ -795,7 +785,7 @@ class _HomeMainState extends State<HomeMain>
                           (MapEntry<DateTime, InsightTotalEntry> e) => Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              defaultCurrency.fmt(e.value.differenceFloat),
+                              defaultCurrency.fmt(e.value.differenceFloat ?? 0),
                               style: const TextStyle(
                                 fontFeatures: <FontFeature>[
                                   FontFeature.tabularFigures()
@@ -824,7 +814,7 @@ class _HomeMainState extends State<HomeMain>
                           (MapEntry<DateTime, InsightTotalEntry> e) => Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              defaultCurrency.fmt(e.value.differenceFloat),
+                              defaultCurrency.fmt(e.value.differenceFloat ?? 0),
                               style: const TextStyle(
                                 fontFeatures: <FontFeature>[
                                   FontFeature.tabularFigures()
@@ -844,10 +834,11 @@ class _HomeMainState extends State<HomeMain>
                     ),
                     ...lastMonthsIncome.entries.toList().reversed.map(
                       (MapEntry<DateTime, InsightTotalEntry> e) {
-                        final double income = e.value.differenceFloat;
+                        final double income = e.value.differenceFloat ?? 0;
                         double expense = 0;
                         if (lastMonthsExpense.containsKey(e.key)) {
-                          expense = lastMonthsExpense[e.key]!.differenceFloat;
+                          expense =
+                              lastMonthsExpense[e.key]!.differenceFloat ?? 0;
                         }
                         double sum = income + expense;
                         return Align(
@@ -1162,12 +1153,12 @@ class BudgetList extends StatelessWidget {
                 continue;
               }
               final CurrencyRead currency = CurrencyRead(
-                id: budget.attributes.currencyId,
+                id: budget.attributes.currencyId ?? "0",
                 type: "currencies",
-                attributes: currencyS(
-                  code: budget.attributes.currencyCode,
-                  name: budget.attributes.currencyName,
-                  symbol: budget.attributes.currencySymbol,
+                attributes: Currency(
+                  code: budget.attributes.currencyCode ?? "",
+                  name: budget.attributes.currencyName ?? "",
+                  symbol: budget.attributes.currencySymbol ?? "",
                   decimalPlaces: budget.attributes.currencyDecimalPlaces,
                 ),
               );
@@ -1278,7 +1269,7 @@ class BillList extends StatelessWidget {
                 return dateCompare;
               }
               final int orderCompare =
-                  (a.attributes.order).compareTo(b.attributes.order);
+                  (a.attributes.order ?? 0).compareTo(b.attributes.order ?? 0);
               if (orderCompare != 0) {
                 return orderCompare;
               }
@@ -1292,7 +1283,7 @@ class BillList extends StatelessWidget {
                         DateTime.now())
                     .subtract(const Duration(days: 1));
             for (BillRead bill in snapshot.data!) {
-              if (!bill.attributes.active) {
+              if (!(bill.attributes.active ?? false)) {
                 continue;
               }
 
@@ -1300,12 +1291,12 @@ class BillList extends StatelessWidget {
                   bill.attributes.nextExpectedMatch?.toLocal() ??
                       DateTime.now();
               final CurrencyRead currency = CurrencyRead(
-                id: bill.attributes.currencyId,
+                id: bill.attributes.currencyId ?? "0",
                 type: "currencies",
-                attributes: currencyS(
-                  code: bill.attributes.currencyCode,
+                attributes: Currency(
+                  code: bill.attributes.currencyCode ?? "",
                   name: "",
-                  symbol: bill.attributes.currencySymbol,
+                  symbol: bill.attributes.currencySymbol ?? "",
                   decimalPlaces: bill.attributes.currencyDecimalPlaces,
                 ),
               );

@@ -178,16 +178,17 @@ class _TransactionPageState extends State<TransactionPage>
       _localCurrency = CurrencyRead(
         type: "currencies",
         id: transactions.first.currencyId!,
-        attributes: currencyS(
+        attributes: Currency(
           code: transactions.first.currencyCode!,
-          name: transactions.first.currencyName,
-          symbol: transactions.first.currencySymbol,
+          name: transactions.first.currencyName!,
+          symbol: transactions.first.currencySymbol!,
           decimalPlaces: transactions.first.currencyDecimalPlaces,
         ),
       );
 
       // Reconciled
-      _reconciled = widget.clone ? false : transactions.first.reconciled;
+      _reconciled =
+          widget.clone ? false : transactions.first.reconciled ?? false;
 
       for (TransactionSplit trans in transactions) {
         // Always in card view
@@ -222,19 +223,6 @@ class _TransactionPageState extends State<TransactionPage>
                 amountMax: "",
                 date: DateTime.now(),
                 repeatFreq: BillRepeatFrequency.swaggerGeneratedUnknown,
-                createdAt: DateTime.now(),
-                updatedAt: DateTime.now(),
-                currencyId: '',
-                currencyCode: '',
-                currencySymbol: '',
-                currencyDecimalPlaces: 0,
-                endDate: DateTime.now(),
-                extensionDate: DateTime.now(),
-                skip: 0,
-                active: false,
-                order: 0,
-                payDates: <DateTime>[],
-                paidDates: <Bill$PaidDates$Item>[],
               ),
             ),
           );
@@ -251,7 +239,8 @@ class _TransactionPageState extends State<TransactionPage>
         /// local amount
         _localAmounts.add(double.tryParse(trans.amount) ?? 0);
         _localAmountTextControllers.add(TextEditingController(
-          text: _localAmounts.last.toStringAsFixed(trans.currencyDecimalPlaces),
+          text: _localAmounts.last
+              .toStringAsFixed(trans.currencyDecimalPlaces ?? 2),
         ));
 
         /// other account
@@ -286,11 +275,11 @@ class _TransactionPageState extends State<TransactionPage>
           _foreignCurrencies.add(CurrencyRead(
             type: "currencies",
             id: trans.foreignCurrencyId!,
-            attributes: currencyS(
+            attributes: Currency(
               code: trans.foreignCurrencyCode!,
               name: "", // empty
               symbol: trans.foreignCurrencySymbol!,
-              decimalPlaces: trans.foreignCurrencyDecimalPlaces ?? 2,
+              decimalPlaces: trans.foreignCurrencyDecimalPlaces,
             ),
           ));
         } else {
@@ -302,8 +291,9 @@ class _TransactionPageState extends State<TransactionPage>
             .add(widget.clone ? null : trans.transactionJournalId);
 
         //// Attachments
-        _hasAttachments =
-            widget.clone ? false : _hasAttachments || (trans.hasAttachments);
+        _hasAttachments = widget.clone
+            ? false
+            : _hasAttachments || (trans.hasAttachments ?? false);
 
         // Card Animations
         _cardsAnimationController.add(AnimationController(
@@ -965,19 +955,14 @@ class _TransactionPageState extends State<TransactionPage>
                           sourceName: sourceName,
                           tags: _tags[i].tags,
                           transactionJournalId:
-                              _transactionJournalIDs.elementAtOrNull(i) ?? "0",
+                              _transactionJournalIDs.elementAtOrNull(i),
                           type: _transactionType,
                           reconciled: _reconciled,
-                          currencyName: "",
-                          currencySymbol: "",
-                          currencyDecimalPlaces: 0,
                         ));
                       }
                       TransactionUpdate txUpdate = TransactionUpdate(
                         groupTitle: _split ? _titleTextController.text : null,
                         transactions: txS,
-                        applyRules: true,
-                        fireWebhooks: true,
                       );
                       // Delete old splits
                       for (String id in _deletedSplitIDs) {
@@ -1062,13 +1047,12 @@ class _TransactionPageState extends State<TransactionPage>
                         ValidationError valError = ValidationError.fromJson(
                           json.decode(resp.error.toString()),
                         );
-                        error = valError.message;
-                        if (error.isEmpty) {
-                          error = (context.mounted
-                              // ignore: use_build_context_synchronously
-                              ? S.of(context).errorUnknown
-                              : "[nocontext] Unknown error.");
-                        }
+                        error = valError.message ??
+                            // ignore: use_build_context_synchronously
+                            (context.mounted
+                                // ignore: use_build_context_synchronously
+                                ? S.of(context).errorUnknown
+                                : "[nocontext] Unknown error.");
                       } catch (_) {
                         // ignore: use_build_context_synchronously
                         error = context.mounted
@@ -1100,9 +1084,9 @@ class _TransactionPageState extends State<TransactionPage>
                       TransactionSplit? tx = resp
                           .body?.data.attributes.transactions
                           .firstWhereOrNull((TransactionSplit e) =>
-                              e.transactionJournalId != "");
+                              e.transactionJournalId != null);
                       if (tx != null) {
-                        String txId = tx.transactionJournalId;
+                        String txId = tx.transactionJournalId!;
                         log.finest(() => "uploading to txId $txId");
                         for (AttachmentRead attachment in _attachments!) {
                           log.finest(() =>
@@ -1110,7 +1094,6 @@ class _TransactionPageState extends State<TransactionPage>
                           final Response<AttachmentSingle> respAttachment =
                               await api.v1AttachmentsPost(
                             body: AttachmentStore(
-                              title: attachment.attributes.filename,
                               filename: attachment.attributes.filename,
                               attachableType: AttachableType.transactionjournal,
                               attachableId: txId,
@@ -1127,7 +1110,7 @@ class _TransactionPageState extends State<TransactionPage>
                               () => "attachment id is ${newAttachment.id}");
                           final HttpClientRequest request =
                               await HttpClient().postUrl(
-                            Uri.parse(newAttachment.attributes.uploadUrl),
+                            Uri.parse(newAttachment.attributes.uploadUrl!),
                           );
                           user!.headers().forEach(
                                 (String key, String value) =>
@@ -1136,7 +1119,7 @@ class _TransactionPageState extends State<TransactionPage>
                           request.headers.set(HttpHeaders.contentTypeHeader,
                               "application/octet-stream");
                           final Stream<List<int>> listenStream =
-                              File(attachment.attributes.uploadUrl)
+                              File(attachment.attributes.uploadUrl!)
                                   .openRead()
                                   .transform(
                                     StreamTransformer<List<int>,
@@ -1631,7 +1614,7 @@ class _TransactionPageState extends State<TransactionPage>
         _localCurrency = CurrencyRead(
           type: "currencies",
           id: option.currencyId.toString(),
-          attributes: currencyS(
+          attributes: Currency(
             code: option.currencyCode,
             name: option.currencyName,
             symbol: option.currencySymbol,

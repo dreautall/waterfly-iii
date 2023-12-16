@@ -59,7 +59,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     final String filePath = "${tmpPath.path}/${attachment.attributes.filename}";
 
     final HttpClientRequest request = await HttpClient().getUrl(
-      Uri.parse(attachment.attributes.downloadUrl),
+      Uri.parse(attachment.attributes.downloadUrl!),
     );
     user.headers().forEach(
           (String key, String value) => request.headers.add(key, value),
@@ -75,7 +75,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     }
     total = resp.headers.contentLength;
     if (total == 0) {
-      total = attachment.attributes.size;
+      total = attachment.attributes.size ?? 0;
     }
     resp.listen(
       (List<int> value) {
@@ -153,7 +153,6 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     final Response<AttachmentSingle> respAttachment =
         await api.v1AttachmentsPost(
       body: AttachmentStore(
-        title: file.name,
         filename: file.name,
         attachableType: AttachableType.transactionjournal,
         attachableId: widget.transactionId!,
@@ -164,8 +163,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       try {
         ValidationError valError = ValidationError.fromJson(
             json.decode(respAttachment.error.toString()));
-        error = valError.message;
-        if (error.isEmpty) error = l10n.errorUnknown;
+        error = valError.message ?? l10n.errorUnknown;
       } catch (_) {
         error = l10n.errorUnknown;
       }
@@ -187,7 +185,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     });
 
     final HttpClientRequest request = await HttpClient().postUrl(
-      Uri.parse(newAttachment.attributes.uploadUrl),
+      Uri.parse(newAttachment.attributes.uploadUrl!),
     );
     user.headers().forEach(
           (String key, String value) => request.headers.add(key, value),
@@ -232,8 +230,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       final String respString = await resp.transform(utf8.decoder).join();
       ValidationError valError =
           ValidationError.fromJson(json.decode(respString));
-      error = valError.message;
-      if (error.isEmpty) error = l10n.errorUnknown;
+      error = valError.message ?? l10n.errorUnknown;
     } catch (_) {
       error = l10n.errorUnknown;
     }
@@ -290,15 +287,10 @@ class _AttachmentDialogState extends State<AttachmentDialog>
         attachableType: AttachableType.transactionjournal,
         attachableId: "FAKE",
         filename: file.name,
-        uploadUrl: file.path ?? "",
+        uploadUrl: file.path,
         size: file.size,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-        md5: "",
-        downloadUrl: "",
-        mime: "",
       ),
-      links: const ObjectLink(self: ""),
+      links: const ObjectLink(),
     );
     setState(() {
       widget.attachments.add(newAttachment);
@@ -312,10 +304,13 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     for (int i = 0; i < widget.attachments.length; i++) {
       AttachmentRead attachment = widget.attachments[i];
       String subtitle = "";
-      DateTime modDate = attachment.attributes.updatedAt;
-      subtitle = DateFormat.yMd().add_Hms().format(modDate.toLocal());
+      DateTime? modDate =
+          attachment.attributes.updatedAt ?? attachment.attributes.createdAt;
+      if (modDate != null) {
+        subtitle = DateFormat.yMd().add_Hms().format(modDate.toLocal());
+      }
 
-      if (attachment.attributes.size != 0) {
+      if (attachment.attributes.size != null) {
         subtitle = "$subtitle (${filesize(attachment.attributes.size)})";
       }
       childs.add(ListTile(

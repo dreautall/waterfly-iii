@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:chopper/chopper.dart' show Response;
 
 import 'package:waterflyiii/auth.dart';
-import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 final Logger log = Logger("Pages.Home.Transaction.Filter");
@@ -268,23 +267,6 @@ class FilterDialog extends StatelessWidget {
                               .homeTransactionsDialogFilterAccountsAll,
                           type:
                               ShortAccountTypeProperty.swaggerGeneratedUnknown,
-                          createdAt: DateTime.now(),
-                          updatedAt: DateTime.now(),
-                          active: false,
-                          accountRole: null,
-                          currencyId: '',
-                          currencyCode: '',
-                          currencySymbol: '',
-                          currencyDecimalPlaces: 0,
-                          currentBalance: '',
-                          currentBalanceDate: DateTime.now(),
-                          openingBalance: '',
-                          virtualBalance: '',
-                          includeNetWorth: false,
-                          creditCardType: null,
-                          liabilityType: null,
-                          liabilityDirection: null,
-                          interestPeriod: null,
                         ),
                       ),
                       label:
@@ -326,13 +308,12 @@ class FilterDialog extends StatelessWidget {
                       value: CurrencyRead(
                         id: "0",
                         type: "dummy",
-                        attributes: currencyS(
+                        attributes: Currency(
                           name: S
                               .of(context)
                               .homeTransactionsDialogFilterCurrenciesAll,
                           code: "",
                           symbol: "",
-                          decimalPlaces: 0,
                         ),
                       ),
                       label: S
@@ -379,10 +360,6 @@ class FilterDialog extends StatelessWidget {
                           name: S
                               .of(context)
                               .homeTransactionsDialogFilterCategoriesAll,
-                          createdAt: DateTime.now(),
-                          updatedAt: DateTime.now(),
-                          spent: <CategorySpent>[],
-                          earned: <CategoryEarned>[],
                         ),
                       ),
                       label: S
@@ -397,10 +374,6 @@ class FilterDialog extends StatelessWidget {
                           name: S
                               .of(context)
                               .homeTransactionsDialogFilterCategoryUnset,
-                          createdAt: DateTime.now(),
-                          updatedAt: DateTime.now(),
-                          spent: <CategorySpent>[],
-                          earned: <CategoryEarned>[],
                         ),
                       ),
                       label: S
@@ -450,13 +423,6 @@ class FilterDialog extends StatelessWidget {
                           name: S
                               .of(context)
                               .homeTransactionsDialogFilterBudgetsAll,
-                          createdAt: DateTime.now(),
-                          updatedAt: DateTime.now(),
-                          active: false,
-                          order: 0,
-                          autoBudgetType: null,
-                          autoBudgetPeriod: null,
-                          spent: <BudgetSpent>[],
                         ),
                       ),
                       label:
@@ -470,13 +436,6 @@ class FilterDialog extends StatelessWidget {
                           name: S
                               .of(context)
                               .homeTransactionsDialogFilterBudgetUnset,
-                          createdAt: DateTime.now(),
-                          updatedAt: DateTime.now(),
-                          active: false,
-                          order: 0,
-                          autoBudgetType: null,
-                          autoBudgetPeriod: null,
-                          spent: <BudgetSpent>[],
                         ),
                       ),
                       label:
@@ -530,19 +489,6 @@ class FilterDialog extends StatelessWidget {
                           name: S
                               .of(context)
                               .homeTransactionsDialogFilterBillsAll,
-                          createdAt: DateTime.now(),
-                          updatedAt: DateTime.now(),
-                          currencyId: '',
-                          currencyCode: '',
-                          currencySymbol: '',
-                          currencyDecimalPlaces: 0,
-                          endDate: DateTime.now(),
-                          extensionDate: DateTime.now(),
-                          skip: 0,
-                          active: false,
-                          order: 0,
-                          payDates: <DateTime>[],
-                          paidDates: <Bill$PaidDates$Item>[],
                         ),
                       ),
                       label: S.of(context).homeTransactionsDialogFilterBillsAll,
@@ -560,19 +506,6 @@ class FilterDialog extends StatelessWidget {
                           name: S
                               .of(context)
                               .homeTransactionsDialogFilterBillUnset,
-                          createdAt: DateTime.now(),
-                          updatedAt: DateTime.now(),
-                          currencyId: '',
-                          currencyCode: '',
-                          currencySymbol: '',
-                          currencyDecimalPlaces: 0,
-                          endDate: DateTime.now(),
-                          extensionDate: DateTime.now(),
-                          skip: 0,
-                          active: false,
-                          order: 0,
-                          payDates: <DateTime>[],
-                          paidDates: <Bill$PaidDates$Item>[],
                         ),
                       ),
                       label:

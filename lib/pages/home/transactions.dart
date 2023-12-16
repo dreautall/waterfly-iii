@@ -194,16 +194,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
       if (mounted) {
         // check if it is the last page
         if (transactionList.length < _numberOfPostsPerRequest) {
-          transactionList.add(TransactionRead(
+          transactionList.add(const TransactionRead(
             type: "WF3_DUMMY_SPACING_ELEMENT",
             id: "WF3_DUMMY_SPACING_ELEMENT",
-            attributes: Transaction(
-              transactions: <TransactionSplit>[],
-              createdAt: DateTime.now(),
-              updatedAt: DateTime.now(),
-              user: "",
-            ),
-            links: const ObjectLink(self: ""),
+            attributes: Transaction(transactions: <TransactionSplit>[]),
+            links: ObjectLink(),
           ));
           _pagingController.appendLastPage(transactionList);
         } else {
@@ -281,7 +276,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
         }
         notes += trans.notes!.trim();
       }
-      if (trans.hasAttachments) {
+      if (trans.hasAttachments ?? false) {
         hasAttachments = true;
       }
       amount += double.parse(trans.amount);
@@ -295,11 +290,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
           foreignCurrencies[foreignSymbol] = CurrencyRead(
             id: trans.foreignCurrencyId ?? "0",
             type: "currencies",
-            attributes: currencyS(
+            attributes: Currency(
               code: trans.foreignCurrencyCode ?? "",
               name: "",
               symbol: trans.foreignCurrencySymbol ?? "",
-              decimalPlaces: trans.foreignCurrencyDecimalPlaces ?? 2,
+              decimalPlaces: trans.foreignCurrencyDecimalPlaces,
             ),
           );
         }
@@ -375,14 +370,14 @@ class _HomeTransactionsState extends State<HomeTransactions>
       );
     }
 
-    reconciled = transactions.first.reconciled;
+    reconciled = transactions.first.reconciled ?? false;
     final CurrencyRead currency = CurrencyRead(
       id: transactions.first.currencyId ?? "0",
       type: "currencies",
-      attributes: currencyS(
+      attributes: Currency(
         code: transactions.first.currencyCode ?? "",
-        name: transactions.first.currencyName,
-        symbol: transactions.first.currencySymbol,
+        name: transactions.first.currencyName ?? "",
+        symbol: transactions.first.currencySymbol ?? "",
         decimalPlaces: transactions.first.currencyDecimalPlaces,
       ),
     );

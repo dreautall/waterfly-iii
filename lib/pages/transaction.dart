@@ -1534,6 +1534,10 @@ class _TransactionPageState extends State<TransactionPage>
                   DateTime? pickedDate = await showDatePicker(
                     context: context,
                     initialDate: _date,
+                    locale: Locale(
+                      Intl.defaultLocale!.split("_").first,
+                      Intl.defaultLocale!.split("_").last,
+                    ),
                     firstDate: DateTime(2000),
                     lastDate: DateTime(2101),
                   );

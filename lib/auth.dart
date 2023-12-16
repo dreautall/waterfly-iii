@@ -290,7 +290,7 @@ class FireflyService with ChangeNotifier {
 
     Response<SystemInfo> about = await api.v1AboutGet();
     try {
-      _apiVersion = Version.parse(about.body?.data.apiVersion ?? "");
+      _apiVersion = Version.parse(about.body?.data?.apiVersion ?? "");
     } on FormatException {
       throw const AuthErrorVersionInvalid();
     }

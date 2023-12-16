@@ -75,18 +75,18 @@ class _HomeBalanceState extends State<HomeBalance>
               children: <Widget>[
                 ...snapshot.data!.data.map(
                   (AccountRead account) {
-                    if (!account.attributes.active) {
+                    if (!(account.attributes.active ?? false)) {
                       return const SizedBox.shrink();
                     }
                     final double balance =
-                        double.tryParse(account.attributes.currentBalance) ?? 0;
+                        double.parse(account.attributes.currentBalance ?? "");
                     final CurrencyRead currency = CurrencyRead(
-                      id: account.attributes.currencyId,
+                      id: account.attributes.currencyId ?? "",
                       type: "currencies",
-                      attributes: currencyS(
-                        code: account.attributes.currencyCode,
+                      attributes: Currency(
+                        code: account.attributes.currencyCode ?? "",
                         name: "",
-                        symbol: account.attributes.currencySymbol,
+                        symbol: account.attributes.currencySymbol ?? "",
                         decimalPlaces: account.attributes.currencyDecimalPlaces,
                       ),
                     );
@@ -145,11 +145,10 @@ class _HomeBalanceState extends State<HomeBalance>
                               ),
                               const TextSpan(text: "\n"),
                               TextSpan(
-                                text: account.attributes.currentBalanceDate
-                                            .millisecondsSinceEpoch !=
-                                        0
+                                text: account.attributes.currentBalanceDate !=
+                                        null
                                     ? DateFormat.yMd().add_Hms().format(account
-                                        .attributes.currentBalanceDate
+                                        .attributes.currentBalanceDate!
                                         .toLocal())
                                     : S.of(context).generalNever,
                               ),

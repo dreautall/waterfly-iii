@@ -411,20 +411,3 @@ extension BillAmountAvg on Bill {
     return (amountMin + amountMax) / 2;
   }
 }
-
-Currency currencyS({
-  required String code,
-  required String name,
-  required String symbol,
-  required int decimalPlaces,
-}) =>
-    Currency(
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-      enabled: true,
-      $default: false,
-      code: code,
-      name: name,
-      symbol: symbol,
-      decimalPlaces: decimalPlaces,
-    );

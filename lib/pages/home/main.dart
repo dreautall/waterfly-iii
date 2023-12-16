@@ -433,7 +433,7 @@ class _HomeMainState extends State<HomeMain>
     return respBudgets.body!.data;
   }
 
-  /*Future<List<BillRead>> _fetchBills() async {
+  Future<List<BillRead>> _fetchBills() async {
     final FireflyIii api = context.read<FireflyService>().api;
 
     final DateTime now = DateTime.now().toLocal().clearTime();
@@ -464,7 +464,7 @@ class _HomeMainState extends State<HomeMain>
             .clearTime()
             .isBefore(end.copyWith(day: end.day + 1)))
         .toList(growable: false);
-  }*/
+  }
 
   Future<bool> _fetchBalance() async {
     /*if (lastMonthsEarned.isNotEmpty) {
@@ -1070,54 +1070,57 @@ class _HomeMainState extends State<HomeMain>
             ),
           ),
           // No sizedbox, done via margins on (maybe hidden) budget card view
-          /* Disabled until https://github.com/firefly-iii/firefly-iii/issues/8115
-             is fixed 
-          AnimatedHeight(
-            child: FutureBuilder<List<BillRead>>(
-              future: _fetchBills(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<BillRead>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.done &&
-                    snapshot.hasData) {
-                  if (snapshot.data!.isEmpty) {
-                    return const SizedBox.shrink();
-                  }
-                  return Card(
-                    clipBehavior: Clip.hardEdge,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Text(
-                            S.of(context).homeMainBillsTitle,
-                            style: Theme.of(context).textTheme.titleMedium,
+          // Only enabled for API v2.0.12 and newer (Firefly v6.1.0 and newer)
+          // due to https://github.com/firefly-iii/firefly-iii/issues/8115
+          (context.read<FireflyService>().apiVersion! >= Version(2, 0, 12))
+              ? AnimatedHeight(
+                  child: FutureBuilder<List<BillRead>>(
+                    future: _fetchBills(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<BillRead>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done &&
+                          snapshot.hasData) {
+                        if (snapshot.data!.isEmpty) {
+                          return const SizedBox.shrink();
+                        }
+                        return Card(
+                          clipBehavior: Clip.hardEdge,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Text(
+                                  S.of(context).homeMainBillsTitle,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                              ),
+                              BillList(
+                                snapshot: snapshot,
+                              ),
+                            ],
                           ),
-                        ),
-                        BillList(
-                          snapshot: snapshot,
-                        ),
-                      ],
-                    ),
-                  );
-                } else if (snapshot.hasError) {
-                  log.severe("error fetching bills", snapshot.error,
-                      snapshot.stackTrace);
-                  return Text(snapshot.error!.toString());
-                } else {
-                  return const Card(
-                    clipBehavior: Clip.hardEdge,
-                    child: Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
-                  );
-                }
-              },
-            ),
-          ),*/
+                        );
+                      } else if (snapshot.hasError) {
+                        log.severe("error fetching bills", snapshot.error,
+                            snapshot.stackTrace);
+                        return Text(snapshot.error!.toString());
+                      } else {
+                        return const Card(
+                          clipBehavior: Clip.hardEdge,
+                          child: Padding(
+                            padding: EdgeInsets.all(8),
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                )
+              : const SizedBox.shrink(),
           const SizedBox(height: 68),
         ],
       ),

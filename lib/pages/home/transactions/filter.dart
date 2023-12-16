@@ -244,7 +244,9 @@ class FilterDialog extends StatelessWidget {
                         onChanged: (bool? value) => context
                             .read<SettingsProvider>()
                             .setShowFutureTXs(value ?? false),
-                        title: Text("Show future transactions"),
+                        title: Text(S
+                            .of(context)
+                            .homeTransactionsDialogFilterFutureTransactions),
                       ),
                     ),
                   );

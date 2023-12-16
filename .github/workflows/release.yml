@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
 
       # Setup Java environment in order to build the Android app.
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: ${{env.JAVA_VERSION}}

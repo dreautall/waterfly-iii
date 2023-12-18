@@ -55,8 +55,8 @@ class _PiggyChartState extends State<PiggyChart> {
   Widget build(BuildContext context) {
     log.finest(() => "build()");
 
-    final List<ChartSeries<TimeSeriesChart, DateTime>> chartData =
-        <ChartSeries<TimeSeriesChart, DateTime>>[];
+    final List<CartesianSeries<TimeSeriesChart, DateTime>> chartData =
+        <CartesianSeries<TimeSeriesChart, DateTime>>[];
     final List<TimeSeriesChart> data = <TimeSeriesChart>[];
 
     double total = 0;

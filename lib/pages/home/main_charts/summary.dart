@@ -25,8 +25,8 @@ class SummaryChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<ChartSeries<TimeSeriesChart, DateTime>> chartData =
-        <ChartSeries<TimeSeriesChart, DateTime>>[];
+    final List<CartesianSeries<TimeSeriesChart, DateTime>> chartData =
+        <CartesianSeries<TimeSeriesChart, DateTime>>[];
 
     for (ChartDataSet e in data) {
       chartData.add(
@@ -170,8 +170,8 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
               AsyncSnapshot<List<ChartDataSet>> snapshot) {
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData) {
-              final List<ChartSeries<TimeSeriesChart, DateTime>> chartData =
-                  <ChartSeries<TimeSeriesChart, DateTime>>[];
+              final List<CartesianSeries<TimeSeriesChart, DateTime>> chartData =
+                  <CartesianSeries<TimeSeriesChart, DateTime>>[];
 
               for (ChartDataSet e in snapshot.data!) {
                 if (e.label == null || e.label!.isEmpty) {
@@ -209,8 +209,8 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                                   .colorScheme
                                   .onSurfaceVariant),
                           minorTicksPerInterval: 3,
-                          zoomFactor: 0.09,
-                          zoomPosition: 1,
+                          initialZoomFactor: 0.09,
+                          initialZoomPosition: 1,
                         ),
                         primaryYAxis: NumericAxis(
                           labelStyle:

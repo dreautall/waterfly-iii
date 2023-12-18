@@ -22,8 +22,8 @@ class NetWorthChart extends StatelessWidget {
     final List<LabelAmountChart> chartDataLiabilities = <LabelAmountChart>[];
     final Map<String, double> balance = <String, double>{};
     final List<LabelAmountChart> chartDataBalance = <LabelAmountChart>[];
-    final List<ChartSeries<LabelAmountChart, String>> chartData =
-        <ChartSeries<LabelAmountChart, String>>[];
+    final List<CartesianSeries<LabelAmountChart, String>> chartData =
+        <CartesianSeries<LabelAmountChart, String>>[];
 
     assets.forEach((DateTime d, double v) {
       chartDataAssets.add(

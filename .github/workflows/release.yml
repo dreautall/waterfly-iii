@@ -110,15 +110,15 @@ jobs:
     needs: [build]
 
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: app-arm64-v8a-release.apk
           path: ./artifacts
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: app-armeabi-v7a-release.apk
           path: ./artifacts
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: app-x86_64-release.apk
           path: ./artifacts
@@ -136,15 +136,15 @@ jobs:
     needs: [build]
 
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: app-release.aab
           path: ./artifacts
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: aab-debug-symbols.zip
           path: ./artifacts
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: mapping.txt
           path: ./artifacts

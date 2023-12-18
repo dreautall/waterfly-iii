@@ -391,7 +391,8 @@ class _TransactionPageState extends State<TransactionPage>
               }
               // extract amount
               // Check if string has a decimal separator
-              final String amountStr = validMatch.namedGroup("amount") ?? "";
+              final String amountStr =
+                  (validMatch.namedGroup("amount") ?? "").replaceAll(" ", "");
               final int decimalSepPos = amountStr.length >= 3 &&
                       (amountStr[amountStr.length - 3] == "." ||
                           amountStr[amountStr.length - 3] == ",")

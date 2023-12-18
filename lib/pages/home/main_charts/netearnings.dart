@@ -264,7 +264,7 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                           maximum: max,
                           decimalPlaces: 0,
                         ),
-                        series: <ChartSeries<WFChartData, String>>[
+                        series: <CartesianSeries<WFChartData, String>>[
                           WaterfallSeries<WFChartData, String>(
                             dataSource: chartData,
                             negativePointsColor: Colors.red,

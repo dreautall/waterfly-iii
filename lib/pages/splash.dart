@@ -104,30 +104,31 @@ class _SplashPageState extends State<SplashPage> {
       String errorDetails =
           "Host: ${context.read<FireflyService>().lastTriedHost}";
       final String errorDescription = () {
-        switch (_loginError.runtimeType) {
-          case AuthErrorHost _:
-          case AuthErrorApiKey _:
-          case AuthErrorNoInstance _:
-          case AuthErrorVersionInvalid _:
-            AuthError errorType = _loginError as AuthError;
-            return errorType.cause;
-          case AuthErrorStatusCode errorType:
-            errorDetails += "\n";
-            errorDetails += S.of(context).errorStatusCode(errorType.code);
-            return errorType.cause;
-          case AuthErrorVersionTooLow errorType:
-            errorDetails += "\n";
-            errorDetails += S
-                .of(context)
-                .errorMinAPIVersion(errorType.requiredVersion.toString());
-            return errorType.cause;
-          case HandshakeException _:
-            showCertButton = true;
-            return S.of(context).errorInvalidSSLCert;
-          default:
-            errorDetails += "\n$_loginError";
-            return S.of(context).errorUnknown;
+        if (_loginError is AuthErrorHost ||
+            _loginError is AuthErrorApiKey ||
+            _loginError is AuthErrorNoInstance ||
+            _loginError is AuthErrorVersionInvalid) {
+          AuthError errorType = _loginError as AuthError;
+          return errorType.cause;
+        } else if (_loginError is AuthErrorStatusCode) {
+          AuthErrorStatusCode errorType = _loginError as AuthErrorStatusCode;
+          errorDetails += "\n";
+          errorDetails += S.of(context).errorStatusCode(errorType.code);
+          return errorType.cause;
+        } else if (_loginError is AuthErrorVersionTooLow) {
+          AuthErrorVersionTooLow errorType =
+              _loginError as AuthErrorVersionTooLow;
+          errorDetails += "\n";
+          errorDetails += S
+              .of(context)
+              .errorMinAPIVersion(errorType.requiredVersion.toString());
+          return errorType.cause;
+        } else if (_loginError is HandshakeException) {
+          showCertButton = true;
+          return S.of(context).errorInvalidSSLCert;
         }
+        errorDetails += "\n$_loginError";
+        return S.of(context).errorUnknown;
       }();
       page = SizedBox(
         width: double.infinity,

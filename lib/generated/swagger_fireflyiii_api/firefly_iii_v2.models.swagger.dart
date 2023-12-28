@@ -795,6 +795,97 @@ class PolymorphicProperty {
 }
 
 @JsonSerializable(explicitToJson: true)
+class BasicSummaryV2 {
+  const BasicSummaryV2();
+
+  factory BasicSummaryV2.fromJson(Map<String, dynamic> json) =>
+      _$BasicSummaryV2FromJson(json);
+
+  static const toJsonFactory = _$BasicSummaryV2ToJson;
+  Map<String, dynamic> toJson() => _$BasicSummaryV2ToJson(this);
+
+  static const fromJsonFactory = _$BasicSummaryV2FromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class BasicSummaryEntry {
+  const BasicSummaryEntry({
+    this.key,
+    this.value,
+    this.currencyId,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyDecimalPlaces,
+  });
+
+  factory BasicSummaryEntry.fromJson(Map<String, dynamic> json) =>
+      _$BasicSummaryEntryFromJson(json);
+
+  static const toJsonFactory = _$BasicSummaryEntryToJson;
+  Map<String, dynamic> toJson() => _$BasicSummaryEntryToJson(this);
+
+  @JsonKey(name: 'key', includeIfNull: false)
+  final String? key;
+  @JsonKey(name: 'value', includeIfNull: false)
+  final double? value;
+  @JsonKey(name: 'currency_id', includeIfNull: false)
+  final String? currencyId;
+  @JsonKey(name: 'currency_code', includeIfNull: false)
+  final String? currencyCode;
+  @JsonKey(name: 'currency_symbol', includeIfNull: false)
+  final String? currencySymbol;
+  @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
+  final int? currencyDecimalPlaces;
+  static const fromJsonFactory = _$BasicSummaryEntryFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $BasicSummaryEntryExtension on BasicSummaryEntry {
+  BasicSummaryEntry copyWith(
+      {String? key,
+      double? value,
+      String? currencyId,
+      String? currencyCode,
+      String? currencySymbol,
+      int? currencyDecimalPlaces}) {
+    return BasicSummaryEntry(
+        key: key ?? this.key,
+        value: value ?? this.value,
+        currencyId: currencyId ?? this.currencyId,
+        currencyCode: currencyCode ?? this.currencyCode,
+        currencySymbol: currencySymbol ?? this.currencySymbol,
+        currencyDecimalPlaces:
+            currencyDecimalPlaces ?? this.currencyDecimalPlaces);
+  }
+
+  BasicSummaryEntry copyWithWrapped(
+      {Wrapped<String?>? key,
+      Wrapped<double?>? value,
+      Wrapped<String?>? currencyId,
+      Wrapped<String?>? currencyCode,
+      Wrapped<String?>? currencySymbol,
+      Wrapped<int?>? currencyDecimalPlaces}) {
+    return BasicSummaryEntry(
+        key: (key != null ? key.value : this.key),
+        value: (value != null ? value.value : this.value),
+        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+        currencyCode:
+            (currencyCode != null ? currencyCode.value : this.currencyCode),
+        currencySymbol: (currencySymbol != null
+            ? currencySymbol.value
+            : this.currencySymbol),
+        currencyDecimalPlaces: (currencyDecimalPlaces != null
+            ? currencyDecimalPlaces.value
+            : this.currencyDecimalPlaces));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class TransactionArray {
   const TransactionArray({
     required this.data,
@@ -1241,7 +1332,7 @@ class TransactionSplit {
   @JsonKey(name: 'original_source', includeIfNull: false)
   final String? originalSource;
   @JsonKey(name: 'recurrence_id', includeIfNull: false)
-  final int? recurrenceId;
+  final String? recurrenceId;
   @JsonKey(name: 'recurrence_total', includeIfNull: false)
   final int? recurrenceTotal;
   @JsonKey(name: 'recurrence_count', includeIfNull: false)
@@ -1332,7 +1423,7 @@ extension $TransactionSplitExtension on TransactionSplit {
       String? externalId,
       String? externalUrl,
       String? originalSource,
-      int? recurrenceId,
+      String? recurrenceId,
       int? recurrenceTotal,
       int? recurrenceCount,
       String? bunqPaymentId,
@@ -1461,7 +1552,7 @@ extension $TransactionSplitExtension on TransactionSplit {
       Wrapped<String?>? externalId,
       Wrapped<String?>? externalUrl,
       Wrapped<String?>? originalSource,
-      Wrapped<int?>? recurrenceId,
+      Wrapped<String?>? recurrenceId,
       Wrapped<int?>? recurrenceTotal,
       Wrapped<int?>? recurrenceCount,
       Wrapped<String?>? bunqPaymentId,

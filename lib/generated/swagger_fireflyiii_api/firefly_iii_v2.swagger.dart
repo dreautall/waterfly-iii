@@ -341,62 +341,54 @@ abstract class FireflyIiiV2 extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  ///@param id The ID of the budget.
   Future<chopper.Response<TransactionSumArray>> v2BudgetsSumBudgetedGet({
     String? xTraceId,
     required String? start,
     required String? end,
-    required String? id,
   }) {
     generatedMapping.putIfAbsent(
         TransactionSum, () => TransactionSum.fromJsonFactory);
 
     return _v2BudgetsSumBudgetedGet(
-        xTraceId: xTraceId?.toString(), start: start, end: end, id: id);
+        xTraceId: xTraceId?.toString(), start: start, end: end);
   }
 
   ///Returns the budgeted amount for all budgets in the given period.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  ///@param id The ID of the budget.
   @Get(path: '/v2/budgets/sum/budgeted')
   Future<chopper.Response<TransactionSumArray>> _v2BudgetsSumBudgetedGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
-    @Path('id') required String? id,
   });
 
   ///Returns the spent amount for all budgets in the given period.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  ///@param id The ID of the budget.
   Future<chopper.Response<TransactionSumArray>> v2BudgetsSumSpentGet({
     String? xTraceId,
     required String? start,
     required String? end,
-    required String? id,
   }) {
     generatedMapping.putIfAbsent(
         TransactionSum, () => TransactionSum.fromJsonFactory);
 
     return _v2BudgetsSumSpentGet(
-        xTraceId: xTraceId?.toString(), start: start, end: end, id: id);
+        xTraceId: xTraceId?.toString(), start: start, end: end);
   }
 
   ///Returns the spent amount for all budgets in the given period.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  ///@param id The ID of the budget.
   @Get(path: '/v2/budgets/sum/spent')
   Future<chopper.Response<TransactionSumArray>> _v2BudgetsSumSpentGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
-    @Path('id') required String? id,
   });
 
   ///Return a single preference.
@@ -441,6 +433,33 @@ abstract class FireflyIiiV2 extends ChopperService {
   Future<chopper.Response<TransactionSumArray>> _v2NetWorthGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('date') required String? date,
+  });
+
+  ///Returns basic sums of the users data.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  Future<chopper.Response<BasicSummaryV2>> v2SummaryBasicGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+  }) {
+    generatedMapping.putIfAbsent(
+        BasicSummaryV2, () => BasicSummaryV2.fromJsonFactory);
+
+    return _v2SummaryBasicGet(
+        xTraceId: xTraceId?.toString(), start: start, end: end);
+  }
+
+  ///Returns basic sums of the users data.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  @Get(path: '/v2/summary/basic')
+  Future<chopper.Response<BasicSummaryV2>> _v2SummaryBasicGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
   });
 }
 

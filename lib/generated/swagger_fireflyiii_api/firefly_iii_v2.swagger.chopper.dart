@@ -251,7 +251,6 @@ final class _$FireflyIiiV2 extends FireflyIiiV2 {
     String? xTraceId,
     required String? start,
     required String? end,
-    required String? id,
   }) {
     final Uri $url = Uri.parse('/v2/budgets/sum/budgeted');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -276,7 +275,6 @@ final class _$FireflyIiiV2 extends FireflyIiiV2 {
     String? xTraceId,
     required String? start,
     required String? end,
-    required String? id,
   }) {
     final Uri $url = Uri.parse('/v2/budgets/sum/spent');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -332,5 +330,29 @@ final class _$FireflyIiiV2 extends FireflyIiiV2 {
       headers: $headers,
     );
     return client.send<List<TransactionSum>, TransactionSum>($request);
+  }
+
+  @override
+  Future<Response<BasicSummaryV2>> _v2SummaryBasicGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+  }) {
+    final Uri $url = Uri.parse('/v2/summary/basic');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'start': start,
+      'end': end,
+    };
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+      headers: $headers,
+    );
+    return client.send<BasicSummaryV2, BasicSummaryV2>($request);
   }
 }

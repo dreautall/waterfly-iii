@@ -3,12 +3,12 @@ servers:
   - description: Firefly III demo site
     url: https://demo.firefly-iii.org/api
 info:
-  title: Firefly III API v2.0.12
+  title: Firefly III API v2.0.10
   description: |
-    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2023-12-26T15:13:43+00:00
+    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2023-10-15T12:13:25+00:00
 
     Please keep in mind that the demo site does not accept requests from curl, colly, wget, etc. You must use a browser or a tool like Postman to make requests. Too many script kiddies out there, sorry about that.
-  version: "2.0.12"
+  version: "2.0.10"
   contact:
     name: James Cole
     email: james@firefly-iii.org
@@ -1156,7 +1156,7 @@ paths:
                 $ref: '#/components/schemas/ChartLine'
   /v1/data/bulk/transactions:
     post:
-      summary: Bulk update transaction properties. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/
+      summary: Bulk update transaction properties. For more information, see https://docs.firefly-iii.org/firefly-iii/api/specials
       description: |
         Allows you to update transactions in bulk.
       operationId: bulkUpdateTransactions
@@ -11807,7 +11807,7 @@ paths:
       tags:
         - transactions
       description: Update an existing transaction.
-      summary: Update existing transaction. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/
+      summary: Update existing transaction. For more information, see https://docs.firefly-iii.org/firefly-iii/api/specials
       parameters:
         - name: X-Trace-Id
           in: header
@@ -12007,7 +12007,7 @@ paths:
       description: Searches through the users transactions.
       externalDocs:
         description: Search Documentation
-        url: https://docs.firefly-iii.org/how-to/firefly-iii/features/search/
+        url: https://docs.firefly-iii.org/firefly-iii/pages-and-features/search/
       operationId: searchTransactions
       tags:
         - search
@@ -13434,42 +13434,6 @@ paths:
           description: No messages to send, so did nothing.
         404:
           description: Webhook not found.
-        500:
-          description: Error while sending.
-  /v1/webhooks/{id}/trigger-transaction/{transactionId}:
-    post:
-      summary: Trigger webhook for a given transaction.
-      description: This endpoint will execute this webhook for a given transaction ID. This is an asynchronous operation, so you can't see the result. Refresh the webhook message and/or the webhook message attempts to see the results. This may take some time if the webhook receiver is slow.
-      operationId: triggerTransactionWebhook
-      parameters:
-        - name: X-Trace-Id
-          in: header
-          description: Unique identifier associated with this request.
-          required: false
-          schema:
-            type: string
-            format: uuid
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-            example: "123"
-          description: The webhook ID.
-        - in: path
-          name: transactionId
-          required: true
-          schema:
-            type: string
-            example: "123"
-          description: The transaction ID.
-      tags:
-        - webhooks
-      responses:
-        204:
-          description: Webhook triggered successfully.
-        404:
-          description: Webhook or transaction not found.
         500:
           description: Error while sending.
   /v1/webhooks:
@@ -18292,8 +18256,8 @@ components:
         default:
           type: boolean
           format: boolean
-          example: true
-          description: Make this currency the default currency. You can set this value to FALSE, in which case nothing will change to the default currency. If you set it to TRUE, the current default currency will no longer be the default currency.
+          example: false
+          description: Make this currency the default currency.
         code:
           type: string
           format: string
@@ -18323,7 +18287,7 @@ components:
           type: boolean
           format: boolean
           example: true
-          description: "If the currency must be the default for the user. You can only submit TRUE. Submitting FALSE will not drop this currency as the default currency, because then the system would be without one."
+          description: "If the currency must be the default for the user. You can only submit TRUE."
           enum:
             - true
         code:
@@ -19264,7 +19228,7 @@ components:
           format: string
           example: "7a344c02-5b52-46b1-90e6-a437431dcf07"
           description: "Long UUID string for identification of this webhook message."
-        message:
+        string:
           type: string
           format: string
           example: "{some:message}"
@@ -19477,7 +19441,7 @@ components:
         - DESTROY_TRANSACTION
     BasicSummary:
       type: object
-      additionalProperties:
+      items:
         $ref: '#/components/schemas/BasicSummaryEntry'
     BasicSummaryEntry:
       type: object
@@ -20353,4 +20317,4 @@ components:
 security:
   - firefly_iii_auth: []
   - local_bearer_auth: []
-
+    

@@ -541,14 +541,14 @@ abstract class FireflyIii extends ChopperService {
     @Query('end') required String? end,
   });
 
-  ///Bulk update transaction properties. For more information, see https://docs.firefly-iii.org/firefly-iii/api/specials
+  ///Bulk update transaction properties. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/
   ///@param query The JSON query.
   Future<chopper.Response> v1DataBulkTransactionsPost(
       {required String? query}) {
     return _v1DataBulkTransactionsPost(query: query);
   }
 
-  ///Bulk update transaction properties. For more information, see https://docs.firefly-iii.org/firefly-iii/api/specials
+  ///Bulk update transaction properties. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/
   ///@param query The JSON query.
   @Post(
     path: '/v1/data/bulk/transactions',
@@ -5108,7 +5108,7 @@ abstract class FireflyIii extends ChopperService {
     @Path('id') required String? id,
   });
 
-  ///Update existing transaction. For more information, see https://docs.firefly-iii.org/firefly-iii/api/specials
+  ///Update existing transaction. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the transaction.
   Future<chopper.Response<TransactionSingle>> v1TransactionsIdPut({
@@ -5123,7 +5123,7 @@ abstract class FireflyIii extends ChopperService {
         xTraceId: xTraceId?.toString(), id: id, body: body);
   }
 
-  ///Update existing transaction. For more information, see https://docs.firefly-iii.org/firefly-iii/api/specials
+  ///Update existing transaction. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the transaction.
   @Put(
@@ -5813,6 +5813,33 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1WebhooksIdSubmitPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+  });
+
+  ///Trigger webhook for a given transaction.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The webhook ID.
+  ///@param transactionId The transaction ID.
+  Future<chopper.Response> v1WebhooksIdTriggerTransactionTransactionIdPost({
+    String? xTraceId,
+    required String? id,
+    required String? transactionId,
+  }) {
+    return _v1WebhooksIdTriggerTransactionTransactionIdPost(
+        xTraceId: xTraceId?.toString(), id: id, transactionId: transactionId);
+  }
+
+  ///Trigger webhook for a given transaction.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The webhook ID.
+  ///@param transactionId The transaction ID.
+  @Post(
+    path: '/v1/webhooks/{id}/trigger-transaction/{transactionId}',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _v1WebhooksIdTriggerTransactionTransactionIdPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Path('transactionId') required String? transactionId,
   });
 
   ///List all webhooks.

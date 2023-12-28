@@ -3,12 +3,12 @@ servers:
   - description: Firefly III demo site
     url: https://demo.firefly-iii.org/api
 info:
-  title: Firefly III API v2.0.12
+  title: Firefly III API v2.0.10
   description: |
-    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2023-12-26T15:13:43+00:00
+    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2023-10-15T12:13:25+00:00
 
     Please keep in mind that the demo site does not accept requests from curl, colly, wget, etc. You must use a browser or a tool like Postman to make requests. Too many script kiddies out there, sorry about that.
-  version: "2.0.12"
+  version: "2.0.10"
   contact:
     name: James Cole
     email: james@firefly-iii.org
@@ -737,6 +737,13 @@ paths:
           schema:
             type: string
             format: date
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: "123"
+          description: The ID of the budget.
       responses:
         401:
           description: Unauthenticated
@@ -806,6 +813,13 @@ paths:
           schema:
             type: string
             format: date
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: "123"
+          description: The ID of the budget.
       responses:
         401:
           description: Unauthenticated
@@ -959,69 +973,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionSumArray'
-  /v2/summary/basic:
-    get:
-      tags:
-        - summary
-      operationId: getBasicSummary
-      summary: Returns basic sums of the users data.
-      parameters:
-        - name: X-Trace-Id
-          in: header
-          description: Unique identifier associated with this request.
-          required: false
-          schema:
-            type: string
-            format: uuid
-        - in: query
-          name: start
-          description: |
-            A date formatted YYYY-MM-DD.
-          required: true
-          schema:
-            type: string
-            format: date
-        - in: query
-          name: end
-          description: |
-            A date formatted YYYY-MM-DD.
-          required: true
-          schema:
-            type: string
-            format: date
-      description: |
-        Returns basic sums of the users data, like the net worth, spent and earned amounts. It is multi-currency, and is used in Firefly III to populate the dashboard. Used on the dashboard.
-      responses:
-        '200':
-          description: An array of sums. It depends on the user what you can expect to get back, so please try this out on the demo site.
-          content:
-            application/vnd.api+json:
-              schema:
-                $ref: '#/components/schemas/BasicSummaryV2'
-        401:
-          description: Unauthenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthenticated'
-        404:
-          description: Page not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-        400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-        500:
-          description: Internal exception
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalException'
 components:
   schemas:
     TransactionSum:
@@ -1414,41 +1365,6 @@ components:
     StringArrayItem:
       type: string
       format: string
-    BasicSummaryV2:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/BasicSummaryV2Entry'
-    BasicSummaryEntry:
-      type: object
-      properties:
-        key:
-          type: string
-          format: string
-          example: "balance-in-EUR"
-          description: "This is a reference to the type of info shared, not influenced by translations or user preferences. The EUR value is a reference to the currency code. They EUR value may also be 'native' in which case the amount is already converted to the user's native balance."
-        value:
-          type: number
-          format: double
-          example: 123.45
-          description: "The amount."
-        currency_id:
-          type: string
-          format: string
-          example: "5"
-          description: "The currency ID of the associated currency."
-        currency_code:
-          type: string
-          format: string
-          example: "EUR"
-        currency_symbol:
-          type: string
-          format: string
-          example: "$"
-        currency_decimal_places:
-          type: integer
-          format: int32
-          example: 2
-          description: "Number of decimals for the associated currency."
     TransactionArray:
       type: object
       required:
@@ -1528,12 +1444,10 @@ components:
           type: string
           format: uri
           example: "https://demo.firefly-iii.org/api/v1/OBJECT?&page=3"
-          nullable: true
         prev:
           type: string
           format: uri
           example: "https://demo.firefly-iii.org/api/v1/OBJECT?&page=2"
-          nullable: true
         last:
           type: string
           format: uri
@@ -1795,9 +1709,9 @@ components:
           description: System generated identifier for original creator of transaction.
           readOnly: true
         recurrence_id:
-          type: string
+          type: integer
           nullable: true
-          format: string
+          format: int32
           description: Reference to recurrence that made the transaction.
           readOnly: true
         recurrence_total:
@@ -2173,4 +2087,4 @@ components:
 security:
   - firefly_iii_auth: []
   - local_bearer_auth: []
-
+    

@@ -303,6 +303,40 @@ Map<String, dynamic> _$PolymorphicPropertyToJson(
         PolymorphicProperty instance) =>
     <String, dynamic>{};
 
+BasicSummaryV2 _$BasicSummaryV2FromJson(Map<String, dynamic> json) =>
+    BasicSummaryV2();
+
+Map<String, dynamic> _$BasicSummaryV2ToJson(BasicSummaryV2 instance) =>
+    <String, dynamic>{};
+
+BasicSummaryEntry _$BasicSummaryEntryFromJson(Map<String, dynamic> json) =>
+    BasicSummaryEntry(
+      key: json['key'] as String?,
+      value: (json['value'] as num?)?.toDouble(),
+      currencyId: json['currency_id'] as String?,
+      currencyCode: json['currency_code'] as String?,
+      currencySymbol: json['currency_symbol'] as String?,
+      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+    );
+
+Map<String, dynamic> _$BasicSummaryEntryToJson(BasicSummaryEntry instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('key', instance.key);
+  writeNotNull('value', instance.value);
+  writeNotNull('currency_id', instance.currencyId);
+  writeNotNull('currency_code', instance.currencyCode);
+  writeNotNull('currency_symbol', instance.currencySymbol);
+  writeNotNull('currency_decimal_places', instance.currencyDecimalPlaces);
+  return val;
+}
+
 TransactionArray _$TransactionArrayFromJson(Map<String, dynamic> json) =>
     TransactionArray(
       data: (json['data'] as List<dynamic>?)
@@ -475,7 +509,7 @@ TransactionSplit _$TransactionSplitFromJson(Map<String, dynamic> json) =>
       externalId: json['external_id'] as String?,
       externalUrl: json['external_url'] as String?,
       originalSource: json['original_source'] as String?,
-      recurrenceId: json['recurrence_id'] as int?,
+      recurrenceId: json['recurrence_id'] as String?,
       recurrenceTotal: json['recurrence_total'] as int?,
       recurrenceCount: json['recurrence_count'] as int?,
       bunqPaymentId: json['bunq_payment_id'] as String?,

@@ -4629,6 +4629,26 @@ final class _$FireflyIii extends FireflyIii {
   }
 
   @override
+  Future<Response<dynamic>> _v1WebhooksIdTriggerTransactionTransactionIdPost({
+    String? xTraceId,
+    required String? id,
+    required String? transactionId,
+  }) {
+    final Uri $url =
+        Uri.parse('/v1/webhooks/${id}/trigger-transaction/${transactionId}');
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      headers: $headers,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<WebhookArray>> _v1WebhooksGet({
     String? xTraceId,
     int? limit,

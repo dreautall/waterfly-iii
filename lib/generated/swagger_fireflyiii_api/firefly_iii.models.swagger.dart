@@ -11349,7 +11349,7 @@ class WebhookMessage {
     this.errored,
     this.webhookId,
     this.uuid,
-    this.$string,
+    this.message,
   });
 
   factory WebhookMessage.fromJson(Map<String, dynamic> json) =>
@@ -11370,8 +11370,8 @@ class WebhookMessage {
   final String? webhookId;
   @JsonKey(name: 'uuid', includeIfNull: false)
   final String? uuid;
-  @JsonKey(name: 'string', includeIfNull: false)
-  final String? $string;
+  @JsonKey(name: 'message', includeIfNull: false)
+  final String? message;
   static const fromJsonFactory = _$WebhookMessageFromJson;
 
   @override
@@ -11386,7 +11386,7 @@ extension $WebhookMessageExtension on WebhookMessage {
       bool? errored,
       String? webhookId,
       String? uuid,
-      String? $string}) {
+      String? message}) {
     return WebhookMessage(
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
@@ -11394,7 +11394,7 @@ extension $WebhookMessageExtension on WebhookMessage {
         errored: errored ?? this.errored,
         webhookId: webhookId ?? this.webhookId,
         uuid: uuid ?? this.uuid,
-        $string: $string ?? this.$string);
+        message: message ?? this.message);
   }
 
   WebhookMessage copyWithWrapped(
@@ -11404,7 +11404,7 @@ extension $WebhookMessageExtension on WebhookMessage {
       Wrapped<bool?>? errored,
       Wrapped<String?>? webhookId,
       Wrapped<String?>? uuid,
-      Wrapped<String?>? $string}) {
+      Wrapped<String?>? message}) {
     return WebhookMessage(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
@@ -11412,7 +11412,7 @@ extension $WebhookMessageExtension on WebhookMessage {
         errored: (errored != null ? errored.value : this.errored),
         webhookId: (webhookId != null ? webhookId.value : this.webhookId),
         uuid: (uuid != null ? uuid.value : this.uuid),
-        $string: ($string != null ? $string.value : this.$string));
+        message: (message != null ? message.value : this.message));
   }
 }
 

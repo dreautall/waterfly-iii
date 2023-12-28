@@ -4231,7 +4231,7 @@ WebhookMessage _$WebhookMessageFromJson(Map<String, dynamic> json) =>
       errored: json['errored'] as bool?,
       webhookId: json['webhook_id'] as String?,
       uuid: json['uuid'] as String?,
-      $string: json['string'] as String?,
+      message: json['message'] as String?,
     );
 
 Map<String, dynamic> _$WebhookMessageToJson(WebhookMessage instance) {
@@ -4249,7 +4249,7 @@ Map<String, dynamic> _$WebhookMessageToJson(WebhookMessage instance) {
   writeNotNull('errored', instance.errored);
   writeNotNull('webhook_id', instance.webhookId);
   writeNotNull('uuid', instance.uuid);
-  writeNotNull('string', instance.$string);
+  writeNotNull('message', instance.message);
   return val;
 }
 

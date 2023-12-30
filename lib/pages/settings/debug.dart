@@ -26,8 +26,12 @@ class DebugDialog extends StatelessWidget {
         ),
         SwitchListTile(
           value: context.select((SettingsProvider s) => s.debug),
-          onChanged: (bool value) =>
-              context.read<SettingsProvider>().setDebug(value),
+          onChanged: (bool value) async {
+            await context.read<SettingsProvider>().setDebug(value);
+            PackageInfo appInfo = await PackageInfo.fromPlatform();
+            log.info(
+                "Enabling debug logs, app ${appInfo.appName}, ${appInfo.version}+${appInfo.buildNumber}");
+          },
           title: Text(S.of(context).settingsDialogDebugTitle),
           secondary: const Icon(Icons.bug_report),
         ),

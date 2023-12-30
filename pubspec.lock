@@ -157,18 +157,18 @@ packages:
     dependency: "direct main"
     description:
       name: chopper
-      sha256: "4ba5b590f4dc04b948024efdf4d85fd484d6c81eb83cefc36f29cf83f6e50ae5"
+      sha256: "33d6061f06adbb5081b41ee76e80995f1cdf81b7729654b17ccee0cc6a476372"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.9"
+    version: "7.0.10"
   chopper_generator:
     dependency: "direct dev"
     description:
       name: chopper_generator
-      sha256: "89d40e458fa21eb1e8f2f87961548d834f24d287e23fcac17b57ab58978ccd06"
+      sha256: "3565fc836ab93052b4f55991d4196394208591e25b3c2ee90a4f76443fbf77de"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.6"
+    version: "7.0.7"
   clock:
     dependency: transitive
     description:
@@ -1159,18 +1159,18 @@ packages:
     dependency: "direct dev"
     description:
       name: swagger_dart_code_generator
-      sha256: "408d9ae270b2158bbf98cd4784b94370bf4b30c0c1dddd234bb552aa850bd09d"
+      sha256: "9c6440be3c3b9254aa93a34aff51d7a7e2d0460cb30f985f04b62ecfa573aafa"
       url: "https://pub.dev"
     source: hosted
-    version: "2.13.5"
+    version: "2.14.1"
   syncfusion_flutter_charts:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_charts
-      sha256: "12ed32b889bd4a28cf44b9fa246510e8f2fc798023018a6a915cbd0bffec1517"
+      sha256: d720751869540bc0b18e063414e9c8d41c924cca01e3aad3538d404c31d00e2d
       url: "https://pub.dev"
     source: hosted
-    version: "24.1.43"
+    version: "24.1.43+1"
   syncfusion_flutter_core:
     dependency: transitive
     description:

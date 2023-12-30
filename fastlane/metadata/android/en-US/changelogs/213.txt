@@ -1,0 +1,5 @@
+- Bill overview on Main Screen
+- Option to show future transactions
+- Slovenian Translation by @thehijacker, thank you!
+- Notification listener support for additional banking apps
+- Bugfixes

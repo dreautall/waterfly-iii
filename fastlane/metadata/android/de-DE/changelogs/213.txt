@@ -1,0 +1,5 @@
+- Rechnungs-Übersicht auf der Startseite
+- Option zukünftige Transaktionen einzublenden
+- Slowenische Übersetzung
+- Benachrichtigungs-Service unterstützt zusätzliche Banking-Apps
+- Fehlerbehebungen

@@ -2,7 +2,7 @@ name: waterflyiii
 description: WaterFly III, a mobile client for Firefly III
 publish_to: 'none'
 
-version: 0.3.0-beta
+version: 0.3.1-beta
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

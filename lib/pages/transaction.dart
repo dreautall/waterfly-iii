@@ -1280,10 +1280,18 @@ class _TransactionPageState extends State<TransactionPage>
                       for (int i = 0; i < _foreignCurrencies.length; i++) {
                         if (newCurrency.id == _localCurrency!.id) {
                           _foreignCurrencies[i] = null;
+                          log.finest(() =>
+                              "before: foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
+                          if (_foreignAmounts[i] != 0 &&
+                              _localAmounts[i] == 0) {
+                            _localAmounts[i] = _foreignAmounts[i];
+                          }
+                          log.finest(() =>
+                              "after: foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
                         } else {
                           _foreignCurrencies[i] = newCurrency;
                           log.finest(() =>
-                              "foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
+                              "before: foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
                           if (_foreignAmounts[i] == 0) {
                             _foreignAmounts[i] = _localAmounts[i];
                             if (_foreignAmounts[i] != 0) {
@@ -1295,6 +1303,8 @@ class _TransactionPageState extends State<TransactionPage>
                                           2);
                             }
                           }
+                          log.finest(() =>
+                              "after: foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
                         }
                       }
                     });

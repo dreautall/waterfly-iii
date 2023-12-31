@@ -458,11 +458,11 @@ class _HomeMainState extends State<HomeMain>
     }
 
     return respBills.body!.data
-        .where((BillRead e) => (e.attributes.nextExpectedMatch ??
-                DateTime.fromMicrosecondsSinceEpoch(0))
-            .toLocal()
-            .clearTime()
-            .isBefore(end.copyWith(day: end.day + 1)))
+        .where((BillRead e) =>
+            (e.attributes.nextExpectedMatch ?? end.copyWith(day: end.day + 2))
+                .toLocal()
+                .clearTime()
+                .isBefore(end.copyWith(day: end.day + 1)))
         .toList(growable: false);
   }
 

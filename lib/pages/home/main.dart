@@ -1321,10 +1321,15 @@ class BillList extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     RichText(
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       text: TextSpan(
                         children: <InlineSpan>[
                           TextSpan(
-                            text: bill.attributes.name,
+                            text: bill.attributes.name.length > 30
+                                ? bill.attributes.name.replaceRange(
+                                    30, bill.attributes.name.length, "…")
+                                : bill.attributes.name,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                           TextSpan(

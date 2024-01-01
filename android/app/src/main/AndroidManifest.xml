@@ -112,6 +112,7 @@
         <package android:name="com.giro"/>
         <package android:name="com.globe.gcash.android"/>
         <package android:name="com.golden1.card"/>
+        <package android:name="com.google.android.apps.googlevoice"/>
         <package android:name="com.google.android.apps.messaging"/>
         <package android:name="com.google.android.apps.nbu.paisa.user"/>
         <package android:name="com.google.android.apps.playconsole"/>

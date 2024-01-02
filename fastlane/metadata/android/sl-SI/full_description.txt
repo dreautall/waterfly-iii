@@ -3,6 +3,7 @@ Waterfly III je neuradna aplikacija vaše namestitve Firefly III, brezplačnega 
 Ta aplikacija zahteva namestitev Firefly III, ki jo gostite sami na vašem strežniku. Za več informacij o programski opremi obiščite https://www.firefly-iii.org/. Je le spremljevalna aplikacija in ne more delovati samostojno!
 
 Funkcije:
+
 - Nadzorna plošča z grafikoni in pregledom proračuna
 - Seznam transakcij s filtri
 - Dodajanje in urejanje transakcij s samodokončanjem, vključno s prilogami, razdeljenimi transakcijami in podporo za več valut
@@ -12,4 +13,5 @@ Funkcije:
 - Brez oglasov ali sledenja uporabe
 
 Prispevanje:
+
 Če naletite na napako ali pogrešate dodatne funkcije, lahko posredujete povratne informacije v trgovini Play, mi pošljete e-pošto ali odprete težavo na GitHubu.

@@ -3,6 +3,7 @@ Waterfly III ist eine inoffizielle App für deine eigene Firefly III-Instanz, ei
 Diese App benötigt eine selbst-gehostete Firefly III-Instanz auf deinem eigenen Server, bitte besuche https://www.firefly-iii.org/ für mehr Informationen über die Software. Es ist nur eine Begleit-App und kann nicht alleine funktionieren!
 
 Funktionen:
+
 - Übersicht mit Schaubildern & Budget-Übersicht
 - Transaktionsliste mit Filtern
 - Füge neue Transaktionen hinzu und bearbeite bestehende Transaktionen mit Autovervollständigung, Anhängen, aufgeteilten Buchungen & mehreren Währungen
@@ -12,4 +13,5 @@ Funktionen:
 - Keine Werbung oder Tracker
 
 Mithelfen:
+
 Wenn du einen Fehler bemerkst oder dir ein Feature wünscht, bitte eröffne ein Ticket auf GitHub, schreibe mir eine Mail oder hinterlasse einen Kommentar hier im Play Store.

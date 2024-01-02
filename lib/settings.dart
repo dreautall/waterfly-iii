@@ -50,11 +50,14 @@ class SettingsProvider with ChangeNotifier {
   static const String settingThemeLight = "LIGHT";
   static const String settingThemeSystem = "SYSTEM";
   static const String settingDynamicColors = "DYNAMICCOLORS";
+  static const String settingUseServerTime = "USESERVERTIME";
 
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get theme => _theme;
   bool _dynamicColors = false;
   bool get dynamicColors => _dynamicColors;
+  bool _useServerTime = true;
+  bool get useServerTime => _useServerTime;
 
   Locale? _locale;
   Locale? get locale => _locale;
@@ -94,6 +97,8 @@ class SettingsProvider with ChangeNotifier {
     }
     _dynamicColors = prefs.getBool(settingDynamicColors) ?? false;
     log.config("read dynamic colors $dynamicColors");
+    _useServerTime = prefs.getBool(settingUseServerTime) ?? true;
+    log.config("read use server time $useServerTime");
 
     final String? countryCode = Intl.defaultLocale?.split("_").last;
     final Locale locale = Locale(prefs.getString(settingLocale) ?? "unset");
@@ -219,6 +224,19 @@ class SettingsProvider with ChangeNotifier {
     await prefs.setBool(settingDynamicColors, dynamicColors);
 
     log.finest(() => "notify SettingsProvider->dynamicColors()");
+    notifyListeners();
+  }
+
+  Future<void> setUseServerTime(bool useServerTime) async {
+    if (useServerTime == _useServerTime) {
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _useServerTime = useServerTime;
+    await prefs.setBool(settingUseServerTime, useServerTime);
+
+    log.finest(() => "notify SettingsProvider->setUseServerTime()");
     notifyListeners();
   }
 

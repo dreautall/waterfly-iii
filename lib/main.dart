@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:logging/logging.dart';
 
+import 'package:timezone/data/latest.dart' as tz;
+
 import 'package:waterflyiii/app.dart';
 
 void main() async {
@@ -23,5 +25,6 @@ void main() async {
       stackTrace: record.stackTrace,
     );
   });
+  tz.initializeTimeZones();
   return runApp(const WaterflyApp());
 }

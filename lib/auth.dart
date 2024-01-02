@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart';
 import 'package:version/version.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
-import 'package:timezone/standalone.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/stock.dart';
@@ -330,10 +330,9 @@ class FireflyService with ChangeNotifier {
     final HttpClient client = HttpClient();
     Uri tzUri = user!.host.replace(pathSegments: <String>[
       ...user!.host.pathSegments,
-      "api",
       "v1",
       "configuration",
-      ConfigValueFilter.appTimezone.toString()
+      ConfigValueFilter.appTimezone.value!
     ]);
     try {
       HttpClientRequest request = await client.getUrl(tzUri);

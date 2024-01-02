@@ -8,14 +8,40 @@ import 'package:chopper/chopper.dart'
     show Request, Response, StripStringExtension;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:timezone/timezone.dart';
 import 'package:version/version.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
+import 'package:timezone/standalone.dart' as tz;
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/stock.dart';
 
 final Logger log = Logger("Auth");
 final Version minApiVersion = Version(2, 0, 0);
+
+class APITZReply {
+  APITZReply(this.data);
+  APITZReplyData data;
+
+  factory APITZReply.fromJson(dynamic json) {
+    return APITZReply(APITZReplyData.fromJson(json['data']));
+  }
+}
+
+class APITZReplyData {
+  APITZReplyData(this.title, this.value, this.editable);
+  String title;
+  String value;
+  bool editable;
+
+  factory APITZReplyData.fromJson(dynamic json) {
+    return APITZReplyData(
+      json['title'] as String,
+      json['value'] as String,
+      json['editable'] as bool,
+    );
+  }
+}
 
 class SSLHttpOverride extends HttpOverrides {
   SSLHttpOverride(this.validCert);
@@ -221,6 +247,7 @@ class FireflyService with ChangeNotifier {
   }
 
   late CurrencyRead defaultCurrency;
+  late tz.Location defaultTZ;
 
   final FlutterSecureStorage storage = const FlutterSecureStorage(
     aOptions: AndroidOptions(
@@ -298,6 +325,35 @@ class FireflyService with ChangeNotifier {
     if (apiVersion == null || apiVersion! < minApiVersion) {
       throw AuthErrorVersionTooLow(minApiVersion);
     }
+
+    // Manual API query as the Swagger type doesn't resolve in Flutter :(
+    final HttpClient client = HttpClient();
+    Uri tzUri = user!.host.replace(pathSegments: <String>[
+      ...user!.host.pathSegments,
+      "api",
+      "v1",
+      "configuration",
+      ConfigValueFilter.appTimezone.toString()
+    ]);
+    try {
+      HttpClientRequest request = await client.getUrl(tzUri);
+      user!.headers().forEach(
+            (String key, String value) => request.headers.add(key, value),
+          );
+      HttpClientResponse response = await request.close();
+      final String stringData = await response.transform(utf8.decoder).join();
+      late APITZReply reply;
+      try {
+        reply = APITZReply.fromJson(json.decode(stringData));
+        defaultTZ = tz.getLocation(reply.data.value);
+      } on LocationNotFoundException {
+        defaultTZ = tz.getLocation("utc");
+      }
+    } finally {
+      client.close();
+    }
+    tz.setLocalLocation(defaultTZ);
+    log.info(() => "Server Timezone $defaultTZ");
 
     _signedIn = true;
     _transStock = TransStock(api);

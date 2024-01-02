@@ -3,6 +3,7 @@ Waterfly III este o aplicație neoficială pentru propria dumneavoastră instan�
 Această aplicație necesită o instanță Firefly III auto-găzduită pe propriul tău server, te rugăm să vizitezi https://www.firefly-ii.org/ pentru mai multe informații despre software. Este doar o aplicație companion și nu poate rula în mod independent!
 
 Funcționalități:
+
 - Tablou de bord cu diagrame și prezentare generală a bugetului
 - Lista de tranzacții cu filtre
 - Adaugă și editează tranzacțiile cu autocompletare, inclusiv atașamentele, tranzacții divizate și suport multi valută
@@ -12,4 +13,5 @@ Funcționalități:
 - Fără reclame sau trackere
 
 Contribuie:
+
 Dacă găsești o problemă sau îți lipsește o caracteristică, nu ezita să oferi feedback în Play Store, trimite-mi un e-mail sau deschide un issue pe GitHub.

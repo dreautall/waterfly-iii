@@ -3,6 +3,7 @@ A Waterfly III egy nem hivatalos alkalmazás a Firefly III-hoz, mely egy ingyene
 Ehhez az alkalmazáshoz saját üzemeltetésű Firefly III szolgáltatásra van szükség. A szoftverrel kapcsolatos további információkért látogasson el a https://www.firefly-iii.org/ oldalra. Ez csak egy társalkalmazás, önálló használatra nem képes!
 
 Jellemzők:
+
 - Irányítópult diagramokkal és költségvetési áttekintéssel
 - Tranzakciós lista szűrőkkel
 - Tranzakciók hozzáadása és szerkesztése automatikus kiegészítéssel, beleértve a mellékleteket, az osztott tranzakciókat és a több pénznem támogatását
@@ -12,4 +13,5 @@ Jellemzők:
 - Nincsenek hirdetések vagy nyomkövetők
 
 Közreműködés:
+
 Amennyiben hibát talál, vagy hiányol egy funkciót, nyugodtan küldjön visszajelzést a Play Áruházban, küldjön egy e-mailt, vagy nyisson egy problémát a GitHubon.

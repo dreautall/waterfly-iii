@@ -2,7 +2,8 @@ Waterfly III est une application non officielle pour votre propre instance de Fi
 
 Cette application nécessite une instance de Firefly III autohébergée sur votre propre serveur, veuillez visiter https://www.firefly-iiii.org/ pour plus d'informations sur ce logiciel. Il ne s'agit que d'une application cliente qui ne peut pas fonctionner de manière autonome !
 
-Fonctionnalités :
+Fonctionnalités:
+
 - Tableau de bord avec graphiques et aperçu du budget
 - Liste des opérations avec filtres
 - Ajouter et modifier des opérations avec saisie semi-automatique, y compris avec pièces jointes, opérations fractionnées et prise en charge de plusieurs devises
@@ -11,5 +12,6 @@ Fonctionnalités :
 - Entièrement open source : https://github.com/dreautall/waterfly-iii
 - Pas de publicité ou de trackers
 
-Contribution :
+Contribution:
+
 Si vous rencontrez un bug ou que vous souhaitez une fonctionnalité, n'hésitez pas à donner votre avis sur le Play Store, envoyez-moi un e-mail ou ouvrez un ticket sur GitHub.

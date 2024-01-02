@@ -3,6 +3,7 @@ Waterfly III is an unofficial app for your own instance of Firefly III, a free a
 This app requires a self-hosted Firefly III instance on your own server, please visit https://www.firefly-iii.org/ for more information about the software. It is only a companion app and cannot run standalone!
 
 Features:
+
 - Dashboard with charts & budget overview
 - Transaction list with filters
 - Add & edit transactions with autocomplete, including attachments, split transactions & multi currency support
@@ -12,4 +13,5 @@ Features:
 - No ads or trackers
 
 Contribution:
+
 If you run into a bug or miss a feature, feel free to give feedback in the play store, send me an email or open an issue on GitHub.

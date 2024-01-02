@@ -176,10 +176,10 @@ class _TransactionPageState extends State<TransactionPage>
       }
 
       /// date
-      _date = widget.clone
-          ? _tzHandler.dNow()
-          : _tzHandler.sTime(transactions.first.date);
-      _date = _date.toLocal();
+      _date = (widget.clone
+              ? _tzHandler.newTXTime()
+              : _tzHandler.sTime(transactions.first.date))
+          .toLocal();
 
       /// account currency
       _localCurrency = CurrencyRead(
@@ -338,7 +338,7 @@ class _TransactionPageState extends State<TransactionPage>
       // New transaction
       _titleFocusNode.requestFocus();
       _transactionType = TransactionTypeProperty.withdrawal;
-      _date = context.read<FireflyService>().tzHandler.dNow();
+      _date = _tzHandler.newTXTime().toLocal();
 
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         splitTransactionAdd();
@@ -437,7 +437,9 @@ class _TransactionPageState extends State<TransactionPage>
           currency ??= _localCurrency;
 
           // Set date
-          _date = _tzHandler.dTime(widget.notification!.date);
+          _date = _tzHandler
+              .notificationTXTime(widget.notification!.date)
+              .toLocal();
           _dateTextController.text = DateFormat.yMMMMd().format(_date);
           _timeTextController.text = DateFormat.Hm().format(_date);
 

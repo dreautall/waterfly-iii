@@ -8,23 +8,25 @@ class TimeZoneHandler {
 
   final Logger log = Logger("TimeZoneHandler");
 
+  // :TODO: make variable
+  bool useServerTime = false;
+
   TimeZoneHandler(String serverTZ) {
     try {
       _serverLoc = tz.getLocation(serverTZ);
     } on tz.LocationNotFoundException {
-      _serverLoc = tz.getLocation("utc");
+      _serverLoc = tz.getLocation("UTC");
     }
     log.info(() => "Server Timezone: $serverTZ ($sLocation)");
-    updateDeviceLocation();
-
-    // :TODO: add option
-    tz.setLocalLocation(sLocation);
+    updateDeviceLocation().then(
+      (_) => tz.setLocalLocation(useServerTime ? sLocation : dLocation),
+    );
   }
 
   tz.Location get sLocation => _serverLoc;
-  tz.Location get dLocation => _deviceLoc ?? tz.getLocation("utc");
+  tz.Location get dLocation => _deviceLoc ?? tz.getLocation("UTC");
 
-  void updateDeviceLocation() async {
+  Future<void> updateDeviceLocation() async {
     final String deviceTZ = await FlutterTimezone.getLocalTimezone();
     try {
       _deviceLoc = tz.getLocation(deviceTZ);
@@ -34,10 +36,10 @@ class TimeZoneHandler {
     log.info(() => "Device Timezone: $deviceTZ ($dLocation)");
   }
 
-  tz.TZDateTime getLocalTimeAsServerTime() {
+  tz.TZDateTime getLocalTimeAsServerTime(tz.TZDateTime t) {
     final int offsetMs =
         sLocation.currentTimeZone.offset - dLocation.currentTimeZone.offset;
-    return tz.TZDateTime.now(dLocation).add(Duration(milliseconds: offsetMs));
+    return t.subtract(Duration(milliseconds: offsetMs));
   }
 
   tz.TZDateTime dNow() => tz.TZDateTime.now(dLocation).toLocal();
@@ -45,4 +47,11 @@ class TimeZoneHandler {
 
   tz.TZDateTime dTime(DateTime t) => tz.TZDateTime.from(t, dLocation);
   tz.TZDateTime sTime(DateTime t) => tz.TZDateTime.from(t, sLocation);
+
+  tz.TZDateTime newTXTime() => useServerTime
+      ? getLocalTimeAsServerTime(tz.TZDateTime.now(dLocation))
+      : dNow();
+
+  tz.TZDateTime notificationTXTime(DateTime t) =>
+      useServerTime ? getLocalTimeAsServerTime(dTime(t)) : dTime(t);
 }

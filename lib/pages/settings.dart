@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:quick_actions/quick_actions.dart';
+import 'package:waterflyiii/auth.dart';
 
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/settings/debug.dart';
@@ -105,6 +106,25 @@ class SettingsPageState extends State<SettingsPage>
                 });
               },
             );
+          },
+        ),
+        SwitchListTile(
+          title: Text(S.of(context).settingsUseServerTimezone),
+          subtitle: Text(S.of(context).settingsUseServerTimezoneHelp),
+          value: context.select((SettingsProvider s) => s.useServerTime),
+          secondary: CircleAvatar(
+            child: Icon(
+              context.select((SettingsProvider s) => s.useServerTime)
+                  ? Icons.schedule
+                  : Icons.schedule_outlined,
+            ),
+          ),
+          onChanged: (bool value) async {
+            await context
+                .read<FireflyService>()
+                .tzHandler
+                .setUseServerTime(value);
+            await settings.setUseServerTime(value);
           },
         ),
         const Divider(),

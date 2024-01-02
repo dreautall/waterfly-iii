@@ -12,6 +12,6 @@ Fonctionnalités:
 - Entièrement open source : https://github.com/dreautall/waterfly-iii
 - Pas de publicité ou de trackers
 
-Contribution :
+Contribution:
 
 Si vous rencontrez un bug ou que vous souhaitez une fonctionnalité, n'hésitez pas à donner votre avis sur le Play Store, envoyez-moi un e-mail ou ouvrez un ticket sur GitHub.

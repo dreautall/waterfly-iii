@@ -689,6 +689,8 @@
       }
     }
   },
+  "settingsUseServerTimezone": "Server-Zeitzone benutzen",
+  "settingsUseServerTimezoneHelp": "Zeigt alle Zeiten in der Server-Zeitzone an. Dies entspricht dem Verhalten des Webinterfaces.",
   "settingsVersion": "App-Version",
   "@settingsVersion": {
     "description": "Current App Version"

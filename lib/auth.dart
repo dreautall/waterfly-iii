@@ -8,13 +8,12 @@ import 'package:chopper/chopper.dart'
     show Request, Response, StripStringExtension;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:timezone/timezone.dart';
 import 'package:version/version.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
-import 'package:timezone/timezone.dart' as tz;
 
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/stock.dart';
+import 'package:waterflyiii/timezonehandler.dart';
 
 final Logger log = Logger("Auth");
 final Version minApiVersion = Version(2, 0, 0);
@@ -247,7 +246,7 @@ class FireflyService with ChangeNotifier {
   }
 
   late CurrencyRead defaultCurrency;
-  late tz.Location defaultTZ;
+  late TimeZoneHandler tzHandler;
 
   final FlutterSecureStorage storage = const FlutterSecureStorage(
     aOptions: AndroidOptions(
@@ -341,18 +340,11 @@ class FireflyService with ChangeNotifier {
           );
       HttpClientResponse response = await request.close();
       final String stringData = await response.transform(utf8.decoder).join();
-      late APITZReply reply;
-      try {
-        reply = APITZReply.fromJson(json.decode(stringData));
-        defaultTZ = tz.getLocation(reply.data.value);
-      } on LocationNotFoundException {
-        defaultTZ = tz.getLocation("utc");
-      }
+      final APITZReply reply = APITZReply.fromJson(json.decode(stringData));
+      tzHandler = TimeZoneHandler(reply.data.value);
     } finally {
       client.close();
     }
-    tz.setLocalLocation(defaultTZ);
-    log.info(() => "Server Timezone $defaultTZ");
 
     _signedIn = true;
     _transStock = TransStock(api);

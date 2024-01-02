@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 
 import 'package:badges/badges.dart' as badges;
 import 'package:chopper/chopper.dart' show Response;
+import 'package:timezone/timezone.dart' as tz;
 import 'package:version/version.dart';
 
 import 'package:waterflyiii/animations.dart';
@@ -27,6 +28,7 @@ import 'package:waterflyiii/pages/transaction/delete.dart';
 import 'package:waterflyiii/pages/transaction/tags.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
+import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
@@ -66,7 +68,7 @@ class _TransactionPageState extends State<TransactionPage>
       TextEditingController();
   final FocusNode _ownAccountFocusNode = FocusNode();
   String? _ownAccountId;
-  late DateTime _date;
+  late tz.TZDateTime _date;
   final TextEditingController _dateTextController = TextEditingController();
   final TextEditingController _timeTextController = TextEditingController();
   CurrencyRead? _localCurrency;
@@ -123,6 +125,8 @@ class _TransactionPageState extends State<TransactionPage>
   bool _hasAttachments = false;
   List<AttachmentRead>? _attachments;
 
+  late TimeZoneHandler _tzHandler;
+
   // Magic moving!
   // https://m3.material.io/styles/motion/easing-and-duration/applying-easing-and-duration
   final List<AnimationController> _cardsAnimationController =
@@ -134,6 +138,8 @@ class _TransactionPageState extends State<TransactionPage>
   @override
   void initState() {
     super.initState();
+
+    _tzHandler = context.read<FireflyService>().tzHandler;
 
     if (widget.transactionId != null && widget.transaction == null) {
       // :TODO: Fetch transaction while spinner is shown
@@ -171,8 +177,9 @@ class _TransactionPageState extends State<TransactionPage>
 
       /// date
       _date = widget.clone
-          ? DateTime.now().toLocal()
-          : transactions.first.date.toLocal();
+          ? _tzHandler.dNow()
+          : _tzHandler.sTime(transactions.first.date);
+      _date = _date.toLocal();
 
       /// account currency
       _localCurrency = CurrencyRead(
@@ -331,7 +338,7 @@ class _TransactionPageState extends State<TransactionPage>
       // New transaction
       _titleFocusNode.requestFocus();
       _transactionType = TransactionTypeProperty.withdrawal;
-      _date = DateTime.now();
+      _date = context.read<FireflyService>().tzHandler.dNow();
 
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         splitTransactionAdd();
@@ -430,7 +437,7 @@ class _TransactionPageState extends State<TransactionPage>
           currency ??= _localCurrency;
 
           // Set date
-          _date = widget.notification!.date;
+          _date = _tzHandler.dTime(widget.notification!.date);
           _dateTextController.text = DateFormat.yMMMMd().format(_date);
           _timeTextController.text = DateFormat.Hm().format(_date);
 
@@ -1558,10 +1565,13 @@ class _TransactionPageState extends State<TransactionPage>
                   }
 
                   setState(() {
-                    _date = _date.copyWith(
-                      year: pickedDate.year,
-                      month: pickedDate.month,
-                      day: pickedDate.day,
+                    _date = tz.TZDateTime.from(
+                      _date.copyWith(
+                        year: pickedDate.year,
+                        month: pickedDate.month,
+                        day: pickedDate.day,
+                      ),
+                      _date.location,
                     );
                     _dateTextController.text =
                         DateFormat.yMMMMd().format(_date);

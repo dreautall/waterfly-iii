@@ -689,6 +689,14 @@
       }
     }
   },
+  "settingsUseServerTimezone": "Server-Zeitzone benutzen",
+  "@settingsUseServerTimezone": {
+    "description": "Setting label to use server timezone."
+  },
+  "settingsUseServerTimezoneHelp": "Zeigt alle Zeiten in der Server-Zeitzone an. Dies entspricht dem Verhalten des Webinterfaces.",
+  "@settingsUseServerTimezoneHelp": {
+    "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
+  },
   "settingsVersion": "App-Version",
   "@settingsVersion": {
     "description": "Current App Version"

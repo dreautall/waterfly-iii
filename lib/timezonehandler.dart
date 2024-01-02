@@ -9,7 +9,8 @@ class TimeZoneHandler {
   final Logger log = Logger("TimeZoneHandler");
 
   // :TODO: make variable
-  bool useServerTime = false;
+  bool _useServerTime = true;
+  bool get useServerTime => _useServerTime;
 
   TimeZoneHandler(String serverTZ) {
     try {
@@ -25,6 +26,14 @@ class TimeZoneHandler {
 
   tz.Location get sLocation => _serverLoc;
   tz.Location get dLocation => _deviceLoc ?? tz.getLocation("UTC");
+
+  Future<void> setUseServerTime(bool useServerTime) async {
+    _useServerTime = useServerTime;
+    log.finest(() => "set useServertime to $useServerTime");
+    updateDeviceLocation().then(
+      (_) => tz.setLocalLocation(useServerTime ? sLocation : dLocation),
+    );
+  }
 
   Future<void> updateDeviceLocation() async {
     final String deviceTZ = await FlutterTimezone.getLocalTimezone();

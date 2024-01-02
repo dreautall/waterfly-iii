@@ -99,7 +99,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
           onSurfaceVariant: Colors.white,
         );
 
-        log.finest(
+        log.finest(() =>
             "has dynamic color? light: ${cSchemeDynamicLight != null}, dark: ${cSchemeDynamicDark != null}");
 
         return MultiProvider(
@@ -158,6 +158,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
               }
             } else {
               signedIn = context.select((FireflyService f) => f.signedIn);
+              context.read<FireflyService>().tzHandler.setUseServerTime(
+                  context.read<SettingsProvider>().useServerTime);
               log.config("signedIn: $signedIn");
             }
 

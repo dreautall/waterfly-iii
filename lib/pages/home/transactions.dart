@@ -22,6 +22,7 @@ import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/pages/transaction/delete.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
+import 'package:waterflyiii/timezonehandler.dart';
 
 class HomeTransactions extends StatefulWidget {
   const HomeTransactions({super.key, this.accountId});
@@ -46,7 +47,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   DateTime? _lastDate;
   List<int> _rowsWithDate = <int>[];
-  late TransStock stock;
+  late TransStock _stock;
+  late TimeZoneHandler _tzHandler;
 
   final TransactionFilters _filters = TransactionFilters();
 
@@ -54,6 +56,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
   void initState() {
     super.initState();
 
+    _tzHandler = context.read<FireflyService>().tzHandler;
     _pagingController
         .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
 
@@ -115,12 +118,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
       });
     }
 
-    stock = context.read<FireflyService>().transStock!;
+    _stock = context.read<FireflyService>().transStock!;
   }
 
   @override
   void dispose() {
-    stock.removeListener(notifRefresh);
+    _stock.removeListener(notifRefresh);
     _pagingController.dispose();
 
     super.dispose();
@@ -574,7 +577,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     );
 
     // Date
-    DateTime date = transactions.first.date.toLocal();
+    DateTime date = _tzHandler.sTime(transactions.first.date).toLocal();
     // Show Date Banner when:
     // 1. _lastDate is not set (= first element)
     // 2. _lastDate has a different day than current date (= date changed) and

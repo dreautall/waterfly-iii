@@ -9,13 +9,38 @@ import 'package:chopper/chopper.dart'
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:version/version.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
 
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/stock.dart';
+import 'package:waterflyiii/timezonehandler.dart';
 
 final Logger log = Logger("Auth");
 final Version minApiVersion = Version(2, 0, 0);
+
+class APITZReply {
+  APITZReply(this.data);
+  APITZReplyData data;
+
+  factory APITZReply.fromJson(dynamic json) {
+    return APITZReply(APITZReplyData.fromJson(json['data']));
+  }
+}
+
+class APITZReplyData {
+  APITZReplyData(this.title, this.value, this.editable);
+  String title;
+  String value;
+  bool editable;
+
+  factory APITZReplyData.fromJson(dynamic json) {
+    return APITZReplyData(
+      json['title'] as String,
+      json['value'] as String,
+      json['editable'] as bool,
+    );
+  }
+}
 
 class SSLHttpOverride extends HttpOverrides {
   SSLHttpOverride(this.validCert);
@@ -221,6 +246,7 @@ class FireflyService with ChangeNotifier {
   }
 
   late CurrencyRead defaultCurrency;
+  late TimeZoneHandler tzHandler;
 
   final FlutterSecureStorage storage = const FlutterSecureStorage(
     aOptions: AndroidOptions(
@@ -297,6 +323,27 @@ class FireflyService with ChangeNotifier {
     log.info(() => "Firefly API version $_apiVersion");
     if (apiVersion == null || apiVersion! < minApiVersion) {
       throw AuthErrorVersionTooLow(minApiVersion);
+    }
+
+    // Manual API query as the Swagger type doesn't resolve in Flutter :(
+    final HttpClient client = HttpClient();
+    Uri tzUri = user!.host.replace(pathSegments: <String>[
+      ...user!.host.pathSegments,
+      "v1",
+      "configuration",
+      ConfigValueFilter.appTimezone.value!
+    ]);
+    try {
+      HttpClientRequest request = await client.getUrl(tzUri);
+      user!.headers().forEach(
+            (String key, String value) => request.headers.add(key, value),
+          );
+      HttpClientResponse response = await request.close();
+      final String stringData = await response.transform(utf8.decoder).join();
+      final APITZReply reply = APITZReply.fromJson(json.decode(stringData));
+      tzHandler = TimeZoneHandler(reply.data.value);
+    } finally {
+      client.close();
     }
 
     _signedIn = true;

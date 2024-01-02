@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
@@ -346,6 +347,41 @@ extension DateTimeExtension on DateTime {
       );
 
   DateTime clearTime() => DateTime(year, month, day, 0, 0, 0, 0, 0);
+
+  TimeOfDay getTimeOfDay() => TimeOfDay.fromDateTime(this);
+}
+
+extension TZDateTimeExtension on tz.TZDateTime {
+  tz.TZDateTime setTimeOfDay(TimeOfDay time) => tz.TZDateTime(
+        location,
+        year,
+        month,
+        day,
+        time.hour,
+        time.minute,
+      );
+
+  tz.TZDateTime setTime({
+    int hours = 0,
+    int minutes = 0,
+    int seconds = 0,
+    int milliSeconds = 0,
+    int microSeconds = 0,
+  }) =>
+      tz.TZDateTime(
+        location,
+        year,
+        month,
+        day,
+        hours,
+        minutes,
+        seconds,
+        milliSeconds,
+        microSeconds,
+      );
+
+  tz.TZDateTime clearTime() =>
+      tz.TZDateTime(location, year, month, day, 0, 0, 0, 0, 0);
 
   TimeOfDay getTimeOfDay() => TimeOfDay.fromDateTime(this);
 }

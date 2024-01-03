@@ -10,6 +10,8 @@ import 'package:provider/single_child_widget.dart';
 import 'package:quick_actions/quick_actions.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_sharing_intent/flutter_sharing_intent.dart';
+import 'package:flutter_sharing_intent/model/sharing_file.dart';
 import 'package:local_auth/local_auth.dart';
 
 import 'package:waterflyiii/auth.dart';
@@ -36,6 +38,9 @@ class _WaterflyAppState extends State<WaterflyApp> {
   bool _startup = true;
   String? _quickAction;
   NotificationTransaction? _notificationPayload;
+  // Not needed right now, as sharing while the app is open does not work
+  //late StreamSubscription<List<SharedFile>> _intentDataStreamSubscription;
+  List<SharedFile>? _filesSharedToApp;
 
   @override
   void initState() {
@@ -77,7 +82,41 @@ class _WaterflyAppState extends State<WaterflyApp> {
       }
     });
     quickActions.clearShortcutItems();
+
+    // Share to Waterfly III
+    // While the app is open...
+    /* Sharing while app is open is currently not supported :(
+       The fix from https://github.com/bhagat-techind/flutter_sharing_intent/issues/33
+       does not seem to work, unfortunately.
+       
+    _intentDataStreamSubscription = FlutterSharingIntent.instance
+        .getMediaStream()
+        .listen((List<SharedFile> value) {
+      setState(() {
+        list = value;
+      });
+      debugPrint(
+          "Shared: getMediaStream ${value.map((SharedFile f) => f.value).join(",")}");
+    }, onError: (Object err) {
+      debugPrint("getIntentDataStream error: $err");
+    });*/
+
+    // For sharing images coming from outside the app while the app is closed
+    FlutterSharingIntent.instance.getInitialSharing().then(
+      (List<SharedFile> value) {
+        log.config("App was opened via file sharing");
+        _filesSharedToApp = value;
+      },
+    );
   }
+
+  /* Not needed right now, as sharing while the app is open does not work
+  @override
+  void dispose() {
+    _intentDataStreamSubscription.cancel();
+
+    super.dispose();
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +237,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
                   ? const SplashPage()
                   : signedIn
                       ? (_notificationPayload != null ||
-                              _quickAction == "action_transaction_add")
+                              _quickAction == "action_transaction_add" ||
+                              _filesSharedToApp != null)
                           ? TransactionPage(notification: _notificationPayload)
                           : const NavPage()
                       : const LoginPage(),

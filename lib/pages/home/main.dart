@@ -18,6 +18,8 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii_v2.enums.swagger.dart'
+    as api_v2_enums;
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii_v2.swagger.dart'
     as api_v2;
 import 'package:waterflyiii/pages/home/main_charts/category.dart';
@@ -498,6 +500,7 @@ class _HomeMainState extends State<HomeMain>
         await apiV2.v2ChartAccountDashboardGet(
       start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
       end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
+      preselected: api_v2_enums.PreselectedAccountProperty.all,
     );
     if (!respBalanceData.isSuccessful || respBalanceData.body == null) {
       if (context.mounted) {

@@ -6,6 +6,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_sharing_intent/model/sharing_file.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
@@ -41,12 +43,14 @@ class TransactionPage extends StatefulWidget {
     this.transaction,
     this.transactionId,
     this.notification,
+    this.files,
     this.clone = false,
   });
 
   final String? transactionId;
   final TransactionRead? transaction;
   final NotificationTransaction? notification;
+  final List<SharedFile>? files;
   final bool clone;
 
   @override
@@ -486,6 +490,30 @@ class _TransactionPageState extends State<TransactionPage>
           }
 
           setState(() {});
+        }
+        if (widget.files != null && widget.files!.isNotEmpty) {
+          _attachments = <AttachmentRead>[];
+          for (SharedFile file in widget.files!) {
+            if (file.value == null || file.value!.isEmpty) {
+              continue;
+            }
+            final XFile xfile = XFile(file.value!);
+            _attachments!.add(
+              AttachmentRead(
+                type: "attachments",
+                id: _attachments!.length.toString(),
+                attributes: Attachment(
+                  attachableType: AttachableType.transactionjournal,
+                  attachableId: "FAKE",
+                  filename: xfile.name,
+                  uploadUrl: xfile.path,
+                  size: await xfile.length(),
+                ),
+                links: const ObjectLink(),
+              ),
+            );
+          }
+          _hasAttachments = _attachments!.isNotEmpty;
         }
       });
     }

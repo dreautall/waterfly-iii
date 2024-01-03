@@ -515,6 +515,10 @@
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"
   },
+  "navigationCategories": "Categories",
+  "@navigationCategories": {
+    "description": "Navigation Label: Categories"
+  },
   "navigationMain": "Main Dashboard",
   "@navigationMain": {
     "description": "Navigation Label: Main Dashboard"

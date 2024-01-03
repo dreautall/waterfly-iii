@@ -952,10 +952,10 @@ class _TransactionPageState extends State<TransactionPage>
                           foreignAmount: _split
                               ? _foreignCurrencies[i] != null
                                   ? _foreignAmounts[i].toString()
-                                  : "0"
+                                  : null
                               : _foreignCurrency != null
                                   ? _foreignAmounts[i].toString()
-                                  : "0",
+                                  : null,
                           foreignCurrencyId: _split
                               ? _foreignCurrencies[i]?.id
                               : _foreignCurrency?.id,
@@ -1026,10 +1026,10 @@ class _TransactionPageState extends State<TransactionPage>
                           foreignAmount: _split
                               ? _foreignCurrencies[i] != null
                                   ? _foreignAmounts[i].toString()
-                                  : "0"
+                                  : null
                               : _foreignCurrency != null
                                   ? _foreignAmounts[i].toString()
-                                  : "0",
+                                  : null,
                           foreignCurrencyId: _split
                               ? _foreignCurrencies[i]?.id
                               : _foreignCurrency?.id,

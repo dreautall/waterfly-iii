@@ -1,0 +1,4 @@
+- Fehler beim Erstellen einer Transaktion in FF3 v6.1.3 und höher behoben.
+- Zeitzonen-Unterstützung mit der Option, die Server-Zeitzone zu nehmen (Standard)
+- Benachrichtigungs-Service unterstützt zusätzliche Banking-Apps
+- Rechnungen-Anzeige auf der Startseite wird jetzt richtig gefilert

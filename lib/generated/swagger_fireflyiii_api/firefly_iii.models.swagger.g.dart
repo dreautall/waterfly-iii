@@ -276,6 +276,23 @@ Map<String, dynamic> _$TagArrayToJson(TagArray instance) => <String, dynamic>{
       'links': instance.links.toJson(),
     };
 
+TransactionArray _$TransactionArrayFromJson(Map<String, dynamic> json) =>
+    TransactionArray(
+      data: (json['data'] as List<dynamic>?)
+              ?.map((e) => TransactionRead.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      meta: Meta.fromJson(json['meta'] as Map<String, dynamic>),
+      links: PageLink.fromJson(json['links'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$TransactionArrayToJson(TransactionArray instance) =>
+    <String, dynamic>{
+      'data': instance.data.map((e) => e.toJson()).toList(),
+      'meta': instance.meta.toJson(),
+      'links': instance.links.toJson(),
+    };
+
 TransactionLinkArray _$TransactionLinkArrayFromJson(
         Map<String, dynamic> json) =>
     TransactionLinkArray(
@@ -1320,6 +1337,23 @@ Map<String, dynamic> _$TransactionLinkSingleToJson(
       'data': instance.data.toJson(),
     };
 
+TransactionRead _$TransactionReadFromJson(Map<String, dynamic> json) =>
+    TransactionRead(
+      type: json['type'] as String,
+      id: json['id'] as String,
+      attributes:
+          Transaction.fromJson(json['attributes'] as Map<String, dynamic>),
+      links: ObjectLink.fromJson(json['links'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$TransactionReadToJson(TransactionRead instance) =>
+    <String, dynamic>{
+      'type': instance.type,
+      'id': instance.id,
+      'attributes': instance.attributes.toJson(),
+      'links': instance.links.toJson(),
+    };
+
 TransactionSingle _$TransactionSingleFromJson(Map<String, dynamic> json) =>
     TransactionSingle(
       data: TransactionRead.fromJson(json['data'] as Map<String, dynamic>),
@@ -1453,15 +1487,18 @@ Account _$AccountFromJson(Map<String, dynamic> json) => Account(
           : DateTime.parse(json['opening_balance_date'] as String),
       virtualBalance: json['virtual_balance'] as String?,
       includeNetWorth: json['include_net_worth'] as bool? ?? true,
-      creditCardType: creditCardTypeNullableFromJson(json['credit_card_type']),
+      creditCardType:
+          creditCardTypePropertyNullableFromJson(json['credit_card_type']),
       monthlyPaymentDate: json['monthly_payment_date'] == null
           ? null
           : DateTime.parse(json['monthly_payment_date'] as String),
-      liabilityType: liabilityTypeNullableFromJson(json['liability_type']),
-      liabilityDirection:
-          liabilityDirectionNullableFromJson(json['liability_direction']),
+      liabilityType:
+          liabilityTypePropertyNullableFromJson(json['liability_type']),
+      liabilityDirection: liabilityDirectionPropertyNullableFromJson(
+          json['liability_direction']),
       interest: json['interest'] as String?,
-      interestPeriod: interestPeriodNullableFromJson(json['interest_period']),
+      interestPeriod:
+          interestPeriodPropertyNullableFromJson(json['interest_period']),
       notes: json['notes'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
@@ -1502,16 +1539,16 @@ Map<String, dynamic> _$AccountToJson(Account instance) {
   writeNotNull('virtual_balance', instance.virtualBalance);
   writeNotNull('include_net_worth', instance.includeNetWorth);
   writeNotNull('credit_card_type',
-      creditCardTypeNullableToJson(instance.creditCardType));
+      creditCardTypePropertyNullableToJson(instance.creditCardType));
   writeNotNull(
       'monthly_payment_date', instance.monthlyPaymentDate?.toIso8601String());
-  writeNotNull(
-      'liability_type', liabilityTypeNullableToJson(instance.liabilityType));
+  writeNotNull('liability_type',
+      liabilityTypePropertyNullableToJson(instance.liabilityType));
   writeNotNull('liability_direction',
-      liabilityDirectionNullableToJson(instance.liabilityDirection));
+      liabilityDirectionPropertyNullableToJson(instance.liabilityDirection));
   writeNotNull('interest', instance.interest);
-  writeNotNull(
-      'interest_period', interestPeriodNullableToJson(instance.interestPeriod));
+  writeNotNull('interest_period',
+      interestPeriodPropertyNullableToJson(instance.interestPeriod));
   writeNotNull('notes', instance.notes);
   writeNotNull('latitude', instance.latitude);
   writeNotNull('longitude', instance.longitude);
@@ -1536,15 +1573,18 @@ AccountStore _$AccountStoreFromJson(Map<String, dynamic> json) => AccountStore(
       order: json['order'] as int?,
       includeNetWorth: json['include_net_worth'] as bool? ?? true,
       accountRole: accountRolePropertyNullableFromJson(json['account_role']),
-      creditCardType: creditCardTypeNullableFromJson(json['credit_card_type']),
+      creditCardType:
+          creditCardTypePropertyNullableFromJson(json['credit_card_type']),
       monthlyPaymentDate: json['monthly_payment_date'] == null
           ? null
           : DateTime.parse(json['monthly_payment_date'] as String),
-      liabilityType: liabilityTypeNullableFromJson(json['liability_type']),
-      liabilityDirection:
-          liabilityDirectionNullableFromJson(json['liability_direction']),
+      liabilityType:
+          liabilityTypePropertyNullableFromJson(json['liability_type']),
+      liabilityDirection: liabilityDirectionPropertyNullableFromJson(
+          json['liability_direction']),
       interest: json['interest'] as String?,
-      interestPeriod: interestPeriodNullableFromJson(json['interest_period']),
+      interestPeriod:
+          interestPeriodPropertyNullableFromJson(json['interest_period']),
       notes: json['notes'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
@@ -1578,16 +1618,16 @@ Map<String, dynamic> _$AccountStoreToJson(AccountStore instance) {
   writeNotNull(
       'account_role', accountRolePropertyNullableToJson(instance.accountRole));
   writeNotNull('credit_card_type',
-      creditCardTypeNullableToJson(instance.creditCardType));
+      creditCardTypePropertyNullableToJson(instance.creditCardType));
   writeNotNull(
       'monthly_payment_date', instance.monthlyPaymentDate?.toIso8601String());
-  writeNotNull(
-      'liability_type', liabilityTypeNullableToJson(instance.liabilityType));
+  writeNotNull('liability_type',
+      liabilityTypePropertyNullableToJson(instance.liabilityType));
   writeNotNull('liability_direction',
-      liabilityDirectionNullableToJson(instance.liabilityDirection));
+      liabilityDirectionPropertyNullableToJson(instance.liabilityDirection));
   writeNotNull('interest', instance.interest);
-  writeNotNull(
-      'interest_period', interestPeriodNullableToJson(instance.interestPeriod));
+  writeNotNull('interest_period',
+      interestPeriodPropertyNullableToJson(instance.interestPeriod));
   writeNotNull('notes', instance.notes);
   writeNotNull('latitude', instance.latitude);
   writeNotNull('longitude', instance.longitude);
@@ -1612,13 +1652,16 @@ AccountUpdate _$AccountUpdateFromJson(Map<String, dynamic> json) =>
       order: json['order'] as int?,
       includeNetWorth: json['include_net_worth'] as bool? ?? true,
       accountRole: accountRolePropertyNullableFromJson(json['account_role']),
-      creditCardType: creditCardTypeNullableFromJson(json['credit_card_type']),
+      creditCardType:
+          creditCardTypePropertyNullableFromJson(json['credit_card_type']),
       monthlyPaymentDate: json['monthly_payment_date'] == null
           ? null
           : DateTime.parse(json['monthly_payment_date'] as String),
-      liabilityType: liabilityTypeNullableFromJson(json['liability_type']),
+      liabilityType:
+          liabilityTypePropertyNullableFromJson(json['liability_type']),
       interest: json['interest'] as String?,
-      interestPeriod: interestPeriodNullableFromJson(json['interest_period']),
+      interestPeriod:
+          interestPeriodPropertyNullableFromJson(json['interest_period']),
       notes: json['notes'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
@@ -1651,14 +1694,14 @@ Map<String, dynamic> _$AccountUpdateToJson(AccountUpdate instance) {
   writeNotNull(
       'account_role', accountRolePropertyNullableToJson(instance.accountRole));
   writeNotNull('credit_card_type',
-      creditCardTypeNullableToJson(instance.creditCardType));
+      creditCardTypePropertyNullableToJson(instance.creditCardType));
   writeNotNull(
       'monthly_payment_date', instance.monthlyPaymentDate?.toIso8601String());
-  writeNotNull(
-      'liability_type', liabilityTypeNullableToJson(instance.liabilityType));
+  writeNotNull('liability_type',
+      liabilityTypePropertyNullableToJson(instance.liabilityType));
   writeNotNull('interest', instance.interest);
-  writeNotNull(
-      'interest_period', interestPeriodNullableToJson(instance.interestPeriod));
+  writeNotNull('interest_period',
+      interestPeriodPropertyNullableToJson(instance.interestPeriod));
   writeNotNull('notes', instance.notes);
   writeNotNull('latitude', instance.latitude);
   writeNotNull('longitude', instance.longitude);
@@ -1673,7 +1716,7 @@ Attachment _$AttachmentFromJson(Map<String, dynamic> json) => Attachment(
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
-      attachableType: attachableTypeFromJson(json['attachable_type']),
+      attachableType: attachableTypeNullableFromJson(json['attachable_type']),
       attachableId: json['attachable_id'] as String,
       md5: json['md5'] as String?,
       filename: json['filename'] as String,
@@ -1697,7 +1740,7 @@ Map<String, dynamic> _$AttachmentToJson(Attachment instance) {
   writeNotNull('created_at', instance.createdAt?.toIso8601String());
   writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
   writeNotNull(
-      'attachable_type', attachableTypeToJson(instance.attachableType));
+      'attachable_type', attachableTypeNullableToJson(instance.attachableType));
   val['attachable_id'] = instance.attachableId;
   writeNotNull('md5', instance.md5);
   val['filename'] = instance.filename;
@@ -1713,7 +1756,7 @@ Map<String, dynamic> _$AttachmentToJson(Attachment instance) {
 AttachmentStore _$AttachmentStoreFromJson(Map<String, dynamic> json) =>
     AttachmentStore(
       filename: json['filename'] as String,
-      attachableType: attachableTypeFromJson(json['attachable_type']),
+      attachableType: attachableTypeNullableFromJson(json['attachable_type']),
       attachableId: json['attachable_id'] as String,
       title: json['title'] as String?,
       notes: json['notes'] as String?,
@@ -1731,7 +1774,7 @@ Map<String, dynamic> _$AttachmentStoreToJson(AttachmentStore instance) {
   }
 
   writeNotNull(
-      'attachable_type', attachableTypeToJson(instance.attachableType));
+      'attachable_type', attachableTypeNullableToJson(instance.attachableType));
   val['attachable_id'] = instance.attachableId;
   writeNotNull('title', instance.title);
   writeNotNull('notes', instance.notes);
@@ -1831,7 +1874,7 @@ Bill _$BillFromJson(Map<String, dynamic> json) => Bill(
       extensionDate: json['extension_date'] == null
           ? null
           : DateTime.parse(json['extension_date'] as String),
-      repeatFreq: billRepeatFrequencyFromJson(json['repeat_freq']),
+      repeatFreq: billRepeatFrequencyNullableFromJson(json['repeat_freq']),
       skip: json['skip'] as int?,
       active: json['active'] as bool?,
       order: json['order'] as int?,
@@ -1873,7 +1916,8 @@ Map<String, dynamic> _$BillToJson(Bill instance) {
   val['date'] = instance.date.toIso8601String();
   writeNotNull('end_date', instance.endDate?.toIso8601String());
   writeNotNull('extension_date', instance.extensionDate?.toIso8601String());
-  writeNotNull('repeat_freq', billRepeatFrequencyToJson(instance.repeatFreq));
+  writeNotNull(
+      'repeat_freq', billRepeatFrequencyNullableToJson(instance.repeatFreq));
   writeNotNull('skip', instance.skip);
   writeNotNull('active', instance.active);
   writeNotNull('order', instance.order);
@@ -1904,7 +1948,7 @@ BillStore _$BillStoreFromJson(Map<String, dynamic> json) => BillStore(
       extensionDate: json['extension_date'] == null
           ? null
           : DateTime.parse(json['extension_date'] as String),
-      repeatFreq: billRepeatFrequencyFromJson(json['repeat_freq']),
+      repeatFreq: billRepeatFrequencyNullableFromJson(json['repeat_freq']),
       skip: json['skip'] as int?,
       active: json['active'] as bool?,
       notes: json['notes'] as String?,
@@ -1929,7 +1973,8 @@ Map<String, dynamic> _$BillStoreToJson(BillStore instance) {
   val['date'] = instance.date.toIso8601String();
   writeNotNull('end_date', instance.endDate?.toIso8601String());
   writeNotNull('extension_date', instance.extensionDate?.toIso8601String());
-  writeNotNull('repeat_freq', billRepeatFrequencyToJson(instance.repeatFreq));
+  writeNotNull(
+      'repeat_freq', billRepeatFrequencyNullableToJson(instance.repeatFreq));
   writeNotNull('skip', instance.skip);
   writeNotNull('active', instance.active);
   writeNotNull('notes', instance.notes);
@@ -2124,7 +2169,7 @@ BudgetLimit _$BudgetLimitFromJson(Map<String, dynamic> json) => BudgetLimit(
       currencyName: json['currency_name'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
       currencyDecimalPlaces: json['currency_decimal_places'] as int?,
-      budgetId: json['budget_id'] as String?,
+      budgetId: json['budget_id'] as String,
       period: json['period'] as String?,
       amount: json['amount'] as String,
       spent: json['spent'] as String?,
@@ -2148,7 +2193,7 @@ Map<String, dynamic> _$BudgetLimitToJson(BudgetLimit instance) {
   writeNotNull('currency_name', instance.currencyName);
   writeNotNull('currency_symbol', instance.currencySymbol);
   writeNotNull('currency_decimal_places', instance.currencyDecimalPlaces);
-  writeNotNull('budget_id', instance.budgetId);
+  val['budget_id'] = instance.budgetId;
   writeNotNull('period', instance.period);
   val['amount'] = instance.amount;
   writeNotNull('spent', instance.spent);
@@ -2159,7 +2204,7 @@ BudgetLimitStore _$BudgetLimitStoreFromJson(Map<String, dynamic> json) =>
     BudgetLimitStore(
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
-      budgetId: json['budget_id'] as String?,
+      budgetId: json['budget_id'] as String,
       start: DateTime.parse(json['start'] as String),
       period: json['period'] as String?,
       end: DateTime.parse(json['end'] as String),
@@ -2177,7 +2222,7 @@ Map<String, dynamic> _$BudgetLimitStoreToJson(BudgetLimitStore instance) {
 
   writeNotNull('currency_id', instance.currencyId);
   writeNotNull('currency_code', instance.currencyCode);
-  writeNotNull('budget_id', instance.budgetId);
+  val['budget_id'] = instance.budgetId;
   writeNotNull('start', _dateToJson(instance.start));
   writeNotNull('period', instance.period);
   writeNotNull('end', _dateToJson(instance.end));
@@ -2365,6 +2410,36 @@ Map<String, dynamic> _$ObjectGroupUpdateToJson(ObjectGroupUpdate instance) {
   }
 
   writeNotNull('order', instance.order);
+  return val;
+}
+
+ObjectLink _$ObjectLinkFromJson(Map<String, dynamic> json) => ObjectLink();
+
+Map<String, dynamic> _$ObjectLinkToJson(ObjectLink instance) =>
+    <String, dynamic>{};
+
+PageLink _$PageLinkFromJson(Map<String, dynamic> json) => PageLink(
+      self: json['self'] as String?,
+      first: json['first'] as String?,
+      next: json['next'] as String?,
+      prev: json['prev'] as String?,
+      last: json['last'] as String?,
+    );
+
+Map<String, dynamic> _$PageLinkToJson(PageLink instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('self', instance.self);
+  writeNotNull('first', instance.first);
+  writeNotNull('next', instance.next);
+  writeNotNull('prev', instance.prev);
+  writeNotNull('last', instance.last);
   return val;
 }
 
@@ -3614,6 +3689,38 @@ Map<String, dynamic> _$CurrencyUpdateToJson(CurrencyUpdate instance) {
   return val;
 }
 
+Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+      user: json['user'] as String?,
+      groupTitle: json['group_title'] as String?,
+      transactions: (json['transactions'] as List<dynamic>?)
+              ?.map((e) => TransactionSplit.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+    );
+
+Map<String, dynamic> _$TransactionToJson(Transaction instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('created_at', instance.createdAt?.toIso8601String());
+  writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
+  writeNotNull('user', instance.user);
+  writeNotNull('group_title', instance.groupTitle);
+  val['transactions'] = instance.transactions.map((e) => e.toJson()).toList();
+  return val;
+}
+
 TransactionStore _$TransactionStoreFromJson(Map<String, dynamic> json) =>
     TransactionStore(
       errorIfDuplicateHash: json['error_if_duplicate_hash'] as bool?,
@@ -3681,7 +3788,7 @@ TransactionLink _$TransactionLinkFromJson(Map<String, dynamic> json) =>
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
-      linkTypeId: json['link_type_id'] as String?,
+      linkTypeId: json['link_type_id'] as String,
       linkTypeName: json['link_type_name'] as String?,
       inwardId: json['inward_id'] as String,
       outwardId: json['outward_id'] as String,
@@ -3699,7 +3806,7 @@ Map<String, dynamic> _$TransactionLinkToJson(TransactionLink instance) {
 
   writeNotNull('created_at', instance.createdAt?.toIso8601String());
   writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
-  writeNotNull('link_type_id', instance.linkTypeId);
+  val['link_type_id'] = instance.linkTypeId;
   writeNotNull('link_type_name', instance.linkTypeName);
   val['inward_id'] = instance.inwardId;
   val['outward_id'] = instance.outwardId;
@@ -3710,7 +3817,7 @@ Map<String, dynamic> _$TransactionLinkToJson(TransactionLink instance) {
 TransactionLinkStore _$TransactionLinkStoreFromJson(
         Map<String, dynamic> json) =>
     TransactionLinkStore(
-      linkTypeId: json['link_type_id'] as String?,
+      linkTypeId: json['link_type_id'] as String,
       linkTypeName: json['link_type_name'] as String?,
       inwardId: json['inward_id'] as String,
       outwardId: json['outward_id'] as String,
@@ -3719,7 +3826,9 @@ TransactionLinkStore _$TransactionLinkStoreFromJson(
 
 Map<String, dynamic> _$TransactionLinkStoreToJson(
     TransactionLinkStore instance) {
-  final val = <String, dynamic>{};
+  final val = <String, dynamic>{
+    'link_type_id': instance.linkTypeId,
+  };
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -3727,7 +3836,6 @@ Map<String, dynamic> _$TransactionLinkStoreToJson(
     }
   }
 
-  writeNotNull('link_type_id', instance.linkTypeId);
   writeNotNull('link_type_name', instance.linkTypeName);
   val['inward_id'] = instance.inwardId;
   val['outward_id'] = instance.outwardId;
@@ -3806,6 +3914,163 @@ Map<String, dynamic> _$LinkTypeUpdateToJson(LinkTypeUpdate instance) {
   writeNotNull('name', instance.name);
   writeNotNull('inward', instance.inward);
   writeNotNull('outward', instance.outward);
+  return val;
+}
+
+TransactionSplit _$TransactionSplitFromJson(Map<String, dynamic> json) =>
+    TransactionSplit(
+      user: json['user'] as String?,
+      transactionJournalId: json['transaction_journal_id'] as String?,
+      type: transactionTypePropertyFromJson(json['type']),
+      date: DateTime.parse(json['date'] as String),
+      order: json['order'] as int?,
+      currencyId: json['currency_id'] as String?,
+      currencyCode: json['currency_code'] as String?,
+      currencySymbol: json['currency_symbol'] as String?,
+      currencyName: json['currency_name'] as String?,
+      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      foreignCurrencyId: json['foreign_currency_id'] as String?,
+      foreignCurrencyCode: json['foreign_currency_code'] as String?,
+      foreignCurrencySymbol: json['foreign_currency_symbol'] as String?,
+      foreignCurrencyDecimalPlaces:
+          json['foreign_currency_decimal_places'] as int?,
+      amount: json['amount'] as String,
+      foreignAmount: json['foreign_amount'] as String?,
+      description: json['description'] as String,
+      sourceId: json['source_id'] as String?,
+      sourceName: json['source_name'] as String?,
+      sourceIban: json['source_iban'] as String?,
+      sourceType: accountTypePropertyNullableFromJson(json['source_type']),
+      destinationId: json['destination_id'] as String?,
+      destinationName: json['destination_name'] as String?,
+      destinationIban: json['destination_iban'] as String?,
+      destinationType:
+          accountTypePropertyNullableFromJson(json['destination_type']),
+      budgetId: json['budget_id'] as String?,
+      budgetName: json['budget_name'] as String?,
+      categoryId: json['category_id'] as String?,
+      categoryName: json['category_name'] as String?,
+      billId: json['bill_id'] as String?,
+      billName: json['bill_name'] as String?,
+      reconciled: json['reconciled'] as bool?,
+      notes: json['notes'] as String?,
+      tags:
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              [],
+      internalReference: json['internal_reference'] as String?,
+      externalId: json['external_id'] as String?,
+      externalUrl: json['external_url'] as String?,
+      originalSource: json['original_source'] as String?,
+      recurrenceId: json['recurrence_id'] as String?,
+      recurrenceTotal: json['recurrence_total'] as int?,
+      recurrenceCount: json['recurrence_count'] as int?,
+      bunqPaymentId: json['bunq_payment_id'] as String?,
+      importHashV2: json['import_hash_v2'] as String?,
+      sepaCc: json['sepa_cc'] as String?,
+      sepaCtOp: json['sepa_ct_op'] as String?,
+      sepaCtId: json['sepa_ct_id'] as String?,
+      sepaDb: json['sepa_db'] as String?,
+      sepaCountry: json['sepa_country'] as String?,
+      sepaEp: json['sepa_ep'] as String?,
+      sepaCi: json['sepa_ci'] as String?,
+      sepaBatchId: json['sepa_batch_id'] as String?,
+      interestDate: json['interest_date'] == null
+          ? null
+          : DateTime.parse(json['interest_date'] as String),
+      bookDate: json['book_date'] == null
+          ? null
+          : DateTime.parse(json['book_date'] as String),
+      processDate: json['process_date'] == null
+          ? null
+          : DateTime.parse(json['process_date'] as String),
+      dueDate: json['due_date'] == null
+          ? null
+          : DateTime.parse(json['due_date'] as String),
+      paymentDate: json['payment_date'] == null
+          ? null
+          : DateTime.parse(json['payment_date'] as String),
+      invoiceDate: json['invoice_date'] == null
+          ? null
+          : DateTime.parse(json['invoice_date'] as String),
+      latitude: (json['latitude'] as num?)?.toDouble(),
+      longitude: (json['longitude'] as num?)?.toDouble(),
+      zoomLevel: json['zoom_level'] as int?,
+      hasAttachments: json['has_attachments'] as bool?,
+    );
+
+Map<String, dynamic> _$TransactionSplitToJson(TransactionSplit instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('user', instance.user);
+  writeNotNull('transaction_journal_id', instance.transactionJournalId);
+  writeNotNull('type', transactionTypePropertyToJson(instance.type));
+  val['date'] = instance.date.toIso8601String();
+  writeNotNull('order', instance.order);
+  writeNotNull('currency_id', instance.currencyId);
+  writeNotNull('currency_code', instance.currencyCode);
+  writeNotNull('currency_symbol', instance.currencySymbol);
+  writeNotNull('currency_name', instance.currencyName);
+  writeNotNull('currency_decimal_places', instance.currencyDecimalPlaces);
+  writeNotNull('foreign_currency_id', instance.foreignCurrencyId);
+  writeNotNull('foreign_currency_code', instance.foreignCurrencyCode);
+  writeNotNull('foreign_currency_symbol', instance.foreignCurrencySymbol);
+  writeNotNull(
+      'foreign_currency_decimal_places', instance.foreignCurrencyDecimalPlaces);
+  val['amount'] = instance.amount;
+  writeNotNull('foreign_amount', instance.foreignAmount);
+  val['description'] = instance.description;
+  writeNotNull('source_id', instance.sourceId);
+  writeNotNull('source_name', instance.sourceName);
+  writeNotNull('source_iban', instance.sourceIban);
+  writeNotNull(
+      'source_type', accountTypePropertyNullableToJson(instance.sourceType));
+  writeNotNull('destination_id', instance.destinationId);
+  writeNotNull('destination_name', instance.destinationName);
+  writeNotNull('destination_iban', instance.destinationIban);
+  writeNotNull('destination_type',
+      accountTypePropertyNullableToJson(instance.destinationType));
+  writeNotNull('budget_id', instance.budgetId);
+  writeNotNull('budget_name', instance.budgetName);
+  writeNotNull('category_id', instance.categoryId);
+  writeNotNull('category_name', instance.categoryName);
+  writeNotNull('bill_id', instance.billId);
+  writeNotNull('bill_name', instance.billName);
+  writeNotNull('reconciled', instance.reconciled);
+  writeNotNull('notes', instance.notes);
+  writeNotNull('tags', instance.tags);
+  writeNotNull('internal_reference', instance.internalReference);
+  writeNotNull('external_id', instance.externalId);
+  writeNotNull('external_url', instance.externalUrl);
+  writeNotNull('original_source', instance.originalSource);
+  writeNotNull('recurrence_id', instance.recurrenceId);
+  writeNotNull('recurrence_total', instance.recurrenceTotal);
+  writeNotNull('recurrence_count', instance.recurrenceCount);
+  writeNotNull('bunq_payment_id', instance.bunqPaymentId);
+  writeNotNull('import_hash_v2', instance.importHashV2);
+  writeNotNull('sepa_cc', instance.sepaCc);
+  writeNotNull('sepa_ct_op', instance.sepaCtOp);
+  writeNotNull('sepa_ct_id', instance.sepaCtId);
+  writeNotNull('sepa_db', instance.sepaDb);
+  writeNotNull('sepa_country', instance.sepaCountry);
+  writeNotNull('sepa_ep', instance.sepaEp);
+  writeNotNull('sepa_ci', instance.sepaCi);
+  writeNotNull('sepa_batch_id', instance.sepaBatchId);
+  writeNotNull('interest_date', instance.interestDate?.toIso8601String());
+  writeNotNull('book_date', instance.bookDate?.toIso8601String());
+  writeNotNull('process_date', instance.processDate?.toIso8601String());
+  writeNotNull('due_date', instance.dueDate?.toIso8601String());
+  writeNotNull('payment_date', instance.paymentDate?.toIso8601String());
+  writeNotNull('invoice_date', instance.invoiceDate?.toIso8601String());
+  writeNotNull('latitude', instance.latitude);
+  writeNotNull('longitude', instance.longitude);
+  writeNotNull('zoom_level', instance.zoomLevel);
+  writeNotNull('has_attachments', instance.hasAttachments);
   return val;
 }
 
@@ -4419,40 +4684,6 @@ Map<String, dynamic> _$UserSingleToJson(UserSingle instance) =>
       'data': instance.data.toJson(),
     };
 
-TransactionArray _$TransactionArrayFromJson(Map<String, dynamic> json) =>
-    TransactionArray(
-      data: (json['data'] as List<dynamic>?)
-              ?.map((e) => TransactionRead.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      meta: Meta.fromJson(json['meta'] as Map<String, dynamic>),
-      links: PageLink.fromJson(json['links'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$TransactionArrayToJson(TransactionArray instance) =>
-    <String, dynamic>{
-      'data': instance.data.map((e) => e.toJson()).toList(),
-      'meta': instance.meta.toJson(),
-      'links': instance.links.toJson(),
-    };
-
-TransactionRead _$TransactionReadFromJson(Map<String, dynamic> json) =>
-    TransactionRead(
-      type: json['type'] as String,
-      id: json['id'] as String,
-      attributes:
-          Transaction.fromJson(json['attributes'] as Map<String, dynamic>),
-      links: ObjectLink.fromJson(json['links'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$TransactionReadToJson(TransactionRead instance) =>
-    <String, dynamic>{
-      'type': instance.type,
-      'id': instance.id,
-      'attributes': instance.attributes.toJson(),
-      'links': instance.links.toJson(),
-    };
-
 Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
       pagination: json['pagination'] == null
           ? null
@@ -4473,243 +4704,13 @@ Map<String, dynamic> _$MetaToJson(Meta instance) {
   return val;
 }
 
-ObjectLink _$ObjectLinkFromJson(Map<String, dynamic> json) => ObjectLink(
-      self: json['self'] as String?,
-    );
-
-Map<String, dynamic> _$ObjectLinkToJson(ObjectLink instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('self', instance.self);
-  return val;
-}
-
-PageLink _$PageLinkFromJson(Map<String, dynamic> json) => PageLink(
-      self: json['self'] as String?,
-      first: json['first'] as String?,
-      next: json['next'] as String?,
-      prev: json['prev'] as String?,
-      last: json['last'] as String?,
-    );
-
-Map<String, dynamic> _$PageLinkToJson(PageLink instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('self', instance.self);
-  writeNotNull('first', instance.first);
-  writeNotNull('next', instance.next);
-  writeNotNull('prev', instance.prev);
-  writeNotNull('last', instance.last);
-  return val;
-}
-
-Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
-      createdAt: json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-      updatedAt: json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
-      user: json['user'] as String?,
-      groupTitle: json['group_title'] as String?,
-      transactions: (json['transactions'] as List<dynamic>?)
-              ?.map((e) => TransactionSplit.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-    );
-
-Map<String, dynamic> _$TransactionToJson(Transaction instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('created_at', instance.createdAt?.toIso8601String());
-  writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
-  writeNotNull('user', instance.user);
-  writeNotNull('group_title', instance.groupTitle);
-  val['transactions'] = instance.transactions.map((e) => e.toJson()).toList();
-  return val;
-}
-
-TransactionSplit _$TransactionSplitFromJson(Map<String, dynamic> json) =>
-    TransactionSplit(
-      user: json['user'] as String?,
-      transactionJournalId: json['transaction_journal_id'] as String?,
-      type: transactionTypePropertyFromJson(json['type']),
-      date: DateTime.parse(json['date'] as String),
-      order: json['order'] as int?,
-      currencyId: json['currency_id'] as String?,
-      currencyCode: json['currency_code'] as String?,
-      currencySymbol: json['currency_symbol'] as String?,
-      currencyName: json['currency_name'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
-      foreignCurrencyId: json['foreign_currency_id'] as String?,
-      foreignCurrencyCode: json['foreign_currency_code'] as String?,
-      foreignCurrencySymbol: json['foreign_currency_symbol'] as String?,
-      foreignCurrencyDecimalPlaces:
-          json['foreign_currency_decimal_places'] as int?,
-      amount: json['amount'] as String,
-      foreignAmount: json['foreign_amount'] as String?,
-      description: json['description'] as String,
-      sourceId: json['source_id'] as String?,
-      sourceName: json['source_name'] as String?,
-      sourceIban: json['source_iban'] as String?,
-      sourceType: accountTypePropertyNullableFromJson(json['source_type']),
-      destinationId: json['destination_id'] as String?,
-      destinationName: json['destination_name'] as String?,
-      destinationIban: json['destination_iban'] as String?,
-      destinationType:
-          accountTypePropertyNullableFromJson(json['destination_type']),
-      budgetId: json['budget_id'] as String?,
-      budgetName: json['budget_name'] as String?,
-      categoryId: json['category_id'] as String?,
-      categoryName: json['category_name'] as String?,
-      billId: json['bill_id'] as String?,
-      billName: json['bill_name'] as String?,
-      reconciled: json['reconciled'] as bool?,
-      notes: json['notes'] as String?,
-      tags:
-          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              [],
-      internalReference: json['internal_reference'] as String?,
-      externalId: json['external_id'] as String?,
-      externalUrl: json['external_url'] as String?,
-      originalSource: json['original_source'] as String?,
-      recurrenceId: json['recurrence_id'] as String?,
-      recurrenceTotal: json['recurrence_total'] as int?,
-      recurrenceCount: json['recurrence_count'] as int?,
-      bunqPaymentId: json['bunq_payment_id'] as String?,
-      importHashV2: json['import_hash_v2'] as String?,
-      sepaCc: json['sepa_cc'] as String?,
-      sepaCtOp: json['sepa_ct_op'] as String?,
-      sepaCtId: json['sepa_ct_id'] as String?,
-      sepaDb: json['sepa_db'] as String?,
-      sepaCountry: json['sepa_country'] as String?,
-      sepaEp: json['sepa_ep'] as String?,
-      sepaCi: json['sepa_ci'] as String?,
-      sepaBatchId: json['sepa_batch_id'] as String?,
-      interestDate: json['interest_date'] == null
-          ? null
-          : DateTime.parse(json['interest_date'] as String),
-      bookDate: json['book_date'] == null
-          ? null
-          : DateTime.parse(json['book_date'] as String),
-      processDate: json['process_date'] == null
-          ? null
-          : DateTime.parse(json['process_date'] as String),
-      dueDate: json['due_date'] == null
-          ? null
-          : DateTime.parse(json['due_date'] as String),
-      paymentDate: json['payment_date'] == null
-          ? null
-          : DateTime.parse(json['payment_date'] as String),
-      invoiceDate: json['invoice_date'] == null
-          ? null
-          : DateTime.parse(json['invoice_date'] as String),
-      latitude: (json['latitude'] as num?)?.toDouble(),
-      longitude: (json['longitude'] as num?)?.toDouble(),
-      zoomLevel: json['zoom_level'] as int?,
-      hasAttachments: json['has_attachments'] as bool?,
-    );
-
-Map<String, dynamic> _$TransactionSplitToJson(TransactionSplit instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('user', instance.user);
-  writeNotNull('transaction_journal_id', instance.transactionJournalId);
-  writeNotNull('type', transactionTypePropertyToJson(instance.type));
-  val['date'] = instance.date.toIso8601String();
-  writeNotNull('order', instance.order);
-  writeNotNull('currency_id', instance.currencyId);
-  writeNotNull('currency_code', instance.currencyCode);
-  writeNotNull('currency_symbol', instance.currencySymbol);
-  writeNotNull('currency_name', instance.currencyName);
-  writeNotNull('currency_decimal_places', instance.currencyDecimalPlaces);
-  writeNotNull('foreign_currency_id', instance.foreignCurrencyId);
-  writeNotNull('foreign_currency_code', instance.foreignCurrencyCode);
-  writeNotNull('foreign_currency_symbol', instance.foreignCurrencySymbol);
-  writeNotNull(
-      'foreign_currency_decimal_places', instance.foreignCurrencyDecimalPlaces);
-  val['amount'] = instance.amount;
-  writeNotNull('foreign_amount', instance.foreignAmount);
-  val['description'] = instance.description;
-  writeNotNull('source_id', instance.sourceId);
-  writeNotNull('source_name', instance.sourceName);
-  writeNotNull('source_iban', instance.sourceIban);
-  writeNotNull(
-      'source_type', accountTypePropertyNullableToJson(instance.sourceType));
-  writeNotNull('destination_id', instance.destinationId);
-  writeNotNull('destination_name', instance.destinationName);
-  writeNotNull('destination_iban', instance.destinationIban);
-  writeNotNull('destination_type',
-      accountTypePropertyNullableToJson(instance.destinationType));
-  writeNotNull('budget_id', instance.budgetId);
-  writeNotNull('budget_name', instance.budgetName);
-  writeNotNull('category_id', instance.categoryId);
-  writeNotNull('category_name', instance.categoryName);
-  writeNotNull('bill_id', instance.billId);
-  writeNotNull('bill_name', instance.billName);
-  writeNotNull('reconciled', instance.reconciled);
-  writeNotNull('notes', instance.notes);
-  writeNotNull('tags', instance.tags);
-  writeNotNull('internal_reference', instance.internalReference);
-  writeNotNull('external_id', instance.externalId);
-  writeNotNull('external_url', instance.externalUrl);
-  writeNotNull('original_source', instance.originalSource);
-  writeNotNull('recurrence_id', instance.recurrenceId);
-  writeNotNull('recurrence_total', instance.recurrenceTotal);
-  writeNotNull('recurrence_count', instance.recurrenceCount);
-  writeNotNull('bunq_payment_id', instance.bunqPaymentId);
-  writeNotNull('import_hash_v2', instance.importHashV2);
-  writeNotNull('sepa_cc', instance.sepaCc);
-  writeNotNull('sepa_ct_op', instance.sepaCtOp);
-  writeNotNull('sepa_ct_id', instance.sepaCtId);
-  writeNotNull('sepa_db', instance.sepaDb);
-  writeNotNull('sepa_country', instance.sepaCountry);
-  writeNotNull('sepa_ep', instance.sepaEp);
-  writeNotNull('sepa_ci', instance.sepaCi);
-  writeNotNull('sepa_batch_id', instance.sepaBatchId);
-  writeNotNull('interest_date', instance.interestDate?.toIso8601String());
-  writeNotNull('book_date', instance.bookDate?.toIso8601String());
-  writeNotNull('process_date', instance.processDate?.toIso8601String());
-  writeNotNull('due_date', instance.dueDate?.toIso8601String());
-  writeNotNull('payment_date', instance.paymentDate?.toIso8601String());
-  writeNotNull('invoice_date', instance.invoiceDate?.toIso8601String());
-  writeNotNull('latitude', instance.latitude);
-  writeNotNull('longitude', instance.longitude);
-  writeNotNull('zoom_level', instance.zoomLevel);
-  writeNotNull('has_attachments', instance.hasAttachments);
-  return val;
-}
-
-BadRequest _$BadRequestFromJson(Map<String, dynamic> json) => BadRequest(
+BadRequestResponse _$BadRequestResponseFromJson(Map<String, dynamic> json) =>
+    BadRequestResponse(
       message: json['message'] as String?,
       exception: json['exception'] as String?,
     );
 
-Map<String, dynamic> _$BadRequestToJson(BadRequest instance) {
+Map<String, dynamic> _$BadRequestResponseToJson(BadRequestResponse instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -4723,13 +4724,15 @@ Map<String, dynamic> _$BadRequestToJson(BadRequest instance) {
   return val;
 }
 
-InternalException _$InternalExceptionFromJson(Map<String, dynamic> json) =>
-    InternalException(
+InternalExceptionResponse _$InternalExceptionResponseFromJson(
+        Map<String, dynamic> json) =>
+    InternalExceptionResponse(
       message: json['message'] as String?,
       exception: json['exception'] as String?,
     );
 
-Map<String, dynamic> _$InternalExceptionToJson(InternalException instance) {
+Map<String, dynamic> _$InternalExceptionResponseToJson(
+    InternalExceptionResponse instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -4743,12 +4746,13 @@ Map<String, dynamic> _$InternalExceptionToJson(InternalException instance) {
   return val;
 }
 
-NotFound _$NotFoundFromJson(Map<String, dynamic> json) => NotFound(
+NotFoundResponse _$NotFoundResponseFromJson(Map<String, dynamic> json) =>
+    NotFoundResponse(
       message: json['message'] as String?,
       exception: json['exception'] as String?,
     );
 
-Map<String, dynamic> _$NotFoundToJson(NotFound instance) {
+Map<String, dynamic> _$NotFoundResponseToJson(NotFoundResponse instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -4762,13 +4766,15 @@ Map<String, dynamic> _$NotFoundToJson(NotFound instance) {
   return val;
 }
 
-Unauthenticated _$UnauthenticatedFromJson(Map<String, dynamic> json) =>
-    Unauthenticated(
+UnauthenticatedResponse _$UnauthenticatedResponseFromJson(
+        Map<String, dynamic> json) =>
+    UnauthenticatedResponse(
       message: json['message'] as String?,
       exception: json['exception'] as String?,
     );
 
-Map<String, dynamic> _$UnauthenticatedToJson(Unauthenticated instance) {
+Map<String, dynamic> _$UnauthenticatedResponseToJson(
+    UnauthenticatedResponse instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -4782,16 +4788,18 @@ Map<String, dynamic> _$UnauthenticatedToJson(Unauthenticated instance) {
   return val;
 }
 
-ValidationError _$ValidationErrorFromJson(Map<String, dynamic> json) =>
-    ValidationError(
+ValidationErrorResponse _$ValidationErrorResponseFromJson(
+        Map<String, dynamic> json) =>
+    ValidationErrorResponse(
       message: json['message'] as String?,
       errors: json['errors'] == null
           ? null
-          : ValidationError$Errors.fromJson(
+          : ValidationErrorResponse$Errors.fromJson(
               json['errors'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ValidationErrorToJson(ValidationError instance) {
+Map<String, dynamic> _$ValidationErrorResponseToJson(
+    ValidationErrorResponse instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -4880,9 +4888,9 @@ Map<String, dynamic> _$Meta$PaginationToJson(Meta$Pagination instance) {
   return val;
 }
 
-ValidationError$Errors _$ValidationError$ErrorsFromJson(
+ValidationErrorResponse$Errors _$ValidationErrorResponse$ErrorsFromJson(
         Map<String, dynamic> json) =>
-    ValidationError$Errors(
+    ValidationErrorResponse$Errors(
       email:
           (json['email'] as List<dynamic>?)?.map((e) => e as String).toList() ??
               [],
@@ -4916,8 +4924,8 @@ ValidationError$Errors _$ValidationError$ErrorsFromJson(
               [],
     );
 
-Map<String, dynamic> _$ValidationError$ErrorsToJson(
-    ValidationError$Errors instance) {
+Map<String, dynamic> _$ValidationErrorResponse$ErrorsToJson(
+    ValidationErrorResponse$Errors instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {

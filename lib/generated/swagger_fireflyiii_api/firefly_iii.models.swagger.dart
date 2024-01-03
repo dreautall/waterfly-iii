@@ -733,6 +733,53 @@ extension $TagArrayExtension on TagArray {
 }
 
 @JsonSerializable(explicitToJson: true)
+class TransactionArray {
+  const TransactionArray({
+    required this.data,
+    required this.meta,
+    required this.links,
+  });
+
+  factory TransactionArray.fromJson(Map<String, dynamic> json) =>
+      _$TransactionArrayFromJson(json);
+
+  static const toJsonFactory = _$TransactionArrayToJson;
+  Map<String, dynamic> toJson() => _$TransactionArrayToJson(this);
+
+  @JsonKey(
+      name: 'data', includeIfNull: false, defaultValue: <TransactionRead>[])
+  final List<TransactionRead> data;
+  @JsonKey(name: 'meta', includeIfNull: false)
+  final Meta meta;
+  @JsonKey(name: 'links', includeIfNull: false)
+  final PageLink links;
+  static const fromJsonFactory = _$TransactionArrayFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $TransactionArrayExtension on TransactionArray {
+  TransactionArray copyWith(
+      {List<TransactionRead>? data, Meta? meta, PageLink? links}) {
+    return TransactionArray(
+        data: data ?? this.data,
+        meta: meta ?? this.meta,
+        links: links ?? this.links);
+  }
+
+  TransactionArray copyWithWrapped(
+      {Wrapped<List<TransactionRead>>? data,
+      Wrapped<Meta>? meta,
+      Wrapped<PageLink>? links}) {
+    return TransactionArray(
+        data: (data != null ? data.value : this.data),
+        meta: (meta != null ? meta.value : this.meta),
+        links: (links != null ? links.value : this.links));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class TransactionLinkArray {
   const TransactionLinkArray({
     required this.data,
@@ -3659,6 +3706,58 @@ extension $TransactionLinkSingleExtension on TransactionLinkSingle {
 }
 
 @JsonSerializable(explicitToJson: true)
+class TransactionRead {
+  const TransactionRead({
+    required this.type,
+    required this.id,
+    required this.attributes,
+    required this.links,
+  });
+
+  factory TransactionRead.fromJson(Map<String, dynamic> json) =>
+      _$TransactionReadFromJson(json);
+
+  static const toJsonFactory = _$TransactionReadToJson;
+  Map<String, dynamic> toJson() => _$TransactionReadToJson(this);
+
+  @JsonKey(name: 'type', includeIfNull: false)
+  final String type;
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String id;
+  @JsonKey(name: 'attributes', includeIfNull: false)
+  final Transaction attributes;
+  @JsonKey(name: 'links', includeIfNull: false)
+  final ObjectLink links;
+  static const fromJsonFactory = _$TransactionReadFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $TransactionReadExtension on TransactionRead {
+  TransactionRead copyWith(
+      {String? type, String? id, Transaction? attributes, ObjectLink? links}) {
+    return TransactionRead(
+        type: type ?? this.type,
+        id: id ?? this.id,
+        attributes: attributes ?? this.attributes,
+        links: links ?? this.links);
+  }
+
+  TransactionRead copyWithWrapped(
+      {Wrapped<String>? type,
+      Wrapped<String>? id,
+      Wrapped<Transaction>? attributes,
+      Wrapped<ObjectLink>? links}) {
+    return TransactionRead(
+        type: (type != null ? type.value : this.type),
+        id: (id != null ? id.value : this.id),
+        attributes: (attributes != null ? attributes.value : this.attributes),
+        links: (links != null ? links.value : this.links));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class TransactionSingle {
   const TransactionSingle({
     required this.data,
@@ -4071,35 +4170,35 @@ class Account {
   @JsonKey(
     name: 'credit_card_type',
     includeIfNull: false,
-    toJson: creditCardTypeNullableToJson,
-    fromJson: creditCardTypeNullableFromJson,
+    toJson: creditCardTypePropertyNullableToJson,
+    fromJson: creditCardTypePropertyNullableFromJson,
   )
-  final enums.CreditCardType? creditCardType;
+  final enums.CreditCardTypeProperty? creditCardType;
   @JsonKey(name: 'monthly_payment_date', includeIfNull: false)
   final DateTime? monthlyPaymentDate;
   @JsonKey(
     name: 'liability_type',
     includeIfNull: false,
-    toJson: liabilityTypeNullableToJson,
-    fromJson: liabilityTypeNullableFromJson,
+    toJson: liabilityTypePropertyNullableToJson,
+    fromJson: liabilityTypePropertyNullableFromJson,
   )
-  final enums.LiabilityType? liabilityType;
+  final enums.LiabilityTypeProperty? liabilityType;
   @JsonKey(
     name: 'liability_direction',
     includeIfNull: false,
-    toJson: liabilityDirectionNullableToJson,
-    fromJson: liabilityDirectionNullableFromJson,
+    toJson: liabilityDirectionPropertyNullableToJson,
+    fromJson: liabilityDirectionPropertyNullableFromJson,
   )
-  final enums.LiabilityDirection? liabilityDirection;
+  final enums.LiabilityDirectionProperty? liabilityDirection;
   @JsonKey(name: 'interest', includeIfNull: false)
   final String? interest;
   @JsonKey(
     name: 'interest_period',
     includeIfNull: false,
-    toJson: interestPeriodNullableToJson,
-    fromJson: interestPeriodNullableFromJson,
+    toJson: interestPeriodPropertyNullableToJson,
+    fromJson: interestPeriodPropertyNullableFromJson,
   )
-  final enums.InterestPeriod? interestPeriod;
+  final enums.InterestPeriodProperty? interestPeriod;
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   @JsonKey(name: 'latitude', includeIfNull: false)
@@ -4137,12 +4236,12 @@ extension $AccountExtension on Account {
       DateTime? openingBalanceDate,
       String? virtualBalance,
       bool? includeNetWorth,
-      enums.CreditCardType? creditCardType,
+      enums.CreditCardTypeProperty? creditCardType,
       DateTime? monthlyPaymentDate,
-      enums.LiabilityType? liabilityType,
-      enums.LiabilityDirection? liabilityDirection,
+      enums.LiabilityTypeProperty? liabilityType,
+      enums.LiabilityDirectionProperty? liabilityDirection,
       String? interest,
-      enums.InterestPeriod? interestPeriod,
+      enums.InterestPeriodProperty? interestPeriod,
       String? notes,
       double? latitude,
       double? longitude,
@@ -4204,12 +4303,12 @@ extension $AccountExtension on Account {
       Wrapped<DateTime?>? openingBalanceDate,
       Wrapped<String?>? virtualBalance,
       Wrapped<bool?>? includeNetWorth,
-      Wrapped<enums.CreditCardType?>? creditCardType,
+      Wrapped<enums.CreditCardTypeProperty?>? creditCardType,
       Wrapped<DateTime?>? monthlyPaymentDate,
-      Wrapped<enums.LiabilityType?>? liabilityType,
-      Wrapped<enums.LiabilityDirection?>? liabilityDirection,
+      Wrapped<enums.LiabilityTypeProperty?>? liabilityType,
+      Wrapped<enums.LiabilityDirectionProperty?>? liabilityDirection,
       Wrapped<String?>? interest,
-      Wrapped<enums.InterestPeriod?>? interestPeriod,
+      Wrapped<enums.InterestPeriodProperty?>? interestPeriod,
       Wrapped<String?>? notes,
       Wrapped<double?>? latitude,
       Wrapped<double?>? longitude,
@@ -4354,35 +4453,35 @@ class AccountStore {
   @JsonKey(
     name: 'credit_card_type',
     includeIfNull: false,
-    toJson: creditCardTypeNullableToJson,
-    fromJson: creditCardTypeNullableFromJson,
+    toJson: creditCardTypePropertyNullableToJson,
+    fromJson: creditCardTypePropertyNullableFromJson,
   )
-  final enums.CreditCardType? creditCardType;
+  final enums.CreditCardTypeProperty? creditCardType;
   @JsonKey(name: 'monthly_payment_date', includeIfNull: false)
   final DateTime? monthlyPaymentDate;
   @JsonKey(
     name: 'liability_type',
     includeIfNull: false,
-    toJson: liabilityTypeNullableToJson,
-    fromJson: liabilityTypeNullableFromJson,
+    toJson: liabilityTypePropertyNullableToJson,
+    fromJson: liabilityTypePropertyNullableFromJson,
   )
-  final enums.LiabilityType? liabilityType;
+  final enums.LiabilityTypeProperty? liabilityType;
   @JsonKey(
     name: 'liability_direction',
     includeIfNull: false,
-    toJson: liabilityDirectionNullableToJson,
-    fromJson: liabilityDirectionNullableFromJson,
+    toJson: liabilityDirectionPropertyNullableToJson,
+    fromJson: liabilityDirectionPropertyNullableFromJson,
   )
-  final enums.LiabilityDirection? liabilityDirection;
+  final enums.LiabilityDirectionProperty? liabilityDirection;
   @JsonKey(name: 'interest', includeIfNull: false)
   final String? interest;
   @JsonKey(
     name: 'interest_period',
     includeIfNull: false,
-    toJson: interestPeriodNullableToJson,
-    fromJson: interestPeriodNullableFromJson,
+    toJson: interestPeriodPropertyNullableToJson,
+    fromJson: interestPeriodPropertyNullableFromJson,
   )
-  final enums.InterestPeriod? interestPeriod;
+  final enums.InterestPeriodProperty? interestPeriod;
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   @JsonKey(name: 'latitude', includeIfNull: false)
@@ -4413,12 +4512,12 @@ extension $AccountStoreExtension on AccountStore {
       int? order,
       bool? includeNetWorth,
       enums.AccountRoleProperty? accountRole,
-      enums.CreditCardType? creditCardType,
+      enums.CreditCardTypeProperty? creditCardType,
       DateTime? monthlyPaymentDate,
-      enums.LiabilityType? liabilityType,
-      enums.LiabilityDirection? liabilityDirection,
+      enums.LiabilityTypeProperty? liabilityType,
+      enums.LiabilityDirectionProperty? liabilityDirection,
       String? interest,
-      enums.InterestPeriod? interestPeriod,
+      enums.InterestPeriodProperty? interestPeriod,
       String? notes,
       double? latitude,
       double? longitude,
@@ -4465,12 +4564,12 @@ extension $AccountStoreExtension on AccountStore {
       Wrapped<int?>? order,
       Wrapped<bool?>? includeNetWorth,
       Wrapped<enums.AccountRoleProperty?>? accountRole,
-      Wrapped<enums.CreditCardType?>? creditCardType,
+      Wrapped<enums.CreditCardTypeProperty?>? creditCardType,
       Wrapped<DateTime?>? monthlyPaymentDate,
-      Wrapped<enums.LiabilityType?>? liabilityType,
-      Wrapped<enums.LiabilityDirection?>? liabilityDirection,
+      Wrapped<enums.LiabilityTypeProperty?>? liabilityType,
+      Wrapped<enums.LiabilityDirectionProperty?>? liabilityDirection,
       Wrapped<String?>? interest,
-      Wrapped<enums.InterestPeriod?>? interestPeriod,
+      Wrapped<enums.InterestPeriodProperty?>? interestPeriod,
       Wrapped<String?>? notes,
       Wrapped<double?>? latitude,
       Wrapped<double?>? longitude,
@@ -4590,28 +4689,28 @@ class AccountUpdate {
   @JsonKey(
     name: 'credit_card_type',
     includeIfNull: false,
-    toJson: creditCardTypeNullableToJson,
-    fromJson: creditCardTypeNullableFromJson,
+    toJson: creditCardTypePropertyNullableToJson,
+    fromJson: creditCardTypePropertyNullableFromJson,
   )
-  final enums.CreditCardType? creditCardType;
+  final enums.CreditCardTypeProperty? creditCardType;
   @JsonKey(name: 'monthly_payment_date', includeIfNull: false)
   final DateTime? monthlyPaymentDate;
   @JsonKey(
     name: 'liability_type',
     includeIfNull: false,
-    toJson: liabilityTypeNullableToJson,
-    fromJson: liabilityTypeNullableFromJson,
+    toJson: liabilityTypePropertyNullableToJson,
+    fromJson: liabilityTypePropertyNullableFromJson,
   )
-  final enums.LiabilityType? liabilityType;
+  final enums.LiabilityTypeProperty? liabilityType;
   @JsonKey(name: 'interest', includeIfNull: false)
   final String? interest;
   @JsonKey(
     name: 'interest_period',
     includeIfNull: false,
-    toJson: interestPeriodNullableToJson,
-    fromJson: interestPeriodNullableFromJson,
+    toJson: interestPeriodPropertyNullableToJson,
+    fromJson: interestPeriodPropertyNullableFromJson,
   )
-  final enums.InterestPeriod? interestPeriod;
+  final enums.InterestPeriodProperty? interestPeriod;
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   @JsonKey(name: 'latitude', includeIfNull: false)
@@ -4641,11 +4740,11 @@ extension $AccountUpdateExtension on AccountUpdate {
       int? order,
       bool? includeNetWorth,
       enums.AccountRoleProperty? accountRole,
-      enums.CreditCardType? creditCardType,
+      enums.CreditCardTypeProperty? creditCardType,
       DateTime? monthlyPaymentDate,
-      enums.LiabilityType? liabilityType,
+      enums.LiabilityTypeProperty? liabilityType,
       String? interest,
-      enums.InterestPeriod? interestPeriod,
+      enums.InterestPeriodProperty? interestPeriod,
       String? notes,
       double? latitude,
       double? longitude,
@@ -4689,11 +4788,11 @@ extension $AccountUpdateExtension on AccountUpdate {
       Wrapped<int?>? order,
       Wrapped<bool?>? includeNetWorth,
       Wrapped<enums.AccountRoleProperty?>? accountRole,
-      Wrapped<enums.CreditCardType?>? creditCardType,
+      Wrapped<enums.CreditCardTypeProperty?>? creditCardType,
       Wrapped<DateTime?>? monthlyPaymentDate,
-      Wrapped<enums.LiabilityType?>? liabilityType,
+      Wrapped<enums.LiabilityTypeProperty?>? liabilityType,
       Wrapped<String?>? interest,
-      Wrapped<enums.InterestPeriod?>? interestPeriod,
+      Wrapped<enums.InterestPeriodProperty?>? interestPeriod,
       Wrapped<String?>? notes,
       Wrapped<double?>? latitude,
       Wrapped<double?>? longitude,
@@ -4772,10 +4871,10 @@ class Attachment {
   @JsonKey(
     name: 'attachable_type',
     includeIfNull: false,
-    toJson: attachableTypeToJson,
-    fromJson: attachableTypeFromJson,
+    toJson: attachableTypeNullableToJson,
+    fromJson: attachableTypeNullableFromJson,
   )
-  final enums.AttachableType attachableType;
+  final enums.AttachableType? attachableType;
   @JsonKey(name: 'attachable_id', includeIfNull: false)
   final String attachableId;
   @JsonKey(name: 'md5', includeIfNull: false)
@@ -4832,7 +4931,7 @@ extension $AttachmentExtension on Attachment {
   Attachment copyWithWrapped(
       {Wrapped<DateTime?>? createdAt,
       Wrapped<DateTime?>? updatedAt,
-      Wrapped<enums.AttachableType>? attachableType,
+      Wrapped<enums.AttachableType?>? attachableType,
       Wrapped<String>? attachableId,
       Wrapped<String?>? md5,
       Wrapped<String>? filename,
@@ -4883,10 +4982,10 @@ class AttachmentStore {
   @JsonKey(
     name: 'attachable_type',
     includeIfNull: false,
-    toJson: attachableTypeToJson,
-    fromJson: attachableTypeFromJson,
+    toJson: attachableTypeNullableToJson,
+    fromJson: attachableTypeNullableFromJson,
   )
-  final enums.AttachableType attachableType;
+  final enums.AttachableType? attachableType;
   @JsonKey(name: 'attachable_id', includeIfNull: false)
   final String attachableId;
   @JsonKey(name: 'title', includeIfNull: false)
@@ -4916,7 +5015,7 @@ extension $AttachmentStoreExtension on AttachmentStore {
 
   AttachmentStore copyWithWrapped(
       {Wrapped<String>? filename,
-      Wrapped<enums.AttachableType>? attachableType,
+      Wrapped<enums.AttachableType?>? attachableType,
       Wrapped<String>? attachableId,
       Wrapped<String?>? title,
       Wrapped<String?>? notes}) {
@@ -5158,10 +5257,10 @@ class Bill {
   @JsonKey(
     name: 'repeat_freq',
     includeIfNull: false,
-    toJson: billRepeatFrequencyToJson,
-    fromJson: billRepeatFrequencyFromJson,
+    toJson: billRepeatFrequencyNullableToJson,
+    fromJson: billRepeatFrequencyNullableFromJson,
   )
-  final enums.BillRepeatFrequency repeatFreq;
+  final enums.BillRepeatFrequency? repeatFreq;
   @JsonKey(name: 'skip', includeIfNull: false)
   final int? skip;
   @JsonKey(name: 'active', includeIfNull: false)
@@ -5258,7 +5357,7 @@ extension $BillExtension on Bill {
       Wrapped<DateTime>? date,
       Wrapped<DateTime?>? endDate,
       Wrapped<DateTime?>? extensionDate,
-      Wrapped<enums.BillRepeatFrequency>? repeatFreq,
+      Wrapped<enums.BillRepeatFrequency?>? repeatFreq,
       Wrapped<int?>? skip,
       Wrapped<bool?>? active,
       Wrapped<int?>? order,
@@ -5357,10 +5456,10 @@ class BillStore {
   @JsonKey(
     name: 'repeat_freq',
     includeIfNull: false,
-    toJson: billRepeatFrequencyToJson,
-    fromJson: billRepeatFrequencyFromJson,
+    toJson: billRepeatFrequencyNullableToJson,
+    fromJson: billRepeatFrequencyNullableFromJson,
   )
-  final enums.BillRepeatFrequency repeatFreq;
+  final enums.BillRepeatFrequency? repeatFreq;
   @JsonKey(name: 'skip', includeIfNull: false)
   final int? skip;
   @JsonKey(name: 'active', includeIfNull: false)
@@ -5419,7 +5518,7 @@ extension $BillStoreExtension on BillStore {
       Wrapped<DateTime>? date,
       Wrapped<DateTime?>? endDate,
       Wrapped<DateTime?>? extensionDate,
-      Wrapped<enums.BillRepeatFrequency>? repeatFreq,
+      Wrapped<enums.BillRepeatFrequency?>? repeatFreq,
       Wrapped<int?>? skip,
       Wrapped<bool?>? active,
       Wrapped<String?>? notes,
@@ -5948,7 +6047,7 @@ class BudgetLimit {
     this.currencyName,
     this.currencySymbol,
     this.currencyDecimalPlaces,
-    this.budgetId,
+    required this.budgetId,
     this.period,
     required this.amount,
     this.spent,
@@ -5979,7 +6078,7 @@ class BudgetLimit {
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
   @JsonKey(name: 'budget_id', includeIfNull: false)
-  final String? budgetId;
+  final String budgetId;
   @JsonKey(name: 'period', includeIfNull: false)
   final String? period;
   @JsonKey(name: 'amount', includeIfNull: false)
@@ -6034,7 +6133,7 @@ extension $BudgetLimitExtension on BudgetLimit {
       Wrapped<String?>? currencyName,
       Wrapped<String?>? currencySymbol,
       Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? budgetId,
+      Wrapped<String>? budgetId,
       Wrapped<String?>? period,
       Wrapped<String>? amount,
       Wrapped<String?>? spent}) {
@@ -6066,7 +6165,7 @@ class BudgetLimitStore {
   const BudgetLimitStore({
     this.currencyId,
     this.currencyCode,
-    this.budgetId,
+    required this.budgetId,
     required this.start,
     this.period,
     required this.end,
@@ -6084,7 +6183,7 @@ class BudgetLimitStore {
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'budget_id', includeIfNull: false)
-  final String? budgetId;
+  final String budgetId;
   @JsonKey(name: 'start', includeIfNull: false, toJson: _dateToJson)
   final DateTime start;
   @JsonKey(name: 'period', includeIfNull: false)
@@ -6121,7 +6220,7 @@ extension $BudgetLimitStoreExtension on BudgetLimitStore {
   BudgetLimitStore copyWithWrapped(
       {Wrapped<String?>? currencyId,
       Wrapped<String?>? currencyCode,
-      Wrapped<String?>? budgetId,
+      Wrapped<String>? budgetId,
       Wrapped<DateTime>? start,
       Wrapped<String?>? period,
       Wrapped<DateTime>? end,
@@ -6538,6 +6637,80 @@ extension $ObjectGroupUpdateExtension on ObjectGroupUpdate {
 }
 
 @JsonSerializable(explicitToJson: true)
+class ObjectLink {
+  const ObjectLink();
+
+  factory ObjectLink.fromJson(Map<String, dynamic> json) =>
+      _$ObjectLinkFromJson(json);
+
+  static const toJsonFactory = _$ObjectLinkToJson;
+  Map<String, dynamic> toJson() => _$ObjectLinkToJson(this);
+
+  static const fromJsonFactory = _$ObjectLinkFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class PageLink {
+  const PageLink({
+    this.self,
+    this.first,
+    this.next,
+    this.prev,
+    this.last,
+  });
+
+  factory PageLink.fromJson(Map<String, dynamic> json) =>
+      _$PageLinkFromJson(json);
+
+  static const toJsonFactory = _$PageLinkToJson;
+  Map<String, dynamic> toJson() => _$PageLinkToJson(this);
+
+  @JsonKey(name: 'self', includeIfNull: false)
+  final String? self;
+  @JsonKey(name: 'first', includeIfNull: false)
+  final String? first;
+  @JsonKey(name: 'next', includeIfNull: false)
+  final String? next;
+  @JsonKey(name: 'prev', includeIfNull: false)
+  final String? prev;
+  @JsonKey(name: 'last', includeIfNull: false)
+  final String? last;
+  static const fromJsonFactory = _$PageLinkFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $PageLinkExtension on PageLink {
+  PageLink copyWith(
+      {String? self, String? first, String? next, String? prev, String? last}) {
+    return PageLink(
+        self: self ?? this.self,
+        first: first ?? this.first,
+        next: next ?? this.next,
+        prev: prev ?? this.prev,
+        last: last ?? this.last);
+  }
+
+  PageLink copyWithWrapped(
+      {Wrapped<String?>? self,
+      Wrapped<String?>? first,
+      Wrapped<String?>? next,
+      Wrapped<String?>? prev,
+      Wrapped<String?>? last}) {
+    return PageLink(
+        self: (self != null ? self.value : this.self),
+        first: (first != null ? first.value : this.first),
+        next: (next != null ? next.value : this.next),
+        prev: (prev != null ? prev.value : this.prev),
+        last: (last != null ? last.value : this.last));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class PiggyBank {
   const PiggyBank({
     this.createdAt,
@@ -6549,7 +6722,7 @@ class PiggyBank {
     this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
-    this.targetAmount,
+    required this.targetAmount,
     this.percentage,
     this.currentAmount,
     this.leftToSave,
@@ -6738,7 +6911,7 @@ class PiggyBankStore {
   const PiggyBankStore({
     required this.name,
     required this.accountId,
-    this.targetAmount,
+    required this.targetAmount,
     this.currentAmount,
     this.startDate,
     this.targetDate,
@@ -7300,7 +7473,7 @@ class RecurrenceStore {
     required this.title,
     this.description,
     required this.firstDate,
-    this.repeatUntil,
+    required this.repeatUntil,
     this.nrOfRepetitions,
     this.applyRules,
     this.active,
@@ -8640,7 +8813,7 @@ class RuleAction {
     this.createdAt,
     this.updatedAt,
     required this.type,
-    this.value,
+    required this.value,
     this.order,
     this.active,
     this.stopProcessing,
@@ -8727,7 +8900,7 @@ extension $RuleActionExtension on RuleAction {
 class RuleActionStore {
   const RuleActionStore({
     required this.type,
-    this.value,
+    required this.value,
     this.order,
     this.active,
     this.stopProcessing,
@@ -9714,6 +9887,72 @@ extension $CurrencyUpdateExtension on CurrencyUpdate {
 }
 
 @JsonSerializable(explicitToJson: true)
+class Transaction {
+  const Transaction({
+    this.createdAt,
+    this.updatedAt,
+    this.user,
+    this.groupTitle,
+    required this.transactions,
+  });
+
+  factory Transaction.fromJson(Map<String, dynamic> json) =>
+      _$TransactionFromJson(json);
+
+  static const toJsonFactory = _$TransactionToJson;
+  Map<String, dynamic> toJson() => _$TransactionToJson(this);
+
+  @JsonKey(name: 'created_at', includeIfNull: false)
+  final DateTime? createdAt;
+  @JsonKey(name: 'updated_at', includeIfNull: false)
+  final DateTime? updatedAt;
+  @JsonKey(name: 'user', includeIfNull: false)
+  final String? user;
+  @JsonKey(name: 'group_title', includeIfNull: false)
+  final String? groupTitle;
+  @JsonKey(
+      name: 'transactions',
+      includeIfNull: false,
+      defaultValue: <TransactionSplit>[])
+  final List<TransactionSplit> transactions;
+  static const fromJsonFactory = _$TransactionFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $TransactionExtension on Transaction {
+  Transaction copyWith(
+      {DateTime? createdAt,
+      DateTime? updatedAt,
+      String? user,
+      String? groupTitle,
+      List<TransactionSplit>? transactions}) {
+    return Transaction(
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        user: user ?? this.user,
+        groupTitle: groupTitle ?? this.groupTitle,
+        transactions: transactions ?? this.transactions);
+  }
+
+  Transaction copyWithWrapped(
+      {Wrapped<DateTime?>? createdAt,
+      Wrapped<DateTime?>? updatedAt,
+      Wrapped<String?>? user,
+      Wrapped<String?>? groupTitle,
+      Wrapped<List<TransactionSplit>>? transactions}) {
+    return Transaction(
+        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        user: (user != null ? user.value : this.user),
+        groupTitle: (groupTitle != null ? groupTitle.value : this.groupTitle),
+        transactions:
+            (transactions != null ? transactions.value : this.transactions));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class TransactionStore {
   const TransactionStore({
     this.errorIfDuplicateHash,
@@ -9847,7 +10086,7 @@ class TransactionLink {
   const TransactionLink({
     this.createdAt,
     this.updatedAt,
-    this.linkTypeId,
+    required this.linkTypeId,
     this.linkTypeName,
     required this.inwardId,
     required this.outwardId,
@@ -9865,7 +10104,7 @@ class TransactionLink {
   @JsonKey(name: 'updated_at', includeIfNull: false)
   final DateTime? updatedAt;
   @JsonKey(name: 'link_type_id', includeIfNull: false)
-  final String? linkTypeId;
+  final String linkTypeId;
   @JsonKey(name: 'link_type_name', includeIfNull: false)
   final String? linkTypeName;
   @JsonKey(name: 'inward_id', includeIfNull: false)
@@ -9902,7 +10141,7 @@ extension $TransactionLinkExtension on TransactionLink {
   TransactionLink copyWithWrapped(
       {Wrapped<DateTime?>? createdAt,
       Wrapped<DateTime?>? updatedAt,
-      Wrapped<String?>? linkTypeId,
+      Wrapped<String>? linkTypeId,
       Wrapped<String?>? linkTypeName,
       Wrapped<String>? inwardId,
       Wrapped<String>? outwardId,
@@ -9922,7 +10161,7 @@ extension $TransactionLinkExtension on TransactionLink {
 @JsonSerializable(explicitToJson: true)
 class TransactionLinkStore {
   const TransactionLinkStore({
-    this.linkTypeId,
+    required this.linkTypeId,
     this.linkTypeName,
     required this.inwardId,
     required this.outwardId,
@@ -9936,7 +10175,7 @@ class TransactionLinkStore {
   Map<String, dynamic> toJson() => _$TransactionLinkStoreToJson(this);
 
   @JsonKey(name: 'link_type_id', includeIfNull: false)
-  final String? linkTypeId;
+  final String linkTypeId;
   @JsonKey(name: 'link_type_name', includeIfNull: false)
   final String? linkTypeName;
   @JsonKey(name: 'inward_id', includeIfNull: false)
@@ -9967,7 +10206,7 @@ extension $TransactionLinkStoreExtension on TransactionLinkStore {
   }
 
   TransactionLinkStore copyWithWrapped(
-      {Wrapped<String?>? linkTypeId,
+      {Wrapped<String>? linkTypeId,
       Wrapped<String?>? linkTypeName,
       Wrapped<String>? inwardId,
       Wrapped<String>? outwardId,
@@ -10139,6 +10378,524 @@ extension $LinkTypeUpdateExtension on LinkTypeUpdate {
         name: (name != null ? name.value : this.name),
         inward: (inward != null ? inward.value : this.inward),
         outward: (outward != null ? outward.value : this.outward));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class TransactionSplit {
+  const TransactionSplit({
+    this.user,
+    this.transactionJournalId,
+    required this.type,
+    required this.date,
+    this.order,
+    this.currencyId,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyName,
+    this.currencyDecimalPlaces,
+    this.foreignCurrencyId,
+    this.foreignCurrencyCode,
+    this.foreignCurrencySymbol,
+    this.foreignCurrencyDecimalPlaces,
+    required this.amount,
+    this.foreignAmount,
+    required this.description,
+    required this.sourceId,
+    this.sourceName,
+    this.sourceIban,
+    this.sourceType,
+    required this.destinationId,
+    this.destinationName,
+    this.destinationIban,
+    this.destinationType,
+    this.budgetId,
+    this.budgetName,
+    this.categoryId,
+    this.categoryName,
+    this.billId,
+    this.billName,
+    this.reconciled,
+    this.notes,
+    this.tags,
+    this.internalReference,
+    this.externalId,
+    this.externalUrl,
+    this.originalSource,
+    this.recurrenceId,
+    this.recurrenceTotal,
+    this.recurrenceCount,
+    this.bunqPaymentId,
+    this.importHashV2,
+    this.sepaCc,
+    this.sepaCtOp,
+    this.sepaCtId,
+    this.sepaDb,
+    this.sepaCountry,
+    this.sepaEp,
+    this.sepaCi,
+    this.sepaBatchId,
+    this.interestDate,
+    this.bookDate,
+    this.processDate,
+    this.dueDate,
+    this.paymentDate,
+    this.invoiceDate,
+    this.latitude,
+    this.longitude,
+    this.zoomLevel,
+    this.hasAttachments,
+  });
+
+  factory TransactionSplit.fromJson(Map<String, dynamic> json) =>
+      _$TransactionSplitFromJson(json);
+
+  static const toJsonFactory = _$TransactionSplitToJson;
+  Map<String, dynamic> toJson() => _$TransactionSplitToJson(this);
+
+  @JsonKey(name: 'user', includeIfNull: false)
+  final String? user;
+  @JsonKey(name: 'transaction_journal_id', includeIfNull: false)
+  final String? transactionJournalId;
+  @JsonKey(
+    name: 'type',
+    includeIfNull: false,
+    toJson: transactionTypePropertyToJson,
+    fromJson: transactionTypePropertyFromJson,
+  )
+  final enums.TransactionTypeProperty type;
+  @JsonKey(name: 'date', includeIfNull: false)
+  final DateTime date;
+  @JsonKey(name: 'order', includeIfNull: false)
+  final int? order;
+  @JsonKey(name: 'currency_id', includeIfNull: false)
+  final String? currencyId;
+  @JsonKey(name: 'currency_code', includeIfNull: false)
+  final String? currencyCode;
+  @JsonKey(name: 'currency_symbol', includeIfNull: false)
+  final String? currencySymbol;
+  @JsonKey(name: 'currency_name', includeIfNull: false)
+  final String? currencyName;
+  @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
+  final int? currencyDecimalPlaces;
+  @JsonKey(name: 'foreign_currency_id', includeIfNull: false)
+  final String? foreignCurrencyId;
+  @JsonKey(name: 'foreign_currency_code', includeIfNull: false)
+  final String? foreignCurrencyCode;
+  @JsonKey(name: 'foreign_currency_symbol', includeIfNull: false)
+  final String? foreignCurrencySymbol;
+  @JsonKey(name: 'foreign_currency_decimal_places', includeIfNull: false)
+  final int? foreignCurrencyDecimalPlaces;
+  @JsonKey(name: 'amount', includeIfNull: false)
+  final String amount;
+  @JsonKey(name: 'foreign_amount', includeIfNull: false)
+  final String? foreignAmount;
+  @JsonKey(name: 'description', includeIfNull: false)
+  final String description;
+  @JsonKey(name: 'source_id', includeIfNull: false)
+  final String? sourceId;
+  @JsonKey(name: 'source_name', includeIfNull: false)
+  final String? sourceName;
+  @JsonKey(name: 'source_iban', includeIfNull: false)
+  final String? sourceIban;
+  @JsonKey(
+    name: 'source_type',
+    includeIfNull: false,
+    toJson: accountTypePropertyNullableToJson,
+    fromJson: accountTypePropertyNullableFromJson,
+  )
+  final enums.AccountTypeProperty? sourceType;
+  @JsonKey(name: 'destination_id', includeIfNull: false)
+  final String? destinationId;
+  @JsonKey(name: 'destination_name', includeIfNull: false)
+  final String? destinationName;
+  @JsonKey(name: 'destination_iban', includeIfNull: false)
+  final String? destinationIban;
+  @JsonKey(
+    name: 'destination_type',
+    includeIfNull: false,
+    toJson: accountTypePropertyNullableToJson,
+    fromJson: accountTypePropertyNullableFromJson,
+  )
+  final enums.AccountTypeProperty? destinationType;
+  @JsonKey(name: 'budget_id', includeIfNull: false)
+  final String? budgetId;
+  @JsonKey(name: 'budget_name', includeIfNull: false)
+  final String? budgetName;
+  @JsonKey(name: 'category_id', includeIfNull: false)
+  final String? categoryId;
+  @JsonKey(name: 'category_name', includeIfNull: false)
+  final String? categoryName;
+  @JsonKey(name: 'bill_id', includeIfNull: false)
+  final String? billId;
+  @JsonKey(name: 'bill_name', includeIfNull: false)
+  final String? billName;
+  @JsonKey(name: 'reconciled', includeIfNull: false)
+  final bool? reconciled;
+  @JsonKey(name: 'notes', includeIfNull: false)
+  final String? notes;
+  @JsonKey(name: 'tags', includeIfNull: false, defaultValue: <String>[])
+  final List<String>? tags;
+  @JsonKey(name: 'internal_reference', includeIfNull: false)
+  final String? internalReference;
+  @JsonKey(name: 'external_id', includeIfNull: false)
+  final String? externalId;
+  @JsonKey(name: 'external_url', includeIfNull: false)
+  final String? externalUrl;
+  @JsonKey(name: 'original_source', includeIfNull: false)
+  final String? originalSource;
+  @JsonKey(name: 'recurrence_id', includeIfNull: false)
+  final String? recurrenceId;
+  @JsonKey(name: 'recurrence_total', includeIfNull: false)
+  final int? recurrenceTotal;
+  @JsonKey(name: 'recurrence_count', includeIfNull: false)
+  final int? recurrenceCount;
+  @JsonKey(name: 'bunq_payment_id', includeIfNull: false)
+  final String? bunqPaymentId;
+  @JsonKey(name: 'import_hash_v2', includeIfNull: false)
+  final String? importHashV2;
+  @JsonKey(name: 'sepa_cc', includeIfNull: false)
+  final String? sepaCc;
+  @JsonKey(name: 'sepa_ct_op', includeIfNull: false)
+  final String? sepaCtOp;
+  @JsonKey(name: 'sepa_ct_id', includeIfNull: false)
+  final String? sepaCtId;
+  @JsonKey(name: 'sepa_db', includeIfNull: false)
+  final String? sepaDb;
+  @JsonKey(name: 'sepa_country', includeIfNull: false)
+  final String? sepaCountry;
+  @JsonKey(name: 'sepa_ep', includeIfNull: false)
+  final String? sepaEp;
+  @JsonKey(name: 'sepa_ci', includeIfNull: false)
+  final String? sepaCi;
+  @JsonKey(name: 'sepa_batch_id', includeIfNull: false)
+  final String? sepaBatchId;
+  @JsonKey(name: 'interest_date', includeIfNull: false)
+  final DateTime? interestDate;
+  @JsonKey(name: 'book_date', includeIfNull: false)
+  final DateTime? bookDate;
+  @JsonKey(name: 'process_date', includeIfNull: false)
+  final DateTime? processDate;
+  @JsonKey(name: 'due_date', includeIfNull: false)
+  final DateTime? dueDate;
+  @JsonKey(name: 'payment_date', includeIfNull: false)
+  final DateTime? paymentDate;
+  @JsonKey(name: 'invoice_date', includeIfNull: false)
+  final DateTime? invoiceDate;
+  @JsonKey(name: 'latitude', includeIfNull: false)
+  final double? latitude;
+  @JsonKey(name: 'longitude', includeIfNull: false)
+  final double? longitude;
+  @JsonKey(name: 'zoom_level', includeIfNull: false)
+  final int? zoomLevel;
+  @JsonKey(name: 'has_attachments', includeIfNull: false)
+  final bool? hasAttachments;
+  static const fromJsonFactory = _$TransactionSplitFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $TransactionSplitExtension on TransactionSplit {
+  TransactionSplit copyWith(
+      {String? user,
+      String? transactionJournalId,
+      enums.TransactionTypeProperty? type,
+      DateTime? date,
+      int? order,
+      String? currencyId,
+      String? currencyCode,
+      String? currencySymbol,
+      String? currencyName,
+      int? currencyDecimalPlaces,
+      String? foreignCurrencyId,
+      String? foreignCurrencyCode,
+      String? foreignCurrencySymbol,
+      int? foreignCurrencyDecimalPlaces,
+      String? amount,
+      String? foreignAmount,
+      String? description,
+      String? sourceId,
+      String? sourceName,
+      String? sourceIban,
+      enums.AccountTypeProperty? sourceType,
+      String? destinationId,
+      String? destinationName,
+      String? destinationIban,
+      enums.AccountTypeProperty? destinationType,
+      String? budgetId,
+      String? budgetName,
+      String? categoryId,
+      String? categoryName,
+      String? billId,
+      String? billName,
+      bool? reconciled,
+      String? notes,
+      List<String>? tags,
+      String? internalReference,
+      String? externalId,
+      String? externalUrl,
+      String? originalSource,
+      String? recurrenceId,
+      int? recurrenceTotal,
+      int? recurrenceCount,
+      String? bunqPaymentId,
+      String? importHashV2,
+      String? sepaCc,
+      String? sepaCtOp,
+      String? sepaCtId,
+      String? sepaDb,
+      String? sepaCountry,
+      String? sepaEp,
+      String? sepaCi,
+      String? sepaBatchId,
+      DateTime? interestDate,
+      DateTime? bookDate,
+      DateTime? processDate,
+      DateTime? dueDate,
+      DateTime? paymentDate,
+      DateTime? invoiceDate,
+      double? latitude,
+      double? longitude,
+      int? zoomLevel,
+      bool? hasAttachments}) {
+    return TransactionSplit(
+        user: user ?? this.user,
+        transactionJournalId: transactionJournalId ?? this.transactionJournalId,
+        type: type ?? this.type,
+        date: date ?? this.date,
+        order: order ?? this.order,
+        currencyId: currencyId ?? this.currencyId,
+        currencyCode: currencyCode ?? this.currencyCode,
+        currencySymbol: currencySymbol ?? this.currencySymbol,
+        currencyName: currencyName ?? this.currencyName,
+        currencyDecimalPlaces:
+            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+        foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
+        foreignCurrencyCode: foreignCurrencyCode ?? this.foreignCurrencyCode,
+        foreignCurrencySymbol:
+            foreignCurrencySymbol ?? this.foreignCurrencySymbol,
+        foreignCurrencyDecimalPlaces:
+            foreignCurrencyDecimalPlaces ?? this.foreignCurrencyDecimalPlaces,
+        amount: amount ?? this.amount,
+        foreignAmount: foreignAmount ?? this.foreignAmount,
+        description: description ?? this.description,
+        sourceId: sourceId ?? this.sourceId,
+        sourceName: sourceName ?? this.sourceName,
+        sourceIban: sourceIban ?? this.sourceIban,
+        sourceType: sourceType ?? this.sourceType,
+        destinationId: destinationId ?? this.destinationId,
+        destinationName: destinationName ?? this.destinationName,
+        destinationIban: destinationIban ?? this.destinationIban,
+        destinationType: destinationType ?? this.destinationType,
+        budgetId: budgetId ?? this.budgetId,
+        budgetName: budgetName ?? this.budgetName,
+        categoryId: categoryId ?? this.categoryId,
+        categoryName: categoryName ?? this.categoryName,
+        billId: billId ?? this.billId,
+        billName: billName ?? this.billName,
+        reconciled: reconciled ?? this.reconciled,
+        notes: notes ?? this.notes,
+        tags: tags ?? this.tags,
+        internalReference: internalReference ?? this.internalReference,
+        externalId: externalId ?? this.externalId,
+        externalUrl: externalUrl ?? this.externalUrl,
+        originalSource: originalSource ?? this.originalSource,
+        recurrenceId: recurrenceId ?? this.recurrenceId,
+        recurrenceTotal: recurrenceTotal ?? this.recurrenceTotal,
+        recurrenceCount: recurrenceCount ?? this.recurrenceCount,
+        bunqPaymentId: bunqPaymentId ?? this.bunqPaymentId,
+        importHashV2: importHashV2 ?? this.importHashV2,
+        sepaCc: sepaCc ?? this.sepaCc,
+        sepaCtOp: sepaCtOp ?? this.sepaCtOp,
+        sepaCtId: sepaCtId ?? this.sepaCtId,
+        sepaDb: sepaDb ?? this.sepaDb,
+        sepaCountry: sepaCountry ?? this.sepaCountry,
+        sepaEp: sepaEp ?? this.sepaEp,
+        sepaCi: sepaCi ?? this.sepaCi,
+        sepaBatchId: sepaBatchId ?? this.sepaBatchId,
+        interestDate: interestDate ?? this.interestDate,
+        bookDate: bookDate ?? this.bookDate,
+        processDate: processDate ?? this.processDate,
+        dueDate: dueDate ?? this.dueDate,
+        paymentDate: paymentDate ?? this.paymentDate,
+        invoiceDate: invoiceDate ?? this.invoiceDate,
+        latitude: latitude ?? this.latitude,
+        longitude: longitude ?? this.longitude,
+        zoomLevel: zoomLevel ?? this.zoomLevel,
+        hasAttachments: hasAttachments ?? this.hasAttachments);
+  }
+
+  TransactionSplit copyWithWrapped(
+      {Wrapped<String?>? user,
+      Wrapped<String?>? transactionJournalId,
+      Wrapped<enums.TransactionTypeProperty>? type,
+      Wrapped<DateTime>? date,
+      Wrapped<int?>? order,
+      Wrapped<String?>? currencyId,
+      Wrapped<String?>? currencyCode,
+      Wrapped<String?>? currencySymbol,
+      Wrapped<String?>? currencyName,
+      Wrapped<int?>? currencyDecimalPlaces,
+      Wrapped<String?>? foreignCurrencyId,
+      Wrapped<String?>? foreignCurrencyCode,
+      Wrapped<String?>? foreignCurrencySymbol,
+      Wrapped<int?>? foreignCurrencyDecimalPlaces,
+      Wrapped<String>? amount,
+      Wrapped<String?>? foreignAmount,
+      Wrapped<String>? description,
+      Wrapped<String?>? sourceId,
+      Wrapped<String?>? sourceName,
+      Wrapped<String?>? sourceIban,
+      Wrapped<enums.AccountTypeProperty?>? sourceType,
+      Wrapped<String?>? destinationId,
+      Wrapped<String?>? destinationName,
+      Wrapped<String?>? destinationIban,
+      Wrapped<enums.AccountTypeProperty?>? destinationType,
+      Wrapped<String?>? budgetId,
+      Wrapped<String?>? budgetName,
+      Wrapped<String?>? categoryId,
+      Wrapped<String?>? categoryName,
+      Wrapped<String?>? billId,
+      Wrapped<String?>? billName,
+      Wrapped<bool?>? reconciled,
+      Wrapped<String?>? notes,
+      Wrapped<List<String>?>? tags,
+      Wrapped<String?>? internalReference,
+      Wrapped<String?>? externalId,
+      Wrapped<String?>? externalUrl,
+      Wrapped<String?>? originalSource,
+      Wrapped<String?>? recurrenceId,
+      Wrapped<int?>? recurrenceTotal,
+      Wrapped<int?>? recurrenceCount,
+      Wrapped<String?>? bunqPaymentId,
+      Wrapped<String?>? importHashV2,
+      Wrapped<String?>? sepaCc,
+      Wrapped<String?>? sepaCtOp,
+      Wrapped<String?>? sepaCtId,
+      Wrapped<String?>? sepaDb,
+      Wrapped<String?>? sepaCountry,
+      Wrapped<String?>? sepaEp,
+      Wrapped<String?>? sepaCi,
+      Wrapped<String?>? sepaBatchId,
+      Wrapped<DateTime?>? interestDate,
+      Wrapped<DateTime?>? bookDate,
+      Wrapped<DateTime?>? processDate,
+      Wrapped<DateTime?>? dueDate,
+      Wrapped<DateTime?>? paymentDate,
+      Wrapped<DateTime?>? invoiceDate,
+      Wrapped<double?>? latitude,
+      Wrapped<double?>? longitude,
+      Wrapped<int?>? zoomLevel,
+      Wrapped<bool?>? hasAttachments}) {
+    return TransactionSplit(
+        user: (user != null ? user.value : this.user),
+        transactionJournalId: (transactionJournalId != null
+            ? transactionJournalId.value
+            : this.transactionJournalId),
+        type: (type != null ? type.value : this.type),
+        date: (date != null ? date.value : this.date),
+        order: (order != null ? order.value : this.order),
+        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+        currencyCode:
+            (currencyCode != null ? currencyCode.value : this.currencyCode),
+        currencySymbol: (currencySymbol != null
+            ? currencySymbol.value
+            : this.currencySymbol),
+        currencyName:
+            (currencyName != null ? currencyName.value : this.currencyName),
+        currencyDecimalPlaces: (currencyDecimalPlaces != null
+            ? currencyDecimalPlaces.value
+            : this.currencyDecimalPlaces),
+        foreignCurrencyId: (foreignCurrencyId != null
+            ? foreignCurrencyId.value
+            : this.foreignCurrencyId),
+        foreignCurrencyCode: (foreignCurrencyCode != null
+            ? foreignCurrencyCode.value
+            : this.foreignCurrencyCode),
+        foreignCurrencySymbol: (foreignCurrencySymbol != null
+            ? foreignCurrencySymbol.value
+            : this.foreignCurrencySymbol),
+        foreignCurrencyDecimalPlaces: (foreignCurrencyDecimalPlaces != null
+            ? foreignCurrencyDecimalPlaces.value
+            : this.foreignCurrencyDecimalPlaces),
+        amount: (amount != null ? amount.value : this.amount),
+        foreignAmount:
+            (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
+        description:
+            (description != null ? description.value : this.description),
+        sourceId: (sourceId != null ? sourceId.value : this.sourceId),
+        sourceName: (sourceName != null ? sourceName.value : this.sourceName),
+        sourceIban: (sourceIban != null ? sourceIban.value : this.sourceIban),
+        sourceType: (sourceType != null ? sourceType.value : this.sourceType),
+        destinationId:
+            (destinationId != null ? destinationId.value : this.destinationId),
+        destinationName: (destinationName != null
+            ? destinationName.value
+            : this.destinationName),
+        destinationIban: (destinationIban != null
+            ? destinationIban.value
+            : this.destinationIban),
+        destinationType: (destinationType != null
+            ? destinationType.value
+            : this.destinationType),
+        budgetId: (budgetId != null ? budgetId.value : this.budgetId),
+        budgetName: (budgetName != null ? budgetName.value : this.budgetName),
+        categoryId: (categoryId != null ? categoryId.value : this.categoryId),
+        categoryName:
+            (categoryName != null ? categoryName.value : this.categoryName),
+        billId: (billId != null ? billId.value : this.billId),
+        billName: (billName != null ? billName.value : this.billName),
+        reconciled: (reconciled != null ? reconciled.value : this.reconciled),
+        notes: (notes != null ? notes.value : this.notes),
+        tags: (tags != null ? tags.value : this.tags),
+        internalReference: (internalReference != null
+            ? internalReference.value
+            : this.internalReference),
+        externalId: (externalId != null ? externalId.value : this.externalId),
+        externalUrl:
+            (externalUrl != null ? externalUrl.value : this.externalUrl),
+        originalSource: (originalSource != null
+            ? originalSource.value
+            : this.originalSource),
+        recurrenceId:
+            (recurrenceId != null ? recurrenceId.value : this.recurrenceId),
+        recurrenceTotal: (recurrenceTotal != null
+            ? recurrenceTotal.value
+            : this.recurrenceTotal),
+        recurrenceCount: (recurrenceCount != null
+            ? recurrenceCount.value
+            : this.recurrenceCount),
+        bunqPaymentId:
+            (bunqPaymentId != null ? bunqPaymentId.value : this.bunqPaymentId),
+        importHashV2:
+            (importHashV2 != null ? importHashV2.value : this.importHashV2),
+        sepaCc: (sepaCc != null ? sepaCc.value : this.sepaCc),
+        sepaCtOp: (sepaCtOp != null ? sepaCtOp.value : this.sepaCtOp),
+        sepaCtId: (sepaCtId != null ? sepaCtId.value : this.sepaCtId),
+        sepaDb: (sepaDb != null ? sepaDb.value : this.sepaDb),
+        sepaCountry:
+            (sepaCountry != null ? sepaCountry.value : this.sepaCountry),
+        sepaEp: (sepaEp != null ? sepaEp.value : this.sepaEp),
+        sepaCi: (sepaCi != null ? sepaCi.value : this.sepaCi),
+        sepaBatchId:
+            (sepaBatchId != null ? sepaBatchId.value : this.sepaBatchId),
+        interestDate:
+            (interestDate != null ? interestDate.value : this.interestDate),
+        bookDate: (bookDate != null ? bookDate.value : this.bookDate),
+        processDate:
+            (processDate != null ? processDate.value : this.processDate),
+        dueDate: (dueDate != null ? dueDate.value : this.dueDate),
+        paymentDate:
+            (paymentDate != null ? paymentDate.value : this.paymentDate),
+        invoiceDate:
+            (invoiceDate != null ? invoiceDate.value : this.invoiceDate),
+        latitude: (latitude != null ? latitude.value : this.latitude),
+        longitude: (longitude != null ? longitude.value : this.longitude),
+        zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel),
+        hasAttachments: (hasAttachments != null
+            ? hasAttachments.value
+            : this.hasAttachments));
   }
 }
 
@@ -11803,105 +12560,6 @@ extension $UserSingleExtension on UserSingle {
 }
 
 @JsonSerializable(explicitToJson: true)
-class TransactionArray {
-  const TransactionArray({
-    required this.data,
-    required this.meta,
-    required this.links,
-  });
-
-  factory TransactionArray.fromJson(Map<String, dynamic> json) =>
-      _$TransactionArrayFromJson(json);
-
-  static const toJsonFactory = _$TransactionArrayToJson;
-  Map<String, dynamic> toJson() => _$TransactionArrayToJson(this);
-
-  @JsonKey(
-      name: 'data', includeIfNull: false, defaultValue: <TransactionRead>[])
-  final List<TransactionRead> data;
-  @JsonKey(name: 'meta', includeIfNull: false)
-  final Meta meta;
-  @JsonKey(name: 'links', includeIfNull: false)
-  final PageLink links;
-  static const fromJsonFactory = _$TransactionArrayFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $TransactionArrayExtension on TransactionArray {
-  TransactionArray copyWith(
-      {List<TransactionRead>? data, Meta? meta, PageLink? links}) {
-    return TransactionArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
-  }
-
-  TransactionArray copyWithWrapped(
-      {Wrapped<List<TransactionRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
-    return TransactionArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class TransactionRead {
-  const TransactionRead({
-    required this.type,
-    required this.id,
-    required this.attributes,
-    required this.links,
-  });
-
-  factory TransactionRead.fromJson(Map<String, dynamic> json) =>
-      _$TransactionReadFromJson(json);
-
-  static const toJsonFactory = _$TransactionReadToJson;
-  Map<String, dynamic> toJson() => _$TransactionReadToJson(this);
-
-  @JsonKey(name: 'type', includeIfNull: false)
-  final String type;
-  @JsonKey(name: 'id', includeIfNull: false)
-  final String id;
-  @JsonKey(name: 'attributes', includeIfNull: false)
-  final Transaction attributes;
-  @JsonKey(name: 'links', includeIfNull: false)
-  final ObjectLink links;
-  static const fromJsonFactory = _$TransactionReadFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $TransactionReadExtension on TransactionRead {
-  TransactionRead copyWith(
-      {String? type, String? id, Transaction? attributes, ObjectLink? links}) {
-    return TransactionRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
-  }
-
-  TransactionRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<Transaction>? attributes,
-      Wrapped<ObjectLink>? links}) {
-    return TransactionRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class Meta {
   const Meta({
     this.pagination,
@@ -11932,861 +12590,191 @@ extension $MetaExtension on Meta {
 }
 
 @JsonSerializable(explicitToJson: true)
-class ObjectLink {
-  const ObjectLink({
-    this.self,
-  });
-
-  factory ObjectLink.fromJson(Map<String, dynamic> json) =>
-      _$ObjectLinkFromJson(json);
-
-  static const toJsonFactory = _$ObjectLinkToJson;
-  Map<String, dynamic> toJson() => _$ObjectLinkToJson(this);
-
-  @JsonKey(name: 'self', includeIfNull: false)
-  final String? self;
-  static const fromJsonFactory = _$ObjectLinkFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $ObjectLinkExtension on ObjectLink {
-  ObjectLink copyWith({String? self}) {
-    return ObjectLink(self: self ?? this.self);
-  }
-
-  ObjectLink copyWithWrapped({Wrapped<String?>? self}) {
-    return ObjectLink(self: (self != null ? self.value : this.self));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class PageLink {
-  const PageLink({
-    this.self,
-    this.first,
-    this.next,
-    this.prev,
-    this.last,
-  });
-
-  factory PageLink.fromJson(Map<String, dynamic> json) =>
-      _$PageLinkFromJson(json);
-
-  static const toJsonFactory = _$PageLinkToJson;
-  Map<String, dynamic> toJson() => _$PageLinkToJson(this);
-
-  @JsonKey(name: 'self', includeIfNull: false)
-  final String? self;
-  @JsonKey(name: 'first', includeIfNull: false)
-  final String? first;
-  @JsonKey(name: 'next', includeIfNull: false)
-  final String? next;
-  @JsonKey(name: 'prev', includeIfNull: false)
-  final String? prev;
-  @JsonKey(name: 'last', includeIfNull: false)
-  final String? last;
-  static const fromJsonFactory = _$PageLinkFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $PageLinkExtension on PageLink {
-  PageLink copyWith(
-      {String? self, String? first, String? next, String? prev, String? last}) {
-    return PageLink(
-        self: self ?? this.self,
-        first: first ?? this.first,
-        next: next ?? this.next,
-        prev: prev ?? this.prev,
-        last: last ?? this.last);
-  }
-
-  PageLink copyWithWrapped(
-      {Wrapped<String?>? self,
-      Wrapped<String?>? first,
-      Wrapped<String?>? next,
-      Wrapped<String?>? prev,
-      Wrapped<String?>? last}) {
-    return PageLink(
-        self: (self != null ? self.value : this.self),
-        first: (first != null ? first.value : this.first),
-        next: (next != null ? next.value : this.next),
-        prev: (prev != null ? prev.value : this.prev),
-        last: (last != null ? last.value : this.last));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class Transaction {
-  const Transaction({
-    this.createdAt,
-    this.updatedAt,
-    this.user,
-    this.groupTitle,
-    required this.transactions,
-  });
-
-  factory Transaction.fromJson(Map<String, dynamic> json) =>
-      _$TransactionFromJson(json);
-
-  static const toJsonFactory = _$TransactionToJson;
-  Map<String, dynamic> toJson() => _$TransactionToJson(this);
-
-  @JsonKey(name: 'created_at', includeIfNull: false)
-  final DateTime? createdAt;
-  @JsonKey(name: 'updated_at', includeIfNull: false)
-  final DateTime? updatedAt;
-  @JsonKey(name: 'user', includeIfNull: false)
-  final String? user;
-  @JsonKey(name: 'group_title', includeIfNull: false)
-  final String? groupTitle;
-  @JsonKey(
-      name: 'transactions',
-      includeIfNull: false,
-      defaultValue: <TransactionSplit>[])
-  final List<TransactionSplit> transactions;
-  static const fromJsonFactory = _$TransactionFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $TransactionExtension on Transaction {
-  Transaction copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? user,
-      String? groupTitle,
-      List<TransactionSplit>? transactions}) {
-    return Transaction(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        user: user ?? this.user,
-        groupTitle: groupTitle ?? this.groupTitle,
-        transactions: transactions ?? this.transactions);
-  }
-
-  Transaction copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String?>? user,
-      Wrapped<String?>? groupTitle,
-      Wrapped<List<TransactionSplit>>? transactions}) {
-    return Transaction(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        user: (user != null ? user.value : this.user),
-        groupTitle: (groupTitle != null ? groupTitle.value : this.groupTitle),
-        transactions:
-            (transactions != null ? transactions.value : this.transactions));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class TransactionSplit {
-  const TransactionSplit({
-    this.user,
-    this.transactionJournalId,
-    required this.type,
-    required this.date,
-    this.order,
-    this.currencyId,
-    this.currencyCode,
-    this.currencySymbol,
-    this.currencyName,
-    this.currencyDecimalPlaces,
-    this.foreignCurrencyId,
-    this.foreignCurrencyCode,
-    this.foreignCurrencySymbol,
-    this.foreignCurrencyDecimalPlaces,
-    required this.amount,
-    this.foreignAmount,
-    required this.description,
-    this.sourceId,
-    this.sourceName,
-    this.sourceIban,
-    this.sourceType,
-    this.destinationId,
-    this.destinationName,
-    this.destinationIban,
-    this.destinationType,
-    this.budgetId,
-    this.budgetName,
-    this.categoryId,
-    this.categoryName,
-    this.billId,
-    this.billName,
-    this.reconciled,
-    this.notes,
-    this.tags,
-    this.internalReference,
-    this.externalId,
-    this.externalUrl,
-    this.originalSource,
-    this.recurrenceId,
-    this.recurrenceTotal,
-    this.recurrenceCount,
-    this.bunqPaymentId,
-    this.importHashV2,
-    this.sepaCc,
-    this.sepaCtOp,
-    this.sepaCtId,
-    this.sepaDb,
-    this.sepaCountry,
-    this.sepaEp,
-    this.sepaCi,
-    this.sepaBatchId,
-    this.interestDate,
-    this.bookDate,
-    this.processDate,
-    this.dueDate,
-    this.paymentDate,
-    this.invoiceDate,
-    this.latitude,
-    this.longitude,
-    this.zoomLevel,
-    this.hasAttachments,
-  });
-
-  factory TransactionSplit.fromJson(Map<String, dynamic> json) =>
-      _$TransactionSplitFromJson(json);
-
-  static const toJsonFactory = _$TransactionSplitToJson;
-  Map<String, dynamic> toJson() => _$TransactionSplitToJson(this);
-
-  @JsonKey(name: 'user', includeIfNull: false)
-  final String? user;
-  @JsonKey(name: 'transaction_journal_id', includeIfNull: false)
-  final String? transactionJournalId;
-  @JsonKey(
-    name: 'type',
-    includeIfNull: false,
-    toJson: transactionTypePropertyToJson,
-    fromJson: transactionTypePropertyFromJson,
-  )
-  final enums.TransactionTypeProperty type;
-  @JsonKey(name: 'date', includeIfNull: false)
-  final DateTime date;
-  @JsonKey(name: 'order', includeIfNull: false)
-  final int? order;
-  @JsonKey(name: 'currency_id', includeIfNull: false)
-  final String? currencyId;
-  @JsonKey(name: 'currency_code', includeIfNull: false)
-  final String? currencyCode;
-  @JsonKey(name: 'currency_symbol', includeIfNull: false)
-  final String? currencySymbol;
-  @JsonKey(name: 'currency_name', includeIfNull: false)
-  final String? currencyName;
-  @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
-  final int? currencyDecimalPlaces;
-  @JsonKey(name: 'foreign_currency_id', includeIfNull: false)
-  final String? foreignCurrencyId;
-  @JsonKey(name: 'foreign_currency_code', includeIfNull: false)
-  final String? foreignCurrencyCode;
-  @JsonKey(name: 'foreign_currency_symbol', includeIfNull: false)
-  final String? foreignCurrencySymbol;
-  @JsonKey(name: 'foreign_currency_decimal_places', includeIfNull: false)
-  final int? foreignCurrencyDecimalPlaces;
-  @JsonKey(name: 'amount', includeIfNull: false)
-  final String amount;
-  @JsonKey(name: 'foreign_amount', includeIfNull: false)
-  final String? foreignAmount;
-  @JsonKey(name: 'description', includeIfNull: false)
-  final String description;
-  @JsonKey(name: 'source_id', includeIfNull: false)
-  final String? sourceId;
-  @JsonKey(name: 'source_name', includeIfNull: false)
-  final String? sourceName;
-  @JsonKey(name: 'source_iban', includeIfNull: false)
-  final String? sourceIban;
-  @JsonKey(
-    name: 'source_type',
-    includeIfNull: false,
-    toJson: accountTypePropertyNullableToJson,
-    fromJson: accountTypePropertyNullableFromJson,
-  )
-  final enums.AccountTypeProperty? sourceType;
-  @JsonKey(name: 'destination_id', includeIfNull: false)
-  final String? destinationId;
-  @JsonKey(name: 'destination_name', includeIfNull: false)
-  final String? destinationName;
-  @JsonKey(name: 'destination_iban', includeIfNull: false)
-  final String? destinationIban;
-  @JsonKey(
-    name: 'destination_type',
-    includeIfNull: false,
-    toJson: accountTypePropertyNullableToJson,
-    fromJson: accountTypePropertyNullableFromJson,
-  )
-  final enums.AccountTypeProperty? destinationType;
-  @JsonKey(name: 'budget_id', includeIfNull: false)
-  final String? budgetId;
-  @JsonKey(name: 'budget_name', includeIfNull: false)
-  final String? budgetName;
-  @JsonKey(name: 'category_id', includeIfNull: false)
-  final String? categoryId;
-  @JsonKey(name: 'category_name', includeIfNull: false)
-  final String? categoryName;
-  @JsonKey(name: 'bill_id', includeIfNull: false)
-  final String? billId;
-  @JsonKey(name: 'bill_name', includeIfNull: false)
-  final String? billName;
-  @JsonKey(name: 'reconciled', includeIfNull: false)
-  final bool? reconciled;
-  @JsonKey(name: 'notes', includeIfNull: false)
-  final String? notes;
-  @JsonKey(name: 'tags', includeIfNull: false, defaultValue: <String>[])
-  final List<String>? tags;
-  @JsonKey(name: 'internal_reference', includeIfNull: false)
-  final String? internalReference;
-  @JsonKey(name: 'external_id', includeIfNull: false)
-  final String? externalId;
-  @JsonKey(name: 'external_url', includeIfNull: false)
-  final String? externalUrl;
-  @JsonKey(name: 'original_source', includeIfNull: false)
-  final String? originalSource;
-  @JsonKey(name: 'recurrence_id', includeIfNull: false)
-  final String? recurrenceId;
-  @JsonKey(name: 'recurrence_total', includeIfNull: false)
-  final int? recurrenceTotal;
-  @JsonKey(name: 'recurrence_count', includeIfNull: false)
-  final int? recurrenceCount;
-  @JsonKey(name: 'bunq_payment_id', includeIfNull: false)
-  final String? bunqPaymentId;
-  @JsonKey(name: 'import_hash_v2', includeIfNull: false)
-  final String? importHashV2;
-  @JsonKey(name: 'sepa_cc', includeIfNull: false)
-  final String? sepaCc;
-  @JsonKey(name: 'sepa_ct_op', includeIfNull: false)
-  final String? sepaCtOp;
-  @JsonKey(name: 'sepa_ct_id', includeIfNull: false)
-  final String? sepaCtId;
-  @JsonKey(name: 'sepa_db', includeIfNull: false)
-  final String? sepaDb;
-  @JsonKey(name: 'sepa_country', includeIfNull: false)
-  final String? sepaCountry;
-  @JsonKey(name: 'sepa_ep', includeIfNull: false)
-  final String? sepaEp;
-  @JsonKey(name: 'sepa_ci', includeIfNull: false)
-  final String? sepaCi;
-  @JsonKey(name: 'sepa_batch_id', includeIfNull: false)
-  final String? sepaBatchId;
-  @JsonKey(name: 'interest_date', includeIfNull: false)
-  final DateTime? interestDate;
-  @JsonKey(name: 'book_date', includeIfNull: false)
-  final DateTime? bookDate;
-  @JsonKey(name: 'process_date', includeIfNull: false)
-  final DateTime? processDate;
-  @JsonKey(name: 'due_date', includeIfNull: false)
-  final DateTime? dueDate;
-  @JsonKey(name: 'payment_date', includeIfNull: false)
-  final DateTime? paymentDate;
-  @JsonKey(name: 'invoice_date', includeIfNull: false)
-  final DateTime? invoiceDate;
-  @JsonKey(name: 'latitude', includeIfNull: false)
-  final double? latitude;
-  @JsonKey(name: 'longitude', includeIfNull: false)
-  final double? longitude;
-  @JsonKey(name: 'zoom_level', includeIfNull: false)
-  final int? zoomLevel;
-  @JsonKey(name: 'has_attachments', includeIfNull: false)
-  final bool? hasAttachments;
-  static const fromJsonFactory = _$TransactionSplitFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $TransactionSplitExtension on TransactionSplit {
-  TransactionSplit copyWith(
-      {String? user,
-      String? transactionJournalId,
-      enums.TransactionTypeProperty? type,
-      DateTime? date,
-      int? order,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      String? currencyName,
-      int? currencyDecimalPlaces,
-      String? foreignCurrencyId,
-      String? foreignCurrencyCode,
-      String? foreignCurrencySymbol,
-      int? foreignCurrencyDecimalPlaces,
-      String? amount,
-      String? foreignAmount,
-      String? description,
-      String? sourceId,
-      String? sourceName,
-      String? sourceIban,
-      enums.AccountTypeProperty? sourceType,
-      String? destinationId,
-      String? destinationName,
-      String? destinationIban,
-      enums.AccountTypeProperty? destinationType,
-      String? budgetId,
-      String? budgetName,
-      String? categoryId,
-      String? categoryName,
-      String? billId,
-      String? billName,
-      bool? reconciled,
-      String? notes,
-      List<String>? tags,
-      String? internalReference,
-      String? externalId,
-      String? externalUrl,
-      String? originalSource,
-      String? recurrenceId,
-      int? recurrenceTotal,
-      int? recurrenceCount,
-      String? bunqPaymentId,
-      String? importHashV2,
-      String? sepaCc,
-      String? sepaCtOp,
-      String? sepaCtId,
-      String? sepaDb,
-      String? sepaCountry,
-      String? sepaEp,
-      String? sepaCi,
-      String? sepaBatchId,
-      DateTime? interestDate,
-      DateTime? bookDate,
-      DateTime? processDate,
-      DateTime? dueDate,
-      DateTime? paymentDate,
-      DateTime? invoiceDate,
-      double? latitude,
-      double? longitude,
-      int? zoomLevel,
-      bool? hasAttachments}) {
-    return TransactionSplit(
-        user: user ?? this.user,
-        transactionJournalId: transactionJournalId ?? this.transactionJournalId,
-        type: type ?? this.type,
-        date: date ?? this.date,
-        order: order ?? this.order,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyName: currencyName ?? this.currencyName,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
-        foreignCurrencyCode: foreignCurrencyCode ?? this.foreignCurrencyCode,
-        foreignCurrencySymbol:
-            foreignCurrencySymbol ?? this.foreignCurrencySymbol,
-        foreignCurrencyDecimalPlaces:
-            foreignCurrencyDecimalPlaces ?? this.foreignCurrencyDecimalPlaces,
-        amount: amount ?? this.amount,
-        foreignAmount: foreignAmount ?? this.foreignAmount,
-        description: description ?? this.description,
-        sourceId: sourceId ?? this.sourceId,
-        sourceName: sourceName ?? this.sourceName,
-        sourceIban: sourceIban ?? this.sourceIban,
-        sourceType: sourceType ?? this.sourceType,
-        destinationId: destinationId ?? this.destinationId,
-        destinationName: destinationName ?? this.destinationName,
-        destinationIban: destinationIban ?? this.destinationIban,
-        destinationType: destinationType ?? this.destinationType,
-        budgetId: budgetId ?? this.budgetId,
-        budgetName: budgetName ?? this.budgetName,
-        categoryId: categoryId ?? this.categoryId,
-        categoryName: categoryName ?? this.categoryName,
-        billId: billId ?? this.billId,
-        billName: billName ?? this.billName,
-        reconciled: reconciled ?? this.reconciled,
-        notes: notes ?? this.notes,
-        tags: tags ?? this.tags,
-        internalReference: internalReference ?? this.internalReference,
-        externalId: externalId ?? this.externalId,
-        externalUrl: externalUrl ?? this.externalUrl,
-        originalSource: originalSource ?? this.originalSource,
-        recurrenceId: recurrenceId ?? this.recurrenceId,
-        recurrenceTotal: recurrenceTotal ?? this.recurrenceTotal,
-        recurrenceCount: recurrenceCount ?? this.recurrenceCount,
-        bunqPaymentId: bunqPaymentId ?? this.bunqPaymentId,
-        importHashV2: importHashV2 ?? this.importHashV2,
-        sepaCc: sepaCc ?? this.sepaCc,
-        sepaCtOp: sepaCtOp ?? this.sepaCtOp,
-        sepaCtId: sepaCtId ?? this.sepaCtId,
-        sepaDb: sepaDb ?? this.sepaDb,
-        sepaCountry: sepaCountry ?? this.sepaCountry,
-        sepaEp: sepaEp ?? this.sepaEp,
-        sepaCi: sepaCi ?? this.sepaCi,
-        sepaBatchId: sepaBatchId ?? this.sepaBatchId,
-        interestDate: interestDate ?? this.interestDate,
-        bookDate: bookDate ?? this.bookDate,
-        processDate: processDate ?? this.processDate,
-        dueDate: dueDate ?? this.dueDate,
-        paymentDate: paymentDate ?? this.paymentDate,
-        invoiceDate: invoiceDate ?? this.invoiceDate,
-        latitude: latitude ?? this.latitude,
-        longitude: longitude ?? this.longitude,
-        zoomLevel: zoomLevel ?? this.zoomLevel,
-        hasAttachments: hasAttachments ?? this.hasAttachments);
-  }
-
-  TransactionSplit copyWithWrapped(
-      {Wrapped<String?>? user,
-      Wrapped<String?>? transactionJournalId,
-      Wrapped<enums.TransactionTypeProperty>? type,
-      Wrapped<DateTime>? date,
-      Wrapped<int?>? order,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<String?>? currencyName,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? foreignCurrencyId,
-      Wrapped<String?>? foreignCurrencyCode,
-      Wrapped<String?>? foreignCurrencySymbol,
-      Wrapped<int?>? foreignCurrencyDecimalPlaces,
-      Wrapped<String>? amount,
-      Wrapped<String?>? foreignAmount,
-      Wrapped<String>? description,
-      Wrapped<String?>? sourceId,
-      Wrapped<String?>? sourceName,
-      Wrapped<String?>? sourceIban,
-      Wrapped<enums.AccountTypeProperty?>? sourceType,
-      Wrapped<String?>? destinationId,
-      Wrapped<String?>? destinationName,
-      Wrapped<String?>? destinationIban,
-      Wrapped<enums.AccountTypeProperty?>? destinationType,
-      Wrapped<String?>? budgetId,
-      Wrapped<String?>? budgetName,
-      Wrapped<String?>? categoryId,
-      Wrapped<String?>? categoryName,
-      Wrapped<String?>? billId,
-      Wrapped<String?>? billName,
-      Wrapped<bool?>? reconciled,
-      Wrapped<String?>? notes,
-      Wrapped<List<String>?>? tags,
-      Wrapped<String?>? internalReference,
-      Wrapped<String?>? externalId,
-      Wrapped<String?>? externalUrl,
-      Wrapped<String?>? originalSource,
-      Wrapped<String?>? recurrenceId,
-      Wrapped<int?>? recurrenceTotal,
-      Wrapped<int?>? recurrenceCount,
-      Wrapped<String?>? bunqPaymentId,
-      Wrapped<String?>? importHashV2,
-      Wrapped<String?>? sepaCc,
-      Wrapped<String?>? sepaCtOp,
-      Wrapped<String?>? sepaCtId,
-      Wrapped<String?>? sepaDb,
-      Wrapped<String?>? sepaCountry,
-      Wrapped<String?>? sepaEp,
-      Wrapped<String?>? sepaCi,
-      Wrapped<String?>? sepaBatchId,
-      Wrapped<DateTime?>? interestDate,
-      Wrapped<DateTime?>? bookDate,
-      Wrapped<DateTime?>? processDate,
-      Wrapped<DateTime?>? dueDate,
-      Wrapped<DateTime?>? paymentDate,
-      Wrapped<DateTime?>? invoiceDate,
-      Wrapped<double?>? latitude,
-      Wrapped<double?>? longitude,
-      Wrapped<int?>? zoomLevel,
-      Wrapped<bool?>? hasAttachments}) {
-    return TransactionSplit(
-        user: (user != null ? user.value : this.user),
-        transactionJournalId: (transactionJournalId != null
-            ? transactionJournalId.value
-            : this.transactionJournalId),
-        type: (type != null ? type.value : this.type),
-        date: (date != null ? date.value : this.date),
-        order: (order != null ? order.value : this.order),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyName:
-            (currencyName != null ? currencyName.value : this.currencyName),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        foreignCurrencyId: (foreignCurrencyId != null
-            ? foreignCurrencyId.value
-            : this.foreignCurrencyId),
-        foreignCurrencyCode: (foreignCurrencyCode != null
-            ? foreignCurrencyCode.value
-            : this.foreignCurrencyCode),
-        foreignCurrencySymbol: (foreignCurrencySymbol != null
-            ? foreignCurrencySymbol.value
-            : this.foreignCurrencySymbol),
-        foreignCurrencyDecimalPlaces: (foreignCurrencyDecimalPlaces != null
-            ? foreignCurrencyDecimalPlaces.value
-            : this.foreignCurrencyDecimalPlaces),
-        amount: (amount != null ? amount.value : this.amount),
-        foreignAmount:
-            (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
-        description:
-            (description != null ? description.value : this.description),
-        sourceId: (sourceId != null ? sourceId.value : this.sourceId),
-        sourceName: (sourceName != null ? sourceName.value : this.sourceName),
-        sourceIban: (sourceIban != null ? sourceIban.value : this.sourceIban),
-        sourceType: (sourceType != null ? sourceType.value : this.sourceType),
-        destinationId:
-            (destinationId != null ? destinationId.value : this.destinationId),
-        destinationName: (destinationName != null
-            ? destinationName.value
-            : this.destinationName),
-        destinationIban: (destinationIban != null
-            ? destinationIban.value
-            : this.destinationIban),
-        destinationType: (destinationType != null
-            ? destinationType.value
-            : this.destinationType),
-        budgetId: (budgetId != null ? budgetId.value : this.budgetId),
-        budgetName: (budgetName != null ? budgetName.value : this.budgetName),
-        categoryId: (categoryId != null ? categoryId.value : this.categoryId),
-        categoryName:
-            (categoryName != null ? categoryName.value : this.categoryName),
-        billId: (billId != null ? billId.value : this.billId),
-        billName: (billName != null ? billName.value : this.billName),
-        reconciled: (reconciled != null ? reconciled.value : this.reconciled),
-        notes: (notes != null ? notes.value : this.notes),
-        tags: (tags != null ? tags.value : this.tags),
-        internalReference: (internalReference != null
-            ? internalReference.value
-            : this.internalReference),
-        externalId: (externalId != null ? externalId.value : this.externalId),
-        externalUrl:
-            (externalUrl != null ? externalUrl.value : this.externalUrl),
-        originalSource: (originalSource != null
-            ? originalSource.value
-            : this.originalSource),
-        recurrenceId:
-            (recurrenceId != null ? recurrenceId.value : this.recurrenceId),
-        recurrenceTotal: (recurrenceTotal != null
-            ? recurrenceTotal.value
-            : this.recurrenceTotal),
-        recurrenceCount: (recurrenceCount != null
-            ? recurrenceCount.value
-            : this.recurrenceCount),
-        bunqPaymentId:
-            (bunqPaymentId != null ? bunqPaymentId.value : this.bunqPaymentId),
-        importHashV2:
-            (importHashV2 != null ? importHashV2.value : this.importHashV2),
-        sepaCc: (sepaCc != null ? sepaCc.value : this.sepaCc),
-        sepaCtOp: (sepaCtOp != null ? sepaCtOp.value : this.sepaCtOp),
-        sepaCtId: (sepaCtId != null ? sepaCtId.value : this.sepaCtId),
-        sepaDb: (sepaDb != null ? sepaDb.value : this.sepaDb),
-        sepaCountry:
-            (sepaCountry != null ? sepaCountry.value : this.sepaCountry),
-        sepaEp: (sepaEp != null ? sepaEp.value : this.sepaEp),
-        sepaCi: (sepaCi != null ? sepaCi.value : this.sepaCi),
-        sepaBatchId:
-            (sepaBatchId != null ? sepaBatchId.value : this.sepaBatchId),
-        interestDate:
-            (interestDate != null ? interestDate.value : this.interestDate),
-        bookDate: (bookDate != null ? bookDate.value : this.bookDate),
-        processDate:
-            (processDate != null ? processDate.value : this.processDate),
-        dueDate: (dueDate != null ? dueDate.value : this.dueDate),
-        paymentDate:
-            (paymentDate != null ? paymentDate.value : this.paymentDate),
-        invoiceDate:
-            (invoiceDate != null ? invoiceDate.value : this.invoiceDate),
-        latitude: (latitude != null ? latitude.value : this.latitude),
-        longitude: (longitude != null ? longitude.value : this.longitude),
-        zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel),
-        hasAttachments: (hasAttachments != null
-            ? hasAttachments.value
-            : this.hasAttachments));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class BadRequest {
-  const BadRequest({
+class BadRequestResponse {
+  const BadRequestResponse({
     this.message,
     this.exception,
   });
 
-  factory BadRequest.fromJson(Map<String, dynamic> json) =>
-      _$BadRequestFromJson(json);
+  factory BadRequestResponse.fromJson(Map<String, dynamic> json) =>
+      _$BadRequestResponseFromJson(json);
 
-  static const toJsonFactory = _$BadRequestToJson;
-  Map<String, dynamic> toJson() => _$BadRequestToJson(this);
+  static const toJsonFactory = _$BadRequestResponseToJson;
+  Map<String, dynamic> toJson() => _$BadRequestResponseToJson(this);
 
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   @JsonKey(name: 'exception', includeIfNull: false)
   final String? exception;
-  static const fromJsonFactory = _$BadRequestFromJson;
+  static const fromJsonFactory = _$BadRequestResponseFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $BadRequestExtension on BadRequest {
-  BadRequest copyWith({String? message, String? exception}) {
-    return BadRequest(
+extension $BadRequestResponseExtension on BadRequestResponse {
+  BadRequestResponse copyWith({String? message, String? exception}) {
+    return BadRequestResponse(
         message: message ?? this.message,
         exception: exception ?? this.exception);
   }
 
-  BadRequest copyWithWrapped(
+  BadRequestResponse copyWithWrapped(
       {Wrapped<String?>? message, Wrapped<String?>? exception}) {
-    return BadRequest(
+    return BadRequestResponse(
         message: (message != null ? message.value : this.message),
         exception: (exception != null ? exception.value : this.exception));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-class InternalException {
-  const InternalException({
+class InternalExceptionResponse {
+  const InternalExceptionResponse({
     this.message,
     this.exception,
   });
 
-  factory InternalException.fromJson(Map<String, dynamic> json) =>
-      _$InternalExceptionFromJson(json);
+  factory InternalExceptionResponse.fromJson(Map<String, dynamic> json) =>
+      _$InternalExceptionResponseFromJson(json);
 
-  static const toJsonFactory = _$InternalExceptionToJson;
-  Map<String, dynamic> toJson() => _$InternalExceptionToJson(this);
+  static const toJsonFactory = _$InternalExceptionResponseToJson;
+  Map<String, dynamic> toJson() => _$InternalExceptionResponseToJson(this);
 
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   @JsonKey(name: 'exception', includeIfNull: false)
   final String? exception;
-  static const fromJsonFactory = _$InternalExceptionFromJson;
+  static const fromJsonFactory = _$InternalExceptionResponseFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $InternalExceptionExtension on InternalException {
-  InternalException copyWith({String? message, String? exception}) {
-    return InternalException(
+extension $InternalExceptionResponseExtension on InternalExceptionResponse {
+  InternalExceptionResponse copyWith({String? message, String? exception}) {
+    return InternalExceptionResponse(
         message: message ?? this.message,
         exception: exception ?? this.exception);
   }
 
-  InternalException copyWithWrapped(
+  InternalExceptionResponse copyWithWrapped(
       {Wrapped<String?>? message, Wrapped<String?>? exception}) {
-    return InternalException(
+    return InternalExceptionResponse(
         message: (message != null ? message.value : this.message),
         exception: (exception != null ? exception.value : this.exception));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-class NotFound {
-  const NotFound({
+class NotFoundResponse {
+  const NotFoundResponse({
     this.message,
     this.exception,
   });
 
-  factory NotFound.fromJson(Map<String, dynamic> json) =>
-      _$NotFoundFromJson(json);
+  factory NotFoundResponse.fromJson(Map<String, dynamic> json) =>
+      _$NotFoundResponseFromJson(json);
 
-  static const toJsonFactory = _$NotFoundToJson;
-  Map<String, dynamic> toJson() => _$NotFoundToJson(this);
+  static const toJsonFactory = _$NotFoundResponseToJson;
+  Map<String, dynamic> toJson() => _$NotFoundResponseToJson(this);
 
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   @JsonKey(name: 'exception', includeIfNull: false)
   final String? exception;
-  static const fromJsonFactory = _$NotFoundFromJson;
+  static const fromJsonFactory = _$NotFoundResponseFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $NotFoundExtension on NotFound {
-  NotFound copyWith({String? message, String? exception}) {
-    return NotFound(
+extension $NotFoundResponseExtension on NotFoundResponse {
+  NotFoundResponse copyWith({String? message, String? exception}) {
+    return NotFoundResponse(
         message: message ?? this.message,
         exception: exception ?? this.exception);
   }
 
-  NotFound copyWithWrapped(
+  NotFoundResponse copyWithWrapped(
       {Wrapped<String?>? message, Wrapped<String?>? exception}) {
-    return NotFound(
+    return NotFoundResponse(
         message: (message != null ? message.value : this.message),
         exception: (exception != null ? exception.value : this.exception));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-class Unauthenticated {
-  const Unauthenticated({
+class UnauthenticatedResponse {
+  const UnauthenticatedResponse({
     this.message,
     this.exception,
   });
 
-  factory Unauthenticated.fromJson(Map<String, dynamic> json) =>
-      _$UnauthenticatedFromJson(json);
+  factory UnauthenticatedResponse.fromJson(Map<String, dynamic> json) =>
+      _$UnauthenticatedResponseFromJson(json);
 
-  static const toJsonFactory = _$UnauthenticatedToJson;
-  Map<String, dynamic> toJson() => _$UnauthenticatedToJson(this);
+  static const toJsonFactory = _$UnauthenticatedResponseToJson;
+  Map<String, dynamic> toJson() => _$UnauthenticatedResponseToJson(this);
 
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   @JsonKey(name: 'exception', includeIfNull: false)
   final String? exception;
-  static const fromJsonFactory = _$UnauthenticatedFromJson;
+  static const fromJsonFactory = _$UnauthenticatedResponseFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $UnauthenticatedExtension on Unauthenticated {
-  Unauthenticated copyWith({String? message, String? exception}) {
-    return Unauthenticated(
+extension $UnauthenticatedResponseExtension on UnauthenticatedResponse {
+  UnauthenticatedResponse copyWith({String? message, String? exception}) {
+    return UnauthenticatedResponse(
         message: message ?? this.message,
         exception: exception ?? this.exception);
   }
 
-  Unauthenticated copyWithWrapped(
+  UnauthenticatedResponse copyWithWrapped(
       {Wrapped<String?>? message, Wrapped<String?>? exception}) {
-    return Unauthenticated(
+    return UnauthenticatedResponse(
         message: (message != null ? message.value : this.message),
         exception: (exception != null ? exception.value : this.exception));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-class ValidationError {
-  const ValidationError({
+class ValidationErrorResponse {
+  const ValidationErrorResponse({
     this.message,
     this.errors,
   });
 
-  factory ValidationError.fromJson(Map<String, dynamic> json) =>
-      _$ValidationErrorFromJson(json);
+  factory ValidationErrorResponse.fromJson(Map<String, dynamic> json) =>
+      _$ValidationErrorResponseFromJson(json);
 
-  static const toJsonFactory = _$ValidationErrorToJson;
-  Map<String, dynamic> toJson() => _$ValidationErrorToJson(this);
+  static const toJsonFactory = _$ValidationErrorResponseToJson;
+  Map<String, dynamic> toJson() => _$ValidationErrorResponseToJson(this);
 
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   @JsonKey(name: 'errors', includeIfNull: false)
-  final ValidationError$Errors? errors;
-  static const fromJsonFactory = _$ValidationErrorFromJson;
+  final ValidationErrorResponse$Errors? errors;
+  static const fromJsonFactory = _$ValidationErrorResponseFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $ValidationErrorExtension on ValidationError {
-  ValidationError copyWith({String? message, ValidationError$Errors? errors}) {
-    return ValidationError(
+extension $ValidationErrorResponseExtension on ValidationErrorResponse {
+  ValidationErrorResponse copyWith(
+      {String? message, ValidationErrorResponse$Errors? errors}) {
+    return ValidationErrorResponse(
         message: message ?? this.message, errors: errors ?? this.errors);
   }
 
-  ValidationError copyWithWrapped(
-      {Wrapped<String?>? message, Wrapped<ValidationError$Errors?>? errors}) {
-    return ValidationError(
+  ValidationErrorResponse copyWithWrapped(
+      {Wrapped<String?>? message,
+      Wrapped<ValidationErrorResponse$Errors?>? errors}) {
+    return ValidationErrorResponse(
         message: (message != null ? message.value : this.message),
         errors: (errors != null ? errors.value : this.errors));
   }
@@ -12970,8 +12958,8 @@ extension $Meta$PaginationExtension on Meta$Pagination {
 }
 
 @JsonSerializable(explicitToJson: true)
-class ValidationError$Errors {
-  const ValidationError$Errors({
+class ValidationErrorResponse$Errors {
+  const ValidationErrorResponse$Errors({
     this.email,
     this.blocked,
     this.role,
@@ -12984,11 +12972,11 @@ class ValidationError$Errors {
     this.date,
   });
 
-  factory ValidationError$Errors.fromJson(Map<String, dynamic> json) =>
-      _$ValidationError$ErrorsFromJson(json);
+  factory ValidationErrorResponse$Errors.fromJson(Map<String, dynamic> json) =>
+      _$ValidationErrorResponse$ErrorsFromJson(json);
 
-  static const toJsonFactory = _$ValidationError$ErrorsToJson;
-  Map<String, dynamic> toJson() => _$ValidationError$ErrorsToJson(this);
+  static const toJsonFactory = _$ValidationErrorResponse$ErrorsToJson;
+  Map<String, dynamic> toJson() => _$ValidationErrorResponse$ErrorsToJson(this);
 
   @JsonKey(name: 'email', includeIfNull: false, defaultValue: <String>[])
   final List<String>? email;
@@ -13010,14 +12998,15 @@ class ValidationError$Errors {
   final List<String>? end;
   @JsonKey(name: 'date', includeIfNull: false, defaultValue: <String>[])
   final List<String>? date;
-  static const fromJsonFactory = _$ValidationError$ErrorsFromJson;
+  static const fromJsonFactory = _$ValidationErrorResponse$ErrorsFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $ValidationError$ErrorsExtension on ValidationError$Errors {
-  ValidationError$Errors copyWith(
+extension $ValidationErrorResponse$ErrorsExtension
+    on ValidationErrorResponse$Errors {
+  ValidationErrorResponse$Errors copyWith(
       {List<String>? email,
       List<String>? blocked,
       List<String>? role,
@@ -13028,7 +13017,7 @@ extension $ValidationError$ErrorsExtension on ValidationError$Errors {
       List<String>? start,
       List<String>? end,
       List<String>? date}) {
-    return ValidationError$Errors(
+    return ValidationErrorResponse$Errors(
         email: email ?? this.email,
         blocked: blocked ?? this.blocked,
         role: role ?? this.role,
@@ -13041,7 +13030,7 @@ extension $ValidationError$ErrorsExtension on ValidationError$Errors {
         date: date ?? this.date);
   }
 
-  ValidationError$Errors copyWithWrapped(
+  ValidationErrorResponse$Errors copyWithWrapped(
       {Wrapped<List<String>?>? email,
       Wrapped<List<String>?>? blocked,
       Wrapped<List<String>?>? role,
@@ -13052,7 +13041,7 @@ extension $ValidationError$ErrorsExtension on ValidationError$Errors {
       Wrapped<List<String>?>? start,
       Wrapped<List<String>?>? end,
       Wrapped<List<String>?>? date}) {
-    return ValidationError$Errors(
+    return ValidationErrorResponse$Errors(
         email: (email != null ? email.value : this.email),
         blocked: (blocked != null ? blocked.value : this.blocked),
         role: (role != null ? role.value : this.role),
@@ -14513,286 +14502,6 @@ List<enums.WebhookTrigger>? webhookTriggerNullableListFromJson(
       .toList();
 }
 
-String? creditCardTypeNullableToJson(enums.CreditCardType? creditCardType) {
-  return creditCardType?.value;
-}
-
-String? creditCardTypeToJson(enums.CreditCardType creditCardType) {
-  return creditCardType.value;
-}
-
-enums.CreditCardType creditCardTypeFromJson(
-  Object? creditCardType, [
-  enums.CreditCardType? defaultValue,
-]) {
-  return enums.CreditCardType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          creditCardType?.toString().toLowerCase()) ??
-      defaultValue ??
-      enums.CreditCardType.swaggerGeneratedUnknown;
-}
-
-enums.CreditCardType? creditCardTypeNullableFromJson(
-  Object? creditCardType, [
-  enums.CreditCardType? defaultValue,
-]) {
-  if (creditCardType == null) {
-    return null;
-  }
-  return enums.CreditCardType.values
-          .firstWhereOrNull((e) => e.value == creditCardType) ??
-      defaultValue;
-}
-
-String creditCardTypeExplodedListToJson(
-    List<enums.CreditCardType>? creditCardType) {
-  return creditCardType?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> creditCardTypeListToJson(
-    List<enums.CreditCardType>? creditCardType) {
-  if (creditCardType == null) {
-    return [];
-  }
-
-  return creditCardType.map((e) => e.value!).toList();
-}
-
-List<enums.CreditCardType> creditCardTypeListFromJson(
-  List? creditCardType, [
-  List<enums.CreditCardType>? defaultValue,
-]) {
-  if (creditCardType == null) {
-    return defaultValue ?? [];
-  }
-
-  return creditCardType
-      .map((e) => creditCardTypeFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.CreditCardType>? creditCardTypeNullableListFromJson(
-  List? creditCardType, [
-  List<enums.CreditCardType>? defaultValue,
-]) {
-  if (creditCardType == null) {
-    return defaultValue;
-  }
-
-  return creditCardType
-      .map((e) => creditCardTypeFromJson(e.toString()))
-      .toList();
-}
-
-String? interestPeriodNullableToJson(enums.InterestPeriod? interestPeriod) {
-  return interestPeriod?.value;
-}
-
-String? interestPeriodToJson(enums.InterestPeriod interestPeriod) {
-  return interestPeriod.value;
-}
-
-enums.InterestPeriod interestPeriodFromJson(
-  Object? interestPeriod, [
-  enums.InterestPeriod? defaultValue,
-]) {
-  return enums.InterestPeriod.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          interestPeriod?.toString().toLowerCase()) ??
-      defaultValue ??
-      enums.InterestPeriod.swaggerGeneratedUnknown;
-}
-
-enums.InterestPeriod? interestPeriodNullableFromJson(
-  Object? interestPeriod, [
-  enums.InterestPeriod? defaultValue,
-]) {
-  if (interestPeriod == null) {
-    return null;
-  }
-  return enums.InterestPeriod.values
-          .firstWhereOrNull((e) => e.value == interestPeriod) ??
-      defaultValue;
-}
-
-String interestPeriodExplodedListToJson(
-    List<enums.InterestPeriod>? interestPeriod) {
-  return interestPeriod?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> interestPeriodListToJson(
-    List<enums.InterestPeriod>? interestPeriod) {
-  if (interestPeriod == null) {
-    return [];
-  }
-
-  return interestPeriod.map((e) => e.value!).toList();
-}
-
-List<enums.InterestPeriod> interestPeriodListFromJson(
-  List? interestPeriod, [
-  List<enums.InterestPeriod>? defaultValue,
-]) {
-  if (interestPeriod == null) {
-    return defaultValue ?? [];
-  }
-
-  return interestPeriod
-      .map((e) => interestPeriodFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.InterestPeriod>? interestPeriodNullableListFromJson(
-  List? interestPeriod, [
-  List<enums.InterestPeriod>? defaultValue,
-]) {
-  if (interestPeriod == null) {
-    return defaultValue;
-  }
-
-  return interestPeriod
-      .map((e) => interestPeriodFromJson(e.toString()))
-      .toList();
-}
-
-String? liabilityDirectionNullableToJson(
-    enums.LiabilityDirection? liabilityDirection) {
-  return liabilityDirection?.value;
-}
-
-String? liabilityDirectionToJson(enums.LiabilityDirection liabilityDirection) {
-  return liabilityDirection.value;
-}
-
-enums.LiabilityDirection liabilityDirectionFromJson(
-  Object? liabilityDirection, [
-  enums.LiabilityDirection? defaultValue,
-]) {
-  return enums.LiabilityDirection.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          liabilityDirection?.toString().toLowerCase()) ??
-      defaultValue ??
-      enums.LiabilityDirection.swaggerGeneratedUnknown;
-}
-
-enums.LiabilityDirection? liabilityDirectionNullableFromJson(
-  Object? liabilityDirection, [
-  enums.LiabilityDirection? defaultValue,
-]) {
-  if (liabilityDirection == null) {
-    return null;
-  }
-  return enums.LiabilityDirection.values
-          .firstWhereOrNull((e) => e.value == liabilityDirection) ??
-      defaultValue;
-}
-
-String liabilityDirectionExplodedListToJson(
-    List<enums.LiabilityDirection>? liabilityDirection) {
-  return liabilityDirection?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> liabilityDirectionListToJson(
-    List<enums.LiabilityDirection>? liabilityDirection) {
-  if (liabilityDirection == null) {
-    return [];
-  }
-
-  return liabilityDirection.map((e) => e.value!).toList();
-}
-
-List<enums.LiabilityDirection> liabilityDirectionListFromJson(
-  List? liabilityDirection, [
-  List<enums.LiabilityDirection>? defaultValue,
-]) {
-  if (liabilityDirection == null) {
-    return defaultValue ?? [];
-  }
-
-  return liabilityDirection
-      .map((e) => liabilityDirectionFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.LiabilityDirection>? liabilityDirectionNullableListFromJson(
-  List? liabilityDirection, [
-  List<enums.LiabilityDirection>? defaultValue,
-]) {
-  if (liabilityDirection == null) {
-    return defaultValue;
-  }
-
-  return liabilityDirection
-      .map((e) => liabilityDirectionFromJson(e.toString()))
-      .toList();
-}
-
-String? liabilityTypeNullableToJson(enums.LiabilityType? liabilityType) {
-  return liabilityType?.value;
-}
-
-String? liabilityTypeToJson(enums.LiabilityType liabilityType) {
-  return liabilityType.value;
-}
-
-enums.LiabilityType liabilityTypeFromJson(
-  Object? liabilityType, [
-  enums.LiabilityType? defaultValue,
-]) {
-  return enums.LiabilityType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          liabilityType?.toString().toLowerCase()) ??
-      defaultValue ??
-      enums.LiabilityType.swaggerGeneratedUnknown;
-}
-
-enums.LiabilityType? liabilityTypeNullableFromJson(
-  Object? liabilityType, [
-  enums.LiabilityType? defaultValue,
-]) {
-  if (liabilityType == null) {
-    return null;
-  }
-  return enums.LiabilityType.values
-          .firstWhereOrNull((e) => e.value == liabilityType) ??
-      defaultValue;
-}
-
-String liabilityTypeExplodedListToJson(
-    List<enums.LiabilityType>? liabilityType) {
-  return liabilityType?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> liabilityTypeListToJson(List<enums.LiabilityType>? liabilityType) {
-  if (liabilityType == null) {
-    return [];
-  }
-
-  return liabilityType.map((e) => e.value!).toList();
-}
-
-List<enums.LiabilityType> liabilityTypeListFromJson(
-  List? liabilityType, [
-  List<enums.LiabilityType>? defaultValue,
-]) {
-  if (liabilityType == null) {
-    return defaultValue ?? [];
-  }
-
-  return liabilityType.map((e) => liabilityTypeFromJson(e.toString())).toList();
-}
-
-List<enums.LiabilityType>? liabilityTypeNullableListFromJson(
-  List? liabilityType, [
-  List<enums.LiabilityType>? defaultValue,
-]) {
-  if (liabilityType == null) {
-    return defaultValue;
-  }
-
-  return liabilityType.map((e) => liabilityTypeFromJson(e.toString())).toList();
-}
-
 String? accountRolePropertyNullableToJson(
     enums.AccountRoleProperty? accountRoleProperty) {
   return accountRoleProperty?.value;
@@ -14936,6 +14645,299 @@ List<enums.AccountTypeProperty>? accountTypePropertyNullableListFromJson(
 
   return accountTypeProperty
       .map((e) => accountTypePropertyFromJson(e.toString()))
+      .toList();
+}
+
+String? creditCardTypePropertyNullableToJson(
+    enums.CreditCardTypeProperty? creditCardTypeProperty) {
+  return creditCardTypeProperty?.value;
+}
+
+String? creditCardTypePropertyToJson(
+    enums.CreditCardTypeProperty creditCardTypeProperty) {
+  return creditCardTypeProperty.value;
+}
+
+enums.CreditCardTypeProperty creditCardTypePropertyFromJson(
+  Object? creditCardTypeProperty, [
+  enums.CreditCardTypeProperty? defaultValue,
+]) {
+  return enums.CreditCardTypeProperty.values.firstWhereOrNull((e) =>
+          e.value.toString().toLowerCase() ==
+          creditCardTypeProperty?.toString().toLowerCase()) ??
+      defaultValue ??
+      enums.CreditCardTypeProperty.swaggerGeneratedUnknown;
+}
+
+enums.CreditCardTypeProperty? creditCardTypePropertyNullableFromJson(
+  Object? creditCardTypeProperty, [
+  enums.CreditCardTypeProperty? defaultValue,
+]) {
+  if (creditCardTypeProperty == null) {
+    return null;
+  }
+  return enums.CreditCardTypeProperty.values
+          .firstWhereOrNull((e) => e.value == creditCardTypeProperty) ??
+      defaultValue;
+}
+
+String creditCardTypePropertyExplodedListToJson(
+    List<enums.CreditCardTypeProperty>? creditCardTypeProperty) {
+  return creditCardTypeProperty?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> creditCardTypePropertyListToJson(
+    List<enums.CreditCardTypeProperty>? creditCardTypeProperty) {
+  if (creditCardTypeProperty == null) {
+    return [];
+  }
+
+  return creditCardTypeProperty.map((e) => e.value!).toList();
+}
+
+List<enums.CreditCardTypeProperty> creditCardTypePropertyListFromJson(
+  List? creditCardTypeProperty, [
+  List<enums.CreditCardTypeProperty>? defaultValue,
+]) {
+  if (creditCardTypeProperty == null) {
+    return defaultValue ?? [];
+  }
+
+  return creditCardTypeProperty
+      .map((e) => creditCardTypePropertyFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.CreditCardTypeProperty>? creditCardTypePropertyNullableListFromJson(
+  List? creditCardTypeProperty, [
+  List<enums.CreditCardTypeProperty>? defaultValue,
+]) {
+  if (creditCardTypeProperty == null) {
+    return defaultValue;
+  }
+
+  return creditCardTypeProperty
+      .map((e) => creditCardTypePropertyFromJson(e.toString()))
+      .toList();
+}
+
+String? interestPeriodPropertyNullableToJson(
+    enums.InterestPeriodProperty? interestPeriodProperty) {
+  return interestPeriodProperty?.value;
+}
+
+String? interestPeriodPropertyToJson(
+    enums.InterestPeriodProperty interestPeriodProperty) {
+  return interestPeriodProperty.value;
+}
+
+enums.InterestPeriodProperty interestPeriodPropertyFromJson(
+  Object? interestPeriodProperty, [
+  enums.InterestPeriodProperty? defaultValue,
+]) {
+  return enums.InterestPeriodProperty.values.firstWhereOrNull((e) =>
+          e.value.toString().toLowerCase() ==
+          interestPeriodProperty?.toString().toLowerCase()) ??
+      defaultValue ??
+      enums.InterestPeriodProperty.swaggerGeneratedUnknown;
+}
+
+enums.InterestPeriodProperty? interestPeriodPropertyNullableFromJson(
+  Object? interestPeriodProperty, [
+  enums.InterestPeriodProperty? defaultValue,
+]) {
+  if (interestPeriodProperty == null) {
+    return null;
+  }
+  return enums.InterestPeriodProperty.values
+          .firstWhereOrNull((e) => e.value == interestPeriodProperty) ??
+      defaultValue;
+}
+
+String interestPeriodPropertyExplodedListToJson(
+    List<enums.InterestPeriodProperty>? interestPeriodProperty) {
+  return interestPeriodProperty?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> interestPeriodPropertyListToJson(
+    List<enums.InterestPeriodProperty>? interestPeriodProperty) {
+  if (interestPeriodProperty == null) {
+    return [];
+  }
+
+  return interestPeriodProperty.map((e) => e.value!).toList();
+}
+
+List<enums.InterestPeriodProperty> interestPeriodPropertyListFromJson(
+  List? interestPeriodProperty, [
+  List<enums.InterestPeriodProperty>? defaultValue,
+]) {
+  if (interestPeriodProperty == null) {
+    return defaultValue ?? [];
+  }
+
+  return interestPeriodProperty
+      .map((e) => interestPeriodPropertyFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.InterestPeriodProperty>? interestPeriodPropertyNullableListFromJson(
+  List? interestPeriodProperty, [
+  List<enums.InterestPeriodProperty>? defaultValue,
+]) {
+  if (interestPeriodProperty == null) {
+    return defaultValue;
+  }
+
+  return interestPeriodProperty
+      .map((e) => interestPeriodPropertyFromJson(e.toString()))
+      .toList();
+}
+
+String? liabilityDirectionPropertyNullableToJson(
+    enums.LiabilityDirectionProperty? liabilityDirectionProperty) {
+  return liabilityDirectionProperty?.value;
+}
+
+String? liabilityDirectionPropertyToJson(
+    enums.LiabilityDirectionProperty liabilityDirectionProperty) {
+  return liabilityDirectionProperty.value;
+}
+
+enums.LiabilityDirectionProperty liabilityDirectionPropertyFromJson(
+  Object? liabilityDirectionProperty, [
+  enums.LiabilityDirectionProperty? defaultValue,
+]) {
+  return enums.LiabilityDirectionProperty.values.firstWhereOrNull((e) =>
+          e.value.toString().toLowerCase() ==
+          liabilityDirectionProperty?.toString().toLowerCase()) ??
+      defaultValue ??
+      enums.LiabilityDirectionProperty.swaggerGeneratedUnknown;
+}
+
+enums.LiabilityDirectionProperty? liabilityDirectionPropertyNullableFromJson(
+  Object? liabilityDirectionProperty, [
+  enums.LiabilityDirectionProperty? defaultValue,
+]) {
+  if (liabilityDirectionProperty == null) {
+    return null;
+  }
+  return enums.LiabilityDirectionProperty.values
+          .firstWhereOrNull((e) => e.value == liabilityDirectionProperty) ??
+      defaultValue;
+}
+
+String liabilityDirectionPropertyExplodedListToJson(
+    List<enums.LiabilityDirectionProperty>? liabilityDirectionProperty) {
+  return liabilityDirectionProperty?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> liabilityDirectionPropertyListToJson(
+    List<enums.LiabilityDirectionProperty>? liabilityDirectionProperty) {
+  if (liabilityDirectionProperty == null) {
+    return [];
+  }
+
+  return liabilityDirectionProperty.map((e) => e.value!).toList();
+}
+
+List<enums.LiabilityDirectionProperty> liabilityDirectionPropertyListFromJson(
+  List? liabilityDirectionProperty, [
+  List<enums.LiabilityDirectionProperty>? defaultValue,
+]) {
+  if (liabilityDirectionProperty == null) {
+    return defaultValue ?? [];
+  }
+
+  return liabilityDirectionProperty
+      .map((e) => liabilityDirectionPropertyFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.LiabilityDirectionProperty>?
+    liabilityDirectionPropertyNullableListFromJson(
+  List? liabilityDirectionProperty, [
+  List<enums.LiabilityDirectionProperty>? defaultValue,
+]) {
+  if (liabilityDirectionProperty == null) {
+    return defaultValue;
+  }
+
+  return liabilityDirectionProperty
+      .map((e) => liabilityDirectionPropertyFromJson(e.toString()))
+      .toList();
+}
+
+String? liabilityTypePropertyNullableToJson(
+    enums.LiabilityTypeProperty? liabilityTypeProperty) {
+  return liabilityTypeProperty?.value;
+}
+
+String? liabilityTypePropertyToJson(
+    enums.LiabilityTypeProperty liabilityTypeProperty) {
+  return liabilityTypeProperty.value;
+}
+
+enums.LiabilityTypeProperty liabilityTypePropertyFromJson(
+  Object? liabilityTypeProperty, [
+  enums.LiabilityTypeProperty? defaultValue,
+]) {
+  return enums.LiabilityTypeProperty.values.firstWhereOrNull((e) =>
+          e.value.toString().toLowerCase() ==
+          liabilityTypeProperty?.toString().toLowerCase()) ??
+      defaultValue ??
+      enums.LiabilityTypeProperty.swaggerGeneratedUnknown;
+}
+
+enums.LiabilityTypeProperty? liabilityTypePropertyNullableFromJson(
+  Object? liabilityTypeProperty, [
+  enums.LiabilityTypeProperty? defaultValue,
+]) {
+  if (liabilityTypeProperty == null) {
+    return null;
+  }
+  return enums.LiabilityTypeProperty.values
+          .firstWhereOrNull((e) => e.value == liabilityTypeProperty) ??
+      defaultValue;
+}
+
+String liabilityTypePropertyExplodedListToJson(
+    List<enums.LiabilityTypeProperty>? liabilityTypeProperty) {
+  return liabilityTypeProperty?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> liabilityTypePropertyListToJson(
+    List<enums.LiabilityTypeProperty>? liabilityTypeProperty) {
+  if (liabilityTypeProperty == null) {
+    return [];
+  }
+
+  return liabilityTypeProperty.map((e) => e.value!).toList();
+}
+
+List<enums.LiabilityTypeProperty> liabilityTypePropertyListFromJson(
+  List? liabilityTypeProperty, [
+  List<enums.LiabilityTypeProperty>? defaultValue,
+]) {
+  if (liabilityTypeProperty == null) {
+    return defaultValue ?? [];
+  }
+
+  return liabilityTypeProperty
+      .map((e) => liabilityTypePropertyFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.LiabilityTypeProperty>? liabilityTypePropertyNullableListFromJson(
+  List? liabilityTypeProperty, [
+  List<enums.LiabilityTypeProperty>? defaultValue,
+]) {
+  if (liabilityTypeProperty == null) {
+    return defaultValue;
+  }
+
+  return liabilityTypeProperty
+      .map((e) => liabilityTypePropertyFromJson(e.toString()))
       .toList();
 }
 

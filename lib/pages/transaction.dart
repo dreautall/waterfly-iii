@@ -1054,7 +1054,8 @@ class _TransactionPageState extends State<TransactionPage>
                     // Check if insert/update was successful
                     if (!resp.isSuccessful || resp.body == null) {
                       try {
-                        ValidationError valError = ValidationError.fromJson(
+                        ValidationErrorResponse valError =
+                            ValidationErrorResponse.fromJson(
                           json.decode(resp.error.toString()),
                         );
                         error = valError.message ??

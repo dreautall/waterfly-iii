@@ -541,8 +541,9 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                 if (!resp.isSuccessful || resp.body == null) {
                   late String error;
                   try {
-                    ValidationError valError = ValidationError.fromJson(
-                        json.decode(resp.error.toString()));
+                    ValidationErrorResponse valError =
+                        ValidationErrorResponse.fromJson(
+                            json.decode(resp.error.toString()));
                     if (context.mounted) {
                       error = valError.message ?? S.of(context).errorUnknown;
                     } else {

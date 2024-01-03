@@ -161,7 +161,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     if (!respAttachment.isSuccessful || respAttachment.body == null) {
       late String error;
       try {
-        ValidationError valError = ValidationError.fromJson(
+        ValidationErrorResponse valError = ValidationErrorResponse.fromJson(
             json.decode(respAttachment.error.toString()));
         error = valError.message ?? l10n.errorUnknown;
       } catch (_) {
@@ -228,8 +228,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     late String error;
     try {
       final String respString = await resp.transform(utf8.decoder).join();
-      ValidationError valError =
-          ValidationError.fromJson(json.decode(respString));
+      ValidationErrorResponse valError =
+          ValidationErrorResponse.fromJson(json.decode(respString));
       error = valError.message ?? l10n.errorUnknown;
     } catch (_) {
       error = l10n.errorUnknown;

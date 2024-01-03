@@ -53,13 +53,13 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
       break;
     case ShortAccountTypeProperty.liabilities:
       switch (account.attributes.liabilityType) {
-        case LiabilityType.debt:
+        case LiabilityTypeProperty.debt:
           subtitle = S.of(context).liabilityTypeDebt;
           break;
-        case LiabilityType.loan:
+        case LiabilityTypeProperty.loan:
           subtitle = S.of(context).liabilityTypeLoan;
           break;
-        case LiabilityType.mortgage:
+        case LiabilityTypeProperty.mortgage:
           subtitle = S.of(context).liabilityTypeMortgage;
           break;
         default:
@@ -67,10 +67,10 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
       }
       subtitle += "; ";
       switch (account.attributes.liabilityDirection) {
-        case LiabilityDirection.credit:
+        case LiabilityDirectionProperty.credit:
           subtitle += S.of(context).liabilityDirectionCredit;
           break;
-        case LiabilityDirection.debit:
+        case LiabilityDirectionProperty.debit:
           subtitle += S.of(context).liabilityDirectionDebit;
           break;
         default:

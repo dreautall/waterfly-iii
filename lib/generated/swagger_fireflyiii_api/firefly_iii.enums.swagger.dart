@@ -501,76 +501,6 @@ enum WebhookTrigger {
   const WebhookTrigger(this.value);
 }
 
-enum CreditCardType {
-  @JsonValue(null)
-  swaggerGeneratedUnknown(null),
-
-  @JsonValue('monthlyFull')
-  monthlyfull('monthlyFull'),
-  @JsonValue('null')
-  $null('null');
-
-  final String? value;
-
-  const CreditCardType(this.value);
-}
-
-enum InterestPeriod {
-  @JsonValue(null)
-  swaggerGeneratedUnknown(null),
-
-  @JsonValue('weekly')
-  weekly('weekly'),
-  @JsonValue('monthly')
-  monthly('monthly'),
-  @JsonValue('quarterly')
-  quarterly('quarterly'),
-  @JsonValue('half-year')
-  halfYear('half-year'),
-  @JsonValue('yearly')
-  yearly('yearly'),
-  @JsonValue('null')
-  $null('null');
-
-  final String? value;
-
-  const InterestPeriod(this.value);
-}
-
-enum LiabilityDirection {
-  @JsonValue(null)
-  swaggerGeneratedUnknown(null),
-
-  @JsonValue('credit')
-  credit('credit'),
-  @JsonValue('debit')
-  debit('debit'),
-  @JsonValue('null')
-  $null('null');
-
-  final String? value;
-
-  const LiabilityDirection(this.value);
-}
-
-enum LiabilityType {
-  @JsonValue(null)
-  swaggerGeneratedUnknown(null),
-
-  @JsonValue('loan')
-  loan('loan'),
-  @JsonValue('debt')
-  debt('debt'),
-  @JsonValue('mortgage')
-  mortgage('mortgage'),
-  @JsonValue('null')
-  $null('null');
-
-  final String? value;
-
-  const LiabilityType(this.value);
-}
-
 enum AccountRoleProperty {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
@@ -625,6 +555,76 @@ enum AccountTypeProperty {
   final String? value;
 
   const AccountTypeProperty(this.value);
+}
+
+enum CreditCardTypeProperty {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('monthlyFull')
+  monthlyfull('monthlyFull'),
+  @JsonValue('null')
+  $null('null');
+
+  final String? value;
+
+  const CreditCardTypeProperty(this.value);
+}
+
+enum InterestPeriodProperty {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('weekly')
+  weekly('weekly'),
+  @JsonValue('monthly')
+  monthly('monthly'),
+  @JsonValue('quarterly')
+  quarterly('quarterly'),
+  @JsonValue('half-year')
+  halfYear('half-year'),
+  @JsonValue('yearly')
+  yearly('yearly'),
+  @JsonValue('null')
+  $null('null');
+
+  final String? value;
+
+  const InterestPeriodProperty(this.value);
+}
+
+enum LiabilityDirectionProperty {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('credit')
+  credit('credit'),
+  @JsonValue('debit')
+  debit('debit'),
+  @JsonValue('null')
+  $null('null');
+
+  final String? value;
+
+  const LiabilityDirectionProperty(this.value);
+}
+
+enum LiabilityTypeProperty {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('loan')
+  loan('loan'),
+  @JsonValue('debt')
+  debt('debt'),
+  @JsonValue('mortgage')
+  mortgage('mortgage'),
+  @JsonValue('null')
+  $null('null');
+
+  final String? value;
+
+  const LiabilityTypeProperty(this.value);
 }
 
 enum ShortAccountTypeProperty {

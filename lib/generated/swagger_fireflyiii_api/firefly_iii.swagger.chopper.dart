@@ -6,6 +6,7 @@ part of 'firefly_iii.swagger.dart';
 // ChopperGenerator
 // **************************************************************************
 
+// coverage:ignore-file
 // ignore_for_file: type=lint
 final class _$FireflyIii extends FireflyIii {
   _$FireflyIii([ChopperClient? client]) {
@@ -14,7 +15,7 @@ final class _$FireflyIii extends FireflyIii {
   }
 
   @override
-  final definitionType = FireflyIii;
+  final Type definitionType = FireflyIii;
 
   @override
   Future<Response<List<AutocompleteAccount>>> _v1AutocompleteAccountsGet({
@@ -3834,25 +3835,27 @@ final class _$FireflyIii extends FireflyIii {
   Future<Response<CurrencySingle>> _v1CurrenciesCodePut({
     String? xTraceId,
     required String? code,
-    required Map<String, String> body,
+    required CurrencyUpdate body,
   }) {
     final Uri $url = Uri.parse('/v1/currencies/${code}');
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
-      'content-type': 'application/x-www-form-urlencoded',
     };
-    final $body = body;
+    final List<PartValue> $parts = <PartValue>[
+      PartValue<CurrencyUpdate>(
+        'body',
+        body,
+      )
+    ];
     final Request $request = Request(
       'PUT',
       $url,
       client.baseUrl,
-      body: $body,
+      parts: $parts,
+      multipart: true,
       headers: $headers,
     );
-    return client.send<CurrencySingle, CurrencySingle>(
-      $request,
-      requestConverter: FormUrlEncodedConverter.requestFactory,
-    );
+    return client.send<CurrencySingle, CurrencySingle>($request);
   }
 
   @override

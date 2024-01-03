@@ -105,6 +105,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
     FlutterSharingIntent.instance.getInitialSharing().then(
       (List<SharedFile> value) {
         log.config("App was opened via file sharing");
+        log.finest(
+            () => "files: ${value.map((SharedFile f) => f.value).join(",")}");
         _filesSharedToApp = value;
       },
     );
@@ -238,8 +240,12 @@ class _WaterflyAppState extends State<WaterflyApp> {
                   : signedIn
                       ? (_notificationPayload != null ||
                               _quickAction == "action_transaction_add" ||
-                              _filesSharedToApp != null)
-                          ? TransactionPage(notification: _notificationPayload)
+                              (_filesSharedToApp != null &&
+                                  _filesSharedToApp!.isNotEmpty))
+                          ? TransactionPage(
+                              notification: _notificationPayload,
+                              files: _filesSharedToApp,
+                            )
                           : const NavPage()
                       : const LoginPage(),
             );

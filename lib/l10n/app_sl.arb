@@ -689,6 +689,14 @@
       }
     }
   },
+  "settingsUseServerTimezone": "Uporabite časovni pas strežnika",
+  "@settingsUseServerTimezone": {
+    "description": "Setting label to use server timezone."
+  },
+  "settingsUseServerTimezoneHelp": "Prikaži vse čase v časovnem pasu strežnika. To posnema vedenje spletnega vmesnika.",
+  "@settingsUseServerTimezoneHelp": {
+    "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
+  },
   "settingsVersion": "Verzija aplikacije",
   "@settingsVersion": {
     "description": "Current App Version"

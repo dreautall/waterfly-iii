@@ -31,7 +31,7 @@ class _HomePiggybankState extends State<HomePiggybank>
     with AutomaticKeepAliveClientMixin {
   final Logger log = Logger("Pages.Home.Piggybank");
 
-  final int _numberOfItemsPerRequest = 50;
+  final int _numberOfItemsPerRequest = 100;
   final PagingController<int, PiggyBankRead> _pagingController =
       PagingController<int, PiggyBankRead>(
     firstPageKey: 1,
@@ -58,6 +58,7 @@ class _HomePiggybankState extends State<HomePiggybank>
       final FireflyIii api = context.read<FireflyService>().api;
       final Response<PiggyBankArray> respAccounts = await api.v1PiggyBanksGet(
         page: pageKey,
+        limit: _numberOfItemsPerRequest,
       );
       if (!respAccounts.isSuccessful || respAccounts.body == null) {
         if (context.mounted) {
@@ -75,6 +76,9 @@ class _HomePiggybankState extends State<HomePiggybank>
 
       if (mounted) {
         final List<PiggyBankRead> piggyList = respAccounts.body!.data;
+        piggyList.sortByCompare(
+            (PiggyBankRead element) => element.attributes.objectGroupOrder,
+            (int? a, int? b) => (a ?? 0).compareTo(b ?? 0));
         final bool isLastPage = piggyList.length < _numberOfItemsPerRequest;
         if (isLastPage) {
           _pagingController.appendLastPage(piggyList);
@@ -97,12 +101,30 @@ class _HomePiggybankState extends State<HomePiggybank>
     super.build(context);
     log.finest(() => "build()");
 
+    int lastGroupId = -1;
+
     return RefreshIndicator(
       onRefresh: () => Future<void>.sync(() => _pagingController.refresh()),
       child: PagedListView<int, PiggyBankRead>(
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<PiggyBankRead>(
           itemBuilder: (BuildContext context, PiggyBankRead piggy, int index) {
+            Widget? groupHeader;
+            final int groupId =
+                (int.tryParse(piggy.attributes.objectGroupId ?? "") ?? 0);
+            if (groupId != lastGroupId &&
+                groupId != 0 &&
+                (piggy.attributes.objectGroupTitle ?? "").isNotEmpty) {
+              lastGroupId = groupId;
+              groupHeader = Padding(
+                padding: const EdgeInsets.only(top: 16, left: 16),
+                child: Text(
+                  piggy.attributes.objectGroupTitle ?? "(no title)",
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+              );
+            }
             final double currentAmount =
                 double.tryParse(piggy.attributes.currentAmount ?? "") ?? 0;
             final CurrencyRead currency = CurrencyRead(
@@ -121,7 +143,9 @@ class _HomePiggybankState extends State<HomePiggybank>
               return const SizedBox.shrink();
             }
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                groupHeader ?? const SizedBox.shrink(),
                 ListTile(
                   title: Text(piggy.attributes.name),
                   subtitle: (piggy.attributes.accountName != null)

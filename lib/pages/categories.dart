@@ -327,8 +327,15 @@ class _CategoriesPageState extends State<CategoriesPage>
           },
         );
 
+        double totalEarned = 0;
+        double totalSpent = 0;
+
         for (CategoryRead category in snapshot.data!.data) {
           CategoryWithSum cs = category.attributes as CategoryWithSum;
+
+          totalEarned += cs.sumEarned;
+          totalSpent += cs.sumSpent;
+
           childs.add(
             OpenContainer(
               openBuilder: (BuildContext context, Function closedContainer) =>
@@ -472,7 +479,66 @@ class _CategoriesPageState extends State<CategoriesPage>
             ),
           );
         }
-        // :TODO: sum display
+        childs.add(const Divider());
+        childs.add(
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    S.of(context).generalSum,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    defaultCurrency.fmt(totalSpent),
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                      color: totalSpent < 0 ? Colors.red : Colors.green,
+                      fontWeight: FontWeight.bold,
+                      fontFeatures: const <FontFeature>[
+                        FontFeature.tabularFigures()
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    defaultCurrency.fmt(totalEarned),
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                      color: totalEarned < 0 ? Colors.red : Colors.green,
+                      fontWeight: FontWeight.bold,
+                      fontFeatures: const <FontFeature>[
+                        FontFeature.tabularFigures()
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    defaultCurrency.fmt(totalSpent + totalEarned),
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                      color: (totalSpent + totalEarned) < 0
+                          ? Colors.red
+                          : Colors.green,
+                      fontWeight: FontWeight.bold,
+                      fontFeatures: const <FontFeature>[
+                        FontFeature.tabularFigures()
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
         return RefreshIndicator(
           onRefresh: () => Future<void>(() {
             setState(() {});

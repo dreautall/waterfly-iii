@@ -348,7 +348,7 @@ class _CategoriesPageState extends State<CategoriesPage>
 
         for (CategoryRead category in snapshot.data!.data) {
           CategoryWithSum cs = category.attributes as CategoryWithSum;
-          final bool negativeBalance = (cs.sumSpent + cs.sumEarned) < 0;
+          final double totalBalance = cs.sumSpent + cs.sumEarned;
 
           childs.add(
             OpenContainer(
@@ -392,30 +392,18 @@ class _CategoriesPageState extends State<CategoriesPage>
                                   const Placeholder(),
                             ),
                           );
+                          if (!(ok ?? false)) {
+                            return;
+                          }
+
+                          // Refresh page
+                          setState(() {});
                         },
                         child: Row(
                           children: <Widget>[
-                            const Icon(Icons.copy),
+                            const Icon(Icons.edit),
                             const SizedBox(width: 12),
-                            Text("Long Press Action 1"),
-                          ],
-                        ),
-                      ),
-                      const PopupMenuDivider(),
-                      PopupMenuItem<Function>(
-                        value: () async {
-                          //final FireflyIii api = context.read<FireflyService>().api;
-                          bool? ok = await showDialog<bool>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                const Placeholder(),
-                          );
-                        },
-                        child: Row(
-                          children: <Widget>[
-                            const Icon(Icons.delete),
-                            const SizedBox(width: 12),
-                            Text("Long Press Action 2"),
+                            Text(S.of(context).categoriesEdit),
                           ],
                         ),
                       ),
@@ -442,7 +430,7 @@ class _CategoriesPageState extends State<CategoriesPage>
                           ActionChip(
                             label: Text(
                               NumberFormat.percentPattern().format(
-                                  negativeBalance
+                                  totalBalance < 0
                                       ? cs.sumSpent / totalSpent
                                       : cs.sumEarned / totalEarned),
                             ),
@@ -452,8 +440,11 @@ class _CategoriesPageState extends State<CategoriesPage>
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 2, vertical: -4),
                             side: BorderSide(
-                              color:
-                                  negativeBalance ? Colors.red : Colors.green,
+                              color: totalBalance < 0
+                                  ? Colors.red
+                                  : totalBalance > 0
+                                      ? Colors.green
+                                      : Colors.grey,
                             ),
                           ),
                         ],
@@ -467,8 +458,11 @@ class _CategoriesPageState extends State<CategoriesPage>
                               defaultCurrency.fmt(cs.sumSpent),
                               textAlign: TextAlign.end,
                               style: TextStyle(
-                                color:
-                                    cs.sumSpent < 0 ? Colors.red : Colors.green,
+                                color: cs.sumSpent < 0
+                                    ? Colors.red
+                                    : cs.sumSpent > 0
+                                        ? Colors.green
+                                        : Colors.grey,
                                 fontWeight: FontWeight.bold,
                                 fontFeatures: const <FontFeature>[
                                   FontFeature.tabularFigures()
@@ -483,7 +477,9 @@ class _CategoriesPageState extends State<CategoriesPage>
                               style: TextStyle(
                                 color: cs.sumEarned < 0
                                     ? Colors.red
-                                    : Colors.green,
+                                    : cs.sumEarned > 0
+                                        ? Colors.green
+                                        : Colors.grey,
                                 fontWeight: FontWeight.bold,
                                 fontFeatures: const <FontFeature>[
                                   FontFeature.tabularFigures()
@@ -496,8 +492,11 @@ class _CategoriesPageState extends State<CategoriesPage>
                               defaultCurrency.fmt(cs.sumSpent + cs.sumEarned),
                               textAlign: TextAlign.end,
                               style: TextStyle(
-                                color:
-                                    negativeBalance ? Colors.red : Colors.green,
+                                color: totalBalance < 0
+                                    ? Colors.red
+                                    : totalBalance > 0
+                                        ? Colors.green
+                                        : Colors.grey,
                                 fontWeight: FontWeight.bold,
                                 fontFeatures: const <FontFeature>[
                                   FontFeature.tabularFigures()
@@ -537,7 +536,11 @@ class _CategoriesPageState extends State<CategoriesPage>
                     defaultCurrency.fmt(totalSpent),
                     textAlign: TextAlign.end,
                     style: TextStyle(
-                      color: totalSpent < 0 ? Colors.red : Colors.green,
+                      color: totalSpent < 0
+                          ? Colors.red
+                          : totalSpent > 0
+                              ? Colors.green
+                              : Colors.grey,
                       fontWeight: FontWeight.bold,
                       fontFeatures: const <FontFeature>[
                         FontFeature.tabularFigures()
@@ -550,7 +553,11 @@ class _CategoriesPageState extends State<CategoriesPage>
                     defaultCurrency.fmt(totalEarned),
                     textAlign: TextAlign.end,
                     style: TextStyle(
-                      color: totalEarned < 0 ? Colors.red : Colors.green,
+                      color: totalEarned < 0
+                          ? Colors.red
+                          : totalEarned > 0
+                              ? Colors.green
+                              : Colors.grey,
                       fontWeight: FontWeight.bold,
                       fontFeatures: const <FontFeature>[
                         FontFeature.tabularFigures()
@@ -565,7 +572,9 @@ class _CategoriesPageState extends State<CategoriesPage>
                     style: TextStyle(
                       color: (totalSpent + totalEarned) < 0
                           ? Colors.red
-                          : Colors.green,
+                          : (totalSpent + totalEarned) > 0
+                              ? Colors.green
+                              : Colors.grey,
                       fontWeight: FontWeight.bold,
                       fontFeatures: const <FontFeature>[
                         FontFeature.tabularFigures()

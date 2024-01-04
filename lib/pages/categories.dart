@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:animations/animations.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -30,13 +29,13 @@ class _CategoriesPageState extends State<CategoriesPage>
     with SingleTickerProviderStateMixin {
   final Logger log = Logger("Pages.Categories.Page");
 
-  Future<CategoryArray> _fetchCategories() async {
+  Future<CategoryArray> _fetchCategories(DateTime now) async {
     final S l10n = S.of(context);
     final FireflyIii api = context.read<FireflyService>().api;
     final CurrencyRead defaultCurrency =
         context.read<FireflyService>().defaultCurrency;
 
-    /*final*/ DateTime now = DateTime.now().toLocal().clearTime();
+    // :TODO: remove
     now = now.copyWith(month: now.month - 1, day: 31);
     final String startDate =
         DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1));
@@ -253,9 +252,10 @@ class _CategoriesPageState extends State<CategoriesPage>
     log.fine(() => "build");
     final CurrencyRead defaultCurrency =
         context.read<FireflyService>().defaultCurrency;
+    final DateTime now = DateTime.now().toLocal().clearTime();
 
     return FutureBuilder<CategoryArray>(
-      future: _fetchCategories(),
+      future: _fetchCategories(now),
       builder: (BuildContext context, AsyncSnapshot<CategoryArray> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // :TODO: loading
@@ -277,7 +277,16 @@ class _CategoriesPageState extends State<CategoriesPage>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                const Expanded(child: SizedBox.shrink()),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      DateFormat.yMMMM().format(now),
+                      textAlign: TextAlign.end,
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                  ),
+                ),
                 Expanded(
                   child: Text(
                     S.of(context).generalSpent,

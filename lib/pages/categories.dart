@@ -130,7 +130,7 @@ class _CategoriesPageState extends State<CategoriesPage>
         categories[cat.id!] = CategoryRead(
           id: cat.id!,
           type: "categories",
-          attributes: Category(
+          attributes: CategoryWithSum(
             name: cat.name!,
             spent: <CategorySpent>[],
             earned: <CategoryEarned>[],
@@ -162,7 +162,7 @@ class _CategoriesPageState extends State<CategoriesPage>
         categories[cat.id!] = CategoryRead(
           id: cat.id!,
           type: "categories",
-          attributes: Category(
+          attributes: CategoryWithSum(
             name: cat.name!,
             spent: <CategorySpent>[],
             earned: <CategoryEarned>[],
@@ -189,7 +189,7 @@ class _CategoriesPageState extends State<CategoriesPage>
         categories["-1"] = CategoryRead(
           id: "-1",
           type: "no-category",
-          attributes: Category(
+          attributes: CategoryWithSum(
             name: l10n.catNone,
             spent: <CategorySpent>[],
             earned: <CategoryEarned>[],
@@ -216,7 +216,7 @@ class _CategoriesPageState extends State<CategoriesPage>
         categories["-1"] = CategoryRead(
           id: "-1",
           type: "no-category",
-          attributes: Category(
+          attributes: CategoryWithSum(
             name: l10n.catNone,
             spent: <CategorySpent>[],
             earned: <CategoryEarned>[],
@@ -233,6 +233,14 @@ class _CategoriesPageState extends State<CategoriesPage>
             ),
           );
     }
+
+    categories.forEach((_, CategoryRead c) {
+      CategoryWithSum cs = c.attributes as CategoryWithSum;
+      cs.sumEarned = c.attributes.earned!.fold<double>(
+          0, (double p, CategoryEarned e) => p += double.parse(e.sum ?? "0"));
+      cs.sumSpent = c.attributes.spent!.fold<double>(
+          0, (double p, CategorySpent e) => p += double.parse(e.sum ?? "0"));
+    });
 
     return CategoryArray(
       data: categories.values.toList(growable: false),
@@ -274,50 +282,44 @@ class _CategoriesPageState extends State<CategoriesPage>
                   child: Text(
                     S.of(context).generalSpent,
                     textAlign: TextAlign.end,
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ),
                 Expanded(
                   child: Text(
                     S.of(context).generalEarned,
                     textAlign: TextAlign.end,
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ),
                 Expanded(
                   child: Text(
                     S.of(context).generalSum,
                     textAlign: TextAlign.end,
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ),
               ],
             ),
           ),
         );
+        childs.add(const Divider());
 
+        // Sort low-to-high by:
+        // 1. Total sum
+        // 2. Spent sum
+        // 3. Earned sum
         snapshot.data!.data.sort(
           (CategoryRead a, CategoryRead b) {
-            double spentA = a.attributes.spent!.fold<double>(
-              0,
-              (double p, CategorySpent e) => p += double.parse(e.sum ?? "0"),
-            );
-            double earnedA = a.attributes.earned!.fold<double>(
-              0,
-              (double p, CategoryEarned e) => p += double.parse(e.sum ?? "0"),
-            );
-            double spentB = b.attributes.spent!.fold<double>(
-              0,
-              (double p, CategorySpent e) => p += double.parse(e.sum ?? "0"),
-            );
-            double earnedB = b.attributes.earned!.fold<double>(
-              0,
-              (double p, CategoryEarned e) => p += double.parse(e.sum ?? "0"),
-            );
-            final double sumA = spentA + earnedA;
-            final double sumB = spentB + earnedB;
+            CategoryWithSum cA = a.attributes as CategoryWithSum;
+            CategoryWithSum cB = b.attributes as CategoryWithSum;
+            final double sumA = cA.sumSpent + cA.sumEarned;
+            final double sumB = cB.sumSpent + cB.sumEarned;
             if (sumA == sumB) {
-              if (spentA == spentB) {
-                return earnedA.compareTo(earnedB);
+              if (cA.sumSpent == cB.sumSpent) {
+                return cA.sumEarned.compareTo(cB.sumEarned);
               } else {
-                return spentA.compareTo(spentB);
+                return cA.sumSpent.compareTo(cB.sumSpent);
               }
             } else {
               return sumA.compareTo(sumB);
@@ -326,14 +328,7 @@ class _CategoriesPageState extends State<CategoriesPage>
         );
 
         for (CategoryRead category in snapshot.data!.data) {
-          double spent = category.attributes.spent!.fold<double>(
-            0,
-            (double p, CategorySpent e) => p += double.parse(e.sum ?? "0"),
-          );
-          double earned = category.attributes.earned!.fold<double>(
-            0,
-            (double p, CategoryEarned e) => p += double.parse(e.sum ?? "0"),
-          );
+          CategoryWithSum cs = category.attributes as CategoryWithSum;
           childs.add(
             OpenContainer(
               openBuilder: (BuildContext context, Function closedContainer) =>
@@ -423,10 +418,11 @@ class _CategoriesPageState extends State<CategoriesPage>
                           const Expanded(child: SizedBox.shrink()),
                           Expanded(
                             child: Text(
-                              defaultCurrency.fmt(spent),
+                              defaultCurrency.fmt(cs.sumSpent),
                               textAlign: TextAlign.end,
                               style: TextStyle(
-                                color: spent < 0 ? Colors.red : Colors.green,
+                                color:
+                                    cs.sumSpent < 0 ? Colors.red : Colors.green,
                                 fontWeight: FontWeight.bold,
                                 fontFeatures: const <FontFeature>[
                                   FontFeature.tabularFigures()
@@ -436,10 +432,12 @@ class _CategoriesPageState extends State<CategoriesPage>
                           ),
                           Expanded(
                             child: Text(
-                              defaultCurrency.fmt(earned),
+                              defaultCurrency.fmt(cs.sumEarned),
                               textAlign: TextAlign.end,
                               style: TextStyle(
-                                color: earned < 0 ? Colors.red : Colors.green,
+                                color: cs.sumEarned < 0
+                                    ? Colors.red
+                                    : Colors.green,
                                 fontWeight: FontWeight.bold,
                                 fontFeatures: const <FontFeature>[
                                   FontFeature.tabularFigures()
@@ -449,10 +447,10 @@ class _CategoriesPageState extends State<CategoriesPage>
                           ),
                           Expanded(
                             child: Text(
-                              defaultCurrency.fmt(spent + earned),
+                              defaultCurrency.fmt(cs.sumSpent + cs.sumEarned),
                               textAlign: TextAlign.end,
                               style: TextStyle(
-                                color: (spent + earned) < 0
+                                color: (cs.sumSpent + cs.sumEarned) < 0
                                     ? Colors.red
                                     : Colors.green,
                                 fontWeight: FontWeight.bold,
@@ -473,9 +471,8 @@ class _CategoriesPageState extends State<CategoriesPage>
               },
             ),
           );
-          childs.add(const Divider());
         }
-        childs.removeLast();
+        // :TODO: sum display
         return RefreshIndicator(
           onRefresh: () => Future<void>(() {
             setState(() {});

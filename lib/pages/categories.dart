@@ -13,6 +13,7 @@ import 'package:chopper/chopper.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/home/transactions.dart';
 
 final Logger log = Logger("Pages.Categories");
 
@@ -352,7 +353,12 @@ class _CategoriesPageState extends State<CategoriesPage>
           childs.add(
             OpenContainer(
               openBuilder: (BuildContext context, Function closedContainer) =>
-                  Placeholder(),
+                  Scaffold(
+                appBar: AppBar(
+                  title: Text(category.attributes.name),
+                ),
+                body: HomeTransactions(categoryId: category.id),
+              ),
               openColor: Theme.of(context).cardColor,
               closedColor: Theme.of(context).cardColor,
               closedShape: const RoundedRectangleBorder(

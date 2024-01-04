@@ -347,77 +347,207 @@ class _CategoriesPageState extends State<CategoriesPage>
                 p += (e.attributes as CategoryWithSum).sumSpent);
 
         for (CategoryRead category in snapshot.data!.data) {
-          CategoryWithSum cs = category.attributes as CategoryWithSum;
-          final double totalBalance = cs.sumSpent + cs.sumEarned;
-
-          childs.add(
-            OpenContainer(
-              openBuilder: (BuildContext context, Function closedContainer) =>
-                  Scaffold(
-                appBar: AppBar(
-                  title: Text(category.attributes.name),
-                ),
-                body: HomeTransactions(categoryId: category.id),
-              ),
-              openColor: Theme.of(context).cardColor,
-              closedColor: Theme.of(context).cardColor,
-              closedShape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  bottomLeft: Radius.circular(16),
-                ),
-              ),
-              closedElevation: 0,
-              closedBuilder: (BuildContext context, Function openContainer) =>
-                  GestureDetector(
-                onLongPressStart: (LongPressStartDetails details) async {
-                  final Size screenSize = MediaQuery.of(context).size;
-                  final Offset offset = details.globalPosition;
-                  HapticFeedback.vibrate();
-                  final Function? func = await showMenu<Function>(
-                    context: context,
-                    position: RelativeRect.fromLTRB(
-                      offset.dx,
-                      offset.dy,
-                      screenSize.width - offset.dx,
-                      screenSize.height - offset.dy,
-                    ),
-                    items: <PopupMenuEntry<Function>>[
-                      PopupMenuItem<Function>(
-                        value: () async {
-                          bool? ok = await Navigator.push(
-                            context,
-                            MaterialPageRoute<bool>(
-                              builder: (BuildContext context) =>
-                                  const Placeholder(),
-                            ),
-                          );
-                          if (!(ok ?? false)) {
-                            return;
-                          }
-
-                          // Refresh page
-                          setState(() {});
-                        },
-                        child: Row(
-                          children: <Widget>[
-                            const Icon(Icons.edit),
-                            const SizedBox(width: 12),
-                            Text(S.of(context).categoriesEdit),
-                          ],
+          childs.add(CategoryLine(
+            category: category,
+            setState: setState,
+            totalSpent: totalSpent,
+            totalEarned: totalEarned,
+          ));
+        }
+        childs.add(const Divider());
+        childs.add(
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    S.of(context).generalSum,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
                         ),
-                      ),
-                    ],
-                    clipBehavior: Clip.hardEdge,
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    defaultCurrency.fmt(totalSpent),
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                      color: totalSpent < 0
+                          ? Colors.red
+                          : totalSpent > 0
+                              ? Colors.green
+                              : Colors.grey,
+                      fontWeight: FontWeight.bold,
+                      fontFeatures: const <FontFeature>[
+                        FontFeature.tabularFigures()
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    defaultCurrency.fmt(totalEarned),
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                      color: totalEarned < 0
+                          ? Colors.red
+                          : totalEarned > 0
+                              ? Colors.green
+                              : Colors.grey,
+                      fontWeight: FontWeight.bold,
+                      fontFeatures: const <FontFeature>[
+                        FontFeature.tabularFigures()
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    defaultCurrency.fmt(totalSpent + totalEarned),
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                      color: (totalSpent + totalEarned) < 0
+                          ? Colors.red
+                          : (totalSpent + totalEarned) > 0
+                              ? Colors.green
+                              : Colors.grey,
+                      fontWeight: FontWeight.bold,
+                      fontFeatures: const <FontFeature>[
+                        FontFeature.tabularFigures()
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+        return RefreshIndicator(
+          onRefresh: () => Future<void>(() {
+            setState(() {});
+          }),
+          child: ListView(
+            children: childs,
+          ),
+        );
+      },
+    );
+  }
+}
+
+class CategoryLine extends StatelessWidget {
+  const CategoryLine({
+    super.key,
+    required this.category,
+    required this.setState,
+    required this.totalSpent,
+    required this.totalEarned,
+  });
+
+  final CategoryRead category;
+  final void Function(void Function()) setState;
+  final double totalSpent;
+  final double totalEarned;
+
+  @override
+  Widget build(BuildContext context) {
+    final CurrencyRead defaultCurrency =
+        context.read<FireflyService>().defaultCurrency;
+
+    CategoryWithSum cs = category.attributes as CategoryWithSum;
+    final double totalBalance = cs.sumSpent + cs.sumEarned;
+
+    return OpenContainer(
+      openBuilder: (BuildContext context, Function closedContainer) => Scaffold(
+        appBar: AppBar(
+          title: Text(category.attributes.name),
+        ),
+        body: HomeTransactions(categoryId: category.id),
+      ),
+      openColor: Theme.of(context).cardColor,
+      closedColor: Theme.of(context).cardColor,
+      closedShape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          bottomLeft: Radius.circular(16),
+        ),
+      ),
+      closedElevation: 0,
+      closedBuilder: (BuildContext context, Function openContainer) =>
+          GestureDetector(
+        onLongPressStart: (LongPressStartDetails details) async {
+          final Size screenSize = MediaQuery.of(context).size;
+          final Offset offset = details.globalPosition;
+          HapticFeedback.vibrate();
+          final Function? func = await showMenu<Function>(
+            context: context,
+            position: RelativeRect.fromLTRB(
+              offset.dx,
+              offset.dy,
+              screenSize.width - offset.dx,
+              screenSize.height - offset.dy,
+            ),
+            items: <PopupMenuEntry<Function>>[
+              PopupMenuItem<Function>(
+                value: () async {
+                  bool? ok = await Navigator.push(
+                    context,
+                    MaterialPageRoute<bool>(
+                      builder: (BuildContext context) => const Placeholder(),
+                    ),
                   );
-                  if (func == null) {
+                  if (!(ok ?? false)) {
                     return;
                   }
-                  func();
+
+                  // Refresh page
+                  setState(() {});
                 },
+                child: Row(
+                  children: <Widget>[
+                    const Icon(Icons.edit),
+                    const SizedBox(width: 12),
+                    Text(S.of(context).categoriesEdit),
+                  ],
+                ),
+              ),
+            ],
+            clipBehavior: Clip.hardEdge,
+          );
+          if (func == null) {
+            return;
+          }
+          func();
+        },
+        child: InkWell(
+          customBorder: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              bottomLeft: Radius.circular(16),
+            ),
+          ),
+          onTap: () => openContainer(),
+          child: Semantics(
+            enabled: true,
+            child: Ink(
+              decoration: const ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    bottomLeft: Radius.circular(16),
+                  ),
+                ),
+              ),
+              child: SafeArea(
+                top: false,
+                bottom: false,
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 16,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -510,90 +640,12 @@ class _CategoriesPageState extends State<CategoriesPage>
                   ),
                 ),
               ),
-              onClosed: (bool? refresh) {
-                debugPrint("closed with $refresh");
-              },
-            ),
-          );
-        }
-        childs.add(const Divider());
-        childs.add(
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Expanded(
-                  child: Text(
-                    S.of(context).generalSum,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    defaultCurrency.fmt(totalSpent),
-                    textAlign: TextAlign.end,
-                    style: TextStyle(
-                      color: totalSpent < 0
-                          ? Colors.red
-                          : totalSpent > 0
-                              ? Colors.green
-                              : Colors.grey,
-                      fontWeight: FontWeight.bold,
-                      fontFeatures: const <FontFeature>[
-                        FontFeature.tabularFigures()
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    defaultCurrency.fmt(totalEarned),
-                    textAlign: TextAlign.end,
-                    style: TextStyle(
-                      color: totalEarned < 0
-                          ? Colors.red
-                          : totalEarned > 0
-                              ? Colors.green
-                              : Colors.grey,
-                      fontWeight: FontWeight.bold,
-                      fontFeatures: const <FontFeature>[
-                        FontFeature.tabularFigures()
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    defaultCurrency.fmt(totalSpent + totalEarned),
-                    textAlign: TextAlign.end,
-                    style: TextStyle(
-                      color: (totalSpent + totalEarned) < 0
-                          ? Colors.red
-                          : (totalSpent + totalEarned) > 0
-                              ? Colors.green
-                              : Colors.grey,
-                      fontWeight: FontWeight.bold,
-                      fontFeatures: const <FontFeature>[
-                        FontFeature.tabularFigures()
-                      ],
-                    ),
-                  ),
-                ),
-              ],
             ),
           ),
-        );
-        return RefreshIndicator(
-          onRefresh: () => Future<void>(() {
-            setState(() {});
-          }),
-          child: ListView(
-            children: childs,
-          ),
-        );
+        ),
+      ),
+      onClosed: (bool? refresh) {
+        debugPrint("closed with $refresh");
       },
     );
   }

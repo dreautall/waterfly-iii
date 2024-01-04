@@ -25,9 +25,10 @@ import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 
 class HomeTransactions extends StatefulWidget {
-  const HomeTransactions({super.key, this.accountId});
+  const HomeTransactions({super.key, this.accountId, this.categoryId});
 
   final String? accountId;
+  final String? categoryId;
 
   @override
   State<HomeTransactions> createState() => _HomeTransactionsState();
@@ -61,7 +62,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
         .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
 
     // Only add button when in own tab
-    if (widget.accountId == null) {
+    if (widget.accountId == null && widget.categoryId == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         context.read<PageActions>().set(
           widget.key!,
@@ -143,6 +144,17 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
     try {
       late List<TransactionRead> transactionList;
+
+      // simply add a search filter for category id
+      // logic later already detects categoryId == -1 (= no category)
+      // there is no /api/v1/categories call for "no category" anyways
+      if (widget.categoryId != null) {
+        _filters.category = CategoryRead(
+          id: widget.categoryId!,
+          type: "filter-category",
+          attributes: const Category(name: "filter-category"),
+        );
+      }
 
       if (_filters.hasFilters) {
         String query = _filters.text ?? "";

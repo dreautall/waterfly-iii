@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:animations/animations.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -182,7 +185,7 @@ class _CategoriesPageState extends State<CategoriesPage>
         continue;
       }
       if (!categories.containsKey("-1")) {
-        categories["-1"] = const CategoryRead(
+        categories["-1"] = CategoryRead(
           id: "-1",
           type: "no-category",
           attributes: Category(
@@ -209,7 +212,7 @@ class _CategoriesPageState extends State<CategoriesPage>
         continue;
       }
       if (!categories.containsKey("-1")) {
-        categories["-1"] = const CategoryRead(
+        categories["-1"] = CategoryRead(
           id: "-1",
           type: "no-category",
           attributes: Category(
@@ -251,6 +254,11 @@ class _CategoriesPageState extends State<CategoriesPage>
         }
         if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
           // :TODO: error handling
+          log.severe(
+            "Error loading categories",
+            snapshot.error,
+            snapshot.stackTrace,
+          );
           return const Text("booo");
         }
         final List<Widget> childs = <Widget>[];
@@ -283,6 +291,39 @@ class _CategoriesPageState extends State<CategoriesPage>
             ),
           ),
         );
+
+        snapshot.data!.data.sort(
+          (CategoryRead a, CategoryRead b) {
+            double spentA = a.attributes.spent!.fold<double>(
+              0,
+              (double p, CategorySpent e) => p += double.parse(e.sum ?? "0"),
+            );
+            double earnedA = a.attributes.earned!.fold<double>(
+              0,
+              (double p, CategoryEarned e) => p += double.parse(e.sum ?? "0"),
+            );
+            double spentB = b.attributes.spent!.fold<double>(
+              0,
+              (double p, CategorySpent e) => p += double.parse(e.sum ?? "0"),
+            );
+            double earnedB = b.attributes.earned!.fold<double>(
+              0,
+              (double p, CategoryEarned e) => p += double.parse(e.sum ?? "0"),
+            );
+            final double sumA = spentA + earnedA;
+            final double sumB = spentB + earnedB;
+            if (sumA == sumB) {
+              if (spentA == spentB) {
+                return earnedA.compareTo(earnedB);
+              } else {
+                return spentA.compareTo(spentB);
+              }
+            } else {
+              return sumA.compareTo(sumB);
+            }
+          },
+        );
+
         for (CategoryRead category in snapshot.data!.data) {
           double spent = category.attributes.spent!.fold<double>(
             0,
@@ -371,7 +412,8 @@ class _CategoriesPageState extends State<CategoriesPage>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        category.attributes.name,
+                        category.attributes
+                            .name, // :TODO: add percentage indicator.
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       Row(
@@ -382,18 +424,41 @@ class _CategoriesPageState extends State<CategoriesPage>
                             child: Text(
                               defaultCurrency.fmt(spent),
                               textAlign: TextAlign.end,
+                              style: TextStyle(
+                                color: spent < 0 ? Colors.red : Colors.green,
+                                fontWeight: FontWeight.bold,
+                                fontFeatures: const <FontFeature>[
+                                  FontFeature.tabularFigures()
+                                ],
+                              ),
                             ),
                           ),
                           Expanded(
                             child: Text(
                               defaultCurrency.fmt(earned),
                               textAlign: TextAlign.end,
+                              style: TextStyle(
+                                color: earned < 0 ? Colors.red : Colors.green,
+                                fontWeight: FontWeight.bold,
+                                fontFeatures: const <FontFeature>[
+                                  FontFeature.tabularFigures()
+                                ],
+                              ),
                             ),
                           ),
                           Expanded(
                             child: Text(
                               defaultCurrency.fmt(spent + earned),
                               textAlign: TextAlign.end,
+                              style: TextStyle(
+                                color: (spent + earned) < 0
+                                    ? Colors.red
+                                    : Colors.green,
+                                fontWeight: FontWeight.bold,
+                                fontFeatures: const <FontFeature>[
+                                  FontFeature.tabularFigures()
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -407,9 +472,16 @@ class _CategoriesPageState extends State<CategoriesPage>
               },
             ),
           );
+          childs.add(const Divider());
         }
-        return ListView(
-          children: childs,
+        childs.removeLast();
+        return RefreshIndicator(
+          onRefresh: () => Future<void>(() {
+            setState(() {});
+          }),
+          child: ListView(
+            children: childs,
+          ),
         );
       },
     );

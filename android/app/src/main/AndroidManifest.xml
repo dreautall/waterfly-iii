@@ -65,6 +65,7 @@
         <package android:name="br.com.digio"/>
         <package android:name="by.alfabank.insync"/>
         <package android:name="by.belinvestbank"/>
+        <package android:name="ca.tangerine.clients.banking.app"/>
         <package android:name="capitec.acuity.mobile.prod"/>
         <package android:name="cl.android"/>
         <package android:name="cl.bancochile.mi_banco"/>

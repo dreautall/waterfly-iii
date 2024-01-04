@@ -31,6 +31,7 @@ class _CategoriesPageState extends State<CategoriesPage>
   final Logger log = Logger("Pages.Categories.Page");
 
   Future<CategoryArray> _fetchCategories() async {
+    final S l10n = S.of(context);
     final FireflyIii api = context.read<FireflyService>().api;
     final CurrencyRead defaultCurrency =
         context.read<FireflyService>().defaultCurrency;
@@ -189,7 +190,7 @@ class _CategoriesPageState extends State<CategoriesPage>
           id: "-1",
           type: "no-category",
           attributes: Category(
-            name: "(no category)", // :TODO: l10n
+            name: l10n.catNone,
             spent: <CategorySpent>[],
             earned: <CategoryEarned>[],
           ),
@@ -216,7 +217,7 @@ class _CategoriesPageState extends State<CategoriesPage>
           id: "-1",
           type: "no-category",
           attributes: Category(
-            name: "(no category)", // :TODO: l10n
+            name: l10n.catNone,
             spent: <CategorySpent>[],
             earned: <CategoryEarned>[],
           ),
@@ -271,19 +272,19 @@ class _CategoriesPageState extends State<CategoriesPage>
                 const Expanded(child: SizedBox.shrink()),
                 Expanded(
                   child: Text(
-                    "Spent", // :TODO: l10n
+                    S.of(context).generalSpent,
                     textAlign: TextAlign.end,
                   ),
                 ),
                 Expanded(
                   child: Text(
-                    "Earned", // :TODO: l10n
+                    S.of(context).generalEarned,
                     textAlign: TextAlign.end,
                   ),
                 ),
                 Expanded(
                   child: Text(
-                    "Sum", // :TODO: l10n
+                    S.of(context).generalSum,
                     textAlign: TextAlign.end,
                   ),
                 ),

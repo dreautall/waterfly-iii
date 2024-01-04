@@ -55,6 +55,10 @@
   "@catOther": {
     "description": "Category description for summary category 'Other'"
   },
+  "catNone": "<no category>",
+  "@catNone": {
+    "description": "Placeholder when no category has been set."
+  },
   "errorAPIInvalidResponse": "Invalid Response from API: {message}",
   "@errorAPIInvalidResponse": {
     "description": "Invalid API response error",
@@ -179,6 +183,10 @@
   "@generalDismiss": {
     "description": "Dismiss window/dialog without action"
   },
+  "generalEarned": "Earned",
+  "@generalEarned": {
+    "description": "(Amount) Earned"
+  },
   "generalError": "Error",
   "@generalError": {
     "description": "Error (title in dialogs etc.)"
@@ -210,6 +218,10 @@
   "generalReset": "Reset",
   "@generalReset": {
     "description": "Reset something (i.e. set filters)"
+  },
+  "generalSpent": "Spent",
+  "@generalSpent": {
+    "description": "(Amount) Spent"
   },
   "generalSum": "Sum",
   "@generalSum": {

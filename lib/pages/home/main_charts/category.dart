@@ -5,6 +5,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
 class CategoryChart extends StatelessWidget {
@@ -77,6 +78,32 @@ class CategoryChart extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
+            onPointTap: (ChartPointDetails pid) {
+              if (pid.pointIndex == null ||
+                  pid.dataPoints == null ||
+                  pid.dataPoints![pid.pointIndex!] == null) {
+                return;
+              }
+              final ChartPoint<String> chart = pid.dataPoints![pid.pointIndex!];
+              InsightGroupEntry? category = data.firstWhere(
+                  (InsightGroupEntry e) => e.name == chart.x,
+                  orElse: () => const InsightGroupEntry());
+              // Filters out the "other" category, if the user has none made himself
+              if (category.name == null || category.id == null) {
+                return;
+              }
+              Navigator.push(
+                context,
+                MaterialPageRoute<bool>(
+                  builder: (BuildContext context) => Scaffold(
+                    appBar: AppBar(
+                      title: Text(category.name!),
+                    ),
+                    body: HomeTransactions(categoryId: category.id),
+                  ),
+                ),
+              );
+            },
             animationDuration:
                 animDurationEmphasized.inMilliseconds.toDouble() * 2,
           ),

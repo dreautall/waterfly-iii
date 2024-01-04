@@ -186,8 +186,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           page: pageKey,
           end: context.read<SettingsProvider>().showFutureTXs
               ? null
-              : DateFormat('yyyy-MM-dd', 'en_US')
-                  .format(_tzHandler.sNow()),
+              : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
           start:
               (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
                   ? null
@@ -198,8 +197,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           page: pageKey,
           end: context.read<SettingsProvider>().showFutureTXs
               ? null
-              : DateFormat('yyyy-MM-dd', 'en_US')
-                  .format(_tzHandler.sNow()),
+              : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
           start:
               (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
                   ? null

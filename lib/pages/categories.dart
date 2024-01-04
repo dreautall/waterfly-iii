@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:badges/badges.dart' as badges;
 import 'package:chopper/chopper.dart';
 
 import 'package:waterflyiii/auth.dart';

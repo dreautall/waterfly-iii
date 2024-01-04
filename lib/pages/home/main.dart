@@ -27,6 +27,7 @@ import 'package:waterflyiii/pages/home/main_charts/lastdays.dart';
 import 'package:waterflyiii/pages/home/main_charts/netearnings.dart';
 import 'package:waterflyiii/pages/home/main_charts/networth.dart';
 import 'package:waterflyiii/pages/home/main_charts/summary.dart';
+import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
 class HomeMain extends StatefulWidget {
@@ -66,11 +67,11 @@ class _HomeMainState extends State<HomeMain>
     }*/
 
     final FireflyIii api = context.read<FireflyService>().api;
+    final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
     // Use noon due to dailylight saving time
-    final DateTime now = DateTime.now()
-        .toLocal()
-        .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
+    final DateTime now =
+        tzHandler.sNow().setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
 
     lastDaysExpense.clear();
     lastDaysIncome.clear();
@@ -111,7 +112,8 @@ class _HomeMainState extends State<HomeMain>
         final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
         entries.forEach(
           (String dateStr, dynamic valueStr) {
-            final DateTime date = DateTime.parse(dateStr)
+            final DateTime date = tzHandler
+                .sTime(DateTime.parse(dateStr))
                 .toLocal()
                 .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
             final double value = double.tryParse(valueStr) ?? 0;
@@ -191,8 +193,9 @@ class _HomeMainState extends State<HomeMain>
     }*/
 
     final FireflyIii api = context.read<FireflyService>().api;
+    final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
-    final DateTime now = DateTime.now().toLocal().clearTime();
+    final DateTime now = tzHandler.sNow().clearTime();
 
     final Response<ChartLine> respChartData =
         await api.v1ChartAccountOverviewGet(
@@ -227,8 +230,9 @@ class _HomeMainState extends State<HomeMain>
     }*/
 
     final FireflyIii api = context.read<FireflyService>().api;
+    final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
-    final DateTime now = DateTime.now().toLocal().clearTime();
+    final DateTime now = tzHandler.sNow().clearTime();
     final List<DateTime> lastMonths = <DateTime>[];
     for (int i = 0; i < 3; i++) {
       lastMonths.add(DateTime(now.year, now.month - i, (i == 0) ? now.day : 1));
@@ -316,8 +320,9 @@ class _HomeMainState extends State<HomeMain>
     }*/
 
     final FireflyIii api = context.read<FireflyService>().api;
+    final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
-    final DateTime now = DateTime.now().toLocal().clearTime();
+    final DateTime now = tzHandler.sNow().clearTime();
 
     catChartData.clear();
 
@@ -374,6 +379,7 @@ class _HomeMainState extends State<HomeMain>
 
   Future<List<BudgetLimitRead>> _fetchBudgets() async {
     final FireflyIii api = context.read<FireflyService>().api;
+    final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
     final Response<BudgetArray> respBudgetInfos = await api.v1BudgetsGet();
     if (!respBudgetInfos.isSuccessful || respBudgetInfos.body == null) {
@@ -394,7 +400,7 @@ class _HomeMainState extends State<HomeMain>
       budgetInfos[budget.id] = budget.attributes;
     }
 
-    final DateTime now = DateTime.now().toLocal().clearTime();
+    final DateTime now = tzHandler.sNow().clearTime();
     final Response<BudgetLimitArray> respBudgets = await api.v1BudgetLimitsGet(
       start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
       end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
@@ -437,8 +443,9 @@ class _HomeMainState extends State<HomeMain>
 
   Future<List<BillRead>> _fetchBills() async {
     final FireflyIii api = context.read<FireflyService>().api;
+    final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
-    final DateTime now = DateTime.now().toLocal().clearTime();
+    final DateTime now = tzHandler.sNow().clearTime();
     final DateTime end = now.copyWith(day: now.day + 7);
 
     final Response<BillArray> respBills = await api.v1BillsGet(
@@ -460,11 +467,12 @@ class _HomeMainState extends State<HomeMain>
     }
 
     return respBills.body!.data
-        .where((BillRead e) =>
-            (e.attributes.nextExpectedMatch ?? end.copyWith(day: end.day + 2))
-                .toLocal()
-                .clearTime()
-                .isBefore(end.copyWith(day: end.day + 1)))
+        .where((BillRead e) => (e.attributes.nextExpectedMatch != null
+                ? tzHandler.sTime(e.attributes.nextExpectedMatch!)
+                : end.copyWith(day: end.day + 2))
+            .toLocal()
+            .clearTime()
+            .isBefore(end.copyWith(day: end.day + 1)))
         .toList(growable: false);
   }
 
@@ -475,7 +483,9 @@ class _HomeMainState extends State<HomeMain>
     }*/
 
     final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
-    final DateTime now = DateTime.now().toLocal().clearTime();
+    final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
+
+    final DateTime now = tzHandler.sNow().clearTime();
     final DateTime end = now.copyWith(
       month: now.month + 1,
       day: 0,
@@ -520,7 +530,7 @@ class _HomeMainState extends State<HomeMain>
       final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
       entries.forEach(
         (String dateStr, dynamic valueStr) {
-          DateTime date = DateTime.parse(dateStr).toLocal();
+          DateTime date = tzHandler.sTime(DateTime.parse(dateStr)).toLocal();
           if (
               // Current month: take current day
               (date.month == now.month &&
@@ -1143,6 +1153,8 @@ class BudgetList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
+
     return SizedBox(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
@@ -1191,13 +1203,21 @@ class BudgetList extends StatelessWidget {
                       TextSpan(
                         text: budget.attributes.period?.isNotEmpty ?? false
                             ? S.of(context).homeMainBudgetInterval(
-                                  budget.attributes.start.toLocal(),
-                                  budget.attributes.end.toLocal(),
+                                  tzHandler
+                                      .sTime(budget.attributes.start)
+                                      .toLocal(),
+                                  tzHandler
+                                      .sTime(budget.attributes.end)
+                                      .toLocal(),
                                   budget.attributes.period!,
                                 )
                             : S.of(context).homeMainBudgetIntervalSingle(
-                                  budget.attributes.start.toLocal(),
-                                  budget.attributes.end.toLocal(),
+                                  tzHandler
+                                      .sTime(budget.attributes.start)
+                                      .toLocal(),
+                                  tzHandler
+                                      .sTime(budget.attributes.end)
+                                      .toLocal(),
                                 ),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
@@ -1261,6 +1281,8 @@ class BillList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
+
     return SizedBox(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
@@ -1268,9 +1290,10 @@ class BillList extends StatelessWidget {
           builder: (BuildContext context, BoxConstraints constraints) {
             final List<Widget> widgets = <Widget>[];
             snapshot.data!.sort((BillRead a, BillRead b) {
-              final int dateCompare = (a.attributes.nextExpectedMatch ??
-                      DateTime.now())
-                  .compareTo(b.attributes.nextExpectedMatch ?? DateTime.now());
+              final int dateCompare =
+                  (a.attributes.nextExpectedMatch ?? tzHandler.sNow())
+                      .compareTo(
+                          b.attributes.nextExpectedMatch ?? tzHandler.sNow());
               if (dateCompare != 0) {
                 return dateCompare;
               }
@@ -1286,7 +1309,7 @@ class BillList extends StatelessWidget {
 
             DateTime lastDate =
                 (snapshot.data!.first.attributes.nextExpectedMatch ??
-                        DateTime.now())
+                        tzHandler.sNow())
                     .subtract(const Duration(days: 1));
             for (BillRead bill in snapshot.data!) {
               if (!(bill.attributes.active ?? false)) {
@@ -1294,8 +1317,11 @@ class BillList extends StatelessWidget {
               }
 
               final DateTime nextMatch =
-                  bill.attributes.nextExpectedMatch?.toLocal() ??
-                      DateTime.now();
+                  bill.attributes.nextExpectedMatch != null
+                      ? tzHandler
+                          .sTime(bill.attributes.nextExpectedMatch!)
+                          .toLocal()
+                      : tzHandler.sNow();
               final CurrencyRead currency = CurrencyRead(
                 id: bill.attributes.currencyId ?? "0",
                 type: "currencies",

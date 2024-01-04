@@ -184,6 +184,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
         transactionList = await stock.getAccount(
           id: widget.accountId ?? _filters.account!.id,
           page: pageKey,
+          limit: _numberOfPostsPerRequest,
           end: context.read<SettingsProvider>().showFutureTXs
               ? null
               : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
@@ -195,6 +196,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       } else {
         transactionList = await stock.get(
           page: pageKey,
+          limit: _numberOfPostsPerRequest,
           end: context.read<SettingsProvider>().showFutureTXs
               ? null
               : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
@@ -207,6 +209,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
       if (mounted) {
         // check if it is the last page
+        // adds spacing for the FAB button to not overlap.
         if (transactionList.length < _numberOfPostsPerRequest) {
           transactionList.add(const TransactionRead(
             type: "WF3_DUMMY_SPACING_ELEMENT",

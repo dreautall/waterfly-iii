@@ -40,6 +40,7 @@ class TransStock with ChangeNotifier {
               .v1TransactionsGet(
                 xTraceId: query.xTraceId,
                 page: query.page,
+                limit: query.limit,
                 start: query.start,
                 end: query.end,
                 type: query.type,
@@ -77,6 +78,7 @@ class TransStock with ChangeNotifier {
                 xTraceId: query.xTraceId,
                 query: query.query,
                 page: query.page,
+                limit: query.limit,
               )
               .then<List<String>>(_onAPIValue);
         },
@@ -98,6 +100,7 @@ class TransStock with ChangeNotifier {
   Future<List<TransactionRead>> get({
     String? xTraceId,
     int? page,
+    int? limit,
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
@@ -106,6 +109,7 @@ class TransStock with ChangeNotifier {
         .get(jsonEncode(_getOptions(
           xTraceId: xTraceId,
           page: page,
+          limit: limit,
           start: start,
           end: end,
           type: type,
@@ -139,12 +143,14 @@ class TransStock with ChangeNotifier {
     String? xTraceId,
     required String? query,
     int? page,
+    int? limit,
   }) async {
     return _getSearchStock
         .get(jsonEncode(_getOptions(
           xTraceId: xTraceId,
           query: query,
           page: page,
+          limit: limit,
         )))
         .then(_onGetValue);
   }
@@ -186,7 +192,7 @@ class _getOptions {
   final String? end; // get, getAccount
   final enums.TransactionTypeFilter? type; // get, getAccount
   final String? id; // getAccount
-  final int? limit; // getAccount
+  final int? limit; // get, getAccount, getSearch
   final String? query; // getSearch
 
   _getOptions({

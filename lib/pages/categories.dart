@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
+import 'package:badges/badges.dart' as badges;
 import 'package:chopper/chopper.dart';
 
 import 'package:waterflyiii/auth.dart';
@@ -336,14 +337,18 @@ class _CategoriesPageState extends State<CategoriesPage>
           },
         );
 
-        double totalEarned = 0;
-        double totalSpent = 0;
+        final double totalEarned = snapshot.data!.data.fold<double>(
+            0,
+            (double p, CategoryRead e) =>
+                p += (e.attributes as CategoryWithSum).sumEarned);
+        final double totalSpent = snapshot.data!.data.fold<double>(
+            0,
+            (double p, CategoryRead e) =>
+                p += (e.attributes as CategoryWithSum).sumSpent);
 
         for (CategoryRead category in snapshot.data!.data) {
           CategoryWithSum cs = category.attributes as CategoryWithSum;
-
-          totalEarned += cs.sumEarned;
-          totalSpent += cs.sumSpent;
+          final bool negativeBalance = (cs.sumSpent + cs.sumEarned) < 0;
 
           childs.add(
             OpenContainer(
@@ -423,10 +428,30 @@ class _CategoriesPageState extends State<CategoriesPage>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        category.attributes
-                            .name, // :TODO: add percentage indicator.
-                        style: Theme.of(context).textTheme.bodyLarge,
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            category.attributes.name,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                          ActionChip(
+                            label: Text(
+                              NumberFormat.percentPattern().format(
+                                  negativeBalance
+                                      ? cs.sumSpent / totalSpent
+                                      : cs.sumEarned / totalEarned),
+                            ),
+                            labelStyle: Theme.of(context).textTheme.labelLarge,
+                            labelPadding: const EdgeInsets.symmetric(
+                                horizontal: 2, vertical: -4),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 2, vertical: -4),
+                            side: BorderSide(
+                              color:
+                                  negativeBalance ? Colors.red : Colors.green,
+                            ),
+                          ),
+                        ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -466,9 +491,8 @@ class _CategoriesPageState extends State<CategoriesPage>
                               defaultCurrency.fmt(cs.sumSpent + cs.sumEarned),
                               textAlign: TextAlign.end,
                               style: TextStyle(
-                                color: (cs.sumSpent + cs.sumEarned) < 0
-                                    ? Colors.red
-                                    : Colors.green,
+                                color:
+                                    negativeBalance ? Colors.red : Colors.green,
                                 fontWeight: FontWeight.bold,
                                 fontFeatures: const <FontFeature>[
                                   FontFeature.tabularFigures()

@@ -1,0 +1,17 @@
+Waterfly III je neoficiální aplikace pro Vaši vlastní instanci Firefly III, bezplatný open source software pro správu Vašich financí.
+
+Tato aplikace vyžaduje self-hosted instanci Firefly III na Vašem vlastním serveru, prosíme navštivte https://www.firefly-iii.org/ pro více informací o tomto software. Jedná se pouze o doplňkovou aplikaci, která nemůžeme fungovat samostatně!
+
+Funkce:
+
+- Nástěnka s grafy a přehledem rozpočtů
+- Seznam a filtrování transakcí
+- Přidávání & úprava transakcí s automatickým doplňováním, včetně příloh, rozdělených transakcí a s podporou více měn
+- Podpora pokladniček (zobrazení & přidávání peněz)
+- Služba pro poslech notifikací pro snadné přidávání nových transakcí na základě příhozích notifikací (např. z Google Play nebo Vaší bankovní aplikace)
+- Zcela open source: https://github.com/dreautall/waterfly-iii
+- Žádný reklamy nebo sledovače
+
+Přispívání:
+
+Pokud narazíte na chybu nebo Vám chybí nějaká funkce, neváhejte napsat zpětnou vazbu na Play Store, poslat mi email nebo otevřít issue na GitHub.

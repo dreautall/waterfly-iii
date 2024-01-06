@@ -57,8 +57,12 @@
         <package android:name="am.vtb.mobilebank"/>
         <package android:name="at.erstebank.george"/>
         <package android:name="au.com.bank86400"/>
+        <package android:name="au.com.bankwest.mobile"/>
         <package android:name="au.com.boq.mobilebanking"/>
+        <package android:name="au.com.ingdirect.android"/>
+        <package android:name="au.com.macquarie.banking"/>
         <package android:name="au.com.nab.mobile"/>
+        <package android:name="au.com.suncorp.marketplace"/>
         <package android:name="au.com.up.money"/>
         <package android:name="bank.discovery.banking.production.release"/>
         <package android:name="br.com.bb.android"/>
@@ -84,6 +88,7 @@
         <package android:name="com.americanexpress.android.amex4you"/>
         <package android:name="com.americanexpress.android.amexgo"/>
         <package android:name="com.americanexpress.receiptmatch.activities"/>
+        <package android:name="com.anz.android.gomoney"/>
         <package android:name="com.apps4fuun.smssender"/>
         <package android:name="com.axis.mobile"/>
         <package android:name="com.b2winc.amedigital"/>
@@ -94,6 +99,7 @@
         <package android:name="com.bca"/>
         <package android:name="com.bcadigital.blu"/>
         <package android:name="com.bcp.bank.bcp"/>
+        <package android:name="com.bendigobank.mobile"/>
         <package android:name="com.binance.dev"/>
         <package android:name="com.bnpp.hellobank"/>
         <package android:name="com.boursorama.android.clients"/>
@@ -122,6 +128,7 @@
         <package android:name="com.ftband.koto"/>
         <package android:name="com.ftband.mono"/>
         <package android:name="com.fuib.android.spot.online"/>
+        <package android:name="com.fusion.banking"/>
         <package android:name="com.giro"/>
         <package android:name="com.globe.gcash.android"/>
         <package android:name="com.golden1.card"/>
@@ -227,6 +234,7 @@
         <package android:name="it.icbpi.mobile"/>
         <package android:name="it.ingdirect.app"/>
         <package android:name="it.nexi.yap"/>
+        <package android:name="in.codeseed.undonotification.pro"/>
         <package android:name="md.maib.maibank"/>
         <package android:name="mx.com.hsbc.controltotal"/>
         <package android:name="net.easypark.android"/>

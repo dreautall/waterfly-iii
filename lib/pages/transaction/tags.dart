@@ -154,21 +154,33 @@ class _TagDialogState extends State<TagDialog> {
 
   Future<List<String>>? _getTags() async {
     final FireflyIii api = context.read<FireflyService>().api;
-    final Response<TagArray> response = await api.v1TagsGet();
-    if (!response.isSuccessful || response.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${response.error}",
-        );
+    List<String> tags = <String>[];
+    Response<TagArray> response;
+    int pageNumber = 0;
+
+    do {
+      pageNumber += 1;
+      response = await api.v1TagsGet(page: pageNumber);
+
+      if (!response.isSuccessful || response.body == null) {
+        if (context.mounted) {
+          throw Exception(
+            S
+                .of(context)
+                .errorAPIInvalidResponse(response.error?.toString() ?? ""),
+          );
+        } else {
+          throw Exception(
+            "[nocontext] Invalid API response: ${response.error}",
+          );
+        }
       }
-    }
-    return response.body!.data.map((TagRead e) => e.attributes.tag).toList();
+
+      tags.addAll(response.body!.data.map((TagRead e) => e.attributes.tag));
+    } while (response.body!.meta.pagination!.currentPage! <
+        response.body!.meta.pagination!.totalPages!);
+
+    return tags;
   }
 
   void _newTagSubmitted(

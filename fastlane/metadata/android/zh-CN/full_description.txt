@@ -1,6 +1,6 @@
 Waterfly III 是一款适用于您自己的 Firefly III（免费开源财务管理器）实例的非官方应用程序。
 
-这个应用程序需要您自己的服务器上的Frefly III实例。请访问https://www.firefrey-iii.org/ 了解更多有关该软件的信息。 这只是一个配套应用程序，不能独立运行！
+此应用程序需要在您自己的服务器上安装有自托管的 Firefly III 实例，请访问 https://www.firefly-iii.org/ 以获取有关软件的更多信息。 这只是一个配套应用程序，不能独立运行！
 
 特点：
 

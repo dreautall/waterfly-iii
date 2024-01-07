@@ -966,8 +966,10 @@ class _TransactionPageState extends State<TransactionPage>
                         }
                         txS.add(TransactionSplitUpdate(
                           amount: _localAmounts[i].toString(),
-                          billId: _bills[i]!.id,
-                          billName: _bills[i]!.attributes.name,
+                          billId: _bills[i] != null
+                              ? _bills[i]!.id
+                              : '0',
+                          billName: _bills[i]?.attributes.name,
                           budgetName: (_transactionType ==
                                   TransactionTypeProperty.withdrawal)
                               ? _budgetTextControllers[i].text
@@ -1046,8 +1048,10 @@ class _TransactionPageState extends State<TransactionPage>
                           description: _split
                               ? _titleTextControllers[i].text
                               : _titleTextController.text,
-                          billId: _bills[i]!.id,
-                          billName: _bills[i]!.attributes.name,
+                          billId: _bills[i] != null
+                              ? _bills[i]!.id
+                              : '0',
+                          billName: _bills[i]?.attributes.name,
                           budgetName: (_transactionType ==
                                   TransactionTypeProperty.withdrawal)
                               ? _budgetTextControllers[i].text

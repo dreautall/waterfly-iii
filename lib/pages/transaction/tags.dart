@@ -155,7 +155,7 @@ class _TagDialogState extends State<TagDialog> {
   Future<List<String>>? _getTags() async {
     final FireflyIii api = context.read<FireflyService>().api;
     List<String> tags = <String>[];
-    Response<TagArray> response;
+    late Response<TagArray> response;
     int pageNumber = 0;
 
     do {
@@ -177,8 +177,8 @@ class _TagDialogState extends State<TagDialog> {
       }
 
       tags.addAll(response.body!.data.map((TagRead e) => e.attributes.tag));
-    } while (response.body!.meta.pagination!.currentPage! <
-        response.body!.meta.pagination!.totalPages!);
+    } while ((response.body!.meta.pagination?.currentPage ?? 1) <
+        (response.body!.meta.pagination?.totalPages ?? 1));
 
     return tags;
   }

@@ -46,7 +46,7 @@ dependencies:
   quick_actions: ^1.0.6
   stock: ^1.1.0
   syncfusion_flutter_charts: ^24.1.41
-  image_picker: ^1.0.4
+  image_picker: ^1.0.6
   timezone: ^0.9.2
   flutter_timezone: ^1.0.8
   flutter_sharing_intent: ^1.1.0

@@ -43,7 +43,7 @@ dependencies:
   dynamic_color: ^1.6.8
   material_color_utilities: ^0.5.0
   version: ^3.0.2
-  quick_actions: ^1.0.6
+  quick_actions: ^1.0.7
   stock: ^1.1.0
   syncfusion_flutter_charts: ^24.1.41
   image_picker: ^1.0.6

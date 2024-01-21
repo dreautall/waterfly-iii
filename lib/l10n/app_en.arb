@@ -51,9 +51,21 @@
       }
     }
   },
-  "categoriesEdit": "Edit Category",
-  "@categoriesEdit": {
-    "description": "Action to edit category"
+  "categoryDeleteConfirm": "Are you sure you want to delete this category? All transactions in this category will have no category anymore.",
+  "@categoryDeleteConfirm": {
+    "description": "Confirmation text to delete category"
+  },
+  "categoryTitleAdd": "Edit Category",
+  "@categoryTitleAdd": {
+    "description": "Title for Dialog: Add Category"
+  },
+  "categoryTitleDelete": "Delete Category",
+  "@categoryTitleDelete": {
+    "description": "Title for Dialog: Delete Category"
+  },
+  "categoryTitleEdit": "Edit Category",
+  "@categoryTitleEdit": {
+    "description": "Title for Dialog: Edit Category"
   },
   "catOther": "Other",
   "@catOther": {

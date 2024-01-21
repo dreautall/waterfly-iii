@@ -428,4 +428,5 @@ class CatStock {
   }
 
   Future<CategoryArray> get(DateTime t) => _stock.get(t);
+  Future<void> reset() => _stock.clearAll();
 }

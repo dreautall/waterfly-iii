@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/categories/addedit.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/stock.dart';
@@ -174,6 +175,7 @@ class _CategoriesPageState extends State<CategoriesPage>
           childs.add(CategoryLine(
             category: category,
             setState: setState,
+            stock: stock,
             totalSpent: totalSpent,
             totalEarned: totalEarned,
           ));
@@ -249,7 +251,8 @@ class _CategoriesPageState extends State<CategoriesPage>
           ),
         );
         return RefreshIndicator(
-          onRefresh: () => Future<void>(() {
+          onRefresh: () => Future<void>(() async {
+            await stock.reset();
             setState(() {});
           }),
           child: ListView(
@@ -268,12 +271,14 @@ class CategoryLine extends StatelessWidget {
     required this.setState,
     required this.totalSpent,
     required this.totalEarned,
+    required this.stock,
   });
 
   final CategoryRead category;
   final void Function(void Function()) setState;
   final double totalSpent;
   final double totalEarned;
+  final CatStock stock;
 
   @override
   Widget build(BuildContext context) {
@@ -320,25 +325,24 @@ class CategoryLine extends StatelessWidget {
                   items: <PopupMenuEntry<Function>>[
                     PopupMenuItem<Function>(
                       value: () async {
-                        bool? ok = await Navigator.push(
-                          context,
-                          MaterialPageRoute<bool>(
-                            builder: (BuildContext context) =>
-                                const Placeholder(),
-                          ),
+                        bool? ok = await showDialog(
+                          context: context,
+                          builder: (BuildContext context) =>
+                              CategoryAddEditDialog(category: category),
                         );
                         if (!(ok ?? false)) {
                           return;
                         }
 
                         // Refresh page
+                        stock.reset();
                         setState(() {});
                       },
                       child: Row(
                         children: <Widget>[
                           const Icon(Icons.edit),
                           const SizedBox(width: 12),
-                          Text(S.of(context).categoriesEdit),
+                          Text(S.of(context).categoryTitleEdit),
                         ],
                       ),
                     ),

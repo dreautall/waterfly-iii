@@ -99,7 +99,13 @@ class CategoryChart extends StatelessWidget {
                     appBar: AppBar(
                       title: Text(category.name!),
                     ),
-                    body: HomeTransactions(categoryId: category.id),
+                    body: HomeTransactions(
+                      category: CategoryRead(
+                        id: category.id!,
+                        type: "filter-category",
+                        attributes: Category(name: category.name!),
+                      ),
+                    ),
                   ),
                 ),
               );

@@ -50,7 +50,7 @@ class _CategoriesPageState extends State<CategoriesPage>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<NavPageElements>().appBarActions = <Widget>[
         IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back),
           tooltip: "Previous Month",
           onPressed: () {
             log.finest(() => "getting prev month");
@@ -61,7 +61,7 @@ class _CategoriesPageState extends State<CategoriesPage>
           },
         ),
         IconButton(
-          icon: const Icon(Icons.arrow_forward_ios),
+          icon: const Icon(Icons.arrow_forward),
           tooltip: "Next Month",
           onPressed: () {
             log.finest(() => "getting next month");
@@ -288,7 +288,7 @@ class CategoryLine extends StatelessWidget {
         appBar: AppBar(
           title: Text(category.attributes.name),
         ),
-        body: HomeTransactions(categoryId: category.id),
+        body: HomeTransactions(category: category),
       ),
       openColor: Theme.of(context).cardColor,
       closedColor: Theme.of(context).cardColor,

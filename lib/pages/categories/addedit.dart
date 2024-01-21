@@ -32,6 +32,8 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
     super.initState();
 
     if (widget.category == null) {
+      // no setstate needed, the only if below checks for category null as well
+      loaded = true;
       return;
     }
 
@@ -49,7 +51,6 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
         );
         Navigator.of(context).pop();
       }
-      log.finest(() => "got notes: ${resp.body?.data.attributes.notes}");
       setState(() {
         notesController.text = resp.body?.data.attributes.notes ?? "";
         loaded = true;
@@ -61,7 +62,6 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
   Widget build(BuildContext context) {
     //final Logger log = Logger("Pages.Categories.AddEditDialog");
     final double inputWidth = MediaQuery.of(context).size.width - 128 - 24;
-    log.finest("category: ${widget.category}");
 
     return AlertDialog(
       icon: const Icon(Icons.assignment),

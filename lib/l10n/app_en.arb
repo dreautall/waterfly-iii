@@ -55,9 +55,21 @@
   "@categoryDeleteConfirm": {
     "description": "Confirmation text to delete category"
   },
-  "categoryTitleAdd": "Edit Category",
+  "categoryErrorLoading": "Error loading categories..",
+  "@categoryErrorLoading": {
+    "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+  },
+  "categoryTitleAdd": "Add Category",
   "@categoryTitleAdd": {
     "description": "Title for Dialog: Add Category"
+  },
+  "categoryMonthNext": "Next Month",
+  "@categoryMonthNext": {
+    "description": "Button title to view overview for next month"
+  },
+  "categoryMonthPrev": "Previous Month",
+  "@categoryMonthPrev": {
+    "description": "Button title to view overview for previous month"
   },
   "categoryTitleDelete": "Delete Category",
   "@categoryTitleDelete": {

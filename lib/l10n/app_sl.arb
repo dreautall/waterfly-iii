@@ -851,7 +851,7 @@
   "@transactionTitleEdit": {
     "description": "Title: Edit existing transaction"
   },
-  "transactionTypeDeposit": "Polog",
+  "transactionTypeDeposit": "Priliv",
   "@transactionTypeDeposit": {
     "description": "Deposit transaction type"
   },
@@ -859,7 +859,7 @@
   "@transactionTypeTransfer": {
     "description": "Transfer transaction type"
   },
-  "transactionTypeWithdrawal": "Dvig",
+  "transactionTypeWithdrawal": "Odliv",
   "@transactionTypeWithdrawal": {
     "description": "Withdrawal transaction type"
   }

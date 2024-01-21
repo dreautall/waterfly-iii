@@ -29,7 +29,7 @@ dependencies:
   community_charts_flutter: ^1.0.2
   open_filex: ^4.3.4
   file_picker: ^6.0.0
-  animations: ^2.0.10
+  animations: ^2.0.11
   flutter_local_notifications: ^16.2.0
   notifications_listener_service:
     git:
@@ -39,14 +39,14 @@ dependencies:
   package_info_plus: ^5.0.1
   logging: ^1.1.1
   flutter_email_sender: ^6.0.2
-  local_auth: ^2.1.6
+  local_auth: ^2.1.8
   dynamic_color: ^1.6.8
   material_color_utilities: ^0.5.0
   version: ^3.0.2
-  quick_actions: ^1.0.6
+  quick_actions: ^1.0.7
   stock: ^1.1.0
-  syncfusion_flutter_charts: ^24.1.41
-  image_picker: ^1.0.4
+  syncfusion_flutter_charts: ^24.1.45+2
+  image_picker: ^1.0.7
   timezone: ^0.9.2
   flutter_timezone: ^1.0.8
   flutter_sharing_intent: ^1.1.0
@@ -55,9 +55,9 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   # needed for swagger_dart_code_generator
   build_runner: ^2.4.7
-  chopper_generator: ^7.0.6
+  chopper_generator: ^7.1.0
   json_serializable: ^6.7.1
-  swagger_dart_code_generator: 2.13.2
+  swagger_dart_code_generator: ^2.14.2
   flutter_native_splash: ^2.3.9
   translations_cleaner: ^0.0.5
 

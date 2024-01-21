@@ -51,8 +51,26 @@ class _CategoriesPageState extends State<CategoriesPage>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<NavPageElements>().appBarActions = <Widget>[
         IconButton(
+          icon: const Icon(Icons.plus_one),
+          tooltip: S.of(context).categoryTitleAdd,
+          onPressed: () async {
+            bool? ok = await showDialog(
+              context: context,
+              builder: (BuildContext context) =>
+                  const CategoryAddEditDialog(category: null),
+            );
+            if (!(ok ?? false)) {
+              return;
+            }
+
+            // Refresh page
+            stock.reset();
+            setState(() {});
+          },
+        ),
+        IconButton(
           icon: const Icon(Icons.arrow_back),
-          tooltip: "Previous Month",
+          tooltip: S.of(context).categoryMonthPrev,
           onPressed: () {
             log.finest(() => "getting prev month");
             setState(() {
@@ -63,7 +81,7 @@ class _CategoriesPageState extends State<CategoriesPage>
         ),
         IconButton(
           icon: const Icon(Icons.arrow_forward),
-          tooltip: "Next Month",
+          tooltip: S.of(context).categoryMonthNext,
           onPressed: () {
             log.finest(() => "getting next month");
             setState(() {
@@ -94,7 +112,15 @@ class _CategoriesPageState extends State<CategoriesPage>
             snapshot.error,
             snapshot.stackTrace,
           );
-          return const Center(child: Text("Error loading categories."));
+          return Center(
+            child: Text(
+              S.of(context).categoryErrorLoading,
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineLarge
+                  ?.copyWith(color: Theme.of(context).colorScheme.error),
+            ),
+          );
         }
         final List<Widget> childs = <Widget>[];
         childs.add(

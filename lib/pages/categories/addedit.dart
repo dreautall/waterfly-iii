@@ -61,6 +61,7 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
   Widget build(BuildContext context) {
     //final Logger log = Logger("Pages.Categories.AddEditDialog");
     final double inputWidth = MediaQuery.of(context).size.width - 128 - 24;
+    log.finest("category: ${widget.category}");
 
     return AlertDialog(
       icon: const Icon(Icons.assignment),

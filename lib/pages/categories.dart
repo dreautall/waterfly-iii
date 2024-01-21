@@ -286,7 +286,9 @@ class CategoryLine extends StatelessWidget {
     return OpenContainer(
       openBuilder: (BuildContext context, Function closedContainer) => Scaffold(
         appBar: AppBar(
-          title: Text(category.attributes.name),
+          title: Text(category.attributes.name == "L10NNONE"
+              ? S.of(context).catNone
+              : category.attributes.name),
         ),
         body: HomeTransactions(category: category),
       ),
@@ -301,50 +303,53 @@ class CategoryLine extends StatelessWidget {
       closedElevation: 0,
       closedBuilder: (BuildContext context, Function openContainer) =>
           GestureDetector(
-        onLongPressStart: (LongPressStartDetails details) async {
-          final Size screenSize = MediaQuery.of(context).size;
-          final Offset offset = details.globalPosition;
-          HapticFeedback.vibrate();
-          final Function? func = await showMenu<Function>(
-            context: context,
-            position: RelativeRect.fromLTRB(
-              offset.dx,
-              offset.dy,
-              screenSize.width - offset.dx,
-              screenSize.height - offset.dy,
-            ),
-            items: <PopupMenuEntry<Function>>[
-              PopupMenuItem<Function>(
-                value: () async {
-                  bool? ok = await Navigator.push(
-                    context,
-                    MaterialPageRoute<bool>(
-                      builder: (BuildContext context) => const Placeholder(),
-                    ),
-                  );
-                  if (!(ok ?? false)) {
-                    return;
-                  }
+        onLongPressStart: category.attributes.name == "L10NNONE"
+            ? null
+            : (LongPressStartDetails details) async {
+                final Size screenSize = MediaQuery.of(context).size;
+                final Offset offset = details.globalPosition;
+                HapticFeedback.vibrate();
+                final Function? func = await showMenu<Function>(
+                  context: context,
+                  position: RelativeRect.fromLTRB(
+                    offset.dx,
+                    offset.dy,
+                    screenSize.width - offset.dx,
+                    screenSize.height - offset.dy,
+                  ),
+                  items: <PopupMenuEntry<Function>>[
+                    PopupMenuItem<Function>(
+                      value: () async {
+                        bool? ok = await Navigator.push(
+                          context,
+                          MaterialPageRoute<bool>(
+                            builder: (BuildContext context) =>
+                                const Placeholder(),
+                          ),
+                        );
+                        if (!(ok ?? false)) {
+                          return;
+                        }
 
-                  // Refresh page
-                  setState(() {});
-                },
-                child: Row(
-                  children: <Widget>[
-                    const Icon(Icons.edit),
-                    const SizedBox(width: 12),
-                    Text(S.of(context).categoriesEdit),
+                        // Refresh page
+                        setState(() {});
+                      },
+                      child: Row(
+                        children: <Widget>[
+                          const Icon(Icons.edit),
+                          const SizedBox(width: 12),
+                          Text(S.of(context).categoriesEdit),
+                        ],
+                      ),
+                    ),
                   ],
-                ),
-              ),
-            ],
-            clipBehavior: Clip.hardEdge,
-          );
-          if (func == null) {
-            return;
-          }
-          func();
-        },
+                  clipBehavior: Clip.hardEdge,
+                );
+                if (func == null) {
+                  return;
+                }
+                func();
+              },
         child: InkWell(
           customBorder: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -378,7 +383,9 @@ class CategoryLine extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Text(
-                            category.attributes.name,
+                            category.attributes.name == "L10NNONE"
+                                ? S.of(context).catNone
+                                : category.attributes.name,
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           ActionChip(

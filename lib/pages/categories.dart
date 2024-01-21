@@ -294,6 +294,17 @@ class CategoryLine extends StatelessWidget {
           title: Text(category.attributes.name == "L10NNONE"
               ? S.of(context).catNone
               : category.attributes.name),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.edit),
+              tooltip: S.of(context).categoryTitleEdit,
+              onPressed: () => showDialog(
+                context: context,
+                builder: (BuildContext context) =>
+                    CategoryAddEditDialog(category: category),
+              ),
+            ),
+          ],
         ),
         body: HomeTransactions(category: category),
       ),

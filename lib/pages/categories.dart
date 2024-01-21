@@ -8,12 +8,12 @@ import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart';
-
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
+import 'package:waterflyiii/pages/navigation.dart';
+import 'package:waterflyiii/stock.dart';
 
 final Logger log = Logger("Pages.Categories");
 
@@ -29,223 +29,50 @@ class CategoriesPage extends StatefulWidget {
 class _CategoriesPageState extends State<CategoriesPage>
     with SingleTickerProviderStateMixin {
   final Logger log = Logger("Pages.Categories.Page");
+  late DateTime selectedMonth;
+  late DateTime now;
+  late CatStock stock;
 
-  Future<CategoryArray> _fetchCategories(DateTime now) async {
-    final S l10n = S.of(context);
-    final FireflyIii api = context.read<FireflyService>().api;
-    final CurrencyRead defaultCurrency =
-        context.read<FireflyService>().defaultCurrency;
+  @override
+  void initState() {
+    super.initState();
 
-    // :TODO: remove
-    now = now.copyWith(month: now.month - 1, day: 31);
-    final String startDate =
-        DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1));
-    final String endDate = DateFormat('yyyy-MM-dd', 'en_US').format(now);
+    now = context
+        .read<FireflyService>()
+        .tzHandler
+        .sNow()
+        .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
+    selectedMonth = now.copyWith(day: 15);
 
-    final Response<InsightGroup> respIncomeCat =
-        await api.v1InsightIncomeCategoryGet(
-      start: startDate,
-      end: endDate,
-    );
-    if (!respIncomeCat.isSuccessful || respIncomeCat.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respIncomeCat.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respIncomeCat.error}",
-        );
-      }
-    }
-    final Response<InsightTotal> respIncomeNoCat =
-        await api.v1InsightIncomeNoCategoryGet(
-      start: startDate,
-      end: endDate,
-    );
-    if (!respIncomeNoCat.isSuccessful || respIncomeNoCat.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respIncomeNoCat.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respIncomeNoCat.error}",
-        );
-      }
-    }
-    final Response<InsightGroup> respExpenseCat =
-        await api.v1InsightExpenseCategoryGet(
-      start: startDate,
-      end: endDate,
-    );
-    if (!respExpenseCat.isSuccessful || respExpenseCat.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respExpenseCat.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respExpenseCat.error}",
-        );
-      }
-    }
-    final Response<InsightTotal> respExpenseNoCat =
-        await api.v1InsightExpenseNoCategoryGet(
-      start: startDate,
-      end: endDate,
-    );
-    if (!respExpenseNoCat.isSuccessful || respExpenseNoCat.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S.of(context).errorAPIInvalidResponse(
-              respExpenseNoCat.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respExpenseNoCat.error}",
-        );
-      }
-    }
+    stock = CatStock(context.read<FireflyService>().api,
+        context.read<FireflyService>().defaultCurrency);
 
-    final Map<String, CategoryRead> categories = <String, CategoryRead>{};
-    for (InsightGroupEntry cat in respIncomeCat.body!) {
-      if ((cat.id?.isEmpty ?? true) || (cat.name?.isEmpty ?? true)) {
-        log.finest(() => "skipping empty category");
-        continue;
-      }
-
-      if (cat.currencyId != defaultCurrency.id) {
-        log.finest(() =>
-            "skipping non-default currency category (${cat.currencyCode})");
-        continue;
-      }
-      if (!categories.containsKey(cat.id)) {
-        categories[cat.id!] = CategoryRead(
-          id: cat.id!,
-          type: "categories",
-          attributes: CategoryWithSum(
-            name: cat.name!,
-            spent: <CategorySpent>[],
-            earned: <CategoryEarned>[],
-          ),
-        );
-      }
-      categories[cat.id!]!.attributes.earned!.add(
-            CategoryEarned(
-              currencyId: cat.currencyId,
-              currencyCode: cat.currencyCode,
-              currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
-              currencySymbol: defaultCurrency.attributes.symbol,
-              sum: cat.difference,
-            ),
-          );
-    }
-    for (InsightGroupEntry cat in respExpenseCat.body!) {
-      if ((cat.id?.isEmpty ?? true) || (cat.name?.isEmpty ?? true)) {
-        log.finest(() => "skipping empty category");
-        continue;
-      }
-
-      if (cat.currencyId != defaultCurrency.id) {
-        log.finest(() =>
-            "skipping non-default currency category (${cat.currencyCode})");
-        continue;
-      }
-      if (!categories.containsKey(cat.id)) {
-        categories[cat.id!] = CategoryRead(
-          id: cat.id!,
-          type: "categories",
-          attributes: CategoryWithSum(
-            name: cat.name!,
-            spent: <CategorySpent>[],
-            earned: <CategoryEarned>[],
-          ),
-        );
-      }
-      categories[cat.id!]!.attributes.spent!.add(
-            CategorySpent(
-              currencyId: cat.currencyId,
-              currencyCode: cat.currencyCode,
-              currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
-              currencySymbol: defaultCurrency.attributes.symbol,
-              sum: cat.difference,
-            ),
-          );
-    }
-    for (InsightTotalEntry cat in respIncomeNoCat.body!) {
-      if (cat.currencyId != defaultCurrency.id) {
-        log.finest(() =>
-            "skipping non-default currency category (${cat.currencyCode})");
-        continue;
-      }
-      if (!categories.containsKey("-1")) {
-        categories["-1"] = CategoryRead(
-          id: "-1",
-          type: "no-category",
-          attributes: CategoryWithSum(
-            name: l10n.catNone,
-            spent: <CategorySpent>[],
-            earned: <CategoryEarned>[],
-          ),
-        );
-      }
-      categories["-1"]!.attributes.earned!.add(
-            CategoryEarned(
-              currencyId: cat.currencyId,
-              currencyCode: cat.currencyCode,
-              currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
-              currencySymbol: defaultCurrency.attributes.symbol,
-              sum: cat.difference,
-            ),
-          );
-    }
-    for (InsightTotalEntry cat in respExpenseNoCat.body!) {
-      if (cat.currencyId != defaultCurrency.id) {
-        log.finest(() =>
-            "skipping non-default currency category (${cat.currencyCode})");
-        continue;
-      }
-      if (!categories.containsKey("-1")) {
-        categories["-1"] = CategoryRead(
-          id: "-1",
-          type: "no-category",
-          attributes: CategoryWithSum(
-            name: l10n.catNone,
-            spent: <CategorySpent>[],
-            earned: <CategoryEarned>[],
-          ),
-        );
-      }
-      categories["-1"]!.attributes.spent!.add(
-            CategorySpent(
-              currencyId: cat.currencyId,
-              currencyCode: cat.currencyCode,
-              currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
-              currencySymbol: defaultCurrency.attributes.symbol,
-              sum: cat.difference,
-            ),
-          );
-    }
-
-    categories.forEach((_, CategoryRead c) {
-      CategoryWithSum cs = c.attributes as CategoryWithSum;
-      cs.sumEarned = c.attributes.earned!.fold<double>(
-          0, (double p, CategoryEarned e) => p += double.parse(e.sum ?? "0"));
-      cs.sumSpent = c.attributes.spent!.fold<double>(
-          0, (double p, CategorySpent e) => p += double.parse(e.sum ?? "0"));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<NavPageElements>().appBarActions = <Widget>[
+        IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          tooltip: "Previous Month",
+          onPressed: () {
+            log.finest(() => "getting prev month");
+            setState(() {
+              selectedMonth =
+                  selectedMonth.copyWith(month: selectedMonth.month - 1);
+            });
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.arrow_forward_ios),
+          tooltip: "Next Month",
+          onPressed: () {
+            log.finest(() => "getting next month");
+            setState(() {
+              selectedMonth =
+                  selectedMonth.copyWith(month: selectedMonth.month + 1);
+            });
+          },
+        ),
+      ];
     });
-
-    return CategoryArray(
-      data: categories.values.toList(growable: false),
-      meta: const Meta(),
-    );
   }
 
   @override
@@ -253,23 +80,20 @@ class _CategoriesPageState extends State<CategoriesPage>
     log.fine(() => "build");
     final CurrencyRead defaultCurrency =
         context.read<FireflyService>().defaultCurrency;
-    final DateTime now = DateTime.now().toLocal().clearTime();
 
     return FutureBuilder<CategoryArray>(
-      future: _fetchCategories(now),
+      future: stock.get(selectedMonth),
       builder: (BuildContext context, AsyncSnapshot<CategoryArray> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          // :TODO: loading
-          return const Text("loading");
+          return const Center(child: CircularProgressIndicator());
         }
         if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
-          // :TODO: error handling
           log.severe(
             "Error loading categories",
             snapshot.error,
             snapshot.stackTrace,
           );
-          return const Text("booo");
+          return const Center(child: Text("Error loading categories."));
         }
         final List<Widget> childs = <Widget>[];
         childs.add(
@@ -282,7 +106,7 @@ class _CategoriesPageState extends State<CategoriesPage>
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      DateFormat.yMMMM().format(now),
+                      DateFormat.yMMMM().format(selectedMonth),
                       textAlign: TextAlign.end,
                       style: Theme.of(context).textTheme.labelMedium,
                     ),

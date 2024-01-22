@@ -51,11 +51,11 @@
       }
     }
   },
-  "categoryDeleteConfirm": "Are you sure you want to delete this category? The transactions will not be deleted, but will not have a category anymore.",
+  "categoryDeleteConfirm": "Are you sure you want to delete this category? All transactions in this category will have no category anymore.",
   "@categoryDeleteConfirm": {
     "description": "Confirmation text to delete category"
   },
-  "categoryErrorLoading": "Error loading categories.",
+  "categoryErrorLoading": "Error loading categories..",
   "@categoryErrorLoading": {
     "description": "Generic error message when categories can't be loaded (shouldn't occur)"
   },

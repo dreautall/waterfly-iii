@@ -51,9 +51,41 @@
       }
     }
   },
+  "categoryDeleteConfirm": "Möchtest du diese Kategorie wirklich löschen? Die Transaktionen werden nicht gelöscht, werden aber keine Kategorie mehr haben.",
+  "@categoryDeleteConfirm": {
+    "description": "Confirmation text to delete category"
+  },
+  "categoryErrorLoading": "Fehler beim Laden der Kategorien.",
+  "@categoryErrorLoading": {
+    "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+  },
+  "categoryTitleAdd": "Kategorie hinzufügen",
+  "@categoryTitleAdd": {
+    "description": "Title for Dialog: Add Category"
+  },
+  "categoryMonthNext": "Nächster Monat",
+  "@categoryMonthNext": {
+    "description": "Button title to view overview for next month"
+  },
+  "categoryMonthPrev": "Voriger Monat",
+  "@categoryMonthPrev": {
+    "description": "Button title to view overview for previous month"
+  },
+  "categoryTitleDelete": "Kategorie löschen",
+  "@categoryTitleDelete": {
+    "description": "Title for Dialog: Delete Category"
+  },
+  "categoryTitleEdit": "Kategorie bearbeiten",
+  "@categoryTitleEdit": {
+    "description": "Title for Dialog: Edit Category"
+  },
   "catOther": "Andere",
   "@catOther": {
     "description": "Category description for summary category 'Other'"
+  },
+  "catNone": "<keine Kategorie>",
+  "@catNone": {
+    "description": "Placeholder when no category has been set."
   },
   "errorAPIInvalidResponse": "Ungültige API-Antwort: {message}",
   "@errorAPIInvalidResponse": {
@@ -179,6 +211,10 @@
   "@generalDismiss": {
     "description": "Dismiss window/dialog without action"
   },
+  "generalEarned": "Verdient",
+  "@generalEarned": {
+    "description": "(Amount) Earned"
+  },
   "generalError": "Fehler",
   "@generalError": {
     "description": "Error (title in dialogs etc.)"
@@ -210,6 +246,10 @@
   "generalReset": "Zurücksetzen",
   "@generalReset": {
     "description": "Reset something (i.e. set filters)"
+  },
+  "generalSpent": "Ausgegeben",
+  "@generalSpent": {
+    "description": "(Amount) Spent"
   },
   "generalSum": "Summe",
   "@generalSum": {
@@ -514,6 +554,10 @@
   "navigationAccounts": "Konten",
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"
+  },
+  "navigationCategories": "Kategorien",
+  "@navigationCategories": {
+    "description": "Navigation Label: Categories"
   },
   "navigationMain": "Übersicht",
   "@navigationMain": {

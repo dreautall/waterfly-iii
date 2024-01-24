@@ -51,9 +51,41 @@
       }
     }
   },
+  "categoryDeleteConfirm": "Ali ste prepričani, da želite izbrisati to kategorijo? Transakcije ne bodo izbrisane, vendar ne bodo imele več kategorije.",
+  "@categoryDeleteConfirm": {
+    "description": "Confirmation text to delete category"
+  },
+  "categoryErrorLoading": "Napaka pri nalaganju kategorij.",
+  "@categoryErrorLoading": {
+    "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+  },
+  "categoryTitleAdd": "Dodaj kategorijo",
+  "@categoryTitleAdd": {
+    "description": "Title for Dialog: Add Category"
+  },
+  "categoryMonthNext": "Naslednji mesec",
+  "@categoryMonthNext": {
+    "description": "Button title to view overview for next month"
+  },
+  "categoryMonthPrev": "Prejšnji mesec",
+  "@categoryMonthPrev": {
+    "description": "Button title to view overview for previous month"
+  },
+  "categoryTitleDelete": "Izbriši kategorijo",
+  "@categoryTitleDelete": {
+    "description": "Title for Dialog: Delete Category"
+  },
+  "categoryTitleEdit": "Uredi kategorijo",
+  "@categoryTitleEdit": {
+    "description": "Title for Dialog: Edit Category"
+  },
   "catOther": "Ostalo",
   "@catOther": {
     "description": "Category description for summary category 'Other'"
+  },
+  "catNone": "<no category>",
+  "@catNone": {
+    "description": "Placeholder when no category has been set."
   },
   "errorAPIInvalidResponse": "Neveljaven odgovor API-ja: {message}",
   "@errorAPIInvalidResponse": {
@@ -179,6 +211,10 @@
   "@generalDismiss": {
     "description": "Dismiss window/dialog without action"
   },
+  "generalEarned": "Prisluženo",
+  "@generalEarned": {
+    "description": "(Amount) Earned"
+  },
   "generalError": "Napaka",
   "@generalError": {
     "description": "Error (title in dialogs etc.)"
@@ -210,6 +246,10 @@
   "generalReset": "Ponastavi",
   "@generalReset": {
     "description": "Reset something (i.e. set filters)"
+  },
+  "generalSpent": "Porabljeno",
+  "@generalSpent": {
+    "description": "(Amount) Spent"
   },
   "generalSum": "Vsota",
   "@generalSum": {
@@ -514,6 +554,10 @@
   "navigationAccounts": "Računi",
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"
+  },
+  "navigationCategories": "Kategorije",
+  "@navigationCategories": {
+    "description": "Navigation Label: Categories"
   },
   "navigationMain": "Glavna nadzorna plošča",
   "@navigationMain": {

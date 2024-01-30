@@ -52,7 +52,7 @@ You can also opt in to the (open) beta channel at Google Play [here](https://pla
 
 ## Screenshots
 
-*All made with a Google Pixel 8*
+*All made with a Google Pixel 8, showing Waterfly III v1.0.0*
 
 |Dashboard|Transactions|Transaction Filters|
 | :-: | :-: | :-: |

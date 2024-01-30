@@ -11,8 +11,6 @@ The app design is heavily influenced by [Bluecoins](https://play.google.com/stor
 
 ## Features
 
-The app is still pretty much work in progress, but basic features already do work:
-
 - General
   - Light & Dark mode, supports dynamic colors
   - Translation ready - [**help to translate via Crowdin**](https://crowdin.com/project/waterfly-iii)!
@@ -45,9 +43,16 @@ The app does **not** try to replicate every single feature that the Webinterface
 
 If you are missing anything, feel free to open a [feature request](https://github.com/dreautall/waterfly-iii/issues/new/choose), or look at that other users [are requesting](https://github.com/dreautall/waterfly-iii/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement).
 
+
+### Releases
+
+The stable released are published in the [Google Play Store](https://play.google.com/store/apps/details?id=com.dreautall.waterflyiii), and are available for download from the [GitHub releases page](https://github.com/dreautall/waterfly-iii/releases/latest). The APKs are identical (and actually pushed to Google Play via a GitHub build pipeline).
+
+You can also opt in to the (open) beta channel at Google Play [here](https://play.google.com/apps/testing/com.dreautall.waterflyiii). The beta channel will feature the "pre-releases" from the [GitHub releases page](https://github.com/dreautall/waterfly-iii/releases), and might not be as stable.
+
 ## Screenshots
 
-*All made with a Google Pixel 5*
+*All made with a Google Pixel 8*
 
 |                           Dashboard                           |                               Transactions                                |                        Balance Sheet                        |
 | :-----------------------------------------------------------: | :-----------------------------------------------------------------------: | :---------------------------------------------------------: |

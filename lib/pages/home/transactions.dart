@@ -100,6 +100,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     _filters.currency = oldFilters.currency;
                     _filters.text = oldFilters.text;
                     _filters.bill = oldFilters.bill;
+                    _filters.tags = oldFilters.tags;
 
                     return;
                   }
@@ -182,6 +183,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
             query = "has_no_bill:true $query";
           } else {
             query = "bill_is:\"${_filters.bill!.attributes.name}\" $query";
+          }
+        }
+        if (_filters.tags != null) {
+          for (String tag in _filters.tags!.tags) {
+            query = "tag_is:\"$tag\" $query";
           }
         }
         query = "date_before:today $query ";

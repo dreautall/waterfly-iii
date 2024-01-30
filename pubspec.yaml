@@ -58,7 +58,7 @@ dev_dependencies:
   chopper_generator: ^7.1.1
   json_serializable: ^6.7.1
   swagger_dart_code_generator: ^2.15.0
-  flutter_native_splash: ^2.3.9
+  flutter_native_splash: ^2.3.10
   translations_cleaner: ^0.0.5
 
 flutter:

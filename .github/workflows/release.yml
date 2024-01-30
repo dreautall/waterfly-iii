@@ -166,7 +166,7 @@ jobs:
           releaseFiles: ./artifacts/app-release.aab
           debugSymbols: ./artifacts/aab-debug-symbols.zip
           mappingFile: ./artifacts/mapping.txt
-          track: alpha
+          track: beta
           status: completed
       - uses: r0adkll/upload-google-play@v1
         if: ${{ startsWith(github.ref, 'refs/tags/') && !github.event.release.prerelease  }}
@@ -176,5 +176,5 @@ jobs:
           releaseFiles: ./artifacts/app-release.aab
           debugSymbols: ./artifacts/aab-debug-symbols.zip
           mappingFile: ./artifacts/mapping.txt
-          track: beta
+          track: production
           status: completed

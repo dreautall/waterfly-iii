@@ -42,6 +42,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
   // Not needed right now, as sharing while the app is open does not work
   //late StreamSubscription<List<SharedFile>> _intentDataStreamSubscription;
   List<SharedFile>? _filesSharedToApp;
+  bool _requiresAuth = false;
+  DateTime? _lcLastOpen;
 
   @override
   void initState() {
@@ -84,6 +86,44 @@ class _WaterflyAppState extends State<WaterflyApp> {
     });
     quickActions.clearShortcutItems();
 
+    // App Lifecycle State
+    AppLifecycleListener(
+      onResume: () {
+        if (_requiresAuth &&
+            (_lcLastOpen?.isBefore(
+                    DateTime.now().subtract(const Duration(minutes: 10))) ??
+                false)) {
+          log.finest(() => "App resuming, last opened: $_lcLastOpen");
+          setState(() {
+            _lcLastOpen = null;
+            _authed = false;
+          });
+
+          auth().then((bool authed) {
+            log.finest(() => "done authing, $authed");
+            if (authed) {
+              setState(() {
+                log.finest(() => "authentication succeeded");
+                _authed = true;
+              });
+            } else {
+              log.shout(() => "authentication failed");
+              _lcLastOpen =
+                  DateTime.now().subtract(const Duration(minutes: 10));
+              // close app
+              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+            }
+          });
+        }
+      },
+      onPause: () {
+        if (_requiresAuth) {
+          _lcLastOpen ??= DateTime.now();
+          log.finest(() => "App pausing now");
+        }
+      },
+    );
+
     // Share to Waterfly III
     // While the app is open...
     /* Sharing while app is open is currently not supported :(
@@ -121,6 +161,17 @@ class _WaterflyAppState extends State<WaterflyApp> {
     super.dispose();
   }*/
 
+  Future<bool> auth() {
+    final LocalAuthentication auth = LocalAuthentication();
+    return auth.authenticate(
+      localizedReason: "Waterfly III",
+      options: const AuthenticationOptions(
+        useErrorDialogs: false,
+        stickyAuth: true,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     log.fine(() => "WaterflyApp() building");
@@ -156,6 +207,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
           builder: (BuildContext context, _) {
             late bool signedIn;
             log.finest(() => "_startup = $_startup");
+            _requiresAuth = context.watch<SettingsProvider>().lock;
+            log.finest(() => "_requiresAuth = $_requiresAuth");
             if (_startup) {
               signedIn = false;
 
@@ -168,17 +221,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
                 if (context.read<SettingsProvider>().lock && !_authed) {
                   // Authentication required
                   log.fine("awaiting authentication");
-                  final LocalAuthentication auth = LocalAuthentication();
-                  auth
-                      .authenticate(
-                    localizedReason: "Waterfly III",
-                    options: const AuthenticationOptions(
-                      useErrorDialogs: false,
-                      stickyAuth: true,
-                    ),
-                  )
-                      .then((bool authed) {
-                    log.finest("done authing, $authed");
+                  auth().then((bool authed) {
+                    log.finest(() => "done authing, $authed");
                     if (authed) {
                       setState(() {
                         log.finest(() => "authentication succeeded");

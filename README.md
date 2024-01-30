@@ -39,14 +39,13 @@ The app design is heavily influenced by [Bluecoins](https://play.google.com/stor
 
 ### Feature Status
 
-The app does **not** try to replicate every single feature that the Webinterface has. Instead, it tries to be a good *companion* to access the most used functions on-the-go. More in-depth operations such as creating or deleting asset accounts, creating or modifying rules etc. are not planned.
+The app does **not** try to replicate every single feature that the Webinterface has. Instead, it tries to be a good *companion* to access the most used functions on-the-go. More in-depth operations such as creating or modifying rules are not planned for this app.
 
-If you are missing anything, feel free to open a [feature request](https://github.com/dreautall/waterfly-iii/issues/new/choose), or look at that other users [are requesting](https://github.com/dreautall/waterfly-iii/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement).
-
+If you are missing anything, feel free to open a [feature request](https://github.com/dreautall/waterfly-iii/issues/new/choose), or look at what other users [are requesting](https://github.com/dreautall/waterfly-iii/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement).
 
 ## Releases
 
-The stable released are published in the [Google Play Store](https://play.google.com/store/apps/details?id=com.dreautall.waterflyiii), and are available for download from the [GitHub releases page](https://github.com/dreautall/waterfly-iii/releases/latest). The APKs are identical (and actually pushed to Google Play via a GitHub build pipeline).
+The stable releases are published to the [Google Play Store](https://play.google.com/store/apps/details?id=com.dreautall.waterflyiii), and are also available for download from the [GitHub releases page](https://github.com/dreautall/waterfly-iii/releases/latest). The APKs are identical (and actually pushed to Google Play via a GitHub build pipeline). There is no fixed release schedule.
 
 You can also opt in to the (open) beta channel at Google Play [here](https://play.google.com/apps/testing/com.dreautall.waterflyiii). The beta channel will feature the "pre-releases" from the [GitHub releases page](https://github.com/dreautall/waterfly-iii/releases), and might not be as stable.
 
@@ -72,6 +71,6 @@ The app is built using [Flutter](https://flutter.dev/), and tries to keep to the
 
 ## Motivation
 
-Having troubles with [Bluecoins](https://play.google.com/store/apps/details?id=com.rammigsoftware.bluecoins) syncing across devices and not always storing attachments online, I was looking for a self-hosted alternative and discovered [Firefly III](https://www.firefly-iii.org/). After a [quick script to migrate from Bluecoins to Firefly](https://github.com/dreautall/bluecoins-to-fireflyiii), the only thing left was to download an app to easy track expenses on-the-go… or so I thought.
+Having troubles with [Bluecoins](https://play.google.com/store/apps/details?id=com.rammigsoftware.bluecoins) syncing across devices and not always storing attachments online, I was looking for a self-hosted alternative and discovered [Firefly III](https://www.firefly-iii.org/). After a [quick script to migrate from Bluecoins to Firefly III](https://github.com/dreautall/bluecoins-to-fireflyiii), the only thing left was to download an app to easily track expenses on-the-go… or so I thought.
 
-Unfortunately, I discovered that the existing Android Apps for Firefly III are either outdated or very buggy and hardly maintained. Always wanting to use Flutter for something, I started to make my own app, modeling it after the Bluecoins app I used so far and its interface I really liked.
+Unfortunately, I discovered that the existing Android Apps for Firefly III had been either outdated or very buggy and hardly maintained. Always wanting to use Flutter for something, I started to make my own app, modeling it after the Bluecoins app I used so far and its interface that I really liked.

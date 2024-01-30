@@ -57,7 +57,7 @@ dev_dependencies:
   build_runner: ^2.4.7
   chopper_generator: ^7.1.1
   json_serializable: ^6.7.1
-  swagger_dart_code_generator: ^2.14.2
+  swagger_dart_code_generator: ^2.15.0
   flutter_native_splash: ^2.3.9
   translations_cleaner: ^0.0.5
 

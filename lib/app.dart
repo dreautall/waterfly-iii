@@ -36,6 +36,7 @@ class WaterflyApp extends StatefulWidget {
 
 class _WaterflyAppState extends State<WaterflyApp> {
   bool _startup = true;
+  bool _authed = false;
   String? _quickAction;
   NotificationTransaction? _notificationPayload;
   // Not needed right now, as sharing while the app is open does not work
@@ -163,39 +164,43 @@ class _WaterflyAppState extends State<WaterflyApp> {
                 context.read<SettingsProvider>().loadSettings();
               } else {
                 log.finer(() => "Load Step 2: Signin In");
-                context.read<FireflyService>().signInFromStorage().then(
-                  (bool success) async {
-                    if (!success || !context.read<SettingsProvider>().lock) {
+
+                if (context.read<SettingsProvider>().lock && !_authed) {
+                  // Authentication required
+                  log.fine("awaiting authentication");
+                  final LocalAuthentication auth = LocalAuthentication();
+                  auth
+                      .authenticate(
+                    localizedReason: "Waterfly III",
+                    options: const AuthenticationOptions(
+                      useErrorDialogs: false,
+                      stickyAuth: true,
+                    ),
+                  )
+                      .then((bool authed) {
+                    log.finest("done authing, $authed");
+                    if (authed) {
                       setState(() {
-                        log.finest(() => "set _startup = false");
-                        _startup = false;
+                        log.finest(() => "authentication succeeded");
+                        _authed = true;
                       });
                     } else {
-                      // Authentication required
-                      log.fine("awaiting authentication");
-                      final LocalAuthentication auth = LocalAuthentication();
-                      final bool authed = await auth.authenticate(
-                        localizedReason: "Waterfly III",
-                        options: const AuthenticationOptions(
-                          useErrorDialogs: false,
-                          stickyAuth: true,
-                        ),
-                      );
-                      log.finest("done authing, $authed");
-                      if (authed) {
-                        setState(() {
-                          log.finest(() => "authentication succeeded");
-                          _startup = false;
-                        });
-                      } else {
-                        log.shout(() => "authentication failed");
-                        // close app
-                        SystemChannels.platform
-                            .invokeMethod('SystemNavigator.pop');
-                      }
+                      log.shout(() => "authentication failed");
+                      // close app
+                      SystemChannels.platform
+                          .invokeMethod('SystemNavigator.pop');
                     }
-                  },
-                );
+                  });
+                } else {
+                  log.finest(() => "signing in");
+                  context.read<FireflyService>().signInFromStorage().then(
+                        (bool _) => setState(() {
+                          log.finest(() => "set _startup = false");
+                          _authed = true;
+                          _startup = false;
+                        }),
+                      );
+                }
               }
             } else {
               signedIn = context.select((FireflyService f) => f.signedIn);
@@ -233,7 +238,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
               supportedLocales: S.supportedLocales,
               locale: context.select((SettingsProvider s) => s.locale),
               navigatorKey: navigatorKey,
-              home: (_startup ||
+              home: ((_startup || !_authed) ||
                       context.select((FireflyService f) =>
                           f.storageSignInException != null))
                   ? const SplashPage()

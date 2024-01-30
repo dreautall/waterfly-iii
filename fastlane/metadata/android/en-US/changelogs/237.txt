@@ -1,0 +1,9 @@
+- Category Page
+- Net Worth respects all accounts
+- Allow sharing files to the app to attach to transactions
+- Show piggy bank groups
+- Fix various issues around fingerprint checks
+- Allow filtering the transaction list by tags
+- Fixed transaction screen only showing the first 50 tags
+- Saving the selected bill
+- Notification listener support for additional banking apps

@@ -44,7 +44,7 @@ The app does **not** try to replicate every single feature that the Webinterface
 If you are missing anything, feel free to open a [feature request](https://github.com/dreautall/waterfly-iii/issues/new/choose), or look at that other users [are requesting](https://github.com/dreautall/waterfly-iii/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement).
 
 
-### Releases
+## Releases
 
 The stable released are published in the [Google Play Store](https://play.google.com/store/apps/details?id=com.dreautall.waterflyiii), and are available for download from the [GitHub releases page](https://github.com/dreautall/waterfly-iii/releases/latest). The APKs are identical (and actually pushed to Google Play via a GitHub build pipeline).
 

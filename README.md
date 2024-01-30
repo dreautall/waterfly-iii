@@ -54,13 +54,17 @@ You can also opt in to the (open) beta channel at Google Play [here](https://pla
 
 *All made with a Google Pixel 8*
 
-|                           Dashboard                           |                               Transactions                                |                        Balance Sheet                        |
-| :-----------------------------------------------------------: | :-----------------------------------------------------------------------: | :---------------------------------------------------------: |
-| <img src=".github/assets/screen_dashboard.png" width="250" /> | <img src=".github/assets/screen_transactions_overview.png" width="250" /> | <img src=".github/assets/screen_balance.png" width="250" /> |
+|Dashboard|Transactions|Transaction Filters|
+| :-: | :-: | :-: |
+| <img src=".github/assets/screen_dashboard.png" width="250" /> | <img src=".github/assets/screen_transactions_overview.png" width="250" /> | <img src=".github/assets/screen_transactions_filters.png" width="250" /> |
 
-|                        Transaction Edit                         |                           Split Transaction                           |                           Transaction Attachments                           |
-| :-------------------------------------------------------------: | :-------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
-| <img src=".github/assets/screen_transaction.png" width="250" /> | <img src=".github/assets/screen_transaction_split.png" width="250" /> | <img src=".github/assets/screen_transaction_attachments.png" width="250" /> |
+Transaction Add|Transaction Edit|Transaction Attachments|
+| :-: | :-: | :-: |
+| <img src=".github/assets/screen_transaction_add.png" width="250" /> | <img src=".github/assets/screen_transaction_edit.png" width="250" /> | <img src=".github/assets/screen_transaction_attachments.png" width="250" /> |
+
+Account Screen|Category Screen|Piggy Banks with Chart|
+| :-: | :-: | :-: |
+| <img src=".github/assets/screen_accounts.png" width="250" /> | <img src=".github/assets/screen_categories.png" width="250" /> | <img src=".github/assets/screen_piggy_chart.png" width="250" /> |
 
 ## Technology
 

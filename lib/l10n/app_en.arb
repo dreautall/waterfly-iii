@@ -515,6 +515,10 @@
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"
   },
+  "navigationBills": "Bills",
+  "@navigationBills": {
+    "description": "Navigation Label: Bills"
+  },
   "navigationMain": "Main Dashboard",
   "@navigationMain": {
     "description": "Navigation Label: Main Dashboard"
@@ -862,5 +866,83 @@
   "transactionTypeWithdrawal": "Withdrawal",
   "@transactionTypeWithdrawal": {
     "description": "Withdrawal transaction type"
+  },
+  "yes": "Yes",
+  "@yes": {
+    "description": "The word yes"
+  },
+  "no": "No",
+  "@no": {
+    "description": "The word no"
+  },
+  "billsUngrouped": "Ungrouped",
+  "@billsUngrouped": {
+    "description": "Title for ungrouped bills"
+  },
+  "billsDetailsTitle": "Details",
+  "@billsDetailsTitle": {
+    "description": "Title for bill details"
+  },
+  "billsConnectedTransactionsTitle": "Connected transactions",
+  "@billsConnectedTransactionsTitle": {
+    "description": "Title for transactions connected to a bill"
+  },
+  "billAmountAndFrequency": "Bill matches transactions between {minValue} and {maxvalue}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}.",
+  "@billAmountAndFrequency": {
+    "description": "Bill match for price and frequency",
+    "placeholders": {
+      "minValue": {
+        "type": "String",
+        "example": "50.12"
+      },
+      "maxvalue": {
+        "type": "String",
+        "example": "60.50"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      }
+    }
+  },
+  "billIsActive": "Bill is active",
+  "@billIsActive": {
+    "description": "Text: whether the bill is active or not"
+  },
+  "billNextExpectedMatch": "Next expected match",
+  "@billNextExpectedMatch": {
+    "description": "Text: next expected match for bill"
+  },
+  "billInactive": "Inactive",
+  "@billInactive": {
+    "description": "Text: when the bill is inactive"
+  },
+  "billPaidOn": "Paid {date}",
+  "@billPaidOn": {
+    "description": "Describes what date the bill was paid",
+    "date": {
+      "message": {
+        "type": "String",
+        "example": "2024-01-05"
+      }
+    }
+  },
+  "billExpectedOn": "Expected {date}",
+  "@billExpectedOn": {
+    "description": "Describes what date the bill is expected",
+    "date": {
+      "message": {
+        "type": "String",
+        "example": "2024-01-05"
+      }
+    }
+  },
+  "billNotExpected": "Not expected this period",
+  "@billNotExpected": {
+    "description": "Describes that the bill is not expected this period"
+  },
+  "billNoTransactaions": "No transactions (yet).",
+  "@billNoTransactaions": {
+    "description": "Describes that there are no transactions connected to the bill (yet)"
   }
 }

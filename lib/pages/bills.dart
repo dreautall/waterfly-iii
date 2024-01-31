@@ -233,8 +233,9 @@ class _BillsPageState extends State<BillsPage>
     } else if (item.attributes.nextExpectedMatch != null) {
       // Bill expected this period
       return TextSpan(
-          text: S.of(context).billExpectedOn(DateFormat.yMd()
-              .format(item.attributes.nextExpectedMatch!.toLocal())),
+          text: S
+              .of(context)
+              .billExpectedOn(item.attributes.nextExpectedMatch!.toLocal()),
           style: Theme.of(context)
               .textTheme
               .bodySmall!

@@ -990,11 +990,9 @@
     "description": "Describes what date the bill was paid",
     "placeholders": {
       "date": {
-        "message": {
-          "type": "DateTime",
-          "format": "yMd",
-          "example": "2023-05-13"
-        }
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "2023-05-13"
       }
     }
   },
@@ -1003,11 +1001,9 @@
     "description": "Describes what date the bill is expected",
     "placeholders": {
       "date": {
-        "message": {
-          "type": "DateTime",
-          "format": "yMd",
-          "example": "2023-05-13"
-        }
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "2023-05-13"
       }
     }
   },

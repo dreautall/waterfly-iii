@@ -42,10 +42,12 @@ class TransactionTags extends StatefulWidget {
     super.key,
     required this.textController,
     required this.tagsController,
+    this.enableAdd = true,
   });
 
   final TextEditingController textController;
   final Tags tagsController;
+  final bool enableAdd;
 
   @override
   State<TransactionTags> createState() => _TransactionTagsState();
@@ -100,8 +102,10 @@ class _TransactionTagsState extends State<TransactionTags> {
               onTap: () async {
                 List<String>? tags = await showDialog<List<String>>(
                   context: context,
-                  builder: (BuildContext context) =>
-                      TagDialog(selectedTags: widget.tagsController.tags),
+                  builder: (BuildContext context) => TagDialog(
+                    selectedTags: widget.tagsController.tags,
+                    enableAdd: widget.enableAdd,
+                  ),
                 );
                 // Cancelled
                 if (tags == null) {
@@ -125,9 +129,11 @@ class TagDialog extends StatefulWidget {
   const TagDialog({
     super.key,
     required this.selectedTags,
+    required this.enableAdd,
   });
 
   final List<String> selectedTags;
+  final bool enableAdd;
 
   @override
   State<TagDialog> createState() => _TagDialogState();
@@ -184,7 +190,13 @@ class _TagDialogState extends State<TagDialog> {
   }
 
   void _newTagSubmitted(
-      StateSetter setState, List<String> allTags, String value) {
+    StateSetter setState,
+    List<String> allTags,
+    String value,
+  ) {
+    if (!widget.enableAdd) {
+      return;
+    }
     if (value.isEmpty) {
       return;
     }
@@ -254,21 +266,25 @@ class _TagDialogState extends State<TagDialog> {
                     onChanged: (String value) {
                       setAlertState(() {});
                     },
-                    onSubmitted: (String value) =>
-                        _newTagSubmitted(setAlertState, allTags, value),
+                    onSubmitted: (String value) => widget.enableAdd
+                        ? _newTagSubmitted(setAlertState, allTags, value)
+                        : null,
                     decoration: InputDecoration(
-                        hintText: S.of(context).transactionDialogTagsHint,
+                        hintText: widget.enableAdd
+                            ? S.of(context).transactionDialogTagsHint
+                            : S.of(context).transactionDialogTagsTitle,
                         icon: const Icon(Icons.bookmark_add),
-                        suffixIcon: showAddTag
+                        suffixIcon: (showAddTag && widget.enableAdd)
                             ? Padding(
                                 padding:
                                     const EdgeInsetsDirectional.only(end: 12.0),
                                 child: IconButton(
                                   icon: const Icon(Icons.add),
                                   onPressed: () => _newTagSubmitted(
-                                      setAlertState,
-                                      allTags,
-                                      _newTagTextController.text),
+                                    setAlertState,
+                                    allTags,
+                                    _newTagTextController.text,
+                                  ),
                                   tooltip:
                                       S.of(context).transactionDialogTagsAdd,
                                 ),

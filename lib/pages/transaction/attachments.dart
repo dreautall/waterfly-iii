@@ -445,6 +445,10 @@ class AttachmentDeletionConfirmDialog extends StatelessWidget {
           },
         ),
         FilledButton(
+          style: FilledButton.styleFrom(
+            foregroundColor: Theme.of(context).colorScheme.error,
+            backgroundColor: Theme.of(context).colorScheme.errorContainer,
+          ),
           child: Text(MaterialLocalizations.of(context).deleteButtonTooltip),
           onPressed: () {
             Navigator.of(context).pop(true);

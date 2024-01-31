@@ -22,15 +22,11 @@ class BillsPage extends StatefulWidget {
 }
 
 class _BillsPageState extends State<BillsPage>
-    with AutomaticKeepAliveClientMixin {
+    with SingleTickerProviderStateMixin {
   final Logger log = Logger("Pages.Bills");
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
     log.finest(() => "build()");
 
     return RefreshIndicator(
@@ -154,21 +150,20 @@ class _BillsPageState extends State<BillsPage>
         openColor: Theme.of(context).cardColor,
         closedColor: Theme.of(context).cardColor,
         closedShape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            bottomLeft: Radius.circular(16),
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
         closedElevation: 0,
         closedBuilder: (BuildContext context, Function openContainer) =>
             ListTile(
           title: Text(bill.attributes.name),
-          subtitle: const Text(""),
+          subtitle: Text(
+            S.of(context).billFrequency(bill.attributes.repeatFreq.toString()),
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: Colors.grey,
+                ),
+          ),
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              bottomLeft: Radius.circular(16),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(16)),
           ),
           isThreeLine: false,
           trailing: RichText(
@@ -200,8 +195,8 @@ class _BillsPageState extends State<BillsPage>
   }
 
   String _getAverageBillAmount(BillRead item) {
-    double min = double.parse(item.attributes.amountMin);
-    double max = double.parse(item.attributes.amountMax);
+    double min = double.tryParse(item.attributes.amountMin) ?? 0;
+    double max = double.tryParse(item.attributes.amountMax) ?? 0;
 
     final CurrencyRead currency = CurrencyRead(
       id: "0",
@@ -228,8 +223,9 @@ class _BillsPageState extends State<BillsPage>
     } else if (item.attributes.paidDates!.isNotEmpty) {
       // Bill was paid this period
       return TextSpan(
-          text: S.of(context).billPaidOn(DateFormat.yMd()
-              .format(item.attributes.paidDates![0].date!.toLocal())),
+          text: S
+              .of(context)
+              .billPaidOn(item.attributes.paidDates![0].date!.toLocal()),
           style: Theme.of(context)
               .textTheme
               .bodySmall!

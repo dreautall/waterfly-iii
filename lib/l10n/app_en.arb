@@ -51,9 +51,41 @@
       }
     }
   },
+  "categoryDeleteConfirm": "Are you sure you want to delete this category? The transactions will not be deleted, but will not have a category anymore.",
+  "@categoryDeleteConfirm": {
+    "description": "Confirmation text to delete category"
+  },
+  "categoryErrorLoading": "Error loading categories.",
+  "@categoryErrorLoading": {
+    "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+  },
+  "categoryTitleAdd": "Add Category",
+  "@categoryTitleAdd": {
+    "description": "Title for Dialog: Add Category"
+  },
+  "categoryMonthNext": "Next Month",
+  "@categoryMonthNext": {
+    "description": "Button title to view overview for next month"
+  },
+  "categoryMonthPrev": "Previous Month",
+  "@categoryMonthPrev": {
+    "description": "Button title to view overview for previous month"
+  },
+  "categoryTitleDelete": "Delete Category",
+  "@categoryTitleDelete": {
+    "description": "Title for Dialog: Delete Category"
+  },
+  "categoryTitleEdit": "Edit Category",
+  "@categoryTitleEdit": {
+    "description": "Title for Dialog: Edit Category"
+  },
   "catOther": "Other",
   "@catOther": {
     "description": "Category description for summary category 'Other'"
+  },
+  "catNone": "<no category>",
+  "@catNone": {
+    "description": "Placeholder when no category has been set."
   },
   "errorAPIInvalidResponse": "Invalid Response from API: {message}",
   "@errorAPIInvalidResponse": {
@@ -179,6 +211,10 @@
   "@generalDismiss": {
     "description": "Dismiss window/dialog without action"
   },
+  "generalEarned": "Earned",
+  "@generalEarned": {
+    "description": "(Amount) Earned"
+  },
   "generalError": "Error",
   "@generalError": {
     "description": "Error (title in dialogs etc.)"
@@ -210,6 +246,10 @@
   "generalReset": "Reset",
   "@generalReset": {
     "description": "Reset something (i.e. set filters)"
+  },
+  "generalSpent": "Spent",
+  "@generalSpent": {
+    "description": "(Amount) Spent"
   },
   "generalSum": "Sum",
   "@generalSum": {
@@ -518,6 +558,10 @@
   "navigationBills": "Bills",
   "@navigationBills": {
     "description": "Navigation Label: Bills"
+  },
+  "navigationCategories": "Categories",
+  "@navigationCategories": {
+    "description": "Navigation Label: Categories"
   },
   "navigationMain": "Main Dashboard",
   "@navigationMain": {

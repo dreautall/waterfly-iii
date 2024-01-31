@@ -447,3 +447,17 @@ extension BillAmountAvg on Bill {
     return (amountMin + amountMax) / 2;
   }
 }
+
+class CategoryWithSum extends Category {
+  CategoryWithSum({
+    super.createdAt,
+    super.updatedAt,
+    required super.name,
+    super.notes,
+    super.spent,
+    super.earned,
+  });
+
+  double sumSpent = 0;
+  double sumEarned = 0;
+}

@@ -3,7 +3,9 @@ import 'dart:convert';
 
 import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:stock/stock.dart';
+import 'package:waterflyiii/extensions.dart';
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.enums.swagger.dart'
     as enums show TransactionTypeFilter;
@@ -40,6 +42,7 @@ class TransStock with ChangeNotifier {
               .v1TransactionsGet(
                 xTraceId: query.xTraceId,
                 page: query.page,
+                limit: query.limit,
                 start: query.start,
                 end: query.end,
                 type: query.type,
@@ -77,6 +80,7 @@ class TransStock with ChangeNotifier {
                 xTraceId: query.xTraceId,
                 query: query.query,
                 page: query.page,
+                limit: query.limit,
               )
               .then<List<String>>(_onAPIValue);
         },
@@ -98,6 +102,7 @@ class TransStock with ChangeNotifier {
   Future<List<TransactionRead>> get({
     String? xTraceId,
     int? page,
+    int? limit,
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
@@ -106,6 +111,7 @@ class TransStock with ChangeNotifier {
         .get(jsonEncode(_getOptions(
           xTraceId: xTraceId,
           page: page,
+          limit: limit,
           start: start,
           end: end,
           type: type,
@@ -139,12 +145,14 @@ class TransStock with ChangeNotifier {
     String? xTraceId,
     required String? query,
     int? page,
+    int? limit,
   }) async {
     return _getSearchStock
         .get(jsonEncode(_getOptions(
           xTraceId: xTraceId,
           query: query,
           page: page,
+          limit: limit,
         )))
         .then(_onGetValue);
   }
@@ -186,7 +194,7 @@ class _getOptions {
   final String? end; // get, getAccount
   final enums.TransactionTypeFilter? type; // get, getAccount
   final String? id; // getAccount
-  final int? limit; // getAccount
+  final int? limit; // get, getAccount, getSearch
   final String? query; // getSearch
 
   _getOptions({
@@ -220,4 +228,205 @@ class _getOptions {
         'limit': limit,
         'query': query,
       };
+}
+
+class CatStock {
+  final FireflyIii api;
+  final CurrencyRead defaultCurrency;
+
+  late Stock<DateTime, CategoryArray> _stock;
+  final CachedSourceOfTruth<DateTime, CategoryArray> _sot =
+      CachedSourceOfTruth<DateTime, CategoryArray>();
+
+  CatStock(this.api, this.defaultCurrency) {
+    _stock = Stock<DateTime, CategoryArray>(
+      fetcher: Fetcher.ofFuture<DateTime, CategoryArray>(
+        (DateTime t) async {
+          final String startDate =
+              DateFormat('yyyy-MM-dd', 'en_US').format(t.copyWith(day: 1));
+          final String endDate = DateFormat('yyyy-MM-dd', 'en_US').format(t);
+
+          final Response<InsightGroup> respIncomeCat =
+              await api.v1InsightIncomeCategoryGet(
+            start: startDate,
+            end: endDate,
+          );
+          if (!respIncomeCat.isSuccessful || respIncomeCat.body == null) {
+            throw Exception(
+              "[stock] Invalid API response: ${respIncomeCat.error}",
+            );
+          }
+          final Response<InsightTotal> respIncomeNoCat =
+              await api.v1InsightIncomeNoCategoryGet(
+            start: startDate,
+            end: endDate,
+          );
+          if (!respIncomeNoCat.isSuccessful || respIncomeNoCat.body == null) {
+            throw Exception(
+              "[stock] Invalid API response: ${respIncomeNoCat.error}",
+            );
+          }
+          final Response<InsightGroup> respExpenseCat =
+              await api.v1InsightExpenseCategoryGet(
+            start: startDate,
+            end: endDate,
+          );
+          if (!respExpenseCat.isSuccessful || respExpenseCat.body == null) {
+            throw Exception(
+              "[stock] Invalid API response: ${respExpenseCat.error}",
+            );
+          }
+          final Response<InsightTotal> respExpenseNoCat =
+              await api.v1InsightExpenseNoCategoryGet(
+            start: startDate,
+            end: endDate,
+          );
+          if (!respExpenseNoCat.isSuccessful || respExpenseNoCat.body == null) {
+            throw Exception(
+              "[stock] Invalid API response: ${respExpenseNoCat.error}",
+            );
+          }
+
+          final Map<String, CategoryRead> categories = <String, CategoryRead>{};
+          for (InsightGroupEntry cat in respIncomeCat.body!) {
+            if ((cat.id?.isEmpty ?? true) || (cat.name?.isEmpty ?? true)) {
+              //log.finest(() => "skipping empty category");
+              continue;
+            }
+
+            if (cat.currencyId != defaultCurrency.id) {
+              //log.finest(() => "skipping non-default currency category (${cat.currencyCode})");
+              continue;
+            }
+            if (!categories.containsKey(cat.id)) {
+              categories[cat.id!] = CategoryRead(
+                id: cat.id!,
+                type: "categories",
+                attributes: CategoryWithSum(
+                  name: cat.name!,
+                  spent: <CategorySpent>[],
+                  earned: <CategoryEarned>[],
+                ),
+              );
+            }
+            categories[cat.id!]!.attributes.earned!.add(
+                  CategoryEarned(
+                    currencyId: cat.currencyId,
+                    currencyCode: cat.currencyCode,
+                    currencyDecimalPlaces:
+                        defaultCurrency.attributes.decimalPlaces,
+                    currencySymbol: defaultCurrency.attributes.symbol,
+                    sum: cat.difference,
+                  ),
+                );
+          }
+          for (InsightGroupEntry cat in respExpenseCat.body!) {
+            if ((cat.id?.isEmpty ?? true) || (cat.name?.isEmpty ?? true)) {
+              //log.finest(() => "skipping empty category");
+              continue;
+            }
+
+            if (cat.currencyId != defaultCurrency.id) {
+              //log.finest(() => "skipping non-default currency category (${cat.currencyCode})");
+              continue;
+            }
+            if (!categories.containsKey(cat.id)) {
+              categories[cat.id!] = CategoryRead(
+                id: cat.id!,
+                type: "categories",
+                attributes: CategoryWithSum(
+                  name: cat.name!,
+                  spent: <CategorySpent>[],
+                  earned: <CategoryEarned>[],
+                ),
+              );
+            }
+            categories[cat.id!]!.attributes.spent!.add(
+                  CategorySpent(
+                    currencyId: cat.currencyId,
+                    currencyCode: cat.currencyCode,
+                    currencyDecimalPlaces:
+                        defaultCurrency.attributes.decimalPlaces,
+                    currencySymbol: defaultCurrency.attributes.symbol,
+                    sum: cat.difference,
+                  ),
+                );
+          }
+          for (InsightTotalEntry cat in respIncomeNoCat.body!) {
+            if (cat.currencyId != defaultCurrency.id) {
+              //log.finest(() => "skipping non-default currency category (${cat.currencyCode})");
+              continue;
+            }
+            if (!categories.containsKey("-1")) {
+              categories["-1"] = CategoryRead(
+                id: "-1",
+                type: "no-category",
+                attributes: CategoryWithSum(
+                  name: "L10NNONE",
+                  spent: <CategorySpent>[],
+                  earned: <CategoryEarned>[],
+                ),
+              );
+            }
+            categories["-1"]!.attributes.earned!.add(
+                  CategoryEarned(
+                    currencyId: cat.currencyId,
+                    currencyCode: cat.currencyCode,
+                    currencyDecimalPlaces:
+                        defaultCurrency.attributes.decimalPlaces,
+                    currencySymbol: defaultCurrency.attributes.symbol,
+                    sum: cat.difference,
+                  ),
+                );
+          }
+          for (InsightTotalEntry cat in respExpenseNoCat.body!) {
+            if (cat.currencyId != defaultCurrency.id) {
+              //log.finest(() => "skipping non-default currency category (${cat.currencyCode})");
+              continue;
+            }
+            if (!categories.containsKey("-1")) {
+              categories["-1"] = CategoryRead(
+                id: "-1",
+                type: "no-category",
+                attributes: CategoryWithSum(
+                  name: "L10NNONE",
+                  spent: <CategorySpent>[],
+                  earned: <CategoryEarned>[],
+                ),
+              );
+            }
+            categories["-1"]!.attributes.spent!.add(
+                  CategorySpent(
+                    currencyId: cat.currencyId,
+                    currencyCode: cat.currencyCode,
+                    currencyDecimalPlaces:
+                        defaultCurrency.attributes.decimalPlaces,
+                    currencySymbol: defaultCurrency.attributes.symbol,
+                    sum: cat.difference,
+                  ),
+                );
+          }
+
+          categories.forEach((_, CategoryRead c) {
+            CategoryWithSum cs = c.attributes as CategoryWithSum;
+            cs.sumEarned = c.attributes.earned!.fold<double>(
+                0,
+                (double p, CategoryEarned e) =>
+                    p += double.parse(e.sum ?? "0"));
+            cs.sumSpent = c.attributes.spent!.fold<double>(0,
+                (double p, CategorySpent e) => p += double.parse(e.sum ?? "0"));
+          });
+
+          return CategoryArray(
+            data: categories.values.toList(growable: false),
+            meta: const Meta(),
+          );
+        },
+      ),
+      sourceOfTruth: _sot,
+    );
+  }
+
+  Future<CategoryArray> get(DateTime t) => _stock.get(t);
+  Future<void> reset() => _stock.clearAll();
 }

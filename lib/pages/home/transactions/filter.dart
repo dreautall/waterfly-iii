@@ -9,6 +9,7 @@ import 'package:chopper/chopper.dart' show Response;
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/transaction/tags.dart';
 import 'package:waterflyiii/settings.dart';
 
 final Logger log = Logger("Pages.Home.Transaction.Filter");
@@ -21,6 +22,7 @@ class TransactionFilters with ChangeNotifier {
     this.category,
     this.budget,
     this.bill,
+    this.tags,
   });
 
   AccountRead? account;
@@ -29,6 +31,7 @@ class TransactionFilters with ChangeNotifier {
   CategoryRead? category;
   BudgetRead? budget;
   BillRead? bill;
+  Tags? tags = Tags();
 
   bool _hasFilters = false;
   bool get hasFilters => _hasFilters;
@@ -39,7 +42,8 @@ class TransactionFilters with ChangeNotifier {
         currency != null ||
         category != null ||
         budget != null ||
-        bill != null;
+        bill != null ||
+        (tags?.tags.isNotEmpty ?? false);
     log.finest(() => "notify TransactionFilters, filters? $hasFilters");
     notifyListeners();
   }
@@ -51,6 +55,7 @@ class TransactionFilters with ChangeNotifier {
     CategoryRead? category,
     BudgetRead? budget,
     BillRead? bill,
+    Tags? tags,
   }) =>
       TransactionFilters(
         account: account ?? this.account,
@@ -59,6 +64,7 @@ class TransactionFilters with ChangeNotifier {
         category: category ?? this.category,
         budget: budget ?? this.budget,
         bill: bill ?? this.bill,
+        tags: tags ?? this.tags,
       );
 
   void reset() {
@@ -68,6 +74,7 @@ class TransactionFilters with ChangeNotifier {
     category = null;
     budget = null;
     bill = null;
+    tags = Tags();
   }
 }
 
@@ -561,6 +568,19 @@ class FilterDialog extends StatelessWidget {
                         }
                       },
                       width: inputWidth,
+                    ),
+                  );
+                  child.add(const SizedBox(height: 12));
+
+                  // Tag Select
+                  final TextEditingController tagsTextController =
+                      TextEditingController();
+                  filters.tags ??= Tags();
+                  child.add(
+                    TransactionTags(
+                      textController: tagsTextController,
+                      tagsController: filters.tags!,
+                      enableAdd: false,
                     ),
                   );
                   child.add(const SizedBox(height: 12));

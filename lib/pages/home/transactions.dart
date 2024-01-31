@@ -25,9 +25,10 @@ import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 
 class HomeTransactions extends StatefulWidget {
-  const HomeTransactions({super.key, this.accountId});
+  const HomeTransactions({super.key, this.accountId, this.category});
 
   final String? accountId;
+  final CategoryRead? category;
 
   @override
   State<HomeTransactions> createState() => _HomeTransactionsState();
@@ -61,7 +62,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
         .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
 
     // Only add button when in own tab
-    if (widget.accountId == null) {
+    if (widget.accountId == null && widget.category == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         context.read<PageActions>().set(
           widget.key!,
@@ -99,6 +100,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     _filters.currency = oldFilters.currency;
                     _filters.text = oldFilters.text;
                     _filters.bill = oldFilters.bill;
+                    _filters.tags = oldFilters.tags;
 
                     return;
                   }
@@ -144,6 +146,15 @@ class _HomeTransactionsState extends State<HomeTransactions>
     try {
       late List<TransactionRead> transactionList;
 
+      // simply add a search filter for category id
+      // logic later already detects categoryId == -1 (= no category)
+      // there is no /api/v1/categories call for "no category" anyways
+      if (widget.category != null) {
+        debugPrint("setting filter for cat ${widget.category!.id}");
+        _filters.category = widget.category;
+        _filters.updateFilters();
+      }
+
       if (_filters.hasFilters) {
         String query = _filters.text ?? "";
         if (_filters.account != null) {
@@ -174,6 +185,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
             query = "bill_is:\"${_filters.bill!.attributes.name}\" $query";
           }
         }
+        if (_filters.tags != null) {
+          for (String tag in _filters.tags!.tags) {
+            query = "tag_is:\"$tag\" $query";
+          }
+        }
         query = "date_before:today $query ";
         log.fine(() => "Search query: $query");
         transactionList = await stock.getSearch(
@@ -184,6 +200,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
         transactionList = await stock.getAccount(
           id: widget.accountId ?? _filters.account!.id,
           page: pageKey,
+          limit: _numberOfPostsPerRequest,
           end: context.read<SettingsProvider>().showFutureTXs
               ? null
               : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
@@ -195,6 +212,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       } else {
         transactionList = await stock.get(
           page: pageKey,
+          limit: _numberOfPostsPerRequest,
           end: context.read<SettingsProvider>().showFutureTXs
               ? null
               : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
@@ -207,6 +225,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
       if (mounted) {
         // check if it is the last page
+        // adds spacing for the FAB button to not overlap.
         if (transactionList.length < _numberOfPostsPerRequest) {
           transactionList.add(const TransactionRead(
             type: "WF3_DUMMY_SPACING_ELEMENT",

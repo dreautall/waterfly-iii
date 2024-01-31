@@ -23,8 +23,7 @@ class BillDetails extends StatefulWidget {
   State<BillDetails> createState() => _BillDetailsState();
 }
 
-class _BillDetailsState extends State<BillDetails>
-    with AutomaticKeepAliveClientMixin {
+class _BillDetailsState extends State<BillDetails> {
   final Logger log = Logger("Pages.BillDetails");
   late TimeZoneHandler _tzHandler;
 
@@ -36,11 +35,7 @@ class _BillDetailsState extends State<BillDetails>
   }
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
     log.finest(() => "build()");
 
     return RefreshIndicator(
@@ -59,66 +54,112 @@ class _BillDetailsState extends State<BillDetails>
               CurrencyRead currency = _getCurrencyForBill(bill);
 
               return Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      S.of(context).billsDetailsTitle,
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: Colors.grey,
+                    Card(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Text(
+                              S.of(context).billsDetailsTitle,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(
+                                    color: Colors.grey,
+                                  ),
+                            ),
                           ),
-                    ),
-                    const SizedBox(height: 16),
-                    ListTile(
-                        title: Text(S.of(context).billAmountAndFrequency(
-                            currency
-                                .fmt(double.parse(bill.attributes.amountMin)),
-                            currency
-                                .fmt(double.parse(bill.attributes.amountMax)),
-                            bill.attributes.repeatFreq.toString()))),
-                    ListTile(
-                      title: Text(S.of(context).billIsActive),
-                      trailing: Text.rich(TextSpan(
-                        text: bill.attributes.active!
-                            ? S.of(context).yes
-                            : S.of(context).no,
-                        children: <InlineSpan>[
-                          WidgetSpan(
-                              child: Icon(
-                            bill.attributes.active! ? Icons.check : Icons.close,
-                            color: bill.attributes.active!
-                                ? Colors.green
-                                : Colors.red,
-                          )),
+                          ListTile(
+                              title: bill.attributes.amountMax ==
+                                      bill.attributes.amountMin
+                                  ? Text(S.of(context).billExactAmountAndFrequency(
+                                      currency.fmt(double.tryParse(
+                                              bill.attributes.amountMin) ??
+                                          0),
+                                      bill.attributes.repeatFreq.toString()))
+                                  : Text(S.of(context).billAmountAndFrequency(
+                                      currency.fmt(
+                                          double.tryParse(bill.attributes.amountMin) ??
+                                              0),
+                                      currency.fmt(
+                                          double.tryParse(bill.attributes.amountMax) ?? 0),
+                                      bill.attributes.repeatFreq.toString()))),
+                          ListTile(
+                            title: Text(S.of(context).billIsActive),
+                            trailing: Text.rich(TextSpan(
+                              text: bill.attributes.active!
+                                  ? S.of(context).yes
+                                  : S.of(context).no,
+                              children: <InlineSpan>[
+                                WidgetSpan(
+                                    child: Icon(
+                                  bill.attributes.active!
+                                      ? Icons.check
+                                      : Icons.close,
+                                  color: bill.attributes.active!
+                                      ? Colors.green
+                                      : Colors.red,
+                                )),
+                              ],
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            )),
+                          ),
+                          ListTile(
+                            title: Text(S.of(context).billNextExpectedMatch),
+                            trailing: Text(
+                              DateFormat.yMd().format(
+                                  bill.attributes.payDates![0].toLocal()),
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ),
                         ],
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      )),
-                    ),
-                    ListTile(
-                      title: Text(S.of(context).billNextExpectedMatch),
-                      trailing: Text(
-                        DateFormat.yMd()
-                            .format(bill.attributes.payDates![0].toLocal()),
-                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Text(
-                      S.of(context).billsConnectedTransactionsTitle,
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: Colors.grey,
+                    Card(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Text(
+                              S.of(context).billsConnectedTransactionsTitle,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(
+                                    color: Colors.grey,
+                                  ),
+                            ),
                           ),
-                    ),
-                    const SizedBox(height: 16),
-                    Expanded(
-                      child: ListView(
-                        cacheExtent: 1000,
-                        padding: const EdgeInsets.all(8),
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: _getTransactionRows(transactions),
+                          transactions.isNotEmpty
+                          ? ListView.separated(
+                              shrinkWrap: true,
+                              cacheExtent: 1000,
+                              padding: const EdgeInsets.all(8),
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: transactions.length,
+                              itemBuilder: (BuildContext context, int index) =>
+                                  _transactionWidgetBuilder(
+                                      context, transactions[index]),
+                              separatorBuilder:
+                                  (BuildContext context, int index) =>
+                                      const SizedBox(height: 5),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                              child: Text(
+                                S.of(context).billNoTransactions,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ),
+                        ],
                       ),
-                    ),
+                    )
                   ],
                 ),
               );
@@ -138,64 +179,6 @@ class _BillDetailsState extends State<BillDetails>
         ));
   }
 
-  List<Widget> _getTransactionRows(List<TransactionRead> transactions) {
-    List<Widget> widgets = <Widget>[];
-
-    if (transactions.isNotEmpty) {
-      for (TransactionRead transaction in transactions) {
-        DateTime date = _tzHandler
-            .sTime(transaction.attributes.transactions.first.date)
-            .toLocal();
-
-        widgets.add(OpenContainer(
-          openBuilder: (BuildContext context, Function closedContainer) =>
-              TransactionPage(transaction: transaction),
-          openColor: Theme.of(context).cardColor,
-          closedColor: Theme.of(context).cardColor,
-          closedShape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              bottomLeft: Radius.circular(16),
-            ),
-          ),
-          closedElevation: 0,
-          closedBuilder: (BuildContext context, Function openContainer) =>
-              ListTile(
-            title: Text(DateFormat.yMd().format(date)),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16),
-                bottomLeft: Radius.circular(16),
-              ),
-            ),
-            isThreeLine: false,
-            trailing: RichText(
-              textAlign: TextAlign.end,
-              maxLines: 2,
-              text: TextSpan(
-                text: _getTransactionAmount(transaction),
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: transaction.attributes.transactions.first.type.color,
-                  fontFeatures: const <FontFeature>[
-                    FontFeature.tabularFigures()
-                  ],
-                ),
-              ),
-            ),
-            onTap: () => openContainer(),
-          ),
-        ));
-      }
-    } else {
-      widgets.add(Text(
-        S.of(context).billNoTransactaions,
-        style: Theme.of(context).textTheme.bodyLarge,
-      ));
-    }
-
-    return widgets;
-  }
-
   CurrencyRead _getCurrencyForBill(BillRead bill) {
     return CurrencyRead(
       id: "0",
@@ -211,7 +194,7 @@ class _BillDetailsState extends State<BillDetails>
 
   String _getTransactionAmount(TransactionRead transaction) {
     double amount =
-        double.parse(transaction.attributes.transactions.first.amount);
+        double.tryParse(transaction.attributes.transactions.first.amount) ?? 0;
 
     final CurrencyRead currency = CurrencyRead(
       id: "0",
@@ -226,6 +209,43 @@ class _BillDetailsState extends State<BillDetails>
     );
 
     return currency.fmt(amount);
+  }
+
+  Widget _transactionWidgetBuilder(
+      BuildContext context, TransactionRead transaction) {
+    DateTime date = _tzHandler
+        .sTime(transaction.attributes.transactions.first.date)
+        .toLocal();
+
+    return OpenContainer(
+      openBuilder: (BuildContext context, Function closedContainer) =>
+          TransactionPage(transaction: transaction),
+      openColor: Theme.of(context).cardColor,
+      closedColor: Theme.of(context).dialogBackgroundColor,
+      closedShape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+      ),
+      closedElevation: 0,
+      closedBuilder: (BuildContext context, Function openContainer) => ListTile(
+        title: Text(DateFormat.yMd().format(date)),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+        ),
+        isThreeLine: false,
+        trailing: RichText(
+          textAlign: TextAlign.end,
+          maxLines: 2,
+          text: TextSpan(
+            text: _getTransactionAmount(transaction),
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: transaction.attributes.transactions.first.type.color,
+              fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
+            ),
+          ),
+        ),
+        onTap: () => openContainer(),
+      ),
+    );
   }
 
   Future<BillTransactionDetails> _fetchBillDetails() async {

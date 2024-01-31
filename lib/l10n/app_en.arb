@@ -931,9 +931,19 @@
   "@billsConnectedTransactionsTitle": {
     "description": "Title for transactions connected to a bill"
   },
+  "billFrequency": "{frequency, select, weekly{Weekly} monthly{Monthly} quarterly{Quarterly} halfyear{Half-yearly} yearly{Yearly} other{Unknown}}",
+  "@billFrequency": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      }
+    }
+  },
   "billAmountAndFrequency": "Bill matches transactions between {minValue} and {maxvalue}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}.",
   "@billAmountAndFrequency": {
-    "description": "Bill match for price and frequency",
+    "description": "Bill match for min and max amounts, and frequency",
     "placeholders": {
       "minValue": {
         "type": "String",
@@ -942,6 +952,20 @@
       "maxvalue": {
         "type": "String",
         "example": "60.50"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      }
+    }
+  },
+  "billExactAmountAndFrequency": "Bill matches transactions of {value}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}.",
+  "@billExactAmountAndFrequency": {
+    "description": "Bill match for exact amount and frequency",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "50.12"
       },
       "frequency": {
         "type": "String",
@@ -964,20 +988,26 @@
   "billPaidOn": "Paid {date}",
   "@billPaidOn": {
     "description": "Describes what date the bill was paid",
-    "date": {
-      "message": {
-        "type": "String",
-        "example": "2024-01-05"
+    "placeholders": {
+      "date": {
+        "message": {
+          "type": "DateTime",
+          "format": "yMd",
+          "example": "2023-05-13"
+        }
       }
     }
   },
   "billExpectedOn": "Expected {date}",
   "@billExpectedOn": {
     "description": "Describes what date the bill is expected",
-    "date": {
-      "message": {
-        "type": "String",
-        "example": "2024-01-05"
+    "placeholders": {
+      "date": {
+        "message": {
+          "type": "DateTime",
+          "format": "yMd",
+          "example": "2023-05-13"
+        }
       }
     }
   },
@@ -985,8 +1015,8 @@
   "@billNotExpected": {
     "description": "Describes that the bill is not expected this period"
   },
-  "billNoTransactaions": "No transactions (yet).",
-  "@billNoTransactaions": {
+  "billNoTransactions": "No transactions (yet).",
+  "@billNoTransactions": {
     "description": "Describes that there are no transactions connected to the bill (yet)"
   }
 }

@@ -124,27 +124,30 @@ class _BillDetailsState extends State<BillDetails> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Card(
+                if (transactions.isNotEmpty)
+                  Card(
                     child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Text(
-                        S.of(context).billsChartTitle,
-                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 125,
-                      child: BillChart(
-                          billId: widget.billId, transactions: transactions),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Text(
+                            S.of(context).billsChartTitle,
+                            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                                  color: Theme.of(context).colorScheme.secondary,
+                                ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 125,
+                          child: BillChart(
+                              billId: widget.billId, transactions: transactions),
+                        )
+                      ],
                     )
-                  ],
-                )),
-                const SizedBox(height: 16),
+                  ),
+                if (transactions.isNotEmpty)
+                  const SizedBox(height: 16),
                 Card(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,

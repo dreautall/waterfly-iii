@@ -11,6 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:waterflyiii/extensions.dart';
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/bills/billchart.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 
@@ -42,147 +43,166 @@ class _BillDetailsState extends State<BillDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-        onRefresh: _refreshStats,
-        child: FutureBuilder<BillTransactionDetails>(
-          future: _futureFetch,
-          builder: (BuildContext context,
-              AsyncSnapshot<BillTransactionDetails> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done &&
-                snapshot.hasData) {
-              BillTransactionDetails billTransactionDetails = snapshot.data!;
-              BillRead bill = billTransactionDetails.bill;
-              List<TransactionRead> transactions =
-                  billTransactionDetails.transactions;
+    return FutureBuilder<BillTransactionDetails>(
+      future: _futureFetch,
+      builder: (BuildContext context,
+          AsyncSnapshot<BillTransactionDetails> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.hasData) {
+          BillTransactionDetails billTransactionDetails = snapshot.data!;
+          BillRead bill = billTransactionDetails.bill;
+          List<TransactionRead> transactions =
+              billTransactionDetails.transactions;
 
-              return Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: <Widget>[
-                    Card(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Text(
-                              S.of(context).billsDetailsTitle,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(
-                                    color: Theme.of(context).colorScheme.secondary,
-                                  ),
-                            ),
-                          ),
-                          ListTile(
-                              title: bill.attributes.amountMax ==
-                                      bill.attributes.amountMin
-                                  ? Text(S.of(context).billExactAmountAndFrequency(
-                                      _currency.fmt(double.tryParse(
-                                              bill.attributes.amountMin) ??
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+            child: ListView(
+              children: <Widget>[
+                const SizedBox(height: 16),
+                Card(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Text(
+                          S.of(context).billsDetailsTitle,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                        ),
+                      ),
+                      ListTile(
+                          title: bill.attributes.amountMax ==
+                                  bill.attributes.amountMin
+                              ? Text(S.of(context).billExactAmountAndFrequency(
+                                  _currency.fmt(
+                                      double.tryParse(bill.attributes.amountMin) ??
                                           0),
-                                      bill.attributes.repeatFreq.toString()))
-                                  : Text(S.of(context).billAmountAndFrequency(
-                                      _currency.fmt(
-                                          double.tryParse(bill.attributes.amountMin) ??
-                                              0),
-                                      _currency
-                                          .fmt(double.tryParse(bill.attributes.amountMax) ?? 0),
-                                      bill.attributes.repeatFreq.toString()))),
-                          ListTile(
-                            title: Text(S.of(context).billIsActive),
-                            trailing: Text.rich(TextSpan(
-                              text: bill.attributes.active!
-                                  ? S.of(context).yes
-                                  : S.of(context).no,
-                              children: <InlineSpan>[
-                                WidgetSpan(
-                                    child: Icon(
-                                  bill.attributes.active!
-                                      ? Icons.check
-                                      : Icons.close,
-                                  color: bill.attributes.active!
-                                      ? Colors.green
-                                      : Colors.red,
-                                )),
-                              ],
-                              style: Theme.of(context).textTheme.bodyLarge,
+                                  bill.attributes.repeatFreq.toString()))
+                              : Text(S.of(context).billAmountAndFrequency(
+                                  _currency.fmt(
+                                      double.tryParse(bill.attributes.amountMin) ??
+                                          0),
+                                  _currency.fmt(
+                                      double.tryParse(bill.attributes.amountMax) ??
+                                          0),
+                                  bill.attributes.repeatFreq.toString()))),
+                      ListTile(
+                        title: Text(S.of(context).billIsActive),
+                        trailing: Text.rich(TextSpan(
+                          text: bill.attributes.active!
+                              ? S.of(context).yes
+                              : S.of(context).no,
+                          children: <InlineSpan>[
+                            WidgetSpan(
+                                child: Icon(
+                              bill.attributes.active!
+                                  ? Icons.check
+                                  : Icons.close,
+                              color: bill.attributes.active!
+                                  ? Colors.green
+                                  : Colors.red,
                             )),
-                          ),
-                          ListTile(
-                            title: Text(S.of(context).billNextExpectedMatch),
-                            trailing: Text(
-                              DateFormat.yMMMMd().format(_tzHandler
-                                  .sTime(bill.attributes.payDates![0])
-                                  .toLocal()),
-                              style: Theme.of(context).textTheme.bodyLarge,
+                          ],
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        )),
+                      ),
+                      ListTile(
+                        title: Text(S.of(context).billNextExpectedMatch),
+                        trailing: Text(
+                          DateFormat.yMMMMd().format(_tzHandler
+                              .sTime(bill.attributes.payDates![0])
+                              .toLocal()),
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Card(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Text(
+                        S.of(context).billsChartTitle,
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              color: Theme.of(context).colorScheme.secondary,
                             ),
-                          ),
-                        ],
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    Card(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Text(
-                              S.of(context).billsConnectedTransactionsTitle,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(
-                                    color: Theme.of(context).colorScheme.secondary,
-                                  ),
-                            ),
-                          ),
-                          transactions.isNotEmpty
-                              ? ListView.separated(
-                                  shrinkWrap: true,
-                                  cacheExtent: 1000,
-                                  padding: const EdgeInsets.all(8),
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: transactions.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) =>
-                                          _transactionWidgetBuilder(
-                                              context, transactions[index]),
-                                  separatorBuilder:
-                                      (BuildContext context, int index) =>
-                                          const SizedBox(height: 5),
-                                )
-                              : Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                                  child: Text(
-                                    S.of(context).billNoTransactions,
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge,
-                                  ),
-                                ),
-                        ],
-                      ),
+                    SizedBox(
+                      height: 125,
+                      child: BillChart(
+                          billId: widget.billId, transactions: transactions),
                     )
                   ],
+                )),
+                const SizedBox(height: 16),
+                Card(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Text(
+                          S.of(context).billsConnectedTransactionsTitle,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                        ),
+                      ),
+                      transactions.isNotEmpty
+                          ? ListView.separated(
+                              shrinkWrap: true,
+                              cacheExtent: 1000,
+                              padding: const EdgeInsets.all(8),
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: transactions.length,
+                              itemBuilder: (BuildContext context, int index) =>
+                                  _transactionWidgetBuilder(
+                                      context, transactions[index]),
+                              separatorBuilder:
+                                  (BuildContext context, int index) =>
+                                      const SizedBox(height: 5),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                              child: Text(
+                                S.of(context).billNoTransactions,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ),
+                    ],
+                  ),
                 ),
-              );
-            } else if (snapshot.hasError) {
-              log.severe(
-                  "error fetching bill", snapshot.error, snapshot.stackTrace);
-              return Text(snapshot.error!.toString());
-            } else {
-              return const Padding(
-                padding: EdgeInsets.all(8),
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-          },
-        ));
+                const SizedBox(height: 16),
+              ],
+            ),
+          );
+        } else if (snapshot.hasError) {
+          log.severe(
+              "error fetching bill", snapshot.error, snapshot.stackTrace);
+          return Text(snapshot.error!.toString());
+        } else {
+          return const Padding(
+            padding: EdgeInsets.all(8),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
+    );
   }
 
   Widget _transactionWidgetBuilder(
@@ -318,10 +338,6 @@ class _BillDetailsState extends State<BillDetails> {
         decimalPlaces: bill.attributes.currencyDecimalPlaces,
       ),
     );
-  }
-
-  Future<void> _refreshStats() async {
-    setState(() {});
   }
 }
 

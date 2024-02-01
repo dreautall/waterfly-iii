@@ -927,6 +927,10 @@
   "@billsDetailsTitle": {
     "description": "Title for bill details"
   },
+  "billsChartTitle": "Chart",
+  "@billsChartTitle": {
+    "description": "Title for bill chart"
+  },
   "billsConnectedTransactionsTitle": "Connected transactions",
   "@billsConnectedTransactionsTitle": {
     "description": "Title for transactions connected to a bill"

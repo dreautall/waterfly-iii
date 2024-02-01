@@ -13,6 +13,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/bills/billdetails.dart';
+import 'package:waterflyiii/timezonehandler.dart';
 
 class BillsPage extends StatefulWidget {
   const BillsPage({super.key});
@@ -24,6 +25,14 @@ class BillsPage extends StatefulWidget {
 class _BillsPageState extends State<BillsPage>
     with SingleTickerProviderStateMixin {
   final Logger log = Logger("Pages.Bills");
+  late TimeZoneHandler _tzHandler;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tzHandler = context.read<FireflyService>().tzHandler;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +70,10 @@ class _BillsPageState extends State<BillsPage>
 
   Future<Map<String, List<BillRead>>> _fetchBills() async {
     final FireflyIii api = context.read<FireflyService>().api;
-    final DateTime today = DateTime.now();
+    // Start date set to first day of this month (period)
+    final DateTime start = DateTime.now().copyWith(day: 1);
+    // End date set to first day of upcoming month (period)
+    final DateTime end = start.copyWith(month: start.month + 1);
     List<BillRead> bills = <BillRead>[];
     late Response<BillArray> response;
     int pageNumber = 0;
@@ -70,8 +82,8 @@ class _BillsPageState extends State<BillsPage>
       pageNumber += 1;
       response = await api.v1BillsGet(
         page: pageNumber,
-        start: DateTime(today.year, today.month, 1).toString(),
-        end: DateTime(today.year, today.month + 1, 0).toString(),
+        start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
+        end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
       );
 
       if (!response.isSuccessful || response.body == null) {
@@ -122,7 +134,7 @@ class _BillsPageState extends State<BillsPage>
         child: Text(
           groupTitle,
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: Colors.grey,
+                color: Theme.of(context).colorScheme.secondary,
               ),
         ),
       ));
@@ -159,7 +171,7 @@ class _BillsPageState extends State<BillsPage>
           subtitle: Text(
             S.of(context).billFrequency(bill.attributes.repeatFreq.toString()),
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: Colors.grey,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
           ),
           shape: const RoundedRectangleBorder(
@@ -214,18 +226,19 @@ class _BillsPageState extends State<BillsPage>
 
   TextSpan _getExpectedDate(BillRead item) {
     if (!item.attributes.active!) {
+      // Bill is inactive
       return TextSpan(
           text: S.of(context).billInactive,
           style: Theme.of(context)
               .textTheme
               .bodySmall!
-              .copyWith(color: Colors.grey));
+              .copyWith(color: Theme.of(context).colorScheme.secondary));
     } else if (item.attributes.paidDates!.isNotEmpty) {
       // Bill was paid this period
       return TextSpan(
-          text: S
-              .of(context)
-              .billPaidOn(item.attributes.paidDates![0].date!.toLocal()),
+          text: S.of(context).billPaidOn(_tzHandler
+              .sTime(item.attributes.paidDates!.last.date!)
+              .toLocal()),
           style: Theme.of(context)
               .textTheme
               .bodySmall!
@@ -233,9 +246,8 @@ class _BillsPageState extends State<BillsPage>
     } else if (item.attributes.nextExpectedMatch != null) {
       // Bill expected this period
       return TextSpan(
-          text: S
-              .of(context)
-              .billExpectedOn(item.attributes.nextExpectedMatch!.toLocal()),
+          text: S.of(context).billExpectedOn(
+              _tzHandler.sTime(item.attributes.nextExpectedMatch!).toLocal()),
           style: Theme.of(context)
               .textTheme
               .bodySmall!

@@ -992,7 +992,7 @@
       "date": {
         "type": "DateTime",
         "format": "yMMMMd",
-        "example": "2023-05-13"
+        "example": "January 5, 2024"
       }
     }
   },
@@ -1003,7 +1003,7 @@
       "date": {
         "type": "DateTime",
         "format": "yMMMMd",
-        "example": "2023-05-13"
+        "example": "January 5, 2024"
       }
     }
   },

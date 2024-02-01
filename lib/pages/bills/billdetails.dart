@@ -25,23 +25,27 @@ class BillDetails extends StatefulWidget {
 
 class _BillDetailsState extends State<BillDetails> {
   final Logger log = Logger("Pages.BillDetails");
+  late CurrencyRead _currency;
   late TimeZoneHandler _tzHandler;
+
+  late Future<BillTransactionDetails> _futureFetch;
 
   @override
   void initState() {
+    log.finest(() => "initState()");
+
     super.initState();
 
     _tzHandler = context.read<FireflyService>().tzHandler;
+    _futureFetch = _fetchBillDetails();
   }
 
   @override
   Widget build(BuildContext context) {
-    log.finest(() => "build()");
-
     return RefreshIndicator(
         onRefresh: _refreshStats,
         child: FutureBuilder<BillTransactionDetails>(
-          future: _fetchBillDetails(),
+          future: _futureFetch,
           builder: (BuildContext context,
               AsyncSnapshot<BillTransactionDetails> snapshot) {
             if (snapshot.connectionState == ConnectionState.done &&
@@ -50,8 +54,6 @@ class _BillDetailsState extends State<BillDetails> {
               BillRead bill = billTransactionDetails.bill;
               List<TransactionRead> transactions =
                   billTransactionDetails.transactions;
-
-              CurrencyRead currency = _getCurrencyForBill(bill);
 
               return Padding(
                 padding: const EdgeInsets.all(16),
@@ -69,7 +71,7 @@ class _BillDetailsState extends State<BillDetails> {
                                   .textTheme
                                   .titleLarge!
                                   .copyWith(
-                                    color: Colors.grey,
+                                    color: Theme.of(context).colorScheme.secondary,
                                   ),
                             ),
                           ),
@@ -77,16 +79,16 @@ class _BillDetailsState extends State<BillDetails> {
                               title: bill.attributes.amountMax ==
                                       bill.attributes.amountMin
                                   ? Text(S.of(context).billExactAmountAndFrequency(
-                                      currency.fmt(double.tryParse(
+                                      _currency.fmt(double.tryParse(
                                               bill.attributes.amountMin) ??
                                           0),
                                       bill.attributes.repeatFreq.toString()))
                                   : Text(S.of(context).billAmountAndFrequency(
-                                      currency.fmt(
+                                      _currency.fmt(
                                           double.tryParse(bill.attributes.amountMin) ??
                                               0),
-                                      currency.fmt(
-                                          double.tryParse(bill.attributes.amountMax) ?? 0),
+                                      _currency
+                                          .fmt(double.tryParse(bill.attributes.amountMax) ?? 0),
                                       bill.attributes.repeatFreq.toString()))),
                           ListTile(
                             title: Text(S.of(context).billIsActive),
@@ -111,8 +113,9 @@ class _BillDetailsState extends State<BillDetails> {
                           ListTile(
                             title: Text(S.of(context).billNextExpectedMatch),
                             trailing: Text(
-                              DateFormat.yMd().format(
-                                  bill.attributes.payDates![0].toLocal()),
+                              DateFormat.yMMMMd().format(_tzHandler
+                                  .sTime(bill.attributes.payDates![0])
+                                  .toLocal()),
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ),
@@ -132,31 +135,34 @@ class _BillDetailsState extends State<BillDetails> {
                                   .textTheme
                                   .titleLarge!
                                   .copyWith(
-                                    color: Colors.grey,
+                                    color: Theme.of(context).colorScheme.secondary,
                                   ),
                             ),
                           ),
                           transactions.isNotEmpty
-                          ? ListView.separated(
-                              shrinkWrap: true,
-                              cacheExtent: 1000,
-                              padding: const EdgeInsets.all(8),
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: transactions.length,
-                              itemBuilder: (BuildContext context, int index) =>
-                                  _transactionWidgetBuilder(
-                                      context, transactions[index]),
-                              separatorBuilder:
-                                  (BuildContext context, int index) =>
-                                      const SizedBox(height: 5),
-                            )
-                          : Padding(
-                              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                              child: Text(
-                                S.of(context).billNoTransactions,
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                            ),
+                              ? ListView.separated(
+                                  shrinkWrap: true,
+                                  cacheExtent: 1000,
+                                  padding: const EdgeInsets.all(8),
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: transactions.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) =>
+                                          _transactionWidgetBuilder(
+                                              context, transactions[index]),
+                                  separatorBuilder:
+                                      (BuildContext context, int index) =>
+                                          const SizedBox(height: 5),
+                                )
+                              : Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                                  child: Text(
+                                    S.of(context).billNoTransactions,
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
+                                  ),
+                                ),
                         ],
                       ),
                     )
@@ -179,38 +185,6 @@ class _BillDetailsState extends State<BillDetails> {
         ));
   }
 
-  CurrencyRead _getCurrencyForBill(BillRead bill) {
-    return CurrencyRead(
-      id: "0",
-      type: "currencies",
-      attributes: Currency(
-        code: bill.attributes.currencyCode ?? "",
-        name: "",
-        symbol: bill.attributes.currencySymbol ?? "",
-        decimalPlaces: bill.attributes.currencyDecimalPlaces,
-      ),
-    );
-  }
-
-  String _getTransactionAmount(TransactionRead transaction) {
-    double amount =
-        double.tryParse(transaction.attributes.transactions.first.amount) ?? 0;
-
-    final CurrencyRead currency = CurrencyRead(
-      id: "0",
-      type: "currencies",
-      attributes: Currency(
-        code: transaction.attributes.transactions.first.currencyCode ?? "",
-        name: "",
-        symbol: transaction.attributes.transactions.first.currencySymbol ?? "",
-        decimalPlaces:
-            transaction.attributes.transactions.first.currencyDecimalPlaces,
-      ),
-    );
-
-    return currency.fmt(amount);
-  }
-
   Widget _transactionWidgetBuilder(
       BuildContext context, TransactionRead transaction) {
     DateTime date = _tzHandler
@@ -227,7 +201,7 @@ class _BillDetailsState extends State<BillDetails> {
       ),
       closedElevation: 0,
       closedBuilder: (BuildContext context, Function openContainer) => ListTile(
-        title: Text(DateFormat.yMd().format(date)),
+        title: Text(DateFormat.yMMMMd().format(date)),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
@@ -238,7 +212,7 @@ class _BillDetailsState extends State<BillDetails> {
           text: TextSpan(
             text: _getTransactionAmount(transaction),
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: transaction.attributes.transactions.first.type.color,
+              color: Colors.red,
               fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
             ),
           ),
@@ -248,8 +222,20 @@ class _BillDetailsState extends State<BillDetails> {
     );
   }
 
+  String _getTransactionAmount(TransactionRead transaction) {
+    double amount = 0;
+    for (TransactionSplit split in transaction.attributes.transactions) {
+      if (split.billId == widget.billId) {
+        amount += double.tryParse(split.amount) ?? 0;
+      }
+    }
+
+    return _currency.fmt(amount);
+  }
+
   Future<BillTransactionDetails> _fetchBillDetails() async {
     BillRead bill = await _fetchBill();
+    _currency = _getCurrencyForBill(bill);
 
     return BillTransactionDetails(
       bill: bill,
@@ -259,12 +245,16 @@ class _BillDetailsState extends State<BillDetails> {
 
   Future<BillRead> _fetchBill() async {
     final FireflyIii api = context.read<FireflyService>().api;
-    final DateTime today = DateTime.now();
+    // Set start date at epoch to ensure we fetch the whole history
+    final DateTime start = DateTime.utc(-271821, 04, 20);
+    final DateTime now = DateTime.now();
+    // Set end date to the first day of upcoming month (period)
+    final DateTime end = now.copyWith(month: now.month + 1, day: 1);
 
     Response<BillSingle> response = await api.v1BillsIdGet(
       id: widget.billId,
-      start: DateTime.utc(-271821, 04, 20).toString(),
-      end: DateTime(today.year, today.month + 1, 0).toString(),
+      start: start.toString(),
+      end: end.toString(),
     );
 
     if (!response.isSuccessful || response.body == null) {
@@ -315,6 +305,19 @@ class _BillDetailsState extends State<BillDetails> {
         (response.body!.meta.pagination?.totalPages ?? 1));
 
     return transactions;
+  }
+
+  CurrencyRead _getCurrencyForBill(BillRead bill) {
+    return CurrencyRead(
+      id: "0",
+      type: "currencies",
+      attributes: Currency(
+        code: bill.attributes.currencyCode ?? "",
+        name: "",
+        symbol: bill.attributes.currencySymbol ?? "",
+        decimalPlaces: bill.attributes.currencyDecimalPlaces,
+      ),
+    );
   }
 
   Future<void> _refreshStats() async {

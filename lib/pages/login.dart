@@ -268,7 +268,7 @@ class _LoginPageState extends State<LoginPage> {
                       OutlinedButton(
                         onPressed: () async {
                           final Uri uri = Uri.parse(
-                              "https://docs.firefly-iii.org/firefly-iii/api/#personal-access-token");
+                              "https://docs.firefly-iii.org/how-to/firefly-iii/features/api/#personal-access-tokens");
                           if (await canLaunchUrl(uri)) {
                             await launchUrl(uri);
                           } else {

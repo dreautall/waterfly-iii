@@ -36,6 +36,9 @@ The app design is heavily influenced by [Bluecoins](https://play.google.com/stor
 - Categories
   - View monthly transactions split up by category
   - Add, edit & delete categories
+- Bills
+  - View bills and their overview organized into groups
+  - Inspect bill details and see connected transactions
 
 ### Feature Status
 

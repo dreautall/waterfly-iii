@@ -923,20 +923,8 @@
   "@billsUngrouped": {
     "description": "Title for ungrouped bills"
   },
-  "billsDetailsTitle": "Details",
-  "@billsDetailsTitle": {
-    "description": "Title for bill details"
-  },
-  "billsChartTitle": "Chart",
-  "@billsChartTitle": {
-    "description": "Title for bill chart"
-  },
-  "billsConnectedTransactionsTitle": "Connected transactions",
-  "@billsConnectedTransactionsTitle": {
-    "description": "Title for transactions connected to a bill"
-  },
-  "billFrequency": "{frequency, select, weekly{Weekly} monthly{Monthly} quarterly{Quarterly} halfyear{Half-yearly} yearly{Yearly} other{Unknown}}",
-  "@billFrequency": {
+  "billsFrequency": "{frequency, select, weekly{Weekly} monthly{Monthly} quarterly{Quarterly} halfyear{Half-yearly} yearly{Yearly} other{Unknown}}",
+  "@billsFrequency": {
     "description": "Bill frequency",
     "placeholders": {
       "frequency": {
@@ -945,8 +933,8 @@
       }
     }
   },
-  "billAmountAndFrequency": "Bill matches transactions between {minValue} and {maxvalue}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}.",
-  "@billAmountAndFrequency": {
+  "billsAmountAndFrequency": "Bill matches transactions between {minValue} and {maxvalue}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}.",
+  "@billsAmountAndFrequency": {
     "description": "Bill match for min and max amounts, and frequency",
     "placeholders": {
       "minValue": {
@@ -963,8 +951,8 @@
       }
     }
   },
-  "billExactAmountAndFrequency": "Bill matches transactions of {value}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}.",
-  "@billExactAmountAndFrequency": {
+  "billsExactAmountAndFrequency": "Bill matches transactions of {value}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}.",
+  "@billsExactAmountAndFrequency": {
     "description": "Bill match for exact amount and frequency",
     "placeholders": {
       "value": {
@@ -977,20 +965,20 @@
       }
     }
   },
-  "billIsActive": "Bill is active",
-  "@billIsActive": {
+  "billsIsActive": "Bill is active",
+  "@billsIsActive": {
     "description": "Text: whether the bill is active or not"
   },
-  "billNextExpectedMatch": "Next expected match",
-  "@billNextExpectedMatch": {
+  "billsNextExpectedMatch": "Next expected match",
+  "@billsNextExpectedMatch": {
     "description": "Text: next expected match for bill"
   },
-  "billInactive": "Inactive",
-  "@billInactive": {
+  "billsInactive": "Inactive",
+  "@billsInactive": {
     "description": "Text: when the bill is inactive"
   },
-  "billPaidOn": "Paid {date}",
-  "@billPaidOn": {
+  "billsPaidOn": "Paid {date}",
+  "@billsPaidOn": {
     "description": "Describes what date the bill was paid",
     "placeholders": {
       "date": {
@@ -1000,8 +988,8 @@
       }
     }
   },
-  "billExpectedOn": "Expected {date}",
-  "@billExpectedOn": {
+  "billsExpectedOn": "Expected {date}",
+  "@billsExpectedOn": {
     "description": "Describes what date the bill is expected",
     "placeholders": {
       "date": {
@@ -1011,12 +999,16 @@
       }
     }
   },
-  "billNotExpected": "Not expected this period",
-  "@billNotExpected": {
+  "billsNotExpected": "Not expected this period",
+  "@billsNotExpected": {
     "description": "Describes that the bill is not expected this period"
   },
-  "billNoTransactions": "No transactions (yet).",
-  "@billNoTransactions": {
-    "description": "Describes that there are no transactions connected to the bill (yet)"
+  "billsNoTransactions": "No transactions found.",
+  "@billsNoTransactions": {
+    "description": "Describes that there are no transactions connected to the bill"
+  },
+  "billsListEmpty": "The list is currently empty.",
+  "@billsListEmpty": {
+    "description": "Describes that the list is empty"
   }
 }

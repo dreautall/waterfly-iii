@@ -5294,7 +5294,23 @@ paths:
           schema:
             type: string
             example: "123"
-          description: The ID of the bill.
+          description: The ID of the bill.          
+        - in: query
+          name: limit
+          description: Number of items per page. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
+            format: int32
+            example: 10  
+        - in: query
+          name: page
+          description: Page number. The default pagination is per 50 items.
+          required: false
+          schema:
+            type: integer
+            format: int32
+            example: 1
         - in: query
           name: start
           description: |

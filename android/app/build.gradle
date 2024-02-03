@@ -81,6 +81,14 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    // https://github.com/dreautall/waterfly-iii/issues/295
+    dependenciesInfo {
+        // Disables dependency metadata when building APKs.
+        includeInApk = false
+        // Disables dependency metadata when building Android App Bundles.
+        includeInBundle = false
+    }
 }
 
 flutter {

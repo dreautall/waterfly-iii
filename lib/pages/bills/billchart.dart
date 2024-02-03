@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waterflyiii/animations.dart';
+import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.models.swagger.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
@@ -37,30 +38,31 @@ class BillChartState extends State<BillChart> {
         child: SizedBox(
             height: 125,
             child: SfCartesianChart(
-              primaryXAxis: CategoryAxis(
+              primaryXAxis: DateTimeCategoryAxis(
+                dateFormat: DateFormat.MMM(),
                 labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  fontWeight: FontWeight.normal,
-                ),
-                axisLine:
-                AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                      fontWeight: FontWeight.normal,
+                    ),
+                axisLine: AxisLine(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
               primaryYAxis: NumericAxis(
                 labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  fontWeight: FontWeight.normal,
-                ),
-                axisLine:
-                AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
-                axisLabelFormatter: (AxisLabelRenderDetails args) => ChartAxisLabel(
-                    NumberFormat().format(double.parse(args.text)), args.textStyle),
+                      fontWeight: FontWeight.normal,
+                    ),
+                axisLine: AxisLine(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant),
+                axisLabelFormatter: (AxisLabelRenderDetails args) =>
+                    ChartAxisLabel(
+                        NumberFormat().format(double.parse(args.text)),
+                        args.textStyle),
               ),
               series: _getUpdateDataSourceSeries(),
               enableAxisAnimation: false,
               enableSideBySideSeriesPlacement: false,
-            )
-        ),
+            )),
       );
-    }
-    else {
+    } else {
       return const SizedBox(height: 0);
     }
   }
@@ -70,31 +72,34 @@ class BillChartState extends State<BillChart> {
       for (TransactionRead transaction in transactions.reversed) {
         for (TransactionSplit split in transaction.attributes.transactions) {
           if (split.billId == widget.billId) {
-            _values[split.date] = double.tryParse(split.amount) ?? 0;
+            double value = _values[split.date] ?? 0;
+            value += double.tryParse(split.amount) ?? 0;
+            _values[split.date] = value;
           }
         }
       }
     });
   }
 
-  List<CartesianSeries<LabelAmountChart, String>> _getUpdateDataSourceSeries() {
-    final List<LabelAmountChart> chartDataBalance = <LabelAmountChart>[];
-    _values.forEach((DateTime d, double v) => chartDataBalance
-        .add(LabelAmountChart(DateFormat(DateFormat.ABBR_MONTH).format(d), v)));
+  List<CartesianSeries<TimeSeriesChart, DateTime>>
+      _getUpdateDataSourceSeries() {
+    final List<TimeSeriesChart> chartDataBalance = <TimeSeriesChart>[];
+    _values.forEach(
+        (DateTime d, double v) => chartDataBalance.add(TimeSeriesChart(d, v)));
 
-    return <CartesianSeries<LabelAmountChart, String>>[
-      AreaSeries<LabelAmountChart, String>(
+    return <CartesianSeries<TimeSeriesChart, DateTime>>[
+      AreaSeries<TimeSeriesChart, DateTime>(
         dataSource: chartDataBalance,
-        xValueMapper: (LabelAmountChart data, _) => data.label,
-        yValueMapper: (LabelAmountChart data, _) => data.amount,
+        xValueMapper: (TimeSeriesChart data, _) => data.time,
+        yValueMapper: (TimeSeriesChart data, _) => data.value,
         animationDuration: animDurationEmphasized.inMilliseconds.toDouble() * 2,
         color: Colors.blue,
         opacity: 0.4,
       ),
-      LineSeries<LabelAmountChart, String>(
+      LineSeries<TimeSeriesChart, DateTime>(
         dataSource: chartDataBalance,
-        xValueMapper: (LabelAmountChart data, _) => data.label,
-        yValueMapper: (LabelAmountChart data, _) => data.amount,
+        xValueMapper: (TimeSeriesChart data, _) => data.time,
+        yValueMapper: (TimeSeriesChart data, _) => data.value,
         animationDuration: animDurationEmphasized.inMilliseconds.toDouble() * 2,
         color: Colors.blue,
         markerSettings: const MarkerSettings(

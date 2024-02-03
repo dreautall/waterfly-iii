@@ -73,7 +73,7 @@ class _BillDetailsState extends State<BillDetails> {
             child: Column(
               children: <Widget>[
                 Card(
-                  margin: const EdgeInsets.all(0),
+                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 1),
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(16),
@@ -132,8 +132,16 @@ class _BillDetailsState extends State<BillDetails> {
                   ),
                 ),
                 Expanded(
+                    child: RawScrollbar(
+                  radius: const Radius.circular(12),
+                  thickness: 5,
+                  thumbVisibility: true,
+                  thumbColor: Theme.of(context).colorScheme.outlineVariant,
+                  crossAxisMargin: 4,
+                  mainAxisMargin: 4,
                   child: PagedListView<int, TransactionRead>(
                     pagingController: _pagingController,
+                    physics: const ClampingScrollPhysics(),
                     builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
                         animateTransitions: true,
                         transitionDuration: animDurationStandard,
@@ -149,7 +157,7 @@ class _BillDetailsState extends State<BillDetails> {
                                         text: S.of(context).billsNoTransactions,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .titleLarge,
+                                            .titleMedium,
                                         children: <InlineSpan>[
                                           const TextSpan(text: "\n\n"),
                                           TextSpan(
@@ -162,7 +170,7 @@ class _BillDetailsState extends State<BillDetails> {
                               ),
                             )),
                   ),
-                ),
+                )),
               ],
             ),
           );
@@ -321,7 +329,6 @@ class _BillDetailsState extends State<BillDetails> {
     Response<TransactionArray> response = await api.v1BillsIdTransactionsGet(
       id: widget.billId,
       page: page,
-      limit: 5,
     );
 
     if (!response.isSuccessful || response.body == null) {

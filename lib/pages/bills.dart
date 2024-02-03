@@ -49,6 +49,7 @@ class _BillsPageState extends State<BillsPage>
             return ListView(
               cacheExtent: 1000,
               padding: const EdgeInsets.all(8),
+              physics: const ClampingScrollPhysics(),
               children: _groupBuilder(snapshot.data!),
             );
           } else if (snapshot.hasError) {

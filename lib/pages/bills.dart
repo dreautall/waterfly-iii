@@ -68,63 +68,6 @@ class _BillsPageState extends State<BillsPage>
     );
   }
 
-  Future<Map<String, List<BillRead>>> _fetchBills() async {
-    final FireflyIii api = context.read<FireflyService>().api;
-    // Start date set to first day of this month (period)
-    final DateTime start = DateTime.now().copyWith(day: 1);
-    // End date set to first day of upcoming month (period)
-    final DateTime end = start.copyWith(month: start.month + 1);
-    List<BillRead> bills = <BillRead>[];
-    late Response<BillArray> response;
-    int pageNumber = 0;
-
-    do {
-      pageNumber += 1;
-      response = await api.v1BillsGet(
-        page: pageNumber,
-        start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
-        end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
-      );
-
-      if (!response.isSuccessful || response.body == null) {
-        if (context.mounted) {
-          throw Exception(
-            S
-                .of(context)
-                .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-          );
-        } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${response.error}",
-          );
-        }
-      }
-
-      bills.addAll(response.body!.data);
-    } while ((response.body!.meta.pagination?.currentPage ?? 1) <
-        (response.body!.meta.pagination?.totalPages ?? 1));
-
-    bills.sort((BillRead a, BillRead b) => (a.attributes.objectGroupOrder ?? 0)
-        .compareTo(b.attributes.objectGroupOrder ?? 0));
-    Map<String, List<BillRead>> billsMap = <String, List<BillRead>>{};
-
-    for (BillRead bill in bills) {
-      String key =
-          bill.attributes.objectGroupTitle ?? S.of(context).billsUngrouped;
-      if (!billsMap.containsKey(key)) {
-        billsMap[key] = <BillRead>[];
-      }
-
-      billsMap[key]!.add(bill);
-    }
-
-    return billsMap;
-  }
-
-  Future<void> _refreshStats() async {
-    setState(() {});
-  }
-
   List<Widget> _groupBuilder(Map<String, List<BillRead>> bills) {
     List<Widget> widgets = <Widget>[];
 
@@ -156,6 +99,9 @@ class _BillsPageState extends State<BillsPage>
             Scaffold(
           appBar: AppBar(
             title: Text(bill.attributes.name),
+            elevation: 1,
+            scrolledUnderElevation: 1,
+            backgroundColor: Theme.of(context).colorScheme.background,
           ),
           body: BillDetails(billId: bill.id),
         ),
@@ -169,7 +115,7 @@ class _BillsPageState extends State<BillsPage>
             ListTile(
           title: Text(bill.attributes.name),
           subtitle: Text(
-            S.of(context).billFrequency(bill.attributes.repeatFreq.toString()),
+            S.of(context).billsFrequency(bill.attributes.repeatFreq.toString()),
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   color: Theme.of(context).colorScheme.secondary,
                 ),
@@ -228,7 +174,7 @@ class _BillsPageState extends State<BillsPage>
     if (!item.attributes.active!) {
       // Bill is inactive
       return TextSpan(
-          text: S.of(context).billInactive,
+          text: S.of(context).billsInactive,
           style: Theme.of(context)
               .textTheme
               .bodySmall!
@@ -236,7 +182,7 @@ class _BillsPageState extends State<BillsPage>
     } else if (item.attributes.paidDates!.isNotEmpty) {
       // Bill was paid this period
       return TextSpan(
-          text: S.of(context).billPaidOn(_tzHandler
+          text: S.of(context).billsPaidOn(_tzHandler
               .sTime(item.attributes.paidDates!.last.date!)
               .toLocal()),
           style: Theme.of(context)
@@ -246,7 +192,7 @@ class _BillsPageState extends State<BillsPage>
     } else if (item.attributes.nextExpectedMatch != null) {
       // Bill expected this period
       return TextSpan(
-          text: S.of(context).billExpectedOn(
+          text: S.of(context).billsExpectedOn(
               _tzHandler.sTime(item.attributes.nextExpectedMatch!).toLocal()),
           style: Theme.of(context)
               .textTheme
@@ -255,11 +201,68 @@ class _BillsPageState extends State<BillsPage>
     } else {
       // Bill not expected this period
       return TextSpan(
-          text: S.of(context).billNotExpected,
+          text: S.of(context).billsNotExpected,
           style: Theme.of(context)
               .textTheme
               .bodySmall!
               .copyWith(color: Colors.orangeAccent));
     }
+  }
+
+  Future<Map<String, List<BillRead>>> _fetchBills() async {
+    final FireflyIii api = context.read<FireflyService>().api;
+    // Start date set to first day of this month (period)
+    final DateTime start = DateTime.now().copyWith(day: 1);
+    // End date set to first day of upcoming month (period)
+    final DateTime end = start.copyWith(month: start.month + 1);
+    List<BillRead> bills = <BillRead>[];
+    late Response<BillArray> response;
+    int pageNumber = 0;
+
+    do {
+      pageNumber += 1;
+      response = await api.v1BillsGet(
+        page: pageNumber,
+        start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
+        end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
+      );
+
+      if (!response.isSuccessful || response.body == null) {
+        if (context.mounted) {
+          throw Exception(
+            S
+                .of(context)
+                .errorAPIInvalidResponse(response.error?.toString() ?? ""),
+          );
+        } else {
+          throw Exception(
+            "[nocontext] Invalid API response: ${response.error}",
+          );
+        }
+      }
+
+      bills.addAll(response.body!.data);
+    } while ((response.body!.meta.pagination?.currentPage ?? 1) <
+        (response.body!.meta.pagination?.totalPages ?? 1));
+
+    bills.sort((BillRead a, BillRead b) => (a.attributes.objectGroupOrder ?? 0)
+        .compareTo(b.attributes.objectGroupOrder ?? 0));
+    Map<String, List<BillRead>> billsMap = <String, List<BillRead>>{};
+
+    for (BillRead bill in bills) {
+      String key =
+          bill.attributes.objectGroupTitle ?? S.of(context).billsUngrouped;
+      if (!billsMap.containsKey(key)) {
+        billsMap[key] = <BillRead>[];
+      }
+
+      billsMap[key]!.add(bill);
+    }
+
+    return billsMap;
+  }
+
+  Future<void> _refreshStats() async {
+    setState(() {});
   }
 }

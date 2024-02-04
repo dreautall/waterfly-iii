@@ -97,15 +97,7 @@ class _BillsPageState extends State<BillsPage>
     for (BillRead bill in bills) {
       widgets.add(OpenContainer(
         openBuilder: (BuildContext context, Function closedContainer) =>
-            Scaffold(
-          appBar: AppBar(
-            title: Text(bill.attributes.name),
-            elevation: 1,
-            scrolledUnderElevation: 1,
-            backgroundColor: Theme.of(context).colorScheme.background,
-          ),
-          body: BillDetails(billId: bill.id),
-        ),
+          BillDetails(bill: bill),
         openColor: Theme.of(context).cardColor,
         closedColor: Theme.of(context).cardColor,
         closedShape: const RoundedRectangleBorder(

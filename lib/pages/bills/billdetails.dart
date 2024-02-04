@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:animations/animations.dart';
@@ -19,9 +18,9 @@ import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 
 class BillDetails extends StatefulWidget {
-  const BillDetails({super.key, required this.billId});
+  const BillDetails({super.key, required this.bill});
 
-  final String billId;
+  final BillRead bill;
 
   @override
   State<BillDetails> createState() => _BillDetailsState();
@@ -36,9 +35,8 @@ class _BillDetailsState extends State<BillDetails> {
   );
   final GlobalKey<BillChartState> _billChartKey = GlobalKey<BillChartState>();
 
-  late CurrencyRead _currency;
-  late TimeZoneHandler _tzHandler;
-  late Future<BillRead> _futureFetch;
+  late final CurrencyRead _currency;
+  late final TimeZoneHandler _tzHandler;
 
   @override
   void initState() {
@@ -46,8 +44,18 @@ class _BillDetailsState extends State<BillDetails> {
 
     super.initState();
 
+    _currency = CurrencyRead(
+      id: "0",
+      type: "currencies",
+      attributes: Currency(
+        code: widget.bill.attributes.currencyCode ?? "",
+        name: "",
+        symbol: widget.bill.attributes.currencySymbol ?? "",
+        decimalPlaces: widget.bill.attributes.currencyDecimalPlaces,
+      ),
+    );
     _tzHandler = context.read<FireflyService>().tzHandler;
-    _futureFetch = _fetchBill();
+
     _pagingController
         .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
   }
@@ -61,132 +69,124 @@ class _BillDetailsState extends State<BillDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<BillRead>(
-      future: _futureFetch,
-      builder: (BuildContext context, AsyncSnapshot<BillRead> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done &&
-            snapshot.hasData) {
-          BillRead bill = snapshot.data!;
+    log.finest(() => "build()");
 
-          return Padding(
-            padding: const EdgeInsets.all(0),
+    final BillRead bill = widget.bill;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.bill.attributes.name),
+        elevation: 1,
+        scrolledUnderElevation: 1,
+        backgroundColor: Theme.of(context).colorScheme.background,
+      ),
+      body: Column(
+        children: <Widget>[
+          Card(
+            margin: const EdgeInsets.fromLTRB(0, 0, 0, 1),
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(16),
+                  bottomRight: Radius.circular(16),
+                )),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Card(
-                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 1),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(16),
-                    bottomRight: Radius.circular(16),
-                  )),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      ListTile(
-                          title: bill.attributes.amountMax ==
-                                  bill.attributes.amountMin
-                              ? Text(S.of(context).billsExactAmountAndFrequency(
-                                  _currency.fmt(
-                                      double.tryParse(bill.attributes.amountMin) ??
-                                          0),
-                                  bill.attributes.repeatFreq.toString()))
-                              : Text(S.of(context).billsAmountAndFrequency(
-                                  _currency.fmt(
-                                      double.tryParse(bill.attributes.amountMin) ??
-                                          0),
-                                  _currency.fmt(
-                                      double.tryParse(bill.attributes.amountMax) ??
-                                          0),
-                                  bill.attributes.repeatFreq.toString()))),
-                      ListTile(
-                        title: Text(S.of(context).billsIsActive),
-                        trailing: Text.rich(TextSpan(
-                          text: bill.attributes.active!
-                              ? S.of(context).yes
-                              : S.of(context).no,
-                          children: <InlineSpan>[
-                            WidgetSpan(
-                                child: Icon(
-                              bill.attributes.active!
-                                  ? Icons.check
-                                  : Icons.close,
-                              color: bill.attributes.active!
-                                  ? Colors.green
-                                  : Colors.red,
-                            )),
-                          ],
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        )),
-                      ),
-                      ListTile(
-                        title: Text(S.of(context).billsNextExpectedMatch),
-                        trailing: Text(
-                          DateFormat.yMMMMd().format(_tzHandler
-                              .sTime(bill.attributes.payDates![0])
-                              .toLocal()),
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                      ),
-                      BillChart(key: _billChartKey, billId: bill.id),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor:
+                    Theme.of(context).colorScheme.secondary,
+                    child: Icon(
+                      Icons.info_outline,
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ),
+                  ),
+                  title: bill.attributes.amountMax ==
+                      bill.attributes.amountMin
+                      ? Text(S.of(context).billsExactAmountAndFrequency(
+                      _currency.fmt(
+                          double.tryParse(bill.attributes.amountMin) ??
+                              0),
+                      bill.attributes.repeatFreq.toString()))
+                      : Text(S.of(context).billsAmountAndFrequency(
+                      _currency.fmt(
+                          double.tryParse(bill.attributes.amountMin) ??
+                              0),
+                      _currency.fmt(
+                          double.tryParse(bill.attributes.amountMax) ??
+                              0),
+                      bill.attributes.repeatFreq.toString())),
+                ),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor:
+                    Theme.of(context).colorScheme.secondary,
+                    child: Icon(
+                      Icons.check_box_outlined,
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ),
+                  ),
+                  title: Text(S.of(context).billsIsActive),
+                  trailing: Text.rich(TextSpan(
+                    text: bill.attributes.active!
+                        ? S.of(context).yes
+                        : S.of(context).no,
+                    children: <InlineSpan>[
+                      WidgetSpan(
+                          child: Icon(
+                            bill.attributes.active! ? Icons.check : Icons.close,
+                            color: bill.attributes.active!
+                                ? Colors.green
+                                : Colors.red,
+                          )),
                     ],
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  )),
+                ),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor:
+                    Theme.of(context).colorScheme.secondary,
+                    child: Icon(
+                      Icons.calendar_month,
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ),
+                  ),
+                  title: Text(S.of(context).billsNextExpectedMatch),
+                  trailing: Text(
+                    DateFormat.yMMMMd().format(_tzHandler
+                        .sTime(bill.attributes.payDates![0])
+                        .toLocal()),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
-                Expanded(
-                    child: RawScrollbar(
-                  radius: const Radius.circular(12),
-                  thickness: 5,
-                  thumbVisibility: true,
-                  thumbColor: Theme.of(context).colorScheme.outlineVariant,
-                  crossAxisMargin: 4,
-                  mainAxisMargin: 4,
-                  child: PagedListView<int, TransactionRead>(
-                    pagingController: _pagingController,
-                    physics: const ClampingScrollPhysics(),
-                    builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
-                        animateTransitions: true,
-                        transitionDuration: animDurationStandard,
-                        itemBuilder: _transactionRowBuilder,
-                        noItemsFoundIndicatorBuilder: (BuildContext context) =>
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                              child: Align(
-                                alignment: Alignment.topCenter,
-                                child: Text.rich(
-                                    textAlign: TextAlign.center,
-                                    TextSpan(
-                                        text: S.of(context).billsNoTransactions,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium,
-                                        children: <InlineSpan>[
-                                          const TextSpan(text: "\n\n"),
-                                          TextSpan(
-                                            text: S.of(context).billsListEmpty,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium,
-                                          )
-                                        ])),
-                              ),
-                            )),
-                  ),
-                )),
+                const SizedBox(height: 8),
+                BillChart(key: _billChartKey, billId: bill.id),
               ],
             ),
-          );
-        } else if (snapshot.hasError) {
-          log.severe(
-              "error fetching bill", snapshot.error, snapshot.stackTrace);
-          return Text(snapshot.error!.toString());
-        } else {
-          return const Padding(
-            padding: EdgeInsets.all(8),
-            child: Center(
-              child: CircularProgressIndicator(),
+          ),
+          Expanded(
+            child: RawScrollbar(
+              radius: const Radius.circular(12),
+              thickness: 5,
+              thumbVisibility: true,
+              thumbColor: Theme.of(context).colorScheme.outlineVariant,
+              crossAxisMargin: 4,
+              mainAxisMargin: 4,
+              child: PagedListView<int, TransactionRead>(
+                pagingController: _pagingController,
+                physics: const ClampingScrollPhysics(),
+                builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
+                  animateTransitions: true,
+                  transitionDuration: animDurationStandard,
+                  itemBuilder: _transactionRowBuilder,
+                  noItemsFoundIndicatorBuilder: _emptyListBuilder,
+                ),
+              ),
             ),
-          );
-        }
-      },
+          ),
+        ],
+      ),
     );
   }
 
@@ -263,7 +263,7 @@ class _BillDetailsState extends State<BillDetails> {
   String _getTransactionAmount(TransactionRead transaction) {
     double amount = 0;
     for (TransactionSplit split in transaction.attributes.transactions) {
-      if (split.billId == widget.billId) {
+      if (split.billId == widget.bill.id) {
         amount += double.tryParse(split.amount) ?? 0;
       }
     }
@@ -273,61 +273,42 @@ class _BillDetailsState extends State<BillDetails> {
 
   String _getTransactionSource(TransactionRead transaction) {
     for (TransactionSplit split in transaction.attributes.transactions) {
-      if (split.billId == widget.billId) {
+      if (split.billId == widget.bill.id) {
         return split.sourceName!;
       }
     }
     return "";
   }
 
-  Future<BillRead> _fetchBill() async {
-    final FireflyIii api = context.read<FireflyService>().api;
-    // Set start date at epoch to ensure we fetch the whole history
-    final DateTime start = DateTime.utc(-271821, 04, 20);
-    final DateTime now = DateTime.now();
-    // Set end date to the first day of upcoming month (period)
-    final DateTime end = now.copyWith(month: now.month + 1, day: 1);
-
-    Response<BillSingle> response = await api.v1BillsIdGet(
-      id: widget.billId,
-      start: start.toString(),
-      end: end.toString(),
-    );
-
-    if (!response.isSuccessful || response.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${response.error}",
-        );
-      }
-    }
-
-    BillRead bill = response.body!.data;
-    _currency = CurrencyRead(
-      id: "0",
-      type: "currencies",
-      attributes: Currency(
-        code: bill.attributes.currencyCode ?? "",
-        name: "",
-        symbol: bill.attributes.currencySymbol ?? "",
-        decimalPlaces: bill.attributes.currencyDecimalPlaces,
+  Widget _emptyListBuilder(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Text.rich(
+            textAlign: TextAlign.center,
+            TextSpan(
+                text: S.of(context).billsNoTransactions,
+                style:
+                Theme.of(context).textTheme.titleMedium,
+                children: <InlineSpan>[
+                  const TextSpan(text: "\n\n"),
+                  TextSpan(
+                    text: S.of(context).billsListEmpty,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium,
+                  )
+                ])),
       ),
     );
-
-    return bill;
   }
 
   Future<void> _fetchPage(int page) async {
     final FireflyIii api = context.read<FireflyService>().api;
 
     Response<TransactionArray> response = await api.v1BillsIdTransactionsGet(
-      id: widget.billId,
+      id: widget.bill.id,
       page: page,
     );
 

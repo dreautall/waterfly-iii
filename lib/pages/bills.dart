@@ -44,15 +44,10 @@ class _BillsPageState extends State<BillsPage>
         future: _fetchBills(),
         builder: (BuildContext context,
             AsyncSnapshot<Map<String, List<BillRead>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.hasData) {
-            return ListView(
-              cacheExtent: 1000,
-              padding: const EdgeInsets.all(8),
-              physics: const ClampingScrollPhysics(),
-              children: _groupBuilder(snapshot.data!),
-            );
-          } else if (snapshot.hasError) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
             log.severe(
               "error fetching bills",
               snapshot.error,
@@ -67,14 +62,13 @@ class _BillsPageState extends State<BillsPage>
                     ?.copyWith(color: Theme.of(context).colorScheme.error),
               ),
             );
-          } else {
-            return const Padding(
-              padding: EdgeInsets.all(8),
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
           }
+          return ListView(
+            cacheExtent: 1000,
+            padding: const EdgeInsets.all(8),
+            physics: const ClampingScrollPhysics(),
+            children: _groupBuilder(snapshot.data!),
+          );
         },
       ),
     );

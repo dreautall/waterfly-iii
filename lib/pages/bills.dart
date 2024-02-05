@@ -39,7 +39,7 @@ class _BillsPageState extends State<BillsPage>
     log.finest(() => "build()");
 
     return RefreshIndicator(
-      onRefresh: _refreshStats,
+      onRefresh: () async => setState(() {}),
       child: FutureBuilder<Map<String, List<BillRead>>>(
         future: _fetchBills(),
         builder: (BuildContext context,
@@ -54,8 +54,19 @@ class _BillsPageState extends State<BillsPage>
             );
           } else if (snapshot.hasError) {
             log.severe(
-                "error fetching bills", snapshot.error, snapshot.stackTrace);
-            return Text(snapshot.error!.toString());
+              "error fetching bills",
+              snapshot.error,
+              snapshot.stackTrace,
+            );
+            return Center(
+              child: Text(
+                S.of(context).billsErrorLoading,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineLarge
+                    ?.copyWith(color: Theme.of(context).colorScheme.error),
+              ),
+            );
           } else {
             return const Padding(
               padding: EdgeInsets.all(8),
@@ -97,7 +108,7 @@ class _BillsPageState extends State<BillsPage>
     for (BillRead bill in bills) {
       widgets.add(OpenContainer(
         openBuilder: (BuildContext context, Function closedContainer) =>
-          BillDetails(bill: bill),
+            BillDetails(bill: bill),
         openColor: Theme.of(context).cardColor,
         closedColor: Theme.of(context).cardColor,
         closedShape: const RoundedRectangleBorder(
@@ -243,8 +254,8 @@ class _BillsPageState extends State<BillsPage>
     Map<String, List<BillRead>> billsMap = <String, List<BillRead>>{};
 
     for (BillRead bill in bills) {
-      String key =
-          bill.attributes.objectGroupTitle ?? S.of(context).billsUngrouped;
+      String key = bill.attributes.objectGroupTitle ??
+          (context.mounted ? S.of(context).billsUngrouped : "");
       if (!billsMap.containsKey(key)) {
         billsMap[key] = <BillRead>[];
       }
@@ -253,9 +264,5 @@ class _BillsPageState extends State<BillsPage>
     }
 
     return billsMap;
-  }
-
-  Future<void> _refreshStats() async {
-    setState(() {});
   }
 }

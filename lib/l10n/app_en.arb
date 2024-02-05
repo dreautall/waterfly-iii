@@ -919,6 +919,10 @@
   "@no": {
     "description": "The word no"
   },
+  "billsErrorLoading": "Error loading bills.",
+  "@billsErrorLoading": {
+    "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+  },
   "billsUngrouped": "Ungrouped",
   "@billsUngrouped": {
     "description": "Title for ungrouped bills"

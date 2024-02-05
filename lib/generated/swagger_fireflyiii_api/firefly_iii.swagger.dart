@@ -28,6 +28,7 @@ abstract class FireflyIii extends ChopperService {
     ChopperClient? client,
     http.Client? httpClient,
     Authenticator? authenticator,
+    ErrorConverter? errorConverter,
     Converter? converter,
     Uri? baseUrl,
     Iterable<dynamic>? interceptors,
@@ -42,6 +43,7 @@ abstract class FireflyIii extends ChopperService {
         interceptors: interceptors ?? [],
         client: httpClient,
         authenticator: authenticator,
+        errorConverter: errorConverter,
         baseUrl: baseUrl ?? Uri.parse('http://'));
     return _$FireflyIii(newClient);
   }
@@ -2163,12 +2165,16 @@ abstract class FireflyIii extends ChopperService {
   ///List all transactions associated with the  bill.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the bill.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param type Optional filter on the transaction type(s) returned
   Future<chopper.Response<TransactionArray>> v1BillsIdTransactionsGet({
     String? xTraceId,
     required String? id,
+    int? limit,
+    int? page,
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
@@ -2179,6 +2185,8 @@ abstract class FireflyIii extends ChopperService {
     return _v1BillsIdTransactionsGet(
         xTraceId: xTraceId?.toString(),
         id: id,
+        limit: limit,
+        page: page,
         start: start,
         end: end,
         type: type?.value?.toString());
@@ -2187,6 +2195,8 @@ abstract class FireflyIii extends ChopperService {
   ///List all transactions associated with the  bill.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the bill.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param type Optional filter on the transaction type(s) returned
@@ -2194,6 +2204,8 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<TransactionArray>> _v1BillsIdTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @Query('limit') int? limit,
+    @Query('page') int? page,
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
@@ -4724,10 +4736,13 @@ abstract class FireflyIii extends ChopperService {
   ///Enable a single currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param code The currency code.
-  Future<chopper.Response> v1CurrenciesCodeEnablePost({
+  Future<chopper.Response<CurrencySingle>> v1CurrenciesCodeEnablePost({
     String? xTraceId,
     required String? code,
   }) {
+    generatedMapping.putIfAbsent(
+        CurrencySingle, () => CurrencySingle.fromJsonFactory);
+
     return _v1CurrenciesCodeEnablePost(
         xTraceId: xTraceId?.toString(), code: code);
   }
@@ -4739,7 +4754,7 @@ abstract class FireflyIii extends ChopperService {
     path: '/v1/currencies/{code}/enable',
     optionalBody: true,
   )
-  Future<chopper.Response> _v1CurrenciesCodeEnablePost({
+  Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodeEnablePost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
   });
@@ -4747,10 +4762,13 @@ abstract class FireflyIii extends ChopperService {
   ///Disable a currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param code The currency code.
-  Future<chopper.Response> v1CurrenciesCodeDisablePost({
+  Future<chopper.Response<CurrencySingle>> v1CurrenciesCodeDisablePost({
     String? xTraceId,
     required String? code,
   }) {
+    generatedMapping.putIfAbsent(
+        CurrencySingle, () => CurrencySingle.fromJsonFactory);
+
     return _v1CurrenciesCodeDisablePost(
         xTraceId: xTraceId?.toString(), code: code);
   }
@@ -4762,7 +4780,7 @@ abstract class FireflyIii extends ChopperService {
     path: '/v1/currencies/{code}/disable',
     optionalBody: true,
   )
-  Future<chopper.Response> _v1CurrenciesCodeDisablePost({
+  Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodeDisablePost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
   });
@@ -4770,10 +4788,13 @@ abstract class FireflyIii extends ChopperService {
   ///Make currency default currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param code The currency code.
-  Future<chopper.Response> v1CurrenciesCodeDefaultPost({
+  Future<chopper.Response<CurrencySingle>> v1CurrenciesCodeDefaultPost({
     String? xTraceId,
     required String? code,
   }) {
+    generatedMapping.putIfAbsent(
+        CurrencySingle, () => CurrencySingle.fromJsonFactory);
+
     return _v1CurrenciesCodeDefaultPost(
         xTraceId: xTraceId?.toString(), code: code);
   }
@@ -4785,7 +4806,7 @@ abstract class FireflyIii extends ChopperService {
     path: '/v1/currencies/{code}/default',
     optionalBody: true,
   )
-  Future<chopper.Response> _v1CurrenciesCodeDefaultPost({
+  Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodeDefaultPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
   });
@@ -4818,7 +4839,7 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<CurrencySingle>> v1CurrenciesCodePut({
     String? xTraceId,
     required String? code,
-    required CurrencyUpdate body,
+    required Map<String, String> body,
   }) {
     generatedMapping.putIfAbsent(
         CurrencySingle, () => CurrencySingle.fromJsonFactory);
@@ -4832,13 +4853,13 @@ abstract class FireflyIii extends ChopperService {
   ///@param code The currency code.
   @Put(
     path: '/v1/currencies/{code}',
-    optionalBody: true,
+    headers: {contentTypeKey: formEncodedHeaders},
   )
-  @Multipart()
+  @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
   Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodePut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
-    @Part() required CurrencyUpdate body,
+    @Body() required Map<String, String> body,
   });
 
   ///Delete a currency.

@@ -652,7 +652,7 @@ class BudgetLimitV2 {
     this.currencyName,
     this.currencySymbol,
     this.currencyDecimalPlaces,
-    required this.budgetId,
+    this.budgetId,
     this.period,
     required this.amount,
   });
@@ -682,7 +682,7 @@ class BudgetLimitV2 {
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
   @JsonKey(name: 'budget_id', includeIfNull: false)
-  final String budgetId;
+  final String? budgetId;
   @JsonKey(name: 'period', includeIfNull: false)
   final String? period;
   @JsonKey(name: 'amount', includeIfNull: false)
@@ -733,7 +733,7 @@ extension $BudgetLimitV2Extension on BudgetLimitV2 {
       Wrapped<String?>? currencyName,
       Wrapped<String?>? currencySymbol,
       Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String>? budgetId,
+      Wrapped<String?>? budgetId,
       Wrapped<String?>? period,
       Wrapped<String>? amount}) {
     return BudgetLimitV2(
@@ -1355,7 +1355,7 @@ class PiggyBankV2 {
     this.nativeCurrencyDecimalPlaces,
     this.currentAmount,
     this.nativeCurrentAmount,
-    required this.targetAmount,
+    this.targetAmount,
     this.nativeTargetAmount,
     this.percentage,
     this.leftToSave,
@@ -1918,10 +1918,10 @@ class Subscription {
   @JsonKey(
     name: 'repeat_freq',
     includeIfNull: false,
-    toJson: subscriptionRepeatPropertyNullableToJson,
-    fromJson: subscriptionRepeatPropertyNullableFromJson,
+    toJson: subscriptionRepeatPropertyToJson,
+    fromJson: subscriptionRepeatPropertyFromJson,
   )
-  final enums.SubscriptionRepeatProperty? repeatFreq;
+  final enums.SubscriptionRepeatProperty repeatFreq;
   @JsonKey(name: 'skip', includeIfNull: false)
   final int? skip;
   @JsonKey(name: 'active', includeIfNull: false)
@@ -2037,7 +2037,7 @@ extension $SubscriptionExtension on Subscription {
       Wrapped<DateTime>? date,
       Wrapped<DateTime?>? endDate,
       Wrapped<DateTime?>? extensionDate,
-      Wrapped<enums.SubscriptionRepeatProperty?>? repeatFreq,
+      Wrapped<enums.SubscriptionRepeatProperty>? repeatFreq,
       Wrapped<int?>? skip,
       Wrapped<bool?>? active,
       Wrapped<int?>? order,
@@ -2456,11 +2456,11 @@ class TransactionV2Split {
     this.foreignCurrencySymbol,
     this.foreignCurrencyDecimalPlaces,
     required this.description,
-    required this.sourceId,
+    this.sourceId,
     this.sourceName,
     this.sourceIban,
     this.sourceType,
-    required this.destinationId,
+    this.destinationId,
     this.destinationName,
     this.destinationIban,
     this.destinationType,
@@ -3601,7 +3601,7 @@ class BasicSummaryV2 {
 class BasicSummaryV2Entry {
   const BasicSummaryV2Entry({
     this.key,
-    this.value,
+    this.$value,
     this.currencyId,
     this.currencyCode,
     this.currencySymbol,
@@ -3617,7 +3617,7 @@ class BasicSummaryV2Entry {
   @JsonKey(name: 'key', includeIfNull: false)
   final String? key;
   @JsonKey(name: 'value', includeIfNull: false)
-  final double? value;
+  final double? $value;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
@@ -3635,14 +3635,14 @@ class BasicSummaryV2Entry {
 extension $BasicSummaryV2EntryExtension on BasicSummaryV2Entry {
   BasicSummaryV2Entry copyWith(
       {String? key,
-      double? value,
+      double? $value,
       String? currencyId,
       String? currencyCode,
       String? currencySymbol,
       int? currencyDecimalPlaces}) {
     return BasicSummaryV2Entry(
         key: key ?? this.key,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         currencyId: currencyId ?? this.currencyId,
         currencyCode: currencyCode ?? this.currencyCode,
         currencySymbol: currencySymbol ?? this.currencySymbol,
@@ -3652,14 +3652,14 @@ extension $BasicSummaryV2EntryExtension on BasicSummaryV2Entry {
 
   BasicSummaryV2Entry copyWithWrapped(
       {Wrapped<String?>? key,
-      Wrapped<double?>? value,
+      Wrapped<double?>? $value,
       Wrapped<String?>? currencyId,
       Wrapped<String?>? currencyCode,
       Wrapped<String?>? currencySymbol,
       Wrapped<int?>? currencyDecimalPlaces}) {
     return BasicSummaryV2Entry(
         key: (key != null ? key.value : this.key),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         currencyId: (currencyId != null ? currencyId.value : this.currencyId),
         currencyCode:
             (currencyCode != null ? currencyCode.value : this.currencyCode),
@@ -4121,9 +4121,8 @@ enums.ChartV2PeriodProperty chartV2PeriodPropertyFromJson(
   Object? chartV2PeriodProperty, [
   enums.ChartV2PeriodProperty? defaultValue,
 ]) {
-  return enums.ChartV2PeriodProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          chartV2PeriodProperty?.toString().toLowerCase()) ??
+  return enums.ChartV2PeriodProperty.values
+          .firstWhereOrNull((e) => e.value == chartV2PeriodProperty) ??
       defaultValue ??
       enums.ChartV2PeriodProperty.swaggerGeneratedUnknown;
 }
@@ -4192,9 +4191,8 @@ enums.PeriodProperty periodPropertyFromJson(
   Object? periodProperty, [
   enums.PeriodProperty? defaultValue,
 ]) {
-  return enums.PeriodProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          periodProperty?.toString().toLowerCase()) ??
+  return enums.PeriodProperty.values
+          .firstWhereOrNull((e) => e.value == periodProperty) ??
       defaultValue ??
       enums.PeriodProperty.swaggerGeneratedUnknown;
 }
@@ -4265,9 +4263,8 @@ enums.PreselectedAccountProperty preselectedAccountPropertyFromJson(
   Object? preselectedAccountProperty, [
   enums.PreselectedAccountProperty? defaultValue,
 ]) {
-  return enums.PreselectedAccountProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          preselectedAccountProperty?.toString().toLowerCase()) ??
+  return enums.PreselectedAccountProperty.values
+          .firstWhereOrNull((e) => e.value == preselectedAccountProperty) ??
       defaultValue ??
       enums.PreselectedAccountProperty.swaggerGeneratedUnknown;
 }
@@ -4339,9 +4336,8 @@ enums.SubscriptionRepeatProperty subscriptionRepeatPropertyFromJson(
   Object? subscriptionRepeatProperty, [
   enums.SubscriptionRepeatProperty? defaultValue,
 ]) {
-  return enums.SubscriptionRepeatProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          subscriptionRepeatProperty?.toString().toLowerCase()) ??
+  return enums.SubscriptionRepeatProperty.values
+          .firstWhereOrNull((e) => e.value == subscriptionRepeatProperty) ??
       defaultValue ??
       enums.SubscriptionRepeatProperty.swaggerGeneratedUnknown;
 }
@@ -4413,9 +4409,8 @@ enums.AccountRoleProperty accountRolePropertyFromJson(
   Object? accountRoleProperty, [
   enums.AccountRoleProperty? defaultValue,
 ]) {
-  return enums.AccountRoleProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          accountRoleProperty?.toString().toLowerCase()) ??
+  return enums.AccountRoleProperty.values
+          .firstWhereOrNull((e) => e.value == accountRoleProperty) ??
       defaultValue ??
       enums.AccountRoleProperty.swaggerGeneratedUnknown;
 }
@@ -4486,9 +4481,8 @@ enums.AccountTypeProperty accountTypePropertyFromJson(
   Object? accountTypeProperty, [
   enums.AccountTypeProperty? defaultValue,
 ]) {
-  return enums.AccountTypeProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          accountTypeProperty?.toString().toLowerCase()) ??
+  return enums.AccountTypeProperty.values
+          .firstWhereOrNull((e) => e.value == accountTypeProperty) ??
       defaultValue ??
       enums.AccountTypeProperty.swaggerGeneratedUnknown;
 }
@@ -4559,9 +4553,8 @@ enums.CreditCardTypeProperty creditCardTypePropertyFromJson(
   Object? creditCardTypeProperty, [
   enums.CreditCardTypeProperty? defaultValue,
 ]) {
-  return enums.CreditCardTypeProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          creditCardTypeProperty?.toString().toLowerCase()) ??
+  return enums.CreditCardTypeProperty.values
+          .firstWhereOrNull((e) => e.value == creditCardTypeProperty) ??
       defaultValue ??
       enums.CreditCardTypeProperty.swaggerGeneratedUnknown;
 }
@@ -4632,9 +4625,8 @@ enums.InterestPeriodProperty interestPeriodPropertyFromJson(
   Object? interestPeriodProperty, [
   enums.InterestPeriodProperty? defaultValue,
 ]) {
-  return enums.InterestPeriodProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          interestPeriodProperty?.toString().toLowerCase()) ??
+  return enums.InterestPeriodProperty.values
+          .firstWhereOrNull((e) => e.value == interestPeriodProperty) ??
       defaultValue ??
       enums.InterestPeriodProperty.swaggerGeneratedUnknown;
 }
@@ -4705,9 +4697,8 @@ enums.LiabilityDirectionProperty liabilityDirectionPropertyFromJson(
   Object? liabilityDirectionProperty, [
   enums.LiabilityDirectionProperty? defaultValue,
 ]) {
-  return enums.LiabilityDirectionProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          liabilityDirectionProperty?.toString().toLowerCase()) ??
+  return enums.LiabilityDirectionProperty.values
+          .firstWhereOrNull((e) => e.value == liabilityDirectionProperty) ??
       defaultValue ??
       enums.LiabilityDirectionProperty.swaggerGeneratedUnknown;
 }
@@ -4779,9 +4770,8 @@ enums.LiabilityTypeProperty liabilityTypePropertyFromJson(
   Object? liabilityTypeProperty, [
   enums.LiabilityTypeProperty? defaultValue,
 ]) {
-  return enums.LiabilityTypeProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          liabilityTypeProperty?.toString().toLowerCase()) ??
+  return enums.LiabilityTypeProperty.values
+          .firstWhereOrNull((e) => e.value == liabilityTypeProperty) ??
       defaultValue ??
       enums.LiabilityTypeProperty.swaggerGeneratedUnknown;
 }
@@ -4852,9 +4842,8 @@ enums.ShortAccountTypeProperty shortAccountTypePropertyFromJson(
   Object? shortAccountTypeProperty, [
   enums.ShortAccountTypeProperty? defaultValue,
 ]) {
-  return enums.ShortAccountTypeProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          shortAccountTypeProperty?.toString().toLowerCase()) ??
+  return enums.ShortAccountTypeProperty.values
+          .firstWhereOrNull((e) => e.value == shortAccountTypeProperty) ??
       defaultValue ??
       enums.ShortAccountTypeProperty.swaggerGeneratedUnknown;
 }
@@ -4926,9 +4915,8 @@ enums.TransactionTypeProperty transactionTypePropertyFromJson(
   Object? transactionTypeProperty, [
   enums.TransactionTypeProperty? defaultValue,
 ]) {
-  return enums.TransactionTypeProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          transactionTypeProperty?.toString().toLowerCase()) ??
+  return enums.TransactionTypeProperty.values
+          .firstWhereOrNull((e) => e.value == transactionTypeProperty) ??
       defaultValue ??
       enums.TransactionTypeProperty.swaggerGeneratedUnknown;
 }
@@ -4999,9 +4987,8 @@ enums.AccountTypeFilter accountTypeFilterFromJson(
   Object? accountTypeFilter, [
   enums.AccountTypeFilter? defaultValue,
 ]) {
-  return enums.AccountTypeFilter.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          accountTypeFilter?.toString().toLowerCase()) ??
+  return enums.AccountTypeFilter.values
+          .firstWhereOrNull((e) => e.value == accountTypeFilter) ??
       defaultValue ??
       enums.AccountTypeFilter.swaggerGeneratedUnknown;
 }
@@ -5072,9 +5059,8 @@ enums.TransactionTypeFilter transactionTypeFilterFromJson(
   Object? transactionTypeFilter, [
   enums.TransactionTypeFilter? defaultValue,
 ]) {
-  return enums.TransactionTypeFilter.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          transactionTypeFilter?.toString().toLowerCase()) ??
+  return enums.TransactionTypeFilter.values
+          .firstWhereOrNull((e) => e.value == transactionTypeFilter) ??
       defaultValue ??
       enums.TransactionTypeFilter.swaggerGeneratedUnknown;
 }

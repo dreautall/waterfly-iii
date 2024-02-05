@@ -1716,7 +1716,7 @@ Attachment _$AttachmentFromJson(Map<String, dynamic> json) => Attachment(
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
-      attachableType: attachableTypeNullableFromJson(json['attachable_type']),
+      attachableType: attachableTypeFromJson(json['attachable_type']),
       attachableId: json['attachable_id'] as String,
       md5: json['md5'] as String?,
       filename: json['filename'] as String,
@@ -1740,7 +1740,7 @@ Map<String, dynamic> _$AttachmentToJson(Attachment instance) {
   writeNotNull('created_at', instance.createdAt?.toIso8601String());
   writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
   writeNotNull(
-      'attachable_type', attachableTypeNullableToJson(instance.attachableType));
+      'attachable_type', attachableTypeToJson(instance.attachableType));
   val['attachable_id'] = instance.attachableId;
   writeNotNull('md5', instance.md5);
   val['filename'] = instance.filename;
@@ -1756,7 +1756,7 @@ Map<String, dynamic> _$AttachmentToJson(Attachment instance) {
 AttachmentStore _$AttachmentStoreFromJson(Map<String, dynamic> json) =>
     AttachmentStore(
       filename: json['filename'] as String,
-      attachableType: attachableTypeNullableFromJson(json['attachable_type']),
+      attachableType: attachableTypeFromJson(json['attachable_type']),
       attachableId: json['attachable_id'] as String,
       title: json['title'] as String?,
       notes: json['notes'] as String?,
@@ -1774,7 +1774,7 @@ Map<String, dynamic> _$AttachmentStoreToJson(AttachmentStore instance) {
   }
 
   writeNotNull(
-      'attachable_type', attachableTypeNullableToJson(instance.attachableType));
+      'attachable_type', attachableTypeToJson(instance.attachableType));
   val['attachable_id'] = instance.attachableId;
   writeNotNull('title', instance.title);
   writeNotNull('notes', instance.notes);
@@ -1874,7 +1874,7 @@ Bill _$BillFromJson(Map<String, dynamic> json) => Bill(
       extensionDate: json['extension_date'] == null
           ? null
           : DateTime.parse(json['extension_date'] as String),
-      repeatFreq: billRepeatFrequencyNullableFromJson(json['repeat_freq']),
+      repeatFreq: billRepeatFrequencyFromJson(json['repeat_freq']),
       skip: json['skip'] as int?,
       active: json['active'] as bool?,
       order: json['order'] as int?,
@@ -1916,8 +1916,7 @@ Map<String, dynamic> _$BillToJson(Bill instance) {
   val['date'] = instance.date.toIso8601String();
   writeNotNull('end_date', instance.endDate?.toIso8601String());
   writeNotNull('extension_date', instance.extensionDate?.toIso8601String());
-  writeNotNull(
-      'repeat_freq', billRepeatFrequencyNullableToJson(instance.repeatFreq));
+  writeNotNull('repeat_freq', billRepeatFrequencyToJson(instance.repeatFreq));
   writeNotNull('skip', instance.skip);
   writeNotNull('active', instance.active);
   writeNotNull('order', instance.order);
@@ -1948,7 +1947,7 @@ BillStore _$BillStoreFromJson(Map<String, dynamic> json) => BillStore(
       extensionDate: json['extension_date'] == null
           ? null
           : DateTime.parse(json['extension_date'] as String),
-      repeatFreq: billRepeatFrequencyNullableFromJson(json['repeat_freq']),
+      repeatFreq: billRepeatFrequencyFromJson(json['repeat_freq']),
       skip: json['skip'] as int?,
       active: json['active'] as bool?,
       notes: json['notes'] as String?,
@@ -1973,8 +1972,7 @@ Map<String, dynamic> _$BillStoreToJson(BillStore instance) {
   val['date'] = instance.date.toIso8601String();
   writeNotNull('end_date', instance.endDate?.toIso8601String());
   writeNotNull('extension_date', instance.extensionDate?.toIso8601String());
-  writeNotNull(
-      'repeat_freq', billRepeatFrequencyNullableToJson(instance.repeatFreq));
+  writeNotNull('repeat_freq', billRepeatFrequencyToJson(instance.repeatFreq));
   writeNotNull('skip', instance.skip);
   writeNotNull('active', instance.active);
   writeNotNull('notes', instance.notes);
@@ -2169,7 +2167,7 @@ BudgetLimit _$BudgetLimitFromJson(Map<String, dynamic> json) => BudgetLimit(
       currencyName: json['currency_name'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
       currencyDecimalPlaces: json['currency_decimal_places'] as int?,
-      budgetId: json['budget_id'] as String,
+      budgetId: json['budget_id'] as String?,
       period: json['period'] as String?,
       amount: json['amount'] as String,
       spent: json['spent'] as String?,
@@ -2193,7 +2191,7 @@ Map<String, dynamic> _$BudgetLimitToJson(BudgetLimit instance) {
   writeNotNull('currency_name', instance.currencyName);
   writeNotNull('currency_symbol', instance.currencySymbol);
   writeNotNull('currency_decimal_places', instance.currencyDecimalPlaces);
-  val['budget_id'] = instance.budgetId;
+  writeNotNull('budget_id', instance.budgetId);
   writeNotNull('period', instance.period);
   val['amount'] = instance.amount;
   writeNotNull('spent', instance.spent);
@@ -2204,7 +2202,7 @@ BudgetLimitStore _$BudgetLimitStoreFromJson(Map<String, dynamic> json) =>
     BudgetLimitStore(
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
-      budgetId: json['budget_id'] as String,
+      budgetId: json['budget_id'] as String?,
       start: DateTime.parse(json['start'] as String),
       period: json['period'] as String?,
       end: DateTime.parse(json['end'] as String),
@@ -2222,7 +2220,7 @@ Map<String, dynamic> _$BudgetLimitStoreToJson(BudgetLimitStore instance) {
 
   writeNotNull('currency_id', instance.currencyId);
   writeNotNull('currency_code', instance.currencyCode);
-  val['budget_id'] = instance.budgetId;
+  writeNotNull('budget_id', instance.budgetId);
   writeNotNull('start', _dateToJson(instance.start));
   writeNotNull('period', instance.period);
   writeNotNull('end', _dateToJson(instance.end));
@@ -3258,7 +3256,7 @@ RuleAction _$RuleActionFromJson(Map<String, dynamic> json) => RuleAction(
           ? null
           : DateTime.parse(json['updated_at'] as String),
       type: ruleActionKeywordFromJson(json['type']),
-      value: json['value'] as String?,
+      $value: json['value'] as String?,
       order: json['order'] as int?,
       active: json['active'] as bool? ?? true,
       stopProcessing: json['stop_processing'] as bool? ?? false,
@@ -3277,7 +3275,7 @@ Map<String, dynamic> _$RuleActionToJson(RuleAction instance) {
   writeNotNull('created_at', instance.createdAt?.toIso8601String());
   writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
   writeNotNull('type', ruleActionKeywordToJson(instance.type));
-  writeNotNull('value', instance.value);
+  writeNotNull('value', instance.$value);
   writeNotNull('order', instance.order);
   writeNotNull('active', instance.active);
   writeNotNull('stop_processing', instance.stopProcessing);
@@ -3287,7 +3285,7 @@ Map<String, dynamic> _$RuleActionToJson(RuleAction instance) {
 RuleActionStore _$RuleActionStoreFromJson(Map<String, dynamic> json) =>
     RuleActionStore(
       type: ruleActionKeywordFromJson(json['type']),
-      value: json['value'] as String?,
+      $value: json['value'] as String?,
       order: json['order'] as int?,
       active: json['active'] as bool? ?? true,
       stopProcessing: json['stop_processing'] as bool? ?? false,
@@ -3303,7 +3301,7 @@ Map<String, dynamic> _$RuleActionStoreToJson(RuleActionStore instance) {
   }
 
   writeNotNull('type', ruleActionKeywordToJson(instance.type));
-  writeNotNull('value', instance.value);
+  writeNotNull('value', instance.$value);
   writeNotNull('order', instance.order);
   writeNotNull('active', instance.active);
   writeNotNull('stop_processing', instance.stopProcessing);
@@ -3313,7 +3311,7 @@ Map<String, dynamic> _$RuleActionStoreToJson(RuleActionStore instance) {
 RuleActionUpdate _$RuleActionUpdateFromJson(Map<String, dynamic> json) =>
     RuleActionUpdate(
       type: ruleActionKeywordNullableFromJson(json['type']),
-      value: json['value'] as String?,
+      $value: json['value'] as String?,
       order: json['order'] as int?,
       active: json['active'] as bool?,
       stopProcessing: json['stop_processing'] as bool?,
@@ -3329,7 +3327,7 @@ Map<String, dynamic> _$RuleActionUpdateToJson(RuleActionUpdate instance) {
   }
 
   writeNotNull('type', ruleActionKeywordNullableToJson(instance.type));
-  writeNotNull('value', instance.value);
+  writeNotNull('value', instance.$value);
   writeNotNull('order', instance.order);
   writeNotNull('active', instance.active);
   writeNotNull('stop_processing', instance.stopProcessing);
@@ -3425,7 +3423,7 @@ RuleTrigger _$RuleTriggerFromJson(Map<String, dynamic> json) => RuleTrigger(
           ? null
           : DateTime.parse(json['updated_at'] as String),
       type: ruleTriggerKeywordFromJson(json['type']),
-      value: json['value'] as String,
+      $value: json['value'] as String,
       order: json['order'] as int?,
       active: json['active'] as bool? ?? true,
       stopProcessing: json['stop_processing'] as bool? ?? false,
@@ -3444,7 +3442,7 @@ Map<String, dynamic> _$RuleTriggerToJson(RuleTrigger instance) {
   writeNotNull('created_at', instance.createdAt?.toIso8601String());
   writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
   writeNotNull('type', ruleTriggerKeywordToJson(instance.type));
-  val['value'] = instance.value;
+  val['value'] = instance.$value;
   writeNotNull('order', instance.order);
   writeNotNull('active', instance.active);
   writeNotNull('stop_processing', instance.stopProcessing);
@@ -3454,7 +3452,7 @@ Map<String, dynamic> _$RuleTriggerToJson(RuleTrigger instance) {
 RuleTriggerStore _$RuleTriggerStoreFromJson(Map<String, dynamic> json) =>
     RuleTriggerStore(
       type: ruleTriggerKeywordFromJson(json['type']),
-      value: json['value'] as String,
+      $value: json['value'] as String,
       order: json['order'] as int?,
       active: json['active'] as bool? ?? true,
       stopProcessing: json['stop_processing'] as bool? ?? false,
@@ -3470,7 +3468,7 @@ Map<String, dynamic> _$RuleTriggerStoreToJson(RuleTriggerStore instance) {
   }
 
   writeNotNull('type', ruleTriggerKeywordToJson(instance.type));
-  val['value'] = instance.value;
+  val['value'] = instance.$value;
   writeNotNull('order', instance.order);
   writeNotNull('active', instance.active);
   writeNotNull('stop_processing', instance.stopProcessing);
@@ -3480,7 +3478,7 @@ Map<String, dynamic> _$RuleTriggerStoreToJson(RuleTriggerStore instance) {
 RuleTriggerUpdate _$RuleTriggerUpdateFromJson(Map<String, dynamic> json) =>
     RuleTriggerUpdate(
       type: ruleTriggerKeywordNullableFromJson(json['type']),
-      value: json['value'] as String?,
+      $value: json['value'] as String?,
       order: json['order'] as int?,
       active: json['active'] as bool?,
       stopProcessing: json['stop_processing'] as bool?,
@@ -3496,7 +3494,7 @@ Map<String, dynamic> _$RuleTriggerUpdateToJson(RuleTriggerUpdate instance) {
   }
 
   writeNotNull('type', ruleTriggerKeywordNullableToJson(instance.type));
-  writeNotNull('value', instance.value);
+  writeNotNull('value', instance.$value);
   writeNotNull('order', instance.order);
   writeNotNull('active', instance.active);
   writeNotNull('stop_processing', instance.stopProcessing);
@@ -3788,7 +3786,7 @@ TransactionLink _$TransactionLinkFromJson(Map<String, dynamic> json) =>
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
-      linkTypeId: json['link_type_id'] as String,
+      linkTypeId: json['link_type_id'] as String?,
       linkTypeName: json['link_type_name'] as String?,
       inwardId: json['inward_id'] as String,
       outwardId: json['outward_id'] as String,
@@ -3806,7 +3804,7 @@ Map<String, dynamic> _$TransactionLinkToJson(TransactionLink instance) {
 
   writeNotNull('created_at', instance.createdAt?.toIso8601String());
   writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
-  val['link_type_id'] = instance.linkTypeId;
+  writeNotNull('link_type_id', instance.linkTypeId);
   writeNotNull('link_type_name', instance.linkTypeName);
   val['inward_id'] = instance.inwardId;
   val['outward_id'] = instance.outwardId;
@@ -3817,7 +3815,7 @@ Map<String, dynamic> _$TransactionLinkToJson(TransactionLink instance) {
 TransactionLinkStore _$TransactionLinkStoreFromJson(
         Map<String, dynamic> json) =>
     TransactionLinkStore(
-      linkTypeId: json['link_type_id'] as String,
+      linkTypeId: json['link_type_id'] as String?,
       linkTypeName: json['link_type_name'] as String?,
       inwardId: json['inward_id'] as String,
       outwardId: json['outward_id'] as String,
@@ -3826,9 +3824,7 @@ TransactionLinkStore _$TransactionLinkStoreFromJson(
 
 Map<String, dynamic> _$TransactionLinkStoreToJson(
     TransactionLinkStore instance) {
-  final val = <String, dynamic>{
-    'link_type_id': instance.linkTypeId,
-  };
+  final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -3836,6 +3832,7 @@ Map<String, dynamic> _$TransactionLinkStoreToJson(
     }
   }
 
+  writeNotNull('link_type_id', instance.linkTypeId);
   writeNotNull('link_type_name', instance.linkTypeName);
   val['inward_id'] = instance.inwardId;
   val['outward_id'] = instance.outwardId;
@@ -4570,7 +4567,7 @@ Map<String, dynamic> _$BasicSummaryEntryToJson(BasicSummaryEntry instance) {
 Configuration _$ConfigurationFromJson(Map<String, dynamic> json) =>
     Configuration(
       title: configValueFilterFromJson(json['title']),
-      value:
+      $value:
           PolymorphicProperty.fromJson(json['value'] as Map<String, dynamic>),
       editable: json['editable'] as bool,
     );
@@ -4585,21 +4582,21 @@ Map<String, dynamic> _$ConfigurationToJson(Configuration instance) {
   }
 
   writeNotNull('title', configValueFilterToJson(instance.title));
-  val['value'] = instance.value.toJson();
+  val['value'] = instance.$value.toJson();
   val['editable'] = instance.editable;
   return val;
 }
 
 ConfigurationUpdate _$ConfigurationUpdateFromJson(Map<String, dynamic> json) =>
     ConfigurationUpdate(
-      value:
+      $value:
           PolymorphicProperty.fromJson(json['value'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ConfigurationUpdateToJson(
         ConfigurationUpdate instance) =>
     <String, dynamic>{
-      'value': instance.value.toJson(),
+      'value': instance.$value.toJson(),
     };
 
 CronResult _$CronResultFromJson(Map<String, dynamic> json) => CronResult(

@@ -4871,10 +4871,10 @@ class Attachment {
   @JsonKey(
     name: 'attachable_type',
     includeIfNull: false,
-    toJson: attachableTypeNullableToJson,
-    fromJson: attachableTypeNullableFromJson,
+    toJson: attachableTypeToJson,
+    fromJson: attachableTypeFromJson,
   )
-  final enums.AttachableType? attachableType;
+  final enums.AttachableType attachableType;
   @JsonKey(name: 'attachable_id', includeIfNull: false)
   final String attachableId;
   @JsonKey(name: 'md5', includeIfNull: false)
@@ -4931,7 +4931,7 @@ extension $AttachmentExtension on Attachment {
   Attachment copyWithWrapped(
       {Wrapped<DateTime?>? createdAt,
       Wrapped<DateTime?>? updatedAt,
-      Wrapped<enums.AttachableType?>? attachableType,
+      Wrapped<enums.AttachableType>? attachableType,
       Wrapped<String>? attachableId,
       Wrapped<String?>? md5,
       Wrapped<String>? filename,
@@ -4982,10 +4982,10 @@ class AttachmentStore {
   @JsonKey(
     name: 'attachable_type',
     includeIfNull: false,
-    toJson: attachableTypeNullableToJson,
-    fromJson: attachableTypeNullableFromJson,
+    toJson: attachableTypeToJson,
+    fromJson: attachableTypeFromJson,
   )
-  final enums.AttachableType? attachableType;
+  final enums.AttachableType attachableType;
   @JsonKey(name: 'attachable_id', includeIfNull: false)
   final String attachableId;
   @JsonKey(name: 'title', includeIfNull: false)
@@ -5015,7 +5015,7 @@ extension $AttachmentStoreExtension on AttachmentStore {
 
   AttachmentStore copyWithWrapped(
       {Wrapped<String>? filename,
-      Wrapped<enums.AttachableType?>? attachableType,
+      Wrapped<enums.AttachableType>? attachableType,
       Wrapped<String>? attachableId,
       Wrapped<String?>? title,
       Wrapped<String?>? notes}) {
@@ -5257,10 +5257,10 @@ class Bill {
   @JsonKey(
     name: 'repeat_freq',
     includeIfNull: false,
-    toJson: billRepeatFrequencyNullableToJson,
-    fromJson: billRepeatFrequencyNullableFromJson,
+    toJson: billRepeatFrequencyToJson,
+    fromJson: billRepeatFrequencyFromJson,
   )
-  final enums.BillRepeatFrequency? repeatFreq;
+  final enums.BillRepeatFrequency repeatFreq;
   @JsonKey(name: 'skip', includeIfNull: false)
   final int? skip;
   @JsonKey(name: 'active', includeIfNull: false)
@@ -5357,7 +5357,7 @@ extension $BillExtension on Bill {
       Wrapped<DateTime>? date,
       Wrapped<DateTime?>? endDate,
       Wrapped<DateTime?>? extensionDate,
-      Wrapped<enums.BillRepeatFrequency?>? repeatFreq,
+      Wrapped<enums.BillRepeatFrequency>? repeatFreq,
       Wrapped<int?>? skip,
       Wrapped<bool?>? active,
       Wrapped<int?>? order,
@@ -5456,10 +5456,10 @@ class BillStore {
   @JsonKey(
     name: 'repeat_freq',
     includeIfNull: false,
-    toJson: billRepeatFrequencyNullableToJson,
-    fromJson: billRepeatFrequencyNullableFromJson,
+    toJson: billRepeatFrequencyToJson,
+    fromJson: billRepeatFrequencyFromJson,
   )
-  final enums.BillRepeatFrequency? repeatFreq;
+  final enums.BillRepeatFrequency repeatFreq;
   @JsonKey(name: 'skip', includeIfNull: false)
   final int? skip;
   @JsonKey(name: 'active', includeIfNull: false)
@@ -5518,7 +5518,7 @@ extension $BillStoreExtension on BillStore {
       Wrapped<DateTime>? date,
       Wrapped<DateTime?>? endDate,
       Wrapped<DateTime?>? extensionDate,
-      Wrapped<enums.BillRepeatFrequency?>? repeatFreq,
+      Wrapped<enums.BillRepeatFrequency>? repeatFreq,
       Wrapped<int?>? skip,
       Wrapped<bool?>? active,
       Wrapped<String?>? notes,
@@ -6047,7 +6047,7 @@ class BudgetLimit {
     this.currencyName,
     this.currencySymbol,
     this.currencyDecimalPlaces,
-    required this.budgetId,
+    this.budgetId,
     this.period,
     required this.amount,
     this.spent,
@@ -6078,7 +6078,7 @@ class BudgetLimit {
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
   @JsonKey(name: 'budget_id', includeIfNull: false)
-  final String budgetId;
+  final String? budgetId;
   @JsonKey(name: 'period', includeIfNull: false)
   final String? period;
   @JsonKey(name: 'amount', includeIfNull: false)
@@ -6133,7 +6133,7 @@ extension $BudgetLimitExtension on BudgetLimit {
       Wrapped<String?>? currencyName,
       Wrapped<String?>? currencySymbol,
       Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String>? budgetId,
+      Wrapped<String?>? budgetId,
       Wrapped<String?>? period,
       Wrapped<String>? amount,
       Wrapped<String?>? spent}) {
@@ -6165,7 +6165,7 @@ class BudgetLimitStore {
   const BudgetLimitStore({
     this.currencyId,
     this.currencyCode,
-    required this.budgetId,
+    this.budgetId,
     required this.start,
     this.period,
     required this.end,
@@ -6183,7 +6183,7 @@ class BudgetLimitStore {
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'budget_id', includeIfNull: false)
-  final String budgetId;
+  final String? budgetId;
   @JsonKey(name: 'start', includeIfNull: false, toJson: _dateToJson)
   final DateTime start;
   @JsonKey(name: 'period', includeIfNull: false)
@@ -6220,7 +6220,7 @@ extension $BudgetLimitStoreExtension on BudgetLimitStore {
   BudgetLimitStore copyWithWrapped(
       {Wrapped<String?>? currencyId,
       Wrapped<String?>? currencyCode,
-      Wrapped<String>? budgetId,
+      Wrapped<String?>? budgetId,
       Wrapped<DateTime>? start,
       Wrapped<String?>? period,
       Wrapped<DateTime>? end,
@@ -6722,7 +6722,7 @@ class PiggyBank {
     this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
-    required this.targetAmount,
+    this.targetAmount,
     this.percentage,
     this.currentAmount,
     this.leftToSave,
@@ -6911,7 +6911,7 @@ class PiggyBankStore {
   const PiggyBankStore({
     required this.name,
     required this.accountId,
-    required this.targetAmount,
+    this.targetAmount,
     this.currentAmount,
     this.startDate,
     this.targetDate,
@@ -7473,7 +7473,7 @@ class RecurrenceStore {
     required this.title,
     this.description,
     required this.firstDate,
-    required this.repeatUntil,
+    this.repeatUntil,
     this.nrOfRepetitions,
     this.applyRules,
     this.active,
@@ -8813,7 +8813,7 @@ class RuleAction {
     this.createdAt,
     this.updatedAt,
     required this.type,
-    required this.value,
+    this.$value,
     this.order,
     this.active,
     this.stopProcessing,
@@ -8839,7 +8839,7 @@ class RuleAction {
   )
   final enums.RuleActionKeyword type;
   @JsonKey(name: 'value', includeIfNull: false)
-  final String? value;
+  final String? $value;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
   @JsonKey(name: 'active', includeIfNull: false, defaultValue: true)
@@ -8858,7 +8858,7 @@ extension $RuleActionExtension on RuleAction {
       DateTime? createdAt,
       DateTime? updatedAt,
       enums.RuleActionKeyword? type,
-      String? value,
+      String? $value,
       int? order,
       bool? active,
       bool? stopProcessing}) {
@@ -8867,7 +8867,7 @@ extension $RuleActionExtension on RuleAction {
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         type: type ?? this.type,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         order: order ?? this.order,
         active: active ?? this.active,
         stopProcessing: stopProcessing ?? this.stopProcessing);
@@ -8878,7 +8878,7 @@ extension $RuleActionExtension on RuleAction {
       Wrapped<DateTime?>? createdAt,
       Wrapped<DateTime?>? updatedAt,
       Wrapped<enums.RuleActionKeyword>? type,
-      Wrapped<String?>? value,
+      Wrapped<String?>? $value,
       Wrapped<int?>? order,
       Wrapped<bool?>? active,
       Wrapped<bool?>? stopProcessing}) {
@@ -8887,7 +8887,7 @@ extension $RuleActionExtension on RuleAction {
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
         type: (type != null ? type.value : this.type),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         order: (order != null ? order.value : this.order),
         active: (active != null ? active.value : this.active),
         stopProcessing: (stopProcessing != null
@@ -8900,7 +8900,7 @@ extension $RuleActionExtension on RuleAction {
 class RuleActionStore {
   const RuleActionStore({
     required this.type,
-    required this.value,
+    this.$value,
     this.order,
     this.active,
     this.stopProcessing,
@@ -8920,7 +8920,7 @@ class RuleActionStore {
   )
   final enums.RuleActionKeyword type;
   @JsonKey(name: 'value', includeIfNull: false)
-  final String? value;
+  final String? $value;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
   @JsonKey(name: 'active', includeIfNull: false, defaultValue: true)
@@ -8936,13 +8936,13 @@ class RuleActionStore {
 extension $RuleActionStoreExtension on RuleActionStore {
   RuleActionStore copyWith(
       {enums.RuleActionKeyword? type,
-      String? value,
+      String? $value,
       int? order,
       bool? active,
       bool? stopProcessing}) {
     return RuleActionStore(
         type: type ?? this.type,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         order: order ?? this.order,
         active: active ?? this.active,
         stopProcessing: stopProcessing ?? this.stopProcessing);
@@ -8950,13 +8950,13 @@ extension $RuleActionStoreExtension on RuleActionStore {
 
   RuleActionStore copyWithWrapped(
       {Wrapped<enums.RuleActionKeyword>? type,
-      Wrapped<String?>? value,
+      Wrapped<String?>? $value,
       Wrapped<int?>? order,
       Wrapped<bool?>? active,
       Wrapped<bool?>? stopProcessing}) {
     return RuleActionStore(
         type: (type != null ? type.value : this.type),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         order: (order != null ? order.value : this.order),
         active: (active != null ? active.value : this.active),
         stopProcessing: (stopProcessing != null
@@ -8969,7 +8969,7 @@ extension $RuleActionStoreExtension on RuleActionStore {
 class RuleActionUpdate {
   const RuleActionUpdate({
     this.type,
-    this.value,
+    this.$value,
     this.order,
     this.active,
     this.stopProcessing,
@@ -8989,7 +8989,7 @@ class RuleActionUpdate {
   )
   final enums.RuleActionKeyword? type;
   @JsonKey(name: 'value', includeIfNull: false)
-  final String? value;
+  final String? $value;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
   @JsonKey(name: 'active', includeIfNull: false)
@@ -9005,13 +9005,13 @@ class RuleActionUpdate {
 extension $RuleActionUpdateExtension on RuleActionUpdate {
   RuleActionUpdate copyWith(
       {enums.RuleActionKeyword? type,
-      String? value,
+      String? $value,
       int? order,
       bool? active,
       bool? stopProcessing}) {
     return RuleActionUpdate(
         type: type ?? this.type,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         order: order ?? this.order,
         active: active ?? this.active,
         stopProcessing: stopProcessing ?? this.stopProcessing);
@@ -9019,13 +9019,13 @@ extension $RuleActionUpdateExtension on RuleActionUpdate {
 
   RuleActionUpdate copyWithWrapped(
       {Wrapped<enums.RuleActionKeyword?>? type,
-      Wrapped<String?>? value,
+      Wrapped<String?>? $value,
       Wrapped<int?>? order,
       Wrapped<bool?>? active,
       Wrapped<bool?>? stopProcessing}) {
     return RuleActionUpdate(
         type: (type != null ? type.value : this.type),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         order: (order != null ? order.value : this.order),
         active: (active != null ? active.value : this.active),
         stopProcessing: (stopProcessing != null
@@ -9217,7 +9217,7 @@ class RuleTrigger {
     this.createdAt,
     this.updatedAt,
     required this.type,
-    required this.value,
+    required this.$value,
     this.order,
     this.active,
     this.stopProcessing,
@@ -9243,7 +9243,7 @@ class RuleTrigger {
   )
   final enums.RuleTriggerKeyword type;
   @JsonKey(name: 'value', includeIfNull: false)
-  final String value;
+  final String $value;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
   @JsonKey(name: 'active', includeIfNull: false, defaultValue: true)
@@ -9262,7 +9262,7 @@ extension $RuleTriggerExtension on RuleTrigger {
       DateTime? createdAt,
       DateTime? updatedAt,
       enums.RuleTriggerKeyword? type,
-      String? value,
+      String? $value,
       int? order,
       bool? active,
       bool? stopProcessing}) {
@@ -9271,7 +9271,7 @@ extension $RuleTriggerExtension on RuleTrigger {
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         type: type ?? this.type,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         order: order ?? this.order,
         active: active ?? this.active,
         stopProcessing: stopProcessing ?? this.stopProcessing);
@@ -9282,7 +9282,7 @@ extension $RuleTriggerExtension on RuleTrigger {
       Wrapped<DateTime?>? createdAt,
       Wrapped<DateTime?>? updatedAt,
       Wrapped<enums.RuleTriggerKeyword>? type,
-      Wrapped<String>? value,
+      Wrapped<String>? $value,
       Wrapped<int?>? order,
       Wrapped<bool?>? active,
       Wrapped<bool?>? stopProcessing}) {
@@ -9291,7 +9291,7 @@ extension $RuleTriggerExtension on RuleTrigger {
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
         type: (type != null ? type.value : this.type),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         order: (order != null ? order.value : this.order),
         active: (active != null ? active.value : this.active),
         stopProcessing: (stopProcessing != null
@@ -9304,7 +9304,7 @@ extension $RuleTriggerExtension on RuleTrigger {
 class RuleTriggerStore {
   const RuleTriggerStore({
     required this.type,
-    required this.value,
+    required this.$value,
     this.order,
     this.active,
     this.stopProcessing,
@@ -9324,7 +9324,7 @@ class RuleTriggerStore {
   )
   final enums.RuleTriggerKeyword type;
   @JsonKey(name: 'value', includeIfNull: false)
-  final String value;
+  final String $value;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
   @JsonKey(name: 'active', includeIfNull: false, defaultValue: true)
@@ -9340,13 +9340,13 @@ class RuleTriggerStore {
 extension $RuleTriggerStoreExtension on RuleTriggerStore {
   RuleTriggerStore copyWith(
       {enums.RuleTriggerKeyword? type,
-      String? value,
+      String? $value,
       int? order,
       bool? active,
       bool? stopProcessing}) {
     return RuleTriggerStore(
         type: type ?? this.type,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         order: order ?? this.order,
         active: active ?? this.active,
         stopProcessing: stopProcessing ?? this.stopProcessing);
@@ -9354,13 +9354,13 @@ extension $RuleTriggerStoreExtension on RuleTriggerStore {
 
   RuleTriggerStore copyWithWrapped(
       {Wrapped<enums.RuleTriggerKeyword>? type,
-      Wrapped<String>? value,
+      Wrapped<String>? $value,
       Wrapped<int?>? order,
       Wrapped<bool?>? active,
       Wrapped<bool?>? stopProcessing}) {
     return RuleTriggerStore(
         type: (type != null ? type.value : this.type),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         order: (order != null ? order.value : this.order),
         active: (active != null ? active.value : this.active),
         stopProcessing: (stopProcessing != null
@@ -9373,7 +9373,7 @@ extension $RuleTriggerStoreExtension on RuleTriggerStore {
 class RuleTriggerUpdate {
   const RuleTriggerUpdate({
     this.type,
-    this.value,
+    this.$value,
     this.order,
     this.active,
     this.stopProcessing,
@@ -9393,7 +9393,7 @@ class RuleTriggerUpdate {
   )
   final enums.RuleTriggerKeyword? type;
   @JsonKey(name: 'value', includeIfNull: false)
-  final String? value;
+  final String? $value;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
   @JsonKey(name: 'active', includeIfNull: false)
@@ -9409,13 +9409,13 @@ class RuleTriggerUpdate {
 extension $RuleTriggerUpdateExtension on RuleTriggerUpdate {
   RuleTriggerUpdate copyWith(
       {enums.RuleTriggerKeyword? type,
-      String? value,
+      String? $value,
       int? order,
       bool? active,
       bool? stopProcessing}) {
     return RuleTriggerUpdate(
         type: type ?? this.type,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         order: order ?? this.order,
         active: active ?? this.active,
         stopProcessing: stopProcessing ?? this.stopProcessing);
@@ -9423,13 +9423,13 @@ extension $RuleTriggerUpdateExtension on RuleTriggerUpdate {
 
   RuleTriggerUpdate copyWithWrapped(
       {Wrapped<enums.RuleTriggerKeyword?>? type,
-      Wrapped<String?>? value,
+      Wrapped<String?>? $value,
       Wrapped<int?>? order,
       Wrapped<bool?>? active,
       Wrapped<bool?>? stopProcessing}) {
     return RuleTriggerUpdate(
         type: (type != null ? type.value : this.type),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         order: (order != null ? order.value : this.order),
         active: (active != null ? active.value : this.active),
         stopProcessing: (stopProcessing != null
@@ -10086,7 +10086,7 @@ class TransactionLink {
   const TransactionLink({
     this.createdAt,
     this.updatedAt,
-    required this.linkTypeId,
+    this.linkTypeId,
     this.linkTypeName,
     required this.inwardId,
     required this.outwardId,
@@ -10104,7 +10104,7 @@ class TransactionLink {
   @JsonKey(name: 'updated_at', includeIfNull: false)
   final DateTime? updatedAt;
   @JsonKey(name: 'link_type_id', includeIfNull: false)
-  final String linkTypeId;
+  final String? linkTypeId;
   @JsonKey(name: 'link_type_name', includeIfNull: false)
   final String? linkTypeName;
   @JsonKey(name: 'inward_id', includeIfNull: false)
@@ -10141,7 +10141,7 @@ extension $TransactionLinkExtension on TransactionLink {
   TransactionLink copyWithWrapped(
       {Wrapped<DateTime?>? createdAt,
       Wrapped<DateTime?>? updatedAt,
-      Wrapped<String>? linkTypeId,
+      Wrapped<String?>? linkTypeId,
       Wrapped<String?>? linkTypeName,
       Wrapped<String>? inwardId,
       Wrapped<String>? outwardId,
@@ -10161,7 +10161,7 @@ extension $TransactionLinkExtension on TransactionLink {
 @JsonSerializable(explicitToJson: true)
 class TransactionLinkStore {
   const TransactionLinkStore({
-    required this.linkTypeId,
+    this.linkTypeId,
     this.linkTypeName,
     required this.inwardId,
     required this.outwardId,
@@ -10175,7 +10175,7 @@ class TransactionLinkStore {
   Map<String, dynamic> toJson() => _$TransactionLinkStoreToJson(this);
 
   @JsonKey(name: 'link_type_id', includeIfNull: false)
-  final String linkTypeId;
+  final String? linkTypeId;
   @JsonKey(name: 'link_type_name', includeIfNull: false)
   final String? linkTypeName;
   @JsonKey(name: 'inward_id', includeIfNull: false)
@@ -10206,7 +10206,7 @@ extension $TransactionLinkStoreExtension on TransactionLinkStore {
   }
 
   TransactionLinkStore copyWithWrapped(
-      {Wrapped<String>? linkTypeId,
+      {Wrapped<String?>? linkTypeId,
       Wrapped<String?>? linkTypeName,
       Wrapped<String>? inwardId,
       Wrapped<String>? outwardId,
@@ -10401,11 +10401,11 @@ class TransactionSplit {
     required this.amount,
     this.foreignAmount,
     required this.description,
-    required this.sourceId,
+    this.sourceId,
     this.sourceName,
     this.sourceIban,
     this.sourceType,
-    required this.destinationId,
+    this.destinationId,
     this.destinationName,
     this.destinationIban,
     this.destinationType,
@@ -12314,7 +12314,7 @@ extension $BasicSummaryEntryExtension on BasicSummaryEntry {
 class Configuration {
   const Configuration({
     required this.title,
-    required this.value,
+    required this.$value,
     required this.editable,
   });
 
@@ -12332,7 +12332,7 @@ class Configuration {
   )
   final enums.ConfigValueFilter title;
   @JsonKey(name: 'value', includeIfNull: false)
-  final PolymorphicProperty value;
+  final PolymorphicProperty $value;
   @JsonKey(name: 'editable', includeIfNull: false)
   final bool editable;
   static const fromJsonFactory = _$ConfigurationFromJson;
@@ -12344,21 +12344,21 @@ class Configuration {
 extension $ConfigurationExtension on Configuration {
   Configuration copyWith(
       {enums.ConfigValueFilter? title,
-      PolymorphicProperty? value,
+      PolymorphicProperty? $value,
       bool? editable}) {
     return Configuration(
         title: title ?? this.title,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         editable: editable ?? this.editable);
   }
 
   Configuration copyWithWrapped(
       {Wrapped<enums.ConfigValueFilter>? title,
-      Wrapped<PolymorphicProperty>? value,
+      Wrapped<PolymorphicProperty>? $value,
       Wrapped<bool>? editable}) {
     return Configuration(
         title: (title != null ? title.value : this.title),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         editable: (editable != null ? editable.value : this.editable));
   }
 }
@@ -12366,7 +12366,7 @@ extension $ConfigurationExtension on Configuration {
 @JsonSerializable(explicitToJson: true)
 class ConfigurationUpdate {
   const ConfigurationUpdate({
-    required this.value,
+    required this.$value,
   });
 
   factory ConfigurationUpdate.fromJson(Map<String, dynamic> json) =>
@@ -12376,7 +12376,7 @@ class ConfigurationUpdate {
   Map<String, dynamic> toJson() => _$ConfigurationUpdateToJson(this);
 
   @JsonKey(name: 'value', includeIfNull: false)
-  final PolymorphicProperty value;
+  final PolymorphicProperty $value;
   static const fromJsonFactory = _$ConfigurationUpdateFromJson;
 
   @override
@@ -12384,13 +12384,13 @@ class ConfigurationUpdate {
 }
 
 extension $ConfigurationUpdateExtension on ConfigurationUpdate {
-  ConfigurationUpdate copyWith({PolymorphicProperty? value}) {
-    return ConfigurationUpdate(value: value ?? this.value);
+  ConfigurationUpdate copyWith({PolymorphicProperty? $value}) {
+    return ConfigurationUpdate($value: $value ?? this.$value);
   }
 
-  ConfigurationUpdate copyWithWrapped({Wrapped<PolymorphicProperty>? value}) {
+  ConfigurationUpdate copyWithWrapped({Wrapped<PolymorphicProperty>? $value}) {
     return ConfigurationUpdate(
-        value: (value != null ? value.value : this.value));
+        $value: ($value != null ? $value.value : this.$value));
   }
 }
 
@@ -13069,9 +13069,8 @@ enums.DataDestroyObject dataDestroyObjectFromJson(
   Object? dataDestroyObject, [
   enums.DataDestroyObject? defaultValue,
 ]) {
-  return enums.DataDestroyObject.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          dataDestroyObject?.toString().toLowerCase()) ??
+  return enums.DataDestroyObject.values
+          .firstWhereOrNull((e) => e.value == dataDestroyObject) ??
       defaultValue ??
       enums.DataDestroyObject.swaggerGeneratedUnknown;
 }
@@ -13142,9 +13141,8 @@ enums.AccountSearchFieldFilter accountSearchFieldFilterFromJson(
   Object? accountSearchFieldFilter, [
   enums.AccountSearchFieldFilter? defaultValue,
 ]) {
-  return enums.AccountSearchFieldFilter.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          accountSearchFieldFilter?.toString().toLowerCase()) ??
+  return enums.AccountSearchFieldFilter.values
+          .firstWhereOrNull((e) => e.value == accountSearchFieldFilter) ??
       defaultValue ??
       enums.AccountSearchFieldFilter.swaggerGeneratedUnknown;
 }
@@ -13215,9 +13213,8 @@ enums.ConfigValueFilter configValueFilterFromJson(
   Object? configValueFilter, [
   enums.ConfigValueFilter? defaultValue,
 ]) {
-  return enums.ConfigValueFilter.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          configValueFilter?.toString().toLowerCase()) ??
+  return enums.ConfigValueFilter.values
+          .firstWhereOrNull((e) => e.value == configValueFilter) ??
       defaultValue ??
       enums.ConfigValueFilter.swaggerGeneratedUnknown;
 }
@@ -13288,9 +13285,8 @@ enums.ConfigValueUpdateFilter configValueUpdateFilterFromJson(
   Object? configValueUpdateFilter, [
   enums.ConfigValueUpdateFilter? defaultValue,
 ]) {
-  return enums.ConfigValueUpdateFilter.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          configValueUpdateFilter?.toString().toLowerCase()) ??
+  return enums.ConfigValueUpdateFilter.values
+          .firstWhereOrNull((e) => e.value == configValueUpdateFilter) ??
       defaultValue ??
       enums.ConfigValueUpdateFilter.swaggerGeneratedUnknown;
 }
@@ -13361,9 +13357,8 @@ enums.ExportFileFilter exportFileFilterFromJson(
   Object? exportFileFilter, [
   enums.ExportFileFilter? defaultValue,
 ]) {
-  return enums.ExportFileFilter.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          exportFileFilter?.toString().toLowerCase()) ??
+  return enums.ExportFileFilter.values
+          .firstWhereOrNull((e) => e.value == exportFileFilter) ??
       defaultValue ??
       enums.ExportFileFilter.swaggerGeneratedUnknown;
 }
@@ -13434,9 +13429,8 @@ enums.CurrencyUpdateDefault currencyUpdateDefaultFromJson(
   Object? currencyUpdateDefault, [
   enums.CurrencyUpdateDefault? defaultValue,
 ]) {
-  return enums.CurrencyUpdateDefault.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          currencyUpdateDefault?.toString().toLowerCase()) ??
+  return enums.CurrencyUpdateDefault.values
+          .firstWhereOrNull((e) => e.value == currencyUpdateDefault) ??
       defaultValue ??
       enums.CurrencyUpdateDefault.swaggerGeneratedUnknown;
 }
@@ -13505,9 +13499,8 @@ enums.AttachableType attachableTypeFromJson(
   Object? attachableType, [
   enums.AttachableType? defaultValue,
 ]) {
-  return enums.AttachableType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          attachableType?.toString().toLowerCase()) ??
+  return enums.AttachableType.values
+          .firstWhereOrNull((e) => e.value == attachableType) ??
       defaultValue ??
       enums.AttachableType.swaggerGeneratedUnknown;
 }
@@ -13577,9 +13570,8 @@ enums.AutoBudgetPeriod autoBudgetPeriodFromJson(
   Object? autoBudgetPeriod, [
   enums.AutoBudgetPeriod? defaultValue,
 ]) {
-  return enums.AutoBudgetPeriod.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          autoBudgetPeriod?.toString().toLowerCase()) ??
+  return enums.AutoBudgetPeriod.values
+          .firstWhereOrNull((e) => e.value == autoBudgetPeriod) ??
       defaultValue ??
       enums.AutoBudgetPeriod.swaggerGeneratedUnknown;
 }
@@ -13648,9 +13640,8 @@ enums.AutoBudgetType autoBudgetTypeFromJson(
   Object? autoBudgetType, [
   enums.AutoBudgetType? defaultValue,
 ]) {
-  return enums.AutoBudgetType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          autoBudgetType?.toString().toLowerCase()) ??
+  return enums.AutoBudgetType.values
+          .firstWhereOrNull((e) => e.value == autoBudgetType) ??
       defaultValue ??
       enums.AutoBudgetType.swaggerGeneratedUnknown;
 }
@@ -13721,9 +13712,8 @@ enums.BillRepeatFrequency billRepeatFrequencyFromJson(
   Object? billRepeatFrequency, [
   enums.BillRepeatFrequency? defaultValue,
 ]) {
-  return enums.BillRepeatFrequency.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          billRepeatFrequency?.toString().toLowerCase()) ??
+  return enums.BillRepeatFrequency.values
+          .firstWhereOrNull((e) => e.value == billRepeatFrequency) ??
       defaultValue ??
       enums.BillRepeatFrequency.swaggerGeneratedUnknown;
 }
@@ -13794,9 +13784,8 @@ enums.RecurrenceRepetitionType recurrenceRepetitionTypeFromJson(
   Object? recurrenceRepetitionType, [
   enums.RecurrenceRepetitionType? defaultValue,
 ]) {
-  return enums.RecurrenceRepetitionType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          recurrenceRepetitionType?.toString().toLowerCase()) ??
+  return enums.RecurrenceRepetitionType.values
+          .firstWhereOrNull((e) => e.value == recurrenceRepetitionType) ??
       defaultValue ??
       enums.RecurrenceRepetitionType.swaggerGeneratedUnknown;
 }
@@ -13868,9 +13857,8 @@ enums.RecurrenceTransactionType recurrenceTransactionTypeFromJson(
   Object? recurrenceTransactionType, [
   enums.RecurrenceTransactionType? defaultValue,
 ]) {
-  return enums.RecurrenceTransactionType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          recurrenceTransactionType?.toString().toLowerCase()) ??
+  return enums.RecurrenceTransactionType.values
+          .firstWhereOrNull((e) => e.value == recurrenceTransactionType) ??
       defaultValue ??
       enums.RecurrenceTransactionType.swaggerGeneratedUnknown;
 }
@@ -13941,9 +13929,8 @@ enums.RuleActionKeyword ruleActionKeywordFromJson(
   Object? ruleActionKeyword, [
   enums.RuleActionKeyword? defaultValue,
 ]) {
-  return enums.RuleActionKeyword.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          ruleActionKeyword?.toString().toLowerCase()) ??
+  return enums.RuleActionKeyword.values
+          .firstWhereOrNull((e) => e.value == ruleActionKeyword) ??
       defaultValue ??
       enums.RuleActionKeyword.swaggerGeneratedUnknown;
 }
@@ -14013,9 +14000,8 @@ enums.RuleTriggerKeyword ruleTriggerKeywordFromJson(
   Object? ruleTriggerKeyword, [
   enums.RuleTriggerKeyword? defaultValue,
 ]) {
-  return enums.RuleTriggerKeyword.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          ruleTriggerKeyword?.toString().toLowerCase()) ??
+  return enums.RuleTriggerKeyword.values
+          .firstWhereOrNull((e) => e.value == ruleTriggerKeyword) ??
       defaultValue ??
       enums.RuleTriggerKeyword.swaggerGeneratedUnknown;
 }
@@ -14084,9 +14070,8 @@ enums.RuleTriggerType ruleTriggerTypeFromJson(
   Object? ruleTriggerType, [
   enums.RuleTriggerType? defaultValue,
 ]) {
-  return enums.RuleTriggerType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          ruleTriggerType?.toString().toLowerCase()) ??
+  return enums.RuleTriggerType.values
+          .firstWhereOrNull((e) => e.value == ruleTriggerType) ??
       defaultValue ??
       enums.RuleTriggerType.swaggerGeneratedUnknown;
 }
@@ -14157,9 +14142,8 @@ enums.UserBlockedCodeProperty userBlockedCodePropertyFromJson(
   Object? userBlockedCodeProperty, [
   enums.UserBlockedCodeProperty? defaultValue,
 ]) {
-  return enums.UserBlockedCodeProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          userBlockedCodeProperty?.toString().toLowerCase()) ??
+  return enums.UserBlockedCodeProperty.values
+          .firstWhereOrNull((e) => e.value == userBlockedCodeProperty) ??
       defaultValue ??
       enums.UserBlockedCodeProperty.swaggerGeneratedUnknown;
 }
@@ -14230,9 +14214,8 @@ enums.UserRoleProperty userRolePropertyFromJson(
   Object? userRoleProperty, [
   enums.UserRoleProperty? defaultValue,
 ]) {
-  return enums.UserRoleProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          userRoleProperty?.toString().toLowerCase()) ??
+  return enums.UserRoleProperty.values
+          .firstWhereOrNull((e) => e.value == userRoleProperty) ??
       defaultValue ??
       enums.UserRoleProperty.swaggerGeneratedUnknown;
 }
@@ -14301,9 +14284,8 @@ enums.WebhookDelivery webhookDeliveryFromJson(
   Object? webhookDelivery, [
   enums.WebhookDelivery? defaultValue,
 ]) {
-  return enums.WebhookDelivery.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          webhookDelivery?.toString().toLowerCase()) ??
+  return enums.WebhookDelivery.values
+          .firstWhereOrNull((e) => e.value == webhookDelivery) ??
       defaultValue ??
       enums.WebhookDelivery.swaggerGeneratedUnknown;
 }
@@ -14372,9 +14354,8 @@ enums.WebhookResponse webhookResponseFromJson(
   Object? webhookResponse, [
   enums.WebhookResponse? defaultValue,
 ]) {
-  return enums.WebhookResponse.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          webhookResponse?.toString().toLowerCase()) ??
+  return enums.WebhookResponse.values
+          .firstWhereOrNull((e) => e.value == webhookResponse) ??
       defaultValue ??
       enums.WebhookResponse.swaggerGeneratedUnknown;
 }
@@ -14443,9 +14424,8 @@ enums.WebhookTrigger webhookTriggerFromJson(
   Object? webhookTrigger, [
   enums.WebhookTrigger? defaultValue,
 ]) {
-  return enums.WebhookTrigger.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          webhookTrigger?.toString().toLowerCase()) ??
+  return enums.WebhookTrigger.values
+          .firstWhereOrNull((e) => e.value == webhookTrigger) ??
       defaultValue ??
       enums.WebhookTrigger.swaggerGeneratedUnknown;
 }
@@ -14516,9 +14496,8 @@ enums.AccountRoleProperty accountRolePropertyFromJson(
   Object? accountRoleProperty, [
   enums.AccountRoleProperty? defaultValue,
 ]) {
-  return enums.AccountRoleProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          accountRoleProperty?.toString().toLowerCase()) ??
+  return enums.AccountRoleProperty.values
+          .firstWhereOrNull((e) => e.value == accountRoleProperty) ??
       defaultValue ??
       enums.AccountRoleProperty.swaggerGeneratedUnknown;
 }
@@ -14589,9 +14568,8 @@ enums.AccountTypeProperty accountTypePropertyFromJson(
   Object? accountTypeProperty, [
   enums.AccountTypeProperty? defaultValue,
 ]) {
-  return enums.AccountTypeProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          accountTypeProperty?.toString().toLowerCase()) ??
+  return enums.AccountTypeProperty.values
+          .firstWhereOrNull((e) => e.value == accountTypeProperty) ??
       defaultValue ??
       enums.AccountTypeProperty.swaggerGeneratedUnknown;
 }
@@ -14662,9 +14640,8 @@ enums.CreditCardTypeProperty creditCardTypePropertyFromJson(
   Object? creditCardTypeProperty, [
   enums.CreditCardTypeProperty? defaultValue,
 ]) {
-  return enums.CreditCardTypeProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          creditCardTypeProperty?.toString().toLowerCase()) ??
+  return enums.CreditCardTypeProperty.values
+          .firstWhereOrNull((e) => e.value == creditCardTypeProperty) ??
       defaultValue ??
       enums.CreditCardTypeProperty.swaggerGeneratedUnknown;
 }
@@ -14735,9 +14712,8 @@ enums.InterestPeriodProperty interestPeriodPropertyFromJson(
   Object? interestPeriodProperty, [
   enums.InterestPeriodProperty? defaultValue,
 ]) {
-  return enums.InterestPeriodProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          interestPeriodProperty?.toString().toLowerCase()) ??
+  return enums.InterestPeriodProperty.values
+          .firstWhereOrNull((e) => e.value == interestPeriodProperty) ??
       defaultValue ??
       enums.InterestPeriodProperty.swaggerGeneratedUnknown;
 }
@@ -14808,9 +14784,8 @@ enums.LiabilityDirectionProperty liabilityDirectionPropertyFromJson(
   Object? liabilityDirectionProperty, [
   enums.LiabilityDirectionProperty? defaultValue,
 ]) {
-  return enums.LiabilityDirectionProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          liabilityDirectionProperty?.toString().toLowerCase()) ??
+  return enums.LiabilityDirectionProperty.values
+          .firstWhereOrNull((e) => e.value == liabilityDirectionProperty) ??
       defaultValue ??
       enums.LiabilityDirectionProperty.swaggerGeneratedUnknown;
 }
@@ -14882,9 +14857,8 @@ enums.LiabilityTypeProperty liabilityTypePropertyFromJson(
   Object? liabilityTypeProperty, [
   enums.LiabilityTypeProperty? defaultValue,
 ]) {
-  return enums.LiabilityTypeProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          liabilityTypeProperty?.toString().toLowerCase()) ??
+  return enums.LiabilityTypeProperty.values
+          .firstWhereOrNull((e) => e.value == liabilityTypeProperty) ??
       defaultValue ??
       enums.LiabilityTypeProperty.swaggerGeneratedUnknown;
 }
@@ -14955,9 +14929,8 @@ enums.ShortAccountTypeProperty shortAccountTypePropertyFromJson(
   Object? shortAccountTypeProperty, [
   enums.ShortAccountTypeProperty? defaultValue,
 ]) {
-  return enums.ShortAccountTypeProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          shortAccountTypeProperty?.toString().toLowerCase()) ??
+  return enums.ShortAccountTypeProperty.values
+          .firstWhereOrNull((e) => e.value == shortAccountTypeProperty) ??
       defaultValue ??
       enums.ShortAccountTypeProperty.swaggerGeneratedUnknown;
 }
@@ -15029,9 +15002,8 @@ enums.TransactionTypeProperty transactionTypePropertyFromJson(
   Object? transactionTypeProperty, [
   enums.TransactionTypeProperty? defaultValue,
 ]) {
-  return enums.TransactionTypeProperty.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          transactionTypeProperty?.toString().toLowerCase()) ??
+  return enums.TransactionTypeProperty.values
+          .firstWhereOrNull((e) => e.value == transactionTypeProperty) ??
       defaultValue ??
       enums.TransactionTypeProperty.swaggerGeneratedUnknown;
 }
@@ -15102,9 +15074,8 @@ enums.AccountTypeFilter accountTypeFilterFromJson(
   Object? accountTypeFilter, [
   enums.AccountTypeFilter? defaultValue,
 ]) {
-  return enums.AccountTypeFilter.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          accountTypeFilter?.toString().toLowerCase()) ??
+  return enums.AccountTypeFilter.values
+          .firstWhereOrNull((e) => e.value == accountTypeFilter) ??
       defaultValue ??
       enums.AccountTypeFilter.swaggerGeneratedUnknown;
 }
@@ -15175,9 +15146,8 @@ enums.TransactionTypeFilter transactionTypeFilterFromJson(
   Object? transactionTypeFilter, [
   enums.TransactionTypeFilter? defaultValue,
 ]) {
-  return enums.TransactionTypeFilter.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          transactionTypeFilter?.toString().toLowerCase()) ??
+  return enums.TransactionTypeFilter.values
+          .firstWhereOrNull((e) => e.value == transactionTypeFilter) ??
       defaultValue ??
       enums.TransactionTypeFilter.swaggerGeneratedUnknown;
 }

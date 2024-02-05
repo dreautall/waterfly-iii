@@ -59,10 +59,6 @@
   "@categoryErrorLoading": {
     "description": "Generic error message when categories can't be loaded (shouldn't occur)"
   },
-  "categoryTitleAdd": "Kategorie hinzufügen",
-  "@categoryTitleAdd": {
-    "description": "Title for Dialog: Add Category"
-  },
   "categoryMonthNext": "Nächster Monat",
   "@categoryMonthNext": {
     "description": "Button title to view overview for next month"
@@ -70,6 +66,10 @@
   "categoryMonthPrev": "Voriger Monat",
   "@categoryMonthPrev": {
     "description": "Button title to view overview for previous month"
+  },
+  "categoryTitleAdd": "Kategorie hinzufügen",
+  "@categoryTitleAdd": {
+    "description": "Title for Dialog: Add Category"
   },
   "categoryTitleDelete": "Kategorie löschen",
   "@categoryTitleDelete": {
@@ -79,13 +79,13 @@
   "@categoryTitleEdit": {
     "description": "Title for Dialog: Edit Category"
   },
-  "catOther": "Andere",
-  "@catOther": {
-    "description": "Category description for summary category 'Other'"
-  },
   "catNone": "<keine Kategorie>",
   "@catNone": {
     "description": "Placeholder when no category has been set."
+  },
+  "catOther": "Andere",
+  "@catOther": {
+    "description": "Category description for summary category 'Other'"
   },
   "errorAPIInvalidResponse": "Ungültige API-Antwort: {message}",
   "@errorAPIInvalidResponse": {

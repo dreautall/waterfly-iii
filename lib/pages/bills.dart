@@ -39,31 +39,36 @@ class _BillsPageState extends State<BillsPage>
     log.finest(() => "build()");
 
     return RefreshIndicator(
-      onRefresh: _refreshStats,
+      onRefresh: () async => setState(() {}),
       child: FutureBuilder<Map<String, List<BillRead>>>(
         future: _fetchBills(),
         builder: (BuildContext context,
             AsyncSnapshot<Map<String, List<BillRead>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.hasData) {
-            return ListView(
-              cacheExtent: 1000,
-              padding: const EdgeInsets.all(8),
-              physics: const ClampingScrollPhysics(),
-              children: _groupBuilder(snapshot.data!),
-            );
-          } else if (snapshot.hasError) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
             log.severe(
-                "error fetching bills", snapshot.error, snapshot.stackTrace);
-            return Text(snapshot.error!.toString());
-          } else {
-            return const Padding(
-              padding: EdgeInsets.all(8),
-              child: Center(
-                child: CircularProgressIndicator(),
+              "error fetching bills",
+              snapshot.error,
+              snapshot.stackTrace,
+            );
+            return Center(
+              child: Text(
+                S.of(context).billsErrorLoading,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineLarge
+                    ?.copyWith(color: Theme.of(context).colorScheme.error),
               ),
             );
           }
+          return ListView(
+            cacheExtent: 1000,
+            padding: const EdgeInsets.all(8),
+            physics: const ClampingScrollPhysics(),
+            children: _groupBuilder(snapshot.data!),
+          );
         },
       ),
     );
@@ -97,7 +102,7 @@ class _BillsPageState extends State<BillsPage>
     for (BillRead bill in bills) {
       widgets.add(OpenContainer(
         openBuilder: (BuildContext context, Function closedContainer) =>
-          BillDetails(bill: bill),
+            BillDetails(bill: bill),
         openColor: Theme.of(context).cardColor,
         closedColor: Theme.of(context).cardColor,
         closedShape: const RoundedRectangleBorder(
@@ -243,8 +248,8 @@ class _BillsPageState extends State<BillsPage>
     Map<String, List<BillRead>> billsMap = <String, List<BillRead>>{};
 
     for (BillRead bill in bills) {
-      String key =
-          bill.attributes.objectGroupTitle ?? S.of(context).billsUngrouped;
+      String key = bill.attributes.objectGroupTitle ??
+          (context.mounted ? S.of(context).billsUngrouped : "");
       if (!billsMap.containsKey(key)) {
         billsMap[key] = <BillRead>[];
       }
@@ -253,9 +258,5 @@ class _BillsPageState extends State<BillsPage>
     }
 
     return billsMap;
-  }
-
-  Future<void> _refreshStats() async {
-    setState(() {});
   }
 }

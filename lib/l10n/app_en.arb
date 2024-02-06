@@ -57,11 +57,11 @@
     "placeholders": {
       "minValue": {
         "type": "String",
-        "example": "50.12"
+        "example": "$50.12"
       },
       "maxvalue": {
         "type": "String",
-        "example": "60.50"
+        "example": "$60.50"
       },
       "frequency": {
         "type": "String",
@@ -79,7 +79,7 @@
     "placeholders": {
       "value": {
         "type": "String",
-        "example": "50.12"
+        "example": "$50.12"
       },
       "frequency": {
         "type": "String",

@@ -92,12 +92,8 @@ class _BillDetailsState extends State<BillDetails> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                    child: Icon(
-                      Icons.info_outline,
-                      color: Theme.of(context).colorScheme.onSecondary,
-                    ),
+                  leading: const CircleAvatar(
+                    child: Icon(Icons.info_outline),
                   ),
                   title: widget.bill.attributes.amountMax ==
                           widget.bill.attributes.amountMin
@@ -121,38 +117,19 @@ class _BillDetailsState extends State<BillDetails> {
                 ),
                 ListTile(
                   leading: CircleAvatar(
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
                     child: Icon(
-                      Icons.check_box_outlined,
-                      color: Theme.of(context).colorScheme.onSecondary,
+                      widget.bill.attributes.active ?? false
+                          ? Icons.check_box_outlined
+                          : Icons.check_box_outline_blank,
                     ),
                   ),
-                  title: Text(S.of(context).billsIsActive),
-                  trailing: Text.rich(TextSpan(
-                    text: widget.bill.attributes.active!
-                        ? S.of(context).yes
-                        : S.of(context).no,
-                    children: <InlineSpan>[
-                      WidgetSpan(
-                          child: Icon(
-                        widget.bill.attributes.active!
-                            ? Icons.check
-                            : Icons.close,
-                        color: widget.bill.attributes.active!
-                            ? Colors.green
-                            : Colors.red,
-                      )),
-                    ],
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  )),
+                  title: Text(widget.bill.attributes.active ?? false
+                      ? S.of(context).billsIsActive
+                      : S.of(context).billsNotActive),
                 ),
                 ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                    child: Icon(
-                      Icons.calendar_month,
-                      color: Theme.of(context).colorScheme.onSecondary,
-                    ),
+                  leading: const CircleAvatar(
+                    child: Icon(Icons.calendar_month),
                   ),
                   title: Text(S.of(context).billsNextExpectedMatch),
                   trailing: Text(

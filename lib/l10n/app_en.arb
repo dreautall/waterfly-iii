@@ -114,7 +114,7 @@
   },
   "billsIsActive": "Bill is active",
   "@billsIsActive": {
-    "description": "Text: whether the bill is active or not"
+    "description": "Text: the bill is active"
   },
   "billsListEmpty": "The list is currently empty.",
   "@billsListEmpty": {
@@ -123,6 +123,10 @@
   "billsNextExpectedMatch": "Next expected match",
   "@billsNextExpectedMatch": {
     "description": "Text: next expected match for bill"
+  },
+  "billsNotActive": "Bill is inactive",
+  "@billsNotActive": {
+    "description": "Text: the bill is inactive"
   },
   "billsNotExpected": "Not expected this period",
   "@billsNotExpected": {

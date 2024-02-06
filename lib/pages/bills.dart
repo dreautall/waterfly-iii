@@ -111,11 +111,20 @@ class _BillsPageState extends State<BillsPage>
         closedElevation: 0,
         closedBuilder: (BuildContext context, Function openContainer) =>
             ListTile(
-          title: Text(bill.attributes.name),
+          title: Text(
+            bill.attributes.name,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: bill.attributes.active ?? false
+                      ? Theme.of(context).colorScheme.onSurface
+                      : Theme.of(context).disabledColor,
+                ),
+          ),
           subtitle: Text(
             S.of(context).billsFrequency(bill.attributes.repeatFreq.toString()),
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: Theme.of(context).colorScheme.secondary,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: bill.attributes.active ?? false
+                      ? Theme.of(context).colorScheme.secondary
+                      : Theme.of(context).disabledColor,
                 ),
           ),
           shape: const RoundedRectangleBorder(

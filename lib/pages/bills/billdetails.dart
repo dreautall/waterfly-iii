@@ -1,21 +1,22 @@
 import 'dart:ui';
 
 import 'package:animations/animations.dart';
-import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'package:chopper/chopper.dart' show Response;
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:waterflyiii/extensions.dart';
-
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/bills/billchart.dart';
-import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/pages/transaction.dart';
+import 'package:waterflyiii/timezonehandler.dart';
 
 class BillDetails extends StatefulWidget {
   const BillDetails({super.key, required this.bill});
@@ -27,7 +28,7 @@ class BillDetails extends StatefulWidget {
 }
 
 class _BillDetailsState extends State<BillDetails> {
-  final Logger log = Logger("Pages.BillDetails");
+  final Logger log = Logger("Pages.Bills.Details");
   final PagingController<int, TransactionRead> _pagingController =
       PagingController<int, TransactionRead>(
     firstPageKey: 1,
@@ -71,8 +72,6 @@ class _BillDetailsState extends State<BillDetails> {
   Widget build(BuildContext context) {
     log.finest(() => "build()");
 
-    final BillRead bill = widget.bill;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.bill.attributes.name),
@@ -86,41 +85,43 @@ class _BillDetailsState extends State<BillDetails> {
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 1),
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(16),
-                  bottomRight: Radius.circular(16),
-                )),
+              bottomLeft: Radius.circular(16),
+              bottomRight: Radius.circular(16),
+            )),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 ListTile(
                   leading: CircleAvatar(
-                    backgroundColor:
-                    Theme.of(context).colorScheme.secondary,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
                     child: Icon(
                       Icons.info_outline,
                       color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),
-                  title: bill.attributes.amountMax ==
-                      bill.attributes.amountMin
-                      ? Text(S.of(context).billsExactAmountAndFrequency(
-                      _currency.fmt(
-                          double.tryParse(bill.attributes.amountMin) ??
-                              0),
-                      bill.attributes.repeatFreq.toString()))
-                      : Text(S.of(context).billsAmountAndFrequency(
-                      _currency.fmt(
-                          double.tryParse(bill.attributes.amountMin) ??
-                              0),
-                      _currency.fmt(
-                          double.tryParse(bill.attributes.amountMax) ??
-                              0),
-                      bill.attributes.repeatFreq.toString())),
+                  title: widget.bill.attributes.amountMax ==
+                          widget.bill.attributes.amountMin
+                      ? Text(
+                          S.of(context).billsExactAmountAndFrequency(
+                              _currency.fmt(double.tryParse(
+                                      widget.bill.attributes.amountMin) ??
+                                  0),
+                              widget.bill.attributes.repeatFreq.toString()),
+                        )
+                      : Text(
+                          S.of(context).billsAmountAndFrequency(
+                              _currency.fmt(double.tryParse(
+                                      widget.bill.attributes.amountMin) ??
+                                  0),
+                              _currency.fmt(double.tryParse(
+                                      widget.bill.attributes.amountMax) ??
+                                  0),
+                              widget.bill.attributes.repeatFreq.toString()),
+                        ),
                 ),
                 ListTile(
                   leading: CircleAvatar(
-                    backgroundColor:
-                    Theme.of(context).colorScheme.secondary,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
                     child: Icon(
                       Icons.check_box_outlined,
                       color: Theme.of(context).colorScheme.onSecondary,
@@ -128,25 +129,26 @@ class _BillDetailsState extends State<BillDetails> {
                   ),
                   title: Text(S.of(context).billsIsActive),
                   trailing: Text.rich(TextSpan(
-                    text: bill.attributes.active!
+                    text: widget.bill.attributes.active!
                         ? S.of(context).yes
                         : S.of(context).no,
                     children: <InlineSpan>[
                       WidgetSpan(
                           child: Icon(
-                            bill.attributes.active! ? Icons.check : Icons.close,
-                            color: bill.attributes.active!
-                                ? Colors.green
-                                : Colors.red,
-                          )),
+                        widget.bill.attributes.active!
+                            ? Icons.check
+                            : Icons.close,
+                        color: widget.bill.attributes.active!
+                            ? Colors.green
+                            : Colors.red,
+                      )),
                     ],
                     style: Theme.of(context).textTheme.bodyLarge,
                   )),
                 ),
                 ListTile(
                   leading: CircleAvatar(
-                    backgroundColor:
-                    Theme.of(context).colorScheme.secondary,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
                     child: Icon(
                       Icons.calendar_month,
                       color: Theme.of(context).colorScheme.onSecondary,
@@ -154,14 +156,16 @@ class _BillDetailsState extends State<BillDetails> {
                   ),
                   title: Text(S.of(context).billsNextExpectedMatch),
                   trailing: Text(
-                    DateFormat.yMMMMd().format(_tzHandler
-                        .sTime(bill.attributes.payDates![0])
-                        .toLocal()),
+                    DateFormat.yMMMMd().format(
+                      _tzHandler
+                          .sTime(widget.bill.attributes.payDates![0])
+                          .toLocal(),
+                    ),
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 const SizedBox(height: 8),
-                BillChart(key: _billChartKey, billId: bill.id),
+                BillChart(key: _billChartKey, billId: widget.bill.id),
               ],
             ),
           ),
@@ -286,20 +290,19 @@ class _BillDetailsState extends State<BillDetails> {
       child: Align(
         alignment: Alignment.topCenter,
         child: Text.rich(
-            textAlign: TextAlign.center,
-            TextSpan(
-                text: S.of(context).billsNoTransactions,
-                style:
-                Theme.of(context).textTheme.titleMedium,
-                children: <InlineSpan>[
-                  const TextSpan(text: "\n\n"),
-                  TextSpan(
-                    text: S.of(context).billsListEmpty,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium,
-                  )
-                ])),
+          textAlign: TextAlign.center,
+          TextSpan(
+            text: S.of(context).billsNoTransactions,
+            style: Theme.of(context).textTheme.titleMedium,
+            children: <InlineSpan>[
+              const TextSpan(text: "\n\n"),
+              TextSpan(
+                text: S.of(context).billsListEmpty,
+                style: Theme.of(context).textTheme.bodyMedium,
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -6,9 +6,12 @@ import 'package:logging/logging.dart';
 
 import 'package:chopper/chopper.dart'
     show Request, Response, StripStringExtension;
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:version/version.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
@@ -356,5 +359,23 @@ class FireflyService with ChangeNotifier {
     storage.write(key: 'api_cert', value: cert);
 
     return true;
+  }
+
+  //we check if context is mounted in the method, so asnyc gap is no problem
+  static void handleResponseError(
+      Response<dynamic> response, BuildContext context) {
+    if (!response.isSuccessful || response.body == null) {
+      if (context.mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(response.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${response.error}",
+        );
+      }
+    }
   }
 }

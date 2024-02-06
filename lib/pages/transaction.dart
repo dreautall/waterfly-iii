@@ -540,19 +540,7 @@ class _TransactionPageState extends State<TransactionPage>
             AccountTypeFilter.mortgage,
           ],
         );
-        if (!response.isSuccessful || response.body == null) {
-          if (context.mounted) {
-            throw Exception(
-              S
-                  .of(context)
-                  .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-            );
-          } else {
-            throw Exception(
-              "[nocontext] Invalid API response: ${response.error}",
-            );
-          }
-        }
+        FireflyService.handleResponseError(response, context);
         if (response.body!.isEmpty ||
             (response.body!.length > 1 &&
                 response.body!.first.name != _ownAccountTextController.text)) {
@@ -572,6 +560,38 @@ class _TransactionPageState extends State<TransactionPage>
     });
   }
 
+  Future<Iterable<AutocompleteAccount>> getAutocompleteSuggestions(
+      TextEditingValue textEditingValue) async {
+    try {
+      final FireflyIii api = context.read<FireflyService>().api;
+      final Response<AutocompleteAccountArray> response =
+          await api.v1AutocompleteAccountsGet(
+        query: textEditingValue.text,
+        types: _transactionType == TransactionTypeProperty.withdrawal
+            ? _transactionType.destinationAccountTypes
+            : _transactionType.sourceAccountTypes,
+      );
+      FireflyService.handleResponseError(response, context);
+      return response.body!;
+    } catch (e, stackTrace) {
+      log.severe("Error while fetching autocomplete from API", e, stackTrace);
+      return const Iterable<AutocompleteAccount>.empty();
+    }
+  }
+
+  void disposeArrayTextEditingController(
+      List<TextEditingController> controllers) {
+    for (TextEditingController t in controllers) {
+      t.dispose();
+    }
+  }
+
+  void disposeArrayFocusNodes(List<FocusNode> nodes) {
+    for (FocusNode f in nodes) {
+      f.dispose();
+    }
+  }
+
   @override
   void dispose() {
     _typeFocusNode.dispose();
@@ -584,45 +604,20 @@ class _TransactionPageState extends State<TransactionPage>
 
     _localAmountTextController.dispose();
     _foreignAmountTextController.dispose();
-
-    for (TextEditingController t in _otherAccountTextControllers) {
-      t.dispose();
-    }
-    for (FocusNode f in _otherAccountFocusNodes) {
-      f.dispose();
-    }
-    for (TextEditingController t in _categoryTextControllers) {
-      t.dispose();
-    }
-    for (FocusNode f in _categoryFocusNodes) {
-      f.dispose();
-    }
-    for (TextEditingController t in _budgetTextControllers) {
-      t.dispose();
-    }
-    for (FocusNode f in _budgetFocusNodes) {
-      f.dispose();
-    }
-    for (TextEditingController t in _tagsTextControllers) {
-      t.dispose();
-    }
-    for (TextEditingController t in _noteTextControllers) {
-      t.dispose();
-    }
-
-    for (TextEditingController t in _titleTextControllers) {
-      t.dispose();
-    }
-    for (FocusNode f in _titleFocusNodes) {
-      f.dispose();
-    }
-    for (TextEditingController t in _localAmountTextControllers) {
-      t.dispose();
-    }
-    for (TextEditingController t in _foreignAmountTextControllers) {
-      t.dispose();
-    }
-
+    //dispose all text editing controllers
+    disposeArrayTextEditingController(_otherAccountTextControllers);
+    disposeArrayTextEditingController(_categoryTextControllers);
+    disposeArrayTextEditingController(_budgetTextControllers);
+    disposeArrayTextEditingController(_tagsTextControllers);
+    disposeArrayTextEditingController(_noteTextControllers);
+    disposeArrayTextEditingController(_titleTextControllers);
+    disposeArrayTextEditingController(_localAmountTextControllers);
+    disposeArrayTextEditingController(_foreignAmountTextControllers);
+    //dispose all focus nodes
+    disposeArrayFocusNodes(_otherAccountFocusNodes);
+    disposeArrayFocusNodes(_categoryFocusNodes);
+    disposeArrayFocusNodes(_budgetFocusNodes);
+    disposeArrayFocusNodes(_titleFocusNodes);
     for (AnimationController a in _cardsAnimationController) {
       a.dispose();
     }
@@ -839,19 +834,7 @@ class _TransactionPageState extends State<TransactionPage>
           await api.v1TransactionsIdAttachmentsGet(
         id: widget.transaction?.id ?? widget.transactionId,
       );
-      if (!response.isSuccessful || response.body == null) {
-        if (context.mounted) {
-          throw Exception(
-            S
-                .of(context)
-                .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-          );
-        } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${response.error}",
-          );
-        }
-      }
+      FireflyService.handleResponseError(response, context);
       _attachments = response.body!.data;
       setState(() {
         _hasAttachments = _attachments?.isNotEmpty ?? false;
@@ -1401,36 +1384,7 @@ class _TransactionPageState extends State<TransactionPage>
               },
               displayStringForOption: (AutocompleteAccount option) =>
                   option.name,
-              optionsBuilder: (TextEditingValue textEditingValue) async {
-                try {
-                  final FireflyIii api = context.read<FireflyService>().api;
-                  final Response<AutocompleteAccountArray> response =
-                      await api.v1AutocompleteAccountsGet(
-                    query: textEditingValue.text,
-                    types:
-                        _transactionType == TransactionTypeProperty.withdrawal
-                            ? _transactionType.destinationAccountTypes
-                            : _transactionType.sourceAccountTypes,
-                  );
-                  if (!response.isSuccessful || response.body == null) {
-                    if (context.mounted) {
-                      throw Exception(
-                        S.of(context).errorAPIInvalidResponse(
-                            response.error?.toString() ?? ""),
-                      );
-                    } else {
-                      throw Exception(
-                        "[nocontext] Invalid API response: ${response.error}",
-                      );
-                    }
-                  }
-                  return response.body!;
-                } catch (e, stackTrace) {
-                  log.severe("Error while fetching autocomplete from API", e,
-                      stackTrace);
-                  return const Iterable<AutocompleteAccount>.empty();
-                }
-              },
+              optionsBuilder: getAutocompleteSuggestions,
             ),
           ),
           vDivider,
@@ -1536,18 +1490,7 @@ class _TransactionPageState extends State<TransactionPage>
                       AccountTypeFilter.mortgage,
                     ],
                   );
-                  if (!response.isSuccessful || response.body == null) {
-                    if (context.mounted) {
-                      throw Exception(
-                        S.of(context).errorAPIInvalidResponse(
-                            response.error?.toString() ?? ""),
-                      );
-                    } else {
-                      throw Exception(
-                        "[nocontext] Invalid API response: ${response.error}",
-                      );
-                    }
-                  }
+                  FireflyService.handleResponseError(response, context);
                   return response.body!;
                 } catch (e, stackTrace) {
                   log.severe("Error while fetching autocomplete from API", e,
@@ -1733,50 +1676,7 @@ class _TransactionPageState extends State<TransactionPage>
                                   displayStringForOption:
                                       (AutocompleteAccount option) =>
                                           option.name,
-                                  optionsBuilder: (TextEditingValue
-                                      textEditingValue) async {
-                                    try {
-                                      final FireflyIii api =
-                                          context.read<FireflyService>().api;
-                                      final Response<AutocompleteAccountArray>
-                                          response =
-                                          await api.v1AutocompleteAccountsGet(
-                                        query: textEditingValue.text,
-                                        types: _transactionType ==
-                                                TransactionTypeProperty
-                                                    .withdrawal
-                                            ? _transactionType
-                                                .destinationAccountTypes
-                                            : _transactionType
-                                                .sourceAccountTypes,
-                                      );
-                                      if (!response.isSuccessful ||
-                                          response.body == null) {
-                                        if (context.mounted) {
-                                          throw Exception(
-                                            S
-                                                .of(context)
-                                                .errorAPIInvalidResponse(
-                                                    response.error
-                                                            ?.toString() ??
-                                                        ""),
-                                          );
-                                        } else {
-                                          throw Exception(
-                                            "[nocontext] Invalid API response: ${response.error}",
-                                          );
-                                        }
-                                      }
-                                      return response.body!;
-                                    } catch (e, stackTrace) {
-                                      log.severe(
-                                          "Error while fetching autocomplete from API",
-                                          e,
-                                          stackTrace);
-                                      return const Iterable<
-                                          AutocompleteAccount>.empty();
-                                    }
-                                  },
+                                  optionsBuilder: getAutocompleteSuggestions,
                                 ),
                               ),
                             ],
@@ -2061,18 +1961,7 @@ class TransactionTitle extends StatelessWidget {
             final FireflyIii api = context.read<FireflyService>().api;
             final Response<AutocompleteTransactionArray> response = await api
                 .v1AutocompleteTransactionsGet(query: textEditingValue.text);
-            if (!response.isSuccessful || response.body == null) {
-              if (context.mounted) {
-                throw Exception(
-                  S.of(context).errorAPIInvalidResponse(
-                      response.error?.toString() ?? ""),
-                );
-              } else {
-                throw Exception(
-                  "[nocontext] Invalid API response: ${response.error}",
-                );
-              }
-            }
+            FireflyService.handleResponseError(response, context);
             return response.body!.map((AutocompleteTransaction e) => e.name);
           } catch (e, stackTrace) {
             log.severe(
@@ -2145,18 +2034,7 @@ class TransactionCategory extends StatelessWidget {
                     await api.v1AutocompleteCategoriesGet(
                   query: textEditingValue.text,
                 );
-                if (!response.isSuccessful || response.body == null) {
-                  if (context.mounted) {
-                    throw Exception(
-                      S.of(context).errorAPIInvalidResponse(
-                          response.error?.toString() ?? ""),
-                    );
-                  } else {
-                    throw Exception(
-                      "[nocontext] Invalid API response: ${response.error}",
-                    );
-                  }
-                }
+                FireflyService.handleResponseError(response, context);
                 return response.body!.map((AutocompleteCategory e) => e.name);
               } catch (e, stackTrace) {
                 log.severe("Error while fetching autocomplete from API", e,
@@ -2212,19 +2090,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
             await api.v1AutocompleteBudgetsGet(
           query: widget.textController.text,
         );
-        if (!response.isSuccessful || response.body == null) {
-          if (context.mounted) {
-            throw Exception(
-              S
-                  .of(context)
-                  .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-            );
-          } else {
-            throw Exception(
-              "[nocontext] Invalid API response: ${response.error}",
-            );
-          }
-        }
+        FireflyService.handleResponseError(response, context);
         if (response.body!.isEmpty ||
             (response.body!.length > 1 &&
                 response.body!.first.name != widget.textController.text)) {
@@ -2270,18 +2136,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
                     await api.v1AutocompleteBudgetsGet(
                   query: textEditingValue.text,
                 );
-                if (!response.isSuccessful || response.body == null) {
-                  if (context.mounted) {
-                    throw Exception(
-                      S.of(context).errorAPIInvalidResponse(
-                          response.error?.toString() ?? ""),
-                    );
-                  } else {
-                    throw Exception(
-                      "[nocontext] Invalid API response: ${response.error}",
-                    );
-                  }
-                }
+                FireflyService.handleResponseError(response, context);
                 return response.body!;
               } catch (e, stackTrace) {
                 log.severe("Error while fetching autocomplete from API", e,

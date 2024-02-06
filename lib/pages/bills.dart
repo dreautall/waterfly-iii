@@ -65,8 +65,6 @@ class _BillsPageState extends State<BillsPage>
           }
           return ListView(
             cacheExtent: 1000,
-            padding: const EdgeInsets.all(8),
-            physics: const ClampingScrollPhysics(),
             children: _groupBuilder(snapshot.data!),
           );
         },
@@ -78,19 +76,18 @@ class _BillsPageState extends State<BillsPage>
     List<Widget> widgets = <Widget>[];
 
     bills.forEach((String groupTitle, List<BillRead> groupBills) {
-      widgets.add(Padding(
-        padding: const EdgeInsets.all(8),
-        child: Text(
-          groupTitle,
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: Theme.of(context).colorScheme.secondary,
-              ),
+      widgets.add(
+        Padding(
+          padding: const EdgeInsets.only(top: 16, left: 16),
+          child: Text(
+            groupTitle,
+            textAlign: TextAlign.start,
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
         ),
-      ));
+      );
 
       widgets.addAll(_billRowBuilder(groupBills));
-
-      widgets.add(const SizedBox(height: 16));
     });
 
     return widgets;
@@ -106,7 +103,10 @@ class _BillsPageState extends State<BillsPage>
         openColor: Theme.of(context).cardColor,
         closedColor: Theme.of(context).cardColor,
         closedShape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            bottomLeft: Radius.circular(16),
+          ),
         ),
         closedElevation: 0,
         closedBuilder: (BuildContext context, Function openContainer) =>
@@ -119,7 +119,10 @@ class _BillsPageState extends State<BillsPage>
                 ),
           ),
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              bottomLeft: Radius.circular(16),
+            ),
           ),
           isThreeLine: false,
           trailing: RichText(
@@ -129,14 +132,14 @@ class _BillsPageState extends State<BillsPage>
               style: Theme.of(context).textTheme.bodyMedium,
               children: <InlineSpan>[
                 TextSpan(
-                    text: _getAverageBillAmount(bill),
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                      fontFeatures: const <FontFeature>[
-                        FontFeature.tabularFigures()
-                      ],
-                    )),
+                  text: _getAverageBillAmount(bill),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: Colors.red,
+                    fontFeatures: const <FontFeature>[
+                      FontFeature.tabularFigures()
+                    ],
+                  ),
+                ),
                 const TextSpan(text: "\n"),
                 _getExpectedDate(bill),
               ],
@@ -165,24 +168,27 @@ class _BillsPageState extends State<BillsPage>
       ),
     );
 
-    return "~${currency.fmt((min + max) / 2)}";
+    return "${min != max ? "~ " : ""}${currency.fmt((min + max) / 2)}";
   }
 
   TextSpan _getExpectedDate(BillRead item) {
-    if (!item.attributes.active!) {
+    if (!(item.attributes.active ?? false)) {
       // Bill is inactive
       return TextSpan(
-          text: S.of(context).billsInactive,
-          style: Theme.of(context)
-              .textTheme
-              .bodySmall!
-              .copyWith(color: Theme.of(context).colorScheme.secondary));
-    } else if (item.attributes.paidDates!.isNotEmpty) {
+        text: S.of(context).billsInactive,
+        style: Theme.of(context)
+            .textTheme
+            .bodySmall!
+            .copyWith(color: Theme.of(context).colorScheme.secondary),
+      );
+    } else if (item.attributes.paidDates?.isNotEmpty ?? false) {
       // Bill was paid this period
       return TextSpan(
-          text: S.of(context).billsPaidOn(_tzHandler
-              .sTime(item.attributes.paidDates!.last.date!)
-              .toLocal()),
+          text: S.of(context).billsPaidOn(
+                _tzHandler
+                    .sTime(item.attributes.paidDates!.last.date!)
+                    .toLocal(),
+              ),
           style: Theme.of(context)
               .textTheme
               .bodySmall!
@@ -190,20 +196,23 @@ class _BillsPageState extends State<BillsPage>
     } else if (item.attributes.nextExpectedMatch != null) {
       // Bill expected this period
       return TextSpan(
-          text: S.of(context).billsExpectedOn(
-              _tzHandler.sTime(item.attributes.nextExpectedMatch!).toLocal()),
-          style: Theme.of(context)
-              .textTheme
-              .bodySmall!
-              .copyWith(color: Colors.orangeAccent));
+        text: S.of(context).billsExpectedOn(
+              _tzHandler.sTime(item.attributes.nextExpectedMatch!).toLocal(),
+            ),
+        style: Theme.of(context)
+            .textTheme
+            .bodySmall!
+            .copyWith(color: Colors.orangeAccent),
+      );
     } else {
       // Bill not expected this period
       return TextSpan(
-          text: S.of(context).billsNotExpected,
-          style: Theme.of(context)
-              .textTheme
-              .bodySmall!
-              .copyWith(color: Colors.orangeAccent));
+        text: S.of(context).billsNotExpected,
+        style: Theme.of(context)
+            .textTheme
+            .bodySmall!
+            .copyWith(color: Colors.orangeAccent),
+      );
     }
   }
 

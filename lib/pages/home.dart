@@ -5,7 +5,7 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/pages/home/balance.dart';
-import 'package:waterflyiii/pages/home/main.dart';
+import 'package:waterflyiii/pages/home/home_main.dart';
 import 'package:waterflyiii/pages/home/piggybank.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/navigation.dart';

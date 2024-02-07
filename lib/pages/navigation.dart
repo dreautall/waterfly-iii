@@ -4,11 +4,11 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/animations.dart';
-import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/pages/accounts.dart';
 import 'package:waterflyiii/pages/categories.dart';
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/settings.dart';
+import 'package:waterflyiii/services/firefly_api_service.dart';
 
 final Logger log = Logger("Pages.Navigation");
 

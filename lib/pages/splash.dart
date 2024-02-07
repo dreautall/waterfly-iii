@@ -8,6 +8,7 @@ import 'package:quick_actions/quick_actions.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
+import 'package:waterflyiii/services/firefly_api_service.dart';
 import 'package:waterflyiii/widgets/logo.dart';
 
 final Logger log = Logger("Pages.Splash");
@@ -237,6 +238,7 @@ class _SplashPageState extends State<SplashPage> {
                   AnimatedHeight(
                     child: page,
                   ),
+                  const Text("Hi this  a is a test"),
                 ],
               ),
             ],

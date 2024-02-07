@@ -9,10 +9,10 @@ import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
 
-import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
+import 'package:waterflyiii/services/firefly_api_service.dart';
 
 class HomeBalance extends StatefulWidget {
   const HomeBalance({

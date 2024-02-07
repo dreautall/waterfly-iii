@@ -10,11 +10,11 @@ import 'package:provider/provider.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:quick_actions/quick_actions.dart';
-import 'package:waterflyiii/auth.dart';
 
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/settings/debug.dart';
 import 'package:waterflyiii/pages/settings/notifications.dart';
+import 'package:waterflyiii/services/firefly_api_service.dart';
 import 'package:waterflyiii/settings.dart';
 
 final Logger log = Logger("Pages.Settings");

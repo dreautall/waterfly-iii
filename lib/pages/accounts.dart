@@ -8,11 +8,11 @@ import 'package:chopper/chopper.dart' show Response;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:waterflyiii/animations.dart';
 
-import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/accounts/row.dart';
 import 'package:waterflyiii/pages/home/accounts/search.dart';
 import 'package:waterflyiii/pages/navigation.dart';
+import 'package:waterflyiii/services/firefly_api_service.dart';
 
 final Logger log = Logger("Pages.Accounts");
 

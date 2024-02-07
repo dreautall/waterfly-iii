@@ -14,12 +14,12 @@ import 'package:flutter_sharing_intent/flutter_sharing_intent.dart';
 import 'package:flutter_sharing_intent/model/sharing_file.dart';
 import 'package:local_auth/local_auth.dart';
 
-import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/login.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/splash.dart';
 import 'package:waterflyiii/pages/transaction.dart';
+import 'package:waterflyiii/services/firefly_api_service.dart';
 import 'package:waterflyiii/settings.dart';
 
 final Logger log = Logger("App");

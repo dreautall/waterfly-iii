@@ -13,6 +13,7 @@ import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/services/firefly_api_service.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
 class SummaryChart extends StatelessWidget {

@@ -8,9 +8,9 @@ import 'package:device_apps/device_apps.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';
 
-import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/notificationlistener.dart';
+import 'package:waterflyiii/services/firefly_api_service.dart';
 import 'package:waterflyiii/settings.dart';
 
 class SettingsNotifications extends StatefulWidget {

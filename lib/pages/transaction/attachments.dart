@@ -17,6 +17,7 @@ import 'package:open_filex/open_filex.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/services/firefly_api_service.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
 
 class AttachmentDialog extends StatefulWidget {

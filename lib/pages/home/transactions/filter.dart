@@ -7,9 +7,9 @@ import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
 
-import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/transaction/tags.dart';
+import 'package:waterflyiii/services/firefly_api_service.dart';
 import 'package:waterflyiii/settings.dart';
 
 final Logger log = Logger("Pages.Home.Transaction.Filter");

@@ -14,6 +14,7 @@ import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/bills/billdetails.dart';
 import 'package:waterflyiii/timezonehandler.dart';
+import 'package:waterflyiii/pages/navigation.dart';
 
 class BillsPage extends StatefulWidget {
   const BillsPage({super.key});
@@ -22,10 +23,25 @@ class BillsPage extends StatefulWidget {
   State<BillsPage> createState() => _BillsPageState();
 }
 
+enum BillSort {
+  alphabeticalAscending("alphabetical", "ascending"),
+  alphabeticalDescending("alphabetical", "descending"),
+  frequencyAscending("frequency", "ascending"),
+  frequencyDescending("frequency", "descending");
+
+  final String type;
+  final String direction;
+
+  const BillSort(this.type, this.direction);
+}
+
 class _BillsPageState extends State<BillsPage>
     with SingleTickerProviderStateMixin {
   final Logger log = Logger("Pages.Bills");
   late TimeZoneHandler _tzHandler;
+
+  bool isListView = false;
+  BillSort sortOrder = BillSort.alphabeticalAscending;
 
   @override
   void initState() {
@@ -37,6 +53,24 @@ class _BillsPageState extends State<BillsPage>
   @override
   Widget build(BuildContext context) {
     log.finest(() => "build()");
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<NavPageElements>().appBarActions = <Widget>[
+        if (isListView)
+          IconButton(
+            icon: const Icon(Icons.sort),
+            tooltip: S.of(context).billsChangeSortOrderTooltip,
+            onPressed: _showSortOrderPickerDialog,
+          ),
+        IconButton(
+          icon: isListView
+              ? const Icon(Icons.table_rows_outlined)
+              : const Icon(Icons.view_agenda_outlined),
+          tooltip: S.of(context).billsChangeLayoutTooltip,
+          onPressed: _showLayoutPickerDialog,
+        ),
+      ];
+    });
 
     return RefreshIndicator(
       onRefresh: () async => setState(() {}),
@@ -63,103 +97,154 @@ class _BillsPageState extends State<BillsPage>
               ),
             );
           }
-          return ListView(
-            cacheExtent: 1000,
-            children: _groupBuilder(snapshot.data!),
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            child: ListView(
+              cacheExtent: 1000,
+              children: isListView
+                  ? _listBuilder(snapshot.data!)
+                  : _groupBuilder(snapshot.data!),
+            ),
           );
         },
       ),
     );
   }
 
-  List<Widget> _groupBuilder(Map<String, List<BillRead>> bills) {
+  List<Widget> _listBuilder(Map<String, List<BillRead>> groupedBills) {
+    List<BillRead> billList =
+        groupedBills.values.expand((List<BillRead> x) => x).toList();
+
+    switch (sortOrder) {
+      case BillSort.alphabeticalAscending:
+        billList.sort((BillRead a, BillRead b) =>
+            a.attributes.name.compareTo(b.attributes.name));
+      case BillSort.alphabeticalDescending:
+        billList.sort((BillRead a, BillRead b) =>
+            b.attributes.name.compareTo(a.attributes.name));
+      case BillSort.frequencyAscending:
+        billList.sort((BillRead a, BillRead b) => Enum.compareByIndex(
+            a.attributes.repeatFreq, b.attributes.repeatFreq));
+      case BillSort.frequencyDescending:
+        billList.sort((BillRead a, BillRead b) => Enum.compareByIndex(
+            b.attributes.repeatFreq, a.attributes.repeatFreq));
+    }
+
+    return billList.map((BillRead bill) => _billRowBuilder(bill)).toList();
+  }
+
+  List<Widget> _groupBuilder(Map<String, List<BillRead>> groupedBills) {
     List<Widget> widgets = <Widget>[];
 
-    bills.forEach((String groupTitle, List<BillRead> groupBills) {
-      widgets.add(
-        Padding(
-          padding: const EdgeInsets.only(top: 16, left: 16),
-          child: Text(
+    groupedBills.forEach((String groupTitle, List<BillRead> groupBills) {
+      widgets.add(Card(
+        clipBehavior: Clip.antiAlias,
+        child: ExpansionTile(
+          title: Text(
             groupTitle,
-            textAlign: TextAlign.start,
-            style: Theme.of(context).textTheme.labelLarge,
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
           ),
+          initiallyExpanded: true,
+          collapsedShape: const ContinuousRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8))),
+          shape: const ContinuousRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8))),
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.fromLTRB(1, 0, 1, 1),
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.background,
+                  borderRadius: const BorderRadius.only(
+                    bottomRight: Radius.circular(11),
+                    bottomLeft: Radius.circular(11),
+                  )),
+              child: Column(
+                children: _billGroupedRowBuilder(groupBills),
+              ),
+            ),
+          ],
         ),
-      );
-
-      widgets.addAll(_billRowBuilder(groupBills));
+      ));
     });
 
     return widgets;
   }
 
-  List<Widget> _billRowBuilder(List<BillRead> bills) {
+  List<Widget> _billGroupedRowBuilder(List<BillRead> bills) {
     List<Widget> widgets = <Widget>[];
 
     for (BillRead bill in bills) {
-      widgets.add(OpenContainer(
-        openBuilder: (BuildContext context, Function closedContainer) =>
-            BillDetails(bill: bill),
-        openColor: Theme.of(context).cardColor,
-        closedColor: Theme.of(context).cardColor,
-        closedShape: const RoundedRectangleBorder(
+      widgets.add(_billRowBuilder(bill));
+    }
+
+    return widgets;
+  }
+
+  Widget _billRowBuilder(BillRead bill) {
+    return OpenContainer(
+      openBuilder: (BuildContext context, Function closedContainer) =>
+          BillDetails(bill: bill),
+      openColor: Theme.of(context).cardColor,
+      closedColor: Theme.of(context).cardColor,
+      closedShape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          bottomLeft: Radius.circular(16),
+        ),
+      ),
+      closedElevation: 0,
+      closedBuilder: (BuildContext context, Function openContainer) => ListTile(
+        leading: const Icon(Icons.receipt_outlined),
+        title: Text(
+          bill.attributes.name,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: bill.attributes.active ?? false
+                    ? Theme.of(context).colorScheme.onSurface
+                    : Theme.of(context).disabledColor,
+              ),
+        ),
+        subtitle: Text(
+          S.of(context).billsFrequencySkip(
+              bill.attributes.repeatFreq.toString(), bill.attributes.skip ?? 0),
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: bill.attributes.active ?? false
+                    ? Theme.of(context).colorScheme.secondary
+                    : Theme.of(context).disabledColor,
+              ),
+        ),
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16),
             bottomLeft: Radius.circular(16),
           ),
         ),
-        closedElevation: 0,
-        closedBuilder: (BuildContext context, Function openContainer) =>
-            ListTile(
-          title: Text(
-            bill.attributes.name,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: bill.attributes.active ?? false
-                      ? Theme.of(context).colorScheme.onSurface
-                      : Theme.of(context).disabledColor,
+        isThreeLine: false,
+        trailing: RichText(
+          textAlign: TextAlign.end,
+          maxLines: 2,
+          text: TextSpan(
+            style: Theme.of(context).textTheme.bodyMedium,
+            children: <InlineSpan>[
+              TextSpan(
+                text: _getAverageBillAmount(bill),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  color: Colors.red,
+                  fontFeatures: const <FontFeature>[
+                    FontFeature.tabularFigures()
+                  ],
                 ),
+              ),
+              const TextSpan(text: "\n"),
+              _getExpectedDate(bill),
+            ],
           ),
-          subtitle: Text(
-            S.of(context).billsFrequency(bill.attributes.repeatFreq.toString()),
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: bill.attributes.active ?? false
-                      ? Theme.of(context).colorScheme.secondary
-                      : Theme.of(context).disabledColor,
-                ),
-          ),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              bottomLeft: Radius.circular(16),
-            ),
-          ),
-          isThreeLine: false,
-          trailing: RichText(
-            textAlign: TextAlign.end,
-            maxLines: 2,
-            text: TextSpan(
-              style: Theme.of(context).textTheme.bodyMedium,
-              children: <InlineSpan>[
-                TextSpan(
-                  text: _getAverageBillAmount(bill),
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: Colors.red,
-                    fontFeatures: const <FontFeature>[
-                      FontFeature.tabularFigures()
-                    ],
-                  ),
-                ),
-                const TextSpan(text: "\n"),
-                _getExpectedDate(bill),
-              ],
-            ),
-          ),
-          onTap: () => openContainer(),
         ),
-      ));
-    }
-
-    return widgets;
+        onTap: () => openContainer(),
+      ),
+    );
   }
 
   String _getAverageBillAmount(BillRead item) {
@@ -188,7 +273,7 @@ class _BillsPageState extends State<BillsPage>
         style: Theme.of(context)
             .textTheme
             .bodySmall!
-            .copyWith(color: Theme.of(context).colorScheme.secondary),
+            .copyWith(color: Theme.of(context).disabledColor),
       );
     } else if (item.attributes.paidDates?.isNotEmpty ?? false) {
       // Bill was paid this period
@@ -223,6 +308,124 @@ class _BillsPageState extends State<BillsPage>
             .copyWith(color: Colors.orangeAccent),
       );
     }
+  }
+
+  void _showLayoutPickerDialog() {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                const SizedBox(height: 16),
+                Text(
+                  S.of(context).billsDialogLayoutTitle,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 16),
+                ListTile(
+                  leading: const Icon(Icons.view_agenda_outlined),
+                  title: Text(S.of(context).billsLayoutGroupTitle,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          )),
+                  subtitle: Text(
+                    S.of(context).billsLayoutGroupSubtitle,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                  ),
+                  trailing: !isListView
+                      ? const Icon(Icons.check)
+                      : const SizedBox.shrink(),
+                  onTap: () => setState(() {
+                    Navigator.pop(context);
+                    isListView = false;
+                  }),
+                ),
+                const Divider(indent: 55, endIndent: 20),
+                ListTile(
+                  leading: const Icon(Icons.table_rows_outlined),
+                  title: Text(
+                    S.of(context).billsLayoutListTitle,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  subtitle: Text(
+                    S.of(context).billsLayoutListSubtitle,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                  ),
+                  trailing: isListView
+                      ? const Icon(Icons.check)
+                      : const SizedBox.shrink(),
+                  onTap: () => setState(() {
+                    Navigator.pop(context);
+                    isListView = true;
+                  }),
+                ),
+                const SizedBox(height: 24),
+              ],
+            ),
+          );
+        });
+  }
+
+  void _showSortOrderPickerDialog() {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                const SizedBox(height: 16),
+                Text(
+                  S.of(context).billsDialogSortTitle,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 16),
+                ...BillSort.values.map((BillSort value) {
+                  return Column(
+                    children: <Widget>[
+                      ListTile(
+                        leading: value.direction == "ascending"
+                            ? const Icon(Icons.north_east)
+                            : const Icon(Icons.south_east),
+                        title: Text(
+                          S.of(context).billsSortType(value.type),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        subtitle: Text(
+                          S.of(context).billsSortDirection(value.direction),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                        ),
+                        trailing: sortOrder == value
+                            ? const Icon(Icons.check)
+                            : const SizedBox.shrink(),
+                        onTap: () => setState(() {
+                          Navigator.pop(context);
+                          sortOrder = value;
+                        }),
+                      ),
+                      const Divider(indent: 55, endIndent: 20),
+                    ],
+                  );
+                }),
+                const SizedBox(height: 24),
+              ],
+            ),
+          );
+        });
   }
 
   Future<Map<String, List<BillRead>>> _fetchBills() async {

@@ -27,6 +27,7 @@ import 'package:waterflyiii/pages/home/main_charts/lastdays.dart';
 import 'package:waterflyiii/pages/home/main_charts/netearnings.dart';
 import 'package:waterflyiii/pages/home/main_charts/networth.dart';
 import 'package:waterflyiii/pages/home/main_charts/summary.dart';
+import 'package:waterflyiii/services/firefly_api_service.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
@@ -377,6 +378,7 @@ class _HomeMainState extends State<HomeMain>
     return true;
   }
 
+  /// Fetches the budgets and bills for the current month.
   Future<List<BudgetLimitRead>> _fetchBudgets() async {
     final FireflyIii api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
@@ -441,6 +443,7 @@ class _HomeMainState extends State<HomeMain>
     return respBudgets.body!.data;
   }
 
+  /// Fetches the bills for the current week.
   Future<List<BillRead>> _fetchBills() async {
     final FireflyIii api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
@@ -476,6 +479,7 @@ class _HomeMainState extends State<HomeMain>
         .toList(growable: false);
   }
 
+  /// Fetches the net worth and net earnings for the last 12 months.
   Future<bool> _fetchBalance() async {
     /*if (lastMonthsEarned.isNotEmpty) {
       // :DEBUG:

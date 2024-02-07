@@ -112,7 +112,8 @@ class _BillDetailsState extends State<BillDetails> {
                               _currency.fmt(double.tryParse(
                                       widget.bill.attributes.amountMax) ??
                                   0),
-                              widget.bill.attributes.repeatFreq.toString()),
+                              widget.bill.attributes.repeatFreq.toString(),
+                              widget.bill.attributes.skip ?? 0),
                         ),
                 ),
                 ListTile(

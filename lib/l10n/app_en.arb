@@ -55,7 +55,7 @@
   "@billsAddNewBill": {
     "description": "Text for add new bill flows"
   },
-  "billsAmountAndFrequency": "Bill matches transactions between {minValue} and {maxvalue}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}.",
+  "billsAmountAndFrequency": "Bill matches transactions between {minValue} and {maxvalue}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}{skip, plural, =0{} other{, skips over {skip}}}.",
   "@billsAmountAndFrequency": {
     "description": "Bill match for min and max amounts, and frequency",
     "placeholders": {
@@ -70,6 +70,10 @@
       "frequency": {
         "type": "String",
         "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
       }
     }
   },
@@ -85,7 +89,7 @@
   "@billsDialogLayoutTitle": {
     "description": "Text for bills layout dialog title"
   },
-  "billsDialogSortTitle": "Bill sort order",
+  "billsDialogSortTitle": "Sort list by",
   "@billsDialogSortTitle": {
     "description": "Text for bills sort dialog title"
   },
@@ -132,7 +136,7 @@
       }
     }
   },
-  "billsFrequencySkip": "{frequency, select, weekly{Weekly} monthly{Monthly} quarterly{Quarterly} halfyear{Half-yearly} yearly{Yearly} other{Unknown}}{skip, plural, =0{} other{ skips {skip}}}",
+  "billsFrequencySkip": "{frequency, select, weekly{Weekly} monthly{Monthly} quarterly{Quarterly} halfyear{Half-yearly} yearly{Yearly} other{Unknown}}{skip, plural, =0{} other{ skips over {skip}}}",
   "@billsFrequencySkip": {
     "description": "Bill frequency",
     "placeholders": {
@@ -201,15 +205,13 @@
       }
     }
   },
-  "billsSortType": "{sortType, select, alphabetical{Alphabetical} frequency{Frequency} other{Unknown}}",
-  "@billsSortType": {
-    "description": "Bill sort type",
-    "placeholders": {
-      "sortType": {
-        "type": "String",
-        "example": "Alphabetical"
-      }
-    }
+  "billsSortAlphabetical": "Alphabetical",
+  "@billsSortAlphabetical": {
+    "description": "Text for alphabetical sort types"
+  },
+  "billsSortFrequency": "Frequency",
+  "@billsSortFrequency": {
+    "description": "Text for sort by frequency"
   },
   "billsSortDirection": "{sortDirection, select, ascending{Ascending} descending{Descending} other{Unknown}}",
   "@billsSortDirection": {
@@ -220,6 +222,10 @@
         "example": "Ascending"
       }
     }
+  },
+  "billsSortName": "Name",
+  "@billsSortName": {
+    "description": "Text for sort by name"
   },
   "billsUngrouped": "Ungrouped",
   "@billsUngrouped": {

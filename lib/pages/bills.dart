@@ -8,6 +8,7 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -23,16 +24,9 @@ class BillsPage extends StatefulWidget {
   State<BillsPage> createState() => _BillsPageState();
 }
 
-enum BillSort {
-  alphabeticalAscending("alphabetical", "ascending"),
-  alphabeticalDescending("alphabetical", "descending"),
-  frequencyAscending("frequency", "ascending"),
-  frequencyDescending("frequency", "descending");
-
-  final String type;
-  final String direction;
-
-  const BillSort(this.type, this.direction);
+enum BillSortBy {
+  name,
+  frequency,
 }
 
 class _BillsPageState extends State<BillsPage>
@@ -41,7 +35,8 @@ class _BillsPageState extends State<BillsPage>
   late TimeZoneHandler _tzHandler;
 
   bool isListView = false;
-  BillSort sortOrder = BillSort.alphabeticalAscending;
+  BillSortBy sortBy = BillSortBy.name;
+  SortingOrder sortDirection = SortingOrder.ascending;
 
   @override
   void initState() {
@@ -98,89 +93,82 @@ class _BillsPageState extends State<BillsPage>
             );
           }
           return Padding(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-            child: ListView(
-              cacheExtent: 1000,
-              children: isListView
-                  ? _listBuilder(snapshot.data!)
-                  : _groupBuilder(snapshot.data!),
-            ),
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+            child: isListView
+                ? _listBuilder(snapshot.data!)
+                : _groupBuilder(snapshot.data!),
           );
         },
       ),
     );
   }
 
-  List<Widget> _listBuilder(Map<String, List<BillRead>> groupedBills) {
+  Widget _listBuilder(Map<String, List<BillRead>> groupedBills) {
     List<BillRead> billList =
         groupedBills.values.expand((List<BillRead> x) => x).toList();
 
-    switch (sortOrder) {
-      case BillSort.alphabeticalAscending:
+    switch (sortBy) {
+      case BillSortBy.name:
         billList.sort((BillRead a, BillRead b) =>
-            a.attributes.name.compareTo(b.attributes.name));
-      case BillSort.alphabeticalDescending:
+            sortDirection == SortingOrder.ascending
+                ? a.attributes.name.compareTo(b.attributes.name)
+                : b.attributes.name.compareTo(a.attributes.name));
+      case BillSortBy.frequency:
         billList.sort((BillRead a, BillRead b) =>
-            b.attributes.name.compareTo(a.attributes.name));
-      case BillSort.frequencyAscending:
-        billList.sort((BillRead a, BillRead b) => Enum.compareByIndex(
-            a.attributes.repeatFreq, b.attributes.repeatFreq));
-      case BillSort.frequencyDescending:
-        billList.sort((BillRead a, BillRead b) => Enum.compareByIndex(
-            b.attributes.repeatFreq, a.attributes.repeatFreq));
+            sortDirection == SortingOrder.ascending
+                ? Enum.compareByIndex(
+                    a.attributes.repeatFreq, b.attributes.repeatFreq)
+                : Enum.compareByIndex(
+                    b.attributes.repeatFreq, a.attributes.repeatFreq));
     }
 
-    return billList.map((BillRead bill) => _billRowBuilder(bill)).toList();
+    return ListView.separated(
+      itemCount: billList.length,
+      itemBuilder: (BuildContext context, int index) =>
+          _billRowBuilder(billList[index]),
+      separatorBuilder: (BuildContext context, int index) =>
+          const SizedBox(height: 8),
+    );
   }
 
-  List<Widget> _groupBuilder(Map<String, List<BillRead>> groupedBills) {
-    List<Widget> widgets = <Widget>[];
-
-    groupedBills.forEach((String groupTitle, List<BillRead> groupBills) {
-      widgets.add(Card(
-        clipBehavior: Clip.antiAlias,
-        child: ExpansionTile(
-          title: Text(
-            groupTitle,
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-          ),
-          initiallyExpanded: true,
-          collapsedShape: const ContinuousRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8))),
-          shape: const ContinuousRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8))),
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.fromLTRB(1, 0, 1, 1),
+  Widget _groupBuilder(Map<String, List<BillRead>> groupedBills) {
+    return ListView(
+      cacheExtent: 1000,
+      children: <Widget>[
+        ...groupedBills.keys.map((String groupName) => Card(
               clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
-                  borderRadius: const BorderRadius.only(
-                    bottomRight: Radius.circular(11),
-                    bottomLeft: Radius.circular(11),
-                  )),
-              child: Column(
-                children: _billGroupedRowBuilder(groupBills),
+              child: ExpansionTile(
+                title: Text(
+                  groupName,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                ),
+                initiallyExpanded: true,
+                collapsedShape: const ContinuousRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                shape: const ContinuousRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(2, 0, 2, 2),
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.background,
+                        borderRadius: const BorderRadius.only(
+                          bottomRight: Radius.circular(11),
+                          bottomLeft: Radius.circular(11),
+                        )),
+                    child: Column(
+                        children: groupedBills[groupName]!
+                            .map((BillRead bill) => _billRowBuilder(bill))
+                            .toList()),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
-      ));
-    });
-
-    return widgets;
-  }
-
-  List<Widget> _billGroupedRowBuilder(List<BillRead> bills) {
-    List<Widget> widgets = <Widget>[];
-
-    for (BillRead bill in bills) {
-      widgets.add(_billRowBuilder(bill));
-    }
-
-    return widgets;
+            )),
+      ],
+    );
   }
 
   Widget _billRowBuilder(BillRead bill) {
@@ -385,47 +373,68 @@ class _BillsPageState extends State<BillsPage>
                   S.of(context).billsDialogSortTitle,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                const SizedBox(height: 16),
-                ...BillSort.values.map((BillSort value) {
-                  return Column(
-                    children: <Widget>[
-                      ListTile(
-                        leading: value.direction == "ascending"
-                            ? const Icon(Icons.north_east)
-                            : const Icon(Icons.south_east),
-                        title: Text(
-                          S.of(context).billsSortType(value.type),
-                          style:
-                              Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                ListTile(
+                  leading: const Icon(Icons.sort),
+                  title: Text(
+                    S.of(context).billsSortName,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
                         ),
-                        subtitle: Text(
-                          S.of(context).billsSortDirection(value.direction),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
+                  ),
+                  subtitle: Text(
+                    S.of(context).billsSortAlphabetical,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
-                        trailing: sortOrder == value
-                            ? const Icon(Icons.check)
-                            : const SizedBox.shrink(),
-                        onTap: () => setState(() {
-                          Navigator.pop(context);
-                          sortOrder = value;
-                        }),
-                      ),
-                      const Divider(indent: 55, endIndent: 20),
-                    ],
-                  );
-                }),
+                  ),
+                  trailing: sortBy == BillSortBy.name
+                      ? sortDirection == SortingOrder.ascending
+                          ? const Icon(Icons.north)
+                          : const Icon(Icons.south)
+                      : const SizedBox.shrink(),
+                  onTap: () => _onSortSelected(BillSortBy.name),
+                ),
+                const Divider(indent: 55, endIndent: 20),
+                ListTile(
+                  leading: const Icon(Icons.sort),
+                  title: Text(
+                    S.of(context).billsSortFrequency,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  subtitle: Text(
+                    S.of(context).billsSortAlphabetical,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                  ),
+                  trailing: sortBy == BillSortBy.frequency
+                      ? sortDirection == SortingOrder.ascending
+                          ? const Icon(Icons.north)
+                          : const Icon(Icons.south)
+                      : const SizedBox.shrink(),
+                  onTap: () => _onSortSelected(BillSortBy.frequency),
+                ),
                 const SizedBox(height: 24),
               ],
             ),
           );
         });
+  }
+
+  void _onSortSelected(BillSortBy newSort) {
+    setState(() {
+      Navigator.pop(context);
+      if (sortBy == newSort) {
+        sortDirection = sortDirection == SortingOrder.ascending
+            ? SortingOrder.descending
+            : SortingOrder.ascending;
+      } else {
+        sortBy = newSort;
+        sortDirection = SortingOrder.ascending;
+      }
+    });
   }
 
   Future<Map<String, List<BillRead>>> _fetchBills() async {

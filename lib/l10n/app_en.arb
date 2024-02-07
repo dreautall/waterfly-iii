@@ -51,6 +51,10 @@
       }
     }
   },
+  "billsAddNewBill": "Add new bill",
+  "@billsAddNewBill": {
+    "description": "Text for add new bill flows"
+  },
   "billsAmountAndFrequency": "Bill matches transactions between {minValue} and {maxvalue}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}.",
   "@billsAmountAndFrequency": {
     "description": "Bill match for min and max amounts, and frequency",
@@ -68,6 +72,26 @@
         "example": "yearly"
       }
     }
+  },
+  "billsChangeLayoutTooltip": "Change layout",
+  "@billsChangeLayoutTooltip": {
+    "description": "Text for layout change button tooltip"
+  },
+  "billsChangeSortOrderTooltip": "Change sort order",
+  "@billsChangeSortOrderTooltip": {
+    "description": "Text for sort order change button tooltip"
+  },
+  "billsDialogLayoutTitle": "Bills view layout",
+  "@billsDialogLayoutTitle": {
+    "description": "Text for bills layout dialog title"
+  },
+  "billsDialogSortTitle": "Bill sort order",
+  "@billsDialogSortTitle": {
+    "description": "Text for bills sort dialog title"
+  },
+  "billsEditBill": "Edit bill",
+  "@billsEditBill": {
+    "description": "Text for edit bill flows"
   },
   "billsErrorLoading": "Error loading bills.",
   "@billsErrorLoading": {
@@ -108,6 +132,20 @@
       }
     }
   },
+  "billsFrequencySkip": "{frequency, select, weekly{Weekly} monthly{Monthly} quarterly{Quarterly} halfyear{Half-yearly} yearly{Yearly} other{Unknown}}{skip, plural, =0{} other{ skips {skip}}}",
+  "@billsFrequencySkip": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
   "billsInactive": "Inactive",
   "@billsInactive": {
     "description": "Text: when the bill is inactive"
@@ -115,6 +153,22 @@
   "billsIsActive": "Bill is active",
   "@billsIsActive": {
     "description": "Text: the bill is active"
+  },
+  "billsLayoutGroupTitle": "Group",
+  "@billsLayoutGroupTitle": {
+    "description": "Title text for group layout option"
+  },
+  "billsLayoutGroupSubtitle": "Bills displayed in their assigned groups.",
+  "@billsLayoutGroupSubtitle": {
+    "description": "Subtitle text for group layout option"
+  },
+  "billsLayoutListTitle": "List",
+  "@billsLayoutListTitle": {
+    "description": "Title text for list layout option"
+  },
+  "billsLayoutListSubtitle": "Bills displayed in a list sorted by certain criteria.",
+  "@billsLayoutListSubtitle": {
+    "description": "Subtitle text for list layout option"
   },
   "billsListEmpty": "The list is currently empty.",
   "@billsListEmpty": {
@@ -144,6 +198,26 @@
         "type": "DateTime",
         "format": "yMMMMd",
         "example": "January 5, 2024"
+      }
+    }
+  },
+  "billsSortType": "{sortType, select, alphabetical{Alphabetical} frequency{Frequency} other{Unknown}}",
+  "@billsSortType": {
+    "description": "Bill sort type",
+    "placeholders": {
+      "sortType": {
+        "type": "String",
+        "example": "Alphabetical"
+      }
+    }
+  },
+  "billsSortDirection": "{sortDirection, select, ascending{Ascending} descending{Descending} other{Unknown}}",
+  "@billsSortDirection": {
+    "description": "Bill sort direction",
+    "placeholders": {
+      "sortDirection": {
+        "type": "String",
+        "example": "Ascending"
       }
     }
   },
@@ -788,7 +862,7 @@
   "@settingsNLPermissionRemoveHelp": {
     "description": "Dialog text giving hint how to remove the permission."
   },
-  "settingsNLPrefillTXTitle": "Prefill transaction title with nofication title",
+  "settingsNLPrefillTXTitle": "Prefill transaction title with notification title",
   "@settingsNLPrefillTXTitle": {
     "description": "First line for setting to use pre-fill transaction title with notification title."
   },

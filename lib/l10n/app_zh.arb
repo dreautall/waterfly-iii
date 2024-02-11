@@ -1,5 +1,5 @@
 {
-  "@@locale": "zh",
+  "@@locale": "zh-CN",
   "@@x-reference": true,
   "accountRoleAssetCashWallet": "现金钱包",
   "@accountRoleAssetCashWallet": {
@@ -51,9 +51,41 @@
       }
     }
   },
+  "categoryDeleteConfirm": "您确定要删除这个分类吗？与此分类关联的交易不会被删除，但不再含有此分类。",
+  "@categoryDeleteConfirm": {
+    "description": "Confirmation text to delete category"
+  },
+  "categoryErrorLoading": "加载分类时出错。",
+  "@categoryErrorLoading": {
+    "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+  },
+  "categoryTitleAdd": "添加分类",
+  "@categoryTitleAdd": {
+    "description": "Title for Dialog: Add Category"
+  },
+  "categoryMonthNext": "下个月",
+  "@categoryMonthNext": {
+    "description": "Button title to view overview for next month"
+  },
+  "categoryMonthPrev": "上个月",
+  "@categoryMonthPrev": {
+    "description": "Button title to view overview for previous month"
+  },
+  "categoryTitleDelete": "删除分类",
+  "@categoryTitleDelete": {
+    "description": "Title for Dialog: Delete Category"
+  },
+  "categoryTitleEdit": "编辑分类",
+  "@categoryTitleEdit": {
+    "description": "Title for Dialog: Edit Category"
+  },
   "catOther": "其它",
   "@catOther": {
     "description": "Category description for summary category 'Other'"
+  },
+  "catNone": "<未分类>",
+  "@catNone": {
+    "description": "Placeholder when no category has been set."
   },
   "errorAPIInvalidResponse": "API 的响应无效：{message}",
   "@errorAPIInvalidResponse": {
@@ -179,6 +211,10 @@
   "@generalDismiss": {
     "description": "Dismiss window/dialog without action"
   },
+  "generalEarned": "收入",
+  "@generalEarned": {
+    "description": "(Amount) Earned"
+  },
   "generalError": "错误",
   "@generalError": {
     "description": "Error (title in dialogs etc.)"
@@ -210,6 +246,10 @@
   "generalReset": "重置",
   "@generalReset": {
     "description": "Reset something (i.e. set filters)"
+  },
+  "generalSpent": "支出",
+  "@generalSpent": {
+    "description": "(Amount) Spent"
   },
   "generalSum": "总额",
   "@generalSum": {
@@ -514,6 +554,10 @@
   "navigationAccounts": "账户",
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"
+  },
+  "navigationCategories": "分类",
+  "@navigationCategories": {
+    "description": "Navigation Label: Categories"
   },
   "navigationMain": "主仪表盘",
   "@navigationMain": {

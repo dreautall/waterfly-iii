@@ -122,8 +122,7 @@ class _BillsPageState extends State<BillsPage>
 
     return ListView.builder(
       itemCount: billList.length,
-      itemBuilder: (BuildContext _, int i) =>
-          _billRowBuilder(billList[i], true),
+      itemBuilder: (BuildContext _, int i) => _billRowBuilder(billList[i]),
     );
   }
 
@@ -161,8 +160,7 @@ class _BillsPageState extends State<BillsPage>
                     ),
                     child: Column(
                         children: groupedBills[groupName]!
-                            .map(
-                                (BillRead bill) => _billRowBuilder(bill, false))
+                            .map((BillRead bill) => _billRowBuilder(bill))
                             .toList()),
                   ),
                 ],
@@ -172,7 +170,7 @@ class _BillsPageState extends State<BillsPage>
     );
   }
 
-  Widget _billRowBuilder(BillRead bill, bool isListView) {
+  Widget _billRowBuilder(BillRead bill) {
     return OpenContainer(
       openBuilder: (BuildContext context, Function closedContainer) =>
           BillDetails(bill: bill),
@@ -305,134 +303,123 @@ class _BillsPageState extends State<BillsPage>
     );
   }
 
-  void _showLayoutPickerDialog() {
-    showModalBottomSheet(
+  void _showLayoutPickerDialog() => showModalBottomSheet<void>(
         context: context,
-        builder: (BuildContext context) {
-          return SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 16),
-                Text(
-                  S.of(context).billsDialogLayoutTitle,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 16),
-                ListTile(
-                  leading: const Icon(Icons.view_agenda_outlined),
-                  title: Text(S.of(context).billsLayoutGroupTitle,
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          )),
-                  subtitle: Text(
-                    S.of(context).billsLayoutGroupSubtitle,
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                  ),
-                  trailing: !isListView
-                      ? const Icon(Icons.check)
-                      : const SizedBox.shrink(),
-                  onTap: () => setState(() {
-                    Navigator.pop(context);
-                    isListView = false;
-                  }),
-                ),
-                const Divider(indent: 55, endIndent: 20),
-                ListTile(
-                  leading: const Icon(Icons.table_rows_outlined),
-                  title: Text(
-                    S.of(context).billsLayoutListTitle,
+        builder: (BuildContext context) => SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              const SizedBox(height: 16),
+              ListTile(
+                leading: !isListView
+                    ? const Icon(Icons.view_agenda)
+                    : const Icon(Icons.view_agenda_outlined),
+                title: Text(S.of(context).billsLayoutGroupTitle,
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  subtitle: Text(
-                    S.of(context).billsLayoutListSubtitle,
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                  ),
-                  trailing: isListView
-                      ? const Icon(Icons.check)
-                      : const SizedBox.shrink(),
-                  onTap: () => setState(() {
-                    Navigator.pop(context);
-                    isListView = true;
-                  }),
+                        )),
+                subtitle: Text(
+                  S.of(context).billsLayoutGroupSubtitle,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
                 ),
-                const SizedBox(height: 24),
-              ],
-            ),
-          );
-        });
-  }
+                trailing: !isListView
+                    ? const Icon(Icons.check)
+                    : const SizedBox.shrink(),
+                onTap: () => setState(() {
+                  isListView = false;
+                  Navigator.pop(context);
+                }),
+              ),
+              const Divider(indent: 16, endIndent: 16),
+              ListTile(
+                leading: isListView
+                    ? const Icon(Icons.table_rows)
+                    : const Icon(Icons.table_rows_outlined),
+                title: Text(
+                  S.of(context).billsLayoutListTitle,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                subtitle: Text(
+                  S.of(context).billsLayoutListSubtitle,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                ),
+                trailing: isListView
+                    ? const Icon(Icons.check)
+                    : const SizedBox.shrink(),
+                onTap: () => setState(() {
+                  isListView = true;
+                  Navigator.pop(context);
+                }),
+              ),
+              const SizedBox(height: 24),
+            ],
+          ),
+        ),
+      );
 
-  void _showSortOrderPickerDialog() {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 16),
-                Text(
-                  S.of(context).billsDialogSortTitle,
-                  style: Theme.of(context).textTheme.titleMedium,
+  void _showSortOrderPickerDialog() => showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              const SizedBox(height: 16),
+              ListTile(
+                leading: const Icon(Icons.sort),
+                title: Text(
+                  S.of(context).billsSortName,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
-                ListTile(
-                  leading: const Icon(Icons.sort),
-                  title: Text(
-                    S.of(context).billsSortName,
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  subtitle: Text(
-                    S.of(context).billsSortAlphabetical,
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                  ),
-                  trailing: sortBy == BillSortBy.name
-                      ? sortDirection == SortingOrder.ascending
-                          ? const Icon(Icons.north)
-                          : const Icon(Icons.south)
-                      : const SizedBox.shrink(),
-                  onTap: () => _onSortSelected(BillSortBy.name),
+                subtitle: Text(
+                  S.of(context).billsSortAlphabetical,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
                 ),
-                const Divider(indent: 55, endIndent: 20),
-                ListTile(
-                  leading: const Icon(Icons.sort),
-                  title: Text(
-                    S.of(context).billsSortFrequency,
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  subtitle: Text(
-                    S.of(context).billsSortAlphabetical,
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                  ),
-                  trailing: sortBy == BillSortBy.frequency
-                      ? sortDirection == SortingOrder.ascending
-                          ? const Icon(Icons.north)
-                          : const Icon(Icons.south)
-                      : const SizedBox.shrink(),
-                  onTap: () => _onSortSelected(BillSortBy.frequency),
+                trailing: sortBy == BillSortBy.name
+                    ? sortDirection == SortingOrder.ascending
+                        ? const Icon(Icons.north)
+                        : const Icon(Icons.south)
+                    : const SizedBox.shrink(),
+                onTap: () => _onSortSelected(BillSortBy.name),
+              ),
+              const Divider(indent: 16, endIndent: 16),
+              ListTile(
+                leading: const Icon(Icons.sort),
+                title: Text(
+                  S.of(context).billsSortFrequency,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
-                const SizedBox(height: 24),
-              ],
-            ),
-          );
-        });
-  }
+                subtitle: Text(
+                  S.of(context).billsSortAlphabetical,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                ),
+                trailing: sortBy == BillSortBy.frequency
+                    ? sortDirection == SortingOrder.ascending
+                        ? const Icon(Icons.north)
+                        : const Icon(Icons.south)
+                    : const SizedBox.shrink(),
+                onTap: () => _onSortSelected(BillSortBy.frequency),
+              ),
+              const SizedBox(height: 24),
+            ],
+          ),
+        );
+      });
 
   void _onSortSelected(BillSortBy newSort) {
     setState(() {
-      Navigator.pop(context);
       if (sortBy == newSort) {
         sortDirection = sortDirection == SortingOrder.ascending
             ? SortingOrder.descending
@@ -442,6 +429,7 @@ class _BillsPageState extends State<BillsPage>
         sortDirection = SortingOrder.ascending;
       }
     });
+    Navigator.pop(context);
   }
 
   Future<Map<String, List<BillRead>>> _fetchBills() async {

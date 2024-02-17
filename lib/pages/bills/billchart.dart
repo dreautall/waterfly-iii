@@ -39,7 +39,7 @@ class BillChartState extends State<BillChart> {
             height: 125,
             child: SfCartesianChart(
               primaryXAxis: DateTimeCategoryAxis(
-                dateFormat: DateFormat.MMM(),
+                dateFormat: DateFormat.yMMM(),
                 labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
                       fontWeight: FontWeight.normal,
                     ),

@@ -71,98 +71,104 @@ class _BillDetailsState extends State<BillDetails> {
     log.finest(() => "build()");
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.bill.attributes.name),
-        elevation: 1,
-        scrolledUnderElevation: 1,
-        backgroundColor: Theme.of(context).colorScheme.background,
-      ),
-      body: Column(
-        children: <Widget>[
-          Card(
-            margin: const EdgeInsets.fromLTRB(0, 0, 0, 1),
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(16),
-              bottomRight: Radius.circular(16),
-            )),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                ListTile(
-                  leading: const CircleAvatar(
-                    child: Icon(Icons.info_outline),
-                  ),
-                  title: widget.bill.attributes.amountMax ==
-                          widget.bill.attributes.amountMin
-                      ? Text(
-                          S.of(context).billsExactAmountAndFrequency(
-                              _currency.fmt(double.tryParse(
-                                      widget.bill.attributes.amountMin) ??
-                                  0),
-                              widget.bill.attributes.repeatFreq.toString()),
-                        )
-                      : Text(
-                          S.of(context).billsAmountAndFrequency(
-                              _currency.fmt(double.tryParse(
-                                      widget.bill.attributes.amountMin) ??
-                                  0),
-                              _currency.fmt(double.tryParse(
-                                      widget.bill.attributes.amountMax) ??
-                                  0),
-                              widget.bill.attributes.repeatFreq.toString(),
-                              widget.bill.attributes.skip ?? 0),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            title: Text(widget.bill.attributes.name),
+            elevation: 1,
+            scrolledUnderElevation: 1,
+            forceElevated: true,
+            stretch: false,
+            expandedHeight: 365,
+            floating: true,
+            pinned: true,
+            snap: true,
+            flexibleSpace: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                debugPrint(constraints.maxHeight.toString());
+                // Collapsed & uncollapsed height out of debug log
+                double opacity = (constraints.maxHeight - 106) / (415 - 106);
+                if (opacity > 1) opacity = 1;
+                return Opacity(
+                  opacity: animCurveEmphasized.transform(opacity),
+                  child: Card(
+                    margin: const EdgeInsets.fromLTRB(0, 106, 0, 0),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                    child: ClipRect(
+                        child: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      children: <Widget>[
+                        ListTile(
+                          leading: const CircleAvatar(
+                            child: Icon(Icons.info_outline),
+                          ),
+                          title: widget.bill.attributes.amountMax ==
+                                  widget.bill.attributes.amountMin
+                              ? Text(
+                                  S.of(context).billsExactAmountAndFrequency(
+                                      _currency.fmt(double.tryParse(widget
+                                              .bill.attributes.amountMin) ??
+                                          0),
+                                      widget.bill.attributes.repeatFreq
+                                          .toString()),
+                                )
+                              : Text(
+                                  S.of(context).billsAmountAndFrequency(
+                                      _currency.fmt(double.tryParse(widget
+                                              .bill.attributes.amountMin) ??
+                                          0),
+                                      _currency.fmt(double.tryParse(widget
+                                              .bill.attributes.amountMax) ??
+                                          0),
+                                      widget.bill.attributes.repeatFreq
+                                          .toString(),
+                                      widget.bill.attributes.skip ?? 0),
+                                ),
                         ),
-                ),
-                ListTile(
-                  leading: CircleAvatar(
-                    child: Icon(
-                      widget.bill.attributes.active ?? false
-                          ? Icons.check_box_outlined
-                          : Icons.check_box_outline_blank,
-                    ),
+                        ListTile(
+                          leading: CircleAvatar(
+                            child: Icon(
+                              widget.bill.attributes.active ?? false
+                                  ? Icons.check_box_outlined
+                                  : Icons.check_box_outline_blank,
+                            ),
+                          ),
+                          title: Text(widget.bill.attributes.active ?? false
+                              ? S.of(context).billsIsActive
+                              : S.of(context).billsNotActive),
+                        ),
+                        ListTile(
+                          leading: const CircleAvatar(
+                            child: Icon(Icons.calendar_month),
+                          ),
+                          title: Text(S.of(context).billsNextExpectedMatch),
+                          trailing: Text(
+                            DateFormat.yMMMMd().format(
+                              _tzHandler
+                                  .sTime(widget.bill.attributes.payDates![0])
+                                  .toLocal(),
+                            ),
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        BillChart(key: _billChartKey, billId: widget.bill.id),
+                      ],
+                    )),
                   ),
-                  title: Text(widget.bill.attributes.active ?? false
-                      ? S.of(context).billsIsActive
-                      : S.of(context).billsNotActive),
-                ),
-                ListTile(
-                  leading: const CircleAvatar(
-                    child: Icon(Icons.calendar_month),
-                  ),
-                  title: Text(S.of(context).billsNextExpectedMatch),
-                  trailing: Text(
-                    DateFormat.yMMMMd().format(
-                      _tzHandler
-                          .sTime(widget.bill.attributes.payDates![0])
-                          .toLocal(),
-                    ),
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                BillChart(key: _billChartKey, billId: widget.bill.id),
-              ],
+                );
+              },
             ),
           ),
-          Expanded(
-            child: RawScrollbar(
-              radius: const Radius.circular(12),
-              thickness: 5,
-              thumbVisibility: true,
-              thumbColor: Theme.of(context).colorScheme.outlineVariant,
-              crossAxisMargin: 4,
-              mainAxisMargin: 4,
-              child: PagedListView<int, TransactionRead>(
-                pagingController: _pagingController,
-                physics: const ClampingScrollPhysics(),
-                builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
-                  animateTransitions: true,
-                  transitionDuration: animDurationStandard,
-                  itemBuilder: _transactionRowBuilder,
-                  noItemsFoundIndicatorBuilder: _emptyListBuilder,
-                ),
-              ),
+          PagedSliverList<int, TransactionRead>(
+            pagingController: _pagingController,
+            builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
+              animateTransitions: true,
+              transitionDuration: animDurationStandard,
+              itemBuilder: _transactionRowBuilder,
+              noItemsFoundIndicatorBuilder: _emptyListBuilder,
             ),
           ),
         ],
@@ -178,7 +184,7 @@ class _BillDetailsState extends State<BillDetails> {
 
     return OpenContainer(
       openBuilder: (BuildContext context, Function closedContainer) =>
-          TransactionPage(transaction: transaction),
+          TransactionPage(transaction: null), // :TODO:
       openColor: Theme.of(context).cardColor,
       closedColor: Theme.of(context).dialogBackgroundColor,
       closedShape: const RoundedRectangleBorder(
@@ -233,11 +239,11 @@ class _BillDetailsState extends State<BillDetails> {
                       color: Theme.of(context).colorScheme.secondary,
                     ))
           ]);
-    } else {
-      return TextSpan(
-        text: transaction.attributes.transactions.first.description,
-      );
     }
+
+    return TextSpan(
+      text: transaction.attributes.transactions.first.description,
+    );
   }
 
   String _getTransactionAmount(TransactionRead transaction) {

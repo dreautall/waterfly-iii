@@ -26,6 +26,7 @@ class BillChartState extends State<BillChart> {
   @override
   void dispose() {
     _values.clear();
+
     super.dispose();
   }
 
@@ -61,9 +62,12 @@ class BillChartState extends State<BillChart> {
               enableSideBySideSeriesPlacement: false,
             )),
       );
-    } else {
-      return const SizedBox(height: 0);
     }
+
+    return const SizedBox(
+      height: 141, // Measured final chart height
+      child: Center(child: CircularProgressIndicator()),
+    );
   }
 
   void addTransactions(List<TransactionRead> transactions) {

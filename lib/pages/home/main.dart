@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +95,7 @@ class _HomeMainState extends State<HomeMain>
         period: api_v2.PeriodProperty.value_1d,
       );
       if (!respBalanceData.isSuccessful || respBalanceData.body == null) {
-        if (context.mounted) {
+        if (mounted) {
           throw Exception(
             S.of(context).errorAPIInvalidResponse(
                 respBalanceData.error?.toString() ?? ""),
@@ -144,7 +143,7 @@ class _HomeMainState extends State<HomeMain>
         );
         if (!respInsightExpense.isSuccessful ||
             respInsightExpense.body == null) {
-          if (context.mounted) {
+          if (mounted) {
             throw Exception(
               S.of(context).errorAPIInvalidResponse(
                   respInsightExpense.error?.toString() ?? ""),
@@ -166,7 +165,7 @@ class _HomeMainState extends State<HomeMain>
           end: DateFormat('yyyy-MM-dd', 'en_US').format(e),
         );
         if (!respInsightIncome.isSuccessful || respInsightIncome.body == null) {
-          if (context.mounted) {
+          if (mounted) {
             throw Exception(
               S.of(context).errorAPIInvalidResponse(
                   respInsightIncome.error?.toString() ?? ""),
@@ -206,7 +205,7 @@ class _HomeMainState extends State<HomeMain>
     if (!respChartData.isSuccessful ||
         respChartData.body == null ||
         respChartData.body!.isEmpty) {
-      if (context.mounted) {
+      if (mounted) {
         throw Exception(
           S
               .of(context)
@@ -256,7 +255,7 @@ class _HomeMainState extends State<HomeMain>
         end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
       );
       if (!respInsightExpense.isSuccessful || respInsightExpense.body == null) {
-        if (context.mounted) {
+        if (mounted) {
           throw Exception(
             S.of(context).errorAPIInvalidResponse(
                 respInsightExpense.error?.toString() ?? ""),
@@ -276,7 +275,7 @@ class _HomeMainState extends State<HomeMain>
         end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
       );
       if (!respInsightIncome.isSuccessful || respInsightIncome.body == null) {
-        if (context.mounted) {
+        if (mounted) {
           throw Exception(
             S.of(context).errorAPIInvalidResponse(
                 respInsightIncome.error?.toString() ?? ""),
@@ -338,7 +337,7 @@ class _HomeMainState extends State<HomeMain>
     );
 
     if (!respCatExpenseData.isSuccessful || respCatExpenseData.body == null) {
-      if (context.mounted) {
+      if (mounted) {
         throw Exception(
           S.of(context).errorAPIInvalidResponse(
               respCatExpenseData.error?.toString() ?? ""),
@@ -383,7 +382,7 @@ class _HomeMainState extends State<HomeMain>
 
     final Response<BudgetArray> respBudgetInfos = await api.v1BudgetsGet();
     if (!respBudgetInfos.isSuccessful || respBudgetInfos.body == null) {
-      if (context.mounted) {
+      if (mounted) {
         throw Exception(
           S
               .of(context)
@@ -407,7 +406,7 @@ class _HomeMainState extends State<HomeMain>
     );
 
     if (!respBudgets.isSuccessful || respBudgets.body == null) {
-      if (context.mounted) {
+      if (mounted) {
         throw Exception(
           S
               .of(context)
@@ -453,7 +452,7 @@ class _HomeMainState extends State<HomeMain>
       end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
     );
     if (!respBills.isSuccessful || respBills.body == null) {
-      if (context.mounted) {
+      if (mounted) {
         throw Exception(
           S
               .of(context)
@@ -513,7 +512,7 @@ class _HomeMainState extends State<HomeMain>
       preselected: api_v2_enums.PreselectedAccountProperty.all,
     );
     if (!respBalanceData.isSuccessful || respBalanceData.body == null) {
-      if (context.mounted) {
+      if (mounted) {
         throw Exception(
           S
               .of(context)

@@ -388,7 +388,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                 name: imageFile.name,
                 size: await imageFile.length(),
               );
-              if (mounted) {
+              if (context.mounted) {
                 if (widget.transactionId == null) {
                   fakeUploadAttachment(context, file);
                 } else {
@@ -404,7 +404,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
               if (file == null || file.files.first.path == null) {
                 return;
               }
-              if (mounted) {
+              if (context.mounted) {
                 if (widget.transactionId == null) {
                   fakeUploadAttachment(context, file.files.first);
                 } else {

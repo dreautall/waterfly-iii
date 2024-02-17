@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +60,7 @@ class _HomePiggybankState extends State<HomePiggybank>
         limit: _numberOfItemsPerRequest,
       );
       if (!respAccounts.isSuccessful || respAccounts.body == null) {
-        if (context.mounted) {
+        if (mounted) {
           throw Exception(
             S
                 .of(context)
@@ -285,7 +284,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
     final Response<PiggyBankEventArray> resp =
         await api.v1PiggyBanksIdEventsGet(id: currentPiggy.id);
     if (!resp.isSuccessful || resp.body == null) {
-      if (context.mounted) {
+      if (mounted) {
         throw Exception(
           S.of(context).errorAPIInvalidResponse(resp.error?.toString() ?? ""),
         );

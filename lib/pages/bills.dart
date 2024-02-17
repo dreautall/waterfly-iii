@@ -122,7 +122,8 @@ class _BillsPageState extends State<BillsPage>
 
     return ListView.builder(
       itemCount: billList.length,
-      itemBuilder: (BuildContext _, int i) => _billRowBuilder(billList[i]),
+      itemBuilder: (BuildContext _, int i) =>
+          _billRowBuilder(billList[i], true),
     );
   }
 
@@ -131,7 +132,6 @@ class _BillsPageState extends State<BillsPage>
       cacheExtent: 1000,
       children: <Widget>[
         ...groupedBills.keys.map((String groupName) => Card(
-              clipBehavior: Clip.antiAlias,
               child: ExpansionTile(
                 title: Text(
                   groupName,
@@ -140,23 +140,29 @@ class _BillsPageState extends State<BillsPage>
                       ),
                 ),
                 initiallyExpanded: true,
-                collapsedShape: const ContinuousRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8))),
-                shape: const ContinuousRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                collapsedShape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(12),
+                  ),
+                ),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(12),
+                  ),
+                ),
                 children: <Widget>[
                   Container(
-                    margin: const EdgeInsets.fromLTRB(2, 0, 2, 2),
-                    clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.background,
-                        borderRadius: const BorderRadius.only(
-                          bottomRight: Radius.circular(11),
-                          bottomLeft: Radius.circular(11),
-                        )),
+                      color: Theme.of(context).colorScheme.background,
+                      borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(12),
+                        bottomLeft: Radius.circular(12),
+                      ),
+                    ),
                     child: Column(
                         children: groupedBills[groupName]!
-                            .map((BillRead bill) => _billRowBuilder(bill))
+                            .map(
+                                (BillRead bill) => _billRowBuilder(bill, false))
                             .toList()),
                   ),
                 ],
@@ -166,17 +172,19 @@ class _BillsPageState extends State<BillsPage>
     );
   }
 
-  Widget _billRowBuilder(BillRead bill) {
+  Widget _billRowBuilder(BillRead bill, bool isListView) {
     return OpenContainer(
       openBuilder: (BuildContext context, Function closedContainer) =>
           BillDetails(bill: bill),
       openColor: Theme.of(context).cardColor,
       closedColor: Theme.of(context).cardColor,
-      closedShape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          bottomLeft: Radius.circular(16),
-        ),
+      closedShape: RoundedRectangleBorder(
+        borderRadius: isListView
+            ? const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                bottomLeft: Radius.circular(16),
+              )
+            : const BorderRadius.all(Radius.circular(12)),
       ),
       closedElevation: 0,
       closedBuilder: (BuildContext context, Function openContainer) => ListTile(
@@ -203,11 +211,13 @@ class _BillsPageState extends State<BillsPage>
                       ? Theme.of(context).colorScheme.onSurface
                       : Theme.of(context).disabledColor,
                 ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            bottomLeft: Radius.circular(16),
-          ),
+        shape: RoundedRectangleBorder(
+          borderRadius: isListView
+              ? const BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  bottomLeft: Radius.circular(16),
+                )
+              : const BorderRadius.all(Radius.circular(12)),
         ),
         isThreeLine: false,
         trailing: RichText(

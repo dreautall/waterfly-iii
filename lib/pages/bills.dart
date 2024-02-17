@@ -6,7 +6,7 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
-import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/charts.dart' show SortingOrder;
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -120,12 +120,9 @@ class _BillsPageState extends State<BillsPage>
                     b.attributes.repeatFreq, a.attributes.repeatFreq));
     }
 
-    return ListView.separated(
+    return ListView.builder(
       itemCount: billList.length,
-      itemBuilder: (BuildContext context, int index) =>
-          _billRowBuilder(billList[index]),
-      separatorBuilder: (BuildContext context, int index) =>
-          const SizedBox(height: 8),
+      itemBuilder: (BuildContext _, int i) => _billRowBuilder(billList[i]),
     );
   }
 
@@ -183,24 +180,29 @@ class _BillsPageState extends State<BillsPage>
       ),
       closedElevation: 0,
       closedBuilder: (BuildContext context, Function openContainer) => ListTile(
-        leading: const Icon(Icons.receipt_outlined),
+        leading: const CircleAvatar(child: Icon(Icons.receipt_outlined)),
         title: Text(
           bill.attributes.name,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: bill.attributes.active ?? false
-                    ? Theme.of(context).colorScheme.onSurface
-                    : Theme.of(context).disabledColor,
-              ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
+        titleTextStyle: ListTileTheme.of(context).titleTextStyle ??
+            Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: bill.attributes.active ?? false
+                      ? Theme.of(context).colorScheme.onSurface
+                      : Theme.of(context).disabledColor,
+                ),
         subtitle: Text(
           S.of(context).billsFrequencySkip(
               bill.attributes.repeatFreq.toString(), bill.attributes.skip ?? 0),
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: bill.attributes.active ?? false
-                    ? Theme.of(context).colorScheme.secondary
-                    : Theme.of(context).disabledColor,
-              ),
+          maxLines: 1,
         ),
+        subtitleTextStyle: ListTileTheme.of(context).subtitleTextStyle ??
+            Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: bill.attributes.active ?? false
+                      ? Theme.of(context).colorScheme.onSurface
+                      : Theme.of(context).disabledColor,
+                ),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16),
@@ -252,48 +254,45 @@ class _BillsPageState extends State<BillsPage>
   }
 
   TextSpan _getExpectedDate(BillRead item) {
+    // Bill is inactive
     if (!(item.attributes.active ?? false)) {
-      // Bill is inactive
       return TextSpan(
         text: S.of(context).billsInactive,
-        style: Theme.of(context)
-            .textTheme
-            .bodySmall!
-            .copyWith(color: Theme.of(context).disabledColor),
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Theme.of(context).disabledColor,
+            ),
       );
-    } else if (item.attributes.paidDates?.isNotEmpty ?? false) {
-      // Bill was paid this period
+    }
+    // Bill was paid this period
+    if (item.attributes.paidDates?.isNotEmpty ?? false) {
       return TextSpan(
-          text: S.of(context).billsPaidOn(
-                _tzHandler
-                    .sTime(item.attributes.paidDates!.last.date!)
-                    .toLocal(),
-              ),
-          style: Theme.of(context)
-              .textTheme
-              .bodySmall!
-              .copyWith(color: Theme.of(context).colorScheme.primary));
-    } else if (item.attributes.nextExpectedMatch != null) {
-      // Bill expected this period
+        text: S.of(context).billsPaidOn(
+              _tzHandler.sTime(item.attributes.paidDates!.last.date!).toLocal(),
+            ),
+        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+      );
+    }
+    // Bill expected this period
+    if (item.attributes.nextExpectedMatch != null) {
       return TextSpan(
         text: S.of(context).billsExpectedOn(
               _tzHandler.sTime(item.attributes.nextExpectedMatch!).toLocal(),
             ),
-        style: Theme.of(context)
-            .textTheme
-            .bodySmall!
-            .copyWith(color: Colors.orangeAccent),
-      );
-    } else {
-      // Bill not expected this period
-      return TextSpan(
-        text: S.of(context).billsNotExpected,
-        style: Theme.of(context)
-            .textTheme
-            .bodySmall!
-            .copyWith(color: Colors.orangeAccent),
+        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              color: Colors.orangeAccent,
+            ),
       );
     }
+
+    // Bill not expected this period
+    return TextSpan(
+      text: S.of(context).billsNotExpected,
+      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+            color: Colors.orangeAccent,
+          ),
+    );
   }
 
   void _showLayoutPickerDialog() {

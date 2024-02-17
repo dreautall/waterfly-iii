@@ -131,6 +131,7 @@ class _BillsPageState extends State<BillsPage>
       cacheExtent: 1000,
       children: <Widget>[
         ...groupedBills.keys.map((String groupName) => Card(
+              clipBehavior: Clip.antiAlias,
               child: ExpansionTile(
                 title: Text(
                   groupName,
@@ -400,7 +401,7 @@ class _BillsPageState extends State<BillsPage>
                       ),
                 ),
                 subtitle: Text(
-                  S.of(context).billsSortAlphabetical,
+                  S.of(context).billsSortByTimePeriod,
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: Theme.of(context).colorScheme.secondary,
                       ),

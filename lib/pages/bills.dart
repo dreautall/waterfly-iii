@@ -202,7 +202,7 @@ class _BillsPageState extends State<BillsPage>
         subtitle: Text(
           S.of(context).billsFrequencySkip(
               bill.attributes.repeatFreq.toString(), bill.attributes.skip ?? 0),
-          maxLines: 1,
+          maxLines: 2,
         ),
         subtitleTextStyle: ListTileTheme.of(context).subtitleTextStyle ??
             Theme.of(context).textTheme.bodyMedium?.copyWith(

@@ -312,20 +312,7 @@ class _BillDetailsState extends State<BillDetails> {
       id: widget.bill.id,
       page: page,
     );
-
-    if (!response.isSuccessful || response.body == null) {
-      if (mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${response.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(response, mounted ? context : null);
 
     List<TransactionRead> transactions = response.body!.data;
     _billChartKey.currentState!.addTransactions(transactions);
@@ -344,20 +331,7 @@ class _BillDetailsState extends State<BillDetails> {
     Response<TransactionSingle> response = await api.v1TransactionsIdGet(
       id: id,
     );
-
-    if (!response.isSuccessful || response.body == null) {
-      if (mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${response.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(response, mounted ? context : null);
 
     return response.body!.data;
   }

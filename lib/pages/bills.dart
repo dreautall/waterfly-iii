@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -456,7 +454,7 @@ class _BillsPageState extends State<BillsPage>
       );
 
       if (!response.isSuccessful || response.body == null) {
-        if (context.mounted) {
+        if (mounted) {
           throw Exception(
             S
                 .of(context)
@@ -479,7 +477,7 @@ class _BillsPageState extends State<BillsPage>
 
     for (BillRead bill in bills) {
       String key = bill.attributes.objectGroupTitle ??
-          (context.mounted ? S.of(context).billsUngrouped : "");
+          (mounted ? S.of(context).billsUngrouped : "");
       if (!billsMap.containsKey(key)) {
         billsMap[key] = <BillRead>[];
       }

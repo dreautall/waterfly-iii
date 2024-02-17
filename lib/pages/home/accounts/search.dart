@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
@@ -79,19 +78,7 @@ class _AccountSearchState extends State<AccountSearch> {
           page: pageKey,
         );
       }
-      if (!respAccounts.isSuccessful || respAccounts.body == null) {
-        if (mounted) {
-          throw Exception(
-            S
-                .of(context)
-                .errorAPIInvalidResponse(respAccounts.error?.toString() ?? ""),
-          );
-        } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${respAccounts.error}",
-          );
-        }
-      }
+      apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
 
       if (mounted) {
         final List<AccountRead> accountList = respAccounts.body!.data;

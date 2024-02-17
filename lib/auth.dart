@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 
 import 'package:chopper/chopper.dart'
@@ -356,5 +357,21 @@ class FireflyService with ChangeNotifier {
     storage.write(key: 'api_cert', value: cert);
 
     return true;
+  }
+}
+
+void apiThrowErrorIfEmpty(Response<dynamic> response, BuildContext? context) {
+  if (response.isSuccessful && response.body != null) {
+    return;
+  }
+  log.severe("Invalid API response", response.error);
+  if (context?.mounted ?? false) {
+    throw Exception(
+      S.of(context!).errorAPIInvalidResponse(response.error?.toString() ?? ""),
+    );
+  } else {
+    throw Exception(
+      "[nocontext] Invalid API response: ${response.error}",
+    );
   }
 }

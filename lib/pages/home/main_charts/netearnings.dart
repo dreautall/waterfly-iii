@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -130,18 +129,7 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
           .format(now.copyWith(day: 0, month: now.month + 1)),
     );
 
-    if (!respCatExpenseData.isSuccessful || respCatExpenseData.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S.of(context).errorAPIInvalidResponse(
-              respCatExpenseData.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respCatExpenseData.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respCatExpenseData, mounted ? context : null);
 
     for (InsightGroupEntry cat in respCatIncomeData.body!) {
       if ((cat.name?.isEmpty ?? true) || cat.differenceFloat == 0) {

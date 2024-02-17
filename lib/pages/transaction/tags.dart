@@ -167,20 +167,7 @@ class _TagDialogState extends State<TagDialog> {
     do {
       pageNumber += 1;
       response = await api.v1TagsGet(page: pageNumber);
-
-      if (!response.isSuccessful || response.body == null) {
-        if (context.mounted) {
-          throw Exception(
-            S
-                .of(context)
-                .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-          );
-        } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${response.error}",
-          );
-        }
-      }
+      apiThrowErrorIfEmpty(response, mounted ? context : null);
 
       tags.addAll(response.body!.data.map((TagRead e) => e.attributes.tag));
     } while ((response.body!.meta.pagination?.currentPage ?? 1) <

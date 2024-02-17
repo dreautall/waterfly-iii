@@ -107,18 +107,8 @@ class _BillDialogState extends State<BillDialog> {
                   await api.v1AutocompleteBillsGet(
                 query: textEditingValue.text,
               );
-              if (!response.isSuccessful || response.body == null) {
-                if (context.mounted) {
-                  throw Exception(
-                    S.of(context).errorAPIInvalidResponse(
-                        response.error?.toString() ?? ""),
-                  );
-                } else {
-                  throw Exception(
-                    "[nocontext] Invalid API response: ${response.error}",
-                  );
-                }
-              }
+              apiThrowErrorIfEmpty(response, mounted ? context : null);
+
               return response.body!;
             } catch (e, stackTrace) {
               log.severe(

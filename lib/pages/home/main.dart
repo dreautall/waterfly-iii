@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -95,18 +94,7 @@ class _HomeMainState extends State<HomeMain>
         accounts: accounts,
         period: api_v2.PeriodProperty.value_1d,
       );
-      if (!respBalanceData.isSuccessful || respBalanceData.body == null) {
-        if (context.mounted) {
-          throw Exception(
-            S.of(context).errorAPIInvalidResponse(
-                respBalanceData.error?.toString() ?? ""),
-          );
-        } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${respBalanceData.error}",
-          );
-        }
-      }
+      apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
 
       for (api_v2.ChartDataSetV2 e in respBalanceData.body!) {
         final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
@@ -142,19 +130,7 @@ class _HomeMainState extends State<HomeMain>
           start: DateFormat('yyyy-MM-dd', 'en_US').format(e),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(e),
         );
-        if (!respInsightExpense.isSuccessful ||
-            respInsightExpense.body == null) {
-          if (context.mounted) {
-            throw Exception(
-              S.of(context).errorAPIInvalidResponse(
-                  respInsightExpense.error?.toString() ?? ""),
-            );
-          } else {
-            throw Exception(
-              "[nocontext] Invalid API response: ${respInsightExpense.error}",
-            );
-          }
-        }
+        apiThrowErrorIfEmpty(respInsightExpense, mounted ? context : null);
 
         lastDaysExpense[e] = (respInsightExpense.body?.isNotEmpty ?? false)
             ? respInsightExpense.body?.first.differenceFloat ?? 0
@@ -165,18 +141,8 @@ class _HomeMainState extends State<HomeMain>
           start: DateFormat('yyyy-MM-dd', 'en_US').format(e),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(e),
         );
-        if (!respInsightIncome.isSuccessful || respInsightIncome.body == null) {
-          if (context.mounted) {
-            throw Exception(
-              S.of(context).errorAPIInvalidResponse(
-                  respInsightIncome.error?.toString() ?? ""),
-            );
-          } else {
-            throw Exception(
-              "[nocontext] Invalid API response: ${respInsightIncome.error}",
-            );
-          }
-        }
+        apiThrowErrorIfEmpty(respInsightIncome, mounted ? context : null);
+
         lastDaysIncome[e] = (respInsightIncome.body?.isNotEmpty ?? false)
             ? respInsightIncome.body?.first.differenceFloat ?? 0
             : 0;
@@ -203,21 +169,8 @@ class _HomeMainState extends State<HomeMain>
           .format(now.copyWith(month: now.month - 3)),
       end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
     );
-    if (!respChartData.isSuccessful ||
-        respChartData.body == null ||
-        respChartData.body!.isEmpty) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respChartData.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respChartData.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respChartData, mounted ? context : null);
+
     overviewChartData = respChartData.body!;
 
     return true;
@@ -255,18 +208,8 @@ class _HomeMainState extends State<HomeMain>
         start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
         end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
       );
-      if (!respInsightExpense.isSuccessful || respInsightExpense.body == null) {
-        if (context.mounted) {
-          throw Exception(
-            S.of(context).errorAPIInvalidResponse(
-                respInsightExpense.error?.toString() ?? ""),
-          );
-        } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${respInsightExpense.error}",
-          );
-        }
-      }
+      apiThrowErrorIfEmpty(respInsightExpense, mounted ? context : null);
+
       lastMonthsExpense[e] = respInsightExpense.body!.isNotEmpty
           ? respInsightExpense.body!.first
           : const InsightTotalEntry(differenceFloat: 0);
@@ -275,18 +218,8 @@ class _HomeMainState extends State<HomeMain>
         start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
         end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
       );
-      if (!respInsightIncome.isSuccessful || respInsightIncome.body == null) {
-        if (context.mounted) {
-          throw Exception(
-            S.of(context).errorAPIInvalidResponse(
-                respInsightIncome.error?.toString() ?? ""),
-          );
-        } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${respInsightIncome.error}",
-          );
-        }
-      }
+      apiThrowErrorIfEmpty(respInsightIncome, mounted ? context : null);
+
       lastMonthsIncome[e] = respInsightIncome.body!.isNotEmpty
           ? respInsightIncome.body!.first
           : const InsightTotalEntry(differenceFloat: 0);
@@ -336,19 +269,7 @@ class _HomeMainState extends State<HomeMain>
       start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
       end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
     );
-
-    if (!respCatExpenseData.isSuccessful || respCatExpenseData.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S.of(context).errorAPIInvalidResponse(
-              respCatExpenseData.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respCatExpenseData.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respCatExpenseData, mounted ? context : null);
 
     Map<String, double> catIncomes = <String, double>{};
     for (InsightGroupEntry cat
@@ -382,19 +303,7 @@ class _HomeMainState extends State<HomeMain>
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
     final Response<BudgetArray> respBudgetInfos = await api.v1BudgetsGet();
-    if (!respBudgetInfos.isSuccessful || respBudgetInfos.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respBudgetInfos.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respBudgetInfos.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respBudgetInfos, mounted ? context : null);
 
     for (BudgetRead budget in respBudgetInfos.body!.data) {
       budgetInfos[budget.id] = budget.attributes;
@@ -405,20 +314,7 @@ class _HomeMainState extends State<HomeMain>
       start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
       end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
     );
-
-    if (!respBudgets.isSuccessful || respBudgets.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respBudgets.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respBudgets.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respBudgets, mounted ? context : null);
 
     respBudgets.body!.data.sort((BudgetLimitRead a, BudgetLimitRead b) {
       Budget? budgetA = budgetInfos[a.attributes.budgetId];
@@ -452,19 +348,7 @@ class _HomeMainState extends State<HomeMain>
       start: DateFormat('yyyy-MM-dd', 'en_US').format(now),
       end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
     );
-    if (!respBills.isSuccessful || respBills.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respBills.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respBills.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respBills, mounted ? context : null);
 
     return respBills.body!.data
         .where((BillRead e) => (e.attributes.nextExpectedMatch != null
@@ -512,19 +396,7 @@ class _HomeMainState extends State<HomeMain>
       end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
       preselected: api_v2_enums.PreselectedAccountProperty.all,
     );
-    if (!respBalanceData.isSuccessful || respBalanceData.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respBalanceData.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respBalanceData.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
 
     for (api_v2.ChartDataSetV2 e in respBalanceData.body!) {
       final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;

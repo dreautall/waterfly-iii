@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -60,19 +59,7 @@ class _HomePiggybankState extends State<HomePiggybank>
         page: pageKey,
         limit: _numberOfItemsPerRequest,
       );
-      if (!respAccounts.isSuccessful || respAccounts.body == null) {
-        if (context.mounted) {
-          throw Exception(
-            S
-                .of(context)
-                .errorAPIInvalidResponse(respAccounts.error?.toString() ?? ""),
-          );
-        } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${respAccounts.error}",
-          );
-        }
-      }
+      apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
 
       if (mounted) {
         final List<PiggyBankRead> piggyList = respAccounts.body!.data;
@@ -282,21 +269,11 @@ class _PiggyDetailsState extends State<PiggyDetails> {
   Future<List<PiggyBankEventRead>> _fetchChart() async {
     final FireflyIii api = context.read<FireflyService>().api;
 
-    final Response<PiggyBankEventArray> resp =
+    final Response<PiggyBankEventArray> response =
         await api.v1PiggyBanksIdEventsGet(id: currentPiggy.id);
-    if (!resp.isSuccessful || resp.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S.of(context).errorAPIInvalidResponse(resp.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${resp.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(response, mounted ? context : null);
 
-    return resp.body!.data.sortedBy<DateTime>((PiggyBankEventRead e) =>
+    return response.body!.data.sortedBy<DateTime>((PiggyBankEventRead e) =>
         e.attributes.createdAt ?? e.attributes.updatedAt ?? DateTime.now());
   }
 

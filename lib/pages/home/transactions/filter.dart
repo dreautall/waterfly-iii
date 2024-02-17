@@ -108,83 +108,23 @@ class FilterDialog extends StatelessWidget {
     // Accounts
     final Response<AccountArray> respAccounts =
         await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
-    if (!respAccounts.isSuccessful || respAccounts.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respAccounts.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respAccounts.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respAccounts, context.mounted ? context : null);
 
     // Currencies
     final Response<CurrencyArray> respCurrencies = await api.v1CurrenciesGet();
-    if (!respCurrencies.isSuccessful || respCurrencies.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respCurrencies.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respCurrencies.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respCurrencies, context.mounted ? context : null);
 
     // Categories
     final Response<CategoryArray> respCats = await api.v1CategoriesGet();
-    if (!respCats.isSuccessful || respCats.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respCats.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respCats.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respCats, context.mounted ? context : null);
 
     // Budgets
     final Response<BudgetArray> respBudgets = await api.v1BudgetsGet();
-    if (!respBudgets.isSuccessful || respBudgets.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respBudgets.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respBudgets.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respBudgets, context.mounted ? context : null);
 
     // Bills
     final Response<BillArray> respBills = await api.v1BillsGet();
-    if (!respBills.isSuccessful || respBills.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respBills.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respBills.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respBills, context.mounted ? context : null);
 
     return FilterData(
       respAccounts.body!.data,

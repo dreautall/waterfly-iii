@@ -90,21 +90,7 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
           DateFormat('yyyy-MM-dd').format(now.copyWith(month: now.month - 36)),
       end: DateFormat('yyyy-MM-dd').format(now),
     );
-    if (!respChartData.isSuccessful ||
-        respChartData.body == null ||
-        respChartData.body!.isEmpty) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respChartData.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respChartData.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respChartData, mounted ? context : null);
 
     currencies.clear();
     balances.clear();

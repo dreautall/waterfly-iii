@@ -168,19 +168,7 @@ class _AccountDetailsState extends State<AccountDetails>
         type: widget.accountType,
         page: pageKey,
       );
-      if (!respAccounts.isSuccessful || respAccounts.body == null) {
-        if (mounted) {
-          throw Exception(
-            S
-                .of(context)
-                .errorAPIInvalidResponse(respAccounts.error?.toString() ?? ""),
-          );
-        } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${respAccounts.error}",
-          );
-        }
-      }
+      apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
 
       if (mounted) {
         final List<AccountRead> accountList = respAccounts.body!.data;

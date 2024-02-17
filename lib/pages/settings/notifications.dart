@@ -209,19 +209,8 @@ class NotificationApps extends StatelessWidget {
     // Accounts
     final Response<AccountArray> respAccounts =
         await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
-    if (!respAccounts.isSuccessful || respAccounts.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respAccounts.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respAccounts.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respAccounts, context.mounted ? context : null);
+
     return respAccounts.body!;
   }
 

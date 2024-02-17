@@ -540,19 +540,8 @@ class _TransactionPageState extends State<TransactionPage>
             AccountTypeFilter.mortgage,
           ],
         );
-        if (!response.isSuccessful || response.body == null) {
-          if (mounted) {
-            throw Exception(
-              S
-                  .of(context)
-                  .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-            );
-          } else {
-            throw Exception(
-              "[nocontext] Invalid API response: ${response.error}",
-            );
-          }
-        }
+        apiThrowErrorIfEmpty(response, mounted ? context : null);
+
         if (response.body!.isEmpty ||
             (response.body!.length > 1 &&
                 response.body!.first.name != _ownAccountTextController.text)) {
@@ -839,19 +828,8 @@ class _TransactionPageState extends State<TransactionPage>
           await api.v1TransactionsIdAttachmentsGet(
         id: widget.transaction?.id ?? widget.transactionId,
       );
-      if (!response.isSuccessful || response.body == null) {
-        if (mounted) {
-          throw Exception(
-            S
-                .of(context)
-                .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-          );
-        } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${response.error}",
-          );
-        }
-      }
+      apiThrowErrorIfEmpty(response, mounted ? context : null);
+
       _attachments = response.body!.data;
       setState(() {
         _hasAttachments = _attachments?.isNotEmpty ?? false;
@@ -1412,18 +1390,8 @@ class _TransactionPageState extends State<TransactionPage>
                             ? _transactionType.destinationAccountTypes
                             : _transactionType.sourceAccountTypes,
                   );
-                  if (!response.isSuccessful || response.body == null) {
-                    if (context.mounted) {
-                      throw Exception(
-                        S.of(context).errorAPIInvalidResponse(
-                            response.error?.toString() ?? ""),
-                      );
-                    } else {
-                      throw Exception(
-                        "[nocontext] Invalid API response: ${response.error}",
-                      );
-                    }
-                  }
+                  apiThrowErrorIfEmpty(response, mounted ? context : null);
+
                   return response.body!;
                 } catch (e, stackTrace) {
                   log.severe("Error while fetching autocomplete from API", e,
@@ -1536,18 +1504,8 @@ class _TransactionPageState extends State<TransactionPage>
                       AccountTypeFilter.mortgage,
                     ],
                   );
-                  if (!response.isSuccessful || response.body == null) {
-                    if (context.mounted) {
-                      throw Exception(
-                        S.of(context).errorAPIInvalidResponse(
-                            response.error?.toString() ?? ""),
-                      );
-                    } else {
-                      throw Exception(
-                        "[nocontext] Invalid API response: ${response.error}",
-                      );
-                    }
-                  }
+                  apiThrowErrorIfEmpty(response, mounted ? context : null);
+
                   return response.body!;
                 } catch (e, stackTrace) {
                   log.severe("Error while fetching autocomplete from API", e,
@@ -1750,23 +1708,9 @@ class _TransactionPageState extends State<TransactionPage>
                                             : _transactionType
                                                 .sourceAccountTypes,
                                       );
-                                      if (!response.isSuccessful ||
-                                          response.body == null) {
-                                        if (context.mounted) {
-                                          throw Exception(
-                                            S
-                                                .of(context)
-                                                .errorAPIInvalidResponse(
-                                                    response.error
-                                                            ?.toString() ??
-                                                        ""),
-                                          );
-                                        } else {
-                                          throw Exception(
-                                            "[nocontext] Invalid API response: ${response.error}",
-                                          );
-                                        }
-                                      }
+                                      apiThrowErrorIfEmpty(
+                                          response, mounted ? context : null);
+
                                       return response.body!;
                                     } catch (e, stackTrace) {
                                       log.severe(
@@ -2061,18 +2005,8 @@ class TransactionTitle extends StatelessWidget {
             final FireflyIii api = context.read<FireflyService>().api;
             final Response<AutocompleteTransactionArray> response = await api
                 .v1AutocompleteTransactionsGet(query: textEditingValue.text);
-            if (!response.isSuccessful || response.body == null) {
-              if (context.mounted) {
-                throw Exception(
-                  S.of(context).errorAPIInvalidResponse(
-                      response.error?.toString() ?? ""),
-                );
-              } else {
-                throw Exception(
-                  "[nocontext] Invalid API response: ${response.error}",
-                );
-              }
-            }
+            apiThrowErrorIfEmpty(response, context.mounted ? context : null);
+
             return response.body!.map((AutocompleteTransaction e) => e.name);
           } catch (e, stackTrace) {
             log.severe(
@@ -2145,18 +2079,9 @@ class TransactionCategory extends StatelessWidget {
                     await api.v1AutocompleteCategoriesGet(
                   query: textEditingValue.text,
                 );
-                if (!response.isSuccessful || response.body == null) {
-                  if (context.mounted) {
-                    throw Exception(
-                      S.of(context).errorAPIInvalidResponse(
-                          response.error?.toString() ?? ""),
-                    );
-                  } else {
-                    throw Exception(
-                      "[nocontext] Invalid API response: ${response.error}",
-                    );
-                  }
-                }
+                apiThrowErrorIfEmpty(
+                    response, context.mounted ? context : null);
+
                 return response.body!.map((AutocompleteCategory e) => e.name);
               } catch (e, stackTrace) {
                 log.severe("Error while fetching autocomplete from API", e,
@@ -2212,19 +2137,8 @@ class _TransactionBudgetState extends State<TransactionBudget> {
             await api.v1AutocompleteBudgetsGet(
           query: widget.textController.text,
         );
-        if (!response.isSuccessful || response.body == null) {
-          if (mounted) {
-            throw Exception(
-              S
-                  .of(context)
-                  .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-            );
-          } else {
-            throw Exception(
-              "[nocontext] Invalid API response: ${response.error}",
-            );
-          }
-        }
+        apiThrowErrorIfEmpty(response, mounted ? context : null);
+
         if (response.body!.isEmpty ||
             (response.body!.length > 1 &&
                 response.body!.first.name != widget.textController.text)) {
@@ -2270,18 +2184,8 @@ class _TransactionBudgetState extends State<TransactionBudget> {
                     await api.v1AutocompleteBudgetsGet(
                   query: textEditingValue.text,
                 );
-                if (!response.isSuccessful || response.body == null) {
-                  if (context.mounted) {
-                    throw Exception(
-                      S.of(context).errorAPIInvalidResponse(
-                          response.error?.toString() ?? ""),
-                    );
-                  } else {
-                    throw Exception(
-                      "[nocontext] Invalid API response: ${response.error}",
-                    );
-                  }
-                }
+                apiThrowErrorIfEmpty(response, mounted ? context : null);
+
                 return response.body!;
               } catch (e, stackTrace) {
                 log.severe("Error while fetching autocomplete from API", e,

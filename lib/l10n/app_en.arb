@@ -209,6 +209,10 @@
   "@billsSortAlphabetical": {
     "description": "Text for alphabetical sort types"
   },
+  "billsSortByTimePeriod": "By time period",
+  "@billsSortByTimePeriod": {
+    "description": "Text for frequency sort type"
+  },
   "billsSortFrequency": "Frequency",
   "@billsSortFrequency": {
     "description": "Text for sort by frequency"

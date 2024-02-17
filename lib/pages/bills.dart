@@ -131,7 +131,7 @@ class _BillsPageState extends State<BillsPage>
       cacheExtent: 1000,
       children: <Widget>[
         ...groupedBills.keys.map((String groupName) => Card(
-              clipBehavior: Clip.antiAlias,
+              clipBehavior: Clip.hardEdge,
               child: ExpansionTile(
                 title: Text(
                   groupName,
@@ -153,16 +153,17 @@ class _BillsPageState extends State<BillsPage>
                 children: <Widget>[
                   Container(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.surfaceVariant,
                       borderRadius: const BorderRadius.only(
                         bottomRight: Radius.circular(12),
                         bottomLeft: Radius.circular(12),
                       ),
                     ),
                     child: Column(
-                        children: groupedBills[groupName]!
-                            .map((BillRead bill) => _billRowBuilder(bill))
-                            .toList()),
+                      children: groupedBills[groupName]!
+                          .map((BillRead bill) => _billRowBuilder(bill))
+                          .toList(),
+                    ),
                   ),
                 ],
               ),
@@ -175,8 +176,12 @@ class _BillsPageState extends State<BillsPage>
     return OpenContainer(
       openBuilder: (BuildContext context, Function closedContainer) =>
           BillDetails(bill: bill),
-      openColor: Theme.of(context).cardColor,
-      closedColor: Theme.of(context).cardColor,
+      openColor: isListView
+          ? Theme.of(context).cardColor
+          : Theme.of(context).colorScheme.surfaceVariant,
+      closedColor: isListView
+          ? Theme.of(context).cardColor
+          : Theme.of(context).colorScheme.surfaceVariant,
       closedShape: RoundedRectangleBorder(
         borderRadius: isListView
             ? const BorderRadius.only(

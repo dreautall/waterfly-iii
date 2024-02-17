@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -294,7 +292,7 @@ class _BillDetailsState extends State<BillDetails> {
     );
 
     if (!response.isSuccessful || response.body == null) {
-      if (context.mounted) {
+      if (mounted) {
         throw Exception(
           S
               .of(context)

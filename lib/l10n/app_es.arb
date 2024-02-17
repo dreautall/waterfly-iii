@@ -51,9 +51,41 @@
       }
     }
   },
+  "categoryDeleteConfirm": "¿Estás seguro de que deseas eliminar esta categoría? Las transacciones no serán eliminadas, pero ya no tendrán categoría.",
+  "@categoryDeleteConfirm": {
+    "description": "Confirmation text to delete category"
+  },
+  "categoryErrorLoading": "Error cargando categorías.",
+  "@categoryErrorLoading": {
+    "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+  },
+  "categoryTitleAdd": "Agregar categoría",
+  "@categoryTitleAdd": {
+    "description": "Title for Dialog: Add Category"
+  },
+  "categoryMonthNext": "Próximo Mes",
+  "@categoryMonthNext": {
+    "description": "Button title to view overview for next month"
+  },
+  "categoryMonthPrev": "Mes anterior",
+  "@categoryMonthPrev": {
+    "description": "Button title to view overview for previous month"
+  },
+  "categoryTitleDelete": "Eliminar categoría",
+  "@categoryTitleDelete": {
+    "description": "Title for Dialog: Delete Category"
+  },
+  "categoryTitleEdit": "Editar categoría",
+  "@categoryTitleEdit": {
+    "description": "Title for Dialog: Edit Category"
+  },
   "catOther": "Otros",
   "@catOther": {
     "description": "Category description for summary category 'Other'"
+  },
+  "catNone": "(sin categoría)",
+  "@catNone": {
+    "description": "Placeholder when no category has been set."
   },
   "errorAPIInvalidResponse": "Respuesta inválida de la API: {message}",
   "@errorAPIInvalidResponse": {
@@ -179,6 +211,10 @@
   "@generalDismiss": {
     "description": "Dismiss window/dialog without action"
   },
+  "generalEarned": "Ingresado",
+  "@generalEarned": {
+    "description": "(Amount) Earned"
+  },
   "generalError": "Error",
   "@generalError": {
     "description": "Error (title in dialogs etc.)"
@@ -210,6 +246,10 @@
   "generalReset": "Restablecer",
   "@generalReset": {
     "description": "Reset something (i.e. set filters)"
+  },
+  "generalSpent": "Gastado",
+  "@generalSpent": {
+    "description": "(Amount) Spent"
   },
   "generalSum": "Suma",
   "@generalSum": {
@@ -515,6 +555,10 @@
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"
   },
+  "navigationCategories": "Categorías",
+  "@navigationCategories": {
+    "description": "Navigation Label: Categories"
+  },
   "navigationMain": "Panel principal",
   "@navigationMain": {
     "description": "Navigation Label: Main Dashboard"
@@ -688,6 +732,14 @@
         "example": "ThemeMode.dark"
       }
     }
+  },
+  "settingsUseServerTimezone": "Usar la zona horaria del servidor",
+  "@settingsUseServerTimezone": {
+    "description": "Setting label to use server timezone."
+  },
+  "settingsUseServerTimezoneHelp": "Mostrar todas las horas en la zona horaria del servidor. Esto imita el comportamiento de la interfaz web.",
+  "@settingsUseServerTimezoneHelp": {
+    "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
   },
   "settingsVersion": "Versión de la aplicación",
   "@settingsVersion": {

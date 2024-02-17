@@ -100,8 +100,16 @@ class _CategoriesPageState extends State<CategoriesPage>
     final CurrencyRead defaultCurrency =
         context.read<FireflyService>().defaultCurrency;
 
+    late DateTime stockDate;
+    if (selectedMonth.year == now.year && selectedMonth.month == now.month) {
+      stockDate = selectedMonth.copyWith(day: now.day);
+    } else {
+      stockDate =
+          selectedMonth.copyWith(day: 0, month: selectedMonth.month + 1);
+    }
+
     return FutureBuilder<CategoryArray>(
-      future: stock.get(selectedMonth),
+      future: stock.get(stockDate),
       builder: (BuildContext context, AsyncSnapshot<CategoryArray> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());

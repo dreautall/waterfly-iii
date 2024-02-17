@@ -290,12 +290,13 @@ class CatStock {
           final Map<String, CategoryRead> categories = <String, CategoryRead>{};
           for (InsightGroupEntry cat in respIncomeCat.body!) {
             if ((cat.id?.isEmpty ?? true) || (cat.name?.isEmpty ?? true)) {
-              //log.finest(() => "skipping empty category");
+              debugPrint("skipping empty category");
               continue;
             }
 
             if (cat.currencyId != defaultCurrency.id) {
-              //log.finest(() => "skipping non-default currency category (${cat.currencyCode})");
+              debugPrint(
+                  "skipping non-default currency category (${cat.currencyCode})");
               continue;
             }
             if (!categories.containsKey(cat.id)) {
@@ -322,12 +323,13 @@ class CatStock {
           }
           for (InsightGroupEntry cat in respExpenseCat.body!) {
             if ((cat.id?.isEmpty ?? true) || (cat.name?.isEmpty ?? true)) {
-              //log.finest(() => "skipping empty category");
+              debugPrint("skipping empty category");
               continue;
             }
 
             if (cat.currencyId != defaultCurrency.id) {
-              //log.finest(() => "skipping non-default currency category (${cat.currencyCode})");
+              debugPrint(
+                  "skipping non-default currency category (${cat.currencyCode})");
               continue;
             }
             if (!categories.containsKey(cat.id)) {
@@ -354,7 +356,8 @@ class CatStock {
           }
           for (InsightTotalEntry cat in respIncomeNoCat.body!) {
             if (cat.currencyId != defaultCurrency.id) {
-              //log.finest(() => "skipping non-default currency category (${cat.currencyCode})");
+              debugPrint(
+                  "skipping non-default currency category (${cat.currencyCode})");
               continue;
             }
             if (!categories.containsKey("-1")) {
@@ -381,7 +384,8 @@ class CatStock {
           }
           for (InsightTotalEntry cat in respExpenseNoCat.body!) {
             if (cat.currencyId != defaultCurrency.id) {
-              //log.finest(() => "skipping non-default currency category (${cat.currencyCode})");
+              debugPrint(
+                  "skipping non-default currency category (${cat.currencyCode})");
               continue;
             }
             if (!categories.containsKey("-1")) {

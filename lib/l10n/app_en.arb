@@ -101,7 +101,7 @@
   "@billsErrorLoading": {
     "description": "Generic error message when bills can't be loaded (shouldn't occur)"
   },
-  "billsExactAmountAndFrequency": "Bill matches transactions of {value}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}.",
+  "billsExactAmountAndFrequency": "Bill matches transactions of {value}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}{skip, plural, =0{} other{, skips over {skip}}}.",
   "@billsExactAmountAndFrequency": {
     "description": "Bill match for exact amount and frequency",
     "placeholders": {
@@ -112,6 +112,10 @@
       "frequency": {
         "type": "String",
         "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
       }
     }
   },

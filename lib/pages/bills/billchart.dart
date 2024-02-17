@@ -22,6 +22,7 @@ class BillChart extends StatefulWidget {
 class BillChartState extends State<BillChart> {
   final SplayTreeMap<DateTime, double> _values =
       SplayTreeMap<DateTime, double>();
+  bool loaded = false;
 
   @override
   void dispose() {
@@ -32,7 +33,8 @@ class BillChartState extends State<BillChart> {
 
   @override
   Widget build(BuildContext context) {
-    if (_values.isNotEmpty) {
+    // Loaded and more than two entries.
+    if (loaded && _values.length > 2) {
       return Padding(
         padding: const EdgeInsets.all(8),
         child: SizedBox(
@@ -64,6 +66,12 @@ class BillChartState extends State<BillChart> {
       );
     }
 
+    // Loaded but less than two entries
+    if (loaded) {
+      return const SizedBox.shrink();
+    }
+
+    // Still loading
     return const SizedBox(
       height: 141, // Measured final chart height
       child: Center(child: CircularProgressIndicator()),
@@ -81,6 +89,15 @@ class BillChartState extends State<BillChart> {
           }
         }
       }
+    });
+  }
+
+  void doneLoading() {
+    if (loaded) {
+      return;
+    }
+    setState(() {
+      loaded = true;
     });
   }
 

@@ -85,7 +85,7 @@ class _BillDetailsState extends State<BillDetails> {
             snap: true,
             flexibleSpace: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-                debugPrint(constraints.maxHeight.toString());
+                //debugPrint(constraints.maxHeight.toString());
                 // Collapsed & uncollapsed height out of debug log
                 double opacity = (constraints.maxHeight - 106) / (415 - 106);
                 if (opacity > 1) opacity = 1;
@@ -184,7 +184,23 @@ class _BillDetailsState extends State<BillDetails> {
 
     return OpenContainer(
       openBuilder: (BuildContext context, Function closedContainer) =>
-          TransactionPage(transaction: null), // :TODO:
+          FutureBuilder<TransactionRead>(
+        future: _fetchFullTx(transaction.id),
+        builder:
+            (BuildContext context, AsyncSnapshot<TransactionRead> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData &&
+              snapshot.data != null) {
+            return TransactionPage(transaction: snapshot.data);
+          }
+          if (snapshot.hasError) {
+            Navigator.of(context).pop();
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      ),
       openColor: Theme.of(context).cardColor,
       closedColor: Theme.of(context).dialogBackgroundColor,
       closedShape: const RoundedRectangleBorder(
@@ -320,5 +336,29 @@ class _BillDetailsState extends State<BillDetails> {
     } else {
       _pagingController.appendPage(transactions, page + 1);
     }
+  }
+
+  Future<TransactionRead> _fetchFullTx(String id) async {
+    final FireflyIii api = context.read<FireflyService>().api;
+
+    Response<TransactionSingle> response = await api.v1TransactionsIdGet(
+      id: id,
+    );
+
+    if (!response.isSuccessful || response.body == null) {
+      if (mounted) {
+        throw Exception(
+          S
+              .of(context)
+              .errorAPIInvalidResponse(response.error?.toString() ?? ""),
+        );
+      } else {
+        throw Exception(
+          "[nocontext] Invalid API response: ${response.error}",
+        );
+      }
+    }
+
+    return response.body!.data;
   }
 }

@@ -449,20 +449,7 @@ class _BillsPageState extends State<BillsPage>
         start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
         end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
       );
-
-      if (!response.isSuccessful || response.body == null) {
-        if (mounted) {
-          throw Exception(
-            S
-                .of(context)
-                .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-          );
-        } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${response.error}",
-          );
-        }
-      }
+      apiThrowErrorIfEmpty(response, mounted ? context : null);
 
       bills.addAll(response.body!.data);
     } while ((response.body!.meta.pagination?.currentPage ?? 1) <

@@ -541,7 +541,7 @@ class _TransactionPageState extends State<TransactionPage>
           ],
         );
         if (!response.isSuccessful || response.body == null) {
-          if (context.mounted) {
+          if (mounted) {
             throw Exception(
               S
                   .of(context)
@@ -840,7 +840,7 @@ class _TransactionPageState extends State<TransactionPage>
         id: widget.transaction?.id ?? widget.transactionId,
       );
       if (!response.isSuccessful || response.body == null) {
-        if (context.mounted) {
+        if (mounted) {
           throw Exception(
             S
                 .of(context)
@@ -2213,7 +2213,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
           query: widget.textController.text,
         );
         if (!response.isSuccessful || response.body == null) {
-          if (context.mounted) {
+          if (mounted) {
             throw Exception(
               S
                   .of(context)

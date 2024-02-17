@@ -169,7 +169,7 @@ class _TagDialogState extends State<TagDialog> {
       response = await api.v1TagsGet(page: pageNumber);
 
       if (!response.isSuccessful || response.body == null) {
-        if (context.mounted) {
+        if (mounted) {
           throw Exception(
             S
                 .of(context)

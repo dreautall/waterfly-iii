@@ -80,7 +80,7 @@ class _AccountSearchState extends State<AccountSearch> {
         );
       }
       if (!respAccounts.isSuccessful || respAccounts.body == null) {
-        if (context.mounted) {
+        if (mounted) {
           throw Exception(
             S
                 .of(context)

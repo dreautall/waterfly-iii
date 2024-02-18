@@ -12,6 +12,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/bills/billdetails.dart';
+import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 
@@ -22,7 +23,12 @@ class BillsPage extends StatefulWidget {
   State<BillsPage> createState() => _BillsPageState();
 }
 
-enum BillSortBy {
+enum BillsLayout {
+  grouped,
+  list,
+}
+
+enum BillsSort {
   name,
   frequency,
 }
@@ -30,16 +36,29 @@ enum BillSortBy {
 class _BillsPageState extends State<BillsPage>
     with SingleTickerProviderStateMixin {
   final Logger log = Logger("Pages.Bills");
+  late SettingsProvider _settings;
   late TimeZoneHandler _tzHandler;
 
-  bool isListView = false;
-  BillSortBy sortBy = BillSortBy.name;
-  SortingOrder sortDirection = SortingOrder.ascending;
+  BillsLayout get _billsLayout => _settings.billsLayout;
+  set _billsLayout(BillsLayout value) {
+    _settings.setBillsLayout(value);
+  }
+
+  BillsSort get _billsSort => _settings.billsSort;
+  set _billsSort(BillsSort value) {
+    _settings.setBillsSort(value);
+  }
+
+  SortingOrder get _billsSortOrder => _settings.billsSortOrder;
+  set _billsSortOrder(SortingOrder value) {
+    _settings.setBillsSortOrder(value);
+  }
 
   @override
   void initState() {
     super.initState();
 
+    _settings = context.read<SettingsProvider>();
     _tzHandler = context.read<FireflyService>().tzHandler;
   }
 
@@ -49,14 +68,14 @@ class _BillsPageState extends State<BillsPage>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<NavPageElements>().appBarActions = <Widget>[
-        if (isListView)
+        if (_billsLayout == BillsLayout.list)
           IconButton(
             icon: const Icon(Icons.sort),
             tooltip: S.of(context).billsChangeSortOrderTooltip,
             onPressed: _showSortOrderPickerDialog,
           ),
         IconButton(
-          icon: isListView
+          icon: _billsLayout == BillsLayout.list
               ? const Icon(Icons.table_rows_outlined)
               : const Icon(Icons.view_agenda_outlined),
           tooltip: S.of(context).billsChangeLayoutTooltip,
@@ -92,7 +111,7 @@ class _BillsPageState extends State<BillsPage>
           }
           return Padding(
             padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-            child: isListView
+            child: _billsLayout == BillsLayout.list
                 ? _listBuilder(snapshot.data!)
                 : _groupBuilder(snapshot.data!),
           );
@@ -105,15 +124,15 @@ class _BillsPageState extends State<BillsPage>
     List<BillRead> billList =
         groupedBills.values.expand((List<BillRead> x) => x).toList();
 
-    switch (sortBy) {
-      case BillSortBy.name:
+    switch (_billsSort) {
+      case BillsSort.name:
         billList.sort((BillRead a, BillRead b) =>
-            sortDirection == SortingOrder.ascending
+            _billsSortOrder == SortingOrder.ascending
                 ? a.attributes.name.compareTo(b.attributes.name)
                 : b.attributes.name.compareTo(a.attributes.name));
-      case BillSortBy.frequency:
+      case BillsSort.frequency:
         billList.sort((BillRead a, BillRead b) =>
-            sortDirection == SortingOrder.ascending
+            _billsSortOrder == SortingOrder.ascending
                 ? Enum.compareByIndex(
                     a.attributes.repeatFreq, b.attributes.repeatFreq)
                 : Enum.compareByIndex(
@@ -176,14 +195,14 @@ class _BillsPageState extends State<BillsPage>
     return OpenContainer(
       openBuilder: (BuildContext context, Function closedContainer) =>
           BillDetails(bill: bill),
-      openColor: isListView
+      openColor: _billsLayout == BillsLayout.list
           ? Theme.of(context).cardColor
           : Theme.of(context).colorScheme.surfaceVariant,
-      closedColor: isListView
+      closedColor: _billsLayout == BillsLayout.list
           ? Theme.of(context).cardColor
           : Theme.of(context).colorScheme.surfaceVariant,
       closedShape: RoundedRectangleBorder(
-        borderRadius: isListView
+        borderRadius: _billsLayout == BillsLayout.list
             ? const BorderRadius.only(
                 topLeft: Radius.circular(16),
                 bottomLeft: Radius.circular(16),
@@ -216,7 +235,7 @@ class _BillsPageState extends State<BillsPage>
                       : Theme.of(context).disabledColor,
                 ),
         shape: RoundedRectangleBorder(
-          borderRadius: isListView
+          borderRadius: _billsLayout == BillsLayout.list
               ? const BorderRadius.only(
                   topLeft: Radius.circular(16),
                   bottomLeft: Radius.circular(16),
@@ -316,7 +335,7 @@ class _BillsPageState extends State<BillsPage>
             children: <Widget>[
               const SizedBox(height: 16),
               ListTile(
-                leading: !isListView
+                leading: _billsLayout == BillsLayout.grouped
                     ? const Icon(Icons.view_agenda)
                     : const Icon(Icons.view_agenda_outlined),
                 title: Text(S.of(context).billsLayoutGroupTitle,
@@ -329,17 +348,17 @@ class _BillsPageState extends State<BillsPage>
                         color: Theme.of(context).colorScheme.secondary,
                       ),
                 ),
-                trailing: !isListView
+                trailing: _billsLayout == BillsLayout.grouped
                     ? const Icon(Icons.check)
                     : const SizedBox.shrink(),
                 onTap: () => setState(() {
-                  isListView = false;
+                  _billsLayout = BillsLayout.grouped;
                   Navigator.pop(context);
                 }),
               ),
               const Divider(indent: 16, endIndent: 16),
               ListTile(
-                leading: isListView
+                leading: _billsLayout == BillsLayout.list
                     ? const Icon(Icons.table_rows)
                     : const Icon(Icons.table_rows_outlined),
                 title: Text(
@@ -354,11 +373,13 @@ class _BillsPageState extends State<BillsPage>
                         color: Theme.of(context).colorScheme.secondary,
                       ),
                 ),
-                trailing: isListView
+                trailing: _billsLayout == BillsLayout.list
                     ? const Icon(Icons.check)
                     : const SizedBox.shrink(),
                 onTap: () => setState(() {
-                  isListView = true;
+                  _billsLayout = BillsLayout.list;
+                  _billsSort = BillsSort.name;
+                  _billsSortOrder = SortingOrder.ascending;
                   Navigator.pop(context);
                 }),
               ),
@@ -389,12 +410,12 @@ class _BillsPageState extends State<BillsPage>
                         color: Theme.of(context).colorScheme.secondary,
                       ),
                 ),
-                trailing: sortBy == BillSortBy.name
-                    ? sortDirection == SortingOrder.ascending
+                trailing: _billsSort == BillsSort.name
+                    ? _billsSortOrder == SortingOrder.ascending
                         ? const Icon(Icons.north)
                         : const Icon(Icons.south)
                     : const SizedBox.shrink(),
-                onTap: () => _onSortSelected(BillSortBy.name),
+                onTap: () => _onSortSelected(BillsSort.name),
               ),
               const Divider(indent: 16, endIndent: 16),
               ListTile(
@@ -411,12 +432,12 @@ class _BillsPageState extends State<BillsPage>
                         color: Theme.of(context).colorScheme.secondary,
                       ),
                 ),
-                trailing: sortBy == BillSortBy.frequency
-                    ? sortDirection == SortingOrder.ascending
+                trailing: _billsSort == BillsSort.frequency
+                    ? _billsSortOrder == SortingOrder.ascending
                         ? const Icon(Icons.north)
                         : const Icon(Icons.south)
                     : const SizedBox.shrink(),
-                onTap: () => _onSortSelected(BillSortBy.frequency),
+                onTap: () => _onSortSelected(BillsSort.frequency),
               ),
               const SizedBox(height: 24),
             ],
@@ -424,15 +445,15 @@ class _BillsPageState extends State<BillsPage>
         );
       });
 
-  void _onSortSelected(BillSortBy newSort) {
+  void _onSortSelected(BillsSort newSort) {
     setState(() {
-      if (sortBy == newSort) {
-        sortDirection = sortDirection == SortingOrder.ascending
+      if (_billsSort == newSort) {
+        _billsSortOrder = _billsSortOrder == SortingOrder.ascending
             ? SortingOrder.descending
             : SortingOrder.ascending;
       } else {
-        sortBy = newSort;
-        sortDirection = SortingOrder.ascending;
+        _billsSort = newSort;
+        _billsSortOrder = SortingOrder.ascending;
       }
     });
     Navigator.pop(context);

@@ -11,6 +11,8 @@ import 'package:logging/logging.dart';
 
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:waterflyiii/pages/bills.dart';
 
 final Logger log = Logger("Settings");
 
@@ -51,6 +53,9 @@ class SettingsProvider with ChangeNotifier {
   static const String settingThemeSystem = "SYSTEM";
   static const String settingDynamicColors = "DYNAMICCOLORS";
   static const String settingUseServerTime = "USESERVERTIME";
+  static const String settingBillsDefaultLayout = "BILLSDEFAULTLAYOUT";
+  static const String settingBillsDefaultSort = "BILLSDEFAULTSORT";
+  static const String settingBillsDefaultSortOrder = "BILLSDEFAULTSORTORDER";
 
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get theme => _theme;
@@ -77,6 +82,13 @@ class SettingsProvider with ChangeNotifier {
 
   List<String> _notificationApps = <String>[];
   List<String> get notificationApps => _notificationApps;
+
+  BillsLayout _billsLayout = BillsLayout.grouped;
+  BillsLayout get billsLayout => _billsLayout;
+  BillsSort _billsSort = BillsSort.name;
+  BillsSort get billsSort => _billsSort;
+  SortingOrder _billsSortOrder = SortingOrder.ascending;
+  SortingOrder get billsSortOrder => _billsSortOrder;
 
   Future<void> loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -126,6 +138,21 @@ class SettingsProvider with ChangeNotifier {
     log.config("read showFutureTXs $showFutureTXs");
 
     _notificationApps = prefs.getStringList(settingNLUsedApps) ?? <String>[];
+
+    int? billsLayoutIndex = prefs.getInt(settingBillsDefaultLayout);
+    _billsLayout = billsLayoutIndex == null
+      ? BillsLayout.grouped
+      : BillsLayout.values[billsLayoutIndex];
+
+    int? billsSortIndex = prefs.getInt(settingBillsDefaultSort);
+    _billsSort = billsSortIndex == null
+        ? BillsSort.name
+        : BillsSort.values[billsSortIndex];
+
+    int? billsSortOrderIndex = prefs.getInt(settingBillsDefaultSortOrder);
+    _billsSortOrder = billsSortOrderIndex == null
+        ? SortingOrder.ascending
+        : SortingOrder.values[billsSortOrderIndex];
 
     _loaded = true;
     log.finest(() => "notify SettingsProvider->loadSettings()");
@@ -345,6 +372,45 @@ class SettingsProvider with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(
         "$settingNLAppPrefix$packageName", jsonEncode(settings));
+  }
+
+  Future<void> setBillsLayout(BillsLayout billsLayout) async {
+    if (billsLayout == _billsLayout) {
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _billsLayout = billsLayout;
+    await prefs.setInt(settingBillsDefaultLayout, billsLayout.index);
+
+    log.finest(() => "notify SettingsProvider->billsLayout()");
+    notifyListeners();
+  }
+
+  Future<void> setBillsSort(BillsSort billsSort) async {
+    if (billsSort == _billsSort) {
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _billsSort = billsSort;
+    await prefs.setInt(settingBillsDefaultSort, billsSort.index);
+
+    log.finest(() => "notify SettingsProvider->billsSort()");
+    notifyListeners();
+  }
+
+  Future<void> setBillsSortOrder(SortingOrder sortOrder) async {
+    if (sortOrder == _billsSortOrder) {
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _billsSortOrder = sortOrder;
+    await prefs.setInt(settingBillsDefaultSortOrder, sortOrder.index);
+
+    log.finest(() => "notify SettingsProvider->billsSortOrder()");
+    notifyListeners();
   }
 }
 

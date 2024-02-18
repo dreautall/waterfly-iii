@@ -223,10 +223,6 @@
     "@generalUnknown": {
         "description": "Something is unknown."
     },
-    "homeMainBillsTitle": "Räkningar inför nästa vecka",
-    "@homeMainBillsTitle": {
-        "description": "Title: Bills for the next week"
-    },
     "homeMainBillsInterval": " ({period, select, weekly{veckovis} monthly{månadsvis} quarterly{kvartalsvis} halfyear{årligen} yearly{} other{okänd}})",
     "@homeMainBillsInterval": {
         "description": "bill interval type",
@@ -236,6 +232,10 @@
                 "example": "weekly"
             }
         }
+    },
+    "homeMainBillsTitle": "Räkningar inför nästa vecka",
+    "@homeMainBillsTitle": {
+        "description": "Title: Bills for the next week"
     },
     "homeMainBudgetInterval": " ({from} till {to}, {period})",
     "@homeMainBudgetInterval": {

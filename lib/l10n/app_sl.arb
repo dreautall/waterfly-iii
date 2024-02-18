@@ -59,10 +59,6 @@
   "@categoryErrorLoading": {
     "description": "Generic error message when categories can't be loaded (shouldn't occur)"
   },
-  "categoryTitleAdd": "Dodaj kategorijo",
-  "@categoryTitleAdd": {
-    "description": "Title for Dialog: Add Category"
-  },
   "categoryMonthNext": "Naslednji mesec",
   "@categoryMonthNext": {
     "description": "Button title to view overview for next month"
@@ -70,6 +66,10 @@
   "categoryMonthPrev": "Prejšnji mesec",
   "@categoryMonthPrev": {
     "description": "Button title to view overview for previous month"
+  },
+  "categoryTitleAdd": "Dodaj kategorijo",
+  "@categoryTitleAdd": {
+    "description": "Title for Dialog: Add Category"
   },
   "categoryTitleDelete": "Izbriši kategorijo",
   "@categoryTitleDelete": {
@@ -79,13 +79,13 @@
   "@categoryTitleEdit": {
     "description": "Title for Dialog: Edit Category"
   },
-  "catOther": "Ostalo",
-  "@catOther": {
-    "description": "Category description for summary category 'Other'"
-  },
   "catNone": "<no category>",
   "@catNone": {
     "description": "Placeholder when no category has been set."
+  },
+  "catOther": "Ostalo",
+  "@catOther": {
+    "description": "Category description for summary category 'Other'"
   },
   "errorAPIInvalidResponse": "Neveljaven odgovor API-ja: {message}",
   "@errorAPIInvalidResponse": {

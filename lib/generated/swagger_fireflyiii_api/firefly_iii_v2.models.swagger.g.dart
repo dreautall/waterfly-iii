@@ -235,7 +235,7 @@ BudgetLimitV2 _$BudgetLimitV2FromJson(Map<String, dynamic> json) =>
       currencyName: json['currency_name'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
       currencyDecimalPlaces: json['currency_decimal_places'] as int?,
-      budgetId: json['budget_id'] as String,
+      budgetId: json['budget_id'] as String?,
       period: json['period'] as String?,
       amount: json['amount'] as String,
     );
@@ -258,7 +258,7 @@ Map<String, dynamic> _$BudgetLimitV2ToJson(BudgetLimitV2 instance) {
   writeNotNull('currency_name', instance.currencyName);
   writeNotNull('currency_symbol', instance.currencySymbol);
   writeNotNull('currency_decimal_places', instance.currencyDecimalPlaces);
-  val['budget_id'] = instance.budgetId;
+  writeNotNull('budget_id', instance.budgetId);
   writeNotNull('period', instance.period);
   val['amount'] = instance.amount;
   return val;
@@ -684,8 +684,7 @@ Subscription _$SubscriptionFromJson(Map<String, dynamic> json) => Subscription(
       extensionDate: json['extension_date'] == null
           ? null
           : DateTime.parse(json['extension_date'] as String),
-      repeatFreq:
-          subscriptionRepeatPropertyNullableFromJson(json['repeat_freq']),
+      repeatFreq: subscriptionRepeatPropertyFromJson(json['repeat_freq']),
       skip: json['skip'] as int?,
       active: json['active'] as bool?,
       order: json['order'] as int?,
@@ -735,8 +734,8 @@ Map<String, dynamic> _$SubscriptionToJson(Subscription instance) {
   val['date'] = instance.date.toIso8601String();
   writeNotNull('end_date', instance.endDate?.toIso8601String());
   writeNotNull('extension_date', instance.extensionDate?.toIso8601String());
-  writeNotNull('repeat_freq',
-      subscriptionRepeatPropertyNullableToJson(instance.repeatFreq));
+  writeNotNull(
+      'repeat_freq', subscriptionRepeatPropertyToJson(instance.repeatFreq));
   writeNotNull('skip', instance.skip);
   writeNotNull('active', instance.active);
   writeNotNull('order', instance.order);
@@ -1267,7 +1266,7 @@ Map<String, dynamic> _$BasicSummaryV2ToJson(BasicSummaryV2 instance) =>
 BasicSummaryV2Entry _$BasicSummaryV2EntryFromJson(Map<String, dynamic> json) =>
     BasicSummaryV2Entry(
       key: json['key'] as String?,
-      value: (json['value'] as num?)?.toDouble(),
+      $value: (json['value'] as num?)?.toDouble(),
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
@@ -1284,7 +1283,7 @@ Map<String, dynamic> _$BasicSummaryV2EntryToJson(BasicSummaryV2Entry instance) {
   }
 
   writeNotNull('key', instance.key);
-  writeNotNull('value', instance.value);
+  writeNotNull('value', instance.$value);
   writeNotNull('currency_id', instance.currencyId);
   writeNotNull('currency_code', instance.currencyCode);
   writeNotNull('currency_symbol', instance.currencySymbol);

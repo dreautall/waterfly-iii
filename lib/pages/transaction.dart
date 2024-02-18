@@ -41,13 +41,11 @@ class TransactionPage extends StatefulWidget {
   const TransactionPage({
     super.key,
     this.transaction,
-    this.transactionId,
     this.notification,
     this.files,
     this.clone = false,
   });
 
-  final String? transactionId;
   final TransactionRead? transaction;
   final NotificationTransaction? notification;
   final List<SharedFile>? files;
@@ -145,9 +143,6 @@ class _TransactionPageState extends State<TransactionPage>
 
     _tzHandler = context.read<FireflyService>().tzHandler;
 
-    if (widget.transactionId != null && widget.transaction == null) {
-      // :TODO: Fetch transaction while spinner is shown
-    }
     if (widget.transaction != null) {
       TransactionRead transaction = widget.transaction!;
       List<TransactionSplit> transactions = transaction.attributes.transactions;
@@ -826,7 +821,7 @@ class _TransactionPageState extends State<TransactionPage>
       final FireflyIii api = context.read<FireflyService>().api;
       final Response<AttachmentArray> response =
           await api.v1TransactionsIdAttachmentsGet(
-        id: widget.transaction?.id ?? widget.transactionId,
+        id: widget.transaction?.id,
       );
       apiThrowErrorIfEmpty(response, mounted ? context : null);
 
@@ -856,7 +851,7 @@ class _TransactionPageState extends State<TransactionPage>
               : S.of(context).transactionTitleEdit,
         ),
         actions: <Widget>[
-          if (!(widget.transactionId == null && widget.transaction == null))
+          if (!(widget.transaction == null))
             IconButton(
               icon: const Icon(Icons.delete),
               tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
@@ -873,7 +868,7 @@ class _TransactionPageState extends State<TransactionPage>
                 }
 
                 await api.v1TransactionsIdDelete(
-                  id: widget.transaction?.id ?? widget.transactionId,
+                  id: widget.transaction?.id,
                 );
                 nav.pop(true);
               },
@@ -1178,7 +1173,7 @@ class _TransactionPageState extends State<TransactionPage>
           const SizedBox(width: 16),
         ],
       ),
-      body: (widget.transactionId != null && widget.transaction == null)
+      body: (widget.transaction == null)
           ? const Center(child: CircularProgressIndicator())
           : Form(
               key: _formKey,

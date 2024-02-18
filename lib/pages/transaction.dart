@@ -41,7 +41,6 @@ class TransactionPage extends StatefulWidget {
   const TransactionPage({
     super.key,
     this.transaction,
-    this.transactionId,
     this.notification,
     this.files,
     this.clone = false,

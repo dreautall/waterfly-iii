@@ -1235,7 +1235,7 @@ class BillList extends StatelessWidget {
                           ),
                           TextSpan(
                             text: S.of(context).homeMainBillsInterval(
-                                  bill.attributes.repeatFreq?.value ?? "",
+                                  bill.attributes.repeatFreq.value ?? "",
                                 ),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),

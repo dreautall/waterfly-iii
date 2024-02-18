@@ -223,10 +223,6 @@
     "@generalUnknown": {
         "description": "Something is unknown."
     },
-    "homeMainBillsTitle": "Számlák a következő hétre",
-    "@homeMainBillsTitle": {
-        "description": "Title: Bills for the next week"
-    },
     "homeMainBillsInterval": " ({period, select, weekly{heti} monthly{havi} quarterly{negyedéves} halfyear{féléves} yearly{éves} other{ismeretlen}})",
     "@homeMainBillsInterval": {
         "description": "bill interval type",
@@ -236,6 +232,10 @@
                 "example": "weekly"
             }
         }
+    },
+    "homeMainBillsTitle": "Számlák a következő hétre",
+    "@homeMainBillsTitle": {
+        "description": "Title: Bills for the next week"
     },
     "homeMainBudgetInterval": " (Ettől: {from} eddig: {to}, {period})",
     "@homeMainBudgetInterval": {

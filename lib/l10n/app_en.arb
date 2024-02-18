@@ -51,6 +51,194 @@
       }
     }
   },
+  "billsAddNewBill": "Add new bill",
+  "@billsAddNewBill": {
+    "description": "Text for add new bill flows"
+  },
+  "billsAmountAndFrequency": "Bill matches transactions between {minValue} and {maxvalue}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}{skip, plural, =0{} other{, skips over {skip}}}.",
+  "@billsAmountAndFrequency": {
+    "description": "Bill match for min and max amounts, and frequency",
+    "placeholders": {
+      "minValue": {
+        "type": "String",
+        "example": "$50.12"
+      },
+      "maxvalue": {
+        "type": "String",
+        "example": "$60.50"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsChangeLayoutTooltip": "Change layout",
+  "@billsChangeLayoutTooltip": {
+    "description": "Text for layout change button tooltip"
+  },
+  "billsChangeSortOrderTooltip": "Change sort order",
+  "@billsChangeSortOrderTooltip": {
+    "description": "Text for sort order change button tooltip"
+  },
+  "billsDialogLayoutTitle": "Bills view layout",
+  "@billsDialogLayoutTitle": {
+    "description": "Text for bills layout dialog title"
+  },
+  "billsDialogSortTitle": "Sort list by",
+  "@billsDialogSortTitle": {
+    "description": "Text for bills sort dialog title"
+  },
+  "billsEditBill": "Edit bill",
+  "@billsEditBill": {
+    "description": "Text for edit bill flows"
+  },
+  "billsErrorLoading": "Error loading bills.",
+  "@billsErrorLoading": {
+    "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+  },
+  "billsExactAmountAndFrequency": "Bill matches transactions of {value}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}{skip, plural, =0{} other{, skips over {skip}}}.",
+  "@billsExactAmountAndFrequency": {
+    "description": "Bill match for exact amount and frequency",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "$50.12"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsExpectedOn": "Expected {date}",
+  "@billsExpectedOn": {
+    "description": "Describes what date the bill is expected",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "January 5, 2024"
+      }
+    }
+  },
+  "billsFrequency": "{frequency, select, weekly{Weekly} monthly{Monthly} quarterly{Quarterly} halfyear{Half-yearly} yearly{Yearly} other{Unknown}}",
+  "@billsFrequency": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      }
+    }
+  },
+  "billsFrequencySkip": "{frequency, select, weekly{Weekly} monthly{Monthly} quarterly{Quarterly} halfyear{Half-yearly} yearly{Yearly} other{Unknown}}{skip, plural, =0{} other{, skips over {skip}}}",
+  "@billsFrequencySkip": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsInactive": "Inactive",
+  "@billsInactive": {
+    "description": "Text: when the bill is inactive"
+  },
+  "billsIsActive": "Bill is active",
+  "@billsIsActive": {
+    "description": "Text: the bill is active"
+  },
+  "billsLayoutGroupTitle": "Group",
+  "@billsLayoutGroupTitle": {
+    "description": "Title text for group layout option"
+  },
+  "billsLayoutGroupSubtitle": "Bills displayed in their assigned groups.",
+  "@billsLayoutGroupSubtitle": {
+    "description": "Subtitle text for group layout option"
+  },
+  "billsLayoutListTitle": "List",
+  "@billsLayoutListTitle": {
+    "description": "Title text for list layout option"
+  },
+  "billsLayoutListSubtitle": "Bills displayed in a list sorted by certain criteria.",
+  "@billsLayoutListSubtitle": {
+    "description": "Subtitle text for list layout option"
+  },
+  "billsListEmpty": "The list is currently empty.",
+  "@billsListEmpty": {
+    "description": "Describes that the list is empty"
+  },
+  "billsNextExpectedMatch": "Next expected match",
+  "@billsNextExpectedMatch": {
+    "description": "Text: next expected match for bill"
+  },
+  "billsNotActive": "Bill is inactive",
+  "@billsNotActive": {
+    "description": "Text: the bill is inactive"
+  },
+  "billsNotExpected": "Not expected this period",
+  "@billsNotExpected": {
+    "description": "Describes that the bill is not expected this period"
+  },
+  "billsNoTransactions": "No transactions found.",
+  "@billsNoTransactions": {
+    "description": "Describes that there are no transactions connected to the bill"
+  },
+  "billsPaidOn": "Paid {date}",
+  "@billsPaidOn": {
+    "description": "Describes what date the bill was paid",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "January 5, 2024"
+      }
+    }
+  },
+  "billsSortAlphabetical": "Alphabetical",
+  "@billsSortAlphabetical": {
+    "description": "Text for alphabetical sort types"
+  },
+  "billsSortByTimePeriod": "By time period",
+  "@billsSortByTimePeriod": {
+    "description": "Text for frequency sort type"
+  },
+  "billsSortFrequency": "Frequency",
+  "@billsSortFrequency": {
+    "description": "Text for sort by frequency"
+  },
+  "billsSortDirection": "{sortDirection, select, ascending{Ascending} descending{Descending} other{Unknown}}",
+  "@billsSortDirection": {
+    "description": "Bill sort direction",
+    "placeholders": {
+      "sortDirection": {
+        "type": "String",
+        "example": "Ascending"
+      }
+    }
+  },
+  "billsSortName": "Name",
+  "@billsSortName": {
+    "description": "Text for sort by name"
+  },
+  "billsUngrouped": "Ungrouped",
+  "@billsUngrouped": {
+    "description": "Title for ungrouped bills"
+  },
   "categoryDeleteConfirm": "Are you sure you want to delete this category? The transactions will not be deleted, but will not have a category anymore.",
   "@categoryDeleteConfirm": {
     "description": "Confirmation text to delete category"
@@ -58,10 +246,6 @@
   "categoryErrorLoading": "Error loading categories.",
   "@categoryErrorLoading": {
     "description": "Generic error message when categories can't be loaded (shouldn't occur)"
-  },
-  "categoryTitleAdd": "Add Category",
-  "@categoryTitleAdd": {
-    "description": "Title for Dialog: Add Category"
   },
   "categoryMonthNext": "Next Month",
   "@categoryMonthNext": {
@@ -71,6 +255,10 @@
   "@categoryMonthPrev": {
     "description": "Button title to view overview for previous month"
   },
+  "categoryTitleAdd": "Add Category",
+  "@categoryTitleAdd": {
+    "description": "Title for Dialog: Add Category"
+  },
   "categoryTitleDelete": "Delete Category",
   "@categoryTitleDelete": {
     "description": "Title for Dialog: Delete Category"
@@ -79,13 +267,13 @@
   "@categoryTitleEdit": {
     "description": "Title for Dialog: Edit Category"
   },
-  "catOther": "Other",
-  "@catOther": {
-    "description": "Category description for summary category 'Other'"
-  },
   "catNone": "<no category>",
   "@catNone": {
     "description": "Placeholder when no category has been set."
+  },
+  "catOther": "Other",
+  "@catOther": {
+    "description": "Category description for summary category 'Other'"
   },
   "errorAPIInvalidResponse": "Invalid Response from API: {message}",
   "@errorAPIInvalidResponse": {
@@ -555,6 +743,10 @@
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"
   },
+  "navigationBills": "Bills",
+  "@navigationBills": {
+    "description": "Navigation Label: Bills"
+  },
   "navigationCategories": "Categories",
   "@navigationCategories": {
     "description": "Navigation Label: Categories"
@@ -566,6 +758,10 @@
   "navigationSettings": "Settings",
   "@navigationSettings": {
     "description": "Navigation Label: Settings"
+  },
+  "no": "No",
+  "@no": {
+    "description": "The word no"
   },
   "numPercent": "{num}",
   "@numPercent": {
@@ -680,7 +876,7 @@
   "@settingsNLPermissionRemoveHelp": {
     "description": "Dialog text giving hint how to remove the permission."
   },
-  "settingsNLPrefillTXTitle": "Prefill transaction title with nofication title",
+  "settingsNLPrefillTXTitle": "Prefill transaction title with notification title",
   "@settingsNLPrefillTXTitle": {
     "description": "First line for setting to use pre-fill transaction title with notification title."
   },
@@ -906,5 +1102,9 @@
   "transactionTypeWithdrawal": "Withdrawal",
   "@transactionTypeWithdrawal": {
     "description": "Withdrawal transaction type"
+  },
+  "yes": "Yes",
+  "@yes": {
+    "description": "The word yes"
   }
 }

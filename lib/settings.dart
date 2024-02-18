@@ -141,8 +141,8 @@ class SettingsProvider with ChangeNotifier {
 
     int? billsLayoutIndex = prefs.getInt(settingBillsDefaultLayout);
     _billsLayout = billsLayoutIndex == null
-      ? BillsLayout.grouped
-      : BillsLayout.values[billsLayoutIndex];
+        ? BillsLayout.grouped
+        : BillsLayout.values[billsLayoutIndex];
 
     int? billsSortIndex = prefs.getInt(settingBillsDefaultSort);
     _billsSort = billsSortIndex == null

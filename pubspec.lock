@@ -479,10 +479,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_sharing_intent
-      sha256: "6eb896e6523b735e8230eeb206fd3b9f220f11ce879c2400a90b443147036ff9"
+      sha256: "785ffc391822641457f930eb477c91c2f598a888f50b8fbb40d481ee01c7e719"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   flutter_staggered_grid_view:
     dependency: transitive
     description:

@@ -51,6 +51,194 @@
       }
     }
   },
+  "billsAddNewBill": "Neue Rechnung hinzufügen",
+  "@billsAddNewBill": {
+    "description": "Text for add new bill flows"
+  },
+  "billsAmountAndFrequency": "Rechnung passt zu Transaktionen zwischen {minValue} und {maxvalue}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
+  "@billsAmountAndFrequency": {
+    "description": "Bill match for min and max amounts, and frequency",
+    "placeholders": {
+      "minValue": {
+        "type": "String",
+        "example": "$50.12"
+      },
+      "maxvalue": {
+        "type": "String",
+        "example": "$60.50"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsChangeLayoutTooltip": "Layout ändern",
+  "@billsChangeLayoutTooltip": {
+    "description": "Text for layout change button tooltip"
+  },
+  "billsChangeSortOrderTooltip": "Sortierung ändern",
+  "@billsChangeSortOrderTooltip": {
+    "description": "Text for sort order change button tooltip"
+  },
+  "billsDialogLayoutTitle": "Rechnungsansicht-Layout",
+  "@billsDialogLayoutTitle": {
+    "description": "Text for bills layout dialog title"
+  },
+  "billsDialogSortTitle": "Sortieren nach",
+  "@billsDialogSortTitle": {
+    "description": "Text for bills sort dialog title"
+  },
+  "billsEditBill": "Rechnung bearbeiten",
+  "@billsEditBill": {
+    "description": "Text for edit bill flows"
+  },
+  "billsErrorLoading": "Fehler beim Laden der Rechnungen.",
+  "@billsErrorLoading": {
+    "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+  },
+  "billsExactAmountAndFrequency": "Rechnung passt zu Transaktionen mit {value}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
+  "@billsExactAmountAndFrequency": {
+    "description": "Bill match for exact amount and frequency",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "$50.12"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsExpectedOn": "Voraussichtlich {date}",
+  "@billsExpectedOn": {
+    "description": "Describes what date the bill is expected",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "January 5, 2024"
+      }
+    }
+  },
+  "billsFrequency": "{frequency, select, weekly{Wöchentlich} monthly{Monatlich} quarterly{Vierteljährlich} halfyear{Halbjährlich} yearly{Jährlich} other{Unbekannt}}",
+  "@billsFrequency": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      }
+    }
+  },
+  "billsFrequencySkip": "{frequency, select, weekly{Wöchentlich} monthly{Monatlich} quarterly{Vierteljährlich} halfyear{Halbjährlich} yearly{Jährlich} other{Unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}",
+  "@billsFrequencySkip": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsInactive": "Inaktiv",
+  "@billsInactive": {
+    "description": "Text: when the bill is inactive"
+  },
+  "billsIsActive": "Rechnung ist aktiv",
+  "@billsIsActive": {
+    "description": "Text: the bill is active"
+  },
+  "billsLayoutGroupTitle": "Gruppe",
+  "@billsLayoutGroupTitle": {
+    "description": "Title text for group layout option"
+  },
+  "billsLayoutGroupSubtitle": "Rechnungen werden in ihrer Gruppe angezeigt.",
+  "@billsLayoutGroupSubtitle": {
+    "description": "Subtitle text for group layout option"
+  },
+  "billsLayoutListTitle": "Liste",
+  "@billsLayoutListTitle": {
+    "description": "Title text for list layout option"
+  },
+  "billsLayoutListSubtitle": "Rechnungen werden sortiert in einer Liste angezeigt.",
+  "@billsLayoutListSubtitle": {
+    "description": "Subtitle text for list layout option"
+  },
+  "billsListEmpty": "Diese Liste ist momentan leer.",
+  "@billsListEmpty": {
+    "description": "Describes that the list is empty"
+  },
+  "billsNextExpectedMatch": "Nächste erwartete Übereinstimmung",
+  "@billsNextExpectedMatch": {
+    "description": "Text: next expected match for bill"
+  },
+  "billsNotActive": "Rechnung ist inaktiv",
+  "@billsNotActive": {
+    "description": "Text: the bill is inactive"
+  },
+  "billsNotExpected": "In diesem Zeitraum nicht erwartet",
+  "@billsNotExpected": {
+    "description": "Describes that the bill is not expected this period"
+  },
+  "billsNoTransactions": "Keine Transaktionen gefunden.",
+  "@billsNoTransactions": {
+    "description": "Describes that there are no transactions connected to the bill"
+  },
+  "billsPaidOn": "Bezahlt am {date}",
+  "@billsPaidOn": {
+    "description": "Describes what date the bill was paid",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "January 5, 2024"
+      }
+    }
+  },
+  "billsSortAlphabetical": "Alphabetisch",
+  "@billsSortAlphabetical": {
+    "description": "Text for alphabetical sort types"
+  },
+  "billsSortByTimePeriod": "Nach Zeitraum",
+  "@billsSortByTimePeriod": {
+    "description": "Text for frequency sort type"
+  },
+  "billsSortFrequency": "Häufigkeit",
+  "@billsSortFrequency": {
+    "description": "Text for sort by frequency"
+  },
+  "billsSortDirection": "{sortDirection, select, ascending{Aufsteigend} descending{Absteigend} other{Unbekannt}}",
+  "@billsSortDirection": {
+    "description": "Bill sort direction",
+    "placeholders": {
+      "sortDirection": {
+        "type": "String",
+        "example": "Ascending"
+      }
+    }
+  },
+  "billsSortName": "Name",
+  "@billsSortName": {
+    "description": "Text for sort by name"
+  },
+  "billsUngrouped": "Keine Gruppe",
+  "@billsUngrouped": {
+    "description": "Title for ungrouped bills"
+  },
   "categoryDeleteConfirm": "Möchtest du diese Kategorie wirklich löschen? Die Transaktionen werden nicht gelöscht, werden aber keine Kategorie mehr haben.",
   "@categoryDeleteConfirm": {
     "description": "Confirmation text to delete category"
@@ -555,6 +743,10 @@
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"
   },
+  "navigationBills": "Rechnungen",
+  "@navigationBills": {
+    "description": "Navigation Label: Bills"
+  },
   "navigationCategories": "Kategorien",
   "@navigationCategories": {
     "description": "Navigation Label: Categories"
@@ -566,6 +758,10 @@
   "navigationSettings": "Einstellungen",
   "@navigationSettings": {
     "description": "Navigation Label: Settings"
+  },
+  "no": "Nein",
+  "@no": {
+    "description": "The word no"
   },
   "numPercent": "{num}",
   "@numPercent": {
@@ -906,5 +1102,9 @@
   "transactionTypeWithdrawal": "Ausgabe",
   "@transactionTypeWithdrawal": {
     "description": "Withdrawal transaction type"
+  },
+  "yes": "Ja",
+  "@yes": {
+    "description": "The word yes"
   }
 }

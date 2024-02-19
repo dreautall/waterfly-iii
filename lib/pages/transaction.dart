@@ -1173,20 +1173,18 @@ class _TransactionPageState extends State<TransactionPage>
           const SizedBox(width: 16),
         ],
       ),
-      body: (widget.transaction == null)
-          ? const Center(child: CircularProgressIndicator())
-          : Form(
-              key: _formKey,
-              child: ListView(
-                shrinkWrap: true,
-                cacheExtent: 10000,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 16,
-                ),
-                children: _transactionDetailBuilder(context),
-              ),
-            ),
+      body: Form(
+        key: _formKey,
+        child: ListView(
+          shrinkWrap: true,
+          cacheExtent: 10000,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24,
+            vertical: 16,
+          ),
+          children: _transactionDetailBuilder(context),
+        ),
+      ),
     );
   }
 

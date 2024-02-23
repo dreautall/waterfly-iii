@@ -106,8 +106,6 @@ class _CategoriesPageState extends State<CategoriesPage>
   @override
   Widget build(BuildContext context) {
     log.fine(() => "build");
-    final CurrencyRead defaultCurrency =
-        context.read<FireflyService>().defaultCurrency;
 
     late DateTime stockDate;
     if (selectedMonth.year == now.year && selectedMonth.month == now.month) {
@@ -214,6 +212,21 @@ class _CategoriesPageState extends State<CategoriesPage>
             (double p, CategoryRead e) =>
                 p += (e.attributes as CategoryWithSum).sumSpent);
 
+        // If more than 5 entries, show sum line on top as well
+        if (snapshot.data!.data.length > 5) {
+          childs.add(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: SumLine(
+                totalSpent: totalSpent,
+                totalEarned: totalEarned,
+              ),
+            ),
+          );
+          childs.add(const Divider());
+        }
+
+        // Show categories
         for (CategoryRead category in snapshot.data!.data) {
           childs.add(CategoryLine(
             category: category,
@@ -223,73 +236,15 @@ class _CategoriesPageState extends State<CategoriesPage>
             totalEarned: totalEarned,
           ));
         }
+
+        // Show sum line
         childs.add(const Divider());
         childs.add(
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Expanded(
-                  child: Text(
-                    S.of(context).generalSum,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    defaultCurrency.fmt(totalSpent),
-                    textAlign: TextAlign.end,
-                    style: TextStyle(
-                      color: totalSpent < 0
-                          ? Colors.red
-                          : totalSpent > 0
-                              ? Colors.green
-                              : Colors.grey,
-                      fontWeight: FontWeight.bold,
-                      fontFeatures: const <FontFeature>[
-                        FontFeature.tabularFigures()
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    defaultCurrency.fmt(totalEarned),
-                    textAlign: TextAlign.end,
-                    style: TextStyle(
-                      color: totalEarned < 0
-                          ? Colors.red
-                          : totalEarned > 0
-                              ? Colors.green
-                              : Colors.grey,
-                      fontWeight: FontWeight.bold,
-                      fontFeatures: const <FontFeature>[
-                        FontFeature.tabularFigures()
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    defaultCurrency.fmt(totalSpent + totalEarned),
-                    textAlign: TextAlign.end,
-                    style: TextStyle(
-                      color: (totalSpent + totalEarned) < 0
-                          ? Colors.red
-                          : (totalSpent + totalEarned) > 0
-                              ? Colors.green
-                              : Colors.grey,
-                      fontWeight: FontWeight.bold,
-                      fontFeatures: const <FontFeature>[
-                        FontFeature.tabularFigures()
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+            child: SumLine(
+              totalSpent: totalSpent,
+              totalEarned: totalEarned,
             ),
           ),
         );
@@ -303,6 +258,82 @@ class _CategoriesPageState extends State<CategoriesPage>
           ),
         );
       },
+    );
+  }
+}
+
+class SumLine extends StatelessWidget {
+  const SumLine({
+    super.key,
+    required this.totalSpent,
+    required this.totalEarned,
+  });
+
+  final double totalSpent;
+  final double totalEarned;
+
+  @override
+  Widget build(BuildContext context) {
+    final CurrencyRead defaultCurrency =
+        context.read<FireflyService>().defaultCurrency;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Expanded(
+          child: Text(
+            S.of(context).generalSum,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            defaultCurrency.fmt(totalSpent),
+            textAlign: TextAlign.end,
+            style: TextStyle(
+              color: totalSpent < 0
+                  ? Colors.red
+                  : totalSpent > 0
+                      ? Colors.green
+                      : Colors.grey,
+              fontWeight: FontWeight.bold,
+              fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            defaultCurrency.fmt(totalEarned),
+            textAlign: TextAlign.end,
+            style: TextStyle(
+              color: totalEarned < 0
+                  ? Colors.red
+                  : totalEarned > 0
+                      ? Colors.green
+                      : Colors.grey,
+              fontWeight: FontWeight.bold,
+              fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            defaultCurrency.fmt(totalSpent + totalEarned),
+            textAlign: TextAlign.end,
+            style: TextStyle(
+              color: (totalSpent + totalEarned) < 0
+                  ? Colors.red
+                  : (totalSpent + totalEarned) > 0
+                      ? Colors.green
+                      : Colors.grey,
+              fontWeight: FontWeight.bold,
+              fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

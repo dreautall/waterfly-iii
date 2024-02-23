@@ -9,6 +9,7 @@ import 'package:chopper/chopper.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/settings.dart';
 
 final Logger log = Logger("Pages.Categories.AddEdit");
 
@@ -29,6 +30,7 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
   final TextEditingController notesController = TextEditingController();
 
   bool loaded = false;
+  bool includeInSum = true;
 
   @override
   void initState() {
@@ -55,6 +57,10 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
         Navigator.of(context).pop();
       }
       setState(() {
+        includeInSum = !context
+            .read<SettingsProvider>()
+            .categoriesSumExcluded
+            .contains(widget.category!.id);
         notesController.text = resp.body?.data.attributes.notes ?? "";
         loaded = true;
       });
@@ -152,6 +158,18 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
               ));
               return;
             }
+
+            if (context.mounted) {
+              if (includeInSum) {
+                await context
+                    .read<SettingsProvider>()
+                    .categoryRemoveSumExcluded(widget.category!.id);
+              } else {
+                await context
+                    .read<SettingsProvider>()
+                    .categoryAddSumExcluded(widget.category!.id);
+              }
+            }
             if (context.mounted) {
               Navigator.of(context).pop(true);
             }
@@ -188,6 +206,22 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
                 maxLines: 5,
               ),
             ),
+            // Only show toggle (+ spacing) when in edit mode
+            if (widget.category != null) const SizedBox(height: 12),
+            if (widget.category != null)
+              SizedBox(
+                width: inputWidth,
+                child: SwitchListTile(
+                  title: Text(S.of(context).categoryFormLabelIncludeInSum),
+                  value: includeInSum,
+                  isThreeLine: false,
+                  onChanged: loaded != true
+                      ? null
+                      : (bool value) => setState(() {
+                            includeInSum = value;
+                          }),
+                ),
+              )
           ],
         ),
       ),

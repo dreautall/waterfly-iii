@@ -247,6 +247,10 @@
   "@categoryErrorLoading": {
     "description": "Generic error message when categories can't be loaded (shouldn't occur)"
   },
+  "categoryFormLabelName": "Category Name",
+  "@categoryFormLabelName": {
+    "description": "Category Add/Edit Form: Label for name field"
+  },
   "categoryMonthNext": "Next Month",
   "@categoryMonthNext": {
     "description": "Button title to view overview for next month"

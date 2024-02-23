@@ -2,12 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+
+final Logger log = Logger("Pages.Categories.AddEdit");
 
 class CategoryAddEditDialog extends StatefulWidget {
   const CategoryAddEditDialog({
@@ -134,15 +137,11 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
                   json.decode(resp.error.toString()),
                 );
                 error = valError.message ??
-                    // ignore: use_build_context_synchronously
                     (context.mounted
-                        // ignore: use_build_context_synchronously
                         ? S.of(context).errorUnknown
                         : "[nocontext] Unknown error.");
               } catch (_) {
-                // ignore: use_build_context_synchronously
                 error = context.mounted
-                    // ignore: use_build_context_synchronously
                     ? S.of(context).errorUnknown
                     : "[nocontext] Unknown error.";
               }
@@ -167,9 +166,10 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
               width: inputWidth,
               child: TextFormField(
                 controller: titleController,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.title),
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.title),
+                  border: const OutlineInputBorder(),
+                  labelText: S.of(context).categoryFormLabelName,
                 ),
               ),
             ),
@@ -178,9 +178,10 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
               width: inputWidth,
               child: TextFormField(
                 controller: notesController,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.description),
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.description),
+                  border: const OutlineInputBorder(),
+                  labelText: S.of(context).transactionFormLabelNotes,
                 ),
                 enabled: loaded == true || widget.category == null,
                 minLines: 1,

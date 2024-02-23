@@ -47,49 +47,60 @@ class _CategoriesPageState extends State<CategoriesPage>
         context.read<FireflyService>().defaultCurrency);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<NavPageElements>().appBarActions = <Widget>[
-        IconButton(
-          icon: const Icon(Icons.plus_one),
-          tooltip: S.of(context).categoryTitleAdd,
-          onPressed: () async {
-            bool? ok = await showDialog(
-              context: context,
-              builder: (BuildContext context) =>
-                  const CategoryAddEditDialog(category: null),
-            );
-            if (!(ok ?? false)) {
-              return;
-            }
-
-            // Refresh page
-            stock.reset();
-            setState(() {});
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.arrow_back),
-          tooltip: S.of(context).categoryMonthPrev,
-          onPressed: () {
-            log.finest(() => "getting prev month");
-            setState(() {
-              selectedMonth =
-                  selectedMonth.copyWith(month: selectedMonth.month - 1);
-            });
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.arrow_forward),
-          tooltip: S.of(context).categoryMonthNext,
-          onPressed: () {
-            log.finest(() => "getting next month");
-            setState(() {
-              selectedMonth =
-                  selectedMonth.copyWith(month: selectedMonth.month + 1);
-            });
-          },
-        ),
-      ];
+      refreshAppBarButtons();
     });
+  }
+
+  void refreshAppBarButtons() {
+    bool nextMonthDisabled = selectedMonth
+        .copyWith(day: 1, month: selectedMonth.month + 1)
+        .isAfter(now.copyWith(day: 1));
+    context.read<NavPageElements>().appBarActions = <Widget>[
+      IconButton(
+        icon: const Icon(Icons.plus_one),
+        tooltip: S.of(context).categoryTitleAdd,
+        onPressed: () async {
+          bool? ok = await showDialog(
+            context: context,
+            builder: (BuildContext context) =>
+                const CategoryAddEditDialog(category: null),
+          );
+          if (!(ok ?? false)) {
+            return;
+          }
+
+          // Refresh page
+          stock.reset();
+          setState(() {});
+        },
+      ),
+      IconButton(
+        icon: const Icon(Icons.arrow_back),
+        tooltip: S.of(context).categoryMonthPrev,
+        onPressed: () {
+          log.finest(() => "getting prev month");
+          setState(() {
+            selectedMonth =
+                selectedMonth.copyWith(month: selectedMonth.month - 1);
+            refreshAppBarButtons();
+          });
+        },
+      ),
+      IconButton(
+        icon: const Icon(Icons.arrow_forward),
+        tooltip: S.of(context).categoryMonthNext,
+        onPressed: nextMonthDisabled
+            ? null
+            : () {
+                log.finest(() => "getting next month");
+                setState(() {
+                  selectedMonth =
+                      selectedMonth.copyWith(month: selectedMonth.month + 1);
+                  refreshAppBarButtons();
+                });
+              },
+      ),
+    ];
   }
 
   @override
@@ -215,7 +226,7 @@ class _CategoriesPageState extends State<CategoriesPage>
         childs.add(const Divider());
         childs.add(
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[

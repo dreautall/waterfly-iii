@@ -12,6 +12,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/categories/addedit.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/navigation.dart';
+import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
 
 final Logger log = Logger("Pages.Categories");
@@ -203,14 +204,21 @@ class _CategoriesPageState extends State<CategoriesPage>
           },
         );
 
+        List<String> categoriesSumExcluded =
+            context.read<SettingsProvider>().categoriesSumExcluded;
+
         final double totalEarned = snapshot.data!.data.fold<double>(
             0,
-            (double p, CategoryRead e) =>
-                p += (e.attributes as CategoryWithSum).sumEarned);
+            (double p, CategoryRead e) => p +=
+                categoriesSumExcluded.contains(e.id)
+                    ? 0
+                    : (e.attributes as CategoryWithSum).sumEarned);
         final double totalSpent = snapshot.data!.data.fold<double>(
             0,
-            (double p, CategoryRead e) =>
-                p += (e.attributes as CategoryWithSum).sumSpent);
+            (double p, CategoryRead e) => p +=
+                categoriesSumExcluded.contains(e.id)
+                    ? 0
+                    : (e.attributes as CategoryWithSum).sumSpent);
 
         // If more than 5 entries, show sum line on top as well
         if (snapshot.data!.data.length > 5) {
@@ -234,6 +242,7 @@ class _CategoriesPageState extends State<CategoriesPage>
             stock: stock,
             totalSpent: totalSpent,
             totalEarned: totalEarned,
+            excluded: categoriesSumExcluded.contains(category.id),
           ));
         }
 
@@ -346,6 +355,7 @@ class CategoryLine extends StatelessWidget {
     required this.totalSpent,
     required this.totalEarned,
     required this.stock,
+    required this.excluded,
   });
 
   final CategoryRead category;
@@ -353,6 +363,7 @@ class CategoryLine extends StatelessWidget {
   final double totalSpent;
   final double totalEarned;
   final CatStock stock;
+  final bool excluded;
 
   @override
   Widget build(BuildContext context) {
@@ -475,28 +486,51 @@ class CategoryLine extends StatelessWidget {
                             category.attributes.name == "L10NNONE"
                                 ? S.of(context).catNone
                                 : category.attributes.name,
-                            style: Theme.of(context).textTheme.bodyLarge,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(
+                                  color: !excluded
+                                      ? Theme.of(context).colorScheme.onSurface
+                                      : Theme.of(context).disabledColor,
+                                ),
                           ),
-                          ActionChip(
-                            label: Text(
-                              NumberFormat.percentPattern().format(
-                                  totalBalance < 0
-                                      ? cs.sumSpent / totalSpent
-                                      : cs.sumEarned / totalEarned),
+                          if (!excluded)
+                            ActionChip(
+                              label: Text(
+                                excluded
+                                    ? "Excluded"
+                                    : NumberFormat.percentPattern().format(
+                                        totalBalance < 0
+                                            ? cs.sumSpent / totalSpent
+                                            : cs.sumEarned / totalEarned),
+                              ),
+                              labelStyle:
+                                  Theme.of(context).textTheme.labelLarge,
+                              labelPadding: const EdgeInsets.symmetric(
+                                  horizontal: 2, vertical: -4),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 2, vertical: -4),
+                              side: BorderSide(
+                                color: totalBalance < 0
+                                    ? Colors.red
+                                    : totalBalance > 0
+                                        ? Colors.green
+                                        : Colors.grey,
+                              ),
                             ),
-                            labelStyle: Theme.of(context).textTheme.labelLarge,
-                            labelPadding: const EdgeInsets.symmetric(
-                                horizontal: 2, vertical: -4),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 2, vertical: -4),
-                            side: BorderSide(
-                              color: totalBalance < 0
-                                  ? Colors.red
-                                  : totalBalance > 0
-                                      ? Colors.green
-                                      : Colors.grey,
-                            ),
-                          ),
+                          // Completely separate due to different paddings
+                          if (excluded) const SizedBox(width: 6),
+                          if (excluded)
+                            ActionChip(
+                              label: Text(S.of(context).categorySumExcluded),
+                              labelStyle:
+                                  Theme.of(context).textTheme.labelLarge,
+                              labelPadding: const EdgeInsets.symmetric(
+                                  horizontal: 4, vertical: -4),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 4, vertical: -4),
+                            )
                         ],
                       ),
                       Row(

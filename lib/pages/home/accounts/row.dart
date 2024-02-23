@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
+import 'package:waterflyiii/widgets/fabs.dart';
 
 Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
   late double currentAmount;
@@ -96,6 +97,13 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
       appBar: AppBar(
         title: Text(account.attributes.name),
       ),
+      floatingActionButton:
+          account.attributes.type == ShortAccountTypeProperty.asset
+              ? NewTransactionFab(
+                  context: context,
+                  accountId: account.id,
+                )
+              : null,
       body: HomeTransactions(accountId: account.id),
     ),
     openColor: Theme.of(context).cardColor,

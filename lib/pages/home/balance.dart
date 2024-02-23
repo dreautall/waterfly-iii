@@ -11,6 +11,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
+import 'package:waterflyiii/widgets/fabs.dart';
 
 class HomeBalance extends StatefulWidget {
   const HomeBalance({
@@ -82,6 +83,10 @@ class _HomeBalanceState extends State<HomeBalance>
                               Scaffold(
                         appBar: AppBar(
                           title: Text(account.attributes.name),
+                        ),
+                        floatingActionButton: NewTransactionFab(
+                          context: context,
+                          accountId: account.id,
                         ),
                         body: HomeTransactions(accountId: account.id),
                       ),

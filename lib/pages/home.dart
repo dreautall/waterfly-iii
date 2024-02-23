@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
@@ -9,7 +8,7 @@ import 'package:waterflyiii/pages/home/main.dart';
 import 'package:waterflyiii/pages/home/piggybank.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/navigation.dart';
-import 'package:waterflyiii/pages/transaction.dart';
+import 'package:waterflyiii/widgets/fabs.dart';
 
 final Logger log = Logger("Pages.Home");
 
@@ -54,25 +53,7 @@ class HomePageState extends State<HomePage>
     _tabController.addListener(_handleTabChange);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _newTransactionFab = OpenContainer(
-        openBuilder: (BuildContext context, Function closedContainer) {
-          return const TransactionPage();
-        },
-        openColor: Theme.of(context).cardColor,
-        closedColor: Theme.of(context).colorScheme.primaryContainer,
-        closedShape: Theme.of(context).floatingActionButtonTheme.shape ??
-            const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16.0))),
-        closedElevation:
-            Theme.of(context).floatingActionButtonTheme.elevation ?? 6,
-        closedBuilder: (BuildContext context, Function openContainer) {
-          return FloatingActionButton(
-            onPressed: () => openContainer(),
-            tooltip: S.of(context).formButtonTransactionAdd,
-            child: const Icon(Icons.add),
-          );
-        },
-      );
+      _newTransactionFab = NewTransactionFab(context: context);
 
       context.read<NavPageElements>().appBarBottom = TabBar(
         isScrollable: true,

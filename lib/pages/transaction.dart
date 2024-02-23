@@ -44,12 +44,14 @@ class TransactionPage extends StatefulWidget {
     this.notification,
     this.files,
     this.clone = false,
+    this.accountId,
   });
 
   final TransactionRead? transaction;
   final NotificationTransaction? notification;
   final List<SharedFile>? files;
   final bool clone;
+  final String? accountId;
 
   @override
   State<TransactionPage> createState() => _TransactionPageState();
@@ -485,6 +487,24 @@ class _TransactionPageState extends State<TransactionPage>
           }
 
           setState(() {});
+        }
+        if (widget.accountId != null && mounted) {
+          // Check account
+          final Response<AccountArray> response = await context
+              .read<FireflyService>()
+              .api
+              .v1AccountsGet(type: AccountTypeFilter.assetAccount);
+          if (!response.isSuccessful || response.body == null) {
+            log.warning("api account fetch failed");
+            return;
+          }
+          for (AccountRead acc in response.body!.data) {
+            if (acc.id == widget.accountId) {
+              _ownAccountTextController.text = acc.attributes.name;
+              _ownAccountId = acc.id;
+              break;
+            }
+          }
         }
         if (widget.files != null && widget.files!.isNotEmpty) {
           _attachments = <AttachmentRead>[];

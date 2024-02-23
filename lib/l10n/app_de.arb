@@ -162,21 +162,21 @@
   "@billsIsActive": {
     "description": "Text: the bill is active"
   },
-  "billsLayoutGroupTitle": "Gruppe",
-  "@billsLayoutGroupTitle": {
-    "description": "Title text for group layout option"
-  },
   "billsLayoutGroupSubtitle": "Rechnungen werden in ihrer Gruppe angezeigt.",
   "@billsLayoutGroupSubtitle": {
     "description": "Subtitle text for group layout option"
   },
-  "billsLayoutListTitle": "Liste",
-  "@billsLayoutListTitle": {
-    "description": "Title text for list layout option"
+  "billsLayoutGroupTitle": "Gruppe",
+  "@billsLayoutGroupTitle": {
+    "description": "Title text for group layout option"
   },
   "billsLayoutListSubtitle": "Rechnungen werden sortiert in einer Liste angezeigt.",
   "@billsLayoutListSubtitle": {
     "description": "Subtitle text for list layout option"
+  },
+  "billsLayoutListTitle": "Liste",
+  "@billsLayoutListTitle": {
+    "description": "Title text for list layout option"
   },
   "billsListEmpty": "Diese Liste ist momentan leer.",
   "@billsListEmpty": {
@@ -217,10 +217,6 @@
   "@billsSortByTimePeriod": {
     "description": "Text for frequency sort type"
   },
-  "billsSortFrequency": "Häufigkeit",
-  "@billsSortFrequency": {
-    "description": "Text for sort by frequency"
-  },
   "billsSortDirection": "{sortDirection, select, ascending{Aufsteigend} descending{Absteigend} other{Unbekannt}}",
   "@billsSortDirection": {
     "description": "Bill sort direction",
@@ -230,6 +226,10 @@
         "example": "Ascending"
       }
     }
+  },
+  "billsSortFrequency": "Häufigkeit",
+  "@billsSortFrequency": {
+    "description": "Text for sort by frequency"
   },
   "billsSortName": "Name",
   "@billsSortName": {
@@ -247,6 +247,14 @@
   "@categoryErrorLoading": {
     "description": "Generic error message when categories can't be loaded (shouldn't occur)"
   },
+  "categoryFormLabelIncludeInSum": "In Monatssumme einbeziehen",
+  "@categoryFormLabelIncludeInSum": {
+    "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+  },
+  "categoryFormLabelName": "Kategoriename",
+  "@categoryFormLabelName": {
+    "description": "Category Add/Edit Form: Label for name field"
+  },
   "categoryMonthNext": "Nächster Monat",
   "@categoryMonthNext": {
     "description": "Button title to view overview for next month"
@@ -254,6 +262,10 @@
   "categoryMonthPrev": "Voriger Monat",
   "@categoryMonthPrev": {
     "description": "Button title to view overview for previous month"
+  },
+  "categorySumExcluded": "ausgenommen",
+  "@categorySumExcluded": {
+    "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
   },
   "categoryTitleAdd": "Kategorie hinzufügen",
   "@categoryTitleAdd": {

@@ -247,6 +247,10 @@
   "@categoryErrorLoading": {
     "description": "Generic error message when categories can't be loaded (shouldn't occur)"
   },
+  "categoryFormLabelIncludeInSum": "Include in monthly sum",
+  "@categoryFormLabelIncludeInSum": {
+    "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+  },
   "categoryFormLabelName": "Category Name",
   "@categoryFormLabelName": {
     "description": "Category Add/Edit Form: Label for name field"

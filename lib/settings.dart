@@ -56,6 +56,7 @@ class SettingsProvider with ChangeNotifier {
   static const String settingBillsDefaultLayout = "BILLSDEFAULTLAYOUT";
   static const String settingBillsDefaultSort = "BILLSDEFAULTSORT";
   static const String settingBillsDefaultSortOrder = "BILLSDEFAULTSORTORDER";
+  static const String settingsCategoriesSumExcluded = "CAT_SUMEXCLUDED";
 
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get theme => _theme;
@@ -89,6 +90,9 @@ class SettingsProvider with ChangeNotifier {
   BillsSort get billsSort => _billsSort;
   SortingOrder _billsSortOrder = SortingOrder.ascending;
   SortingOrder get billsSortOrder => _billsSortOrder;
+
+  List<String> _categoriesSumExcluded = <String>[];
+  List<String> get categoriesSumExcluded => _categoriesSumExcluded;
 
   Future<void> loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -153,6 +157,9 @@ class SettingsProvider with ChangeNotifier {
     _billsSortOrder = billsSortOrderIndex == null
         ? SortingOrder.ascending
         : SortingOrder.values[billsSortOrderIndex];
+
+    _categoriesSumExcluded =
+        prefs.getStringList(settingsCategoriesSumExcluded) ?? <String>[];
 
     _loaded = true;
     log.finest(() => "notify SettingsProvider->loadSettings()");
@@ -410,6 +417,39 @@ class SettingsProvider with ChangeNotifier {
     await prefs.setInt(settingBillsDefaultSortOrder, sortOrder.index);
 
     log.finest(() => "notify SettingsProvider->billsSortOrder()");
+    notifyListeners();
+  }
+
+  Future<void> categoryAddSumExcluded(String categoryId) async {
+    if (categoryId.isEmpty || categoriesSumExcluded.contains(categoryId)) {
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _categoriesSumExcluded.add(categoryId);
+    await prefs.setStringList(
+      settingsCategoriesSumExcluded,
+      categoriesSumExcluded,
+    );
+
+    log.finest(() => "notify SettingsProvider->categoryAddSumExcluded()");
+    notifyListeners();
+  }
+
+  Future<void> categoryRemoveSumExcluded(String categoryId) async {
+    if (categoryId.isEmpty || !categoriesSumExcluded.contains(categoryId)) {
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _categoriesSumExcluded.remove(categoryId);
+    await prefs.setStringList(
+      settingsCategoriesSumExcluded,
+      categoriesSumExcluded,
+    );
+
+    log.finest(() => "notify SettingsProvider->categoryRemoveSumExcluded()");
+
     notifyListeners();
   }
 }

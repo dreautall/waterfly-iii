@@ -60,7 +60,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     _pagingController
         .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
 
-    // Only add button when in own tab
+    // Only add filter button when in own tab
     if (widget.accountId == null && widget.category == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         context.read<PageActions>().set(

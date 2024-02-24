@@ -8,7 +8,7 @@ Funktionen:
 - Transaktionsliste mit Filtern
 - Füge neue Transaktionen hinzu und bearbeite bestehende Transaktionen mit Autovervollständigung, Anhängen, aufgeteilten Buchungen & mehreren Währungen
 - Unterstützung für Sparschweine (Beträge anschauen & ändern)
-- Benachrichtigungsservice, um einfach neue Transaktionen zu erstellen, basierend auf eingehenden Benachrichtigungen (z.B. von Google Pay oder deiner Banking-App)
+- Benachrichtigungsservice, um einfach neue Transaktionen zu erstellen, basierend auf eingehenden Benachrichtigungen (z.B.
 - Komplett Open Source: https://github.com/dreautall/waterfly-iii
 - Keine Werbung oder Tracker
 

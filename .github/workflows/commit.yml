@@ -6,10 +6,12 @@ on:
     branches-ignore: 
       - develop
   workflow_call:
+  pull_request:
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
+    name: codecheck
 
     steps:
       - uses: actions/checkout@v4

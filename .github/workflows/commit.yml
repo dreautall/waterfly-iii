@@ -29,4 +29,4 @@ jobs:
       - run: dart analyze .
 
       # Run widget tests for our flutter project.
-      # - run: flutter test
+      - run: flutter test

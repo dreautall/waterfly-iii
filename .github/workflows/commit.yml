@@ -1,0 +1,32 @@
+name: Syntax Check
+
+on:
+  push:
+    # Ignore develop branch, will be triggered by workflow_call in release.yml
+    branches-ignore: 
+      - develop
+  workflow_call:
+  pull_request:
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    name: codecheck
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Call setup_env action to setup workspace
+      - uses: ./.github/actions/setup_env
+        with:
+          java-version: ${{ vars.JAVA_VERSION }}
+          flutter-channel: ${{ vars.FLUTTER_CHANNEL }}
+
+      # Check for any formatting issues in the code.
+      - run: dart format --set-exit-if-changed .
+
+      # Statically analyze the Dart code for any errors.
+      - run: dart analyze .
+
+      # Run widget tests for our flutter project.
+      # - run: flutter test

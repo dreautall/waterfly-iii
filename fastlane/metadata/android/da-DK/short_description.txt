@@ -1,0 +1,1 @@
+Uofficiel app for Firefly III, en personlig åben kildekode økonomimanager.

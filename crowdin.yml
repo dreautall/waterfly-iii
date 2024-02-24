@@ -1,0 +1,16 @@
+pull_request_title: '[l10n] Crowdin Translation update'
+pull_request_labels:
+  - l10n
+files:
+  - source: /lib/l10n/app_en.arb
+    translation: /lib/l10n/app_%two_letters_code%.arb
+    languages_mapping:
+      two_letters_code:
+        zh-CN: zh
+        zh-TW: zh_tw
+        pt-BR: pt
+        pt-PT: pt_pt
+        es-ES: es
+        sv-SE: sv
+  - source: /fastlane/metadata/android/en-US/*.txt
+    translation: /fastlane/metadata/android/%locale%/%original_file_name%

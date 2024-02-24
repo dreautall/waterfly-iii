@@ -1,0 +1,866 @@
+{
+  "@@locale": "it",
+  "@@x-reference": true,
+  "accountRoleAssetCashWallet": "Portafoglio contanti",
+  "@accountRoleAssetCashWallet": {
+    "description": "Firefly Translation String: account_role_cashWalletAsset"
+  },
+  "accountRoleAssetCC": "Carta di credito",
+  "@accountRoleAssetCC": {
+    "description": "Firefly Translation String: account_role_ccAsset"
+  },
+  "accountRoleAssetDefault": "Conto attività predefinito",
+  "@accountRoleAssetDefault": {
+    "description": "Firefly Translation String: account_role_defaultAsset"
+  },
+  "accountRoleAssetSavings": "Conto risparmi",
+  "@accountRoleAssetSavings": {
+    "description": "Firefly Translation String: account_role_savingAsset"
+  },
+  "accountRoleAssetShared": "Conto attività condiviso",
+  "@accountRoleAssetShared": {
+    "description": "Firefly Translation String: account_role_sharedAsset"
+  },
+  "accountsLabelAsset": "Conti attività",
+  "@accountsLabelAsset": {
+    "description": "Firefly Translation String: asset_accounts"
+  },
+  "accountsLabelExpense": "Conti uscite",
+  "@accountsLabelExpense": {
+    "description": "Firefly Translation String: expense_accounts"
+  },
+  "accountsLabelLiabilities": "Passività",
+  "@accountsLabelLiabilities": {
+    "description": "Firefly Translation String: liabilities_accounts"
+  },
+  "accountsLabelRevenue": "Conti entrate",
+  "@accountsLabelRevenue": {
+    "description": "Firefly Translation String: revenue_accounts"
+  },
+  "accountsLiabilitiesInterest": "{interest}% di interesse per {period, select, weekly{settimana} monthly{mese} quarterly{trimestre} halfyear{semestre} yearly{anno} other{sconosciuto}}",
+  "@accountsLiabilitiesInterest": {
+    "description": "Interest in a certain period",
+    "placeholders": {
+      "interest": {
+        "type": "double",
+        "example": "1.2"
+      },
+      "period": {
+        "type": "String",
+        "example": "yearly"
+      }
+    }
+  },
+  "catOther": "Altro",
+  "@catOther": {
+    "description": "Category description for summary category 'Other'"
+  },
+  "errorAPIInvalidResponse": "Risposta non valida dall'API: {message}",
+  "@errorAPIInvalidResponse": {
+    "description": "Invalid API response error",
+    "placeholders": {
+      "message": {
+        "type": "String",
+        "example": "API could not be reached."
+      }
+    }
+  },
+  "errorAPIUnavailable": "API non raggiungibile",
+  "@errorAPIUnavailable": {
+    "description": "Error thrown when API is unavailable."
+  },
+  "errorFieldRequired": "Questo campo è obbligatorio.",
+  "@errorFieldRequired": {
+    "description": "Error: Required field was left empty."
+  },
+  "errorInvalidSSLCert": "Certificato SSL non valido",
+  "@errorInvalidSSLCert": {
+    "description": "Error: SSL certificate is invalid"
+  },
+  "errorInvalidURL": "URL non valido",
+  "@errorInvalidURL": {
+    "description": "Error: URL is invalid"
+  },
+  "errorMinAPIVersion": "È richiesta almeno la versione API v{requiredVersion} su Firefly. Per favore, aggiornare.",
+  "@errorMinAPIVersion": {
+    "description": "Error: Required API version not met.",
+    "placeholders": {
+      "requiredVersion": {
+        "type": "String",
+        "example": "2.0.0"
+      }
+    }
+  },
+  "errorStatusCode": "Codice di stato: {code}",
+  "@errorStatusCode": {
+    "description": "HTTP status code information on error",
+    "placeholders": {
+      "code": {
+        "type": "int",
+        "example": "500"
+      }
+    }
+  },
+  "errorUnknown": "Errore sconosciuto.",
+  "@errorUnknown": {
+    "description": "Error without further information occurred."
+  },
+  "formButtonHelp": "Aiuto",
+  "@formButtonHelp": {
+    "description": "Button Label: Help"
+  },
+  "formButtonLogin": "Accedi",
+  "@formButtonLogin": {
+    "description": "Button Label: Login"
+  },
+  "formButtonLogout": "Esci",
+  "@formButtonLogout": {
+    "description": "Button Label: Logout"
+  },
+  "formButtonRemove": "Rimuovi",
+  "@formButtonRemove": {
+    "description": "Button Label: Remove"
+  },
+  "formButtonResetLogin": "Reimposta accesso",
+  "@formButtonResetLogin": {
+    "description": "Button Label: Reset login form (when error is shown)"
+  },
+  "formButtonTransactionAdd": "Aggiungi transazione",
+  "@formButtonTransactionAdd": {
+    "description": "Button Label: Add Transaction"
+  },
+  "formButtonTryAgain": "Riprova",
+  "@formButtonTryAgain": {
+    "description": "Button Label: Try that thing again (login etc)"
+  },
+  "generalAccount": "Conto",
+  "@generalAccount": {
+    "description": "Asset/Debt (Bank) Account"
+  },
+  "generalAssets": "Attività",
+  "@generalAssets": {
+    "description": "(Monetary) Assets"
+  },
+  "generalBalance": "Saldo",
+  "@generalBalance": {
+    "description": "(Account) Balance"
+  },
+  "generalBalanceOn": "Saldo al {date}",
+  "@generalBalanceOn": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd",
+        "example": "2023-05-13"
+      }
+    }
+  },
+  "generalBill": "Bolletta",
+  "@generalBill": {
+    "description": "Bill"
+  },
+  "generalBudget": "Bilancio",
+  "@generalBudget": {
+    "description": "(Monetary) Budget"
+  },
+  "generalCategory": "Categoria",
+  "@generalCategory": {
+    "description": "Category (of transaction etc.)."
+  },
+  "generalCurrency": "Valuta",
+  "@generalCurrency": {
+    "description": "(Money) Currency"
+  },
+  "generalDefault": "predefinito",
+  "@generalDefault": {
+    "description": "Indicates that something is the default choice"
+  },
+  "generalDismiss": "Ignora",
+  "@generalDismiss": {
+    "description": "Dismiss window/dialog without action"
+  },
+  "generalError": "Errore",
+  "@generalError": {
+    "description": "Error (title in dialogs etc.)"
+  },
+  "generalExpenses": "Spese",
+  "@generalExpenses": {
+    "description": "(Account) Expenses"
+  },
+  "generalIncome": "Entrate",
+  "@generalIncome": {
+    "description": "(Account) Info"
+  },
+  "generalLiabilities": "Passività",
+  "@generalLiabilities": {
+    "description": "Firefly Translation String: liabilities"
+  },
+  "generalMultiple": "molteplice",
+  "@generalMultiple": {
+    "description": "Multiples of a single thing (e.g. source accounts) are existing"
+  },
+  "generalNever": "mai",
+  "@generalNever": {
+    "description": "Has never happened, no update etc."
+  },
+  "generalReconcile": "Contabilizzato",
+  "@generalReconcile": {
+    "description": "Booking has been confirmed/reconciled"
+  },
+  "generalReset": "Reimposta",
+  "@generalReset": {
+    "description": "Reset something (i.e. set filters)"
+  },
+  "generalSum": "Totale",
+  "@generalSum": {
+    "description": "(Mathematical) Sum"
+  },
+  "generalTarget": "Obiettivo",
+  "@generalTarget": {
+    "description": "Target value (i.e. a sum to save)"
+  },
+  "generalUnknown": "Sconosciuto",
+  "@generalUnknown": {
+    "description": "Something is unknown."
+  },
+  "homeMainBillsInterval": " ({period, select, weekly{settimanale} monthly{mensile} quarterly{trimestrale} halfyear{semestrale} yearly{annuale} other{sconosciuto}})",
+  "@homeMainBillsInterval": {
+    "description": "bill interval type",
+    "placeholders": {
+      "period": {
+        "type": "String",
+        "example": "weekly"
+      }
+    }
+  },
+  "homeMainBillsTitle": "Bollette per la prossima settimana",
+  "@homeMainBillsTitle": {
+    "description": "Title: Bills for the next week"
+  },
+  "homeMainBudgetInterval": " (da {from} a {to}, {period})",
+  "@homeMainBudgetInterval": {
+    "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
+    "placeholders": {
+      "from": {
+        "type": "DateTime",
+        "format": "MMMd",
+        "example": "May 13"
+      },
+      "to": {
+        "type": "DateTime",
+        "format": "MMMd",
+        "example": "May 17"
+      },
+      "period": {
+        "type": "String",
+        "example": "weekly"
+      }
+    }
+  },
+  "homeMainBudgetIntervalSingle": " (da {from} al {to})",
+  "@homeMainBudgetIntervalSingle": {
+    "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
+    "placeholders": {
+      "from": {
+        "type": "DateTime",
+        "format": "MMMd",
+        "example": "May 13"
+      },
+      "to": {
+        "type": "DateTime",
+        "format": "MMMd",
+        "example": "May 17"
+      }
+    }
+  },
+  "homeMainBudgetSum": "{current} {status, select, over{su} other{rimanente da}} {available}",
+  "@homeMainBudgetSum": {
+    "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
+    "placeholders": {
+      "current": {
+        "type": "String",
+        "example": "12.34€"
+      },
+      "status": {
+        "type": "String",
+        "example": "left from"
+      },
+      "available": {
+        "type": "String",
+        "example": "12.34€"
+      }
+    }
+  },
+  "homeMainBudgetTitle": "Bilanci per il mese corrente",
+  "@homeMainBudgetTitle": {
+    "description": "Title: Budgets for current month"
+  },
+  "homeMainChartAccountsTitle": "Riepilogo conti",
+  "@homeMainChartAccountsTitle": {
+    "description": "Chart Label: Account Summary"
+  },
+  "homeMainChartCategoriesTitle": "Riepilogo categorie per il mese corrente",
+  "@homeMainChartCategoriesTitle": {
+    "description": "Chart Label: Category Summary"
+  },
+  "homeMainChartDailyAvg": "Media di 7 giorni",
+  "@homeMainChartDailyAvg": {
+    "description": "Text for last week average spent"
+  },
+  "homeMainChartDailyTitle": "Riepilogo giornaliero",
+  "@homeMainChartDailyTitle": {
+    "description": "Chart Label: Daily Summary"
+  },
+  "homeMainChartNetEarningsTitle": "Utili netti",
+  "@homeMainChartNetEarningsTitle": {
+    "description": "Chart Label: Net Earnings"
+  },
+  "homeMainChartNetWorthTitle": "Patrimonio",
+  "@homeMainChartNetWorthTitle": {
+    "description": "Chart Label: Net Worth"
+  },
+  "homePiggyAdjustDialogTitle": "Risparmia/Spendi Denaro",
+  "@homePiggyAdjustDialogTitle": {
+    "description": "Title of the dialog where money can be added/removed to a piggy bank."
+  },
+  "homePiggyDateStart": "Data inizio: {date}",
+  "@homePiggyDateStart": {
+    "description": "Start of the piggy bank",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "March 12, 2023"
+      }
+    }
+  },
+  "homePiggyDateTarget": "Data termine: {date}",
+  "@homePiggyDateTarget": {
+    "description": "Set target date of the piggy bank (when saving should be finished)",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "March 12, 2023"
+      }
+    }
+  },
+  "homePiggyLinked": "Collegato a {account}",
+  "@homePiggyLinked": {
+    "description": "Piggy bank is linked to asset account {account}.",
+    "placeholders": {
+      "account": {
+        "type": "String",
+        "example": "Awesome Bank Account"
+      }
+    }
+  },
+  "homePiggyNoAccounts": "Nessun salvadanaio impostato.",
+  "@homePiggyNoAccounts": {
+    "description": "Information that no piggy banks are existing"
+  },
+  "homePiggyNoAccountsSubtitle": "Creane alcuni dall'interfaccia web!",
+  "@homePiggyNoAccountsSubtitle": {
+    "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
+  },
+  "homePiggyRemaining": "Da risparmiare: {amount}",
+  "@homePiggyRemaining": {
+    "description": "How much money is left to save",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€12.34"
+      }
+    }
+  },
+  "homePiggySaved": "Risparmiato finora: {amount}",
+  "@homePiggySaved": {
+    "description": "How much money already was saved",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€12.34"
+      }
+    }
+  },
+  "homePiggyTarget": "Importo obiettivo: {amount}",
+  "@homePiggyTarget": {
+    "description": "How much money should be saved",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€12.34"
+      }
+    }
+  },
+  "homeTabLabelBalance": "Bilancio",
+  "@homeTabLabelBalance": {
+    "description": "Tab Label: Balance Sheet page"
+  },
+  "homeTabLabelMain": "Principale",
+  "@homeTabLabelMain": {
+    "description": "Tab Label: Start page (\"main\")"
+  },
+  "homeTabLabelPiggybanks": "Salvadanai",
+  "@homeTabLabelPiggybanks": {
+    "description": "Tab Label: Piggy Banks page"
+  },
+  "homeTabLabelTransactions": "Transazioni",
+  "@homeTabLabelTransactions": {
+    "description": "Tab Label: Transactions page"
+  },
+  "homeTransactionsActionFilter": "Elenco Filtri",
+  "@homeTransactionsActionFilter": {
+    "description": "Action Button Label: Filter list."
+  },
+  "homeTransactionsDialogFilterAccountsAll": "<Tutti i conti>",
+  "@homeTransactionsDialogFilterAccountsAll": {
+    "description": "Don't filter for a specific account (default entry)"
+  },
+  "homeTransactionsDialogFilterBillsAll": "<Tutte le bollette>",
+  "@homeTransactionsDialogFilterBillsAll": {
+    "description": "Don't filter for a specific bill (default entry)"
+  },
+  "homeTransactionsDialogFilterBillUnset": "<Nessuna bolletta>",
+  "@homeTransactionsDialogFilterBillUnset": {
+    "description": "Filter for unset bills"
+  },
+  "homeTransactionsDialogFilterBudgetsAll": "<Tutti i bilanci>",
+  "@homeTransactionsDialogFilterBudgetsAll": {
+    "description": "Don't filter for a specific budget (default entry)"
+  },
+  "homeTransactionsDialogFilterBudgetUnset": "<Nessun bilancio>",
+  "@homeTransactionsDialogFilterBudgetUnset": {
+    "description": "Filter for unset budgets"
+  },
+  "homeTransactionsDialogFilterCategoriesAll": "<Tutte le categorie>",
+  "@homeTransactionsDialogFilterCategoriesAll": {
+    "description": "Don't filter for a specific category (default entry)"
+  },
+  "homeTransactionsDialogFilterCategoryUnset": "<Nessuna categoria>",
+  "@homeTransactionsDialogFilterCategoryUnset": {
+    "description": "Filter for unset categories"
+  },
+  "homeTransactionsDialogFilterCurrenciesAll": "<Tutte le valute>",
+  "@homeTransactionsDialogFilterCurrenciesAll": {
+    "description": "Don't filter for a specific currency (default entry)"
+  },
+  "homeTransactionsDialogFilterFutureTransactions": "Mostra transazioni future",
+  "@homeTransactionsDialogFilterFutureTransactions": {
+    "description": "Setting to show future transactions"
+  },
+  "homeTransactionsDialogFilterSearch": "Termine di ricerca",
+  "@homeTransactionsDialogFilterSearch": {
+    "description": "Search term for filter"
+  },
+  "homeTransactionsDialogFilterTitle": "Seleziona filtri",
+  "@homeTransactionsDialogFilterTitle": {
+    "description": "Title of Filter Dialog"
+  },
+  "homeTransactionsEmpty": "Nessuna transazione trovata.",
+  "@homeTransactionsEmpty": {
+    "description": "Message when no transactions are found."
+  },
+  "homeTransactionsMultipleCategories": "{num} categorie",
+  "@homeTransactionsMultipleCategories": {
+    "description": "$num categories for the transaction.",
+    "placeholders": {
+      "num": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+  "liabilityDirectionCredit": "Questo debito mi è dovuto",
+  "@liabilityDirectionCredit": {
+    "description": "Firefly Translation String: liability_direction_credit"
+  },
+  "liabilityDirectionDebit": "Ho questo debito",
+  "@liabilityDirectionDebit": {
+    "description": "Firefly Translation String: liability_direction_debit"
+  },
+  "liabilityTypeDebt": "Debito",
+  "@liabilityTypeDebt": {
+    "description": "Firefly Translation String: account_type_debt"
+  },
+  "liabilityTypeLoan": "Prestito",
+  "@liabilityTypeLoan": {
+    "description": "Firefly Translation String: account_type_loan"
+  },
+  "liabilityTypeMortgage": "Mutuo",
+  "@liabilityTypeMortgage": {
+    "description": "Firefly Translation String: account_type_mortgage"
+  },
+  "loginAbout": "Per utilizzare Waterfly III produttivamente è necessario il proprio server con un'istanza di Firefly III o l'add-on di Firefly III per Home Assistant.\n\nInserisci l'URL completo e un token di accesso personale (Opzioni -> Profilo -> OAuth -> Token di accesso personale) qui sotto.",
+  "@loginAbout": {
+    "description": "Login screen welcome description"
+  },
+  "loginFormLabelAPIKey": "Chiave API valida",
+  "@loginFormLabelAPIKey": {
+    "description": "Login Form: Label for API Key field"
+  },
+  "loginFormLabelHost": "URL del server",
+  "@loginFormLabelHost": {
+    "description": "Login Form: Label for Host field"
+  },
+  "loginWelcome": "Benvenuto su Waterfly III",
+  "@loginWelcome": {
+    "description": "Login screen welcome banner"
+  },
+  "logoutConfirmation": "Sei sicuro di volerti disconnettere?",
+  "@logoutConfirmation": {
+    "description": "Get user confirmation if he really wants to log out"
+  },
+  "navigationAccounts": "Conti",
+  "@navigationAccounts": {
+    "description": "Navigation Label: Accounts Page"
+  },
+  "navigationMain": "Dashboard principale",
+  "@navigationMain": {
+    "description": "Navigation Label: Main Dashboard"
+  },
+  "navigationSettings": "Impostazioni",
+  "@navigationSettings": {
+    "description": "Navigation Label: Settings"
+  },
+  "numPercent": "{num}",
+  "@numPercent": {
+    "description": "Number formatted as percentage",
+    "placeholders": {
+      "num": {
+        "type": "double",
+        "format": "decimalPercentPattern",
+        "optionalParameters": {
+          "decimalDigits": 0
+        }
+      }
+    }
+  },
+  "numPercentOf": "{perc} di {of}",
+  "@numPercentOf": {
+    "description": "Number formatted as percentage, with total amount provided",
+    "placeholders": {
+      "perc": {
+        "type": "double",
+        "format": "decimalPercentPattern",
+        "optionalParameters": {
+          "decimalDigits": 0
+        }
+      },
+      "of": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsDialogDebugInfo": "Qui puoi abilitare il registro di debug e inviarlo. Questo ha un impatto significativo sulle prestazioni, quindi non attivarlo a meno che non venga suggerito di farlo. Disabilitare il registro cancellerà quello memorizzato in precedenza.",
+  "@settingsDialogDebugInfo": {
+    "description": "Information about debug logs and their impact."
+  },
+  "settingsDialogDebugMailCreate": "Crea E-mail",
+  "@settingsDialogDebugMailCreate": {
+    "description": "Button to confirm mail creation after privacy disclaimer is shown."
+  },
+  "settingsDialogDebugMailDisclaimer": "ATTENZIONE: Si aprirà una bozza di e-mail con il file di registro allegato (in formato testuale). I registri potrebbero contenere informazioni sensibili, come il nome host della tua istanza di Firefly (anche se cerco di evitare la registrazione di qualsiasi segreto, come la chiave API). Si prega di leggere attentamente il registro e censurare qualsiasi informazione che non si desidera condividere e/o non è rilevante per il problema che si desidera segnalare.\n\nPer favore non inviare il registro senza previo accordo via e-mail/GitHub. Eliminerò tutti i registri inviati senza contesto per motivi di privacy. Non caricare mai il registro senza censura su GitHub o altrove.",
+  "@settingsDialogDebugMailDisclaimer": {
+    "description": "Privacy disclaimer shown before sending logs"
+  },
+  "settingsDialogDebugSendButton": "Invia registro via e-mail",
+  "@settingsDialogDebugSendButton": {
+    "description": "Button to send logs via E-Mail"
+  },
+  "settingsDialogDebugTitle": "Registro di debug",
+  "@settingsDialogDebugTitle": {
+    "description": "Dialog title: Debug Logs"
+  },
+  "settingsDialogLanguageTitle": "Seleziona Lingua",
+  "@settingsDialogLanguageTitle": {
+    "description": "Dialog title: Select Language"
+  },
+  "settingsDialogThemeTitle": "Seleziona Tema",
+  "@settingsDialogThemeTitle": {
+    "description": "Dialog title: Select theme"
+  },
+  "settingsLanguage": "Lingua",
+  "@settingsLanguage": {
+    "description": "Currently selected language"
+  },
+  "settingsLockscreen": "Schermata di blocco",
+  "@settingsLockscreen": {
+    "description": "Setting if a lockscreen is shown (authentication is required on startup)"
+  },
+  "settingsLockscreenHelp": "Richiedi l'autenticazione all'avvio dell'app",
+  "@settingsLockscreenHelp": {
+    "description": "Description for lockscreen setting"
+  },
+  "settingsLockscreenInitial": "Si prega di autenticarsi per abilitare la schermata di blocco.",
+  "@settingsLockscreenInitial": {
+    "description": "Prompt to authenticate once to set up the lockscreen"
+  },
+  "settingsNLAppAccount": "Conto Predefinito",
+  "@settingsNLAppAccount": {
+    "description": "Default account which will be used for the transaction."
+  },
+  "settingsNLAppAccountDynamic": "<Dinamico>",
+  "@settingsNLAppAccountDynamic": {
+    "description": "Account will be selected dynamically by the content of the notification."
+  },
+  "settingsNLAppAdd": "Aggiungi App",
+  "@settingsNLAppAdd": {
+    "description": "Button title to add a new app."
+  },
+  "settingsNLAppAddHelp": "Tocca per aggiungere un'app di cui leggere le notifiche. Solo le app idonee verranno visualizzate nella lista.",
+  "@settingsNLAppAddHelp": {
+    "description": "Help text below adding the new app button."
+  },
+  "settingsNLAppAddInfo": "Effettua alcune transazioni per le quali ricevi notifiche sullo smartphone per aggiungere app a questo elenco. Se l'app che cerchi non è comunque presente, si prega di segnalarla ad app@vogt.pw.",
+  "@settingsNLAppAddInfo": {
+    "description": "Help text when no more app is available to add."
+  },
+  "settingsNLDescription": "Questo servizio consente di recuperare i dettagli delle transazioni dalle notifiche push che ricevi. Inoltre, è possibile selezionare un account predefinito a cui la transazione dovrebbe essere assegnata - se non è impostato alcun valore, il servizio cerca di estrarre un account dal testo della notifica.",
+  "@settingsNLDescription": {
+    "description": "Description text for the notification listener service."
+  },
+  "settingsNLPermissionGrant": "Tocca per concedere i permessi.",
+  "@settingsNLPermissionGrant": {
+    "description": "Indicates user should tap the text to grant certain permissions (notification access)."
+  },
+  "settingsNLPermissionNotGranted": "Permesso non concesso.",
+  "@settingsNLPermissionNotGranted": {
+    "description": "A requested permission was not granted."
+  },
+  "settingsNLPermissionRemove": "Rimuovere il permesso?",
+  "@settingsNLPermissionRemove": {
+    "description": "Dialog title asking if permission should be removed."
+  },
+  "settingsNLPermissionRemoveHelp": "Per disabilitare questo servizio, fare clic sull'app e rimuovi i permessi nella schermata successiva.",
+  "@settingsNLPermissionRemoveHelp": {
+    "description": "Dialog text giving hint how to remove the permission."
+  },
+  "settingsNLPrefillTXTitle": "Compila il titolo della transazione con il titolo della notifica",
+  "@settingsNLPrefillTXTitle": {
+    "description": "First line for setting to use pre-fill transaction title with notification title."
+  },
+  "settingsNLServiceChecking": "Controllo dello stato…",
+  "@settingsNLServiceChecking": {
+    "description": "Checking the status of the background service"
+  },
+  "settingsNLServiceCheckingError": "Errore nel controllo dello stato: {error}",
+  "@settingsNLServiceCheckingError": {
+    "description": "An error occurred while checking the service status",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "description": "Error details",
+        "example": "Timeout"
+      }
+    }
+  },
+  "settingsNLServiceRunning": "Servizio in esecuzione.",
+  "@settingsNLServiceRunning": {
+    "description": "A background service is running normally."
+  },
+  "settingsNLServiceStatus": "Stato del Servizio",
+  "@settingsNLServiceStatus": {
+    "description": "Status of a background service."
+  },
+  "settingsNLServiceStopped": "Il servizio è interrotto.",
+  "@settingsNLServiceStopped": {
+    "description": "A background service is stopped."
+  },
+  "settingsNotificationListener": "Servizio di Lettura Notifiche",
+  "@settingsNotificationListener": {
+    "description": "Setting for the notification listener service."
+  },
+  "settingsTheme": "Tema App",
+  "@settingsTheme": {
+    "description": "App theme (dark or light)"
+  },
+  "settingsThemeDynamicColors": "Colori Dinamici",
+  "@settingsThemeDynamicColors": {
+    "description": "Material You Dynamic Colors feature"
+  },
+  "settingsThemeValue": "{theme, select, dark{Modalità Scura} light{Modalità Chiara} other{Predefinito di sistema}}",
+  "@settingsThemeValue": {
+    "description": "Currently selected theme (either dark, light or system)",
+    "placeholders": {
+      "theme": {
+        "type": "String",
+        "example": "ThemeMode.dark"
+      }
+    }
+  },
+  "settingsUseServerTimezone": "Usa fuso orario del server",
+  "@settingsUseServerTimezone": {
+    "description": "Setting label to use server timezone."
+  },
+  "settingsUseServerTimezoneHelp": "Mostra tutti gli orari nel fuso orario del server. Questo simula il comportamento dell'interfaccia web.",
+  "@settingsUseServerTimezoneHelp": {
+    "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
+  },
+  "settingsVersion": "Versione App",
+  "@settingsVersion": {
+    "description": "Current App Version"
+  },
+  "settingsVersionChecking": "verifica…",
+  "@settingsVersionChecking": {
+    "description": "Shown while checking for app version"
+  },
+  "splashCustomSSLCert": "Certificato SSL personalizzato",
+  "@splashCustomSSLCert": {
+    "description": "Button text & Dialog title for using a custom SSL certificate"
+  },
+  "splashFormLabelCustomSSLCertPEM": "File del Certificato (PEM)",
+  "@splashFormLabelCustomSSLCertPEM": {
+    "description": "Label for certificate file text input in PEM format"
+  },
+  "transactionAttachments": "Allegati",
+  "@transactionAttachments": {
+    "description": "Button Label: Attachments"
+  },
+  "transactionDeleteConfirm": "Confermare l'eliminazione della transazione?",
+  "@transactionDeleteConfirm": {
+    "description": "Confirmation text to delete transaction"
+  },
+  "transactionDialogAttachmentsDelete": "Elimina Allegato",
+  "@transactionDialogAttachmentsDelete": {
+    "description": "Button Label: Delete Attachment"
+  },
+  "transactionDialogAttachmentsDeleteConfirm": "Confermare l'eliminazione dell'allegato?",
+  "@transactionDialogAttachmentsDeleteConfirm": {
+    "description": "Confirmation text to delete attachment"
+  },
+  "transactionDialogAttachmentsErrorDownload": "Impossibile scaricare il file.",
+  "@transactionDialogAttachmentsErrorDownload": {
+    "description": "Snackbar Text: File download failed."
+  },
+  "transactionDialogAttachmentsErrorOpen": "Impossibile aprire il file: {error}",
+  "@transactionDialogAttachmentsErrorOpen": {
+    "description": "Snackbar Text: File could not be opened, with reason.",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionDialogAttachmentsErrorUpload": "Impossibile caricare il file: {error}",
+  "@transactionDialogAttachmentsErrorUpload": {
+    "description": "Snackbar Text: File could not be uploaded, with reason.",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionDialogAttachmentsTitle": "Allegati",
+  "@transactionDialogAttachmentsTitle": {
+    "description": "Dialog Title: Attachments Dialog"
+  },
+  "transactionDialogBillNoBill": "Nessuna bolletta",
+  "@transactionDialogBillNoBill": {
+    "description": "Button Label: no bill to be used"
+  },
+  "transactionDialogBillTitle": "Collega a bolletta",
+  "@transactionDialogBillTitle": {
+    "description": "Dialog Title: Link Bill to transaction"
+  },
+  "transactionDialogCurrencyTitle": "Seleziona la valuta",
+  "@transactionDialogCurrencyTitle": {
+    "description": "Dialog Title: Currency Selection"
+  },
+  "transactionDialogTagsAdd": "Aggiungi Etichetta",
+  "@transactionDialogTagsAdd": {
+    "description": "Button Label: Add Tag"
+  },
+  "transactionDialogTagsHint": "Ricerca/Aggiungi Etichetta",
+  "@transactionDialogTagsHint": {
+    "description": "Hint Text for search tag field"
+  },
+  "transactionDialogTagsTitle": "Seleziona etichette",
+  "@transactionDialogTagsTitle": {
+    "description": "Dialog Title: Select Tags"
+  },
+  "transactionDuplicate": "Duplica",
+  "@transactionDuplicate": {
+    "description": "Menu Label: Duplicate item"
+  },
+  "transactionErrorInvalidAccount": "Conto non valido",
+  "@transactionErrorInvalidAccount": {
+    "description": "Transaction Save Error: Invalid account"
+  },
+  "transactionErrorInvalidBudget": "Bilancio non valido",
+  "@transactionErrorInvalidBudget": {
+    "description": "Transaction Save Error: Invalid budget"
+  },
+  "transactionErrorTitle": "Si prega di fornire un titolo.",
+  "@transactionErrorTitle": {
+    "description": "Transaction Save Error: No title provided"
+  },
+  "transactionFormLabelAccountDestination": "Conto di destinazione",
+  "@transactionFormLabelAccountDestination": {
+    "description": "Transaction Form: Label for destination account for transfer transaction"
+  },
+  "transactionFormLabelAccountForeign": "Conto esterno",
+  "@transactionFormLabelAccountForeign": {
+    "description": "Transaction Form: Label for foreign (other) account"
+  },
+  "transactionFormLabelAccountOwn": "Conto personale",
+  "@transactionFormLabelAccountOwn": {
+    "description": "Transaction Form: Label for own account"
+  },
+  "transactionFormLabelAccountSource": "Conto di origine",
+  "@transactionFormLabelAccountSource": {
+    "description": "Transaction Form: Label for source account for transfer transaction"
+  },
+  "transactionFormLabelNotes": "Note",
+  "@transactionFormLabelNotes": {
+    "description": "Transaction Form: Label for notes field"
+  },
+  "transactionFormLabelTags": "Etichette",
+  "@transactionFormLabelTags": {
+    "description": "Transaction Form: Label for tags field"
+  },
+  "transactionFormLabelTitle": "Titolo Transazione",
+  "@transactionFormLabelTitle": {
+    "description": "Transaction Form: Label for title field"
+  },
+  "transactionSplitAdd": "Aggiungi transazione suddivisa",
+  "@transactionSplitAdd": {
+    "description": "Button Label: Add a split"
+  },
+  "transactionSplitChangeCurrency": "Modifica Valuta Suddivisa",
+  "@transactionSplitChangeCurrency": {
+    "description": "Hint Text: Change currency for a single split"
+  },
+  "transactionSplitChangeTarget": "Modifica conto destinazione suddivisa",
+  "@transactionSplitChangeTarget": {
+    "description": "Hint Text: Change target account for single split"
+  },
+  "transactionSplitDelete": "Elimina suddivisione",
+  "@transactionSplitDelete": {
+    "description": "Hint Text: Delete single split"
+  },
+  "transactionTitleAdd": "Aggiungi transazione",
+  "@transactionTitleAdd": {
+    "description": "Title: Add a new transaction"
+  },
+  "transactionTitleDelete": "Elimina Transazione",
+  "@transactionTitleDelete": {
+    "description": "Title: Delete existing transaction"
+  },
+  "transactionTitleEdit": "Modifica Transazione",
+  "@transactionTitleEdit": {
+    "description": "Title: Edit existing transaction"
+  },
+  "transactionTypeDeposit": "Deposito",
+  "@transactionTypeDeposit": {
+    "description": "Deposit transaction type"
+  },
+  "transactionTypeTransfer": "Trasferimento",
+  "@transactionTypeTransfer": {
+    "description": "Transfer transaction type"
+  },
+  "transactionTypeWithdrawal": "Prelievo",
+  "@transactionTypeWithdrawal": {
+    "description": "Withdrawal transaction type"
+  }
+}

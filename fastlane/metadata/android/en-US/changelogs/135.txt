@@ -1,0 +1,3 @@
+- Additional banking apps supported for notification services
+- New Translation: Brazilian Portuguese
+- Bugfixes

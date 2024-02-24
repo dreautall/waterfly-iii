@@ -1,0 +1,4 @@
+- You're now able to use your own custom SSL certificate
+- Update to Flutter 3.10
+- Bugfixes
+- Ability to submit logs in case any issue comes up

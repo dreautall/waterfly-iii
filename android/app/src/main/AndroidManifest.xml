@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.dreautall.waterflyiii">
-    <application android:label="Waterfly III" android:name="${applicationName}" android:icon="@mipmap/ic_launcher" android:enableOnBackInvokedCallback="true">
+    <application android:label="Waterfly III" android:name="${applicationName}" android:icon="@mipmap/ic_launcher" android:enableOnBackInvokedCallback="false">
         <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
@@ -10,6 +10,18 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            
+            <!-- For flutter_sharing_intent -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
@@ -19,6 +31,7 @@
     <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
 
     <!-- Queries, used by url_launcher -->
     <queries>
@@ -32,18 +45,31 @@
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="https" />
         </intent>
+        <intent>
+            <action android:name="android.intent.action.SENDTO" />
+            <data android:scheme="mailto" />
+        </intent>
 
         <!-- App queries for some well-known financial apps for the notification listener -->
         <package android:name="agency.sevenofnine.erstewallet.production"/>
         <package android:name="air.app.scb.breeze.android.main.in.prod"/>
         <package android:name="air.app.scb.breeze.android.main.sg.prod"/>
         <package android:name="am.vtb.mobilebank"/>
+        <package android:name="at.erstebank.george"/>
+        <package android:name="au.com.bank86400"/>
+        <package android:name="au.com.bankwest.mobile"/>
+        <package android:name="au.com.boq.mobilebanking"/>
+        <package android:name="au.com.ingdirect.android"/>
+        <package android:name="au.com.macquarie.banking"/>
+        <package android:name="au.com.nab.mobile"/>
+        <package android:name="au.com.suncorp.marketplace"/>
         <package android:name="au.com.up.money"/>
         <package android:name="bank.discovery.banking.production.release"/>
         <package android:name="br.com.bb.android"/>
         <package android:name="br.com.digio"/>
         <package android:name="by.alfabank.insync"/>
         <package android:name="by.belinvestbank"/>
+        <package android:name="ca.tangerine.clients.banking.app"/>
         <package android:name="capitec.acuity.mobile.prod"/>
         <package android:name="cl.android"/>
         <package android:name="cl.bancochile.mi_banco"/>
@@ -62,6 +88,7 @@
         <package android:name="com.americanexpress.android.amex4you"/>
         <package android:name="com.americanexpress.android.amexgo"/>
         <package android:name="com.americanexpress.receiptmatch.activities"/>
+        <package android:name="com.anz.android.gomoney"/>
         <package android:name="com.apps4fuun.smssender"/>
         <package android:name="com.axis.mobile"/>
         <package android:name="com.b2winc.amedigital"/>
@@ -72,10 +99,12 @@
         <package android:name="com.bca"/>
         <package android:name="com.bcadigital.blu"/>
         <package android:name="com.bcp.bank.bcp"/>
+        <package android:name="com.bendigobank.mobile"/>
         <package android:name="com.binance.dev"/>
         <package android:name="com.bnpp.hellobank"/>
         <package android:name="com.boursorama.android.clients"/>
         <package android:name="com.bpi.ng.mobilebanking"/>
+        <package android:name="com.c6bank.app"/>
         <package android:name="com.chase.sig.android"/>
         <package android:name="com.chinatrust.mobilebank"/>
         <package android:name="com.citi.citimobile"/>
@@ -90,6 +119,7 @@
         <package android:name="com.db.pwcc.dbmobile"/>
         <package android:name="com.defi.wallet"/>
         <package android:name="com.deserve.deserve"/>
+        <package android:name="com.discoverfinancial.mobile"/>
         <package android:name="com.dkbcodefactory.banking"/>
         <package android:name="com.ehorizon.apollo.numobile"/>
         <package android:name="com.esunbank.ESUNWALLET"/>
@@ -98,9 +128,11 @@
         <package android:name="com.ftband.koto"/>
         <package android:name="com.ftband.mono"/>
         <package android:name="com.fuib.android.spot.online"/>
+        <package android:name="com.fusion.banking"/>
         <package android:name="com.giro"/>
         <package android:name="com.globe.gcash.android"/>
         <package android:name="com.golden1.card"/>
+        <package android:name="com.google.android.apps.googlevoice"/>
         <package android:name="com.google.android.apps.messaging"/>
         <package android:name="com.google.android.apps.nbu.paisa.user"/>
         <package android:name="com.google.android.apps.playconsole"/>
@@ -109,6 +141,8 @@
         <package android:name="com.grability.rappi"/>
         <package android:name="com.grabtaxi.driver"/>
         <package android:name="com.grabtaxi.passenger"/>
+        <package android:name="com.grppl.android.shell.CMBlloydsTSB73"/>
+        <package android:name="com.hrc.eb.mobile.android.hibismobiledh"/>
         <package android:name="com.idamob.tinkoff.android"/>
         <package android:name="com.ie.capitalone.uk"/>
         <package android:name="com.illimity.mobile.rtl"/>
@@ -137,6 +171,7 @@
         <package android:name="com.paypal.android.p2pmobile"/>
         <package android:name="com.phonepe.app"/>
         <package android:name="com.rappi.restaurants"/>
+        <package android:name="com.rbc.mobile.android"/>
         <package android:name="com.rbs.mobile.android.natwest"/>
         <package android:name="com.rbs.mobile.android.rbs"/>
         <package android:name="com.remitly.androidapp"/>
@@ -165,13 +200,16 @@
         <package android:name="com.unicredit"/>
         <package android:name="com.vipera.chebanca"/>
         <package android:name="com.vipera.ts.starter.MashreqAE"/>
+        <package android:name="com.wave.personal"/>
         <package android:name="com.whatsapp"/>
         <package android:name="com.willmobile.mobilebank.fcb"/>
         <package android:name="com.ykb.android"/>
         <package android:name="com.zen.application"/>
         <package android:name="consumer.cbsa.smartapp"/>
+        <package android:name="cz.mbank"/>
         <package android:name="de.dkb.portalapp"/>
         <package android:name="de.dwins.financeguru"/>
+        <package android:name="de.ingdiba.bankingapp"/>
         <package android:name="de.number26.android"/>
         <package android:name="es.bancosantander.apps"/>
         <package android:name="eu.netinfo.colpatria.system"/>
@@ -189,18 +227,24 @@
         <package android:name="hr.binom.ecc.mobile"/>
         <package android:name="hu.netbank.netbankdroid"/>
         <package android:name="hu.otpbank.mobile"/>
+        <package android:name="in.amazon.mShop.android.shopping"/>
         <package android:name="it.bancomat.pay.user"/>
+        <package android:name="it.beem.app"/>
         <package android:name="it.hype.app"/>
         <package android:name="it.icbpi.mobile"/>
         <package android:name="it.ingdirect.app"/>
         <package android:name="it.nexi.yap"/>
+        <package android:name="in.codeseed.undonotification.pro"/>
         <package android:name="md.maib.maibank"/>
         <package android:name="mx.com.hsbc.controltotal"/>
         <package android:name="net.easypark.android"/>
+        <package android:name="nl.rabomobiel"/>
         <package android:name="om.nu.production"/>
         <package android:name="om.todo1.mobile"/>
+        <package android:name="one.tomorrow.app"/>
         <package android:name="org.ping.sberbank.elba.mobile"/>
         <package android:name="org.toshi"/>
+        <package android:name="org.westpac.bank"/>
         <package android:name="pe.com.interbank.mobilebanking"/>
         <package android:name="pe.com.scotiabank.blpm.android.client"/>
         <package android:name="pl.mbank"/>
@@ -209,6 +253,7 @@
         <package android:name="ru.nspk.mirpay"/>
         <package android:name="ru.sberbankmobile"/>
         <package android:name="ru.vtb24.mobilebanking.android"/>
+        <package android:name="si.delavskahranilnica.dhdenarnik"/>
         <package android:name="tw.com.hncb.sny"/>
         <package android:name="ua.alfabank.mobile.android"/>
         <package android:name="ua.aval.dbo.client.android"/>

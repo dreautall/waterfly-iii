@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';
@@ -8,6 +9,8 @@ import 'package:notifications_listener_service/notifications_listener_service.da
 import 'package:waterflyiii/app.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/settings.dart';
+
+final Logger log = Logger("NotificationListener");
 
 class NotificationTransaction {
   NotificationTransaction(
@@ -49,7 +52,7 @@ class NotificationListenerStatus {
 }
 
 final RegExp rFindMoney = RegExp(
-    r'(?:^|\s)(?<preCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})\s*(?<amount>[.,\d]+(?:[.,]\d+)?)\s*(?<postCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})(?:$|\s)');
+    r'(?:^|\s)(?<preCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})\s*(?<amount>[.,\s\d]+(?:[.,]\d+)?)\s*(?<postCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})(?:$|\s)');
 
 Future<NotificationListenerStatus> nlStatus() async {
   return NotificationListenerStatus(
@@ -64,11 +67,9 @@ Future<NotificationListenerStatus> nlStatus() async {
 
 @pragma('vm:entry-point')
 void nlCallback() async {
-  debugPrint("nlCallback()");
+  log.finest(() => "nlCallback()");
   NotificationServicePlugin.instance
       .executeNotificationListener((NotificationEvent? evt) async {
-    //debugPrint("got event $evt");
-
     if (evt?.packageName?.startsWith("com.dreautall.waterflyiii") ?? false) {
       return;
     }
@@ -79,7 +80,7 @@ void nlCallback() async {
     final Iterable<RegExpMatch> matches =
         rFindMoney.allMatches(evt?.text ?? "");
     if (matches.isEmpty) {
-      debugPrint("nlCallback(${evt?.packageName}): no money found");
+      log.finer(() => "nlCallback(${evt?.packageName}): no money found");
       return;
     }
 
@@ -92,7 +93,7 @@ void nlCallback() async {
       }
     }
     if (!validMatch) {
-      debugPrint(
+      log.finer(() =>
           "nlCallback(${evt?.packageName}): no money with currency found");
       return;
     }
@@ -101,12 +102,12 @@ void nlCallback() async {
 
     if (!(await SettingsProvider().notificationUsedApps(forceReload: true))
         .contains(evt?.packageName ?? "")) {
-      debugPrint("nlCallback(${evt?.packageName}): app not used");
+      log.finer(() => "nlCallback(${evt?.packageName}): app not used");
       return;
     }
 
     FlutterLocalNotificationsPlugin().show(
-      evt?.id ?? DateTime.now().microsecondsSinceEpoch,
+      DateTime.now().millisecondsSinceEpoch ~/ 1000,
       "Create Transaction?",
       "Click to create a transaction based on the notification ${evt?.title}",
       const NotificationDetails(
@@ -130,13 +131,13 @@ void nlCallback() async {
 }
 
 Future<void> nlInit() async {
-  debugPrint("nlInit()");
+  log.finest(() => "nlInit()");
   await NotificationServicePlugin.instance.initialize(nlCallback);
 }
 
 Future<void> nlNotificationTap(
     NotificationResponse notificationResponse) async {
-  debugPrint("nlNotificationTap()");
+  log.finest(() => "nlNotificationTap()");
   if (notificationResponse.payload?.isEmpty ?? true) {
     return;
   }

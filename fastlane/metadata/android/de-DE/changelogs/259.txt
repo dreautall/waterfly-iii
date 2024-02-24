@@ -1,0 +1,5 @@
+Erstes v1 Release 🥳
+
+- Neue Kategorie-Seite
+- Neue Rechnungen-Seite, erstellt von @dballagi
+- Dateien können an die App geteilt werden um neue Transaktionen mit Anhang zu erstellen.

@@ -1,0 +1,17 @@
+Waterfly III är en inofficiell app för din egna instans av Firefly III, en fri och öppen finanshanterare.
+
+Denna app kräver en egen Firefly III instans på din egna server, besök https://www.firefly-iii.org/ för mer information om programvaran. Detta är endast en medföljande app och kan inte köra utan en Firefly III instans!
+
+Funktioner:
+
+- Kontrollpanel med diagram & budgetöversikt
+- Transaktionslista med filter
+- Lägg till och redigera transaktioner med autocomplete, inklusive bilagor, delade transaktioner och stöd för flera valutor
+- Stöd för spargrisar (visa och lägg till pengar)
+- Notifikationslyssnartjänsten kan enkelt skapa nya transaktioner baserat på inkommande meddelanden (t.ex. från Google Pay eller din bankapp)
+- Helt öppen källkod: https://github.com/dreautall/waterfly-iii
+- Inga annonser eller trackers
+
+Bidra:
+
+Om du stöter på en bugg eller saknar en funktion, får du gärna ge feedback i play store, skicka mig ett mail eller öppna ett ärende på GitHub.

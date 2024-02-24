@@ -1,0 +1,4 @@
+- Du kannst jetzt dein eigenes SSL-Zertifikat nutzen
+- Update auf Flutter 3.10
+- Fehlerbehebungen
+- In den Einstellungen können Protokolle aktiviert werden, die bei der Fehlerbehebung helfen können

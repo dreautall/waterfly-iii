@@ -10,7 +10,7 @@ part 'firefly_iii.models.swagger.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class AccountArray {
-  AccountArray({
+  const AccountArray({
     required this.data,
     required this.meta,
   });
@@ -18,13 +18,14 @@ class AccountArray {
   factory AccountArray.fromJson(Map<String, dynamic> json) =>
       _$AccountArrayFromJson(json);
 
+  static const toJsonFactory = _$AccountArrayToJson;
+  Map<String, dynamic> toJson() => _$AccountArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <AccountRead>[])
   final List<AccountRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$AccountArrayFromJson;
-  static const toJsonFactory = _$AccountArrayToJson;
-  Map<String, dynamic> toJson() => _$AccountArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -45,7 +46,7 @@ extension $AccountArrayExtension on AccountArray {
 
 @JsonSerializable(explicitToJson: true)
 class AttachmentArray {
-  AttachmentArray({
+  const AttachmentArray({
     required this.data,
     required this.meta,
   });
@@ -53,13 +54,14 @@ class AttachmentArray {
   factory AttachmentArray.fromJson(Map<String, dynamic> json) =>
       _$AttachmentArrayFromJson(json);
 
+  static const toJsonFactory = _$AttachmentArrayToJson;
+  Map<String, dynamic> toJson() => _$AttachmentArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <AttachmentRead>[])
   final List<AttachmentRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$AttachmentArrayFromJson;
-  static const toJsonFactory = _$AttachmentArrayToJson;
-  Map<String, dynamic> toJson() => _$AttachmentArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -97,7 +99,7 @@ typedef AutocompleteTransactionTypeArray = List<AutocompleteTransactionType>;
 
 @JsonSerializable(explicitToJson: true)
 class AvailableBudgetArray {
-  AvailableBudgetArray({
+  const AvailableBudgetArray({
     required this.data,
     required this.meta,
   });
@@ -105,14 +107,15 @@ class AvailableBudgetArray {
   factory AvailableBudgetArray.fromJson(Map<String, dynamic> json) =>
       _$AvailableBudgetArrayFromJson(json);
 
+  static const toJsonFactory = _$AvailableBudgetArrayToJson;
+  Map<String, dynamic> toJson() => _$AvailableBudgetArrayToJson(this);
+
   @JsonKey(
       name: 'data', includeIfNull: false, defaultValue: <AvailableBudgetRead>[])
   final List<AvailableBudgetRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$AvailableBudgetArrayFromJson;
-  static const toJsonFactory = _$AvailableBudgetArrayToJson;
-  Map<String, dynamic> toJson() => _$AvailableBudgetArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -134,7 +137,7 @@ extension $AvailableBudgetArrayExtension on AvailableBudgetArray {
 
 @JsonSerializable(explicitToJson: true)
 class BillArray {
-  BillArray({
+  const BillArray({
     required this.data,
     required this.meta,
   });
@@ -142,13 +145,14 @@ class BillArray {
   factory BillArray.fromJson(Map<String, dynamic> json) =>
       _$BillArrayFromJson(json);
 
+  static const toJsonFactory = _$BillArrayToJson;
+  Map<String, dynamic> toJson() => _$BillArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <BillRead>[])
   final List<BillRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$BillArrayFromJson;
-  static const toJsonFactory = _$BillArrayToJson;
-  Map<String, dynamic> toJson() => _$BillArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -169,7 +173,7 @@ extension $BillArrayExtension on BillArray {
 
 @JsonSerializable(explicitToJson: true)
 class BudgetArray {
-  BudgetArray({
+  const BudgetArray({
     required this.data,
     required this.meta,
   });
@@ -177,13 +181,14 @@ class BudgetArray {
   factory BudgetArray.fromJson(Map<String, dynamic> json) =>
       _$BudgetArrayFromJson(json);
 
+  static const toJsonFactory = _$BudgetArrayToJson;
+  Map<String, dynamic> toJson() => _$BudgetArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <BudgetRead>[])
   final List<BudgetRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$BudgetArrayFromJson;
-  static const toJsonFactory = _$BudgetArrayToJson;
-  Map<String, dynamic> toJson() => _$BudgetArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -204,7 +209,7 @@ extension $BudgetArrayExtension on BudgetArray {
 
 @JsonSerializable(explicitToJson: true)
 class BudgetLimitArray {
-  BudgetLimitArray({
+  const BudgetLimitArray({
     required this.data,
     required this.meta,
   });
@@ -212,14 +217,15 @@ class BudgetLimitArray {
   factory BudgetLimitArray.fromJson(Map<String, dynamic> json) =>
       _$BudgetLimitArrayFromJson(json);
 
+  static const toJsonFactory = _$BudgetLimitArrayToJson;
+  Map<String, dynamic> toJson() => _$BudgetLimitArrayToJson(this);
+
   @JsonKey(
       name: 'data', includeIfNull: false, defaultValue: <BudgetLimitRead>[])
   final List<BudgetLimitRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$BudgetLimitArrayFromJson;
-  static const toJsonFactory = _$BudgetLimitArrayToJson;
-  Map<String, dynamic> toJson() => _$BudgetLimitArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -240,7 +246,7 @@ extension $BudgetLimitArrayExtension on BudgetLimitArray {
 
 @JsonSerializable(explicitToJson: true)
 class CategoryArray {
-  CategoryArray({
+  const CategoryArray({
     required this.data,
     required this.meta,
   });
@@ -248,13 +254,14 @@ class CategoryArray {
   factory CategoryArray.fromJson(Map<String, dynamic> json) =>
       _$CategoryArrayFromJson(json);
 
+  static const toJsonFactory = _$CategoryArrayToJson;
+  Map<String, dynamic> toJson() => _$CategoryArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <CategoryRead>[])
   final List<CategoryRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$CategoryArrayFromJson;
-  static const toJsonFactory = _$CategoryArrayToJson;
-  Map<String, dynamic> toJson() => _$CategoryArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -277,7 +284,7 @@ typedef ConfigurationArray = List<Configuration>;
 
 @JsonSerializable(explicitToJson: true)
 class CurrencyArray {
-  CurrencyArray({
+  const CurrencyArray({
     required this.data,
     required this.meta,
     required this.links,
@@ -286,6 +293,9 @@ class CurrencyArray {
   factory CurrencyArray.fromJson(Map<String, dynamic> json) =>
       _$CurrencyArrayFromJson(json);
 
+  static const toJsonFactory = _$CurrencyArrayToJson;
+  Map<String, dynamic> toJson() => _$CurrencyArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <CurrencyRead>[])
   final List<CurrencyRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -293,8 +303,6 @@ class CurrencyArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$CurrencyArrayFromJson;
-  static const toJsonFactory = _$CurrencyArrayToJson;
-  Map<String, dynamic> toJson() => _$CurrencyArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -322,7 +330,7 @@ extension $CurrencyArrayExtension on CurrencyArray {
 
 @JsonSerializable(explicitToJson: true)
 class LinkTypeArray {
-  LinkTypeArray({
+  const LinkTypeArray({
     required this.data,
     required this.meta,
     required this.links,
@@ -331,6 +339,9 @@ class LinkTypeArray {
   factory LinkTypeArray.fromJson(Map<String, dynamic> json) =>
       _$LinkTypeArrayFromJson(json);
 
+  static const toJsonFactory = _$LinkTypeArrayToJson;
+  Map<String, dynamic> toJson() => _$LinkTypeArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <LinkTypeRead>[])
   final List<LinkTypeRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -338,8 +349,6 @@ class LinkTypeArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$LinkTypeArrayFromJson;
-  static const toJsonFactory = _$LinkTypeArrayToJson;
-  Map<String, dynamic> toJson() => _$LinkTypeArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -367,7 +376,7 @@ extension $LinkTypeArrayExtension on LinkTypeArray {
 
 @JsonSerializable(explicitToJson: true)
 class ObjectGroupArray {
-  ObjectGroupArray({
+  const ObjectGroupArray({
     required this.data,
     required this.meta,
   });
@@ -375,14 +384,15 @@ class ObjectGroupArray {
   factory ObjectGroupArray.fromJson(Map<String, dynamic> json) =>
       _$ObjectGroupArrayFromJson(json);
 
+  static const toJsonFactory = _$ObjectGroupArrayToJson;
+  Map<String, dynamic> toJson() => _$ObjectGroupArrayToJson(this);
+
   @JsonKey(
       name: 'data', includeIfNull: false, defaultValue: <ObjectGroupRead>[])
   final List<ObjectGroupRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$ObjectGroupArrayFromJson;
-  static const toJsonFactory = _$ObjectGroupArrayToJson;
-  Map<String, dynamic> toJson() => _$ObjectGroupArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -403,7 +413,7 @@ extension $ObjectGroupArrayExtension on ObjectGroupArray {
 
 @JsonSerializable(explicitToJson: true)
 class PiggyBankArray {
-  PiggyBankArray({
+  const PiggyBankArray({
     required this.data,
     required this.meta,
     required this.links,
@@ -412,6 +422,9 @@ class PiggyBankArray {
   factory PiggyBankArray.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankArrayFromJson(json);
 
+  static const toJsonFactory = _$PiggyBankArrayToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <PiggyBankRead>[])
   final List<PiggyBankRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -419,8 +432,6 @@ class PiggyBankArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$PiggyBankArrayFromJson;
-  static const toJsonFactory = _$PiggyBankArrayToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -448,7 +459,7 @@ extension $PiggyBankArrayExtension on PiggyBankArray {
 
 @JsonSerializable(explicitToJson: true)
 class PiggyBankEventArray {
-  PiggyBankEventArray({
+  const PiggyBankEventArray({
     required this.data,
     required this.meta,
     required this.links,
@@ -456,6 +467,9 @@ class PiggyBankEventArray {
 
   factory PiggyBankEventArray.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankEventArrayFromJson(json);
+
+  static const toJsonFactory = _$PiggyBankEventArrayToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankEventArrayToJson(this);
 
   @JsonKey(
       name: 'data', includeIfNull: false, defaultValue: <PiggyBankEventRead>[])
@@ -465,8 +479,6 @@ class PiggyBankEventArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$PiggyBankEventArrayFromJson;
-  static const toJsonFactory = _$PiggyBankEventArrayToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankEventArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -494,7 +506,7 @@ extension $PiggyBankEventArrayExtension on PiggyBankEventArray {
 
 @JsonSerializable(explicitToJson: true)
 class PreferenceArray {
-  PreferenceArray({
+  const PreferenceArray({
     required this.data,
     required this.meta,
     required this.links,
@@ -503,6 +515,9 @@ class PreferenceArray {
   factory PreferenceArray.fromJson(Map<String, dynamic> json) =>
       _$PreferenceArrayFromJson(json);
 
+  static const toJsonFactory = _$PreferenceArrayToJson;
+  Map<String, dynamic> toJson() => _$PreferenceArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <PreferenceRead>[])
   final List<PreferenceRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -510,8 +525,6 @@ class PreferenceArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$PreferenceArrayFromJson;
-  static const toJsonFactory = _$PreferenceArrayToJson;
-  Map<String, dynamic> toJson() => _$PreferenceArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -539,7 +552,7 @@ extension $PreferenceArrayExtension on PreferenceArray {
 
 @JsonSerializable(explicitToJson: true)
 class RecurrenceArray {
-  RecurrenceArray({
+  const RecurrenceArray({
     required this.data,
     required this.meta,
     required this.links,
@@ -548,6 +561,9 @@ class RecurrenceArray {
   factory RecurrenceArray.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceArrayFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceArrayToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <RecurrenceRead>[])
   final List<RecurrenceRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -555,8 +571,6 @@ class RecurrenceArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$RecurrenceArrayFromJson;
-  static const toJsonFactory = _$RecurrenceArrayToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -584,7 +598,7 @@ extension $RecurrenceArrayExtension on RecurrenceArray {
 
 @JsonSerializable(explicitToJson: true)
 class RuleArray {
-  RuleArray({
+  const RuleArray({
     required this.data,
     required this.meta,
     required this.links,
@@ -593,6 +607,9 @@ class RuleArray {
   factory RuleArray.fromJson(Map<String, dynamic> json) =>
       _$RuleArrayFromJson(json);
 
+  static const toJsonFactory = _$RuleArrayToJson;
+  Map<String, dynamic> toJson() => _$RuleArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <RuleRead>[])
   final List<RuleRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -600,8 +617,6 @@ class RuleArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$RuleArrayFromJson;
-  static const toJsonFactory = _$RuleArrayToJson;
-  Map<String, dynamic> toJson() => _$RuleArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -628,7 +643,7 @@ extension $RuleArrayExtension on RuleArray {
 
 @JsonSerializable(explicitToJson: true)
 class RuleGroupArray {
-  RuleGroupArray({
+  const RuleGroupArray({
     required this.data,
     required this.meta,
     required this.links,
@@ -637,6 +652,9 @@ class RuleGroupArray {
   factory RuleGroupArray.fromJson(Map<String, dynamic> json) =>
       _$RuleGroupArrayFromJson(json);
 
+  static const toJsonFactory = _$RuleGroupArrayToJson;
+  Map<String, dynamic> toJson() => _$RuleGroupArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <RuleGroupRead>[])
   final List<RuleGroupRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -644,8 +662,6 @@ class RuleGroupArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$RuleGroupArrayFromJson;
-  static const toJsonFactory = _$RuleGroupArrayToJson;
-  Map<String, dynamic> toJson() => _$RuleGroupArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -673,7 +689,7 @@ extension $RuleGroupArrayExtension on RuleGroupArray {
 
 @JsonSerializable(explicitToJson: true)
 class TagArray {
-  TagArray({
+  const TagArray({
     required this.data,
     required this.meta,
     required this.links,
@@ -682,6 +698,9 @@ class TagArray {
   factory TagArray.fromJson(Map<String, dynamic> json) =>
       _$TagArrayFromJson(json);
 
+  static const toJsonFactory = _$TagArrayToJson;
+  Map<String, dynamic> toJson() => _$TagArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <TagRead>[])
   final List<TagRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -689,8 +708,6 @@ class TagArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$TagArrayFromJson;
-  static const toJsonFactory = _$TagArrayToJson;
-  Map<String, dynamic> toJson() => _$TagArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -716,8 +733,55 @@ extension $TagArrayExtension on TagArray {
 }
 
 @JsonSerializable(explicitToJson: true)
+class TransactionArray {
+  const TransactionArray({
+    required this.data,
+    required this.meta,
+    required this.links,
+  });
+
+  factory TransactionArray.fromJson(Map<String, dynamic> json) =>
+      _$TransactionArrayFromJson(json);
+
+  static const toJsonFactory = _$TransactionArrayToJson;
+  Map<String, dynamic> toJson() => _$TransactionArrayToJson(this);
+
+  @JsonKey(
+      name: 'data', includeIfNull: false, defaultValue: <TransactionRead>[])
+  final List<TransactionRead> data;
+  @JsonKey(name: 'meta', includeIfNull: false)
+  final Meta meta;
+  @JsonKey(name: 'links', includeIfNull: false)
+  final PageLink links;
+  static const fromJsonFactory = _$TransactionArrayFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $TransactionArrayExtension on TransactionArray {
+  TransactionArray copyWith(
+      {List<TransactionRead>? data, Meta? meta, PageLink? links}) {
+    return TransactionArray(
+        data: data ?? this.data,
+        meta: meta ?? this.meta,
+        links: links ?? this.links);
+  }
+
+  TransactionArray copyWithWrapped(
+      {Wrapped<List<TransactionRead>>? data,
+      Wrapped<Meta>? meta,
+      Wrapped<PageLink>? links}) {
+    return TransactionArray(
+        data: (data != null ? data.value : this.data),
+        meta: (meta != null ? meta.value : this.meta),
+        links: (links != null ? links.value : this.links));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class TransactionLinkArray {
-  TransactionLinkArray({
+  const TransactionLinkArray({
     required this.data,
     required this.meta,
     required this.links,
@@ -725,6 +789,9 @@ class TransactionLinkArray {
 
   factory TransactionLinkArray.fromJson(Map<String, dynamic> json) =>
       _$TransactionLinkArrayFromJson(json);
+
+  static const toJsonFactory = _$TransactionLinkArrayToJson;
+  Map<String, dynamic> toJson() => _$TransactionLinkArrayToJson(this);
 
   @JsonKey(
       name: 'data', includeIfNull: false, defaultValue: <TransactionLinkRead>[])
@@ -734,8 +801,6 @@ class TransactionLinkArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$TransactionLinkArrayFromJson;
-  static const toJsonFactory = _$TransactionLinkArrayToJson;
-  Map<String, dynamic> toJson() => _$TransactionLinkArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -763,7 +828,7 @@ extension $TransactionLinkArrayExtension on TransactionLinkArray {
 
 @JsonSerializable(explicitToJson: true)
 class UserArray {
-  UserArray({
+  const UserArray({
     required this.data,
     required this.meta,
     required this.links,
@@ -772,6 +837,9 @@ class UserArray {
   factory UserArray.fromJson(Map<String, dynamic> json) =>
       _$UserArrayFromJson(json);
 
+  static const toJsonFactory = _$UserArrayToJson;
+  Map<String, dynamic> toJson() => _$UserArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <UserRead>[])
   final List<UserRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -779,8 +847,6 @@ class UserArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$UserArrayFromJson;
-  static const toJsonFactory = _$UserArrayToJson;
-  Map<String, dynamic> toJson() => _$UserArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -807,7 +873,7 @@ extension $UserArrayExtension on UserArray {
 
 @JsonSerializable(explicitToJson: true)
 class WebhookArray {
-  WebhookArray({
+  const WebhookArray({
     required this.data,
     required this.meta,
     required this.links,
@@ -816,6 +882,9 @@ class WebhookArray {
   factory WebhookArray.fromJson(Map<String, dynamic> json) =>
       _$WebhookArrayFromJson(json);
 
+  static const toJsonFactory = _$WebhookArrayToJson;
+  Map<String, dynamic> toJson() => _$WebhookArrayToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <WebhookRead>[])
   final List<WebhookRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
@@ -823,8 +892,6 @@ class WebhookArray {
   @JsonKey(name: 'links', includeIfNull: false)
   final PageLink links;
   static const fromJsonFactory = _$WebhookArrayFromJson;
-  static const toJsonFactory = _$WebhookArrayToJson;
-  Map<String, dynamic> toJson() => _$WebhookArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -852,7 +919,7 @@ extension $WebhookArrayExtension on WebhookArray {
 
 @JsonSerializable(explicitToJson: true)
 class WebhookAttemptArray {
-  WebhookAttemptArray({
+  const WebhookAttemptArray({
     required this.data,
     required this.meta,
   });
@@ -860,14 +927,15 @@ class WebhookAttemptArray {
   factory WebhookAttemptArray.fromJson(Map<String, dynamic> json) =>
       _$WebhookAttemptArrayFromJson(json);
 
+  static const toJsonFactory = _$WebhookAttemptArrayToJson;
+  Map<String, dynamic> toJson() => _$WebhookAttemptArrayToJson(this);
+
   @JsonKey(
       name: 'data', includeIfNull: false, defaultValue: <WebhookAttemptRead>[])
   final List<WebhookAttemptRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$WebhookAttemptArrayFromJson;
-  static const toJsonFactory = _$WebhookAttemptArrayToJson;
-  Map<String, dynamic> toJson() => _$WebhookAttemptArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -889,7 +957,7 @@ extension $WebhookAttemptArrayExtension on WebhookAttemptArray {
 
 @JsonSerializable(explicitToJson: true)
 class WebhookMessageArray {
-  WebhookMessageArray({
+  const WebhookMessageArray({
     required this.data,
     required this.meta,
   });
@@ -897,14 +965,15 @@ class WebhookMessageArray {
   factory WebhookMessageArray.fromJson(Map<String, dynamic> json) =>
       _$WebhookMessageArrayFromJson(json);
 
+  static const toJsonFactory = _$WebhookMessageArrayToJson;
+  Map<String, dynamic> toJson() => _$WebhookMessageArrayToJson(this);
+
   @JsonKey(
       name: 'data', includeIfNull: false, defaultValue: <WebhookMessageRead>[])
   final List<WebhookMessageRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
   static const fromJsonFactory = _$WebhookMessageArrayFromJson;
-  static const toJsonFactory = _$WebhookMessageArrayToJson;
-  Map<String, dynamic> toJson() => _$WebhookMessageArrayToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -926,7 +995,7 @@ extension $WebhookMessageArrayExtension on WebhookMessageArray {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteAccount {
-  AutocompleteAccount({
+  const AutocompleteAccount({
     required this.id,
     required this.name,
     required this.nameWithBalance,
@@ -941,6 +1010,9 @@ class AutocompleteAccount {
   factory AutocompleteAccount.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteAccountFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteAccountToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteAccountToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -950,7 +1022,7 @@ class AutocompleteAccount {
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'currency_id', includeIfNull: false)
-  final int currencyId;
+  final String currencyId;
   @JsonKey(name: 'currency_name', includeIfNull: false)
   final String currencyName;
   @JsonKey(name: 'currency_code', includeIfNull: false)
@@ -960,8 +1032,6 @@ class AutocompleteAccount {
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int currencyDecimalPlaces;
   static const fromJsonFactory = _$AutocompleteAccountFromJson;
-  static const toJsonFactory = _$AutocompleteAccountToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteAccountToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -973,7 +1043,7 @@ extension $AutocompleteAccountExtension on AutocompleteAccount {
       String? name,
       String? nameWithBalance,
       String? type,
-      int? currencyId,
+      String? currencyId,
       String? currencyName,
       String? currencyCode,
       String? currencySymbol,
@@ -996,7 +1066,7 @@ extension $AutocompleteAccountExtension on AutocompleteAccount {
       Wrapped<String>? name,
       Wrapped<String>? nameWithBalance,
       Wrapped<String>? type,
-      Wrapped<int>? currencyId,
+      Wrapped<String>? currencyId,
       Wrapped<String>? currencyName,
       Wrapped<String>? currencyCode,
       Wrapped<String>? currencySymbol,
@@ -1024,7 +1094,7 @@ extension $AutocompleteAccountExtension on AutocompleteAccount {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteBill {
-  AutocompleteBill({
+  const AutocompleteBill({
     required this.id,
     required this.name,
     this.active,
@@ -1033,6 +1103,9 @@ class AutocompleteBill {
   factory AutocompleteBill.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteBillFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteBillToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteBillToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1040,8 +1113,6 @@ class AutocompleteBill {
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
   static const fromJsonFactory = _$AutocompleteBillFromJson;
-  static const toJsonFactory = _$AutocompleteBillToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteBillToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1066,7 +1137,7 @@ extension $AutocompleteBillExtension on AutocompleteBill {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteBudget {
-  AutocompleteBudget({
+  const AutocompleteBudget({
     required this.id,
     required this.name,
   });
@@ -1074,13 +1145,14 @@ class AutocompleteBudget {
   factory AutocompleteBudget.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteBudgetFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteBudgetToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteBudgetToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   static const fromJsonFactory = _$AutocompleteBudgetFromJson;
-  static const toJsonFactory = _$AutocompleteBudgetToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteBudgetToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1101,7 +1173,7 @@ extension $AutocompleteBudgetExtension on AutocompleteBudget {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteCategory {
-  AutocompleteCategory({
+  const AutocompleteCategory({
     required this.id,
     required this.name,
   });
@@ -1109,13 +1181,14 @@ class AutocompleteCategory {
   factory AutocompleteCategory.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteCategoryFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteCategoryToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteCategoryToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   static const fromJsonFactory = _$AutocompleteCategoryFromJson;
-  static const toJsonFactory = _$AutocompleteCategoryToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteCategoryToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1136,7 +1209,7 @@ extension $AutocompleteCategoryExtension on AutocompleteCategory {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteCurrency {
-  AutocompleteCurrency({
+  const AutocompleteCurrency({
     required this.id,
     required this.name,
     required this.code,
@@ -1146,6 +1219,9 @@ class AutocompleteCurrency {
 
   factory AutocompleteCurrency.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteCurrencyFromJson(json);
+
+  static const toJsonFactory = _$AutocompleteCurrencyToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteCurrencyToJson(this);
 
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
@@ -1158,8 +1234,6 @@ class AutocompleteCurrency {
   @JsonKey(name: 'decimal_places', includeIfNull: false)
   final int decimalPlaces;
   static const fromJsonFactory = _$AutocompleteCurrencyFromJson;
-  static const toJsonFactory = _$AutocompleteCurrencyToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteCurrencyToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1198,7 +1272,7 @@ extension $AutocompleteCurrencyExtension on AutocompleteCurrency {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteCurrencyCode {
-  AutocompleteCurrencyCode({
+  const AutocompleteCurrencyCode({
     required this.id,
     required this.name,
     required this.code,
@@ -1208,6 +1282,9 @@ class AutocompleteCurrencyCode {
 
   factory AutocompleteCurrencyCode.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteCurrencyCodeFromJson(json);
+
+  static const toJsonFactory = _$AutocompleteCurrencyCodeToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteCurrencyCodeToJson(this);
 
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
@@ -1220,8 +1297,6 @@ class AutocompleteCurrencyCode {
   @JsonKey(name: 'decimal_places', includeIfNull: false)
   final int decimalPlaces;
   static const fromJsonFactory = _$AutocompleteCurrencyCodeFromJson;
-  static const toJsonFactory = _$AutocompleteCurrencyCodeToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteCurrencyCodeToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1260,7 +1335,7 @@ extension $AutocompleteCurrencyCodeExtension on AutocompleteCurrencyCode {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteObjectGroup {
-  AutocompleteObjectGroup({
+  const AutocompleteObjectGroup({
     required this.id,
     required this.title,
     required this.name,
@@ -1269,6 +1344,9 @@ class AutocompleteObjectGroup {
   factory AutocompleteObjectGroup.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteObjectGroupFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteObjectGroupToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteObjectGroupToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'title', includeIfNull: false)
@@ -1276,8 +1354,6 @@ class AutocompleteObjectGroup {
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   static const fromJsonFactory = _$AutocompleteObjectGroupFromJson;
-  static const toJsonFactory = _$AutocompleteObjectGroupToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteObjectGroupToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1300,7 +1376,7 @@ extension $AutocompleteObjectGroupExtension on AutocompleteObjectGroup {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompletePiggy {
-  AutocompletePiggy({
+  const AutocompletePiggy({
     required this.id,
     required this.name,
     this.currencyId,
@@ -1314,6 +1390,9 @@ class AutocompletePiggy {
 
   factory AutocompletePiggy.fromJson(Map<String, dynamic> json) =>
       _$AutocompletePiggyFromJson(json);
+
+  static const toJsonFactory = _$AutocompletePiggyToJson;
+  Map<String, dynamic> toJson() => _$AutocompletePiggyToJson(this);
 
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
@@ -1334,8 +1413,6 @@ class AutocompletePiggy {
   @JsonKey(name: 'object_group_title', includeIfNull: false)
   final String? objectGroupTitle;
   static const fromJsonFactory = _$AutocompletePiggyFromJson;
-  static const toJsonFactory = _$AutocompletePiggyToJson;
-  Map<String, dynamic> toJson() => _$AutocompletePiggyToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1399,7 +1476,7 @@ extension $AutocompletePiggyExtension on AutocompletePiggy {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompletePiggyBalance {
-  AutocompletePiggyBalance({
+  const AutocompletePiggyBalance({
     required this.id,
     required this.name,
     this.nameWithBalance,
@@ -1413,6 +1490,9 @@ class AutocompletePiggyBalance {
 
   factory AutocompletePiggyBalance.fromJson(Map<String, dynamic> json) =>
       _$AutocompletePiggyBalanceFromJson(json);
+
+  static const toJsonFactory = _$AutocompletePiggyBalanceToJson;
+  Map<String, dynamic> toJson() => _$AutocompletePiggyBalanceToJson(this);
 
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
@@ -1433,8 +1513,6 @@ class AutocompletePiggyBalance {
   @JsonKey(name: 'object_group_title', includeIfNull: false)
   final String? objectGroupTitle;
   static const fromJsonFactory = _$AutocompletePiggyBalanceFromJson;
-  static const toJsonFactory = _$AutocompletePiggyBalanceToJson;
-  Map<String, dynamic> toJson() => _$AutocompletePiggyBalanceToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1499,7 +1577,7 @@ extension $AutocompletePiggyBalanceExtension on AutocompletePiggyBalance {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteRecurrence {
-  AutocompleteRecurrence({
+  const AutocompleteRecurrence({
     required this.id,
     required this.name,
     this.description,
@@ -1508,6 +1586,9 @@ class AutocompleteRecurrence {
   factory AutocompleteRecurrence.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteRecurrenceFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteRecurrenceToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteRecurrenceToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1515,8 +1596,6 @@ class AutocompleteRecurrence {
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
   static const fromJsonFactory = _$AutocompleteRecurrenceFromJson;
-  static const toJsonFactory = _$AutocompleteRecurrenceToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteRecurrenceToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1545,7 +1624,7 @@ extension $AutocompleteRecurrenceExtension on AutocompleteRecurrence {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteRule {
-  AutocompleteRule({
+  const AutocompleteRule({
     required this.id,
     required this.name,
     this.description,
@@ -1554,6 +1633,9 @@ class AutocompleteRule {
   factory AutocompleteRule.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteRuleFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteRuleToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteRuleToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1561,8 +1643,6 @@ class AutocompleteRule {
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
   static const fromJsonFactory = _$AutocompleteRuleFromJson;
-  static const toJsonFactory = _$AutocompleteRuleToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteRuleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1590,7 +1670,7 @@ extension $AutocompleteRuleExtension on AutocompleteRule {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteRuleGroup {
-  AutocompleteRuleGroup({
+  const AutocompleteRuleGroup({
     required this.id,
     required this.name,
     this.description,
@@ -1599,6 +1679,9 @@ class AutocompleteRuleGroup {
   factory AutocompleteRuleGroup.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteRuleGroupFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteRuleGroupToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteRuleGroupToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1606,8 +1689,6 @@ class AutocompleteRuleGroup {
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
   static const fromJsonFactory = _$AutocompleteRuleGroupFromJson;
-  static const toJsonFactory = _$AutocompleteRuleGroupToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteRuleGroupToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1636,7 +1717,7 @@ extension $AutocompleteRuleGroupExtension on AutocompleteRuleGroup {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteTag {
-  AutocompleteTag({
+  const AutocompleteTag({
     required this.id,
     required this.name,
     required this.tag,
@@ -1645,6 +1726,9 @@ class AutocompleteTag {
   factory AutocompleteTag.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteTagFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteTagToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteTagToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1652,8 +1736,6 @@ class AutocompleteTag {
   @JsonKey(name: 'tag', includeIfNull: false)
   final String tag;
   static const fromJsonFactory = _$AutocompleteTagFromJson;
-  static const toJsonFactory = _$AutocompleteTagToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteTagToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1676,7 +1758,7 @@ extension $AutocompleteTagExtension on AutocompleteTag {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteTransaction {
-  AutocompleteTransaction({
+  const AutocompleteTransaction({
     required this.id,
     this.transactionGroupId,
     required this.name,
@@ -1685,6 +1767,9 @@ class AutocompleteTransaction {
 
   factory AutocompleteTransaction.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteTransactionFromJson(json);
+
+  static const toJsonFactory = _$AutocompleteTransactionToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteTransactionToJson(this);
 
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
@@ -1695,8 +1780,6 @@ class AutocompleteTransaction {
   @JsonKey(name: 'description', includeIfNull: false)
   final String description;
   static const fromJsonFactory = _$AutocompleteTransactionFromJson;
-  static const toJsonFactory = _$AutocompleteTransactionToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteTransactionToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1733,7 +1816,7 @@ extension $AutocompleteTransactionExtension on AutocompleteTransaction {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteTransactionID {
-  AutocompleteTransactionID({
+  const AutocompleteTransactionID({
     required this.id,
     this.transactionGroupId,
     required this.name,
@@ -1742,6 +1825,9 @@ class AutocompleteTransactionID {
 
   factory AutocompleteTransactionID.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteTransactionIDFromJson(json);
+
+  static const toJsonFactory = _$AutocompleteTransactionIDToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteTransactionIDToJson(this);
 
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
@@ -1752,8 +1838,6 @@ class AutocompleteTransactionID {
   @JsonKey(name: 'description', includeIfNull: false)
   final String description;
   static const fromJsonFactory = _$AutocompleteTransactionIDFromJson;
-  static const toJsonFactory = _$AutocompleteTransactionIDToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteTransactionIDToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1790,7 +1874,7 @@ extension $AutocompleteTransactionIDExtension on AutocompleteTransactionID {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteTransactionType {
-  AutocompleteTransactionType({
+  const AutocompleteTransactionType({
     required this.id,
     required this.name,
     required this.type,
@@ -1799,6 +1883,9 @@ class AutocompleteTransactionType {
   factory AutocompleteTransactionType.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteTransactionTypeFromJson(json);
 
+  static const toJsonFactory = _$AutocompleteTransactionTypeToJson;
+  Map<String, dynamic> toJson() => _$AutocompleteTransactionTypeToJson(this);
+
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -1806,8 +1893,6 @@ class AutocompleteTransactionType {
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   static const fromJsonFactory = _$AutocompleteTransactionTypeFromJson;
-  static const toJsonFactory = _$AutocompleteTransactionTypeToJson;
-  Map<String, dynamic> toJson() => _$AutocompleteTransactionTypeToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1831,18 +1916,19 @@ extension $AutocompleteTransactionTypeExtension on AutocompleteTransactionType {
 
 @JsonSerializable(explicitToJson: true)
 class ChartDataPoint {
-  ChartDataPoint({
+  const ChartDataPoint({
     this.key,
   });
 
   factory ChartDataPoint.fromJson(Map<String, dynamic> json) =>
       _$ChartDataPointFromJson(json);
 
+  static const toJsonFactory = _$ChartDataPointToJson;
+  Map<String, dynamic> toJson() => _$ChartDataPointToJson(this);
+
   @JsonKey(name: 'key', includeIfNull: false)
   final String? key;
   static const fromJsonFactory = _$ChartDataPointFromJson;
-  static const toJsonFactory = _$ChartDataPointToJson;
-  Map<String, dynamic> toJson() => _$ChartDataPointToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1860,7 +1946,7 @@ extension $ChartDataPointExtension on ChartDataPoint {
 
 @JsonSerializable(explicitToJson: true)
 class ChartDataSet {
-  ChartDataSet({
+  const ChartDataSet({
     this.label,
     this.currencyId,
     this.currencyCode,
@@ -1875,6 +1961,9 @@ class ChartDataSet {
 
   factory ChartDataSet.fromJson(Map<String, dynamic> json) =>
       _$ChartDataSetFromJson(json);
+
+  static const toJsonFactory = _$ChartDataSetToJson;
+  Map<String, dynamic> toJson() => _$ChartDataSetToJson(this);
 
   @JsonKey(name: 'label', includeIfNull: false)
   final String? label;
@@ -1897,8 +1986,6 @@ class ChartDataSet {
   @JsonKey(name: 'entries', includeIfNull: false)
   final Object? entries;
   static const fromJsonFactory = _$ChartDataSetFromJson;
-  static const toJsonFactory = _$ChartDataSetToJson;
-  Map<String, dynamic> toJson() => _$ChartDataSetToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -1966,7 +2053,7 @@ typedef InsightGroup = List<InsightGroupEntry>;
 
 @JsonSerializable(explicitToJson: true)
 class InsightGroupEntry {
-  InsightGroupEntry({
+  const InsightGroupEntry({
     this.id,
     this.name,
     this.difference,
@@ -1977,6 +2064,9 @@ class InsightGroupEntry {
 
   factory InsightGroupEntry.fromJson(Map<String, dynamic> json) =>
       _$InsightGroupEntryFromJson(json);
+
+  static const toJsonFactory = _$InsightGroupEntryToJson;
+  Map<String, dynamic> toJson() => _$InsightGroupEntryToJson(this);
 
   @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
@@ -1991,8 +2081,6 @@ class InsightGroupEntry {
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   static const fromJsonFactory = _$InsightGroupEntryFromJson;
-  static const toJsonFactory = _$InsightGroupEntryToJson;
-  Map<String, dynamic> toJson() => _$InsightGroupEntryToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2039,7 +2127,7 @@ typedef InsightTotal = List<InsightTotalEntry>;
 
 @JsonSerializable(explicitToJson: true)
 class InsightTotalEntry {
-  InsightTotalEntry({
+  const InsightTotalEntry({
     this.difference,
     this.differenceFloat,
     this.currencyId,
@@ -2048,6 +2136,9 @@ class InsightTotalEntry {
 
   factory InsightTotalEntry.fromJson(Map<String, dynamic> json) =>
       _$InsightTotalEntryFromJson(json);
+
+  static const toJsonFactory = _$InsightTotalEntryToJson;
+  Map<String, dynamic> toJson() => _$InsightTotalEntryToJson(this);
 
   @JsonKey(name: 'difference', includeIfNull: false)
   final String? difference;
@@ -2058,8 +2149,6 @@ class InsightTotalEntry {
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   static const fromJsonFactory = _$InsightTotalEntryFromJson;
-  static const toJsonFactory = _$InsightTotalEntryToJson;
-  Map<String, dynamic> toJson() => _$InsightTotalEntryToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2098,7 +2187,7 @@ typedef InsightTransfer = List<InsightTransferEntry>;
 
 @JsonSerializable(explicitToJson: true)
 class InsightTransferEntry {
-  InsightTransferEntry({
+  const InsightTransferEntry({
     this.id,
     this.name,
     this.difference,
@@ -2113,6 +2202,9 @@ class InsightTransferEntry {
 
   factory InsightTransferEntry.fromJson(Map<String, dynamic> json) =>
       _$InsightTransferEntryFromJson(json);
+
+  static const toJsonFactory = _$InsightTransferEntryToJson;
+  Map<String, dynamic> toJson() => _$InsightTransferEntryToJson(this);
 
   @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
@@ -2135,8 +2227,6 @@ class InsightTransferEntry {
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   static const fromJsonFactory = _$InsightTransferEntryFromJson;
-  static const toJsonFactory = _$InsightTransferEntryToJson;
-  Map<String, dynamic> toJson() => _$InsightTransferEntryToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2197,7 +2287,7 @@ extension $InsightTransferEntryExtension on InsightTransferEntry {
 
 @JsonSerializable(explicitToJson: true)
 class AccountRead {
-  AccountRead({
+  const AccountRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -2206,6 +2296,9 @@ class AccountRead {
   factory AccountRead.fromJson(Map<String, dynamic> json) =>
       _$AccountReadFromJson(json);
 
+  static const toJsonFactory = _$AccountReadToJson;
+  Map<String, dynamic> toJson() => _$AccountReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2213,8 +2306,6 @@ class AccountRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final Account attributes;
   static const fromJsonFactory = _$AccountReadFromJson;
-  static const toJsonFactory = _$AccountReadToJson;
-  Map<String, dynamic> toJson() => _$AccountReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2241,18 +2332,19 @@ extension $AccountReadExtension on AccountRead {
 
 @JsonSerializable(explicitToJson: true)
 class AccountSingle {
-  AccountSingle({
+  const AccountSingle({
     required this.data,
   });
 
   factory AccountSingle.fromJson(Map<String, dynamic> json) =>
       _$AccountSingleFromJson(json);
 
+  static const toJsonFactory = _$AccountSingleToJson;
+  Map<String, dynamic> toJson() => _$AccountSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final AccountRead data;
   static const fromJsonFactory = _$AccountSingleFromJson;
-  static const toJsonFactory = _$AccountSingleToJson;
-  Map<String, dynamic> toJson() => _$AccountSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2270,7 +2362,7 @@ extension $AccountSingleExtension on AccountSingle {
 
 @JsonSerializable(explicitToJson: true)
 class AttachmentRead {
-  AttachmentRead({
+  const AttachmentRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -2279,6 +2371,9 @@ class AttachmentRead {
 
   factory AttachmentRead.fromJson(Map<String, dynamic> json) =>
       _$AttachmentReadFromJson(json);
+
+  static const toJsonFactory = _$AttachmentReadToJson;
+  Map<String, dynamic> toJson() => _$AttachmentReadToJson(this);
 
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
@@ -2289,8 +2384,6 @@ class AttachmentRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$AttachmentReadFromJson;
-  static const toJsonFactory = _$AttachmentReadToJson;
-  Map<String, dynamic> toJson() => _$AttachmentReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2321,18 +2414,19 @@ extension $AttachmentReadExtension on AttachmentRead {
 
 @JsonSerializable(explicitToJson: true)
 class AttachmentSingle {
-  AttachmentSingle({
+  const AttachmentSingle({
     required this.data,
   });
 
   factory AttachmentSingle.fromJson(Map<String, dynamic> json) =>
       _$AttachmentSingleFromJson(json);
 
+  static const toJsonFactory = _$AttachmentSingleToJson;
+  Map<String, dynamic> toJson() => _$AttachmentSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final AttachmentRead data;
   static const fromJsonFactory = _$AttachmentSingleFromJson;
-  static const toJsonFactory = _$AttachmentSingleToJson;
-  Map<String, dynamic> toJson() => _$AttachmentSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2350,7 +2444,7 @@ extension $AttachmentSingleExtension on AttachmentSingle {
 
 @JsonSerializable(explicitToJson: true)
 class AvailableBudgetRead {
-  AvailableBudgetRead({
+  const AvailableBudgetRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -2359,6 +2453,9 @@ class AvailableBudgetRead {
   factory AvailableBudgetRead.fromJson(Map<String, dynamic> json) =>
       _$AvailableBudgetReadFromJson(json);
 
+  static const toJsonFactory = _$AvailableBudgetReadToJson;
+  Map<String, dynamic> toJson() => _$AvailableBudgetReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2366,8 +2463,6 @@ class AvailableBudgetRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final AvailableBudget attributes;
   static const fromJsonFactory = _$AvailableBudgetReadFromJson;
-  static const toJsonFactory = _$AvailableBudgetReadToJson;
-  Map<String, dynamic> toJson() => _$AvailableBudgetReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2395,18 +2490,19 @@ extension $AvailableBudgetReadExtension on AvailableBudgetRead {
 
 @JsonSerializable(explicitToJson: true)
 class AvailableBudgetSingle {
-  AvailableBudgetSingle({
+  const AvailableBudgetSingle({
     required this.data,
   });
 
   factory AvailableBudgetSingle.fromJson(Map<String, dynamic> json) =>
       _$AvailableBudgetSingleFromJson(json);
 
+  static const toJsonFactory = _$AvailableBudgetSingleToJson;
+  Map<String, dynamic> toJson() => _$AvailableBudgetSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final AvailableBudgetRead data;
   static const fromJsonFactory = _$AvailableBudgetSingleFromJson;
-  static const toJsonFactory = _$AvailableBudgetSingleToJson;
-  Map<String, dynamic> toJson() => _$AvailableBudgetSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2424,7 +2520,7 @@ extension $AvailableBudgetSingleExtension on AvailableBudgetSingle {
 
 @JsonSerializable(explicitToJson: true)
 class BillRead {
-  BillRead({
+  const BillRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -2433,6 +2529,9 @@ class BillRead {
   factory BillRead.fromJson(Map<String, dynamic> json) =>
       _$BillReadFromJson(json);
 
+  static const toJsonFactory = _$BillReadToJson;
+  Map<String, dynamic> toJson() => _$BillReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2440,8 +2539,6 @@ class BillRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final Bill attributes;
   static const fromJsonFactory = _$BillReadFromJson;
-  static const toJsonFactory = _$BillReadToJson;
-  Map<String, dynamic> toJson() => _$BillReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2466,18 +2563,19 @@ extension $BillReadExtension on BillRead {
 
 @JsonSerializable(explicitToJson: true)
 class BillSingle {
-  BillSingle({
+  const BillSingle({
     required this.data,
   });
 
   factory BillSingle.fromJson(Map<String, dynamic> json) =>
       _$BillSingleFromJson(json);
 
+  static const toJsonFactory = _$BillSingleToJson;
+  Map<String, dynamic> toJson() => _$BillSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final BillRead data;
   static const fromJsonFactory = _$BillSingleFromJson;
-  static const toJsonFactory = _$BillSingleToJson;
-  Map<String, dynamic> toJson() => _$BillSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2495,7 +2593,7 @@ extension $BillSingleExtension on BillSingle {
 
 @JsonSerializable(explicitToJson: true)
 class BudgetLimitRead {
-  BudgetLimitRead({
+  const BudgetLimitRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -2504,6 +2602,9 @@ class BudgetLimitRead {
   factory BudgetLimitRead.fromJson(Map<String, dynamic> json) =>
       _$BudgetLimitReadFromJson(json);
 
+  static const toJsonFactory = _$BudgetLimitReadToJson;
+  Map<String, dynamic> toJson() => _$BudgetLimitReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2511,8 +2612,6 @@ class BudgetLimitRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final BudgetLimit attributes;
   static const fromJsonFactory = _$BudgetLimitReadFromJson;
-  static const toJsonFactory = _$BudgetLimitReadToJson;
-  Map<String, dynamic> toJson() => _$BudgetLimitReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2540,18 +2639,19 @@ extension $BudgetLimitReadExtension on BudgetLimitRead {
 
 @JsonSerializable(explicitToJson: true)
 class BudgetLimitSingle {
-  BudgetLimitSingle({
+  const BudgetLimitSingle({
     required this.data,
   });
 
   factory BudgetLimitSingle.fromJson(Map<String, dynamic> json) =>
       _$BudgetLimitSingleFromJson(json);
 
+  static const toJsonFactory = _$BudgetLimitSingleToJson;
+  Map<String, dynamic> toJson() => _$BudgetLimitSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final BudgetLimitRead data;
   static const fromJsonFactory = _$BudgetLimitSingleFromJson;
-  static const toJsonFactory = _$BudgetLimitSingleToJson;
-  Map<String, dynamic> toJson() => _$BudgetLimitSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2569,7 +2669,7 @@ extension $BudgetLimitSingleExtension on BudgetLimitSingle {
 
 @JsonSerializable(explicitToJson: true)
 class BudgetRead {
-  BudgetRead({
+  const BudgetRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -2578,6 +2678,9 @@ class BudgetRead {
   factory BudgetRead.fromJson(Map<String, dynamic> json) =>
       _$BudgetReadFromJson(json);
 
+  static const toJsonFactory = _$BudgetReadToJson;
+  Map<String, dynamic> toJson() => _$BudgetReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2585,8 +2688,6 @@ class BudgetRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final Budget attributes;
   static const fromJsonFactory = _$BudgetReadFromJson;
-  static const toJsonFactory = _$BudgetReadToJson;
-  Map<String, dynamic> toJson() => _$BudgetReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2613,18 +2714,19 @@ extension $BudgetReadExtension on BudgetRead {
 
 @JsonSerializable(explicitToJson: true)
 class BudgetSingle {
-  BudgetSingle({
+  const BudgetSingle({
     required this.data,
   });
 
   factory BudgetSingle.fromJson(Map<String, dynamic> json) =>
       _$BudgetSingleFromJson(json);
 
+  static const toJsonFactory = _$BudgetSingleToJson;
+  Map<String, dynamic> toJson() => _$BudgetSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final BudgetRead data;
   static const fromJsonFactory = _$BudgetSingleFromJson;
-  static const toJsonFactory = _$BudgetSingleToJson;
-  Map<String, dynamic> toJson() => _$BudgetSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2642,7 +2744,7 @@ extension $BudgetSingleExtension on BudgetSingle {
 
 @JsonSerializable(explicitToJson: true)
 class CategoryRead {
-  CategoryRead({
+  const CategoryRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -2651,6 +2753,9 @@ class CategoryRead {
   factory CategoryRead.fromJson(Map<String, dynamic> json) =>
       _$CategoryReadFromJson(json);
 
+  static const toJsonFactory = _$CategoryReadToJson;
+  Map<String, dynamic> toJson() => _$CategoryReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2658,8 +2763,6 @@ class CategoryRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final Category attributes;
   static const fromJsonFactory = _$CategoryReadFromJson;
-  static const toJsonFactory = _$CategoryReadToJson;
-  Map<String, dynamic> toJson() => _$CategoryReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2686,18 +2789,19 @@ extension $CategoryReadExtension on CategoryRead {
 
 @JsonSerializable(explicitToJson: true)
 class CategorySingle {
-  CategorySingle({
+  const CategorySingle({
     required this.data,
   });
 
   factory CategorySingle.fromJson(Map<String, dynamic> json) =>
       _$CategorySingleFromJson(json);
 
+  static const toJsonFactory = _$CategorySingleToJson;
+  Map<String, dynamic> toJson() => _$CategorySingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final CategoryRead data;
   static const fromJsonFactory = _$CategorySingleFromJson;
-  static const toJsonFactory = _$CategorySingleToJson;
-  Map<String, dynamic> toJson() => _$CategorySingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2715,18 +2819,19 @@ extension $CategorySingleExtension on CategorySingle {
 
 @JsonSerializable(explicitToJson: true)
 class ConfigurationSingle {
-  ConfigurationSingle({
+  const ConfigurationSingle({
     required this.data,
   });
 
   factory ConfigurationSingle.fromJson(Map<String, dynamic> json) =>
       _$ConfigurationSingleFromJson(json);
 
+  static const toJsonFactory = _$ConfigurationSingleToJson;
+  Map<String, dynamic> toJson() => _$ConfigurationSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final Configuration data;
   static const fromJsonFactory = _$ConfigurationSingleFromJson;
-  static const toJsonFactory = _$ConfigurationSingleToJson;
-  Map<String, dynamic> toJson() => _$ConfigurationSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2744,7 +2849,7 @@ extension $ConfigurationSingleExtension on ConfigurationSingle {
 
 @JsonSerializable(explicitToJson: true)
 class CurrencyRead {
-  CurrencyRead({
+  const CurrencyRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -2753,6 +2858,9 @@ class CurrencyRead {
   factory CurrencyRead.fromJson(Map<String, dynamic> json) =>
       _$CurrencyReadFromJson(json);
 
+  static const toJsonFactory = _$CurrencyReadToJson;
+  Map<String, dynamic> toJson() => _$CurrencyReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2760,8 +2868,6 @@ class CurrencyRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final Currency attributes;
   static const fromJsonFactory = _$CurrencyReadFromJson;
-  static const toJsonFactory = _$CurrencyReadToJson;
-  Map<String, dynamic> toJson() => _$CurrencyReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2788,18 +2894,19 @@ extension $CurrencyReadExtension on CurrencyRead {
 
 @JsonSerializable(explicitToJson: true)
 class CurrencySingle {
-  CurrencySingle({
+  const CurrencySingle({
     required this.data,
   });
 
   factory CurrencySingle.fromJson(Map<String, dynamic> json) =>
       _$CurrencySingleFromJson(json);
 
+  static const toJsonFactory = _$CurrencySingleToJson;
+  Map<String, dynamic> toJson() => _$CurrencySingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final CurrencyRead data;
   static const fromJsonFactory = _$CurrencySingleFromJson;
-  static const toJsonFactory = _$CurrencySingleToJson;
-  Map<String, dynamic> toJson() => _$CurrencySingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2817,7 +2924,7 @@ extension $CurrencySingleExtension on CurrencySingle {
 
 @JsonSerializable(explicitToJson: true)
 class LinkTypeRead {
-  LinkTypeRead({
+  const LinkTypeRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -2826,6 +2933,9 @@ class LinkTypeRead {
 
   factory LinkTypeRead.fromJson(Map<String, dynamic> json) =>
       _$LinkTypeReadFromJson(json);
+
+  static const toJsonFactory = _$LinkTypeReadToJson;
+  Map<String, dynamic> toJson() => _$LinkTypeReadToJson(this);
 
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
@@ -2836,8 +2946,6 @@ class LinkTypeRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$LinkTypeReadFromJson;
-  static const toJsonFactory = _$LinkTypeReadToJson;
-  Map<String, dynamic> toJson() => _$LinkTypeReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2868,18 +2976,19 @@ extension $LinkTypeReadExtension on LinkTypeRead {
 
 @JsonSerializable(explicitToJson: true)
 class LinkTypeSingle {
-  LinkTypeSingle({
+  const LinkTypeSingle({
     required this.data,
   });
 
   factory LinkTypeSingle.fromJson(Map<String, dynamic> json) =>
       _$LinkTypeSingleFromJson(json);
 
+  static const toJsonFactory = _$LinkTypeSingleToJson;
+  Map<String, dynamic> toJson() => _$LinkTypeSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final LinkTypeRead data;
   static const fromJsonFactory = _$LinkTypeSingleFromJson;
-  static const toJsonFactory = _$LinkTypeSingleToJson;
-  Map<String, dynamic> toJson() => _$LinkTypeSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2897,7 +3006,7 @@ extension $LinkTypeSingleExtension on LinkTypeSingle {
 
 @JsonSerializable(explicitToJson: true)
 class ObjectGroupRead {
-  ObjectGroupRead({
+  const ObjectGroupRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -2906,6 +3015,9 @@ class ObjectGroupRead {
   factory ObjectGroupRead.fromJson(Map<String, dynamic> json) =>
       _$ObjectGroupReadFromJson(json);
 
+  static const toJsonFactory = _$ObjectGroupReadToJson;
+  Map<String, dynamic> toJson() => _$ObjectGroupReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -2913,8 +3025,6 @@ class ObjectGroupRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final ObjectGroup attributes;
   static const fromJsonFactory = _$ObjectGroupReadFromJson;
-  static const toJsonFactory = _$ObjectGroupReadToJson;
-  Map<String, dynamic> toJson() => _$ObjectGroupReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2942,18 +3052,19 @@ extension $ObjectGroupReadExtension on ObjectGroupRead {
 
 @JsonSerializable(explicitToJson: true)
 class ObjectGroupSingle {
-  ObjectGroupSingle({
+  const ObjectGroupSingle({
     required this.data,
   });
 
   factory ObjectGroupSingle.fromJson(Map<String, dynamic> json) =>
       _$ObjectGroupSingleFromJson(json);
 
+  static const toJsonFactory = _$ObjectGroupSingleToJson;
+  Map<String, dynamic> toJson() => _$ObjectGroupSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final ObjectGroupRead data;
   static const fromJsonFactory = _$ObjectGroupSingleFromJson;
-  static const toJsonFactory = _$ObjectGroupSingleToJson;
-  Map<String, dynamic> toJson() => _$ObjectGroupSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -2971,7 +3082,7 @@ extension $ObjectGroupSingleExtension on ObjectGroupSingle {
 
 @JsonSerializable(explicitToJson: true)
 class PiggyBankEventRead {
-  PiggyBankEventRead({
+  const PiggyBankEventRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -2980,6 +3091,9 @@ class PiggyBankEventRead {
 
   factory PiggyBankEventRead.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankEventReadFromJson(json);
+
+  static const toJsonFactory = _$PiggyBankEventReadToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankEventReadToJson(this);
 
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
@@ -2990,8 +3104,6 @@ class PiggyBankEventRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$PiggyBankEventReadFromJson;
-  static const toJsonFactory = _$PiggyBankEventReadToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankEventReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3025,7 +3137,7 @@ extension $PiggyBankEventReadExtension on PiggyBankEventRead {
 
 @JsonSerializable(explicitToJson: true)
 class PiggyBankRead {
-  PiggyBankRead({
+  const PiggyBankRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -3034,6 +3146,9 @@ class PiggyBankRead {
 
   factory PiggyBankRead.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankReadFromJson(json);
+
+  static const toJsonFactory = _$PiggyBankReadToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankReadToJson(this);
 
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
@@ -3044,8 +3159,6 @@ class PiggyBankRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$PiggyBankReadFromJson;
-  static const toJsonFactory = _$PiggyBankReadToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3076,18 +3189,19 @@ extension $PiggyBankReadExtension on PiggyBankRead {
 
 @JsonSerializable(explicitToJson: true)
 class PiggyBankSingle {
-  PiggyBankSingle({
+  const PiggyBankSingle({
     required this.data,
   });
 
   factory PiggyBankSingle.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankSingleFromJson(json);
 
+  static const toJsonFactory = _$PiggyBankSingleToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final PiggyBankRead data;
   static const fromJsonFactory = _$PiggyBankSingleFromJson;
-  static const toJsonFactory = _$PiggyBankSingleToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3105,7 +3219,7 @@ extension $PiggyBankSingleExtension on PiggyBankSingle {
 
 @JsonSerializable(explicitToJson: true)
 class PreferenceRead {
-  PreferenceRead({
+  const PreferenceRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -3114,6 +3228,9 @@ class PreferenceRead {
   factory PreferenceRead.fromJson(Map<String, dynamic> json) =>
       _$PreferenceReadFromJson(json);
 
+  static const toJsonFactory = _$PreferenceReadToJson;
+  Map<String, dynamic> toJson() => _$PreferenceReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -3121,8 +3238,6 @@ class PreferenceRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final Preference attributes;
   static const fromJsonFactory = _$PreferenceReadFromJson;
-  static const toJsonFactory = _$PreferenceReadToJson;
-  Map<String, dynamic> toJson() => _$PreferenceReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3149,18 +3264,19 @@ extension $PreferenceReadExtension on PreferenceRead {
 
 @JsonSerializable(explicitToJson: true)
 class PreferenceSingle {
-  PreferenceSingle({
+  const PreferenceSingle({
     required this.data,
   });
 
   factory PreferenceSingle.fromJson(Map<String, dynamic> json) =>
       _$PreferenceSingleFromJson(json);
 
+  static const toJsonFactory = _$PreferenceSingleToJson;
+  Map<String, dynamic> toJson() => _$PreferenceSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final PreferenceRead data;
   static const fromJsonFactory = _$PreferenceSingleFromJson;
-  static const toJsonFactory = _$PreferenceSingleToJson;
-  Map<String, dynamic> toJson() => _$PreferenceSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3178,7 +3294,7 @@ extension $PreferenceSingleExtension on PreferenceSingle {
 
 @JsonSerializable(explicitToJson: true)
 class RecurrenceRead {
-  RecurrenceRead({
+  const RecurrenceRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -3187,6 +3303,9 @@ class RecurrenceRead {
 
   factory RecurrenceRead.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceReadFromJson(json);
+
+  static const toJsonFactory = _$RecurrenceReadToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceReadToJson(this);
 
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
@@ -3197,8 +3316,6 @@ class RecurrenceRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$RecurrenceReadFromJson;
-  static const toJsonFactory = _$RecurrenceReadToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3229,18 +3346,19 @@ extension $RecurrenceReadExtension on RecurrenceRead {
 
 @JsonSerializable(explicitToJson: true)
 class RecurrenceSingle {
-  RecurrenceSingle({
+  const RecurrenceSingle({
     required this.data,
   });
 
   factory RecurrenceSingle.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceSingleFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceSingleToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final RecurrenceRead data;
   static const fromJsonFactory = _$RecurrenceSingleFromJson;
-  static const toJsonFactory = _$RecurrenceSingleToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3258,7 +3376,7 @@ extension $RecurrenceSingleExtension on RecurrenceSingle {
 
 @JsonSerializable(explicitToJson: true)
 class RuleGroupRead {
-  RuleGroupRead({
+  const RuleGroupRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -3267,6 +3385,9 @@ class RuleGroupRead {
 
   factory RuleGroupRead.fromJson(Map<String, dynamic> json) =>
       _$RuleGroupReadFromJson(json);
+
+  static const toJsonFactory = _$RuleGroupReadToJson;
+  Map<String, dynamic> toJson() => _$RuleGroupReadToJson(this);
 
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
@@ -3277,8 +3398,6 @@ class RuleGroupRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$RuleGroupReadFromJson;
-  static const toJsonFactory = _$RuleGroupReadToJson;
-  Map<String, dynamic> toJson() => _$RuleGroupReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3309,18 +3428,19 @@ extension $RuleGroupReadExtension on RuleGroupRead {
 
 @JsonSerializable(explicitToJson: true)
 class RuleGroupSingle {
-  RuleGroupSingle({
+  const RuleGroupSingle({
     required this.data,
   });
 
   factory RuleGroupSingle.fromJson(Map<String, dynamic> json) =>
       _$RuleGroupSingleFromJson(json);
 
+  static const toJsonFactory = _$RuleGroupSingleToJson;
+  Map<String, dynamic> toJson() => _$RuleGroupSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final RuleGroupRead data;
   static const fromJsonFactory = _$RuleGroupSingleFromJson;
-  static const toJsonFactory = _$RuleGroupSingleToJson;
-  Map<String, dynamic> toJson() => _$RuleGroupSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3338,7 +3458,7 @@ extension $RuleGroupSingleExtension on RuleGroupSingle {
 
 @JsonSerializable(explicitToJson: true)
 class RuleRead {
-  RuleRead({
+  const RuleRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -3347,6 +3467,9 @@ class RuleRead {
 
   factory RuleRead.fromJson(Map<String, dynamic> json) =>
       _$RuleReadFromJson(json);
+
+  static const toJsonFactory = _$RuleReadToJson;
+  Map<String, dynamic> toJson() => _$RuleReadToJson(this);
 
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
@@ -3357,8 +3480,6 @@ class RuleRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$RuleReadFromJson;
-  static const toJsonFactory = _$RuleReadToJson;
-  Map<String, dynamic> toJson() => _$RuleReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3389,18 +3510,19 @@ extension $RuleReadExtension on RuleRead {
 
 @JsonSerializable(explicitToJson: true)
 class RuleSingle {
-  RuleSingle({
+  const RuleSingle({
     required this.data,
   });
 
   factory RuleSingle.fromJson(Map<String, dynamic> json) =>
       _$RuleSingleFromJson(json);
 
+  static const toJsonFactory = _$RuleSingleToJson;
+  Map<String, dynamic> toJson() => _$RuleSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final RuleRead data;
   static const fromJsonFactory = _$RuleSingleFromJson;
-  static const toJsonFactory = _$RuleSingleToJson;
-  Map<String, dynamic> toJson() => _$RuleSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3418,7 +3540,7 @@ extension $RuleSingleExtension on RuleSingle {
 
 @JsonSerializable(explicitToJson: true)
 class TagRead {
-  TagRead({
+  const TagRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -3427,6 +3549,9 @@ class TagRead {
 
   factory TagRead.fromJson(Map<String, dynamic> json) =>
       _$TagReadFromJson(json);
+
+  static const toJsonFactory = _$TagReadToJson;
+  Map<String, dynamic> toJson() => _$TagReadToJson(this);
 
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
@@ -3437,8 +3562,6 @@ class TagRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$TagReadFromJson;
-  static const toJsonFactory = _$TagReadToJson;
-  Map<String, dynamic> toJson() => _$TagReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3469,18 +3592,19 @@ extension $TagReadExtension on TagRead {
 
 @JsonSerializable(explicitToJson: true)
 class TagSingle {
-  TagSingle({
+  const TagSingle({
     required this.data,
   });
 
   factory TagSingle.fromJson(Map<String, dynamic> json) =>
       _$TagSingleFromJson(json);
 
+  static const toJsonFactory = _$TagSingleToJson;
+  Map<String, dynamic> toJson() => _$TagSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final TagRead data;
   static const fromJsonFactory = _$TagSingleFromJson;
-  static const toJsonFactory = _$TagSingleToJson;
-  Map<String, dynamic> toJson() => _$TagSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3498,7 +3622,7 @@ extension $TagSingleExtension on TagSingle {
 
 @JsonSerializable(explicitToJson: true)
 class TransactionLinkRead {
-  TransactionLinkRead({
+  const TransactionLinkRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -3507,6 +3631,9 @@ class TransactionLinkRead {
 
   factory TransactionLinkRead.fromJson(Map<String, dynamic> json) =>
       _$TransactionLinkReadFromJson(json);
+
+  static const toJsonFactory = _$TransactionLinkReadToJson;
+  Map<String, dynamic> toJson() => _$TransactionLinkReadToJson(this);
 
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
@@ -3517,8 +3644,6 @@ class TransactionLinkRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$TransactionLinkReadFromJson;
-  static const toJsonFactory = _$TransactionLinkReadToJson;
-  Map<String, dynamic> toJson() => _$TransactionLinkReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3552,18 +3677,19 @@ extension $TransactionLinkReadExtension on TransactionLinkRead {
 
 @JsonSerializable(explicitToJson: true)
 class TransactionLinkSingle {
-  TransactionLinkSingle({
+  const TransactionLinkSingle({
     required this.data,
   });
 
   factory TransactionLinkSingle.fromJson(Map<String, dynamic> json) =>
       _$TransactionLinkSingleFromJson(json);
 
+  static const toJsonFactory = _$TransactionLinkSingleToJson;
+  Map<String, dynamic> toJson() => _$TransactionLinkSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final TransactionLinkRead data;
   static const fromJsonFactory = _$TransactionLinkSingleFromJson;
-  static const toJsonFactory = _$TransactionLinkSingleToJson;
-  Map<String, dynamic> toJson() => _$TransactionLinkSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3580,19 +3706,72 @@ extension $TransactionLinkSingleExtension on TransactionLinkSingle {
 }
 
 @JsonSerializable(explicitToJson: true)
+class TransactionRead {
+  const TransactionRead({
+    required this.type,
+    required this.id,
+    required this.attributes,
+    required this.links,
+  });
+
+  factory TransactionRead.fromJson(Map<String, dynamic> json) =>
+      _$TransactionReadFromJson(json);
+
+  static const toJsonFactory = _$TransactionReadToJson;
+  Map<String, dynamic> toJson() => _$TransactionReadToJson(this);
+
+  @JsonKey(name: 'type', includeIfNull: false)
+  final String type;
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String id;
+  @JsonKey(name: 'attributes', includeIfNull: false)
+  final Transaction attributes;
+  @JsonKey(name: 'links', includeIfNull: false)
+  final ObjectLink links;
+  static const fromJsonFactory = _$TransactionReadFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $TransactionReadExtension on TransactionRead {
+  TransactionRead copyWith(
+      {String? type, String? id, Transaction? attributes, ObjectLink? links}) {
+    return TransactionRead(
+        type: type ?? this.type,
+        id: id ?? this.id,
+        attributes: attributes ?? this.attributes,
+        links: links ?? this.links);
+  }
+
+  TransactionRead copyWithWrapped(
+      {Wrapped<String>? type,
+      Wrapped<String>? id,
+      Wrapped<Transaction>? attributes,
+      Wrapped<ObjectLink>? links}) {
+    return TransactionRead(
+        type: (type != null ? type.value : this.type),
+        id: (id != null ? id.value : this.id),
+        attributes: (attributes != null ? attributes.value : this.attributes),
+        links: (links != null ? links.value : this.links));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class TransactionSingle {
-  TransactionSingle({
+  const TransactionSingle({
     required this.data,
   });
 
   factory TransactionSingle.fromJson(Map<String, dynamic> json) =>
       _$TransactionSingleFromJson(json);
 
+  static const toJsonFactory = _$TransactionSingleToJson;
+  Map<String, dynamic> toJson() => _$TransactionSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final TransactionRead data;
   static const fromJsonFactory = _$TransactionSingleFromJson;
-  static const toJsonFactory = _$TransactionSingleToJson;
-  Map<String, dynamic> toJson() => _$TransactionSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3610,7 +3789,7 @@ extension $TransactionSingleExtension on TransactionSingle {
 
 @JsonSerializable(explicitToJson: true)
 class UserRead {
-  UserRead({
+  const UserRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -3619,6 +3798,9 @@ class UserRead {
 
   factory UserRead.fromJson(Map<String, dynamic> json) =>
       _$UserReadFromJson(json);
+
+  static const toJsonFactory = _$UserReadToJson;
+  Map<String, dynamic> toJson() => _$UserReadToJson(this);
 
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
@@ -3629,8 +3811,6 @@ class UserRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$UserReadFromJson;
-  static const toJsonFactory = _$UserReadToJson;
-  Map<String, dynamic> toJson() => _$UserReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3661,7 +3841,7 @@ extension $UserReadExtension on UserRead {
 
 @JsonSerializable(explicitToJson: true)
 class WebhookAttemptRead {
-  WebhookAttemptRead({
+  const WebhookAttemptRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -3670,6 +3850,9 @@ class WebhookAttemptRead {
   factory WebhookAttemptRead.fromJson(Map<String, dynamic> json) =>
       _$WebhookAttemptReadFromJson(json);
 
+  static const toJsonFactory = _$WebhookAttemptReadToJson;
+  Map<String, dynamic> toJson() => _$WebhookAttemptReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -3677,8 +3860,6 @@ class WebhookAttemptRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final WebhookAttempt attributes;
   static const fromJsonFactory = _$WebhookAttemptReadFromJson;
-  static const toJsonFactory = _$WebhookAttemptReadToJson;
-  Map<String, dynamic> toJson() => _$WebhookAttemptReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3706,18 +3887,19 @@ extension $WebhookAttemptReadExtension on WebhookAttemptRead {
 
 @JsonSerializable(explicitToJson: true)
 class WebhookAttemptSingle {
-  WebhookAttemptSingle({
+  const WebhookAttemptSingle({
     required this.data,
   });
 
   factory WebhookAttemptSingle.fromJson(Map<String, dynamic> json) =>
       _$WebhookAttemptSingleFromJson(json);
 
+  static const toJsonFactory = _$WebhookAttemptSingleToJson;
+  Map<String, dynamic> toJson() => _$WebhookAttemptSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final WebhookAttemptRead data;
   static const fromJsonFactory = _$WebhookAttemptSingleFromJson;
-  static const toJsonFactory = _$WebhookAttemptSingleToJson;
-  Map<String, dynamic> toJson() => _$WebhookAttemptSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3735,7 +3917,7 @@ extension $WebhookAttemptSingleExtension on WebhookAttemptSingle {
 
 @JsonSerializable(explicitToJson: true)
 class WebhookMessageRead {
-  WebhookMessageRead({
+  const WebhookMessageRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -3744,6 +3926,9 @@ class WebhookMessageRead {
   factory WebhookMessageRead.fromJson(Map<String, dynamic> json) =>
       _$WebhookMessageReadFromJson(json);
 
+  static const toJsonFactory = _$WebhookMessageReadToJson;
+  Map<String, dynamic> toJson() => _$WebhookMessageReadToJson(this);
+
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'id', includeIfNull: false)
@@ -3751,8 +3936,6 @@ class WebhookMessageRead {
   @JsonKey(name: 'attributes', includeIfNull: false)
   final WebhookMessage attributes;
   static const fromJsonFactory = _$WebhookMessageReadFromJson;
-  static const toJsonFactory = _$WebhookMessageReadToJson;
-  Map<String, dynamic> toJson() => _$WebhookMessageReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3780,18 +3963,19 @@ extension $WebhookMessageReadExtension on WebhookMessageRead {
 
 @JsonSerializable(explicitToJson: true)
 class WebhookMessageSingle {
-  WebhookMessageSingle({
+  const WebhookMessageSingle({
     required this.data,
   });
 
   factory WebhookMessageSingle.fromJson(Map<String, dynamic> json) =>
       _$WebhookMessageSingleFromJson(json);
 
+  static const toJsonFactory = _$WebhookMessageSingleToJson;
+  Map<String, dynamic> toJson() => _$WebhookMessageSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final WebhookMessageRead data;
   static const fromJsonFactory = _$WebhookMessageSingleFromJson;
-  static const toJsonFactory = _$WebhookMessageSingleToJson;
-  Map<String, dynamic> toJson() => _$WebhookMessageSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3809,7 +3993,7 @@ extension $WebhookMessageSingleExtension on WebhookMessageSingle {
 
 @JsonSerializable(explicitToJson: true)
 class WebhookRead {
-  WebhookRead({
+  const WebhookRead({
     required this.type,
     required this.id,
     required this.attributes,
@@ -3818,6 +4002,9 @@ class WebhookRead {
 
   factory WebhookRead.fromJson(Map<String, dynamic> json) =>
       _$WebhookReadFromJson(json);
+
+  static const toJsonFactory = _$WebhookReadToJson;
+  Map<String, dynamic> toJson() => _$WebhookReadToJson(this);
 
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
@@ -3828,8 +4015,6 @@ class WebhookRead {
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$WebhookReadFromJson;
-  static const toJsonFactory = _$WebhookReadToJson;
-  Map<String, dynamic> toJson() => _$WebhookReadToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3860,18 +4045,19 @@ extension $WebhookReadExtension on WebhookRead {
 
 @JsonSerializable(explicitToJson: true)
 class WebhookSingle {
-  WebhookSingle({
+  const WebhookSingle({
     required this.data,
   });
 
   factory WebhookSingle.fromJson(Map<String, dynamic> json) =>
       _$WebhookSingleFromJson(json);
 
+  static const toJsonFactory = _$WebhookSingleToJson;
+  Map<String, dynamic> toJson() => _$WebhookSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final WebhookRead data;
   static const fromJsonFactory = _$WebhookSingleFromJson;
-  static const toJsonFactory = _$WebhookSingleToJson;
-  Map<String, dynamic> toJson() => _$WebhookSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -3889,7 +4075,7 @@ extension $WebhookSingleExtension on WebhookSingle {
 
 @JsonSerializable(explicitToJson: true)
 class Account {
-  Account({
+  const Account({
     this.createdAt,
     this.updatedAt,
     this.active,
@@ -3926,6 +4112,9 @@ class Account {
   factory Account.fromJson(Map<String, dynamic> json) =>
       _$AccountFromJson(json);
 
+  static const toJsonFactory = _$AccountToJson;
+  Map<String, dynamic> toJson() => _$AccountToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -3946,8 +4135,8 @@ class Account {
   @JsonKey(
     name: 'account_role',
     includeIfNull: false,
-    toJson: accountRolePropertyToJson,
-    fromJson: accountRolePropertyFromJson,
+    toJson: accountRolePropertyNullableToJson,
+    fromJson: accountRolePropertyNullableFromJson,
   )
   final enums.AccountRoleProperty? accountRole;
   @JsonKey(name: 'currency_id', includeIfNull: false)
@@ -3981,35 +4170,35 @@ class Account {
   @JsonKey(
     name: 'credit_card_type',
     includeIfNull: false,
-    toJson: creditCardTypeToJson,
-    fromJson: creditCardTypeFromJson,
+    toJson: creditCardTypePropertyNullableToJson,
+    fromJson: creditCardTypePropertyNullableFromJson,
   )
-  final enums.CreditCardType? creditCardType;
+  final enums.CreditCardTypeProperty? creditCardType;
   @JsonKey(name: 'monthly_payment_date', includeIfNull: false)
   final DateTime? monthlyPaymentDate;
   @JsonKey(
     name: 'liability_type',
     includeIfNull: false,
-    toJson: liabilityTypeToJson,
-    fromJson: liabilityTypeFromJson,
+    toJson: liabilityTypePropertyNullableToJson,
+    fromJson: liabilityTypePropertyNullableFromJson,
   )
-  final enums.LiabilityType? liabilityType;
+  final enums.LiabilityTypeProperty? liabilityType;
   @JsonKey(
     name: 'liability_direction',
     includeIfNull: false,
-    toJson: liabilityDirectionToJson,
-    fromJson: liabilityDirectionFromJson,
+    toJson: liabilityDirectionPropertyNullableToJson,
+    fromJson: liabilityDirectionPropertyNullableFromJson,
   )
-  final enums.LiabilityDirection? liabilityDirection;
+  final enums.LiabilityDirectionProperty? liabilityDirection;
   @JsonKey(name: 'interest', includeIfNull: false)
   final String? interest;
   @JsonKey(
     name: 'interest_period',
     includeIfNull: false,
-    toJson: interestPeriodToJson,
-    fromJson: interestPeriodFromJson,
+    toJson: interestPeriodPropertyNullableToJson,
+    fromJson: interestPeriodPropertyNullableFromJson,
   )
-  final enums.InterestPeriod? interestPeriod;
+  final enums.InterestPeriodProperty? interestPeriod;
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   @JsonKey(name: 'latitude', includeIfNull: false)
@@ -4019,8 +4208,6 @@ class Account {
   @JsonKey(name: 'zoom_level', includeIfNull: false)
   final int? zoomLevel;
   static const fromJsonFactory = _$AccountFromJson;
-  static const toJsonFactory = _$AccountToJson;
-  Map<String, dynamic> toJson() => _$AccountToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -4049,12 +4236,12 @@ extension $AccountExtension on Account {
       DateTime? openingBalanceDate,
       String? virtualBalance,
       bool? includeNetWorth,
-      enums.CreditCardType? creditCardType,
+      enums.CreditCardTypeProperty? creditCardType,
       DateTime? monthlyPaymentDate,
-      enums.LiabilityType? liabilityType,
-      enums.LiabilityDirection? liabilityDirection,
+      enums.LiabilityTypeProperty? liabilityType,
+      enums.LiabilityDirectionProperty? liabilityDirection,
       String? interest,
-      enums.InterestPeriod? interestPeriod,
+      enums.InterestPeriodProperty? interestPeriod,
       String? notes,
       double? latitude,
       double? longitude,
@@ -4116,12 +4303,12 @@ extension $AccountExtension on Account {
       Wrapped<DateTime?>? openingBalanceDate,
       Wrapped<String?>? virtualBalance,
       Wrapped<bool?>? includeNetWorth,
-      Wrapped<enums.CreditCardType?>? creditCardType,
+      Wrapped<enums.CreditCardTypeProperty?>? creditCardType,
       Wrapped<DateTime?>? monthlyPaymentDate,
-      Wrapped<enums.LiabilityType?>? liabilityType,
-      Wrapped<enums.LiabilityDirection?>? liabilityDirection,
+      Wrapped<enums.LiabilityTypeProperty?>? liabilityType,
+      Wrapped<enums.LiabilityDirectionProperty?>? liabilityDirection,
       Wrapped<String?>? interest,
-      Wrapped<enums.InterestPeriod?>? interestPeriod,
+      Wrapped<enums.InterestPeriodProperty?>? interestPeriod,
       Wrapped<String?>? notes,
       Wrapped<double?>? latitude,
       Wrapped<double?>? longitude,
@@ -4192,7 +4379,7 @@ extension $AccountExtension on Account {
 
 @JsonSerializable(explicitToJson: true)
 class AccountStore {
-  AccountStore({
+  const AccountStore({
     required this.name,
     required this.type,
     this.iban,
@@ -4222,6 +4409,9 @@ class AccountStore {
   factory AccountStore.fromJson(Map<String, dynamic> json) =>
       _$AccountStoreFromJson(json);
 
+  static const toJsonFactory = _$AccountStoreToJson;
+  Map<String, dynamic> toJson() => _$AccountStoreToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   @JsonKey(
@@ -4239,8 +4429,7 @@ class AccountStore {
   final String? accountNumber;
   @JsonKey(name: 'opening_balance', includeIfNull: false)
   final String? openingBalance;
-  @JsonKey(
-      name: 'opening_balance_date', includeIfNull: false, toJson: _dateToJson)
+  @JsonKey(name: 'opening_balance_date', includeIfNull: false)
   final DateTime? openingBalanceDate;
   @JsonKey(name: 'virtual_balance', includeIfNull: false)
   final String? virtualBalance;
@@ -4257,43 +4446,42 @@ class AccountStore {
   @JsonKey(
     name: 'account_role',
     includeIfNull: false,
-    toJson: accountRolePropertyToJson,
-    fromJson: accountRolePropertyFromJson,
+    toJson: accountRolePropertyNullableToJson,
+    fromJson: accountRolePropertyNullableFromJson,
   )
   final enums.AccountRoleProperty? accountRole;
   @JsonKey(
     name: 'credit_card_type',
     includeIfNull: false,
-    toJson: creditCardTypeToJson,
-    fromJson: creditCardTypeFromJson,
+    toJson: creditCardTypePropertyNullableToJson,
+    fromJson: creditCardTypePropertyNullableFromJson,
   )
-  final enums.CreditCardType? creditCardType;
-  @JsonKey(
-      name: 'monthly_payment_date', includeIfNull: false, toJson: _dateToJson)
+  final enums.CreditCardTypeProperty? creditCardType;
+  @JsonKey(name: 'monthly_payment_date', includeIfNull: false)
   final DateTime? monthlyPaymentDate;
   @JsonKey(
     name: 'liability_type',
     includeIfNull: false,
-    toJson: liabilityTypeToJson,
-    fromJson: liabilityTypeFromJson,
+    toJson: liabilityTypePropertyNullableToJson,
+    fromJson: liabilityTypePropertyNullableFromJson,
   )
-  final enums.LiabilityType? liabilityType;
+  final enums.LiabilityTypeProperty? liabilityType;
   @JsonKey(
     name: 'liability_direction',
     includeIfNull: false,
-    toJson: liabilityDirectionToJson,
-    fromJson: liabilityDirectionFromJson,
+    toJson: liabilityDirectionPropertyNullableToJson,
+    fromJson: liabilityDirectionPropertyNullableFromJson,
   )
-  final enums.LiabilityDirection? liabilityDirection;
+  final enums.LiabilityDirectionProperty? liabilityDirection;
   @JsonKey(name: 'interest', includeIfNull: false)
   final String? interest;
   @JsonKey(
     name: 'interest_period',
     includeIfNull: false,
-    toJson: interestPeriodToJson,
-    fromJson: interestPeriodFromJson,
+    toJson: interestPeriodPropertyNullableToJson,
+    fromJson: interestPeriodPropertyNullableFromJson,
   )
-  final enums.InterestPeriod? interestPeriod;
+  final enums.InterestPeriodProperty? interestPeriod;
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   @JsonKey(name: 'latitude', includeIfNull: false)
@@ -4303,8 +4491,6 @@ class AccountStore {
   @JsonKey(name: 'zoom_level', includeIfNull: false)
   final int? zoomLevel;
   static const fromJsonFactory = _$AccountStoreFromJson;
-  static const toJsonFactory = _$AccountStoreToJson;
-  Map<String, dynamic> toJson() => _$AccountStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -4326,12 +4512,12 @@ extension $AccountStoreExtension on AccountStore {
       int? order,
       bool? includeNetWorth,
       enums.AccountRoleProperty? accountRole,
-      enums.CreditCardType? creditCardType,
+      enums.CreditCardTypeProperty? creditCardType,
       DateTime? monthlyPaymentDate,
-      enums.LiabilityType? liabilityType,
-      enums.LiabilityDirection? liabilityDirection,
+      enums.LiabilityTypeProperty? liabilityType,
+      enums.LiabilityDirectionProperty? liabilityDirection,
       String? interest,
-      enums.InterestPeriod? interestPeriod,
+      enums.InterestPeriodProperty? interestPeriod,
       String? notes,
       double? latitude,
       double? longitude,
@@ -4378,12 +4564,12 @@ extension $AccountStoreExtension on AccountStore {
       Wrapped<int?>? order,
       Wrapped<bool?>? includeNetWorth,
       Wrapped<enums.AccountRoleProperty?>? accountRole,
-      Wrapped<enums.CreditCardType?>? creditCardType,
+      Wrapped<enums.CreditCardTypeProperty?>? creditCardType,
       Wrapped<DateTime?>? monthlyPaymentDate,
-      Wrapped<enums.LiabilityType?>? liabilityType,
-      Wrapped<enums.LiabilityDirection?>? liabilityDirection,
+      Wrapped<enums.LiabilityTypeProperty?>? liabilityType,
+      Wrapped<enums.LiabilityDirectionProperty?>? liabilityDirection,
       Wrapped<String?>? interest,
-      Wrapped<enums.InterestPeriod?>? interestPeriod,
+      Wrapped<enums.InterestPeriodProperty?>? interestPeriod,
       Wrapped<String?>? notes,
       Wrapped<double?>? latitude,
       Wrapped<double?>? longitude,
@@ -4438,7 +4624,7 @@ extension $AccountStoreExtension on AccountStore {
 
 @JsonSerializable(explicitToJson: true)
 class AccountUpdate {
-  AccountUpdate({
+  const AccountUpdate({
     required this.name,
     this.iban,
     this.bic,
@@ -4466,6 +4652,9 @@ class AccountUpdate {
   factory AccountUpdate.fromJson(Map<String, dynamic> json) =>
       _$AccountUpdateFromJson(json);
 
+  static const toJsonFactory = _$AccountUpdateToJson;
+  Map<String, dynamic> toJson() => _$AccountUpdateToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   @JsonKey(name: 'iban', includeIfNull: false)
@@ -4476,8 +4665,7 @@ class AccountUpdate {
   final String? accountNumber;
   @JsonKey(name: 'opening_balance', includeIfNull: false)
   final String? openingBalance;
-  @JsonKey(
-      name: 'opening_balance_date', includeIfNull: false, toJson: _dateToJson)
+  @JsonKey(name: 'opening_balance_date', includeIfNull: false)
   final DateTime? openingBalanceDate;
   @JsonKey(name: 'virtual_balance', includeIfNull: false)
   final String? virtualBalance;
@@ -4494,36 +4682,35 @@ class AccountUpdate {
   @JsonKey(
     name: 'account_role',
     includeIfNull: false,
-    toJson: accountRolePropertyToJson,
-    fromJson: accountRolePropertyFromJson,
+    toJson: accountRolePropertyNullableToJson,
+    fromJson: accountRolePropertyNullableFromJson,
   )
   final enums.AccountRoleProperty? accountRole;
   @JsonKey(
     name: 'credit_card_type',
     includeIfNull: false,
-    toJson: creditCardTypeToJson,
-    fromJson: creditCardTypeFromJson,
+    toJson: creditCardTypePropertyNullableToJson,
+    fromJson: creditCardTypePropertyNullableFromJson,
   )
-  final enums.CreditCardType? creditCardType;
-  @JsonKey(
-      name: 'monthly_payment_date', includeIfNull: false, toJson: _dateToJson)
+  final enums.CreditCardTypeProperty? creditCardType;
+  @JsonKey(name: 'monthly_payment_date', includeIfNull: false)
   final DateTime? monthlyPaymentDate;
   @JsonKey(
     name: 'liability_type',
     includeIfNull: false,
-    toJson: liabilityTypeToJson,
-    fromJson: liabilityTypeFromJson,
+    toJson: liabilityTypePropertyNullableToJson,
+    fromJson: liabilityTypePropertyNullableFromJson,
   )
-  final enums.LiabilityType? liabilityType;
+  final enums.LiabilityTypeProperty? liabilityType;
   @JsonKey(name: 'interest', includeIfNull: false)
   final String? interest;
   @JsonKey(
     name: 'interest_period',
     includeIfNull: false,
-    toJson: interestPeriodToJson,
-    fromJson: interestPeriodFromJson,
+    toJson: interestPeriodPropertyNullableToJson,
+    fromJson: interestPeriodPropertyNullableFromJson,
   )
-  final enums.InterestPeriod? interestPeriod;
+  final enums.InterestPeriodProperty? interestPeriod;
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   @JsonKey(name: 'latitude', includeIfNull: false)
@@ -4533,8 +4720,6 @@ class AccountUpdate {
   @JsonKey(name: 'zoom_level', includeIfNull: false)
   final int? zoomLevel;
   static const fromJsonFactory = _$AccountUpdateFromJson;
-  static const toJsonFactory = _$AccountUpdateToJson;
-  Map<String, dynamic> toJson() => _$AccountUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -4555,11 +4740,11 @@ extension $AccountUpdateExtension on AccountUpdate {
       int? order,
       bool? includeNetWorth,
       enums.AccountRoleProperty? accountRole,
-      enums.CreditCardType? creditCardType,
+      enums.CreditCardTypeProperty? creditCardType,
       DateTime? monthlyPaymentDate,
-      enums.LiabilityType? liabilityType,
+      enums.LiabilityTypeProperty? liabilityType,
       String? interest,
-      enums.InterestPeriod? interestPeriod,
+      enums.InterestPeriodProperty? interestPeriod,
       String? notes,
       double? latitude,
       double? longitude,
@@ -4603,11 +4788,11 @@ extension $AccountUpdateExtension on AccountUpdate {
       Wrapped<int?>? order,
       Wrapped<bool?>? includeNetWorth,
       Wrapped<enums.AccountRoleProperty?>? accountRole,
-      Wrapped<enums.CreditCardType?>? creditCardType,
+      Wrapped<enums.CreditCardTypeProperty?>? creditCardType,
       Wrapped<DateTime?>? monthlyPaymentDate,
-      Wrapped<enums.LiabilityType?>? liabilityType,
+      Wrapped<enums.LiabilityTypeProperty?>? liabilityType,
       Wrapped<String?>? interest,
-      Wrapped<enums.InterestPeriod?>? interestPeriod,
+      Wrapped<enums.InterestPeriodProperty?>? interestPeriod,
       Wrapped<String?>? notes,
       Wrapped<double?>? latitude,
       Wrapped<double?>? longitude,
@@ -4658,7 +4843,7 @@ extension $AccountUpdateExtension on AccountUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class Attachment {
-  Attachment({
+  const Attachment({
     this.createdAt,
     this.updatedAt,
     required this.attachableType,
@@ -4675,6 +4860,9 @@ class Attachment {
 
   factory Attachment.fromJson(Map<String, dynamic> json) =>
       _$AttachmentFromJson(json);
+
+  static const toJsonFactory = _$AttachmentToJson;
+  Map<String, dynamic> toJson() => _$AttachmentToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -4706,8 +4894,6 @@ class Attachment {
   @JsonKey(name: 'size', includeIfNull: false)
   final int? size;
   static const fromJsonFactory = _$AttachmentFromJson;
-  static const toJsonFactory = _$AttachmentToJson;
-  Map<String, dynamic> toJson() => _$AttachmentToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -4777,7 +4963,7 @@ extension $AttachmentExtension on Attachment {
 
 @JsonSerializable(explicitToJson: true)
 class AttachmentStore {
-  AttachmentStore({
+  const AttachmentStore({
     required this.filename,
     required this.attachableType,
     required this.attachableId,
@@ -4787,6 +4973,9 @@ class AttachmentStore {
 
   factory AttachmentStore.fromJson(Map<String, dynamic> json) =>
       _$AttachmentStoreFromJson(json);
+
+  static const toJsonFactory = _$AttachmentStoreToJson;
+  Map<String, dynamic> toJson() => _$AttachmentStoreToJson(this);
 
   @JsonKey(name: 'filename', includeIfNull: false)
   final String filename;
@@ -4804,8 +4993,6 @@ class AttachmentStore {
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   static const fromJsonFactory = _$AttachmentStoreFromJson;
-  static const toJsonFactory = _$AttachmentStoreToJson;
-  Map<String, dynamic> toJson() => _$AttachmentStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -4846,7 +5033,7 @@ extension $AttachmentStoreExtension on AttachmentStore {
 
 @JsonSerializable(explicitToJson: true)
 class AttachmentUpdate {
-  AttachmentUpdate({
+  const AttachmentUpdate({
     this.filename,
     this.title,
     this.notes,
@@ -4855,6 +5042,9 @@ class AttachmentUpdate {
   factory AttachmentUpdate.fromJson(Map<String, dynamic> json) =>
       _$AttachmentUpdateFromJson(json);
 
+  static const toJsonFactory = _$AttachmentUpdateToJson;
+  Map<String, dynamic> toJson() => _$AttachmentUpdateToJson(this);
+
   @JsonKey(name: 'filename', includeIfNull: false)
   final String? filename;
   @JsonKey(name: 'title', includeIfNull: false)
@@ -4862,8 +5052,6 @@ class AttachmentUpdate {
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   static const fromJsonFactory = _$AttachmentUpdateFromJson;
-  static const toJsonFactory = _$AttachmentUpdateToJson;
-  Map<String, dynamic> toJson() => _$AttachmentUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -4890,7 +5078,7 @@ extension $AttachmentUpdateExtension on AttachmentUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class AvailableBudget {
-  AvailableBudget({
+  const AvailableBudget({
     this.createdAt,
     this.updatedAt,
     this.currencyId,
@@ -4906,6 +5094,9 @@ class AvailableBudget {
 
   factory AvailableBudget.fromJson(Map<String, dynamic> json) =>
       _$AvailableBudgetFromJson(json);
+
+  static const toJsonFactory = _$AvailableBudgetToJson;
+  Map<String, dynamic> toJson() => _$AvailableBudgetToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -4936,8 +5127,6 @@ class AvailableBudget {
       defaultValue: <BudgetSpent>[])
   final List<BudgetSpent>? spentOutsideBudget;
   static const fromJsonFactory = _$AvailableBudgetFromJson;
-  static const toJsonFactory = _$AvailableBudgetToJson;
-  Map<String, dynamic> toJson() => _$AvailableBudgetToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5008,132 +5197,8 @@ extension $AvailableBudgetExtension on AvailableBudget {
 }
 
 @JsonSerializable(explicitToJson: true)
-class AvailableBudgetStore {
-  AvailableBudgetStore({
-    this.currencyId,
-    this.currencyCode,
-    required this.amount,
-    required this.start,
-    required this.end,
-  });
-
-  factory AvailableBudgetStore.fromJson(Map<String, dynamic> json) =>
-      _$AvailableBudgetStoreFromJson(json);
-
-  @JsonKey(name: 'currency_id', includeIfNull: false)
-  final String? currencyId;
-  @JsonKey(name: 'currency_code', includeIfNull: false)
-  final String? currencyCode;
-  @JsonKey(name: 'amount', includeIfNull: false)
-  final String amount;
-  @JsonKey(name: 'start', includeIfNull: false, toJson: _dateToJson)
-  final DateTime start;
-  @JsonKey(name: 'end', includeIfNull: false, toJson: _dateToJson)
-  final DateTime end;
-  static const fromJsonFactory = _$AvailableBudgetStoreFromJson;
-  static const toJsonFactory = _$AvailableBudgetStoreToJson;
-  Map<String, dynamic> toJson() => _$AvailableBudgetStoreToJson(this);
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $AvailableBudgetStoreExtension on AvailableBudgetStore {
-  AvailableBudgetStore copyWith(
-      {String? currencyId,
-      String? currencyCode,
-      String? amount,
-      DateTime? start,
-      DateTime? end}) {
-    return AvailableBudgetStore(
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        amount: amount ?? this.amount,
-        start: start ?? this.start,
-        end: end ?? this.end);
-  }
-
-  AvailableBudgetStore copyWithWrapped(
-      {Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String>? amount,
-      Wrapped<DateTime>? start,
-      Wrapped<DateTime>? end}) {
-    return AvailableBudgetStore(
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        amount: (amount != null ? amount.value : this.amount),
-        start: (start != null ? start.value : this.start),
-        end: (end != null ? end.value : this.end));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class AvailableBudgetUpdate {
-  AvailableBudgetUpdate({
-    this.currencyId,
-    this.currencyCode,
-    this.amount,
-    this.start,
-    this.end,
-  });
-
-  factory AvailableBudgetUpdate.fromJson(Map<String, dynamic> json) =>
-      _$AvailableBudgetUpdateFromJson(json);
-
-  @JsonKey(name: 'currency_id', includeIfNull: false)
-  final String? currencyId;
-  @JsonKey(name: 'currency_code', includeIfNull: false)
-  final String? currencyCode;
-  @JsonKey(name: 'amount', includeIfNull: false)
-  final String? amount;
-  @JsonKey(name: 'start', includeIfNull: false, toJson: _dateToJson)
-  final DateTime? start;
-  @JsonKey(name: 'end', includeIfNull: false, toJson: _dateToJson)
-  final DateTime? end;
-  static const fromJsonFactory = _$AvailableBudgetUpdateFromJson;
-  static const toJsonFactory = _$AvailableBudgetUpdateToJson;
-  Map<String, dynamic> toJson() => _$AvailableBudgetUpdateToJson(this);
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $AvailableBudgetUpdateExtension on AvailableBudgetUpdate {
-  AvailableBudgetUpdate copyWith(
-      {String? currencyId,
-      String? currencyCode,
-      String? amount,
-      DateTime? start,
-      DateTime? end}) {
-    return AvailableBudgetUpdate(
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        amount: amount ?? this.amount,
-        start: start ?? this.start,
-        end: end ?? this.end);
-  }
-
-  AvailableBudgetUpdate copyWithWrapped(
-      {Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? amount,
-      Wrapped<DateTime?>? start,
-      Wrapped<DateTime?>? end}) {
-    return AvailableBudgetUpdate(
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        amount: (amount != null ? amount.value : this.amount),
-        start: (start != null ? start.value : this.start),
-        end: (end != null ? end.value : this.end));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class Bill {
-  Bill({
+  const Bill({
     this.createdAt,
     this.updatedAt,
     this.currencyId,
@@ -5161,6 +5226,9 @@ class Bill {
   });
 
   factory Bill.fromJson(Map<String, dynamic> json) => _$BillFromJson(json);
+
+  static const toJsonFactory = _$BillToJson;
+  Map<String, dynamic> toJson() => _$BillToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -5213,14 +5281,9 @@ class Bill {
   final String? objectGroupTitle;
   @JsonKey(name: 'pay_dates', includeIfNull: false, defaultValue: <DateTime>[])
   final List<DateTime>? payDates;
-  @JsonKey(
-      name: 'paid_dates',
-      includeIfNull: false,
-      defaultValue: <Bill$PaidDates>[])
-  final List<Bill$PaidDates>? paidDates;
+  @JsonKey(name: 'paid_dates', includeIfNull: false)
+  final List<Bill$PaidDates$Item>? paidDates;
   static const fromJsonFactory = _$BillFromJson;
-  static const toJsonFactory = _$BillToJson;
-  Map<String, dynamic> toJson() => _$BillToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5251,7 +5314,7 @@ extension $BillExtension on Bill {
       int? objectGroupOrder,
       String? objectGroupTitle,
       List<DateTime>? payDates,
-      List<Bill$PaidDates>? paidDates}) {
+      List<Bill$PaidDates$Item>? paidDates}) {
     return Bill(
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
@@ -5305,7 +5368,7 @@ extension $BillExtension on Bill {
       Wrapped<int?>? objectGroupOrder,
       Wrapped<String?>? objectGroupTitle,
       Wrapped<List<DateTime>?>? payDates,
-      Wrapped<List<Bill$PaidDates>?>? paidDates}) {
+      Wrapped<List<Bill$PaidDates$Item>?>? paidDates}) {
     return Bill(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
@@ -5351,7 +5414,7 @@ extension $BillExtension on Bill {
 
 @JsonSerializable(explicitToJson: true)
 class BillStore {
-  BillStore({
+  const BillStore({
     this.currencyId,
     this.currencyCode,
     required this.name,
@@ -5370,6 +5433,9 @@ class BillStore {
 
   factory BillStore.fromJson(Map<String, dynamic> json) =>
       _$BillStoreFromJson(json);
+
+  static const toJsonFactory = _$BillStoreToJson;
+  Map<String, dynamic> toJson() => _$BillStoreToJson(this);
 
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
@@ -5405,8 +5471,6 @@ class BillStore {
   @JsonKey(name: 'object_group_title', includeIfNull: false)
   final String? objectGroupTitle;
   static const fromJsonFactory = _$BillStoreFromJson;
-  static const toJsonFactory = _$BillStoreToJson;
-  Map<String, dynamic> toJson() => _$BillStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5485,10 +5549,10 @@ extension $BillStoreExtension on BillStore {
 
 @JsonSerializable(explicitToJson: true)
 class BillUpdate {
-  BillUpdate({
+  const BillUpdate({
     this.currencyId,
     this.currencyCode,
-    this.name,
+    required this.name,
     this.amountMin,
     this.amountMax,
     this.date,
@@ -5505,12 +5569,15 @@ class BillUpdate {
   factory BillUpdate.fromJson(Map<String, dynamic> json) =>
       _$BillUpdateFromJson(json);
 
+  static const toJsonFactory = _$BillUpdateToJson;
+  Map<String, dynamic> toJson() => _$BillUpdateToJson(this);
+
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'name', includeIfNull: false)
-  final String? name;
+  final String name;
   @JsonKey(name: 'amount_min', includeIfNull: false)
   final String? amountMin;
   @JsonKey(name: 'amount_max', includeIfNull: false)
@@ -5524,8 +5591,8 @@ class BillUpdate {
   @JsonKey(
     name: 'repeat_freq',
     includeIfNull: false,
-    toJson: billRepeatFrequencyToJson,
-    fromJson: billRepeatFrequencyFromJson,
+    toJson: billRepeatFrequencyNullableToJson,
+    fromJson: billRepeatFrequencyNullableFromJson,
   )
   final enums.BillRepeatFrequency? repeatFreq;
   @JsonKey(name: 'skip', includeIfNull: false)
@@ -5539,8 +5606,6 @@ class BillUpdate {
   @JsonKey(name: 'object_group_title', includeIfNull: false)
   final String? objectGroupTitle;
   static const fromJsonFactory = _$BillUpdateFromJson;
-  static const toJsonFactory = _$BillUpdateToJson;
-  Map<String, dynamic> toJson() => _$BillUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5582,7 +5647,7 @@ extension $BillUpdateExtension on BillUpdate {
   BillUpdate copyWithWrapped(
       {Wrapped<String?>? currencyId,
       Wrapped<String?>? currencyCode,
-      Wrapped<String?>? name,
+      Wrapped<String>? name,
       Wrapped<String?>? amountMin,
       Wrapped<String?>? amountMax,
       Wrapped<DateTime?>? date,
@@ -5619,7 +5684,7 @@ extension $BillUpdateExtension on BillUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class Budget {
-  Budget({
+  const Budget({
     this.createdAt,
     this.updatedAt,
     required this.name,
@@ -5636,6 +5701,9 @@ class Budget {
 
   factory Budget.fromJson(Map<String, dynamic> json) => _$BudgetFromJson(json);
 
+  static const toJsonFactory = _$BudgetToJson;
+  Map<String, dynamic> toJson() => _$BudgetToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -5651,8 +5719,8 @@ class Budget {
   @JsonKey(
     name: 'auto_budget_type',
     includeIfNull: false,
-    toJson: autoBudgetTypeToJson,
-    fromJson: autoBudgetTypeFromJson,
+    toJson: autoBudgetTypeNullableToJson,
+    fromJson: autoBudgetTypeNullableFromJson,
   )
   final enums.AutoBudgetType? autoBudgetType;
   @JsonKey(name: 'auto_budget_currency_id', includeIfNull: false)
@@ -5664,15 +5732,13 @@ class Budget {
   @JsonKey(
     name: 'auto_budget_period',
     includeIfNull: false,
-    toJson: autoBudgetPeriodToJson,
-    fromJson: autoBudgetPeriodFromJson,
+    toJson: autoBudgetPeriodNullableToJson,
+    fromJson: autoBudgetPeriodNullableFromJson,
   )
   final enums.AutoBudgetPeriod? autoBudgetPeriod;
   @JsonKey(name: 'spent', includeIfNull: false, defaultValue: <BudgetSpent>[])
   final List<BudgetSpent>? spent;
   static const fromJsonFactory = _$BudgetFromJson;
-  static const toJsonFactory = _$BudgetToJson;
-  Map<String, dynamic> toJson() => _$BudgetToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5749,7 +5815,7 @@ extension $BudgetExtension on Budget {
 
 @JsonSerializable(explicitToJson: true)
 class BudgetStore {
-  BudgetStore({
+  const BudgetStore({
     required this.name,
     this.active,
     this.order,
@@ -5764,6 +5830,9 @@ class BudgetStore {
   factory BudgetStore.fromJson(Map<String, dynamic> json) =>
       _$BudgetStoreFromJson(json);
 
+  static const toJsonFactory = _$BudgetStoreToJson;
+  Map<String, dynamic> toJson() => _$BudgetStoreToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   @JsonKey(name: 'active', includeIfNull: false)
@@ -5775,8 +5844,8 @@ class BudgetStore {
   @JsonKey(
     name: 'auto_budget_type',
     includeIfNull: false,
-    toJson: autoBudgetTypeToJson,
-    fromJson: autoBudgetTypeFromJson,
+    toJson: autoBudgetTypeNullableToJson,
+    fromJson: autoBudgetTypeNullableFromJson,
   )
   final enums.AutoBudgetType? autoBudgetType;
   @JsonKey(name: 'auto_budget_currency_id', includeIfNull: false)
@@ -5788,13 +5857,11 @@ class BudgetStore {
   @JsonKey(
     name: 'auto_budget_period',
     includeIfNull: false,
-    toJson: autoBudgetPeriodToJson,
-    fromJson: autoBudgetPeriodFromJson,
+    toJson: autoBudgetPeriodNullableToJson,
+    fromJson: autoBudgetPeriodNullableFromJson,
   )
   final enums.AutoBudgetPeriod? autoBudgetPeriod;
   static const fromJsonFactory = _$BudgetStoreFromJson;
-  static const toJsonFactory = _$BudgetStoreToJson;
-  Map<String, dynamic> toJson() => _$BudgetStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5859,8 +5926,8 @@ extension $BudgetStoreExtension on BudgetStore {
 
 @JsonSerializable(explicitToJson: true)
 class BudgetUpdate {
-  BudgetUpdate({
-    this.name,
+  const BudgetUpdate({
+    required this.name,
     this.active,
     this.order,
     this.notes,
@@ -5874,8 +5941,11 @@ class BudgetUpdate {
   factory BudgetUpdate.fromJson(Map<String, dynamic> json) =>
       _$BudgetUpdateFromJson(json);
 
+  static const toJsonFactory = _$BudgetUpdateToJson;
+  Map<String, dynamic> toJson() => _$BudgetUpdateToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
-  final String? name;
+  final String name;
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
   @JsonKey(name: 'order', includeIfNull: false)
@@ -5885,8 +5955,8 @@ class BudgetUpdate {
   @JsonKey(
     name: 'auto_budget_type',
     includeIfNull: false,
-    toJson: autoBudgetTypeToJson,
-    fromJson: autoBudgetTypeFromJson,
+    toJson: autoBudgetTypeNullableToJson,
+    fromJson: autoBudgetTypeNullableFromJson,
   )
   final enums.AutoBudgetType? autoBudgetType;
   @JsonKey(name: 'auto_budget_currency_id', includeIfNull: false)
@@ -5898,13 +5968,11 @@ class BudgetUpdate {
   @JsonKey(
     name: 'auto_budget_period',
     includeIfNull: false,
-    toJson: autoBudgetPeriodToJson,
-    fromJson: autoBudgetPeriodFromJson,
+    toJson: autoBudgetPeriodNullableToJson,
+    fromJson: autoBudgetPeriodNullableFromJson,
   )
   final enums.AutoBudgetPeriod? autoBudgetPeriod;
   static const fromJsonFactory = _$BudgetUpdateFromJson;
-  static const toJsonFactory = _$BudgetUpdateToJson;
-  Map<String, dynamic> toJson() => _$BudgetUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -5935,7 +6003,7 @@ extension $BudgetUpdateExtension on BudgetUpdate {
   }
 
   BudgetUpdate copyWithWrapped(
-      {Wrapped<String?>? name,
+      {Wrapped<String>? name,
       Wrapped<bool?>? active,
       Wrapped<int?>? order,
       Wrapped<String?>? notes,
@@ -5969,7 +6037,7 @@ extension $BudgetUpdateExtension on BudgetUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class BudgetLimit {
-  BudgetLimit({
+  const BudgetLimit({
     this.createdAt,
     this.updatedAt,
     required this.start,
@@ -5979,7 +6047,7 @@ class BudgetLimit {
     this.currencyName,
     this.currencySymbol,
     this.currencyDecimalPlaces,
-    required this.budgetId,
+    this.budgetId,
     this.period,
     required this.amount,
     this.spent,
@@ -5987,6 +6055,9 @@ class BudgetLimit {
 
   factory BudgetLimit.fromJson(Map<String, dynamic> json) =>
       _$BudgetLimitFromJson(json);
+
+  static const toJsonFactory = _$BudgetLimitToJson;
+  Map<String, dynamic> toJson() => _$BudgetLimitToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -6007,7 +6078,7 @@ class BudgetLimit {
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
   @JsonKey(name: 'budget_id', includeIfNull: false)
-  final String budgetId;
+  final String? budgetId;
   @JsonKey(name: 'period', includeIfNull: false)
   final String? period;
   @JsonKey(name: 'amount', includeIfNull: false)
@@ -6015,8 +6086,6 @@ class BudgetLimit {
   @JsonKey(name: 'spent', includeIfNull: false)
   final String? spent;
   static const fromJsonFactory = _$BudgetLimitFromJson;
-  static const toJsonFactory = _$BudgetLimitToJson;
-  Map<String, dynamic> toJson() => _$BudgetLimitToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6064,7 +6133,7 @@ extension $BudgetLimitExtension on BudgetLimit {
       Wrapped<String?>? currencyName,
       Wrapped<String?>? currencySymbol,
       Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String>? budgetId,
+      Wrapped<String?>? budgetId,
       Wrapped<String?>? period,
       Wrapped<String>? amount,
       Wrapped<String?>? spent}) {
@@ -6093,10 +6162,10 @@ extension $BudgetLimitExtension on BudgetLimit {
 
 @JsonSerializable(explicitToJson: true)
 class BudgetLimitStore {
-  BudgetLimitStore({
+  const BudgetLimitStore({
     this.currencyId,
     this.currencyCode,
-    required this.budgetId,
+    this.budgetId,
     required this.start,
     this.period,
     required this.end,
@@ -6106,12 +6175,15 @@ class BudgetLimitStore {
   factory BudgetLimitStore.fromJson(Map<String, dynamic> json) =>
       _$BudgetLimitStoreFromJson(json);
 
+  static const toJsonFactory = _$BudgetLimitStoreToJson;
+  Map<String, dynamic> toJson() => _$BudgetLimitStoreToJson(this);
+
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'budget_id', includeIfNull: false)
-  final String budgetId;
+  final String? budgetId;
   @JsonKey(name: 'start', includeIfNull: false, toJson: _dateToJson)
   final DateTime start;
   @JsonKey(name: 'period', includeIfNull: false)
@@ -6121,8 +6193,6 @@ class BudgetLimitStore {
   @JsonKey(name: 'amount', includeIfNull: false)
   final String amount;
   static const fromJsonFactory = _$BudgetLimitStoreFromJson;
-  static const toJsonFactory = _$BudgetLimitStoreToJson;
-  Map<String, dynamic> toJson() => _$BudgetLimitStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6150,7 +6220,7 @@ extension $BudgetLimitStoreExtension on BudgetLimitStore {
   BudgetLimitStore copyWithWrapped(
       {Wrapped<String?>? currencyId,
       Wrapped<String?>? currencyCode,
-      Wrapped<String>? budgetId,
+      Wrapped<String?>? budgetId,
       Wrapped<DateTime>? start,
       Wrapped<String?>? period,
       Wrapped<DateTime>? end,
@@ -6169,7 +6239,7 @@ extension $BudgetLimitStoreExtension on BudgetLimitStore {
 
 @JsonSerializable(explicitToJson: true)
 class BudgetSpent {
-  BudgetSpent({
+  const BudgetSpent({
     this.sum,
     this.currencyId,
     this.currencyCode,
@@ -6179,6 +6249,9 @@ class BudgetSpent {
 
   factory BudgetSpent.fromJson(Map<String, dynamic> json) =>
       _$BudgetSpentFromJson(json);
+
+  static const toJsonFactory = _$BudgetSpentToJson;
+  Map<String, dynamic> toJson() => _$BudgetSpentToJson(this);
 
   @JsonKey(name: 'sum', includeIfNull: false)
   final String? sum;
@@ -6191,8 +6264,6 @@ class BudgetSpent {
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
   static const fromJsonFactory = _$BudgetSpentFromJson;
-  static const toJsonFactory = _$BudgetSpentToJson;
-  Map<String, dynamic> toJson() => _$BudgetSpentToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6236,7 +6307,7 @@ extension $BudgetSpentExtension on BudgetSpent {
 
 @JsonSerializable(explicitToJson: true)
 class Category {
-  Category({
+  const Category({
     this.createdAt,
     this.updatedAt,
     required this.name,
@@ -6247,6 +6318,9 @@ class Category {
 
   factory Category.fromJson(Map<String, dynamic> json) =>
       _$CategoryFromJson(json);
+
+  static const toJsonFactory = _$CategoryToJson;
+  Map<String, dynamic> toJson() => _$CategoryToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -6262,8 +6336,6 @@ class Category {
       name: 'earned', includeIfNull: false, defaultValue: <CategoryEarned>[])
   final List<CategoryEarned>? earned;
   static const fromJsonFactory = _$CategoryFromJson;
-  static const toJsonFactory = _$CategoryToJson;
-  Map<String, dynamic> toJson() => _$CategoryToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6304,57 +6376,23 @@ extension $CategoryExtension on Category {
 }
 
 @JsonSerializable(explicitToJson: true)
-class CategoryStore {
-  CategoryStore({
-    required this.name,
-    this.notes,
-  });
-
-  factory CategoryStore.fromJson(Map<String, dynamic> json) =>
-      _$CategoryStoreFromJson(json);
-
-  @JsonKey(name: 'name', includeIfNull: false)
-  final String name;
-  @JsonKey(name: 'notes', includeIfNull: false)
-  final String? notes;
-  static const fromJsonFactory = _$CategoryStoreFromJson;
-  static const toJsonFactory = _$CategoryStoreToJson;
-  Map<String, dynamic> toJson() => _$CategoryStoreToJson(this);
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $CategoryStoreExtension on CategoryStore {
-  CategoryStore copyWith({String? name, String? notes}) {
-    return CategoryStore(name: name ?? this.name, notes: notes ?? this.notes);
-  }
-
-  CategoryStore copyWithWrapped(
-      {Wrapped<String>? name, Wrapped<String?>? notes}) {
-    return CategoryStore(
-        name: (name != null ? name.value : this.name),
-        notes: (notes != null ? notes.value : this.notes));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class CategoryUpdate {
-  CategoryUpdate({
-    this.name,
+  const CategoryUpdate({
+    required this.name,
     this.notes,
   });
 
   factory CategoryUpdate.fromJson(Map<String, dynamic> json) =>
       _$CategoryUpdateFromJson(json);
 
+  static const toJsonFactory = _$CategoryUpdateToJson;
+  Map<String, dynamic> toJson() => _$CategoryUpdateToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
-  final String? name;
+  final String name;
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   static const fromJsonFactory = _$CategoryUpdateFromJson;
-  static const toJsonFactory = _$CategoryUpdateToJson;
-  Map<String, dynamic> toJson() => _$CategoryUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6366,7 +6404,7 @@ extension $CategoryUpdateExtension on CategoryUpdate {
   }
 
   CategoryUpdate copyWithWrapped(
-      {Wrapped<String?>? name, Wrapped<String?>? notes}) {
+      {Wrapped<String>? name, Wrapped<String?>? notes}) {
     return CategoryUpdate(
         name: (name != null ? name.value : this.name),
         notes: (notes != null ? notes.value : this.notes));
@@ -6375,7 +6413,7 @@ extension $CategoryUpdateExtension on CategoryUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class CategoryEarned {
-  CategoryEarned({
+  const CategoryEarned({
     this.currencyId,
     this.currencyCode,
     this.currencySymbol,
@@ -6386,8 +6424,11 @@ class CategoryEarned {
   factory CategoryEarned.fromJson(Map<String, dynamic> json) =>
       _$CategoryEarnedFromJson(json);
 
+  static const toJsonFactory = _$CategoryEarnedToJson;
+  Map<String, dynamic> toJson() => _$CategoryEarnedToJson(this);
+
   @JsonKey(name: 'currency_id', includeIfNull: false)
-  final int? currencyId;
+  final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'currency_symbol', includeIfNull: false)
@@ -6397,8 +6438,6 @@ class CategoryEarned {
   @JsonKey(name: 'sum', includeIfNull: false)
   final String? sum;
   static const fromJsonFactory = _$CategoryEarnedFromJson;
-  static const toJsonFactory = _$CategoryEarnedToJson;
-  Map<String, dynamic> toJson() => _$CategoryEarnedToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6406,7 +6445,7 @@ class CategoryEarned {
 
 extension $CategoryEarnedExtension on CategoryEarned {
   CategoryEarned copyWith(
-      {int? currencyId,
+      {String? currencyId,
       String? currencyCode,
       String? currencySymbol,
       int? currencyDecimalPlaces,
@@ -6421,7 +6460,7 @@ extension $CategoryEarnedExtension on CategoryEarned {
   }
 
   CategoryEarned copyWithWrapped(
-      {Wrapped<int?>? currencyId,
+      {Wrapped<String?>? currencyId,
       Wrapped<String?>? currencyCode,
       Wrapped<String?>? currencySymbol,
       Wrapped<int?>? currencyDecimalPlaces,
@@ -6442,7 +6481,7 @@ extension $CategoryEarnedExtension on CategoryEarned {
 
 @JsonSerializable(explicitToJson: true)
 class CategorySpent {
-  CategorySpent({
+  const CategorySpent({
     this.currencyId,
     this.currencyCode,
     this.currencySymbol,
@@ -6453,8 +6492,11 @@ class CategorySpent {
   factory CategorySpent.fromJson(Map<String, dynamic> json) =>
       _$CategorySpentFromJson(json);
 
+  static const toJsonFactory = _$CategorySpentToJson;
+  Map<String, dynamic> toJson() => _$CategorySpentToJson(this);
+
   @JsonKey(name: 'currency_id', includeIfNull: false)
-  final int? currencyId;
+  final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'currency_symbol', includeIfNull: false)
@@ -6464,8 +6506,6 @@ class CategorySpent {
   @JsonKey(name: 'sum', includeIfNull: false)
   final String? sum;
   static const fromJsonFactory = _$CategorySpentFromJson;
-  static const toJsonFactory = _$CategorySpentToJson;
-  Map<String, dynamic> toJson() => _$CategorySpentToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6473,7 +6513,7 @@ class CategorySpent {
 
 extension $CategorySpentExtension on CategorySpent {
   CategorySpent copyWith(
-      {int? currencyId,
+      {String? currencyId,
       String? currencyCode,
       String? currencySymbol,
       int? currencyDecimalPlaces,
@@ -6488,7 +6528,7 @@ extension $CategorySpentExtension on CategorySpent {
   }
 
   CategorySpent copyWithWrapped(
-      {Wrapped<int?>? currencyId,
+      {Wrapped<String?>? currencyId,
       Wrapped<String?>? currencyCode,
       Wrapped<String?>? currencySymbol,
       Wrapped<int?>? currencyDecimalPlaces,
@@ -6509,7 +6549,7 @@ extension $CategorySpentExtension on CategorySpent {
 
 @JsonSerializable(explicitToJson: true)
 class ObjectGroup {
-  ObjectGroup({
+  const ObjectGroup({
     this.createdAt,
     this.updatedAt,
     required this.title,
@@ -6518,6 +6558,9 @@ class ObjectGroup {
 
   factory ObjectGroup.fromJson(Map<String, dynamic> json) =>
       _$ObjectGroupFromJson(json);
+
+  static const toJsonFactory = _$ObjectGroupToJson;
+  Map<String, dynamic> toJson() => _$ObjectGroupToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -6528,8 +6571,6 @@ class ObjectGroup {
   @JsonKey(name: 'order', includeIfNull: false)
   final int order;
   static const fromJsonFactory = _$ObjectGroupFromJson;
-  static const toJsonFactory = _$ObjectGroupToJson;
-  Map<String, dynamic> toJson() => _$ObjectGroupToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6560,21 +6601,22 @@ extension $ObjectGroupExtension on ObjectGroup {
 
 @JsonSerializable(explicitToJson: true)
 class ObjectGroupUpdate {
-  ObjectGroupUpdate({
-    this.title,
+  const ObjectGroupUpdate({
+    required this.title,
     this.order,
   });
 
   factory ObjectGroupUpdate.fromJson(Map<String, dynamic> json) =>
       _$ObjectGroupUpdateFromJson(json);
 
+  static const toJsonFactory = _$ObjectGroupUpdateToJson;
+  Map<String, dynamic> toJson() => _$ObjectGroupUpdateToJson(this);
+
   @JsonKey(name: 'title', includeIfNull: false)
-  final String? title;
+  final String title;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
   static const fromJsonFactory = _$ObjectGroupUpdateFromJson;
-  static const toJsonFactory = _$ObjectGroupUpdateToJson;
-  Map<String, dynamic> toJson() => _$ObjectGroupUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6587,7 +6629,7 @@ extension $ObjectGroupUpdateExtension on ObjectGroupUpdate {
   }
 
   ObjectGroupUpdate copyWithWrapped(
-      {Wrapped<String?>? title, Wrapped<int?>? order}) {
+      {Wrapped<String>? title, Wrapped<int?>? order}) {
     return ObjectGroupUpdate(
         title: (title != null ? title.value : this.title),
         order: (order != null ? order.value : this.order));
@@ -6595,8 +6637,82 @@ extension $ObjectGroupUpdateExtension on ObjectGroupUpdate {
 }
 
 @JsonSerializable(explicitToJson: true)
+class ObjectLink {
+  const ObjectLink();
+
+  factory ObjectLink.fromJson(Map<String, dynamic> json) =>
+      _$ObjectLinkFromJson(json);
+
+  static const toJsonFactory = _$ObjectLinkToJson;
+  Map<String, dynamic> toJson() => _$ObjectLinkToJson(this);
+
+  static const fromJsonFactory = _$ObjectLinkFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class PageLink {
+  const PageLink({
+    this.self,
+    this.first,
+    this.next,
+    this.prev,
+    this.last,
+  });
+
+  factory PageLink.fromJson(Map<String, dynamic> json) =>
+      _$PageLinkFromJson(json);
+
+  static const toJsonFactory = _$PageLinkToJson;
+  Map<String, dynamic> toJson() => _$PageLinkToJson(this);
+
+  @JsonKey(name: 'self', includeIfNull: false)
+  final String? self;
+  @JsonKey(name: 'first', includeIfNull: false)
+  final String? first;
+  @JsonKey(name: 'next', includeIfNull: false)
+  final String? next;
+  @JsonKey(name: 'prev', includeIfNull: false)
+  final String? prev;
+  @JsonKey(name: 'last', includeIfNull: false)
+  final String? last;
+  static const fromJsonFactory = _$PageLinkFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $PageLinkExtension on PageLink {
+  PageLink copyWith(
+      {String? self, String? first, String? next, String? prev, String? last}) {
+    return PageLink(
+        self: self ?? this.self,
+        first: first ?? this.first,
+        next: next ?? this.next,
+        prev: prev ?? this.prev,
+        last: last ?? this.last);
+  }
+
+  PageLink copyWithWrapped(
+      {Wrapped<String?>? self,
+      Wrapped<String?>? first,
+      Wrapped<String?>? next,
+      Wrapped<String?>? prev,
+      Wrapped<String?>? last}) {
+    return PageLink(
+        self: (self != null ? self.value : this.self),
+        first: (first != null ? first.value : this.first),
+        next: (next != null ? next.value : this.next),
+        prev: (prev != null ? prev.value : this.prev),
+        last: (last != null ? last.value : this.last));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class PiggyBank {
-  PiggyBank({
+  const PiggyBank({
     this.createdAt,
     this.updatedAt,
     required this.accountId,
@@ -6606,7 +6722,7 @@ class PiggyBank {
     this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
-    required this.targetAmount,
+    this.targetAmount,
     this.percentage,
     this.currentAmount,
     this.leftToSave,
@@ -6623,6 +6739,9 @@ class PiggyBank {
 
   factory PiggyBank.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankFromJson(json);
+
+  static const toJsonFactory = _$PiggyBankToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -6652,9 +6771,9 @@ class PiggyBank {
   final String? leftToSave;
   @JsonKey(name: 'save_per_month', includeIfNull: false)
   final String? savePerMonth;
-  @JsonKey(name: 'start_date', includeIfNull: false)
+  @JsonKey(name: 'start_date', includeIfNull: false, toJson: _dateToJson)
   final DateTime? startDate;
-  @JsonKey(name: 'target_date', includeIfNull: false)
+  @JsonKey(name: 'target_date', includeIfNull: false, toJson: _dateToJson)
   final DateTime? targetDate;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
@@ -6669,8 +6788,6 @@ class PiggyBank {
   @JsonKey(name: 'object_group_title', includeIfNull: false)
   final String? objectGroupTitle;
   static const fromJsonFactory = _$PiggyBankFromJson;
-  static const toJsonFactory = _$PiggyBankToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6791,10 +6908,10 @@ extension $PiggyBankExtension on PiggyBank {
 
 @JsonSerializable(explicitToJson: true)
 class PiggyBankStore {
-  PiggyBankStore({
+  const PiggyBankStore({
     required this.name,
     required this.accountId,
-    required this.targetAmount,
+    this.targetAmount,
     this.currentAmount,
     this.startDate,
     this.targetDate,
@@ -6807,6 +6924,9 @@ class PiggyBankStore {
 
   factory PiggyBankStore.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankStoreFromJson(json);
+
+  static const toJsonFactory = _$PiggyBankStoreToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankStoreToJson(this);
 
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
@@ -6831,8 +6951,6 @@ class PiggyBankStore {
   @JsonKey(name: 'object_group_title', includeIfNull: false)
   final String? objectGroupTitle;
   static const fromJsonFactory = _$PiggyBankStoreFromJson;
-  static const toJsonFactory = _$PiggyBankStoreToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -6899,7 +7017,7 @@ extension $PiggyBankStoreExtension on PiggyBankStore {
 
 @JsonSerializable(explicitToJson: true)
 class PiggyBankUpdate {
-  PiggyBankUpdate({
+  const PiggyBankUpdate({
     this.name,
     this.accountId,
     this.currencyId,
@@ -6917,6 +7035,9 @@ class PiggyBankUpdate {
 
   factory PiggyBankUpdate.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankUpdateFromJson(json);
+
+  static const toJsonFactory = _$PiggyBankUpdateToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankUpdateToJson(this);
 
   @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
@@ -6945,8 +7066,6 @@ class PiggyBankUpdate {
   @JsonKey(name: 'object_group_title', includeIfNull: false)
   final String? objectGroupTitle;
   static const fromJsonFactory = _$PiggyBankUpdateFromJson;
-  static const toJsonFactory = _$PiggyBankUpdateToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7022,7 +7141,7 @@ extension $PiggyBankUpdateExtension on PiggyBankUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class PiggyBankEvent {
-  PiggyBankEvent({
+  const PiggyBankEvent({
     this.createdAt,
     this.updatedAt,
     this.currencyId,
@@ -7036,6 +7155,9 @@ class PiggyBankEvent {
 
   factory PiggyBankEvent.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankEventFromJson(json);
+
+  static const toJsonFactory = _$PiggyBankEventToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankEventToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -7056,8 +7178,6 @@ class PiggyBankEvent {
   @JsonKey(name: 'transaction_group_id', includeIfNull: false)
   final String? transactionGroupId;
   static const fromJsonFactory = _$PiggyBankEventFromJson;
-  static const toJsonFactory = _$PiggyBankEventToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankEventToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7121,7 +7241,7 @@ extension $PiggyBankEventExtension on PiggyBankEvent {
 
 @JsonSerializable(explicitToJson: true)
 class Preference {
-  Preference({
+  const Preference({
     this.createdAt,
     this.updatedAt,
     required this.name,
@@ -7130,6 +7250,9 @@ class Preference {
 
   factory Preference.fromJson(Map<String, dynamic> json) =>
       _$PreferenceFromJson(json);
+
+  static const toJsonFactory = _$PreferenceToJson;
+  Map<String, dynamic> toJson() => _$PreferenceToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -7140,8 +7263,6 @@ class Preference {
   @JsonKey(name: 'data', includeIfNull: false)
   final PolymorphicProperty data;
   static const fromJsonFactory = _$PreferenceFromJson;
-  static const toJsonFactory = _$PreferenceToJson;
-  Map<String, dynamic> toJson() => _$PreferenceToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7175,18 +7296,19 @@ extension $PreferenceExtension on Preference {
 
 @JsonSerializable(explicitToJson: true)
 class PreferenceUpdate {
-  PreferenceUpdate({
+  const PreferenceUpdate({
     required this.data,
   });
 
   factory PreferenceUpdate.fromJson(Map<String, dynamic> json) =>
       _$PreferenceUpdateFromJson(json);
 
+  static const toJsonFactory = _$PreferenceUpdateToJson;
+  Map<String, dynamic> toJson() => _$PreferenceUpdateToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final PolymorphicProperty data;
   static const fromJsonFactory = _$PreferenceUpdateFromJson;
-  static const toJsonFactory = _$PreferenceUpdateToJson;
-  Map<String, dynamic> toJson() => _$PreferenceUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7204,7 +7326,7 @@ extension $PreferenceUpdateExtension on PreferenceUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class Recurrence {
-  Recurrence({
+  const Recurrence({
     this.createdAt,
     this.updatedAt,
     this.type,
@@ -7224,6 +7346,9 @@ class Recurrence {
   factory Recurrence.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -7231,19 +7356,19 @@ class Recurrence {
   @JsonKey(
     name: 'type',
     includeIfNull: false,
-    toJson: recurrenceTransactionTypeToJson,
-    fromJson: recurrenceTransactionTypeFromJson,
+    toJson: recurrenceTransactionTypeNullableToJson,
+    fromJson: recurrenceTransactionTypeNullableFromJson,
   )
   final enums.RecurrenceTransactionType? type;
   @JsonKey(name: 'title', includeIfNull: false)
   final String? title;
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
-  @JsonKey(name: 'first_date', includeIfNull: false)
+  @JsonKey(name: 'first_date', includeIfNull: false, toJson: _dateToJson)
   final DateTime? firstDate;
-  @JsonKey(name: 'latest_date', includeIfNull: false)
+  @JsonKey(name: 'latest_date', includeIfNull: false, toJson: _dateToJson)
   final DateTime? latestDate;
-  @JsonKey(name: 'repeat_until', includeIfNull: false)
+  @JsonKey(name: 'repeat_until', includeIfNull: false, toJson: _dateToJson)
   final DateTime? repeatUntil;
   @JsonKey(name: 'nr_of_repetitions', includeIfNull: false)
   final int? nrOfRepetitions;
@@ -7264,8 +7389,6 @@ class Recurrence {
       defaultValue: <RecurrenceTransaction>[])
   final List<RecurrenceTransaction>? transactions;
   static const fromJsonFactory = _$RecurrenceFromJson;
-  static const toJsonFactory = _$RecurrenceToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7345,12 +7468,12 @@ extension $RecurrenceExtension on Recurrence {
 
 @JsonSerializable(explicitToJson: true)
 class RecurrenceStore {
-  RecurrenceStore({
+  const RecurrenceStore({
     required this.type,
     required this.title,
     this.description,
     required this.firstDate,
-    required this.repeatUntil,
+    this.repeatUntil,
     this.nrOfRepetitions,
     this.applyRules,
     this.active,
@@ -7361,6 +7484,9 @@ class RecurrenceStore {
 
   factory RecurrenceStore.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceStoreFromJson(json);
+
+  static const toJsonFactory = _$RecurrenceStoreToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceStoreToJson(this);
 
   @JsonKey(
     name: 'type',
@@ -7396,8 +7522,6 @@ class RecurrenceStore {
       defaultValue: <RecurrenceTransactionStore>[])
   final List<RecurrenceTransactionStore> transactions;
   static const fromJsonFactory = _$RecurrenceStoreFromJson;
-  static const toJsonFactory = _$RecurrenceStoreToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7465,7 +7589,7 @@ extension $RecurrenceStoreExtension on RecurrenceStore {
 
 @JsonSerializable(explicitToJson: true)
 class RecurrenceUpdate {
-  RecurrenceUpdate({
+  const RecurrenceUpdate({
     this.title,
     this.description,
     this.firstDate,
@@ -7480,6 +7604,9 @@ class RecurrenceUpdate {
 
   factory RecurrenceUpdate.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceUpdateFromJson(json);
+
+  static const toJsonFactory = _$RecurrenceUpdateToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceUpdateToJson(this);
 
   @JsonKey(name: 'title', includeIfNull: false)
   final String? title;
@@ -7508,8 +7635,6 @@ class RecurrenceUpdate {
       defaultValue: <RecurrenceTransactionUpdate>[])
   final List<RecurrenceTransactionUpdate>? transactions;
   static const fromJsonFactory = _$RecurrenceUpdateFromJson;
-  static const toJsonFactory = _$RecurrenceUpdateToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7573,7 +7698,7 @@ extension $RecurrenceUpdateExtension on RecurrenceUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class RecurrenceRepetition {
-  RecurrenceRepetition({
+  const RecurrenceRepetition({
     this.id,
     this.createdAt,
     this.updatedAt,
@@ -7587,6 +7712,9 @@ class RecurrenceRepetition {
 
   factory RecurrenceRepetition.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceRepetitionFromJson(json);
+
+  static const toJsonFactory = _$RecurrenceRepetitionToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceRepetitionToJson(this);
 
   @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
@@ -7613,8 +7741,6 @@ class RecurrenceRepetition {
       name: 'occurrences', includeIfNull: false, defaultValue: <DateTime>[])
   final List<DateTime>? occurrences;
   static const fromJsonFactory = _$RecurrenceRepetitionFromJson;
-  static const toJsonFactory = _$RecurrenceRepetitionToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceRepetitionToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7670,7 +7796,7 @@ extension $RecurrenceRepetitionExtension on RecurrenceRepetition {
 
 @JsonSerializable(explicitToJson: true)
 class RecurrenceRepetitionStore {
-  RecurrenceRepetitionStore({
+  const RecurrenceRepetitionStore({
     required this.type,
     required this.moment,
     this.skip,
@@ -7679,6 +7805,9 @@ class RecurrenceRepetitionStore {
 
   factory RecurrenceRepetitionStore.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceRepetitionStoreFromJson(json);
+
+  static const toJsonFactory = _$RecurrenceRepetitionStoreToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceRepetitionStoreToJson(this);
 
   @JsonKey(
     name: 'type',
@@ -7694,8 +7823,6 @@ class RecurrenceRepetitionStore {
   @JsonKey(name: 'weekend', includeIfNull: false)
   final int? weekend;
   static const fromJsonFactory = _$RecurrenceRepetitionStoreFromJson;
-  static const toJsonFactory = _$RecurrenceRepetitionStoreToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceRepetitionStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7729,7 +7856,7 @@ extension $RecurrenceRepetitionStoreExtension on RecurrenceRepetitionStore {
 
 @JsonSerializable(explicitToJson: true)
 class RecurrenceRepetitionUpdate {
-  RecurrenceRepetitionUpdate({
+  const RecurrenceRepetitionUpdate({
     this.type,
     this.moment,
     this.skip,
@@ -7739,11 +7866,14 @@ class RecurrenceRepetitionUpdate {
   factory RecurrenceRepetitionUpdate.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceRepetitionUpdateFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceRepetitionUpdateToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceRepetitionUpdateToJson(this);
+
   @JsonKey(
     name: 'type',
     includeIfNull: false,
-    toJson: recurrenceRepetitionTypeToJson,
-    fromJson: recurrenceRepetitionTypeFromJson,
+    toJson: recurrenceRepetitionTypeNullableToJson,
+    fromJson: recurrenceRepetitionTypeNullableFromJson,
   )
   final enums.RecurrenceRepetitionType? type;
   @JsonKey(name: 'moment', includeIfNull: false)
@@ -7753,8 +7883,6 @@ class RecurrenceRepetitionUpdate {
   @JsonKey(name: 'weekend', includeIfNull: false)
   final int? weekend;
   static const fromJsonFactory = _$RecurrenceRepetitionUpdateFromJson;
-  static const toJsonFactory = _$RecurrenceRepetitionUpdateToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceRepetitionUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7788,7 +7916,8 @@ extension $RecurrenceRepetitionUpdateExtension on RecurrenceRepetitionUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class RecurrenceTransaction {
-  RecurrenceTransaction({
+  const RecurrenceTransaction({
+    this.id,
     required this.description,
     required this.amount,
     this.foreignAmount,
@@ -7815,11 +7944,18 @@ class RecurrenceTransaction {
     this.tags,
     this.piggyBankId,
     this.piggyBankName,
+    this.billId,
+    this.billName,
   });
 
   factory RecurrenceTransaction.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceTransactionFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceTransactionToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceTransactionToJson(this);
+
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String? id;
   @JsonKey(name: 'description', includeIfNull: false)
   final String description;
   @JsonKey(name: 'amount', includeIfNull: false)
@@ -7859,8 +7995,8 @@ class RecurrenceTransaction {
   @JsonKey(
     name: 'source_type',
     includeIfNull: false,
-    toJson: accountTypePropertyToJson,
-    fromJson: accountTypePropertyFromJson,
+    toJson: accountTypePropertyNullableToJson,
+    fromJson: accountTypePropertyNullableFromJson,
   )
   final enums.AccountTypeProperty? sourceType;
   @JsonKey(name: 'destination_id', includeIfNull: false)
@@ -7872,8 +8008,8 @@ class RecurrenceTransaction {
   @JsonKey(
     name: 'destination_type',
     includeIfNull: false,
-    toJson: accountTypePropertyToJson,
-    fromJson: accountTypePropertyFromJson,
+    toJson: accountTypePropertyNullableToJson,
+    fromJson: accountTypePropertyNullableFromJson,
   )
   final enums.AccountTypeProperty? destinationType;
   @JsonKey(name: 'tags', includeIfNull: false, defaultValue: <String>[])
@@ -7882,9 +8018,11 @@ class RecurrenceTransaction {
   final String? piggyBankId;
   @JsonKey(name: 'piggy_bank_name', includeIfNull: false)
   final String? piggyBankName;
+  @JsonKey(name: 'bill_id', includeIfNull: false)
+  final String? billId;
+  @JsonKey(name: 'bill_name', includeIfNull: false)
+  final String? billName;
   static const fromJsonFactory = _$RecurrenceTransactionFromJson;
-  static const toJsonFactory = _$RecurrenceTransactionToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceTransactionToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -7892,7 +8030,8 @@ class RecurrenceTransaction {
 
 extension $RecurrenceTransactionExtension on RecurrenceTransaction {
   RecurrenceTransaction copyWith(
-      {String? description,
+      {String? id,
+      String? description,
       String? amount,
       String? foreignAmount,
       String? currencyId,
@@ -7917,8 +8056,11 @@ extension $RecurrenceTransactionExtension on RecurrenceTransaction {
       enums.AccountTypeProperty? destinationType,
       List<String>? tags,
       String? piggyBankId,
-      String? piggyBankName}) {
+      String? piggyBankName,
+      String? billId,
+      String? billName}) {
     return RecurrenceTransaction(
+        id: id ?? this.id,
         description: description ?? this.description,
         amount: amount ?? this.amount,
         foreignAmount: foreignAmount ?? this.foreignAmount,
@@ -7947,11 +8089,14 @@ extension $RecurrenceTransactionExtension on RecurrenceTransaction {
         destinationType: destinationType ?? this.destinationType,
         tags: tags ?? this.tags,
         piggyBankId: piggyBankId ?? this.piggyBankId,
-        piggyBankName: piggyBankName ?? this.piggyBankName);
+        piggyBankName: piggyBankName ?? this.piggyBankName,
+        billId: billId ?? this.billId,
+        billName: billName ?? this.billName);
   }
 
   RecurrenceTransaction copyWithWrapped(
-      {Wrapped<String>? description,
+      {Wrapped<String?>? id,
+      Wrapped<String>? description,
       Wrapped<String>? amount,
       Wrapped<String?>? foreignAmount,
       Wrapped<String?>? currencyId,
@@ -7976,8 +8121,11 @@ extension $RecurrenceTransactionExtension on RecurrenceTransaction {
       Wrapped<enums.AccountTypeProperty?>? destinationType,
       Wrapped<List<String>?>? tags,
       Wrapped<String?>? piggyBankId,
-      Wrapped<String?>? piggyBankName}) {
+      Wrapped<String?>? piggyBankName,
+      Wrapped<String?>? billId,
+      Wrapped<String?>? billName}) {
     return RecurrenceTransaction(
+        id: (id != null ? id.value : this.id),
         description:
             (description != null ? description.value : this.description),
         amount: (amount != null ? amount.value : this.amount),
@@ -8028,13 +8176,15 @@ extension $RecurrenceTransactionExtension on RecurrenceTransaction {
         piggyBankId:
             (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
         piggyBankName:
-            (piggyBankName != null ? piggyBankName.value : this.piggyBankName));
+            (piggyBankName != null ? piggyBankName.value : this.piggyBankName),
+        billId: (billId != null ? billId.value : this.billId),
+        billName: (billName != null ? billName.value : this.billName));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class RecurrenceTransactionStore {
-  RecurrenceTransactionStore({
+  const RecurrenceTransactionStore({
     required this.description,
     required this.amount,
     this.foreignAmount,
@@ -8048,10 +8198,14 @@ class RecurrenceTransactionStore {
     required this.destinationId,
     this.tags,
     this.piggyBankId,
+    this.billId,
   });
 
   factory RecurrenceTransactionStore.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceTransactionStoreFromJson(json);
+
+  static const toJsonFactory = _$RecurrenceTransactionStoreToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceTransactionStoreToJson(this);
 
   @JsonKey(name: 'description', includeIfNull: false)
   final String description;
@@ -8079,9 +8233,9 @@ class RecurrenceTransactionStore {
   final List<String>? tags;
   @JsonKey(name: 'piggy_bank_id', includeIfNull: false)
   final String? piggyBankId;
+  @JsonKey(name: 'bill_id', includeIfNull: false)
+  final String? billId;
   static const fromJsonFactory = _$RecurrenceTransactionStoreFromJson;
-  static const toJsonFactory = _$RecurrenceTransactionStoreToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceTransactionStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8101,7 +8255,8 @@ extension $RecurrenceTransactionStoreExtension on RecurrenceTransactionStore {
       String? sourceId,
       String? destinationId,
       List<String>? tags,
-      String? piggyBankId}) {
+      String? piggyBankId,
+      String? billId}) {
     return RecurrenceTransactionStore(
         description: description ?? this.description,
         amount: amount ?? this.amount,
@@ -8115,7 +8270,8 @@ extension $RecurrenceTransactionStoreExtension on RecurrenceTransactionStore {
         sourceId: sourceId ?? this.sourceId,
         destinationId: destinationId ?? this.destinationId,
         tags: tags ?? this.tags,
-        piggyBankId: piggyBankId ?? this.piggyBankId);
+        piggyBankId: piggyBankId ?? this.piggyBankId,
+        billId: billId ?? this.billId);
   }
 
   RecurrenceTransactionStore copyWithWrapped(
@@ -8131,7 +8287,8 @@ extension $RecurrenceTransactionStoreExtension on RecurrenceTransactionStore {
       Wrapped<String>? sourceId,
       Wrapped<String>? destinationId,
       Wrapped<List<String>?>? tags,
-      Wrapped<String?>? piggyBankId}) {
+      Wrapped<String?>? piggyBankId,
+      Wrapped<String?>? billId}) {
     return RecurrenceTransactionStore(
         description:
             (description != null ? description.value : this.description),
@@ -8154,13 +8311,15 @@ extension $RecurrenceTransactionStoreExtension on RecurrenceTransactionStore {
             (destinationId != null ? destinationId.value : this.destinationId),
         tags: (tags != null ? tags.value : this.tags),
         piggyBankId:
-            (piggyBankId != null ? piggyBankId.value : this.piggyBankId));
+            (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
+        billId: (billId != null ? billId.value : this.billId));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class RecurrenceTransactionUpdate {
-  RecurrenceTransactionUpdate({
+  const RecurrenceTransactionUpdate({
+    required this.id,
     this.description,
     this.amount,
     this.foreignAmount,
@@ -8173,11 +8332,17 @@ class RecurrenceTransactionUpdate {
     this.destinationId,
     this.tags,
     this.piggyBankId,
+    this.billId,
   });
 
   factory RecurrenceTransactionUpdate.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceTransactionUpdateFromJson(json);
 
+  static const toJsonFactory = _$RecurrenceTransactionUpdateToJson;
+  Map<String, dynamic> toJson() => _$RecurrenceTransactionUpdateToJson(this);
+
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String id;
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
   @JsonKey(name: 'amount', includeIfNull: false)
@@ -8202,9 +8367,9 @@ class RecurrenceTransactionUpdate {
   final List<String>? tags;
   @JsonKey(name: 'piggy_bank_id', includeIfNull: false)
   final String? piggyBankId;
+  @JsonKey(name: 'bill_id', includeIfNull: false)
+  final String? billId;
   static const fromJsonFactory = _$RecurrenceTransactionUpdateFromJson;
-  static const toJsonFactory = _$RecurrenceTransactionUpdateToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceTransactionUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8212,7 +8377,8 @@ class RecurrenceTransactionUpdate {
 
 extension $RecurrenceTransactionUpdateExtension on RecurrenceTransactionUpdate {
   RecurrenceTransactionUpdate copyWith(
-      {String? description,
+      {String? id,
+      String? description,
       String? amount,
       String? foreignAmount,
       String? currencyId,
@@ -8223,8 +8389,10 @@ extension $RecurrenceTransactionUpdateExtension on RecurrenceTransactionUpdate {
       String? sourceId,
       String? destinationId,
       List<String>? tags,
-      String? piggyBankId}) {
+      String? piggyBankId,
+      String? billId}) {
     return RecurrenceTransactionUpdate(
+        id: id ?? this.id,
         description: description ?? this.description,
         amount: amount ?? this.amount,
         foreignAmount: foreignAmount ?? this.foreignAmount,
@@ -8236,11 +8404,13 @@ extension $RecurrenceTransactionUpdateExtension on RecurrenceTransactionUpdate {
         sourceId: sourceId ?? this.sourceId,
         destinationId: destinationId ?? this.destinationId,
         tags: tags ?? this.tags,
-        piggyBankId: piggyBankId ?? this.piggyBankId);
+        piggyBankId: piggyBankId ?? this.piggyBankId,
+        billId: billId ?? this.billId);
   }
 
   RecurrenceTransactionUpdate copyWithWrapped(
-      {Wrapped<String?>? description,
+      {Wrapped<String>? id,
+      Wrapped<String?>? description,
       Wrapped<String?>? amount,
       Wrapped<String?>? foreignAmount,
       Wrapped<String?>? currencyId,
@@ -8251,8 +8421,10 @@ extension $RecurrenceTransactionUpdateExtension on RecurrenceTransactionUpdate {
       Wrapped<String?>? sourceId,
       Wrapped<String?>? destinationId,
       Wrapped<List<String>?>? tags,
-      Wrapped<String?>? piggyBankId}) {
+      Wrapped<String?>? piggyBankId,
+      Wrapped<String?>? billId}) {
     return RecurrenceTransactionUpdate(
+        id: (id != null ? id.value : this.id),
         description:
             (description != null ? description.value : this.description),
         amount: (amount != null ? amount.value : this.amount),
@@ -8271,13 +8443,14 @@ extension $RecurrenceTransactionUpdateExtension on RecurrenceTransactionUpdate {
             (destinationId != null ? destinationId.value : this.destinationId),
         tags: (tags != null ? tags.value : this.tags),
         piggyBankId:
-            (piggyBankId != null ? piggyBankId.value : this.piggyBankId));
+            (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
+        billId: (billId != null ? billId.value : this.billId));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class Rule {
-  Rule({
+  const Rule({
     this.createdAt,
     this.updatedAt,
     required this.title,
@@ -8294,6 +8467,9 @@ class Rule {
   });
 
   factory Rule.fromJson(Map<String, dynamic> json) => _$RuleFromJson(json);
+
+  static const toJsonFactory = _$RuleToJson;
+  Map<String, dynamic> toJson() => _$RuleToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -8328,8 +8504,6 @@ class Rule {
   @JsonKey(name: 'actions', includeIfNull: false, defaultValue: <RuleAction>[])
   final List<RuleAction> actions;
   static const fromJsonFactory = _$RuleFromJson;
-  static const toJsonFactory = _$RuleToJson;
-  Map<String, dynamic> toJson() => _$RuleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8405,7 +8579,7 @@ extension $RuleExtension on Rule {
 
 @JsonSerializable(explicitToJson: true)
 class RuleStore {
-  RuleStore({
+  const RuleStore({
     required this.title,
     this.description,
     required this.ruleGroupId,
@@ -8421,6 +8595,9 @@ class RuleStore {
 
   factory RuleStore.fromJson(Map<String, dynamic> json) =>
       _$RuleStoreFromJson(json);
+
+  static const toJsonFactory = _$RuleStoreToJson;
+  Map<String, dynamic> toJson() => _$RuleStoreToJson(this);
 
   @JsonKey(name: 'title', includeIfNull: false)
   final String title;
@@ -8454,8 +8631,6 @@ class RuleStore {
       name: 'actions', includeIfNull: false, defaultValue: <RuleActionStore>[])
   final List<RuleActionStore> actions;
   static const fromJsonFactory = _$RuleStoreFromJson;
-  static const toJsonFactory = _$RuleStoreToJson;
-  Map<String, dynamic> toJson() => _$RuleStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8523,7 +8698,7 @@ extension $RuleStoreExtension on RuleStore {
 
 @JsonSerializable(explicitToJson: true)
 class RuleUpdate {
-  RuleUpdate({
+  const RuleUpdate({
     this.title,
     this.description,
     this.ruleGroupId,
@@ -8539,6 +8714,9 @@ class RuleUpdate {
   factory RuleUpdate.fromJson(Map<String, dynamic> json) =>
       _$RuleUpdateFromJson(json);
 
+  static const toJsonFactory = _$RuleUpdateToJson;
+  Map<String, dynamic> toJson() => _$RuleUpdateToJson(this);
+
   @JsonKey(name: 'title', includeIfNull: false)
   final String? title;
   @JsonKey(name: 'description', includeIfNull: false)
@@ -8550,8 +8728,8 @@ class RuleUpdate {
   @JsonKey(
     name: 'trigger',
     includeIfNull: false,
-    toJson: ruleTriggerTypeToJson,
-    fromJson: ruleTriggerTypeFromJson,
+    toJson: ruleTriggerTypeNullableToJson,
+    fromJson: ruleTriggerTypeNullableFromJson,
   )
   final enums.RuleTriggerType? trigger;
   @JsonKey(name: 'active', includeIfNull: false, defaultValue: true)
@@ -8569,8 +8747,6 @@ class RuleUpdate {
       name: 'actions', includeIfNull: false, defaultValue: <RuleActionUpdate>[])
   final List<RuleActionUpdate>? actions;
   static const fromJsonFactory = _$RuleUpdateFromJson;
-  static const toJsonFactory = _$RuleUpdateToJson;
-  Map<String, dynamic> toJson() => _$RuleUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8632,12 +8808,12 @@ extension $RuleUpdateExtension on RuleUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class RuleAction {
-  RuleAction({
+  const RuleAction({
     this.id,
     this.createdAt,
     this.updatedAt,
     required this.type,
-    required this.value,
+    this.$value,
     this.order,
     this.active,
     this.stopProcessing,
@@ -8645,6 +8821,9 @@ class RuleAction {
 
   factory RuleAction.fromJson(Map<String, dynamic> json) =>
       _$RuleActionFromJson(json);
+
+  static const toJsonFactory = _$RuleActionToJson;
+  Map<String, dynamic> toJson() => _$RuleActionToJson(this);
 
   @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
@@ -8660,7 +8839,7 @@ class RuleAction {
   )
   final enums.RuleActionKeyword type;
   @JsonKey(name: 'value', includeIfNull: false)
-  final String? value;
+  final String? $value;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
   @JsonKey(name: 'active', includeIfNull: false, defaultValue: true)
@@ -8668,8 +8847,6 @@ class RuleAction {
   @JsonKey(name: 'stop_processing', includeIfNull: false, defaultValue: false)
   final bool? stopProcessing;
   static const fromJsonFactory = _$RuleActionFromJson;
-  static const toJsonFactory = _$RuleActionToJson;
-  Map<String, dynamic> toJson() => _$RuleActionToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8681,7 +8858,7 @@ extension $RuleActionExtension on RuleAction {
       DateTime? createdAt,
       DateTime? updatedAt,
       enums.RuleActionKeyword? type,
-      String? value,
+      String? $value,
       int? order,
       bool? active,
       bool? stopProcessing}) {
@@ -8690,7 +8867,7 @@ extension $RuleActionExtension on RuleAction {
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         type: type ?? this.type,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         order: order ?? this.order,
         active: active ?? this.active,
         stopProcessing: stopProcessing ?? this.stopProcessing);
@@ -8701,7 +8878,7 @@ extension $RuleActionExtension on RuleAction {
       Wrapped<DateTime?>? createdAt,
       Wrapped<DateTime?>? updatedAt,
       Wrapped<enums.RuleActionKeyword>? type,
-      Wrapped<String?>? value,
+      Wrapped<String?>? $value,
       Wrapped<int?>? order,
       Wrapped<bool?>? active,
       Wrapped<bool?>? stopProcessing}) {
@@ -8710,7 +8887,7 @@ extension $RuleActionExtension on RuleAction {
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
         type: (type != null ? type.value : this.type),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         order: (order != null ? order.value : this.order),
         active: (active != null ? active.value : this.active),
         stopProcessing: (stopProcessing != null
@@ -8721,9 +8898,9 @@ extension $RuleActionExtension on RuleAction {
 
 @JsonSerializable(explicitToJson: true)
 class RuleActionStore {
-  RuleActionStore({
+  const RuleActionStore({
     required this.type,
-    required this.value,
+    this.$value,
     this.order,
     this.active,
     this.stopProcessing,
@@ -8731,6 +8908,9 @@ class RuleActionStore {
 
   factory RuleActionStore.fromJson(Map<String, dynamic> json) =>
       _$RuleActionStoreFromJson(json);
+
+  static const toJsonFactory = _$RuleActionStoreToJson;
+  Map<String, dynamic> toJson() => _$RuleActionStoreToJson(this);
 
   @JsonKey(
     name: 'type',
@@ -8740,7 +8920,7 @@ class RuleActionStore {
   )
   final enums.RuleActionKeyword type;
   @JsonKey(name: 'value', includeIfNull: false)
-  final String? value;
+  final String? $value;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
   @JsonKey(name: 'active', includeIfNull: false, defaultValue: true)
@@ -8748,8 +8928,6 @@ class RuleActionStore {
   @JsonKey(name: 'stop_processing', includeIfNull: false, defaultValue: false)
   final bool? stopProcessing;
   static const fromJsonFactory = _$RuleActionStoreFromJson;
-  static const toJsonFactory = _$RuleActionStoreToJson;
-  Map<String, dynamic> toJson() => _$RuleActionStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8758,13 +8936,13 @@ class RuleActionStore {
 extension $RuleActionStoreExtension on RuleActionStore {
   RuleActionStore copyWith(
       {enums.RuleActionKeyword? type,
-      String? value,
+      String? $value,
       int? order,
       bool? active,
       bool? stopProcessing}) {
     return RuleActionStore(
         type: type ?? this.type,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         order: order ?? this.order,
         active: active ?? this.active,
         stopProcessing: stopProcessing ?? this.stopProcessing);
@@ -8772,13 +8950,13 @@ extension $RuleActionStoreExtension on RuleActionStore {
 
   RuleActionStore copyWithWrapped(
       {Wrapped<enums.RuleActionKeyword>? type,
-      Wrapped<String?>? value,
+      Wrapped<String?>? $value,
       Wrapped<int?>? order,
       Wrapped<bool?>? active,
       Wrapped<bool?>? stopProcessing}) {
     return RuleActionStore(
         type: (type != null ? type.value : this.type),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         order: (order != null ? order.value : this.order),
         active: (active != null ? active.value : this.active),
         stopProcessing: (stopProcessing != null
@@ -8789,9 +8967,9 @@ extension $RuleActionStoreExtension on RuleActionStore {
 
 @JsonSerializable(explicitToJson: true)
 class RuleActionUpdate {
-  RuleActionUpdate({
+  const RuleActionUpdate({
     this.type,
-    this.value,
+    this.$value,
     this.order,
     this.active,
     this.stopProcessing,
@@ -8800,15 +8978,18 @@ class RuleActionUpdate {
   factory RuleActionUpdate.fromJson(Map<String, dynamic> json) =>
       _$RuleActionUpdateFromJson(json);
 
+  static const toJsonFactory = _$RuleActionUpdateToJson;
+  Map<String, dynamic> toJson() => _$RuleActionUpdateToJson(this);
+
   @JsonKey(
     name: 'type',
     includeIfNull: false,
-    toJson: ruleActionKeywordToJson,
-    fromJson: ruleActionKeywordFromJson,
+    toJson: ruleActionKeywordNullableToJson,
+    fromJson: ruleActionKeywordNullableFromJson,
   )
   final enums.RuleActionKeyword? type;
   @JsonKey(name: 'value', includeIfNull: false)
-  final String? value;
+  final String? $value;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
   @JsonKey(name: 'active', includeIfNull: false)
@@ -8816,8 +8997,6 @@ class RuleActionUpdate {
   @JsonKey(name: 'stop_processing', includeIfNull: false)
   final bool? stopProcessing;
   static const fromJsonFactory = _$RuleActionUpdateFromJson;
-  static const toJsonFactory = _$RuleActionUpdateToJson;
-  Map<String, dynamic> toJson() => _$RuleActionUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8826,13 +9005,13 @@ class RuleActionUpdate {
 extension $RuleActionUpdateExtension on RuleActionUpdate {
   RuleActionUpdate copyWith(
       {enums.RuleActionKeyword? type,
-      String? value,
+      String? $value,
       int? order,
       bool? active,
       bool? stopProcessing}) {
     return RuleActionUpdate(
         type: type ?? this.type,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         order: order ?? this.order,
         active: active ?? this.active,
         stopProcessing: stopProcessing ?? this.stopProcessing);
@@ -8840,13 +9019,13 @@ extension $RuleActionUpdateExtension on RuleActionUpdate {
 
   RuleActionUpdate copyWithWrapped(
       {Wrapped<enums.RuleActionKeyword?>? type,
-      Wrapped<String?>? value,
+      Wrapped<String?>? $value,
       Wrapped<int?>? order,
       Wrapped<bool?>? active,
       Wrapped<bool?>? stopProcessing}) {
     return RuleActionUpdate(
         type: (type != null ? type.value : this.type),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         order: (order != null ? order.value : this.order),
         active: (active != null ? active.value : this.active),
         stopProcessing: (stopProcessing != null
@@ -8857,7 +9036,7 @@ extension $RuleActionUpdateExtension on RuleActionUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class RuleGroup {
-  RuleGroup({
+  const RuleGroup({
     this.createdAt,
     this.updatedAt,
     required this.title,
@@ -8868,6 +9047,9 @@ class RuleGroup {
 
   factory RuleGroup.fromJson(Map<String, dynamic> json) =>
       _$RuleGroupFromJson(json);
+
+  static const toJsonFactory = _$RuleGroupToJson;
+  Map<String, dynamic> toJson() => _$RuleGroupToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -8882,8 +9064,6 @@ class RuleGroup {
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
   static const fromJsonFactory = _$RuleGroupFromJson;
-  static const toJsonFactory = _$RuleGroupToJson;
-  Map<String, dynamic> toJson() => _$RuleGroupToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8926,7 +9106,7 @@ extension $RuleGroupExtension on RuleGroup {
 
 @JsonSerializable(explicitToJson: true)
 class RuleGroupStore {
-  RuleGroupStore({
+  const RuleGroupStore({
     required this.title,
     this.description,
     this.order,
@@ -8935,6 +9115,9 @@ class RuleGroupStore {
 
   factory RuleGroupStore.fromJson(Map<String, dynamic> json) =>
       _$RuleGroupStoreFromJson(json);
+
+  static const toJsonFactory = _$RuleGroupStoreToJson;
+  Map<String, dynamic> toJson() => _$RuleGroupStoreToJson(this);
 
   @JsonKey(name: 'title', includeIfNull: false)
   final String title;
@@ -8945,8 +9128,6 @@ class RuleGroupStore {
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
   static const fromJsonFactory = _$RuleGroupStoreFromJson;
-  static const toJsonFactory = _$RuleGroupStoreToJson;
-  Map<String, dynamic> toJson() => _$RuleGroupStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -8978,7 +9159,7 @@ extension $RuleGroupStoreExtension on RuleGroupStore {
 
 @JsonSerializable(explicitToJson: true)
 class RuleGroupUpdate {
-  RuleGroupUpdate({
+  const RuleGroupUpdate({
     this.title,
     this.description,
     this.order,
@@ -8987,6 +9168,9 @@ class RuleGroupUpdate {
 
   factory RuleGroupUpdate.fromJson(Map<String, dynamic> json) =>
       _$RuleGroupUpdateFromJson(json);
+
+  static const toJsonFactory = _$RuleGroupUpdateToJson;
+  Map<String, dynamic> toJson() => _$RuleGroupUpdateToJson(this);
 
   @JsonKey(name: 'title', includeIfNull: false)
   final String? title;
@@ -8997,8 +9181,6 @@ class RuleGroupUpdate {
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
   static const fromJsonFactory = _$RuleGroupUpdateFromJson;
-  static const toJsonFactory = _$RuleGroupUpdateToJson;
-  Map<String, dynamic> toJson() => _$RuleGroupUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9030,12 +9212,12 @@ extension $RuleGroupUpdateExtension on RuleGroupUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class RuleTrigger {
-  RuleTrigger({
+  const RuleTrigger({
     this.id,
     this.createdAt,
     this.updatedAt,
     required this.type,
-    required this.value,
+    required this.$value,
     this.order,
     this.active,
     this.stopProcessing,
@@ -9043,6 +9225,9 @@ class RuleTrigger {
 
   factory RuleTrigger.fromJson(Map<String, dynamic> json) =>
       _$RuleTriggerFromJson(json);
+
+  static const toJsonFactory = _$RuleTriggerToJson;
+  Map<String, dynamic> toJson() => _$RuleTriggerToJson(this);
 
   @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
@@ -9058,7 +9243,7 @@ class RuleTrigger {
   )
   final enums.RuleTriggerKeyword type;
   @JsonKey(name: 'value', includeIfNull: false)
-  final String value;
+  final String $value;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
   @JsonKey(name: 'active', includeIfNull: false, defaultValue: true)
@@ -9066,8 +9251,6 @@ class RuleTrigger {
   @JsonKey(name: 'stop_processing', includeIfNull: false, defaultValue: false)
   final bool? stopProcessing;
   static const fromJsonFactory = _$RuleTriggerFromJson;
-  static const toJsonFactory = _$RuleTriggerToJson;
-  Map<String, dynamic> toJson() => _$RuleTriggerToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9079,7 +9262,7 @@ extension $RuleTriggerExtension on RuleTrigger {
       DateTime? createdAt,
       DateTime? updatedAt,
       enums.RuleTriggerKeyword? type,
-      String? value,
+      String? $value,
       int? order,
       bool? active,
       bool? stopProcessing}) {
@@ -9088,7 +9271,7 @@ extension $RuleTriggerExtension on RuleTrigger {
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         type: type ?? this.type,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         order: order ?? this.order,
         active: active ?? this.active,
         stopProcessing: stopProcessing ?? this.stopProcessing);
@@ -9099,7 +9282,7 @@ extension $RuleTriggerExtension on RuleTrigger {
       Wrapped<DateTime?>? createdAt,
       Wrapped<DateTime?>? updatedAt,
       Wrapped<enums.RuleTriggerKeyword>? type,
-      Wrapped<String>? value,
+      Wrapped<String>? $value,
       Wrapped<int?>? order,
       Wrapped<bool?>? active,
       Wrapped<bool?>? stopProcessing}) {
@@ -9108,7 +9291,7 @@ extension $RuleTriggerExtension on RuleTrigger {
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
         type: (type != null ? type.value : this.type),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         order: (order != null ? order.value : this.order),
         active: (active != null ? active.value : this.active),
         stopProcessing: (stopProcessing != null
@@ -9119,9 +9302,9 @@ extension $RuleTriggerExtension on RuleTrigger {
 
 @JsonSerializable(explicitToJson: true)
 class RuleTriggerStore {
-  RuleTriggerStore({
+  const RuleTriggerStore({
     required this.type,
-    required this.value,
+    required this.$value,
     this.order,
     this.active,
     this.stopProcessing,
@@ -9129,6 +9312,9 @@ class RuleTriggerStore {
 
   factory RuleTriggerStore.fromJson(Map<String, dynamic> json) =>
       _$RuleTriggerStoreFromJson(json);
+
+  static const toJsonFactory = _$RuleTriggerStoreToJson;
+  Map<String, dynamic> toJson() => _$RuleTriggerStoreToJson(this);
 
   @JsonKey(
     name: 'type',
@@ -9138,7 +9324,7 @@ class RuleTriggerStore {
   )
   final enums.RuleTriggerKeyword type;
   @JsonKey(name: 'value', includeIfNull: false)
-  final String value;
+  final String $value;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
   @JsonKey(name: 'active', includeIfNull: false, defaultValue: true)
@@ -9146,8 +9332,6 @@ class RuleTriggerStore {
   @JsonKey(name: 'stop_processing', includeIfNull: false, defaultValue: false)
   final bool? stopProcessing;
   static const fromJsonFactory = _$RuleTriggerStoreFromJson;
-  static const toJsonFactory = _$RuleTriggerStoreToJson;
-  Map<String, dynamic> toJson() => _$RuleTriggerStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9156,13 +9340,13 @@ class RuleTriggerStore {
 extension $RuleTriggerStoreExtension on RuleTriggerStore {
   RuleTriggerStore copyWith(
       {enums.RuleTriggerKeyword? type,
-      String? value,
+      String? $value,
       int? order,
       bool? active,
       bool? stopProcessing}) {
     return RuleTriggerStore(
         type: type ?? this.type,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         order: order ?? this.order,
         active: active ?? this.active,
         stopProcessing: stopProcessing ?? this.stopProcessing);
@@ -9170,13 +9354,13 @@ extension $RuleTriggerStoreExtension on RuleTriggerStore {
 
   RuleTriggerStore copyWithWrapped(
       {Wrapped<enums.RuleTriggerKeyword>? type,
-      Wrapped<String>? value,
+      Wrapped<String>? $value,
       Wrapped<int?>? order,
       Wrapped<bool?>? active,
       Wrapped<bool?>? stopProcessing}) {
     return RuleTriggerStore(
         type: (type != null ? type.value : this.type),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         order: (order != null ? order.value : this.order),
         active: (active != null ? active.value : this.active),
         stopProcessing: (stopProcessing != null
@@ -9187,9 +9371,9 @@ extension $RuleTriggerStoreExtension on RuleTriggerStore {
 
 @JsonSerializable(explicitToJson: true)
 class RuleTriggerUpdate {
-  RuleTriggerUpdate({
+  const RuleTriggerUpdate({
     this.type,
-    this.value,
+    this.$value,
     this.order,
     this.active,
     this.stopProcessing,
@@ -9198,15 +9382,18 @@ class RuleTriggerUpdate {
   factory RuleTriggerUpdate.fromJson(Map<String, dynamic> json) =>
       _$RuleTriggerUpdateFromJson(json);
 
+  static const toJsonFactory = _$RuleTriggerUpdateToJson;
+  Map<String, dynamic> toJson() => _$RuleTriggerUpdateToJson(this);
+
   @JsonKey(
     name: 'type',
     includeIfNull: false,
-    toJson: ruleTriggerKeywordToJson,
-    fromJson: ruleTriggerKeywordFromJson,
+    toJson: ruleTriggerKeywordNullableToJson,
+    fromJson: ruleTriggerKeywordNullableFromJson,
   )
   final enums.RuleTriggerKeyword? type;
   @JsonKey(name: 'value', includeIfNull: false)
-  final String? value;
+  final String? $value;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
   @JsonKey(name: 'active', includeIfNull: false)
@@ -9214,8 +9401,6 @@ class RuleTriggerUpdate {
   @JsonKey(name: 'stop_processing', includeIfNull: false)
   final bool? stopProcessing;
   static const fromJsonFactory = _$RuleTriggerUpdateFromJson;
-  static const toJsonFactory = _$RuleTriggerUpdateToJson;
-  Map<String, dynamic> toJson() => _$RuleTriggerUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9224,13 +9409,13 @@ class RuleTriggerUpdate {
 extension $RuleTriggerUpdateExtension on RuleTriggerUpdate {
   RuleTriggerUpdate copyWith(
       {enums.RuleTriggerKeyword? type,
-      String? value,
+      String? $value,
       int? order,
       bool? active,
       bool? stopProcessing}) {
     return RuleTriggerUpdate(
         type: type ?? this.type,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         order: order ?? this.order,
         active: active ?? this.active,
         stopProcessing: stopProcessing ?? this.stopProcessing);
@@ -9238,13 +9423,13 @@ extension $RuleTriggerUpdateExtension on RuleTriggerUpdate {
 
   RuleTriggerUpdate copyWithWrapped(
       {Wrapped<enums.RuleTriggerKeyword?>? type,
-      Wrapped<String?>? value,
+      Wrapped<String?>? $value,
       Wrapped<int?>? order,
       Wrapped<bool?>? active,
       Wrapped<bool?>? stopProcessing}) {
     return RuleTriggerUpdate(
         type: (type != null ? type.value : this.type),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         order: (order != null ? order.value : this.order),
         active: (active != null ? active.value : this.active),
         stopProcessing: (stopProcessing != null
@@ -9255,7 +9440,7 @@ extension $RuleTriggerUpdateExtension on RuleTriggerUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class TagModel {
-  TagModel({
+  const TagModel({
     this.createdAt,
     this.updatedAt,
     required this.tag,
@@ -9269,13 +9454,16 @@ class TagModel {
   factory TagModel.fromJson(Map<String, dynamic> json) =>
       _$TagModelFromJson(json);
 
+  static const toJsonFactory = _$TagModelToJson;
+  Map<String, dynamic> toJson() => _$TagModelToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
   final DateTime? updatedAt;
   @JsonKey(name: 'tag', includeIfNull: false)
   final String tag;
-  @JsonKey(name: 'date', includeIfNull: false)
+  @JsonKey(name: 'date', includeIfNull: false, toJson: _dateToJson)
   final DateTime? date;
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
@@ -9286,8 +9474,6 @@ class TagModel {
   @JsonKey(name: 'zoom_level', includeIfNull: false)
   final int? zoomLevel;
   static const fromJsonFactory = _$TagModelFromJson;
-  static const toJsonFactory = _$TagModelToJson;
-  Map<String, dynamic> toJson() => _$TagModelToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9338,7 +9524,7 @@ extension $TagModelExtension on TagModel {
 
 @JsonSerializable(explicitToJson: true)
 class TagModelStore {
-  TagModelStore({
+  const TagModelStore({
     required this.tag,
     this.date,
     this.description,
@@ -9349,6 +9535,9 @@ class TagModelStore {
 
   factory TagModelStore.fromJson(Map<String, dynamic> json) =>
       _$TagModelStoreFromJson(json);
+
+  static const toJsonFactory = _$TagModelStoreToJson;
+  Map<String, dynamic> toJson() => _$TagModelStoreToJson(this);
 
   @JsonKey(name: 'tag', includeIfNull: false)
   final String tag;
@@ -9363,8 +9552,6 @@ class TagModelStore {
   @JsonKey(name: 'zoom_level', includeIfNull: false)
   final int? zoomLevel;
   static const fromJsonFactory = _$TagModelStoreFromJson;
-  static const toJsonFactory = _$TagModelStoreToJson;
-  Map<String, dynamic> toJson() => _$TagModelStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9407,7 +9594,7 @@ extension $TagModelStoreExtension on TagModelStore {
 
 @JsonSerializable(explicitToJson: true)
 class TagModelUpdate {
-  TagModelUpdate({
+  const TagModelUpdate({
     this.tag,
     this.date,
     this.description,
@@ -9418,6 +9605,9 @@ class TagModelUpdate {
 
   factory TagModelUpdate.fromJson(Map<String, dynamic> json) =>
       _$TagModelUpdateFromJson(json);
+
+  static const toJsonFactory = _$TagModelUpdateToJson;
+  Map<String, dynamic> toJson() => _$TagModelUpdateToJson(this);
 
   @JsonKey(name: 'tag', includeIfNull: false)
   final String? tag;
@@ -9432,8 +9622,6 @@ class TagModelUpdate {
   @JsonKey(name: 'zoom_level', includeIfNull: false)
   final int? zoomLevel;
   static const fromJsonFactory = _$TagModelUpdateFromJson;
-  static const toJsonFactory = _$TagModelUpdateToJson;
-  Map<String, dynamic> toJson() => _$TagModelUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9476,7 +9664,7 @@ extension $TagModelUpdateExtension on TagModelUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class Currency {
-  Currency({
+  const Currency({
     this.createdAt,
     this.updatedAt,
     this.enabled,
@@ -9489,6 +9677,9 @@ class Currency {
 
   factory Currency.fromJson(Map<String, dynamic> json) =>
       _$CurrencyFromJson(json);
+
+  static const toJsonFactory = _$CurrencyToJson;
+  Map<String, dynamic> toJson() => _$CurrencyToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -9507,8 +9698,6 @@ class Currency {
   @JsonKey(name: 'decimal_places', includeIfNull: false)
   final int? decimalPlaces;
   static const fromJsonFactory = _$CurrencyFromJson;
-  static const toJsonFactory = _$CurrencyToJson;
-  Map<String, dynamic> toJson() => _$CurrencyToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9559,7 +9748,7 @@ extension $CurrencyExtension on Currency {
 
 @JsonSerializable(explicitToJson: true)
 class CurrencyStore {
-  CurrencyStore({
+  const CurrencyStore({
     this.enabled,
     this.$default,
     required this.code,
@@ -9570,6 +9759,9 @@ class CurrencyStore {
 
   factory CurrencyStore.fromJson(Map<String, dynamic> json) =>
       _$CurrencyStoreFromJson(json);
+
+  static const toJsonFactory = _$CurrencyStoreToJson;
+  Map<String, dynamic> toJson() => _$CurrencyStoreToJson(this);
 
   @JsonKey(name: 'enabled', includeIfNull: false, defaultValue: true)
   final bool? enabled;
@@ -9584,8 +9776,6 @@ class CurrencyStore {
   @JsonKey(name: 'decimal_places', includeIfNull: false)
   final int? decimalPlaces;
   static const fromJsonFactory = _$CurrencyStoreFromJson;
-  static const toJsonFactory = _$CurrencyStoreToJson;
-  Map<String, dynamic> toJson() => _$CurrencyStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9628,7 +9818,7 @@ extension $CurrencyStoreExtension on CurrencyStore {
 
 @JsonSerializable(explicitToJson: true)
 class CurrencyUpdate {
-  CurrencyUpdate({
+  const CurrencyUpdate({
     this.enabled,
     this.$default,
     this.code,
@@ -9639,6 +9829,9 @@ class CurrencyUpdate {
 
   factory CurrencyUpdate.fromJson(Map<String, dynamic> json) =>
       _$CurrencyUpdateFromJson(json);
+
+  static const toJsonFactory = _$CurrencyUpdateToJson;
+  Map<String, dynamic> toJson() => _$CurrencyUpdateToJson(this);
 
   @JsonKey(name: 'enabled', includeIfNull: false)
   final bool? enabled;
@@ -9653,8 +9846,6 @@ class CurrencyUpdate {
   @JsonKey(name: 'decimal_places', includeIfNull: false)
   final int? decimalPlaces;
   static const fromJsonFactory = _$CurrencyUpdateFromJson;
-  static const toJsonFactory = _$CurrencyUpdateToJson;
-  Map<String, dynamic> toJson() => _$CurrencyUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9696,8 +9887,74 @@ extension $CurrencyUpdateExtension on CurrencyUpdate {
 }
 
 @JsonSerializable(explicitToJson: true)
+class Transaction {
+  const Transaction({
+    this.createdAt,
+    this.updatedAt,
+    this.user,
+    this.groupTitle,
+    required this.transactions,
+  });
+
+  factory Transaction.fromJson(Map<String, dynamic> json) =>
+      _$TransactionFromJson(json);
+
+  static const toJsonFactory = _$TransactionToJson;
+  Map<String, dynamic> toJson() => _$TransactionToJson(this);
+
+  @JsonKey(name: 'created_at', includeIfNull: false)
+  final DateTime? createdAt;
+  @JsonKey(name: 'updated_at', includeIfNull: false)
+  final DateTime? updatedAt;
+  @JsonKey(name: 'user', includeIfNull: false)
+  final String? user;
+  @JsonKey(name: 'group_title', includeIfNull: false)
+  final String? groupTitle;
+  @JsonKey(
+      name: 'transactions',
+      includeIfNull: false,
+      defaultValue: <TransactionSplit>[])
+  final List<TransactionSplit> transactions;
+  static const fromJsonFactory = _$TransactionFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $TransactionExtension on Transaction {
+  Transaction copyWith(
+      {DateTime? createdAt,
+      DateTime? updatedAt,
+      String? user,
+      String? groupTitle,
+      List<TransactionSplit>? transactions}) {
+    return Transaction(
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        user: user ?? this.user,
+        groupTitle: groupTitle ?? this.groupTitle,
+        transactions: transactions ?? this.transactions);
+  }
+
+  Transaction copyWithWrapped(
+      {Wrapped<DateTime?>? createdAt,
+      Wrapped<DateTime?>? updatedAt,
+      Wrapped<String?>? user,
+      Wrapped<String?>? groupTitle,
+      Wrapped<List<TransactionSplit>>? transactions}) {
+    return Transaction(
+        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        user: (user != null ? user.value : this.user),
+        groupTitle: (groupTitle != null ? groupTitle.value : this.groupTitle),
+        transactions:
+            (transactions != null ? transactions.value : this.transactions));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class TransactionStore {
-  TransactionStore({
+  const TransactionStore({
     this.errorIfDuplicateHash,
     this.applyRules,
     this.fireWebhooks,
@@ -9707,6 +9964,9 @@ class TransactionStore {
 
   factory TransactionStore.fromJson(Map<String, dynamic> json) =>
       _$TransactionStoreFromJson(json);
+
+  static const toJsonFactory = _$TransactionStoreToJson;
+  Map<String, dynamic> toJson() => _$TransactionStoreToJson(this);
 
   @JsonKey(name: 'error_if_duplicate_hash', includeIfNull: false)
   final bool? errorIfDuplicateHash;
@@ -9722,8 +9982,6 @@ class TransactionStore {
       defaultValue: <TransactionSplitStore>[])
   final List<TransactionSplitStore> transactions;
   static const fromJsonFactory = _$TransactionStoreFromJson;
-  static const toJsonFactory = _$TransactionStoreToJson;
-  Map<String, dynamic> toJson() => _$TransactionStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9765,7 +10023,7 @@ extension $TransactionStoreExtension on TransactionStore {
 
 @JsonSerializable(explicitToJson: true)
 class TransactionUpdate {
-  TransactionUpdate({
+  const TransactionUpdate({
     this.applyRules,
     this.fireWebhooks,
     this.groupTitle,
@@ -9774,6 +10032,9 @@ class TransactionUpdate {
 
   factory TransactionUpdate.fromJson(Map<String, dynamic> json) =>
       _$TransactionUpdateFromJson(json);
+
+  static const toJsonFactory = _$TransactionUpdateToJson;
+  Map<String, dynamic> toJson() => _$TransactionUpdateToJson(this);
 
   @JsonKey(name: 'apply_rules', includeIfNull: false)
   final bool? applyRules;
@@ -9787,8 +10048,6 @@ class TransactionUpdate {
       defaultValue: <TransactionSplitUpdate>[])
   final List<TransactionSplitUpdate>? transactions;
   static const fromJsonFactory = _$TransactionUpdateFromJson;
-  static const toJsonFactory = _$TransactionUpdateToJson;
-  Map<String, dynamic> toJson() => _$TransactionUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9824,10 +10083,10 @@ extension $TransactionUpdateExtension on TransactionUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class TransactionLink {
-  TransactionLink({
+  const TransactionLink({
     this.createdAt,
     this.updatedAt,
-    required this.linkTypeId,
+    this.linkTypeId,
     this.linkTypeName,
     required this.inwardId,
     required this.outwardId,
@@ -9837,12 +10096,15 @@ class TransactionLink {
   factory TransactionLink.fromJson(Map<String, dynamic> json) =>
       _$TransactionLinkFromJson(json);
 
+  static const toJsonFactory = _$TransactionLinkToJson;
+  Map<String, dynamic> toJson() => _$TransactionLinkToJson(this);
+
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
   final DateTime? updatedAt;
   @JsonKey(name: 'link_type_id', includeIfNull: false)
-  final String linkTypeId;
+  final String? linkTypeId;
   @JsonKey(name: 'link_type_name', includeIfNull: false)
   final String? linkTypeName;
   @JsonKey(name: 'inward_id', includeIfNull: false)
@@ -9852,8 +10114,6 @@ class TransactionLink {
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   static const fromJsonFactory = _$TransactionLinkFromJson;
-  static const toJsonFactory = _$TransactionLinkToJson;
-  Map<String, dynamic> toJson() => _$TransactionLinkToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9881,7 +10141,7 @@ extension $TransactionLinkExtension on TransactionLink {
   TransactionLink copyWithWrapped(
       {Wrapped<DateTime?>? createdAt,
       Wrapped<DateTime?>? updatedAt,
-      Wrapped<String>? linkTypeId,
+      Wrapped<String?>? linkTypeId,
       Wrapped<String?>? linkTypeName,
       Wrapped<String>? inwardId,
       Wrapped<String>? outwardId,
@@ -9900,8 +10160,8 @@ extension $TransactionLinkExtension on TransactionLink {
 
 @JsonSerializable(explicitToJson: true)
 class TransactionLinkStore {
-  TransactionLinkStore({
-    required this.linkTypeId,
+  const TransactionLinkStore({
+    this.linkTypeId,
     this.linkTypeName,
     required this.inwardId,
     required this.outwardId,
@@ -9911,8 +10171,11 @@ class TransactionLinkStore {
   factory TransactionLinkStore.fromJson(Map<String, dynamic> json) =>
       _$TransactionLinkStoreFromJson(json);
 
+  static const toJsonFactory = _$TransactionLinkStoreToJson;
+  Map<String, dynamic> toJson() => _$TransactionLinkStoreToJson(this);
+
   @JsonKey(name: 'link_type_id', includeIfNull: false)
-  final String linkTypeId;
+  final String? linkTypeId;
   @JsonKey(name: 'link_type_name', includeIfNull: false)
   final String? linkTypeName;
   @JsonKey(name: 'inward_id', includeIfNull: false)
@@ -9922,8 +10185,6 @@ class TransactionLinkStore {
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   static const fromJsonFactory = _$TransactionLinkStoreFromJson;
-  static const toJsonFactory = _$TransactionLinkStoreToJson;
-  Map<String, dynamic> toJson() => _$TransactionLinkStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -9945,7 +10206,7 @@ extension $TransactionLinkStoreExtension on TransactionLinkStore {
   }
 
   TransactionLinkStore copyWithWrapped(
-      {Wrapped<String>? linkTypeId,
+      {Wrapped<String?>? linkTypeId,
       Wrapped<String?>? linkTypeName,
       Wrapped<String>? inwardId,
       Wrapped<String>? outwardId,
@@ -9962,7 +10223,7 @@ extension $TransactionLinkStoreExtension on TransactionLinkStore {
 
 @JsonSerializable(explicitToJson: true)
 class TransactionLinkUpdate {
-  TransactionLinkUpdate({
+  const TransactionLinkUpdate({
     this.linkTypeId,
     this.linkTypeName,
     this.inwardId,
@@ -9972,6 +10233,9 @@ class TransactionLinkUpdate {
 
   factory TransactionLinkUpdate.fromJson(Map<String, dynamic> json) =>
       _$TransactionLinkUpdateFromJson(json);
+
+  static const toJsonFactory = _$TransactionLinkUpdateToJson;
+  Map<String, dynamic> toJson() => _$TransactionLinkUpdateToJson(this);
 
   @JsonKey(name: 'link_type_id', includeIfNull: false)
   final String? linkTypeId;
@@ -9984,8 +10248,6 @@ class TransactionLinkUpdate {
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   static const fromJsonFactory = _$TransactionLinkUpdateFromJson;
-  static const toJsonFactory = _$TransactionLinkUpdateToJson;
-  Map<String, dynamic> toJson() => _$TransactionLinkUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -10024,7 +10286,7 @@ extension $TransactionLinkUpdateExtension on TransactionLinkUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class LinkType {
-  LinkType({
+  const LinkType({
     required this.name,
     required this.inward,
     required this.outward,
@@ -10033,6 +10295,9 @@ class LinkType {
 
   factory LinkType.fromJson(Map<String, dynamic> json) =>
       _$LinkTypeFromJson(json);
+
+  static const toJsonFactory = _$LinkTypeToJson;
+  Map<String, dynamic> toJson() => _$LinkTypeToJson(this);
 
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
@@ -10043,8 +10308,6 @@ class LinkType {
   @JsonKey(name: 'editable', includeIfNull: false)
   final bool? editable;
   static const fromJsonFactory = _$LinkTypeFromJson;
-  static const toJsonFactory = _$LinkTypeToJson;
-  Map<String, dynamic> toJson() => _$LinkTypeToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -10074,52 +10337,8 @@ extension $LinkTypeExtension on LinkType {
 }
 
 @JsonSerializable(explicitToJson: true)
-class LinkTypeStore {
-  LinkTypeStore({
-    required this.name,
-    required this.inward,
-    required this.outward,
-  });
-
-  factory LinkTypeStore.fromJson(Map<String, dynamic> json) =>
-      _$LinkTypeStoreFromJson(json);
-
-  @JsonKey(name: 'name', includeIfNull: false)
-  final String name;
-  @JsonKey(name: 'inward', includeIfNull: false)
-  final String inward;
-  @JsonKey(name: 'outward', includeIfNull: false)
-  final String outward;
-  static const fromJsonFactory = _$LinkTypeStoreFromJson;
-  static const toJsonFactory = _$LinkTypeStoreToJson;
-  Map<String, dynamic> toJson() => _$LinkTypeStoreToJson(this);
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $LinkTypeStoreExtension on LinkTypeStore {
-  LinkTypeStore copyWith({String? name, String? inward, String? outward}) {
-    return LinkTypeStore(
-        name: name ?? this.name,
-        inward: inward ?? this.inward,
-        outward: outward ?? this.outward);
-  }
-
-  LinkTypeStore copyWithWrapped(
-      {Wrapped<String>? name,
-      Wrapped<String>? inward,
-      Wrapped<String>? outward}) {
-    return LinkTypeStore(
-        name: (name != null ? name.value : this.name),
-        inward: (inward != null ? inward.value : this.inward),
-        outward: (outward != null ? outward.value : this.outward));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class LinkTypeUpdate {
-  LinkTypeUpdate({
+  const LinkTypeUpdate({
     this.name,
     this.inward,
     this.outward,
@@ -10128,6 +10347,9 @@ class LinkTypeUpdate {
   factory LinkTypeUpdate.fromJson(Map<String, dynamic> json) =>
       _$LinkTypeUpdateFromJson(json);
 
+  static const toJsonFactory = _$LinkTypeUpdateToJson;
+  Map<String, dynamic> toJson() => _$LinkTypeUpdateToJson(this);
+
   @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
   @JsonKey(name: 'inward', includeIfNull: false)
@@ -10135,8 +10357,6 @@ class LinkTypeUpdate {
   @JsonKey(name: 'outward', includeIfNull: false)
   final String? outward;
   static const fromJsonFactory = _$LinkTypeUpdateFromJson;
-  static const toJsonFactory = _$LinkTypeUpdateToJson;
-  Map<String, dynamic> toJson() => _$LinkTypeUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -10162,8 +10382,526 @@ extension $LinkTypeUpdateExtension on LinkTypeUpdate {
 }
 
 @JsonSerializable(explicitToJson: true)
+class TransactionSplit {
+  const TransactionSplit({
+    this.user,
+    this.transactionJournalId,
+    required this.type,
+    required this.date,
+    this.order,
+    this.currencyId,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyName,
+    this.currencyDecimalPlaces,
+    this.foreignCurrencyId,
+    this.foreignCurrencyCode,
+    this.foreignCurrencySymbol,
+    this.foreignCurrencyDecimalPlaces,
+    required this.amount,
+    this.foreignAmount,
+    required this.description,
+    this.sourceId,
+    this.sourceName,
+    this.sourceIban,
+    this.sourceType,
+    this.destinationId,
+    this.destinationName,
+    this.destinationIban,
+    this.destinationType,
+    this.budgetId,
+    this.budgetName,
+    this.categoryId,
+    this.categoryName,
+    this.billId,
+    this.billName,
+    this.reconciled,
+    this.notes,
+    this.tags,
+    this.internalReference,
+    this.externalId,
+    this.externalUrl,
+    this.originalSource,
+    this.recurrenceId,
+    this.recurrenceTotal,
+    this.recurrenceCount,
+    this.bunqPaymentId,
+    this.importHashV2,
+    this.sepaCc,
+    this.sepaCtOp,
+    this.sepaCtId,
+    this.sepaDb,
+    this.sepaCountry,
+    this.sepaEp,
+    this.sepaCi,
+    this.sepaBatchId,
+    this.interestDate,
+    this.bookDate,
+    this.processDate,
+    this.dueDate,
+    this.paymentDate,
+    this.invoiceDate,
+    this.latitude,
+    this.longitude,
+    this.zoomLevel,
+    this.hasAttachments,
+  });
+
+  factory TransactionSplit.fromJson(Map<String, dynamic> json) =>
+      _$TransactionSplitFromJson(json);
+
+  static const toJsonFactory = _$TransactionSplitToJson;
+  Map<String, dynamic> toJson() => _$TransactionSplitToJson(this);
+
+  @JsonKey(name: 'user', includeIfNull: false)
+  final String? user;
+  @JsonKey(name: 'transaction_journal_id', includeIfNull: false)
+  final String? transactionJournalId;
+  @JsonKey(
+    name: 'type',
+    includeIfNull: false,
+    toJson: transactionTypePropertyToJson,
+    fromJson: transactionTypePropertyFromJson,
+  )
+  final enums.TransactionTypeProperty type;
+  @JsonKey(name: 'date', includeIfNull: false)
+  final DateTime date;
+  @JsonKey(name: 'order', includeIfNull: false)
+  final int? order;
+  @JsonKey(name: 'currency_id', includeIfNull: false)
+  final String? currencyId;
+  @JsonKey(name: 'currency_code', includeIfNull: false)
+  final String? currencyCode;
+  @JsonKey(name: 'currency_symbol', includeIfNull: false)
+  final String? currencySymbol;
+  @JsonKey(name: 'currency_name', includeIfNull: false)
+  final String? currencyName;
+  @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
+  final int? currencyDecimalPlaces;
+  @JsonKey(name: 'foreign_currency_id', includeIfNull: false)
+  final String? foreignCurrencyId;
+  @JsonKey(name: 'foreign_currency_code', includeIfNull: false)
+  final String? foreignCurrencyCode;
+  @JsonKey(name: 'foreign_currency_symbol', includeIfNull: false)
+  final String? foreignCurrencySymbol;
+  @JsonKey(name: 'foreign_currency_decimal_places', includeIfNull: false)
+  final int? foreignCurrencyDecimalPlaces;
+  @JsonKey(name: 'amount', includeIfNull: false)
+  final String amount;
+  @JsonKey(name: 'foreign_amount', includeIfNull: false)
+  final String? foreignAmount;
+  @JsonKey(name: 'description', includeIfNull: false)
+  final String description;
+  @JsonKey(name: 'source_id', includeIfNull: false)
+  final String? sourceId;
+  @JsonKey(name: 'source_name', includeIfNull: false)
+  final String? sourceName;
+  @JsonKey(name: 'source_iban', includeIfNull: false)
+  final String? sourceIban;
+  @JsonKey(
+    name: 'source_type',
+    includeIfNull: false,
+    toJson: accountTypePropertyNullableToJson,
+    fromJson: accountTypePropertyNullableFromJson,
+  )
+  final enums.AccountTypeProperty? sourceType;
+  @JsonKey(name: 'destination_id', includeIfNull: false)
+  final String? destinationId;
+  @JsonKey(name: 'destination_name', includeIfNull: false)
+  final String? destinationName;
+  @JsonKey(name: 'destination_iban', includeIfNull: false)
+  final String? destinationIban;
+  @JsonKey(
+    name: 'destination_type',
+    includeIfNull: false,
+    toJson: accountTypePropertyNullableToJson,
+    fromJson: accountTypePropertyNullableFromJson,
+  )
+  final enums.AccountTypeProperty? destinationType;
+  @JsonKey(name: 'budget_id', includeIfNull: false)
+  final String? budgetId;
+  @JsonKey(name: 'budget_name', includeIfNull: false)
+  final String? budgetName;
+  @JsonKey(name: 'category_id', includeIfNull: false)
+  final String? categoryId;
+  @JsonKey(name: 'category_name', includeIfNull: false)
+  final String? categoryName;
+  @JsonKey(name: 'bill_id', includeIfNull: false)
+  final String? billId;
+  @JsonKey(name: 'bill_name', includeIfNull: false)
+  final String? billName;
+  @JsonKey(name: 'reconciled', includeIfNull: false)
+  final bool? reconciled;
+  @JsonKey(name: 'notes', includeIfNull: false)
+  final String? notes;
+  @JsonKey(name: 'tags', includeIfNull: false, defaultValue: <String>[])
+  final List<String>? tags;
+  @JsonKey(name: 'internal_reference', includeIfNull: false)
+  final String? internalReference;
+  @JsonKey(name: 'external_id', includeIfNull: false)
+  final String? externalId;
+  @JsonKey(name: 'external_url', includeIfNull: false)
+  final String? externalUrl;
+  @JsonKey(name: 'original_source', includeIfNull: false)
+  final String? originalSource;
+  @JsonKey(name: 'recurrence_id', includeIfNull: false)
+  final String? recurrenceId;
+  @JsonKey(name: 'recurrence_total', includeIfNull: false)
+  final int? recurrenceTotal;
+  @JsonKey(name: 'recurrence_count', includeIfNull: false)
+  final int? recurrenceCount;
+  @JsonKey(name: 'bunq_payment_id', includeIfNull: false)
+  final String? bunqPaymentId;
+  @JsonKey(name: 'import_hash_v2', includeIfNull: false)
+  final String? importHashV2;
+  @JsonKey(name: 'sepa_cc', includeIfNull: false)
+  final String? sepaCc;
+  @JsonKey(name: 'sepa_ct_op', includeIfNull: false)
+  final String? sepaCtOp;
+  @JsonKey(name: 'sepa_ct_id', includeIfNull: false)
+  final String? sepaCtId;
+  @JsonKey(name: 'sepa_db', includeIfNull: false)
+  final String? sepaDb;
+  @JsonKey(name: 'sepa_country', includeIfNull: false)
+  final String? sepaCountry;
+  @JsonKey(name: 'sepa_ep', includeIfNull: false)
+  final String? sepaEp;
+  @JsonKey(name: 'sepa_ci', includeIfNull: false)
+  final String? sepaCi;
+  @JsonKey(name: 'sepa_batch_id', includeIfNull: false)
+  final String? sepaBatchId;
+  @JsonKey(name: 'interest_date', includeIfNull: false)
+  final DateTime? interestDate;
+  @JsonKey(name: 'book_date', includeIfNull: false)
+  final DateTime? bookDate;
+  @JsonKey(name: 'process_date', includeIfNull: false)
+  final DateTime? processDate;
+  @JsonKey(name: 'due_date', includeIfNull: false)
+  final DateTime? dueDate;
+  @JsonKey(name: 'payment_date', includeIfNull: false)
+  final DateTime? paymentDate;
+  @JsonKey(name: 'invoice_date', includeIfNull: false)
+  final DateTime? invoiceDate;
+  @JsonKey(name: 'latitude', includeIfNull: false)
+  final double? latitude;
+  @JsonKey(name: 'longitude', includeIfNull: false)
+  final double? longitude;
+  @JsonKey(name: 'zoom_level', includeIfNull: false)
+  final int? zoomLevel;
+  @JsonKey(name: 'has_attachments', includeIfNull: false)
+  final bool? hasAttachments;
+  static const fromJsonFactory = _$TransactionSplitFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $TransactionSplitExtension on TransactionSplit {
+  TransactionSplit copyWith(
+      {String? user,
+      String? transactionJournalId,
+      enums.TransactionTypeProperty? type,
+      DateTime? date,
+      int? order,
+      String? currencyId,
+      String? currencyCode,
+      String? currencySymbol,
+      String? currencyName,
+      int? currencyDecimalPlaces,
+      String? foreignCurrencyId,
+      String? foreignCurrencyCode,
+      String? foreignCurrencySymbol,
+      int? foreignCurrencyDecimalPlaces,
+      String? amount,
+      String? foreignAmount,
+      String? description,
+      String? sourceId,
+      String? sourceName,
+      String? sourceIban,
+      enums.AccountTypeProperty? sourceType,
+      String? destinationId,
+      String? destinationName,
+      String? destinationIban,
+      enums.AccountTypeProperty? destinationType,
+      String? budgetId,
+      String? budgetName,
+      String? categoryId,
+      String? categoryName,
+      String? billId,
+      String? billName,
+      bool? reconciled,
+      String? notes,
+      List<String>? tags,
+      String? internalReference,
+      String? externalId,
+      String? externalUrl,
+      String? originalSource,
+      String? recurrenceId,
+      int? recurrenceTotal,
+      int? recurrenceCount,
+      String? bunqPaymentId,
+      String? importHashV2,
+      String? sepaCc,
+      String? sepaCtOp,
+      String? sepaCtId,
+      String? sepaDb,
+      String? sepaCountry,
+      String? sepaEp,
+      String? sepaCi,
+      String? sepaBatchId,
+      DateTime? interestDate,
+      DateTime? bookDate,
+      DateTime? processDate,
+      DateTime? dueDate,
+      DateTime? paymentDate,
+      DateTime? invoiceDate,
+      double? latitude,
+      double? longitude,
+      int? zoomLevel,
+      bool? hasAttachments}) {
+    return TransactionSplit(
+        user: user ?? this.user,
+        transactionJournalId: transactionJournalId ?? this.transactionJournalId,
+        type: type ?? this.type,
+        date: date ?? this.date,
+        order: order ?? this.order,
+        currencyId: currencyId ?? this.currencyId,
+        currencyCode: currencyCode ?? this.currencyCode,
+        currencySymbol: currencySymbol ?? this.currencySymbol,
+        currencyName: currencyName ?? this.currencyName,
+        currencyDecimalPlaces:
+            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+        foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
+        foreignCurrencyCode: foreignCurrencyCode ?? this.foreignCurrencyCode,
+        foreignCurrencySymbol:
+            foreignCurrencySymbol ?? this.foreignCurrencySymbol,
+        foreignCurrencyDecimalPlaces:
+            foreignCurrencyDecimalPlaces ?? this.foreignCurrencyDecimalPlaces,
+        amount: amount ?? this.amount,
+        foreignAmount: foreignAmount ?? this.foreignAmount,
+        description: description ?? this.description,
+        sourceId: sourceId ?? this.sourceId,
+        sourceName: sourceName ?? this.sourceName,
+        sourceIban: sourceIban ?? this.sourceIban,
+        sourceType: sourceType ?? this.sourceType,
+        destinationId: destinationId ?? this.destinationId,
+        destinationName: destinationName ?? this.destinationName,
+        destinationIban: destinationIban ?? this.destinationIban,
+        destinationType: destinationType ?? this.destinationType,
+        budgetId: budgetId ?? this.budgetId,
+        budgetName: budgetName ?? this.budgetName,
+        categoryId: categoryId ?? this.categoryId,
+        categoryName: categoryName ?? this.categoryName,
+        billId: billId ?? this.billId,
+        billName: billName ?? this.billName,
+        reconciled: reconciled ?? this.reconciled,
+        notes: notes ?? this.notes,
+        tags: tags ?? this.tags,
+        internalReference: internalReference ?? this.internalReference,
+        externalId: externalId ?? this.externalId,
+        externalUrl: externalUrl ?? this.externalUrl,
+        originalSource: originalSource ?? this.originalSource,
+        recurrenceId: recurrenceId ?? this.recurrenceId,
+        recurrenceTotal: recurrenceTotal ?? this.recurrenceTotal,
+        recurrenceCount: recurrenceCount ?? this.recurrenceCount,
+        bunqPaymentId: bunqPaymentId ?? this.bunqPaymentId,
+        importHashV2: importHashV2 ?? this.importHashV2,
+        sepaCc: sepaCc ?? this.sepaCc,
+        sepaCtOp: sepaCtOp ?? this.sepaCtOp,
+        sepaCtId: sepaCtId ?? this.sepaCtId,
+        sepaDb: sepaDb ?? this.sepaDb,
+        sepaCountry: sepaCountry ?? this.sepaCountry,
+        sepaEp: sepaEp ?? this.sepaEp,
+        sepaCi: sepaCi ?? this.sepaCi,
+        sepaBatchId: sepaBatchId ?? this.sepaBatchId,
+        interestDate: interestDate ?? this.interestDate,
+        bookDate: bookDate ?? this.bookDate,
+        processDate: processDate ?? this.processDate,
+        dueDate: dueDate ?? this.dueDate,
+        paymentDate: paymentDate ?? this.paymentDate,
+        invoiceDate: invoiceDate ?? this.invoiceDate,
+        latitude: latitude ?? this.latitude,
+        longitude: longitude ?? this.longitude,
+        zoomLevel: zoomLevel ?? this.zoomLevel,
+        hasAttachments: hasAttachments ?? this.hasAttachments);
+  }
+
+  TransactionSplit copyWithWrapped(
+      {Wrapped<String?>? user,
+      Wrapped<String?>? transactionJournalId,
+      Wrapped<enums.TransactionTypeProperty>? type,
+      Wrapped<DateTime>? date,
+      Wrapped<int?>? order,
+      Wrapped<String?>? currencyId,
+      Wrapped<String?>? currencyCode,
+      Wrapped<String?>? currencySymbol,
+      Wrapped<String?>? currencyName,
+      Wrapped<int?>? currencyDecimalPlaces,
+      Wrapped<String?>? foreignCurrencyId,
+      Wrapped<String?>? foreignCurrencyCode,
+      Wrapped<String?>? foreignCurrencySymbol,
+      Wrapped<int?>? foreignCurrencyDecimalPlaces,
+      Wrapped<String>? amount,
+      Wrapped<String?>? foreignAmount,
+      Wrapped<String>? description,
+      Wrapped<String?>? sourceId,
+      Wrapped<String?>? sourceName,
+      Wrapped<String?>? sourceIban,
+      Wrapped<enums.AccountTypeProperty?>? sourceType,
+      Wrapped<String?>? destinationId,
+      Wrapped<String?>? destinationName,
+      Wrapped<String?>? destinationIban,
+      Wrapped<enums.AccountTypeProperty?>? destinationType,
+      Wrapped<String?>? budgetId,
+      Wrapped<String?>? budgetName,
+      Wrapped<String?>? categoryId,
+      Wrapped<String?>? categoryName,
+      Wrapped<String?>? billId,
+      Wrapped<String?>? billName,
+      Wrapped<bool?>? reconciled,
+      Wrapped<String?>? notes,
+      Wrapped<List<String>?>? tags,
+      Wrapped<String?>? internalReference,
+      Wrapped<String?>? externalId,
+      Wrapped<String?>? externalUrl,
+      Wrapped<String?>? originalSource,
+      Wrapped<String?>? recurrenceId,
+      Wrapped<int?>? recurrenceTotal,
+      Wrapped<int?>? recurrenceCount,
+      Wrapped<String?>? bunqPaymentId,
+      Wrapped<String?>? importHashV2,
+      Wrapped<String?>? sepaCc,
+      Wrapped<String?>? sepaCtOp,
+      Wrapped<String?>? sepaCtId,
+      Wrapped<String?>? sepaDb,
+      Wrapped<String?>? sepaCountry,
+      Wrapped<String?>? sepaEp,
+      Wrapped<String?>? sepaCi,
+      Wrapped<String?>? sepaBatchId,
+      Wrapped<DateTime?>? interestDate,
+      Wrapped<DateTime?>? bookDate,
+      Wrapped<DateTime?>? processDate,
+      Wrapped<DateTime?>? dueDate,
+      Wrapped<DateTime?>? paymentDate,
+      Wrapped<DateTime?>? invoiceDate,
+      Wrapped<double?>? latitude,
+      Wrapped<double?>? longitude,
+      Wrapped<int?>? zoomLevel,
+      Wrapped<bool?>? hasAttachments}) {
+    return TransactionSplit(
+        user: (user != null ? user.value : this.user),
+        transactionJournalId: (transactionJournalId != null
+            ? transactionJournalId.value
+            : this.transactionJournalId),
+        type: (type != null ? type.value : this.type),
+        date: (date != null ? date.value : this.date),
+        order: (order != null ? order.value : this.order),
+        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+        currencyCode:
+            (currencyCode != null ? currencyCode.value : this.currencyCode),
+        currencySymbol: (currencySymbol != null
+            ? currencySymbol.value
+            : this.currencySymbol),
+        currencyName:
+            (currencyName != null ? currencyName.value : this.currencyName),
+        currencyDecimalPlaces: (currencyDecimalPlaces != null
+            ? currencyDecimalPlaces.value
+            : this.currencyDecimalPlaces),
+        foreignCurrencyId: (foreignCurrencyId != null
+            ? foreignCurrencyId.value
+            : this.foreignCurrencyId),
+        foreignCurrencyCode: (foreignCurrencyCode != null
+            ? foreignCurrencyCode.value
+            : this.foreignCurrencyCode),
+        foreignCurrencySymbol: (foreignCurrencySymbol != null
+            ? foreignCurrencySymbol.value
+            : this.foreignCurrencySymbol),
+        foreignCurrencyDecimalPlaces: (foreignCurrencyDecimalPlaces != null
+            ? foreignCurrencyDecimalPlaces.value
+            : this.foreignCurrencyDecimalPlaces),
+        amount: (amount != null ? amount.value : this.amount),
+        foreignAmount:
+            (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
+        description:
+            (description != null ? description.value : this.description),
+        sourceId: (sourceId != null ? sourceId.value : this.sourceId),
+        sourceName: (sourceName != null ? sourceName.value : this.sourceName),
+        sourceIban: (sourceIban != null ? sourceIban.value : this.sourceIban),
+        sourceType: (sourceType != null ? sourceType.value : this.sourceType),
+        destinationId:
+            (destinationId != null ? destinationId.value : this.destinationId),
+        destinationName: (destinationName != null
+            ? destinationName.value
+            : this.destinationName),
+        destinationIban: (destinationIban != null
+            ? destinationIban.value
+            : this.destinationIban),
+        destinationType: (destinationType != null
+            ? destinationType.value
+            : this.destinationType),
+        budgetId: (budgetId != null ? budgetId.value : this.budgetId),
+        budgetName: (budgetName != null ? budgetName.value : this.budgetName),
+        categoryId: (categoryId != null ? categoryId.value : this.categoryId),
+        categoryName:
+            (categoryName != null ? categoryName.value : this.categoryName),
+        billId: (billId != null ? billId.value : this.billId),
+        billName: (billName != null ? billName.value : this.billName),
+        reconciled: (reconciled != null ? reconciled.value : this.reconciled),
+        notes: (notes != null ? notes.value : this.notes),
+        tags: (tags != null ? tags.value : this.tags),
+        internalReference: (internalReference != null
+            ? internalReference.value
+            : this.internalReference),
+        externalId: (externalId != null ? externalId.value : this.externalId),
+        externalUrl:
+            (externalUrl != null ? externalUrl.value : this.externalUrl),
+        originalSource: (originalSource != null
+            ? originalSource.value
+            : this.originalSource),
+        recurrenceId:
+            (recurrenceId != null ? recurrenceId.value : this.recurrenceId),
+        recurrenceTotal: (recurrenceTotal != null
+            ? recurrenceTotal.value
+            : this.recurrenceTotal),
+        recurrenceCount: (recurrenceCount != null
+            ? recurrenceCount.value
+            : this.recurrenceCount),
+        bunqPaymentId:
+            (bunqPaymentId != null ? bunqPaymentId.value : this.bunqPaymentId),
+        importHashV2:
+            (importHashV2 != null ? importHashV2.value : this.importHashV2),
+        sepaCc: (sepaCc != null ? sepaCc.value : this.sepaCc),
+        sepaCtOp: (sepaCtOp != null ? sepaCtOp.value : this.sepaCtOp),
+        sepaCtId: (sepaCtId != null ? sepaCtId.value : this.sepaCtId),
+        sepaDb: (sepaDb != null ? sepaDb.value : this.sepaDb),
+        sepaCountry:
+            (sepaCountry != null ? sepaCountry.value : this.sepaCountry),
+        sepaEp: (sepaEp != null ? sepaEp.value : this.sepaEp),
+        sepaCi: (sepaCi != null ? sepaCi.value : this.sepaCi),
+        sepaBatchId:
+            (sepaBatchId != null ? sepaBatchId.value : this.sepaBatchId),
+        interestDate:
+            (interestDate != null ? interestDate.value : this.interestDate),
+        bookDate: (bookDate != null ? bookDate.value : this.bookDate),
+        processDate:
+            (processDate != null ? processDate.value : this.processDate),
+        dueDate: (dueDate != null ? dueDate.value : this.dueDate),
+        paymentDate:
+            (paymentDate != null ? paymentDate.value : this.paymentDate),
+        invoiceDate:
+            (invoiceDate != null ? invoiceDate.value : this.invoiceDate),
+        latitude: (latitude != null ? latitude.value : this.latitude),
+        longitude: (longitude != null ? longitude.value : this.longitude),
+        zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel),
+        hasAttachments: (hasAttachments != null
+            ? hasAttachments.value
+            : this.hasAttachments));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class TransactionSplitStore {
-  TransactionSplitStore({
+  const TransactionSplitStore({
     required this.type,
     required this.date,
     required this.amount,
@@ -10211,6 +10949,9 @@ class TransactionSplitStore {
 
   factory TransactionSplitStore.fromJson(Map<String, dynamic> json) =>
       _$TransactionSplitStoreFromJson(json);
+
+  static const toJsonFactory = _$TransactionSplitStoreToJson;
+  Map<String, dynamic> toJson() => _$TransactionSplitStoreToJson(this);
 
   @JsonKey(
     name: 'type',
@@ -10304,8 +11045,6 @@ class TransactionSplitStore {
   @JsonKey(name: 'invoice_date', includeIfNull: false)
   final DateTime? invoiceDate;
   static const fromJsonFactory = _$TransactionSplitStoreFromJson;
-  static const toJsonFactory = _$TransactionSplitStoreToJson;
-  Map<String, dynamic> toJson() => _$TransactionSplitStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -10518,7 +11257,7 @@ extension $TransactionSplitStoreExtension on TransactionSplitStore {
 
 @JsonSerializable(explicitToJson: true)
 class TransactionSplitUpdate {
-  TransactionSplitUpdate({
+  const TransactionSplitUpdate({
     this.transactionJournalId,
     this.type,
     this.date,
@@ -10573,13 +11312,16 @@ class TransactionSplitUpdate {
   factory TransactionSplitUpdate.fromJson(Map<String, dynamic> json) =>
       _$TransactionSplitUpdateFromJson(json);
 
+  static const toJsonFactory = _$TransactionSplitUpdateToJson;
+  Map<String, dynamic> toJson() => _$TransactionSplitUpdateToJson(this);
+
   @JsonKey(name: 'transaction_journal_id', includeIfNull: false)
   final String? transactionJournalId;
   @JsonKey(
     name: 'type',
     includeIfNull: false,
-    toJson: transactionTypePropertyToJson,
-    fromJson: transactionTypePropertyFromJson,
+    toJson: transactionTypePropertyNullableToJson,
+    fromJson: transactionTypePropertyNullableFromJson,
   )
   final enums.TransactionTypeProperty? type;
   @JsonKey(name: 'date', includeIfNull: false)
@@ -10677,8 +11419,6 @@ class TransactionSplitUpdate {
   @JsonKey(name: 'invoice_date', includeIfNull: false)
   final DateTime? invoiceDate;
   static const fromJsonFactory = _$TransactionSplitUpdateFromJson;
-  static const toJsonFactory = _$TransactionSplitUpdateToJson;
-  Map<String, dynamic> toJson() => _$TransactionSplitUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -10929,7 +11669,7 @@ extension $TransactionSplitUpdateExtension on TransactionSplitUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class User {
-  User({
+  const User({
     this.createdAt,
     this.updatedAt,
     required this.email,
@@ -10939,6 +11679,9 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  static const toJsonFactory = _$UserToJson;
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -10951,20 +11694,18 @@ class User {
   @JsonKey(
     name: 'blocked_code',
     includeIfNull: false,
-    toJson: userBlockedCodePropertyToJson,
-    fromJson: userBlockedCodePropertyFromJson,
+    toJson: userBlockedCodePropertyNullableToJson,
+    fromJson: userBlockedCodePropertyNullableFromJson,
   )
   final enums.UserBlockedCodeProperty? blockedCode;
   @JsonKey(
     name: 'role',
     includeIfNull: false,
-    toJson: userRolePropertyToJson,
-    fromJson: userRolePropertyFromJson,
+    toJson: userRolePropertyNullableToJson,
+    fromJson: userRolePropertyNullableFromJson,
   )
   final enums.UserRoleProperty? role;
   static const fromJsonFactory = _$UserFromJson;
-  static const toJsonFactory = _$UserToJson;
-  Map<String, dynamic> toJson() => _$UserToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11007,7 +11748,7 @@ extension $UserExtension on User {
 
 @JsonSerializable(explicitToJson: true)
 class Webhook {
-  Webhook({
+  const Webhook({
     this.createdAt,
     this.updatedAt,
     this.active,
@@ -11021,6 +11762,9 @@ class Webhook {
 
   factory Webhook.fromJson(Map<String, dynamic> json) =>
       _$WebhookFromJson(json);
+
+  static const toJsonFactory = _$WebhookToJson;
+  Map<String, dynamic> toJson() => _$WebhookToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -11056,8 +11800,6 @@ class Webhook {
   @JsonKey(name: 'url', includeIfNull: false)
   final String url;
   static const fromJsonFactory = _$WebhookFromJson;
-  static const toJsonFactory = _$WebhookToJson;
-  Map<String, dynamic> toJson() => _$WebhookToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11111,7 +11853,7 @@ extension $WebhookExtension on Webhook {
 
 @JsonSerializable(explicitToJson: true)
 class WebhookStore {
-  WebhookStore({
+  const WebhookStore({
     this.active,
     required this.title,
     required this.trigger,
@@ -11122,6 +11864,9 @@ class WebhookStore {
 
   factory WebhookStore.fromJson(Map<String, dynamic> json) =>
       _$WebhookStoreFromJson(json);
+
+  static const toJsonFactory = _$WebhookStoreToJson;
+  Map<String, dynamic> toJson() => _$WebhookStoreToJson(this);
 
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
@@ -11151,8 +11896,6 @@ class WebhookStore {
   @JsonKey(name: 'url', includeIfNull: false)
   final String url;
   static const fromJsonFactory = _$WebhookStoreFromJson;
-  static const toJsonFactory = _$WebhookStoreToJson;
-  Map<String, dynamic> toJson() => _$WebhookStoreToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11194,7 +11937,7 @@ extension $WebhookStoreExtension on WebhookStore {
 
 @JsonSerializable(explicitToJson: true)
 class WebhookUpdate {
-  WebhookUpdate({
+  const WebhookUpdate({
     this.active,
     this.title,
     this.secret,
@@ -11207,6 +11950,9 @@ class WebhookUpdate {
   factory WebhookUpdate.fromJson(Map<String, dynamic> json) =>
       _$WebhookUpdateFromJson(json);
 
+  static const toJsonFactory = _$WebhookUpdateToJson;
+  Map<String, dynamic> toJson() => _$WebhookUpdateToJson(this);
+
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
   @JsonKey(name: 'title', includeIfNull: false)
@@ -11216,29 +11962,27 @@ class WebhookUpdate {
   @JsonKey(
     name: 'trigger',
     includeIfNull: false,
-    toJson: webhookTriggerToJson,
-    fromJson: webhookTriggerFromJson,
+    toJson: webhookTriggerNullableToJson,
+    fromJson: webhookTriggerNullableFromJson,
   )
   final enums.WebhookTrigger? trigger;
   @JsonKey(
     name: 'response',
     includeIfNull: false,
-    toJson: webhookResponseToJson,
-    fromJson: webhookResponseFromJson,
+    toJson: webhookResponseNullableToJson,
+    fromJson: webhookResponseNullableFromJson,
   )
   final enums.WebhookResponse? response;
   @JsonKey(
     name: 'delivery',
     includeIfNull: false,
-    toJson: webhookDeliveryToJson,
-    fromJson: webhookDeliveryFromJson,
+    toJson: webhookDeliveryNullableToJson,
+    fromJson: webhookDeliveryNullableFromJson,
   )
   final enums.WebhookDelivery? delivery;
   @JsonKey(name: 'url', includeIfNull: false)
   final String? url;
   static const fromJsonFactory = _$WebhookUpdateFromJson;
-  static const toJsonFactory = _$WebhookUpdateToJson;
-  Map<String, dynamic> toJson() => _$WebhookUpdateToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11284,7 +12028,7 @@ extension $WebhookUpdateExtension on WebhookUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class WebhookAttempt {
-  WebhookAttempt({
+  const WebhookAttempt({
     this.createdAt,
     this.updatedAt,
     this.webhookMessageId,
@@ -11295,6 +12039,9 @@ class WebhookAttempt {
 
   factory WebhookAttempt.fromJson(Map<String, dynamic> json) =>
       _$WebhookAttemptFromJson(json);
+
+  static const toJsonFactory = _$WebhookAttemptToJson;
+  Map<String, dynamic> toJson() => _$WebhookAttemptToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -11309,8 +12056,6 @@ class WebhookAttempt {
   @JsonKey(name: 'response', includeIfNull: false)
   final String? response;
   static const fromJsonFactory = _$WebhookAttemptFromJson;
-  static const toJsonFactory = _$WebhookAttemptToJson;
-  Map<String, dynamic> toJson() => _$WebhookAttemptToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11354,18 +12099,21 @@ extension $WebhookAttemptExtension on WebhookAttempt {
 
 @JsonSerializable(explicitToJson: true)
 class WebhookMessage {
-  WebhookMessage({
+  const WebhookMessage({
     this.createdAt,
     this.updatedAt,
     this.sent,
     this.errored,
     this.webhookId,
     this.uuid,
-    this.$string,
+    this.message,
   });
 
   factory WebhookMessage.fromJson(Map<String, dynamic> json) =>
       _$WebhookMessageFromJson(json);
+
+  static const toJsonFactory = _$WebhookMessageToJson;
+  Map<String, dynamic> toJson() => _$WebhookMessageToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -11379,11 +12127,9 @@ class WebhookMessage {
   final String? webhookId;
   @JsonKey(name: 'uuid', includeIfNull: false)
   final String? uuid;
-  @JsonKey(name: 'string', includeIfNull: false)
-  final String? $string;
+  @JsonKey(name: 'message', includeIfNull: false)
+  final String? message;
   static const fromJsonFactory = _$WebhookMessageFromJson;
-  static const toJsonFactory = _$WebhookMessageToJson;
-  Map<String, dynamic> toJson() => _$WebhookMessageToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11397,7 +12143,7 @@ extension $WebhookMessageExtension on WebhookMessage {
       bool? errored,
       String? webhookId,
       String? uuid,
-      String? $string}) {
+      String? message}) {
     return WebhookMessage(
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
@@ -11405,7 +12151,7 @@ extension $WebhookMessageExtension on WebhookMessage {
         errored: errored ?? this.errored,
         webhookId: webhookId ?? this.webhookId,
         uuid: uuid ?? this.uuid,
-        $string: $string ?? this.$string);
+        message: message ?? this.message);
   }
 
   WebhookMessage copyWithWrapped(
@@ -11415,7 +12161,7 @@ extension $WebhookMessageExtension on WebhookMessage {
       Wrapped<bool?>? errored,
       Wrapped<String?>? webhookId,
       Wrapped<String?>? uuid,
-      Wrapped<String?>? $string}) {
+      Wrapped<String?>? message}) {
     return WebhookMessage(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
@@ -11423,37 +12169,37 @@ extension $WebhookMessageExtension on WebhookMessage {
         errored: (errored != null ? errored.value : this.errored),
         webhookId: (webhookId != null ? webhookId.value : this.webhookId),
         uuid: (uuid != null ? uuid.value : this.uuid),
-        $string: ($string != null ? $string.value : this.$string));
+        message: (message != null ? message.value : this.message));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class PolymorphicProperty {
-  PolymorphicProperty();
+  const PolymorphicProperty();
 
   factory PolymorphicProperty.fromJson(Map<String, dynamic> json) =>
       _$PolymorphicPropertyFromJson(json);
 
-  static const fromJsonFactory = _$PolymorphicPropertyFromJson;
   static const toJsonFactory = _$PolymorphicPropertyToJson;
   Map<String, dynamic> toJson() => _$PolymorphicPropertyToJson(this);
+
+  static const fromJsonFactory = _$PolymorphicPropertyFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-typedef StringArray = List<String>;
-
 @JsonSerializable(explicitToJson: true)
 class BasicSummary {
-  BasicSummary();
+  const BasicSummary();
 
   factory BasicSummary.fromJson(Map<String, dynamic> json) =>
       _$BasicSummaryFromJson(json);
 
-  static const fromJsonFactory = _$BasicSummaryFromJson;
   static const toJsonFactory = _$BasicSummaryToJson;
   Map<String, dynamic> toJson() => _$BasicSummaryToJson(this);
+
+  static const fromJsonFactory = _$BasicSummaryFromJson;
 
   @override
   String toString() => jsonEncode(this);
@@ -11461,7 +12207,7 @@ class BasicSummary {
 
 @JsonSerializable(explicitToJson: true)
 class BasicSummaryEntry {
-  BasicSummaryEntry({
+  const BasicSummaryEntry({
     this.key,
     this.title,
     this.monetaryValue,
@@ -11476,6 +12222,9 @@ class BasicSummaryEntry {
 
   factory BasicSummaryEntry.fromJson(Map<String, dynamic> json) =>
       _$BasicSummaryEntryFromJson(json);
+
+  static const toJsonFactory = _$BasicSummaryEntryToJson;
+  Map<String, dynamic> toJson() => _$BasicSummaryEntryToJson(this);
 
   @JsonKey(name: 'key', includeIfNull: false)
   final String? key;
@@ -11498,8 +12247,6 @@ class BasicSummaryEntry {
   @JsonKey(name: 'sub_title', includeIfNull: false)
   final String? subTitle;
   static const fromJsonFactory = _$BasicSummaryEntryFromJson;
-  static const toJsonFactory = _$BasicSummaryEntryToJson;
-  Map<String, dynamic> toJson() => _$BasicSummaryEntryToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11565,14 +12312,17 @@ extension $BasicSummaryEntryExtension on BasicSummaryEntry {
 
 @JsonSerializable(explicitToJson: true)
 class Configuration {
-  Configuration({
+  const Configuration({
     required this.title,
-    required this.value,
+    required this.$value,
     required this.editable,
   });
 
   factory Configuration.fromJson(Map<String, dynamic> json) =>
       _$ConfigurationFromJson(json);
+
+  static const toJsonFactory = _$ConfigurationToJson;
+  Map<String, dynamic> toJson() => _$ConfigurationToJson(this);
 
   @JsonKey(
     name: 'title',
@@ -11582,12 +12332,10 @@ class Configuration {
   )
   final enums.ConfigValueFilter title;
   @JsonKey(name: 'value', includeIfNull: false)
-  final PolymorphicProperty value;
+  final PolymorphicProperty $value;
   @JsonKey(name: 'editable', includeIfNull: false)
   final bool editable;
   static const fromJsonFactory = _$ConfigurationFromJson;
-  static const toJsonFactory = _$ConfigurationToJson;
-  Map<String, dynamic> toJson() => _$ConfigurationToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11596,58 +12344,59 @@ class Configuration {
 extension $ConfigurationExtension on Configuration {
   Configuration copyWith(
       {enums.ConfigValueFilter? title,
-      PolymorphicProperty? value,
+      PolymorphicProperty? $value,
       bool? editable}) {
     return Configuration(
         title: title ?? this.title,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         editable: editable ?? this.editable);
   }
 
   Configuration copyWithWrapped(
       {Wrapped<enums.ConfigValueFilter>? title,
-      Wrapped<PolymorphicProperty>? value,
+      Wrapped<PolymorphicProperty>? $value,
       Wrapped<bool>? editable}) {
     return Configuration(
         title: (title != null ? title.value : this.title),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         editable: (editable != null ? editable.value : this.editable));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class ConfigurationUpdate {
-  ConfigurationUpdate({
-    required this.value,
+  const ConfigurationUpdate({
+    required this.$value,
   });
 
   factory ConfigurationUpdate.fromJson(Map<String, dynamic> json) =>
       _$ConfigurationUpdateFromJson(json);
 
-  @JsonKey(name: 'value', includeIfNull: false)
-  final PolymorphicProperty value;
-  static const fromJsonFactory = _$ConfigurationUpdateFromJson;
   static const toJsonFactory = _$ConfigurationUpdateToJson;
   Map<String, dynamic> toJson() => _$ConfigurationUpdateToJson(this);
+
+  @JsonKey(name: 'value', includeIfNull: false)
+  final PolymorphicProperty $value;
+  static const fromJsonFactory = _$ConfigurationUpdateFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
 extension $ConfigurationUpdateExtension on ConfigurationUpdate {
-  ConfigurationUpdate copyWith({PolymorphicProperty? value}) {
-    return ConfigurationUpdate(value: value ?? this.value);
+  ConfigurationUpdate copyWith({PolymorphicProperty? $value}) {
+    return ConfigurationUpdate($value: $value ?? this.$value);
   }
 
-  ConfigurationUpdate copyWithWrapped({Wrapped<PolymorphicProperty>? value}) {
+  ConfigurationUpdate copyWithWrapped({Wrapped<PolymorphicProperty>? $value}) {
     return ConfigurationUpdate(
-        value: (value != null ? value.value : this.value));
+        $value: ($value != null ? $value.value : this.$value));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class CronResult {
-  CronResult({
+  const CronResult({
     this.recurringTransactions,
     this.autoBudgets,
     this.telemetry,
@@ -11656,6 +12405,9 @@ class CronResult {
   factory CronResult.fromJson(Map<String, dynamic> json) =>
       _$CronResultFromJson(json);
 
+  static const toJsonFactory = _$CronResultToJson;
+  Map<String, dynamic> toJson() => _$CronResultToJson(this);
+
   @JsonKey(name: 'recurring_transactions', includeIfNull: false)
   final CronResultRow? recurringTransactions;
   @JsonKey(name: 'auto_budgets', includeIfNull: false)
@@ -11663,8 +12415,6 @@ class CronResult {
   @JsonKey(name: 'telemetry', includeIfNull: false)
   final CronResultRow? telemetry;
   static const fromJsonFactory = _$CronResultFromJson;
-  static const toJsonFactory = _$CronResultToJson;
-  Map<String, dynamic> toJson() => _$CronResultToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11698,7 +12448,7 @@ extension $CronResultExtension on CronResult {
 
 @JsonSerializable(explicitToJson: true)
 class CronResultRow {
-  CronResultRow({
+  const CronResultRow({
     this.jobFired,
     this.jobSucceeded,
     this.jobErrored,
@@ -11707,6 +12457,9 @@ class CronResultRow {
 
   factory CronResultRow.fromJson(Map<String, dynamic> json) =>
       _$CronResultRowFromJson(json);
+
+  static const toJsonFactory = _$CronResultRowToJson;
+  Map<String, dynamic> toJson() => _$CronResultRowToJson(this);
 
   @JsonKey(name: 'job_fired', includeIfNull: false)
   final bool? jobFired;
@@ -11717,8 +12470,6 @@ class CronResultRow {
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   static const fromJsonFactory = _$CronResultRowFromJson;
-  static const toJsonFactory = _$CronResultRowToJson;
-  Map<String, dynamic> toJson() => _$CronResultRowToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11750,18 +12501,19 @@ extension $CronResultRowExtension on CronResultRow {
 
 @JsonSerializable(explicitToJson: true)
 class SystemInfo {
-  SystemInfo({
+  const SystemInfo({
     this.data,
   });
 
   factory SystemInfo.fromJson(Map<String, dynamic> json) =>
       _$SystemInfoFromJson(json);
 
+  static const toJsonFactory = _$SystemInfoToJson;
+  Map<String, dynamic> toJson() => _$SystemInfoToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final SystemInfo$Data? data;
   static const fromJsonFactory = _$SystemInfoFromJson;
-  static const toJsonFactory = _$SystemInfoToJson;
-  Map<String, dynamic> toJson() => _$SystemInfoToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11779,18 +12531,19 @@ extension $SystemInfoExtension on SystemInfo {
 
 @JsonSerializable(explicitToJson: true)
 class UserSingle {
-  UserSingle({
+  const UserSingle({
     required this.data,
   });
 
   factory UserSingle.fromJson(Map<String, dynamic> json) =>
       _$UserSingleFromJson(json);
 
+  static const toJsonFactory = _$UserSingleToJson;
+  Map<String, dynamic> toJson() => _$UserSingleToJson(this);
+
   @JsonKey(name: 'data', includeIfNull: false)
   final UserRead data;
   static const fromJsonFactory = _$UserSingleFromJson;
-  static const toJsonFactory = _$UserSingleToJson;
-  Map<String, dynamic> toJson() => _$UserSingleToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11807,115 +12560,19 @@ extension $UserSingleExtension on UserSingle {
 }
 
 @JsonSerializable(explicitToJson: true)
-class TransactionArray {
-  TransactionArray({
-    required this.data,
-    required this.meta,
-    required this.links,
-  });
-
-  factory TransactionArray.fromJson(Map<String, dynamic> json) =>
-      _$TransactionArrayFromJson(json);
-
-  @JsonKey(
-      name: 'data', includeIfNull: false, defaultValue: <TransactionRead>[])
-  final List<TransactionRead> data;
-  @JsonKey(name: 'meta', includeIfNull: false)
-  final Meta meta;
-  @JsonKey(name: 'links', includeIfNull: false)
-  final PageLink links;
-  static const fromJsonFactory = _$TransactionArrayFromJson;
-  static const toJsonFactory = _$TransactionArrayToJson;
-  Map<String, dynamic> toJson() => _$TransactionArrayToJson(this);
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $TransactionArrayExtension on TransactionArray {
-  TransactionArray copyWith(
-      {List<TransactionRead>? data, Meta? meta, PageLink? links}) {
-    return TransactionArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
-  }
-
-  TransactionArray copyWithWrapped(
-      {Wrapped<List<TransactionRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
-    return TransactionArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class TransactionRead {
-  TransactionRead({
-    required this.type,
-    required this.id,
-    required this.attributes,
-    required this.links,
-  });
-
-  factory TransactionRead.fromJson(Map<String, dynamic> json) =>
-      _$TransactionReadFromJson(json);
-
-  @JsonKey(name: 'type', includeIfNull: false)
-  final String type;
-  @JsonKey(name: 'id', includeIfNull: false)
-  final String id;
-  @JsonKey(name: 'attributes', includeIfNull: false)
-  final Transaction attributes;
-  @JsonKey(name: 'links', includeIfNull: false)
-  final ObjectLink links;
-  static const fromJsonFactory = _$TransactionReadFromJson;
-  static const toJsonFactory = _$TransactionReadToJson;
-  Map<String, dynamic> toJson() => _$TransactionReadToJson(this);
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $TransactionReadExtension on TransactionRead {
-  TransactionRead copyWith(
-      {String? type, String? id, Transaction? attributes, ObjectLink? links}) {
-    return TransactionRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
-  }
-
-  TransactionRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<Transaction>? attributes,
-      Wrapped<ObjectLink>? links}) {
-    return TransactionRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class Meta {
-  Meta({
+  const Meta({
     this.pagination,
   });
 
   factory Meta.fromJson(Map<String, dynamic> json) => _$MetaFromJson(json);
 
+  static const toJsonFactory = _$MetaToJson;
+  Map<String, dynamic> toJson() => _$MetaToJson(this);
+
   @JsonKey(name: 'pagination', includeIfNull: false)
   final Meta$Pagination? pagination;
   static const fromJsonFactory = _$MetaFromJson;
-  static const toJsonFactory = _$MetaToJson;
-  Map<String, dynamic> toJson() => _$MetaToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -11933,849 +12590,199 @@ extension $MetaExtension on Meta {
 }
 
 @JsonSerializable(explicitToJson: true)
-class ObjectLink {
-  ObjectLink({
-    this.self,
-  });
-
-  factory ObjectLink.fromJson(Map<String, dynamic> json) =>
-      _$ObjectLinkFromJson(json);
-
-  @JsonKey(name: 'self', includeIfNull: false)
-  final String? self;
-  static const fromJsonFactory = _$ObjectLinkFromJson;
-  static const toJsonFactory = _$ObjectLinkToJson;
-  Map<String, dynamic> toJson() => _$ObjectLinkToJson(this);
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $ObjectLinkExtension on ObjectLink {
-  ObjectLink copyWith({String? self}) {
-    return ObjectLink(self: self ?? this.self);
-  }
-
-  ObjectLink copyWithWrapped({Wrapped<String?>? self}) {
-    return ObjectLink(self: (self != null ? self.value : this.self));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class PageLink {
-  PageLink({
-    this.self,
-    this.first,
-    this.last,
-  });
-
-  factory PageLink.fromJson(Map<String, dynamic> json) =>
-      _$PageLinkFromJson(json);
-
-  @JsonKey(name: 'self', includeIfNull: false)
-  final String? self;
-  @JsonKey(name: 'first', includeIfNull: false)
-  final String? first;
-  @JsonKey(name: 'last', includeIfNull: false)
-  final String? last;
-  static const fromJsonFactory = _$PageLinkFromJson;
-  static const toJsonFactory = _$PageLinkToJson;
-  Map<String, dynamic> toJson() => _$PageLinkToJson(this);
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $PageLinkExtension on PageLink {
-  PageLink copyWith({String? self, String? first, String? last}) {
-    return PageLink(
-        self: self ?? this.self,
-        first: first ?? this.first,
-        last: last ?? this.last);
-  }
-
-  PageLink copyWithWrapped(
-      {Wrapped<String?>? self,
-      Wrapped<String?>? first,
-      Wrapped<String?>? last}) {
-    return PageLink(
-        self: (self != null ? self.value : this.self),
-        first: (first != null ? first.value : this.first),
-        last: (last != null ? last.value : this.last));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class Transaction {
-  Transaction({
-    this.createdAt,
-    this.updatedAt,
-    this.user,
-    this.groupTitle,
-    required this.transactions,
-  });
-
-  factory Transaction.fromJson(Map<String, dynamic> json) =>
-      _$TransactionFromJson(json);
-
-  @JsonKey(name: 'created_at', includeIfNull: false)
-  final DateTime? createdAt;
-  @JsonKey(name: 'updated_at', includeIfNull: false)
-  final DateTime? updatedAt;
-  @JsonKey(name: 'user', includeIfNull: false)
-  final String? user;
-  @JsonKey(name: 'group_title', includeIfNull: false)
-  final String? groupTitle;
-  @JsonKey(
-      name: 'transactions',
-      includeIfNull: false,
-      defaultValue: <TransactionSplit>[])
-  final List<TransactionSplit> transactions;
-  static const fromJsonFactory = _$TransactionFromJson;
-  static const toJsonFactory = _$TransactionToJson;
-  Map<String, dynamic> toJson() => _$TransactionToJson(this);
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $TransactionExtension on Transaction {
-  Transaction copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? user,
-      String? groupTitle,
-      List<TransactionSplit>? transactions}) {
-    return Transaction(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        user: user ?? this.user,
-        groupTitle: groupTitle ?? this.groupTitle,
-        transactions: transactions ?? this.transactions);
-  }
-
-  Transaction copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String?>? user,
-      Wrapped<String?>? groupTitle,
-      Wrapped<List<TransactionSplit>>? transactions}) {
-    return Transaction(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        user: (user != null ? user.value : this.user),
-        groupTitle: (groupTitle != null ? groupTitle.value : this.groupTitle),
-        transactions:
-            (transactions != null ? transactions.value : this.transactions));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class TransactionSplit {
-  TransactionSplit({
-    this.user,
-    this.transactionJournalId,
-    required this.type,
-    required this.date,
-    this.order,
-    this.currencyId,
-    this.currencyCode,
-    this.currencySymbol,
-    this.currencyName,
-    this.currencyDecimalPlaces,
-    this.foreignCurrencyId,
-    this.foreignCurrencyCode,
-    this.foreignCurrencySymbol,
-    this.foreignCurrencyDecimalPlaces,
-    required this.amount,
-    this.foreignAmount,
-    required this.description,
-    required this.sourceId,
-    this.sourceName,
-    this.sourceIban,
-    this.sourceType,
-    required this.destinationId,
-    this.destinationName,
-    this.destinationIban,
-    this.destinationType,
-    this.budgetId,
-    this.budgetName,
-    this.categoryId,
-    this.categoryName,
-    this.billId,
-    this.billName,
-    this.reconciled,
-    this.notes,
-    this.tags,
-    this.internalReference,
-    this.externalId,
-    this.externalUrl,
-    this.originalSource,
-    this.recurrenceId,
-    this.recurrenceTotal,
-    this.recurrenceCount,
-    this.bunqPaymentId,
-    this.importHashV2,
-    this.sepaCc,
-    this.sepaCtOp,
-    this.sepaCtId,
-    this.sepaDb,
-    this.sepaCountry,
-    this.sepaEp,
-    this.sepaCi,
-    this.sepaBatchId,
-    this.interestDate,
-    this.bookDate,
-    this.processDate,
-    this.dueDate,
-    this.paymentDate,
-    this.invoiceDate,
-    this.latitude,
-    this.longitude,
-    this.zoomLevel,
-    this.hasAttachments,
-  });
-
-  factory TransactionSplit.fromJson(Map<String, dynamic> json) =>
-      _$TransactionSplitFromJson(json);
-
-  @JsonKey(name: 'user', includeIfNull: false)
-  final String? user;
-  @JsonKey(name: 'transaction_journal_id', includeIfNull: false)
-  final String? transactionJournalId;
-  @JsonKey(
-    name: 'type',
-    includeIfNull: false,
-    toJson: transactionTypePropertyToJson,
-    fromJson: transactionTypePropertyFromJson,
-  )
-  final enums.TransactionTypeProperty type;
-  @JsonKey(name: 'date', includeIfNull: false)
-  final DateTime date;
-  @JsonKey(name: 'order', includeIfNull: false)
-  final int? order;
-  @JsonKey(name: 'currency_id', includeIfNull: false)
-  final String? currencyId;
-  @JsonKey(name: 'currency_code', includeIfNull: false)
-  final String? currencyCode;
-  @JsonKey(name: 'currency_symbol', includeIfNull: false)
-  final String? currencySymbol;
-  @JsonKey(name: 'currency_name', includeIfNull: false)
-  final String? currencyName;
-  @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
-  final int? currencyDecimalPlaces;
-  @JsonKey(name: 'foreign_currency_id', includeIfNull: false)
-  final String? foreignCurrencyId;
-  @JsonKey(name: 'foreign_currency_code', includeIfNull: false)
-  final String? foreignCurrencyCode;
-  @JsonKey(name: 'foreign_currency_symbol', includeIfNull: false)
-  final String? foreignCurrencySymbol;
-  @JsonKey(name: 'foreign_currency_decimal_places', includeIfNull: false)
-  final int? foreignCurrencyDecimalPlaces;
-  @JsonKey(name: 'amount', includeIfNull: false)
-  final String amount;
-  @JsonKey(name: 'foreign_amount', includeIfNull: false)
-  final String? foreignAmount;
-  @JsonKey(name: 'description', includeIfNull: false)
-  final String description;
-  @JsonKey(name: 'source_id', includeIfNull: false)
-  final String? sourceId;
-  @JsonKey(name: 'source_name', includeIfNull: false)
-  final String? sourceName;
-  @JsonKey(name: 'source_iban', includeIfNull: false)
-  final String? sourceIban;
-  @JsonKey(
-    name: 'source_type',
-    includeIfNull: false,
-    toJson: accountTypePropertyToJson,
-    fromJson: accountTypePropertyFromJson,
-  )
-  final enums.AccountTypeProperty? sourceType;
-  @JsonKey(name: 'destination_id', includeIfNull: false)
-  final String? destinationId;
-  @JsonKey(name: 'destination_name', includeIfNull: false)
-  final String? destinationName;
-  @JsonKey(name: 'destination_iban', includeIfNull: false)
-  final String? destinationIban;
-  @JsonKey(
-    name: 'destination_type',
-    includeIfNull: false,
-    toJson: accountTypePropertyToJson,
-    fromJson: accountTypePropertyFromJson,
-  )
-  final enums.AccountTypeProperty? destinationType;
-  @JsonKey(name: 'budget_id', includeIfNull: false)
-  final String? budgetId;
-  @JsonKey(name: 'budget_name', includeIfNull: false)
-  final String? budgetName;
-  @JsonKey(name: 'category_id', includeIfNull: false)
-  final String? categoryId;
-  @JsonKey(name: 'category_name', includeIfNull: false)
-  final String? categoryName;
-  @JsonKey(name: 'bill_id', includeIfNull: false)
-  final String? billId;
-  @JsonKey(name: 'bill_name', includeIfNull: false)
-  final String? billName;
-  @JsonKey(name: 'reconciled', includeIfNull: false)
-  final bool? reconciled;
-  @JsonKey(name: 'notes', includeIfNull: false)
-  final String? notes;
-  @JsonKey(name: 'tags', includeIfNull: false, defaultValue: <String>[])
-  final List<String>? tags;
-  @JsonKey(name: 'internal_reference', includeIfNull: false)
-  final String? internalReference;
-  @JsonKey(name: 'external_id', includeIfNull: false)
-  final String? externalId;
-  @JsonKey(name: 'external_url', includeIfNull: false)
-  final String? externalUrl;
-  @JsonKey(name: 'original_source', includeIfNull: false)
-  final String? originalSource;
-  @JsonKey(name: 'recurrence_id', includeIfNull: false)
-  final Object? recurrenceId;
-  @JsonKey(name: 'recurrence_total', includeIfNull: false)
-  final int? recurrenceTotal;
-  @JsonKey(name: 'recurrence_count', includeIfNull: false)
-  final int? recurrenceCount;
-  @JsonKey(name: 'bunq_payment_id', includeIfNull: false)
-  final String? bunqPaymentId;
-  @JsonKey(name: 'import_hash_v2', includeIfNull: false)
-  final String? importHashV2;
-  @JsonKey(name: 'sepa_cc', includeIfNull: false)
-  final String? sepaCc;
-  @JsonKey(name: 'sepa_ct_op', includeIfNull: false)
-  final String? sepaCtOp;
-  @JsonKey(name: 'sepa_ct_id', includeIfNull: false)
-  final String? sepaCtId;
-  @JsonKey(name: 'sepa_db', includeIfNull: false)
-  final String? sepaDb;
-  @JsonKey(name: 'sepa_country', includeIfNull: false)
-  final String? sepaCountry;
-  @JsonKey(name: 'sepa_ep', includeIfNull: false)
-  final String? sepaEp;
-  @JsonKey(name: 'sepa_ci', includeIfNull: false)
-  final String? sepaCi;
-  @JsonKey(name: 'sepa_batch_id', includeIfNull: false)
-  final String? sepaBatchId;
-  @JsonKey(name: 'interest_date', includeIfNull: false)
-  final DateTime? interestDate;
-  @JsonKey(name: 'book_date', includeIfNull: false)
-  final DateTime? bookDate;
-  @JsonKey(name: 'process_date', includeIfNull: false)
-  final DateTime? processDate;
-  @JsonKey(name: 'due_date', includeIfNull: false)
-  final DateTime? dueDate;
-  @JsonKey(name: 'payment_date', includeIfNull: false)
-  final DateTime? paymentDate;
-  @JsonKey(name: 'invoice_date', includeIfNull: false)
-  final DateTime? invoiceDate;
-  @JsonKey(name: 'latitude', includeIfNull: false)
-  final double? latitude;
-  @JsonKey(name: 'longitude', includeIfNull: false)
-  final double? longitude;
-  @JsonKey(name: 'zoom_level', includeIfNull: false)
-  final int? zoomLevel;
-  @JsonKey(name: 'has_attachments', includeIfNull: false)
-  final bool? hasAttachments;
-  static const fromJsonFactory = _$TransactionSplitFromJson;
-  static const toJsonFactory = _$TransactionSplitToJson;
-  Map<String, dynamic> toJson() => _$TransactionSplitToJson(this);
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $TransactionSplitExtension on TransactionSplit {
-  TransactionSplit copyWith(
-      {String? user,
-      String? transactionJournalId,
-      enums.TransactionTypeProperty? type,
-      DateTime? date,
-      int? order,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      String? currencyName,
-      int? currencyDecimalPlaces,
-      String? foreignCurrencyId,
-      String? foreignCurrencyCode,
-      String? foreignCurrencySymbol,
-      int? foreignCurrencyDecimalPlaces,
-      String? amount,
-      String? foreignAmount,
-      String? description,
-      String? sourceId,
-      String? sourceName,
-      String? sourceIban,
-      enums.AccountTypeProperty? sourceType,
-      String? destinationId,
-      String? destinationName,
-      String? destinationIban,
-      enums.AccountTypeProperty? destinationType,
-      String? budgetId,
-      String? budgetName,
-      String? categoryId,
-      String? categoryName,
-      String? billId,
-      String? billName,
-      bool? reconciled,
-      String? notes,
-      List<String>? tags,
-      String? internalReference,
-      String? externalId,
-      String? externalUrl,
-      String? originalSource,
-      Object? recurrenceId,
-      int? recurrenceTotal,
-      int? recurrenceCount,
-      String? bunqPaymentId,
-      String? importHashV2,
-      String? sepaCc,
-      String? sepaCtOp,
-      String? sepaCtId,
-      String? sepaDb,
-      String? sepaCountry,
-      String? sepaEp,
-      String? sepaCi,
-      String? sepaBatchId,
-      DateTime? interestDate,
-      DateTime? bookDate,
-      DateTime? processDate,
-      DateTime? dueDate,
-      DateTime? paymentDate,
-      DateTime? invoiceDate,
-      double? latitude,
-      double? longitude,
-      int? zoomLevel,
-      bool? hasAttachments}) {
-    return TransactionSplit(
-        user: user ?? this.user,
-        transactionJournalId: transactionJournalId ?? this.transactionJournalId,
-        type: type ?? this.type,
-        date: date ?? this.date,
-        order: order ?? this.order,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyName: currencyName ?? this.currencyName,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
-        foreignCurrencyCode: foreignCurrencyCode ?? this.foreignCurrencyCode,
-        foreignCurrencySymbol:
-            foreignCurrencySymbol ?? this.foreignCurrencySymbol,
-        foreignCurrencyDecimalPlaces:
-            foreignCurrencyDecimalPlaces ?? this.foreignCurrencyDecimalPlaces,
-        amount: amount ?? this.amount,
-        foreignAmount: foreignAmount ?? this.foreignAmount,
-        description: description ?? this.description,
-        sourceId: sourceId ?? this.sourceId,
-        sourceName: sourceName ?? this.sourceName,
-        sourceIban: sourceIban ?? this.sourceIban,
-        sourceType: sourceType ?? this.sourceType,
-        destinationId: destinationId ?? this.destinationId,
-        destinationName: destinationName ?? this.destinationName,
-        destinationIban: destinationIban ?? this.destinationIban,
-        destinationType: destinationType ?? this.destinationType,
-        budgetId: budgetId ?? this.budgetId,
-        budgetName: budgetName ?? this.budgetName,
-        categoryId: categoryId ?? this.categoryId,
-        categoryName: categoryName ?? this.categoryName,
-        billId: billId ?? this.billId,
-        billName: billName ?? this.billName,
-        reconciled: reconciled ?? this.reconciled,
-        notes: notes ?? this.notes,
-        tags: tags ?? this.tags,
-        internalReference: internalReference ?? this.internalReference,
-        externalId: externalId ?? this.externalId,
-        externalUrl: externalUrl ?? this.externalUrl,
-        originalSource: originalSource ?? this.originalSource,
-        recurrenceId: recurrenceId ?? this.recurrenceId,
-        recurrenceTotal: recurrenceTotal ?? this.recurrenceTotal,
-        recurrenceCount: recurrenceCount ?? this.recurrenceCount,
-        bunqPaymentId: bunqPaymentId ?? this.bunqPaymentId,
-        importHashV2: importHashV2 ?? this.importHashV2,
-        sepaCc: sepaCc ?? this.sepaCc,
-        sepaCtOp: sepaCtOp ?? this.sepaCtOp,
-        sepaCtId: sepaCtId ?? this.sepaCtId,
-        sepaDb: sepaDb ?? this.sepaDb,
-        sepaCountry: sepaCountry ?? this.sepaCountry,
-        sepaEp: sepaEp ?? this.sepaEp,
-        sepaCi: sepaCi ?? this.sepaCi,
-        sepaBatchId: sepaBatchId ?? this.sepaBatchId,
-        interestDate: interestDate ?? this.interestDate,
-        bookDate: bookDate ?? this.bookDate,
-        processDate: processDate ?? this.processDate,
-        dueDate: dueDate ?? this.dueDate,
-        paymentDate: paymentDate ?? this.paymentDate,
-        invoiceDate: invoiceDate ?? this.invoiceDate,
-        latitude: latitude ?? this.latitude,
-        longitude: longitude ?? this.longitude,
-        zoomLevel: zoomLevel ?? this.zoomLevel,
-        hasAttachments: hasAttachments ?? this.hasAttachments);
-  }
-
-  TransactionSplit copyWithWrapped(
-      {Wrapped<String?>? user,
-      Wrapped<String?>? transactionJournalId,
-      Wrapped<enums.TransactionTypeProperty>? type,
-      Wrapped<DateTime>? date,
-      Wrapped<int?>? order,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<String?>? currencyName,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? foreignCurrencyId,
-      Wrapped<String?>? foreignCurrencyCode,
-      Wrapped<String?>? foreignCurrencySymbol,
-      Wrapped<int?>? foreignCurrencyDecimalPlaces,
-      Wrapped<String>? amount,
-      Wrapped<String?>? foreignAmount,
-      Wrapped<String>? description,
-      Wrapped<String?>? sourceId,
-      Wrapped<String?>? sourceName,
-      Wrapped<String?>? sourceIban,
-      Wrapped<enums.AccountTypeProperty?>? sourceType,
-      Wrapped<String?>? destinationId,
-      Wrapped<String?>? destinationName,
-      Wrapped<String?>? destinationIban,
-      Wrapped<enums.AccountTypeProperty?>? destinationType,
-      Wrapped<String?>? budgetId,
-      Wrapped<String?>? budgetName,
-      Wrapped<String?>? categoryId,
-      Wrapped<String?>? categoryName,
-      Wrapped<String?>? billId,
-      Wrapped<String?>? billName,
-      Wrapped<bool?>? reconciled,
-      Wrapped<String?>? notes,
-      Wrapped<List<String>?>? tags,
-      Wrapped<String?>? internalReference,
-      Wrapped<String?>? externalId,
-      Wrapped<String?>? externalUrl,
-      Wrapped<String?>? originalSource,
-      Wrapped<Object?>? recurrenceId,
-      Wrapped<int?>? recurrenceTotal,
-      Wrapped<int?>? recurrenceCount,
-      Wrapped<String?>? bunqPaymentId,
-      Wrapped<String?>? importHashV2,
-      Wrapped<String?>? sepaCc,
-      Wrapped<String?>? sepaCtOp,
-      Wrapped<String?>? sepaCtId,
-      Wrapped<String?>? sepaDb,
-      Wrapped<String?>? sepaCountry,
-      Wrapped<String?>? sepaEp,
-      Wrapped<String?>? sepaCi,
-      Wrapped<String?>? sepaBatchId,
-      Wrapped<DateTime?>? interestDate,
-      Wrapped<DateTime?>? bookDate,
-      Wrapped<DateTime?>? processDate,
-      Wrapped<DateTime?>? dueDate,
-      Wrapped<DateTime?>? paymentDate,
-      Wrapped<DateTime?>? invoiceDate,
-      Wrapped<double?>? latitude,
-      Wrapped<double?>? longitude,
-      Wrapped<int?>? zoomLevel,
-      Wrapped<bool?>? hasAttachments}) {
-    return TransactionSplit(
-        user: (user != null ? user.value : this.user),
-        transactionJournalId: (transactionJournalId != null
-            ? transactionJournalId.value
-            : this.transactionJournalId),
-        type: (type != null ? type.value : this.type),
-        date: (date != null ? date.value : this.date),
-        order: (order != null ? order.value : this.order),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyName:
-            (currencyName != null ? currencyName.value : this.currencyName),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        foreignCurrencyId: (foreignCurrencyId != null
-            ? foreignCurrencyId.value
-            : this.foreignCurrencyId),
-        foreignCurrencyCode: (foreignCurrencyCode != null
-            ? foreignCurrencyCode.value
-            : this.foreignCurrencyCode),
-        foreignCurrencySymbol: (foreignCurrencySymbol != null
-            ? foreignCurrencySymbol.value
-            : this.foreignCurrencySymbol),
-        foreignCurrencyDecimalPlaces: (foreignCurrencyDecimalPlaces != null
-            ? foreignCurrencyDecimalPlaces.value
-            : this.foreignCurrencyDecimalPlaces),
-        amount: (amount != null ? amount.value : this.amount),
-        foreignAmount:
-            (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
-        description:
-            (description != null ? description.value : this.description),
-        sourceId: (sourceId != null ? sourceId.value : this.sourceId),
-        sourceName: (sourceName != null ? sourceName.value : this.sourceName),
-        sourceIban: (sourceIban != null ? sourceIban.value : this.sourceIban),
-        sourceType: (sourceType != null ? sourceType.value : this.sourceType),
-        destinationId:
-            (destinationId != null ? destinationId.value : this.destinationId),
-        destinationName: (destinationName != null
-            ? destinationName.value
-            : this.destinationName),
-        destinationIban: (destinationIban != null
-            ? destinationIban.value
-            : this.destinationIban),
-        destinationType: (destinationType != null
-            ? destinationType.value
-            : this.destinationType),
-        budgetId: (budgetId != null ? budgetId.value : this.budgetId),
-        budgetName: (budgetName != null ? budgetName.value : this.budgetName),
-        categoryId: (categoryId != null ? categoryId.value : this.categoryId),
-        categoryName:
-            (categoryName != null ? categoryName.value : this.categoryName),
-        billId: (billId != null ? billId.value : this.billId),
-        billName: (billName != null ? billName.value : this.billName),
-        reconciled: (reconciled != null ? reconciled.value : this.reconciled),
-        notes: (notes != null ? notes.value : this.notes),
-        tags: (tags != null ? tags.value : this.tags),
-        internalReference: (internalReference != null
-            ? internalReference.value
-            : this.internalReference),
-        externalId: (externalId != null ? externalId.value : this.externalId),
-        externalUrl:
-            (externalUrl != null ? externalUrl.value : this.externalUrl),
-        originalSource: (originalSource != null
-            ? originalSource.value
-            : this.originalSource),
-        recurrenceId:
-            (recurrenceId != null ? recurrenceId.value : this.recurrenceId),
-        recurrenceTotal: (recurrenceTotal != null
-            ? recurrenceTotal.value
-            : this.recurrenceTotal),
-        recurrenceCount: (recurrenceCount != null
-            ? recurrenceCount.value
-            : this.recurrenceCount),
-        bunqPaymentId:
-            (bunqPaymentId != null ? bunqPaymentId.value : this.bunqPaymentId),
-        importHashV2:
-            (importHashV2 != null ? importHashV2.value : this.importHashV2),
-        sepaCc: (sepaCc != null ? sepaCc.value : this.sepaCc),
-        sepaCtOp: (sepaCtOp != null ? sepaCtOp.value : this.sepaCtOp),
-        sepaCtId: (sepaCtId != null ? sepaCtId.value : this.sepaCtId),
-        sepaDb: (sepaDb != null ? sepaDb.value : this.sepaDb),
-        sepaCountry:
-            (sepaCountry != null ? sepaCountry.value : this.sepaCountry),
-        sepaEp: (sepaEp != null ? sepaEp.value : this.sepaEp),
-        sepaCi: (sepaCi != null ? sepaCi.value : this.sepaCi),
-        sepaBatchId:
-            (sepaBatchId != null ? sepaBatchId.value : this.sepaBatchId),
-        interestDate:
-            (interestDate != null ? interestDate.value : this.interestDate),
-        bookDate: (bookDate != null ? bookDate.value : this.bookDate),
-        processDate:
-            (processDate != null ? processDate.value : this.processDate),
-        dueDate: (dueDate != null ? dueDate.value : this.dueDate),
-        paymentDate:
-            (paymentDate != null ? paymentDate.value : this.paymentDate),
-        invoiceDate:
-            (invoiceDate != null ? invoiceDate.value : this.invoiceDate),
-        latitude: (latitude != null ? latitude.value : this.latitude),
-        longitude: (longitude != null ? longitude.value : this.longitude),
-        zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel),
-        hasAttachments: (hasAttachments != null
-            ? hasAttachments.value
-            : this.hasAttachments));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class BadRequest {
-  BadRequest({
+class BadRequestResponse {
+  const BadRequestResponse({
     this.message,
     this.exception,
   });
 
-  factory BadRequest.fromJson(Map<String, dynamic> json) =>
-      _$BadRequestFromJson(json);
+  factory BadRequestResponse.fromJson(Map<String, dynamic> json) =>
+      _$BadRequestResponseFromJson(json);
+
+  static const toJsonFactory = _$BadRequestResponseToJson;
+  Map<String, dynamic> toJson() => _$BadRequestResponseToJson(this);
 
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   @JsonKey(name: 'exception', includeIfNull: false)
   final String? exception;
-  static const fromJsonFactory = _$BadRequestFromJson;
-  static const toJsonFactory = _$BadRequestToJson;
-  Map<String, dynamic> toJson() => _$BadRequestToJson(this);
+  static const fromJsonFactory = _$BadRequestResponseFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $BadRequestExtension on BadRequest {
-  BadRequest copyWith({String? message, String? exception}) {
-    return BadRequest(
+extension $BadRequestResponseExtension on BadRequestResponse {
+  BadRequestResponse copyWith({String? message, String? exception}) {
+    return BadRequestResponse(
         message: message ?? this.message,
         exception: exception ?? this.exception);
   }
 
-  BadRequest copyWithWrapped(
+  BadRequestResponse copyWithWrapped(
       {Wrapped<String?>? message, Wrapped<String?>? exception}) {
-    return BadRequest(
+    return BadRequestResponse(
         message: (message != null ? message.value : this.message),
         exception: (exception != null ? exception.value : this.exception));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-class InternalException {
-  InternalException({
+class InternalExceptionResponse {
+  const InternalExceptionResponse({
     this.message,
     this.exception,
   });
 
-  factory InternalException.fromJson(Map<String, dynamic> json) =>
-      _$InternalExceptionFromJson(json);
+  factory InternalExceptionResponse.fromJson(Map<String, dynamic> json) =>
+      _$InternalExceptionResponseFromJson(json);
+
+  static const toJsonFactory = _$InternalExceptionResponseToJson;
+  Map<String, dynamic> toJson() => _$InternalExceptionResponseToJson(this);
 
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   @JsonKey(name: 'exception', includeIfNull: false)
   final String? exception;
-  static const fromJsonFactory = _$InternalExceptionFromJson;
-  static const toJsonFactory = _$InternalExceptionToJson;
-  Map<String, dynamic> toJson() => _$InternalExceptionToJson(this);
+  static const fromJsonFactory = _$InternalExceptionResponseFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $InternalExceptionExtension on InternalException {
-  InternalException copyWith({String? message, String? exception}) {
-    return InternalException(
+extension $InternalExceptionResponseExtension on InternalExceptionResponse {
+  InternalExceptionResponse copyWith({String? message, String? exception}) {
+    return InternalExceptionResponse(
         message: message ?? this.message,
         exception: exception ?? this.exception);
   }
 
-  InternalException copyWithWrapped(
+  InternalExceptionResponse copyWithWrapped(
       {Wrapped<String?>? message, Wrapped<String?>? exception}) {
-    return InternalException(
+    return InternalExceptionResponse(
         message: (message != null ? message.value : this.message),
         exception: (exception != null ? exception.value : this.exception));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-class NotFound {
-  NotFound({
+class NotFoundResponse {
+  const NotFoundResponse({
     this.message,
     this.exception,
   });
 
-  factory NotFound.fromJson(Map<String, dynamic> json) =>
-      _$NotFoundFromJson(json);
+  factory NotFoundResponse.fromJson(Map<String, dynamic> json) =>
+      _$NotFoundResponseFromJson(json);
+
+  static const toJsonFactory = _$NotFoundResponseToJson;
+  Map<String, dynamic> toJson() => _$NotFoundResponseToJson(this);
 
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   @JsonKey(name: 'exception', includeIfNull: false)
   final String? exception;
-  static const fromJsonFactory = _$NotFoundFromJson;
-  static const toJsonFactory = _$NotFoundToJson;
-  Map<String, dynamic> toJson() => _$NotFoundToJson(this);
+  static const fromJsonFactory = _$NotFoundResponseFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $NotFoundExtension on NotFound {
-  NotFound copyWith({String? message, String? exception}) {
-    return NotFound(
+extension $NotFoundResponseExtension on NotFoundResponse {
+  NotFoundResponse copyWith({String? message, String? exception}) {
+    return NotFoundResponse(
         message: message ?? this.message,
         exception: exception ?? this.exception);
   }
 
-  NotFound copyWithWrapped(
+  NotFoundResponse copyWithWrapped(
       {Wrapped<String?>? message, Wrapped<String?>? exception}) {
-    return NotFound(
+    return NotFoundResponse(
         message: (message != null ? message.value : this.message),
         exception: (exception != null ? exception.value : this.exception));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-class Unauthenticated {
-  Unauthenticated({
+class UnauthenticatedResponse {
+  const UnauthenticatedResponse({
     this.message,
     this.exception,
   });
 
-  factory Unauthenticated.fromJson(Map<String, dynamic> json) =>
-      _$UnauthenticatedFromJson(json);
+  factory UnauthenticatedResponse.fromJson(Map<String, dynamic> json) =>
+      _$UnauthenticatedResponseFromJson(json);
+
+  static const toJsonFactory = _$UnauthenticatedResponseToJson;
+  Map<String, dynamic> toJson() => _$UnauthenticatedResponseToJson(this);
 
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   @JsonKey(name: 'exception', includeIfNull: false)
   final String? exception;
-  static const fromJsonFactory = _$UnauthenticatedFromJson;
-  static const toJsonFactory = _$UnauthenticatedToJson;
-  Map<String, dynamic> toJson() => _$UnauthenticatedToJson(this);
+  static const fromJsonFactory = _$UnauthenticatedResponseFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $UnauthenticatedExtension on Unauthenticated {
-  Unauthenticated copyWith({String? message, String? exception}) {
-    return Unauthenticated(
+extension $UnauthenticatedResponseExtension on UnauthenticatedResponse {
+  UnauthenticatedResponse copyWith({String? message, String? exception}) {
+    return UnauthenticatedResponse(
         message: message ?? this.message,
         exception: exception ?? this.exception);
   }
 
-  Unauthenticated copyWithWrapped(
+  UnauthenticatedResponse copyWithWrapped(
       {Wrapped<String?>? message, Wrapped<String?>? exception}) {
-    return Unauthenticated(
+    return UnauthenticatedResponse(
         message: (message != null ? message.value : this.message),
         exception: (exception != null ? exception.value : this.exception));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-class ValidationError {
-  ValidationError({
+class ValidationErrorResponse {
+  const ValidationErrorResponse({
     this.message,
     this.errors,
   });
 
-  factory ValidationError.fromJson(Map<String, dynamic> json) =>
-      _$ValidationErrorFromJson(json);
+  factory ValidationErrorResponse.fromJson(Map<String, dynamic> json) =>
+      _$ValidationErrorResponseFromJson(json);
+
+  static const toJsonFactory = _$ValidationErrorResponseToJson;
+  Map<String, dynamic> toJson() => _$ValidationErrorResponseToJson(this);
 
   @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   @JsonKey(name: 'errors', includeIfNull: false)
-  final ValidationError$Errors? errors;
-  static const fromJsonFactory = _$ValidationErrorFromJson;
-  static const toJsonFactory = _$ValidationErrorToJson;
-  Map<String, dynamic> toJson() => _$ValidationErrorToJson(this);
+  final ValidationErrorResponse$Errors? errors;
+  static const fromJsonFactory = _$ValidationErrorResponseFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $ValidationErrorExtension on ValidationError {
-  ValidationError copyWith({String? message, ValidationError$Errors? errors}) {
-    return ValidationError(
+extension $ValidationErrorResponseExtension on ValidationErrorResponse {
+  ValidationErrorResponse copyWith(
+      {String? message, ValidationErrorResponse$Errors? errors}) {
+    return ValidationErrorResponse(
         message: message ?? this.message, errors: errors ?? this.errors);
   }
 
-  ValidationError copyWithWrapped(
-      {Wrapped<String?>? message, Wrapped<ValidationError$Errors?>? errors}) {
-    return ValidationError(
+  ValidationErrorResponse copyWithWrapped(
+      {Wrapped<String?>? message,
+      Wrapped<ValidationErrorResponse$Errors?>? errors}) {
+    return ValidationErrorResponse(
         message: (message != null ? message.value : this.message),
         errors: (errors != null ? errors.value : this.errors));
   }
 }
 
-typedef Bill$PaidDates = List<Bill$PaidDates$Item>;
-
 @JsonSerializable(explicitToJson: true)
 class Bill$PaidDates$Item {
-  Bill$PaidDates$Item({
+  const Bill$PaidDates$Item({
     this.transactionGroupId,
     this.transactionJournalId,
     this.date,
@@ -12784,6 +12791,9 @@ class Bill$PaidDates$Item {
   factory Bill$PaidDates$Item.fromJson(Map<String, dynamic> json) =>
       _$Bill$PaidDates$ItemFromJson(json);
 
+  static const toJsonFactory = _$Bill$PaidDates$ItemToJson;
+  Map<String, dynamic> toJson() => _$Bill$PaidDates$ItemToJson(this);
+
   @JsonKey(name: 'transaction_group_id', includeIfNull: false)
   final String? transactionGroupId;
   @JsonKey(name: 'transaction_journal_id', includeIfNull: false)
@@ -12791,8 +12801,6 @@ class Bill$PaidDates$Item {
   @JsonKey(name: 'date', includeIfNull: false)
   final DateTime? date;
   static const fromJsonFactory = _$Bill$PaidDates$ItemFromJson;
-  static const toJsonFactory = _$Bill$PaidDates$ItemToJson;
-  Map<String, dynamic> toJson() => _$Bill$PaidDates$ItemToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -12826,7 +12834,7 @@ extension $Bill$PaidDates$ItemExtension on Bill$PaidDates$Item {
 
 @JsonSerializable(explicitToJson: true)
 class SystemInfo$Data {
-  SystemInfo$Data({
+  const SystemInfo$Data({
     this.version,
     this.apiVersion,
     this.phpVersion,
@@ -12836,6 +12844,9 @@ class SystemInfo$Data {
 
   factory SystemInfo$Data.fromJson(Map<String, dynamic> json) =>
       _$SystemInfo$DataFromJson(json);
+
+  static const toJsonFactory = _$SystemInfo$DataToJson;
+  Map<String, dynamic> toJson() => _$SystemInfo$DataToJson(this);
 
   @JsonKey(name: 'version', includeIfNull: false)
   final String? version;
@@ -12848,8 +12859,6 @@ class SystemInfo$Data {
   @JsonKey(name: 'driver', includeIfNull: false)
   final String? driver;
   static const fromJsonFactory = _$SystemInfo$DataFromJson;
-  static const toJsonFactory = _$SystemInfo$DataToJson;
-  Map<String, dynamic> toJson() => _$SystemInfo$DataToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -12887,7 +12896,7 @@ extension $SystemInfo$DataExtension on SystemInfo$Data {
 
 @JsonSerializable(explicitToJson: true)
 class Meta$Pagination {
-  Meta$Pagination({
+  const Meta$Pagination({
     this.total,
     this.count,
     this.perPage,
@@ -12897,6 +12906,9 @@ class Meta$Pagination {
 
   factory Meta$Pagination.fromJson(Map<String, dynamic> json) =>
       _$Meta$PaginationFromJson(json);
+
+  static const toJsonFactory = _$Meta$PaginationToJson;
+  Map<String, dynamic> toJson() => _$Meta$PaginationToJson(this);
 
   @JsonKey(name: 'total', includeIfNull: false)
   final int? total;
@@ -12909,8 +12921,6 @@ class Meta$Pagination {
   @JsonKey(name: 'total_pages', includeIfNull: false)
   final int? totalPages;
   static const fromJsonFactory = _$Meta$PaginationFromJson;
-  static const toJsonFactory = _$Meta$PaginationToJson;
-  Map<String, dynamic> toJson() => _$Meta$PaginationToJson(this);
 
   @override
   String toString() => jsonEncode(this);
@@ -12948,8 +12958,8 @@ extension $Meta$PaginationExtension on Meta$Pagination {
 }
 
 @JsonSerializable(explicitToJson: true)
-class ValidationError$Errors {
-  ValidationError$Errors({
+class ValidationErrorResponse$Errors {
+  const ValidationErrorResponse$Errors({
     this.email,
     this.blocked,
     this.role,
@@ -12962,8 +12972,11 @@ class ValidationError$Errors {
     this.date,
   });
 
-  factory ValidationError$Errors.fromJson(Map<String, dynamic> json) =>
-      _$ValidationError$ErrorsFromJson(json);
+  factory ValidationErrorResponse$Errors.fromJson(Map<String, dynamic> json) =>
+      _$ValidationErrorResponse$ErrorsFromJson(json);
+
+  static const toJsonFactory = _$ValidationErrorResponse$ErrorsToJson;
+  Map<String, dynamic> toJson() => _$ValidationErrorResponse$ErrorsToJson(this);
 
   @JsonKey(name: 'email', includeIfNull: false, defaultValue: <String>[])
   final List<String>? email;
@@ -12985,16 +12998,15 @@ class ValidationError$Errors {
   final List<String>? end;
   @JsonKey(name: 'date', includeIfNull: false, defaultValue: <String>[])
   final List<String>? date;
-  static const fromJsonFactory = _$ValidationError$ErrorsFromJson;
-  static const toJsonFactory = _$ValidationError$ErrorsToJson;
-  Map<String, dynamic> toJson() => _$ValidationError$ErrorsToJson(this);
+  static const fromJsonFactory = _$ValidationErrorResponse$ErrorsFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $ValidationError$ErrorsExtension on ValidationError$Errors {
-  ValidationError$Errors copyWith(
+extension $ValidationErrorResponse$ErrorsExtension
+    on ValidationErrorResponse$Errors {
+  ValidationErrorResponse$Errors copyWith(
       {List<String>? email,
       List<String>? blocked,
       List<String>? role,
@@ -13005,7 +13017,7 @@ extension $ValidationError$ErrorsExtension on ValidationError$Errors {
       List<String>? start,
       List<String>? end,
       List<String>? date}) {
-    return ValidationError$Errors(
+    return ValidationErrorResponse$Errors(
         email: email ?? this.email,
         blocked: blocked ?? this.blocked,
         role: role ?? this.role,
@@ -13018,7 +13030,7 @@ extension $ValidationError$ErrorsExtension on ValidationError$Errors {
         date: date ?? this.date);
   }
 
-  ValidationError$Errors copyWithWrapped(
+  ValidationErrorResponse$Errors copyWithWrapped(
       {Wrapped<List<String>?>? email,
       Wrapped<List<String>?>? blocked,
       Wrapped<List<String>?>? role,
@@ -13029,7 +13041,7 @@ extension $ValidationError$ErrorsExtension on ValidationError$Errors {
       Wrapped<List<String>?>? start,
       Wrapped<List<String>?>? end,
       Wrapped<List<String>?>? date}) {
-    return ValidationError$Errors(
+    return ValidationErrorResponse$Errors(
         email: (email != null ? email.value : this.email),
         blocked: (blocked != null ? blocked.value : this.blocked),
         role: (role != null ? role.value : this.role),
@@ -13044,8 +13056,13 @@ extension $ValidationError$ErrorsExtension on ValidationError$Errors {
   }
 }
 
-String? dataDestroyObjectToJson(enums.DataDestroyObject? dataDestroyObject) {
+String? dataDestroyObjectNullableToJson(
+    enums.DataDestroyObject? dataDestroyObject) {
   return dataDestroyObject?.value;
+}
+
+String? dataDestroyObjectToJson(enums.DataDestroyObject dataDestroyObject) {
+  return dataDestroyObject.value;
 }
 
 enums.DataDestroyObject dataDestroyObjectFromJson(
@@ -13056,6 +13073,23 @@ enums.DataDestroyObject dataDestroyObjectFromJson(
           .firstWhereOrNull((e) => e.value == dataDestroyObject) ??
       defaultValue ??
       enums.DataDestroyObject.swaggerGeneratedUnknown;
+}
+
+enums.DataDestroyObject? dataDestroyObjectNullableFromJson(
+  Object? dataDestroyObject, [
+  enums.DataDestroyObject? defaultValue,
+]) {
+  if (dataDestroyObject == null) {
+    return null;
+  }
+  return enums.DataDestroyObject.values
+          .firstWhereOrNull((e) => e.value == dataDestroyObject) ??
+      defaultValue;
+}
+
+String dataDestroyObjectExplodedListToJson(
+    List<enums.DataDestroyObject>? dataDestroyObject) {
+  return dataDestroyObject?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> dataDestroyObjectListToJson(
@@ -13093,9 +13127,14 @@ List<enums.DataDestroyObject>? dataDestroyObjectNullableListFromJson(
       .toList();
 }
 
-String? accountSearchFieldFilterToJson(
+String? accountSearchFieldFilterNullableToJson(
     enums.AccountSearchFieldFilter? accountSearchFieldFilter) {
   return accountSearchFieldFilter?.value;
+}
+
+String? accountSearchFieldFilterToJson(
+    enums.AccountSearchFieldFilter accountSearchFieldFilter) {
+  return accountSearchFieldFilter.value;
 }
 
 enums.AccountSearchFieldFilter accountSearchFieldFilterFromJson(
@@ -13106,6 +13145,23 @@ enums.AccountSearchFieldFilter accountSearchFieldFilterFromJson(
           .firstWhereOrNull((e) => e.value == accountSearchFieldFilter) ??
       defaultValue ??
       enums.AccountSearchFieldFilter.swaggerGeneratedUnknown;
+}
+
+enums.AccountSearchFieldFilter? accountSearchFieldFilterNullableFromJson(
+  Object? accountSearchFieldFilter, [
+  enums.AccountSearchFieldFilter? defaultValue,
+]) {
+  if (accountSearchFieldFilter == null) {
+    return null;
+  }
+  return enums.AccountSearchFieldFilter.values
+          .firstWhereOrNull((e) => e.value == accountSearchFieldFilter) ??
+      defaultValue;
+}
+
+String accountSearchFieldFilterExplodedListToJson(
+    List<enums.AccountSearchFieldFilter>? accountSearchFieldFilter) {
+  return accountSearchFieldFilter?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> accountSearchFieldFilterListToJson(
@@ -13144,8 +13200,13 @@ List<enums.AccountSearchFieldFilter>?
       .toList();
 }
 
-String? configValueFilterToJson(enums.ConfigValueFilter? configValueFilter) {
+String? configValueFilterNullableToJson(
+    enums.ConfigValueFilter? configValueFilter) {
   return configValueFilter?.value;
+}
+
+String? configValueFilterToJson(enums.ConfigValueFilter configValueFilter) {
+  return configValueFilter.value;
 }
 
 enums.ConfigValueFilter configValueFilterFromJson(
@@ -13156,6 +13217,23 @@ enums.ConfigValueFilter configValueFilterFromJson(
           .firstWhereOrNull((e) => e.value == configValueFilter) ??
       defaultValue ??
       enums.ConfigValueFilter.swaggerGeneratedUnknown;
+}
+
+enums.ConfigValueFilter? configValueFilterNullableFromJson(
+  Object? configValueFilter, [
+  enums.ConfigValueFilter? defaultValue,
+]) {
+  if (configValueFilter == null) {
+    return null;
+  }
+  return enums.ConfigValueFilter.values
+          .firstWhereOrNull((e) => e.value == configValueFilter) ??
+      defaultValue;
+}
+
+String configValueFilterExplodedListToJson(
+    List<enums.ConfigValueFilter>? configValueFilter) {
+  return configValueFilter?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> configValueFilterListToJson(
@@ -13193,9 +13271,14 @@ List<enums.ConfigValueFilter>? configValueFilterNullableListFromJson(
       .toList();
 }
 
-String? configValueUpdateFilterToJson(
+String? configValueUpdateFilterNullableToJson(
     enums.ConfigValueUpdateFilter? configValueUpdateFilter) {
   return configValueUpdateFilter?.value;
+}
+
+String? configValueUpdateFilterToJson(
+    enums.ConfigValueUpdateFilter configValueUpdateFilter) {
+  return configValueUpdateFilter.value;
 }
 
 enums.ConfigValueUpdateFilter configValueUpdateFilterFromJson(
@@ -13206,6 +13289,23 @@ enums.ConfigValueUpdateFilter configValueUpdateFilterFromJson(
           .firstWhereOrNull((e) => e.value == configValueUpdateFilter) ??
       defaultValue ??
       enums.ConfigValueUpdateFilter.swaggerGeneratedUnknown;
+}
+
+enums.ConfigValueUpdateFilter? configValueUpdateFilterNullableFromJson(
+  Object? configValueUpdateFilter, [
+  enums.ConfigValueUpdateFilter? defaultValue,
+]) {
+  if (configValueUpdateFilter == null) {
+    return null;
+  }
+  return enums.ConfigValueUpdateFilter.values
+          .firstWhereOrNull((e) => e.value == configValueUpdateFilter) ??
+      defaultValue;
+}
+
+String configValueUpdateFilterExplodedListToJson(
+    List<enums.ConfigValueUpdateFilter>? configValueUpdateFilter) {
+  return configValueUpdateFilter?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> configValueUpdateFilterListToJson(
@@ -13244,8 +13344,13 @@ List<enums.ConfigValueUpdateFilter>?
       .toList();
 }
 
-String? exportFileFilterToJson(enums.ExportFileFilter? exportFileFilter) {
+String? exportFileFilterNullableToJson(
+    enums.ExportFileFilter? exportFileFilter) {
   return exportFileFilter?.value;
+}
+
+String? exportFileFilterToJson(enums.ExportFileFilter exportFileFilter) {
+  return exportFileFilter.value;
 }
 
 enums.ExportFileFilter exportFileFilterFromJson(
@@ -13256,6 +13361,23 @@ enums.ExportFileFilter exportFileFilterFromJson(
           .firstWhereOrNull((e) => e.value == exportFileFilter) ??
       defaultValue ??
       enums.ExportFileFilter.swaggerGeneratedUnknown;
+}
+
+enums.ExportFileFilter? exportFileFilterNullableFromJson(
+  Object? exportFileFilter, [
+  enums.ExportFileFilter? defaultValue,
+]) {
+  if (exportFileFilter == null) {
+    return null;
+  }
+  return enums.ExportFileFilter.values
+          .firstWhereOrNull((e) => e.value == exportFileFilter) ??
+      defaultValue;
+}
+
+String exportFileFilterExplodedListToJson(
+    List<enums.ExportFileFilter>? exportFileFilter) {
+  return exportFileFilter?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> exportFileFilterListToJson(
@@ -13293,9 +13415,14 @@ List<enums.ExportFileFilter>? exportFileFilterNullableListFromJson(
       .toList();
 }
 
-String? currencyUpdateDefaultToJson(
+String? currencyUpdateDefaultNullableToJson(
     enums.CurrencyUpdateDefault? currencyUpdateDefault) {
   return currencyUpdateDefault?.value;
+}
+
+String? currencyUpdateDefaultToJson(
+    enums.CurrencyUpdateDefault currencyUpdateDefault) {
+  return currencyUpdateDefault.value;
 }
 
 enums.CurrencyUpdateDefault currencyUpdateDefaultFromJson(
@@ -13306,6 +13433,23 @@ enums.CurrencyUpdateDefault currencyUpdateDefaultFromJson(
           .firstWhereOrNull((e) => e.value == currencyUpdateDefault) ??
       defaultValue ??
       enums.CurrencyUpdateDefault.swaggerGeneratedUnknown;
+}
+
+enums.CurrencyUpdateDefault? currencyUpdateDefaultNullableFromJson(
+  Object? currencyUpdateDefault, [
+  enums.CurrencyUpdateDefault? defaultValue,
+]) {
+  if (currencyUpdateDefault == null) {
+    return null;
+  }
+  return enums.CurrencyUpdateDefault.values
+          .firstWhereOrNull((e) => e.value == currencyUpdateDefault) ??
+      defaultValue;
+}
+
+String currencyUpdateDefaultExplodedListToJson(
+    List<enums.CurrencyUpdateDefault>? currencyUpdateDefault) {
+  return currencyUpdateDefault?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> currencyUpdateDefaultListToJson(
@@ -13343,8 +13487,12 @@ List<enums.CurrencyUpdateDefault>? currencyUpdateDefaultNullableListFromJson(
       .toList();
 }
 
-String? attachableTypeToJson(enums.AttachableType? attachableType) {
+String? attachableTypeNullableToJson(enums.AttachableType? attachableType) {
   return attachableType?.value;
+}
+
+String? attachableTypeToJson(enums.AttachableType attachableType) {
+  return attachableType.value;
 }
 
 enums.AttachableType attachableTypeFromJson(
@@ -13355,6 +13503,23 @@ enums.AttachableType attachableTypeFromJson(
           .firstWhereOrNull((e) => e.value == attachableType) ??
       defaultValue ??
       enums.AttachableType.swaggerGeneratedUnknown;
+}
+
+enums.AttachableType? attachableTypeNullableFromJson(
+  Object? attachableType, [
+  enums.AttachableType? defaultValue,
+]) {
+  if (attachableType == null) {
+    return null;
+  }
+  return enums.AttachableType.values
+          .firstWhereOrNull((e) => e.value == attachableType) ??
+      defaultValue;
+}
+
+String attachableTypeExplodedListToJson(
+    List<enums.AttachableType>? attachableType) {
+  return attachableType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> attachableTypeListToJson(
@@ -13392,8 +13557,13 @@ List<enums.AttachableType>? attachableTypeNullableListFromJson(
       .toList();
 }
 
-String? autoBudgetPeriodToJson(enums.AutoBudgetPeriod? autoBudgetPeriod) {
+String? autoBudgetPeriodNullableToJson(
+    enums.AutoBudgetPeriod? autoBudgetPeriod) {
   return autoBudgetPeriod?.value;
+}
+
+String? autoBudgetPeriodToJson(enums.AutoBudgetPeriod autoBudgetPeriod) {
+  return autoBudgetPeriod.value;
 }
 
 enums.AutoBudgetPeriod autoBudgetPeriodFromJson(
@@ -13404,6 +13574,23 @@ enums.AutoBudgetPeriod autoBudgetPeriodFromJson(
           .firstWhereOrNull((e) => e.value == autoBudgetPeriod) ??
       defaultValue ??
       enums.AutoBudgetPeriod.swaggerGeneratedUnknown;
+}
+
+enums.AutoBudgetPeriod? autoBudgetPeriodNullableFromJson(
+  Object? autoBudgetPeriod, [
+  enums.AutoBudgetPeriod? defaultValue,
+]) {
+  if (autoBudgetPeriod == null) {
+    return null;
+  }
+  return enums.AutoBudgetPeriod.values
+          .firstWhereOrNull((e) => e.value == autoBudgetPeriod) ??
+      defaultValue;
+}
+
+String autoBudgetPeriodExplodedListToJson(
+    List<enums.AutoBudgetPeriod>? autoBudgetPeriod) {
+  return autoBudgetPeriod?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> autoBudgetPeriodListToJson(
@@ -13441,8 +13628,12 @@ List<enums.AutoBudgetPeriod>? autoBudgetPeriodNullableListFromJson(
       .toList();
 }
 
-String? autoBudgetTypeToJson(enums.AutoBudgetType? autoBudgetType) {
+String? autoBudgetTypeNullableToJson(enums.AutoBudgetType? autoBudgetType) {
   return autoBudgetType?.value;
+}
+
+String? autoBudgetTypeToJson(enums.AutoBudgetType autoBudgetType) {
+  return autoBudgetType.value;
 }
 
 enums.AutoBudgetType autoBudgetTypeFromJson(
@@ -13453,6 +13644,23 @@ enums.AutoBudgetType autoBudgetTypeFromJson(
           .firstWhereOrNull((e) => e.value == autoBudgetType) ??
       defaultValue ??
       enums.AutoBudgetType.swaggerGeneratedUnknown;
+}
+
+enums.AutoBudgetType? autoBudgetTypeNullableFromJson(
+  Object? autoBudgetType, [
+  enums.AutoBudgetType? defaultValue,
+]) {
+  if (autoBudgetType == null) {
+    return null;
+  }
+  return enums.AutoBudgetType.values
+          .firstWhereOrNull((e) => e.value == autoBudgetType) ??
+      defaultValue;
+}
+
+String autoBudgetTypeExplodedListToJson(
+    List<enums.AutoBudgetType>? autoBudgetType) {
+  return autoBudgetType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> autoBudgetTypeListToJson(
@@ -13490,9 +13698,14 @@ List<enums.AutoBudgetType>? autoBudgetTypeNullableListFromJson(
       .toList();
 }
 
-String? billRepeatFrequencyToJson(
+String? billRepeatFrequencyNullableToJson(
     enums.BillRepeatFrequency? billRepeatFrequency) {
   return billRepeatFrequency?.value;
+}
+
+String? billRepeatFrequencyToJson(
+    enums.BillRepeatFrequency billRepeatFrequency) {
+  return billRepeatFrequency.value;
 }
 
 enums.BillRepeatFrequency billRepeatFrequencyFromJson(
@@ -13503,6 +13716,23 @@ enums.BillRepeatFrequency billRepeatFrequencyFromJson(
           .firstWhereOrNull((e) => e.value == billRepeatFrequency) ??
       defaultValue ??
       enums.BillRepeatFrequency.swaggerGeneratedUnknown;
+}
+
+enums.BillRepeatFrequency? billRepeatFrequencyNullableFromJson(
+  Object? billRepeatFrequency, [
+  enums.BillRepeatFrequency? defaultValue,
+]) {
+  if (billRepeatFrequency == null) {
+    return null;
+  }
+  return enums.BillRepeatFrequency.values
+          .firstWhereOrNull((e) => e.value == billRepeatFrequency) ??
+      defaultValue;
+}
+
+String billRepeatFrequencyExplodedListToJson(
+    List<enums.BillRepeatFrequency>? billRepeatFrequency) {
+  return billRepeatFrequency?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> billRepeatFrequencyListToJson(
@@ -13540,9 +13770,14 @@ List<enums.BillRepeatFrequency>? billRepeatFrequencyNullableListFromJson(
       .toList();
 }
 
-String? recurrenceRepetitionTypeToJson(
+String? recurrenceRepetitionTypeNullableToJson(
     enums.RecurrenceRepetitionType? recurrenceRepetitionType) {
   return recurrenceRepetitionType?.value;
+}
+
+String? recurrenceRepetitionTypeToJson(
+    enums.RecurrenceRepetitionType recurrenceRepetitionType) {
+  return recurrenceRepetitionType.value;
 }
 
 enums.RecurrenceRepetitionType recurrenceRepetitionTypeFromJson(
@@ -13553,6 +13788,23 @@ enums.RecurrenceRepetitionType recurrenceRepetitionTypeFromJson(
           .firstWhereOrNull((e) => e.value == recurrenceRepetitionType) ??
       defaultValue ??
       enums.RecurrenceRepetitionType.swaggerGeneratedUnknown;
+}
+
+enums.RecurrenceRepetitionType? recurrenceRepetitionTypeNullableFromJson(
+  Object? recurrenceRepetitionType, [
+  enums.RecurrenceRepetitionType? defaultValue,
+]) {
+  if (recurrenceRepetitionType == null) {
+    return null;
+  }
+  return enums.RecurrenceRepetitionType.values
+          .firstWhereOrNull((e) => e.value == recurrenceRepetitionType) ??
+      defaultValue;
+}
+
+String recurrenceRepetitionTypeExplodedListToJson(
+    List<enums.RecurrenceRepetitionType>? recurrenceRepetitionType) {
+  return recurrenceRepetitionType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> recurrenceRepetitionTypeListToJson(
@@ -13591,9 +13843,14 @@ List<enums.RecurrenceRepetitionType>?
       .toList();
 }
 
-String? recurrenceTransactionTypeToJson(
+String? recurrenceTransactionTypeNullableToJson(
     enums.RecurrenceTransactionType? recurrenceTransactionType) {
   return recurrenceTransactionType?.value;
+}
+
+String? recurrenceTransactionTypeToJson(
+    enums.RecurrenceTransactionType recurrenceTransactionType) {
+  return recurrenceTransactionType.value;
 }
 
 enums.RecurrenceTransactionType recurrenceTransactionTypeFromJson(
@@ -13604,6 +13861,23 @@ enums.RecurrenceTransactionType recurrenceTransactionTypeFromJson(
           .firstWhereOrNull((e) => e.value == recurrenceTransactionType) ??
       defaultValue ??
       enums.RecurrenceTransactionType.swaggerGeneratedUnknown;
+}
+
+enums.RecurrenceTransactionType? recurrenceTransactionTypeNullableFromJson(
+  Object? recurrenceTransactionType, [
+  enums.RecurrenceTransactionType? defaultValue,
+]) {
+  if (recurrenceTransactionType == null) {
+    return null;
+  }
+  return enums.RecurrenceTransactionType.values
+          .firstWhereOrNull((e) => e.value == recurrenceTransactionType) ??
+      defaultValue;
+}
+
+String recurrenceTransactionTypeExplodedListToJson(
+    List<enums.RecurrenceTransactionType>? recurrenceTransactionType) {
+  return recurrenceTransactionType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> recurrenceTransactionTypeListToJson(
@@ -13642,8 +13916,13 @@ List<enums.RecurrenceTransactionType>?
       .toList();
 }
 
-String? ruleActionKeywordToJson(enums.RuleActionKeyword? ruleActionKeyword) {
+String? ruleActionKeywordNullableToJson(
+    enums.RuleActionKeyword? ruleActionKeyword) {
   return ruleActionKeyword?.value;
+}
+
+String? ruleActionKeywordToJson(enums.RuleActionKeyword ruleActionKeyword) {
+  return ruleActionKeyword.value;
 }
 
 enums.RuleActionKeyword ruleActionKeywordFromJson(
@@ -13654,6 +13933,23 @@ enums.RuleActionKeyword ruleActionKeywordFromJson(
           .firstWhereOrNull((e) => e.value == ruleActionKeyword) ??
       defaultValue ??
       enums.RuleActionKeyword.swaggerGeneratedUnknown;
+}
+
+enums.RuleActionKeyword? ruleActionKeywordNullableFromJson(
+  Object? ruleActionKeyword, [
+  enums.RuleActionKeyword? defaultValue,
+]) {
+  if (ruleActionKeyword == null) {
+    return null;
+  }
+  return enums.RuleActionKeyword.values
+          .firstWhereOrNull((e) => e.value == ruleActionKeyword) ??
+      defaultValue;
+}
+
+String ruleActionKeywordExplodedListToJson(
+    List<enums.RuleActionKeyword>? ruleActionKeyword) {
+  return ruleActionKeyword?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> ruleActionKeywordListToJson(
@@ -13691,8 +13987,13 @@ List<enums.RuleActionKeyword>? ruleActionKeywordNullableListFromJson(
       .toList();
 }
 
-String? ruleTriggerKeywordToJson(enums.RuleTriggerKeyword? ruleTriggerKeyword) {
+String? ruleTriggerKeywordNullableToJson(
+    enums.RuleTriggerKeyword? ruleTriggerKeyword) {
   return ruleTriggerKeyword?.value;
+}
+
+String? ruleTriggerKeywordToJson(enums.RuleTriggerKeyword ruleTriggerKeyword) {
+  return ruleTriggerKeyword.value;
 }
 
 enums.RuleTriggerKeyword ruleTriggerKeywordFromJson(
@@ -13703,6 +14004,23 @@ enums.RuleTriggerKeyword ruleTriggerKeywordFromJson(
           .firstWhereOrNull((e) => e.value == ruleTriggerKeyword) ??
       defaultValue ??
       enums.RuleTriggerKeyword.swaggerGeneratedUnknown;
+}
+
+enums.RuleTriggerKeyword? ruleTriggerKeywordNullableFromJson(
+  Object? ruleTriggerKeyword, [
+  enums.RuleTriggerKeyword? defaultValue,
+]) {
+  if (ruleTriggerKeyword == null) {
+    return null;
+  }
+  return enums.RuleTriggerKeyword.values
+          .firstWhereOrNull((e) => e.value == ruleTriggerKeyword) ??
+      defaultValue;
+}
+
+String ruleTriggerKeywordExplodedListToJson(
+    List<enums.RuleTriggerKeyword>? ruleTriggerKeyword) {
+  return ruleTriggerKeyword?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> ruleTriggerKeywordListToJson(
@@ -13740,8 +14058,12 @@ List<enums.RuleTriggerKeyword>? ruleTriggerKeywordNullableListFromJson(
       .toList();
 }
 
-String? ruleTriggerTypeToJson(enums.RuleTriggerType? ruleTriggerType) {
+String? ruleTriggerTypeNullableToJson(enums.RuleTriggerType? ruleTriggerType) {
   return ruleTriggerType?.value;
+}
+
+String? ruleTriggerTypeToJson(enums.RuleTriggerType ruleTriggerType) {
+  return ruleTriggerType.value;
 }
 
 enums.RuleTriggerType ruleTriggerTypeFromJson(
@@ -13752,6 +14074,23 @@ enums.RuleTriggerType ruleTriggerTypeFromJson(
           .firstWhereOrNull((e) => e.value == ruleTriggerType) ??
       defaultValue ??
       enums.RuleTriggerType.swaggerGeneratedUnknown;
+}
+
+enums.RuleTriggerType? ruleTriggerTypeNullableFromJson(
+  Object? ruleTriggerType, [
+  enums.RuleTriggerType? defaultValue,
+]) {
+  if (ruleTriggerType == null) {
+    return null;
+  }
+  return enums.RuleTriggerType.values
+          .firstWhereOrNull((e) => e.value == ruleTriggerType) ??
+      defaultValue;
+}
+
+String ruleTriggerTypeExplodedListToJson(
+    List<enums.RuleTriggerType>? ruleTriggerType) {
+  return ruleTriggerType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> ruleTriggerTypeListToJson(
@@ -13789,9 +14128,14 @@ List<enums.RuleTriggerType>? ruleTriggerTypeNullableListFromJson(
       .toList();
 }
 
-String? userBlockedCodePropertyToJson(
+String? userBlockedCodePropertyNullableToJson(
     enums.UserBlockedCodeProperty? userBlockedCodeProperty) {
   return userBlockedCodeProperty?.value;
+}
+
+String? userBlockedCodePropertyToJson(
+    enums.UserBlockedCodeProperty userBlockedCodeProperty) {
+  return userBlockedCodeProperty.value;
 }
 
 enums.UserBlockedCodeProperty userBlockedCodePropertyFromJson(
@@ -13802,6 +14146,23 @@ enums.UserBlockedCodeProperty userBlockedCodePropertyFromJson(
           .firstWhereOrNull((e) => e.value == userBlockedCodeProperty) ??
       defaultValue ??
       enums.UserBlockedCodeProperty.swaggerGeneratedUnknown;
+}
+
+enums.UserBlockedCodeProperty? userBlockedCodePropertyNullableFromJson(
+  Object? userBlockedCodeProperty, [
+  enums.UserBlockedCodeProperty? defaultValue,
+]) {
+  if (userBlockedCodeProperty == null) {
+    return null;
+  }
+  return enums.UserBlockedCodeProperty.values
+          .firstWhereOrNull((e) => e.value == userBlockedCodeProperty) ??
+      defaultValue;
+}
+
+String userBlockedCodePropertyExplodedListToJson(
+    List<enums.UserBlockedCodeProperty>? userBlockedCodeProperty) {
+  return userBlockedCodeProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> userBlockedCodePropertyListToJson(
@@ -13840,8 +14201,13 @@ List<enums.UserBlockedCodeProperty>?
       .toList();
 }
 
-String? userRolePropertyToJson(enums.UserRoleProperty? userRoleProperty) {
+String? userRolePropertyNullableToJson(
+    enums.UserRoleProperty? userRoleProperty) {
   return userRoleProperty?.value;
+}
+
+String? userRolePropertyToJson(enums.UserRoleProperty userRoleProperty) {
+  return userRoleProperty.value;
 }
 
 enums.UserRoleProperty userRolePropertyFromJson(
@@ -13852,6 +14218,23 @@ enums.UserRoleProperty userRolePropertyFromJson(
           .firstWhereOrNull((e) => e.value == userRoleProperty) ??
       defaultValue ??
       enums.UserRoleProperty.swaggerGeneratedUnknown;
+}
+
+enums.UserRoleProperty? userRolePropertyNullableFromJson(
+  Object? userRoleProperty, [
+  enums.UserRoleProperty? defaultValue,
+]) {
+  if (userRoleProperty == null) {
+    return null;
+  }
+  return enums.UserRoleProperty.values
+          .firstWhereOrNull((e) => e.value == userRoleProperty) ??
+      defaultValue;
+}
+
+String userRolePropertyExplodedListToJson(
+    List<enums.UserRoleProperty>? userRoleProperty) {
+  return userRoleProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> userRolePropertyListToJson(
@@ -13889,8 +14272,12 @@ List<enums.UserRoleProperty>? userRolePropertyNullableListFromJson(
       .toList();
 }
 
-String? webhookDeliveryToJson(enums.WebhookDelivery? webhookDelivery) {
+String? webhookDeliveryNullableToJson(enums.WebhookDelivery? webhookDelivery) {
   return webhookDelivery?.value;
+}
+
+String? webhookDeliveryToJson(enums.WebhookDelivery webhookDelivery) {
+  return webhookDelivery.value;
 }
 
 enums.WebhookDelivery webhookDeliveryFromJson(
@@ -13901,6 +14288,23 @@ enums.WebhookDelivery webhookDeliveryFromJson(
           .firstWhereOrNull((e) => e.value == webhookDelivery) ??
       defaultValue ??
       enums.WebhookDelivery.swaggerGeneratedUnknown;
+}
+
+enums.WebhookDelivery? webhookDeliveryNullableFromJson(
+  Object? webhookDelivery, [
+  enums.WebhookDelivery? defaultValue,
+]) {
+  if (webhookDelivery == null) {
+    return null;
+  }
+  return enums.WebhookDelivery.values
+          .firstWhereOrNull((e) => e.value == webhookDelivery) ??
+      defaultValue;
+}
+
+String webhookDeliveryExplodedListToJson(
+    List<enums.WebhookDelivery>? webhookDelivery) {
+  return webhookDelivery?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> webhookDeliveryListToJson(
@@ -13938,8 +14342,12 @@ List<enums.WebhookDelivery>? webhookDeliveryNullableListFromJson(
       .toList();
 }
 
-String? webhookResponseToJson(enums.WebhookResponse? webhookResponse) {
+String? webhookResponseNullableToJson(enums.WebhookResponse? webhookResponse) {
   return webhookResponse?.value;
+}
+
+String? webhookResponseToJson(enums.WebhookResponse webhookResponse) {
+  return webhookResponse.value;
 }
 
 enums.WebhookResponse webhookResponseFromJson(
@@ -13950,6 +14358,23 @@ enums.WebhookResponse webhookResponseFromJson(
           .firstWhereOrNull((e) => e.value == webhookResponse) ??
       defaultValue ??
       enums.WebhookResponse.swaggerGeneratedUnknown;
+}
+
+enums.WebhookResponse? webhookResponseNullableFromJson(
+  Object? webhookResponse, [
+  enums.WebhookResponse? defaultValue,
+]) {
+  if (webhookResponse == null) {
+    return null;
+  }
+  return enums.WebhookResponse.values
+          .firstWhereOrNull((e) => e.value == webhookResponse) ??
+      defaultValue;
+}
+
+String webhookResponseExplodedListToJson(
+    List<enums.WebhookResponse>? webhookResponse) {
+  return webhookResponse?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> webhookResponseListToJson(
@@ -13987,8 +14412,12 @@ List<enums.WebhookResponse>? webhookResponseNullableListFromJson(
       .toList();
 }
 
-String? webhookTriggerToJson(enums.WebhookTrigger? webhookTrigger) {
+String? webhookTriggerNullableToJson(enums.WebhookTrigger? webhookTrigger) {
   return webhookTrigger?.value;
+}
+
+String? webhookTriggerToJson(enums.WebhookTrigger webhookTrigger) {
+  return webhookTrigger.value;
 }
 
 enums.WebhookTrigger webhookTriggerFromJson(
@@ -13999,6 +14428,23 @@ enums.WebhookTrigger webhookTriggerFromJson(
           .firstWhereOrNull((e) => e.value == webhookTrigger) ??
       defaultValue ??
       enums.WebhookTrigger.swaggerGeneratedUnknown;
+}
+
+enums.WebhookTrigger? webhookTriggerNullableFromJson(
+  Object? webhookTrigger, [
+  enums.WebhookTrigger? defaultValue,
+]) {
+  if (webhookTrigger == null) {
+    return null;
+  }
+  return enums.WebhookTrigger.values
+          .firstWhereOrNull((e) => e.value == webhookTrigger) ??
+      defaultValue;
+}
+
+String webhookTriggerExplodedListToJson(
+    List<enums.WebhookTrigger>? webhookTrigger) {
+  return webhookTrigger?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> webhookTriggerListToJson(
@@ -14036,200 +14482,14 @@ List<enums.WebhookTrigger>? webhookTriggerNullableListFromJson(
       .toList();
 }
 
-String? creditCardTypeToJson(enums.CreditCardType? creditCardType) {
-  return creditCardType?.value;
-}
-
-enums.CreditCardType creditCardTypeFromJson(
-  Object? creditCardType, [
-  enums.CreditCardType? defaultValue,
-]) {
-  return enums.CreditCardType.values
-          .firstWhereOrNull((e) => e.value == creditCardType) ??
-      defaultValue ??
-      enums.CreditCardType.swaggerGeneratedUnknown;
-}
-
-List<String> creditCardTypeListToJson(
-    List<enums.CreditCardType>? creditCardType) {
-  if (creditCardType == null) {
-    return [];
-  }
-
-  return creditCardType.map((e) => e.value!).toList();
-}
-
-List<enums.CreditCardType> creditCardTypeListFromJson(
-  List? creditCardType, [
-  List<enums.CreditCardType>? defaultValue,
-]) {
-  if (creditCardType == null) {
-    return defaultValue ?? [];
-  }
-
-  return creditCardType
-      .map((e) => creditCardTypeFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.CreditCardType>? creditCardTypeNullableListFromJson(
-  List? creditCardType, [
-  List<enums.CreditCardType>? defaultValue,
-]) {
-  if (creditCardType == null) {
-    return defaultValue;
-  }
-
-  return creditCardType
-      .map((e) => creditCardTypeFromJson(e.toString()))
-      .toList();
-}
-
-String? interestPeriodToJson(enums.InterestPeriod? interestPeriod) {
-  return interestPeriod?.value;
-}
-
-enums.InterestPeriod interestPeriodFromJson(
-  Object? interestPeriod, [
-  enums.InterestPeriod? defaultValue,
-]) {
-  return enums.InterestPeriod.values
-          .firstWhereOrNull((e) => e.value == interestPeriod) ??
-      defaultValue ??
-      enums.InterestPeriod.swaggerGeneratedUnknown;
-}
-
-List<String> interestPeriodListToJson(
-    List<enums.InterestPeriod>? interestPeriod) {
-  if (interestPeriod == null) {
-    return [];
-  }
-
-  return interestPeriod.map((e) => e.value!).toList();
-}
-
-List<enums.InterestPeriod> interestPeriodListFromJson(
-  List? interestPeriod, [
-  List<enums.InterestPeriod>? defaultValue,
-]) {
-  if (interestPeriod == null) {
-    return defaultValue ?? [];
-  }
-
-  return interestPeriod
-      .map((e) => interestPeriodFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.InterestPeriod>? interestPeriodNullableListFromJson(
-  List? interestPeriod, [
-  List<enums.InterestPeriod>? defaultValue,
-]) {
-  if (interestPeriod == null) {
-    return defaultValue;
-  }
-
-  return interestPeriod
-      .map((e) => interestPeriodFromJson(e.toString()))
-      .toList();
-}
-
-String? liabilityDirectionToJson(enums.LiabilityDirection? liabilityDirection) {
-  return liabilityDirection?.value;
-}
-
-enums.LiabilityDirection liabilityDirectionFromJson(
-  Object? liabilityDirection, [
-  enums.LiabilityDirection? defaultValue,
-]) {
-  return enums.LiabilityDirection.values
-          .firstWhereOrNull((e) => e.value == liabilityDirection) ??
-      defaultValue ??
-      enums.LiabilityDirection.swaggerGeneratedUnknown;
-}
-
-List<String> liabilityDirectionListToJson(
-    List<enums.LiabilityDirection>? liabilityDirection) {
-  if (liabilityDirection == null) {
-    return [];
-  }
-
-  return liabilityDirection.map((e) => e.value!).toList();
-}
-
-List<enums.LiabilityDirection> liabilityDirectionListFromJson(
-  List? liabilityDirection, [
-  List<enums.LiabilityDirection>? defaultValue,
-]) {
-  if (liabilityDirection == null) {
-    return defaultValue ?? [];
-  }
-
-  return liabilityDirection
-      .map((e) => liabilityDirectionFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.LiabilityDirection>? liabilityDirectionNullableListFromJson(
-  List? liabilityDirection, [
-  List<enums.LiabilityDirection>? defaultValue,
-]) {
-  if (liabilityDirection == null) {
-    return defaultValue;
-  }
-
-  return liabilityDirection
-      .map((e) => liabilityDirectionFromJson(e.toString()))
-      .toList();
-}
-
-String? liabilityTypeToJson(enums.LiabilityType? liabilityType) {
-  return liabilityType?.value;
-}
-
-enums.LiabilityType liabilityTypeFromJson(
-  Object? liabilityType, [
-  enums.LiabilityType? defaultValue,
-]) {
-  return enums.LiabilityType.values
-          .firstWhereOrNull((e) => e.value == liabilityType) ??
-      defaultValue ??
-      enums.LiabilityType.swaggerGeneratedUnknown;
-}
-
-List<String> liabilityTypeListToJson(List<enums.LiabilityType>? liabilityType) {
-  if (liabilityType == null) {
-    return [];
-  }
-
-  return liabilityType.map((e) => e.value!).toList();
-}
-
-List<enums.LiabilityType> liabilityTypeListFromJson(
-  List? liabilityType, [
-  List<enums.LiabilityType>? defaultValue,
-]) {
-  if (liabilityType == null) {
-    return defaultValue ?? [];
-  }
-
-  return liabilityType.map((e) => liabilityTypeFromJson(e.toString())).toList();
-}
-
-List<enums.LiabilityType>? liabilityTypeNullableListFromJson(
-  List? liabilityType, [
-  List<enums.LiabilityType>? defaultValue,
-]) {
-  if (liabilityType == null) {
-    return defaultValue;
-  }
-
-  return liabilityType.map((e) => liabilityTypeFromJson(e.toString())).toList();
+String? accountRolePropertyNullableToJson(
+    enums.AccountRoleProperty? accountRoleProperty) {
+  return accountRoleProperty?.value;
 }
 
 String? accountRolePropertyToJson(
-    enums.AccountRoleProperty? accountRoleProperty) {
-  return accountRoleProperty?.value;
+    enums.AccountRoleProperty accountRoleProperty) {
+  return accountRoleProperty.value;
 }
 
 enums.AccountRoleProperty accountRolePropertyFromJson(
@@ -14240,6 +14500,23 @@ enums.AccountRoleProperty accountRolePropertyFromJson(
           .firstWhereOrNull((e) => e.value == accountRoleProperty) ??
       defaultValue ??
       enums.AccountRoleProperty.swaggerGeneratedUnknown;
+}
+
+enums.AccountRoleProperty? accountRolePropertyNullableFromJson(
+  Object? accountRoleProperty, [
+  enums.AccountRoleProperty? defaultValue,
+]) {
+  if (accountRoleProperty == null) {
+    return null;
+  }
+  return enums.AccountRoleProperty.values
+          .firstWhereOrNull((e) => e.value == accountRoleProperty) ??
+      defaultValue;
+}
+
+String accountRolePropertyExplodedListToJson(
+    List<enums.AccountRoleProperty>? accountRoleProperty) {
+  return accountRoleProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> accountRolePropertyListToJson(
@@ -14277,9 +14554,14 @@ List<enums.AccountRoleProperty>? accountRolePropertyNullableListFromJson(
       .toList();
 }
 
-String? accountTypePropertyToJson(
+String? accountTypePropertyNullableToJson(
     enums.AccountTypeProperty? accountTypeProperty) {
   return accountTypeProperty?.value;
+}
+
+String? accountTypePropertyToJson(
+    enums.AccountTypeProperty accountTypeProperty) {
+  return accountTypeProperty.value;
 }
 
 enums.AccountTypeProperty accountTypePropertyFromJson(
@@ -14290,6 +14572,23 @@ enums.AccountTypeProperty accountTypePropertyFromJson(
           .firstWhereOrNull((e) => e.value == accountTypeProperty) ??
       defaultValue ??
       enums.AccountTypeProperty.swaggerGeneratedUnknown;
+}
+
+enums.AccountTypeProperty? accountTypePropertyNullableFromJson(
+  Object? accountTypeProperty, [
+  enums.AccountTypeProperty? defaultValue,
+]) {
+  if (accountTypeProperty == null) {
+    return null;
+  }
+  return enums.AccountTypeProperty.values
+          .firstWhereOrNull((e) => e.value == accountTypeProperty) ??
+      defaultValue;
+}
+
+String accountTypePropertyExplodedListToJson(
+    List<enums.AccountTypeProperty>? accountTypeProperty) {
+  return accountTypeProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> accountTypePropertyListToJson(
@@ -14327,9 +14626,303 @@ List<enums.AccountTypeProperty>? accountTypePropertyNullableListFromJson(
       .toList();
 }
 
-String? shortAccountTypePropertyToJson(
+String? creditCardTypePropertyNullableToJson(
+    enums.CreditCardTypeProperty? creditCardTypeProperty) {
+  return creditCardTypeProperty?.value;
+}
+
+String? creditCardTypePropertyToJson(
+    enums.CreditCardTypeProperty creditCardTypeProperty) {
+  return creditCardTypeProperty.value;
+}
+
+enums.CreditCardTypeProperty creditCardTypePropertyFromJson(
+  Object? creditCardTypeProperty, [
+  enums.CreditCardTypeProperty? defaultValue,
+]) {
+  return enums.CreditCardTypeProperty.values
+          .firstWhereOrNull((e) => e.value == creditCardTypeProperty) ??
+      defaultValue ??
+      enums.CreditCardTypeProperty.swaggerGeneratedUnknown;
+}
+
+enums.CreditCardTypeProperty? creditCardTypePropertyNullableFromJson(
+  Object? creditCardTypeProperty, [
+  enums.CreditCardTypeProperty? defaultValue,
+]) {
+  if (creditCardTypeProperty == null) {
+    return null;
+  }
+  return enums.CreditCardTypeProperty.values
+          .firstWhereOrNull((e) => e.value == creditCardTypeProperty) ??
+      defaultValue;
+}
+
+String creditCardTypePropertyExplodedListToJson(
+    List<enums.CreditCardTypeProperty>? creditCardTypeProperty) {
+  return creditCardTypeProperty?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> creditCardTypePropertyListToJson(
+    List<enums.CreditCardTypeProperty>? creditCardTypeProperty) {
+  if (creditCardTypeProperty == null) {
+    return [];
+  }
+
+  return creditCardTypeProperty.map((e) => e.value!).toList();
+}
+
+List<enums.CreditCardTypeProperty> creditCardTypePropertyListFromJson(
+  List? creditCardTypeProperty, [
+  List<enums.CreditCardTypeProperty>? defaultValue,
+]) {
+  if (creditCardTypeProperty == null) {
+    return defaultValue ?? [];
+  }
+
+  return creditCardTypeProperty
+      .map((e) => creditCardTypePropertyFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.CreditCardTypeProperty>? creditCardTypePropertyNullableListFromJson(
+  List? creditCardTypeProperty, [
+  List<enums.CreditCardTypeProperty>? defaultValue,
+]) {
+  if (creditCardTypeProperty == null) {
+    return defaultValue;
+  }
+
+  return creditCardTypeProperty
+      .map((e) => creditCardTypePropertyFromJson(e.toString()))
+      .toList();
+}
+
+String? interestPeriodPropertyNullableToJson(
+    enums.InterestPeriodProperty? interestPeriodProperty) {
+  return interestPeriodProperty?.value;
+}
+
+String? interestPeriodPropertyToJson(
+    enums.InterestPeriodProperty interestPeriodProperty) {
+  return interestPeriodProperty.value;
+}
+
+enums.InterestPeriodProperty interestPeriodPropertyFromJson(
+  Object? interestPeriodProperty, [
+  enums.InterestPeriodProperty? defaultValue,
+]) {
+  return enums.InterestPeriodProperty.values
+          .firstWhereOrNull((e) => e.value == interestPeriodProperty) ??
+      defaultValue ??
+      enums.InterestPeriodProperty.swaggerGeneratedUnknown;
+}
+
+enums.InterestPeriodProperty? interestPeriodPropertyNullableFromJson(
+  Object? interestPeriodProperty, [
+  enums.InterestPeriodProperty? defaultValue,
+]) {
+  if (interestPeriodProperty == null) {
+    return null;
+  }
+  return enums.InterestPeriodProperty.values
+          .firstWhereOrNull((e) => e.value == interestPeriodProperty) ??
+      defaultValue;
+}
+
+String interestPeriodPropertyExplodedListToJson(
+    List<enums.InterestPeriodProperty>? interestPeriodProperty) {
+  return interestPeriodProperty?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> interestPeriodPropertyListToJson(
+    List<enums.InterestPeriodProperty>? interestPeriodProperty) {
+  if (interestPeriodProperty == null) {
+    return [];
+  }
+
+  return interestPeriodProperty.map((e) => e.value!).toList();
+}
+
+List<enums.InterestPeriodProperty> interestPeriodPropertyListFromJson(
+  List? interestPeriodProperty, [
+  List<enums.InterestPeriodProperty>? defaultValue,
+]) {
+  if (interestPeriodProperty == null) {
+    return defaultValue ?? [];
+  }
+
+  return interestPeriodProperty
+      .map((e) => interestPeriodPropertyFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.InterestPeriodProperty>? interestPeriodPropertyNullableListFromJson(
+  List? interestPeriodProperty, [
+  List<enums.InterestPeriodProperty>? defaultValue,
+]) {
+  if (interestPeriodProperty == null) {
+    return defaultValue;
+  }
+
+  return interestPeriodProperty
+      .map((e) => interestPeriodPropertyFromJson(e.toString()))
+      .toList();
+}
+
+String? liabilityDirectionPropertyNullableToJson(
+    enums.LiabilityDirectionProperty? liabilityDirectionProperty) {
+  return liabilityDirectionProperty?.value;
+}
+
+String? liabilityDirectionPropertyToJson(
+    enums.LiabilityDirectionProperty liabilityDirectionProperty) {
+  return liabilityDirectionProperty.value;
+}
+
+enums.LiabilityDirectionProperty liabilityDirectionPropertyFromJson(
+  Object? liabilityDirectionProperty, [
+  enums.LiabilityDirectionProperty? defaultValue,
+]) {
+  return enums.LiabilityDirectionProperty.values
+          .firstWhereOrNull((e) => e.value == liabilityDirectionProperty) ??
+      defaultValue ??
+      enums.LiabilityDirectionProperty.swaggerGeneratedUnknown;
+}
+
+enums.LiabilityDirectionProperty? liabilityDirectionPropertyNullableFromJson(
+  Object? liabilityDirectionProperty, [
+  enums.LiabilityDirectionProperty? defaultValue,
+]) {
+  if (liabilityDirectionProperty == null) {
+    return null;
+  }
+  return enums.LiabilityDirectionProperty.values
+          .firstWhereOrNull((e) => e.value == liabilityDirectionProperty) ??
+      defaultValue;
+}
+
+String liabilityDirectionPropertyExplodedListToJson(
+    List<enums.LiabilityDirectionProperty>? liabilityDirectionProperty) {
+  return liabilityDirectionProperty?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> liabilityDirectionPropertyListToJson(
+    List<enums.LiabilityDirectionProperty>? liabilityDirectionProperty) {
+  if (liabilityDirectionProperty == null) {
+    return [];
+  }
+
+  return liabilityDirectionProperty.map((e) => e.value!).toList();
+}
+
+List<enums.LiabilityDirectionProperty> liabilityDirectionPropertyListFromJson(
+  List? liabilityDirectionProperty, [
+  List<enums.LiabilityDirectionProperty>? defaultValue,
+]) {
+  if (liabilityDirectionProperty == null) {
+    return defaultValue ?? [];
+  }
+
+  return liabilityDirectionProperty
+      .map((e) => liabilityDirectionPropertyFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.LiabilityDirectionProperty>?
+    liabilityDirectionPropertyNullableListFromJson(
+  List? liabilityDirectionProperty, [
+  List<enums.LiabilityDirectionProperty>? defaultValue,
+]) {
+  if (liabilityDirectionProperty == null) {
+    return defaultValue;
+  }
+
+  return liabilityDirectionProperty
+      .map((e) => liabilityDirectionPropertyFromJson(e.toString()))
+      .toList();
+}
+
+String? liabilityTypePropertyNullableToJson(
+    enums.LiabilityTypeProperty? liabilityTypeProperty) {
+  return liabilityTypeProperty?.value;
+}
+
+String? liabilityTypePropertyToJson(
+    enums.LiabilityTypeProperty liabilityTypeProperty) {
+  return liabilityTypeProperty.value;
+}
+
+enums.LiabilityTypeProperty liabilityTypePropertyFromJson(
+  Object? liabilityTypeProperty, [
+  enums.LiabilityTypeProperty? defaultValue,
+]) {
+  return enums.LiabilityTypeProperty.values
+          .firstWhereOrNull((e) => e.value == liabilityTypeProperty) ??
+      defaultValue ??
+      enums.LiabilityTypeProperty.swaggerGeneratedUnknown;
+}
+
+enums.LiabilityTypeProperty? liabilityTypePropertyNullableFromJson(
+  Object? liabilityTypeProperty, [
+  enums.LiabilityTypeProperty? defaultValue,
+]) {
+  if (liabilityTypeProperty == null) {
+    return null;
+  }
+  return enums.LiabilityTypeProperty.values
+          .firstWhereOrNull((e) => e.value == liabilityTypeProperty) ??
+      defaultValue;
+}
+
+String liabilityTypePropertyExplodedListToJson(
+    List<enums.LiabilityTypeProperty>? liabilityTypeProperty) {
+  return liabilityTypeProperty?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> liabilityTypePropertyListToJson(
+    List<enums.LiabilityTypeProperty>? liabilityTypeProperty) {
+  if (liabilityTypeProperty == null) {
+    return [];
+  }
+
+  return liabilityTypeProperty.map((e) => e.value!).toList();
+}
+
+List<enums.LiabilityTypeProperty> liabilityTypePropertyListFromJson(
+  List? liabilityTypeProperty, [
+  List<enums.LiabilityTypeProperty>? defaultValue,
+]) {
+  if (liabilityTypeProperty == null) {
+    return defaultValue ?? [];
+  }
+
+  return liabilityTypeProperty
+      .map((e) => liabilityTypePropertyFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.LiabilityTypeProperty>? liabilityTypePropertyNullableListFromJson(
+  List? liabilityTypeProperty, [
+  List<enums.LiabilityTypeProperty>? defaultValue,
+]) {
+  if (liabilityTypeProperty == null) {
+    return defaultValue;
+  }
+
+  return liabilityTypeProperty
+      .map((e) => liabilityTypePropertyFromJson(e.toString()))
+      .toList();
+}
+
+String? shortAccountTypePropertyNullableToJson(
     enums.ShortAccountTypeProperty? shortAccountTypeProperty) {
   return shortAccountTypeProperty?.value;
+}
+
+String? shortAccountTypePropertyToJson(
+    enums.ShortAccountTypeProperty shortAccountTypeProperty) {
+  return shortAccountTypeProperty.value;
 }
 
 enums.ShortAccountTypeProperty shortAccountTypePropertyFromJson(
@@ -14340,6 +14933,23 @@ enums.ShortAccountTypeProperty shortAccountTypePropertyFromJson(
           .firstWhereOrNull((e) => e.value == shortAccountTypeProperty) ??
       defaultValue ??
       enums.ShortAccountTypeProperty.swaggerGeneratedUnknown;
+}
+
+enums.ShortAccountTypeProperty? shortAccountTypePropertyNullableFromJson(
+  Object? shortAccountTypeProperty, [
+  enums.ShortAccountTypeProperty? defaultValue,
+]) {
+  if (shortAccountTypeProperty == null) {
+    return null;
+  }
+  return enums.ShortAccountTypeProperty.values
+          .firstWhereOrNull((e) => e.value == shortAccountTypeProperty) ??
+      defaultValue;
+}
+
+String shortAccountTypePropertyExplodedListToJson(
+    List<enums.ShortAccountTypeProperty>? shortAccountTypeProperty) {
+  return shortAccountTypeProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> shortAccountTypePropertyListToJson(
@@ -14378,9 +14988,14 @@ List<enums.ShortAccountTypeProperty>?
       .toList();
 }
 
-String? transactionTypePropertyToJson(
+String? transactionTypePropertyNullableToJson(
     enums.TransactionTypeProperty? transactionTypeProperty) {
   return transactionTypeProperty?.value;
+}
+
+String? transactionTypePropertyToJson(
+    enums.TransactionTypeProperty transactionTypeProperty) {
+  return transactionTypeProperty.value;
 }
 
 enums.TransactionTypeProperty transactionTypePropertyFromJson(
@@ -14391,6 +15006,23 @@ enums.TransactionTypeProperty transactionTypePropertyFromJson(
           .firstWhereOrNull((e) => e.value == transactionTypeProperty) ??
       defaultValue ??
       enums.TransactionTypeProperty.swaggerGeneratedUnknown;
+}
+
+enums.TransactionTypeProperty? transactionTypePropertyNullableFromJson(
+  Object? transactionTypeProperty, [
+  enums.TransactionTypeProperty? defaultValue,
+]) {
+  if (transactionTypeProperty == null) {
+    return null;
+  }
+  return enums.TransactionTypeProperty.values
+          .firstWhereOrNull((e) => e.value == transactionTypeProperty) ??
+      defaultValue;
+}
+
+String transactionTypePropertyExplodedListToJson(
+    List<enums.TransactionTypeProperty>? transactionTypeProperty) {
+  return transactionTypeProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> transactionTypePropertyListToJson(
@@ -14429,8 +15061,13 @@ List<enums.TransactionTypeProperty>?
       .toList();
 }
 
-String? accountTypeFilterToJson(enums.AccountTypeFilter? accountTypeFilter) {
+String? accountTypeFilterNullableToJson(
+    enums.AccountTypeFilter? accountTypeFilter) {
   return accountTypeFilter?.value;
+}
+
+String? accountTypeFilterToJson(enums.AccountTypeFilter accountTypeFilter) {
+  return accountTypeFilter.value;
 }
 
 enums.AccountTypeFilter accountTypeFilterFromJson(
@@ -14441,6 +15078,23 @@ enums.AccountTypeFilter accountTypeFilterFromJson(
           .firstWhereOrNull((e) => e.value == accountTypeFilter) ??
       defaultValue ??
       enums.AccountTypeFilter.swaggerGeneratedUnknown;
+}
+
+enums.AccountTypeFilter? accountTypeFilterNullableFromJson(
+  Object? accountTypeFilter, [
+  enums.AccountTypeFilter? defaultValue,
+]) {
+  if (accountTypeFilter == null) {
+    return null;
+  }
+  return enums.AccountTypeFilter.values
+          .firstWhereOrNull((e) => e.value == accountTypeFilter) ??
+      defaultValue;
+}
+
+String accountTypeFilterExplodedListToJson(
+    List<enums.AccountTypeFilter>? accountTypeFilter) {
+  return accountTypeFilter?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> accountTypeFilterListToJson(
@@ -14478,9 +15132,14 @@ List<enums.AccountTypeFilter>? accountTypeFilterNullableListFromJson(
       .toList();
 }
 
-String? transactionTypeFilterToJson(
+String? transactionTypeFilterNullableToJson(
     enums.TransactionTypeFilter? transactionTypeFilter) {
   return transactionTypeFilter?.value;
+}
+
+String? transactionTypeFilterToJson(
+    enums.TransactionTypeFilter transactionTypeFilter) {
+  return transactionTypeFilter.value;
 }
 
 enums.TransactionTypeFilter transactionTypeFilterFromJson(
@@ -14491,6 +15150,23 @@ enums.TransactionTypeFilter transactionTypeFilterFromJson(
           .firstWhereOrNull((e) => e.value == transactionTypeFilter) ??
       defaultValue ??
       enums.TransactionTypeFilter.swaggerGeneratedUnknown;
+}
+
+enums.TransactionTypeFilter? transactionTypeFilterNullableFromJson(
+  Object? transactionTypeFilter, [
+  enums.TransactionTypeFilter? defaultValue,
+]) {
+  if (transactionTypeFilter == null) {
+    return null;
+  }
+  return enums.TransactionTypeFilter.values
+          .firstWhereOrNull((e) => e.value == transactionTypeFilter) ??
+      defaultValue;
+}
+
+String transactionTypeFilterExplodedListToJson(
+    List<enums.TransactionTypeFilter>? transactionTypeFilter) {
+  return transactionTypeFilter?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> transactionTypeFilterListToJson(

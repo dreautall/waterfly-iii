@@ -1,9 +1,8 @@
-import 'dart:ui';
-
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
@@ -12,6 +11,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
+import 'package:waterflyiii/widgets/fabs.dart';
 
 class HomeBalance extends StatefulWidget {
   const HomeBalance({
@@ -24,25 +24,14 @@ class HomeBalance extends StatefulWidget {
 
 class _HomeBalanceState extends State<HomeBalance>
     with AutomaticKeepAliveClientMixin {
+  final Logger log = Logger("Pages.Home.Balance");
+
   Future<AccountArray> _fetchAccounts() async {
     final FireflyIii api = context.read<FireflyService>().api;
 
     final Response<AccountArray> respAccounts =
         await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
-
-    if (!respAccounts.isSuccessful || respAccounts.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respAccounts.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respAccounts.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
 
     return Future<AccountArray>.value(respAccounts.body);
   }
@@ -57,7 +46,7 @@ class _HomeBalanceState extends State<HomeBalance>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    debugPrint("home_balance build()");
+    log.finest(() => "build()");
 
     return RefreshIndicator(
       onRefresh: _refreshStats,
@@ -78,7 +67,7 @@ class _HomeBalanceState extends State<HomeBalance>
                     final double balance =
                         double.parse(account.attributes.currentBalance ?? "");
                     final CurrencyRead currency = CurrencyRead(
-                      id: account.attributes.currencyId ?? "0",
+                      id: account.attributes.currencyId ?? "",
                       type: "currencies",
                       attributes: Currency(
                         code: account.attributes.currencyCode ?? "",
@@ -94,6 +83,10 @@ class _HomeBalanceState extends State<HomeBalance>
                               Scaffold(
                         appBar: AppBar(
                           title: Text(account.attributes.name),
+                        ),
+                        floatingActionButton: NewTransactionFab(
+                          context: context,
+                          accountId: account.id,
                         ),
                         body: HomeTransactions(accountId: account.id),
                       ),
@@ -160,6 +153,8 @@ class _HomeBalanceState extends State<HomeBalance>
               ],
             );
           } else if (snapshot.hasError) {
+            log.severe(
+                "error fetching accounts", snapshot.error, snapshot.stackTrace);
             return Text(snapshot.error!.toString());
           } else {
             return const Padding(

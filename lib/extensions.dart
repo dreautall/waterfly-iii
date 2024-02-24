@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
@@ -17,14 +18,14 @@ extension CurrencyFormat on CurrencyRead {
     int? decimalDigits,
   }) =>
       NumberFormat.currency(
-        locale: locale,
+        locale: locale ?? Intl.defaultLocale,
         name: attributes.code,
         decimalDigits: decimalDigits ?? attributes.decimalPlaces,
         symbol: forceCode ? null : attributes.symbol,
       ).format(amount);
 
   String zero({String? locale}) => NumberFormat.currency(
-        locale: locale,
+        locale: locale ?? Intl.defaultLocale,
         name: "",
         symbol: "",
         decimalDigits: attributes.decimalPlaces,
@@ -348,4 +349,115 @@ extension DateTimeExtension on DateTime {
   DateTime clearTime() => DateTime(year, month, day, 0, 0, 0, 0, 0);
 
   TimeOfDay getTimeOfDay() => TimeOfDay.fromDateTime(this);
+}
+
+extension TZDateTimeExtension on tz.TZDateTime {
+  tz.TZDateTime setTimeOfDay(TimeOfDay time) => tz.TZDateTime(
+        location,
+        year,
+        month,
+        day,
+        time.hour,
+        time.minute,
+      );
+
+  tz.TZDateTime setTime({
+    int hours = 0,
+    int minutes = 0,
+    int seconds = 0,
+    int milliSeconds = 0,
+    int microSeconds = 0,
+  }) =>
+      tz.TZDateTime(
+        location,
+        year,
+        month,
+        day,
+        hours,
+        minutes,
+        seconds,
+        milliSeconds,
+        microSeconds,
+      );
+
+  tz.TZDateTime clearTime() =>
+      tz.TZDateTime(location, year, month, day, 0, 0, 0, 0, 0);
+
+  TimeOfDay getTimeOfDay() => TimeOfDay.fromDateTime(this);
+}
+
+extension ListStringIgnoreCase on List<String> {
+  bool containsIgnoreCase(String? element) {
+    for (String e in this) {
+      if (e.toLowerCase() == element?.toLowerCase()) return true;
+    }
+    return false;
+  }
+}
+
+extension StringIgnoreCase on String {
+  bool containsIgnoreCase(String? a) =>
+      a == null || toLowerCase().contains(a.toLowerCase());
+}
+
+extension AccountTypeFilterIcon on AccountTypeFilter {
+  IconData icon() {
+    switch (this) {
+      case AccountTypeFilter.asset:
+        return Icons.money_outlined;
+      case AccountTypeFilter.expense:
+        return Icons.shopping_cart;
+      case AccountTypeFilter.revenue:
+        return Icons.download;
+      case AccountTypeFilter.liabilities:
+        return Icons.payment_outlined;
+      default:
+        return Icons.question_mark;
+    }
+  }
+
+  String friendlyName(BuildContext context) {
+    switch (this) {
+      case AccountTypeFilter.asset:
+        return S.of(context).accountsLabelAsset;
+      case AccountTypeFilter.expense:
+        return S.of(context).accountsLabelExpense;
+      case AccountTypeFilter.revenue:
+        return S.of(context).accountsLabelRevenue;
+      case AccountTypeFilter.liabilities:
+        return S.of(context).accountsLabelLiabilities;
+      default:
+        return S.of(context).generalAccount;
+    }
+  }
+}
+
+extension BillAmountAvg on Bill {
+  double avgAmount() {
+    final double amountMax = (double.tryParse(this.amountMax) ?? 0).abs();
+    final double amountMin = (double.tryParse(this.amountMin) ?? 0).abs();
+    if (amountMax == 0) {
+      return amountMin;
+    }
+    if (amountMin == 0) {
+      return amountMax;
+    }
+
+    // Same as Firefly Source Code
+    return (amountMin + amountMax) / 2;
+  }
+}
+
+class CategoryWithSum extends Category {
+  CategoryWithSum({
+    super.createdAt,
+    super.updatedAt,
+    required super.name,
+    super.notes,
+    super.spent,
+    super.earned,
+  });
+
+  double sumSpent = 0;
+  double sumEarned = 0;
 }

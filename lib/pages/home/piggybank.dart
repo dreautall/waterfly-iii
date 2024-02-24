@@ -1,21 +1,19 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
-import 'package:community_charts_flutter/community_charts_flutter.dart'
-    as charts;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/home/piggybank/chart.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
 
@@ -30,10 +28,12 @@ class HomePiggybank extends StatefulWidget {
 
 class _HomePiggybankState extends State<HomePiggybank>
     with AutomaticKeepAliveClientMixin {
-  final int _numberOfItemsPerRequest = 50;
+  final Logger log = Logger("Pages.Home.Piggybank");
+
+  final int _numberOfItemsPerRequest = 100;
   final PagingController<int, PiggyBankRead> _pagingController =
       PagingController<int, PiggyBankRead>(
-    firstPageKey: 0,
+    firstPageKey: 1,
     invisibleItemsThreshold: 10,
   );
 
@@ -41,9 +41,8 @@ class _HomePiggybankState extends State<HomePiggybank>
   void initState() {
     super.initState();
 
-    _pagingController.addPageRequestListener((int pageKey) {
-      _fetchPage(pageKey);
-    });
+    _pagingController
+        .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
   }
 
   @override
@@ -58,31 +57,25 @@ class _HomePiggybankState extends State<HomePiggybank>
       final FireflyIii api = context.read<FireflyService>().api;
       final Response<PiggyBankArray> respAccounts = await api.v1PiggyBanksGet(
         page: pageKey,
+        limit: _numberOfItemsPerRequest,
       );
-      if (!respAccounts.isSuccessful || respAccounts.body == null) {
-        if (context.mounted) {
-          throw Exception(
-            S
-                .of(context)
-                .errorAPIInvalidResponse(respAccounts.error?.toString() ?? ""),
-          );
+      apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
+
+      if (mounted) {
+        final List<PiggyBankRead> piggyList = respAccounts.body!.data;
+        piggyList.sortByCompare(
+            (PiggyBankRead element) => element.attributes.objectGroupOrder,
+            (int? a, int? b) => (a ?? 0).compareTo(b ?? 0));
+        final bool isLastPage = piggyList.length < _numberOfItemsPerRequest;
+        if (isLastPage) {
+          _pagingController.appendLastPage(piggyList);
         } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${respAccounts.error}",
-          );
+          final int nextPageKey = pageKey + 1;
+          _pagingController.appendPage(piggyList, nextPageKey);
         }
       }
-
-      final List<PiggyBankRead> piggyList = respAccounts.body!.data;
-      final bool isLastPage = piggyList.length < _numberOfItemsPerRequest;
-      if (isLastPage) {
-        _pagingController.appendLastPage(piggyList);
-      } else {
-        final int nextPageKey = pageKey + 1;
-        _pagingController.appendPage(piggyList, nextPageKey);
-      }
-    } catch (e) {
-      debugPrint("error --> $e");
+    } catch (e, stackTrace) {
+      log.severe("_fetchPage($pageKey)", e, stackTrace);
       _pagingController.error = e;
     }
   }
@@ -93,7 +86,9 @@ class _HomePiggybankState extends State<HomePiggybank>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    debugPrint("home_piggybank build()");
+    log.finest(() => "build()");
+
+    int lastGroupId = -1;
 
     return RefreshIndicator(
       onRefresh: () => Future<void>.sync(() => _pagingController.refresh()),
@@ -101,6 +96,22 @@ class _HomePiggybankState extends State<HomePiggybank>
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<PiggyBankRead>(
           itemBuilder: (BuildContext context, PiggyBankRead piggy, int index) {
+            Widget? groupHeader;
+            final int groupId =
+                (int.tryParse(piggy.attributes.objectGroupId ?? "") ?? 0);
+            if (groupId != lastGroupId &&
+                groupId != 0 &&
+                (piggy.attributes.objectGroupTitle ?? "").isNotEmpty) {
+              lastGroupId = groupId;
+              groupHeader = Padding(
+                padding: const EdgeInsets.only(top: 16, left: 16),
+                child: Text(
+                  piggy.attributes.objectGroupTitle ?? "(no title)",
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+              );
+            }
             final double currentAmount =
                 double.tryParse(piggy.attributes.currentAmount ?? "") ?? 0;
             final CurrencyRead currency = CurrencyRead(
@@ -119,7 +130,9 @@ class _HomePiggybankState extends State<HomePiggybank>
               return const SizedBox.shrink();
             }
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                groupHeader ?? const SizedBox.shrink(),
                 ListTile(
                   title: Text(piggy.attributes.name),
                   subtitle: (piggy.attributes.accountName != null)
@@ -247,32 +260,20 @@ class PiggyDetails extends StatefulWidget {
   State<PiggyDetails> createState() => _PiggyDetailsState();
 }
 
-class TimeSeriesChart {
-  final DateTime time;
-  final double value;
-
-  TimeSeriesChart(this.time, this.value);
-}
-
 class _PiggyDetailsState extends State<PiggyDetails> {
+  final Logger log = Logger("Pages.Home.Piggybank.Details");
+
+  DateTime? selectedTime;
+  double? selectedValue;
+
   Future<List<PiggyBankEventRead>> _fetchChart() async {
     final FireflyIii api = context.read<FireflyService>().api;
 
-    final Response<PiggyBankEventArray> resp =
+    final Response<PiggyBankEventArray> response =
         await api.v1PiggyBanksIdEventsGet(id: currentPiggy.id);
-    if (!resp.isSuccessful || resp.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S.of(context).errorAPIInvalidResponse(resp.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${resp.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(response, mounted ? context : null);
 
-    return resp.body!.data.sortedBy<DateTime>((PiggyBankEventRead e) =>
+    return response.body!.data.sortedBy<DateTime>((PiggyBankEventRead e) =>
         e.attributes.createdAt ?? e.attributes.updatedAt ?? DateTime.now());
   }
 
@@ -353,112 +354,18 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                       child: Text(S.of(context).homeTransactionsEmpty),
                     );
                   }
-                  final List<charts.Series<TimeSeriesChart, DateTime>>
-                      chartData = <charts.Series<TimeSeriesChart, DateTime>>[];
-                  final List<charts.TickSpec<DateTime>> ticks =
-                      <charts.TickSpec<DateTime>>[];
-                  final List<TimeSeriesChart> data = <TimeSeriesChart>[];
-
-                  double total = 0;
-
-                  if (currentPiggy.attributes.startDate != null) {
-                    data.add(TimeSeriesChart(
-                      currentPiggy.attributes.startDate!,
-                      0,
-                    ));
-                    ticks.add(charts.TickSpec<DateTime>(
-                        currentPiggy.attributes.startDate!.toLocal()));
-                  }
-
-                  for (PiggyBankEventRead e in snapshot.data!) {
-                    final DateTime? date =
-                        e.attributes.createdAt ?? e.attributes.updatedAt;
-                    final double amount =
-                        double.tryParse(e.attributes.amount ?? "") ?? 0;
-                    if (date == null || amount == 0) {
-                      continue;
-                    }
-                    total += amount;
-                    data.add(TimeSeriesChart(date, total));
-                    ticks.add(charts.TickSpec<DateTime>(date.toLocal()));
-                  }
-                  chartData.add(
-                    charts.Series<TimeSeriesChart, DateTime>(
-                      id: currentPiggy.id,
-                      domainFn: (TimeSeriesChart d, _) => d.time.toLocal(),
-                      measureFn: (TimeSeriesChart d, _) => d.value,
-                      data: data,
-                    ),
-                  );
-
-                  final charts.TimeSeriesChart chart = charts.TimeSeriesChart(
-                    chartData,
-                    animate: true,
-                    primaryMeasureAxis: charts.NumericAxisSpec(
-                      tickProviderSpec:
-                          const charts.BasicNumericTickProviderSpec(
-                        //desiredTickCount: 6,
-                        desiredMaxTickCount: 6,
-                        desiredMinTickCount: 4,
-                        zeroBound: true,
-                      ),
-                      renderSpec: charts.SmallTickRendererSpec<num>(
-                        labelStyle: charts.TextStyleSpec(
-                          color: charts.ColorUtil.fromDartColor(
-                              Theme.of(context).colorScheme.onSurfaceVariant),
-                        ),
-                      ),
-                    ),
-                    domainAxis: charts.DateTimeAxisSpec(
-                      tickFormatterSpec:
-                          charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
-                              DateFormat(DateFormat.ABBR_MONTH_DAY)),
-                      tickProviderSpec:
-                          const charts.AutoDateTimeTickProviderSpec(
-                              includeTime: false),
-                      renderSpec: charts.SmallTickRendererSpec<DateTime>(
-                        labelStyle: charts.TextStyleSpec(
-                          color: charts.ColorUtil.fromDartColor(
-                              Theme.of(context).colorScheme.onSurfaceVariant),
-                        ),
-                      ),
-                    ),
-                    defaultRenderer: charts.LineRendererConfig<DateTime>(
-                        includePoints: true),
-                    behaviors: targetAmount != 0
-                        ? <charts.ChartBehavior<DateTime>>[
-                            charts.RangeAnnotation<DateTime>(
-                              <charts.LineAnnotationSegment<num>>[
-                                charts.LineAnnotationSegment<num>(
-                                  targetAmount,
-                                  charts.RangeAnnotationAxisType.measure,
-                                  color: charts
-                                      .MaterialPalette.deepOrange.shadeDefault,
-                                  labelAnchor:
-                                      charts.AnnotationLabelAnchor.start,
-                                  startLabel: S.of(context).generalTarget,
-                                  labelStyleSpec: charts.TextStyleSpec(
-                                    color: charts.ColorUtil.fromDartColor(
-                                        Theme.of(context)
-                                            .colorScheme
-                                            .onSurfaceVariant),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ]
-                        : <charts.ChartBehavior<DateTime>>[],
-                  );
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: SizedBox(
                       height: 300,
-                      child: chart,
+                      width: MediaQuery.of(context).size.width,
+                      child: PiggyChart(currentPiggy, snapshot.data!),
                     ),
                   );
                 } else if (snapshot.hasError) {
-                  debugPrint("has error ${snapshot.error}, popping view");
+                  log.severe("error fetching chart", snapshot.error,
+                      snapshot.stackTrace);
                   Navigator.of(context).pop();
                   return const SizedBox.shrink();
                 } else {
@@ -473,6 +380,8 @@ class _PiggyDetailsState extends State<PiggyDetails> {
         ),
         OverflowBar(
           alignment: MainAxisAlignment.end,
+          spacing: 12,
+          overflowSpacing: 12,
           children: <Widget>[
             TextButton(
               onPressed: () async {
@@ -480,7 +389,6 @@ class _PiggyDetailsState extends State<PiggyDetails> {
               },
               child: Text(MaterialLocalizations.of(context).closeButtonLabel),
             ),
-            const SizedBox(width: 12),
             FilledButton(
               onPressed: () async {
                 PiggyBankSingle? newPiggy = await showDialog<PiggyBankSingle>(
@@ -518,6 +426,8 @@ class PiggyAdjustBalance extends StatefulWidget {
 }
 
 class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
+  final Logger log = Logger("Pages.Home.Piggybank.AdjustBalance");
+
   final TextEditingController _amountTextController = TextEditingController();
   TransactionTypeProperty _transactionType = TransactionTypeProperty.deposit;
 
@@ -596,6 +506,8 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
         const SizedBox(height: 16),
         OverflowBar(
           alignment: MainAxisAlignment.end,
+          spacing: 12,
+          overflowSpacing: 12,
           children: <Widget>[
             TextButton(
               onPressed: () async {
@@ -603,7 +515,6 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
               },
               child: Text(MaterialLocalizations.of(context).closeButtonLabel),
             ),
-            const SizedBox(width: 12),
             FilledButton(
               onPressed: () async {
                 final FireflyIii api = context.read<FireflyService>().api;
@@ -618,7 +529,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                   amount *= -1;
                 }
                 final double totalAmount = currentAmount + amount;
-                debugPrint(
+                log.finest(() =>
                     "New piggy bank total = $totalAmount out of $currentAmount + $amount");
                 final Response<PiggyBankSingle> resp =
                     await api.v1PiggyBanksIdPut(
@@ -631,8 +542,9 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                 if (!resp.isSuccessful || resp.body == null) {
                   late String error;
                   try {
-                    ValidationError valError = ValidationError.fromJson(
-                        json.decode(resp.error.toString()));
+                    ValidationErrorResponse valError =
+                        ValidationErrorResponse.fromJson(
+                            json.decode(resp.error.toString()));
                     if (context.mounted) {
                       error = valError.message ?? S.of(context).errorUnknown;
                     } else {

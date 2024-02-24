@@ -1,15 +1,16 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show Response;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:waterflyiii/animations.dart';
+import 'package:version/version.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -18,11 +19,15 @@ import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/pages/transaction/delete.dart';
+import 'package:waterflyiii/settings.dart';
+import 'package:waterflyiii/stock.dart';
+import 'package:waterflyiii/timezonehandler.dart';
 
 class HomeTransactions extends StatefulWidget {
-  const HomeTransactions({Key? key, this.accountId}) : super(key: key);
+  const HomeTransactions({super.key, this.accountId, this.category});
 
   final String? accountId;
+  final CategoryRead? category;
 
   @override
   State<HomeTransactions> createState() => _HomeTransactionsState();
@@ -30,15 +35,20 @@ class HomeTransactions extends StatefulWidget {
 
 class _HomeTransactionsState extends State<HomeTransactions>
     with AutomaticKeepAliveClientMixin {
+  final Logger log = Logger("Pages.Home.Transaction");
+
   final int _numberOfPostsPerRequest = 50;
 
   final PagingController<int, TransactionRead> _pagingController =
       PagingController<int, TransactionRead>(
-    firstPageKey: 0,
+    firstPageKey: 1,
     invisibleItemsThreshold: 20,
   );
 
   DateTime? _lastDate;
+  List<int> _rowsWithDate = <int>[];
+  late TransStock _stock;
+  late TimeZoneHandler _tzHandler;
 
   final TransactionFilters _filters = TransactionFilters();
 
@@ -46,12 +56,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
   void initState() {
     super.initState();
 
-    _pagingController.addPageRequestListener((int pageKey) {
-      _fetchPage(pageKey);
-    });
+    _tzHandler = context.read<FireflyService>().tzHandler;
+    _pagingController
+        .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
 
-    // Only add button when in own tab
-    if (widget.accountId == null) {
+    // Only add filter button when in own tab
+    if (widget.accountId == null && widget.category == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         context.read<PageActions>().set(
           widget.key!,
@@ -60,12 +70,17 @@ class _HomeTransactionsState extends State<HomeTransactions>
               value: _filters,
               builder: (BuildContext context, _) => IconButton(
                 icon: const Icon(Icons.filter_alt_outlined),
-                selectedIcon: Icon(Icons.filter_alt,
-                    color: Theme.of(context).colorScheme.primary),
+                selectedIcon: Icon(
+                  Icons.filter_alt,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
                 isSelected: context.watch<TransactionFilters>().hasFilters,
                 tooltip: S.of(context).homeTransactionsActionFilter,
                 onPressed: () async {
                   TransactionFilters oldFilters = _filters.copyWith();
+                  final SettingsProvider settings =
+                      context.read<SettingsProvider>();
+                  final bool oldShowFutureTXs = settings.showFutureTXs;
                   bool? ok = await showDialog<bool>(
                     context: context,
                     builder: (BuildContext context) => FilterDialog(
@@ -74,12 +89,27 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     ),
                   );
                   if (ok == null || !ok) {
+                    if (settings.showFutureTXs != oldShowFutureTXs) {
+                      settings.setShowFutureTXs(oldShowFutureTXs);
+                      _pagingController.refresh();
+                    }
+                    _filters.account = oldFilters.account;
+                    _filters.budget = oldFilters.budget;
+                    _filters.category = oldFilters.category;
+                    _filters.currency = oldFilters.currency;
+                    _filters.text = oldFilters.text;
+                    _filters.bill = oldFilters.bill;
+                    _filters.tags = oldFilters.tags;
+
                     return;
                   }
-                  if (oldFilters == _filters) {
+                  if (oldFilters == _filters &&
+                      settings.showFutureTXs == oldShowFutureTXs) {
                     return;
                   }
                   _filters.updateFilters();
+                  _rowsWithDate = <int>[];
+                  _lastDate = null;
                   _pagingController.refresh();
                 },
               ),
@@ -88,19 +118,42 @@ class _HomeTransactionsState extends State<HomeTransactions>
         );
       });
     }
+
+    _stock = context.read<FireflyService>().transStock!;
   }
 
   @override
   void dispose() {
+    _stock.removeListener(notifRefresh);
     _pagingController.dispose();
 
     super.dispose();
   }
 
+  void notifRefresh() {
+    _pagingController.refresh();
+  }
+
   Future<void> _fetchPage(int pageKey) async {
+    final TransStock? stock = context.read<FireflyService>().transStock;
+
+    if (stock == null) {
+      // Throw error
+      return;
+    }
+
     try {
-      final FireflyIii api = context.read<FireflyService>().api;
-      late Future<Response<TransactionArray>> searchFunc;
+      late List<TransactionRead> transactionList;
+
+      // simply add a search filter for category id
+      // logic later already detects categoryId == -1 (= no category)
+      // there is no /api/v1/categories call for "no category" anyways
+      if (widget.category != null) {
+        debugPrint("setting filter for cat ${widget.category!.id}");
+        _filters.category = widget.category;
+        _filters.updateFilters();
+      }
+
       if (_filters.hasFilters) {
         String query = _filters.text ?? "";
         if (_filters.account != null) {
@@ -110,52 +163,82 @@ class _HomeTransactionsState extends State<HomeTransactions>
           query = "currency_is:${_filters.currency!.attributes.code} $query";
         }
         if (_filters.category != null) {
-          query =
-              "category_is:\"${_filters.category!.attributes.name}\" $query";
+          if (_filters.category!.id == "-1") {
+            query = "has_no_category:true $query";
+          } else {
+            query =
+                "category_is:\"${_filters.category!.attributes.name}\" $query";
+          }
         }
         if (_filters.budget != null) {
-          query = "budget_is:\"${_filters.budget!.attributes.name}\" $query";
+          if (_filters.budget!.id == "-1") {
+            query = "has_no_budget:true $query";
+          } else {
+            query = "budget_is:\"${_filters.budget!.attributes.name}\" $query";
+          }
         }
-        debugPrint("Search query: $query");
-        searchFunc = api.v1SearchTransactionsGet(
+        if (_filters.bill != null) {
+          if (_filters.bill!.id == "-1") {
+            query = "has_no_bill:true $query";
+          } else {
+            query = "bill_is:\"${_filters.bill!.attributes.name}\" $query";
+          }
+        }
+        if (_filters.tags != null) {
+          for (String tag in _filters.tags!.tags) {
+            query = "tag_is:\"$tag\" $query";
+          }
+        }
+        query = "date_before:today $query ";
+        log.fine(() => "Search query: $query");
+        transactionList = await stock.getSearch(
           query: query,
           page: pageKey,
         );
+      } else if (widget.accountId != null || _filters.account != null) {
+        transactionList = await stock.getAccount(
+          id: widget.accountId ?? _filters.account!.id,
+          page: pageKey,
+          limit: _numberOfPostsPerRequest,
+          end: context.read<SettingsProvider>().showFutureTXs
+              ? null
+              : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
+          start:
+              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
+                  ? null
+                  : "1900-01-01",
+        );
       } else {
-        searchFunc = (widget.accountId != null || _filters.account != null)
-            ? api.v1AccountsIdTransactionsGet(
-                id: widget.accountId ?? _filters.account!.id,
-                page: pageKey,
-                end: DateFormat('yyyy-MM-dd').format(DateTime.now().toLocal()))
-            : api.v1TransactionsGet(
-                page: pageKey,
-                end: DateFormat('yyyy-MM-dd').format(DateTime.now().toLocal()),
-              );
+        transactionList = await stock.get(
+          page: pageKey,
+          limit: _numberOfPostsPerRequest,
+          end: context.read<SettingsProvider>().showFutureTXs
+              ? null
+              : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
+          start:
+              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
+                  ? null
+                  : "1900-01-01",
+        );
       }
-      final Response<TransactionArray> response = await searchFunc;
-      if (!response.isSuccessful || response.body == null) {
-        if (context.mounted) {
-          throw Exception(
-            S
-                .of(context)
-                .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-          );
+
+      if (mounted) {
+        // check if it is the last page
+        // adds spacing for the FAB button to not overlap.
+        if (transactionList.length < _numberOfPostsPerRequest) {
+          transactionList.add(const TransactionRead(
+            type: "WF3_DUMMY_SPACING_ELEMENT",
+            id: "WF3_DUMMY_SPACING_ELEMENT",
+            attributes: Transaction(transactions: <TransactionSplit>[]),
+            links: ObjectLink(),
+          ));
+          _pagingController.appendLastPage(transactionList);
         } else {
-          throw Exception(
-            "[nocontext] Invalid API response: ${response.error}",
-          );
+          _pagingController.appendPage(transactionList, pageKey + 1);
         }
       }
-      final List<TransactionRead> transactionList = response.body!.data;
-      final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
-      if (isLastPage) {
-        _pagingController.appendLastPage(transactionList);
-      } else {
-        final int nextPageKey = pageKey + 1;
-        _pagingController.appendPage(transactionList, nextPageKey);
-      }
-    } catch (e) {
-      debugPrint("error --> $e");
+    } catch (e, stackTrace) {
+      log.severe("_fetchPage($pageKey)", e, stackTrace);
       _pagingController.error = e;
     }
   }
@@ -165,14 +248,21 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("home_transactions build()");
+    log.finest(() => "build()");
     super.build(context);
 
     return RefreshIndicator(
-      onRefresh: () => Future<void>.sync(() => _pagingController.refresh()),
+      onRefresh: () => Future<void>.sync(() {
+        _rowsWithDate = <int>[];
+        _lastDate = null;
+        context.read<FireflyService>().transStock!.clear();
+        return _pagingController.refresh();
+      }),
       child: PagedListView<int, TransactionRead>(
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
+          animateTransitions: true,
+          transitionDuration: animDurationStandard,
           itemBuilder: transactionRowBuilder,
         ),
         //itemExtent: 80,
@@ -185,6 +275,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
     TransactionRead item,
     int index,
   ) {
+    if (item.type == "WF3_DUMMY_SPACING_ELEMENT" &&
+        item.id == "WF3_DUMMY_SPACING_ELEMENT") {
+      return const SizedBox(height: 68);
+    }
     List<TransactionSplit> transactions = item.attributes.transactions;
     if (transactions.isEmpty) {
       return Text(S.of(context).homeTransactionsEmpty);
@@ -273,11 +367,22 @@ class _HomeTransactionsState extends State<HomeTransactions>
     }
     if (transactions.first.type == TransactionTypeProperty.transfer) {
       subtitle.add(
-        TextSpan(text: "(${S.of(context).transactionTypeTransfer}) "),
+        TextSpan(text: "(${S.of(context).transactionTypeTransfer})"),
+      );
+      subtitle.add(
+        const WidgetSpan(
+          baseline: TextBaseline.ideographic,
+          alignment: PlaceholderAlignment.middle,
+          child: Padding(
+            padding: EdgeInsets.only(right: 2),
+            child: Icon(Icons.arrow_right_alt),
+          ),
+        ),
       );
     }
     subtitle.add(TextSpan(
-      text: (transactions.first.type == TransactionTypeProperty.withdrawal)
+      text: (transactions.first.type == TransactionTypeProperty.withdrawal ||
+              transactions.first.type == TransactionTypeProperty.transfer)
           ? destinationName
           : sourceName,
     ));
@@ -356,6 +461,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     ),
                   );
                   if (ok ?? false) {
+                    _rowsWithDate = <int>[];
+                    _lastDate = null;
                     _pagingController.refresh();
                   }
                 },
@@ -383,6 +490,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   await api.v1TransactionsIdDelete(
                     id: item.id,
                   );
+                  _rowsWithDate = <int>[];
+                  _lastDate = null;
+                  if (context.mounted) {
+                    context.read<FireflyService>().transStock!.clear();
+                  }
                   _pagingController.refresh();
                 },
                 child: Row(
@@ -473,23 +585,26 @@ class _HomeTransactionsState extends State<HomeTransactions>
       ),
       onClosed: (bool? refresh) {
         if (refresh ?? false == true) {
+          _rowsWithDate = <int>[];
+          _lastDate = null;
           _pagingController.refresh();
         }
       },
     );
 
     // Date
-    DateTime date = transactions.first.date.toLocal();
+    DateTime date = _tzHandler.sTime(transactions.first.date).toLocal();
     // Show Date Banner when:
     // 1. _lastDate is not set (= first element)
-    // 2. _lastDate has a different day than current date (= date changed)
-    // 3. _lastDate day is older than current date day. As the list is sorted by
-    //    time, this should not happen, and means _lastDate just wasn't properly
-    //    cleared
+    // 2. _lastDate has a different day than current date (= date changed) and
+    //    is an earlier date (= scrolling down)
+    // 3. index indicates we have to.
     if (_lastDate == null ||
-        _lastDate!.clearTime() != date.clearTime() ||
-        _lastDate!.clearTime().isBefore(date.clearTime())) {
+        (_lastDate!.clearTime() != date.clearTime() &&
+            date.clearTime().isBefore(_lastDate!.clearTime())) ||
+        _rowsWithDate.contains(index)) {
       // Add date row
+      _rowsWithDate.add(index);
       transactionWidget = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

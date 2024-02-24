@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/pages/accounts.dart';
+import 'package:waterflyiii/pages/bills.dart';
+import 'package:waterflyiii/pages/categories.dart';
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/settings.dart';
+
+final Logger log = Logger("Pages.Navigation");
 
 class NavDestination {
   const NavDestination(
@@ -23,49 +28,68 @@ class NavDestination {
 }
 
 class NavPageElements with ChangeNotifier {
-  List<Widget>? appBarActions;
-  PreferredSizeWidget? appBarBottom;
-  Widget? fab;
+  NavPageElements(this.defaultTitle);
+  final Widget defaultTitle;
 
-  void setAppBarActions(List<Widget>? actions) {
-    if (actions == appBarActions) {
-      debugPrint("NavPageElements->setAppBarActions equal, skipping");
+  List<Widget>? _appBarActions;
+  List<Widget>? get appBarActions => _appBarActions;
+  set appBarActions(List<Widget>? value) {
+    if (value == appBarActions) {
+      log.finer(() => "NavPageElements->setAppBarActions equal, skipping");
       return;
     }
-    appBarActions = actions;
-    debugPrint("notify NavPageElements->setAppBarActions()");
+    _appBarActions = value;
+    log.finest(() => "notify NavPageElements->setAppBarActions()");
     notifyListeners();
   }
 
-  void setAppBarBottom(PreferredSizeWidget? bottom) {
-    if (bottom == appBarBottom) {
-      debugPrint("NavPageElements->setAppBarBottom equal, skipping");
+  PreferredSizeWidget? _appBarBottom;
+  PreferredSizeWidget? get appBarBottom => _appBarBottom;
+  set appBarBottom(PreferredSizeWidget? value) {
+    if (value == appBarBottom) {
+      log.finer(() => "NavPageElements->setAppBarBottom equal, skipping");
       return;
     }
-    appBarBottom = bottom;
-    debugPrint("notify NavPageElements->setAppBarBottom()");
+    _appBarBottom = value;
+    log.finest(() => "notify NavPageElements->setAppBarBottom()");
     notifyListeners();
   }
 
-  void setFab(Widget? newFab) {
-    if (newFab == fab) {
-      debugPrint("NavPageElements->setFab equal, skipping");
+  Widget? _fab;
+  Widget? get fab => _fab;
+  set fab(Widget? value) {
+    if (value == fab) {
+      log.finer(() => "NavPageElements->setFab equal, skipping");
       return;
     }
-    fab = newFab;
-    debugPrint("notify NavPageElements->setFab()");
+    _fab = value;
+    log.finest(() => "notify NavPageElements->setFab()");
+    notifyListeners();
+  }
+
+  Widget? _appBarTitle;
+  Widget get appBarTitle => _appBarTitle ?? defaultTitle;
+  set appBarTitle(Widget value) {
+    if (value == appBarTitle) {
+      log.finer(() => "NavPageElements->setAppBarTitle equal, skipping");
+      return;
+    }
+    _appBarTitle = value;
+    log.finest(() => "notify NavPageElements->setAppBarTitle()");
     notifyListeners();
   }
 }
 
 class NavPage extends StatefulWidget {
-  const NavPage({Key? key}) : super(key: key);
+  const NavPage({super.key});
 
   @override
   State<NavPage> createState() => NavPageState();
 }
 
 class NavPageState extends State<NavPage> with TickerProviderStateMixin {
+  final Logger log = Logger("Pages.Navigation.Page");
+
   late TabController _tabController;
   int screenIndex = 0;
   late List<NavDestination> navDestinations;
@@ -88,6 +112,18 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
         const Icon(Icons.account_balance),
       ),
       NavDestination(
+        S.of(context).navigationCategories,
+        const CategoriesPage(),
+        const Icon(Icons.assignment_outlined),
+        const Icon(Icons.assignment),
+      ),
+      NavDestination(
+        S.of(context).navigationBills,
+        const BillsPage(),
+        const Icon(Icons.receipt_outlined),
+        const Icon(Icons.receipt),
+      ),
+      NavDestination(
         S.of(context).navigationSettings,
         const SettingsPage(),
         const Icon(Icons.settings_outlined),
@@ -108,26 +144,31 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final NavDestination currentPage = navDestinations[screenIndex];
-    debugPrint("nav build(), page $screenIndex");
+    log.finest(() => "nav build(page: $screenIndex)");
 
     return ChangeNotifierProvider<NavPageElements>(
-      create: (_) => NavPageElements(),
+      create: (_) => NavPageElements(Text(navDestinations[0].label)),
       builder: (BuildContext context, _) => Scaffold(
         appBar: AppBar(
-          title: Text(currentPage.label),
+          title: context.select((NavPageElements n) => n.appBarTitle),
           actions: context.select((NavPageElements n) => n.appBarActions),
           bottom: context.select((NavPageElements n) => n.appBarBottom),
         ),
         drawer: NavigationDrawer(
           selectedIndex: screenIndex,
           onDestinationSelected: (int index) {
-            context.read<NavPageElements>().setAppBarActions(null);
-            context.read<NavPageElements>().setAppBarBottom(null);
-            context.read<NavPageElements>().setFab(null);
+            Navigator.pop(context); // closes the drawer
+            if (screenIndex == index) {
+              return;
+            }
+            context.read<NavPageElements>().appBarActions = null;
+            context.read<NavPageElements>().appBarBottom = null;
+            context.read<NavPageElements>().fab = null;
+            context.read<NavPageElements>().appBarTitle =
+                Text(navDestinations[index].label);
             setState(() {
               screenIndex = index;
             });
-            Navigator.pop(context); // closes the drawer
           },
           children: <Widget>[
             Padding(
@@ -148,8 +189,18 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
               child: GestureDetector(
-                onTap: () {
-                  context.read<FireflyService>().signOut();
+                onTap: () async {
+                  final FireflyService ff = context.read<FireflyService>();
+                  bool? ok = await showDialog<bool>(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        const LogoutConfirmDialog(),
+                  );
+                  if (!(ok ?? false)) {
+                    return;
+                  }
+
+                  ff.signOut();
                 },
                 child: Text(
                   S.of(context).formButtonLogout,
@@ -175,6 +226,36 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
         ),
         floatingActionButton: context.select((NavPageElements n) => n.fab),
       ),
+    );
+  }
+}
+
+class LogoutConfirmDialog extends StatelessWidget {
+  const LogoutConfirmDialog({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      icon: const Icon(Icons.logout),
+      title: Text(S.of(context).formButtonLogout),
+      clipBehavior: Clip.hardEdge,
+      actions: <Widget>[
+        TextButton(
+          child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        FilledButton(
+          child: Text(S.of(context).formButtonLogout),
+          onPressed: () {
+            Navigator.of(context).pop(true);
+          },
+        ),
+      ],
+      content: Text(S.of(context).logoutConfirmation),
     );
   }
 }

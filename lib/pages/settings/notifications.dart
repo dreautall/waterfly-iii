@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
@@ -23,6 +24,7 @@ class SettingsNotifications extends StatefulWidget {
 
 class _SettingsNotificationsState extends State<SettingsNotifications> {
   NotificationListenerStatus? status;
+  final Logger log = Logger("Notifications.Settings");
 
   @override
   void initState() {
@@ -66,7 +68,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                     bool granted = await FlutterLocalNotificationsPlugin()
                             .resolvePlatformSpecificImplementation<
                                 AndroidFlutterLocalNotificationsPlugin>()!
-                            .requestPermission() ??
+                            .requestNotificationsPermission() ??
                         false;
                     if (!granted) {
                       msg.showSnackBar(SnackBar(
@@ -85,7 +87,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                     await FlutterLocalNotificationsPlugin()
                         .resolvePlatformSpecificImplementation<
                             AndroidFlutterLocalNotificationsPlugin>()!
-                        .requestPermission();
+                        .requestNotificationsPermission();
                   };
                 } else if (!snapshot.data!.serviceRunning) {
                   subtitle = l10n.settingsNLServiceStopped;
@@ -128,6 +130,8 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                   };
                 }
               } else if (snapshot.hasError) {
+                log.severe("error updating status", snapshot.error,
+                    snapshot.stackTrace);
                 subtitle = S
                     .of(context)
                     .settingsNLServiceCheckingError(snapshot.error.toString());
@@ -205,24 +209,15 @@ class NotificationApps extends StatelessWidget {
     // Accounts
     final Response<AccountArray> respAccounts =
         await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
-    if (!respAccounts.isSuccessful || respAccounts.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(respAccounts.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${respAccounts.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(respAccounts, context.mounted ? context : null);
+
     return respAccounts.body!;
   }
 
   @override
   Widget build(BuildContext context) {
+    final Logger log = Logger("Notifications.Apps");
+
     return FutureBuilder<AccountArray>(
       future: _getAccounts(context),
       builder: (BuildContext context, AsyncSnapshot<AccountArray> snapshot) {
@@ -233,15 +228,35 @@ class NotificationApps extends StatelessWidget {
             children: <Widget>[
               ...context.watch<SettingsProvider>().notificationApps.map(
                 (String app) {
-                  return AppCard(
-                    app: app,
-                    accounts: snapshot.data!,
+                  return FutureBuilder<NotificationAppSettings>(
+                    future: context
+                        .read<SettingsProvider>()
+                        .notificationGetAppSettings(app),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<NotificationAppSettings> snap) {
+                      if (snap.connectionState == ConnectionState.done &&
+                          snap.hasData) {
+                        return AppCard(
+                          app: app,
+                          accounts: snapshot.data!,
+                          settings: snap.data!,
+                        );
+                      } else if (snapshot.hasError) {
+                        log.severe("error getting app settings", snapshot.error,
+                            snapshot.stackTrace);
+                        return const SizedBox.shrink();
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    },
                   );
                 },
               ),
             ],
           );
         } else if (snapshot.hasError) {
+          log.severe(
+              "error getting accounts", snapshot.error, snapshot.stackTrace);
           return Text(S
               .of(context)
               .settingsNLServiceCheckingError(snapshot.error.toString()));
@@ -258,10 +273,12 @@ class AppCard extends StatefulWidget {
     super.key,
     required this.app,
     required this.accounts,
+    required this.settings,
   });
 
   final String app;
   final AccountArray accounts;
+  final NotificationAppSettings settings;
 
   @override
   State<AppCard> createState() => _AppCardState();
@@ -275,6 +292,30 @@ class _AppCardState extends State<AppCard> {
 
   @override
   Widget build(BuildContext context) {
+    List<DropdownMenuEntry<AccountRead>> accountOptions =
+        <DropdownMenuEntry<AccountRead>>[
+      DropdownMenuEntry<AccountRead>(
+        value: AccountRead(
+          id: "0",
+          type: "dummy",
+          attributes: Account(
+            name: S.of(context).settingsNLAppAccountDynamic,
+            type: ShortAccountTypeProperty.swaggerGeneratedUnknown,
+          ),
+        ),
+        label: S.of(context).settingsNLAppAccountDynamic,
+      )
+    ];
+    AccountRead? currentAccount = accountOptions.first.value;
+    for (AccountRead e in widget.accounts.data) {
+      accountOptions.add(DropdownMenuEntry<AccountRead>(
+        value: e,
+        label: e.attributes.name,
+      ));
+      if (widget.settings.defaultAccountId == e.id) {
+        currentAccount = e;
+      }
+    }
     return Card(
       clipBehavior: Clip.hardEdge,
       child: Padding(
@@ -282,75 +323,49 @@ class _AppCardState extends State<AppCard> {
         child: Row(
           children: <Widget>[
             Expanded(
-              child: FutureBuilder<NotificationAppSettings>(
-                future: context
-                    .read<SettingsProvider>()
-                    .notificationGetAppSettings(widget.app),
-                builder: (BuildContext context,
-                    AsyncSnapshot<NotificationAppSettings> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done &&
-                      snapshot.hasData) {
-                    List<DropdownMenuEntry<AccountRead>> accountOptions =
-                        <DropdownMenuEntry<AccountRead>>[
-                      DropdownMenuEntry<AccountRead>(
-                        value: AccountRead(
-                          id: "0",
-                          type: "dummy",
-                          attributes: Account(
-                            name: S.of(context).settingsNLAppAccountDynamic,
-                            type: ShortAccountTypeProperty
-                                .swaggerGeneratedUnknown,
-                          ),
-                        ),
-                        label: S.of(context).settingsNLAppAccountDynamic,
-                      )
-                    ];
-                    AccountRead? currentAccount = accountOptions.first.value;
-                    for (AccountRead e in widget.accounts.data) {
-                      accountOptions.add(DropdownMenuEntry<AccountRead>(
-                        value: e,
-                        label: e.attributes.name,
-                      ));
-                      if (snapshot.data!.defaultAccountId == e.id) {
-                        currentAccount = e;
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    widget.settings.appName,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 16),
+                  DropdownMenu<AccountRead>(
+                    initialSelection: currentAccount,
+                    leadingIcon: const Icon(Icons.account_balance),
+                    label: Text(S.of(context).settingsNLAppAccount),
+                    dropdownMenuEntries: accountOptions,
+                    width: MediaQuery.of(context).size.width - 128,
+                    onSelected: (AccountRead? account) async {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      if ((account?.id ?? "0") == "0") {
+                        widget.settings.defaultAccountId = null;
+                      } else {
+                        widget.settings.defaultAccountId = account!.id;
                       }
-                    }
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          snapshot.data!.appName,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        const SizedBox(height: 16),
-                        DropdownMenu<AccountRead>(
-                          initialSelection: currentAccount,
-                          leadingIcon: const Icon(Icons.account_balance),
-                          label: Text(S.of(context).settingsNLAppAccount),
-                          dropdownMenuEntries: accountOptions,
-                          onSelected: (AccountRead? account) async {
-                            FocusManager.instance.primaryFocus?.unfocus();
-                            final NotificationAppSettings settings =
-                                snapshot.data!;
-                            if ((account?.id ?? "0") == "0") {
-                              settings.defaultAccountId = null;
-                            } else {
-                              settings.defaultAccountId = account!.id;
-                            }
-                            await context
-                                .read<SettingsProvider>()
-                                .notificationSetAppSettings(
-                                    widget.app, settings);
-                          },
-                        ),
-                      ],
-                    );
-                  } else if (snapshot.hasError) {
-                    return const SizedBox.shrink();
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                },
+                      await context
+                          .read<SettingsProvider>()
+                          .notificationSetAppSettings(
+                              widget.app, widget.settings);
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  CheckboxListTile(
+                    title: Text(S.of(context).settingsNLPrefillTXTitle),
+                    isThreeLine: false,
+                    value: widget.settings.includeTitle,
+                    onChanged: (bool? value) async {
+                      setState(() {
+                        widget.settings.includeTitle = value ?? true;
+                      });
+                      await context
+                          .read<SettingsProvider>()
+                          .notificationSetAppSettings(
+                              widget.app, widget.settings);
+                    },
+                  ),
+                ],
               ),
             ),
             SizedBox(
@@ -382,6 +397,8 @@ class AppDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Logger log = Logger("Notifications.AppDialog");
+
     return SimpleDialog(
       title: Text(S.of(context).settingsNLAppAdd),
       clipBehavior: Clip.hardEdge,
@@ -408,6 +425,8 @@ class AppDialog extends StatelessWidget {
                 children: child,
               );
             } else if (snapshot.hasError) {
+              log.severe("error getting app settings", snapshot.error,
+                  snapshot.stackTrace);
               Navigator.pop(context);
               return const SizedBox.shrink();
             } else {
@@ -432,6 +451,8 @@ class AppDialogEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Logger log = Logger("Notifications.AppDialog.Entry");
+
     return FutureBuilder<Application?>(
       future: DeviceApps.getApp(app, true),
       builder: (BuildContext context, AsyncSnapshot<Application?> snapshot) {
@@ -458,6 +479,8 @@ class AppDialogEntry extends StatelessWidget {
             },
           );
         } else if (snapshot.hasError) {
+          log.severe(
+              "error getting app details", snapshot.error, snapshot.stackTrace);
           return const SizedBox.shrink();
         } else {
           return const CircularProgressIndicator();

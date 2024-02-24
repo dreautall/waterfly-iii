@@ -1,0 +1,7 @@
+First v1 release 🥳
+
+In the future, pre-releases will be submitted to the beta channel in Google Play, production releases will be submitted to the main channel.
+
+- New category page
+- New bill page, feature coded by @dballagi
+- Allow sharing files to the app to attach to transactions

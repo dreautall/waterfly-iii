@@ -1,0 +1,8 @@
+- Revamped charts for the main screen
+  - Improved performance & readability
+  - New Chart: Net Worth
+  - History Chart when tapping on Account Summary Chart
+  - Waterfall Chart when tapping on Net Earnings Chart
+- Improved performance by caching the transaction list
+- Search for Accounts screen
+- Bugfixes

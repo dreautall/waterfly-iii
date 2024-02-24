@@ -51,6 +51,238 @@
       }
     }
   },
+  "billsAddNewBill": "Add new bill",
+  "@billsAddNewBill": {
+    "description": "Text for add new bill flows"
+  },
+  "billsAmountAndFrequency": "Bill matches transactions between {minValue} and {maxvalue}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}{skip, plural, =0{} other{, skips over {skip}}}.",
+  "@billsAmountAndFrequency": {
+    "description": "Bill match for min and max amounts, and frequency",
+    "placeholders": {
+      "minValue": {
+        "type": "String",
+        "example": "$50.12"
+      },
+      "maxvalue": {
+        "type": "String",
+        "example": "$60.50"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsChangeLayoutTooltip": "Change layout",
+  "@billsChangeLayoutTooltip": {
+    "description": "Text for layout change button tooltip"
+  },
+  "billsChangeSortOrderTooltip": "Change sort order",
+  "@billsChangeSortOrderTooltip": {
+    "description": "Text for sort order change button tooltip"
+  },
+  "billsDialogLayoutTitle": "Bills view layout",
+  "@billsDialogLayoutTitle": {
+    "description": "Text for bills layout dialog title"
+  },
+  "billsDialogSortTitle": "Sort list by",
+  "@billsDialogSortTitle": {
+    "description": "Text for bills sort dialog title"
+  },
+  "billsEditBill": "Edit bill",
+  "@billsEditBill": {
+    "description": "Text for edit bill flows"
+  },
+  "billsErrorLoading": "Error loading bills.",
+  "@billsErrorLoading": {
+    "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+  },
+  "billsExactAmountAndFrequency": "Bill matches transactions of {value}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}{skip, plural, =0{} other{, skips over {skip}}}.",
+  "@billsExactAmountAndFrequency": {
+    "description": "Bill match for exact amount and frequency",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "$50.12"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsExpectedOn": "Expected {date}",
+  "@billsExpectedOn": {
+    "description": "Describes what date the bill is expected",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "January 5, 2024"
+      }
+    }
+  },
+  "billsFrequency": "{frequency, select, weekly{Weekly} monthly{Monthly} quarterly{Quarterly} halfyear{Half-yearly} yearly{Yearly} other{Unknown}}",
+  "@billsFrequency": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      }
+    }
+  },
+  "billsFrequencySkip": "{frequency, select, weekly{Weekly} monthly{Monthly} quarterly{Quarterly} halfyear{Half-yearly} yearly{Yearly} other{Unknown}}{skip, plural, =0{} other{, skips over {skip}}}",
+  "@billsFrequencySkip": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsInactive": "Inactive",
+  "@billsInactive": {
+    "description": "Text: when the bill is inactive"
+  },
+  "billsIsActive": "Bill is active",
+  "@billsIsActive": {
+    "description": "Text: the bill is active"
+  },
+  "billsLayoutGroupSubtitle": "Bills displayed in their assigned groups.",
+  "@billsLayoutGroupSubtitle": {
+    "description": "Subtitle text for group layout option"
+  },
+  "billsLayoutGroupTitle": "Group",
+  "@billsLayoutGroupTitle": {
+    "description": "Title text for group layout option"
+  },
+  "billsLayoutListSubtitle": "Bills displayed in a list sorted by certain criteria.",
+  "@billsLayoutListSubtitle": {
+    "description": "Subtitle text for list layout option"
+  },
+  "billsLayoutListTitle": "List",
+  "@billsLayoutListTitle": {
+    "description": "Title text for list layout option"
+  },
+  "billsListEmpty": "The list is currently empty.",
+  "@billsListEmpty": {
+    "description": "Describes that the list is empty"
+  },
+  "billsNextExpectedMatch": "Next expected match",
+  "@billsNextExpectedMatch": {
+    "description": "Text: next expected match for bill"
+  },
+  "billsNotActive": "Bill is inactive",
+  "@billsNotActive": {
+    "description": "Text: the bill is inactive"
+  },
+  "billsNotExpected": "Not expected this period",
+  "@billsNotExpected": {
+    "description": "Describes that the bill is not expected this period"
+  },
+  "billsNoTransactions": "No transactions found.",
+  "@billsNoTransactions": {
+    "description": "Describes that there are no transactions connected to the bill"
+  },
+  "billsPaidOn": "Paid {date}",
+  "@billsPaidOn": {
+    "description": "Describes what date the bill was paid",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "January 5, 2024"
+      }
+    }
+  },
+  "billsSortAlphabetical": "Alphabetical",
+  "@billsSortAlphabetical": {
+    "description": "Text for alphabetical sort types"
+  },
+  "billsSortByTimePeriod": "By time period",
+  "@billsSortByTimePeriod": {
+    "description": "Text for frequency sort type"
+  },
+  "billsSortDirection": "{sortDirection, select, ascending{Ascending} descending{Descending} other{Unknown}}",
+  "@billsSortDirection": {
+    "description": "Bill sort direction",
+    "placeholders": {
+      "sortDirection": {
+        "type": "String",
+        "example": "Ascending"
+      }
+    }
+  },
+  "billsSortFrequency": "Frequency",
+  "@billsSortFrequency": {
+    "description": "Text for sort by frequency"
+  },
+  "billsSortName": "Name",
+  "@billsSortName": {
+    "description": "Text for sort by name"
+  },
+  "billsUngrouped": "Ungrouped",
+  "@billsUngrouped": {
+    "description": "Title for ungrouped bills"
+  },
+  "categoryDeleteConfirm": "Are you sure you want to delete this category? The transactions will not be deleted, but will not have a category anymore.",
+  "@categoryDeleteConfirm": {
+    "description": "Confirmation text to delete category"
+  },
+  "categoryErrorLoading": "Error loading categories.",
+  "@categoryErrorLoading": {
+    "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+  },
+  "categoryFormLabelIncludeInSum": "Include in monthly sum",
+  "@categoryFormLabelIncludeInSum": {
+    "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+  },
+  "categoryFormLabelName": "Category Name",
+  "@categoryFormLabelName": {
+    "description": "Category Add/Edit Form: Label for name field"
+  },
+  "categoryMonthNext": "Next Month",
+  "@categoryMonthNext": {
+    "description": "Button title to view overview for next month"
+  },
+  "categoryMonthPrev": "Previous Month",
+  "@categoryMonthPrev": {
+    "description": "Button title to view overview for previous month"
+  },
+  "categorySumExcluded": "excluded",
+  "@categorySumExcluded": {
+    "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+  },
+  "categoryTitleAdd": "Add Category",
+  "@categoryTitleAdd": {
+    "description": "Title for Dialog: Add Category"
+  },
+  "categoryTitleDelete": "Delete Category",
+  "@categoryTitleDelete": {
+    "description": "Title for Dialog: Delete Category"
+  },
+  "categoryTitleEdit": "Edit Category",
+  "@categoryTitleEdit": {
+    "description": "Title for Dialog: Edit Category"
+  },
+  "catNone": "<no category>",
+  "@catNone": {
+    "description": "Placeholder when no category has been set."
+  },
   "catOther": "Other",
   "@catOther": {
     "description": "Category description for summary category 'Other'"
@@ -81,12 +313,23 @@
   "@errorInvalidURL": {
     "description": "Error: URL is invalid"
   },
+  "errorMinAPIVersion": "Minimum Firefly API Version v{requiredVersion} required. Please upgrade.",
+  "@errorMinAPIVersion": {
+    "description": "Error: Required API version not met.",
+    "placeholders": {
+      "requiredVersion": {
+        "type": "String",
+        "example": "2.0.0"
+      }
+    }
+  },
   "errorStatusCode": "Status Code: {code}",
   "@errorStatusCode": {
     "description": "HTTP status code information on error",
     "placeholders": {
       "code": {
-        "type": "int"
+        "type": "int",
+        "example": "500"
       }
     }
   },
@@ -122,21 +365,35 @@
   "@formButtonTryAgain": {
     "description": "Button Label: Try that thing again (login etc)"
   },
-  "formButtonUpload": "Upload",
-  "@formButtonUpload": {
-    "description": "Button Label: Upload (file etc.)"
-  },
   "generalAccount": "Account",
   "@generalAccount": {
     "description": "Asset/Debt (Bank) Account"
+  },
+  "generalAssets": "Assets",
+  "@generalAssets": {
+    "description": "(Monetary) Assets"
   },
   "generalBalance": "Balance",
   "@generalBalance": {
     "description": "(Account) Balance"
   },
+  "generalBalanceOn": "Balance on {date}",
+  "@generalBalanceOn": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd",
+        "example": "2023-05-13"
+      }
+    }
+  },
+  "generalBill": "Bill",
+  "@generalBill": {
+    "description": "Bill"
+  },
   "generalBudget": "Budget",
   "@generalBudget": {
-    "description": "(Monetary) Budget)"
+    "description": "(Monetary) Budget"
   },
   "generalCategory": "Category",
   "@generalCategory": {
@@ -154,6 +411,10 @@
   "@generalDismiss": {
     "description": "Dismiss window/dialog without action"
   },
+  "generalEarned": "Earned",
+  "@generalEarned": {
+    "description": "(Amount) Earned"
+  },
   "generalError": "Error",
   "@generalError": {
     "description": "Error (title in dialogs etc.)"
@@ -166,6 +427,10 @@
   "@generalIncome": {
     "description": "(Account) Info"
   },
+  "generalLiabilities": "Liabilities",
+  "@generalLiabilities": {
+    "description": "Firefly Translation String: liabilities"
+  },
   "generalMultiple": "multiple",
   "@generalMultiple": {
     "description": "Multiples of a single thing (e.g. source accounts) are existing"
@@ -173,6 +438,18 @@
   "generalNever": "never",
   "@generalNever": {
     "description": "Has never happened, no update etc."
+  },
+  "generalReconcile": "Reconciled",
+  "@generalReconcile": {
+    "description": "Booking has been confirmed/reconciled"
+  },
+  "generalReset": "Reset",
+  "@generalReset": {
+    "description": "Reset something (i.e. set filters)"
+  },
+  "generalSpent": "Spent",
+  "@generalSpent": {
+    "description": "(Amount) Spent"
   },
   "generalSum": "Sum",
   "@generalSum": {
@@ -185,6 +462,20 @@
   "generalUnknown": "Unknown",
   "@generalUnknown": {
     "description": "Something is unknown."
+  },
+  "homeMainBillsInterval": " ({period, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-year} yearly{yearly} other{unknown}})",
+  "@homeMainBillsInterval": {
+    "description": "bill interval type",
+    "placeholders": {
+      "period": {
+        "type": "String",
+        "example": "weekly"
+      }
+    }
+  },
+  "homeMainBillsTitle": "Bills for the next week",
+  "@homeMainBillsTitle": {
+    "description": "Title: Bills for the next week"
   },
   "homeMainBudgetInterval": " ({from} to {to}, {period})",
   "@homeMainBudgetInterval": {
@@ -203,6 +494,22 @@
       "period": {
         "type": "String",
         "example": "weekly"
+      }
+    }
+  },
+  "homeMainBudgetIntervalSingle": " ({from} to {to})",
+  "@homeMainBudgetIntervalSingle": {
+    "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
+    "placeholders": {
+      "from": {
+        "type": "DateTime",
+        "format": "MMMd",
+        "example": "May 13"
+      },
+      "to": {
+        "type": "DateTime",
+        "format": "MMMd",
+        "example": "May 17"
       }
     }
   },
@@ -244,9 +551,13 @@
   "@homeMainChartDailyTitle": {
     "description": "Chart Label: Daily Summary"
   },
-  "homeMainChartNetearningsTitle": "Net Earnings",
-  "@homeMainChartNetearningsTitle": {
+  "homeMainChartNetEarningsTitle": "Net Earnings",
+  "@homeMainChartNetEarningsTitle": {
     "description": "Chart Label: Net Earnings"
+  },
+  "homeMainChartNetWorthTitle": "Net Worth",
+  "@homeMainChartNetWorthTitle": {
+    "description": "Chart Label: Net Worth"
   },
   "homePiggyAdjustDialogTitle": "Save/Spend Money",
   "@homePiggyAdjustDialogTitle": {
@@ -346,17 +657,37 @@
   "@homeTransactionsDialogFilterAccountsAll": {
     "description": "Don't filter for a specific account (default entry)"
   },
+  "homeTransactionsDialogFilterBillsAll": "<All Bills>",
+  "@homeTransactionsDialogFilterBillsAll": {
+    "description": "Don't filter for a specific bill (default entry)"
+  },
+  "homeTransactionsDialogFilterBillUnset": "<No Bill set>",
+  "@homeTransactionsDialogFilterBillUnset": {
+    "description": "Filter for unset bills"
+  },
   "homeTransactionsDialogFilterBudgetsAll": "<All Budgets>",
   "@homeTransactionsDialogFilterBudgetsAll": {
     "description": "Don't filter for a specific budget (default entry)"
+  },
+  "homeTransactionsDialogFilterBudgetUnset": "<No Budget set>",
+  "@homeTransactionsDialogFilterBudgetUnset": {
+    "description": "Filter for unset budgets"
   },
   "homeTransactionsDialogFilterCategoriesAll": "<All Categories>",
   "@homeTransactionsDialogFilterCategoriesAll": {
     "description": "Don't filter for a specific category (default entry)"
   },
+  "homeTransactionsDialogFilterCategoryUnset": "<No Category set>",
+  "@homeTransactionsDialogFilterCategoryUnset": {
+    "description": "Filter for unset categories"
+  },
   "homeTransactionsDialogFilterCurrenciesAll": "<All Currencies>",
   "@homeTransactionsDialogFilterCurrenciesAll": {
     "description": "Don't filter for a specific currency (default entry)"
+  },
+  "homeTransactionsDialogFilterFutureTransactions": "Show future transactions",
+  "@homeTransactionsDialogFilterFutureTransactions": {
+    "description": "Setting to show future transactions"
   },
   "homeTransactionsDialogFilterSearch": "Search Term",
   "@homeTransactionsDialogFilterSearch": {
@@ -416,9 +747,21 @@
   "@loginWelcome": {
     "description": "Login screen welcome banner"
   },
+  "logoutConfirmation": "Are you sure you want to log out?",
+  "@logoutConfirmation": {
+    "description": "Get user confirmation if he really wants to log out"
+  },
   "navigationAccounts": "Accounts",
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"
+  },
+  "navigationBills": "Bills",
+  "@navigationBills": {
+    "description": "Navigation Label: Bills"
+  },
+  "navigationCategories": "Categories",
+  "@navigationCategories": {
+    "description": "Navigation Label: Categories"
   },
   "navigationMain": "Main Dashboard",
   "@navigationMain": {
@@ -427,6 +770,10 @@
   "navigationSettings": "Settings",
   "@navigationSettings": {
     "description": "Navigation Label: Settings"
+  },
+  "no": "No",
+  "@no": {
+    "description": "The word no"
   },
   "numPercent": "{num}",
   "@numPercent": {
@@ -457,6 +804,26 @@
       }
     }
   },
+  "settingsDialogDebugInfo": "You can enable & send debug logs here. These have a bad impact on performance, so please don't enable them unless you're advised to do so. Disabling logging will delete the stored log.",
+  "@settingsDialogDebugInfo": {
+    "description": "Information about debug logs and their impact."
+  },
+  "settingsDialogDebugMailCreate": "Create Mail",
+  "@settingsDialogDebugMailCreate": {
+    "description": "Button to confirm mail creation after privacy disclaimer is shown."
+  },
+  "settingsDialogDebugMailDisclaimer": "WARNING: A mail draft will open with the log file attached (in text format). The logs might contain sensitive information, such as the host name of your Firefly instance (though I try to avoid logging of any secrets, such as the api key). Please read through the log carefully and censor out any information you don't want to share and/or is not relevant to the problem you want to report.\n\nPlease do not send in logs without prior agreement via mail/GitHub to do so. I will delete any logs sent without context for privacy reasons. Never upload the log uncensored to GitHub or elsewhere.",
+  "@settingsDialogDebugMailDisclaimer": {
+    "description": "Privacy disclaimer shown before sending logs"
+  },
+  "settingsDialogDebugSendButton": "Send Logs via Mail",
+  "@settingsDialogDebugSendButton": {
+    "description": "Button to send logs via E-Mail"
+  },
+  "settingsDialogDebugTitle": "Debug Logs",
+  "@settingsDialogDebugTitle": {
+    "description": "Dialog title: Debug Logs"
+  },
   "settingsDialogLanguageTitle": "Select Language",
   "@settingsDialogLanguageTitle": {
     "description": "Dialog title: Select Language"
@@ -468,6 +835,18 @@
   "settingsLanguage": "Language",
   "@settingsLanguage": {
     "description": "Currently selected language"
+  },
+  "settingsLockscreen": "Lockscreen",
+  "@settingsLockscreen": {
+    "description": "Setting if a lockscreen is shown (authentication is required on startup)"
+  },
+  "settingsLockscreenHelp": "Require authenticiation on app startup",
+  "@settingsLockscreenHelp": {
+    "description": "Description for lockscreen setting"
+  },
+  "settingsLockscreenInitial": "Please authenticate to enable the lock screen.",
+  "@settingsLockscreenInitial": {
+    "description": "Prompt to authenticate once to set up the lockscreen"
   },
   "settingsNLAppAccount": "Default Account",
   "@settingsNLAppAccount": {
@@ -509,6 +888,10 @@
   "@settingsNLPermissionRemoveHelp": {
     "description": "Dialog text giving hint how to remove the permission."
   },
+  "settingsNLPrefillTXTitle": "Prefill transaction title with notification title",
+  "@settingsNLPrefillTXTitle": {
+    "description": "First line for setting to use pre-fill transaction title with notification title."
+  },
   "settingsNLServiceChecking": "Checking status…",
   "@settingsNLServiceChecking": {
     "description": "Checking the status of the background service"
@@ -544,6 +927,10 @@
   "@settingsTheme": {
     "description": "App theme (dark or light)"
   },
+  "settingsThemeDynamicColors": "Dynamic Colors",
+  "@settingsThemeDynamicColors": {
+    "description": "Material You Dynamic Colors feature"
+  },
   "settingsThemeValue": "{theme, select, dark{Dark Mode} light{Light Mode} other{System Default}}",
   "@settingsThemeValue": {
     "description": "Currently selected theme (either dark, light or system)",
@@ -554,13 +941,29 @@
       }
     }
   },
+  "settingsUseServerTimezone": "Use server timezone",
+  "@settingsUseServerTimezone": {
+    "description": "Setting label to use server timezone."
+  },
+  "settingsUseServerTimezoneHelp": "Show all times in the server timezone. This mimics the behavior of the webinterface.",
+  "@settingsUseServerTimezoneHelp": {
+    "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
+  },
   "settingsVersion": "App Version",
   "@settingsVersion": {
     "description": "Current App Version"
   },
-  "settingsVersionChecking": "checking...",
+  "settingsVersionChecking": "checking…",
   "@settingsVersionChecking": {
     "description": "Shown while checking for app version"
+  },
+  "splashCustomSSLCert": "Custom SSL certificate",
+  "@splashCustomSSLCert": {
+    "description": "Button text & Dialog title for using a custom SSL certificate"
+  },
+  "splashFormLabelCustomSSLCertPEM": "Certificate File (PEM)",
+  "@splashFormLabelCustomSSLCertPEM": {
+    "description": "Label for certificate file text input in PEM format"
   },
   "transactionAttachments": "Attachments",
   "@transactionAttachments": {
@@ -604,6 +1007,14 @@
   "@transactionDialogAttachmentsTitle": {
     "description": "Dialog Title: Attachments Dialog"
   },
+  "transactionDialogBillNoBill": "No bill",
+  "@transactionDialogBillNoBill": {
+    "description": "Button Label: no bill to be used"
+  },
+  "transactionDialogBillTitle": "Link to Bill",
+  "@transactionDialogBillTitle": {
+    "description": "Dialog Title: Link Bill to transaction"
+  },
   "transactionDialogCurrencyTitle": "Select currency",
   "@transactionDialogCurrencyTitle": {
     "description": "Dialog Title: Currency Selection"
@@ -631,10 +1042,6 @@
   "transactionErrorInvalidBudget": "Invalid Budget",
   "@transactionErrorInvalidBudget": {
     "description": "Transaction Save Error: Invalid budget"
-  },
-  "transactionErrorSaveFirst": "Please save the transaction first.",
-  "@transactionErrorSaveFirst": {
-    "description": "Transaction Hint Error: Needs to be saved"
   },
   "transactionErrorTitle": "Please provide a title.",
   "@transactionErrorTitle": {
@@ -707,5 +1114,9 @@
   "transactionTypeWithdrawal": "Withdrawal",
   "@transactionTypeWithdrawal": {
     "description": "Withdrawal transaction type"
+  },
+  "yes": "Yes",
+  "@yes": {
+    "description": "The word yes"
   }
 }

@@ -18,19 +18,8 @@ class CurrencyDialog extends StatelessWidget {
   Future<List<CurrencyRead>>? _getCurrencies(BuildContext context) async {
     final FireflyIii api = context.read<FireflyService>().api;
     final Response<CurrencyArray> response = await api.v1CurrenciesGet();
-    if (!response.isSuccessful || response.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${response.error}",
-        );
-      }
-    }
+    apiThrowErrorIfEmpty(response, context.mounted ? context : null);
+
     List<CurrencyRead> currencies = response.body!.data;
     currencies.sort(
       (CurrencyRead a, CurrencyRead b) {
@@ -73,6 +62,8 @@ class CurrencyDialog extends StatelessWidget {
                 children: child,
               );
             } else if (snapshot.hasError) {
+              log.severe("error getting currencies", snapshot.error,
+                  snapshot.stackTrace);
               Navigator.pop(context);
               return const CircularProgressIndicator();
             } else {

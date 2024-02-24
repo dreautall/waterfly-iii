@@ -1,0 +1,6 @@
+Prepare the first "v1" release as the last "non-pre-release beta".
+
+In the future, pre-releases will be submitted to the beta channel in Google Play, production releases will be submitted to the main channel.
+
+- New bill page, feature coded by @dballagi
+- Bug fixes

@@ -2,34 +2,33 @@ name: Build
 
 on:
   release:
-    types: [created]
+    types:
+      - created
   push:
-    branches: [master]
+    branches:
+      - develop
 
 env:
-  JAVA_VERSION: "12.x"
-  FLUTTER_CHANNEL: "stable"
   PROPERTIES_PATH: "./android/key.properties"
 
 jobs:
+  check:
+    uses: ./.github/workflows/commit.yml
+    name: codecheck
+
   build:
     runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, '[skip-build]') }}
+    needs: [check]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      # Setup Java environment in order to build the Android app.
-      - uses: actions/setup-java@v3
+      # Call setup_env action to setup workspace
+      - uses: ./.github/actions/setup_env
         with:
-          distribution: 'zulu'
-          java-version: ${{env.JAVA_VERSION}}
-          cache: 'gradle'
-
-      # Setup the flutter environment.
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: ${{env.FLUTTER_CHANNEL}}
-          cache: true
+          java-version: ${{ vars.JAVA_VERSION }}
+          flutter-channel: ${{ vars.FLUTTER_CHANNEL }}
 
       # Generate keystore
       - uses: timheuer/base64-to-file@v1.2
@@ -49,24 +48,6 @@ jobs:
       - run: |
           sed -i 's/^\(version: [0-9\.]\{1,\}\(-[a-z]\{1,\}\)\{0,1\}\)$/\1+${{ github.run_number }}/m' pubspec.yaml
 
-      # No dart analytics.
-      - run: dart --disable-analytics
-
-      # No flutter analytics.
-      - run: flutter config --no-analytics
-
-      # Get flutter dependencies.
-      - run: flutter pub get
-
-      # Check for any formatting issues in the code.
-      - run: dart format --set-exit-if-changed .
-
-      # Statically analyze the Dart code for any errors.
-      - run: dart analyze .
-
-      # Run widget tests for our flutter project.
-      - run: flutter test
-
       # Build apk.
       - run: flutter build apk --obfuscate --split-debug-info=build/app/outputs/symbols/apk --release --split-per-abi
 
@@ -79,48 +60,52 @@ jobs:
         working-directory: build/app/intermediates/merged_native_libs/release/out/lib/
 
       # Upload generated apk to the artifacts.
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: app-arm64-v8a-release.apk
           path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: app-armeabi-v7a-release.apk
           path: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: app-x86_64-release.apk
           path: build/app/outputs/flutter-apk/app-x86_64-release.apk
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: app-release.aab
           path: build/app/outputs/bundle/release/app-release.aab
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: aab-debug-symbols.zip
           path: build/app/intermediates/merged_native_libs/release/out/lib/aab-debug-symbols.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mapping.txt
+          path: build/app/outputs/mapping/release/mapping.txt
 
   upload-to-github:
     runs-on: ubuntu-latest
     needs: [build]
+    if: startsWith(github.ref, 'refs/tags/')
 
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: app-arm64-v8a-release.apk
           path: ./artifacts
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: app-armeabi-v7a-release.apk
           path: ./artifacts
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: app-x86_64-release.apk
           path: ./artifacts
       
       - uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             ./artifacts/app-arm64-v8a-release.apk
@@ -132,14 +117,19 @@ jobs:
     needs: [build]
 
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: app-release.aab
           path: ./artifacts
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: aab-debug-symbols.zip
           path: ./artifacts
+      - uses: actions/download-artifact@v4
+        with:
+          name: mapping.txt
+          path: ./artifacts
+      # not a release --> push to internal
       - uses: r0adkll/upload-google-play@v1
         if: ${{ !startsWith(github.ref, 'refs/tags/')  }}
         with:
@@ -147,8 +137,10 @@ jobs:
           packageName: com.dreautall.waterflyiii
           releaseFiles: ./artifacts/app-release.aab
           debugSymbols: ./artifacts/aab-debug-symbols.zip
+          mappingFile: ./artifacts/mapping.txt
           track: internal
           status: completed
+      # prerelease --> push to beta
       - uses: r0adkll/upload-google-play@v1
         if: ${{ startsWith(github.ref, 'refs/tags/') && github.event.release.prerelease  }}
         with:
@@ -156,8 +148,10 @@ jobs:
           packageName: com.dreautall.waterflyiii
           releaseFiles: ./artifacts/app-release.aab
           debugSymbols: ./artifacts/aab-debug-symbols.zip
-          track: alpha
+          mappingFile: ./artifacts/mapping.txt
+          track: beta
           status: completed
+      # release --> push to production
       - uses: r0adkll/upload-google-play@v1
         if: ${{ startsWith(github.ref, 'refs/tags/') && !github.event.release.prerelease  }}
         with:
@@ -165,5 +159,6 @@ jobs:
           packageName: com.dreautall.waterflyiii
           releaseFiles: ./artifacts/app-release.aab
           debugSymbols: ./artifacts/aab-debug-symbols.zip
-          track: beta
+          mappingFile: ./artifacts/mapping.txt
+          track: production
           status: completed

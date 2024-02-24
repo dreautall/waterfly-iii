@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
@@ -20,13 +21,13 @@ class Tags {
   List<String> get tags => _tags;
 
   void add(String tag) {
-    if (!_tags.contains(tag)) {
+    if (!_tags.containsIgnoreCase(tag)) {
       _tags.add(tag);
     }
   }
 
   void remove(String tag) {
-    if (_tags.contains(tag)) {
+    if (_tags.containsIgnoreCase(tag)) {
       _tags.remove(tag);
     }
   }
@@ -41,19 +42,23 @@ class TransactionTags extends StatefulWidget {
     super.key,
     required this.textController,
     required this.tagsController,
+    this.enableAdd = true,
   });
 
   final TextEditingController textController;
   final Tags tagsController;
+  final bool enableAdd;
 
   @override
   State<TransactionTags> createState() => _TransactionTagsState();
 }
 
 class _TransactionTagsState extends State<TransactionTags> {
+  final Logger log = Logger("Pages.Transaction.Tags");
+
   @override
   Widget build(BuildContext context) {
-    debugPrint("TransactionTags build()");
+    log.finest(() => "build()");
     FocusNode disabledFocus = AlwaysDisabledFocusNode();
     return Row(
       children: <Widget>[
@@ -97,8 +102,10 @@ class _TransactionTagsState extends State<TransactionTags> {
               onTap: () async {
                 List<String>? tags = await showDialog<List<String>>(
                   context: context,
-                  builder: (BuildContext context) =>
-                      TagDialog(selectedTags: widget.tagsController.tags),
+                  builder: (BuildContext context) => TagDialog(
+                    selectedTags: widget.tagsController.tags,
+                    enableAdd: widget.enableAdd,
+                  ),
                 );
                 // Cancelled
                 if (tags == null) {
@@ -122,9 +129,11 @@ class TagDialog extends StatefulWidget {
   const TagDialog({
     super.key,
     required this.selectedTags,
+    required this.enableAdd,
   });
 
   final List<String> selectedTags;
+  final bool enableAdd;
 
   @override
   State<TagDialog> createState() => _TagDialogState();
@@ -151,34 +160,39 @@ class _TagDialogState extends State<TagDialog> {
 
   Future<List<String>>? _getTags() async {
     final FireflyIii api = context.read<FireflyService>().api;
-    final Response<TagArray> response = await api.v1TagsGet();
-    if (!response.isSuccessful || response.body == null) {
-      if (context.mounted) {
-        throw Exception(
-          S
-              .of(context)
-              .errorAPIInvalidResponse(response.error?.toString() ?? ""),
-        );
-      } else {
-        throw Exception(
-          "[nocontext] Invalid API response: ${response.error}",
-        );
-      }
-    }
-    return response.body!.data.map((TagRead e) => e.attributes.tag).toList();
+    List<String> tags = <String>[];
+    late Response<TagArray> response;
+    int pageNumber = 0;
+
+    do {
+      pageNumber += 1;
+      response = await api.v1TagsGet(page: pageNumber);
+      apiThrowErrorIfEmpty(response, mounted ? context : null);
+
+      tags.addAll(response.body!.data.map((TagRead e) => e.attributes.tag));
+    } while ((response.body!.meta.pagination?.currentPage ?? 1) <
+        (response.body!.meta.pagination?.totalPages ?? 1));
+
+    return tags;
   }
 
   void _newTagSubmitted(
-      StateSetter setState, List<String> allTags, String value) {
+    StateSetter setState,
+    List<String> allTags,
+    String value,
+  ) {
+    if (!widget.enableAdd) {
+      return;
+    }
     if (value.isEmpty) {
       return;
     }
     _newTagTextController.clear();
-    if (_newSelectedTags.contains(value)) {
+    if (_newSelectedTags.containsIgnoreCase(value)) {
       setState(() {});
       return;
     }
-    if (allTags.contains(value)) {
+    if (allTags.containsIgnoreCase(value)) {
       setState(() {
         _newSelectedTags.add(value);
       });
@@ -202,7 +216,7 @@ class _TagDialogState extends State<TagDialog> {
             Navigator.pop(context);
           },
         ),
-        TextButton(
+        FilledButton(
           child: Text(MaterialLocalizations.of(context).saveButtonLabel),
           onPressed: () {
             Navigator.pop(context, _newSelectedTags);
@@ -220,13 +234,14 @@ class _TagDialogState extends State<TagDialog> {
             return StatefulBuilder(
               builder: (BuildContext context, StateSetter setAlertState) {
                 showAddTag = _newTagTextController.text.isNotEmpty &&
-                    !_newSelectedTags.contains(_newTagTextController.text);
+                    !_newSelectedTags
+                        .containsIgnoreCase(_newTagTextController.text);
                 allTags.sort((String a, String b) {
-                  if (_newSelectedTags.contains(a) &&
-                      !_newSelectedTags.contains(b)) {
+                  if (_newSelectedTags.containsIgnoreCase(a) &&
+                      !_newSelectedTags.containsIgnoreCase(b)) {
                     return -1;
-                  } else if (!_newSelectedTags.contains(a) &&
-                      _newSelectedTags.contains(b)) {
+                  } else if (!_newSelectedTags.containsIgnoreCase(a) &&
+                      _newSelectedTags.containsIgnoreCase(b)) {
                     return 1;
                   } else {
                     return a.toLowerCase().compareTo(b.toLowerCase());
@@ -238,21 +253,25 @@ class _TagDialogState extends State<TagDialog> {
                     onChanged: (String value) {
                       setAlertState(() {});
                     },
-                    onSubmitted: (String value) =>
-                        _newTagSubmitted(setAlertState, allTags, value),
+                    onSubmitted: (String value) => widget.enableAdd
+                        ? _newTagSubmitted(setAlertState, allTags, value)
+                        : null,
                     decoration: InputDecoration(
-                        hintText: S.of(context).transactionDialogTagsHint,
+                        hintText: widget.enableAdd
+                            ? S.of(context).transactionDialogTagsHint
+                            : S.of(context).transactionDialogTagsTitle,
                         icon: const Icon(Icons.bookmark_add),
-                        suffixIcon: showAddTag
+                        suffixIcon: (showAddTag && widget.enableAdd)
                             ? Padding(
                                 padding:
                                     const EdgeInsetsDirectional.only(end: 12.0),
                                 child: IconButton(
                                   icon: const Icon(Icons.add),
                                   onPressed: () => _newTagSubmitted(
-                                      setAlertState,
-                                      allTags,
-                                      _newTagTextController.text),
+                                    setAlertState,
+                                    allTags,
+                                    _newTagTextController.text,
+                                  ),
                                   tooltip:
                                       S.of(context).transactionDialogTagsAdd,
                                 ),
@@ -261,22 +280,33 @@ class _TagDialogState extends State<TagDialog> {
                   ),
                   const Divider(),
                 ];
-                for (String tag in allTags) {
+                final Iterable<String> filteredTags = allTags.where(
+                    (String t) =>
+                        _newTagTextController.text.isEmpty ||
+                        (_newTagTextController.text.isNotEmpty &&
+                            t.containsIgnoreCase(_newTagTextController.text)));
+                for (String tag in filteredTags) {
                   if (_newTagTextController.text.isNotEmpty &&
-                      !tag.contains(_newTagTextController.text)) {
+                      !tag.containsIgnoreCase(_newTagTextController.text)) {
                     continue;
                   }
                   child.add(CheckboxListTile(
-                    value: _newSelectedTags.contains(tag),
+                    value: _newSelectedTags.containsIgnoreCase(tag),
                     onChanged: (bool? selected) {
                       setAlertState(
                         () {
                           if ((selected == null || !selected) &&
-                              _newSelectedTags.contains(tag)) {
+                              _newSelectedTags.containsIgnoreCase(tag)) {
                             _newSelectedTags.remove(tag);
                           } else if ((selected != null && selected) &&
-                              !_newSelectedTags.contains(tag)) {
+                              !_newSelectedTags.containsIgnoreCase(tag)) {
                             _newSelectedTags.add(tag);
+                            if (filteredTags
+                                .where((String t) =>
+                                    !_newSelectedTags.containsIgnoreCase(t))
+                                .isEmpty) {
+                              _newTagTextController.text = "";
+                            }
                           }
                         },
                       );
@@ -297,6 +327,8 @@ class _TagDialogState extends State<TagDialog> {
               },
             );
           } else if (snapshot.hasError) {
+            log.severe(
+                "error getting tags", snapshot.error, snapshot.stackTrace);
             Navigator.pop(context);
             return const CircularProgressIndicator();
           } else {

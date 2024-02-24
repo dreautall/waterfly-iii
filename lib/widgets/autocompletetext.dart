@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:logging/logging.dart';
 
 import 'package:waterflyiii/widgets/erroricon.dart';
+
+final Logger log = Logger("Widgets.AutoCompleteText");
 
 class AutoCompleteText<T extends Object> extends StatelessWidget {
   const AutoCompleteText({
@@ -37,7 +40,7 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("AutoCompleteText(labelText: $labelText)");
+    log.finest(() => "build(labelText: $labelText)");
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) =>
           RawAutocomplete<T>(
@@ -70,6 +73,14 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
           style: disabled
               ? style?.copyWith(color: Theme.of(context).disabledColor)
               : style,
+          onTapOutside: (_) {
+            final BuildContext? ctx =
+                FocusManager.instance.primaryFocus?.context;
+            if (!focusNode.hasFocus || ctx == null) {
+              return;
+            }
+            Actions.invoke(ctx, const DismissIntent());
+          },
         ),
         optionsViewBuilder: (BuildContext context,
                 void Function(T) onOptionSelected, Iterable<T> options) =>

@@ -138,7 +138,7 @@ class _AccountSearchState extends State<AccountSearch> {
                           _pagingController.refresh();
                           FocusScope.of(context).unfocus();
                         },
-                        avatar: Icon(accType.icon()),
+                        avatar: Icon(accType.icon),
                         visualDensity: const VisualDensity(vertical: -2),
                       )
                     : const SizedBox.shrink(),

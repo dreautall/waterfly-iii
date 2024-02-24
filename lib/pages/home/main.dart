@@ -1174,9 +1174,7 @@ class BillList extends StatelessWidget {
               if (orderCompare != 0) {
                 return orderCompare;
               }
-              return a.attributes
-                  .avgAmount()
-                  .compareTo(b.attributes.avgAmount());
+              return a.attributes.avgAmount.compareTo(b.attributes.avgAmount);
             });
 
             DateTime lastDate =
@@ -1243,7 +1241,7 @@ class BillList extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      currency.fmt(bill.attributes.avgAmount()),
+                      currency.fmt(bill.attributes.avgAmount),
                       style: const TextStyle(
                         color: Colors.red,
                         fontWeight: FontWeight.bold,

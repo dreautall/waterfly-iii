@@ -401,7 +401,7 @@ extension StringIgnoreCase on String {
 }
 
 extension AccountTypeFilterIcon on AccountTypeFilter {
-  IconData icon() {
+  IconData get icon {
     switch (this) {
       case AccountTypeFilter.asset:
         return Icons.money_outlined;
@@ -433,7 +433,7 @@ extension AccountTypeFilterIcon on AccountTypeFilter {
 }
 
 extension BillAmountAvg on Bill {
-  double avgAmount() {
+  double get avgAmount {
     final double amountMax = (double.tryParse(this.amountMax) ?? 0).abs();
     final double amountMin = (double.tryParse(this.amountMin) ?? 0).abs();
     if (amountMax == 0) {

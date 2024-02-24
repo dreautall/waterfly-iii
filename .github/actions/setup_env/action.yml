@@ -1,0 +1,36 @@
+name: Setup Flutter environment
+description: Setup Flutter environment
+inputs:
+  java-version:
+    description: 'Java Version'
+    required: true
+  flutter-channel:
+    description: 'Flutter Channel'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    # Setup the Java environment.
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: ${{inputs.java-version}}
+        cache: 'gradle'
+
+    # Setup the Flutter environment.
+    - uses: subosito/flutter-action@v2
+      with:
+        channel: ${{inputs.flutter-channel}}
+        cache: true
+
+    # No dart analytics.
+    - run: dart --disable-analytics
+      shell: bash
+
+    # No flutter analytics.
+    - run: flutter config --disable-analytics
+      shell: bash
+
+    # Get flutter dependencies.
+    - run: flutter pub get
+      shell: bash

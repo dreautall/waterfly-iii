@@ -1,7 +1,11 @@
-name: Check
+name: Syntax Check
 
 on:
   push:
+    # Ignore develop branch, will be triggered by workflow_call in release.yml
+    branches-ignore: 
+      - develop
+  workflow_call:
 
 jobs:
   analyze:
@@ -12,6 +16,9 @@ jobs:
 
       # Call setup_env action to setup workspace
       - uses: ./.github/actions/setup_env
+        with:
+          java-version: ${{ vars.JAVA_VERSION }}
+          flutter-channel: ${{ vars.FLUTTER_CHANNEL }}
 
       # Check for any formatting issues in the code.
       - run: dart format --set-exit-if-changed .

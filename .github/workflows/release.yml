@@ -16,8 +16,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Call Commit workflow to setup workspace
-      - uses: ./.github/workflows/commit.yml
+      # Call setup_env workflow to setup workspace
+      - uses: ./.github/workflows/setup_env.yml
 
       # Generate keystore
       - uses: timheuer/base64-to-file@v1.2

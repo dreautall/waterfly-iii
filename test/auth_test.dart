@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart' show TestWidgetsFlutterBinding;
 import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
@@ -47,6 +48,13 @@ class MockCallbackFunction extends Mock {
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  TestWidgetsFlutterBinding.instance.defaultBinaryMessenger
+      .setMockMethodCallHandler(
+    const MethodChannel('flutter_timezone'),
+    (MethodCall methodCall) async {
+      return "Europe/Berlin";
+    },
+  );
 
   group("AuthError", () {
     test("AuthErrorHost", () {

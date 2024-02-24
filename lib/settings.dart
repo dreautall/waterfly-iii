@@ -11,8 +11,9 @@ import 'package:logging/logging.dart';
 
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:waterflyiii/pages/bills.dart';
+import "package:syncfusion_flutter_charts/charts.dart" show SortingOrder;
+
+import 'package:waterflyiii/pages/bills.dart' show BillsLayout, BillsSort;
 
 final Logger log = Logger("Settings");
 
@@ -408,7 +409,11 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<void> setBillsSortOrder(SortingOrder sortOrder) async {
-    if (sortOrder == _billsSortOrder) {
+    if (sortOrder == _billsSortOrder ||
+        !<SortingOrder>[
+          SortingOrder.ascending,
+          SortingOrder.descending,
+        ].contains(sortOrder)) {
       return;
     }
 

@@ -48,7 +48,7 @@ If you are missing anything, feel free to open a [feature request](https://githu
 
 ## Releases
 
-The stable releases are published to the [Google Play Store](https://play.google.com/store/apps/details?id=com.dreautall.waterflyiii), and are also available for download from the [GitHub releases page](https://github.com/dreautall/waterfly-iii/releases/latest). The APKs are identical (and actually pushed to Google Play via a GitHub build pipeline). There is no fixed release schedule.
+The stable releases are published to the [Google Play Store](https://play.google.com/store/apps/details?id=com.dreautall.waterflyiii), and are also available for download from the [GitHub releases page](https://github.com/dreautall/waterfly-iii/releases/latest). There is no fixed release schedule.
 
 You can also opt in to the (open) beta channel at Google Play [here](https://play.google.com/apps/testing/com.dreautall.waterflyiii). The beta channel will feature the "pre-releases" from the [GitHub releases page](https://github.com/dreautall/waterfly-iii/releases), and might not be as stable.
 

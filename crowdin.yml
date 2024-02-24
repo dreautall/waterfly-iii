@@ -1,5 +1,7 @@
 pull_request_title: "[l10n] Crowdin Translation update"
-commit_message: "[skip ci]"
+pull_request_labels: [
+  "l10n"
+]
 files:
   - source: /lib/l10n/app_en.arb
     translation: /lib/l10n/app_%two_letters_code%.arb

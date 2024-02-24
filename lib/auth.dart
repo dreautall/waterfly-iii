@@ -44,8 +44,9 @@ class APITZReplyData {
 }
 
 class SSLHttpOverride extends HttpOverrides {
-  SSLHttpOverride(this.validCert);
+  SSLHttpOverride(this.validCert, this.currentOverrides);
   final String validCert;
+  final HttpOverrides? currentOverrides;
 
   @override
   HttpClient createHttpClient(SecurityContext? context) {
@@ -53,7 +54,9 @@ class SSLHttpOverride extends HttpOverrides {
     //context ??= SecurityContext.defaultContext;
     //context.useCertificateChainBytes(chainBytes);
     //context.usePrivateKeyBytes(keyBytes);
-    return super.createHttpClient(context)
+    final HttpClient client = currentOverrides?.createHttpClient(context) ??
+        super.createHttpClient(context);
+    return client
       ..badCertificateCallback = (X509Certificate cert, _, __) {
         log.fine("Using SSLHttpOverride");
         return cert.pem.replaceAll("\r", "").trim() ==
@@ -303,9 +306,7 @@ class FireflyService with ChangeNotifier {
     apiKey = apiKey.strip();
 
     if (cert != null && cert.isNotEmpty) {
-      HttpOverrides.global = SSLHttpOverride(cert);
-    } else {
-      HttpOverrides.global = null;
+      HttpOverrides.global = SSLHttpOverride(cert, HttpOverrides.current);
     }
 
     _lastTriedHost = host;
@@ -319,10 +320,12 @@ class FireflyService with ChangeNotifier {
     try {
       _apiVersion = Version.parse(about.body?.data?.apiVersion ?? "");
     } on FormatException {
+      _currentUser = null;
       throw const AuthErrorVersionInvalid();
     }
     log.info(() => "Firefly API version $_apiVersion");
     if (apiVersion == null || apiVersion! < minApiVersion) {
+      _currentUser = null;
       throw AuthErrorVersionTooLow(minApiVersion);
     }
 

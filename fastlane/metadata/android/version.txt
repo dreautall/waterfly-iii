@@ -1,2 +1,2 @@
-versionName=1.0.0-prerelease
-versionCode=249
+versionName=1.0.0
+versionCode=256

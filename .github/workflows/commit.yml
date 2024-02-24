@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
+
       # Call setup_env workflow to setup workspace
       - uses: ./.github/workflows/setup_env.yml
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:test/test.dart';
+
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz_data;
 
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
-
 import 'package:waterflyiii/extensions.dart';
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 void main() {
   group("AlwaysDisabledFocusNode", () {

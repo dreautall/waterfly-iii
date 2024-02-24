@@ -1,0 +1,59 @@
+name: Check
+
+on:
+  push:
+  workflow_call:
+    inputs:
+      external_call:
+        description: 'To distinguish workflow_call from regular push'
+        type: boolean
+        required: false
+        default: true
+
+jobs:
+  setup_env:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Setup the Java environment.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: ${{vars.JAVA_VERSION}}
+          cache: 'gradle'
+
+      # Setup the Flutter environment.
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: ${{vars.FLUTTER_CHANNEL}}
+          cache: true
+
+      # No dart analytics.
+      - run: dart --disable-analytics
+
+      # No flutter analytics.
+      - run: flutter config --disable-analytics
+
+      # Get flutter dependencies.
+      - run: flutter pub get
+
+  analyze:
+    runs-on: ubuntu-latest
+    needs: [setup_env]
+
+    steps:
+      # Check for any formatting issues in the code.
+      - run: dart format --set-exit-if-changed .
+
+      # Statically analyze the Dart code for any errors.
+      - run: dart analyze .
+
+#  test:
+#    runs-on: ubuntu-latest
+#    needs: [analyze]
+#
+#    steps:
+#      # Run widget tests for our flutter project.
+#      - run: flutter test

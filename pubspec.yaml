@@ -62,6 +62,9 @@ dev_dependencies:
   translations_cleaner: ^0.0.5
   test: any
   mockito: ^5.4.0
+  flutter_test:
+    sdk: flutter
+  http: ^1.2.0
 
 flutter:
   uses-material-design: true

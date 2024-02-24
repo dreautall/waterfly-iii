@@ -2,14 +2,22 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart' show TestWidgetsFlutterBinding;
+import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test/test.dart';
+
+import 'package:chopper/chopper.dart' show Response;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:timezone/data/latest.dart' as tz_data;
+import 'package:version/version.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii_v2.swagger.dart';
 
 @GenerateNiceMocks(<MockSpec<dynamic>>[
   MockSpec<HttpClient>(),
@@ -21,6 +29,11 @@ import 'auth_test.mocks.dart';
 
 final MockHttpClient mockHttpClient = MockHttpClient();
 
+class MockBuildContext extends Mock implements BuildContext {
+  @override
+  final bool mounted = false;
+}
+
 class MockHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
@@ -28,7 +41,13 @@ class MockHttpOverrides extends HttpOverrides {
   }
 }
 
+class MockCallbackFunction extends Mock {
+  void call();
+}
+
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group("AuthError", () {
     test("AuthErrorHost", () {
       const AuthError err = AuthErrorHost("test.host");
@@ -39,6 +58,16 @@ void main() {
       const AuthError err = AuthErrorApiKey();
       expect(err, isException);
       expect(err.cause, "Invalid API key");
+    });
+    test("AuthErrorVersionInvalid", () {
+      const AuthError err = AuthErrorVersionInvalid();
+      expect(err, isException);
+      expect(err.cause, "Invalid Firefly API version");
+    });
+    test("AuthErrorVersionTooLow", () {
+      final AuthError err = AuthErrorVersionTooLow(Version(0, 1, 2));
+      expect(err, isException);
+      expect(err.cause, "Firefly API version too low");
     });
     test("AuthErrorStatusCode", () {
       const AuthError err = AuthErrorStatusCode(500);
@@ -51,6 +80,7 @@ void main() {
       expect(err.cause, "Not a valid Firefly III instance");
     });
   });
+
   group("AuthUser", () {
     setUpAll(() {
       HttpOverrides.global = MockHttpOverrides();
@@ -119,6 +149,7 @@ void main() {
               await AuthUser.create("mock://fake.host", "api-key");
           expect(user.host, equals(Uri.parse("mock://fake.host/api")));
           expect(user.api, isA<FireflyIii>());
+          expect(user.apiV2, isA<FireflyIiiV2>());
           expect(
             user.headers(),
             containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
@@ -133,6 +164,7 @@ void main() {
               await AuthUser.create("mock://sub.fake.host", "api-key");
           expect(user.host, equals(Uri.parse("mock://sub.fake.host/api")));
           expect(user.api, isA<FireflyIii>());
+          expect(user.apiV2, isA<FireflyIiiV2>());
           expect(
             user.headers(),
             containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
@@ -147,6 +179,7 @@ void main() {
               await AuthUser.create("mock://fake.host:1234", "api-key");
           expect(user.host, equals(Uri.parse("mock://fake.host:1234/api")));
           expect(user.api, isA<FireflyIii>());
+          expect(user.apiV2, isA<FireflyIiiV2>());
           expect(
             user.headers(),
             containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
@@ -161,6 +194,7 @@ void main() {
               await AuthUser.create("mock://fake.host/sub/path", "api-key");
           expect(user.host, equals(Uri.parse("mock://fake.host/sub/path/api")));
           expect(user.api, isA<FireflyIii>());
+          expect(user.apiV2, isA<FireflyIiiV2>());
           expect(
             user.headers(),
             containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
@@ -176,6 +210,7 @@ void main() {
           expect(user.host,
               equals(Uri.parse("mock://sub.fake.host:1234/sub/path/api")));
           expect(user.api, isA<FireflyIii>());
+          expect(user.apiV2, isA<FireflyIiiV2>());
           expect(
             user.headers(),
             containsPair(HttpHeaders.authorizationHeader, "Bearer api-key"),
@@ -226,8 +261,11 @@ void main() {
   });
 
   group("FireflyService", () {
+    final MockCallbackFunction notifyListenerCallback = MockCallbackFunction();
     late FireflyService service;
+
     setUpAll(() {
+      tz_data.initializeTimeZones();
       HttpOverrides.global = MockHttpOverrides();
 
       when(mockHttpClient.openUrl(any, any))
@@ -248,11 +286,18 @@ void main() {
           code = HttpStatus.badRequest;
           body = "HTTP 400";
         } else if (url.path.endsWith("/api/v1/about")) {
+          String apiVersion = "9.9.9";
+          if (url.host.endsWith("low")) {
+            apiVersion = "1.0.0";
+          }
           body =
-              '{"data": {"version": "6.0.9","api_version": "2.0.1","php_version": "8.2.5","os": "Linux","driver": "mysql"}}';
+              '{"data": {"version": "6.0.9","api_version": "$apiVersion","php_version": "8.2.5","os": "Linux","driver": "mysql"}}';
         } else if (url.path.endsWith("/api/v1/currencies/default")) {
           body =
               '{"data": {"type": "currencies","id": "1","attributes": {"created_at": "2023-05-01T14:04:19+02:00","updated_at": "2023-05-01T14:04:19+02:00","default": true,"enabled": true,"name": "Euro","code": "EUR","symbol": "€","decimal_places": 2},"links": {"0": {"rel": "self","uri": "/currencies/1"},"self": "https://demo.firefly-iii.org/api/v1/currencies/1"}}}';
+        } else if (url.path.endsWith("/api/v1/configuration/app.timezone")) {
+          body =
+              '{"data":{"title":"app.timezone","value":"Europe/Amsterdam","editable":false}}';
         } else {
           body = "404";
         }
@@ -299,13 +344,15 @@ void main() {
 
       SharedPreferences.setMockInitialValues(const <String, Object>{});
       FlutterSecureStorage.setMockInitialValues(<String, String>{});
-      service = FireflyService();
+      service = FireflyService()..addListener(notifyListenerCallback.call);
+      reset(notifyListenerCallback);
     });
     group("signIn(FromStorage)", () {
-      test("no credentials", () {
+      test("no credentials", () async {
         expect(service.signedIn, false);
-        expectLater(service.signInFromStorage(), completion(isFalse));
+        await expectLater(service.signInFromStorage(), completion(isFalse));
         expect(service.signedIn, false);
+        verifyNever(notifyListenerCallback());
       });
       test("invalid credentials", () async {
         FlutterSecureStorage.setMockInitialValues(<String, String>{
@@ -316,8 +363,23 @@ void main() {
         expect(service.storageSignInException, isA<AuthErrorApiKey>());
         expect(service.lastTriedHost, equals("mock://fake.host"));
         expect(service.signedIn, false);
+        expect(service.hasApi, false);
+        verify(notifyListenerCallback()).called(1);
       });
-      test("valid login", () async {
+
+      test("api version too low", () async {
+        FlutterSecureStorage.setMockInitialValues(<String, String>{
+          "api_host": "mock://fake.host.apilow",
+          "api_key": "api-key"
+        });
+        await expectLater(service.signInFromStorage(), completion(isFalse));
+        expect(service.storageSignInException, isA<AuthErrorVersionTooLow>());
+        expect(service.lastTriedHost, equals("mock://fake.host.apilow"));
+        expect(service.signedIn, false);
+        expect(service.hasApi, false);
+        verify(notifyListenerCallback()).called(1);
+      });
+      test("success", () async {
         FlutterSecureStorage.setMockInitialValues(<String, String>{
           "api_host": "mock://fake.host",
           "api_key": "api-key"
@@ -327,6 +389,9 @@ void main() {
         expect(service.hasApi, isTrue);
         expect(service.user, isNotNull);
         expect(service.user!.host, equals(Uri.parse("mock://fake.host/api")));
+        expect(service.api, isNotNull);
+        expect(service.apiV2, isNotNull);
+        verify(notifyListenerCallback()).called(1);
       });
     });
     group("signOut", () {
@@ -336,7 +401,44 @@ void main() {
         expect(service.hasApi, isFalse);
         expect(service.user, isNull);
         expect(service.storageSignInException, isNull);
+        verify(notifyListenerCallback()).called(1);
+        expect(() => service.api, throwsA(isA<Exception>()));
+        expect(() => service.apiV2, throwsA(isA<Exception>()));
       });
+    });
+  });
+
+  group("apiThrowErrorIfEmpty", () {
+    late MockBuildContext context;
+    setUp(() {
+      context = MockBuildContext();
+    });
+
+    test("successful response", () {
+      final Response<String> r = Response<String>(
+        http.Response("string", HttpStatus.ok),
+        "string",
+        error: null,
+      );
+      expect(() => apiThrowErrorIfEmpty(r, context), isA<void>());
+    });
+
+    test("body == null", () {
+      final Response<String?> r = Response<String?>(
+        http.Response("", HttpStatus.ok),
+        null,
+        error: null,
+      );
+      expect(() => apiThrowErrorIfEmpty(r, context), throwsA(isA<Exception>()));
+    });
+
+    test("status == 500", () {
+      final Response<String> r = Response<String>(
+        http.Response("string", HttpStatus.internalServerError),
+        "string",
+        error: null,
+      );
+      expect(() => apiThrowErrorIfEmpty(r, context), throwsA(isA<Exception>()));
     });
   });
 }

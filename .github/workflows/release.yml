@@ -14,6 +14,7 @@ env:
 jobs:
   check:
     uses: ./.github/workflows/commit.yml
+    name: codecheck
 
   build:
     runs-on: ubuntu-latest

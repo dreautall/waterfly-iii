@@ -10,8 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Call setup_env workflow to setup workspace
-      - uses: ./.github/workflows/setup_env.yml
+      # Call setup_env action to setup workspace
+      - uses: ./.github/actions/setup_env
 
       # Check for any formatting issues in the code.
       - run: dart format --set-exit-if-changed .

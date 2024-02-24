@@ -1,0 +1,26 @@
+name: Setup Flutter environment
+description: Setup Flutter environment
+runs:
+  using: "composite"
+  steps:
+    # Setup the Java environment.
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: ${{vars.JAVA_VERSION}}
+        cache: 'gradle'
+
+    # Setup the Flutter environment.
+    - uses: subosito/flutter-action@v2
+      with:
+        channel: ${{vars.FLUTTER_CHANNEL}}
+        cache: true
+
+    # No dart analytics.
+    - run: dart --disable-analytics
+
+    # No flutter analytics.
+    - run: flutter config --disable-analytics
+
+    # Get flutter dependencies.
+    - run: flutter pub get

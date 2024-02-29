@@ -51,6 +51,194 @@
       }
     }
   },
+  "billsAddNewBill": "Dodaj novo transakcijo",
+  "@billsAddNewBill": {
+    "description": "Text for add new bill flows"
+  },
+  "billsAmountAndFrequency": "Račun se ujema s transakcijami med {minValue} in {maxvalue}. Ponavlja se {frequency, select, weekly{tedensko} monthly{mesečno} quarterly{četrtletno} halfyear{polletno} yearly{letno} other{neznano}}{skip, plural, =0{} other{, preskoči čez {skip}}}.",
+  "@billsAmountAndFrequency": {
+    "description": "Bill match for min and max amounts, and frequency",
+    "placeholders": {
+      "minValue": {
+        "type": "String",
+        "example": "$50.12"
+      },
+      "maxvalue": {
+        "type": "String",
+        "example": "$60.50"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsChangeLayoutTooltip": "Spremeni postavitev",
+  "@billsChangeLayoutTooltip": {
+    "description": "Text for layout change button tooltip"
+  },
+  "billsChangeSortOrderTooltip": "Spremeni vrstni red",
+  "@billsChangeSortOrderTooltip": {
+    "description": "Text for sort order change button tooltip"
+  },
+  "billsDialogLayoutTitle": "Postavitev pogleda transakcij",
+  "@billsDialogLayoutTitle": {
+    "description": "Text for bills layout dialog title"
+  },
+  "billsDialogSortTitle": "Razvrsti seznam po",
+  "@billsDialogSortTitle": {
+    "description": "Text for bills sort dialog title"
+  },
+  "billsEditBill": "Uredi transakcijo",
+  "@billsEditBill": {
+    "description": "Text for edit bill flows"
+  },
+  "billsErrorLoading": "Napaka pri nalaganju transakcij.",
+  "@billsErrorLoading": {
+    "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+  },
+  "billsExactAmountAndFrequency": "Račun se ujema s transakcijami v vrednosti {value}. Ponavlja se {frequency, select, weekly{tedensko} monthly{mesečno} quarterly{četrtletno} halfyear{polletno} yearly{letno} other{neznano}}{skip, plural, =0{} other{, preskoči čez {skip}}}.",
+  "@billsExactAmountAndFrequency": {
+    "description": "Bill match for exact amount and frequency",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "$50.12"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsExpectedOn": "Predvideno {date}",
+  "@billsExpectedOn": {
+    "description": "Describes what date the bill is expected",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "January 5, 2024"
+      }
+    }
+  },
+  "billsFrequency": "{frequency, select, weekly{Tedensko} monthly{Mesečno} quarterly{Četrtletno} halfyear{Polletno} yearly{Letno} other{Neznano}}",
+  "@billsFrequency": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      }
+    }
+  },
+  "billsFrequencySkip": "{frequency, select, weekly{Tedensko} monthly{Mesečno} quarterly{Četrtletno} halfyear{Polletno} yearly{Letno} other{Neznano}}{skip, plural, =0{} other{, preskoči čez {skip}}}",
+  "@billsFrequencySkip": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsInactive": "Neaktiven",
+  "@billsInactive": {
+    "description": "Text: when the bill is inactive"
+  },
+  "billsIsActive": "Transakcija je aktivna",
+  "@billsIsActive": {
+    "description": "Text: the bill is active"
+  },
+  "billsLayoutGroupSubtitle": "Transakcije, prikazane v dodeljenih skupinah.",
+  "@billsLayoutGroupSubtitle": {
+    "description": "Subtitle text for group layout option"
+  },
+  "billsLayoutGroupTitle": "Skupina",
+  "@billsLayoutGroupTitle": {
+    "description": "Title text for group layout option"
+  },
+  "billsLayoutListSubtitle": "Transakcije prikazane na seznamu, razvrščenem po določenih kriterijih.",
+  "@billsLayoutListSubtitle": {
+    "description": "Subtitle text for list layout option"
+  },
+  "billsLayoutListTitle": "Seznam",
+  "@billsLayoutListTitle": {
+    "description": "Title text for list layout option"
+  },
+  "billsListEmpty": "Seznam je trenutno prazen.",
+  "@billsListEmpty": {
+    "description": "Describes that the list is empty"
+  },
+  "billsNextExpectedMatch": "Naslednje pričakovano ujemanje",
+  "@billsNextExpectedMatch": {
+    "description": "Text: next expected match for bill"
+  },
+  "billsNotActive": "Transakcija ni aktivna",
+  "@billsNotActive": {
+    "description": "Text: the bill is inactive"
+  },
+  "billsNotExpected": "Ni pričakovano v tem obdobju",
+  "@billsNotExpected": {
+    "description": "Describes that the bill is not expected this period"
+  },
+  "billsNoTransactions": "Ni najdenih transakcij.",
+  "@billsNoTransactions": {
+    "description": "Describes that there are no transactions connected to the bill"
+  },
+  "billsPaidOn": "Plačano dne {date}",
+  "@billsPaidOn": {
+    "description": "Describes what date the bill was paid",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "January 5, 2024"
+      }
+    }
+  },
+  "billsSortAlphabetical": "Po abecedi",
+  "@billsSortAlphabetical": {
+    "description": "Text for alphabetical sort types"
+  },
+  "billsSortByTimePeriod": "Po časovnem obdobju",
+  "@billsSortByTimePeriod": {
+    "description": "Text for frequency sort type"
+  },
+  "billsSortDirection": "{sortDirection, select, ascending{Naraščajoče} descending{Padajoče} other{Neznano}}",
+  "@billsSortDirection": {
+    "description": "Bill sort direction",
+    "placeholders": {
+      "sortDirection": {
+        "type": "String",
+        "example": "Ascending"
+      }
+    }
+  },
+  "billsSortFrequency": "Pogostost",
+  "@billsSortFrequency": {
+    "description": "Text for sort by frequency"
+  },
+  "billsSortName": "Naziv",
+  "@billsSortName": {
+    "description": "Text for sort by name"
+  },
+  "billsUngrouped": "Nezdruženo",
+  "@billsUngrouped": {
+    "description": "Title for ungrouped bills"
+  },
   "categoryDeleteConfirm": "Ali ste prepričani, da želite izbrisati to kategorijo? Transakcije ne bodo izbrisane, vendar ne bodo imele več kategorije.",
   "@categoryDeleteConfirm": {
     "description": "Confirmation text to delete category"
@@ -59,6 +247,14 @@
   "@categoryErrorLoading": {
     "description": "Generic error message when categories can't be loaded (shouldn't occur)"
   },
+  "categoryFormLabelIncludeInSum": "Vključi v mesečni znesek",
+  "@categoryFormLabelIncludeInSum": {
+    "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+  },
+  "categoryFormLabelName": "Ime kategorije",
+  "@categoryFormLabelName": {
+    "description": "Category Add/Edit Form: Label for name field"
+  },
   "categoryMonthNext": "Naslednji mesec",
   "@categoryMonthNext": {
     "description": "Button title to view overview for next month"
@@ -66,6 +262,10 @@
   "categoryMonthPrev": "Prejšnji mesec",
   "@categoryMonthPrev": {
     "description": "Button title to view overview for previous month"
+  },
+  "categorySumExcluded": "izvzeto",
+  "@categorySumExcluded": {
+    "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
   },
   "categoryTitleAdd": "Dodaj kategorijo",
   "@categoryTitleAdd": {
@@ -79,7 +279,7 @@
   "@categoryTitleEdit": {
     "description": "Title for Dialog: Edit Category"
   },
-  "catNone": "<no category>",
+  "catNone": "<brez kategorije>",
   "@catNone": {
     "description": "Placeholder when no category has been set."
   },
@@ -555,6 +755,10 @@
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"
   },
+  "navigationBills": "Transakcije",
+  "@navigationBills": {
+    "description": "Navigation Label: Bills"
+  },
   "navigationCategories": "Kategorije",
   "@navigationCategories": {
     "description": "Navigation Label: Categories"
@@ -566,6 +770,10 @@
   "navigationSettings": "Nastavitve",
   "@navigationSettings": {
     "description": "Navigation Label: Settings"
+  },
+  "no": "Ne",
+  "@no": {
+    "description": "The word no"
   },
   "numPercent": "{num}",
   "@numPercent": {
@@ -906,5 +1114,9 @@
   "transactionTypeWithdrawal": "Odliv",
   "@transactionTypeWithdrawal": {
     "description": "Withdrawal transaction type"
+  },
+  "yes": "Da",
+  "@yes": {
+    "description": "The word yes"
   }
 }

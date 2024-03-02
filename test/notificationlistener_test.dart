@@ -49,35 +49,42 @@ void main() {
   });
 
   group("rFindMoney", () {
+    final List<String> testNumberStr = <String>[
+      "1234",
+      "1 234",
+      "12,34",
+      "12.34",
+      "1230,44",
+      "1230.44",
+      "1 230,44",
+      "1 230.44",
+      "1.230,44",
+      "1,230.44",
+      "1,230,44",
+      "1.230.44",
+    ];
+    final List<String> testCurrencyStr = <String>[
+      ...testNumberStr.map((String e) => "€$e"),
+      ...testNumberStr.map((String e) => "$e€"),
+      ...testNumberStr.map((String e) => "€ $e"),
+      ...testNumberStr.map((String e) => "$e €"),
+      ...testNumberStr.map((String e) => "EUR $e"),
+      ...testNumberStr.map((String e) => "$e EUR"),
+    ];
     final List<String> testStrings = <String>[
       // Generic Tests
-      "PRETEXT PRETEXT €12,34 POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT €12.34 POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT €1 230,44 POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT €1.230,44 POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT €1,230.44 POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT 12,34€ POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT 12.34€ POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT 1 230,44€ POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT 1.230,44€ POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT 1,230.44€ POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT € 12,34 POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT € 12.34 POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT € 1 230,44 POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT € 1.230,44 POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT € 1,230.44 POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT 12,34 € POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT 12.34 € POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT 1 230,44 € POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT 1.230,44 € POSTTEXT POSTTEXT",
-      "PRETEXT PRETEXT 1,230.44 € POSTTEXT POSTTEXT",
-
+      ...testCurrencyStr
+          .map((String e) => "PRETEXT PRETEXT $e POSTTTEXT POSTTEXT"),
+      ...testCurrencyStr.map((String e) => "$e POSTTTEXT POSTTEXT"),
+      ...testCurrencyStr.map((String e) => "PRETEXT PRETEXT $e"),
+      ...testCurrencyStr
+          .map((String e) => "SOME 9876 RANDOM $e NUMBERS 8765 HERE"),
       // Google Pay
       "€12.34 with Card •••• 9876",
       // AMEX
       "Sie haben €12,34 bei Some Store mit Ihrer American Express Karte mit den Enziffern 98765 ausgegeben.",
       // Raiffeisen UA, via mail May 01, 2023 - FAILS!
-      //"07.09.17 17:30 Credit Card Virtual*9876\nсплата за товар/послугу 9876.54 UAH LIQ-PAYDEMSOKIRA GO. Доступна сума: 12.34 UAH",
+      //"07.09.17 17:30 Credit Card Virtual*9876\nсплата за товар/послугу 9876.54 EUR LIQ-PAYDEMSOKIRA GO. Доступна сума: 12.34 EUR",
       // Rabobank, via mail Jun 26, 2023
       "€ 12,34 afgeschreven van *123. Jouw actuele saldo is € +987,65.",
       // Wave, via mail Jul 01, 2023
@@ -88,11 +95,11 @@ void main() {
       "A purchase of €12.34 made using your Tangerine Credit Card at Some Store on September 07, 2017",
     ];
 
-    final List<String> validCurrencies = <String>["€", "F", "Rs", "UAH"];
+    final List<String> validCurrencies = <String>["€", "F", "Rs", "EUR"];
     final List<double> validAmounts = <double>[12.34, 123.4, 1234, 1230.44];
-    setUp(() {});
+
     for (String s in testStrings) {
-      test(s, () {
+      test(s.replaceAll("\n", "\\n"), () {
         RegExpMatch? validMatch;
 
         final Iterable<RegExpMatch> matches = rFindMoney.allMatches(s);

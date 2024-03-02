@@ -1,5 +1,5 @@
 {
-  "@@locale": "zh",
+  "@@locale": "zh-CN",
   "@@x-reference": true,
   "accountRoleAssetCashWallet": "现金钱包",
   "@accountRoleAssetCashWallet": {
@@ -51,6 +51,194 @@
       }
     }
   },
+  "billsAddNewBill": "添加新帐单",
+  "@billsAddNewBill": {
+    "description": "Text for add new bill flows"
+  },
+  "billsAmountAndFrequency": "账单匹配金额在 {minValue} 和 {maxvalue} 之间的交易。{frequency, select, weekly{每周} monthly{每月} quarterly{每季度} halfyear{每半年} yearly{每年} other{未知}}重复{skip, plural, =0{} other{，跳过 {skip} 次}}。",
+  "@billsAmountAndFrequency": {
+    "description": "Bill match for min and max amounts, and frequency",
+    "placeholders": {
+      "minValue": {
+        "type": "String",
+        "example": "$50.12"
+      },
+      "maxvalue": {
+        "type": "String",
+        "example": "$60.50"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsChangeLayoutTooltip": "更改布局",
+  "@billsChangeLayoutTooltip": {
+    "description": "Text for layout change button tooltip"
+  },
+  "billsChangeSortOrderTooltip": "更改排序顺序",
+  "@billsChangeSortOrderTooltip": {
+    "description": "Text for sort order change button tooltip"
+  },
+  "billsDialogLayoutTitle": "账单视图布局",
+  "@billsDialogLayoutTitle": {
+    "description": "Text for bills layout dialog title"
+  },
+  "billsDialogSortTitle": "列表排序依据",
+  "@billsDialogSortTitle": {
+    "description": "Text for bills sort dialog title"
+  },
+  "billsEditBill": "编辑账单",
+  "@billsEditBill": {
+    "description": "Text for edit bill flows"
+  },
+  "billsErrorLoading": "加载账单时出错。",
+  "@billsErrorLoading": {
+    "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+  },
+  "billsExactAmountAndFrequency": "账单匹配金额为 {value} 的交易。{frequency, select, weekly{每周} monthly{每月} quarterly{每季度} halfyear{每半年} yearly{每年} other{未知}}重复{skip, plural, =0{} other{，跳过 {skip} 次}}。",
+  "@billsExactAmountAndFrequency": {
+    "description": "Bill match for exact amount and frequency",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "$50.12"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsExpectedOn": "预计日期 {date}",
+  "@billsExpectedOn": {
+    "description": "Describes what date the bill is expected",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "January 5, 2024"
+      }
+    }
+  },
+  "billsFrequency": "{frequency, select,weekly{每周} monthly{每月} quarterly{每季度} halfyear{每半年} yearly{每年} other{未知}}",
+  "@billsFrequency": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      }
+    }
+  },
+  "billsFrequencySkip": "{frequency, select, weekly{每周} monthly{每月} quarterly{每季度} halfyear{每半年} yearly{每年} other{未知}}重复{skip, plural, =0{} other{，跳过 {skip} 次}}",
+  "@billsFrequencySkip": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsInactive": "未启用",
+  "@billsInactive": {
+    "description": "Text: when the bill is inactive"
+  },
+  "billsIsActive": "账单已启用",
+  "@billsIsActive": {
+    "description": "Text: the bill is active"
+  },
+  "billsLayoutGroupSubtitle": "账单显示在指定的组中。",
+  "@billsLayoutGroupSubtitle": {
+    "description": "Subtitle text for group layout option"
+  },
+  "billsLayoutGroupTitle": "组",
+  "@billsLayoutGroupTitle": {
+    "description": "Title text for group layout option"
+  },
+  "billsLayoutListSubtitle": "账单显示在按特定标准排序的列表中。",
+  "@billsLayoutListSubtitle": {
+    "description": "Subtitle text for list layout option"
+  },
+  "billsLayoutListTitle": "列表",
+  "@billsLayoutListTitle": {
+    "description": "Title text for list layout option"
+  },
+  "billsListEmpty": "该列表当前为空。",
+  "@billsListEmpty": {
+    "description": "Describes that the list is empty"
+  },
+  "billsNextExpectedMatch": "下次预期的支付匹配",
+  "@billsNextExpectedMatch": {
+    "description": "Text: next expected match for bill"
+  },
+  "billsNotActive": "账单未启用",
+  "@billsNotActive": {
+    "description": "Text: the bill is inactive"
+  },
+  "billsNotExpected": "此周期内没有预期的支付",
+  "@billsNotExpected": {
+    "description": "Describes that the bill is not expected this period"
+  },
+  "billsNoTransactions": "未找到交易记录。",
+  "@billsNoTransactions": {
+    "description": "Describes that there are no transactions connected to the bill"
+  },
+  "billsPaidOn": "支付日期 {date}",
+  "@billsPaidOn": {
+    "description": "Describes what date the bill was paid",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "January 5, 2024"
+      }
+    }
+  },
+  "billsSortAlphabetical": "按字母排序",
+  "@billsSortAlphabetical": {
+    "description": "Text for alphabetical sort types"
+  },
+  "billsSortByTimePeriod": "按时间间隔排序",
+  "@billsSortByTimePeriod": {
+    "description": "Text for frequency sort type"
+  },
+  "billsSortDirection": "{sortDirection, select, ascending{升序} descending{降序} other{未知}}",
+  "@billsSortDirection": {
+    "description": "Bill sort direction",
+    "placeholders": {
+      "sortDirection": {
+        "type": "String",
+        "example": "Ascending"
+      }
+    }
+  },
+  "billsSortFrequency": "频率",
+  "@billsSortFrequency": {
+    "description": "Text for sort by frequency"
+  },
+  "billsSortName": "名称",
+  "@billsSortName": {
+    "description": "Text for sort by name"
+  },
+  "billsUngrouped": "未分组的",
+  "@billsUngrouped": {
+    "description": "Title for ungrouped bills"
+  },
   "categoryDeleteConfirm": "您确定要删除这个分类吗？与此分类关联的交易不会被删除，但不再含有此分类。",
   "@categoryDeleteConfirm": {
     "description": "Confirmation text to delete category"
@@ -59,9 +247,13 @@
   "@categoryErrorLoading": {
     "description": "Generic error message when categories can't be loaded (shouldn't occur)"
   },
-  "categoryTitleAdd": "添加分类",
-  "@categoryTitleAdd": {
-    "description": "Title for Dialog: Add Category"
+  "categoryFormLabelIncludeInSum": "包括在每月金额",
+  "@categoryFormLabelIncludeInSum": {
+    "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+  },
+  "categoryFormLabelName": "分类名称",
+  "@categoryFormLabelName": {
+    "description": "Category Add/Edit Form: Label for name field"
   },
   "categoryMonthNext": "下个月",
   "@categoryMonthNext": {
@@ -71,6 +263,14 @@
   "@categoryMonthPrev": {
     "description": "Button title to view overview for previous month"
   },
+  "categorySumExcluded": "排除",
+  "@categorySumExcluded": {
+    "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+  },
+  "categoryTitleAdd": "添加分类",
+  "@categoryTitleAdd": {
+    "description": "Title for Dialog: Add Category"
+  },
   "categoryTitleDelete": "删除分类",
   "@categoryTitleDelete": {
     "description": "Title for Dialog: Delete Category"
@@ -79,13 +279,13 @@
   "@categoryTitleEdit": {
     "description": "Title for Dialog: Edit Category"
   },
-  "catOther": "其它",
-  "@catOther": {
-    "description": "Category description for summary category 'Other'"
-  },
   "catNone": "<未分类>",
   "@catNone": {
     "description": "Placeholder when no category has been set."
+  },
+  "catOther": "其它",
+  "@catOther": {
+    "description": "Category description for summary category 'Other'"
   },
   "errorAPIInvalidResponse": "API 的响应无效：{message}",
   "@errorAPIInvalidResponse": {
@@ -555,6 +755,10 @@
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"
   },
+  "navigationBills": "账单",
+  "@navigationBills": {
+    "description": "Navigation Label: Bills"
+  },
   "navigationCategories": "分类",
   "@navigationCategories": {
     "description": "Navigation Label: Categories"
@@ -566,6 +770,10 @@
   "navigationSettings": "设置",
   "@navigationSettings": {
     "description": "Navigation Label: Settings"
+  },
+  "no": "取消",
+  "@no": {
+    "description": "The word no"
   },
   "numPercent": "{num}",
   "@numPercent": {
@@ -580,7 +788,7 @@
       }
     }
   },
-  "numPercentOf": "{perc} of {of}",
+  "numPercentOf": "{of} 中的 {perc}",
   "@numPercentOf": {
     "description": "Number formatted as percentage, with total amount provided",
     "placeholders": {
@@ -906,5 +1114,9 @@
   "transactionTypeWithdrawal": "支出",
   "@transactionTypeWithdrawal": {
     "description": "Withdrawal transaction type"
+  },
+  "yes": "确定",
+  "@yes": {
+    "description": "The word yes"
   }
 }

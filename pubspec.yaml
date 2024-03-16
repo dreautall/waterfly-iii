@@ -30,7 +30,7 @@ dependencies:
   open_filex: ^4.4.0
   file_picker: ^6.2.0
   animations: ^2.0.11
-  flutter_local_notifications: ^16.3.2
+  flutter_local_notifications: ^17.0.0
   notifications_listener_service:
     git:
       url: https://github.com/dreautall/notification_listener_service.git
@@ -45,7 +45,7 @@ dependencies:
   version: ^3.0.2
   quick_actions: ^1.0.7
   stock: ^1.1.0
-  syncfusion_flutter_charts: ^24.2.9
+  syncfusion_flutter_charts: ^25.1.35
   image_picker: ^1.0.7
   timezone: ^0.9.2
   flutter_timezone: ^1.0.8

@@ -1,11 +1,13 @@
 version: 2
 updates:
   - package-ecosystem: "pub"
+    target-branch: develop
     directory: "/"
     schedule:
       interval: "weekly"
 
   - package-ecosystem: "github-actions"
+    target-branch: develop
     directory: "/.github/workflows/"
     schedule:
       interval: "weekly"

@@ -1,0 +1,17 @@
+Waterfly III, ücretsiz ve açık kaynaklı bir finans yöneticisi olan Firefly III'ün kendi örneğiniz için resmi olmayan bir uygulamadır.
+
+Bu uygulama, kendi sunucunuzda kendi kendine barındırılan bir Firefly III örneği gerektirir, yazılım hakkında daha fazla bilgi için lütfen https://www.firefly-iii.org/ adresini ziyaret edin. Bu sadece bir tamamlayıcı uygulamadır ve tek başına çalışamaz!
+
+Özellikler:
+
+- Grafikler ve bütçeye genel bakış içeren gösterge tablosu
+- Filtreli işlem listesi
+- Ekler, bölünmüş işlemler ve çoklu para birimi desteği dahil olmak üzere otomatik tamamlama ile işlem ekleme ve düzenleme
+- Kumbara desteği (para görüntüleme ve ekleme)
+- Gelen bildirimlere göre kolayca yeni işlemler oluşturmak için Bildirim Dinleyici Hizmeti (örneğin, Google Pay veya bankacılık uygulamanızdan)
+- Tamamen açık kaynak: https://github.com/dreautall/waterfly-iii
+Reklam veya izleyici yok
+
+Katkı:
+
+Bir hatayla karşılaşırsanız veya bir özelliği kaçırırsanız, oyun mağazasında geri bildirimde bulunmaktan, bana bir e-posta göndermekten veya GitHub'da bir sorun açmaktan çekinmeyin.

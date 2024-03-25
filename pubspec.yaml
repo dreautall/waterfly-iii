@@ -28,7 +28,7 @@ dependencies:
   filesize: ^2.0.1
   community_charts_flutter: ^1.0.2
   open_filex: ^4.4.0
-  file_picker: ^6.0.0
+  file_picker: ^8.0.0+1
   animations: ^2.0.11
   flutter_local_notifications: ^16.3.2
   notifications_listener_service:

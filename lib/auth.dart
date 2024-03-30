@@ -55,7 +55,6 @@ class SSLHttpOverride extends HttpOverrides {
     //context ??= SecurityContext.defaultContext;
     //context.useCertificateChainBytes(chainBytes);
     //context.usePrivateKeyBytes(keyBytes);
-    debugPrint("using custom createhttpclient");
     return super.createHttpClient(context)
       ..badCertificateCallback = (X509Certificate cert, _, __) {
         log.fine("Using SSLHttpOverride");
@@ -108,7 +107,6 @@ class AuthErrorNoInstance extends AuthError {
 
 http.Client get httpClient {
   // Only for Android
-  debugPrint("using custom httpClient");
   return CronetClient.fromCronetEngine(
     CronetEngine.build(
       cacheMode: CacheMode.memory,

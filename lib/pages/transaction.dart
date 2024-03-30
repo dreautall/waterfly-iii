@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -7,13 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_sharing_intent/model/sharing_file.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:badges/badges.dart' as badges;
-import 'package:chopper/chopper.dart' show Response;
+import 'package:chopper/chopper.dart' show HttpMethod, Response;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:version/version.dart';
 
@@ -1142,33 +1142,31 @@ class _TransactionPageState extends State<TransactionPage>
                               respAttachment.body!.data;
                           log.finest(
                               () => "attachment id is ${newAttachment.id}");
-                          final HttpClientRequest request =
-                              await HttpClient().postUrl(
+
+                          final File file =
+                              File(attachment.attributes.uploadUrl!);
+
+                          final http.StreamedRequest request =
+                              http.StreamedRequest(
+                            HttpMethod.Post,
                             Uri.parse(newAttachment.attributes.uploadUrl!),
                           );
-                          user!.headers().forEach(
-                                (String key, String value) =>
-                                    request.headers.add(key, value),
-                              );
-                          request.headers.set(HttpHeaders.contentTypeHeader,
-                              "application/octet-stream");
-                          final Stream<List<int>> listenStream =
-                              File(attachment.attributes.uploadUrl!)
-                                  .openRead()
-                                  .transform(
-                                    StreamTransformer<List<int>,
-                                        List<int>>.fromHandlers(
-                                      handleData: (List<int> data,
-                                          EventSink<List<int>> sink) {
-                                        sink.add(data);
-                                      },
-                                      handleDone: (EventSink<List<int>> sink) {
-                                        sink.close();
-                                      },
-                                    ),
-                                  );
-                          await request.addStream(listenStream);
-                          await request.close();
+                          request.headers.addAll(user!.headers());
+                          request.headers[HttpHeaders.contentTypeHeader] =
+                              ContentType.binary.mimeType;
+                          request.contentLength = await file.length();
+                          log.fine(() =>
+                              "AttachmentUpload: Starting Upload ${newAttachment.id}");
+
+                          file.openRead().listen((List<int> data) {
+                            log.finest(() => "sent ${data.length} bytes");
+                            request.sink.add(data);
+                          }, onDone: () {
+                            request.sink.close();
+                          });
+
+                          await httpClient.send(request);
+
                           log.fine(() => "done uploading attachment");
                         }
                       }

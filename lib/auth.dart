@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cronet_http/cronet_http.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 
 import 'package:chopper/chopper.dart'
-    show Request, Response, StripStringExtension;
+    show HttpMethod, Request, Response, StripStringExtension;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:version/version.dart';
@@ -103,6 +105,16 @@ class AuthErrorNoInstance extends AuthError {
   final String host;
 }
 
+http.Client get httpClient {
+  // Only for Android
+  return CronetClient.fromCronetEngine(
+    CronetEngine.build(
+      cacheMode: CacheMode.memory,
+      cacheMaxSize: 2 * 1024 * 1024,
+    ),
+  );
+}
+
 class AuthUser {
   late Uri _host;
   late String _apiKey;
@@ -123,6 +135,7 @@ class AuthUser {
 
     _api = FireflyIii.create(
       baseUrl: _host,
+      httpClient: httpClient,
       interceptors: <dynamic>[
         (Request request) async {
           log.finest(() => "API query to ${request.url}");
@@ -141,6 +154,7 @@ class AuthUser {
 
     _apiV2 = FireflyIiiV2.create(
       baseUrl: _host,
+      httpClient: httpClient,
       interceptors: <dynamic>[
         (Request request) async {
           log.finest(() => "APIv2 query to ${request.url}");
@@ -170,7 +184,7 @@ class AuthUser {
     log.config("AuthUser->create($host)");
 
     // This call is on purpose not using the Swagger API
-    final HttpClient client = HttpClient();
+    final http.Client client = httpClient;
     late Uri uri;
 
     try {
@@ -187,10 +201,10 @@ class AuthUser {
     ]);
 
     try {
-      HttpClientRequest request = await client.getUrl(aboutUri);
-      request.headers.add(HttpHeaders.authorizationHeader, "Bearer $apiKey");
+      final http.Request request = http.Request(HttpMethod.Get, aboutUri);
+      request.headers[HttpHeaders.authorizationHeader] = "Bearer $apiKey";
       request.followRedirects = false;
-      HttpClientResponse response = await request.close();
+      final http.StreamedResponse response = await request.send();
 
       if (response.isRedirect) {
         throw const AuthErrorApiKey();
@@ -199,7 +213,7 @@ class AuthUser {
         throw AuthErrorStatusCode(response.statusCode);
       }
 
-      final String stringData = await response.transform(utf8.decoder).join();
+      final String stringData = await response.stream.bytesToString();
 
       try {
         SystemInfo.fromJson(json.decode(stringData));
@@ -327,7 +341,7 @@ class FireflyService with ChangeNotifier {
     }
 
     // Manual API query as the Swagger type doesn't resolve in Flutter :(
-    final HttpClient client = HttpClient();
+    final http.Client client = httpClient;
     Uri tzUri = user!.host.replace(pathSegments: <String>[
       ...user!.host.pathSegments,
       "v1",
@@ -335,13 +349,11 @@ class FireflyService with ChangeNotifier {
       ConfigValueFilter.appTimezone.value!
     ]);
     try {
-      HttpClientRequest request = await client.getUrl(tzUri);
-      user!.headers().forEach(
-            (String key, String value) => request.headers.add(key, value),
-          );
-      HttpClientResponse response = await request.close();
-      final String stringData = await response.transform(utf8.decoder).join();
-      final APITZReply reply = APITZReply.fromJson(json.decode(stringData));
+      final http.Response response = await client.get(
+        tzUri,
+        headers: user!.headers(),
+      );
+      final APITZReply reply = APITZReply.fromJson(json.decode(response.body));
       tzHandler = TimeZoneHandler(reply.data.value);
     } finally {
       client.close();

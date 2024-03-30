@@ -5,6 +5,7 @@ import 'package:cronet_http/cronet_http.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 import 'package:logging/logging.dart';
 
 import 'package:chopper/chopper.dart'
@@ -110,12 +111,15 @@ class AuthErrorNoInstance extends AuthError {
 
 http.Client get httpClient {
   // Only for Android
-  return CronetClient.fromCronetEngine(
-    CronetEngine.build(
-      cacheMode: CacheMode.memory,
-      cacheMaxSize: 2 * 1024 * 1024,
-    ),
-  );
+  if (Platform.isAndroid) {
+    return CronetClient.fromCronetEngine(
+      CronetEngine.build(
+        cacheMode: CacheMode.memory,
+        cacheMaxSize: 2 * 1024 * 1024,
+      ),
+    );
+  }
+  return IOClient();
 }
 
 class AuthUser {

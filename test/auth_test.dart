@@ -26,6 +26,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii_v2.swag
   MockSpec<HttpClientResponse>(),
   MockSpec<HttpHeaders>(),
 ])
+@GenerateMocks(<Type>[http.Client])
 import 'auth_test.mocks.dart';
 
 final MockHttpClient mockHttpClient = MockHttpClient();
@@ -93,6 +94,13 @@ void main() {
     setUpAll(() {
       HttpOverrides.global = MockHttpOverrides();
 
+      when(mockHttpClient.openUrl(any, any))
+          .thenAnswer((Invocation invocation) {
+        if (invocation.positionalArguments[0] == "GET") {
+          return mockHttpClient.getUrl(invocation.positionalArguments[1]);
+        }
+        return mockHttpClient.postUrl(invocation.positionalArguments[1]);
+      });
       when(mockHttpClient.getUrl(any)).thenAnswer((Invocation invocation) {
         final Uri url = invocation.positionalArguments[0] as Uri;
         late String body;
@@ -118,10 +126,11 @@ void main() {
         when(request.addStream(any)).thenAnswer((_) async => null);
         when(request.headers).thenReturn(requestHeaders);
 
-        when(requestHeaders.add(any, any)).thenAnswer((Invocation invocation) {
+        when(requestHeaders.set(any, any)).thenAnswer((Invocation invocation) {
           if (invocation.positionalArguments[0] ==
               HttpHeaders.authorizationHeader) {
             final String apiKey = invocation.positionalArguments[1];
+
             if (apiKey.startsWith("Bearer invalid-")) {
               when(response.statusCode).thenReturn(HttpStatus.movedPermanently);
               when(response.isRedirect).thenReturn(true);
@@ -318,7 +327,7 @@ void main() {
         when(request.addStream(any)).thenAnswer((_) async => null);
         when(request.headers).thenReturn(requestHeaders);
 
-        when(requestHeaders.add(any, any)).thenAnswer((Invocation invocation) {
+        when(requestHeaders.set(any, any)).thenAnswer((Invocation invocation) {
           if (invocation.positionalArguments[0] ==
               HttpHeaders.authorizationHeader) {
             final String apiKey = invocation.positionalArguments[1];

@@ -49,10 +49,10 @@ jobs:
           sed -i 's/^\(version: [0-9\.]\{1,\}\(-[a-z]\{1,\}\)\{0,1\}\)$/\1+${{ github.run_number }}/m' pubspec.yaml
 
       # Build apk.
-      - run: flutter build apk --obfuscate --split-debug-info=build/app/outputs/symbols/apk --release --split-per-abi
+      - run: flutter build apk --obfuscate --split-debug-info=build/app/outputs/symbols/apk --release --split-per-abi --dart-define=cronetHttpNoPlay=true
 
       # Build aab
-      - run: flutter build appbundle --obfuscate --split-debug-info=build/app/outputs/symbols/aab --release
+      - run: flutter build appbundle --obfuscate --split-debug-info=build/app/outputs/symbols/aab --release --dart-define=cronetHttpNoPlay=true
 
       # Zip symbols
       - uses: montudor/action-zip@v1
@@ -105,7 +105,7 @@ jobs:
           name: app-x86_64-release.apk
           path: ./artifacts
       
-      - uses: softprops/action-gh-release@v1
+      - uses: softprops/action-gh-release@v2
         with:
           files: |
             ./artifacts/app-arm64-v8a-release.apk

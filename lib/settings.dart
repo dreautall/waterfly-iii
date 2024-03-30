@@ -476,8 +476,15 @@ class DebugLogger {
     if (_logPath?.isEmpty ?? true) {
       return;
     }
+    String message = record.message;
+    if (record.error != null) {
+      message += "\nERROR MESSAGE: ${record.error}";
+    }
+    if (record.stackTrace != null) {
+      message += "\nSTACKTRACE:\n${record.stackTrace}\n\n";
+    }
     File(_logPath!).writeAsStringSync(
-      "${record.time}: [${record.loggerName} - ${record.level.name}] ${record.message}\n",
+      "${record.time}: [${record.loggerName} - ${record.level.name}] $message\n",
       mode: FileMode.append,
       flush: true,
     );

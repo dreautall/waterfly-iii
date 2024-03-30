@@ -128,7 +128,7 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
 
   void trackballPositionChange(TrackballArgs args,
       List<ChartSeries<TimeSeriesChart, DateTime>> chartData) {
-    if (args.chartPointInfo.chartDataPoint == null) {
+    if (args.chartPointInfo.chartPoint == null) {
       return;
     }
 
@@ -138,7 +138,7 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
           chart.dataSource![args.chartPointInfo.dataPointIndex!].value;
       i++;
     }
-    date.value = args.chartPointInfo.chartDataPoint!.x.toLocal();
+    date.value = args.chartPointInfo.chartPoint!.x.toLocal();
   }
 
   @override

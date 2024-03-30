@@ -38,7 +38,7 @@ class _SplashPageState extends State<SplashPage> {
         success = await context.read<FireflyService>().signInFromStorage();
       } else {
         log.finer(() =>
-            "SplashPage->_login() with credentials: $host, apiKey apiKey ${apiKey.isEmpty ? "unset" : "set"}");
+            "SplashPage->_login() with credentials: $host, apiKey ${apiKey.isEmpty ? "unset" : "set"}");
         success =
             await context.read<FireflyService>().signIn(host, apiKey, cert);
       }

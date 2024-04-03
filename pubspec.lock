@@ -133,10 +133,10 @@ packages:
     dependency: transitive
     description:
       name: built_value
-      sha256: fedde275e0a6b798c3296963c5cd224e3e1b55d0e478d5b7e65e6b540f363a0e
+      sha256: c7913a9737ee4007efedaffc968c049fd0f3d0e49109e778edc10de9426005cb
       url: "https://pub.dev"
     source: hosted
-    version: "8.9.1"
+    version: "8.9.2"
   characters:
     dependency: transitive
     description:
@@ -157,18 +157,18 @@ packages:
     dependency: "direct main"
     description:
       name: chopper
-      sha256: eac1e6ddfdf50df266943a5f6838f5490e4f6818b48476a68427b89ecc97e07d
+      sha256: d59634cbdba3658ff83036f8d7fe575b74f8baebc57a58925b46b23f9f52e114
       url: "https://pub.dev"
     source: hosted
-    version: "7.2.0"
+    version: "7.3.0"
   chopper_generator:
     dependency: "direct dev"
     description:
       name: chopper_generator
-      sha256: fa03549c15e2c1d7bf122b2afa05c5367fa2d34fd1cbd013298beaff83f94b67
+      sha256: "7d63b37a63a3fbb86f701622f259e516cbf9682798a8bfd17726745a48c6b572"
       url: "https://pub.dev"
     source: hosted
-    version: "7.2.0"
+    version: "7.3.0"
   clock:
     dependency: transitive
     description:

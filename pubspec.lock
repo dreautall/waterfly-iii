@@ -157,10 +157,10 @@ packages:
     dependency: "direct main"
     description:
       name: chopper
-      sha256: d59634cbdba3658ff83036f8d7fe575b74f8baebc57a58925b46b23f9f52e114
+      sha256: "1b6280ec22841b844448bec8ef2644d9cbe9ea8dfce13ec9cab9e8d3aac3830d"
       url: "https://pub.dev"
     source: hosted
-    version: "7.3.0"
+    version: "7.4.0"
   chopper_generator:
     dependency: "direct dev"
     description:
@@ -1014,6 +1014,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  qs_dart:
+    dependency: transitive
+    description:
+      name: qs_dart
+      sha256: ceb5aaa9caf2611f978ec2db9b3c9a30e223262c47c2eed1799b5ef9db68dfa8
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   quick_actions:
     dependency: "direct main"
     description:
@@ -1411,6 +1419,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  weak_map:
+    dependency: transitive
+    description:
+      name: weak_map
+      sha256: "95ca338f0cdf5f0022cc283dfa4d97f6f6b03752f67eca85ebe6d7a679ffe3ed"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   web:
     dependency: transitive
     description:

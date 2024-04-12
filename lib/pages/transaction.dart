@@ -68,9 +68,6 @@ class _TransactionPageState extends State<TransactionPage>
   final FocusNode _typeFocusNode = FocusNode();
   final TextEditingController _titleTextController = TextEditingController();
   final FocusNode _titleFocusNode = FocusNode();
-  final TextEditingController _ownAccountTextController =
-      TextEditingController();
-  final FocusNode _ownAccountFocusNode = FocusNode();
   String? _ownAccountId;
   late tz.TZDateTime _date;
   final TextEditingController _dateTextController = TextEditingController();
@@ -84,9 +81,12 @@ class _TransactionPageState extends State<TransactionPage>
   // Transfer: splits have common accounts for both (= own accounts)
 
   // Individual for split transactions, show common for single transaction
-  final TextEditingController _otherAccountTextController =
+  final TextEditingController _sourceAccountTextController =
       TextEditingController();
-  final FocusNode _otherAccountFocusNode = FocusNode();
+  final FocusNode _sourceAccountFocusNode = FocusNode();
+  final TextEditingController _destinationAccountTextController =
+      TextEditingController();
+  final FocusNode _destinationAccountFocusNode = FocusNode();
   final TextEditingController _localAmountTextController =
       TextEditingController();
   //double? _foreignAmount = 0.0; // = _foreignAmounts.sum;
@@ -112,9 +112,12 @@ class _TransactionPageState extends State<TransactionPage>
   final List<TextEditingController> _titleTextControllers =
       <TextEditingController>[];
   final List<FocusNode> _titleFocusNodes = <FocusNode>[];
-  final List<TextEditingController> _otherAccountTextControllers =
+  final List<TextEditingController> _sourceAccountTextControllers =
       <TextEditingController>[];
-  final List<FocusNode> _otherAccountFocusNodes = <FocusNode>[];
+  final List<FocusNode> _sourceAccountFocusNodes = <FocusNode>[];
+  final List<TextEditingController> _destinationAccountTextControllers =
+      <TextEditingController>[];
+  final List<FocusNode> _destinationAccountFocusNodes = <FocusNode>[];
   final List<double> _localAmounts = <double>[];
   final List<TextEditingController> _localAmountTextControllers =
       <TextEditingController>[];
@@ -164,13 +167,10 @@ class _TransactionPageState extends State<TransactionPage>
       switch (_transactionType) {
         case TransactionTypeProperty.withdrawal:
         case TransactionTypeProperty.transfer:
-          _ownAccountTextController.text = transactions.first.sourceName ?? "";
           _ownAccountId = transactions.first.sourceId;
           break;
         case TransactionTypeProperty.deposit:
         case TransactionTypeProperty.openingBalance:
-          _ownAccountTextController.text =
-              transactions.first.destinationName ?? "";
           _ownAccountId = transactions.first.destinationId;
           break;
         default:
@@ -251,25 +251,17 @@ class _TransactionPageState extends State<TransactionPage>
               .toStringAsFixed(trans.currencyDecimalPlaces ?? 2),
         ));
 
-        /// other account
-        switch (_transactionType) {
-          case TransactionTypeProperty.withdrawal:
-          case TransactionTypeProperty.transfer:
-            _otherAccountTextControllers.add(TextEditingController(
-              text: trans.destinationName,
-            ));
-            break;
-          case TransactionTypeProperty.deposit:
-          case TransactionTypeProperty.openingBalance:
-            _otherAccountTextControllers.add(TextEditingController(
-              text: trans.sourceName,
-            ));
-            break;
-          default:
-            // Always add one to keep List size correct!
-            _otherAccountTextControllers.add(TextEditingController());
-        }
-        _otherAccountFocusNodes.add(FocusNode());
+        /// source account
+        _sourceAccountTextControllers.add(TextEditingController(
+          text: trans.sourceName,
+        ));
+        _sourceAccountFocusNodes.add(FocusNode());
+
+        /// target account
+        _destinationAccountTextControllers.add(TextEditingController(
+          text: trans.destinationName,
+        ));
+        _destinationAccountFocusNodes.add(FocusNode());
 
         /// foreign currency
         //// foreign amount
@@ -338,7 +330,7 @@ class _TransactionPageState extends State<TransactionPage>
     } else {
       // New transaction
       _titleFocusNode.requestFocus();
-      _transactionType = TransactionTypeProperty.withdrawal;
+      _transactionType = TransactionTypeProperty.swaggerGeneratedUnknown;
       _date = _tzHandler.newTXTime().toLocal();
 
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -352,6 +344,7 @@ class _TransactionPageState extends State<TransactionPage>
           log.info("Got notification ${widget.notification?.title}");
           CurrencyRead? currency;
           double amount = 0;
+          _transactionType = TransactionTypeProperty.withdrawal;
 
           // Try to extract some money
           final Iterable<RegExpMatch> matches =
@@ -441,7 +434,7 @@ class _TransactionPageState extends State<TransactionPage>
           _date = _tzHandler
               .notificationTXTime(widget.notification!.date)
               .toLocal();
-          _dateTextController.text = DateFormat.yMMMMd().format(_date);
+          _dateTextController.text = DateFormat.yMMMd().format(_date);
           _timeTextController.text = DateFormat.Hm().format(_date);
 
           // Title & Note
@@ -480,7 +473,7 @@ class _TransactionPageState extends State<TransactionPage>
             if (acc.id == settingAppId ||
                 widget.notification!.body
                     .containsIgnoreCase(acc.attributes.name)) {
-              _ownAccountTextController.text = acc.attributes.name;
+              _sourceAccountTextController.text = acc.attributes.name;
               _ownAccountId = acc.id;
               break;
             }
@@ -500,7 +493,7 @@ class _TransactionPageState extends State<TransactionPage>
           }
           for (AccountRead acc in response.body!.data) {
             if (acc.id == widget.accountId) {
-              _ownAccountTextController.text = acc.attributes.name;
+              _sourceAccountTextController.text = acc.attributes.name;
               _ownAccountId = acc.id;
               break;
             }
@@ -534,13 +527,14 @@ class _TransactionPageState extends State<TransactionPage>
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _dateTextController.text = DateFormat.yMMMMd().format(_date);
+      _dateTextController.text = DateFormat.yMMMd().format(_date);
       _timeTextController.text = DateFormat.Hm().format(_date);
     });
 
-    // focus node listener for ownaccount
-    _ownAccountFocusNode.addListener(() async {
-      if (_ownAccountFocusNode.hasFocus) {
+    // focus node listener for source & target account
+    // to set ownAccountId
+    /*_sourceAccountFocusNode.addListener(() async {
+      if (_sourceAccountFocusNode.hasFocus) {
         return;
       }
       try {
@@ -573,7 +567,7 @@ class _TransactionPageState extends State<TransactionPage>
       } catch (e, stackTrace) {
         log.severe("Error while fetching autocomplete from API", e, stackTrace);
       }
-    });
+    });*/
   }
 
   @override
@@ -581,18 +575,26 @@ class _TransactionPageState extends State<TransactionPage>
     _typeFocusNode.dispose();
     _titleTextController.dispose();
     _titleFocusNode.dispose();
-    _ownAccountTextController.dispose();
-    _ownAccountFocusNode.dispose();
+    _sourceAccountTextController.dispose();
+    _sourceAccountFocusNode.dispose();
+    _destinationAccountTextController.dispose();
+    _destinationAccountFocusNode.dispose();
     _dateTextController.dispose();
     _timeTextController.dispose();
 
     _localAmountTextController.dispose();
     _foreignAmountTextController.dispose();
 
-    for (TextEditingController t in _otherAccountTextControllers) {
+    for (TextEditingController t in _sourceAccountTextControllers) {
       t.dispose();
     }
-    for (FocusNode f in _otherAccountFocusNodes) {
+    for (FocusNode f in _sourceAccountFocusNodes) {
+      f.dispose();
+    }
+    for (TextEditingController t in _destinationAccountTextControllers) {
+      t.dispose();
+    }
+    for (FocusNode f in _destinationAccountFocusNodes) {
       f.dispose();
     }
     for (TextEditingController t in _categoryTextControllers) {
@@ -677,15 +679,17 @@ class _TransactionPageState extends State<TransactionPage>
     }
 
     // this we need to dispose later
-    TextEditingController t1 = _otherAccountTextControllers.removeAt(i);
-    FocusNode f1 = _otherAccountFocusNodes.removeAt(i);
-    TextEditingController t2 = _categoryTextControllers.removeAt(i);
-    FocusNode f2 = _categoryFocusNodes.removeAt(i);
-    TextEditingController t3 = _budgetTextControllers.removeAt(i);
-    FocusNode f3 = _budgetFocusNodes.removeAt(i);
+    TextEditingController t1 = _sourceAccountTextControllers.removeAt(i);
+    FocusNode f1 = _sourceAccountFocusNodes.removeAt(i);
+    TextEditingController t2 = _destinationAccountTextControllers.removeAt(i);
+    FocusNode f2 = _destinationAccountFocusNodes.removeAt(i);
+    TextEditingController t3 = _categoryTextControllers.removeAt(i);
+    FocusNode f3 = _categoryFocusNodes.removeAt(i);
+    TextEditingController t4 = _budgetTextControllers.removeAt(i);
+    FocusNode f4 = _budgetFocusNodes.removeAt(i);
     _tags.removeAt(i);
-    TextEditingController t4 = _tagsTextControllers.removeAt(i);
-    TextEditingController t5 = _noteTextControllers.removeAt(i);
+    TextEditingController t5 = _tagsTextControllers.removeAt(i);
+    TextEditingController t6 = _noteTextControllers.removeAt(i);
     _bills.removeAt(i);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -696,7 +700,9 @@ class _TransactionPageState extends State<TransactionPage>
       t3.dispose();
       f3.dispose();
       t4.dispose();
+      f4.dispose();
       t5.dispose();
+      t6.dispose();
     });
 
     _titleTextControllers.removeAt(i).dispose();
@@ -750,10 +756,14 @@ class _TransactionPageState extends State<TransactionPage>
       _foreignCurrencies.first = _foreignCurrency;
     }
 
-    _otherAccountTextControllers.add(TextEditingController(
-      text: _otherAccountTextControllers.firstOrNull?.text,
+    _sourceAccountTextControllers.add(TextEditingController(
+      text: _sourceAccountTextControllers.firstOrNull?.text,
     ));
-    _otherAccountFocusNodes.add(FocusNode());
+    _sourceAccountFocusNodes.add(FocusNode());
+    _destinationAccountTextControllers.add(TextEditingController(
+      text: _destinationAccountTextControllers.firstOrNull?.text,
+    ));
+    _destinationAccountFocusNodes.add(FocusNode());
     _categoryTextControllers.add(TextEditingController());
     _categoryFocusNodes.add(FocusNode());
     _budgetTextControllers.add(TextEditingController());
@@ -816,18 +826,35 @@ class _TransactionPageState extends State<TransactionPage>
 
   void splitTransactionCheckAccounts() {
     bool update = false;
-    if (_otherAccountTextControllers.every((TextEditingController e) =>
-        e.text == _otherAccountTextControllers.first.text)) {
-      if (_otherAccountTextController.text !=
-          _otherAccountTextControllers.first.text) {
-        _otherAccountTextController.text =
-            _otherAccountTextControllers.first.text;
+    if (_sourceAccountTextControllers.every((TextEditingController e) =>
+        e.text == _sourceAccountTextControllers.first.text)) {
+      if (_sourceAccountTextController.text !=
+          _sourceAccountTextControllers.first.text) {
+        _sourceAccountTextController.text =
+            _sourceAccountTextControllers.first.text;
         update = true;
       }
     } else {
-      if (_otherAccountTextController.text !=
+      if (_sourceAccountTextController.text !=
           "<${S.of(context).generalMultiple}>") {
-        _otherAccountTextController.text = "<${S.of(context).generalMultiple}>";
+        _sourceAccountTextController.text =
+            "<${S.of(context).generalMultiple}>";
+        update = true;
+      }
+    }
+    if (_destinationAccountTextControllers.every((TextEditingController e) =>
+        e.text == _destinationAccountTextControllers.first.text)) {
+      if (_destinationAccountTextController.text !=
+          _destinationAccountTextControllers.first.text) {
+        _destinationAccountTextController.text =
+            _destinationAccountTextControllers.first.text;
+        update = true;
+      }
+    } else {
+      if (_destinationAccountTextController.text !=
+          "<${S.of(context).generalMultiple}>") {
+        _destinationAccountTextController.text =
+            "<${S.of(context).generalMultiple}>";
         update = true;
       }
     }
@@ -932,31 +959,35 @@ class _TransactionPageState extends State<TransactionPage>
                     late Response<TransactionSingle> resp;
 
                     if (!widget.clone && widget.transaction != null) {
+                      if (_transactionType ==
+                          TransactionTypeProperty.swaggerGeneratedUnknown) {
+                        msg.showSnackBar(const SnackBar(
+                          content: Text(
+                              "Please fill in the accounts first"), // :TODO: l10n
+                          behavior: SnackBarBehavior.floating,
+                        ));
+                        setState(() {
+                          _saving = false;
+                        });
+                        return;
+                      }
                       String id = widget.transaction!.id;
                       List<TransactionSplitUpdate> txS =
                           <TransactionSplitUpdate>[];
                       for (int i = 0; i < _localAmounts.length; i++) {
                         late String sourceName, destinationName;
-                        String? sourceId, destinationId;
-                        if (_transactionType ==
-                                TransactionTypeProperty.withdrawal ||
-                            _transactionType ==
-                                TransactionTypeProperty.transfer) {
-                          sourceName = _ownAccountTextController.text;
-                          sourceId = _ownAccountId;
-                          destinationName =
-                              _otherAccountTextControllers[i].text;
-                          if (destinationName.isEmpty) {
-                            destinationName = _otherAccountTextController.text;
-                          }
-                        } else {
-                          destinationName = _ownAccountTextController.text;
-                          destinationId = _ownAccountId;
-                          sourceName = _otherAccountTextControllers[i].text;
-                          if (sourceName.isEmpty) {
-                            sourceName = _otherAccountTextController.text;
-                          }
+
+                        sourceName = _sourceAccountTextControllers[i].text;
+                        if (sourceName.isEmpty) {
+                          sourceName = _sourceAccountTextController.text;
                         }
+                        destinationName =
+                            _destinationAccountTextControllers[i].text;
+                        if (destinationName.isEmpty) {
+                          destinationName =
+                              _destinationAccountTextController.text;
+                        }
+
                         txS.add(TransactionSplitUpdate(
                           amount: _localAmounts[i].toString(),
                           billId: _bills[i]?.id ?? "0",
@@ -969,7 +1000,6 @@ class _TransactionPageState extends State<TransactionPage>
                           description: _split
                               ? _titleTextControllers[i].text
                               : _titleTextController.text,
-                          destinationId: destinationId,
                           destinationName: destinationName,
                           foreignAmount: _split
                               ? _foreignCurrencies[i] != null
@@ -983,7 +1013,6 @@ class _TransactionPageState extends State<TransactionPage>
                               : _foreignCurrency?.id,
                           notes: _noteTextControllers[i].text,
                           order: i,
-                          sourceId: sourceId,
                           sourceName: sourceName,
                           tags: _tags[i].tags,
                           transactionJournalId:
@@ -1011,26 +1040,18 @@ class _TransactionPageState extends State<TransactionPage>
                           <TransactionSplitStore>[];
                       for (int i = 0; i < _localAmounts.length; i++) {
                         late String sourceName, destinationName;
-                        String? sourceId, destinationId;
-                        if (_transactionType ==
-                                TransactionTypeProperty.withdrawal ||
-                            _transactionType ==
-                                TransactionTypeProperty.transfer) {
-                          sourceName = _ownAccountTextController.text;
-                          sourceId = _ownAccountId;
-                          destinationName =
-                              _otherAccountTextControllers[i].text;
-                          if (destinationName.isEmpty) {
-                            destinationName = _otherAccountTextController.text;
-                          }
-                        } else {
-                          destinationName = _ownAccountTextController.text;
-                          destinationId = _ownAccountId;
-                          sourceName = _otherAccountTextControllers[i].text;
-                          if (sourceName.isEmpty) {
-                            sourceName = _otherAccountTextController.text;
-                          }
+
+                        sourceName = _sourceAccountTextControllers[i].text;
+                        if (sourceName.isEmpty) {
+                          sourceName = _sourceAccountTextController.text;
                         }
+                        destinationName =
+                            _destinationAccountTextControllers[i].text;
+                        if (destinationName.isEmpty) {
+                          destinationName =
+                              _destinationAccountTextController.text;
+                        }
+
                         txS.add(TransactionSplitStore(
                           type: _transactionType,
                           date: _date,
@@ -1044,7 +1065,6 @@ class _TransactionPageState extends State<TransactionPage>
                               ? _budgetTextControllers[i].text
                               : "",
                           categoryName: _categoryTextControllers[i].text,
-                          destinationId: destinationId,
                           destinationName: destinationName,
                           foreignAmount: _split
                               ? _foreignCurrencies[i] != null
@@ -1058,7 +1078,6 @@ class _TransactionPageState extends State<TransactionPage>
                               : _foreignCurrency?.id,
                           notes: _noteTextControllers[i].text,
                           order: i,
-                          sourceId: sourceId,
                           sourceName: sourceName,
                           tags: _tags[i].tags,
                           reconciled: _reconciled,
@@ -1209,10 +1228,6 @@ class _TransactionPageState extends State<TransactionPage>
   List<Widget> _transactionDetailBuilder(BuildContext context) {
     log.fine(() => "transactionDetailBuilder()");
     log.finer(() => "splits: ${_localAmounts.length}, split? $_split");
-    bool showAccountSelection =
-        _transactionType != TransactionTypeProperty.transfer &&
-            _otherAccountTextControllers.every((TextEditingController e) =>
-                e.text != _otherAccountTextController.text);
 
     List<Widget> childs = <Widget>[];
     const Widget hDivider = SizedBox(height: 16);
@@ -1267,6 +1282,219 @@ class _TransactionPageState extends State<TransactionPage>
       ),
     );
     childs.add(hDivider);
+
+    // BETA LAYOUT BEGIN
+    // Amount, Date & Time
+    childs.add(
+      // Date/Time select might overflow, so we need to be able to scroll horizontally.
+      SizedBox(
+        height:
+            64, // 64 is measured height from layout inspector of a normal row.
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: <Widget>[
+            SizedBox(
+              width: 130,
+              child: NumberInput(
+                icon: const Icon(Icons.monetization_on),
+                hintText: _foreignCurrency?.zero() ??
+                    _localCurrency?.zero() ??
+                    NumberFormat.currency(decimalDigits: 2).format(0),
+                decimals: _foreignCurrency?.attributes.decimalPlaces ??
+                    _localCurrency?.attributes.decimalPlaces ??
+                    2,
+                //style: Theme.of(context).textTheme.headlineLarge,
+                controller: (_foreignCurrency != null)
+                    ? _foreignAmountTextController
+                    : _localAmountTextController,
+                disabled: _split || (_reconciled && _initiallyReconciled),
+                onChanged: (String string) => (_foreignCurrency != null)
+                    ? _foreignAmounts[0] = double.tryParse(string) ?? 0
+                    : _localAmounts[0] = double.tryParse(string) ?? 0,
+              ),
+            ),
+            vDivider,
+            IntrinsicWidth(
+              child: TextFormField(
+                controller: _dateTextController,
+                decoration: const InputDecoration(
+                  //prefixIcon: Icon(Icons.calendar_month),
+                  border: OutlineInputBorder(),
+                ),
+                readOnly: true,
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: _date,
+                    locale: Locale(
+                      Intl.defaultLocale!.split("_").first,
+                      Intl.defaultLocale!.split("_").last,
+                    ),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2101),
+                  );
+
+                  if (pickedDate == null) {
+                    return;
+                  }
+
+                  setState(() {
+                    _date = tz.TZDateTime.from(
+                      _date.copyWith(
+                        year: pickedDate.year,
+                        month: pickedDate.month,
+                        day: pickedDate.day,
+                      ),
+                      _date.location,
+                    );
+                    _dateTextController.text = DateFormat.yMMMd().format(_date);
+                  });
+                },
+              ),
+            ),
+            vDivider,
+            IntrinsicWidth(
+              child: TextFormField(
+                controller: _timeTextController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
+                readOnly: true,
+                onTap: () async {
+                  TimeOfDay? pickedTime = await showTimePicker(
+                    context: context,
+                    initialTime: _date.getTimeOfDay(),
+                  );
+
+                  if (pickedTime == null) {
+                    return;
+                  }
+
+                  setState(() {
+                    _date = _date.setTimeOfDay(pickedTime);
+                    _timeTextController.text = DateFormat.Hm().format(_date);
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    childs.add(hDivider);
+
+    // Source Account
+    childs.add(
+      Row(
+        children: <Widget>[
+          const Icon(Icons.arrow_back),
+          vDivider,
+          Expanded(
+            child: AutoCompleteText<AutocompleteAccount>(
+              labelText: "Source account", // :TODO: l10n
+              //labelIcon: Icons.account_balance,
+              textController: _sourceAccountTextController,
+              disabled: _reconciled && _initiallyReconciled,
+              focusNode: _sourceAccountFocusNode,
+              /*errorText:
+                  _transactionType == TransactionTypeProperty.withdrawal &&
+                          _sourceAccountId == null
+                      ? S.of(context).transactionErrorInvalidAccount
+                      : null,*/
+              errorIconOnly: true,
+              onChanged: (String text) {
+                for (TextEditingController e in _sourceAccountTextControllers) {
+                  e.text = text;
+                }
+              },
+              onSelected: (AutocompleteAccount option) {
+                for (TextEditingController e in _sourceAccountTextControllers) {
+                  e.text = option.name;
+                }
+                log.finer(() => "selected source account ${option.name}");
+                checkAccountCurrency(option);
+              },
+              displayStringForOption: (AutocompleteAccount option) =>
+                  option.name,
+              optionsBuilder: (TextEditingValue textEditingValue) async {
+                try {
+                  final FireflyIii api = context.read<FireflyService>().api;
+                  final Response<AutocompleteAccountArray> response =
+                      await api.v1AutocompleteAccountsGet(
+                    query: textEditingValue.text,
+                    types: _transactionType.sourceAccountTypes,
+                  );
+                  apiThrowErrorIfEmpty(response, mounted ? context : null);
+
+                  return response.body!;
+                } catch (e, stackTrace) {
+                  log.severe("Error while fetching autocomplete from API", e,
+                      stackTrace);
+                  return const Iterable<AutocompleteAccount>.empty();
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+    childs.add(hDivider);
+
+    childs.add(Text(_transactionType.toString()));
+    childs.add(hDivider);
+
+    // Destination Account
+    childs.add(
+      Row(
+        children: <Widget>[
+          const Icon(Icons.arrow_forward),
+          vDivider,
+          Expanded(
+            child: AutoCompleteText<AutocompleteAccount>(
+              labelText: "Destination account", // :TODO: l10n
+              textController: _destinationAccountTextController,
+              focusNode: _destinationAccountFocusNode,
+              /*errorText: _transactionType == TransactionTypeProperty.deposit &&
+                      _destinationAccountId == null
+                  ? S.of(context).transactionErrorInvalidAccount
+                  : null,*/
+              errorIconOnly: true,
+              displayStringForOption: (AutocompleteAccount option) =>
+                  option.name,
+              onSelected: (AutocompleteAccount option) {
+                for (TextEditingController e in _sourceAccountTextControllers) {
+                  e.text = option.name;
+                }
+                log.finer(() => "selected source account ${option.name}");
+                checkAccountCurrency(option);
+              },
+              optionsBuilder: (TextEditingValue textEditingValue) async {
+                try {
+                  final FireflyIii api = context.read<FireflyService>().api;
+                  final Response<AutocompleteAccountArray> response =
+                      await api.v1AutocompleteAccountsGet(
+                    query: textEditingValue.text,
+                    types: _transactionType.destinationAccountTypes,
+                  );
+                  apiThrowErrorIfEmpty(response, mounted ? context : null);
+
+                  return response.body!;
+                } catch (e, stackTrace) {
+                  log.severe("Error while fetching autocomplete from API", e,
+                      stackTrace);
+                  return const Iterable<AutocompleteAccount>.empty();
+                }
+              },
+              disabled: _reconciled && _initiallyReconciled,
+            ),
+          ),
+        ],
+      ),
+    );
+
+    // BETA LAYOUT END
+
+    /*
     // Amount, Currency, Local Currency
     childs.add(
       Row(
@@ -1611,6 +1839,7 @@ class _TransactionPageState extends State<TransactionPage>
         ),
       ),
     );
+    */
     childs.add(hDivider);
     // Cards with (Split Title), Category, (Split Amount), Tags, Notes
     for (int i = 0; i < _localAmounts.length; i++) {
@@ -1618,7 +1847,7 @@ class _TransactionPageState extends State<TransactionPage>
         SizeTransition(
           sizeFactor: _cardsAnimation[i],
           axis: Axis.vertical,
-          child: _buildSplitWidget(context, i, showAccountSelection),
+          child: _buildSplitWidget(context, i),
         ),
       );
     }
@@ -1652,9 +1881,15 @@ class _TransactionPageState extends State<TransactionPage>
     }
   }
 
-  Card _buildSplitWidget(
-      BuildContext context, int i, bool showAccountSelection) {
+  Card _buildSplitWidget(BuildContext context, int i) {
     const Widget hDivider = SizedBox(height: 16);
+
+    final bool showSourceAccountSelection = _sourceAccountTextControllers.every(
+        (TextEditingController e) =>
+            e.text != _sourceAccountTextController.text);
+    final bool showDestinationAccountSelection =
+        _destinationAccountTextControllers.every((TextEditingController e) =>
+            e.text != _destinationAccountTextController.text);
 
     return Card(
       key: ValueKey<int>(i),
@@ -1681,18 +1916,16 @@ class _TransactionPageState extends State<TransactionPage>
                     child: _split ? hDivider : const SizedBox.shrink(),
                   ),
                   AnimatedHeight(
-                    child: showAccountSelection
+                    child: showSourceAccountSelection
                         ? Row(
                             children: <Widget>[
                               Expanded(
                                 child: AutoCompleteText<AutocompleteAccount>(
-                                  labelText: S
-                                      .of(context)
-                                      .transactionFormLabelAccountForeign,
+                                  labelText: "Source Account", // :TODO: l10n
                                   labelIcon: Icons.account_balance,
                                   textController:
-                                      _otherAccountTextControllers[i],
-                                  focusNode: _otherAccountFocusNodes[i],
+                                      _sourceAccountTextControllers[i],
+                                  focusNode: _sourceAccountFocusNodes[i],
                                   onChanged: (String text) {
                                     splitTransactionCheckAccounts();
                                   },
@@ -1711,13 +1944,8 @@ class _TransactionPageState extends State<TransactionPage>
                                           response =
                                           await api.v1AutocompleteAccountsGet(
                                         query: textEditingValue.text,
-                                        types: _transactionType ==
-                                                TransactionTypeProperty
-                                                    .withdrawal
-                                            ? _transactionType
-                                                .destinationAccountTypes
-                                            : _transactionType
-                                                .sourceAccountTypes,
+                                        types:
+                                            _transactionType.sourceAccountTypes,
                                       );
                                       apiThrowErrorIfEmpty(
                                           response, mounted ? context : null);
@@ -1739,7 +1967,64 @@ class _TransactionPageState extends State<TransactionPage>
                         : const SizedBox.shrink(),
                   ),
                   AnimatedHeight(
-                    child: showAccountSelection
+                    child: showSourceAccountSelection
+                        ? hDivider
+                        : const SizedBox.shrink(),
+                  ),
+                  AnimatedHeight(
+                    child: showDestinationAccountSelection
+                        ? Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: AutoCompleteText<AutocompleteAccount>(
+                                  labelText:
+                                      "Destination Account", // :TODO: l10n
+                                  labelIcon: Icons.account_balance,
+                                  textController:
+                                      _destinationAccountTextControllers[i],
+                                  focusNode: _destinationAccountFocusNodes[i],
+                                  onChanged: (String text) {
+                                    splitTransactionCheckAccounts();
+                                  },
+                                  onSelected: (AutocompleteAccount option) {
+                                    splitTransactionCheckAccounts();
+                                  },
+                                  displayStringForOption:
+                                      (AutocompleteAccount option) =>
+                                          option.name,
+                                  optionsBuilder: (TextEditingValue
+                                      textEditingValue) async {
+                                    try {
+                                      final FireflyIii api =
+                                          context.read<FireflyService>().api;
+                                      final Response<AutocompleteAccountArray>
+                                          response =
+                                          await api.v1AutocompleteAccountsGet(
+                                        query: textEditingValue.text,
+                                        types: _transactionType
+                                            .destinationAccountTypes,
+                                      );
+                                      apiThrowErrorIfEmpty(
+                                          response, mounted ? context : null);
+
+                                      return response.body!;
+                                    } catch (e, stackTrace) {
+                                      log.severe(
+                                          "Error while fetching autocomplete from API",
+                                          e,
+                                          stackTrace);
+                                      return const Iterable<
+                                          AutocompleteAccount>.empty();
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          )
+                        : const SizedBox.shrink(),
+                  ),
+                  AnimatedHeight(
+                    child: showDestinationAccountSelection
                         ? hDivider
                         : const SizedBox.shrink(),
                   ),
@@ -1945,16 +2230,20 @@ class _TransactionPageState extends State<TransactionPage>
                               : null,
                         ),
                         hDivider,
-                        if (!showAccountSelection) ...<Widget>[
+                        if (!showSourceAccountSelection &&
+                            !showDestinationAccountSelection) ...<Widget>[
                           IconButton(
                             icon: const Icon(Icons.add_business),
                             onPressed: _split &&
-                                    !showAccountSelection &&
+                                    !showSourceAccountSelection &&
+                                    !showDestinationAccountSelection &&
                                     !(_reconciled && _initiallyReconciled)
                                 ? () {
                                     log.fine(
                                         () => "adding separate account for $i");
-                                    _otherAccountTextControllers[i].text = "";
+                                    // :TODO: check if source or destination account
+                                    _destinationAccountTextControllers[i].text =
+                                        "";
                                     splitTransactionCheckAccounts();
                                   }
                                 : null,

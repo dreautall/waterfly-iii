@@ -1,6 +1,6 @@
 Waterfly III é um aplicativo não oficial para sua própria instância do Firefly III, um gerenciador financeiro gratuito e de código aberto.
 
-Este aplicativo requer uma instância do Firefly III auto-hospedada em seu próprio servidor. Visite https://www.firefly-iii.org/ para obter mais informações sobre o software. É apenas um aplicativo complementar e não pode ser executado de forma independente!
+Este aplicativo requer uma instância do Firefly III auto-hospedada em seu próprio servidor. É apenas um aplicativo complementar e não pode ser executado de forma independente!
 
 Características:
 

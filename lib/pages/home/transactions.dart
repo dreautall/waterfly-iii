@@ -149,7 +149,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
       // logic later already detects categoryId == -1 (= no category)
       // there is no /api/v1/categories call for "no category" anyways
       if (widget.category != null) {
-        debugPrint("setting filter for cat ${widget.category!.id}");
         _filters.category = widget.category;
         _filters.updateFilters();
       }

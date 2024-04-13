@@ -1,0 +1,17 @@
+Waterfly III é um aplicativo não oficial para sua própria instância do Firefly III, um gerenciador financeiro gratuito e de código aberto.
+
+Este aplicativo requer uma instância do Firefly III auto-hospedada em seu próprio servidor. É apenas um aplicativo complementar e não pode ser executado de forma independente!
+
+Características:
+
+- Painel com gráficos e visão geral do orçamento
+- Lista de transações com filtros
+- Adicione e edite transações com preenchimento automático, incluindo anexos, transações divididas e suporte a várias moedas
+- Suporte ao Piggy Bank (visualizar e adicionar dinheiro)
+- Serviço de ouvinte de notificação para criar facilmente novas transações com base em notificações recebidas (por exemplo, do Google Pay ou de seu aplicativo bancário)
+- Código totalmente aberto: https://github.com/dreutall/waterfly-iii
+- Sem anúncios ou rastreadores
+
+Contribuição:
+
+Se você encontrar uma falha ou sentir falta de um recurso, sinta-se à vontade para dar opinião na Play Store, enviar-me um e-mail ou abrir um chamado no GitHub.

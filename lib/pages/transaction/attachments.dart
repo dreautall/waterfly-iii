@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:chopper/chopper.dart' show HttpMethod, Response;
 import 'package:file_picker/file_picker.dart';
 import 'package:filesize/filesize.dart';
-import 'package:open_filex/open_filex.dart';
+import 'package:open_file_plus/open_file_plus.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
@@ -95,7 +95,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
         });
         log.finest(() => "writing ${fileData.length} bytes to $filePath");
         await File(filePath).writeAsBytes(fileData, flush: true);
-        final OpenResult file = await OpenFilex.open(filePath);
+        final OpenResult file = await OpenFile.open(filePath);
         if (file.type != ResultType.done) {
           log.severe("error opening file", file.message);
           msg.showSnackBar(SnackBar(
@@ -247,7 +247,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     final S l10n = S.of(context);
 
     final OpenResult file =
-        await OpenFilex.open(attachment.attributes.uploadUrl);
+        await OpenFile.open(attachment.attributes.uploadUrl);
     if (file.type != ResultType.done) {
       log.severe("error opening file", file.message);
       msg.showSnackBar(SnackBar(

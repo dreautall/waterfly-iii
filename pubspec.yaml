@@ -27,10 +27,9 @@ dependencies:
   badges: ^3.1.2
   filesize: ^2.0.1
   community_charts_flutter: ^1.0.2
-  open_filex: ^4.4.0
   file_picker: ^8.0.0+1
   animations: ^2.0.11
-  flutter_local_notifications: ^17.0.0
+  flutter_local_notifications: ^17.0.1
   notifications_listener_service:
     git:
       url: https://github.com/dreautall/notification_listener_service.git
@@ -52,6 +51,7 @@ dependencies:
   flutter_sharing_intent: ^1.1.1
   cronet_http: ^1.2.0
   http: ^1.2.1
+  open_file_plus: ^3.4.1+1
 
 dev_dependencies:
   flutter_lints: ^3.0.0

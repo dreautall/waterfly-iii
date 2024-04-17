@@ -27,8 +27,8 @@ jobs:
       # Call setup_env action to setup workspace
       - uses: ./.github/actions/setup_env
         with:
-          java-version: ${{ vars.JAVA_VERSION }}
-          flutter-channel: ${{ vars.FLUTTER_CHANNEL }}
+          java-version: 17.x
+          flutter-channel: stable
 
       # Generate keystore
       - uses: timheuer/base64-to-file@v1.2

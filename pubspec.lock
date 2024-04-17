@@ -854,14 +854,14 @@ packages:
       url: "https://github.com/dreautall/notification_listener_service.git"
     source: git
     version: "0.0.2"
-  open_filex:
+  open_file_plus:
     dependency: "direct main"
     description:
-      name: open_filex
-      sha256: "74e2280754cf8161e860746c3181db2c996d6c1909c7057b738ede4a469816b8"
+      name: open_file_plus
+      sha256: "01ad7011d46d253aa22e5f0bc7345ca49cfe652c50ae9b0af945491c1728a8c3"
       url: "https://pub.dev"
     source: hosted
-    version: "4.4.0"
+    version: "3.4.1+1"
   package_config:
     dependency: transitive
     description:

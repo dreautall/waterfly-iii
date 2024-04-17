@@ -293,7 +293,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     String foreignText = "";
     String sourceName = "";
     String destinationName = "";
-    List<String> tags = List<String>.empty();
+    List<String> tags = <String>[];
     late bool reconciled;
     for (TransactionSplit trans in transactions) {
       if (trans.categoryName?.isNotEmpty ?? false) {
@@ -311,7 +311,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       if (trans.hasAttachments ?? false) {
         hasAttachments = true;
       }
-      if ((trans.tags ?? List<String>.empty()).isNotEmpty) {
+      if (trans.tags?.isNotEmpty ?? false) {
         tags = trans.tags!;
       }
       amount += double.parse(trans.amount);
@@ -529,7 +529,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               RichText(
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
@@ -547,7 +547,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             padding: const EdgeInsets.all(6.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
-                              children: [
+                              children: <Widget>[
                                 const Icon(
                                   Icons.label_outline,
                                   size: 16,
@@ -557,10 +557,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
                                   child: RichText(
                                     overflow: TextOverflow.fade,
                                     text: TextSpan(
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                        text: tag),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                      text: tag,
+                                    ),
                                   ),
                                 ),
                               ],

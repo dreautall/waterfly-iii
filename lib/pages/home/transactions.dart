@@ -293,6 +293,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     String foreignText = "";
     String sourceName = "";
     String destinationName = "";
+    List<String> tags = <String>[];
     late bool reconciled;
     for (TransactionSplit trans in transactions) {
       if (trans.categoryName?.isNotEmpty ?? false) {
@@ -309,6 +310,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
       }
       if (trans.hasAttachments ?? false) {
         hasAttachments = true;
+      }
+      if (trans.tags?.isNotEmpty ?? false) {
+        tags = trans.tags!;
       }
       amount += double.parse(trans.amount);
       if (trans.foreignAmount?.isNotEmpty ?? false) {
@@ -523,13 +527,52 @@ class _HomeTransactionsState extends State<HomeTransactions>
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          subtitle: RichText(
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            text: TextSpan(
-              style: Theme.of(context).textTheme.bodyMedium,
-              children: subtitle,
-            ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              RichText(
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                text: TextSpan(
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  children: subtitle,
+                ),
+              ),
+              if (tags.isNotEmpty) ...<Widget>[
+                Wrap(
+                  children: tags
+                      .map(
+                        (String tag) => Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(6.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                const Icon(
+                                  Icons.label_outline,
+                                  size: 16,
+                                ),
+                                const SizedBox(width: 5),
+                                Flexible(
+                                  child: RichText(
+                                    overflow: TextOverflow.fade,
+                                    text: TextSpan(
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                      text: tag,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                )
+              ]
+            ],
           ),
           isThreeLine: true,
           shape: const RoundedRectangleBorder(

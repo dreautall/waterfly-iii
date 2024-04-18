@@ -1393,8 +1393,8 @@ class _TransactionPageState extends State<TransactionPage>
     // Source Account, floating type element
     childs.add(
       Stack(
-        clipBehavior: Clip.none,
         children: <Widget>[
+          const SizedBox(height: 64 + 16 + 64), // Padding for Stack
           Row(
             children: <Widget>[
               const Icon(Icons.arrow_back),
@@ -1464,8 +1464,82 @@ class _TransactionPageState extends State<TransactionPage>
               ),
             ],
           ),
+          // Destination account
+          Positioned.fill(
+            top: 64 + 16,
+            child: Row(
+              children: <Widget>[
+                const Icon(Icons.arrow_forward),
+                vDivider,
+                Expanded(
+                  child: AutoCompleteText<AutocompleteAccount>(
+                    labelText: "Destination account", // :TODO: l10n
+                    textController: _destinationAccountTextController,
+                    focusNode: _destinationAccountFocusNode,
+                    /*errorText: _transactionType == TransactionTypeProperty.deposit &&
+                      _destinationAccountId == null
+                  ? S.of(context).transactionErrorInvalidAccount
+                  : null,*/
+                    onChanged: (_) {
+                      // Reset own account & account type when changed
+                      if (_destinationAccountType ==
+                          AccountTypeProperty.assetAccount) {
+                        _ownAccountId = null;
+                      }
+                      _destinationAccountType =
+                          AccountTypeProperty.swaggerGeneratedUnknown;
+                      checkTXType();
+                    },
+                    errorIconOnly: true,
+                    displayStringForOption: (AutocompleteAccount option) =>
+                        option.name,
+                    onSelected: (AutocompleteAccount option) {
+                      for (TextEditingController e
+                          in _destinationAccountTextControllers) {
+                        e.text = option.name;
+                      }
+                      _destinationAccountType =
+                          AccountTypeProperty.values.firstWhere(
+                        (AccountTypeProperty e) => e.value == option.type,
+                        orElse: () =>
+                            AccountTypeProperty.swaggerGeneratedUnknown,
+                      );
+                      if (_destinationAccountType ==
+                          AccountTypeProperty.assetAccount) {
+                        _ownAccountId = option.id;
+                      }
+                      log.finer(() =>
+                          "selected destination account ${option.name}, type ${_destinationAccountType.toString()} (${option.type})");
+                      checkTXType();
+                      checkAccountCurrency(option);
+                    },
+                    optionsBuilder: (TextEditingValue textEditingValue) async {
+                      try {
+                        final FireflyIii api =
+                            context.read<FireflyService>().api;
+                        final Response<AutocompleteAccountArray> response =
+                            await api.v1AutocompleteAccountsGet(
+                          query: textEditingValue.text,
+                          types: _sourceAccountType.allowedOpposingTypes(true),
+                        );
+                        apiThrowErrorIfEmpty(
+                            response, mounted ? context : null);
+
+                        return response.body!;
+                      } catch (e, stackTrace) {
+                        log.severe("Error while fetching autocomplete from API",
+                            e, stackTrace);
+                        return const Iterable<AutocompleteAccount>.empty();
+                      }
+                    },
+                    disabled: _reconciled && _initiallyReconciled,
+                  ),
+                ),
+              ],
+            ),
+          ),
           Positioned(
-            top: 48,
+            top: (64 + 16 + 64 - 56) / 2,
             right: 15,
             child: FloatingActionButton.extended(
               extendedIconLabelSpacing: _isTXExtended ? 10 : 0,
@@ -1480,77 +1554,6 @@ class _TransactionPageState extends State<TransactionPage>
               ),
               icon: Icon(_transactionType.verticalIcon),
               backgroundColor: _transactionType.color,
-            ),
-          ),
-        ],
-      ),
-    );
-    childs.add(hDivider);
-
-    // Destination account
-    childs.add(
-      Row(
-        children: <Widget>[
-          const Icon(Icons.arrow_forward),
-          vDivider,
-          Expanded(
-            child: AutoCompleteText<AutocompleteAccount>(
-              labelText: "Destination account", // :TODO: l10n
-              textController: _destinationAccountTextController,
-              focusNode: _destinationAccountFocusNode,
-              /*errorText: _transactionType == TransactionTypeProperty.deposit &&
-                      _destinationAccountId == null
-                  ? S.of(context).transactionErrorInvalidAccount
-                  : null,*/
-              onChanged: (_) {
-                // Reset own account & account type when changed
-                if (_destinationAccountType ==
-                    AccountTypeProperty.assetAccount) {
-                  _ownAccountId = null;
-                }
-                _destinationAccountType =
-                    AccountTypeProperty.swaggerGeneratedUnknown;
-                checkTXType();
-              },
-              errorIconOnly: true,
-              displayStringForOption: (AutocompleteAccount option) =>
-                  option.name,
-              onSelected: (AutocompleteAccount option) {
-                for (TextEditingController e
-                    in _destinationAccountTextControllers) {
-                  e.text = option.name;
-                }
-                _destinationAccountType = AccountTypeProperty.values.firstWhere(
-                  (AccountTypeProperty e) => e.value == option.type,
-                  orElse: () => AccountTypeProperty.swaggerGeneratedUnknown,
-                );
-                if (_destinationAccountType ==
-                    AccountTypeProperty.assetAccount) {
-                  _ownAccountId = option.id;
-                }
-                log.finer(() =>
-                    "selected destination account ${option.name}, type ${_destinationAccountType.toString()} (${option.type})");
-                checkTXType();
-                checkAccountCurrency(option);
-              },
-              optionsBuilder: (TextEditingValue textEditingValue) async {
-                try {
-                  final FireflyIii api = context.read<FireflyService>().api;
-                  final Response<AutocompleteAccountArray> response =
-                      await api.v1AutocompleteAccountsGet(
-                    query: textEditingValue.text,
-                    types: _sourceAccountType.allowedOpposingTypes(true),
-                  );
-                  apiThrowErrorIfEmpty(response, mounted ? context : null);
-
-                  return response.body!;
-                } catch (e, stackTrace) {
-                  log.severe("Error while fetching autocomplete from API", e,
-                      stackTrace);
-                  return const Iterable<AutocompleteAccount>.empty();
-                }
-              },
-              disabled: _reconciled && _initiallyReconciled,
             ),
           ),
         ],

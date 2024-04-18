@@ -260,12 +260,14 @@ class _TransactionPageState extends State<TransactionPage>
           text: trans.sourceName,
         ));
         _sourceAccountFocusNodes.add(FocusNode());
+        _sourceAccountType = trans.sourceType!;
 
         /// target account
         _destinationAccountTextControllers.add(TextEditingController(
           text: trans.destinationName,
         ));
         _destinationAccountFocusNodes.add(FocusNode());
+        _destinationAccountType = trans.destinationType!;
 
         /// foreign currency
         //// foreign amount
@@ -1921,6 +1923,9 @@ class _TransactionPageState extends State<TransactionPage>
   }
 
   void checkTXType() {
+    // Don't change TX type when editing!
+    if (!widget.clone && widget.transaction != null) return;
+
     final TransactionTypeProperty txType =
         accountsToTransaction(_sourceAccountType, _destinationAccountType);
     if (_transactionType != txType) {

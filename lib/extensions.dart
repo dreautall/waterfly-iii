@@ -56,16 +56,14 @@ extension TransactionType on TransactionTypeProperty {
     switch (this) {
       case TransactionTypeProperty.deposit:
         return Colors.green;
-
       case TransactionTypeProperty.withdrawal:
         return Colors.red;
-
       case TransactionTypeProperty.transfer:
         return Colors.blue;
       // reconciliation
       // openingBalance
       default:
-        return Colors.black;
+        return Colors.grey;
     }
   }
 
@@ -73,16 +71,44 @@ extension TransactionType on TransactionTypeProperty {
     switch (this) {
       case TransactionTypeProperty.deposit:
         return Icons.arrow_forward;
-
       case TransactionTypeProperty.withdrawal:
         return Icons.arrow_back;
-
       case TransactionTypeProperty.transfer:
         return Icons.swap_horiz;
       // reconciliation
       // openingBalance
       default:
         return Icons.question_mark;
+    }
+  }
+
+  IconData get verticalIcon {
+    switch (this) {
+      case TransactionTypeProperty.deposit:
+        return Icons.arrow_downward;
+      case TransactionTypeProperty.withdrawal:
+        return Icons.arrow_downward;
+      case TransactionTypeProperty.transfer:
+        return Icons.swap_vert;
+      // reconciliation
+      // openingBalance
+      default:
+        return Icons.question_mark;
+    }
+  }
+
+  String friendlyName(BuildContext context) {
+    switch (this) {
+      case TransactionTypeProperty.deposit:
+        return S.of(context).transactionTypeDeposit;
+      case TransactionTypeProperty.withdrawal:
+        return S.of(context).transactionTypeWithdrawal;
+      case TransactionTypeProperty.transfer:
+        return S.of(context).transactionTypeTransfer;
+      // reconciliation
+      // openingBalance
+      default:
+        return S.of(context).generalUnknown;
     }
   }
 

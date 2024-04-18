@@ -135,6 +135,7 @@ class _TransactionPageState extends State<TransactionPage>
   bool _split = false;
   bool _hasAttachments = false;
   List<AttachmentRead>? _attachments;
+  bool _isTXExtended = false;
 
   late TimeZoneHandler _tzHandler;
 
@@ -1389,70 +1390,96 @@ class _TransactionPageState extends State<TransactionPage>
     );
     childs.add(hDivider);
 
-    // Source Account
+    // Source Account, floating type element
     childs.add(
-      Row(
+      Stack(
+        clipBehavior: Clip.none,
         children: <Widget>[
-          const Icon(Icons.arrow_back),
-          vDivider,
-          Expanded(
-            child: AutoCompleteText<AutocompleteAccount>(
-              labelText: "Source account", // :TODO: l10n
-              //labelIcon: Icons.account_balance,
-              textController: _sourceAccountTextController,
-              disabled: _reconciled && _initiallyReconciled,
-              focusNode: _sourceAccountFocusNode,
-              /*errorText:
+          Row(
+            children: <Widget>[
+              const Icon(Icons.arrow_back),
+              vDivider,
+              Expanded(
+                child: AutoCompleteText<AutocompleteAccount>(
+                  labelText: "Source account", // :TODO: l10n
+                  //labelIcon: Icons.account_balance,
+                  textController: _sourceAccountTextController,
+                  disabled: _reconciled && _initiallyReconciled,
+                  focusNode: _sourceAccountFocusNode,
+                  /*errorText:
                   _transactionType == TransactionTypeProperty.withdrawal &&
                           _sourceAccountId == null
                       ? S.of(context).transactionErrorInvalidAccount
                       : null,*/
-              errorIconOnly: true,
-              onChanged: (_) {
-                debugPrint("fired");
-                // Reset own account & account type when changed
-                if (_sourceAccountType == AccountTypeProperty.assetAccount) {
-                  _ownAccountId = null;
-                }
-                _sourceAccountType =
-                    AccountTypeProperty.swaggerGeneratedUnknown;
-                checkTXType();
-              },
-              onSelected: (AutocompleteAccount option) {
-                for (TextEditingController e in _sourceAccountTextControllers) {
-                  e.text = option.name;
-                }
-                _sourceAccountType = AccountTypeProperty.values.firstWhere(
-                  (AccountTypeProperty e) => e.value == option.type,
-                  orElse: () => AccountTypeProperty.swaggerGeneratedUnknown,
-                );
-                log.finer(() =>
-                    "selected source account ${option.name}, type ${_sourceAccountType.toString()} (${option.type})");
-                if (_sourceAccountType == AccountTypeProperty.assetAccount) {
-                  _ownAccountId = option.id;
-                }
-                checkTXType();
-                checkAccountCurrency(option);
-              },
-              displayStringForOption: (AutocompleteAccount option) =>
-                  option.name,
-              optionsBuilder: (TextEditingValue textEditingValue) async {
-                try {
-                  final FireflyIii api = context.read<FireflyService>().api;
-                  final Response<AutocompleteAccountArray> response =
-                      await api.v1AutocompleteAccountsGet(
-                    query: textEditingValue.text,
-                    types: _destinationAccountType.allowedOpposingTypes(false),
-                  );
-                  apiThrowErrorIfEmpty(response, mounted ? context : null);
+                  errorIconOnly: true,
+                  onChanged: (_) {
+                    // Reset own account & account type when changed
+                    if (_sourceAccountType ==
+                        AccountTypeProperty.assetAccount) {
+                      _ownAccountId = null;
+                    }
+                    _sourceAccountType =
+                        AccountTypeProperty.swaggerGeneratedUnknown;
+                    checkTXType();
+                  },
+                  onSelected: (AutocompleteAccount option) {
+                    for (TextEditingController e
+                        in _sourceAccountTextControllers) {
+                      e.text = option.name;
+                    }
+                    _sourceAccountType = AccountTypeProperty.values.firstWhere(
+                      (AccountTypeProperty e) => e.value == option.type,
+                      orElse: () => AccountTypeProperty.swaggerGeneratedUnknown,
+                    );
+                    log.finer(() =>
+                        "selected source account ${option.name}, type ${_sourceAccountType.toString()} (${option.type})");
+                    if (_sourceAccountType ==
+                        AccountTypeProperty.assetAccount) {
+                      _ownAccountId = option.id;
+                    }
+                    checkTXType();
+                    checkAccountCurrency(option);
+                  },
+                  displayStringForOption: (AutocompleteAccount option) =>
+                      option.name,
+                  optionsBuilder: (TextEditingValue textEditingValue) async {
+                    try {
+                      final FireflyIii api = context.read<FireflyService>().api;
+                      final Response<AutocompleteAccountArray> response =
+                          await api.v1AutocompleteAccountsGet(
+                        query: textEditingValue.text,
+                        types:
+                            _destinationAccountType.allowedOpposingTypes(false),
+                      );
+                      apiThrowErrorIfEmpty(response, mounted ? context : null);
 
-                  return response.body!;
-                } catch (e, stackTrace) {
-                  log.severe("Error while fetching autocomplete from API", e,
-                      stackTrace);
-                  return const Iterable<AutocompleteAccount>.empty();
-                }
-              },
+                      return response.body!;
+                    } catch (e, stackTrace) {
+                      log.severe("Error while fetching autocomplete from API",
+                          e, stackTrace);
+                      return const Iterable<AutocompleteAccount>.empty();
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+          Positioned(
+            top: 48,
+            right: 15,
+            child: FloatingActionButton.extended(
+              extendedIconLabelSpacing: _isTXExtended ? 10 : 0,
+              extendedPadding: _isTXExtended ? null : const EdgeInsets.all(16),
+              onPressed: null,
+              label: AnimatedSize(
+                duration: animDurationEmphasized,
+                curve: animCurveEmphasized,
+                child: _isTXExtended
+                    ? Text(_transactionType.friendlyName(context))
+                    : const SizedBox(),
+              ),
+              icon: Icon(_transactionType.verticalIcon),
+              backgroundColor: _transactionType.color,
             ),
           ),
         ],
@@ -1460,10 +1487,7 @@ class _TransactionPageState extends State<TransactionPage>
     );
     childs.add(hDivider);
 
-    childs.add(Text(_transactionType.toString()));
-    childs.add(hDivider);
-
-    // Destination Account
+    // Destination account
     childs.add(
       Row(
         children: <Widget>[
@@ -1930,6 +1954,14 @@ class _TransactionPageState extends State<TransactionPage>
         accountsToTransaction(_sourceAccountType, _destinationAccountType);
     if (_transactionType != txType) {
       setState(() {
+        if (txType != TransactionTypeProperty.swaggerGeneratedUnknown) {
+          _isTXExtended = true;
+          Future<void>.delayed(animDurationEmphasized * 3, () {
+            setState(() {
+              _isTXExtended = false;
+            });
+          });
+        }
         _transactionType = txType;
       });
     }

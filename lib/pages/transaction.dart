@@ -941,7 +941,7 @@ class _TransactionPageState extends State<TransactionPage>
                     String? error;
 
                     if (_ownAccountId == null) {
-                      //error = "Please select an asset account.";
+                      error = "Please select an asset account."; // :TODO: l10n
                     }
                     if (_titleTextController.text.isEmpty) {
                       error = S.of(context).transactionErrorTitle;
@@ -1406,10 +1406,15 @@ class _TransactionPageState extends State<TransactionPage>
                       ? S.of(context).transactionErrorInvalidAccount
                       : null,*/
               errorIconOnly: true,
-              onChanged: (String text) {
-                for (TextEditingController e in _sourceAccountTextControllers) {
-                  e.text = text;
+              onChanged: (_) {
+                debugPrint("fired");
+                // Reset own account & account type when changed
+                if (_sourceAccountType == AccountTypeProperty.assetAccount) {
+                  _ownAccountId = null;
                 }
+                _sourceAccountType =
+                    AccountTypeProperty.swaggerGeneratedUnknown;
+                checkTXType();
               },
               onSelected: (AutocompleteAccount option) {
                 for (TextEditingController e in _sourceAccountTextControllers) {
@@ -1421,6 +1426,9 @@ class _TransactionPageState extends State<TransactionPage>
                 );
                 log.finer(() =>
                     "selected source account ${option.name}, type ${_sourceAccountType.toString()} (${option.type})");
+                if (_sourceAccountType == AccountTypeProperty.assetAccount) {
+                  _ownAccountId = option.id;
+                }
                 checkTXType();
                 checkAccountCurrency(option);
               },
@@ -1468,6 +1476,16 @@ class _TransactionPageState extends State<TransactionPage>
                       _destinationAccountId == null
                   ? S.of(context).transactionErrorInvalidAccount
                   : null,*/
+              onChanged: (_) {
+                // Reset own account & account type when changed
+                if (_destinationAccountType ==
+                    AccountTypeProperty.assetAccount) {
+                  _ownAccountId = null;
+                }
+                _destinationAccountType =
+                    AccountTypeProperty.swaggerGeneratedUnknown;
+                checkTXType();
+              },
               errorIconOnly: true,
               displayStringForOption: (AutocompleteAccount option) =>
                   option.name,
@@ -1480,6 +1498,10 @@ class _TransactionPageState extends State<TransactionPage>
                   (AccountTypeProperty e) => e.value == option.type,
                   orElse: () => AccountTypeProperty.swaggerGeneratedUnknown,
                 );
+                if (_destinationAccountType ==
+                    AccountTypeProperty.assetAccount) {
+                  _ownAccountId = option.id;
+                }
                 log.finer(() =>
                     "selected destination account ${option.name}, type ${_destinationAccountType.toString()} (${option.type})");
                 checkTXType();

@@ -76,17 +76,21 @@ class _TransactionPageState extends State<TransactionPage>
   bool _reconciled = false;
   bool _initiallyReconciled = false;
 
-  // Withdrawal: splits have common source account (= own account)
-  // Deposit: splits have common target account (= own account)
-  // Transfer: splits have common accounts for both (= own accounts)
+  // Withdrawal: splits have common source account
+  // Deposit: splits have common target account
+  // Transfer: splits have common accounts for both
 
   // Individual for split transactions, show common for single transaction
   final TextEditingController _sourceAccountTextController =
       TextEditingController();
   final FocusNode _sourceAccountFocusNode = FocusNode();
+  AccountTypeProperty _sourceAccountType =
+      AccountTypeProperty.swaggerGeneratedUnknown;
   final TextEditingController _destinationAccountTextController =
       TextEditingController();
   final FocusNode _destinationAccountFocusNode = FocusNode();
+  AccountTypeProperty _destinationAccountType =
+      AccountTypeProperty.swaggerGeneratedUnknown;
   final TextEditingController _localAmountTextController =
       TextEditingController();
   //double? _foreignAmount = 0.0; // = _foreignAmounts.sum;
@@ -1411,7 +1415,13 @@ class _TransactionPageState extends State<TransactionPage>
                 for (TextEditingController e in _sourceAccountTextControllers) {
                   e.text = option.name;
                 }
-                log.finer(() => "selected source account ${option.name}");
+                _sourceAccountType = AccountTypeProperty.values.firstWhere(
+                  (AccountTypeProperty e) => e.value == option.type,
+                  orElse: () => AccountTypeProperty.swaggerGeneratedUnknown,
+                );
+                log.finer(() =>
+                    "selected source account ${option.name}, type ${_sourceAccountType.toString()} (${option.type})");
+                checkTXType();
                 checkAccountCurrency(option);
               },
               displayStringForOption: (AutocompleteAccount option) =>
@@ -1422,7 +1432,7 @@ class _TransactionPageState extends State<TransactionPage>
                   final Response<AutocompleteAccountArray> response =
                       await api.v1AutocompleteAccountsGet(
                     query: textEditingValue.text,
-                    types: _transactionType.sourceAccountTypes,
+                    types: _destinationAccountType.allowedOpposingTypes(false),
                   );
                   apiThrowErrorIfEmpty(response, mounted ? context : null);
 
@@ -1462,10 +1472,17 @@ class _TransactionPageState extends State<TransactionPage>
               displayStringForOption: (AutocompleteAccount option) =>
                   option.name,
               onSelected: (AutocompleteAccount option) {
-                for (TextEditingController e in _sourceAccountTextControllers) {
+                for (TextEditingController e
+                    in _destinationAccountTextControllers) {
                   e.text = option.name;
                 }
-                log.finer(() => "selected source account ${option.name}");
+                _destinationAccountType = AccountTypeProperty.values.firstWhere(
+                  (AccountTypeProperty e) => e.value == option.type,
+                  orElse: () => AccountTypeProperty.swaggerGeneratedUnknown,
+                );
+                log.finer(() =>
+                    "selected destination account ${option.name}, type ${_destinationAccountType.toString()} (${option.type})");
+                checkTXType();
                 checkAccountCurrency(option);
               },
               optionsBuilder: (TextEditingValue textEditingValue) async {
@@ -1474,7 +1491,7 @@ class _TransactionPageState extends State<TransactionPage>
                   final Response<AutocompleteAccountArray> response =
                       await api.v1AutocompleteAccountsGet(
                     query: textEditingValue.text,
-                    types: _transactionType.destinationAccountTypes,
+                    types: _sourceAccountType.allowedOpposingTypes(true),
                   );
                   apiThrowErrorIfEmpty(response, mounted ? context : null);
 
@@ -1881,6 +1898,16 @@ class _TransactionPageState extends State<TransactionPage>
     }
   }
 
+  void checkTXType() {
+    final TransactionTypeProperty txType =
+        accountsToTransaction(_sourceAccountType, _destinationAccountType);
+    if (_transactionType != txType) {
+      setState(() {
+        _transactionType = txType;
+      });
+    }
+  }
+
   Card _buildSplitWidget(BuildContext context, int i) {
     const Widget hDivider = SizedBox(height: 16);
 
@@ -1944,8 +1971,8 @@ class _TransactionPageState extends State<TransactionPage>
                                           response =
                                           await api.v1AutocompleteAccountsGet(
                                         query: textEditingValue.text,
-                                        types:
-                                            _transactionType.sourceAccountTypes,
+                                        types: _destinationAccountType
+                                            .allowedOpposingTypes(false),
                                       );
                                       apiThrowErrorIfEmpty(
                                           response, mounted ? context : null);
@@ -2001,8 +2028,8 @@ class _TransactionPageState extends State<TransactionPage>
                                           response =
                                           await api.v1AutocompleteAccountsGet(
                                         query: textEditingValue.text,
-                                        types: _transactionType
-                                            .destinationAccountTypes,
+                                        types: _sourceAccountType
+                                            .allowedOpposingTypes(true),
                                       );
                                       apiThrowErrorIfEmpty(
                                           response, mounted ? context : null);

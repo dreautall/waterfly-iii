@@ -1438,7 +1438,7 @@ class _TransactionPageState extends State<TransactionPage>
                       _ownAccountId = option.id;
                     }
                     checkTXType();
-                    checkAccountCurrency(option);
+                    checkAccountCurrency(option, true);
                   },
                   displayStringForOption: (AutocompleteAccount option) =>
                       option.name,
@@ -1511,7 +1511,7 @@ class _TransactionPageState extends State<TransactionPage>
                       log.finer(() =>
                           "selected destination account ${option.name}, type ${_destinationAccountType.toString()} (${option.type})");
                       checkTXType();
-                      checkAccountCurrency(option);
+                      checkAccountCurrency(option, false);
                     },
                     optionsBuilder: (TextEditingValue textEditingValue) async {
                       try {
@@ -1932,20 +1932,53 @@ class _TransactionPageState extends State<TransactionPage>
     return childs;
   }
 
-  void checkAccountCurrency(AutocompleteAccount option) {
-    if (_localCurrency?.id != option.currencyId.toString()) {
-      setState(() {
-        _localCurrency = CurrencyRead(
-          type: "currencies",
-          id: option.currencyId.toString(),
-          attributes: Currency(
-            code: option.currencyCode,
-            name: option.currencyName,
-            symbol: option.currencySymbol,
-            decimalPlaces: option.currencyDecimalPlaces,
-          ),
-        );
-      });
+  void checkAccountCurrency(AutocompleteAccount option, bool isSource) {
+    // Update currency when:
+    // 1. set account is source & assetAccount
+    // 2. set account is destination & assetAccount & source account is NOT an
+    //    asset account
+    // 3. either source or destination account are still unset, so first to set
+    if ((isSource && _sourceAccountType == AccountTypeProperty.assetAccount) ||
+        (!isSource &&
+            _destinationAccountType == AccountTypeProperty.assetAccount &&
+            _sourceAccountType != AccountTypeProperty.assetAccount) ||
+        (_sourceAccountType == AccountTypeProperty.swaggerGeneratedUnknown ||
+            _destinationAccountType ==
+                AccountTypeProperty.swaggerGeneratedUnknown)) {
+      if (_localCurrency?.id != option.currencyId.toString()) {
+        setState(() {
+          _localCurrency = CurrencyRead(
+            type: "currencies",
+            id: option.currencyId.toString(),
+            attributes: Currency(
+              code: option.currencyCode,
+              name: option.currencyName,
+              symbol: option.currencySymbol,
+              decimalPlaces: option.currencyDecimalPlaces,
+            ),
+          );
+        });
+      }
+    }
+    // set foreign currency if account is destination & asset account and source
+    // account is also asset account (transfer from one currency to other)
+    if (!isSource &&
+        _destinationAccountType == AccountTypeProperty.assetAccount &&
+        _sourceAccountType == AccountTypeProperty.assetAccount) {
+      if (_foreignCurrency?.id != option.currencyId.toString()) {
+        setState(() {
+          _foreignCurrency = CurrencyRead(
+            type: "currencies",
+            id: option.currencyId.toString(),
+            attributes: Currency(
+              code: option.currencyCode,
+              name: option.currencyName,
+              symbol: option.currencySymbol,
+              decimalPlaces: option.currencyDecimalPlaces,
+            ),
+          );
+        });
+      }
     }
   }
 

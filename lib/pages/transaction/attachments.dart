@@ -1,19 +1,19 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show Response;
+import 'package:chopper/chopper.dart' show HttpMethod, Response;
 import 'package:file_picker/file_picker.dart';
 import 'package:filesize/filesize.dart';
-import 'package:open_filex/open_filex.dart';
+import 'package:open_file_plus/open_file_plus.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
@@ -58,13 +58,12 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     final Directory tmpPath = await getTemporaryDirectory();
     final String filePath = "${tmpPath.path}/${attachment.attributes.filename}";
 
-    final HttpClientRequest request = await HttpClient().getUrl(
+    final http.Request request = http.Request(
+      HttpMethod.Get,
       Uri.parse(attachment.attributes.downloadUrl!),
     );
-    user.headers().forEach(
-          (String key, String value) => request.headers.add(key, value),
-        );
-    final HttpClientResponse resp = await request.close();
+    request.headers.addAll(user.headers());
+    final http.StreamedResponse resp = await httpClient.send(request);
     if (resp.statusCode != 200) {
       log.warning("got invalid status code ${resp.statusCode}");
       msg.showSnackBar(SnackBar(
@@ -73,11 +72,11 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       ));
       return;
     }
-    total = resp.headers.contentLength;
+    total = resp.contentLength ?? 0;
     if (total == 0) {
       total = attachment.attributes.size ?? 0;
     }
-    resp.listen(
+    resp.stream.listen(
       (List<int> value) {
         setState(() {
           fileData.addAll(value);
@@ -96,7 +95,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
         });
         log.finest(() => "writing ${fileData.length} bytes to $filePath");
         await File(filePath).writeAsBytes(fileData, flush: true);
-        final OpenResult file = await OpenFilex.open(filePath);
+        final OpenResult file = await OpenFile.open(filePath);
         if (file.type != ResultType.done) {
           log.severe("error opening file", file.message);
           msg.showSnackBar(SnackBar(
@@ -106,8 +105,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
           ));
         }
       },
-      onError: (Error e) {
-        log.severe("download error", e);
+      onError: (Object e, StackTrace s) {
+        log.severe("download error", e, s);
         setState(() {
           _dlProgress.remove(i);
         });
@@ -173,10 +172,13 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       ));
       return;
     }
-    final AttachmentRead newAttachment = respAttachment.body!.data;
+    AttachmentRead newAttachment = respAttachment.body!.data;
     int newAttachmentIndex =
         widget.attachments.length; // Will be added later, no -1 needed.
     final int total = file.size;
+    newAttachment = newAttachment.copyWith(
+      attributes: newAttachment.attributes.copyWith(size: total),
+    );
     int sent = 0;
 
     setState(() {
@@ -184,38 +186,31 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       _dlProgress[newAttachmentIndex] = -0.0001;
     });
 
-    final HttpClientRequest request = await HttpClient().postUrl(
+    final http.StreamedRequest request = http.StreamedRequest(
+      HttpMethod.Post,
       Uri.parse(newAttachment.attributes.uploadUrl!),
     );
-    user.headers().forEach(
-          (String key, String value) => request.headers.add(key, value),
-        );
-    request.headers
-        .set(HttpHeaders.contentTypeHeader, "application/octet-stream");
+    request.headers.addAll(user.headers());
+    request.headers[HttpHeaders.contentTypeHeader] =
+        ContentType.binary.mimeType;
     log.fine(() => "AttachmentUpload: Starting Upload $newAttachmentIndex");
+    request.contentLength = total;
 
-    final Stream<List<int>> listenStream =
-        File(file.path!).openRead().transform(
-              StreamTransformer<List<int>, List<int>>.fromHandlers(
-                handleData: (List<int> data, EventSink<List<int>> sink) {
-                  setState(() {
-                    sent += data.length;
-                    _dlProgress[newAttachmentIndex] = sent / total * -1;
-                    log.finest(
-                      () =>
-                          "sent ${data.length} bytes (total $sent of $total), ${sent / total * 100}%",
-                    );
-                  });
-                  sink.add(data);
-                },
-                handleDone: (EventSink<List<int>> sink) {
-                  sink.close();
-                },
-              ),
-            );
+    File(file.path!).openRead().listen((List<int> data) {
+      setState(() {
+        sent += data.length;
+        _dlProgress[newAttachmentIndex] = sent / total * -1;
+        log.finest(
+          () =>
+              "sent ${data.length} bytes (total $sent of $total), ${sent / total * 100}%",
+        );
+      });
+      request.sink.add(data);
+    }, onDone: () {
+      request.sink.close();
+    });
 
-    await request.addStream(listenStream);
-    final HttpClientResponse resp = await request.close();
+    final http.StreamedResponse resp = await httpClient.send(request);
     log.fine(() => "AttachmentUpload: Done with Upload $newAttachmentIndex");
     setState(() {
       _dlProgress.remove(newAttachmentIndex);
@@ -227,7 +222,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     }
     late String error;
     try {
-      final String respString = await resp.transform(utf8.decoder).join();
+      final String respString = await resp.stream.bytesToString();
       ValidationErrorResponse valError =
           ValidationErrorResponse.fromJson(json.decode(respString));
       error = valError.message ?? l10n.errorUnknown;
@@ -252,7 +247,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     final S l10n = S.of(context);
 
     final OpenResult file =
-        await OpenFilex.open(attachment.attributes.uploadUrl);
+        await OpenFile.open(attachment.attributes.uploadUrl);
     if (file.type != ResultType.done) {
       log.severe("error opening file", file.message);
       msg.showSnackBar(SnackBar(

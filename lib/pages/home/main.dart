@@ -366,6 +366,7 @@ class _HomeMainState extends State<HomeMain>
       return true;
     }*/
 
+    final FireflyIii api = context.read<FireflyService>().api;
     final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
@@ -390,15 +391,34 @@ class _HomeMainState extends State<HomeMain>
     lastMonthsAssets.clear();
     lastMonthsLiabilities.clear();
 
+    final Response<AccountArray> respAssetAccounts =
+        await api.v1AccountsGet(type: AccountTypeFilter.asset);
+    apiThrowErrorIfEmpty(respAssetAccounts, mounted ? context : null);
+    final Map<String, bool> includeInNetWorth = <String, bool>{
+      for (AccountRead e in respAssetAccounts.body!.data)
+        e.attributes.name: e.attributes.includeNetWorth ?? true
+    };
+    final Response<AccountArray> respLiabilityAccounts =
+        await api.v1AccountsGet(type: AccountTypeFilter.liabilities);
+    apiThrowErrorIfEmpty(respLiabilityAccounts, mounted ? context : null);
+    includeInNetWorth.addAll(<String, bool>{
+      for (AccountRead e in respLiabilityAccounts.body!.data)
+        e.attributes.name: e.attributes.includeNetWorth ?? true
+    });
+
     final Response<List<api_v2.ChartDataSetV2>> respBalanceData =
         await apiV2.v2ChartAccountDashboardGet(
       start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
       end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
-      preselected: api_v2_enums.PreselectedAccountProperty.all,
+      preselected: api_v2_enums.PreselectedAccountProperty.assets,
     );
     apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
 
     for (api_v2.ChartDataSetV2 e in respBalanceData.body!) {
+      if (includeInNetWorth.containsKey(e.label) &&
+          includeInNetWorth[e.label] != true) {
+        continue;
+      }
       final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
       entries.forEach(
         (String dateStr, dynamic valueStr) {

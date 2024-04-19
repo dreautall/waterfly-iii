@@ -1,0 +1,4 @@
+- Zeige Schlagwörter in der Transaktions-Liste
+- Update der Übersetzungen
+- Unterstützung für zusätzliche Banking-Apps
+- Fehlerbehebungen

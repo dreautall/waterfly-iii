@@ -159,6 +159,7 @@
         <package android:name="com.marcus.android"/>
         <package android:name="com.marcus.android.uk"/>
         <package android:name="com.mashreq.NeoApp"/>
+        <package android:name="com.maybank2u.life"/>
         <package android:name="com.mercadolibre"/>
         <package android:name="com.mercadopago.wallet"/>
         <package android:name="com.microsoft.android.smsorganizer"/>
@@ -195,6 +196,7 @@
         <package android:name="com.softteco.bsbank"/>
         <package android:name="com.starlingbank.android"/>
         <package android:name="com.taxis99"/>
+        <package android:name="com.tpaay.bigpay"/>
         <package android:name="com.transferwise.android"/>
         <package android:name="com.ukrsibbank.client.android"/>
         <package android:name="com.unicredit"/>
@@ -207,10 +209,12 @@
         <package android:name="com.zen.application"/>
         <package android:name="consumer.cbsa.smartapp"/>
         <package android:name="cz.mbank"/>
+        <package android:name="de.c24.bankapp"/>
         <package android:name="de.dkb.portalapp"/>
         <package android:name="de.dwins.financeguru"/>
         <package android:name="de.ingdiba.bankingapp"/>
         <package android:name="de.number26.android"/>
+        <package android:name="de.traderepublic.app"/>
         <package android:name="es.bancosantander.apps"/>
         <package android:name="eu.netinfo.colpatria.system"/>
         <package android:name="fi.danskebank.mobilepay"/>
@@ -237,6 +241,8 @@
         <package android:name="in.codeseed.undonotification.pro"/>
         <package android:name="md.maib.maibank"/>
         <package android:name="mx.com.hsbc.controltotal"/>
+        <package android:name="my.com.myboost"/>
+        <package android:name="my.com.tngdigital.ewallet"/>
         <package android:name="net.easypark.android"/>
         <package android:name="nl.rabomobiel"/>
         <package android:name="om.nu.production"/>

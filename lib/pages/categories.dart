@@ -598,9 +598,6 @@ class CategoryLine extends StatelessWidget {
           ),
         ),
       ),
-      onClosed: (bool? refresh) {
-        debugPrint("closed with $refresh");
-      },
     );
   }
 }

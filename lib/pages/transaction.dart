@@ -176,6 +176,7 @@ class _TransactionPageState extends State<TransactionPage>
           break;
         case TransactionTypeProperty.deposit:
         case TransactionTypeProperty.openingBalance:
+        case TransactionTypeProperty.reconciliation:
           _ownAccountId = transactions.first.destinationId;
           break;
         default:
@@ -342,7 +343,6 @@ class _TransactionPageState extends State<TransactionPage>
 
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         splitTransactionAdd();
-        _localCurrency = context.read<FireflyService>().defaultCurrency;
 
         if (widget.notification != null) {
           final FireflyIii api = context.read<FireflyService>().api;
@@ -352,6 +352,8 @@ class _TransactionPageState extends State<TransactionPage>
           CurrencyRead? currency;
           double amount = 0;
           _transactionType = TransactionTypeProperty.withdrawal;
+          final CurrencyRead defaultCurrency =
+              context.read<FireflyService>().defaultCurrency;
 
           // Try to extract some money
           final Iterable<RegExpMatch> matches =
@@ -376,10 +378,11 @@ class _TransactionPageState extends State<TransactionPage>
               if (currencyStr.isEmpty) {
                 log.warning("no currency found");
               }
-              if (_localCurrency!.attributes.code == currencyStr ||
-                  _localCurrency!.attributes.symbol == currencyStr ||
-                  _localCurrency!.attributes.code == currencyStrAlt ||
-                  _localCurrency!.attributes.symbol == currencyStrAlt) {
+              if (defaultCurrency.attributes.code == currencyStr ||
+                  defaultCurrency.attributes.symbol == currencyStr ||
+                  defaultCurrency.attributes.code == currencyStrAlt ||
+                  defaultCurrency.attributes.symbol == currencyStrAlt) {
+                currency = defaultCurrency;
               } else {
                 final Response<CurrencyArray> response =
                     await api.v1CurrenciesGet();
@@ -435,7 +438,7 @@ class _TransactionPageState extends State<TransactionPage>
             log.warning("regex did not match");
           }
           // Fallback solution
-          currency ??= _localCurrency;
+          currency ??= defaultCurrency;
 
           // Set date
           _date = _tzHandler
@@ -456,18 +459,6 @@ class _TransactionPageState extends State<TransactionPage>
                 "${widget.notification!.title} - ${_noteTextControllers[0].text}";
           }
 
-          // Check currency
-          if (currency == _localCurrency) {
-            _localAmounts[0] = amount;
-            _localAmountTextController.text =
-                amount.toStringAsFixed(currency?.attributes.decimalPlaces ?? 2);
-          } else {
-            _foreignCurrency = currency;
-            _foreignAmounts[0] = amount;
-            _foreignAmountTextController.text =
-                amount.toStringAsFixed(currency?.attributes.decimalPlaces ?? 2);
-          }
-
           // Check account
           final Response<AccountArray> response =
               await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
@@ -482,8 +473,35 @@ class _TransactionPageState extends State<TransactionPage>
                     .containsIgnoreCase(acc.attributes.name)) {
               _sourceAccountTextController.text = acc.attributes.name;
               _ownAccountId = acc.id;
+              if (currency.id == acc.attributes.currencyId) {
+                _localCurrency = currency;
+              } else {
+                _localCurrency = CurrencyRead(
+                  type: "currencies",
+                  id: acc.attributes.currencyId!,
+                  attributes: Currency(
+                    code: acc.attributes.currencyCode!,
+                    name: "",
+                    symbol: acc.attributes.currencySymbol!,
+                    decimalPlaces: acc.attributes.currencyDecimalPlaces,
+                  ),
+                );
+                _foreignCurrency = currency;
+              }
               break;
             }
+          }
+
+          // Check currency
+          if (currency == _localCurrency) {
+            _localAmounts[0] = amount;
+            _localAmountTextController.text =
+                amount.toStringAsFixed(currency.attributes.decimalPlaces ?? 2);
+          } else {
+            _foreignCurrency = currency;
+            _foreignAmounts[0] = amount;
+            _foreignAmountTextController.text =
+                amount.toStringAsFixed(currency.attributes.decimalPlaces ?? 2);
           }
 
           setState(() {});

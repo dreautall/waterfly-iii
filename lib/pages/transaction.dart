@@ -76,10 +76,6 @@ class _TransactionPageState extends State<TransactionPage>
   bool _reconciled = false;
   bool _initiallyReconciled = false;
 
-  // Withdrawal: splits have common source account
-  // Deposit: splits have common target account
-  // Transfer: splits have common accounts for both
-
   // Individual for split transactions, show common for single transaction
   final TextEditingController _sourceAccountTextController =
       TextEditingController();
@@ -918,12 +914,12 @@ class _TransactionPageState extends State<TransactionPage>
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          (widget.transaction == null)
+          (widget.transaction == null || widget.clone)
               ? S.of(context).transactionTitleAdd
               : S.of(context).transactionTitleEdit,
         ),
         actions: <Widget>[
-          if (!(widget.transaction == null))
+          if (!(widget.transaction == null || widget.clone))
             IconButton(
               icon: const Icon(Icons.delete),
               tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
@@ -1770,10 +1766,15 @@ class _TransactionPageState extends State<TransactionPage>
   Card _buildSplitWidget(BuildContext context, int i) {
     const Widget hDivider = SizedBox(height: 16);
 
-    final bool showSourceAccountSelection = _sourceAccountTextControllers.every(
-        (TextEditingController e) =>
-            e.text != _sourceAccountTextController.text);
-    final bool showDestinationAccountSelection =
+    // Withdrawal: splits have common source account
+    // Deposit: splits have common destination account
+    // Transfer: splits have common accounts for both
+    final bool showSourceAccountSelection =
+        _transactionType != TransactionTypeProperty.withdrawal &&
+            _sourceAccountTextControllers.every((TextEditingController e) =>
+                e.text != _sourceAccountTextController.text);
+    final bool showDestinationAccountSelection = _transactionType !=
+            TransactionTypeProperty.deposit &&
         _destinationAccountTextControllers.every((TextEditingController e) =>
             e.text != _destinationAccountTextController.text);
 

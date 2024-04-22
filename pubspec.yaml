@@ -29,7 +29,7 @@ dependencies:
   community_charts_flutter: ^1.0.2
   file_picker: ^8.0.0+1
   animations: ^2.0.11
-  flutter_local_notifications: ^17.0.1
+  flutter_local_notifications: ^17.1.0
   notifications_listener_service:
     git:
       url: https://github.com/dreautall/notification_listener_service.git

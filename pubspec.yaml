@@ -35,7 +35,7 @@ dependencies:
       url: https://github.com/dreautall/notification_listener_service.git
       ref: 280a7b869fe57c81dd1842cd08fa16045d828f0a
   device_apps: ^2.2.0
-  package_info_plus: ^7.0.0
+  package_info_plus: ^8.0.0
   logging: ^1.1.1
   flutter_email_sender: ^6.0.2
   local_auth: ^2.1.8

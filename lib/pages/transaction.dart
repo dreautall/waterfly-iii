@@ -1763,6 +1763,21 @@ class _TransactionPageState extends State<TransactionPage>
           });
         }
         _transactionType = txType;
+        // Withdrawal: splits have common source account
+        // Deposit: splits have common destination account
+        // Transfer: splits have common accounts for both
+        if (txType == TransactionTypeProperty.withdrawal ||
+            txType == TransactionTypeProperty.transfer) {
+          for (TextEditingController e in _sourceAccountTextControllers) {
+            e.text = _sourceAccountTextController.text;
+          }
+        }
+        if (txType == TransactionTypeProperty.deposit ||
+            txType == TransactionTypeProperty.transfer) {
+          for (TextEditingController e in _destinationAccountTextControllers) {
+            e.text = _destinationAccountTextController.text;
+          }
+        }
       });
     }
   }
@@ -2122,24 +2137,52 @@ class _TransactionPageState extends State<TransactionPage>
                         ),
                         hDivider,
                         if (!showSourceAccountSelection &&
-                            !showDestinationAccountSelection) ...<Widget>[
+                            _transactionType ==
+                                TransactionTypeProperty.deposit) ...<Widget>[
                           IconButton(
                             icon: const Icon(Icons.add_business),
                             onPressed: _split &&
                                     !showSourceAccountSelection &&
-                                    !showDestinationAccountSelection &&
+                                    _transactionType ==
+                                        TransactionTypeProperty.deposit &&
                                     !(_reconciled && _initiallyReconciled)
                                 ? () {
-                                    log.fine(
-                                        () => "adding separate account for $i");
-                                    // :TODO: check if source or destination account
+                                    log.fine(() =>
+                                        "adding separate source account for $i");
+                                    _sourceAccountTextControllers[i].text = "";
+                                    splitTransactionCheckAccounts();
+                                  }
+                                : null,
+                            tooltip: (_split)
+                                ? S
+                                    .of(context)
+                                    .transactionSplitChangeTarget // :TODO:
+                                : null,
+                          ),
+                          hDivider,
+                        ],
+                        if (!showDestinationAccountSelection &&
+                            _transactionType ==
+                                TransactionTypeProperty.withdrawal) ...<Widget>[
+                          IconButton(
+                            icon: const Icon(Icons.add_business),
+                            onPressed: _split &&
+                                    !showDestinationAccountSelection &&
+                                    _transactionType ==
+                                        TransactionTypeProperty.withdrawal &&
+                                    !(_reconciled && _initiallyReconciled)
+                                ? () {
+                                    log.fine(() =>
+                                        "adding separate destination account for $i");
                                     _destinationAccountTextControllers[i].text =
                                         "";
                                     splitTransactionCheckAccounts();
                                   }
                                 : null,
                             tooltip: (_split)
-                                ? S.of(context).transactionSplitChangeTarget
+                                ? S
+                                    .of(context)
+                                    .transactionSplitChangeTarget // :TODO:
                                 : null,
                           ),
                           hDivider,

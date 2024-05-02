@@ -131,7 +131,8 @@ class _TransactionPageState extends State<TransactionPage>
   bool _split = false;
   bool _hasAttachments = false;
   List<AttachmentRead>? _attachments;
-  bool _isTXExtended = false;
+  bool _txTypeChipExtended = false;
+  late bool _newTX;
 
   late TimeZoneHandler _tzHandler;
 
@@ -146,6 +147,8 @@ class _TransactionPageState extends State<TransactionPage>
   @override
   void initState() {
     super.initState();
+
+    _newTX = widget.transaction == null || widget.clone;
 
     _tzHandler = context.read<FireflyService>().tzHandler;
 
@@ -914,12 +917,12 @@ class _TransactionPageState extends State<TransactionPage>
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          (widget.transaction == null || widget.clone)
+          _newTX
               ? S.of(context).transactionTitleAdd
               : S.of(context).transactionTitleEdit,
         ),
         actions: <Widget>[
-          if (!(widget.transaction == null || widget.clone))
+          if (!_newTX)
             IconButton(
               icon: const Icon(Icons.delete),
               tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
@@ -979,7 +982,7 @@ class _TransactionPageState extends State<TransactionPage>
                     });
                     late Response<TransactionSingle> resp;
 
-                    if (!widget.clone && widget.transaction != null) {
+                    if (!_newTX) {
                       if (_transactionType ==
                           TransactionTypeProperty.swaggerGeneratedUnknown) {
                         msg.showSnackBar(const SnackBar(
@@ -1555,13 +1558,14 @@ class _TransactionPageState extends State<TransactionPage>
             top: (64 + 16 + 64 - 56) / 2,
             right: 15,
             child: FloatingActionButton.extended(
-              extendedIconLabelSpacing: _isTXExtended ? 10 : 0,
-              extendedPadding: _isTXExtended ? null : const EdgeInsets.all(16),
+              extendedIconLabelSpacing: _txTypeChipExtended ? 10 : 0,
+              extendedPadding:
+                  _txTypeChipExtended ? null : const EdgeInsets.all(16),
               onPressed: null,
               label: AnimatedSize(
                 duration: animDurationEmphasized,
                 curve: animCurveEmphasized,
-                child: _isTXExtended
+                child: _txTypeChipExtended
                     ? Text(_transactionType.friendlyName(context))
                     : const SizedBox(),
               ),
@@ -1744,17 +1748,17 @@ class _TransactionPageState extends State<TransactionPage>
 
   void checkTXType() {
     // Don't change TX type when editing!
-    if (!widget.clone && widget.transaction != null) return;
+    if (!_newTX) return;
 
     final TransactionTypeProperty txType =
         accountsToTransaction(_sourceAccountType, _destinationAccountType);
     if (_transactionType != txType) {
       setState(() {
         if (txType != TransactionTypeProperty.swaggerGeneratedUnknown) {
-          _isTXExtended = true;
+          _txTypeChipExtended = true;
           Future<void>.delayed(animDurationEmphasized * 3, () {
             setState(() {
-              _isTXExtended = false;
+              _txTypeChipExtended = false;
             });
           });
         }

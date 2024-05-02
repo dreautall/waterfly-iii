@@ -257,6 +257,7 @@
         <package android:name="ro.ing.mobile.banking.android.activity"/>
         <package android:name="ru.abr"/>
         <package android:name="ru.nspk.mirpay"/>
+        <package android:name="ru.ozon.app.android"/>
         <package android:name="ru.sberbankmobile"/>
         <package android:name="ru.vtb24.mobilebanking.android"/>
         <package android:name="si.delavskahranilnica.dhdenarnik"/>

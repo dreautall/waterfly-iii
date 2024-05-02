@@ -89,10 +89,6 @@ class _TransactionPageState extends State<TransactionPage>
       AccountTypeProperty.swaggerGeneratedUnknown;
   final TextEditingController _localAmountTextController =
       TextEditingController();
-  //double? _foreignAmount = 0.0; // = _foreignAmounts.sum;
-  final TextEditingController _foreignAmountTextController =
-      TextEditingController();
-  CurrencyRead? _foreignCurrency;
 
   // Always in card view
   final List<TextEditingController> _categoryTextControllers =
@@ -485,7 +481,7 @@ class _TransactionPageState extends State<TransactionPage>
                     decimalPlaces: acc.attributes.currencyDecimalPlaces,
                   ),
                 );
-                _foreignCurrency = currency;
+                _foreignCurrencies[0] = currency;
               }
               break;
             }
@@ -497,9 +493,9 @@ class _TransactionPageState extends State<TransactionPage>
             _localAmountTextController.text =
                 amount.toStringAsFixed(currency.attributes.decimalPlaces ?? 2);
           } else {
-            _foreignCurrency = currency;
+            _foreignCurrencies[0] = currency;
             _foreignAmounts[0] = amount;
-            _foreignAmountTextController.text =
+            _foreignAmountTextControllers[0].text =
                 amount.toStringAsFixed(currency.attributes.decimalPlaces ?? 2);
           }
 
@@ -554,44 +550,6 @@ class _TransactionPageState extends State<TransactionPage>
       _dateTextController.text = DateFormat.yMMMd().format(_date);
       _timeTextController.text = DateFormat.Hm().format(_date);
     });
-
-    // focus node listener for source & target account
-    // to set ownAccountId
-    /*_sourceAccountFocusNode.addListener(() async {
-      if (_sourceAccountFocusNode.hasFocus) {
-        return;
-      }
-      try {
-        final FireflyIii api = context.read<FireflyService>().api;
-        final Response<AutocompleteAccountArray> response =
-            await api.v1AutocompleteAccountsGet(
-          query: _ownAccountTextController.text,
-          types: <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.mortgage,
-          ],
-        );
-        apiThrowErrorIfEmpty(response, mounted ? context : null);
-
-        if (response.body!.isEmpty ||
-            (response.body!.length > 1 &&
-                response.body!.first.name != _ownAccountTextController.text)) {
-          setState(() {
-            _ownAccountId = null;
-          });
-        } else {
-          _ownAccountTextController.text = response.body!.first.name;
-          setState(() {
-            _ownAccountId = response.body!.first.id;
-          });
-          checkAccountCurrency(response.body!.first);
-        }
-      } catch (e, stackTrace) {
-        log.severe("Error while fetching autocomplete from API", e, stackTrace);
-      }
-    });*/
   }
 
   @override
@@ -607,7 +565,6 @@ class _TransactionPageState extends State<TransactionPage>
     _timeTextController.dispose();
 
     _localAmountTextController.dispose();
-    _foreignAmountTextController.dispose();
 
     for (TextEditingController t in _sourceAccountTextControllers) {
       t.dispose();
@@ -668,22 +625,6 @@ class _TransactionPageState extends State<TransactionPage>
           .toStringAsFixed(_localCurrency?.attributes.decimalPlaces ?? 2);
     } else {
       _localAmountTextController.text = "";
-    }
-
-    /// foreign amount & currency
-    _foreignCurrency = _foreignCurrencies.first;
-    if (_foreignCurrency != null &&
-        _foreignCurrencies.every(
-            (CurrencyRead? e) => e != null && e.id == _foreignCurrency!.id)) {
-      // all same foreign currency --> ok to show in summary
-      if (_foreignAmounts.sum != 0) {
-        _foreignAmountTextController.text = _foreignAmounts.sum
-            .toStringAsFixed(_foreignCurrency?.attributes.decimalPlaces ?? 2);
-      } else {
-        _foreignAmountTextController.text = "";
-      }
-    } else {
-      _foreignCurrency = null;
     }
   }
 
@@ -775,9 +716,6 @@ class _TransactionPageState extends State<TransactionPage>
     // Update from summary to first when first split is added
     if (_localAmounts.length == 1) {
       _localAmountTextControllers.first.text = _localAmountTextController.text;
-      _foreignAmountTextControllers.first.text =
-          _foreignAmountTextController.text;
-      _foreignCurrencies.first = _foreignCurrency;
     }
 
     _sourceAccountTextControllers.add(TextEditingController(
@@ -839,13 +777,6 @@ class _TransactionPageState extends State<TransactionPage>
   void splitTransactionCalculateAmount() {
     _localAmountTextController.text = _localAmounts.sum
         .toStringAsFixed(_localCurrency?.attributes.decimalPlaces ?? 2);
-    if (_foreignCurrencies
-        .every((CurrencyRead? e) => e?.id == _foreignCurrencies.first?.id)) {
-      _foreignAmountTextController.text = _foreignAmounts.sum
-          .toStringAsFixed(_foreignCurrency?.attributes.decimalPlaces ?? 2);
-    } else {
-      _foreignAmountTextController.text = "<${S.of(context).generalMultiple}>";
-    }
   }
 
   void splitTransactionCheckAccounts() {
@@ -1025,16 +956,10 @@ class _TransactionPageState extends State<TransactionPage>
                               ? _titleTextControllers[i].text
                               : _titleTextController.text,
                           destinationName: destinationName,
-                          foreignAmount: _split
-                              ? _foreignCurrencies[i] != null
-                                  ? _foreignAmounts[i].toString()
-                                  : null
-                              : _foreignCurrency != null
-                                  ? _foreignAmounts[i].toString()
-                                  : null,
-                          foreignCurrencyId: _split
-                              ? _foreignCurrencies[i]?.id
-                              : _foreignCurrency?.id,
+                          foreignAmount: _foreignCurrencies[i] != null
+                              ? _foreignAmounts[i].toString()
+                              : null,
+                          foreignCurrencyId: _foreignCurrencies[i]?.id,
                           notes: _noteTextControllers[i].text,
                           order: i,
                           sourceName: sourceName,
@@ -1090,16 +1015,10 @@ class _TransactionPageState extends State<TransactionPage>
                               : "",
                           categoryName: _categoryTextControllers[i].text,
                           destinationName: destinationName,
-                          foreignAmount: _split
-                              ? _foreignCurrencies[i] != null
-                                  ? _foreignAmounts[i].toString()
-                                  : null
-                              : _foreignCurrency != null
-                                  ? _foreignAmounts[i].toString()
-                                  : null,
-                          foreignCurrencyId: _split
-                              ? _foreignCurrencies[i]?.id
-                              : _foreignCurrency?.id,
+                          foreignAmount: _foreignCurrencies[i] != null
+                              ? _foreignAmounts[i].toString()
+                              : null,
+                          foreignCurrencyId: _foreignCurrencies[i]?.id,
                           notes: _noteTextControllers[i].text,
                           order: i,
                           sourceName: sourceName,
@@ -1320,20 +1239,14 @@ class _TransactionPageState extends State<TransactionPage>
               width: 130,
               child: NumberInput(
                 icon: const Icon(Icons.monetization_on),
-                hintText: _foreignCurrency?.zero() ??
-                    _localCurrency?.zero() ??
+                hintText: _localCurrency?.zero() ??
                     NumberFormat.currency(decimalDigits: 2).format(0),
-                decimals: _foreignCurrency?.attributes.decimalPlaces ??
-                    _localCurrency?.attributes.decimalPlaces ??
-                    2,
+                decimals: _localCurrency?.attributes.decimalPlaces ?? 2,
                 //style: Theme.of(context).textTheme.headlineLarge,
-                controller: (_foreignCurrency != null)
-                    ? _foreignAmountTextController
-                    : _localAmountTextController,
+                controller: _localAmountTextController,
                 disabled: _split || (_reconciled && _initiallyReconciled),
-                onChanged: (String string) => (_foreignCurrency != null)
-                    ? _foreignAmounts[0] = double.tryParse(string) ?? 0
-                    : _localAmounts[0] = double.tryParse(string) ?? 0,
+                onChanged: (String string) =>
+                    _localAmounts[0] = double.tryParse(string) ?? 0,
               ),
             ),
             vDivider,
@@ -1576,102 +1489,6 @@ class _TransactionPageState extends State<TransactionPage>
         ],
       ),
     );
-
-    /*
-    // Amount, Currency, Local Currency
-    childs.add(
-      Row(
-        children: <Widget>[
-          SizedBox(
-            width: 130,
-            child: NumberInput(
-              icon: const Icon(Icons.monetization_on),
-              hintText: _foreignCurrency?.zero() ??
-                  _localCurrency?.zero() ??
-                  NumberFormat.currency(decimalDigits: 2).format(0),
-              decimals: _foreignCurrency?.attributes.decimalPlaces ??
-                  _localCurrency?.attributes.decimalPlaces ??
-                  2,
-              //style: Theme.of(context).textTheme.headlineLarge,
-              controller: (_foreignCurrency != null)
-                  ? _foreignAmountTextController
-                  : _localAmountTextController,
-              disabled: _split || (_reconciled && _initiallyReconciled),
-              onChanged: (String string) => (_foreignCurrency != null)
-                  ? _foreignAmounts[0] = double.tryParse(string) ?? 0
-                  : _localAmounts[0] = double.tryParse(string) ?? 0,
-            ),
-          ),
-          vDivider,
-          FilledButton(
-            onPressed: _reconciled && _initiallyReconciled
-                ? null
-                : () async {
-                    CurrencyRead? newCurrency = await showDialog<CurrencyRead>(
-                      context: context,
-                      builder: (BuildContext context) => CurrencyDialog(
-                        currentCurrency: _foreignCurrency ?? _localCurrency!,
-                      ),
-                    );
-                    if (newCurrency == null) {
-                      return;
-                    }
-                    setState(() {
-                      for (int i = 0; i < _foreignCurrencies.length; i++) {
-                        if (newCurrency.id == _localCurrency!.id) {
-                          _foreignCurrencies[i] = null;
-                          log.finest(() =>
-                              "before: foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
-                          if (_foreignAmounts[i] != 0 &&
-                              _localAmounts[i] == 0) {
-                            _localAmounts[i] = _foreignAmounts[i];
-                          }
-                          log.finest(() =>
-                              "after: foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
-                        } else {
-                          _foreignCurrencies[i] = newCurrency;
-                          log.finest(() =>
-                              "before: foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
-                          if (_foreignAmounts[i] == 0) {
-                            _foreignAmounts[i] = _localAmounts[i];
-                            if (_foreignAmounts[i] != 0) {
-                              _foreignAmountTextControllers[i].text =
-                                  _foreignAmounts[i].toStringAsFixed(
-                                      _foreignCurrencies[i]
-                                              ?.attributes
-                                              .decimalPlaces ??
-                                          2);
-                            }
-                          }
-                          log.finest(() =>
-                              "after: foreignAmounts[i] = ${_foreignAmounts[i]}, localAmounts[i] = ${_localAmounts[i]}");
-                        }
-                      }
-                    });
-                    updateTransactionAmounts();
-                  },
-            //style: FilledButton.styleFrom(textStyle: Theme.of(context).textTheme.headlineLarge,),
-            child: Text(_foreignCurrency?.attributes.code ??
-                _localCurrency?.attributes.code ??
-                ""),
-          ),
-          vDivider,
-          if (_foreignCurrency != null)
-            Expanded(
-              child: NumberInput(
-                controller: _localAmountTextController,
-                disabled: _split,
-                hintText: _localCurrency?.zero() ??
-                    NumberFormat.currency(decimalDigits: 2).format(0),
-                decimals: _localCurrency?.attributes.decimalPlaces ?? 2,
-                prefixText: "${_localCurrency?.attributes.code} ",
-                onChanged: (String string) =>
-                    _localAmounts[0] = double.tryParse(string) ?? 0,
-              ),
-            ),
-        ],
-      ),
-    */
     childs.add(hDivider);
     // Cards with (Split Title), Category, (Split Amount), Tags, Notes
     for (int i = 0; i < _localAmounts.length; i++) {
@@ -1729,16 +1546,21 @@ class _TransactionPageState extends State<TransactionPage>
     if (!isSource &&
         _destinationAccountType == AccountTypeProperty.assetAccount &&
         _sourceAccountType == AccountTypeProperty.assetAccount) {
-      if (_foreignCurrency?.id != option.currencyId.toString()) {
+      if (!_foreignCurrencies
+          .every((CurrencyRead? e) => e?.id == option.currencyId)) {
         setState(() {
-          _foreignCurrency = CurrencyRead(
-            type: "currencies",
-            id: option.currencyId.toString(),
-            attributes: Currency(
-              code: option.currencyCode,
-              name: option.currencyName,
-              symbol: option.currencySymbol,
-              decimalPlaces: option.currencyDecimalPlaces,
+          _foreignCurrencies.fillRange(
+            0,
+            _foreignCurrencies.length,
+            CurrencyRead(
+              type: "currencies",
+              id: option.currencyId,
+              attributes: Currency(
+                code: option.currencyCode,
+                name: option.currencyName,
+                symbol: option.currencySymbol,
+                decimalPlaces: option.currencyDecimalPlaces,
+              ),
             ),
           );
         });
@@ -2096,46 +1918,40 @@ class _TransactionPageState extends State<TransactionPage>
                         tooltip: S.of(context).transactionDialogBillTitle,
                       ),
                       hDivider,
-                      if (_split) ...<Widget>[
-                        IconButton(
-                          icon: const Icon(Icons.currency_exchange),
-                          onPressed: _split &&
-                                  !(_reconciled && _initiallyReconciled)
-                              ? () async {
-                                  CurrencyRead? newCurrency =
-                                      await showDialog<CurrencyRead>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        CurrencyDialog(
-                                      currentCurrency: _foreignCurrencies[i] ??
-                                          _localCurrency!,
-                                    ),
-                                  );
-                                  if (newCurrency == null) {
-                                    return;
-                                  }
-
-                                  if (newCurrency.id == _localCurrency!.id) {
-                                    newCurrency = null;
-                                    _foreignAmounts[i] = 0;
-                                    _foreignAmountTextControllers[i].text = "";
-                                  }
-                                  setState(() {
-                                    _foreignCurrencies[i] = newCurrency;
-                                    if (_foreignCurrencies.every(
-                                        (CurrencyRead? e) =>
-                                            e?.id == newCurrency?.id)) {
-                                      _foreignCurrency = newCurrency;
-                                    }
-                                    splitTransactionCalculateAmount();
-                                  });
+                      IconButton(
+                        icon: const Icon(Icons.currency_exchange),
+                        onPressed: _split &&
+                                !(_reconciled && _initiallyReconciled)
+                            ? () async {
+                                CurrencyRead? newCurrency =
+                                    await showDialog<CurrencyRead>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      CurrencyDialog(
+                                    currentCurrency: _foreignCurrencies[i] ??
+                                        _localCurrency!,
+                                  ),
+                                );
+                                if (newCurrency == null) {
+                                  return;
                                 }
-                              : null,
-                          tooltip: (_split)
-                              ? S.of(context).transactionSplitChangeCurrency
-                              : null,
-                        ),
-                        hDivider,
+
+                                if (newCurrency.id == _localCurrency!.id) {
+                                  newCurrency = null;
+                                  _foreignAmounts[i] = 0;
+                                  _foreignAmountTextControllers[i].text = "";
+                                }
+                                setState(() {
+                                  _foreignCurrencies[i] = newCurrency;
+                                });
+                              }
+                            : null,
+                        tooltip: (_split)
+                            ? S.of(context).transactionSplitChangeCurrency
+                            : null,
+                      ),
+                      hDivider,
+                      if (_split) ...<Widget>[
                         if (!showSourceAccountSelection &&
                             _transactionType ==
                                 TransactionTypeProperty.deposit) ...<Widget>[

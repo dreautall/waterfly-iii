@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.dreautall.waterflyiii">
-    <application android:label="Waterfly III" android:name="${applicationName}" android:icon="@mipmap/ic_launcher" android:enableOnBackInvokedCallback="false">
+    <application android:label="Waterfly III" android:name="${applicationName}" android:icon="@mipmap/ic_launcher" android:enableOnBackInvokedCallback="false" android:usesCleartextTraffic="true">
         <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
@@ -257,6 +257,7 @@
         <package android:name="ro.ing.mobile.banking.android.activity"/>
         <package android:name="ru.abr"/>
         <package android:name="ru.nspk.mirpay"/>
+        <package android:name="ru.ozon.app.android"/>
         <package android:name="ru.sberbankmobile"/>
         <package android:name="ru.vtb24.mobilebanking.android"/>
         <package android:name="si.delavskahranilnica.dhdenarnik"/>

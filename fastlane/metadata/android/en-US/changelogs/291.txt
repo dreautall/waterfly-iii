@@ -1,0 +1,5 @@
+- Hotfix for HTTP installations
+- Show tags on transaction screen
+- Translation updates
+- Add support for additional banking apps
+- Bugfixes

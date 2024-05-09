@@ -19,7 +19,7 @@ dependencies:
   flutter_secure_storage: ^9.0.0
   provider: ^6.1.2
   shared_preferences: ^2.2.2
-  chopper: ^7.4.0
+  chopper: ^8.0.0
   json_annotation: ^4.8.0
   flutter_svg: ^2.0.7
   url_launcher: ^6.2.4
@@ -29,7 +29,7 @@ dependencies:
   community_charts_flutter: ^1.0.2
   file_picker: ^8.0.0+1
   animations: ^2.0.11
-  flutter_local_notifications: ^17.0.1
+  flutter_local_notifications: ^17.1.2
   notifications_listener_service:
     git:
       url: https://github.com/dreautall/notification_listener_service.git
@@ -57,7 +57,7 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   # needed for swagger_dart_code_generator
   build_runner: ^2.4.7
-  chopper_generator: ^7.4.0
+  chopper_generator: ^8.0.0
   json_serializable: ^6.7.1
   swagger_dart_code_generator: ^2.15.1
   flutter_native_splash: ^2.3.10

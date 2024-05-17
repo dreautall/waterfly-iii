@@ -172,7 +172,8 @@ class _BillsPageState extends State<BillsPage>
                 children: <Widget>[
                   Container(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surfaceVariant,
+                      color:
+                          Theme.of(context).colorScheme.surfaceContainerHighest,
                       borderRadius: const BorderRadius.only(
                         bottomRight: Radius.circular(12),
                         bottomLeft: Radius.circular(12),
@@ -197,10 +198,10 @@ class _BillsPageState extends State<BillsPage>
           BillDetails(bill: bill),
       openColor: _billsLayout == BillsLayout.list
           ? Theme.of(context).cardColor
-          : Theme.of(context).colorScheme.surfaceVariant,
+          : Theme.of(context).colorScheme.surfaceContainerHighest,
       closedColor: _billsLayout == BillsLayout.list
           ? Theme.of(context).cardColor
-          : Theme.of(context).colorScheme.surfaceVariant,
+          : Theme.of(context).colorScheme.surfaceContainerHighest,
       closedShape: RoundedRectangleBorder(
         borderRadius: _billsLayout == BillsLayout.list
             ? const BorderRadius.only(

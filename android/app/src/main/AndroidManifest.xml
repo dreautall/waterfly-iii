@@ -151,7 +151,9 @@
         <package android:name="com.ing.banking"/>
         <package android:name="com.ing.mobile"/>
         <package android:name="com.interbank.mobile"/>
+        <package android:name="com.kasikorn.retail.mbanking.wap"/>
         <package android:name="com.konylabs.capitalone"/>
+        <package android:name="com.krungsri.kma"/>
         <package android:name="com.latuabancaperandroid"/>
         <package android:name="com.loan.cash.credit.nanopay"/>
         <package android:name="com.loan.cash.credit.nanopaymx"/>

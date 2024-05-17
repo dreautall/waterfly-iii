@@ -1194,7 +1194,7 @@ class _TransactionPageState extends State<TransactionPage>
             ),
             showBadge: _hasAttachments,
             badgeStyle: badges.BadgeStyle(
-              badgeColor: Theme.of(context).colorScheme.surfaceVariant,
+              badgeColor: Theme.of(context).colorScheme.surfaceContainerHighest,
             ),
             badgeAnimation: const badges.BadgeAnimation.scale(
               animationDuration: animDurationEmphasized,

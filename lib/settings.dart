@@ -129,8 +129,6 @@ class SettingsProvider with ChangeNotifier {
 
   StreamSubscription<LogRecord>? _debugLogger;
 
-  bool _showFutureTXs = false;
-
   bool _loaded = false;
   bool get loaded => _loaded;
 
@@ -302,20 +300,6 @@ class SettingsProvider with ChangeNotifier {
     await prefs.setString(settingLocale, locale.languageCode);
 
     log.finest(() => "notify SettingsProvider->setLocale()");
-    notifyListeners();
-  }
-
-  @Deprecated('legacy feature, use bitmask for bool settings')
-  Future<void> setShowFutureTXs(bool showFutureTXs) async {
-    if (showFutureTXs == _showFutureTXs) {
-      return;
-    }
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _showFutureTXs = showFutureTXs;
-    await prefs.setBool(settingShowFutureTXs, showFutureTXs);
-
-    log.finest(() => "notify SettingsProvider->setShowFutureTXs()");
     notifyListeners();
   }
 

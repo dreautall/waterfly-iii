@@ -90,7 +90,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   );
                   if (ok == null || !ok) {
                     if (settings.showFutureTXs != oldShowFutureTXs) {
-                      settings.setShowFutureTXs(oldShowFutureTXs);
+                      settings.showFutureTXs = oldShowFutureTXs;
                       _pagingController.refresh();
                     }
                     _filters.account = oldFilters.account;

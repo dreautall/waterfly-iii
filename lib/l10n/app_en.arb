@@ -713,7 +713,7 @@
   },
   "homeTransactionsSettingsShowTags": "Show tags in transaction list",
   "@homeTransactionsSettingsShowTags": {
-    "description": "Setting label to show tags in transaction list."
+    "description": "Setting label to show tags in transactioon list."
   },
   "liabilityDirectionCredit": "I am owed this debt",
   "@liabilityDirectionCredit": {

@@ -110,11 +110,14 @@ class SettingsProvider with ChangeNotifier {
   static const String settingBillsDefaultSortOrder = "BILLSDEFAULTSORTORDER";
   static const String settingsCategoriesSumExcluded = "CAT_SUMEXCLUDED";
 
-  bool get debug => _boolSettings[BoolSettings.debug];
-  bool get lock => _boolSettings[BoolSettings.lock];
-  bool get showFutureTXs => _boolSettings[BoolSettings.showFutureTXs];
-  bool get dynamicColors => _boolSettings[BoolSettings.dynamicColors];
-  bool get useServerTime => _boolSettings[BoolSettings.useServerTime];
+  bool get debug => _loaded ? _boolSettings[BoolSettings.debug] : false;
+  bool get lock => _loaded ? _boolSettings[BoolSettings.lock] : false;
+  bool get showFutureTXs =>
+      _loaded ? _boolSettings[BoolSettings.showFutureTXs] : false;
+  bool get dynamicColors =>
+      _loaded ? _boolSettings[BoolSettings.dynamicColors] : false;
+  bool get useServerTime =>
+      _loaded ? _boolSettings[BoolSettings.useServerTime] : true;
 
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get theme => _theme;
@@ -233,6 +236,8 @@ class SettingsProvider with ChangeNotifier {
     if (_boolSettings[setting] == value) {
       return false;
     }
+
+    _boolSettings[setting] = value;
 
     () async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -596,6 +601,9 @@ class DebugLogger {
   }
 
   Future<void> destroy() async {
-    File(await _getPath()).deleteSync();
+    File file = File(await _getPath());
+    if (await file.exists()) {
+      file.deleteSync();
+    }
   }
 }

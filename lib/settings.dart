@@ -42,7 +42,7 @@ class NotificationAppSettings {
 enum BoolSettings {
   debug,
   lock,
-  showfutureTXs,
+  showFutureTXs,
   dynamicColors,
   useServerTime,
 }
@@ -110,25 +110,28 @@ class SettingsProvider with ChangeNotifier {
   static const String settingBillsDefaultSortOrder = "BILLSDEFAULTSORTORDER";
   static const String settingsCategoriesSumExcluded = "CAT_SUMEXCLUDED";
 
+  bool get debug => _boolSettings[BoolSettings.debug];
+  bool get lock => _boolSettings[BoolSettings.lock];
+  bool get showFutureTXs => _boolSettings[BoolSettings.showFutureTXs];
+  bool get dynamicColors => _boolSettings[BoolSettings.dynamicColors];
+  bool get useServerTime => _boolSettings[BoolSettings.useServerTime];
+
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get theme => _theme;
+
   bool _dynamicColors = false;
-  bool get dynamicColors => _dynamicColors;
+
   bool _useServerTime = true;
-  bool get useServerTime => _useServerTime;
 
   Locale? _locale;
   Locale? get locale => _locale;
 
   bool _debug = false;
-  bool get debug => _debug;
   StreamSubscription<LogRecord>? _debugLogger;
 
   bool _lock = false;
-  bool get lock => _lock;
 
   bool _showFutureTXs = false;
-  bool get showFutureTXs => _showFutureTXs;
 
   bool _loaded = false;
   bool get loaded => _loaded;
@@ -151,20 +154,22 @@ class SettingsProvider with ChangeNotifier {
 
   Future<void> loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    log.config("reading prefs!");
+    log.config("reading prefs");
 
     _boolSettings = SettingsBitmask(prefs.getInt(settingsBitmask) ?? 0);
     if (!prefs.containsKey(settingsBitmask)) {
       // Fallback solution for migration
+      log.config("no bitmask saved, trying legacy settings");
       _boolSettings[BoolSettings.debug] = prefs.getBool(settingDebug) ?? false;
       _boolSettings[BoolSettings.lock] = prefs.getBool(settingLock) ?? false;
-      _boolSettings[BoolSettings.showfutureTXs] =
+      _boolSettings[BoolSettings.showFutureTXs] =
           prefs.getBool(settingShowFutureTXs) ?? false;
       _boolSettings[BoolSettings.dynamicColors] =
           prefs.getBool(settingDynamicColors) ?? false;
       _boolSettings[BoolSettings.useServerTime] =
           prefs.getBool(settingUseServerTime) ?? true;
     }
+    log.config("read bool bitmask $_boolSettings");
 
     final String theme = prefs.getString(settingTheme) ?? "unset";
     log.config("read theme $theme");
@@ -179,8 +184,6 @@ class SettingsProvider with ChangeNotifier {
       default:
         _theme = ThemeMode.system;
     }
-    log.config("read dynamic colors $dynamicColors");
-    log.config("read use server time $useServerTime");
 
     final String? countryCode = Intl.defaultLocale?.split("_").last;
     final Locale locale = Locale(prefs.getString(settingLocale) ?? "unset");
@@ -192,17 +195,14 @@ class SettingsProvider with ChangeNotifier {
       _locale = const Locale('en');
     }
 
-    log.config("read debug $debug");
     if (debug) {
+      log.config("setting debug");
       Logger.root.level = Level.ALL;
       _debugLogger = Logger.root.onRecord.listen(await DebugLogger().get());
     } else {
+      log.config("not setting debug");
       Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
     }
-
-    log.config("read lock $lock");
-
-    _showFutureTXs = prefs.getBool(settingShowFutureTXs) ?? false;
 
     _notificationApps = prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
@@ -263,6 +263,7 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  @Deprecated('legacy feature, use bitmask for bool settings')
   Future<void> setDebug(bool debug) async {
     if (debug == _debug) {
       return;
@@ -285,6 +286,7 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  @Deprecated('legacy feature, use bitmask for bool settings')
   Future<void> setLock(bool lock) async {
     if (lock == _lock) {
       return;
@@ -298,6 +300,7 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  @Deprecated('legacy feature, use bitmask for bool settings')
   Future<void> setShowFutureTXs(bool showFutureTXs) async {
     if (showFutureTXs == _showFutureTXs) {
       return;
@@ -311,6 +314,7 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  @Deprecated('legacy feature, use bitmask for bool settings')
   Future<void> setDynamicColors(bool dynamicColors) async {
     if (dynamicColors == _dynamicColors) {
       return;
@@ -324,6 +328,7 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  @Deprecated('legacy feature, use bitmask for bool settings')
   Future<void> setUseServerTime(bool useServerTime) async {
     if (useServerTime == _useServerTime) {
       return;

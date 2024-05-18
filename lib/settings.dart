@@ -122,8 +122,6 @@ class SettingsProvider with ChangeNotifier {
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get theme => _theme;
 
-  bool _dynamicColors = false;
-
   Locale? _locale;
   Locale? get locale => _locale;
 
@@ -300,20 +298,6 @@ class SettingsProvider with ChangeNotifier {
     await prefs.setString(settingLocale, locale.languageCode);
 
     log.finest(() => "notify SettingsProvider->setLocale()");
-    notifyListeners();
-  }
-
-  @Deprecated('legacy feature, use bitmask for bool settings')
-  Future<void> setDynamicColors(bool dynamicColors) async {
-    if (dynamicColors == _dynamicColors) {
-      return;
-    }
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _dynamicColors = dynamicColors;
-    await prefs.setBool(settingDynamicColors, dynamicColors);
-
-    log.finest(() => "notify SettingsProvider->dynamicColors()");
     notifyListeners();
   }
 

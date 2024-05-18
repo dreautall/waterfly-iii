@@ -281,9 +281,7 @@ class ThemeDialog extends StatelessWidget {
                 title: Text(S.of(context).settingsThemeDynamicColors),
                 value: context.select((SettingsProvider s) => s.dynamicColors),
                 isThreeLine: false,
-                onChanged: (bool value) async {
-                  settings.setDynamicColors(value);
-                },
+                onChanged: (bool value) => settings.dynamicColors = value,
               )
             : const SizedBox.shrink(),
         ...ThemeMode.values.map(

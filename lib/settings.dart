@@ -129,7 +129,6 @@ class SettingsProvider with ChangeNotifier {
   Locale? _locale;
   Locale? get locale => _locale;
 
-  bool _debug = false;
   StreamSubscription<LogRecord>? _debugLogger;
 
   bool _lock = false;
@@ -307,29 +306,6 @@ class SettingsProvider with ChangeNotifier {
     await prefs.setString(settingLocale, locale.languageCode);
 
     log.finest(() => "notify SettingsProvider->setLocale()");
-    notifyListeners();
-  }
-
-  @Deprecated('legacy feature, use bitmask for bool settings')
-  Future<void> setDebug(bool debug) async {
-    if (debug == _debug) {
-      return;
-    }
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _debug = debug;
-    await prefs.setBool(settingDebug, debug);
-
-    if (debug) {
-      Logger.root.level = Level.ALL;
-      _debugLogger = Logger.root.onRecord.listen(await DebugLogger().get());
-    } else {
-      Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
-      await _debugLogger?.cancel();
-      await DebugLogger().destroy();
-    }
-
-    log.finest(() => "notify SettingsProvider->setDebug()");
     notifyListeners();
   }
 

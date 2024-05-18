@@ -131,8 +131,6 @@ class SettingsProvider with ChangeNotifier {
 
   StreamSubscription<LogRecord>? _debugLogger;
 
-  bool _lock = false;
-
   bool _showFutureTXs = false;
 
   bool _loaded = false;
@@ -306,20 +304,6 @@ class SettingsProvider with ChangeNotifier {
     await prefs.setString(settingLocale, locale.languageCode);
 
     log.finest(() => "notify SettingsProvider->setLocale()");
-    notifyListeners();
-  }
-
-  @Deprecated('legacy feature, use bitmask for bool settings')
-  Future<void> setLock(bool lock) async {
-    if (lock == _lock) {
-      return;
-    }
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _lock = lock;
-    await prefs.setBool(settingLock, lock);
-
-    log.finest(() => "notify SettingsProvider->setLock()");
     notifyListeners();
   }
 

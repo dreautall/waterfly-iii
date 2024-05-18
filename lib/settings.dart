@@ -45,6 +45,7 @@ enum BoolSettings {
   showFutureTXs,
   dynamicColors,
   useServerTime,
+  hideTags,
 }
 
 class SettingsBitmask {
@@ -118,6 +119,7 @@ class SettingsProvider with ChangeNotifier {
       _loaded ? _boolSettings[BoolSettings.dynamicColors] : false;
   bool get useServerTime =>
       _loaded ? _boolSettings[BoolSettings.useServerTime] : true;
+  bool get hideTags => _loaded ? _boolSettings[BoolSettings.hideTags] : false;
 
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get theme => _theme;
@@ -266,6 +268,7 @@ class SettingsProvider with ChangeNotifier {
       _setBool(BoolSettings.dynamicColors, enabled);
   set useServerTime(bool enabled) =>
       _setBool(BoolSettings.useServerTime, enabled);
+  set hideTags(bool enabled) => _setBool(BoolSettings.hideTags, enabled);
 
   Future<void> setTheme(ThemeMode theme) async {
     _theme = theme;

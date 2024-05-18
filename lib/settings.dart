@@ -164,6 +164,7 @@ class SettingsProvider with ChangeNotifier {
           prefs.getBool(settingDynamicColors) ?? false;
       _boolSettings[BoolSettings.useServerTime] =
           prefs.getBool(settingUseServerTime) ?? true;
+      _boolSettings[BoolSettings.hideTags] = false;
     }
     log.config("read bool bitmask $_boolSettings");
 

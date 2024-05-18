@@ -2090,6 +2090,9 @@ class TransactionCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     final Logger log = Logger("Pages.Transaction.Category");
 
+    CancelableOperation<Response<AutocompleteCategoryArray>>? fetchOp;
+
+    log.finest(() => "build()");
     return Row(
       children: <Widget>[
         Expanded(
@@ -2100,11 +2103,21 @@ class TransactionCategory extends StatelessWidget {
             focusNode: focusNode,
             optionsBuilder: (TextEditingValue textEditingValue) async {
               try {
+                fetchOp?.cancel();
+
                 final FireflyIii api = context.read<FireflyService>().api;
-                final Response<AutocompleteCategoryArray> response =
-                    await api.v1AutocompleteCategoriesGet(
-                  query: textEditingValue.text,
+                fetchOp = CancelableOperation<
+                    Response<AutocompleteCategoryArray>>.fromFuture(
+                  api.v1AutocompleteCategoriesGet(
+                    query: textEditingValue.text,
+                  ),
                 );
+                final Response<AutocompleteCategoryArray>? response =
+                    await fetchOp?.valueOrCancellation();
+                if (response == null) {
+                  // Cancelled
+                  return const Iterable<String>.empty();
+                }
                 apiThrowErrorIfEmpty(
                     response, context.mounted ? context : null);
 

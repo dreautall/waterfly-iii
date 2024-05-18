@@ -1219,6 +1219,9 @@ class _TransactionPageState extends State<TransactionPage>
     const Widget hDivider = SizedBox(height: 16);
     const Widget vDivider = SizedBox(width: 16);
 
+    CancelableOperation<Response<AutocompleteAccountArray>>? fetchOpSource;
+    CancelableOperation<Response<AutocompleteAccountArray>>? fetchOpDestination;
+
     // Title
     childs.add(
       Row(
@@ -1393,15 +1396,25 @@ class _TransactionPageState extends State<TransactionPage>
                   option.name,
               optionsBuilder: (TextEditingValue textEditingValue) async {
                 try {
+                  fetchOpSource?.cancel();
+
                   final FireflyIii api = context.read<FireflyService>().api;
-                  final Response<AutocompleteAccountArray> response =
-                      await api.v1AutocompleteAccountsGet(
-                    query: textEditingValue.text,
-                    types:
-                        _transactionType == TransactionTypeProperty.withdrawal
-                            ? _transactionType.destinationAccountTypes
-                            : _transactionType.sourceAccountTypes,
+                  fetchOpSource = CancelableOperation<
+                      Response<AutocompleteAccountArray>>.fromFuture(
+                    api.v1AutocompleteAccountsGet(
+                      query: textEditingValue.text,
+                      types:
+                          _transactionType == TransactionTypeProperty.withdrawal
+                              ? _transactionType.destinationAccountTypes
+                              : _transactionType.sourceAccountTypes,
+                    ),
                   );
+                  final Response<AutocompleteAccountArray>? response =
+                      await fetchOpSource?.valueOrCancellation();
+                  if (response == null) {
+                    // Cancelled
+                    return const Iterable<AutocompleteAccount>.empty();
+                  }
                   apiThrowErrorIfEmpty(response, mounted ? context : null);
 
                   return response.body!;
@@ -1505,17 +1518,27 @@ class _TransactionPageState extends State<TransactionPage>
               },
               optionsBuilder: (TextEditingValue textEditingValue) async {
                 try {
+                  fetchOpDestination?.cancel();
+
                   final FireflyIii api = context.read<FireflyService>().api;
-                  final Response<AutocompleteAccountArray> response =
-                      await api.v1AutocompleteAccountsGet(
-                    query: textEditingValue.text,
-                    types: <AccountTypeFilter>[
-                      AccountTypeFilter.assetAccount,
-                      AccountTypeFilter.loan,
-                      AccountTypeFilter.debt,
-                      AccountTypeFilter.mortgage,
-                    ],
+                  fetchOpDestination = CancelableOperation<
+                      Response<AutocompleteAccountArray>>.fromFuture(
+                    api.v1AutocompleteAccountsGet(
+                      query: textEditingValue.text,
+                      types: <AccountTypeFilter>[
+                        AccountTypeFilter.assetAccount,
+                        AccountTypeFilter.loan,
+                        AccountTypeFilter.debt,
+                        AccountTypeFilter.mortgage,
+                      ],
+                    ),
                   );
+                  final Response<AutocompleteAccountArray>? response =
+                      await fetchOpDestination?.valueOrCancellation();
+                  if (response == null) {
+                    // Cancelled
+                    return const Iterable<AutocompleteAccount>.empty();
+                  }
                   apiThrowErrorIfEmpty(response, mounted ? context : null);
 
                   return response.body!;

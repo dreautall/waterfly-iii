@@ -39,7 +39,59 @@ class NotificationAppSettings {
       };
 }
 
+enum BoolSettings {
+  debug,
+  lock,
+  showfutureTXs,
+  dynamicColors,
+  useServerTime,
+}
+
+class SettingsBitmask {
+  int _value;
+
+  SettingsBitmask([this._value = 0]) {
+    assert(_value >= 0);
+  }
+
+  bool operator [](BoolSettings flag) => hasFlag(flag);
+
+  void operator []=(BoolSettings flag, bool value) {
+    if (value) {
+      setFlag(flag);
+    } else {
+      unsetFlag(flag);
+    }
+  }
+
+  bool hasFlag(BoolSettings flag) => (_value & (1 << flag.index)) != 0;
+
+  void setFlag(BoolSettings flag) {
+    _value |= 1 << flag.index;
+  }
+
+  void unsetFlag(BoolSettings flag) {
+    _value &= ~(1 << flag.index);
+  }
+
+  int get value => _value;
+
+  @override
+  String toString() {
+    final StringBuffer buffer = StringBuffer();
+    for (final BoolSettings flag in BoolSettings.values.reversed) {
+      if (hasFlag(flag)) {
+        buffer.write('1');
+      } else {
+        buffer.write('0');
+      }
+    }
+    return buffer.toString();
+  }
+}
+
 class SettingsProvider with ChangeNotifier {
+  static const String settingsBitmask = "BOOLBITMASK";
   static const String settingDebug = "DEBUG";
   static const String settingLocale = "LOCALE";
   static const String settingLock = "LOCK";
@@ -94,9 +146,25 @@ class SettingsProvider with ChangeNotifier {
   List<String> _categoriesSumExcluded = <String>[];
   List<String> get categoriesSumExcluded => _categoriesSumExcluded;
 
+  late SettingsBitmask _boolSettings;
+  SettingsBitmask get boolSettings => _boolSettings;
+
   Future<void> loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     log.config("reading prefs!");
+
+    _boolSettings = SettingsBitmask(prefs.getInt(settingsBitmask) ?? 0);
+    if (!prefs.containsKey(settingsBitmask)) {
+      // Fallback solution for migration
+      _boolSettings[BoolSettings.debug] = prefs.getBool(settingDebug) ?? false;
+      _boolSettings[BoolSettings.lock] = prefs.getBool(settingLock) ?? false;
+      _boolSettings[BoolSettings.showfutureTXs] =
+          prefs.getBool(settingShowFutureTXs) ?? false;
+      _boolSettings[BoolSettings.dynamicColors] =
+          prefs.getBool(settingDynamicColors) ?? false;
+      _boolSettings[BoolSettings.useServerTime] =
+          prefs.getBool(settingUseServerTime) ?? true;
+    }
 
     final String theme = prefs.getString(settingTheme) ?? "unset";
     log.config("read theme $theme");
@@ -111,9 +179,7 @@ class SettingsProvider with ChangeNotifier {
       default:
         _theme = ThemeMode.system;
     }
-    _dynamicColors = prefs.getBool(settingDynamicColors) ?? false;
     log.config("read dynamic colors $dynamicColors");
-    _useServerTime = prefs.getBool(settingUseServerTime) ?? true;
     log.config("read use server time $useServerTime");
 
     final String? countryCode = Intl.defaultLocale?.split("_").last;
@@ -126,20 +192,17 @@ class SettingsProvider with ChangeNotifier {
       _locale = const Locale('en');
     }
 
-    _debug = prefs.getBool(settingDebug) ?? false;
     log.config("read debug $debug");
-    if (_debug) {
+    if (debug) {
       Logger.root.level = Level.ALL;
       _debugLogger = Logger.root.onRecord.listen(await DebugLogger().get());
     } else {
       Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
     }
 
-    _lock = prefs.getBool(settingLock) ?? false;
     log.config("read lock $lock");
 
     _showFutureTXs = prefs.getBool(settingShowFutureTXs) ?? false;
-    log.config("read showFutureTXs $showFutureTXs");
 
     _notificationApps = prefs.getStringList(settingNLUsedApps) ?? <String>[];
 

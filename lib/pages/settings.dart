@@ -124,7 +124,7 @@ class SettingsPageState extends State<SettingsPage>
                 .read<FireflyService>()
                 .tzHandler
                 .setUseServerTime(value);
-            await settings.setUseServerTime(value);
+            settings.useServerTime = value;
           },
         ),
         const Divider(),

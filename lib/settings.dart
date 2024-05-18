@@ -124,8 +124,6 @@ class SettingsProvider with ChangeNotifier {
 
   bool _dynamicColors = false;
 
-  bool _useServerTime = true;
-
   Locale? _locale;
   Locale? get locale => _locale;
 
@@ -332,20 +330,6 @@ class SettingsProvider with ChangeNotifier {
     await prefs.setBool(settingDynamicColors, dynamicColors);
 
     log.finest(() => "notify SettingsProvider->dynamicColors()");
-    notifyListeners();
-  }
-
-  @Deprecated('legacy feature, use bitmask for bool settings')
-  Future<void> setUseServerTime(bool useServerTime) async {
-    if (useServerTime == _useServerTime) {
-      return;
-    }
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _useServerTime = useServerTime;
-    await prefs.setBool(settingUseServerTime, useServerTime);
-
-    log.finest(() => "notify SettingsProvider->setUseServerTime()");
     notifyListeners();
   }
 

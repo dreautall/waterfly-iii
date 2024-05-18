@@ -77,7 +77,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 isSelected: !value,
-                tooltip: "Show tags in transaction list",
+                tooltip: S.of(context).homeTransactionsSettingsShowTags,
                 onPressed: () async {
                   final SettingsProvider settings =
                       context.read<SettingsProvider>();

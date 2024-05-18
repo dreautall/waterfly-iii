@@ -229,6 +229,48 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  bool _setBool(BoolSettings setting, bool value) {
+    if (_boolSettings[setting] == value) {
+      return false;
+    }
+
+    () async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(settingsBitmask, _boolSettings.value);
+
+      log.finest(() => "notify SettingsProvider->_setBool($setting)");
+      notifyListeners();
+    }();
+
+    return true;
+  }
+
+  // Bool setters
+  set debug(bool enabled) {
+    if (!_setBool(BoolSettings.debug, enabled)) {
+      return;
+    }
+
+    () async {
+      if (debug) {
+        Logger.root.level = Level.ALL;
+        _debugLogger = Logger.root.onRecord.listen(await DebugLogger().get());
+      } else {
+        Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
+        await _debugLogger?.cancel();
+        await DebugLogger().destroy();
+      }
+    }();
+  }
+
+  set lock(bool enabled) => _setBool(BoolSettings.lock, enabled);
+  set showFutureTXs(bool enabled) =>
+      _setBool(BoolSettings.showFutureTXs, enabled);
+  set dynamicColors(bool enabled) =>
+      _setBool(BoolSettings.dynamicColors, enabled);
+  set useServerTime(bool enabled) =>
+      _setBool(BoolSettings.useServerTime, enabled);
+
   Future<void> setTheme(ThemeMode theme) async {
     _theme = theme;
     SharedPreferences prefs = await SharedPreferences.getInstance();

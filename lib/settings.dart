@@ -39,7 +39,59 @@ class NotificationAppSettings {
       };
 }
 
+enum BoolSettings {
+  debug,
+  lock,
+  showFutureTXs,
+  dynamicColors,
+  useServerTime,
+}
+
+class SettingsBitmask {
+  int _value;
+
+  SettingsBitmask([this._value = 0]) {
+    assert(_value >= 0);
+  }
+
+  bool operator [](BoolSettings flag) => hasFlag(flag);
+
+  void operator []=(BoolSettings flag, bool value) {
+    if (value) {
+      setFlag(flag);
+    } else {
+      unsetFlag(flag);
+    }
+  }
+
+  bool hasFlag(BoolSettings flag) => (_value & (1 << flag.index)) != 0;
+
+  void setFlag(BoolSettings flag) {
+    _value |= 1 << flag.index;
+  }
+
+  void unsetFlag(BoolSettings flag) {
+    _value &= ~(1 << flag.index);
+  }
+
+  int get value => _value;
+
+  @override
+  String toString() {
+    final StringBuffer buffer = StringBuffer();
+    for (final BoolSettings flag in BoolSettings.values.reversed) {
+      if (hasFlag(flag)) {
+        buffer.write('1');
+      } else {
+        buffer.write('0');
+      }
+    }
+    return buffer.toString();
+  }
+}
+
 class SettingsProvider with ChangeNotifier {
+  static const String settingsBitmask = "BOOLBITMASK";
   static const String settingDebug = "DEBUG";
   static const String settingLocale = "LOCALE";
   static const String settingLock = "LOCK";
@@ -58,25 +110,22 @@ class SettingsProvider with ChangeNotifier {
   static const String settingBillsDefaultSortOrder = "BILLSDEFAULTSORTORDER";
   static const String settingsCategoriesSumExcluded = "CAT_SUMEXCLUDED";
 
+  bool get debug => _loaded ? _boolSettings[BoolSettings.debug] : false;
+  bool get lock => _loaded ? _boolSettings[BoolSettings.lock] : false;
+  bool get showFutureTXs =>
+      _loaded ? _boolSettings[BoolSettings.showFutureTXs] : false;
+  bool get dynamicColors =>
+      _loaded ? _boolSettings[BoolSettings.dynamicColors] : false;
+  bool get useServerTime =>
+      _loaded ? _boolSettings[BoolSettings.useServerTime] : true;
+
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get theme => _theme;
-  bool _dynamicColors = false;
-  bool get dynamicColors => _dynamicColors;
-  bool _useServerTime = true;
-  bool get useServerTime => _useServerTime;
 
   Locale? _locale;
   Locale? get locale => _locale;
 
-  bool _debug = false;
-  bool get debug => _debug;
   StreamSubscription<LogRecord>? _debugLogger;
-
-  bool _lock = false;
-  bool get lock => _lock;
-
-  bool _showFutureTXs = false;
-  bool get showFutureTXs => _showFutureTXs;
 
   bool _loaded = false;
   bool get loaded => _loaded;
@@ -94,9 +143,27 @@ class SettingsProvider with ChangeNotifier {
   List<String> _categoriesSumExcluded = <String>[];
   List<String> get categoriesSumExcluded => _categoriesSumExcluded;
 
+  late SettingsBitmask _boolSettings;
+  SettingsBitmask get boolSettings => _boolSettings;
+
   Future<void> loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    log.config("reading prefs!");
+    log.config("reading prefs");
+
+    _boolSettings = SettingsBitmask(prefs.getInt(settingsBitmask) ?? 0);
+    if (!prefs.containsKey(settingsBitmask)) {
+      // Fallback solution for migration
+      log.config("no bitmask saved, trying legacy settings");
+      _boolSettings[BoolSettings.debug] = prefs.getBool(settingDebug) ?? false;
+      _boolSettings[BoolSettings.lock] = prefs.getBool(settingLock) ?? false;
+      _boolSettings[BoolSettings.showFutureTXs] =
+          prefs.getBool(settingShowFutureTXs) ?? false;
+      _boolSettings[BoolSettings.dynamicColors] =
+          prefs.getBool(settingDynamicColors) ?? false;
+      _boolSettings[BoolSettings.useServerTime] =
+          prefs.getBool(settingUseServerTime) ?? true;
+    }
+    log.config("read bool bitmask $_boolSettings");
 
     final String theme = prefs.getString(settingTheme) ?? "unset";
     log.config("read theme $theme");
@@ -111,10 +178,6 @@ class SettingsProvider with ChangeNotifier {
       default:
         _theme = ThemeMode.system;
     }
-    _dynamicColors = prefs.getBool(settingDynamicColors) ?? false;
-    log.config("read dynamic colors $dynamicColors");
-    _useServerTime = prefs.getBool(settingUseServerTime) ?? true;
-    log.config("read use server time $useServerTime");
 
     final String? countryCode = Intl.defaultLocale?.split("_").last;
     final Locale locale = Locale(prefs.getString(settingLocale) ?? "unset");
@@ -126,20 +189,14 @@ class SettingsProvider with ChangeNotifier {
       _locale = const Locale('en');
     }
 
-    _debug = prefs.getBool(settingDebug) ?? false;
-    log.config("read debug $debug");
-    if (_debug) {
+    if (debug) {
+      log.config("setting debug");
       Logger.root.level = Level.ALL;
       _debugLogger = Logger.root.onRecord.listen(await DebugLogger().get());
     } else {
+      log.config("not setting debug");
       Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
     }
-
-    _lock = prefs.getBool(settingLock) ?? false;
-    log.config("read lock $lock");
-
-    _showFutureTXs = prefs.getBool(settingShowFutureTXs) ?? false;
-    log.config("read showFutureTXs $showFutureTXs");
 
     _notificationApps = prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
@@ -165,6 +222,50 @@ class SettingsProvider with ChangeNotifier {
     log.finest(() => "notify SettingsProvider->loadSettings()");
     notifyListeners();
   }
+
+  bool _setBool(BoolSettings setting, bool value) {
+    if (_boolSettings[setting] == value) {
+      return false;
+    }
+
+    _boolSettings[setting] = value;
+
+    () async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(settingsBitmask, _boolSettings.value);
+
+      log.finest(() => "notify SettingsProvider->_setBool($setting)");
+      notifyListeners();
+    }();
+
+    return true;
+  }
+
+  // Bool setters
+  set debug(bool enabled) {
+    if (!_setBool(BoolSettings.debug, enabled)) {
+      return;
+    }
+
+    () async {
+      if (debug) {
+        Logger.root.level = Level.ALL;
+        _debugLogger = Logger.root.onRecord.listen(await DebugLogger().get());
+      } else {
+        Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
+        await _debugLogger?.cancel();
+        await DebugLogger().destroy();
+      }
+    }();
+  }
+
+  set lock(bool enabled) => _setBool(BoolSettings.lock, enabled);
+  set showFutureTXs(bool enabled) =>
+      _setBool(BoolSettings.showFutureTXs, enabled);
+  set dynamicColors(bool enabled) =>
+      _setBool(BoolSettings.dynamicColors, enabled);
+  set useServerTime(bool enabled) =>
+      _setBool(BoolSettings.useServerTime, enabled);
 
   Future<void> setTheme(ThemeMode theme) async {
     _theme = theme;
@@ -197,80 +298,6 @@ class SettingsProvider with ChangeNotifier {
     await prefs.setString(settingLocale, locale.languageCode);
 
     log.finest(() => "notify SettingsProvider->setLocale()");
-    notifyListeners();
-  }
-
-  Future<void> setDebug(bool debug) async {
-    if (debug == _debug) {
-      return;
-    }
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _debug = debug;
-    await prefs.setBool(settingDebug, debug);
-
-    if (debug) {
-      Logger.root.level = Level.ALL;
-      _debugLogger = Logger.root.onRecord.listen(await DebugLogger().get());
-    } else {
-      Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
-      await _debugLogger?.cancel();
-      await DebugLogger().destroy();
-    }
-
-    log.finest(() => "notify SettingsProvider->setDebug()");
-    notifyListeners();
-  }
-
-  Future<void> setLock(bool lock) async {
-    if (lock == _lock) {
-      return;
-    }
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _lock = lock;
-    await prefs.setBool(settingLock, lock);
-
-    log.finest(() => "notify SettingsProvider->setLock()");
-    notifyListeners();
-  }
-
-  Future<void> setShowFutureTXs(bool showFutureTXs) async {
-    if (showFutureTXs == _showFutureTXs) {
-      return;
-    }
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _showFutureTXs = showFutureTXs;
-    await prefs.setBool(settingShowFutureTXs, showFutureTXs);
-
-    log.finest(() => "notify SettingsProvider->setShowFutureTXs()");
-    notifyListeners();
-  }
-
-  Future<void> setDynamicColors(bool dynamicColors) async {
-    if (dynamicColors == _dynamicColors) {
-      return;
-    }
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _dynamicColors = dynamicColors;
-    await prefs.setBool(settingDynamicColors, dynamicColors);
-
-    log.finest(() => "notify SettingsProvider->dynamicColors()");
-    notifyListeners();
-  }
-
-  Future<void> setUseServerTime(bool useServerTime) async {
-    if (useServerTime == _useServerTime) {
-      return;
-    }
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _useServerTime = useServerTime;
-    await prefs.setBool(settingUseServerTime, useServerTime);
-
-    log.finest(() => "notify SettingsProvider->setUseServerTime()");
     notifyListeners();
   }
 
@@ -486,6 +513,9 @@ class DebugLogger {
   }
 
   Future<void> destroy() async {
-    File(await _getPath()).deleteSync();
+    File file = File(await _getPath());
+    if (await file.exists()) {
+      file.deleteSync();
+    }
   }
 }

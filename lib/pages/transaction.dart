@@ -1657,6 +1657,8 @@ class _TransactionPageState extends State<TransactionPage>
       BuildContext context, int i, bool showAccountSelection) {
     const Widget hDivider = SizedBox(height: 16);
 
+    CancelableOperation<Response<AutocompleteAccountArray>>? fetchOp;
+
     return Card(
       key: ValueKey<int>(i),
       child: Padding(
@@ -1706,20 +1708,32 @@ class _TransactionPageState extends State<TransactionPage>
                                   optionsBuilder: (TextEditingValue
                                       textEditingValue) async {
                                     try {
+                                      fetchOp?.cancel();
+
                                       final FireflyIii api =
                                           context.read<FireflyService>().api;
-                                      final Response<AutocompleteAccountArray>
-                                          response =
-                                          await api.v1AutocompleteAccountsGet(
-                                        query: textEditingValue.text,
-                                        types: _transactionType ==
-                                                TransactionTypeProperty
-                                                    .withdrawal
-                                            ? _transactionType
-                                                .destinationAccountTypes
-                                            : _transactionType
-                                                .sourceAccountTypes,
+                                      fetchOp = CancelableOperation<
+                                          Response<
+                                              AutocompleteAccountArray>>.fromFuture(
+                                        api.v1AutocompleteAccountsGet(
+                                          query: textEditingValue.text,
+                                          types: _transactionType ==
+                                                  TransactionTypeProperty
+                                                      .withdrawal
+                                              ? _transactionType
+                                                  .destinationAccountTypes
+                                              : _transactionType
+                                                  .sourceAccountTypes,
+                                        ),
                                       );
+                                      final Response<AutocompleteAccountArray>?
+                                          response =
+                                          await fetchOp?.valueOrCancellation();
+                                      if (response == null) {
+                                        // Cancelled
+                                        return const Iterable<
+                                            AutocompleteAccount>.empty();
+                                      }
                                       apiThrowErrorIfEmpty(
                                           response, mounted ? context : null);
 

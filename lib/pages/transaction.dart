@@ -2198,6 +2198,9 @@ class _TransactionBudgetState extends State<TransactionBudget> {
 
   @override
   Widget build(BuildContext context) {
+    CancelableOperation<Response<AutocompleteBudgetArray>>? fetchOp;
+
+    log.finest(() => "build()");
     return Row(
       children: <Widget>[
         Expanded(
@@ -2218,11 +2221,21 @@ class _TransactionBudgetState extends State<TransactionBudget> {
             },
             optionsBuilder: (TextEditingValue textEditingValue) async {
               try {
+                fetchOp?.cancel();
+
                 final FireflyIii api = context.read<FireflyService>().api;
-                final Response<AutocompleteBudgetArray> response =
-                    await api.v1AutocompleteBudgetsGet(
-                  query: textEditingValue.text,
+                fetchOp = CancelableOperation<
+                    Response<AutocompleteBudgetArray>>.fromFuture(
+                  api.v1AutocompleteBudgetsGet(
+                    query: textEditingValue.text,
+                  ),
                 );
+                final Response<AutocompleteBudgetArray>? response =
+                    await fetchOp?.valueOrCancellation();
+                if (response == null) {
+                  // Cancelled
+                  return const Iterable<AutocompleteBudget>.empty();
+                }
                 apiThrowErrorIfEmpty(response, mounted ? context : null);
 
                 return response.body!;

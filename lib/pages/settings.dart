@@ -159,7 +159,7 @@ class SettingsPageState extends State<SettingsPage>
                 return;
               }
             }
-            settings.setLock(value);
+            settings.lock = value;
           },
         ),
         const Divider(),

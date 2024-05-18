@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:async/async.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -1218,6 +1219,9 @@ class _TransactionPageState extends State<TransactionPage>
     const Widget hDivider = SizedBox(height: 16);
     const Widget vDivider = SizedBox(width: 16);
 
+    CancelableOperation<Response<AutocompleteAccountArray>>? fetchOpSource;
+    CancelableOperation<Response<AutocompleteAccountArray>>? fetchOpDestination;
+
     // Title
     childs.add(
       Row(
@@ -1392,15 +1396,25 @@ class _TransactionPageState extends State<TransactionPage>
                   option.name,
               optionsBuilder: (TextEditingValue textEditingValue) async {
                 try {
+                  fetchOpSource?.cancel();
+
                   final FireflyIii api = context.read<FireflyService>().api;
-                  final Response<AutocompleteAccountArray> response =
-                      await api.v1AutocompleteAccountsGet(
-                    query: textEditingValue.text,
-                    types:
-                        _transactionType == TransactionTypeProperty.withdrawal
-                            ? _transactionType.destinationAccountTypes
-                            : _transactionType.sourceAccountTypes,
+                  fetchOpSource = CancelableOperation<
+                      Response<AutocompleteAccountArray>>.fromFuture(
+                    api.v1AutocompleteAccountsGet(
+                      query: textEditingValue.text,
+                      types:
+                          _transactionType == TransactionTypeProperty.withdrawal
+                              ? _transactionType.destinationAccountTypes
+                              : _transactionType.sourceAccountTypes,
+                    ),
                   );
+                  final Response<AutocompleteAccountArray>? response =
+                      await fetchOpSource?.valueOrCancellation();
+                  if (response == null) {
+                    // Cancelled
+                    return const Iterable<AutocompleteAccount>.empty();
+                  }
                   apiThrowErrorIfEmpty(response, mounted ? context : null);
 
                   return response.body!;
@@ -1504,17 +1518,27 @@ class _TransactionPageState extends State<TransactionPage>
               },
               optionsBuilder: (TextEditingValue textEditingValue) async {
                 try {
+                  fetchOpDestination?.cancel();
+
                   final FireflyIii api = context.read<FireflyService>().api;
-                  final Response<AutocompleteAccountArray> response =
-                      await api.v1AutocompleteAccountsGet(
-                    query: textEditingValue.text,
-                    types: <AccountTypeFilter>[
-                      AccountTypeFilter.assetAccount,
-                      AccountTypeFilter.loan,
-                      AccountTypeFilter.debt,
-                      AccountTypeFilter.mortgage,
-                    ],
+                  fetchOpDestination = CancelableOperation<
+                      Response<AutocompleteAccountArray>>.fromFuture(
+                    api.v1AutocompleteAccountsGet(
+                      query: textEditingValue.text,
+                      types: <AccountTypeFilter>[
+                        AccountTypeFilter.assetAccount,
+                        AccountTypeFilter.loan,
+                        AccountTypeFilter.debt,
+                        AccountTypeFilter.mortgage,
+                      ],
+                    ),
                   );
+                  final Response<AutocompleteAccountArray>? response =
+                      await fetchOpDestination?.valueOrCancellation();
+                  if (response == null) {
+                    // Cancelled
+                    return const Iterable<AutocompleteAccount>.empty();
+                  }
                   apiThrowErrorIfEmpty(response, mounted ? context : null);
 
                   return response.body!;
@@ -1656,6 +1680,8 @@ class _TransactionPageState extends State<TransactionPage>
       BuildContext context, int i, bool showAccountSelection) {
     const Widget hDivider = SizedBox(height: 16);
 
+    CancelableOperation<Response<AutocompleteAccountArray>>? fetchOp;
+
     return Card(
       key: ValueKey<int>(i),
       child: Padding(
@@ -1705,20 +1731,32 @@ class _TransactionPageState extends State<TransactionPage>
                                   optionsBuilder: (TextEditingValue
                                       textEditingValue) async {
                                     try {
+                                      fetchOp?.cancel();
+
                                       final FireflyIii api =
                                           context.read<FireflyService>().api;
-                                      final Response<AutocompleteAccountArray>
-                                          response =
-                                          await api.v1AutocompleteAccountsGet(
-                                        query: textEditingValue.text,
-                                        types: _transactionType ==
-                                                TransactionTypeProperty
-                                                    .withdrawal
-                                            ? _transactionType
-                                                .destinationAccountTypes
-                                            : _transactionType
-                                                .sourceAccountTypes,
+                                      fetchOp = CancelableOperation<
+                                          Response<
+                                              AutocompleteAccountArray>>.fromFuture(
+                                        api.v1AutocompleteAccountsGet(
+                                          query: textEditingValue.text,
+                                          types: _transactionType ==
+                                                  TransactionTypeProperty
+                                                      .withdrawal
+                                              ? _transactionType
+                                                  .destinationAccountTypes
+                                              : _transactionType
+                                                  .sourceAccountTypes,
+                                        ),
                                       );
+                                      final Response<AutocompleteAccountArray>?
+                                          response =
+                                          await fetchOp?.valueOrCancellation();
+                                      if (response == null) {
+                                        // Cancelled
+                                        return const Iterable<
+                                            AutocompleteAccount>.empty();
+                                      }
                                       apiThrowErrorIfEmpty(
                                           response, mounted ? context : null);
 
@@ -2004,6 +2042,8 @@ class TransactionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final Logger log = Logger("Pages.Transaction.Title");
 
+    CancelableOperation<Response<AutocompleteTransactionArray>>? fetchOp;
+
     log.finest(() => "build()");
     return Expanded(
       child: AutoCompleteText<String>(
@@ -2013,9 +2053,21 @@ class TransactionTitle extends StatelessWidget {
         focusNode: focusNode,
         optionsBuilder: (TextEditingValue textEditingValue) async {
           try {
+            fetchOp?.cancel();
+
             final FireflyIii api = context.read<FireflyService>().api;
-            final Response<AutocompleteTransactionArray> response = await api
-                .v1AutocompleteTransactionsGet(query: textEditingValue.text);
+            fetchOp = CancelableOperation<
+                Response<AutocompleteTransactionArray>>.fromFuture(
+              api.v1AutocompleteTransactionsGet(
+                query: textEditingValue.text,
+              ),
+            );
+            final Response<AutocompleteTransactionArray>? response =
+                await fetchOp?.valueOrCancellation();
+            if (response == null) {
+              // Cancelled
+              return const Iterable<String>.empty();
+            }
             apiThrowErrorIfEmpty(response, context.mounted ? context : null);
 
             return response.body!.map((AutocompleteTransaction e) => e.name);
@@ -2075,6 +2127,9 @@ class TransactionCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     final Logger log = Logger("Pages.Transaction.Category");
 
+    CancelableOperation<Response<AutocompleteCategoryArray>>? fetchOp;
+
+    log.finest(() => "build()");
     return Row(
       children: <Widget>[
         Expanded(
@@ -2085,11 +2140,21 @@ class TransactionCategory extends StatelessWidget {
             focusNode: focusNode,
             optionsBuilder: (TextEditingValue textEditingValue) async {
               try {
+                fetchOp?.cancel();
+
                 final FireflyIii api = context.read<FireflyService>().api;
-                final Response<AutocompleteCategoryArray> response =
-                    await api.v1AutocompleteCategoriesGet(
-                  query: textEditingValue.text,
+                fetchOp = CancelableOperation<
+                    Response<AutocompleteCategoryArray>>.fromFuture(
+                  api.v1AutocompleteCategoriesGet(
+                    query: textEditingValue.text,
+                  ),
                 );
+                final Response<AutocompleteCategoryArray>? response =
+                    await fetchOp?.valueOrCancellation();
+                if (response == null) {
+                  // Cancelled
+                  return const Iterable<String>.empty();
+                }
                 apiThrowErrorIfEmpty(
                     response, context.mounted ? context : null);
 
@@ -2170,6 +2235,9 @@ class _TransactionBudgetState extends State<TransactionBudget> {
 
   @override
   Widget build(BuildContext context) {
+    CancelableOperation<Response<AutocompleteBudgetArray>>? fetchOp;
+
+    log.finest(() => "build()");
     return Row(
       children: <Widget>[
         Expanded(
@@ -2190,11 +2258,21 @@ class _TransactionBudgetState extends State<TransactionBudget> {
             },
             optionsBuilder: (TextEditingValue textEditingValue) async {
               try {
+                fetchOp?.cancel();
+
                 final FireflyIii api = context.read<FireflyService>().api;
-                final Response<AutocompleteBudgetArray> response =
-                    await api.v1AutocompleteBudgetsGet(
-                  query: textEditingValue.text,
+                fetchOp = CancelableOperation<
+                    Response<AutocompleteBudgetArray>>.fromFuture(
+                  api.v1AutocompleteBudgetsGet(
+                    query: textEditingValue.text,
+                  ),
                 );
+                final Response<AutocompleteBudgetArray>? response =
+                    await fetchOp?.valueOrCancellation();
+                if (response == null) {
+                  // Cancelled
+                  return const Iterable<AutocompleteBudget>.empty();
+                }
                 apiThrowErrorIfEmpty(response, mounted ? context : null);
 
                 return response.body!;

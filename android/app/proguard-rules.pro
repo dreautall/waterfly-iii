@@ -1,2 +1,3 @@
--keep class org.chromium.** { *; }
--keep class io.flutter.plugins.cronet_http.** { *; }
+-keep class java.net.URL { *; }
+-keep class java.util.concurrent.Executors { *; }
+-keep class org.chromium.net.** { *; }

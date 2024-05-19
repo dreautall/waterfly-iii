@@ -51,7 +51,7 @@ class LastDaysChart extends StatelessWidget {
       double diff = income + expense;
 
       // Don't show currency when numbers are too big, see #29
-      if (diff > 1000) {
+      if (showCurrency && diff.abs() >= 1000) {
         showCurrency = false;
       }
 
@@ -75,7 +75,10 @@ class LastDaysChart extends StatelessWidget {
                   entry.amount.abs(),
                   decimalDigits: 0,
                 )
-              : entry.amount.abs().toStringAsFixed(0),
+              // Use compact number formatting for numbers over 10.000
+              : entry.amount.abs() >= 100000
+                  ? NumberFormat.compact().format(entry.amount.abs())
+                  : entry.amount.abs().toStringAsFixed(0),
           outsideLabelStyleAccessorFn: (_, __) => charts.TextStyleSpec(
             color: charts.ColorUtil.fromDartColor(
               Theme.of(context).colorScheme.onSurfaceVariant,

@@ -101,7 +101,8 @@ class _LoginPageState extends State<LoginPage> {
                     width: double.infinity,
                     child: Card(
                       elevation: 0,
-                      color: Theme.of(context).colorScheme.surfaceVariant,
+                      color:
+                          Theme.of(context).colorScheme.surfaceContainerHighest,
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Text(

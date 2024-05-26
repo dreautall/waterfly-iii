@@ -27,14 +27,12 @@ class LastDaysChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
     // Use noon due to dailylight saving time
-    final DateTime now = tzHandler
-        .sNow()
-        .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
+    final DateTime now =
+        tzHandler.sNow().setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
     final List<DateTime> lastDays = <DateTime>[];
     for (int i = 0; i < 7; i++) {
       lastDays.add(
-        now
-            .subtract(Duration(days: i)),
+        now.subtract(Duration(days: i)),
       );
     }
     bool showCurrency = true;

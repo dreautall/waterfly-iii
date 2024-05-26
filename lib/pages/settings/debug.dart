@@ -27,7 +27,7 @@ class DebugDialog extends StatelessWidget {
         SwitchListTile(
           value: context.select((SettingsProvider s) => s.debug),
           onChanged: (bool value) async {
-            await context.read<SettingsProvider>().setDebug(value);
+            context.read<SettingsProvider>().debug = value;
             PackageInfo appInfo = await PackageInfo.fromPlatform();
             log.info(
                 "Enabling debug logs, app ${appInfo.appName}, ${appInfo.version}+${appInfo.buildNumber}");

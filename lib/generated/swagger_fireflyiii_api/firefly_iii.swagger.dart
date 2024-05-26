@@ -31,7 +31,7 @@ abstract class FireflyIii extends ChopperService {
     ErrorConverter? errorConverter,
     Converter? converter,
     Uri? baseUrl,
-    Iterable<dynamic>? interceptors,
+    List<Interceptor>? interceptors,
   }) {
     if (client != null) {
       return _$FireflyIii(client);

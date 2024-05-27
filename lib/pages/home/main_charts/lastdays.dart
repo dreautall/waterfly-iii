@@ -11,6 +11,8 @@ import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
+import 'package:waterflyiii/timezonehandler.dart';
+
 class LastDaysChart extends StatelessWidget {
   const LastDaysChart({
     super.key,
@@ -23,10 +25,10 @@ class LastDaysChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
     // Use noon due to dailylight saving time
-    final DateTime now = DateTime.now()
-        .toLocal()
-        .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
+    final DateTime now =
+        tzHandler.sNow().setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
     final List<DateTime> lastDays = <DateTime>[];
     for (int i = 0; i < 7; i++) {
       lastDays.add(

@@ -388,7 +388,7 @@ AutocompleteAccount _$AutocompleteAccountFromJson(Map<String, dynamic> json) =>
       currencyName: json['currency_name'] as String,
       currencyCode: json['currency_code'] as String,
       currencySymbol: json['currency_symbol'] as String,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num).toInt(),
     );
 
 Map<String, dynamic> _$AutocompleteAccountToJson(
@@ -461,7 +461,7 @@ AutocompleteCurrency _$AutocompleteCurrencyFromJson(
       name: json['name'] as String,
       code: json['code'] as String,
       symbol: json['symbol'] as String,
-      decimalPlaces: json['decimal_places'] as int,
+      decimalPlaces: (json['decimal_places'] as num).toInt(),
     );
 
 Map<String, dynamic> _$AutocompleteCurrencyToJson(
@@ -481,7 +481,7 @@ AutocompleteCurrencyCode _$AutocompleteCurrencyCodeFromJson(
       name: json['name'] as String,
       code: json['code'] as String,
       symbol: json['symbol'] as String,
-      decimalPlaces: json['decimal_places'] as int,
+      decimalPlaces: (json['decimal_places'] as num).toInt(),
     );
 
 Map<String, dynamic> _$AutocompleteCurrencyCodeToJson(
@@ -518,7 +518,7 @@ AutocompletePiggy _$AutocompletePiggyFromJson(Map<String, dynamic> json) =>
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
       currencyName: json['currency_name'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       objectGroupId: json['object_group_id'] as String?,
       objectGroupTitle: json['object_group_title'] as String?,
     );
@@ -554,7 +554,7 @@ AutocompletePiggyBalance _$AutocompletePiggyBalanceFromJson(
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       objectGroupId: json['object_group_id'] as String?,
       objectGroupTitle: json['object_group_title'] as String?,
     );
@@ -762,7 +762,7 @@ ChartDataSet _$ChartDataSetFromJson(Map<String, dynamic> json) => ChartDataSet(
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       startDate: json['start_date'] == null
           ? null
           : DateTime.parse(json['start_date'] as String),
@@ -770,7 +770,7 @@ ChartDataSet _$ChartDataSetFromJson(Map<String, dynamic> json) => ChartDataSet(
           ? null
           : DateTime.parse(json['end_date'] as String),
       type: json['type'] as String?,
-      yAxisID: json['yAxisID'] as int?,
+      yAxisID: (json['yAxisID'] as num?)?.toInt(),
       entries: json['entries'],
     );
 
@@ -1465,14 +1465,14 @@ Account _$AccountFromJson(Map<String, dynamic> json) => Account(
           ? null
           : DateTime.parse(json['updated_at'] as String),
       active: json['active'] as bool? ?? true,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       name: json['name'] as String,
       type: shortAccountTypePropertyFromJson(json['type']),
       accountRole: accountRolePropertyNullableFromJson(json['account_role']),
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       currentBalance: json['current_balance'] as String?,
       currentBalanceDate: json['current_balance_date'] == null
           ? null
@@ -1502,7 +1502,7 @@ Account _$AccountFromJson(Map<String, dynamic> json) => Account(
       notes: json['notes'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
-      zoomLevel: json['zoom_level'] as int?,
+      zoomLevel: (json['zoom_level'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$AccountToJson(Account instance) {
@@ -1570,7 +1570,7 @@ AccountStore _$AccountStoreFromJson(Map<String, dynamic> json) => AccountStore(
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       active: json['active'] as bool? ?? true,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       includeNetWorth: json['include_net_worth'] as bool? ?? true,
       accountRole: accountRolePropertyNullableFromJson(json['account_role']),
       creditCardType:
@@ -1588,7 +1588,7 @@ AccountStore _$AccountStoreFromJson(Map<String, dynamic> json) => AccountStore(
       notes: json['notes'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
-      zoomLevel: json['zoom_level'] as int?,
+      zoomLevel: (json['zoom_level'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$AccountStoreToJson(AccountStore instance) {
@@ -1649,7 +1649,7 @@ AccountUpdate _$AccountUpdateFromJson(Map<String, dynamic> json) =>
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       active: json['active'] as bool? ?? true,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       includeNetWorth: json['include_net_worth'] as bool? ?? true,
       accountRole: accountRolePropertyNullableFromJson(json['account_role']),
       creditCardType:
@@ -1665,7 +1665,7 @@ AccountUpdate _$AccountUpdateFromJson(Map<String, dynamic> json) =>
       notes: json['notes'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
-      zoomLevel: json['zoom_level'] as int?,
+      zoomLevel: (json['zoom_level'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$AccountUpdateToJson(AccountUpdate instance) {
@@ -1725,7 +1725,7 @@ Attachment _$AttachmentFromJson(Map<String, dynamic> json) => Attachment(
       title: json['title'] as String?,
       notes: json['notes'] as String?,
       mime: json['mime'] as String?,
-      size: json['size'] as int?,
+      size: (json['size'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$AttachmentToJson(Attachment instance) {
@@ -1814,7 +1814,7 @@ AvailableBudget _$AvailableBudgetFromJson(Map<String, dynamic> json) =>
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       amount: json['amount'] as String,
       start: DateTime.parse(json['start'] as String),
       end: DateTime.parse(json['end'] as String),
@@ -1863,7 +1863,7 @@ Bill _$BillFromJson(Map<String, dynamic> json) => Bill(
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       name: json['name'] as String,
       amountMin: json['amount_min'] as String,
       amountMax: json['amount_max'] as String,
@@ -1875,16 +1875,16 @@ Bill _$BillFromJson(Map<String, dynamic> json) => Bill(
           ? null
           : DateTime.parse(json['extension_date'] as String),
       repeatFreq: billRepeatFrequencyFromJson(json['repeat_freq']),
-      skip: json['skip'] as int?,
+      skip: (json['skip'] as num?)?.toInt(),
       active: json['active'] as bool?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       notes: json['notes'] as String?,
       nextExpectedMatch: json['next_expected_match'] == null
           ? null
           : DateTime.parse(json['next_expected_match'] as String),
       nextExpectedMatchDiff: json['next_expected_match_diff'] as String?,
       objectGroupId: json['object_group_id'] as String?,
-      objectGroupOrder: json['object_group_order'] as int?,
+      objectGroupOrder: (json['object_group_order'] as num?)?.toInt(),
       objectGroupTitle: json['object_group_title'] as String?,
       payDates: (json['pay_dates'] as List<dynamic>?)
               ?.map((e) => DateTime.parse(e as String))
@@ -1948,7 +1948,7 @@ BillStore _$BillStoreFromJson(Map<String, dynamic> json) => BillStore(
           ? null
           : DateTime.parse(json['extension_date'] as String),
       repeatFreq: billRepeatFrequencyFromJson(json['repeat_freq']),
-      skip: json['skip'] as int?,
+      skip: (json['skip'] as num?)?.toInt(),
       active: json['active'] as bool?,
       notes: json['notes'] as String?,
       objectGroupId: json['object_group_id'] as String?,
@@ -1996,7 +1996,7 @@ BillUpdate _$BillUpdateFromJson(Map<String, dynamic> json) => BillUpdate(
           ? null
           : DateTime.parse(json['extension_date'] as String),
       repeatFreq: billRepeatFrequencyNullableFromJson(json['repeat_freq']),
-      skip: json['skip'] as int?,
+      skip: (json['skip'] as num?)?.toInt(),
       active: json['active'] as bool?,
       notes: json['notes'] as String?,
       objectGroupId: json['object_group_id'] as String?,
@@ -2040,7 +2040,7 @@ Budget _$BudgetFromJson(Map<String, dynamic> json) => Budget(
       name: json['name'] as String,
       active: json['active'] as bool?,
       notes: json['notes'] as String?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       autoBudgetType: autoBudgetTypeNullableFromJson(json['auto_budget_type']),
       autoBudgetCurrencyId: json['auto_budget_currency_id'] as String?,
       autoBudgetCurrencyCode: json['auto_budget_currency_code'] as String?,
@@ -2082,7 +2082,7 @@ Map<String, dynamic> _$BudgetToJson(Budget instance) {
 BudgetStore _$BudgetStoreFromJson(Map<String, dynamic> json) => BudgetStore(
       name: json['name'] as String,
       active: json['active'] as bool?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       notes: json['notes'] as String?,
       autoBudgetType: autoBudgetTypeNullableFromJson(json['auto_budget_type']),
       autoBudgetCurrencyId: json['auto_budget_currency_id'] as String?,
@@ -2119,7 +2119,7 @@ Map<String, dynamic> _$BudgetStoreToJson(BudgetStore instance) {
 BudgetUpdate _$BudgetUpdateFromJson(Map<String, dynamic> json) => BudgetUpdate(
       name: json['name'] as String,
       active: json['active'] as bool?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       notes: json['notes'] as String?,
       autoBudgetType: autoBudgetTypeNullableFromJson(json['auto_budget_type']),
       autoBudgetCurrencyId: json['auto_budget_currency_id'] as String?,
@@ -2166,7 +2166,7 @@ BudgetLimit _$BudgetLimitFromJson(Map<String, dynamic> json) => BudgetLimit(
       currencyCode: json['currency_code'] as String?,
       currencyName: json['currency_name'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       budgetId: json['budget_id'] as String?,
       period: json['period'] as String?,
       amount: json['amount'] as String,
@@ -2233,7 +2233,7 @@ BudgetSpent _$BudgetSpentFromJson(Map<String, dynamic> json) => BudgetSpent(
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$BudgetSpentToJson(BudgetSpent instance) {
@@ -2316,7 +2316,7 @@ CategoryEarned _$CategoryEarnedFromJson(Map<String, dynamic> json) =>
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       sum: json['sum'] as String?,
     );
 
@@ -2342,7 +2342,7 @@ CategorySpent _$CategorySpentFromJson(Map<String, dynamic> json) =>
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       sum: json['sum'] as String?,
     );
 
@@ -2371,7 +2371,7 @@ ObjectGroup _$ObjectGroupFromJson(Map<String, dynamic> json) => ObjectGroup(
           ? null
           : DateTime.parse(json['updated_at'] as String),
       title: json['title'] as String,
-      order: json['order'] as int,
+      order: (json['order'] as num).toInt(),
     );
 
 Map<String, dynamic> _$ObjectGroupToJson(ObjectGroup instance) {
@@ -2393,7 +2393,7 @@ Map<String, dynamic> _$ObjectGroupToJson(ObjectGroup instance) {
 ObjectGroupUpdate _$ObjectGroupUpdateFromJson(Map<String, dynamic> json) =>
     ObjectGroupUpdate(
       title: json['title'] as String,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$ObjectGroupUpdateToJson(ObjectGroupUpdate instance) {
@@ -2454,7 +2454,7 @@ PiggyBank _$PiggyBankFromJson(Map<String, dynamic> json) => PiggyBank(
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       targetAmount: json['target_amount'] as String?,
       percentage: (json['percentage'] as num?)?.toDouble(),
       currentAmount: json['current_amount'] as String?,
@@ -2466,11 +2466,11 @@ PiggyBank _$PiggyBankFromJson(Map<String, dynamic> json) => PiggyBank(
       targetDate: json['target_date'] == null
           ? null
           : DateTime.parse(json['target_date'] as String),
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool?,
       notes: json['notes'] as String?,
       objectGroupId: json['object_group_id'] as String?,
-      objectGroupOrder: json['object_group_order'] as int?,
+      objectGroupOrder: (json['object_group_order'] as num?)?.toInt(),
       objectGroupTitle: json['object_group_title'] as String?,
     );
 
@@ -2520,7 +2520,7 @@ PiggyBankStore _$PiggyBankStoreFromJson(Map<String, dynamic> json) =>
       targetDate: json['target_date'] == null
           ? null
           : DateTime.parse(json['target_date'] as String),
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool?,
       notes: json['notes'] as String?,
       objectGroupId: json['object_group_id'] as String?,
@@ -2565,7 +2565,7 @@ PiggyBankUpdate _$PiggyBankUpdateFromJson(Map<String, dynamic> json) =>
       targetDate: json['target_date'] == null
           ? null
           : DateTime.parse(json['target_date'] as String),
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool?,
       notes: json['notes'] as String?,
       objectGroupId: json['object_group_id'] as String?,
@@ -2608,7 +2608,7 @@ PiggyBankEvent _$PiggyBankEventFromJson(Map<String, dynamic> json) =>
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       amount: json['amount'] as String?,
       transactionJournalId: json['transaction_journal_id'] as String?,
       transactionGroupId: json['transaction_group_id'] as String?,
@@ -2691,7 +2691,7 @@ Recurrence _$RecurrenceFromJson(Map<String, dynamic> json) => Recurrence(
       repeatUntil: json['repeat_until'] == null
           ? null
           : DateTime.parse(json['repeat_until'] as String),
-      nrOfRepetitions: json['nr_of_repetitions'] as int?,
+      nrOfRepetitions: (json['nr_of_repetitions'] as num?)?.toInt(),
       applyRules: json['apply_rules'] as bool?,
       active: json['active'] as bool?,
       notes: json['notes'] as String?,
@@ -2744,7 +2744,7 @@ RecurrenceStore _$RecurrenceStoreFromJson(Map<String, dynamic> json) =>
       repeatUntil: json['repeat_until'] == null
           ? null
           : DateTime.parse(json['repeat_until'] as String),
-      nrOfRepetitions: json['nr_of_repetitions'] as int?,
+      nrOfRepetitions: (json['nr_of_repetitions'] as num?)?.toInt(),
       applyRules: json['apply_rules'] as bool?,
       active: json['active'] as bool?,
       notes: json['notes'] as String?,
@@ -2793,7 +2793,7 @@ RecurrenceUpdate _$RecurrenceUpdateFromJson(Map<String, dynamic> json) =>
       repeatUntil: json['repeat_until'] == null
           ? null
           : DateTime.parse(json['repeat_until'] as String),
-      nrOfRepetitions: json['nr_of_repetitions'] as int?,
+      nrOfRepetitions: (json['nr_of_repetitions'] as num?)?.toInt(),
       applyRules: json['apply_rules'] as bool?,
       active: json['active'] as bool?,
       notes: json['notes'] as String?,
@@ -2845,8 +2845,8 @@ RecurrenceRepetition _$RecurrenceRepetitionFromJson(
           : DateTime.parse(json['updated_at'] as String),
       type: recurrenceRepetitionTypeFromJson(json['type']),
       moment: json['moment'] as String,
-      skip: json['skip'] as int?,
-      weekend: json['weekend'] as int?,
+      skip: (json['skip'] as num?)?.toInt(),
+      weekend: (json['weekend'] as num?)?.toInt(),
       description: json['description'] as String?,
       occurrences: (json['occurrences'] as List<dynamic>?)
               ?.map((e) => DateTime.parse(e as String))
@@ -2882,8 +2882,8 @@ RecurrenceRepetitionStore _$RecurrenceRepetitionStoreFromJson(
     RecurrenceRepetitionStore(
       type: recurrenceRepetitionTypeFromJson(json['type']),
       moment: json['moment'] as String,
-      skip: json['skip'] as int?,
-      weekend: json['weekend'] as int?,
+      skip: (json['skip'] as num?)?.toInt(),
+      weekend: (json['weekend'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$RecurrenceRepetitionStoreToJson(
@@ -2908,8 +2908,8 @@ RecurrenceRepetitionUpdate _$RecurrenceRepetitionUpdateFromJson(
     RecurrenceRepetitionUpdate(
       type: recurrenceRepetitionTypeNullableFromJson(json['type']),
       moment: json['moment'] as String?,
-      skip: json['skip'] as int?,
-      weekend: json['weekend'] as int?,
+      skip: (json['skip'] as num?)?.toInt(),
+      weekend: (json['weekend'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$RecurrenceRepetitionUpdateToJson(
@@ -2939,12 +2939,12 @@ RecurrenceTransaction _$RecurrenceTransactionFromJson(
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       foreignCurrencyId: json['foreign_currency_id'] as String?,
       foreignCurrencyCode: json['foreign_currency_code'] as String?,
       foreignCurrencySymbol: json['foreign_currency_symbol'] as String?,
       foreignCurrencyDecimalPlaces:
-          json['foreign_currency_decimal_places'] as int?,
+          (json['foreign_currency_decimal_places'] as num?)?.toInt(),
       budgetId: json['budget_id'] as String?,
       budgetName: json['budget_name'] as String?,
       categoryId: json['category_id'] as String?,
@@ -3121,7 +3121,7 @@ Rule _$RuleFromJson(Map<String, dynamic> json) => Rule(
       description: json['description'] as String?,
       ruleGroupId: json['rule_group_id'] as String,
       ruleGroupTitle: json['rule_group_title'] as String?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       trigger: ruleTriggerTypeFromJson(json['trigger']),
       active: json['active'] as bool? ?? true,
       strict: json['strict'] as bool?,
@@ -3166,7 +3166,7 @@ RuleStore _$RuleStoreFromJson(Map<String, dynamic> json) => RuleStore(
       description: json['description'] as String?,
       ruleGroupId: json['rule_group_id'] as String,
       ruleGroupTitle: json['rule_group_title'] as String?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       trigger: ruleTriggerTypeFromJson(json['trigger']),
       active: json['active'] as bool? ?? true,
       strict: json['strict'] as bool? ?? true,
@@ -3209,7 +3209,7 @@ RuleUpdate _$RuleUpdateFromJson(Map<String, dynamic> json) => RuleUpdate(
       title: json['title'] as String?,
       description: json['description'] as String?,
       ruleGroupId: json['rule_group_id'] as String?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       trigger: ruleTriggerTypeNullableFromJson(json['trigger']),
       active: json['active'] as bool? ?? true,
       strict: json['strict'] as bool?,
@@ -3257,7 +3257,7 @@ RuleAction _$RuleActionFromJson(Map<String, dynamic> json) => RuleAction(
           : DateTime.parse(json['updated_at'] as String),
       type: ruleActionKeywordFromJson(json['type']),
       $value: json['value'] as String?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool? ?? true,
       stopProcessing: json['stop_processing'] as bool? ?? false,
     );
@@ -3286,7 +3286,7 @@ RuleActionStore _$RuleActionStoreFromJson(Map<String, dynamic> json) =>
     RuleActionStore(
       type: ruleActionKeywordFromJson(json['type']),
       $value: json['value'] as String?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool? ?? true,
       stopProcessing: json['stop_processing'] as bool? ?? false,
     );
@@ -3312,7 +3312,7 @@ RuleActionUpdate _$RuleActionUpdateFromJson(Map<String, dynamic> json) =>
     RuleActionUpdate(
       type: ruleActionKeywordNullableFromJson(json['type']),
       $value: json['value'] as String?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool?,
       stopProcessing: json['stop_processing'] as bool?,
     );
@@ -3343,7 +3343,7 @@ RuleGroup _$RuleGroupFromJson(Map<String, dynamic> json) => RuleGroup(
           : DateTime.parse(json['updated_at'] as String),
       title: json['title'] as String,
       description: json['description'] as String?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool?,
     );
 
@@ -3369,7 +3369,7 @@ RuleGroupStore _$RuleGroupStoreFromJson(Map<String, dynamic> json) =>
     RuleGroupStore(
       title: json['title'] as String,
       description: json['description'] as String?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool?,
     );
 
@@ -3394,7 +3394,7 @@ RuleGroupUpdate _$RuleGroupUpdateFromJson(Map<String, dynamic> json) =>
     RuleGroupUpdate(
       title: json['title'] as String?,
       description: json['description'] as String?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool?,
     );
 
@@ -3424,7 +3424,7 @@ RuleTrigger _$RuleTriggerFromJson(Map<String, dynamic> json) => RuleTrigger(
           : DateTime.parse(json['updated_at'] as String),
       type: ruleTriggerKeywordFromJson(json['type']),
       $value: json['value'] as String,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool? ?? true,
       stopProcessing: json['stop_processing'] as bool? ?? false,
     );
@@ -3453,7 +3453,7 @@ RuleTriggerStore _$RuleTriggerStoreFromJson(Map<String, dynamic> json) =>
     RuleTriggerStore(
       type: ruleTriggerKeywordFromJson(json['type']),
       $value: json['value'] as String,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool? ?? true,
       stopProcessing: json['stop_processing'] as bool? ?? false,
     );
@@ -3479,7 +3479,7 @@ RuleTriggerUpdate _$RuleTriggerUpdateFromJson(Map<String, dynamic> json) =>
     RuleTriggerUpdate(
       type: ruleTriggerKeywordNullableFromJson(json['type']),
       $value: json['value'] as String?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool?,
       stopProcessing: json['stop_processing'] as bool?,
     );
@@ -3514,7 +3514,7 @@ TagModel _$TagModelFromJson(Map<String, dynamic> json) => TagModel(
       description: json['description'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
-      zoomLevel: json['zoom_level'] as int?,
+      zoomLevel: (json['zoom_level'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$TagModelToJson(TagModel instance) {
@@ -3545,7 +3545,7 @@ TagModelStore _$TagModelStoreFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
-      zoomLevel: json['zoom_level'] as int?,
+      zoomLevel: (json['zoom_level'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$TagModelStoreToJson(TagModelStore instance) {
@@ -3575,7 +3575,7 @@ TagModelUpdate _$TagModelUpdateFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
-      zoomLevel: json['zoom_level'] as int?,
+      zoomLevel: (json['zoom_level'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$TagModelUpdateToJson(TagModelUpdate instance) {
@@ -3608,7 +3608,7 @@ Currency _$CurrencyFromJson(Map<String, dynamic> json) => Currency(
       code: json['code'] as String,
       name: json['name'] as String,
       symbol: json['symbol'] as String,
-      decimalPlaces: json['decimal_places'] as int?,
+      decimalPlaces: (json['decimal_places'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$CurrencyToJson(Currency instance) {
@@ -3638,7 +3638,7 @@ CurrencyStore _$CurrencyStoreFromJson(Map<String, dynamic> json) =>
       code: json['code'] as String,
       name: json['name'] as String,
       symbol: json['symbol'] as String,
-      decimalPlaces: json['decimal_places'] as int?,
+      decimalPlaces: (json['decimal_places'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$CurrencyStoreToJson(CurrencyStore instance) {
@@ -3666,7 +3666,7 @@ CurrencyUpdate _$CurrencyUpdateFromJson(Map<String, dynamic> json) =>
       code: json['code'] as String?,
       name: json['name'] as String?,
       symbol: json['symbol'] as String?,
-      decimalPlaces: json['decimal_places'] as int?,
+      decimalPlaces: (json['decimal_places'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$CurrencyUpdateToJson(CurrencyUpdate instance) {
@@ -3920,17 +3920,17 @@ TransactionSplit _$TransactionSplitFromJson(Map<String, dynamic> json) =>
       transactionJournalId: json['transaction_journal_id'] as String?,
       type: transactionTypePropertyFromJson(json['type']),
       date: DateTime.parse(json['date'] as String),
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
       currencyName: json['currency_name'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       foreignCurrencyId: json['foreign_currency_id'] as String?,
       foreignCurrencyCode: json['foreign_currency_code'] as String?,
       foreignCurrencySymbol: json['foreign_currency_symbol'] as String?,
       foreignCurrencyDecimalPlaces:
-          json['foreign_currency_decimal_places'] as int?,
+          (json['foreign_currency_decimal_places'] as num?)?.toInt(),
       amount: json['amount'] as String,
       foreignAmount: json['foreign_amount'] as String?,
       description: json['description'] as String,
@@ -3959,8 +3959,8 @@ TransactionSplit _$TransactionSplitFromJson(Map<String, dynamic> json) =>
       externalUrl: json['external_url'] as String?,
       originalSource: json['original_source'] as String?,
       recurrenceId: json['recurrence_id'] as String?,
-      recurrenceTotal: json['recurrence_total'] as int?,
-      recurrenceCount: json['recurrence_count'] as int?,
+      recurrenceTotal: (json['recurrence_total'] as num?)?.toInt(),
+      recurrenceCount: (json['recurrence_count'] as num?)?.toInt(),
       bunqPaymentId: json['bunq_payment_id'] as String?,
       importHashV2: json['import_hash_v2'] as String?,
       sepaCc: json['sepa_cc'] as String?,
@@ -3991,7 +3991,7 @@ TransactionSplit _$TransactionSplitFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['invoice_date'] as String),
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
-      zoomLevel: json['zoom_level'] as int?,
+      zoomLevel: (json['zoom_level'] as num?)?.toInt(),
       hasAttachments: json['has_attachments'] as bool?,
     );
 
@@ -4078,7 +4078,7 @@ TransactionSplitStore _$TransactionSplitStoreFromJson(
       date: DateTime.parse(json['date'] as String),
       amount: json['amount'] as String,
       description: json['description'] as String,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       foreignAmount: json['foreign_amount'] as String?,
@@ -4093,7 +4093,7 @@ TransactionSplitStore _$TransactionSplitStoreFromJson(
       destinationId: json['destination_id'] as String?,
       destinationName: json['destination_name'] as String?,
       reconciled: json['reconciled'] as bool?,
-      piggyBankId: json['piggy_bank_id'] as int?,
+      piggyBankId: (json['piggy_bank_id'] as num?)?.toInt(),
       piggyBankName: json['piggy_bank_name'] as String?,
       billId: json['bill_id'] as String?,
       billName: json['bill_name'] as String?,
@@ -4198,18 +4198,18 @@ TransactionSplitUpdate _$TransactionSplitUpdateFromJson(
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
       amount: json['amount'] as String?,
       description: json['description'] as String?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
       currencyName: json['currency_name'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       foreignAmount: json['foreign_amount'] as String?,
       foreignCurrencyId: json['foreign_currency_id'] as String?,
       foreignCurrencyCode: json['foreign_currency_code'] as String?,
       foreignCurrencySymbol: json['foreign_currency_symbol'] as String?,
       foreignCurrencyDecimalPlaces:
-          json['foreign_currency_decimal_places'] as int?,
+          (json['foreign_currency_decimal_places'] as num?)?.toInt(),
       budgetId: json['budget_id'] as String?,
       budgetName: json['budget_name'] as String?,
       categoryId: json['category_id'] as String?,
@@ -4458,7 +4458,7 @@ WebhookAttempt _$WebhookAttemptFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['updated_at'] as String),
       webhookMessageId: json['webhook_message_id'] as String?,
-      statusCode: json['status_code'] as int?,
+      statusCode: (json['status_code'] as num?)?.toInt(),
       logs: json['logs'] as String?,
       response: json['response'] as String?,
     );
@@ -4536,7 +4536,7 @@ BasicSummaryEntry _$BasicSummaryEntryFromJson(Map<String, dynamic> json) =>
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       valueParsed: json['value_parsed'] as String?,
       localIcon: json['local_icon'] as String?,
       subTitle: json['sub_title'] as String?,
@@ -4861,11 +4861,11 @@ Map<String, dynamic> _$SystemInfo$DataToJson(SystemInfo$Data instance) {
 
 Meta$Pagination _$Meta$PaginationFromJson(Map<String, dynamic> json) =>
     Meta$Pagination(
-      total: json['total'] as int?,
-      count: json['count'] as int?,
-      perPage: json['per_page'] as int?,
-      currentPage: json['current_page'] as int?,
-      totalPages: json['total_pages'] as int?,
+      total: (json['total'] as num?)?.toInt(),
+      count: (json['count'] as num?)?.toInt(),
+      perPage: (json['per_page'] as num?)?.toInt(),
+      currentPage: (json['current_page'] as num?)?.toInt(),
+      totalPages: (json['total_pages'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$Meta$PaginationToJson(Meta$Pagination instance) {

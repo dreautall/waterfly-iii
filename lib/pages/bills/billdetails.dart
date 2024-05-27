@@ -75,7 +75,7 @@ class _BillDetailsState extends State<BillDetails> {
         title: Text(widget.bill.attributes.name),
         elevation: 1,
         scrolledUnderElevation: 1,
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
       ),
       body: Column(
         children: <Widget>[

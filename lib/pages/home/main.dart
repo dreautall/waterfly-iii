@@ -1353,7 +1353,9 @@ class ChartCard extends StatelessWidget {
                     ),
                     Ink(
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surfaceVariant,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerHighest,
                       ),
                       child: SizedBox(
                           height: height,

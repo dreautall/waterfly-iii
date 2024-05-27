@@ -34,7 +34,8 @@ class LastDaysChart extends StatelessWidget {
     for (int i = 0; i < 7; i++) {
       lastDays.add(
         now
-            .subtract(Duration(days: i)),
+            .subtract(Duration(days: i))
+            .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0)),
       );
     }
     bool showCurrency = true;

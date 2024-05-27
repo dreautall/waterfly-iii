@@ -113,15 +113,7 @@ class AuthErrorNoInstance extends AuthError {
   final String host;
 }
 
-http.Client get httpClient {
-  // Only for Android
-  return CronetClient.fromCronetEngine(
-    CronetEngine.build(
-      cacheMode: CacheMode.memory,
-      cacheMaxSize: 2 * 1024 * 1024,
-    ),
-  );
-}
+http.Client get httpClient => CronetClient.defaultCronetEngine();
 
 class APIRequestInterceptor implements Interceptor {
   APIRequestInterceptor(this.headerFunc);

@@ -188,7 +188,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
           seedColor: Colors.blue,
           brightness: Brightness.dark,
         ).copyWith(
-          surfaceVariant: Colors.blueGrey.shade900,
+          surfaceContainerHighest: Colors.blueGrey.shade900,
           onSurfaceVariant: Colors.white,
         );
 

@@ -711,6 +711,10 @@
       }
     }
   },
+  "homeTransactionsSettingsShowTags": "Pokaži oznake na seznamu transakcij",
+  "@homeTransactionsSettingsShowTags": {
+    "description": "Setting label to show tags in transactioon list."
+  },
   "liabilityDirectionCredit": "Dolžan sem ta dolg",
   "@liabilityDirectionCredit": {
     "description": "Firefly Translation String: liability_direction_credit"

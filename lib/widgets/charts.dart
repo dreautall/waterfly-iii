@@ -111,7 +111,7 @@ class TextSymbolRenderer extends charts.CircleSymbolRenderer {
         height + (padding.top + padding.bottom),
       ),
       fill: charts.ColorUtil.fromDartColor(
-        Theme.of(context).colorScheme.surfaceVariant,
+        Theme.of(context).colorScheme.surfaceContainerHighest,
       ),
       radius: 16,
       roundTopLeft: true,

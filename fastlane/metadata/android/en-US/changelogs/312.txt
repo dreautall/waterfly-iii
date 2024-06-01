@@ -1,0 +1,4 @@
+- Option to hide tags in transaction view
+- Bugfix for custom certificates
+- Support for additional banking apps
+- Minor bugfixes & improvements

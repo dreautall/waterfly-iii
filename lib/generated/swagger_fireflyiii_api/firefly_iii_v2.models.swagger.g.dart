@@ -12,13 +12,13 @@ TransactionSum _$TransactionSumFromJson(Map<String, dynamic> json) =>
       currencyName: json['currency_name'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
       currencyCode: json['currency_code'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       nativeCurrencyId: json['native_currency_id'] as String?,
       nativeCurrencyName: json['native_currency_name'] as String?,
       nativeCurrencySymbol: json['native_currency_symbol'] as String?,
       nativeCurrencyCode: json['native_currency_code'] as String?,
       nativeCurrencyDecimalPlaces:
-          json['native_currency_decimal_places'] as int?,
+          (json['native_currency_decimal_places'] as num?)?.toInt(),
       sum: json['sum'] as String?,
       nativeSum: json['native_sum'] as String?,
     );
@@ -59,7 +59,7 @@ AutocompleteAccountV2 _$AutocompleteAccountV2FromJson(
       currencyName: json['currency_name'] as String,
       currencyCode: json['currency_code'] as String,
       currencySymbol: json['currency_symbol'] as String,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num).toInt(),
     );
 
 Map<String, dynamic> _$AutocompleteAccountV2ToJson(
@@ -140,7 +140,7 @@ AccountV2 _$AccountV2FromJson(Map<String, dynamic> json) => AccountV2(
           ? null
           : DateTime.parse(json['updated_at'] as String),
       active: json['active'] as bool? ?? true,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       name: json['name'] as String,
       iban: json['iban'] as String?,
       type: shortAccountTypePropertyFromJson(json['type']),
@@ -148,12 +148,12 @@ AccountV2 _$AccountV2FromJson(Map<String, dynamic> json) => AccountV2(
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       nativeCurrencyId: json['native_currency_id'] as String?,
       nativeCurrencyCode: json['native_currency_code'] as String?,
       nativeCurrencySymbol: json['native_currency_symbol'] as String?,
       nativeCurrencyDecimalPlaces:
-          json['native_currency_decimal_places'] as int?,
+          (json['native_currency_decimal_places'] as num?)?.toInt(),
       currentBalance: json['current_balance'] as String?,
       nativeCurrentBalance: json['native_current_balance'] as String?,
       currentBalanceDate: json['current_balance_date'] == null
@@ -234,7 +234,7 @@ BudgetLimitV2 _$BudgetLimitV2FromJson(Map<String, dynamic> json) =>
       currencyCode: json['currency_code'] as String?,
       currencyName: json['currency_name'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       budgetId: json['budget_id'] as String?,
       period: json['period'] as String?,
       amount: json['amount'] as String,
@@ -304,7 +304,7 @@ BudgetV2 _$BudgetV2FromJson(Map<String, dynamic> json) => BudgetV2(
           : DateTime.parse(json['updated_at'] as String),
       name: json['name'] as String,
       active: json['active'] as bool?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$BudgetV2ToJson(BudgetV2 instance) {
@@ -376,12 +376,12 @@ ChartDataSetV2 _$ChartDataSetV2FromJson(Map<String, dynamic> json) =>
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       nativeCurrencyId: json['native_currency_id'] as String?,
       nativeCurrencyCode: json['native_currency_code'] as String?,
       nativeCurrencySymbol: json['native_currency_symbol'] as String?,
       nativeCurrencyDecimalPlaces:
-          json['native_currency_decimal_places'] as int?,
+          (json['native_currency_decimal_places'] as num?)?.toInt(),
       start: json['start'] == null
           ? null
           : DateTime.parse(json['start'] as String),
@@ -430,7 +430,7 @@ CurrencyV2 _$CurrencyV2FromJson(Map<String, dynamic> json) => CurrencyV2(
       code: json['code'] as String,
       name: json['name'] as String,
       symbol: json['symbol'] as String,
-      decimalPlaces: json['decimal_places'] as int?,
+      decimalPlaces: (json['decimal_places'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$CurrencyV2ToJson(CurrencyV2 instance) {
@@ -498,12 +498,12 @@ PiggyBankV2 _$PiggyBankV2FromJson(Map<String, dynamic> json) => PiggyBankV2(
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       nativeCurrencyId: json['native_currency_id'] as String?,
       nativeCurrencyCode: json['native_currency_code'] as String?,
       nativeCurrencySymbol: json['native_currency_symbol'] as String?,
       nativeCurrencyDecimalPlaces:
-          json['native_currency_decimal_places'] as int?,
+          (json['native_currency_decimal_places'] as num?)?.toInt(),
       currentAmount: json['current_amount'] as String?,
       nativeCurrentAmount: json['native_current_amount'] as String?,
       targetAmount: json['target_amount'] as String?,
@@ -519,11 +519,11 @@ PiggyBankV2 _$PiggyBankV2FromJson(Map<String, dynamic> json) => PiggyBankV2(
       targetDate: json['target_date'] == null
           ? null
           : DateTime.parse(json['target_date'] as String),
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool?,
       notes: json['notes'] as String?,
       objectGroupId: json['object_group_id'] as String?,
-      objectGroupOrder: json['object_group_order'] as int?,
+      objectGroupOrder: (json['object_group_order'] as num?)?.toInt(),
       objectGroupTitle: json['object_group_title'] as String?,
     );
 
@@ -671,12 +671,12 @@ Subscription _$SubscriptionFromJson(Map<String, dynamic> json) => Subscription(
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       nativeCurrencyId: json['native_currency_id'] as String?,
       nativeCurrencyCode: json['native_currency_code'] as String?,
       nativeCurrencySymbol: json['native_currency_symbol'] as String?,
       nativeCurrencyDecimalPlaces:
-          json['native_currency_decimal_places'] as int?,
+          (json['native_currency_decimal_places'] as num?)?.toInt(),
       date: DateTime.parse(json['date'] as String),
       endDate: json['end_date'] == null
           ? null
@@ -685,12 +685,12 @@ Subscription _$SubscriptionFromJson(Map<String, dynamic> json) => Subscription(
           ? null
           : DateTime.parse(json['extension_date'] as String),
       repeatFreq: subscriptionRepeatPropertyFromJson(json['repeat_freq']),
-      skip: json['skip'] as int?,
+      skip: (json['skip'] as num?)?.toInt(),
       active: json['active'] as bool?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       notes: json['notes'] as String?,
       objectGroupId: json['object_group_id'] as String?,
-      objectGroupOrder: json['object_group_order'] as int?,
+      objectGroupOrder: (json['object_group_order'] as num?)?.toInt(),
       objectGroupTitle: json['object_group_title'] as String?,
       nextExpectedMatch: json['next_expected_match'] == null
           ? null
@@ -882,7 +882,7 @@ TransactionV2Split _$TransactionV2SplitFromJson(Map<String, dynamic> json) =>
       transactionJournalId: json['transaction_journal_id'] as String?,
       type: transactionTypePropertyFromJson(json['type']),
       date: DateTime.parse(json['date'] as String),
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       amount: json['amount'] as String,
       nativeAmount: json['native_amount'] as String?,
       foreignAmount: json['foreign_amount'] as String?,
@@ -891,18 +891,18 @@ TransactionV2Split _$TransactionV2SplitFromJson(Map<String, dynamic> json) =>
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
       currencyName: json['currency_name'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       nativeCurrencyId: json['native_currency_id'] as String?,
       nativeCurrencyCode: json['native_currency_code'] as String?,
       nativeCurrencySymbol: json['native_currency_symbol'] as String?,
       nativeCurrencyName: json['native_currency_name'] as String?,
       nativeCurrencyDecimalPlaces:
-          json['native_currency_decimal_places'] as int?,
+          (json['native_currency_decimal_places'] as num?)?.toInt(),
       foreignCurrencyId: json['foreign_currency_id'] as String?,
       foreignCurrencyCode: json['foreign_currency_code'] as String?,
       foreignCurrencySymbol: json['foreign_currency_symbol'] as String?,
       foreignCurrencyDecimalPlaces:
-          json['foreign_currency_decimal_places'] as int?,
+          (json['foreign_currency_decimal_places'] as num?)?.toInt(),
       description: json['description'] as String,
       sourceId: json['source_id'] as String?,
       sourceName: json['source_name'] as String?,
@@ -929,8 +929,8 @@ TransactionV2Split _$TransactionV2SplitFromJson(Map<String, dynamic> json) =>
       externalUrl: json['external_url'] as String?,
       originalSource: json['original_source'] as String?,
       recurrenceId: json['recurrence_id'] as String?,
-      recurrenceTotal: json['recurrence_total'] as int?,
-      recurrenceCount: json['recurrence_count'] as int?,
+      recurrenceTotal: (json['recurrence_total'] as num?)?.toInt(),
+      recurrenceCount: (json['recurrence_count'] as num?)?.toInt(),
       importHashV2: json['import_hash_v2'] as String?,
       sepaCc: json['sepa_cc'] as String?,
       sepaCtOp: json['sepa_ct_op'] as String?,
@@ -1047,7 +1047,7 @@ TransactionV2SplitStore _$TransactionV2SplitStoreFromJson(
       date: DateTime.parse(json['date'] as String),
       amount: json['amount'] as String,
       description: json['description'] as String,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       foreignAmount: json['foreign_amount'] as String?,
@@ -1062,7 +1062,7 @@ TransactionV2SplitStore _$TransactionV2SplitStoreFromJson(
       destinationId: json['destination_id'] as String?,
       destinationName: json['destination_name'] as String?,
       reconciled: json['reconciled'] as bool?,
-      piggyBankId: json['piggy_bank_id'] as int?,
+      piggyBankId: (json['piggy_bank_id'] as num?)?.toInt(),
       piggyBankName: json['piggy_bank_name'] as String?,
       billId: json['bill_id'] as String?,
       billName: json['bill_name'] as String?,
@@ -1216,13 +1216,13 @@ NetWorthItem _$NetWorthItemFromJson(Map<String, dynamic> json) => NetWorthItem(
       currencyName: json['currency_name'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
       currencyCode: json['currency_code'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       nativeCurrencyId: json['native_currency_id'] as String?,
       nativeCurrencyName: json['native_currency_name'] as String?,
       nativeCurrencySymbol: json['native_currency_symbol'] as String?,
       nativeCurrencyCode: json['native_currency_code'] as String?,
       nativeCurrencyDecimalPlaces:
-          json['native_currency_decimal_places'] as int?,
+          (json['native_currency_decimal_places'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$NetWorthItemToJson(NetWorthItem instance) {
@@ -1270,7 +1270,7 @@ BasicSummaryV2Entry _$BasicSummaryV2EntryFromJson(Map<String, dynamic> json) =>
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: json['currency_decimal_places'] as int?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$BasicSummaryV2EntryToJson(BasicSummaryV2Entry instance) {
@@ -1447,11 +1447,11 @@ Map<String, dynamic> _$Subscription$PaidDates$ItemToJson(
 
 Meta$Pagination _$Meta$PaginationFromJson(Map<String, dynamic> json) =>
     Meta$Pagination(
-      total: json['total'] as int?,
-      count: json['count'] as int?,
-      perPage: json['per_page'] as int?,
-      currentPage: json['current_page'] as int?,
-      totalPages: json['total_pages'] as int?,
+      total: (json['total'] as num?)?.toInt(),
+      count: (json['count'] as num?)?.toInt(),
+      perPage: (json['per_page'] as num?)?.toInt(),
+      currentPage: (json['current_page'] as num?)?.toInt(),
+      totalPages: (json['total_pages'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$Meta$PaginationToJson(Meta$Pagination instance) {

@@ -124,7 +124,7 @@ class SettingsPageState extends State<SettingsPage>
                 .read<FireflyService>()
                 .tzHandler
                 .setUseServerTime(value);
-            await settings.setUseServerTime(value);
+            settings.useServerTime = value;
           },
         ),
         const Divider(),
@@ -159,7 +159,7 @@ class SettingsPageState extends State<SettingsPage>
                 return;
               }
             }
-            settings.setLock(value);
+            settings.lock = value;
           },
         ),
         const Divider(),
@@ -281,9 +281,7 @@ class ThemeDialog extends StatelessWidget {
                 title: Text(S.of(context).settingsThemeDynamicColors),
                 value: context.select((SettingsProvider s) => s.dynamicColors),
                 isThreeLine: false,
-                onChanged: (bool value) async {
-                  settings.setDynamicColors(value);
-                },
+                onChanged: (bool value) => settings.dynamicColors = value,
               )
             : const SizedBox.shrink(),
         ...ThemeMode.values.map(

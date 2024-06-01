@@ -1,14 +1,22 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cronet_http/cronet_http.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 import 'package:logging/logging.dart';
 
 import 'package:chopper/chopper.dart'
-    show HttpMethod, Request, Response, StripStringExtension;
+    show
+        Chain,
+        HttpMethod,
+        Interceptor,
+        Request,
+        Response,
+        StripStringExtension,
+        applyHeaders;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:version/version.dart';
@@ -105,14 +113,23 @@ class AuthErrorNoInstance extends AuthError {
   final String host;
 }
 
-http.Client get httpClient {
-  // Only for Android
-  return CronetClient.fromCronetEngine(
-    CronetEngine.build(
-      cacheMode: CacheMode.memory,
-      cacheMaxSize: 2 * 1024 * 1024,
-    ),
-  );
+http.Client get httpClient => IOClient(HttpClient());
+
+class APIRequestInterceptor implements Interceptor {
+  APIRequestInterceptor(this.headerFunc);
+
+  final Function() headerFunc;
+
+  @override
+  FutureOr<Response<BodyType>> intercept<BodyType>(
+      Chain<BodyType> chain) async {
+    log.finest(() => "API query to ${chain.request.url}");
+    final Request request =
+        applyHeaders(chain.request, headerFunc(), override: true);
+    request.followRedirects = false;
+    request.maxRedirects = 0;
+    return chain.proceed(request);
+  }
 }
 
 class AuthUser {
@@ -136,39 +153,13 @@ class AuthUser {
     _api = FireflyIii.create(
       baseUrl: _host,
       httpClient: httpClient,
-      interceptors: <dynamic>[
-        (Request request) async {
-          log.finest(() => "API query to ${request.url}");
-          request.followRedirects = false;
-          request.maxRedirects = 0;
-          return request.copyWith(headers: <String, String>{
-            ...request.headers,
-            ...headers(),
-          });
-        },
-        (Response<dynamic> response) async {
-          return response;
-        },
-      ],
+      interceptors: <Interceptor>[APIRequestInterceptor(headers)],
     );
 
     _apiV2 = FireflyIiiV2.create(
       baseUrl: _host,
       httpClient: httpClient,
-      interceptors: <dynamic>[
-        (Request request) async {
-          log.finest(() => "APIv2 query to ${request.url}");
-          request.followRedirects = false;
-          request.maxRedirects = 0;
-          return request.copyWith(headers: <String, String>{
-            ...request.headers,
-            ...headers(),
-          });
-        },
-        (Response<dynamic> response) async {
-          return response;
-        },
-      ],
+      interceptors: <Interceptor>[APIRequestInterceptor(headers)],
     );
   }
 

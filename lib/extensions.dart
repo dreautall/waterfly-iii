@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart';
 
 class AlwaysDisabledFocusNode extends FocusNode {
   @override
@@ -35,15 +35,15 @@ extension CurrencyFormat on CurrencyRead {
 extension AccountRole on AccountRoleProperty {
   String friendlyName(BuildContext context) {
     switch (this) {
-      case AccountRoleProperty.cashwalletasset:
+      case AccountRoleProperty.cashWalletAsset:
         return S.of(context).accountRoleAssetCashWallet;
-      case AccountRoleProperty.ccasset:
+      case AccountRoleProperty.ccAsset:
         return S.of(context).accountRoleAssetCC;
-      case AccountRoleProperty.defaultasset:
+      case AccountRoleProperty.defaultAsset:
         return S.of(context).accountRoleAssetDefault;
-      case AccountRoleProperty.savingasset:
+      case AccountRoleProperty.savingAsset:
         return S.of(context).accountRoleAssetSavings;
-      case AccountRoleProperty.sharedasset:
+      case AccountRoleProperty.sharedAsset:
         return S.of(context).accountRoleAssetShared;
       default:
         return S.of(context).generalUnknown;
@@ -450,12 +450,12 @@ extension BillAmountAvg on Bill {
 
 class CategoryWithSum extends Category {
   CategoryWithSum({
-    super.createdAt,
-    super.updatedAt,
+    required super.createdAt,
+    required super.updatedAt,
     required super.name,
     super.notes,
-    super.spent,
-    super.earned,
+    required super.spent,
+    required super.earned,
   });
 
   double sumSpent = 0;

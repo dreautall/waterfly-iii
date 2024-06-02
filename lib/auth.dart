@@ -53,25 +53,6 @@ class APITZReplyData {
   }
 }
 
-class SSLHttpOverride extends HttpOverrides {
-  SSLHttpOverride(this.validCert);
-  final String validCert;
-
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    // Needed for issue #75
-    //context ??= SecurityContext.defaultContext;
-    //context.useCertificateChainBytes(chainBytes);
-    //context.usePrivateKeyBytes(keyBytes);
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, _, __) {
-        log.fine("Using SSLHttpOverride");
-        return cert.pem.replaceAll("\r", "").trim() ==
-            validCert.replaceAll("\r", "").trim();
-      };
-  }
-}
-
 // :TODO: translate strings. cause returns just an identifier for the translation.
 class AuthError implements Exception {
   const AuthError(this.cause);

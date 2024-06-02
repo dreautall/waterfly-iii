@@ -1,5 +1,3 @@
-import 'dart:io' show HandshakeException;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
@@ -100,7 +98,6 @@ class _SplashPageState extends State<SplashPage> {
       );
     } else {
       log.finer(() => "_loginError available --> show error");
-      bool showCertButton = false;
       String errorDetails =
           "Host: ${context.read<FireflyService>().lastTriedHost}";
       final String errorDescription = () {
@@ -123,9 +120,6 @@ class _SplashPageState extends State<SplashPage> {
               .of(context)
               .errorMinAPIVersion(errorType.requiredVersion.toString());
           return errorType.cause;
-        } else if (_loginError is HandshakeException) {
-          showCertButton = true;
-          return S.of(context).errorInvalidSSLCert;
         }
         errorDetails += "\n$_loginError";
         return S.of(context).errorUnknown;
@@ -167,28 +161,6 @@ class _SplashPageState extends State<SplashPage> {
               ),
             ),
             const SizedBox(height: 12),
-            showCertButton
-                ? FilledButton(
-                    onPressed: () async {
-                      String? cert = await showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            const SSLCertDialog(),
-                      );
-                      if (cert == null || cert.isEmpty) {
-                        return;
-                      }
-                      setState(() {
-                        _loginError = null;
-                      });
-                      _login(widget.host, widget.apiKey, cert);
-                    },
-                    child: Text(S.of(context).splashCustomSSLCert),
-                  )
-                : const SizedBox.shrink(),
-            showCertButton
-                ? const SizedBox(height: 12)
-                : const SizedBox.shrink(),
             OverflowBar(
               alignment: MainAxisAlignment.center,
               spacing: 12,
@@ -242,48 +214,6 @@ class _SplashPageState extends State<SplashPage> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class SSLCertDialog extends StatelessWidget {
-  const SSLCertDialog({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final TextEditingController textController = TextEditingController();
-
-    return AlertDialog(
-      icon: const Icon(Icons.policy),
-      title: Text(S.of(context).splashCustomSSLCert),
-      clipBehavior: Clip.hardEdge,
-      actions: <Widget>[
-        TextButton(
-          child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        FilledButton(
-          child: Text(MaterialLocalizations.of(context).saveButtonLabel),
-          onPressed: () {
-            Navigator.of(context).pop(textController.text);
-          },
-        ),
-      ],
-      content: TextField(
-        controller: textController,
-        decoration: InputDecoration(
-          filled: true,
-          labelText: S.of(context).splashFormLabelCustomSSLCertPEM,
-        ),
-        autocorrect: false,
-        autofocus: true,
-        expands: true,
-        maxLines: null,
       ),
     );
   }

@@ -25,7 +25,7 @@ class _SplashPageState extends State<SplashPage> {
 
   Object? _loginError;
 
-  void _login(String? host, String? apiKey, [String? cert]) async {
+  void _login(String? host, String? apiKey) async {
     log.fine(() => "SplashPage->_login()");
 
     bool success = false;
@@ -37,8 +37,7 @@ class _SplashPageState extends State<SplashPage> {
       } else {
         log.finer(() =>
             "SplashPage->_login() with credentials: $host, apiKey ${apiKey.isEmpty ? "unset" : "set"}");
-        success =
-            await context.read<FireflyService>().signIn(host, apiKey, cert);
+        success = await context.read<FireflyService>().signIn(host, apiKey);
       }
     } catch (e, stackTrace) {
       log.warning(

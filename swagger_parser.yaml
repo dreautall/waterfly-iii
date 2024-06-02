@@ -1,0 +1,59 @@
+swagger_parser:
+  output_directory: lib/generated/api
+
+  schemes:
+    - schema_path: swagger_input/firefly-iii.yaml
+      root_client_name: APIv1
+    - schema_path: swagger_input/firefly-iii-v2.yaml
+      root_client_name: APIv2
+
+  language: dart
+  # Current available serializers are: json_serializable, freezed, dart_mappable.
+  json_serializer: json_serializable
+  # Optional. Set default content-type for all requests.
+  default_content_type: "application/json"
+  # Optional (dart only).
+  # Support @Extras annotation for interceptors.
+  # If the value is 'true', then the annotation will be added to all requests.
+  extras_parameter_by_default: true
+  # Optional (dart only).
+  # It is used if the value does not have the annotations 'required' and 'nullable'. 
+  # If the value is 'true', then value be 'required', if the value is 'false', then 'nullable'.
+  required_by_default: true
+  # Optional (dart only). Set 'true' to generate root client
+  # with interface and all clients instances.
+  root_client: true
+  # Optional (dart only). Set 'true' to generate export file.
+  export_file: true
+  # Optional. Set to 'true' to put the all api in its folder.
+  put_in_folder: true
+  # Optional. Set 'true' to put all clients in clients folder.
+  put_clients_in_folder: true
+  # Optional. Set to 'true' to squash all clients in one client.
+  merge_clients: false
+  # Optional. Set postfix for Client class and file.
+  client_postfix: Client
+  # Optional. Set 'true' to use only the endpoint path for the method name.
+  # Set 'false' to use operationId
+  path_method_name: false
+  # Optional (dart only). Set 'true' to include toJson() in enums. 
+  # If set to false, serialization will use .name instead.
+  enums_to_json: false
+  # Optional. Set 'true' to set enum prefix from parent component.
+  enums_parent_prefix: true
+  # Optional (dart only). Set 'true' to maintain backwards compatibility 
+  # when adding new values on the backend.
+  unknown_enum_value: true
+  # Optional. Set 'false' to not put a comment at the beginning of the generated files.
+  mark_files_as_generated: true
+  # Optional (dart only). Set 'true' to wrap all request return types with HttpResponse.
+  original_http_response: false
+  # Optional. Set regex replacement rules for the names of the generated classes/enums.
+  # All rules are applied in order.
+  replacement_rules:
+    # Example of rule
+    #- pattern: "[0-9]+"
+    #  replacement: ""
+  # Optional. Skip parameters with names.
+  skipped_parameters:
+    #- 'X-Some-Token'

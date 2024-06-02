@@ -153,22 +153,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
-  chopper:
-    dependency: "direct main"
-    description:
-      name: chopper
-      sha256: "779a7bc5c7af2e45bd35c49698f2b6fabc23ac053b622294369bbb079eeb8920"
-      url: "https://pub.dev"
-    source: hosted
-    version: "8.0.0"
-  chopper_generator:
-    dependency: "direct dev"
-    description:
-      name: chopper_generator
-      sha256: f7f4913d14bbec24b5cc3c5270f47a3a218bd1c764d7ed3eb0bf4574913208f3
-      url: "https://pub.dev"
-    source: hosted
-    version: "8.0.0"
   clock:
     dependency: transitive
     description:
@@ -265,6 +249,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      sha256: "11e40df547d418cc0c4900a9318b26304e665da6fa4755399a9ff9efd09034b5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.4.3+1"
   dynamic_color:
     dependency: "direct main"
     description:
@@ -273,14 +265,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.7.0"
-  equatable:
-    dependency: transitive
-    description:
-      name: equatable
-      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.5"
   fake_async:
     dependency: transitive
     description:
@@ -773,14 +757,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  markdown:
-    dependency: transitive
-    description:
-      name: markdown
-      sha256: ef2a1298144e3f985cc736b22e0ccdaf188b5b3970648f2d9dc13efd1d9df051
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.2.2"
   matcher:
     dependency: transitive
     description:
@@ -966,6 +942,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
+  protobuf:
+    dependency: transitive
+    description:
+      name: protobuf
+      sha256: "68645b24e0716782e58948f8467fd42a880f255096a821f9e7d0ec625b00c84d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   provider:
     dependency: "direct main"
     description:
@@ -990,14 +974,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.0"
-  qs_dart:
-    dependency: transitive
-    description:
-      name: qs_dart
-      sha256: "5f1827ccdfa061582c121e7a8fe4a83319fa455bcd1fd6e46ff5b17b57aed680"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.0"
   quick_actions:
     dependency: "direct main"
     description:
@@ -1030,22 +1006,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
-  recase:
-    dependency: transitive
+  retrofit:
+    dependency: "direct main"
     description:
-      name: recase
-      sha256: e4eb4ec2dcdee52dcf99cb4ceabaffc631d7424ee55e56f280bc039737f89213
+      name: retrofit
+      sha256: "13a2865c0d97da580ea4e3c64d412d81f365fd5b26be2a18fca9582e021da37a"
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
-  recursive_regex:
-    dependency: transitive
+  retrofit_generator:
+    dependency: "direct dev"
     description:
-      name: recursive_regex
-      sha256: f7252e3d3dfd1665e594d9fe035eca6bc54139b1f2fee38256fa427ea41adc60
+      name: retrofit_generator
+      sha256: a962be21403c2ecdd82d06c863340cff759642ae6ecac5a2c74a9a60377592c3
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "8.1.0"
   rxdart:
     dependency: transitive
     description:
@@ -1203,14 +1179,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  swagger_dart_code_generator:
+  swagger_parser:
     dependency: "direct dev"
     description:
-      name: swagger_dart_code_generator
-      sha256: "73dedc94da13ee4c7259cb60411ccf699789eeceb842a493e025afbca808bb99"
+      name: swagger_parser
+      sha256: ab1f341e80a19027ced958817a32e6053df167a2f22869d9aa69f69228f0d8f5
       url: "https://pub.dev"
     source: hosted
-    version: "2.15.2"
+    version: "1.17.3"
   syncfusion_flutter_charts:
     dependency: "direct main"
     description:
@@ -1267,6 +1243,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.5"
+  tuple:
+    dependency: transitive
+    description:
+      name: tuple
+      sha256: a97ce2013f240b2f3807bcbaf218765b6f301c3eff91092bcfa23a039e7dd151
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   typed_data:
     dependency: transitive
     description:
@@ -1403,14 +1387,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
-  weak_map:
-    dependency: transitive
-    description:
-      name: weak_map
-      sha256: "95ca338f0cdf5f0022cc283dfa4d97f6f6b03752f67eca85ebe6d7a679ffe3ed"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
   web:
     dependency: transitive
     description:

@@ -19,8 +19,6 @@ dependencies:
   flutter_secure_storage: ^9.0.0
   provider: ^6.1.2
   shared_preferences: ^2.2.2
-  chopper: ^8.0.0
-  json_annotation: ^4.8.0
   flutter_svg: ^2.0.7
   url_launcher: ^6.2.4
   infinite_scroll_pagination: ^4.0.0
@@ -51,16 +49,19 @@ dependencies:
   flutter_sharing_intent: ^1.1.1
   http: ^1.2.1
   open_file_plus: ^3.4.1+1
+  dio: ^5.4.1 # swagger_parser
+  json_annotation: ^4.8.1 # swagger_parser
+  retrofit: ^4.1.0 # swagger_parser
+
 
 dev_dependencies:
   flutter_lints: ^4.0.0
-  # needed for swagger_dart_code_generator
-  build_runner: ^2.4.7
-  chopper_generator: ^8.0.0
-  json_serializable: ^6.7.1
-  swagger_dart_code_generator: ^2.15.1
   flutter_native_splash: ^2.3.10
   translations_cleaner: ^0.0.5
+  swagger_parser: ^1.17.3
+  build_runner: ^2.4.8 # swagger_parser
+  json_serializable: ^6.7.1 # swagger_parser
+  retrofit_generator: ^8.1.0 # swagger_parser
 
 flutter:
   uses-material-design: true

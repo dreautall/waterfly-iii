@@ -176,7 +176,7 @@ class AuthUser {
       final http.Request request = http.Request(HttpMethod.Get, aboutUri);
       request.headers[HttpHeaders.authorizationHeader] = "Bearer $apiKey";
       request.followRedirects = false;
-      final http.StreamedResponse response = await request.send();
+      final http.StreamedResponse response = await client.send(request);
 
       if (response.isRedirect) {
         throw const AuthErrorApiKey();

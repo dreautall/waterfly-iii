@@ -2,27 +2,19 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
 import 'package:logging/logging.dart';
 
-import 'package:chopper/chopper.dart'
-    show
-        Chain,
-        HttpMethod,
-        Interceptor,
-        Request,
-        Response,
-        StripStringExtension,
-        applyHeaders;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:version/version.dart';
 
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart';
+import 'package:waterflyiii/generated/api/v2/export.dart';
 import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 
@@ -115,6 +107,7 @@ class AuthErrorNoInstance extends AuthError {
 
 http.Client get httpClient => IOClient(HttpClient());
 
+/*
 class APIRequestInterceptor implements Interceptor {
   APIRequestInterceptor(this.headerFunc);
 
@@ -132,15 +125,17 @@ class APIRequestInterceptor implements Interceptor {
   }
 }
 
+*/
+
 class AuthUser {
   late Uri _host;
   late String _apiKey;
-  late FireflyIii _api;
-  late FireflyIiiV2 _apiV2;
+  late APIv1 _api;
+  late APIv2 _apiV2;
 
   Uri get host => _host;
-  FireflyIii get api => _api;
-  FireflyIiiV2 get apiV2 => _apiV2;
+  APIv1 get api => _api;
+  APIv2 get apiV2 => _apiV2;
 
   final Logger log = Logger("Auth.AuthUser");
 
@@ -150,16 +145,26 @@ class AuthUser {
 
     _host = host.replace(pathSegments: <String>[...host.pathSegments, "api"]);
 
-    _api = FireflyIii.create(
-      baseUrl: _host,
-      httpClient: httpClient,
-      interceptors: <Interceptor>[APIRequestInterceptor(headers)],
+    final Dio dio = Dio(
+      BaseOptions(
+        headers: headers(),
+      ),
     );
 
-    _apiV2 = FireflyIiiV2.create(
-      baseUrl: _host,
-      httpClient: httpClient,
-      interceptors: <Interceptor>[APIRequestInterceptor(headers)],
+    /* Consider https://pub.dev/packages/native_dio_adapter
+    dio.httpClientAdapter = IOHttpClientAdapter(
+      createHttpClient: httpClient,
+    )
+    */
+
+    _api = APIv1(
+      dio,
+      baseUrl: _host.toString(),
+    );
+
+    _apiV2 = APIv2(
+      dio,
+      baseUrl: _host.toString(),
     );
   }
 
@@ -192,7 +197,7 @@ class AuthUser {
     ]);
 
     try {
-      final http.Request request = http.Request(HttpMethod.Get, aboutUri);
+      final http.Request request = http.Request("GET", aboutUri);
       request.headers[HttpHeaders.authorizationHeader] = "Bearer $apiKey";
       request.followRedirects = false;
       final http.StreamedResponse response = await request.send();
@@ -235,7 +240,7 @@ class FireflyService with ChangeNotifier {
   TransStock? get transStock => _transStock;
 
   bool get hasApi => (_currentUser?.api != null) ? true : false;
-  FireflyIii get api {
+  APIv1 get api {
     if (_currentUser?.api == null) {
       signOut();
       throw Exception("API unavailable");
@@ -243,7 +248,7 @@ class FireflyService with ChangeNotifier {
     return _currentUser!.api;
   }
 
-  FireflyIiiV2 get apiV2 {
+  APIv2 get apiV2 {
     if (_currentUser?.apiV2 == null) {
       signOut();
       throw Exception("API unavailable");
@@ -304,8 +309,11 @@ class FireflyService with ChangeNotifier {
 
   Future<bool> signIn(String host, String apiKey, [String? cert]) async {
     log.config("FireflyService->signIn($host)");
-    host = host.strip().rightStrip('/');
-    apiKey = apiKey.strip();
+    host = host.trim();
+    if (host.endsWith("/")) {
+      host = host.substring(0, host.length - 1);
+    }
+    apiKey = apiKey.trim();
 
     if (cert != null && cert.isNotEmpty) {
       HttpOverrides.global = SSLHttpOverride(cert);
@@ -317,12 +325,12 @@ class FireflyService with ChangeNotifier {
     _currentUser = await AuthUser.create(host, apiKey);
     if (_currentUser == null || !hasApi) return false;
 
-    Response<CurrencySingle> currencyInfo = await api.v1CurrenciesDefaultGet();
-    defaultCurrency = currencyInfo.body!.data;
+    CurrencySingle currencyInfo = await api.currencies.getDefaultCurrency();
+    defaultCurrency = currencyInfo.data;
 
-    Response<SystemInfo> about = await api.v1AboutGet();
+    SystemInfo about = await api.about.getAbout();
     try {
-      _apiVersion = Version.parse(about.body?.data?.apiVersion ?? "");
+      _apiVersion = Version.parse(about.data.apiVersion);
     } on FormatException {
       throw const AuthErrorVersionInvalid();
     }
@@ -337,7 +345,7 @@ class FireflyService with ChangeNotifier {
       ...user!.host.pathSegments,
       "v1",
       "configuration",
-      ConfigValueFilter.appTimezone.value!
+      ConfigValueFilter.undefined14.name
     ]);
     try {
       final http.Response response = await client.get(
@@ -364,17 +372,19 @@ class FireflyService with ChangeNotifier {
 }
 
 void apiThrowErrorIfEmpty(Response<dynamic> response, BuildContext? context) {
-  if (response.isSuccessful && response.body != null) {
+  if (response.statusCode == HttpStatus.ok && response.data != null) {
     return;
   }
-  log.severe("Invalid API response", response.error);
+  log.severe("Invalid API response", response.statusMessage);
   if (context?.mounted ?? false) {
     throw Exception(
-      S.of(context!).errorAPIInvalidResponse(response.error?.toString() ?? ""),
+      S
+          .of(context!)
+          .errorAPIInvalidResponse(response.statusMessage?.toString() ?? ""),
     );
   } else {
     throw Exception(
-      "[nocontext] Invalid API response: ${response.error}",
+      "[nocontext] Invalid API response: ${response.statusMessage}",
     );
   }
 }

@@ -3424,6 +3424,7 @@ RuleTrigger _$RuleTriggerFromJson(Map<String, dynamic> json) => RuleTrigger(
           : DateTime.parse(json['updated_at'] as String),
       type: ruleTriggerKeywordFromJson(json['type']),
       $value: json['value'] as String,
+      prohibited: json['prohibited'] as bool? ?? false,
       order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool? ?? true,
       stopProcessing: json['stop_processing'] as bool? ?? false,
@@ -3443,6 +3444,7 @@ Map<String, dynamic> _$RuleTriggerToJson(RuleTrigger instance) {
   writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
   writeNotNull('type', ruleTriggerKeywordToJson(instance.type));
   val['value'] = instance.$value;
+  writeNotNull('prohibited', instance.prohibited);
   writeNotNull('order', instance.order);
   writeNotNull('active', instance.active);
   writeNotNull('stop_processing', instance.stopProcessing);
@@ -3455,6 +3457,7 @@ RuleTriggerStore _$RuleTriggerStoreFromJson(Map<String, dynamic> json) =>
       $value: json['value'] as String,
       order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool? ?? true,
+      prohibited: json['prohibited'] as bool? ?? false,
       stopProcessing: json['stop_processing'] as bool? ?? false,
     );
 
@@ -3471,6 +3474,7 @@ Map<String, dynamic> _$RuleTriggerStoreToJson(RuleTriggerStore instance) {
   val['value'] = instance.$value;
   writeNotNull('order', instance.order);
   writeNotNull('active', instance.active);
+  writeNotNull('prohibited', instance.prohibited);
   writeNotNull('stop_processing', instance.stopProcessing);
   return val;
 }

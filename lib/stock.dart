@@ -1,18 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:stock/stock.dart';
 import 'package:waterflyiii/extensions.dart';
 
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.enums.swagger.dart'
-    as enums show TransactionTypeFilter;
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart';
 
 class TransStock with ChangeNotifier {
-  final FireflyIii api;
+  final APIv1 api;
 
   late Stock<String, TransactionRead> _singleStock;
 
@@ -28,9 +24,9 @@ class TransStock with ChangeNotifier {
   TransStock(this.api) {
     _singleStock = Stock<String, TransactionRead>(
       fetcher: Fetcher.ofFuture<String, TransactionRead>(
-        (String id) => api
-            .v1TransactionsIdGet(id: id)
-            .then((Response<TransactionSingle> value) => value.body!.data),
+        (String id) => api.transactions
+            .getTransaction(id: id)
+            .then((TransactionSingle value) => value.data),
       ),
       sourceOfTruth: _singleSoT,
     );
@@ -38,8 +34,8 @@ class TransStock with ChangeNotifier {
       fetcher: Fetcher.ofFuture<String, List<String>>(
         (String id) {
           final _getOptions query = _getOptions.fromJson(jsonDecode(id));
-          return api
-              .v1TransactionsGet(
+          return api.transactions
+              .listTransaction(
                 xTraceId: query.xTraceId,
                 page: query.page,
                 limit: query.limit,
@@ -56,10 +52,10 @@ class TransStock with ChangeNotifier {
       fetcher: Fetcher.ofFuture<String, List<String>>(
         (String id) {
           final _getOptions query = _getOptions.fromJson(jsonDecode(id));
-          return api
-              .v1AccountsIdTransactionsGet(
+          return api.accounts
+              .listTransactionByAccount(
                 xTraceId: query.xTraceId,
-                id: query.id,
+                id: query.id!,
                 page: query.page,
                 limit: query.limit,
                 start: query.start,
@@ -75,10 +71,10 @@ class TransStock with ChangeNotifier {
       fetcher: Fetcher.ofFuture<String, List<String>>(
         (String id) {
           final _getOptions query = _getOptions.fromJson(jsonDecode(id));
-          return api
-              .v1SearchTransactionsGet(
+          return api.search
+              .searchTransactions(
                 xTraceId: query.xTraceId,
-                query: query.query,
+                query: query.query!,
                 page: query.page,
                 limit: query.limit,
               )
@@ -89,23 +85,25 @@ class TransStock with ChangeNotifier {
     );
   }
 
-  FutureOr<List<String>> _onAPIValue(Response<TransactionArray> response) {
+  FutureOr<List<String>> _onAPIValue(TransactionArray response) {
+    /*
     if (!response.isSuccessful || response.body == null) {
       throw Exception(response.error ?? "empty body");
     }
     for (TransactionRead element in response.body!.data) {
       _singleSoT.write(element.id, element);
     }
-    return response.body!.data.map((TransactionRead e) => e.id).toList();
+    return response.body!.data.map((TransactionRead e) => e.id).toList();*/
+    return response.data.map((TransactionRead e) => e.id).toList();
   }
 
   Future<List<TransactionRead>> get({
     String? xTraceId,
     int? page,
     int? limit,
-    String? start,
-    String? end,
-    enums.TransactionTypeFilter? type,
+    DateTime? start,
+    DateTime? end,
+    TransactionTypeFilter? type,
   }) async {
     return _getStock
         .get(jsonEncode(_getOptions(
@@ -124,9 +122,9 @@ class TransStock with ChangeNotifier {
     required String id,
     int? page,
     int? limit,
-    String? start,
-    String? end,
-    enums.TransactionTypeFilter? type,
+    DateTime? start,
+    DateTime? end,
+    TransactionTypeFilter? type,
   }) async {
     return _getAccountStock
         .get(jsonEncode(_getOptions(
@@ -190,9 +188,9 @@ class TransStock with ChangeNotifier {
 class _getOptions {
   final String? xTraceId; // get, getAccount, getSearch
   final int? page; // get, getAccount, getSearch
-  final String? start; // get, getAccount
-  final String? end; // get, getAccount
-  final enums.TransactionTypeFilter? type; // get, getAccount
+  final DateTime? start; // get, getAccount
+  final DateTime? end; // get, getAccount
+  final TransactionTypeFilter? type; // get, getAccount
   final String? id; // getAccount
   final int? limit; // get, getAccount, getSearch
   final String? query; // getSearch
@@ -231,7 +229,7 @@ class _getOptions {
 }
 
 class CatStock {
-  final FireflyIii api;
+  final APIv1 api;
   final CurrencyRead defaultCurrency;
 
   late Stock<DateTime, CategoryArray> _stock;
@@ -242,54 +240,57 @@ class CatStock {
     _stock = Stock<DateTime, CategoryArray>(
       fetcher: Fetcher.ofFuture<DateTime, CategoryArray>(
         (DateTime t) async {
-          final String startDate =
-              DateFormat('yyyy-MM-dd', 'en_US').format(t.copyWith(day: 1));
-          final String endDate = DateFormat('yyyy-MM-dd', 'en_US').format(t);
+          final DateTime startDate = t.copyWith(day: 1);
+          final DateTime endDate = t;
 
-          final Response<InsightGroup> respIncomeCat =
-              await api.v1InsightIncomeCategoryGet(
+          final InsightGroup respIncomeCat =
+              await api.insight.insightIncomeCategory(
             start: startDate,
             end: endDate,
           );
-          if (!respIncomeCat.isSuccessful || respIncomeCat.body == null) {
+          /* if (!respIncomeCat.isSuccessful || respIncomeCat.body == null) {
             throw Exception(
               "[stock] Invalid API response: ${respIncomeCat.error}",
             );
-          }
-          final Response<InsightTotal> respIncomeNoCat =
-              await api.v1InsightIncomeNoCategoryGet(
+          }*/
+          final InsightTotal respIncomeNoCat =
+              await api.insight.insightIncomeNoCategory(
             start: startDate,
             end: endDate,
           );
+          /*
           if (!respIncomeNoCat.isSuccessful || respIncomeNoCat.body == null) {
             throw Exception(
               "[stock] Invalid API response: ${respIncomeNoCat.error}",
             );
           }
-          final Response<InsightGroup> respExpenseCat =
-              await api.v1InsightExpenseCategoryGet(
+          */
+          final InsightGroup respExpenseCat =
+              await api.insight.insightExpenseCategory(
             start: startDate,
             end: endDate,
           );
+          /*
           if (!respExpenseCat.isSuccessful || respExpenseCat.body == null) {
             throw Exception(
               "[stock] Invalid API response: ${respExpenseCat.error}",
             );
-          }
-          final Response<InsightTotal> respExpenseNoCat =
-              await api.v1InsightExpenseNoCategoryGet(
+          }*/
+          final InsightTotal respExpenseNoCat =
+              await api.insight.insightExpenseNoCategory(
             start: startDate,
             end: endDate,
           );
+          /*
           if (!respExpenseNoCat.isSuccessful || respExpenseNoCat.body == null) {
             throw Exception(
               "[stock] Invalid API response: ${respExpenseNoCat.error}",
             );
-          }
+          }*/
 
           final Map<String, CategoryRead> categories = <String, CategoryRead>{};
-          for (InsightGroupEntry cat in respIncomeCat.body!) {
-            if ((cat.id?.isEmpty ?? true) || (cat.name?.isEmpty ?? true)) {
+          for (InsightGroupEntry cat in respIncomeCat) {
+            if ((cat.id.isEmpty) || (cat.name.isEmpty)) {
               continue;
             }
 
@@ -297,17 +298,19 @@ class CatStock {
               continue;
             }
             if (!categories.containsKey(cat.id)) {
-              categories[cat.id!] = CategoryRead(
-                id: cat.id!,
+              categories[cat.id] = CategoryRead(
+                id: cat.id,
                 type: "categories",
                 attributes: CategoryWithSum(
-                  name: cat.name!,
+                  name: cat.name,
+                  createdAt: DateTime.now(),
+                  updatedAt: DateTime.now(),
                   spent: <CategorySpent>[],
                   earned: <CategoryEarned>[],
                 ),
               );
             }
-            categories[cat.id!]!.attributes.earned!.add(
+            categories[cat.id]!.attributes.earned.add(
                   CategoryEarned(
                     currencyId: cat.currencyId,
                     currencyCode: cat.currencyCode,
@@ -318,8 +321,8 @@ class CatStock {
                   ),
                 );
           }
-          for (InsightGroupEntry cat in respExpenseCat.body!) {
-            if ((cat.id?.isEmpty ?? true) || (cat.name?.isEmpty ?? true)) {
+          for (InsightGroupEntry cat in respExpenseCat) {
+            if ((cat.id.isEmpty) || (cat.name.isEmpty)) {
               continue;
             }
 
@@ -327,17 +330,19 @@ class CatStock {
               continue;
             }
             if (!categories.containsKey(cat.id)) {
-              categories[cat.id!] = CategoryRead(
-                id: cat.id!,
+              categories[cat.id] = CategoryRead(
+                id: cat.id,
                 type: "categories",
                 attributes: CategoryWithSum(
-                  name: cat.name!,
+                  name: cat.name,
+                  createdAt: DateTime.now(),
+                  updatedAt: DateTime.now(),
                   spent: <CategorySpent>[],
                   earned: <CategoryEarned>[],
                 ),
               );
             }
-            categories[cat.id!]!.attributes.spent!.add(
+            categories[cat.id]!.attributes.spent.add(
                   CategorySpent(
                     currencyId: cat.currencyId,
                     currencyCode: cat.currencyCode,
@@ -348,7 +353,7 @@ class CatStock {
                   ),
                 );
           }
-          for (InsightTotalEntry cat in respIncomeNoCat.body!) {
+          for (InsightTotalEntry cat in respIncomeNoCat) {
             if (cat.currencyId != defaultCurrency.id) {
               continue;
             }
@@ -358,12 +363,14 @@ class CatStock {
                 type: "no-category",
                 attributes: CategoryWithSum(
                   name: "L10NNONE",
+                  createdAt: DateTime.now(),
+                  updatedAt: DateTime.now(),
                   spent: <CategorySpent>[],
                   earned: <CategoryEarned>[],
                 ),
               );
             }
-            categories["-1"]!.attributes.earned!.add(
+            categories["-1"]!.attributes.earned.add(
                   CategoryEarned(
                     currencyId: cat.currencyId,
                     currencyCode: cat.currencyCode,
@@ -374,7 +381,7 @@ class CatStock {
                   ),
                 );
           }
-          for (InsightTotalEntry cat in respExpenseNoCat.body!) {
+          for (InsightTotalEntry cat in respExpenseNoCat) {
             if (cat.currencyId != defaultCurrency.id) {
               continue;
             }
@@ -384,12 +391,14 @@ class CatStock {
                 type: "no-category",
                 attributes: CategoryWithSum(
                   name: "L10NNONE",
+                  createdAt: DateTime.now(),
+                  updatedAt: DateTime.now(),
                   spent: <CategorySpent>[],
                   earned: <CategoryEarned>[],
                 ),
               );
             }
-            categories["-1"]!.attributes.spent!.add(
+            categories["-1"]!.attributes.spent.add(
                   CategorySpent(
                     currencyId: cat.currencyId,
                     currencyCode: cat.currencyCode,
@@ -403,17 +412,22 @@ class CatStock {
 
           categories.forEach((_, CategoryRead c) {
             CategoryWithSum cs = c.attributes as CategoryWithSum;
-            cs.sumEarned = c.attributes.earned!.fold<double>(
-                0,
-                (double p, CategoryEarned e) =>
-                    p += double.parse(e.sum ?? "0"));
-            cs.sumSpent = c.attributes.spent!.fold<double>(0,
-                (double p, CategorySpent e) => p += double.parse(e.sum ?? "0"));
+            cs.sumEarned = c.attributes.earned.fold<double>(
+                0, (double p, CategoryEarned e) => p += double.parse(e.sum));
+            cs.sumSpent = c.attributes.spent.fold<double>(
+                0, (double p, CategorySpent e) => p += double.parse(e.sum));
           });
 
           return CategoryArray(
             data: categories.values.toList(growable: false),
-            meta: const Meta(),
+            meta: const Meta(
+                pagination: Pagination(
+              total: 0,
+              count: 0,
+              perPage: 0,
+              currentPage: 0,
+              totalPages: 0,
+            )),
           );
         },
       ),

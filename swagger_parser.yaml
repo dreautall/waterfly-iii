@@ -1,11 +1,11 @@
 swagger_parser:
-  output_directory: lib/generated/api
-
   schemes:
     - schema_path: swagger_input/firefly-iii.yaml
       root_client_name: APIv1
+      output_directory: lib/generated/api/v1
     - schema_path: swagger_input/firefly-iii-v2.yaml
       root_client_name: APIv2
+      output_directory: lib/generated/api/v2
 
   language: dart
   # Current available serializers are: json_serializable, freezed, dart_mappable.

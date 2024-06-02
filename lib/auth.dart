@@ -270,17 +270,16 @@ class FireflyService with ChangeNotifier {
     _storageSignInException = null;
     String? apiHost = await storage.read(key: 'api_host');
     String? apiKey = await storage.read(key: 'api_key');
-    String? cert = await storage.read(key: 'api_cert');
 
     log.config(
-        "storage: $apiHost, apiKey ${apiKey?.isEmpty ?? true ? "unset" : "set"}, cert ${cert?.isEmpty ?? true ? "unset" : "set"}");
+        "storage: $apiHost, apiKey ${apiKey?.isEmpty ?? true ? "unset" : "set"}");
 
     if (apiHost == null || apiKey == null) {
       return false;
     }
 
     try {
-      return await signIn(apiHost, apiKey, cert);
+      return await signIn(apiHost, apiKey);
     } catch (e) {
       _storageSignInException = e;
       log.finest(() => "notify FireflyService->signInFromStorage");
@@ -302,16 +301,10 @@ class FireflyService with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> signIn(String host, String apiKey, [String? cert]) async {
+  Future<bool> signIn(String host, String apiKey) async {
     log.config("FireflyService->signIn($host)");
     host = host.strip().rightStrip('/');
     apiKey = apiKey.strip();
-
-    if (cert != null && cert.isNotEmpty) {
-      HttpOverrides.global = SSLHttpOverride(cert);
-    } else {
-      HttpOverrides.global = null;
-    }
 
     _lastTriedHost = host;
     _currentUser = await AuthUser.create(host, apiKey);
@@ -357,7 +350,6 @@ class FireflyService with ChangeNotifier {
 
     storage.write(key: 'api_host', value: host);
     storage.write(key: 'api_key', value: apiKey);
-    storage.write(key: 'api_cert', value: cert);
 
     return true;
   }

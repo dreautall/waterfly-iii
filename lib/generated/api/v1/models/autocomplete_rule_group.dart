@@ -11,7 +11,7 @@ class AutocompleteRuleGroup {
   const AutocompleteRuleGroup({
     required this.id,
     required this.name,
-    required this.description,
+    this.description,
   });
 
   factory AutocompleteRuleGroup.fromJson(Map<String, Object?> json) =>
@@ -23,7 +23,7 @@ class AutocompleteRuleGroup {
   final String name;
 
   /// Description of the rule group found by auto-complete.
-  final String description;
+  final String? description;
 
   Map<String, Object?> toJson() => _$AutocompleteRuleGroupToJson(this);
 }

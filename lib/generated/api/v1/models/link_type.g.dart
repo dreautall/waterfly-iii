@@ -10,7 +10,7 @@ LinkType _$LinkTypeFromJson(Map<String, dynamic> json) => LinkType(
       name: json['name'] as String,
       inward: json['inward'] as String,
       outward: json['outward'] as String,
-      editable: json['editable'] as bool,
+      editable: json['editable'] as bool?,
     );
 
 Map<String, dynamic> _$LinkTypeToJson(LinkType instance) => <String, dynamic>{

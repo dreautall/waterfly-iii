@@ -9,13 +9,13 @@ part 'budget_limit_store.g.dart';
 @JsonSerializable()
 class BudgetLimitStore {
   const BudgetLimitStore({
-    required this.currencyId,
-    required this.currencyCode,
     required this.budgetId,
     required this.start,
-    required this.period,
     required this.end,
     required this.amount,
+    this.currencyId,
+    this.currencyCode,
+    this.period,
   });
 
   factory BudgetLimitStore.fromJson(Map<String, Object?> json) =>
@@ -23,11 +23,11 @@ class BudgetLimitStore {
 
   /// Use either currency_id or currency_code. Defaults to the user's default currency.
   @JsonKey(name: 'currency_id')
-  final String currencyId;
+  final String? currencyId;
 
   /// Use either currency_id or currency_code. Defaults to the user's default currency.
   @JsonKey(name: 'currency_code')
-  final String currencyCode;
+  final String? currencyCode;
 
   /// The budget ID of the associated budget.
   @JsonKey(name: 'budget_id')

@@ -10,29 +10,29 @@ part 'recurrence_transaction_update.g.dart';
 class RecurrenceTransactionUpdate {
   const RecurrenceTransactionUpdate({
     required this.id,
-    required this.description,
-    required this.amount,
-    required this.foreignAmount,
-    required this.currencyId,
-    required this.currencyCode,
-    required this.foreignCurrencyId,
-    required this.budgetId,
-    required this.categoryId,
-    required this.sourceId,
-    required this.destinationId,
-    required this.tags,
-    required this.piggyBankId,
-    required this.billId,
+    this.description,
+    this.amount,
+    this.foreignAmount,
+    this.currencyId,
+    this.currencyCode,
+    this.foreignCurrencyId,
+    this.budgetId,
+    this.categoryId,
+    this.sourceId,
+    this.destinationId,
+    this.tags,
+    this.piggyBankId,
+    this.billId,
   });
 
   factory RecurrenceTransactionUpdate.fromJson(Map<String, Object?> json) =>
       _$RecurrenceTransactionUpdateFromJson(json);
 
   final String id;
-  final String description;
+  final String? description;
 
   /// Amount of the transaction.
-  final String amount;
+  final String? amount;
 
   /// Foreign amount of the transaction.
   @JsonKey(name: 'foreign_amount')
@@ -40,11 +40,11 @@ class RecurrenceTransactionUpdate {
 
   /// Submit either a currency_id or a currency_code.
   @JsonKey(name: 'currency_id')
-  final String currencyId;
+  final String? currencyId;
 
   /// Submit either a currency_id or a currency_code.
   @JsonKey(name: 'currency_code')
-  final String currencyCode;
+  final String? currencyCode;
 
   /// Submit either a foreign_currency_id or a foreign_currency_code, or neither.
   @JsonKey(name: 'foreign_currency_id')
@@ -52,19 +52,19 @@ class RecurrenceTransactionUpdate {
 
   /// The budget ID for this transaction.
   @JsonKey(name: 'budget_id')
-  final String budgetId;
+  final String? budgetId;
 
   /// Category ID for this transaction.
   @JsonKey(name: 'category_id')
-  final String categoryId;
+  final String? categoryId;
 
   /// ID of the source account. Submit either this or source_name.
   @JsonKey(name: 'source_id')
-  final String sourceId;
+  final String? sourceId;
 
   /// ID of the destination account. Submit either this or destination_name.
   @JsonKey(name: 'destination_id')
-  final String destinationId;
+  final String? destinationId;
 
   /// Array of tags.
   final List<String>? tags;

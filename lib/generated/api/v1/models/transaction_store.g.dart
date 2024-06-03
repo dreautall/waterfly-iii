@@ -8,13 +8,13 @@ part of 'transaction_store.dart';
 
 TransactionStore _$TransactionStoreFromJson(Map<String, dynamic> json) =>
     TransactionStore(
-      errorIfDuplicateHash: json['error_if_duplicate_hash'] as bool,
-      applyRules: json['apply_rules'] as bool,
-      groupTitle: json['group_title'] as String?,
       transactions: (json['transactions'] as List<dynamic>)
           .map((e) => TransactionSplitStore.fromJson(e as Map<String, dynamic>))
           .toList(),
       fireWebhooks: json['fire_webhooks'] as bool? ?? true,
+      errorIfDuplicateHash: json['error_if_duplicate_hash'] as bool?,
+      applyRules: json['apply_rules'] as bool?,
+      groupTitle: json['group_title'] as String?,
     );
 
 Map<String, dynamic> _$TransactionStoreToJson(TransactionStore instance) =>

@@ -290,7 +290,7 @@ class CatStock {
 
           final Map<String, CategoryRead> categories = <String, CategoryRead>{};
           for (InsightGroupEntry cat in respIncomeCat) {
-            if ((cat.id.isEmpty) || (cat.name.isEmpty)) {
+            if ((cat.id?.isEmpty ?? true) || (cat.name?.isEmpty ?? true)) {
               continue;
             }
 
@@ -298,11 +298,11 @@ class CatStock {
               continue;
             }
             if (!categories.containsKey(cat.id)) {
-              categories[cat.id] = CategoryRead(
-                id: cat.id,
+              categories[cat.id!] = CategoryRead(
+                id: cat.id!,
                 type: "categories",
                 attributes: CategoryWithSum(
-                  name: cat.name,
+                  name: cat.name!,
                   createdAt: DateTime.now(),
                   updatedAt: DateTime.now(),
                   spent: <CategorySpent>[],
@@ -310,7 +310,7 @@ class CatStock {
                 ),
               );
             }
-            categories[cat.id]!.attributes.earned.add(
+            categories[cat.id]!.attributes.earned!.add(
                   CategoryEarned(
                     currencyId: cat.currencyId,
                     currencyCode: cat.currencyCode,
@@ -322,7 +322,7 @@ class CatStock {
                 );
           }
           for (InsightGroupEntry cat in respExpenseCat) {
-            if ((cat.id.isEmpty) || (cat.name.isEmpty)) {
+            if ((cat.id?.isEmpty ?? true) || (cat.name?.isEmpty ?? true)) {
               continue;
             }
 
@@ -330,11 +330,11 @@ class CatStock {
               continue;
             }
             if (!categories.containsKey(cat.id)) {
-              categories[cat.id] = CategoryRead(
-                id: cat.id,
+              categories[cat.id!] = CategoryRead(
+                id: cat.id!,
                 type: "categories",
                 attributes: CategoryWithSum(
-                  name: cat.name,
+                  name: cat.name!,
                   createdAt: DateTime.now(),
                   updatedAt: DateTime.now(),
                   spent: <CategorySpent>[],
@@ -342,7 +342,7 @@ class CatStock {
                 ),
               );
             }
-            categories[cat.id]!.attributes.spent.add(
+            categories[cat.id]!.attributes.spent!.add(
                   CategorySpent(
                     currencyId: cat.currencyId,
                     currencyCode: cat.currencyCode,
@@ -370,7 +370,7 @@ class CatStock {
                 ),
               );
             }
-            categories["-1"]!.attributes.earned.add(
+            categories["-1"]!.attributes.earned!.add(
                   CategoryEarned(
                     currencyId: cat.currencyId,
                     currencyCode: cat.currencyCode,
@@ -398,7 +398,7 @@ class CatStock {
                 ),
               );
             }
-            categories["-1"]!.attributes.spent.add(
+            categories["-1"]!.attributes.spent!.add(
                   CategorySpent(
                     currencyId: cat.currencyId,
                     currencyCode: cat.currencyCode,
@@ -412,10 +412,12 @@ class CatStock {
 
           categories.forEach((_, CategoryRead c) {
             CategoryWithSum cs = c.attributes as CategoryWithSum;
-            cs.sumEarned = c.attributes.earned.fold<double>(
-                0, (double p, CategoryEarned e) => p += double.parse(e.sum));
-            cs.sumSpent = c.attributes.spent.fold<double>(
-                0, (double p, CategorySpent e) => p += double.parse(e.sum));
+            cs.sumEarned = c.attributes.earned!.fold<double>(
+                0,
+                (double p, CategoryEarned e) =>
+                    p += double.parse(e.sum ?? "0"));
+            cs.sumSpent = c.attributes.spent!.fold<double>(0,
+                (double p, CategorySpent e) => p += double.parse(e.sum ?? "0"));
           });
 
           return CategoryArray(

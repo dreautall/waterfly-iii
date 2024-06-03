@@ -10,10 +10,10 @@ part 'transaction_link_store.g.dart';
 class TransactionLinkStore {
   const TransactionLinkStore({
     required this.linkTypeId,
-    required this.linkTypeName,
     required this.inwardId,
     required this.outwardId,
-    required this.notes,
+    this.linkTypeName,
+    this.notes,
   });
 
   factory TransactionLinkStore.fromJson(Map<String, Object?> json) =>
@@ -25,7 +25,7 @@ class TransactionLinkStore {
 
   /// The link type name to use. You can also use the link_type_id field.
   @JsonKey(name: 'link_type_name')
-  final String linkTypeName;
+  final String? linkTypeName;
 
   /// The inward transaction transaction_journal_id for the link. This becomes the 'is paid by' transaction of the set.
   @JsonKey(name: 'inward_id')

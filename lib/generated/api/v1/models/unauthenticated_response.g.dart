@@ -9,8 +9,8 @@ part of 'unauthenticated_response.dart';
 UnauthenticatedResponse _$UnauthenticatedResponseFromJson(
         Map<String, dynamic> json) =>
     UnauthenticatedResponse(
-      message: json['message'] as String,
-      exception: json['exception'] as String,
+      message: json['message'] as String?,
+      exception: json['exception'] as String?,
     );
 
 Map<String, dynamic> _$UnauthenticatedResponseToJson(

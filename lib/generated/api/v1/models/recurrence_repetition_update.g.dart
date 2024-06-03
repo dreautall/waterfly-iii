@@ -9,16 +9,18 @@ part of 'recurrence_repetition_update.dart';
 RecurrenceRepetitionUpdate _$RecurrenceRepetitionUpdateFromJson(
         Map<String, dynamic> json) =>
     RecurrenceRepetitionUpdate(
-      type: RecurrenceRepetitionType.fromJson(json['type'] as String),
-      moment: json['moment'] as String,
-      skip: (json['skip'] as num).toInt(),
-      weekend: (json['weekend'] as num).toInt(),
+      type: json['type'] == null
+          ? null
+          : RecurrenceRepetitionType.fromJson(json['type'] as String),
+      moment: json['moment'] as String?,
+      skip: (json['skip'] as num?)?.toInt(),
+      weekend: (json['weekend'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$RecurrenceRepetitionUpdateToJson(
         RecurrenceRepetitionUpdate instance) =>
     <String, dynamic>{
-      'type': _$RecurrenceRepetitionTypeEnumMap[instance.type]!,
+      'type': _$RecurrenceRepetitionTypeEnumMap[instance.type],
       'moment': instance.moment,
       'skip': instance.skip,
       'weekend': instance.weekend,

@@ -10,7 +10,7 @@ part 'category_update.g.dart';
 class CategoryUpdate {
   const CategoryUpdate({
     required this.name,
-    required this.notes,
+    this.notes,
   });
 
   factory CategoryUpdate.fromJson(Map<String, Object?> json) =>

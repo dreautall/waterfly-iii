@@ -9,34 +9,39 @@ part of 'account_update.dart';
 AccountUpdate _$AccountUpdateFromJson(Map<String, dynamic> json) =>
     AccountUpdate(
       name: json['name'] as String,
+      active: json['active'] as bool? ?? true,
+      includeNetWorth: json['include_net_worth'] as bool? ?? true,
       iban: json['iban'] as String?,
       bic: json['bic'] as String?,
       accountNumber: json['account_number'] as String?,
-      openingBalance: json['opening_balance'] as String,
+      openingBalance: json['opening_balance'] as String?,
       openingBalanceDate: json['opening_balance_date'] == null
           ? null
           : DateTime.parse(json['opening_balance_date'] as String),
-      virtualBalance: json['virtual_balance'] as String,
-      currencyId: json['currency_id'] as String,
-      currencyCode: json['currency_code'] as String,
-      order: (json['order'] as num).toInt(),
-      accountRole: AccountRoleProperty.fromJson(json['account_role'] as String),
-      creditCardType:
-          CreditCardTypeProperty.fromJson(json['credit_card_type'] as String),
+      virtualBalance: json['virtual_balance'] as String?,
+      currencyId: json['currency_id'] as String?,
+      currencyCode: json['currency_code'] as String?,
+      order: (json['order'] as num?)?.toInt(),
+      accountRole: json['account_role'] == null
+          ? null
+          : AccountRoleProperty.fromJson(json['account_role'] as String),
+      creditCardType: json['credit_card_type'] == null
+          ? null
+          : CreditCardTypeProperty.fromJson(json['credit_card_type'] as String),
       monthlyPaymentDate: json['monthly_payment_date'] == null
           ? null
           : DateTime.parse(json['monthly_payment_date'] as String),
-      liabilityType:
-          LiabilityTypeProperty.fromJson(json['liability_type'] as String),
+      liabilityType: json['liability_type'] == null
+          ? null
+          : LiabilityTypeProperty.fromJson(json['liability_type'] as String),
       interest: json['interest'] as String?,
-      interestPeriod:
-          InterestPeriodProperty.fromJson(json['interest_period'] as String),
+      interestPeriod: json['interest_period'] == null
+          ? null
+          : InterestPeriodProperty.fromJson(json['interest_period'] as String),
       notes: json['notes'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
       zoomLevel: (json['zoom_level'] as num?)?.toInt(),
-      active: json['active'] as bool? ?? true,
-      includeNetWorth: json['include_net_worth'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$AccountUpdateToJson(AccountUpdate instance) =>
@@ -53,14 +58,14 @@ Map<String, dynamic> _$AccountUpdateToJson(AccountUpdate instance) =>
       'active': instance.active,
       'order': instance.order,
       'include_net_worth': instance.includeNetWorth,
-      'account_role': _$AccountRolePropertyEnumMap[instance.accountRole]!,
+      'account_role': _$AccountRolePropertyEnumMap[instance.accountRole],
       'credit_card_type':
-          _$CreditCardTypePropertyEnumMap[instance.creditCardType]!,
+          _$CreditCardTypePropertyEnumMap[instance.creditCardType],
       'monthly_payment_date': instance.monthlyPaymentDate?.toIso8601String(),
-      'liability_type': _$LiabilityTypePropertyEnumMap[instance.liabilityType]!,
+      'liability_type': _$LiabilityTypePropertyEnumMap[instance.liabilityType],
       'interest': instance.interest,
       'interest_period':
-          _$InterestPeriodPropertyEnumMap[instance.interestPeriod]!,
+          _$InterestPeriodPropertyEnumMap[instance.interestPeriod],
       'notes': instance.notes,
       'latitude': instance.latitude,
       'longitude': instance.longitude,

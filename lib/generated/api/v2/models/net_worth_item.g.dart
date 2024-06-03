@@ -7,19 +7,19 @@ part of 'net_worth_item.dart';
 // **************************************************************************
 
 NetWorthItem _$NetWorthItemFromJson(Map<String, dynamic> json) => NetWorthItem(
-      balance: json['balance'] as String,
-      nativeBalance: json['native_balance'] as String,
-      currencyId: json['currency_id'] as String,
-      currencyName: json['currency_name'] as String,
-      currencySymbol: json['currency_symbol'] as String,
-      currencyCode: json['currency_code'] as String,
-      currencyDecimalPlaces: (json['currency_decimal_places'] as num).toInt(),
-      nativeCurrencyId: json['native_currency_id'] as String,
-      nativeCurrencyName: json['native_currency_name'] as String,
-      nativeCurrencySymbol: json['native_currency_symbol'] as String,
-      nativeCurrencyCode: json['native_currency_code'] as String,
+      balance: json['balance'] as String?,
+      nativeBalance: json['native_balance'] as String?,
+      currencyId: json['currency_id'] as String?,
+      currencyName: json['currency_name'] as String?,
+      currencySymbol: json['currency_symbol'] as String?,
+      currencyCode: json['currency_code'] as String?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
+      nativeCurrencyId: json['native_currency_id'] as String?,
+      nativeCurrencyName: json['native_currency_name'] as String?,
+      nativeCurrencySymbol: json['native_currency_symbol'] as String?,
+      nativeCurrencyCode: json['native_currency_code'] as String?,
       nativeCurrencyDecimalPlaces:
-          (json['native_currency_decimal_places'] as num).toInt(),
+          (json['native_currency_decimal_places'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$NetWorthItemToJson(NetWorthItem instance) =>

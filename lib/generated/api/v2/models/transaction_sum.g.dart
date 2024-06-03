@@ -8,19 +8,19 @@ part of 'transaction_sum.dart';
 
 TransactionSum _$TransactionSumFromJson(Map<String, dynamic> json) =>
     TransactionSum(
-      currencyId: json['currency_id'] as String,
-      currencyName: json['currency_name'] as String,
-      currencySymbol: json['currency_symbol'] as String,
-      currencyCode: json['currency_code'] as String,
-      currencyDecimalPlaces: (json['currency_decimal_places'] as num).toInt(),
-      nativeCurrencyId: json['native_currency_id'] as String,
-      nativeCurrencyName: json['native_currency_name'] as String,
-      nativeCurrencySymbol: json['native_currency_symbol'] as String,
-      nativeCurrencyCode: json['native_currency_code'] as String,
+      currencyId: json['currency_id'] as String?,
+      currencyName: json['currency_name'] as String?,
+      currencySymbol: json['currency_symbol'] as String?,
+      currencyCode: json['currency_code'] as String?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
+      nativeCurrencyId: json['native_currency_id'] as String?,
+      nativeCurrencyName: json['native_currency_name'] as String?,
+      nativeCurrencySymbol: json['native_currency_symbol'] as String?,
+      nativeCurrencyCode: json['native_currency_code'] as String?,
       nativeCurrencyDecimalPlaces:
-          (json['native_currency_decimal_places'] as num).toInt(),
-      sum: json['sum'] as String,
-      nativeSum: json['native_sum'] as String,
+          (json['native_currency_decimal_places'] as num?)?.toInt(),
+      sum: json['sum'] as String?,
+      nativeSum: json['native_sum'] as String?,
     );
 
 Map<String, dynamic> _$TransactionSumToJson(TransactionSum instance) =>

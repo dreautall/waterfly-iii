@@ -11,13 +11,13 @@ class AutocompletePiggy {
   const AutocompletePiggy({
     required this.id,
     required this.name,
-    required this.currencyId,
-    required this.currencyCode,
-    required this.currencySymbol,
-    required this.currencyName,
-    required this.currencyDecimalPlaces,
-    required this.objectGroupId,
-    required this.objectGroupTitle,
+    this.currencyId,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyName,
+    this.currencyDecimalPlaces,
+    this.objectGroupId,
+    this.objectGroupTitle,
   });
 
   factory AutocompletePiggy.fromJson(Map<String, Object?> json) =>
@@ -30,19 +30,19 @@ class AutocompletePiggy {
 
   /// Currency ID for this piggy bank.
   @JsonKey(name: 'currency_id')
-  final String currencyId;
+  final String? currencyId;
 
   /// Currency code for this piggy bank.
   @JsonKey(name: 'currency_code')
-  final String currencyCode;
+  final String? currencyCode;
   @JsonKey(name: 'currency_symbol')
-  final String currencySymbol;
+  final String? currencySymbol;
 
   /// Currency name for the currency used by this account.
   @JsonKey(name: 'currency_name')
-  final String currencyName;
+  final String? currencyName;
   @JsonKey(name: 'currency_decimal_places')
-  final int currencyDecimalPlaces;
+  final int? currencyDecimalPlaces;
 
   /// The group ID of the group this object is part of. NULL if no group.
   @JsonKey(name: 'object_group_id')

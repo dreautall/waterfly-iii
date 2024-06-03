@@ -15,27 +15,27 @@ part 'account_update.g.dart';
 class AccountUpdate {
   const AccountUpdate({
     required this.name,
-    required this.iban,
-    required this.bic,
-    required this.accountNumber,
-    required this.openingBalance,
-    required this.openingBalanceDate,
-    required this.virtualBalance,
-    required this.currencyId,
-    required this.currencyCode,
-    required this.order,
-    required this.accountRole,
-    required this.creditCardType,
-    required this.monthlyPaymentDate,
-    required this.liabilityType,
-    required this.interest,
-    required this.interestPeriod,
-    required this.notes,
-    required this.latitude,
-    required this.longitude,
-    required this.zoomLevel,
     this.active = true,
     this.includeNetWorth = true,
+    this.iban,
+    this.bic,
+    this.accountNumber,
+    this.openingBalance,
+    this.openingBalanceDate,
+    this.virtualBalance,
+    this.currencyId,
+    this.currencyCode,
+    this.order,
+    this.accountRole,
+    this.creditCardType,
+    this.monthlyPaymentDate,
+    this.liabilityType,
+    this.interest,
+    this.interestPeriod,
+    this.notes,
+    this.latitude,
+    this.longitude,
+    this.zoomLevel,
   });
 
   factory AccountUpdate.fromJson(Map<String, Object?> json) =>
@@ -47,44 +47,44 @@ class AccountUpdate {
   @JsonKey(name: 'account_number')
   final String? accountNumber;
   @JsonKey(name: 'opening_balance')
-  final String openingBalance;
+  final String? openingBalance;
   @JsonKey(name: 'opening_balance_date')
   final DateTime? openingBalanceDate;
   @JsonKey(name: 'virtual_balance')
-  final String virtualBalance;
+  final String? virtualBalance;
 
   /// Use either currency_id or currency_code. Defaults to the user's default currency.
   @JsonKey(name: 'currency_id')
-  final String currencyId;
+  final String? currencyId;
 
   /// Use either currency_id or currency_code. Defaults to the user's default currency.
   @JsonKey(name: 'currency_code')
-  final String currencyCode;
+  final String? currencyCode;
 
   /// If omitted, defaults to true.
   final bool active;
 
   /// Order of the account
-  final int order;
+  final int? order;
 
   /// If omitted, defaults to true.
   @JsonKey(name: 'include_net_worth')
   final bool includeNetWorth;
   @JsonKey(name: 'account_role')
-  final AccountRoleProperty accountRole;
+  final AccountRoleProperty? accountRole;
   @JsonKey(name: 'credit_card_type')
-  final CreditCardTypeProperty creditCardType;
+  final CreditCardTypeProperty? creditCardType;
 
   /// Mandatory when the account_role is ccAsset. Moment at which CC payment installments are asked for by the bank.
   @JsonKey(name: 'monthly_payment_date')
   final DateTime? monthlyPaymentDate;
   @JsonKey(name: 'liability_type')
-  final LiabilityTypeProperty liabilityType;
+  final LiabilityTypeProperty? liabilityType;
 
   /// Mandatory when type is liability. Interest percentage.
   final String? interest;
   @JsonKey(name: 'interest_period')
-  final InterestPeriodProperty interestPeriod;
+  final InterestPeriodProperty? interestPeriod;
   final String? notes;
 
   /// Latitude of the account's location, if applicable. Can be used to draw a map. If omitted, the existing location will be kept. If submitted as NULL, the current location will be removed.

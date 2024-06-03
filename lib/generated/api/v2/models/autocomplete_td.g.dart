@@ -9,9 +9,9 @@ part of 'autocomplete_td.dart';
 AutocompleteTD _$AutocompleteTDFromJson(Map<String, dynamic> json) =>
     AutocompleteTD(
       id: json['id'] as String,
-      transactionJournalId: json['transaction_journal_id'] as String,
       name: json['name'] as String,
       description: json['description'] as String,
+      transactionJournalId: json['transaction_journal_id'] as String?,
     );
 
 Map<String, dynamic> _$AutocompleteTDToJson(AutocompleteTD instance) =>

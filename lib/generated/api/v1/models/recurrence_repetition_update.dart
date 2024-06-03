@@ -11,16 +11,16 @@ part 'recurrence_repetition_update.g.dart';
 @JsonSerializable()
 class RecurrenceRepetitionUpdate {
   const RecurrenceRepetitionUpdate({
-    required this.type,
-    required this.moment,
-    required this.skip,
-    required this.weekend,
+    this.type,
+    this.moment,
+    this.skip,
+    this.weekend,
   });
 
   factory RecurrenceRepetitionUpdate.fromJson(Map<String, Object?> json) =>
       _$RecurrenceRepetitionUpdateFromJson(json);
 
-  final RecurrenceRepetitionType type;
+  final RecurrenceRepetitionType? type;
 
   /// Information that defined the type of repetition.
   /// - For 'daily', this is empty.
@@ -29,10 +29,10 @@ class RecurrenceRepetitionUpdate {
   /// - For 'monthly' it is the day of the month (1 - 31).
   /// - For yearly, it is a full date, ie '2018-09-17'. The year you use does not matter.
   ///
-  final String moment;
+  final String? moment;
 
   /// How many occurrences to skip. 0 means skip nothing. 1 means every other.
-  final int skip;
+  final int? skip;
 
   /// How to respond when the recurring transaction falls in the weekend. Possible values:.
   /// 1. Do nothing, just create it.
@@ -40,7 +40,7 @@ class RecurrenceRepetitionUpdate {
   /// 3. Skip to the previous Friday.
   /// 4. Skip to the next Monday.
   ///
-  final int weekend;
+  final int? weekend;
 
   Map<String, Object?> toJson() => _$RecurrenceRepetitionUpdateToJson(this);
 }

@@ -10,9 +10,9 @@ RuleActionStore _$RuleActionStoreFromJson(Map<String, dynamic> json) =>
     RuleActionStore(
       type: RuleActionKeyword.fromJson(json['type'] as String),
       value: json['value'] as String?,
-      order: (json['order'] as num).toInt(),
       active: json['active'] as bool? ?? true,
       stopProcessing: json['stop_processing'] as bool? ?? false,
+      order: (json['order'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$RuleActionStoreToJson(RuleActionStore instance) =>

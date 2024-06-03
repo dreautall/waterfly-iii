@@ -9,14 +9,14 @@ part 'chart_data_point.g.dart';
 @JsonSerializable()
 class ChartDataPoint {
   const ChartDataPoint({
-    required this.key,
+    this.key,
   });
 
   factory ChartDataPoint.fromJson(Map<String, Object?> json) =>
       _$ChartDataPointFromJson(json);
 
   /// The key is the label of the value, so for example: '2018-01-01' => 13 or 'Groceries' => -123.
-  final String key;
+  final String? key;
 
   Map<String, Object?> toJson() => _$ChartDataPointToJson(this);
 }

@@ -8,12 +8,12 @@ part of 'insight_group_entry.dart';
 
 InsightGroupEntry _$InsightGroupEntryFromJson(Map<String, dynamic> json) =>
     InsightGroupEntry(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      difference: json['difference'] as String,
-      differenceFloat: (json['difference_float'] as num).toDouble(),
-      currencyId: json['currency_id'] as String,
-      currencyCode: json['currency_code'] as String,
+      id: json['id'] as String?,
+      name: json['name'] as String?,
+      difference: json['difference'] as String?,
+      differenceFloat: (json['difference_float'] as num?)?.toDouble(),
+      currencyId: json['currency_id'] as String?,
+      currencyCode: json['currency_code'] as String?,
     );
 
 Map<String, dynamic> _$InsightGroupEntryToJson(InsightGroupEntry instance) =>

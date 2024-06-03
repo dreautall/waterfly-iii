@@ -9,11 +9,11 @@ part 'transaction_link_update.g.dart';
 @JsonSerializable()
 class TransactionLinkUpdate {
   const TransactionLinkUpdate({
-    required this.linkTypeId,
-    required this.linkTypeName,
-    required this.inwardId,
-    required this.outwardId,
-    required this.notes,
+    this.linkTypeId,
+    this.linkTypeName,
+    this.inwardId,
+    this.outwardId,
+    this.notes,
   });
 
   factory TransactionLinkUpdate.fromJson(Map<String, Object?> json) =>
@@ -21,19 +21,19 @@ class TransactionLinkUpdate {
 
   /// The link type ID to use. Use this field OR use the link_type_name field.
   @JsonKey(name: 'link_type_id')
-  final String linkTypeId;
+  final String? linkTypeId;
 
   /// The link type name to use. Use this field OR use the link_type_id field.
   @JsonKey(name: 'link_type_name')
-  final String linkTypeName;
+  final String? linkTypeName;
 
   /// The inward transaction transaction_journal_id for the link. This becomes the 'is paid by' transaction of the set.
   @JsonKey(name: 'inward_id')
-  final String inwardId;
+  final String? inwardId;
 
   /// The outward transaction transaction_journal_id for the link. This becomes the 'pays for' transaction of the set.
   @JsonKey(name: 'outward_id')
-  final String outwardId;
+  final String? outwardId;
 
   /// Optional. Some notes. If you submit an empty string the current notes will be removed
   final String? notes;

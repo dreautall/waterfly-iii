@@ -11,13 +11,13 @@ part 'system_info.g.dart';
 @JsonSerializable()
 class SystemInfo {
   const SystemInfo({
-    required this.data,
+    this.data,
   });
 
   factory SystemInfo.fromJson(Map<String, Object?> json) =>
       _$SystemInfoFromJson(json);
 
-  final Data data;
+  final Data? data;
 
   Map<String, Object?> toJson() => _$SystemInfoToJson(this);
 }

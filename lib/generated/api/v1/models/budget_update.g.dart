@@ -8,16 +8,18 @@ part of 'budget_update.dart';
 
 BudgetUpdate _$BudgetUpdateFromJson(Map<String, dynamic> json) => BudgetUpdate(
       name: json['name'] as String,
-      active: json['active'] as bool,
-      order: (json['order'] as num).toInt(),
+      active: json['active'] as bool?,
+      order: (json['order'] as num?)?.toInt(),
       notes: json['notes'] as String?,
-      autoBudgetType:
-          AutoBudgetType.fromJson(json['auto_budget_type'] as String),
+      autoBudgetType: json['auto_budget_type'] == null
+          ? null
+          : AutoBudgetType.fromJson(json['auto_budget_type'] as String),
       autoBudgetCurrencyId: json['auto_budget_currency_id'] as String?,
       autoBudgetCurrencyCode: json['auto_budget_currency_code'] as String?,
       autoBudgetAmount: json['auto_budget_amount'] as String?,
-      autoBudgetPeriod:
-          AutoBudgetPeriod.fromJson(json['auto_budget_period'] as String),
+      autoBudgetPeriod: json['auto_budget_period'] == null
+          ? null
+          : AutoBudgetPeriod.fromJson(json['auto_budget_period'] as String),
     );
 
 Map<String, dynamic> _$BudgetUpdateToJson(BudgetUpdate instance) =>
@@ -26,12 +28,12 @@ Map<String, dynamic> _$BudgetUpdateToJson(BudgetUpdate instance) =>
       'active': instance.active,
       'order': instance.order,
       'notes': instance.notes,
-      'auto_budget_type': _$AutoBudgetTypeEnumMap[instance.autoBudgetType]!,
+      'auto_budget_type': _$AutoBudgetTypeEnumMap[instance.autoBudgetType],
       'auto_budget_currency_id': instance.autoBudgetCurrencyId,
       'auto_budget_currency_code': instance.autoBudgetCurrencyCode,
       'auto_budget_amount': instance.autoBudgetAmount,
       'auto_budget_period':
-          _$AutoBudgetPeriodEnumMap[instance.autoBudgetPeriod]!,
+          _$AutoBudgetPeriodEnumMap[instance.autoBudgetPeriod],
     };
 
 const _$AutoBudgetTypeEnumMap = {

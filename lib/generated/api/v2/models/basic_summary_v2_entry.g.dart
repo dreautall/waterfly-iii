@@ -8,12 +8,12 @@ part of 'basic_summary_v2_entry.dart';
 
 BasicSummaryV2Entry _$BasicSummaryV2EntryFromJson(Map<String, dynamic> json) =>
     BasicSummaryV2Entry(
-      key: json['key'] as String,
-      value: (json['value'] as num).toDouble(),
-      currencyId: json['currency_id'] as String,
-      currencyCode: json['currency_code'] as String,
-      currencySymbol: json['currency_symbol'] as String,
-      currencyDecimalPlaces: (json['currency_decimal_places'] as num).toInt(),
+      key: json['key'] as String?,
+      value: (json['value'] as num?)?.toDouble(),
+      currencyId: json['currency_id'] as String?,
+      currencyCode: json['currency_code'] as String?,
+      currencySymbol: json['currency_symbol'] as String?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$BasicSummaryV2EntryToJson(

@@ -8,13 +8,13 @@ part of 'transaction_update.dart';
 
 TransactionUpdate _$TransactionUpdateFromJson(Map<String, dynamic> json) =>
     TransactionUpdate(
-      applyRules: json['apply_rules'] as bool,
+      fireWebhooks: json['fire_webhooks'] as bool? ?? true,
+      applyRules: json['apply_rules'] as bool?,
       groupTitle: json['group_title'] as String?,
-      transactions: (json['transactions'] as List<dynamic>)
-          .map(
+      transactions: (json['transactions'] as List<dynamic>?)
+          ?.map(
               (e) => TransactionSplitUpdate.fromJson(e as Map<String, dynamic>))
           .toList(),
-      fireWebhooks: json['fire_webhooks'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$TransactionUpdateToJson(TransactionUpdate instance) =>

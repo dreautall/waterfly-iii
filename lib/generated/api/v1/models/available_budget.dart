@@ -11,38 +11,38 @@ part 'available_budget.g.dart';
 @JsonSerializable()
 class AvailableBudget {
   const AvailableBudget({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.currencyId,
-    required this.currencyCode,
-    required this.currencySymbol,
-    required this.currencyDecimalPlaces,
     required this.amount,
     required this.start,
     required this.end,
-    required this.spentInBudgets,
-    required this.spentOutsideBudget,
+    this.createdAt,
+    this.updatedAt,
+    this.currencyId,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyDecimalPlaces,
+    this.spentInBudgets,
+    this.spentOutsideBudget,
   });
 
   factory AvailableBudget.fromJson(Map<String, Object?> json) =>
       _$AvailableBudgetFromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
 
   /// Use either currency_id or currency_code.
   @JsonKey(name: 'currency_id')
-  final String currencyId;
+  final String? currencyId;
 
   /// Use either currency_id or currency_code.
   @JsonKey(name: 'currency_code')
-  final String currencyCode;
+  final String? currencyCode;
   @JsonKey(name: 'currency_symbol')
-  final String currencySymbol;
+  final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places')
-  final int currencyDecimalPlaces;
+  final int? currencyDecimalPlaces;
   final String amount;
 
   /// Start date of the available budget.
@@ -51,9 +51,9 @@ class AvailableBudget {
   /// End date of the available budget.
   final DateTime end;
   @JsonKey(name: 'spent_in_budgets')
-  final List<BudgetSpent> spentInBudgets;
+  final List<BudgetSpent>? spentInBudgets;
   @JsonKey(name: 'spent_outside_budget')
-  final List<BudgetSpent> spentOutsideBudget;
+  final List<BudgetSpent>? spentOutsideBudget;
 
   Map<String, Object?> toJson() => _$AvailableBudgetToJson(this);
 }

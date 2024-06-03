@@ -9,22 +9,22 @@ part 'data.g.dart';
 @JsonSerializable()
 class Data {
   const Data({
-    required this.version,
-    required this.apiVersion,
-    required this.phpVersion,
-    required this.os,
-    required this.driver,
+    this.version,
+    this.apiVersion,
+    this.phpVersion,
+    this.os,
+    this.driver,
   });
 
   factory Data.fromJson(Map<String, Object?> json) => _$DataFromJson(json);
 
-  final String version;
+  final String? version;
   @JsonKey(name: 'api_version')
-  final String apiVersion;
+  final String? apiVersion;
   @JsonKey(name: 'php_version')
-  final String phpVersion;
-  final String os;
-  final String driver;
+  final String? phpVersion;
+  final String? os;
+  final String? driver;
 
   Map<String, Object?> toJson() => _$DataToJson(this);
 }

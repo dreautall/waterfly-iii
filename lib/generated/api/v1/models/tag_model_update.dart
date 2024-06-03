@@ -9,19 +9,19 @@ part 'tag_model_update.g.dart';
 @JsonSerializable()
 class TagModelUpdate {
   const TagModelUpdate({
-    required this.tag,
-    required this.date,
-    required this.description,
-    required this.latitude,
-    required this.longitude,
-    required this.zoomLevel,
+    this.tag,
+    this.date,
+    this.description,
+    this.latitude,
+    this.longitude,
+    this.zoomLevel,
   });
 
   factory TagModelUpdate.fromJson(Map<String, Object?> json) =>
       _$TagModelUpdateFromJson(json);
 
   /// The tag
-  final String tag;
+  final String? tag;
 
   /// The date to which the tag is applicable.
   final DateTime? date;

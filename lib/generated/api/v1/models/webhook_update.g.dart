@@ -8,13 +8,19 @@ part of 'webhook_update.dart';
 
 WebhookUpdate _$WebhookUpdateFromJson(Map<String, dynamic> json) =>
     WebhookUpdate(
-      active: json['active'] as bool,
-      title: json['title'] as String,
-      secret: json['secret'] as String,
-      trigger: WebhookTrigger.fromJson(json['trigger'] as String),
-      response: WebhookResponse.fromJson(json['response'] as String),
-      delivery: WebhookDelivery.fromJson(json['delivery'] as String),
-      url: json['url'] as String,
+      active: json['active'] as bool?,
+      title: json['title'] as String?,
+      secret: json['secret'] as String?,
+      trigger: json['trigger'] == null
+          ? null
+          : WebhookTrigger.fromJson(json['trigger'] as String),
+      response: json['response'] == null
+          ? null
+          : WebhookResponse.fromJson(json['response'] as String),
+      delivery: json['delivery'] == null
+          ? null
+          : WebhookDelivery.fromJson(json['delivery'] as String),
+      url: json['url'] as String?,
     );
 
 Map<String, dynamic> _$WebhookUpdateToJson(WebhookUpdate instance) =>
@@ -22,9 +28,9 @@ Map<String, dynamic> _$WebhookUpdateToJson(WebhookUpdate instance) =>
       'active': instance.active,
       'title': instance.title,
       'secret': instance.secret,
-      'trigger': _$WebhookTriggerEnumMap[instance.trigger]!,
-      'response': _$WebhookResponseEnumMap[instance.response]!,
-      'delivery': _$WebhookDeliveryEnumMap[instance.delivery]!,
+      'trigger': _$WebhookTriggerEnumMap[instance.trigger],
+      'response': _$WebhookResponseEnumMap[instance.response],
+      'delivery': _$WebhookDeliveryEnumMap[instance.delivery],
       'url': instance.url,
     };
 

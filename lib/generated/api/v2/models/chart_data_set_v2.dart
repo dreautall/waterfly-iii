@@ -11,62 +11,62 @@ part 'chart_data_set_v2.g.dart';
 @JsonSerializable()
 class ChartDataSetV2 {
   const ChartDataSetV2({
-    required this.label,
-    required this.currencyId,
-    required this.currencyCode,
-    required this.currencySymbol,
-    required this.currencyDecimalPlaces,
-    required this.nativeCurrencyId,
-    required this.nativeCurrencyCode,
-    required this.nativeCurrencySymbol,
-    required this.nativeCurrencyDecimalPlaces,
-    required this.start,
-    required this.end,
-    required this.period,
-    required this.entries,
-    required this.nativeEntries,
+    this.label,
+    this.currencyId,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyDecimalPlaces,
+    this.nativeCurrencyId,
+    this.nativeCurrencyCode,
+    this.nativeCurrencySymbol,
+    this.nativeCurrencyDecimalPlaces,
+    this.start,
+    this.end,
+    this.period,
+    this.entries,
+    this.nativeEntries,
   });
 
   factory ChartDataSetV2.fromJson(Map<String, Object?> json) =>
       _$ChartDataSetV2FromJson(json);
 
   /// This is the label of the current data-set. It can refer to an object by name, or a collected set of data.
-  final String label;
+  final String? label;
 
   /// The currency ID of the currency associated to the data in the entries.
   @JsonKey(name: 'currency_id')
-  final String currencyId;
+  final String? currencyId;
   @JsonKey(name: 'currency_code')
-  final String currencyCode;
+  final String? currencyCode;
   @JsonKey(name: 'currency_symbol')
-  final String currencySymbol;
+  final String? currencySymbol;
 
   /// Number of decimals for the currency associated to the data in the entries.
   @JsonKey(name: 'currency_decimal_places')
-  final int currencyDecimalPlaces;
+  final int? currencyDecimalPlaces;
 
   /// The currency ID of the user's native (default) currency.
   @JsonKey(name: 'native_currency_id')
-  final String nativeCurrencyId;
+  final String? nativeCurrencyId;
 
   /// The currency code of the user's native (default) currency.
   @JsonKey(name: 'native_currency_code')
-  final String nativeCurrencyCode;
+  final String? nativeCurrencyCode;
 
   /// The currency symbol of the user's native (default) currency.
   @JsonKey(name: 'native_currency_symbol')
-  final String nativeCurrencySymbol;
+  final String? nativeCurrencySymbol;
 
   /// Number of decimals for the native (default) currency of the user.
   @JsonKey(name: 'native_currency_decimal_places')
-  final int nativeCurrencyDecimalPlaces;
+  final int? nativeCurrencyDecimalPlaces;
 
   /// Holds the date and time of start of the range of data collected. It could be there was no data for this point in time, but this is the start of the requested range.
-  final DateTime start;
+  final DateTime? start;
 
   /// Holds the date and time of END of the range of data collected. It could be there was no data for this point in time, but this is the end of the requested range.
-  final DateTime end;
-  final ChartV2PeriodProperty period;
+  final DateTime? end;
+  final ChartV2PeriodProperty? period;
 
   /// The actual entries for this data set. They 'key' value is the label for the data point. The value is the actual (numerical) value.
   final dynamic entries;

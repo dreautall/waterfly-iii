@@ -1182,10 +1182,11 @@ packages:
   swagger_parser:
     dependency: "direct dev"
     description:
-      name: swagger_parser
-      sha256: ab1f341e80a19027ced958817a32e6053df167a2f22869d9aa69f69228f0d8f5
-      url: "https://pub.dev"
-    source: hosted
+      path: swagger_parser
+      ref: ab025abffa721ed2e810da09fbecef759d38d696
+      resolved-ref: ab025abffa721ed2e810da09fbecef759d38d696
+      url: "https://github.com/Carapacik/swagger_parser.git"
+    source: git
     version: "1.17.3"
   syncfusion_flutter_charts:
     dependency: "direct main"

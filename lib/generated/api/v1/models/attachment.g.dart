@@ -7,25 +7,29 @@ part of 'attachment.dart';
 // **************************************************************************
 
 Attachment _$AttachmentFromJson(Map<String, dynamic> json) => Attachment(
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
       attachableType:
           AttachableType.fromJson(json['attachable_type'] as String),
       attachableId: json['attachable_id'] as String,
-      md5: json['md5'] as String,
       filename: json['filename'] as String,
-      downloadUrl: json['download_url'] as String,
-      uploadUrl: json['upload_url'] as String,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+      md5: json['md5'] as String?,
+      downloadUrl: json['download_url'] as String?,
+      uploadUrl: json['upload_url'] as String?,
       title: json['title'] as String?,
       notes: json['notes'] as String?,
-      mime: json['mime'] as String,
-      size: (json['size'] as num).toInt(),
+      mime: json['mime'] as String?,
+      size: (json['size'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$AttachmentToJson(Attachment instance) =>
     <String, dynamic>{
-      'created_at': instance.createdAt.toIso8601String(),
-      'updated_at': instance.updatedAt.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
       'attachable_type': _$AttachableTypeEnumMap[instance.attachableType]!,
       'attachable_id': instance.attachableId,
       'md5': instance.md5,

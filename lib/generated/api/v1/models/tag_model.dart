@@ -9,23 +9,23 @@ part 'tag_model.g.dart';
 @JsonSerializable()
 class TagModel {
   const TagModel({
-    required this.createdAt,
-    required this.updatedAt,
     required this.tag,
-    required this.date,
-    required this.description,
-    required this.latitude,
-    required this.longitude,
-    required this.zoomLevel,
+    this.createdAt,
+    this.updatedAt,
+    this.date,
+    this.description,
+    this.latitude,
+    this.longitude,
+    this.zoomLevel,
   });
 
   factory TagModel.fromJson(Map<String, Object?> json) =>
       _$TagModelFromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
 
   /// The tag
   final String tag;

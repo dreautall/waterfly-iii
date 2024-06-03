@@ -11,12 +11,12 @@ part 'meta.g.dart';
 @JsonSerializable()
 class Meta {
   const Meta({
-    required this.pagination,
+    this.pagination,
   });
 
   factory Meta.fromJson(Map<String, Object?> json) => _$MetaFromJson(json);
 
-  final Pagination pagination;
+  final Pagination? pagination;
 
   Map<String, Object?> toJson() => _$MetaToJson(this);
 }

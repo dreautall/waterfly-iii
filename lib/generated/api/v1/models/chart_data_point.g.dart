@@ -8,7 +8,7 @@ part of 'chart_data_point.dart';
 
 ChartDataPoint _$ChartDataPointFromJson(Map<String, dynamic> json) =>
     ChartDataPoint(
-      key: json['key'] as String,
+      key: json['key'] as String?,
     );
 
 Map<String, dynamic> _$ChartDataPointToJson(ChartDataPoint instance) =>

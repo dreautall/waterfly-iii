@@ -8,10 +8,10 @@ part of 'rule_group_update.dart';
 
 RuleGroupUpdate _$RuleGroupUpdateFromJson(Map<String, dynamic> json) =>
     RuleGroupUpdate(
-      title: json['title'] as String,
+      title: json['title'] as String?,
       description: json['description'] as String?,
-      order: (json['order'] as num).toInt(),
-      active: json['active'] as bool,
+      order: (json['order'] as num?)?.toInt(),
+      active: json['active'] as bool?,
     );
 
 Map<String, dynamic> _$RuleGroupUpdateToJson(RuleGroupUpdate instance) =>

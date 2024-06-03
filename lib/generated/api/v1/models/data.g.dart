@@ -7,11 +7,11 @@ part of 'data.dart';
 // **************************************************************************
 
 Data _$DataFromJson(Map<String, dynamic> json) => Data(
-      version: json['version'] as String,
-      apiVersion: json['api_version'] as String,
-      phpVersion: json['php_version'] as String,
-      os: json['os'] as String,
-      driver: json['driver'] as String,
+      version: json['version'] as String?,
+      apiVersion: json['api_version'] as String?,
+      phpVersion: json['php_version'] as String?,
+      os: json['os'] as String?,
+      driver: json['driver'] as String?,
     );
 
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{

@@ -12,25 +12,25 @@ part 'category.g.dart';
 @JsonSerializable()
 class Category {
   const Category({
-    required this.createdAt,
-    required this.updatedAt,
     required this.name,
-    required this.notes,
-    required this.spent,
-    required this.earned,
+    this.createdAt,
+    this.updatedAt,
+    this.notes,
+    this.spent,
+    this.earned,
   });
 
   factory Category.fromJson(Map<String, Object?> json) =>
       _$CategoryFromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
   final String name;
   final String? notes;
-  final List<CategorySpent> spent;
-  final List<CategoryEarned> earned;
+  final List<CategorySpent>? spent;
+  final List<CategoryEarned>? earned;
 
   Map<String, Object?> toJson() => _$CategoryToJson(this);
 }

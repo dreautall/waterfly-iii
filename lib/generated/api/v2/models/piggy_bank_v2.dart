@@ -9,45 +9,45 @@ part 'piggy_bank_v2.g.dart';
 @JsonSerializable()
 class PiggyBankV2 {
   const PiggyBankV2({
-    required this.createdAt,
-    required this.updatedAt,
     required this.accountId,
-    required this.accountName,
     required this.name,
-    required this.currencyId,
-    required this.currencyCode,
-    required this.currencySymbol,
-    required this.currencyDecimalPlaces,
-    required this.nativeCurrencyId,
-    required this.nativeCurrencyCode,
-    required this.nativeCurrencySymbol,
-    required this.nativeCurrencyDecimalPlaces,
-    required this.currentAmount,
-    required this.nativeCurrentAmount,
     required this.targetAmount,
-    required this.nativeTargetAmount,
-    required this.percentage,
-    required this.leftToSave,
-    required this.nativeLeftToSave,
-    required this.savePerMonth,
-    required this.nativeSavePerMonth,
-    required this.startDate,
-    required this.targetDate,
-    required this.order,
-    required this.active,
-    required this.notes,
-    required this.objectGroupId,
-    required this.objectGroupOrder,
-    required this.objectGroupTitle,
+    this.createdAt,
+    this.updatedAt,
+    this.accountName,
+    this.currencyId,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyDecimalPlaces,
+    this.nativeCurrencyId,
+    this.nativeCurrencyCode,
+    this.nativeCurrencySymbol,
+    this.nativeCurrencyDecimalPlaces,
+    this.currentAmount,
+    this.nativeCurrentAmount,
+    this.nativeTargetAmount,
+    this.percentage,
+    this.leftToSave,
+    this.nativeLeftToSave,
+    this.savePerMonth,
+    this.nativeSavePerMonth,
+    this.startDate,
+    this.targetDate,
+    this.order,
+    this.active,
+    this.notes,
+    this.objectGroupId,
+    this.objectGroupOrder,
+    this.objectGroupTitle,
   });
 
   factory PiggyBankV2.fromJson(Map<String, Object?> json) =>
       _$PiggyBankV2FromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
 
   /// The ID of the asset account this piggy bank is connected to.
   @JsonKey(name: 'account_id')
@@ -55,32 +55,32 @@ class PiggyBankV2 {
 
   /// The name of the asset account this piggy bank is connected to.
   @JsonKey(name: 'account_name')
-  final String accountName;
+  final String? accountName;
   final String name;
   @JsonKey(name: 'currency_id')
-  final String currencyId;
+  final String? currencyId;
   @JsonKey(name: 'currency_code')
-  final String currencyCode;
+  final String? currencyCode;
   @JsonKey(name: 'currency_symbol')
-  final String currencySymbol;
+  final String? currencySymbol;
 
   /// Number of decimals supported by the currency
   @JsonKey(name: 'currency_decimal_places')
-  final int currencyDecimalPlaces;
+  final int? currencyDecimalPlaces;
   @JsonKey(name: 'native_currency_id')
-  final String nativeCurrencyId;
+  final String? nativeCurrencyId;
   @JsonKey(name: 'native_currency_code')
-  final String nativeCurrencyCode;
+  final String? nativeCurrencyCode;
   @JsonKey(name: 'native_currency_symbol')
-  final String nativeCurrencySymbol;
+  final String? nativeCurrencySymbol;
 
   /// Number of decimals supported by the currency
   @JsonKey(name: 'native_currency_decimal_places')
-  final int nativeCurrencyDecimalPlaces;
+  final int? nativeCurrencyDecimalPlaces;
   @JsonKey(name: 'current_amount')
-  final String currentAmount;
+  final String? currentAmount;
   @JsonKey(name: 'native_current_amount')
-  final String nativeCurrentAmount;
+  final String? nativeCurrentAmount;
   @JsonKey(name: 'target_amount')
   final String? targetAmount;
   @JsonKey(name: 'native_target_amount')
@@ -97,13 +97,13 @@ class PiggyBankV2 {
 
   /// The date you started with this piggy bank.
   @JsonKey(name: 'start_date')
-  final DateTime startDate;
+  final DateTime? startDate;
 
   /// The date you intend to finish saving money.
   @JsonKey(name: 'target_date')
   final DateTime? targetDate;
-  final int order;
-  final bool active;
+  final int? order;
+  final bool? active;
   final String? notes;
 
   /// The group ID of the group this object is part of. NULL if no group.

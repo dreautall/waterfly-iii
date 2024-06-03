@@ -7,12 +7,12 @@ part of 'webhook_store.dart';
 // **************************************************************************
 
 WebhookStore _$WebhookStoreFromJson(Map<String, dynamic> json) => WebhookStore(
-      active: json['active'] as bool,
       title: json['title'] as String,
       trigger: WebhookTrigger.fromJson(json['trigger'] as String),
       response: WebhookResponse.fromJson(json['response'] as String),
       delivery: WebhookDelivery.fromJson(json['delivery'] as String),
       url: json['url'] as String,
+      active: json['active'] as bool?,
     );
 
 Map<String, dynamic> _$WebhookStoreToJson(WebhookStore instance) =>

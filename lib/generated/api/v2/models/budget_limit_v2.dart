@@ -9,27 +9,27 @@ part 'budget_limit_v2.g.dart';
 @JsonSerializable()
 class BudgetLimitV2 {
   const BudgetLimitV2({
-    required this.createdAt,
-    required this.updatedAt,
     required this.start,
     required this.end,
-    required this.currencyId,
-    required this.currencyCode,
-    required this.currencyName,
-    required this.currencySymbol,
-    required this.currencyDecimalPlaces,
     required this.budgetId,
-    required this.period,
     required this.amount,
+    this.createdAt,
+    this.updatedAt,
+    this.currencyId,
+    this.currencyCode,
+    this.currencyName,
+    this.currencySymbol,
+    this.currencyDecimalPlaces,
+    this.period,
   });
 
   factory BudgetLimitV2.fromJson(Map<String, Object?> json) =>
       _$BudgetLimitV2FromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
 
   /// Start date of the budget limit.
   final DateTime start;
@@ -39,17 +39,17 @@ class BudgetLimitV2 {
 
   /// Use either currency_id or currency_code. Defaults to the user's default currency.
   @JsonKey(name: 'currency_id')
-  final String currencyId;
+  final String? currencyId;
 
   /// Use either currency_id or currency_code. Defaults to the user's default currency.
   @JsonKey(name: 'currency_code')
-  final String currencyCode;
+  final String? currencyCode;
   @JsonKey(name: 'currency_name')
-  final String currencyName;
+  final String? currencyName;
   @JsonKey(name: 'currency_symbol')
-  final String currencySymbol;
+  final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places')
-  final int currencyDecimalPlaces;
+  final int? currencyDecimalPlaces;
 
   /// The budget ID of the associated budget.
   @JsonKey(name: 'budget_id')

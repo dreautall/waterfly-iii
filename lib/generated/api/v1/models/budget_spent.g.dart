@@ -7,11 +7,11 @@ part of 'budget_spent.dart';
 // **************************************************************************
 
 BudgetSpent _$BudgetSpentFromJson(Map<String, dynamic> json) => BudgetSpent(
-      sum: json['sum'] as String,
-      currencyId: json['currency_id'] as String,
-      currencyCode: json['currency_code'] as String,
-      currencySymbol: json['currency_symbol'] as String,
-      currencyDecimalPlaces: (json['currency_decimal_places'] as num).toInt(),
+      sum: json['sum'] as String?,
+      currencyId: json['currency_id'] as String?,
+      currencyCode: json['currency_code'] as String?,
+      currencySymbol: json['currency_symbol'] as String?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$BudgetSpentToJson(BudgetSpent instance) =>

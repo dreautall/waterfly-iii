@@ -8,19 +8,23 @@ part of 'chart_data_set_v2.dart';
 
 ChartDataSetV2 _$ChartDataSetV2FromJson(Map<String, dynamic> json) =>
     ChartDataSetV2(
-      label: json['label'] as String,
-      currencyId: json['currency_id'] as String,
-      currencyCode: json['currency_code'] as String,
-      currencySymbol: json['currency_symbol'] as String,
-      currencyDecimalPlaces: (json['currency_decimal_places'] as num).toInt(),
-      nativeCurrencyId: json['native_currency_id'] as String,
-      nativeCurrencyCode: json['native_currency_code'] as String,
-      nativeCurrencySymbol: json['native_currency_symbol'] as String,
+      label: json['label'] as String?,
+      currencyId: json['currency_id'] as String?,
+      currencyCode: json['currency_code'] as String?,
+      currencySymbol: json['currency_symbol'] as String?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
+      nativeCurrencyId: json['native_currency_id'] as String?,
+      nativeCurrencyCode: json['native_currency_code'] as String?,
+      nativeCurrencySymbol: json['native_currency_symbol'] as String?,
       nativeCurrencyDecimalPlaces:
-          (json['native_currency_decimal_places'] as num).toInt(),
-      start: DateTime.parse(json['start'] as String),
-      end: DateTime.parse(json['end'] as String),
-      period: ChartV2PeriodProperty.fromJson(json['period'] as String),
+          (json['native_currency_decimal_places'] as num?)?.toInt(),
+      start: json['start'] == null
+          ? null
+          : DateTime.parse(json['start'] as String),
+      end: json['end'] == null ? null : DateTime.parse(json['end'] as String),
+      period: json['period'] == null
+          ? null
+          : ChartV2PeriodProperty.fromJson(json['period'] as String),
       entries: json['entries'],
       nativeEntries: json['native_entries'],
     );
@@ -36,9 +40,9 @@ Map<String, dynamic> _$ChartDataSetV2ToJson(ChartDataSetV2 instance) =>
       'native_currency_code': instance.nativeCurrencyCode,
       'native_currency_symbol': instance.nativeCurrencySymbol,
       'native_currency_decimal_places': instance.nativeCurrencyDecimalPlaces,
-      'start': instance.start.toIso8601String(),
-      'end': instance.end.toIso8601String(),
-      'period': _$ChartV2PeriodPropertyEnumMap[instance.period]!,
+      'start': instance.start?.toIso8601String(),
+      'end': instance.end?.toIso8601String(),
+      'period': _$ChartV2PeriodPropertyEnumMap[instance.period],
       'entries': instance.entries,
       'native_entries': instance.nativeEntries,
     };

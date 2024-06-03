@@ -58,7 +58,12 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_native_splash: ^2.3.10
   translations_cleaner: ^0.0.5
-  swagger_parser: ^1.17.3
+  # swagger_parser: ^1.17.3
+  swagger_parser:
+    git:
+      url: https://github.com/Carapacik/swagger_parser.git
+      path: swagger_parser
+      ref: ab025abffa721ed2e810da09fbecef759d38d696
   build_runner: ^2.4.8 # swagger_parser
   json_serializable: ^6.7.1 # swagger_parser
   retrofit_generator: ^8.1.0 # swagger_parser

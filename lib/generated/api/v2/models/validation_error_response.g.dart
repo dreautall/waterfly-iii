@@ -9,8 +9,10 @@ part of 'validation_error_response.dart';
 ValidationErrorResponse _$ValidationErrorResponseFromJson(
         Map<String, dynamic> json) =>
     ValidationErrorResponse(
-      message: json['message'] as String,
-      errors: Errors.fromJson(json['errors'] as Map<String, dynamic>),
+      message: json['message'] as String?,
+      errors: json['errors'] == null
+          ? null
+          : Errors.fromJson(json['errors'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ValidationErrorResponseToJson(

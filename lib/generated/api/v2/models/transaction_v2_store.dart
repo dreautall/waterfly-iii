@@ -11,11 +11,11 @@ part 'transaction_v2_store.g.dart';
 @JsonSerializable()
 class TransactionV2Store {
   const TransactionV2Store({
-    required this.errorIfDuplicateHash,
-    required this.applyRules,
-    required this.groupTitle,
     required this.transactions,
     this.fireWebhooks = true,
+    this.errorIfDuplicateHash,
+    this.applyRules,
+    this.groupTitle,
   });
 
   factory TransactionV2Store.fromJson(Map<String, Object?> json) =>
@@ -23,11 +23,11 @@ class TransactionV2Store {
 
   /// Break if the submitted transaction exists already.
   @JsonKey(name: 'error_if_duplicate_hash')
-  final bool errorIfDuplicateHash;
+  final bool? errorIfDuplicateHash;
 
   /// Whether or not to apply rules when submitting transaction.
   @JsonKey(name: 'apply_rules')
-  final bool applyRules;
+  final bool? applyRules;
 
   /// Whether or not to fire the webhooks that are related to this event.
   @JsonKey(name: 'fire_webhooks')

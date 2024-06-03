@@ -9,15 +9,15 @@ part 'bad_request_response.g.dart';
 @JsonSerializable()
 class BadRequestResponse {
   const BadRequestResponse({
-    required this.message,
-    required this.exception,
+    this.message,
+    this.exception,
   });
 
   factory BadRequestResponse.fromJson(Map<String, Object?> json) =>
       _$BadRequestResponseFromJson(json);
 
-  final String message;
-  final String exception;
+  final String? message;
+  final String? exception;
 
   Map<String, Object?> toJson() => _$BadRequestResponseToJson(this);
 }

@@ -12,14 +12,14 @@ class PiggyBankStore {
     required this.name,
     required this.accountId,
     required this.targetAmount,
-    required this.currentAmount,
-    required this.startDate,
-    required this.targetDate,
-    required this.order,
-    required this.active,
-    required this.notes,
-    required this.objectGroupId,
-    required this.objectGroupTitle,
+    this.currentAmount,
+    this.startDate,
+    this.targetDate,
+    this.order,
+    this.active,
+    this.notes,
+    this.objectGroupId,
+    this.objectGroupTitle,
   });
 
   factory PiggyBankStore.fromJson(Map<String, Object?> json) =>
@@ -33,17 +33,17 @@ class PiggyBankStore {
   @JsonKey(name: 'target_amount')
   final String? targetAmount;
   @JsonKey(name: 'current_amount')
-  final String currentAmount;
+  final String? currentAmount;
 
   /// The date you started with this piggy bank.
   @JsonKey(name: 'start_date')
-  final DateTime startDate;
+  final DateTime? startDate;
 
   /// The date you intend to finish saving money.
   @JsonKey(name: 'target_date')
   final DateTime? targetDate;
-  final int order;
-  final bool active;
+  final int? order;
+  final bool? active;
   final String? notes;
 
   /// The group ID of the group this object is part of. NULL if no group.

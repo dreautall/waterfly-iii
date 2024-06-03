@@ -9,16 +9,16 @@ part 'attachment_update.g.dart';
 @JsonSerializable()
 class AttachmentUpdate {
   const AttachmentUpdate({
-    required this.filename,
-    required this.title,
-    required this.notes,
+    this.filename,
+    this.title,
+    this.notes,
   });
 
   factory AttachmentUpdate.fromJson(Map<String, Object?> json) =>
       _$AttachmentUpdateFromJson(json);
 
-  final String filename;
-  final String title;
+  final String? filename;
+  final String? title;
   final String? notes;
 
   Map<String, Object?> toJson() => _$AttachmentUpdateToJson(this);

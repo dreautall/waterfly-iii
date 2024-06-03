@@ -10,23 +10,26 @@ TransactionSplitUpdate _$TransactionSplitUpdateFromJson(
         Map<String, dynamic> json) =>
     TransactionSplitUpdate(
       budgetId: json['budget_id'] as String?,
-      type: TransactionTypeProperty.fromJson(json['type'] as String),
-      date: DateTime.parse(json['date'] as String),
-      amount: json['amount'] as String,
-      description: json['description'] as String,
+      type: json['type'] == null
+          ? null
+          : TransactionTypeProperty.fromJson(json['type'] as String),
+      date:
+          json['date'] == null ? null : DateTime.parse(json['date'] as String),
+      amount: json['amount'] as String?,
+      description: json['description'] as String?,
       order: (json['order'] as num?)?.toInt(),
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
-      currencySymbol: json['currency_symbol'] as String,
-      currencyName: json['currency_name'] as String,
-      currencyDecimalPlaces: (json['currency_decimal_places'] as num).toInt(),
+      currencySymbol: json['currency_symbol'] as String?,
+      currencyName: json['currency_name'] as String?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       foreignAmount: json['foreign_amount'] as String?,
       foreignCurrencyId: json['foreign_currency_id'] as String?,
       foreignCurrencyCode: json['foreign_currency_code'] as String?,
       foreignCurrencySymbol: json['foreign_currency_symbol'] as String?,
       foreignCurrencyDecimalPlaces:
           (json['foreign_currency_decimal_places'] as num?)?.toInt(),
-      transactionJournalId: json['transaction_journal_id'] as String,
+      transactionJournalId: json['transaction_journal_id'] as String?,
       budgetName: json['budget_name'] as String?,
       categoryId: json['category_id'] as String?,
       categoryName: json['category_name'] as String?,
@@ -36,7 +39,7 @@ TransactionSplitUpdate _$TransactionSplitUpdateFromJson(
       destinationId: json['destination_id'] as String?,
       destinationName: json['destination_name'] as String?,
       destinationIban: json['destination_iban'] as String?,
-      reconciled: json['reconciled'] as bool,
+      reconciled: json['reconciled'] as bool?,
       billId: json['bill_id'] as String?,
       billName: json['bill_name'] as String?,
       tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
@@ -77,8 +80,8 @@ Map<String, dynamic> _$TransactionSplitUpdateToJson(
         TransactionSplitUpdate instance) =>
     <String, dynamic>{
       'transaction_journal_id': instance.transactionJournalId,
-      'type': _$TransactionTypePropertyEnumMap[instance.type]!,
-      'date': instance.date.toIso8601String(),
+      'type': _$TransactionTypePropertyEnumMap[instance.type],
+      'date': instance.date?.toIso8601String(),
       'amount': instance.amount,
       'description': instance.description,
       'order': instance.order,

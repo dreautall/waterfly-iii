@@ -7,15 +7,9 @@ part of 'rule.dart';
 // **************************************************************************
 
 Rule _$RuleFromJson(Map<String, dynamic> json) => Rule(
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
       title: json['title'] as String,
-      description: json['description'] as String,
       ruleGroupId: json['rule_group_id'] as String,
-      ruleGroupTitle: json['rule_group_title'] as String,
-      order: (json['order'] as num).toInt(),
       trigger: RuleTriggerType.fromJson(json['trigger'] as String),
-      strict: json['strict'] as bool,
       triggers: (json['triggers'] as List<dynamic>)
           .map((e) => RuleTrigger.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -24,11 +18,21 @@ Rule _$RuleFromJson(Map<String, dynamic> json) => Rule(
           .toList(),
       active: json['active'] as bool? ?? true,
       stopProcessing: json['stop_processing'] as bool? ?? false,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+      description: json['description'] as String?,
+      ruleGroupTitle: json['rule_group_title'] as String?,
+      order: (json['order'] as num?)?.toInt(),
+      strict: json['strict'] as bool?,
     );
 
 Map<String, dynamic> _$RuleToJson(Rule instance) => <String, dynamic>{
-      'created_at': instance.createdAt.toIso8601String(),
-      'updated_at': instance.updatedAt.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
       'title': instance.title,
       'description': instance.description,
       'rule_group_id': instance.ruleGroupId,

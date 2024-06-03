@@ -9,10 +9,10 @@ part 'cron_result_row.g.dart';
 @JsonSerializable()
 class CronResultRow {
   const CronResultRow({
-    required this.jobFired,
-    required this.jobSucceeded,
-    required this.jobErrored,
-    required this.message,
+    this.jobFired,
+    this.jobSucceeded,
+    this.jobErrored,
+    this.message,
   });
 
   factory CronResultRow.fromJson(Map<String, Object?> json) =>

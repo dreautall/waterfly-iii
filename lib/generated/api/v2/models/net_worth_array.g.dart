@@ -8,8 +8,10 @@ part of 'net_worth_array.dart';
 
 NetWorthArray _$NetWorthArrayFromJson(Map<String, dynamic> json) =>
     NetWorthArray(
-      currencyCode:
-          NetWorthItem.fromJson(json['currency_code'] as Map<String, dynamic>),
+      currencyCode: json['currency_code'] == null
+          ? null
+          : NetWorthItem.fromJson(
+              json['currency_code'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$NetWorthArrayToJson(NetWorthArray instance) =>

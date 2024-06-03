@@ -13,9 +13,9 @@ class RuleActionStore {
   const RuleActionStore({
     required this.type,
     required this.value,
-    required this.order,
     this.active = true,
     this.stopProcessing = false,
+    this.order,
   });
 
   factory RuleActionStore.fromJson(Map<String, Object?> json) =>
@@ -27,7 +27,7 @@ class RuleActionStore {
   final String? value;
 
   /// Order of the action
-  final int order;
+  final int? order;
 
   /// If the action is active. Defaults to true.
   final bool active;

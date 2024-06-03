@@ -9,9 +9,9 @@ part 'paid_dates.g.dart';
 @JsonSerializable()
 class PaidDates {
   const PaidDates({
-    required this.transactionGroupId,
-    required this.transactionJournalId,
-    required this.date,
+    this.transactionGroupId,
+    this.transactionJournalId,
+    this.date,
   });
 
   factory PaidDates.fromJson(Map<String, Object?> json) =>
@@ -19,14 +19,14 @@ class PaidDates {
 
   /// Transaction group ID of the paid bill.
   @JsonKey(name: 'transaction_group_id')
-  final String transactionGroupId;
+  final String? transactionGroupId;
 
   /// Transaction journal ID of the paid bill.
   @JsonKey(name: 'transaction_journal_id')
-  final String transactionJournalId;
+  final String? transactionJournalId;
 
   /// Date the bill was paid.
-  final DateTime date;
+  final DateTime? date;
 
   Map<String, Object?> toJson() => _$PaidDatesToJson(this);
 }

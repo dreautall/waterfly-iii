@@ -9,35 +9,35 @@ part 'webhook_message.g.dart';
 @JsonSerializable()
 class WebhookMessage {
   const WebhookMessage({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.sent,
-    required this.errored,
-    required this.webhookId,
-    required this.uuid,
-    required this.message,
+    this.createdAt,
+    this.updatedAt,
+    this.sent,
+    this.errored,
+    this.webhookId,
+    this.uuid,
+    this.message,
   });
 
   factory WebhookMessage.fromJson(Map<String, Object?> json) =>
       _$WebhookMessageFromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
 
   /// If this message is sent yet.
-  final bool sent;
+  final bool? sent;
 
   /// If this message has errored out.
-  final bool errored;
+  final bool? errored;
 
   /// The ID of the webhook this message belongs to.
   @JsonKey(name: 'webhook_id')
-  final String webhookId;
+  final String? webhookId;
 
   /// Long UUID string for identification of this webhook message.
-  final String uuid;
+  final String? uuid;
 
   /// The actual message that is sent or will be sent as JSON string.
   final String? message;

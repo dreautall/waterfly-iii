@@ -11,19 +11,19 @@ part 'cron_result.g.dart';
 @JsonSerializable()
 class CronResult {
   const CronResult({
-    required this.recurringTransactions,
-    required this.autoBudgets,
-    required this.telemetry,
+    this.recurringTransactions,
+    this.autoBudgets,
+    this.telemetry,
   });
 
   factory CronResult.fromJson(Map<String, Object?> json) =>
       _$CronResultFromJson(json);
 
   @JsonKey(name: 'recurring_transactions')
-  final CronResultRow recurringTransactions;
+  final CronResultRow? recurringTransactions;
   @JsonKey(name: 'auto_budgets')
-  final CronResultRow autoBudgets;
-  final CronResultRow telemetry;
+  final CronResultRow? autoBudgets;
+  final CronResultRow? telemetry;
 
   Map<String, Object?> toJson() => _$CronResultToJson(this);
 }

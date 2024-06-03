@@ -10,9 +10,9 @@ part 'autocomplete_transaction_id.g.dart';
 class AutocompleteTransactionID {
   const AutocompleteTransactionID({
     required this.id,
-    required this.transactionGroupId,
     required this.name,
     required this.description,
+    this.transactionGroupId,
   });
 
   factory AutocompleteTransactionID.fromJson(Map<String, Object?> json) =>
@@ -23,7 +23,7 @@ class AutocompleteTransactionID {
 
   /// The ID of the underlying transaction group.
   @JsonKey(name: 'transaction_group_id')
-  final String transactionGroupId;
+  final String? transactionGroupId;
 
   /// Transaction description with ID in the name.
   final String name;

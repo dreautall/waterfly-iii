@@ -8,11 +8,11 @@ part of 'currency_store.dart';
 
 CurrencyStore _$CurrencyStoreFromJson(Map<String, dynamic> json) =>
     CurrencyStore(
-      defaultValue: json['default'] as bool,
       code: json['code'] as String,
       name: json['name'] as String,
       symbol: json['symbol'] as String,
-      decimalPlaces: (json['decimal_places'] as num).toInt(),
+      defaultValue: json['default'] as bool?,
+      decimalPlaces: (json['decimal_places'] as num?)?.toInt(),
       enabled: json['enabled'] as bool? ?? true,
     );
 

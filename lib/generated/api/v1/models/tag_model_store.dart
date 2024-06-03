@@ -10,11 +10,11 @@ part 'tag_model_store.g.dart';
 class TagModelStore {
   const TagModelStore({
     required this.tag,
-    required this.date,
-    required this.description,
-    required this.latitude,
-    required this.longitude,
-    required this.zoomLevel,
+    this.date,
+    this.description,
+    this.latitude,
+    this.longitude,
+    this.zoomLevel,
   });
 
   factory TagModelStore.fromJson(Map<String, Object?> json) =>

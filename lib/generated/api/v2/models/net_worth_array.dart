@@ -12,14 +12,14 @@ part 'net_worth_array.g.dart';
 @JsonSerializable()
 class NetWorthArray {
   const NetWorthArray({
-    required this.currencyCode,
+    this.currencyCode,
   });
 
   factory NetWorthArray.fromJson(Map<String, Object?> json) =>
       _$NetWorthArrayFromJson(json);
 
   @JsonKey(name: 'currency_code')
-  final NetWorthItem currencyCode;
+  final NetWorthItem? currencyCode;
 
   Map<String, Object?> toJson() => _$NetWorthArrayToJson(this);
 }

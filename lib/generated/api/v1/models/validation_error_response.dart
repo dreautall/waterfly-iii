@@ -11,15 +11,15 @@ part 'validation_error_response.g.dart';
 @JsonSerializable()
 class ValidationErrorResponse {
   const ValidationErrorResponse({
-    required this.message,
-    required this.errors,
+    this.message,
+    this.errors,
   });
 
   factory ValidationErrorResponse.fromJson(Map<String, Object?> json) =>
       _$ValidationErrorResponseFromJson(json);
 
-  final String message;
-  final Errors errors;
+  final String? message;
+  final Errors? errors;
 
   Map<String, Object?> toJson() => _$ValidationErrorResponseToJson(this);
 }

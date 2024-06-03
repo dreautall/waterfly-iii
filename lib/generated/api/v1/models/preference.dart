@@ -11,19 +11,19 @@ part 'preference.g.dart';
 @JsonSerializable()
 class Preference {
   const Preference({
-    required this.createdAt,
-    required this.updatedAt,
     required this.name,
     required this.data,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory Preference.fromJson(Map<String, Object?> json) =>
       _$PreferenceFromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
   final String name;
   final PolymorphicProperty data;
 

@@ -12,7 +12,7 @@ class LinkType {
     required this.name,
     required this.inward,
     required this.outward,
-    required this.editable,
+    this.editable,
   });
 
   factory LinkType.fromJson(Map<String, Object?> json) =>
@@ -21,7 +21,7 @@ class LinkType {
   final String name;
   final String inward;
   final String outward;
-  final bool editable;
+  final bool? editable;
 
   Map<String, Object?> toJson() => _$LinkTypeToJson(this);
 }

@@ -7,20 +7,24 @@ part of 'webhook.dart';
 // **************************************************************************
 
 Webhook _$WebhookFromJson(Map<String, dynamic> json) => Webhook(
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-      active: json['active'] as bool,
       title: json['title'] as String,
-      secret: json['secret'] as String,
       trigger: WebhookTrigger.fromJson(json['trigger'] as String),
       response: WebhookResponse.fromJson(json['response'] as String),
       delivery: WebhookDelivery.fromJson(json['delivery'] as String),
       url: json['url'] as String,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+      active: json['active'] as bool?,
+      secret: json['secret'] as String?,
     );
 
 Map<String, dynamic> _$WebhookToJson(Webhook instance) => <String, dynamic>{
-      'created_at': instance.createdAt.toIso8601String(),
-      'updated_at': instance.updatedAt.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
       'active': instance.active,
       'title': instance.title,
       'secret': instance.secret,

@@ -10,15 +10,10 @@ RecurrenceStore _$RecurrenceStoreFromJson(Map<String, dynamic> json) =>
     RecurrenceStore(
       type: RecurrenceTransactionType.fromJson(json['type'] as String),
       title: json['title'] as String,
-      description: json['description'] as String,
       firstDate: DateTime.parse(json['first_date'] as String),
       repeatUntil: json['repeat_until'] == null
           ? null
           : DateTime.parse(json['repeat_until'] as String),
-      nrOfRepetitions: (json['nr_of_repetitions'] as num?)?.toInt(),
-      applyRules: json['apply_rules'] as bool,
-      active: json['active'] as bool,
-      notes: json['notes'] as String?,
       repetitions: (json['repetitions'] as List<dynamic>)
           .map((e) =>
               RecurrenceRepetitionStore.fromJson(e as Map<String, dynamic>))
@@ -27,6 +22,11 @@ RecurrenceStore _$RecurrenceStoreFromJson(Map<String, dynamic> json) =>
           .map((e) =>
               RecurrenceTransactionStore.fromJson(e as Map<String, dynamic>))
           .toList(),
+      description: json['description'] as String?,
+      nrOfRepetitions: (json['nr_of_repetitions'] as num?)?.toInt(),
+      applyRules: json['apply_rules'] as bool?,
+      active: json['active'] as bool?,
+      notes: json['notes'] as String?,
     );
 
 Map<String, dynamic> _$RecurrenceStoreToJson(RecurrenceStore instance) =>

@@ -8,16 +8,18 @@ part of 'rule_trigger_update.dart';
 
 RuleTriggerUpdate _$RuleTriggerUpdateFromJson(Map<String, dynamic> json) =>
     RuleTriggerUpdate(
-      type: RuleTriggerKeyword.fromJson(json['type'] as String),
-      value: json['value'] as String,
-      order: (json['order'] as num).toInt(),
-      active: json['active'] as bool,
-      stopProcessing: json['stop_processing'] as bool,
+      type: json['type'] == null
+          ? null
+          : RuleTriggerKeyword.fromJson(json['type'] as String),
+      value: json['value'] as String?,
+      order: (json['order'] as num?)?.toInt(),
+      active: json['active'] as bool?,
+      stopProcessing: json['stop_processing'] as bool?,
     );
 
 Map<String, dynamic> _$RuleTriggerUpdateToJson(RuleTriggerUpdate instance) =>
     <String, dynamic>{
-      'type': _$RuleTriggerKeywordEnumMap[instance.type]!,
+      'type': _$RuleTriggerKeywordEnumMap[instance.type],
       'value': instance.value,
       'order': instance.order,
       'active': instance.active,

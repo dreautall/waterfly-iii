@@ -12,87 +12,87 @@ part 'transaction_v2_split.g.dart';
 @JsonSerializable()
 class TransactionV2Split {
   const TransactionV2Split({
-    required this.foreignCurrencyCode,
-    required this.userGroup,
-    required this.transactionJournalId,
+    required this.destinationId,
     required this.type,
     required this.date,
-    required this.order,
     required this.amount,
-    required this.nativeAmount,
-    required this.foreignAmount,
-    required this.nativeForeignAmount,
-    required this.currencyId,
-    required this.currencyCode,
-    required this.currencySymbol,
-    required this.currencyName,
-    required this.currencyDecimalPlaces,
-    required this.nativeCurrencyId,
-    required this.nativeCurrencyCode,
-    required this.nativeCurrencySymbol,
-    required this.nativeCurrencyName,
-    required this.nativeCurrencyDecimalPlaces,
-    required this.foreignCurrencyId,
-    required this.user,
-    required this.foreignCurrencySymbol,
-    required this.foreignCurrencyDecimalPlaces,
     required this.description,
     required this.sourceId,
-    required this.sourceName,
-    required this.sourceIban,
-    required this.sourceType,
-    required this.destinationId,
-    required this.destinationName,
-    required this.destinationIban,
-    required this.destinationType,
-    required this.budgetId,
-    required this.budgetName,
-    required this.categoryId,
-    required this.categoryName,
-    required this.billId,
-    required this.billName,
-    required this.reconciled,
-    required this.notes,
-    required this.invoiceDate,
-    required this.internalReference,
-    required this.externalId,
-    required this.externalUrl,
-    required this.originalSource,
-    required this.recurrenceId,
-    required this.recurrenceTotal,
-    required this.recurrenceCount,
-    required this.importHashV2,
-    required this.sepaCc,
-    required this.sepaCtOp,
-    required this.sepaCtId,
-    required this.sepaDb,
-    required this.sepaCountry,
-    required this.sepaEp,
-    required this.sepaCi,
-    required this.sepaBatchId,
-    required this.interestDate,
-    required this.bookDate,
-    required this.processDate,
-    required this.dueDate,
-    required this.paymentDate,
-    required this.tags,
+    this.foreignCurrencyCode,
+    this.nativeAmount,
+    this.foreignAmount,
+    this.nativeForeignAmount,
+    this.currencyId,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyName,
+    this.currencyDecimalPlaces,
+    this.nativeCurrencyId,
+    this.nativeCurrencyCode,
+    this.nativeCurrencySymbol,
+    this.nativeCurrencyName,
+    this.nativeCurrencyDecimalPlaces,
+    this.foreignCurrencyId,
+    this.user,
+    this.foreignCurrencySymbol,
+    this.foreignCurrencyDecimalPlaces,
+    this.transactionJournalId,
+    this.order,
+    this.sourceName,
+    this.sourceIban,
+    this.sourceType,
+    this.userGroup,
+    this.destinationName,
+    this.destinationIban,
+    this.destinationType,
+    this.budgetId,
+    this.budgetName,
+    this.categoryId,
+    this.categoryName,
+    this.billId,
+    this.billName,
+    this.reconciled,
+    this.notes,
+    this.invoiceDate,
+    this.internalReference,
+    this.externalId,
+    this.externalUrl,
+    this.originalSource,
+    this.recurrenceId,
+    this.recurrenceTotal,
+    this.recurrenceCount,
+    this.importHashV2,
+    this.sepaCc,
+    this.sepaCtOp,
+    this.sepaCtId,
+    this.sepaDb,
+    this.sepaCountry,
+    this.sepaEp,
+    this.sepaCi,
+    this.sepaBatchId,
+    this.interestDate,
+    this.bookDate,
+    this.processDate,
+    this.dueDate,
+    this.paymentDate,
+    this.tags,
   });
 
   factory TransactionV2Split.fromJson(Map<String, Object?> json) =>
       _$TransactionV2SplitFromJson(json);
 
   /// User ID
-  final String user;
+  final String? user;
 
   /// User group ID
   @JsonKey(name: 'user_group')
-  final String userGroup;
+  final String? userGroup;
 
   /// ID of the underlying transaction journal. Each transaction consists of a transaction group (see the top ID) and one or more journals.
   /// making up the splits of the transaction.
   ///
   @JsonKey(name: 'transaction_journal_id')
-  final String transactionJournalId;
+  final String? transactionJournalId;
   final TransactionTypeProperty type;
 
   /// Date of the transaction
@@ -106,7 +106,7 @@ class TransactionV2Split {
 
   /// Amount of the transaction in the user's native currency.
   @JsonKey(name: 'native_amount')
-  final String nativeAmount;
+  final String? nativeAmount;
 
   /// The amount in a foreign currency.
   @JsonKey(name: 'foreign_amount')
@@ -124,13 +124,13 @@ class TransactionV2Split {
   @JsonKey(name: 'currency_code')
   final String? currencyCode;
   @JsonKey(name: 'currency_symbol')
-  final String currencySymbol;
+  final String? currencySymbol;
   @JsonKey(name: 'currency_name')
-  final String currencyName;
+  final String? currencyName;
 
   /// Number of decimals used in this currency.
   @JsonKey(name: 'currency_decimal_places')
-  final int currencyDecimalPlaces;
+  final int? currencyDecimalPlaces;
 
   /// Currency ID of the user's native currency.
   @JsonKey(name: 'native_currency_id')
@@ -140,13 +140,13 @@ class TransactionV2Split {
   @JsonKey(name: 'native_currency_code')
   final String? nativeCurrencyCode;
   @JsonKey(name: 'native_currency_symbol')
-  final String nativeCurrencySymbol;
+  final String? nativeCurrencySymbol;
   @JsonKey(name: 'native_currency_name')
-  final String nativeCurrencyName;
+  final String? nativeCurrencyName;
 
   /// Number of decimals used in this currency.
   @JsonKey(name: 'native_currency_decimal_places')
-  final int nativeCurrencyDecimalPlaces;
+  final int? nativeCurrencyDecimalPlaces;
 
   /// Currency ID of the foreign currency. Default is null. Is required when you submit a foreign amount.
   @JsonKey(name: 'foreign_currency_id')
@@ -175,7 +175,7 @@ class TransactionV2Split {
   @JsonKey(name: 'source_iban')
   final String? sourceIban;
   @JsonKey(name: 'source_type')
-  final AccountTypeProperty sourceType;
+  final AccountTypeProperty? sourceType;
 
   /// ID of the destination account. For a deposit or a transfer, this must always be an asset account. For withdrawals this must be an expense account.
   @JsonKey(name: 'destination_id')
@@ -187,7 +187,7 @@ class TransactionV2Split {
   @JsonKey(name: 'destination_iban')
   final String? destinationIban;
   @JsonKey(name: 'destination_type')
-  final AccountTypeProperty destinationType;
+  final AccountTypeProperty? destinationType;
 
   /// The budget ID for this transaction.
   @JsonKey(name: 'budget_id')
@@ -214,7 +214,7 @@ class TransactionV2Split {
   final String? billName;
 
   /// If the transaction has been reconciled already. When you set this, the amount can no longer be edited by the user.
-  final bool reconciled;
+  final bool? reconciled;
   final String? notes;
 
   /// Array of tags.

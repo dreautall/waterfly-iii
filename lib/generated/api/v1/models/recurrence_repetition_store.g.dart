@@ -11,8 +11,8 @@ RecurrenceRepetitionStore _$RecurrenceRepetitionStoreFromJson(
     RecurrenceRepetitionStore(
       type: RecurrenceRepetitionType.fromJson(json['type'] as String),
       moment: json['moment'] as String,
-      skip: (json['skip'] as num).toInt(),
-      weekend: (json['weekend'] as num).toInt(),
+      skip: (json['skip'] as num?)?.toInt(),
+      weekend: (json['weekend'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$RecurrenceRepetitionStoreToJson(

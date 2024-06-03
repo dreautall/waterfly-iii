@@ -11,7 +11,7 @@ class AutocompleteRecurrence {
   const AutocompleteRecurrence({
     required this.id,
     required this.name,
-    required this.description,
+    this.description,
   });
 
   factory AutocompleteRecurrence.fromJson(Map<String, Object?> json) =>
@@ -23,7 +23,7 @@ class AutocompleteRecurrence {
   final String name;
 
   /// Description of the recurrence found by auto-complete.
-  final String description;
+  final String? description;
 
   Map<String, Object?> toJson() => _$AutocompleteRecurrenceToJson(this);
 }

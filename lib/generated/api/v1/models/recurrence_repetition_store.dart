@@ -13,8 +13,8 @@ class RecurrenceRepetitionStore {
   const RecurrenceRepetitionStore({
     required this.type,
     required this.moment,
-    required this.skip,
-    required this.weekend,
+    this.skip,
+    this.weekend,
   });
 
   factory RecurrenceRepetitionStore.fromJson(Map<String, Object?> json) =>
@@ -32,7 +32,7 @@ class RecurrenceRepetitionStore {
   final String moment;
 
   /// How many occurrences to skip. 0 means skip nothing. 1 means every other.
-  final int skip;
+  final int? skip;
 
   /// How to respond when the recurring transaction falls in the weekend. Possible values:.
   /// 1. Do nothing, just create it.
@@ -40,7 +40,7 @@ class RecurrenceRepetitionStore {
   /// 3. Skip to the previous Friday.
   /// 4. Skip to the next Monday.
   ///
-  final int weekend;
+  final int? weekend;
 
   Map<String, Object?> toJson() => _$RecurrenceRepetitionStoreToJson(this);
 }

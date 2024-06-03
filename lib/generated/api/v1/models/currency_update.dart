@@ -9,31 +9,31 @@ part 'currency_update.g.dart';
 @JsonSerializable()
 class CurrencyUpdate {
   const CurrencyUpdate({
-    required this.enabled,
-    required this.code,
-    required this.name,
-    required this.symbol,
-    required this.decimalPlaces,
+    this.enabled,
+    this.code,
+    this.name,
+    this.symbol,
+    this.decimalPlaces,
   });
 
   factory CurrencyUpdate.fromJson(Map<String, Object?> json) =>
       _$CurrencyUpdateFromJson(json);
 
   /// If the currency is enabled
-  final bool enabled;
+  final bool? enabled;
 
   /// The currency code
-  final String code;
+  final String? code;
 
   /// The currency name
-  final String name;
+  final String? name;
 
   /// The currency symbol
-  final String symbol;
+  final String? symbol;
 
   /// How many decimals to use when displaying this currency. Between 0 and 16.
   @JsonKey(name: 'decimal_places')
-  final int decimalPlaces;
+  final int? decimalPlaces;
 
   Map<String, Object?> toJson() => _$CurrencyUpdateToJson(this);
 }

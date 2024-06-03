@@ -13,10 +13,10 @@ class RuleTriggerStore {
   const RuleTriggerStore({
     required this.type,
     required this.value,
-    required this.order,
     this.active = true,
     this.prohibited = false,
     this.stopProcessing = false,
+    this.order,
   });
 
   factory RuleTriggerStore.fromJson(Map<String, Object?> json) =>
@@ -28,7 +28,7 @@ class RuleTriggerStore {
   final String value;
 
   /// Order of the trigger
-  final int order;
+  final int? order;
 
   /// If the trigger is active. Defaults to true.
   final bool active;

@@ -12,34 +12,34 @@ part 'account_v2.g.dart';
 @JsonSerializable()
 class AccountV2 {
   const AccountV2({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.order,
     required this.name,
-    required this.iban,
     required this.type,
-    required this.accountRole,
-    required this.currencyId,
-    required this.currencyCode,
-    required this.currencySymbol,
-    required this.currencyDecimalPlaces,
-    required this.nativeCurrencyId,
-    required this.nativeCurrencyCode,
-    required this.nativeCurrencySymbol,
-    required this.nativeCurrencyDecimalPlaces,
-    required this.currentBalance,
-    required this.nativeCurrentBalance,
-    required this.currentBalanceDate,
     this.active = true,
+    this.createdAt,
+    this.updatedAt,
+    this.order,
+    this.iban,
+    this.accountRole,
+    this.currencyId,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyDecimalPlaces,
+    this.nativeCurrencyId,
+    this.nativeCurrencyCode,
+    this.nativeCurrencySymbol,
+    this.nativeCurrencyDecimalPlaces,
+    this.currentBalance,
+    this.nativeCurrentBalance,
+    this.currentBalanceDate,
   });
 
   factory AccountV2.fromJson(Map<String, Object?> json) =>
       _$AccountV2FromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
 
   /// If omitted, defaults to true.
   final bool active;
@@ -50,41 +50,41 @@ class AccountV2 {
   final String? iban;
   final ShortAccountTypeProperty type;
   @JsonKey(name: 'account_role')
-  final AccountRoleProperty accountRole;
+  final AccountRoleProperty? accountRole;
 
   /// Account currency ID.
   @JsonKey(name: 'currency_id')
-  final String currencyId;
+  final String? currencyId;
 
   /// Account currency code.
   @JsonKey(name: 'currency_code')
-  final String currencyCode;
+  final String? currencyCode;
   @JsonKey(name: 'currency_symbol')
-  final String currencySymbol;
+  final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places')
-  final int currencyDecimalPlaces;
+  final int? currencyDecimalPlaces;
 
   /// User's native currency id.
   @JsonKey(name: 'native_currency_id')
-  final String nativeCurrencyId;
+  final String? nativeCurrencyId;
 
   /// User's native currency code.
   @JsonKey(name: 'native_currency_code')
-  final String nativeCurrencyCode;
+  final String? nativeCurrencyCode;
   @JsonKey(name: 'native_currency_symbol')
-  final String nativeCurrencySymbol;
+  final String? nativeCurrencySymbol;
   @JsonKey(name: 'native_currency_decimal_places')
-  final int nativeCurrencyDecimalPlaces;
+  final int? nativeCurrencyDecimalPlaces;
   @JsonKey(name: 'current_balance')
-  final String currentBalance;
+  final String? currentBalance;
 
   /// Balance in native currency
   @JsonKey(name: 'native_current_balance')
-  final String nativeCurrentBalance;
+  final String? nativeCurrentBalance;
 
   /// The timestamp for this date is always 23:59:59, to indicate it's the balance at the very END of that particular day.
   @JsonKey(name: 'current_balance_date')
-  final DateTime currentBalanceDate;
+  final DateTime? currentBalanceDate;
 
   Map<String, Object?> toJson() => _$AccountV2ToJson(this);
 }

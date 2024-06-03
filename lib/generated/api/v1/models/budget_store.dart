@@ -13,25 +13,25 @@ part 'budget_store.g.dart';
 class BudgetStore {
   const BudgetStore({
     required this.name,
-    required this.active,
-    required this.order,
-    required this.notes,
-    required this.autoBudgetType,
-    required this.autoBudgetCurrencyId,
-    required this.autoBudgetCurrencyCode,
-    required this.autoBudgetAmount,
-    required this.autoBudgetPeriod,
+    this.active,
+    this.order,
+    this.notes,
+    this.autoBudgetType,
+    this.autoBudgetCurrencyId,
+    this.autoBudgetCurrencyCode,
+    this.autoBudgetAmount,
+    this.autoBudgetPeriod,
   });
 
   factory BudgetStore.fromJson(Map<String, Object?> json) =>
       _$BudgetStoreFromJson(json);
 
   final String name;
-  final bool active;
-  final int order;
+  final bool? active;
+  final int? order;
   final String? notes;
   @JsonKey(name: 'auto_budget_type')
-  final AutoBudgetType autoBudgetType;
+  final AutoBudgetType? autoBudgetType;
 
   /// Use either currency_id or currency_code. Defaults to the user's default currency.
   @JsonKey(name: 'auto_budget_currency_id')
@@ -43,7 +43,7 @@ class BudgetStore {
   @JsonKey(name: 'auto_budget_amount')
   final String? autoBudgetAmount;
   @JsonKey(name: 'auto_budget_period')
-  final AutoBudgetPeriod autoBudgetPeriod;
+  final AutoBudgetPeriod? autoBudgetPeriod;
 
   Map<String, Object?> toJson() => _$BudgetStoreToJson(this);
 }

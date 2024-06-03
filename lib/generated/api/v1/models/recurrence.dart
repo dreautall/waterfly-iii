@@ -13,38 +13,38 @@ part 'recurrence.g.dart';
 @JsonSerializable()
 class Recurrence {
   const Recurrence({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.type,
-    required this.title,
-    required this.description,
-    required this.firstDate,
-    required this.latestDate,
-    required this.repeatUntil,
-    required this.nrOfRepetitions,
-    required this.applyRules,
-    required this.active,
-    required this.notes,
-    required this.repetitions,
-    required this.transactions,
+    this.createdAt,
+    this.updatedAt,
+    this.type,
+    this.title,
+    this.description,
+    this.firstDate,
+    this.latestDate,
+    this.repeatUntil,
+    this.nrOfRepetitions,
+    this.applyRules,
+    this.active,
+    this.notes,
+    this.repetitions,
+    this.transactions,
   });
 
   factory Recurrence.fromJson(Map<String, Object?> json) =>
       _$RecurrenceFromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
-  final RecurrenceTransactionType type;
-  final String title;
+  final DateTime? updatedAt;
+  final RecurrenceTransactionType? type;
+  final String? title;
 
   /// Not to be confused with the description of the actual transaction(s) being created.
-  final String description;
+  final String? description;
 
   /// First time the recurring transaction will fire. Must be after today.
   @JsonKey(name: 'first_date')
-  final DateTime firstDate;
+  final DateTime? firstDate;
 
   /// Last time the recurring transaction has fired.
   @JsonKey(name: 'latest_date')
@@ -60,13 +60,13 @@ class Recurrence {
 
   /// Whether or not to fire the rules after the creation of a transaction.
   @JsonKey(name: 'apply_rules')
-  final bool applyRules;
+  final bool? applyRules;
 
   /// If the recurrence is even active.
-  final bool active;
+  final bool? active;
   final String? notes;
-  final List<RecurrenceRepetition> repetitions;
-  final List<RecurrenceTransaction> transactions;
+  final List<RecurrenceRepetition>? repetitions;
+  final List<RecurrenceTransaction>? transactions;
 
   Map<String, Object?> toJson() => _$RecurrenceToJson(this);
 }

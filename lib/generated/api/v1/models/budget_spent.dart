@@ -9,28 +9,28 @@ part 'budget_spent.g.dart';
 @JsonSerializable()
 class BudgetSpent {
   const BudgetSpent({
-    required this.sum,
-    required this.currencyId,
-    required this.currencyCode,
-    required this.currencySymbol,
-    required this.currencyDecimalPlaces,
+    this.sum,
+    this.currencyId,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyDecimalPlaces,
   });
 
   factory BudgetSpent.fromJson(Map<String, Object?> json) =>
       _$BudgetSpentFromJson(json);
 
   /// The amount spent.
-  final String sum;
+  final String? sum;
   @JsonKey(name: 'currency_id')
-  final String currencyId;
+  final String? currencyId;
   @JsonKey(name: 'currency_code')
-  final String currencyCode;
+  final String? currencyCode;
   @JsonKey(name: 'currency_symbol')
-  final String currencySymbol;
+  final String? currencySymbol;
 
   /// Number of decimals supported by the currency
   @JsonKey(name: 'currency_decimal_places')
-  final int currencyDecimalPlaces;
+  final int? currencyDecimalPlaces;
 
   Map<String, Object?> toJson() => _$BudgetSpentToJson(this);
 }

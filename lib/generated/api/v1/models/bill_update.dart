@@ -11,20 +11,20 @@ part 'bill_update.g.dart';
 @JsonSerializable()
 class BillUpdate {
   const BillUpdate({
-    required this.currencyId,
-    required this.currencyCode,
     required this.name,
-    required this.amountMin,
-    required this.amountMax,
-    required this.date,
-    required this.endDate,
-    required this.extensionDate,
-    required this.repeatFreq,
-    required this.skip,
-    required this.active,
-    required this.notes,
-    required this.objectGroupId,
-    required this.objectGroupTitle,
+    this.currencyId,
+    this.currencyCode,
+    this.amountMin,
+    this.amountMax,
+    this.date,
+    this.endDate,
+    this.extensionDate,
+    this.repeatFreq,
+    this.skip,
+    this.active,
+    this.notes,
+    this.objectGroupId,
+    this.objectGroupTitle,
   });
 
   factory BillUpdate.fromJson(Map<String, Object?> json) =>
@@ -32,33 +32,33 @@ class BillUpdate {
 
   /// Use either currency_id or currency_code
   @JsonKey(name: 'currency_id')
-  final String currencyId;
+  final String? currencyId;
 
   /// Use either currency_id or currency_code
   @JsonKey(name: 'currency_code')
-  final String currencyCode;
+  final String? currencyCode;
   final String name;
   @JsonKey(name: 'amount_min')
-  final String amountMin;
+  final String? amountMin;
   @JsonKey(name: 'amount_max')
-  final String amountMax;
-  final DateTime date;
+  final String? amountMax;
+  final DateTime? date;
 
   /// The date after which this bill is no longer valid or applicable
   @JsonKey(name: 'end_date')
-  final DateTime endDate;
+  final DateTime? endDate;
 
   /// The date before which the bill must be renewed (or cancelled)
   @JsonKey(name: 'extension_date')
-  final DateTime extensionDate;
+  final DateTime? extensionDate;
   @JsonKey(name: 'repeat_freq')
-  final BillRepeatFrequency repeatFreq;
+  final BillRepeatFrequency? repeatFreq;
 
   /// How often the bill must be skipped. 1 means a bi-monthly bill.
-  final int skip;
+  final int? skip;
 
   /// If the bill is active.
-  final bool active;
+  final bool? active;
   final String? notes;
 
   /// The group ID of the group this object is part of. NULL if no group.

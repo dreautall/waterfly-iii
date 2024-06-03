@@ -7,9 +7,13 @@ part of 'tag_model.dart';
 // **************************************************************************
 
 TagModel _$TagModelFromJson(Map<String, dynamic> json) => TagModel(
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
       tag: json['tag'] as String,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
       description: json['description'] as String?,
@@ -19,8 +23,8 @@ TagModel _$TagModelFromJson(Map<String, dynamic> json) => TagModel(
     );
 
 Map<String, dynamic> _$TagModelToJson(TagModel instance) => <String, dynamic>{
-      'created_at': instance.createdAt.toIso8601String(),
-      'updated_at': instance.updatedAt.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
       'tag': instance.tag,
       'date': instance.date?.toIso8601String(),
       'description': instance.description,

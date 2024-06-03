@@ -10,9 +10,9 @@ TransactionLinkStore _$TransactionLinkStoreFromJson(
         Map<String, dynamic> json) =>
     TransactionLinkStore(
       linkTypeId: json['link_type_id'] as String,
-      linkTypeName: json['link_type_name'] as String,
       inwardId: json['inward_id'] as String,
       outwardId: json['outward_id'] as String,
+      linkTypeName: json['link_type_name'] as String?,
       notes: json['notes'] as String?,
     );
 

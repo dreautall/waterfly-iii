@@ -11,7 +11,7 @@ class AutocompleteBill {
   const AutocompleteBill({
     required this.id,
     required this.name,
-    required this.active,
+    this.active,
   });
 
   factory AutocompleteBill.fromJson(Map<String, Object?> json) =>
@@ -23,7 +23,7 @@ class AutocompleteBill {
   final String name;
 
   /// Is the bill active or not?
-  final bool active;
+  final bool? active;
 
   Map<String, Object?> toJson() => _$AutocompleteBillToJson(this);
 }

@@ -11,55 +11,55 @@ part 'transaction_split_update.g.dart';
 @JsonSerializable()
 class TransactionSplitUpdate {
   const TransactionSplitUpdate({
-    required this.budgetId,
-    required this.type,
-    required this.date,
-    required this.amount,
-    required this.description,
-    required this.order,
-    required this.currencyId,
-    required this.currencyCode,
-    required this.currencySymbol,
-    required this.currencyName,
-    required this.currencyDecimalPlaces,
-    required this.foreignAmount,
-    required this.foreignCurrencyId,
-    required this.foreignCurrencyCode,
-    required this.foreignCurrencySymbol,
-    required this.foreignCurrencyDecimalPlaces,
-    required this.transactionJournalId,
-    required this.budgetName,
-    required this.categoryId,
-    required this.categoryName,
-    required this.sourceId,
-    required this.sourceName,
-    required this.sourceIban,
-    required this.destinationId,
-    required this.destinationName,
-    required this.destinationIban,
-    required this.reconciled,
-    required this.billId,
-    required this.billName,
-    required this.tags,
-    required this.notes,
-    required this.internalReference,
-    required this.invoiceDate,
-    required this.externalUrl,
-    required this.bunqPaymentId,
-    required this.sepaCc,
-    required this.sepaCtOp,
-    required this.sepaCtId,
-    required this.sepaDb,
-    required this.sepaCountry,
-    required this.sepaEp,
-    required this.sepaCi,
-    required this.sepaBatchId,
-    required this.interestDate,
-    required this.bookDate,
-    required this.processDate,
-    required this.dueDate,
-    required this.paymentDate,
-    required this.externalId,
+    this.budgetId,
+    this.type,
+    this.date,
+    this.amount,
+    this.description,
+    this.order,
+    this.currencyId,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyName,
+    this.currencyDecimalPlaces,
+    this.foreignAmount,
+    this.foreignCurrencyId,
+    this.foreignCurrencyCode,
+    this.foreignCurrencySymbol,
+    this.foreignCurrencyDecimalPlaces,
+    this.transactionJournalId,
+    this.budgetName,
+    this.categoryId,
+    this.categoryName,
+    this.sourceId,
+    this.sourceName,
+    this.sourceIban,
+    this.destinationId,
+    this.destinationName,
+    this.destinationIban,
+    this.reconciled,
+    this.billId,
+    this.billName,
+    this.tags,
+    this.notes,
+    this.internalReference,
+    this.invoiceDate,
+    this.externalUrl,
+    this.bunqPaymentId,
+    this.sepaCc,
+    this.sepaCtOp,
+    this.sepaCtId,
+    this.sepaDb,
+    this.sepaCountry,
+    this.sepaEp,
+    this.sepaCi,
+    this.sepaBatchId,
+    this.interestDate,
+    this.bookDate,
+    this.processDate,
+    this.dueDate,
+    this.paymentDate,
+    this.externalId,
   });
 
   factory TransactionSplitUpdate.fromJson(Map<String, Object?> json) =>
@@ -67,17 +67,17 @@ class TransactionSplitUpdate {
 
   /// Transaction journal ID of current transaction (split).
   @JsonKey(name: 'transaction_journal_id')
-  final String transactionJournalId;
-  final TransactionTypeProperty type;
+  final String? transactionJournalId;
+  final TransactionTypeProperty? type;
 
   /// Date of the transaction
-  final DateTime date;
+  final DateTime? date;
 
   /// Amount of the transaction.
-  final String amount;
+  final String? amount;
 
   /// Description of the transaction.
-  final String description;
+  final String? description;
 
   /// Order of this entry in the list of transactions.
   final int? order;
@@ -90,13 +90,13 @@ class TransactionSplitUpdate {
   @JsonKey(name: 'currency_code')
   final String? currencyCode;
   @JsonKey(name: 'currency_symbol')
-  final String currencySymbol;
+  final String? currencySymbol;
   @JsonKey(name: 'currency_name')
-  final String currencyName;
+  final String? currencyName;
 
   /// Number of decimals used in this currency.
   @JsonKey(name: 'currency_decimal_places')
-  final int currencyDecimalPlaces;
+  final int? currencyDecimalPlaces;
 
   /// The amount in a foreign currency.
   @JsonKey(name: 'foreign_amount')
@@ -153,7 +153,7 @@ class TransactionSplitUpdate {
   final String? destinationIban;
 
   /// If the transaction has been reconciled already. When you set this, the amount can no longer be edited by the user.
-  final bool reconciled;
+  final bool? reconciled;
 
   /// Optional. Use either this or the bill_name
   @JsonKey(name: 'bill_id')

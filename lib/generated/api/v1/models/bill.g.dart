@@ -7,26 +7,30 @@ part of 'bill.dart';
 // **************************************************************************
 
 Bill _$BillFromJson(Map<String, dynamic> json) => Bill(
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-      currencyId: json['currency_id'] as String,
-      currencyCode: json['currency_code'] as String,
-      currencySymbol: json['currency_symbol'] as String,
-      currencyDecimalPlaces: (json['currency_decimal_places'] as num).toInt(),
       name: json['name'] as String,
       amountMin: json['amount_min'] as String,
       amountMax: json['amount_max'] as String,
       date: DateTime.parse(json['date'] as String),
+      repeatFreq: BillRepeatFrequency.fromJson(json['repeat_freq'] as String),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+      currencyId: json['currency_id'] as String?,
+      currencyCode: json['currency_code'] as String?,
+      currencySymbol: json['currency_symbol'] as String?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       endDate: json['end_date'] == null
           ? null
           : DateTime.parse(json['end_date'] as String),
       extensionDate: json['extension_date'] == null
           ? null
           : DateTime.parse(json['extension_date'] as String),
-      repeatFreq: BillRepeatFrequency.fromJson(json['repeat_freq'] as String),
-      skip: (json['skip'] as num).toInt(),
-      active: json['active'] as bool,
-      order: (json['order'] as num).toInt(),
+      skip: (json['skip'] as num?)?.toInt(),
+      active: json['active'] as bool?,
+      order: (json['order'] as num?)?.toInt(),
       notes: json['notes'] as String?,
       nextExpectedMatch: json['next_expected_match'] == null
           ? null
@@ -35,17 +39,17 @@ Bill _$BillFromJson(Map<String, dynamic> json) => Bill(
       objectGroupId: json['object_group_id'] as String?,
       objectGroupOrder: (json['object_group_order'] as num?)?.toInt(),
       objectGroupTitle: json['object_group_title'] as String?,
-      payDates: (json['pay_dates'] as List<dynamic>)
-          .map((e) => DateTime.parse(e as String))
+      payDates: (json['pay_dates'] as List<dynamic>?)
+          ?.map((e) => DateTime.parse(e as String))
           .toList(),
-      paidDates: (json['paid_dates'] as List<dynamic>)
-          .map((e) => PaidDates.fromJson(e as Map<String, dynamic>))
+      paidDates: (json['paid_dates'] as List<dynamic>?)
+          ?.map((e) => PaidDates.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$BillToJson(Bill instance) => <String, dynamic>{
-      'created_at': instance.createdAt.toIso8601String(),
-      'updated_at': instance.updatedAt.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
       'currency_id': instance.currencyId,
       'currency_code': instance.currencyCode,
       'currency_symbol': instance.currencySymbol,
@@ -66,7 +70,7 @@ Map<String, dynamic> _$BillToJson(Bill instance) => <String, dynamic>{
       'object_group_id': instance.objectGroupId,
       'object_group_order': instance.objectGroupOrder,
       'object_group_title': instance.objectGroupTitle,
-      'pay_dates': instance.payDates.map((e) => e.toIso8601String()).toList(),
+      'pay_dates': instance.payDates?.map((e) => e.toIso8601String()).toList(),
       'paid_dates': instance.paidDates,
     };
 

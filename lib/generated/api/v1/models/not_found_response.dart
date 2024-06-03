@@ -9,15 +9,15 @@ part 'not_found_response.g.dart';
 @JsonSerializable()
 class NotFoundResponse {
   const NotFoundResponse({
-    required this.message,
-    required this.exception,
+    this.message,
+    this.exception,
   });
 
   factory NotFoundResponse.fromJson(Map<String, Object?> json) =>
       _$NotFoundResponseFromJson(json);
 
-  final String message;
-  final String exception;
+  final String? message;
+  final String? exception;
 
   Map<String, Object?> toJson() => _$NotFoundResponseToJson(this);
 }

@@ -8,9 +8,9 @@ part of 'link_type_update.dart';
 
 LinkTypeUpdate _$LinkTypeUpdateFromJson(Map<String, dynamic> json) =>
     LinkTypeUpdate(
-      name: json['name'] as String,
-      inward: json['inward'] as String,
-      outward: json['outward'] as String,
+      name: json['name'] as String?,
+      inward: json['inward'] as String?,
+      outward: json['outward'] as String?,
     );
 
 Map<String, dynamic> _$LinkTypeUpdateToJson(LinkTypeUpdate instance) =>

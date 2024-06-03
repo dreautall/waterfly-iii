@@ -11,31 +11,31 @@ part 'rule_action.g.dart';
 @JsonSerializable()
 class RuleAction {
   const RuleAction({
-    required this.id,
-    required this.createdAt,
-    required this.updatedAt,
     required this.type,
     required this.value,
-    required this.order,
     this.active = true,
     this.stopProcessing = false,
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.order,
   });
 
   factory RuleAction.fromJson(Map<String, Object?> json) =>
       _$RuleActionFromJson(json);
 
-  final String id;
+  final String? id;
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
   final RuleActionKeyword type;
 
   /// The accompanying value the action will set, change or update. Can be empty, but for some types this value is mandatory.
   final String? value;
 
   /// Order of the action
-  final int order;
+  final int? order;
 
   /// If the action is active. Defaults to true.
   final bool active;

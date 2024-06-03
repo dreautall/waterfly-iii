@@ -9,22 +9,22 @@ part 'transaction_link.g.dart';
 @JsonSerializable()
 class TransactionLink {
   const TransactionLink({
-    required this.createdAt,
-    required this.updatedAt,
     required this.linkTypeId,
-    required this.linkTypeName,
     required this.inwardId,
     required this.outwardId,
-    required this.notes,
+    this.createdAt,
+    this.updatedAt,
+    this.linkTypeName,
+    this.notes,
   });
 
   factory TransactionLink.fromJson(Map<String, Object?> json) =>
       _$TransactionLinkFromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
 
   /// The link type ID to use. You can also use the link_type_name field.
   @JsonKey(name: 'link_type_id')
@@ -32,7 +32,7 @@ class TransactionLink {
 
   /// The link type name to use. You can also use the link_type_id field.
   @JsonKey(name: 'link_type_name')
-  final String linkTypeName;
+  final String? linkTypeName;
 
   /// The inward transaction transaction_journal_id for the link. This becomes the 'is paid by' transaction of the set.
   @JsonKey(name: 'inward_id')

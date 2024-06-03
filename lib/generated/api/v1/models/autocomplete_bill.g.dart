@@ -10,7 +10,7 @@ AutocompleteBill _$AutocompleteBillFromJson(Map<String, dynamic> json) =>
     AutocompleteBill(
       id: json['id'] as String,
       name: json['name'] as String,
-      active: json['active'] as bool,
+      active: json['active'] as bool?,
     );
 
 Map<String, dynamic> _$AutocompleteBillToJson(AutocompleteBill instance) =>

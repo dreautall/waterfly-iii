@@ -12,7 +12,7 @@ AttachmentStore _$AttachmentStoreFromJson(Map<String, dynamic> json) =>
       attachableType:
           AttachableType.fromJson(json['attachable_type'] as String),
       attachableId: json['attachable_id'] as String,
-      title: json['title'] as String,
+      title: json['title'] as String?,
       notes: json['notes'] as String?,
     );
 

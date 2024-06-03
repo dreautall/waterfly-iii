@@ -9,17 +9,17 @@ part 'link_type_update.g.dart';
 @JsonSerializable()
 class LinkTypeUpdate {
   const LinkTypeUpdate({
-    required this.name,
-    required this.inward,
-    required this.outward,
+    this.name,
+    this.inward,
+    this.outward,
   });
 
   factory LinkTypeUpdate.fromJson(Map<String, Object?> json) =>
       _$LinkTypeUpdateFromJson(json);
 
-  final String name;
-  final String inward;
-  final String outward;
+  final String? name;
+  final String? inward;
+  final String? outward;
 
   Map<String, Object?> toJson() => _$LinkTypeUpdateToJson(this);
 }

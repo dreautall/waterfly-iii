@@ -9,19 +9,19 @@ part 'rule_group_update.g.dart';
 @JsonSerializable()
 class RuleGroupUpdate {
   const RuleGroupUpdate({
-    required this.title,
-    required this.description,
-    required this.order,
-    required this.active,
+    this.title,
+    this.description,
+    this.order,
+    this.active,
   });
 
   factory RuleGroupUpdate.fromJson(Map<String, Object?> json) =>
       _$RuleGroupUpdateFromJson(json);
 
-  final String title;
+  final String? title;
   final String? description;
-  final int order;
-  final bool active;
+  final int? order;
+  final bool? active;
 
   Map<String, Object?> toJson() => _$RuleGroupUpdateToJson(this);
 }

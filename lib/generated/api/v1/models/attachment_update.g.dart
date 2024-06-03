@@ -8,8 +8,8 @@ part of 'attachment_update.dart';
 
 AttachmentUpdate _$AttachmentUpdateFromJson(Map<String, dynamic> json) =>
     AttachmentUpdate(
-      filename: json['filename'] as String,
-      title: json['title'] as String,
+      filename: json['filename'] as String?,
+      title: json['title'] as String?,
       notes: json['notes'] as String?,
     );
 

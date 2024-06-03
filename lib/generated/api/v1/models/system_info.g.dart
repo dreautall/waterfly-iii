@@ -7,7 +7,9 @@ part of 'system_info.dart';
 // **************************************************************************
 
 SystemInfo _$SystemInfoFromJson(Map<String, dynamic> json) => SystemInfo(
-      data: Data.fromJson(json['data'] as Map<String, dynamic>),
+      data: json['data'] == null
+          ? null
+          : Data.fromJson(json['data'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$SystemInfoToJson(SystemInfo instance) =>

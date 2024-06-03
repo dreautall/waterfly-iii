@@ -11,7 +11,7 @@ AutocompleteRecurrence _$AutocompleteRecurrenceFromJson(
     AutocompleteRecurrence(
       id: json['id'] as String,
       name: json['name'] as String,
-      description: json['description'] as String,
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$AutocompleteRecurrenceToJson(

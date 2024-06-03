@@ -10,10 +10,10 @@ RuleTriggerStore _$RuleTriggerStoreFromJson(Map<String, dynamic> json) =>
     RuleTriggerStore(
       type: RuleTriggerKeyword.fromJson(json['type'] as String),
       value: json['value'] as String,
-      order: (json['order'] as num).toInt(),
       active: json['active'] as bool? ?? true,
       prohibited: json['prohibited'] as bool? ?? false,
       stopProcessing: json['stop_processing'] as bool? ?? false,
+      order: (json['order'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$RuleTriggerStoreToJson(RuleTriggerStore instance) =>

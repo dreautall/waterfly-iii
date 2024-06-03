@@ -11,10 +11,10 @@ part 'transaction_update.g.dart';
 @JsonSerializable()
 class TransactionUpdate {
   const TransactionUpdate({
-    required this.applyRules,
-    required this.groupTitle,
-    required this.transactions,
     this.fireWebhooks = true,
+    this.applyRules,
+    this.groupTitle,
+    this.transactions,
   });
 
   factory TransactionUpdate.fromJson(Map<String, Object?> json) =>
@@ -22,7 +22,7 @@ class TransactionUpdate {
 
   /// Whether or not to apply rules when submitting transaction.
   @JsonKey(name: 'apply_rules')
-  final bool applyRules;
+  final bool? applyRules;
 
   /// Whether or not to fire the webhooks that are related to this event.
   @JsonKey(name: 'fire_webhooks')
@@ -31,7 +31,7 @@ class TransactionUpdate {
   /// Title of the transaction if it has been split in more than one piece. Empty otherwise.
   @JsonKey(name: 'group_title')
   final String? groupTitle;
-  final List<TransactionSplitUpdate> transactions;
+  final List<TransactionSplitUpdate>? transactions;
 
   Map<String, Object?> toJson() => _$TransactionUpdateToJson(this);
 }

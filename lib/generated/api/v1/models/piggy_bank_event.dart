@@ -9,33 +9,33 @@ part 'piggy_bank_event.g.dart';
 @JsonSerializable()
 class PiggyBankEvent {
   const PiggyBankEvent({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.currencyId,
-    required this.currencyCode,
-    required this.currencySymbol,
-    required this.currencyDecimalPlaces,
-    required this.amount,
-    required this.transactionJournalId,
-    required this.transactionGroupId,
+    this.createdAt,
+    this.updatedAt,
+    this.currencyId,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyDecimalPlaces,
+    this.amount,
+    this.transactionJournalId,
+    this.transactionGroupId,
   });
 
   factory PiggyBankEvent.fromJson(Map<String, Object?> json) =>
       _$PiggyBankEventFromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
   @JsonKey(name: 'currency_id')
-  final String currencyId;
+  final String? currencyId;
   @JsonKey(name: 'currency_code')
-  final String currencyCode;
+  final String? currencyCode;
   @JsonKey(name: 'currency_symbol')
-  final String currencySymbol;
+  final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places')
-  final int currencyDecimalPlaces;
-  final String amount;
+  final int? currencyDecimalPlaces;
+  final String? amount;
 
   /// The journal associated with the event.
   @JsonKey(name: 'transaction_journal_id')

@@ -8,13 +8,13 @@ part of 'budget_limit_store.dart';
 
 BudgetLimitStore _$BudgetLimitStoreFromJson(Map<String, dynamic> json) =>
     BudgetLimitStore(
-      currencyId: json['currency_id'] as String,
-      currencyCode: json['currency_code'] as String,
       budgetId: json['budget_id'] as String,
       start: DateTime.parse(json['start'] as String),
-      period: json['period'] as String?,
       end: DateTime.parse(json['end'] as String),
       amount: json['amount'] as String,
+      currencyId: json['currency_id'] as String?,
+      currencyCode: json['currency_code'] as String?,
+      period: json['period'] as String?,
     );
 
 Map<String, dynamic> _$BudgetLimitStoreToJson(BudgetLimitStore instance) =>

@@ -9,7 +9,7 @@ part of 'object_group_update.dart';
 ObjectGroupUpdate _$ObjectGroupUpdateFromJson(Map<String, dynamic> json) =>
     ObjectGroupUpdate(
       title: json['title'] as String,
-      order: (json['order'] as num).toInt(),
+      order: (json['order'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$ObjectGroupUpdateToJson(ObjectGroupUpdate instance) =>

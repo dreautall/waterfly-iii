@@ -11,7 +11,7 @@ class AutocompleteRule {
   const AutocompleteRule({
     required this.id,
     required this.name,
-    required this.description,
+    this.description,
   });
 
   factory AutocompleteRule.fromJson(Map<String, Object?> json) =>
@@ -23,7 +23,7 @@ class AutocompleteRule {
   final String name;
 
   /// Description of the rule found by auto-complete.
-  final String description;
+  final String? description;
 
   Map<String, Object?> toJson() => _$AutocompleteRuleToJson(this);
 }

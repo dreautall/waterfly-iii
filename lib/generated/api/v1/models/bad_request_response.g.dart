@@ -8,8 +8,8 @@ part of 'bad_request_response.dart';
 
 BadRequestResponse _$BadRequestResponseFromJson(Map<String, dynamic> json) =>
     BadRequestResponse(
-      message: json['message'] as String,
-      exception: json['exception'] as String,
+      message: json['message'] as String?,
+      exception: json['exception'] as String?,
     );
 
 Map<String, dynamic> _$BadRequestResponseToJson(BadRequestResponse instance) =>

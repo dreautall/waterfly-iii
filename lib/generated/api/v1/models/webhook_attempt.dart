@@ -9,25 +9,25 @@ part 'webhook_attempt.g.dart';
 @JsonSerializable()
 class WebhookAttempt {
   const WebhookAttempt({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.webhookMessageId,
-    required this.statusCode,
-    required this.logs,
-    required this.response,
+    this.createdAt,
+    this.updatedAt,
+    this.webhookMessageId,
+    this.statusCode,
+    this.logs,
+    this.response,
   });
 
   factory WebhookAttempt.fromJson(Map<String, Object?> json) =>
       _$WebhookAttemptFromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
 
   /// The ID of the webhook message this attempt belongs to.
   @JsonKey(name: 'webhook_message_id')
-  final String webhookMessageId;
+  final String? webhookMessageId;
 
   /// The HTTP status code of the error, if any.
   @JsonKey(name: 'status_code')

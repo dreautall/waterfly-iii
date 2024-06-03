@@ -10,9 +10,9 @@ part 'autocomplete_td.g.dart';
 class AutocompleteTD {
   const AutocompleteTD({
     required this.id,
-    required this.transactionJournalId,
     required this.name,
     required this.description,
+    this.transactionJournalId,
   });
 
   factory AutocompleteTD.fromJson(Map<String, Object?> json) =>
@@ -23,7 +23,7 @@ class AutocompleteTD {
 
   /// The ID of a transaction journal (basically a single split).
   @JsonKey(name: 'transaction_journal_id')
-  final String transactionJournalId;
+  final String? transactionJournalId;
 
   /// Transaction description
   final String name;

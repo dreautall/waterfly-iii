@@ -10,7 +10,7 @@ AutocompleteRule _$AutocompleteRuleFromJson(Map<String, dynamic> json) =>
     AutocompleteRule(
       id: json['id'] as String,
       name: json['name'] as String,
-      description: json['description'] as String,
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$AutocompleteRuleToJson(AutocompleteRule instance) =>

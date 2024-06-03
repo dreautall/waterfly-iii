@@ -218,15 +218,15 @@ class _AttachmentsClient implements AttachmentsClient {
   @override
   Future<void> uploadAttachment({
     required String id,
-    required File body,
     String? xTraceId,
+    File? body,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'X-Trace-Id': xTraceId};
     _headers.removeWhere((k, v) => v == null);
-    final _data = Stream.fromIterable(body.readAsBytesSync().map((i) => [i]));
+    final _data = Stream.fromIterable(body!.readAsBytesSync().map((i) => [i]));
     await _dio.fetch<void>(_setStreamType<void>(Options(
       method: 'POST',
       headers: _headers,

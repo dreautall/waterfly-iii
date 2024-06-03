@@ -9,21 +9,21 @@ part 'page_link.g.dart';
 @JsonSerializable()
 class PageLink {
   const PageLink({
-    required this.self,
-    required this.first,
-    required this.next,
-    required this.prev,
-    required this.last,
+    this.self,
+    this.first,
+    this.next,
+    this.prev,
+    this.last,
   });
 
   factory PageLink.fromJson(Map<String, Object?> json) =>
       _$PageLinkFromJson(json);
 
-  final String self;
-  final String first;
+  final String? self;
+  final String? first;
   final String? next;
   final String? prev;
-  final String last;
+  final String? last;
 
   Map<String, Object?> toJson() => _$PageLinkToJson(this);
 }

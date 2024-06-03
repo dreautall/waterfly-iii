@@ -11,25 +11,25 @@ part 'rule_trigger.g.dart';
 @JsonSerializable()
 class RuleTrigger {
   const RuleTrigger({
-    required this.id,
-    required this.createdAt,
-    required this.updatedAt,
     required this.type,
     required this.value,
-    required this.order,
     this.prohibited = false,
     this.active = true,
     this.stopProcessing = false,
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.order,
   });
 
   factory RuleTrigger.fromJson(Map<String, Object?> json) =>
       _$RuleTriggerFromJson(json);
 
-  final String id;
+  final String? id;
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
   final RuleTriggerKeyword type;
 
   /// The accompanying value the trigger responds to. This value is often mandatory, but this depends on the trigger.
@@ -39,7 +39,7 @@ class RuleTrigger {
   final bool prohibited;
 
   /// Order of the trigger
-  final int order;
+  final int? order;
 
   /// If the trigger is active. Defaults to true.
   final bool active;

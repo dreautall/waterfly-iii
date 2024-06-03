@@ -7,8 +7,9 @@ part of 'meta.dart';
 // **************************************************************************
 
 Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
-      pagination:
-          Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
+      pagination: json['pagination'] == null
+          ? null
+          : Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$MetaToJson(Meta instance) => <String, dynamic>{

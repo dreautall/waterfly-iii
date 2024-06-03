@@ -9,10 +9,10 @@ part of 'transaction_link_update.dart';
 TransactionLinkUpdate _$TransactionLinkUpdateFromJson(
         Map<String, dynamic> json) =>
     TransactionLinkUpdate(
-      linkTypeId: json['link_type_id'] as String,
-      linkTypeName: json['link_type_name'] as String,
-      inwardId: json['inward_id'] as String,
-      outwardId: json['outward_id'] as String,
+      linkTypeId: json['link_type_id'] as String?,
+      linkTypeName: json['link_type_name'] as String?,
+      inwardId: json['inward_id'] as String?,
+      outwardId: json['outward_id'] as String?,
       notes: json['notes'] as String?,
     );
 

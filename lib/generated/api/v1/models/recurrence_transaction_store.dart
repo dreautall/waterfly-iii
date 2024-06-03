@@ -11,18 +11,18 @@ class RecurrenceTransactionStore {
   const RecurrenceTransactionStore({
     required this.description,
     required this.amount,
-    required this.foreignAmount,
-    required this.currencyId,
-    required this.currencyCode,
-    required this.foreignCurrencyId,
-    required this.foreignCurrencyCode,
-    required this.budgetId,
-    required this.categoryId,
     required this.sourceId,
     required this.destinationId,
-    required this.tags,
-    required this.piggyBankId,
-    required this.billId,
+    this.foreignAmount,
+    this.currencyId,
+    this.currencyCode,
+    this.foreignCurrencyId,
+    this.foreignCurrencyCode,
+    this.budgetId,
+    this.categoryId,
+    this.tags,
+    this.piggyBankId,
+    this.billId,
   });
 
   factory RecurrenceTransactionStore.fromJson(Map<String, Object?> json) =>
@@ -39,11 +39,11 @@ class RecurrenceTransactionStore {
 
   /// Submit either a currency_id or a currency_code.
   @JsonKey(name: 'currency_id')
-  final String currencyId;
+  final String? currencyId;
 
   /// Submit either a currency_id or a currency_code.
   @JsonKey(name: 'currency_code')
-  final String currencyCode;
+  final String? currencyCode;
 
   /// Submit either a foreign_currency_id or a foreign_currency_code, or neither.
   @JsonKey(name: 'foreign_currency_id')
@@ -55,11 +55,11 @@ class RecurrenceTransactionStore {
 
   /// The budget ID for this transaction.
   @JsonKey(name: 'budget_id')
-  final String budgetId;
+  final String? budgetId;
 
   /// Category ID for this transaction.
   @JsonKey(name: 'category_id')
-  final String categoryId;
+  final String? categoryId;
 
   /// ID of the source account.
   @JsonKey(name: 'source_id')

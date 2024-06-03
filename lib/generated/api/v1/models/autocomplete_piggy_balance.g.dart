@@ -11,11 +11,11 @@ AutocompletePiggyBalance _$AutocompletePiggyBalanceFromJson(
     AutocompletePiggyBalance(
       id: json['id'] as String,
       name: json['name'] as String,
-      nameWithBalance: json['name_with_balance'] as String,
-      currencyId: json['currency_id'] as String,
-      currencyCode: json['currency_code'] as String,
-      currencySymbol: json['currency_symbol'] as String,
-      currencyDecimalPlaces: (json['currency_decimal_places'] as num).toInt(),
+      nameWithBalance: json['name_with_balance'] as String?,
+      currencyId: json['currency_id'] as String?,
+      currencyCode: json['currency_code'] as String?,
+      currencySymbol: json['currency_symbol'] as String?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
       objectGroupId: json['object_group_id'] as String?,
       objectGroupTitle: json['object_group_title'] as String?,
     );

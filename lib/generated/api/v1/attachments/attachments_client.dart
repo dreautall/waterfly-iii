@@ -110,7 +110,7 @@ abstract class AttachmentsClient {
   @POST('/v1/attachments/{id}/upload')
   Future<void> uploadAttachment({
     @Path('id') required String id,
-    @Body() required File body,
     @Header('X-Trace-Id') String? xTraceId,
+    @Body() File? body,
   });
 }

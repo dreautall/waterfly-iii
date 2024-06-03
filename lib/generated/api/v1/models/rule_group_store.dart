@@ -10,9 +10,9 @@ part 'rule_group_store.g.dart';
 class RuleGroupStore {
   const RuleGroupStore({
     required this.title,
-    required this.description,
-    required this.order,
-    required this.active,
+    this.description,
+    this.order,
+    this.active,
   });
 
   factory RuleGroupStore.fromJson(Map<String, Object?> json) =>
@@ -20,8 +20,8 @@ class RuleGroupStore {
 
   final String title;
   final String? description;
-  final int order;
-  final bool active;
+  final int? order;
+  final bool? active;
 
   Map<String, Object?> toJson() => _$RuleGroupStoreToJson(this);
 }

@@ -9,15 +9,15 @@ part 'internal_exception_response.g.dart';
 @JsonSerializable()
 class InternalExceptionResponse {
   const InternalExceptionResponse({
-    required this.message,
-    required this.exception,
+    this.message,
+    this.exception,
   });
 
   factory InternalExceptionResponse.fromJson(Map<String, Object?> json) =>
       _$InternalExceptionResponseFromJson(json);
 
-  final String message;
-  final String exception;
+  final String? message;
+  final String? exception;
 
   Map<String, Object?> toJson() => _$InternalExceptionResponseToJson(this);
 }

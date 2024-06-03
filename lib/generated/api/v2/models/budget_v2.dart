@@ -9,23 +9,23 @@ part 'budget_v2.g.dart';
 @JsonSerializable()
 class BudgetV2 {
   const BudgetV2({
-    required this.createdAt,
-    required this.updatedAt,
     required this.name,
-    required this.active,
-    required this.order,
+    this.createdAt,
+    this.updatedAt,
+    this.active,
+    this.order,
   });
 
   factory BudgetV2.fromJson(Map<String, Object?> json) =>
       _$BudgetV2FromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
   final String name;
-  final bool active;
-  final int order;
+  final bool? active;
+  final int? order;
 
   Map<String, Object?> toJson() => _$BudgetV2ToJson(this);
 }

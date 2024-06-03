@@ -9,23 +9,23 @@ part 'currency_v2.g.dart';
 @JsonSerializable()
 class CurrencyV2 {
   const CurrencyV2({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.defaultValue,
     required this.code,
     required this.name,
     required this.symbol,
-    required this.decimalPlaces,
     this.enabled = true,
+    this.createdAt,
+    this.updatedAt,
+    this.defaultValue,
+    this.decimalPlaces,
   });
 
   factory CurrencyV2.fromJson(Map<String, Object?> json) =>
       _$CurrencyV2FromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
 
   /// Defaults to true
   final bool enabled;
@@ -33,14 +33,14 @@ class CurrencyV2 {
   /// Make this currency the default currency.
   /// The name has been replaced because it contains a keyword. Original name: `default`.
   @JsonKey(name: 'default')
-  final bool defaultValue;
+  final bool? defaultValue;
   final String code;
   final String name;
   final String symbol;
 
   /// Supports 0-12 decimals.
   @JsonKey(name: 'decimal_places')
-  final int decimalPlaces;
+  final int? decimalPlaces;
 
   Map<String, Object?> toJson() => _$CurrencyV2ToJson(this);
 }

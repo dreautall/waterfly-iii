@@ -7,22 +7,26 @@ part of 'rule_trigger.dart';
 // **************************************************************************
 
 RuleTrigger _$RuleTriggerFromJson(Map<String, dynamic> json) => RuleTrigger(
-      id: json['id'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
       type: RuleTriggerKeyword.fromJson(json['type'] as String),
       value: json['value'] as String,
-      order: (json['order'] as num).toInt(),
       prohibited: json['prohibited'] as bool? ?? false,
       active: json['active'] as bool? ?? true,
       stopProcessing: json['stop_processing'] as bool? ?? false,
+      id: json['id'] as String?,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+      order: (json['order'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$RuleTriggerToJson(RuleTrigger instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'created_at': instance.createdAt.toIso8601String(),
-      'updated_at': instance.updatedAt.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
       'type': _$RuleTriggerKeywordEnumMap[instance.type]!,
       'value': instance.value,
       'prohibited': instance.prohibited,

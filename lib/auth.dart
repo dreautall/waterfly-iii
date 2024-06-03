@@ -330,7 +330,7 @@ class FireflyService with ChangeNotifier {
 
     SystemInfo about = await api.about.getAbout();
     try {
-      _apiVersion = Version.parse(about.data.apiVersion);
+      _apiVersion = Version.parse(about.data?.apiVersion ?? "unknown");
     } on FormatException {
       throw const AuthErrorVersionInvalid();
     }
@@ -345,7 +345,7 @@ class FireflyService with ChangeNotifier {
       ...user!.host.pathSegments,
       "v1",
       "configuration",
-      ConfigValueFilter.undefined14.name
+      "app.timezone"
     ]);
     try {
       final http.Response response = await client.get(

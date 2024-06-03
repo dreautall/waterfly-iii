@@ -11,28 +11,28 @@ part 'transaction_v2.g.dart';
 @JsonSerializable()
 class TransactionV2 {
   const TransactionV2({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.user,
-    required this.userGroup,
-    required this.groupTitle,
     required this.transactions,
+    this.createdAt,
+    this.updatedAt,
+    this.user,
+    this.userGroup,
+    this.groupTitle,
   });
 
   factory TransactionV2.fromJson(Map<String, Object?> json) =>
       _$TransactionV2FromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
 
   /// User ID
-  final String user;
+  final String? user;
 
   /// User group ID
   @JsonKey(name: 'user_group')
-  final String userGroup;
+  final String? userGroup;
 
   /// Title of the transaction if it has been split in more than one piece. Empty otherwise.
   @JsonKey(name: 'group_title')

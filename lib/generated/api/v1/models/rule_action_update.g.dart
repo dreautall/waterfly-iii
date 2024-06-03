@@ -8,16 +8,18 @@ part of 'rule_action_update.dart';
 
 RuleActionUpdate _$RuleActionUpdateFromJson(Map<String, dynamic> json) =>
     RuleActionUpdate(
-      type: RuleActionKeyword.fromJson(json['type'] as String),
+      type: json['type'] == null
+          ? null
+          : RuleActionKeyword.fromJson(json['type'] as String),
       value: json['value'] as String?,
-      order: (json['order'] as num).toInt(),
-      active: json['active'] as bool,
-      stopProcessing: json['stop_processing'] as bool,
+      order: (json['order'] as num?)?.toInt(),
+      active: json['active'] as bool?,
+      stopProcessing: json['stop_processing'] as bool?,
     );
 
 Map<String, dynamic> _$RuleActionUpdateToJson(RuleActionUpdate instance) =>
     <String, dynamic>{
-      'type': _$RuleActionKeywordEnumMap[instance.type]!,
+      'type': _$RuleActionKeywordEnumMap[instance.type],
       'value': instance.value,
       'order': instance.order,
       'active': instance.active,

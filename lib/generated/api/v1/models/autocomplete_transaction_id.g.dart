@@ -10,9 +10,9 @@ AutocompleteTransactionID _$AutocompleteTransactionIDFromJson(
         Map<String, dynamic> json) =>
     AutocompleteTransactionID(
       id: json['id'] as String,
-      transactionGroupId: json['transaction_group_id'] as String,
       name: json['name'] as String,
       description: json['description'] as String,
+      transactionGroupId: json['transaction_group_id'] as String?,
     );
 
 Map<String, dynamic> _$AutocompleteTransactionIDToJson(

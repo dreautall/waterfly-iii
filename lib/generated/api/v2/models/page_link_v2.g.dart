@@ -7,11 +7,11 @@ part of 'page_link_v2.dart';
 // **************************************************************************
 
 PageLinkV2 _$PageLinkV2FromJson(Map<String, dynamic> json) => PageLinkV2(
-      self: json['self'] as String,
-      first: json['first'] as String,
+      self: json['self'] as String?,
+      first: json['first'] as String?,
       next: json['next'] as String?,
       prev: json['prev'] as String?,
-      last: json['last'] as String,
+      last: json['last'] as String?,
     );
 
 Map<String, dynamic> _$PageLinkV2ToJson(PageLinkV2 instance) =>

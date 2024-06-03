@@ -14,8 +14,8 @@ class AttachmentStore {
     required this.filename,
     required this.attachableType,
     required this.attachableId,
-    required this.title,
-    required this.notes,
+    this.title,
+    this.notes,
   });
 
   factory AttachmentStore.fromJson(Map<String, Object?> json) =>
@@ -28,7 +28,7 @@ class AttachmentStore {
   /// ID of the model this attachment is linked to.
   @JsonKey(name: 'attachable_id')
   final String attachableId;
-  final String title;
+  final String? title;
   final String? notes;
 
   Map<String, Object?> toJson() => _$AttachmentStoreToJson(this);

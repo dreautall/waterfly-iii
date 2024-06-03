@@ -12,29 +12,29 @@ part 'recurrence_update.g.dart';
 @JsonSerializable()
 class RecurrenceUpdate {
   const RecurrenceUpdate({
-    required this.title,
-    required this.description,
-    required this.firstDate,
-    required this.repeatUntil,
-    required this.nrOfRepetitions,
-    required this.applyRules,
-    required this.active,
-    required this.notes,
-    required this.repetitions,
-    required this.transactions,
+    this.title,
+    this.description,
+    this.firstDate,
+    this.repeatUntil,
+    this.nrOfRepetitions,
+    this.applyRules,
+    this.active,
+    this.notes,
+    this.repetitions,
+    this.transactions,
   });
 
   factory RecurrenceUpdate.fromJson(Map<String, Object?> json) =>
       _$RecurrenceUpdateFromJson(json);
 
-  final String title;
+  final String? title;
 
   /// Not to be confused with the description of the actual transaction(s) being created.
-  final String description;
+  final String? description;
 
   /// First time the recurring transaction will fire.
   @JsonKey(name: 'first_date')
-  final DateTime firstDate;
+  final DateTime? firstDate;
 
   /// Date until the recurring transaction can fire. After that date, it's basically inactive. Use either this field or repetitions.
   @JsonKey(name: 'repeat_until')
@@ -46,13 +46,13 @@ class RecurrenceUpdate {
 
   /// Whether or not to fire the rules after the creation of a transaction.
   @JsonKey(name: 'apply_rules')
-  final bool applyRules;
+  final bool? applyRules;
 
   /// If the recurrence is even active.
-  final bool active;
+  final bool? active;
   final String? notes;
-  final List<RecurrenceRepetitionUpdate> repetitions;
-  final List<RecurrenceTransactionUpdate> transactions;
+  final List<RecurrenceRepetitionUpdate>? repetitions;
+  final List<RecurrenceTransactionUpdate>? transactions;
 
   Map<String, Object?> toJson() => _$RecurrenceUpdateToJson(this);
 }

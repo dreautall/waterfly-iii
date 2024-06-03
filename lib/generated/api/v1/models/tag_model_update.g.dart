@@ -8,7 +8,7 @@ part of 'tag_model_update.dart';
 
 TagModelUpdate _$TagModelUpdateFromJson(Map<String, dynamic> json) =>
     TagModelUpdate(
-      tag: json['tag'] as String,
+      tag: json['tag'] as String?,
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
       description: json['description'] as String?,

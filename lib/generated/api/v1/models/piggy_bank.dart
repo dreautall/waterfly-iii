@@ -9,37 +9,37 @@ part 'piggy_bank.g.dart';
 @JsonSerializable()
 class PiggyBank {
   const PiggyBank({
-    required this.createdAt,
-    required this.updatedAt,
     required this.accountId,
-    required this.accountName,
     required this.name,
-    required this.currencyId,
-    required this.currencyCode,
-    required this.currencySymbol,
-    required this.currencyDecimalPlaces,
     required this.targetAmount,
-    required this.percentage,
-    required this.currentAmount,
-    required this.leftToSave,
-    required this.savePerMonth,
-    required this.startDate,
-    required this.targetDate,
-    required this.order,
-    required this.active,
-    required this.notes,
-    required this.objectGroupId,
-    required this.objectGroupOrder,
-    required this.objectGroupTitle,
+    this.createdAt,
+    this.updatedAt,
+    this.accountName,
+    this.currencyId,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyDecimalPlaces,
+    this.percentage,
+    this.currentAmount,
+    this.leftToSave,
+    this.savePerMonth,
+    this.startDate,
+    this.targetDate,
+    this.order,
+    this.active,
+    this.notes,
+    this.objectGroupId,
+    this.objectGroupOrder,
+    this.objectGroupTitle,
   });
 
   factory PiggyBank.fromJson(Map<String, Object?> json) =>
       _$PiggyBankFromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
 
   /// The ID of the asset account this piggy bank is connected to.
   @JsonKey(name: 'account_id')
@@ -47,23 +47,23 @@ class PiggyBank {
 
   /// The name of the asset account this piggy bank is connected to.
   @JsonKey(name: 'account_name')
-  final String accountName;
+  final String? accountName;
   final String name;
   @JsonKey(name: 'currency_id')
-  final String currencyId;
+  final String? currencyId;
   @JsonKey(name: 'currency_code')
-  final String currencyCode;
+  final String? currencyCode;
   @JsonKey(name: 'currency_symbol')
-  final String currencySymbol;
+  final String? currencySymbol;
 
   /// Number of decimals supported by the currency
   @JsonKey(name: 'currency_decimal_places')
-  final int currencyDecimalPlaces;
+  final int? currencyDecimalPlaces;
   @JsonKey(name: 'target_amount')
   final String? targetAmount;
   final double? percentage;
   @JsonKey(name: 'current_amount')
-  final String currentAmount;
+  final String? currentAmount;
   @JsonKey(name: 'left_to_save')
   final String? leftToSave;
   @JsonKey(name: 'save_per_month')
@@ -71,13 +71,13 @@ class PiggyBank {
 
   /// The date you started with this piggy bank.
   @JsonKey(name: 'start_date')
-  final DateTime startDate;
+  final DateTime? startDate;
 
   /// The date you intend to finish saving money.
   @JsonKey(name: 'target_date')
   final DateTime? targetDate;
-  final int order;
-  final bool active;
+  final int? order;
+  final bool? active;
   final String? notes;
 
   /// The group ID of the group this object is part of. NULL if no group.

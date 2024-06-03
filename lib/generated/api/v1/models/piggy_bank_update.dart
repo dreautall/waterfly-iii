@@ -9,47 +9,47 @@ part 'piggy_bank_update.g.dart';
 @JsonSerializable()
 class PiggyBankUpdate {
   const PiggyBankUpdate({
-    required this.name,
-    required this.accountId,
-    required this.currencyId,
-    required this.currencyCode,
-    required this.targetAmount,
-    required this.currentAmount,
-    required this.startDate,
-    required this.targetDate,
-    required this.order,
-    required this.active,
-    required this.notes,
-    required this.objectGroupId,
-    required this.objectGroupTitle,
+    this.name,
+    this.accountId,
+    this.currencyId,
+    this.currencyCode,
+    this.targetAmount,
+    this.currentAmount,
+    this.startDate,
+    this.targetDate,
+    this.order,
+    this.active,
+    this.notes,
+    this.objectGroupId,
+    this.objectGroupTitle,
   });
 
   factory PiggyBankUpdate.fromJson(Map<String, Object?> json) =>
       _$PiggyBankUpdateFromJson(json);
 
-  final String name;
+  final String? name;
 
   /// The ID of the asset account this piggy bank is connected to.
   @JsonKey(name: 'account_id')
-  final String accountId;
+  final String? accountId;
   @JsonKey(name: 'currency_id')
-  final String currencyId;
+  final String? currencyId;
   @JsonKey(name: 'currency_code')
-  final String currencyCode;
+  final String? currencyCode;
   @JsonKey(name: 'target_amount')
   final String? targetAmount;
   @JsonKey(name: 'current_amount')
-  final String currentAmount;
+  final String? currentAmount;
 
   /// The date you started with this piggy bank.
   @JsonKey(name: 'start_date')
-  final DateTime startDate;
+  final DateTime? startDate;
 
   /// The date you intend to finish saving money.
   @JsonKey(name: 'target_date')
   final DateTime? targetDate;
-  final int order;
-  final bool active;
+  final int? order;
+  final bool? active;
   final String? notes;
 
   /// The group ID of the group this object is part of. NULL if no group.

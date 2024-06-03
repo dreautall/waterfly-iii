@@ -10,7 +10,7 @@ part 'object_group_update.g.dart';
 class ObjectGroupUpdate {
   const ObjectGroupUpdate({
     required this.title,
-    required this.order,
+    this.order,
   });
 
   factory ObjectGroupUpdate.fromJson(Map<String, Object?> json) =>
@@ -19,7 +19,7 @@ class ObjectGroupUpdate {
   final String title;
 
   /// Order of the object group
-  final int order;
+  final int? order;
 
   Map<String, Object?> toJson() => _$ObjectGroupUpdateToJson(this);
 }

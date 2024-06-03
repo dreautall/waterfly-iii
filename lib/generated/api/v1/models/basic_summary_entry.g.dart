@@ -8,16 +8,16 @@ part of 'basic_summary_entry.dart';
 
 BasicSummaryEntry _$BasicSummaryEntryFromJson(Map<String, dynamic> json) =>
     BasicSummaryEntry(
-      key: json['key'] as String,
-      title: json['title'] as String,
-      monetaryValue: (json['monetary_value'] as num).toDouble(),
-      currencyId: json['currency_id'] as String,
-      currencyCode: json['currency_code'] as String,
-      currencySymbol: json['currency_symbol'] as String,
-      currencyDecimalPlaces: (json['currency_decimal_places'] as num).toInt(),
-      valueParsed: json['value_parsed'] as String,
-      localIcon: json['local_icon'] as String,
-      subTitle: json['sub_title'] as String,
+      key: json['key'] as String?,
+      title: json['title'] as String?,
+      monetaryValue: (json['monetary_value'] as num?)?.toDouble(),
+      currencyId: json['currency_id'] as String?,
+      currencyCode: json['currency_code'] as String?,
+      currencySymbol: json['currency_symbol'] as String?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
+      valueParsed: json['value_parsed'] as String?,
+      localIcon: json['local_icon'] as String?,
+      subTitle: json['sub_title'] as String?,
     );
 
 Map<String, dynamic> _$BasicSummaryEntryToJson(BasicSummaryEntry instance) =>

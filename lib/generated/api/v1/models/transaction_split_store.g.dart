@@ -9,11 +9,11 @@ part of 'transaction_split_store.dart';
 TransactionSplitStore _$TransactionSplitStoreFromJson(
         Map<String, dynamic> json) =>
     TransactionSplitStore(
-      sourceId: json['source_id'] as String?,
+      type: TransactionTypeProperty.fromJson(json['type'] as String),
       date: DateTime.parse(json['date'] as String),
       amount: json['amount'] as String,
       description: json['description'] as String,
-      order: (json['order'] as num?)?.toInt(),
+      sourceId: json['source_id'] as String?,
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       foreignAmount: json['foreign_amount'] as String?,
@@ -23,11 +23,11 @@ TransactionSplitStore _$TransactionSplitStoreFromJson(
       budgetName: json['budget_name'] as String?,
       categoryId: json['category_id'] as String?,
       categoryName: json['category_name'] as String?,
-      type: TransactionTypeProperty.fromJson(json['type'] as String),
+      order: (json['order'] as num?)?.toInt(),
       sourceName: json['source_name'] as String?,
       destinationId: json['destination_id'] as String?,
       destinationName: json['destination_name'] as String?,
-      reconciled: json['reconciled'] as bool,
+      reconciled: json['reconciled'] as bool?,
       piggyBankId: (json['piggy_bank_id'] as num?)?.toInt(),
       piggyBankName: json['piggy_bank_name'] as String?,
       billId: json['bill_id'] as String?,

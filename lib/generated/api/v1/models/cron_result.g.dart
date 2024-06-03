@@ -7,12 +7,17 @@ part of 'cron_result.dart';
 // **************************************************************************
 
 CronResult _$CronResultFromJson(Map<String, dynamic> json) => CronResult(
-      recurringTransactions: CronResultRow.fromJson(
-          json['recurring_transactions'] as Map<String, dynamic>),
-      autoBudgets:
-          CronResultRow.fromJson(json['auto_budgets'] as Map<String, dynamic>),
-      telemetry:
-          CronResultRow.fromJson(json['telemetry'] as Map<String, dynamic>),
+      recurringTransactions: json['recurring_transactions'] == null
+          ? null
+          : CronResultRow.fromJson(
+              json['recurring_transactions'] as Map<String, dynamic>),
+      autoBudgets: json['auto_budgets'] == null
+          ? null
+          : CronResultRow.fromJson(
+              json['auto_budgets'] as Map<String, dynamic>),
+      telemetry: json['telemetry'] == null
+          ? null
+          : CronResultRow.fromJson(json['telemetry'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CronResultToJson(CronResult instance) =>

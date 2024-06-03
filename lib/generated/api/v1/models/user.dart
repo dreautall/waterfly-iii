@@ -12,29 +12,29 @@ part 'user.g.dart';
 @JsonSerializable()
 class User {
   const User({
-    required this.createdAt,
-    required this.updatedAt,
     required this.email,
-    required this.blocked,
-    required this.blockedCode,
-    required this.role,
+    this.createdAt,
+    this.updatedAt,
+    this.blocked,
+    this.blockedCode,
+    this.role,
   });
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
 
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
 
   /// The new users email address.
   final String email;
 
   /// Boolean to indicate if the user is blocked.
-  final bool blocked;
+  final bool? blocked;
   @JsonKey(name: 'blocked_code')
-  final UserBlockedCodeProperty blockedCode;
-  final UserRoleProperty role;
+  final UserBlockedCodeProperty? blockedCode;
+  final UserRoleProperty? role;
 
   Map<String, Object?> toJson() => _$UserToJson(this);
 }

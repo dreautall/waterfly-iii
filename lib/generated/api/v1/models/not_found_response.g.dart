@@ -8,8 +8,8 @@ part of 'not_found_response.dart';
 
 NotFoundResponse _$NotFoundResponseFromJson(Map<String, dynamic> json) =>
     NotFoundResponse(
-      message: json['message'] as String,
-      exception: json['exception'] as String,
+      message: json['message'] as String?,
+      exception: json['exception'] as String?,
     );
 
 Map<String, dynamic> _$NotFoundResponseToJson(NotFoundResponse instance) =>

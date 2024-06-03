@@ -13,19 +13,19 @@ part 'webhook_store.g.dart';
 @JsonSerializable()
 class WebhookStore {
   const WebhookStore({
-    required this.active,
     required this.title,
     required this.trigger,
     required this.response,
     required this.delivery,
     required this.url,
+    this.active,
   });
 
   factory WebhookStore.fromJson(Map<String, Object?> json) =>
       _$WebhookStoreFromJson(json);
 
   /// Boolean to indicate if the webhook is active
-  final bool active;
+  final bool? active;
 
   /// A title for the webhook for easy recognition.
   final String title;

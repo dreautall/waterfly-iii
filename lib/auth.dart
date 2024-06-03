@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
 import 'package:logging/logging.dart';
@@ -13,8 +12,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:version/version.dart';
 
-import 'package:waterflyiii/generated/api/v1/export.dart';
-import 'package:waterflyiii/generated/api/v2/export.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show APIv1, CurrencyRead, CurrencySingle, SystemInfo;
+import 'package:waterflyiii/generated/api/v2/export.dart' show APIv2;
 import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 
@@ -368,23 +368,5 @@ class FireflyService with ChangeNotifier {
     storage.write(key: 'api_cert', value: cert);
 
     return true;
-  }
-}
-
-void apiThrowErrorIfEmpty(Response<dynamic> response, BuildContext? context) {
-  if (response.statusCode == HttpStatus.ok && response.data != null) {
-    return;
-  }
-  log.severe("Invalid API response", response.statusMessage);
-  if (context?.mounted ?? false) {
-    throw Exception(
-      S
-          .of(context!)
-          .errorAPIInvalidResponse(response.statusMessage?.toString() ?? ""),
-    );
-  } else {
-    throw Exception(
-      "[nocontext] Invalid API response: ${response.statusMessage}",
-    );
   }
 }

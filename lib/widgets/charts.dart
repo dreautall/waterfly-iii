@@ -9,7 +9,7 @@ import 'package:community_charts_flutter/src/text_style.dart' as charts_style;
 // ignore: implementation_imports
 import 'package:community_charts_flutter/src/text_element.dart' as charts_text;
 
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart' show ChartDataSet;
 
 class TimeSeriesChart {
   final DateTime time;

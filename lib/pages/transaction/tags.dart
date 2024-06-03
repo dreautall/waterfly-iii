@@ -3,12 +3,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show Response;
-
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show APIv1, TagArray, TagRead;
 
 class Tags {
   final List<String>? initialTags;
@@ -159,19 +158,19 @@ class _TagDialogState extends State<TagDialog> {
   }
 
   Future<List<String>>? _getTags() async {
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
+
     List<String> tags = <String>[];
-    late Response<TagArray> response;
+    late TagArray response;
     int pageNumber = 0;
 
     do {
       pageNumber += 1;
-      response = await api.v1TagsGet(page: pageNumber);
-      apiThrowErrorIfEmpty(response, mounted ? context : null);
+      response = await api.tags.listTag(page: pageNumber);
 
-      tags.addAll(response.body!.data.map((TagRead e) => e.attributes.tag));
-    } while ((response.body!.meta.pagination?.currentPage ?? 1) <
-        (response.body!.meta.pagination?.totalPages ?? 1));
+      tags.addAll(response.data.map((TagRead e) => e.attributes.tag));
+    } while ((response.meta.pagination?.currentPage ?? 1) <
+        (response.meta.pagination?.totalPages ?? 1));
 
     return tags;
   }

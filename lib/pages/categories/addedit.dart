@@ -5,10 +5,17 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart';
+import 'package:dio/dio.dart' show DioException;
 
 import 'package:waterflyiii/auth.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show
+        APIv1,
+        Category,
+        CategoryRead,
+        CategorySingle,
+        CategoryUpdate,
+        ValidationErrorResponse;
 import 'package:waterflyiii/settings.dart';
 
 final Logger log = Logger("Pages.Categories.AddEdit");
@@ -47,21 +54,15 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
     context
         .read<FireflyService>()
         .api
-        .v1CategoriesIdGet(id: widget.category!.id)
-        .then((Response<CategorySingle> resp) {
-      if (!resp.isSuccessful || resp.body == null) {
-        log.severe(
-          "Error fetching information",
-          resp.error,
-        );
-        Navigator.of(context).pop();
-      }
+        .categories
+        .getCategory(id: widget.category!.id)
+        .then((CategorySingle resp) {
       setState(() {
         includeInSum = !context
             .read<SettingsProvider>()
             .categoriesSumExcluded
             .contains(widget.category!.id);
-        notesController.text = resp.body?.data.attributes.notes ?? "";
+        notesController.text = resp.data.attributes.notes ?? "";
         loaded = true;
       });
     });
@@ -89,7 +90,7 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
             ),
             child: Text(MaterialLocalizations.of(context).deleteButtonTooltip),
             onPressed: () async {
-              final FireflyIii api = context.read<FireflyService>().api;
+              final APIv1 api = context.read<FireflyService>().api;
 
               bool? ok = await showDialog(
                 context: context,
@@ -100,7 +101,7 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
                 return;
               }
 
-              await api.v1CategoriesIdDelete(id: widget.category!.id);
+              await api.categories.deleteCategory(id: widget.category!.id);
 
               if (context.mounted) {
                 Navigator.of(context).pop(true);
@@ -118,29 +119,35 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
           onPressed: () async {
             final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
 
-            late Response<CategorySingle> resp;
-            if (widget.category == null) {
-              resp = await context.read<FireflyService>().api.v1CategoriesPost(
-                      body: Category(
-                    name: titleController.text,
-                    notes: notesController.text,
-                  ));
-            } else {
-              resp = await context.read<FireflyService>().api.v1CategoriesIdPut(
-                  id: widget.category!.id,
-                  body: CategoryUpdate(
-                    name: titleController.text,
-                    notes: notesController.text,
-                  ));
-            }
-
-            // Check if insert/update was successful
-            if (!resp.isSuccessful || resp.body == null) {
+            try {
+              if (widget.category == null) {
+                await context
+                    .read<FireflyService>()
+                    .api
+                    .categories
+                    .storeCategory(
+                        body: Category(
+                      name: titleController.text,
+                      notes: notesController.text,
+                    ));
+              } else {
+                await context
+                    .read<FireflyService>()
+                    .api
+                    .categories
+                    .updateCategory(
+                        id: widget.category!.id,
+                        body: CategoryUpdate(
+                          name: titleController.text,
+                          notes: notesController.text,
+                        ));
+              }
+            } on DioException catch (e) {
               late String error;
               try {
                 ValidationErrorResponse valError =
                     ValidationErrorResponse.fromJson(
-                  json.decode(resp.error.toString()),
+                  json.decode(e.response.toString()),
                 );
                 error = valError.message ??
                     (context.mounted

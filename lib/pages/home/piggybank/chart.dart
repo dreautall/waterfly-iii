@@ -7,7 +7,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waterflyiii/animations.dart';
 
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show Currency, CurrencyRead, PiggyBankEventRead, PiggyBankRead;
 import 'package:waterflyiii/widgets/charts.dart';
 
 class PiggyChart extends StatefulWidget {

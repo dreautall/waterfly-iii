@@ -3,10 +3,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show Response;
-
 import 'package:waterflyiii/auth.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show APIv1, AutocompleteBill, Bill, BillRead, BillRepeatFrequency;
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 
 class BillDialog extends StatefulWidget {
@@ -64,7 +63,7 @@ class _BillDialogState extends State<BillDialog> {
                   amountMin: "",
                   amountMax: "",
                   date: DateTime.now(),
-                  repeatFreq: BillRepeatFrequency.swaggerGeneratedUnknown,
+                  repeatFreq: BillRepeatFrequency.$unknown,
                 ),
               ),
             );
@@ -96,20 +95,19 @@ class _BillDialogState extends State<BillDialog> {
                 amountMin: "",
                 amountMax: "",
                 date: DateTime.now(),
-                repeatFreq: BillRepeatFrequency.swaggerGeneratedUnknown,
+                repeatFreq: BillRepeatFrequency.$unknown,
               ),
             );
           },
           optionsBuilder: (TextEditingValue textEditingValue) async {
             try {
-              final FireflyIii api = context.read<FireflyService>().api;
-              final Response<List<AutocompleteBill>> response =
-                  await api.v1AutocompleteBillsGet(
+              final APIv1 api = context.read<FireflyService>().api;
+              final List<AutocompleteBill> response =
+                  await api.autocomplete.getBillsAC(
                 query: textEditingValue.text,
               );
-              apiThrowErrorIfEmpty(response, mounted ? context : null);
 
-              return response.body!;
+              return response;
             } catch (e, stackTrace) {
               log.severe(
                   "Error while fetching autocomplete from API", e, stackTrace);

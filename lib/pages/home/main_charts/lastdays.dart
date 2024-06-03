@@ -8,7 +8,7 @@ import 'package:community_charts_flutter/community_charts_flutter.dart'
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart' show CurrencyRead;
 import 'package:waterflyiii/widgets/charts.dart';
 
 import 'package:waterflyiii/timezonehandler.dart';

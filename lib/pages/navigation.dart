@@ -6,11 +6,11 @@ import 'package:version/version.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
-import 'package:waterflyiii/pages/accounts.dart';
-import 'package:waterflyiii/pages/bills.dart';
-import 'package:waterflyiii/pages/categories.dart';
-import 'package:waterflyiii/pages/home.dart';
-import 'package:waterflyiii/pages/settings.dart';
+//import 'package:waterflyiii/pages/accounts.dart';
+//import 'package:waterflyiii/pages/bills.dart';
+//import 'package:waterflyiii/pages/categories.dart';
+//import 'package:waterflyiii/pages/home.dart';
+//import 'package:waterflyiii/pages/settings.dart';
 
 final Logger log = Logger("Pages.Navigation");
 
@@ -100,7 +100,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
     super.didChangeDependencies();
 
     navDestinations = <NavDestination>[
-      NavDestination(
+      /*NavDestination(
         S.of(context).navigationMain,
         const HomePage(),
         const Icon(Icons.dashboard_outlined),
@@ -129,7 +129,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
         const SettingsPage(),
         const Icon(Icons.settings_outlined),
         const Icon(Icons.settings),
-      ),
+      ),*/
     ];
 
     // Bills page not working below Firefly 6.1.0 (API Version 2.0.12)

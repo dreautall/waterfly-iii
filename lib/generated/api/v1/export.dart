@@ -263,7 +263,6 @@ export 'models/paid_dates.dart';
 export 'models/data.dart';
 export 'models/pagination.dart';
 export 'models/errors.dart';
-export 'models/currency_update_default_enum.dart';
 // Root client
 export 'ap_iv1.dart';
 

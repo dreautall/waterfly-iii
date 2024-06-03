@@ -5,10 +5,28 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show Response;
-
 import 'package:waterflyiii/auth.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show
+        APIv1,
+        Account,
+        AccountArray,
+        AccountRead,
+        AccountTypeFilter,
+        Bill,
+        BillArray,
+        BillRead,
+        BillRepeatFrequency,
+        Budget,
+        BudgetArray,
+        BudgetRead,
+        Category,
+        CategoryArray,
+        CategoryRead,
+        Currency,
+        CurrencyArray,
+        CurrencyRead,
+        ShortAccountTypeProperty;
 import 'package:waterflyiii/pages/transaction/tags.dart';
 import 'package:waterflyiii/settings.dart';
 
@@ -103,35 +121,30 @@ class FilterDialog extends StatelessWidget {
   final TransactionFilters filters;
 
   Future<FilterData> _getData(BuildContext context) async {
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
 
     // Accounts
-    final Response<AccountArray> respAccounts =
-        await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
-    apiThrowErrorIfEmpty(respAccounts, context.mounted ? context : null);
+    final AccountArray respAccounts =
+        await api.accounts.listAccount(type: AccountTypeFilter.assetAccount);
 
     // Currencies
-    final Response<CurrencyArray> respCurrencies = await api.v1CurrenciesGet();
-    apiThrowErrorIfEmpty(respCurrencies, context.mounted ? context : null);
+    final CurrencyArray respCurrencies = await api.currencies.listCurrency();
 
     // Categories
-    final Response<CategoryArray> respCats = await api.v1CategoriesGet();
-    apiThrowErrorIfEmpty(respCats, context.mounted ? context : null);
+    final CategoryArray respCats = await api.categories.listCategory();
 
     // Budgets
-    final Response<BudgetArray> respBudgets = await api.v1BudgetsGet();
-    apiThrowErrorIfEmpty(respBudgets, context.mounted ? context : null);
+    final BudgetArray respBudgets = await api.budgets.listBudget();
 
     // Bills
-    final Response<BillArray> respBills = await api.v1BillsGet();
-    apiThrowErrorIfEmpty(respBills, context.mounted ? context : null);
+    final BillArray respBills = await api.bills.listBill();
 
     return FilterData(
-      respAccounts.body!.data,
-      respCurrencies.body!.data,
-      respCats.body!.data,
-      respBudgets.body!.data,
-      respBills.body!.data,
+      respAccounts.data,
+      respCurrencies.data,
+      respCats.data,
+      respBudgets.data,
+      respBills.data,
     );
   }
 
@@ -234,8 +247,7 @@ class FilterDialog extends StatelessWidget {
                           name: S
                               .of(context)
                               .homeTransactionsDialogFilterAccountsAll,
-                          type:
-                              ShortAccountTypeProperty.swaggerGeneratedUnknown,
+                          type: ShortAccountTypeProperty.$unknown,
                         ),
                       ),
                       label:
@@ -453,8 +465,7 @@ class FilterDialog extends StatelessWidget {
                           amountMax: "0",
                           amountMin: "0",
                           date: DateTime.now(),
-                          repeatFreq:
-                              BillRepeatFrequency.swaggerGeneratedUnknown,
+                          repeatFreq: BillRepeatFrequency.$unknown,
                           name: S
                               .of(context)
                               .homeTransactionsDialogFilterBillsAll,
@@ -470,8 +481,7 @@ class FilterDialog extends StatelessWidget {
                           amountMax: "0",
                           amountMin: "0",
                           date: DateTime.now(),
-                          repeatFreq:
-                              BillRepeatFrequency.swaggerGeneratedUnknown,
+                          repeatFreq: BillRepeatFrequency.$unknown,
                           name: S
                               .of(context)
                               .homeTransactionsDialogFilterBillUnset,

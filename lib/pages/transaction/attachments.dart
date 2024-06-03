@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
@@ -10,13 +11,20 @@ import 'package:logging/logging.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show HttpMethod, Response;
 import 'package:file_picker/file_picker.dart';
 import 'package:filesize/filesize.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 
 import 'package:waterflyiii/auth.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show
+        APIv1,
+        AttachableType,
+        Attachment,
+        AttachmentRead,
+        AttachmentSingle,
+        AttachmentStore,
+        ValidationErrorResponse;
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
 
 class AttachmentDialog extends StatefulWidget {
@@ -59,7 +67,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     final String filePath = "${tmpPath.path}/${attachment.attributes.filename}";
 
     final http.Request request = http.Request(
-      HttpMethod.Get,
+      "GET",
       Uri.parse(attachment.attributes.downloadUrl!),
     );
     request.headers.addAll(user.headers());
@@ -123,7 +131,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     AttachmentRead attachment,
     int i,
   ) async {
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
     bool? ok = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) =>
@@ -133,7 +141,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       return;
     }
 
-    await api.v1AttachmentsIdDelete(id: attachment.id);
+    await api.attachments.deleteAttachment(id: attachment.id);
     setState(() {
       widget.attachments.removeAt(i);
     });
@@ -141,7 +149,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
 
   void uploadAttachment(BuildContext context, PlatformFile file) async {
     final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
     final AuthUser? user = context.read<FireflyService>().user;
     final S l10n = S.of(context);
 
@@ -149,19 +157,20 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       throw Exception(l10n.errorAPIUnavailable);
     }
 
-    final Response<AttachmentSingle> respAttachment =
-        await api.v1AttachmentsPost(
-      body: AttachmentStore(
-        filename: file.name,
-        attachableType: AttachableType.transactionjournal,
-        attachableId: widget.transactionId!,
-      ),
-    );
-    if (!respAttachment.isSuccessful || respAttachment.body == null) {
+    late AttachmentSingle respAttachment;
+    try {
+      respAttachment = await api.attachments.storeAttachment(
+        body: AttachmentStore(
+          filename: file.name,
+          attachableType: AttachableType.transactionJournal,
+          attachableId: widget.transactionId!,
+        ),
+      );
+    } on DioException catch (e) {
       late String error;
       try {
         ValidationErrorResponse valError = ValidationErrorResponse.fromJson(
-            json.decode(respAttachment.error.toString()));
+            json.decode(e.response.toString()));
         error = valError.message ?? l10n.errorUnknown;
       } catch (_) {
         error = l10n.errorUnknown;
@@ -172,12 +181,28 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       ));
       return;
     }
-    AttachmentRead newAttachment = respAttachment.body!.data;
+    AttachmentRead newAttachment = respAttachment.data;
     int newAttachmentIndex =
         widget.attachments.length; // Will be added later, no -1 needed.
     final int total = file.size;
-    newAttachment = newAttachment.copyWith(
-      attributes: newAttachment.attributes.copyWith(size: total),
+    newAttachment = AttachmentRead(
+      id: newAttachment.id,
+      links: newAttachment.links,
+      type: newAttachment.type,
+      attributes: Attachment(
+        attachableId: newAttachment.attributes.attachableId,
+        attachableType: newAttachment.attributes.attachableType,
+        filename: newAttachment.attributes.filename,
+        createdAt: newAttachment.attributes.createdAt,
+        downloadUrl: newAttachment.attributes.downloadUrl,
+        md5: newAttachment.attributes.md5,
+        mime: newAttachment.attributes.mime,
+        notes: newAttachment.attributes.notes,
+        title: newAttachment.attributes.title,
+        updatedAt: newAttachment.attributes.updatedAt,
+        uploadUrl: newAttachment.attributes.uploadUrl,
+        size: total,
+      ),
     );
     int sent = 0;
 
@@ -187,7 +212,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     });
 
     final http.StreamedRequest request = http.StreamedRequest(
-      HttpMethod.Post,
+      "POST",
       Uri.parse(newAttachment.attributes.uploadUrl!),
     );
     request.headers.addAll(user.headers());
@@ -233,7 +258,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       content: Text(l10n.transactionDialogAttachmentsErrorUpload(error)),
       behavior: SnackBarBehavior.floating,
     ));
-    await api.v1AttachmentsIdDelete(id: newAttachment.id);
+    await api.attachments.deleteAttachment(id: newAttachment.id);
     setState(() {
       widget.attachments.removeAt(newAttachmentIndex);
     });
@@ -279,13 +304,13 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       type: "attachments",
       id: widget.attachments.length.toString(),
       attributes: Attachment(
-        attachableType: AttachableType.transactionjournal,
+        attachableType: AttachableType.transactionJournal,
         attachableId: "FAKE",
         filename: file.name,
         uploadUrl: file.path,
         size: file.size,
       ),
-      links: const ObjectLink(),
+      links: null,
     );
     setState(() {
       widget.attachments.add(newAttachment);

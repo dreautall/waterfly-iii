@@ -1,18 +1,30 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show Response;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show
+        APIv1,
+        Currency,
+        CurrencyRead,
+        PiggyBankArray,
+        PiggyBankEventArray,
+        PiggyBankEventRead,
+        PiggyBankRead,
+        PiggyBankSingle,
+        PiggyBankUpdate,
+        TransactionTypeProperty,
+        ValidationErrorResponse;
 import 'package:waterflyiii/pages/home/piggybank/chart.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
@@ -54,15 +66,14 @@ class _HomePiggybankState extends State<HomePiggybank>
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final FireflyIii api = context.read<FireflyService>().api;
-      final Response<PiggyBankArray> respAccounts = await api.v1PiggyBanksGet(
+      final APIv1 api = context.read<FireflyService>().api;
+      final PiggyBankArray respAccounts = await api.piggyBanks.listPiggyBank(
         page: pageKey,
         limit: _numberOfItemsPerRequest,
       );
-      apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
 
       if (mounted) {
-        final List<PiggyBankRead> piggyList = respAccounts.body!.data;
+        final List<PiggyBankRead> piggyList = respAccounts.data;
         piggyList.sortByCompare(
             (PiggyBankRead element) => element.attributes.objectGroupOrder,
             (int? a, int? b) => (a ?? 0).compareTo(b ?? 0));
@@ -269,13 +280,12 @@ class _PiggyDetailsState extends State<PiggyDetails> {
   double? selectedValue;
 
   Future<List<PiggyBankEventRead>> _fetchChart() async {
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
 
-    final Response<PiggyBankEventArray> response =
-        await api.v1PiggyBanksIdEventsGet(id: currentPiggy.id);
-    apiThrowErrorIfEmpty(response, mounted ? context : null);
+    final PiggyBankEventArray response =
+        await api.piggyBanks.listEventByPiggyBank(id: currentPiggy.id);
 
-    return response.body!.data.sortedBy<DateTime>((PiggyBankEventRead e) =>
+    return response.data.sortedBy<DateTime>((PiggyBankEventRead e) =>
         e.attributes.createdAt ?? e.attributes.updatedAt ?? DateTime.now());
   }
 
@@ -519,7 +529,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
             ),
             FilledButton(
               onPressed: () async {
-                final FireflyIii api = context.read<FireflyService>().api;
+                final APIv1 api = context.read<FireflyService>().api;
                 final NavigatorState nav = Navigator.of(context);
 
                 double amount =
@@ -533,20 +543,21 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                 final double totalAmount = currentAmount + amount;
                 log.finest(() =>
                     "New piggy bank total = $totalAmount out of $currentAmount + $amount");
-                final Response<PiggyBankSingle> resp =
-                    await api.v1PiggyBanksIdPut(
-                  id: widget.piggy.id,
-                  body: PiggyBankUpdate(
-                    currentAmount: totalAmount.toStringAsFixed(
-                        currency.attributes.decimalPlaces ?? 2),
-                  ),
-                );
-                if (!resp.isSuccessful || resp.body == null) {
+                late PiggyBankSingle resp;
+                try {
+                  resp = await api.piggyBanks.updatePiggyBank(
+                    id: widget.piggy.id,
+                    body: PiggyBankUpdate(
+                      currentAmount: totalAmount.toStringAsFixed(
+                          currency.attributes.decimalPlaces ?? 2),
+                    ),
+                  );
+                } on DioException catch (e) {
                   late String error;
                   try {
                     ValidationErrorResponse valError =
                         ValidationErrorResponse.fromJson(
-                            json.decode(resp.error.toString()));
+                            json.decode(e.response.toString()));
                     if (context.mounted) {
                       error = valError.message ?? S.of(context).errorUnknown;
                     } else {
@@ -581,7 +592,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                   }
                   return;
                 }
-                nav.pop(resp.body);
+                nav.pop(resp);
               },
               child: Text(MaterialLocalizations.of(context).saveButtonLabel),
             ),

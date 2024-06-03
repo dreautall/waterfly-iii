@@ -95,9 +95,9 @@ class AuthErrorNoInstance extends AuthError {
 }
 
 http.Client get httpClient => CronetClient.fromCronetEngine(
-  CronetEngine.build(),
-  closeEngine: false
-);
+      CronetEngine.build(),
+      closeEngine: false,
+    );
 
 class APIRequestInterceptor implements Interceptor {
   APIRequestInterceptor(this.headerFunc);

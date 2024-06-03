@@ -5,11 +5,10 @@ import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show Response;
-
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show AccountArray, AccountRead, AccountTypeFilter, Currency, CurrencyRead;
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/widgets/fabs.dart';
 
@@ -26,15 +25,11 @@ class _HomeBalanceState extends State<HomeBalance>
     with AutomaticKeepAliveClientMixin {
   final Logger log = Logger("Pages.Home.Balance");
 
-  Future<AccountArray> _fetchAccounts() async {
-    final FireflyIii api = context.read<FireflyService>().api;
-
-    final Response<AccountArray> respAccounts =
-        await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
-    apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
-
-    return Future<AccountArray>.value(respAccounts.body);
-  }
+  Future<AccountArray> _fetchAccounts() async => context
+      .read<FireflyService>()
+      .api
+      .accounts
+      .listAccount(type: AccountTypeFilter.assetAccount);
 
   Future<void> _refreshStats() async {
     setState(() {});
@@ -61,7 +56,7 @@ class _HomeBalanceState extends State<HomeBalance>
               children: <Widget>[
                 ...snapshot.data!.data.map(
                   (AccountRead account) {
-                    if (!(account.attributes.active ?? false)) {
+                    if (!account.attributes.active) {
                       return const SizedBox.shrink();
                     }
                     final double balance =

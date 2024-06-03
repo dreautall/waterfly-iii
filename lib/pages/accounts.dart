@@ -4,12 +4,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show Response;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:waterflyiii/animations.dart';
 
 import 'package:waterflyiii/auth.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show APIv1, AccountArray, AccountRead, AccountTypeFilter;
 import 'package:waterflyiii/pages/home/accounts/row.dart';
 import 'package:waterflyiii/pages/home/accounts/search.dart';
 import 'package:waterflyiii/pages/navigation.dart';
@@ -162,16 +162,15 @@ class _AccountDetailsState extends State<AccountDetails>
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final FireflyIii api = context.read<FireflyService>().api;
+      final APIv1 api = context.read<FireflyService>().api;
 
-      final Response<AccountArray> respAccounts = await api.v1AccountsGet(
+      final AccountArray respAccounts = await api.accounts.listAccount(
         type: widget.accountType,
         page: pageKey,
       );
-      apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
 
       if (mounted) {
-        final List<AccountRead> accountList = respAccounts.body!.data;
+        final List<AccountRead> accountList = respAccounts.data;
         final bool isLastPage = accountList.length < _numberOfItemsPerRequest;
         if (isLastPage) {
           _pagingController.appendLastPage(accountList);

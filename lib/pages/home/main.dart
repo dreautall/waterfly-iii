@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show Response;
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
 import 'package:version/version.dart';
@@ -15,12 +14,8 @@ import 'package:version/version.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii_v2.enums.swagger.dart'
-    as api_v2_enums;
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii_v2.swagger.dart'
-    as api_v2;
+import 'package:waterflyiii/generated/api/v1/export.dart';
+import 'package:waterflyiii/generated/api/v2/export.dart' as api_v2;
 import 'package:waterflyiii/pages/home/main_charts/category.dart';
 import 'package:waterflyiii/pages/home/main_charts/lastdays.dart';
 import 'package:waterflyiii/pages/home/main_charts/netearnings.dart';
@@ -65,7 +60,7 @@ class _HomeMainState extends State<HomeMain>
       return true;
     }*/
 
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
     // Use noon due to dailylight saving time
@@ -77,26 +72,24 @@ class _HomeMainState extends State<HomeMain>
 
     // With a new API the number of API calls is reduced from 14 to 2
     if (context.read<FireflyService>().apiVersion! >= Version(2, 0, 7)) {
-      final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
+      final api_v2.APIv2 apiV2 = context.read<FireflyService>().apiV2;
 
       final List<int> accounts = <int>[];
-      final Response<AccountArray> respAccounts =
-          await api.v1AccountsGet(type: AccountTypeFilter.asset);
-      respAccounts.body?.data.forEach(
-        (AccountRead element) => accounts.add(int.parse(element.id)),
+      final AccountArray respAccounts =
+          await api.accounts.listAccount(type: AccountTypeFilter.asset);
+      for (AccountRead element in respAccounts.data) {
+        accounts.add(int.parse(element.id));
+      }
+
+      final List<api_v2.ChartDataSetV2> respBalanceData =
+          await apiV2.charts.getBalanceChart(
+        start: now.copyWith(day: now.day - 6),
+        end: now,
+        object3: accounts,
+        period: api_v2.PeriodProperty.value1D,
       );
 
-      final Response<List<api_v2.ChartDataSetV2>> respBalanceData =
-          await apiV2.v2ChartBalanceBalanceGet(
-        start: DateFormat('yyyy-MM-dd', 'en_US')
-            .format(now.copyWith(day: now.day - 6)),
-        end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-        accounts: accounts,
-        period: api_v2.PeriodProperty.value_1d,
-      );
-      apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
-
-      for (api_v2.ChartDataSetV2 e in respBalanceData.body!) {
+      for (api_v2.ChartDataSetV2 e in respBalanceData) {
         final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
         entries.forEach(
           (String dateStr, dynamic valueStr) {
@@ -125,26 +118,24 @@ class _HomeMainState extends State<HomeMain>
       }
 
       for (DateTime e in lastDays) {
-        final Response<InsightTotal> respInsightExpense =
-            await api.v1InsightExpenseTotalGet(
-          start: DateFormat('yyyy-MM-dd', 'en_US').format(e),
-          end: DateFormat('yyyy-MM-dd', 'en_US').format(e),
+        final InsightTotal respInsightExpense =
+            await api.insight.insightExpenseTotal(
+          start: e,
+          end: e,
         );
-        apiThrowErrorIfEmpty(respInsightExpense, mounted ? context : null);
 
-        lastDaysExpense[e] = (respInsightExpense.body?.isNotEmpty ?? false)
-            ? respInsightExpense.body?.first.differenceFloat ?? 0
+        lastDaysExpense[e] = respInsightExpense.isNotEmpty
+            ? respInsightExpense.first.differenceFloat ?? 0
             : 0;
 
-        final Response<InsightTotal> respInsightIncome =
-            await api.v1InsightIncomeTotalGet(
-          start: DateFormat('yyyy-MM-dd', 'en_US').format(e),
-          end: DateFormat('yyyy-MM-dd', 'en_US').format(e),
+        final InsightTotal respInsightIncome =
+            await api.insight.insightIncomeTotal(
+          start: e,
+          end: e,
         );
-        apiThrowErrorIfEmpty(respInsightIncome, mounted ? context : null);
 
-        lastDaysIncome[e] = (respInsightIncome.body?.isNotEmpty ?? false)
-            ? respInsightIncome.body?.first.differenceFloat ?? 0
+        lastDaysIncome[e] = respInsightIncome.isNotEmpty
+            ? respInsightIncome.first.differenceFloat ?? 0
             : 0;
       }
     }
@@ -158,20 +149,17 @@ class _HomeMainState extends State<HomeMain>
       return true;
     }*/
 
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
     final DateTime now = tzHandler.sNow().clearTime();
 
-    final Response<ChartLine> respChartData =
-        await api.v1ChartAccountOverviewGet(
-      start: DateFormat('yyyy-MM-dd', 'en_US')
-          .format(now.copyWith(month: now.month - 3)),
-      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+    final ChartLine respChartData = await api.charts.getChartAccountOverview(
+      start: now.copyWith(month: now.month - 3),
+      end: now,
     );
-    apiThrowErrorIfEmpty(respChartData, mounted ? context : null);
 
-    overviewChartData = respChartData.body!;
+    overviewChartData = respChartData;
 
     return true;
   }
@@ -182,7 +170,7 @@ class _HomeMainState extends State<HomeMain>
       return true;
     }*/
 
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
     final DateTime now = tzHandler.sNow().clearTime();
@@ -203,25 +191,23 @@ class _HomeMainState extends State<HomeMain>
         start = e;
         end = e.copyWith(month: e.month + 1, day: 0);
       }
-      final Response<InsightTotal> respInsightExpense =
-          await api.v1InsightExpenseTotalGet(
-        start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
-        end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
+      final InsightTotal respInsightExpense =
+          await api.insight.insightExpenseTotal(
+        start: start,
+        end: end,
       );
-      apiThrowErrorIfEmpty(respInsightExpense, mounted ? context : null);
 
-      lastMonthsExpense[e] = respInsightExpense.body!.isNotEmpty
-          ? respInsightExpense.body!.first
+      lastMonthsExpense[e] = respInsightExpense.isNotEmpty
+          ? respInsightExpense.first
           : const InsightTotalEntry(differenceFloat: 0);
-      final Response<InsightTotal> respInsightIncome =
-          await api.v1InsightIncomeTotalGet(
-        start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
-        end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
+      final InsightTotal respInsightIncome =
+          await api.insight.insightIncomeTotal(
+        start: start,
+        end: end,
       );
-      apiThrowErrorIfEmpty(respInsightIncome, mounted ? context : null);
 
-      lastMonthsIncome[e] = respInsightIncome.body!.isNotEmpty
-          ? respInsightIncome.body!.first
+      lastMonthsIncome[e] = respInsightIncome.isNotEmpty
+          ? respInsightIncome.first
           : const InsightTotalEntry(differenceFloat: 0);
     }
 
@@ -252,35 +238,33 @@ class _HomeMainState extends State<HomeMain>
       return true;
     }*/
 
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
     final DateTime now = tzHandler.sNow().clearTime();
 
     catChartData.clear();
 
-    final Response<InsightGroup> respCatIncomeData =
-        await api.v1InsightIncomeCategoryGet(
-      start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
-      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+    final InsightGroup respCatIncomeData =
+        await api.insight.insightIncomeCategory(
+      start: now.copyWith(day: 1),
+      end: now,
     );
-    final Response<InsightGroup> respCatExpenseData =
-        await api.v1InsightExpenseCategoryGet(
-      start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
-      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+    final InsightGroup respCatExpenseData =
+        await api.insight.insightExpenseCategory(
+      start: now.copyWith(day: 1),
+      end: now,
     );
-    apiThrowErrorIfEmpty(respCatExpenseData, mounted ? context : null);
 
     Map<String, double> catIncomes = <String, double>{};
-    for (InsightGroupEntry cat
-        in respCatIncomeData.body ?? <InsightGroupEntry>[]) {
+    for (InsightGroupEntry cat in respCatIncomeData) {
       if (cat.id?.isEmpty ?? true) {
         continue;
       }
       catIncomes[cat.id!] = cat.differenceFloat ?? 0;
     }
 
-    for (InsightGroupEntry cat in respCatExpenseData.body!) {
+    for (InsightGroupEntry cat in respCatExpenseData) {
       if (cat.id?.isEmpty ?? true) {
         continue;
       }
@@ -292,31 +276,37 @@ class _HomeMainState extends State<HomeMain>
       if (amount >= 0) {
         continue;
       }
-      catChartData.add(cat.copyWith(differenceFloat: amount));
+      catChartData.add(
+        InsightGroupEntry(
+            id: cat.id,
+            currencyCode: cat.currencyCode,
+            currencyId: cat.currencyId,
+            difference: cat.difference,
+            name: cat.name,
+            differenceFloat: amount),
+      );
     }
 
     return true;
   }
 
   Future<List<BudgetLimitRead>> _fetchBudgets() async {
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
-    final Response<BudgetArray> respBudgetInfos = await api.v1BudgetsGet();
-    apiThrowErrorIfEmpty(respBudgetInfos, mounted ? context : null);
+    final BudgetArray respBudgetInfos = await api.budgets.listBudget();
 
-    for (BudgetRead budget in respBudgetInfos.body!.data) {
+    for (BudgetRead budget in respBudgetInfos.data) {
       budgetInfos[budget.id] = budget.attributes;
     }
 
     final DateTime now = tzHandler.sNow().clearTime();
-    final Response<BudgetLimitArray> respBudgets = await api.v1BudgetLimitsGet(
-      start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
-      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+    final BudgetLimitArray respBudgets = await api.budgets.listBudgetLimit(
+      start: now.copyWith(day: 1),
+      end: now,
     );
-    apiThrowErrorIfEmpty(respBudgets, mounted ? context : null);
 
-    respBudgets.body!.data.sort((BudgetLimitRead a, BudgetLimitRead b) {
+    respBudgets.data.sort((BudgetLimitRead a, BudgetLimitRead b) {
       Budget? budgetA = budgetInfos[a.attributes.budgetId];
       Budget? budgetB = budgetInfos[b.attributes.budgetId];
 
@@ -334,23 +324,22 @@ class _HomeMainState extends State<HomeMain>
       return a.attributes.start.compareTo(b.attributes.start);
     });
 
-    return respBudgets.body!.data;
+    return respBudgets.data;
   }
 
   Future<List<BillRead>> _fetchBills() async {
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
     final DateTime now = tzHandler.sNow().clearTime();
     final DateTime end = now.copyWith(day: now.day + 7);
 
-    final Response<BillArray> respBills = await api.v1BillsGet(
-      start: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-      end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
+    final BillArray respBills = await api.bills.listBill(
+      start: now,
+      end: end,
     );
-    apiThrowErrorIfEmpty(respBills, mounted ? context : null);
 
-    return respBills.body!.data
+    return respBills.data
         .where((BillRead e) => (e.attributes.nextExpectedMatch != null
                 ? tzHandler.sTime(e.attributes.nextExpectedMatch!)
                 : end.copyWith(day: end.day + 2))
@@ -366,8 +355,8 @@ class _HomeMainState extends State<HomeMain>
       return true;
     }*/
 
-    final FireflyIii api = context.read<FireflyService>().api;
-    final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
+    final APIv1 api = context.read<FireflyService>().api;
+    final api_v2.APIv2 apiV2 = context.read<FireflyService>().apiV2;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
     final DateTime now = tzHandler.sNow().clearTime();
@@ -391,30 +380,27 @@ class _HomeMainState extends State<HomeMain>
     lastMonthsAssets.clear();
     lastMonthsLiabilities.clear();
 
-    final Response<AccountArray> respAssetAccounts =
-        await api.v1AccountsGet(type: AccountTypeFilter.asset);
-    apiThrowErrorIfEmpty(respAssetAccounts, mounted ? context : null);
+    final AccountArray respAssetAccounts =
+        await api.accounts.listAccount(type: AccountTypeFilter.asset);
     final Map<String, bool> includeInNetWorth = <String, bool>{
-      for (AccountRead e in respAssetAccounts.body!.data)
-        e.attributes.name: e.attributes.includeNetWorth ?? true
+      for (AccountRead e in respAssetAccounts.data)
+        e.attributes.name: e.attributes.includeNetWorth
     };
-    final Response<AccountArray> respLiabilityAccounts =
-        await api.v1AccountsGet(type: AccountTypeFilter.liabilities);
-    apiThrowErrorIfEmpty(respLiabilityAccounts, mounted ? context : null);
+    final AccountArray respLiabilityAccounts =
+        await api.accounts.listAccount(type: AccountTypeFilter.liabilities);
     includeInNetWorth.addAll(<String, bool>{
-      for (AccountRead e in respLiabilityAccounts.body!.data)
-        e.attributes.name: e.attributes.includeNetWorth ?? true
+      for (AccountRead e in respLiabilityAccounts.data)
+        e.attributes.name: e.attributes.includeNetWorth
     });
 
-    final Response<List<api_v2.ChartDataSetV2>> respBalanceData =
-        await apiV2.v2ChartAccountDashboardGet(
-      start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
-      end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
-      preselected: api_v2_enums.PreselectedAccountProperty.assets,
+    final List<api_v2.ChartDataSetV2> respBalanceData =
+        await apiV2.charts.getChartAccountOverview(
+      start: start,
+      end: end,
+      preselected: api_v2.PreselectedAccountProperty.assets,
     );
-    apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
 
-    for (api_v2.ChartDataSetV2 e in respBalanceData.body!) {
+    for (api_v2.ChartDataSetV2 e in respBalanceData) {
       if (includeInNetWorth.containsKey(e.label) &&
           includeInNetWorth[e.label] != true) {
         continue;
@@ -1255,7 +1241,7 @@ class BillList extends StatelessWidget {
                           ),
                           TextSpan(
                             text: S.of(context).homeMainBillsInterval(
-                                  bill.attributes.repeatFreq.value ?? "",
+                                  bill.attributes.repeatFreq.json ?? "",
                                 ),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),

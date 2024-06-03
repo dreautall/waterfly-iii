@@ -51,6 +51,7 @@ enum RuleActionKeyword {
   convertTransfer('convert_transfer'),
   @JsonValue('delete_transaction')
   deleteTransaction('delete_transaction'),
+
   /// Default value for all unparsed values, allows backward compatibility when adding new values on the backend.
   $unknown(null);
 

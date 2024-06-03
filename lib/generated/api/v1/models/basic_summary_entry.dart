@@ -20,9 +20,10 @@ class BasicSummaryEntry {
     required this.localIcon,
     required this.subTitle,
   });
-  
-  factory BasicSummaryEntry.fromJson(Map<String, Object?> json) => _$BasicSummaryEntryFromJson(json);
-  
+
+  factory BasicSummaryEntry.fromJson(Map<String, Object?> json) =>
+      _$BasicSummaryEntryFromJson(json);
+
   /// This is a reference to the type of info shared, not influenced by translations or user preferences. The EUR value is a reference to the currency code. Possibilities are: balance-in-ABC, spent-in-ABC, earned-in-ABC, bills-paid-in-ABC, bills-unpaid-in-ABC, left-to-spend-in-ABC and net-worth-in-ABC.
   final String key;
 

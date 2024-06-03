@@ -14,9 +14,10 @@ class ValidationErrorResponse {
     required this.message,
     required this.errors,
   });
-  
-  factory ValidationErrorResponse.fromJson(Map<String, Object?> json) => _$ValidationErrorResponseFromJson(json);
-  
+
+  factory ValidationErrorResponse.fromJson(Map<String, Object?> json) =>
+      _$ValidationErrorResponseFromJson(json);
+
   final String message;
   final Errors errors;
 

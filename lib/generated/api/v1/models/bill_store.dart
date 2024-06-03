@@ -26,9 +26,10 @@ class BillStore {
     required this.objectGroupId,
     required this.objectGroupTitle,
   });
-  
-  factory BillStore.fromJson(Map<String, Object?> json) => _$BillStoreFromJson(json);
-  
+
+  factory BillStore.fromJson(Map<String, Object?> json) =>
+      _$BillStoreFromJson(json);
+
   /// Use either currency_id or currency_code
   @JsonKey(name: 'currency_id')
   final String currencyId;

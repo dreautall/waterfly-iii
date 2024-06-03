@@ -14,9 +14,10 @@ class NetWorthArray {
   const NetWorthArray({
     required this.currencyCode,
   });
-  
-  factory NetWorthArray.fromJson(Map<String, Object?> json) => _$NetWorthArrayFromJson(json);
-  
+
+  factory NetWorthArray.fromJson(Map<String, Object?> json) =>
+      _$NetWorthArrayFromJson(json);
+
   @JsonKey(name: 'currency_code')
   final NetWorthItem currencyCode;
 

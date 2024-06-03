@@ -21,9 +21,10 @@ class WebhookUpdate {
     required this.delivery,
     required this.url,
   });
-  
-  factory WebhookUpdate.fromJson(Map<String, Object?> json) => _$WebhookUpdateFromJson(json);
-  
+
+  factory WebhookUpdate.fromJson(Map<String, Object?> json) =>
+      _$WebhookUpdateFromJson(json);
+
   /// Boolean to indicate if the webhook is active
   final bool active;
 

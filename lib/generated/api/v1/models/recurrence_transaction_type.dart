@@ -12,6 +12,7 @@ enum RecurrenceTransactionType {
   transfer('transfer'),
   @JsonValue('deposit')
   deposit('deposit'),
+
   /// Default value for all unparsed values, allows backward compatibility when adding new values on the backend.
   $unknown(null);
 

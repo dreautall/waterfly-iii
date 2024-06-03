@@ -17,9 +17,10 @@ class TransactionLink {
     required this.outwardId,
     required this.notes,
   });
-  
-  factory TransactionLink.fromJson(Map<String, Object?> json) => _$TransactionLinkFromJson(json);
-  
+
+  factory TransactionLink.fromJson(Map<String, Object?> json) =>
+      _$TransactionLinkFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

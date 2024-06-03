@@ -17,9 +17,10 @@ class TagRead {
     required this.attributes,
     required this.links,
   });
-  
-  factory TagRead.fromJson(Map<String, Object?> json) => _$TagReadFromJson(json);
-  
+
+  factory TagRead.fromJson(Map<String, Object?> json) =>
+      _$TagReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

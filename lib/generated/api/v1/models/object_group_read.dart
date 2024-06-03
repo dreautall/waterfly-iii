@@ -15,9 +15,10 @@ class ObjectGroupRead {
     required this.id,
     required this.attributes,
   });
-  
-  factory ObjectGroupRead.fromJson(Map<String, Object?> json) => _$ObjectGroupReadFromJson(json);
-  
+
+  factory ObjectGroupRead.fromJson(Map<String, Object?> json) =>
+      _$ObjectGroupReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

@@ -17,9 +17,10 @@ class RuleActionStore {
     this.active = true,
     this.stopProcessing = false,
   });
-  
-  factory RuleActionStore.fromJson(Map<String, Object?> json) => _$RuleActionStoreFromJson(json);
-  
+
+  factory RuleActionStore.fromJson(Map<String, Object?> json) =>
+      _$RuleActionStoreFromJson(json);
+
   final RuleActionKeyword type;
 
   /// The accompanying value the action will set, change or update. Can be empty, but for some types this value is mandatory.

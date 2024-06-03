@@ -17,9 +17,10 @@ class LinkTypeRead {
     required this.attributes,
     required this.links,
   });
-  
-  factory LinkTypeRead.fromJson(Map<String, Object?> json) => _$LinkTypeReadFromJson(json);
-  
+
+  factory LinkTypeRead.fromJson(Map<String, Object?> json) =>
+      _$LinkTypeReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

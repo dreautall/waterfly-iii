@@ -12,9 +12,10 @@ class BadRequestResponse {
     required this.message,
     required this.exception,
   });
-  
-  factory BadRequestResponse.fromJson(Map<String, Object?> json) => _$BadRequestResponseFromJson(json);
-  
+
+  factory BadRequestResponse.fromJson(Map<String, Object?> json) =>
+      _$BadRequestResponseFromJson(json);
+
   final String message;
   final String exception;
 

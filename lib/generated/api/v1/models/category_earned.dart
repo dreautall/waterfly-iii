@@ -15,9 +15,10 @@ class CategoryEarned {
     required this.currencyDecimalPlaces,
     required this.sum,
   });
-  
-  factory CategoryEarned.fromJson(Map<String, Object?> json) => _$CategoryEarnedFromJson(json);
-  
+
+  factory CategoryEarned.fromJson(Map<String, Object?> json) =>
+      _$CategoryEarnedFromJson(json);
+
   @JsonKey(name: 'currency_id')
   final String currencyId;
   @JsonKey(name: 'currency_code')

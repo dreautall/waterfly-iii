@@ -17,9 +17,10 @@ class LinkTypeArray {
     required this.meta,
     required this.links,
   });
-  
-  factory LinkTypeArray.fromJson(Map<String, Object?> json) => _$LinkTypeArrayFromJson(json);
-  
+
+  factory LinkTypeArray.fromJson(Map<String, Object?> json) =>
+      _$LinkTypeArrayFromJson(json);
+
   final List<LinkTypeRead> data;
   final Meta meta;
   final PageLink links;

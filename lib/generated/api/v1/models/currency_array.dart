@@ -17,9 +17,10 @@ class CurrencyArray {
     required this.meta,
     required this.links,
   });
-  
-  factory CurrencyArray.fromJson(Map<String, Object?> json) => _$CurrencyArrayFromJson(json);
-  
+
+  factory CurrencyArray.fromJson(Map<String, Object?> json) =>
+      _$CurrencyArrayFromJson(json);
+
   final List<CurrencyRead> data;
   final Meta meta;
   final PageLink links;

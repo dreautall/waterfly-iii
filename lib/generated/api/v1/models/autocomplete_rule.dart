@@ -13,9 +13,10 @@ class AutocompleteRule {
     required this.name,
     required this.description,
   });
-  
-  factory AutocompleteRule.fromJson(Map<String, Object?> json) => _$AutocompleteRuleFromJson(json);
-  
+
+  factory AutocompleteRule.fromJson(Map<String, Object?> json) =>
+      _$AutocompleteRuleFromJson(json);
+
   final String id;
 
   /// Name of the rule found by an auto-complete search.

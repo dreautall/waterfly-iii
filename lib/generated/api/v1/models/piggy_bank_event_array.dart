@@ -17,9 +17,10 @@ class PiggyBankEventArray {
     required this.meta,
     required this.links,
   });
-  
-  factory PiggyBankEventArray.fromJson(Map<String, Object?> json) => _$PiggyBankEventArrayFromJson(json);
-  
+
+  factory PiggyBankEventArray.fromJson(Map<String, Object?> json) =>
+      _$PiggyBankEventArrayFromJson(json);
+
   final List<PiggyBankEventRead> data;
   final Meta meta;
   final PageLink links;

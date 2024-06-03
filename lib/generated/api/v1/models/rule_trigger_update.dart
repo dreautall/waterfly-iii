@@ -17,9 +17,10 @@ class RuleTriggerUpdate {
     required this.active,
     required this.stopProcessing,
   });
-  
-  factory RuleTriggerUpdate.fromJson(Map<String, Object?> json) => _$RuleTriggerUpdateFromJson(json);
-  
+
+  factory RuleTriggerUpdate.fromJson(Map<String, Object?> json) =>
+      _$RuleTriggerUpdateFromJson(json);
+
   final RuleTriggerKeyword type;
 
   /// The accompanying value the trigger responds to. This value is often mandatory, but this depends on the trigger. If the rule trigger is something like 'has any tag', submit the string 'true'.

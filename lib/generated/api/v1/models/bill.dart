@@ -37,9 +37,9 @@ class Bill {
     required this.payDates,
     required this.paidDates,
   });
-  
+
   factory Bill.fromJson(Map<String, Object?> json) => _$BillFromJson(json);
-  
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

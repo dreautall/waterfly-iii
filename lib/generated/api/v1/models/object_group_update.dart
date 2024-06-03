@@ -12,9 +12,10 @@ class ObjectGroupUpdate {
     required this.title,
     required this.order,
   });
-  
-  factory ObjectGroupUpdate.fromJson(Map<String, Object?> json) => _$ObjectGroupUpdateFromJson(json);
-  
+
+  factory ObjectGroupUpdate.fromJson(Map<String, Object?> json) =>
+      _$ObjectGroupUpdateFromJson(json);
+
   final String title;
 
   /// Order of the object group

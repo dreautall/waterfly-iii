@@ -17,9 +17,10 @@ class UserRead {
     required this.attributes,
     required this.links,
   });
-  
-  factory UserRead.fromJson(Map<String, Object?> json) => _$UserReadFromJson(json);
-  
+
+  factory UserRead.fromJson(Map<String, Object?> json) =>
+      _$UserReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

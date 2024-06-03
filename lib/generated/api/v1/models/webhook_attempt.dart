@@ -16,9 +16,10 @@ class WebhookAttempt {
     required this.logs,
     required this.response,
   });
-  
-  factory WebhookAttempt.fromJson(Map<String, Object?> json) => _$WebhookAttemptFromJson(json);
-  
+
+  factory WebhookAttempt.fromJson(Map<String, Object?> json) =>
+      _$WebhookAttemptFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

@@ -15,9 +15,10 @@ class SubscriptionArray {
     required this.data,
     required this.meta,
   });
-  
-  factory SubscriptionArray.fromJson(Map<String, Object?> json) => _$SubscriptionArrayFromJson(json);
-  
+
+  factory SubscriptionArray.fromJson(Map<String, Object?> json) =>
+      _$SubscriptionArrayFromJson(json);
+
   final List<SubscriptionRead> data;
   final Meta meta;
 

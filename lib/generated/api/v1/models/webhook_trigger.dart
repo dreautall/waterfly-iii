@@ -13,6 +13,7 @@ enum WebhookTrigger {
   updateTransaction('UPDATE_TRANSACTION'),
   @JsonValue('DESTROY_TRANSACTION')
   destroyTransaction('DESTROY_TRANSACTION'),
+
   /// Default value for all unparsed values, allows backward compatibility when adding new values on the backend.
   $unknown(null);
 

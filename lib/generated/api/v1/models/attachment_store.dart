@@ -17,9 +17,10 @@ class AttachmentStore {
     required this.title,
     required this.notes,
   });
-  
-  factory AttachmentStore.fromJson(Map<String, Object?> json) => _$AttachmentStoreFromJson(json);
-  
+
+  factory AttachmentStore.fromJson(Map<String, Object?> json) =>
+      _$AttachmentStoreFromJson(json);
+
   final String filename;
   @JsonKey(name: 'attachable_type')
   final AttachableType attachableType;

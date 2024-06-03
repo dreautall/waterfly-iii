@@ -25,9 +25,10 @@ class RuleStore {
     this.active = true,
     this.strict = true,
   });
-  
-  factory RuleStore.fromJson(Map<String, Object?> json) => _$RuleStoreFromJson(json);
-  
+
+  factory RuleStore.fromJson(Map<String, Object?> json) =>
+      _$RuleStoreFromJson(json);
+
   final String title;
   final String description;
 

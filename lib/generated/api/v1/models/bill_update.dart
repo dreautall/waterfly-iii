@@ -26,9 +26,10 @@ class BillUpdate {
     required this.objectGroupId,
     required this.objectGroupTitle,
   });
-  
-  factory BillUpdate.fromJson(Map<String, Object?> json) => _$BillUpdateFromJson(json);
-  
+
+  factory BillUpdate.fromJson(Map<String, Object?> json) =>
+      _$BillUpdateFromJson(json);
+
   /// Use either currency_id or currency_code
   @JsonKey(name: 'currency_id')
   final String currencyId;

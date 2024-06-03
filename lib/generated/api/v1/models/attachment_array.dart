@@ -15,9 +15,10 @@ class AttachmentArray {
     required this.data,
     required this.meta,
   });
-  
-  factory AttachmentArray.fromJson(Map<String, Object?> json) => _$AttachmentArrayFromJson(json);
-  
+
+  factory AttachmentArray.fromJson(Map<String, Object?> json) =>
+      _$AttachmentArrayFromJson(json);
+
   final List<AttachmentRead> data;
   final Meta meta;
 

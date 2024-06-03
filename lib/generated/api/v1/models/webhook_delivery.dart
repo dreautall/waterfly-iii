@@ -10,6 +10,7 @@ enum WebhookDelivery {
   /// The name has been replaced because it contains a keyword. Original name: `JSON`.
   @JsonValue('JSON')
   valueJson('JSON'),
+
   /// Default value for all unparsed values, allows backward compatibility when adding new values on the backend.
   $unknown(null);
 

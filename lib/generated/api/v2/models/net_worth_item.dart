@@ -22,9 +22,10 @@ class NetWorthItem {
     required this.nativeCurrencyCode,
     required this.nativeCurrencyDecimalPlaces,
   });
-  
-  factory NetWorthItem.fromJson(Map<String, Object?> json) => _$NetWorthItemFromJson(json);
-  
+
+  factory NetWorthItem.fromJson(Map<String, Object?> json) =>
+      _$NetWorthItemFromJson(json);
+
   /// The net worth as a string in the indicated currency (see below). Can also be negative
   final String balance;
 

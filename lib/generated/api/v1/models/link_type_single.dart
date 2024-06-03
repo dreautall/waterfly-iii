@@ -13,9 +13,10 @@ class LinkTypeSingle {
   const LinkTypeSingle({
     required this.data,
   });
-  
-  factory LinkTypeSingle.fromJson(Map<String, Object?> json) => _$LinkTypeSingleFromJson(json);
-  
+
+  factory LinkTypeSingle.fromJson(Map<String, Object?> json) =>
+      _$LinkTypeSingleFromJson(json);
+
   final LinkTypeRead data;
 
   Map<String, Object?> toJson() => _$LinkTypeSingleToJson(this);

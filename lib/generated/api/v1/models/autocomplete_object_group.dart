@@ -13,9 +13,10 @@ class AutocompleteObjectGroup {
     required this.title,
     required this.name,
   });
-  
-  factory AutocompleteObjectGroup.fromJson(Map<String, Object?> json) => _$AutocompleteObjectGroupFromJson(json);
-  
+
+  factory AutocompleteObjectGroup.fromJson(Map<String, Object?> json) =>
+      _$AutocompleteObjectGroupFromJson(json);
+
   final String id;
 
   /// Title of the object group found by an auto-complete search.

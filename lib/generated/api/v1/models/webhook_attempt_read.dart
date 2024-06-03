@@ -15,9 +15,10 @@ class WebhookAttemptRead {
     required this.id,
     required this.attributes,
   });
-  
-  factory WebhookAttemptRead.fromJson(Map<String, Object?> json) => _$WebhookAttemptReadFromJson(json);
-  
+
+  factory WebhookAttemptRead.fromJson(Map<String, Object?> json) =>
+      _$WebhookAttemptReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

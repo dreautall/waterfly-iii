@@ -23,9 +23,10 @@ class Webhook {
     required this.delivery,
     required this.url,
   });
-  
-  factory Webhook.fromJson(Map<String, Object?> json) => _$WebhookFromJson(json);
-  
+
+  factory Webhook.fromJson(Map<String, Object?> json) =>
+      _$WebhookFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

@@ -20,9 +20,10 @@ class RuleAction {
     this.active = true,
     this.stopProcessing = false,
   });
-  
-  factory RuleAction.fromJson(Map<String, Object?> json) => _$RuleActionFromJson(json);
-  
+
+  factory RuleAction.fromJson(Map<String, Object?> json) =>
+      _$RuleActionFromJson(json);
+
   final String id;
   @JsonKey(name: 'created_at')
   final DateTime createdAt;

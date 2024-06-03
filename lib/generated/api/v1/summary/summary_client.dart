@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../models/basic_summary.dart';
+import '../models/basic_summary_entry.dart';
 
 part 'summary_client.g.dart';
 

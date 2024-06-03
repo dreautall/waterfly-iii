@@ -13,9 +13,10 @@ class AutocompleteRuleGroup {
     required this.name,
     required this.description,
   });
-  
-  factory AutocompleteRuleGroup.fromJson(Map<String, Object?> json) => _$AutocompleteRuleGroupFromJson(json);
-  
+
+  factory AutocompleteRuleGroup.fromJson(Map<String, Object?> json) =>
+      _$AutocompleteRuleGroupFromJson(json);
+
   final String id;
 
   /// Name of the rule group found by an auto-complete search.

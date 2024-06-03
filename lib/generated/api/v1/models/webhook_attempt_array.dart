@@ -15,9 +15,10 @@ class WebhookAttemptArray {
     required this.data,
     required this.meta,
   });
-  
-  factory WebhookAttemptArray.fromJson(Map<String, Object?> json) => _$WebhookAttemptArrayFromJson(json);
-  
+
+  factory WebhookAttemptArray.fromJson(Map<String, Object?> json) =>
+      _$WebhookAttemptArrayFromJson(json);
+
   final List<WebhookAttemptRead> data;
   final Meta meta;
 

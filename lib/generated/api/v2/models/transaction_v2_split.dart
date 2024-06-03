@@ -77,9 +77,10 @@ class TransactionV2Split {
     required this.paymentDate,
     required this.tags,
   });
-  
-  factory TransactionV2Split.fromJson(Map<String, Object?> json) => _$TransactionV2SplitFromJson(json);
-  
+
+  factory TransactionV2Split.fromJson(Map<String, Object?> json) =>
+      _$TransactionV2SplitFromJson(json);
+
   /// User ID
   final String user;
 

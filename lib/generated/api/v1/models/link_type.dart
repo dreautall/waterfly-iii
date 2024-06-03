@@ -14,9 +14,10 @@ class LinkType {
     required this.outward,
     required this.editable,
   });
-  
-  factory LinkType.fromJson(Map<String, Object?> json) => _$LinkTypeFromJson(json);
-  
+
+  factory LinkType.fromJson(Map<String, Object?> json) =>
+      _$LinkTypeFromJson(json);
+
   final String name;
   final String inward;
   final String outward;

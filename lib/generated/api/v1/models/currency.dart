@@ -18,9 +18,10 @@ class Currency {
     required this.decimalPlaces,
     this.enabled = true,
   });
-  
-  factory Currency.fromJson(Map<String, Object?> json) => _$CurrencyFromJson(json);
-  
+
+  factory Currency.fromJson(Map<String, Object?> json) =>
+      _$CurrencyFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

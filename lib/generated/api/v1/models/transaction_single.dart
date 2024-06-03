@@ -13,9 +13,10 @@ class TransactionSingle {
   const TransactionSingle({
     required this.data,
   });
-  
-  factory TransactionSingle.fromJson(Map<String, Object?> json) => _$TransactionSingleFromJson(json);
-  
+
+  factory TransactionSingle.fromJson(Map<String, Object?> json) =>
+      _$TransactionSingleFromJson(json);
+
   final TransactionRead data;
 
   Map<String, Object?> toJson() => _$TransactionSingleToJson(this);

@@ -17,9 +17,10 @@ class TransactionRead {
     required this.attributes,
     required this.links,
   });
-  
-  factory TransactionRead.fromJson(Map<String, Object?> json) => _$TransactionReadFromJson(json);
-  
+
+  factory TransactionRead.fromJson(Map<String, Object?> json) =>
+      _$TransactionReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

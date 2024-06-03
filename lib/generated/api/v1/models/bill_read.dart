@@ -15,9 +15,10 @@ class BillRead {
     required this.id,
     required this.attributes,
   });
-  
-  factory BillRead.fromJson(Map<String, Object?> json) => _$BillReadFromJson(json);
-  
+
+  factory BillRead.fromJson(Map<String, Object?> json) =>
+      _$BillReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

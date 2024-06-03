@@ -15,9 +15,10 @@ class CategoryArray {
     required this.data,
     required this.meta,
   });
-  
-  factory CategoryArray.fromJson(Map<String, Object?> json) => _$CategoryArrayFromJson(json);
-  
+
+  factory CategoryArray.fromJson(Map<String, Object?> json) =>
+      _$CategoryArrayFromJson(json);
+
   final List<CategoryRead> data;
   final Meta meta;
 

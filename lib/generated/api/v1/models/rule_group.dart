@@ -16,9 +16,10 @@ class RuleGroup {
     required this.order,
     required this.active,
   });
-  
-  factory RuleGroup.fromJson(Map<String, Object?> json) => _$RuleGroupFromJson(json);
-  
+
+  factory RuleGroup.fromJson(Map<String, Object?> json) =>
+      _$RuleGroupFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

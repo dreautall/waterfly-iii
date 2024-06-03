@@ -17,9 +17,10 @@ class WebhookMessage {
     required this.uuid,
     required this.message,
   });
-  
-  factory WebhookMessage.fromJson(Map<String, Object?> json) => _$WebhookMessageFromJson(json);
-  
+
+  factory WebhookMessage.fromJson(Map<String, Object?> json) =>
+      _$WebhookMessageFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

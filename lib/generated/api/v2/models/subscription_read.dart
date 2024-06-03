@@ -15,9 +15,10 @@ class SubscriptionRead {
     required this.id,
     required this.attributes,
   });
-  
-  factory SubscriptionRead.fromJson(Map<String, Object?> json) => _$SubscriptionReadFromJson(json);
-  
+
+  factory SubscriptionRead.fromJson(Map<String, Object?> json) =>
+      _$SubscriptionReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

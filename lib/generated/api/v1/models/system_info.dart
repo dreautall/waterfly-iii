@@ -13,9 +13,10 @@ class SystemInfo {
   const SystemInfo({
     required this.data,
   });
-  
-  factory SystemInfo.fromJson(Map<String, Object?> json) => _$SystemInfoFromJson(json);
-  
+
+  factory SystemInfo.fromJson(Map<String, Object?> json) =>
+      _$SystemInfoFromJson(json);
+
   final Data data;
 
   Map<String, Object?> toJson() => _$SystemInfoToJson(this);

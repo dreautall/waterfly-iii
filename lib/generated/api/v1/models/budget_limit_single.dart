@@ -13,9 +13,10 @@ class BudgetLimitSingle {
   const BudgetLimitSingle({
     required this.data,
   });
-  
-  factory BudgetLimitSingle.fromJson(Map<String, Object?> json) => _$BudgetLimitSingleFromJson(json);
-  
+
+  factory BudgetLimitSingle.fromJson(Map<String, Object?> json) =>
+      _$BudgetLimitSingleFromJson(json);
+
   final BudgetLimitRead data;
 
   Map<String, Object?> toJson() => _$BudgetLimitSingleToJson(this);

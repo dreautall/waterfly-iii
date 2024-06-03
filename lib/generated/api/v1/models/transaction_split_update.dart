@@ -61,9 +61,10 @@ class TransactionSplitUpdate {
     required this.paymentDate,
     required this.externalId,
   });
-  
-  factory TransactionSplitUpdate.fromJson(Map<String, Object?> json) => _$TransactionSplitUpdateFromJson(json);
-  
+
+  factory TransactionSplitUpdate.fromJson(Map<String, Object?> json) =>
+      _$TransactionSplitUpdateFromJson(json);
+
   /// Transaction journal ID of current transaction (split).
   @JsonKey(name: 'transaction_journal_id')
   final String transactionJournalId;

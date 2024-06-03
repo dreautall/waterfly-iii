@@ -15,9 +15,10 @@ class CurrencyV2Read {
     required this.id,
     required this.attributes,
   });
-  
-  factory CurrencyV2Read.fromJson(Map<String, Object?> json) => _$CurrencyV2ReadFromJson(json);
-  
+
+  factory CurrencyV2Read.fromJson(Map<String, Object?> json) =>
+      _$CurrencyV2ReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

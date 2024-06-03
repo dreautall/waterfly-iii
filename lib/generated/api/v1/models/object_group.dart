@@ -14,9 +14,10 @@ class ObjectGroup {
     required this.title,
     required this.order,
   });
-  
-  factory ObjectGroup.fromJson(Map<String, Object?> json) => _$ObjectGroupFromJson(json);
-  
+
+  factory ObjectGroup.fromJson(Map<String, Object?> json) =>
+      _$ObjectGroupFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

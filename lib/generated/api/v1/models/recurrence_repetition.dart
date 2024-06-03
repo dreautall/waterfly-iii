@@ -21,9 +21,10 @@ class RecurrenceRepetition {
     required this.description,
     required this.occurrences,
   });
-  
-  factory RecurrenceRepetition.fromJson(Map<String, Object?> json) => _$RecurrenceRepetitionFromJson(json);
-  
+
+  factory RecurrenceRepetition.fromJson(Map<String, Object?> json) =>
+      _$RecurrenceRepetitionFromJson(json);
+
   final String id;
   @JsonKey(name: 'created_at')
   final DateTime createdAt;

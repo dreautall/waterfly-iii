@@ -13,9 +13,10 @@ class RuleGroupSingle {
   const RuleGroupSingle({
     required this.data,
   });
-  
-  factory RuleGroupSingle.fromJson(Map<String, Object?> json) => _$RuleGroupSingleFromJson(json);
-  
+
+  factory RuleGroupSingle.fromJson(Map<String, Object?> json) =>
+      _$RuleGroupSingleFromJson(json);
+
   final RuleGroupRead data;
 
   Map<String, Object?> toJson() => _$RuleGroupSingleToJson(this);

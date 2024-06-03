@@ -6,8 +6,11 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../models/insight_group.dart';
+import '../models/insight_group_entry.dart';
 import '../models/insight_total.dart';
+import '../models/insight_total_entry.dart';
 import '../models/insight_transfer.dart';
+import '../models/insight_transfer_entry.dart';
 
 part 'insight_client.g.dart';
 

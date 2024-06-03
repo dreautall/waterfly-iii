@@ -23,9 +23,10 @@ class RecurrenceUpdate {
     required this.repetitions,
     required this.transactions,
   });
-  
-  factory RecurrenceUpdate.fromJson(Map<String, Object?> json) => _$RecurrenceUpdateFromJson(json);
-  
+
+  factory RecurrenceUpdate.fromJson(Map<String, Object?> json) =>
+      _$RecurrenceUpdateFromJson(json);
+
   final String title;
 
   /// Not to be confused with the description of the actual transaction(s) being created.

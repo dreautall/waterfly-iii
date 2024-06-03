@@ -13,9 +13,10 @@ class PreferenceUpdate {
   const PreferenceUpdate({
     required this.data,
   });
-  
-  factory PreferenceUpdate.fromJson(Map<String, Object?> json) => _$PreferenceUpdateFromJson(json);
-  
+
+  factory PreferenceUpdate.fromJson(Map<String, Object?> json) =>
+      _$PreferenceUpdateFromJson(json);
+
   final PolymorphicProperty data;
 
   Map<String, Object?> toJson() => _$PreferenceUpdateToJson(this);

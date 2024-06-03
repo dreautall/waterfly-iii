@@ -22,9 +22,10 @@ class TransactionSum {
     required this.sum,
     required this.nativeSum,
   });
-  
-  factory TransactionSum.fromJson(Map<String, Object?> json) => _$TransactionSumFromJson(json);
-  
+
+  factory TransactionSum.fromJson(Map<String, Object?> json) =>
+      _$TransactionSumFromJson(json);
+
   /// ID of the currency of this sum.
   @JsonKey(name: 'currency_id')
   final String currencyId;

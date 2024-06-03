@@ -5,13 +5,15 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../models/transaction_sum.dart';
 import '../models/transaction_sum_array.dart';
 
 part 'transactionssum_client.g.dart';
 
 @RestApi()
 abstract class TransactionssumClient {
-  factory TransactionssumClient(Dio dio, {String? baseUrl}) = _TransactionssumClient;
+  factory TransactionssumClient(Dio dio, {String? baseUrl}) =
+      _TransactionssumClient;
 
   /// Returns the sum of the bills already paid in the period indicated.
   ///

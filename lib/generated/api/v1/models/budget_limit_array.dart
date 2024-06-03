@@ -15,9 +15,10 @@ class BudgetLimitArray {
     required this.data,
     required this.meta,
   });
-  
-  factory BudgetLimitArray.fromJson(Map<String, Object?> json) => _$BudgetLimitArrayFromJson(json);
-  
+
+  factory BudgetLimitArray.fromJson(Map<String, Object?> json) =>
+      _$BudgetLimitArrayFromJson(json);
+
   final List<BudgetLimitRead> data;
   final Meta meta;
 

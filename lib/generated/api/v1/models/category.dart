@@ -19,9 +19,10 @@ class Category {
     required this.spent,
     required this.earned,
   });
-  
-  factory Category.fromJson(Map<String, Object?> json) => _$CategoryFromJson(json);
-  
+
+  factory Category.fromJson(Map<String, Object?> json) =>
+      _$CategoryFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

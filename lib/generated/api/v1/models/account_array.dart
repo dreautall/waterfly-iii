@@ -15,9 +15,10 @@ class AccountArray {
     required this.data,
     required this.meta,
   });
-  
-  factory AccountArray.fromJson(Map<String, Object?> json) => _$AccountArrayFromJson(json);
-  
+
+  factory AccountArray.fromJson(Map<String, Object?> json) =>
+      _$AccountArrayFromJson(json);
+
   final List<AccountRead> data;
   final Meta meta;
 

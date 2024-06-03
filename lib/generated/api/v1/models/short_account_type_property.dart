@@ -11,6 +11,7 @@ enum ShortAccountTypeProperty {
   asset('asset'),
   @JsonValue('expense')
   expense('expense'),
+
   /// The name has been replaced because it contains a keyword. Original name: `import`.
   @JsonValue('import')
   valueImport('import'),
@@ -26,6 +27,7 @@ enum ShortAccountTypeProperty {
   initialBalance('initial-balance'),
   @JsonValue('reconciliation')
   reconciliation('reconciliation'),
+
   /// Default value for all unparsed values, allows backward compatibility when adding new values on the backend.
   $unknown(null);
 

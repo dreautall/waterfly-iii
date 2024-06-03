@@ -17,9 +17,10 @@ class WebhookRead {
     required this.attributes,
     required this.links,
   });
-  
-  factory WebhookRead.fromJson(Map<String, Object?> json) => _$WebhookReadFromJson(json);
-  
+
+  factory WebhookRead.fromJson(Map<String, Object?> json) =>
+      _$WebhookReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

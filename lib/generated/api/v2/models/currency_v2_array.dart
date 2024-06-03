@@ -17,9 +17,10 @@ class CurrencyV2Array {
     required this.meta,
     required this.links,
   });
-  
-  factory CurrencyV2Array.fromJson(Map<String, Object?> json) => _$CurrencyV2ArrayFromJson(json);
-  
+
+  factory CurrencyV2Array.fromJson(Map<String, Object?> json) =>
+      _$CurrencyV2ArrayFromJson(json);
+
   final List<CurrencyV2Read> data;
   final Meta meta;
   final PageLinkV2 links;

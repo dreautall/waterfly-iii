@@ -17,9 +17,10 @@ class RecurrenceRead {
     required this.attributes,
     required this.links,
   });
-  
-  factory RecurrenceRead.fromJson(Map<String, Object?> json) => _$RecurrenceReadFromJson(json);
-  
+
+  factory RecurrenceRead.fromJson(Map<String, Object?> json) =>
+      _$RecurrenceReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

@@ -79,6 +79,7 @@ enum RuleTriggerKeyword {
   destinationAccountIs('destination_account_is'),
   @JsonValue('source_account_starts')
   sourceAccountStarts('source_account_starts'),
+
   /// Default value for all unparsed values, allows backward compatibility when adding new values on the backend.
   $unknown(null);
 

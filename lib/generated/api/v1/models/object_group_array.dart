@@ -15,9 +15,10 @@ class ObjectGroupArray {
     required this.data,
     required this.meta,
   });
-  
-  factory ObjectGroupArray.fromJson(Map<String, Object?> json) => _$ObjectGroupArrayFromJson(json);
-  
+
+  factory ObjectGroupArray.fromJson(Map<String, Object?> json) =>
+      _$ObjectGroupArrayFromJson(json);
+
   final List<ObjectGroupRead> data;
   final Meta meta;
 

@@ -16,9 +16,10 @@ class Configuration {
     required this.value,
     required this.editable,
   });
-  
-  factory Configuration.fromJson(Map<String, Object?> json) => _$ConfigurationFromJson(json);
-  
+
+  factory Configuration.fromJson(Map<String, Object?> json) =>
+      _$ConfigurationFromJson(json);
+
   final ConfigValueFilter title;
   final PolymorphicProperty value;
 

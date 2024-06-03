@@ -16,9 +16,10 @@ class TransactionUpdate {
     required this.transactions,
     this.fireWebhooks = true,
   });
-  
-  factory TransactionUpdate.fromJson(Map<String, Object?> json) => _$TransactionUpdateFromJson(json);
-  
+
+  factory TransactionUpdate.fromJson(Map<String, Object?> json) =>
+      _$TransactionUpdateFromJson(json);
+
   /// Whether or not to apply rules when submitting transaction.
   @JsonKey(name: 'apply_rules')
   final bool applyRules;

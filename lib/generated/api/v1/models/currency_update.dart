@@ -15,9 +15,10 @@ class CurrencyUpdate {
     required this.symbol,
     required this.decimalPlaces,
   });
-  
-  factory CurrencyUpdate.fromJson(Map<String, Object?> json) => _$CurrencyUpdateFromJson(json);
-  
+
+  factory CurrencyUpdate.fromJson(Map<String, Object?> json) =>
+      _$CurrencyUpdateFromJson(json);
+
   /// If the currency is enabled
   final bool enabled;
 

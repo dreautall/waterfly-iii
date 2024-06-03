@@ -13,9 +13,10 @@ class CurrencySingle {
   const CurrencySingle({
     required this.data,
   });
-  
-  factory CurrencySingle.fromJson(Map<String, Object?> json) => _$CurrencySingleFromJson(json);
-  
+
+  factory CurrencySingle.fromJson(Map<String, Object?> json) =>
+      _$CurrencySingleFromJson(json);
+
   final CurrencyRead data;
 
   Map<String, Object?> toJson() => _$CurrencySingleToJson(this);

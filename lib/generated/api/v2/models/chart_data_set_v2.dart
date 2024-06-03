@@ -26,9 +26,10 @@ class ChartDataSetV2 {
     required this.entries,
     required this.nativeEntries,
   });
-  
-  factory ChartDataSetV2.fromJson(Map<String, Object?> json) => _$ChartDataSetV2FromJson(json);
-  
+
+  factory ChartDataSetV2.fromJson(Map<String, Object?> json) =>
+      _$ChartDataSetV2FromJson(json);
+
   /// This is the label of the current data-set. It can refer to an object by name, or a collected set of data.
   final String label;
 

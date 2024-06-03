@@ -5,8 +5,11 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../models/budget_limit_v2.dart';
 import '../models/budget_limit_v2_array.dart';
+import '../models/budget_v2.dart';
 import '../models/budget_v2_array.dart';
+import '../models/transaction_sum.dart';
 import '../models/transaction_sum_array.dart';
 
 part 'budgets_client.g.dart';

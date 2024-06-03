@@ -17,9 +17,10 @@ class TransactionArray {
     required this.meta,
     required this.links,
   });
-  
-  factory TransactionArray.fromJson(Map<String, Object?> json) => _$TransactionArrayFromJson(json);
-  
+
+  factory TransactionArray.fromJson(Map<String, Object?> json) =>
+      _$TransactionArrayFromJson(json);
+
   final List<TransactionRead> data;
   final Meta meta;
   final PageLink links;

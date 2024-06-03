@@ -13,9 +13,10 @@ class PreferenceSingle {
   const PreferenceSingle({
     required this.data,
   });
-  
-  factory PreferenceSingle.fromJson(Map<String, Object?> json) => _$PreferenceSingleFromJson(json);
-  
+
+  factory PreferenceSingle.fromJson(Map<String, Object?> json) =>
+      _$PreferenceSingleFromJson(json);
+
   final PreferenceRead data;
 
   Map<String, Object?> toJson() => _$PreferenceSingleToJson(this);

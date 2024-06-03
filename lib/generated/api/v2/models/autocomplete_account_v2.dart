@@ -19,9 +19,10 @@ class AutocompleteAccountV2 {
     required this.currencySymbol,
     required this.currencyDecimalPlaces,
   });
-  
-  factory AutocompleteAccountV2.fromJson(Map<String, Object?> json) => _$AutocompleteAccountV2FromJson(json);
-  
+
+  factory AutocompleteAccountV2.fromJson(Map<String, Object?> json) =>
+      _$AutocompleteAccountV2FromJson(json);
+
   final String id;
 
   /// Name of the account found by an auto-complete search.

@@ -25,9 +25,10 @@ class RecurrenceStore {
     required this.repetitions,
     required this.transactions,
   });
-  
-  factory RecurrenceStore.fromJson(Map<String, Object?> json) => _$RecurrenceStoreFromJson(json);
-  
+
+  factory RecurrenceStore.fromJson(Map<String, Object?> json) =>
+      _$RecurrenceStoreFromJson(json);
+
   final RecurrenceTransactionType type;
   final String title;
 

@@ -12,7 +12,8 @@ part 'available_budgets_client.g.dart';
 
 @RestApi()
 abstract class AvailableBudgetsClient {
-  factory AvailableBudgetsClient(Dio dio, {String? baseUrl}) = _AvailableBudgetsClient;
+  factory AvailableBudgetsClient(Dio dio, {String? baseUrl}) =
+      _AvailableBudgetsClient;
 
   /// List all available budget amounts.
   ///

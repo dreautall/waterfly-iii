@@ -17,6 +17,7 @@ enum RecurrenceRepetitionType {
   monthly('monthly'),
   @JsonValue('yearly')
   yearly('yearly'),
+
   /// Default value for all unparsed values, allows backward compatibility when adding new values on the backend.
   $unknown(null);
 

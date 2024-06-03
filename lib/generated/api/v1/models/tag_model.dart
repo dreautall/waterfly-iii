@@ -18,9 +18,10 @@ class TagModel {
     required this.longitude,
     required this.zoomLevel,
   });
-  
-  factory TagModel.fromJson(Map<String, Object?> json) => _$TagModelFromJson(json);
-  
+
+  factory TagModel.fromJson(Map<String, Object?> json) =>
+      _$TagModelFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

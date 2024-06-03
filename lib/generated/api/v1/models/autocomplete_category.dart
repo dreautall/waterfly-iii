@@ -12,9 +12,10 @@ class AutocompleteCategory {
     required this.id,
     required this.name,
   });
-  
-  factory AutocompleteCategory.fromJson(Map<String, Object?> json) => _$AutocompleteCategoryFromJson(json);
-  
+
+  factory AutocompleteCategory.fromJson(Map<String, Object?> json) =>
+      _$AutocompleteCategoryFromJson(json);
+
   final String id;
 
   /// Name of the category found by an auto-complete search.

@@ -19,9 +19,10 @@ class PiggyBankEvent {
     required this.transactionJournalId,
     required this.transactionGroupId,
   });
-  
-  factory PiggyBankEvent.fromJson(Map<String, Object?> json) => _$PiggyBankEventFromJson(json);
-  
+
+  factory PiggyBankEvent.fromJson(Map<String, Object?> json) =>
+      _$PiggyBankEventFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

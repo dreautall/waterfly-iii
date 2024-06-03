@@ -14,9 +14,10 @@ class InsightTotalEntry {
     required this.currencyId,
     required this.currencyCode,
   });
-  
-  factory InsightTotalEntry.fromJson(Map<String, Object?> json) => _$InsightTotalEntryFromJson(json);
-  
+
+  factory InsightTotalEntry.fromJson(Map<String, Object?> json) =>
+      _$InsightTotalEntryFromJson(json);
+
   /// The amount spent between start date and end date, defined as a string, for this expense account and all asset accounts.
   final String difference;
 

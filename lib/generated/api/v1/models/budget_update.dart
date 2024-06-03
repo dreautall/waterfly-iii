@@ -22,9 +22,10 @@ class BudgetUpdate {
     required this.autoBudgetAmount,
     required this.autoBudgetPeriod,
   });
-  
-  factory BudgetUpdate.fromJson(Map<String, Object?> json) => _$BudgetUpdateFromJson(json);
-  
+
+  factory BudgetUpdate.fromJson(Map<String, Object?> json) =>
+      _$BudgetUpdateFromJson(json);
+
   final String name;
   final bool active;
   final int order;

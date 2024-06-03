@@ -13,9 +13,9 @@ class Meta {
   const Meta({
     required this.pagination,
   });
-  
+
   factory Meta.fromJson(Map<String, Object?> json) => _$MetaFromJson(json);
-  
+
   final Pagination pagination;
 
   Map<String, Object?> toJson() => _$MetaToJson(this);

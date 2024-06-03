@@ -17,9 +17,10 @@ class TagArray {
     required this.meta,
     required this.links,
   });
-  
-  factory TagArray.fromJson(Map<String, Object?> json) => _$TagArrayFromJson(json);
-  
+
+  factory TagArray.fromJson(Map<String, Object?> json) =>
+      _$TagArrayFromJson(json);
+
   final List<TagRead> data;
   final Meta meta;
   final PageLink links;

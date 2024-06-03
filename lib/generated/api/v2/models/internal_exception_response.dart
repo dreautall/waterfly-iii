@@ -12,9 +12,10 @@ class InternalExceptionResponse {
     required this.message,
     required this.exception,
   });
-  
-  factory InternalExceptionResponse.fromJson(Map<String, Object?> json) => _$InternalExceptionResponseFromJson(json);
-  
+
+  factory InternalExceptionResponse.fromJson(Map<String, Object?> json) =>
+      _$InternalExceptionResponseFromJson(json);
+
   final String message;
   final String exception;
 

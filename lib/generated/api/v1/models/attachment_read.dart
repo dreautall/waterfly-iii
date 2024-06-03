@@ -17,9 +17,10 @@ class AttachmentRead {
     required this.attributes,
     required this.links,
   });
-  
-  factory AttachmentRead.fromJson(Map<String, Object?> json) => _$AttachmentReadFromJson(json);
-  
+
+  factory AttachmentRead.fromJson(Map<String, Object?> json) =>
+      _$AttachmentReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

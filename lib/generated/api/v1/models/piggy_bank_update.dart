@@ -23,9 +23,10 @@ class PiggyBankUpdate {
     required this.objectGroupId,
     required this.objectGroupTitle,
   });
-  
-  factory PiggyBankUpdate.fromJson(Map<String, Object?> json) => _$PiggyBankUpdateFromJson(json);
-  
+
+  factory PiggyBankUpdate.fromJson(Map<String, Object?> json) =>
+      _$PiggyBankUpdateFromJson(json);
+
   final String name;
 
   /// The ID of the asset account this piggy bank is connected to.

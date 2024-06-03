@@ -15,9 +15,10 @@ class PageLinkV2 {
     required this.prev,
     required this.last,
   });
-  
-  factory PageLinkV2.fromJson(Map<String, Object?> json) => _$PageLinkV2FromJson(json);
-  
+
+  factory PageLinkV2.fromJson(Map<String, Object?> json) =>
+      _$PageLinkV2FromJson(json);
+
   final String self;
   final String first;
   final String? next;

@@ -37,9 +37,10 @@ class AccountUpdate {
     this.active = true,
     this.includeNetWorth = true,
   });
-  
-  factory AccountUpdate.fromJson(Map<String, Object?> json) => _$AccountUpdateFromJson(json);
-  
+
+  factory AccountUpdate.fromJson(Map<String, Object?> json) =>
+      _$AccountUpdateFromJson(json);
+
   final String name;
   final String? iban;
   final String? bic;

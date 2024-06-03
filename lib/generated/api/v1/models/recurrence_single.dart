@@ -13,9 +13,10 @@ class RecurrenceSingle {
   const RecurrenceSingle({
     required this.data,
   });
-  
-  factory RecurrenceSingle.fromJson(Map<String, Object?> json) => _$RecurrenceSingleFromJson(json);
-  
+
+  factory RecurrenceSingle.fromJson(Map<String, Object?> json) =>
+      _$RecurrenceSingleFromJson(json);
+
   final RecurrenceRead data;
 
   Map<String, Object?> toJson() => _$RecurrenceSingleToJson(this);

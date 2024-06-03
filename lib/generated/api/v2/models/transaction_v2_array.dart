@@ -17,9 +17,10 @@ class TransactionV2Array {
     required this.meta,
     required this.links,
   });
-  
-  factory TransactionV2Array.fromJson(Map<String, Object?> json) => _$TransactionV2ArrayFromJson(json);
-  
+
+  factory TransactionV2Array.fromJson(Map<String, Object?> json) =>
+      _$TransactionV2ArrayFromJson(json);
+
   final List<TransactionV2Read> data;
   final Meta meta;
   final PageLinkV2 links;

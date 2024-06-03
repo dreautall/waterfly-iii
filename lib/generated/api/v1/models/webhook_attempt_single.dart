@@ -13,9 +13,10 @@ class WebhookAttemptSingle {
   const WebhookAttemptSingle({
     required this.data,
   });
-  
-  factory WebhookAttemptSingle.fromJson(Map<String, Object?> json) => _$WebhookAttemptSingleFromJson(json);
-  
+
+  factory WebhookAttemptSingle.fromJson(Map<String, Object?> json) =>
+      _$WebhookAttemptSingleFromJson(json);
+
   final WebhookAttemptRead data;
 
   Map<String, Object?> toJson() => _$WebhookAttemptSingleToJson(this);

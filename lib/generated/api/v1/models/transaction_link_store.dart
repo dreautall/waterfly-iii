@@ -15,9 +15,10 @@ class TransactionLinkStore {
     required this.outwardId,
     required this.notes,
   });
-  
-  factory TransactionLinkStore.fromJson(Map<String, Object?> json) => _$TransactionLinkStoreFromJson(json);
-  
+
+  factory TransactionLinkStore.fromJson(Map<String, Object?> json) =>
+      _$TransactionLinkStoreFromJson(json);
+
   /// The link type ID to use. You can also use the link_type_name field.
   @JsonKey(name: 'link_type_id')
   final String linkTypeId;

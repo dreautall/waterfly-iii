@@ -14,9 +14,10 @@ class CronResultRow {
     required this.jobErrored,
     required this.message,
   });
-  
-  factory CronResultRow.fromJson(Map<String, Object?> json) => _$CronResultRowFromJson(json);
-  
+
+  factory CronResultRow.fromJson(Map<String, Object?> json) =>
+      _$CronResultRowFromJson(json);
+
   /// This value tells you if this specific cron job actually fired. It may not fire. Some cron jobs.
   /// only fire every 24 hours, for example.
   ///

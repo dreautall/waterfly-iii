@@ -74,55 +74,72 @@ class APIv1 {
   PreferencesClient? _preferences;
   WebhooksClient? _webhooks;
 
-  AutocompleteClient get autocomplete => _autocomplete ??= AutocompleteClient(_dio, baseUrl: _baseUrl);
+  AutocompleteClient get autocomplete =>
+      _autocomplete ??= AutocompleteClient(_dio, baseUrl: _baseUrl);
 
   ChartsClient get charts => _charts ??= ChartsClient(_dio, baseUrl: _baseUrl);
 
   DataClient get data => _data ??= DataClient(_dio, baseUrl: _baseUrl);
 
-  InsightClient get insight => _insight ??= InsightClient(_dio, baseUrl: _baseUrl);
+  InsightClient get insight =>
+      _insight ??= InsightClient(_dio, baseUrl: _baseUrl);
 
-  AccountsClient get accounts => _accounts ??= AccountsClient(_dio, baseUrl: _baseUrl);
+  AccountsClient get accounts =>
+      _accounts ??= AccountsClient(_dio, baseUrl: _baseUrl);
 
-  AttachmentsClient get attachments => _attachments ??= AttachmentsClient(_dio, baseUrl: _baseUrl);
+  AttachmentsClient get attachments =>
+      _attachments ??= AttachmentsClient(_dio, baseUrl: _baseUrl);
 
-  AvailableBudgetsClient get availableBudgets => _availableBudgets ??= AvailableBudgetsClient(_dio, baseUrl: _baseUrl);
+  AvailableBudgetsClient get availableBudgets =>
+      _availableBudgets ??= AvailableBudgetsClient(_dio, baseUrl: _baseUrl);
 
   BillsClient get bills => _bills ??= BillsClient(_dio, baseUrl: _baseUrl);
 
-  BudgetsClient get budgets => _budgets ??= BudgetsClient(_dio, baseUrl: _baseUrl);
+  BudgetsClient get budgets =>
+      _budgets ??= BudgetsClient(_dio, baseUrl: _baseUrl);
 
-  CategoriesClient get categories => _categories ??= CategoriesClient(_dio, baseUrl: _baseUrl);
+  CategoriesClient get categories =>
+      _categories ??= CategoriesClient(_dio, baseUrl: _baseUrl);
 
   LinksClient get links => _links ??= LinksClient(_dio, baseUrl: _baseUrl);
 
-  ObjectGroupsClient get objectGroups => _objectGroups ??= ObjectGroupsClient(_dio, baseUrl: _baseUrl);
+  ObjectGroupsClient get objectGroups =>
+      _objectGroups ??= ObjectGroupsClient(_dio, baseUrl: _baseUrl);
 
-  PiggyBanksClient get piggyBanks => _piggyBanks ??= PiggyBanksClient(_dio, baseUrl: _baseUrl);
+  PiggyBanksClient get piggyBanks =>
+      _piggyBanks ??= PiggyBanksClient(_dio, baseUrl: _baseUrl);
 
-  RecurrencesClient get recurrences => _recurrences ??= RecurrencesClient(_dio, baseUrl: _baseUrl);
+  RecurrencesClient get recurrences =>
+      _recurrences ??= RecurrencesClient(_dio, baseUrl: _baseUrl);
 
-  RuleGroupsClient get ruleGroups => _ruleGroups ??= RuleGroupsClient(_dio, baseUrl: _baseUrl);
+  RuleGroupsClient get ruleGroups =>
+      _ruleGroups ??= RuleGroupsClient(_dio, baseUrl: _baseUrl);
 
   RulesClient get rules => _rules ??= RulesClient(_dio, baseUrl: _baseUrl);
 
   TagsClient get tags => _tags ??= TagsClient(_dio, baseUrl: _baseUrl);
 
-  CurrenciesClient get currencies => _currencies ??= CurrenciesClient(_dio, baseUrl: _baseUrl);
+  CurrenciesClient get currencies =>
+      _currencies ??= CurrenciesClient(_dio, baseUrl: _baseUrl);
 
-  TransactionsClient get transactions => _transactions ??= TransactionsClient(_dio, baseUrl: _baseUrl);
+  TransactionsClient get transactions =>
+      _transactions ??= TransactionsClient(_dio, baseUrl: _baseUrl);
 
   SearchClient get search => _search ??= SearchClient(_dio, baseUrl: _baseUrl);
 
-  SummaryClient get summary => _summary ??= SummaryClient(_dio, baseUrl: _baseUrl);
+  SummaryClient get summary =>
+      _summary ??= SummaryClient(_dio, baseUrl: _baseUrl);
 
   AboutClient get about => _about ??= AboutClient(_dio, baseUrl: _baseUrl);
 
-  ConfigurationClient get configuration => _configuration ??= ConfigurationClient(_dio, baseUrl: _baseUrl);
+  ConfigurationClient get configuration =>
+      _configuration ??= ConfigurationClient(_dio, baseUrl: _baseUrl);
 
   UsersClient get users => _users ??= UsersClient(_dio, baseUrl: _baseUrl);
 
-  PreferencesClient get preferences => _preferences ??= PreferencesClient(_dio, baseUrl: _baseUrl);
+  PreferencesClient get preferences =>
+      _preferences ??= PreferencesClient(_dio, baseUrl: _baseUrl);
 
-  WebhooksClient get webhooks => _webhooks ??= WebhooksClient(_dio, baseUrl: _baseUrl);
+  WebhooksClient get webhooks =>
+      _webhooks ??= WebhooksClient(_dio, baseUrl: _baseUrl);
 }

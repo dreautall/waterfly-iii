@@ -13,9 +13,10 @@ class TransactionLinkSingle {
   const TransactionLinkSingle({
     required this.data,
   });
-  
-  factory TransactionLinkSingle.fromJson(Map<String, Object?> json) => _$TransactionLinkSingleFromJson(json);
-  
+
+  factory TransactionLinkSingle.fromJson(Map<String, Object?> json) =>
+      _$TransactionLinkSingleFromJson(json);
+
   final TransactionLinkRead data;
 
   Map<String, Object?> toJson() => _$TransactionLinkSingleToJson(this);

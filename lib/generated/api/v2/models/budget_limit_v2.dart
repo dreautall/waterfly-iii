@@ -22,9 +22,10 @@ class BudgetLimitV2 {
     required this.period,
     required this.amount,
   });
-  
-  factory BudgetLimitV2.fromJson(Map<String, Object?> json) => _$BudgetLimitV2FromJson(json);
-  
+
+  factory BudgetLimitV2.fromJson(Map<String, Object?> json) =>
+      _$BudgetLimitV2FromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

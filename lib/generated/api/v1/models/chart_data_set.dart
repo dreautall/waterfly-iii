@@ -20,9 +20,10 @@ class ChartDataSet {
     required this.yAxisID,
     required this.entries,
   });
-  
-  factory ChartDataSet.fromJson(Map<String, Object?> json) => _$ChartDataSetFromJson(json);
-  
+
+  factory ChartDataSet.fromJson(Map<String, Object?> json) =>
+      _$ChartDataSetFromJson(json);
+
   /// This is the title of the current set. It can refer to an account, a budget or another object (by name).
   final String label;
 

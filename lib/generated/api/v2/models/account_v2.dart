@@ -32,9 +32,10 @@ class AccountV2 {
     required this.currentBalanceDate,
     this.active = true,
   });
-  
-  factory AccountV2.fromJson(Map<String, Object?> json) => _$AccountV2FromJson(json);
-  
+
+  factory AccountV2.fromJson(Map<String, Object?> json) =>
+      _$AccountV2FromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

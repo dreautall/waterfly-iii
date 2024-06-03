@@ -13,9 +13,10 @@ class SubscriptionSingle {
   const SubscriptionSingle({
     required this.data,
   });
-  
-  factory SubscriptionSingle.fromJson(Map<String, Object?> json) => _$SubscriptionSingleFromJson(json);
-  
+
+  factory SubscriptionSingle.fromJson(Map<String, Object?> json) =>
+      _$SubscriptionSingleFromJson(json);
+
   final SubscriptionRead data;
 
   Map<String, Object?> toJson() => _$SubscriptionSingleToJson(this);

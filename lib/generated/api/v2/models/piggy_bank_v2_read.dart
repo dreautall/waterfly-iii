@@ -17,9 +17,10 @@ class PiggyBankV2Read {
     required this.attributes,
     required this.links,
   });
-  
-  factory PiggyBankV2Read.fromJson(Map<String, Object?> json) => _$PiggyBankV2ReadFromJson(json);
-  
+
+  factory PiggyBankV2Read.fromJson(Map<String, Object?> json) =>
+      _$PiggyBankV2ReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

@@ -13,9 +13,10 @@ class ObjectGroupSingle {
   const ObjectGroupSingle({
     required this.data,
   });
-  
-  factory ObjectGroupSingle.fromJson(Map<String, Object?> json) => _$ObjectGroupSingleFromJson(json);
-  
+
+  factory ObjectGroupSingle.fromJson(Map<String, Object?> json) =>
+      _$ObjectGroupSingleFromJson(json);
+
   final ObjectGroupRead data;
 
   Map<String, Object?> toJson() => _$ObjectGroupSingleToJson(this);

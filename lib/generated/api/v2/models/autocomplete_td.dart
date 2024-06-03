@@ -14,9 +14,10 @@ class AutocompleteTD {
     required this.name,
     required this.description,
   });
-  
-  factory AutocompleteTD.fromJson(Map<String, Object?> json) => _$AutocompleteTDFromJson(json);
-  
+
+  factory AutocompleteTD.fromJson(Map<String, Object?> json) =>
+      _$AutocompleteTDFromJson(json);
+
   /// The ID of the transaction group.
   final String id;
 

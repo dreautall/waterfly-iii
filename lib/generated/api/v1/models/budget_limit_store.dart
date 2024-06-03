@@ -17,9 +17,10 @@ class BudgetLimitStore {
     required this.end,
     required this.amount,
   });
-  
-  factory BudgetLimitStore.fromJson(Map<String, Object?> json) => _$BudgetLimitStoreFromJson(json);
-  
+
+  factory BudgetLimitStore.fromJson(Map<String, Object?> json) =>
+      _$BudgetLimitStoreFromJson(json);
+
   /// Use either currency_id or currency_code. Defaults to the user's default currency.
   @JsonKey(name: 'currency_id')
   final String currencyId;

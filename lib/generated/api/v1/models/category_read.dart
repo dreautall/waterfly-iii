@@ -15,9 +15,10 @@ class CategoryRead {
     required this.id,
     required this.attributes,
   });
-  
-  factory CategoryRead.fromJson(Map<String, Object?> json) => _$CategoryReadFromJson(json);
-  
+
+  factory CategoryRead.fromJson(Map<String, Object?> json) =>
+      _$CategoryReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

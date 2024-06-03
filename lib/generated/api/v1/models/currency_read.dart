@@ -15,9 +15,10 @@ class CurrencyRead {
     required this.id,
     required this.attributes,
   });
-  
-  factory CurrencyRead.fromJson(Map<String, Object?> json) => _$CurrencyReadFromJson(json);
-  
+
+  factory CurrencyRead.fromJson(Map<String, Object?> json) =>
+      _$CurrencyReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

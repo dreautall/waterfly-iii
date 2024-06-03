@@ -43,9 +43,10 @@ class Subscription {
     required this.payDates,
     required this.paidDates,
   });
-  
-  factory Subscription.fromJson(Map<String, Object?> json) => _$SubscriptionFromJson(json);
-  
+
+  factory Subscription.fromJson(Map<String, Object?> json) =>
+      _$SubscriptionFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

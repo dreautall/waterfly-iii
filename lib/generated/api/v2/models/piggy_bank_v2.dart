@@ -40,9 +40,10 @@ class PiggyBankV2 {
     required this.objectGroupOrder,
     required this.objectGroupTitle,
   });
-  
-  factory PiggyBankV2.fromJson(Map<String, Object?> json) => _$PiggyBankV2FromJson(json);
-  
+
+  factory PiggyBankV2.fromJson(Map<String, Object?> json) =>
+      _$PiggyBankV2FromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

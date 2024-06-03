@@ -26,9 +26,9 @@ class Budget {
     required this.autoBudgetPeriod,
     required this.spent,
   });
-  
+
   factory Budget.fromJson(Map<String, Object?> json) => _$BudgetFromJson(json);
-  
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

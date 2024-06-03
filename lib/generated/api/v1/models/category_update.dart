@@ -12,9 +12,10 @@ class CategoryUpdate {
     required this.name,
     required this.notes,
   });
-  
-  factory CategoryUpdate.fromJson(Map<String, Object?> json) => _$CategoryUpdateFromJson(json);
-  
+
+  factory CategoryUpdate.fromJson(Map<String, Object?> json) =>
+      _$CategoryUpdateFromJson(json);
+
   final String name;
   final String? notes;
 

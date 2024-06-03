@@ -14,9 +14,10 @@ class RuleGroupUpdate {
     required this.order,
     required this.active,
   });
-  
-  factory RuleGroupUpdate.fromJson(Map<String, Object?> json) => _$RuleGroupUpdateFromJson(json);
-  
+
+  factory RuleGroupUpdate.fromJson(Map<String, Object?> json) =>
+      _$RuleGroupUpdateFromJson(json);
+
   final String title;
   final String? description;
   final int order;

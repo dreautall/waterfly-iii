@@ -12,9 +12,10 @@ class AutocompleteBudget {
     required this.id,
     required this.name,
   });
-  
-  factory AutocompleteBudget.fromJson(Map<String, Object?> json) => _$AutocompleteBudgetFromJson(json);
-  
+
+  factory AutocompleteBudget.fromJson(Map<String, Object?> json) =>
+      _$AutocompleteBudgetFromJson(json);
+
   final String id;
 
   /// Name of the budget found by an auto-complete search.

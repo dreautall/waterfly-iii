@@ -13,9 +13,10 @@ class AttachmentUpdate {
     required this.title,
     required this.notes,
   });
-  
-  factory AttachmentUpdate.fromJson(Map<String, Object?> json) => _$AttachmentUpdateFromJson(json);
-  
+
+  factory AttachmentUpdate.fromJson(Map<String, Object?> json) =>
+      _$AttachmentUpdateFromJson(json);
+
   final String filename;
   final String title;
   final String? notes;

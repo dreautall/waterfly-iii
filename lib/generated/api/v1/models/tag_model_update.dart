@@ -16,9 +16,10 @@ class TagModelUpdate {
     required this.longitude,
     required this.zoomLevel,
   });
-  
-  factory TagModelUpdate.fromJson(Map<String, Object?> json) => _$TagModelUpdateFromJson(json);
-  
+
+  factory TagModelUpdate.fromJson(Map<String, Object?> json) =>
+      _$TagModelUpdateFromJson(json);
+
   /// The tag
   final String tag;
 

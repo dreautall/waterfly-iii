@@ -17,9 +17,10 @@ class PiggyBankEventRead {
     required this.attributes,
     required this.links,
   });
-  
-  factory PiggyBankEventRead.fromJson(Map<String, Object?> json) => _$PiggyBankEventReadFromJson(json);
-  
+
+  factory PiggyBankEventRead.fromJson(Map<String, Object?> json) =>
+      _$PiggyBankEventReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

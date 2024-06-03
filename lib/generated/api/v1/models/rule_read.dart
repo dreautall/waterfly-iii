@@ -17,9 +17,10 @@ class RuleRead {
     required this.attributes,
     required this.links,
   });
-  
-  factory RuleRead.fromJson(Map<String, Object?> json) => _$RuleReadFromJson(json);
-  
+
+  factory RuleRead.fromJson(Map<String, Object?> json) =>
+      _$RuleReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

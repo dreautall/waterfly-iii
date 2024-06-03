@@ -20,9 +20,10 @@ class InsightTransferEntry {
     required this.currencyId,
     required this.currencyCode,
   });
-  
-  factory InsightTransferEntry.fromJson(Map<String, Object?> json) => _$InsightTransferEntryFromJson(json);
-  
+
+  factory InsightTransferEntry.fromJson(Map<String, Object?> json) =>
+      _$InsightTransferEntryFromJson(json);
+
   /// This ID is a reference to the original object.
   final String id;
 

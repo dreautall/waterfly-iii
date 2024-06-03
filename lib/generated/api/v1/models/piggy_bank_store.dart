@@ -21,9 +21,10 @@ class PiggyBankStore {
     required this.objectGroupId,
     required this.objectGroupTitle,
   });
-  
-  factory PiggyBankStore.fromJson(Map<String, Object?> json) => _$PiggyBankStoreFromJson(json);
-  
+
+  factory PiggyBankStore.fromJson(Map<String, Object?> json) =>
+      _$PiggyBankStoreFromJson(json);
+
   final String name;
 
   /// The ID of the asset account this piggy bank is connected to.

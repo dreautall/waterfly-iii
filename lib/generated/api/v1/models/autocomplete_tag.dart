@@ -13,9 +13,10 @@ class AutocompleteTag {
     required this.name,
     required this.tag,
   });
-  
-  factory AutocompleteTag.fromJson(Map<String, Object?> json) => _$AutocompleteTagFromJson(json);
-  
+
+  factory AutocompleteTag.fromJson(Map<String, Object?> json) =>
+      _$AutocompleteTagFromJson(json);
+
   final String id;
 
   /// Name of the tag found by an auto-complete search.

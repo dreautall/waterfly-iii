@@ -16,9 +16,10 @@ class BasicSummaryV2Entry {
     required this.currencySymbol,
     required this.currencyDecimalPlaces,
   });
-  
-  factory BasicSummaryV2Entry.fromJson(Map<String, Object?> json) => _$BasicSummaryV2EntryFromJson(json);
-  
+
+  factory BasicSummaryV2Entry.fromJson(Map<String, Object?> json) =>
+      _$BasicSummaryV2EntryFromJson(json);
+
   /// This is a reference to the type of info shared, not influenced by translations or user preferences. The EUR value is a reference to the currency code. They EUR value may also be 'native' in which case the amount is already converted to the user's native balance.
   final String key;
 

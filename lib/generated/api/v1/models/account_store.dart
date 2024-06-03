@@ -41,9 +41,10 @@ class AccountStore {
     this.includeNetWorth = true,
     this.interest = '0',
   });
-  
-  factory AccountStore.fromJson(Map<String, Object?> json) => _$AccountStoreFromJson(json);
-  
+
+  factory AccountStore.fromJson(Map<String, Object?> json) =>
+      _$AccountStoreFromJson(json);
+
   final String name;
   final ShortAccountTypeProperty type;
   final String? iban;

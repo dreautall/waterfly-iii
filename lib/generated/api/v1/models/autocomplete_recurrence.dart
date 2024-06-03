@@ -13,9 +13,10 @@ class AutocompleteRecurrence {
     required this.name,
     required this.description,
   });
-  
-  factory AutocompleteRecurrence.fromJson(Map<String, Object?> json) => _$AutocompleteRecurrenceFromJson(json);
-  
+
+  factory AutocompleteRecurrence.fromJson(Map<String, Object?> json) =>
+      _$AutocompleteRecurrenceFromJson(json);
+
   final String id;
 
   /// Name of the recurrence found by an auto-complete search.

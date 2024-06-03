@@ -17,9 +17,10 @@ class RuleGroupArray {
     required this.meta,
     required this.links,
   });
-  
-  factory RuleGroupArray.fromJson(Map<String, Object?> json) => _$RuleGroupArrayFromJson(json);
-  
+
+  factory RuleGroupArray.fromJson(Map<String, Object?> json) =>
+      _$RuleGroupArrayFromJson(json);
+
   final List<RuleGroupRead> data;
   final Meta meta;
   final PageLink links;

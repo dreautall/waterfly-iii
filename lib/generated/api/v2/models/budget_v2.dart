@@ -15,9 +15,10 @@ class BudgetV2 {
     required this.active,
     required this.order,
   });
-  
-  factory BudgetV2.fromJson(Map<String, Object?> json) => _$BudgetV2FromJson(json);
-  
+
+  factory BudgetV2.fromJson(Map<String, Object?> json) =>
+      _$BudgetV2FromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

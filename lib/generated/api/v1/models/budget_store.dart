@@ -22,9 +22,10 @@ class BudgetStore {
     required this.autoBudgetAmount,
     required this.autoBudgetPeriod,
   });
-  
-  factory BudgetStore.fromJson(Map<String, Object?> json) => _$BudgetStoreFromJson(json);
-  
+
+  factory BudgetStore.fromJson(Map<String, Object?> json) =>
+      _$BudgetStoreFromJson(json);
+
   final String name;
   final bool active;
   final int order;

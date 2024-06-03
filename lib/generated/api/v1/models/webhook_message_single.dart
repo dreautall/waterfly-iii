@@ -13,9 +13,10 @@ class WebhookMessageSingle {
   const WebhookMessageSingle({
     required this.data,
   });
-  
-  factory WebhookMessageSingle.fromJson(Map<String, Object?> json) => _$WebhookMessageSingleFromJson(json);
-  
+
+  factory WebhookMessageSingle.fromJson(Map<String, Object?> json) =>
+      _$WebhookMessageSingleFromJson(json);
+
   final WebhookMessageRead data;
 
   Map<String, Object?> toJson() => _$WebhookMessageSingleToJson(this);

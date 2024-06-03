@@ -12,9 +12,10 @@ class NotFoundResponse {
     required this.message,
     required this.exception,
   });
-  
-  factory NotFoundResponse.fromJson(Map<String, Object?> json) => _$NotFoundResponseFromJson(json);
-  
+
+  factory NotFoundResponse.fromJson(Map<String, Object?> json) =>
+      _$NotFoundResponseFromJson(json);
+
   final String message;
   final String exception;
 

@@ -15,9 +15,10 @@ class CategorySpent {
     required this.currencyDecimalPlaces,
     required this.sum,
   });
-  
-  factory CategorySpent.fromJson(Map<String, Object?> json) => _$CategorySpentFromJson(json);
-  
+
+  factory CategorySpent.fromJson(Map<String, Object?> json) =>
+      _$CategorySpentFromJson(json);
+
   @JsonKey(name: 'currency_id')
   final String currencyId;
   @JsonKey(name: 'currency_code')

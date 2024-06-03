@@ -24,9 +24,10 @@ class Attachment {
     required this.mime,
     required this.size,
   });
-  
-  factory Attachment.fromJson(Map<String, Object?> json) => _$AttachmentFromJson(json);
-  
+
+  factory Attachment.fromJson(Map<String, Object?> json) =>
+      _$AttachmentFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

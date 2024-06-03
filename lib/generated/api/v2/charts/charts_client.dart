@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../models/chart_line_v2.dart';
+import '../models/chart_data_set_v2.dart';
 import '../models/period_property.dart';
 import '../models/preselected_account_property.dart';
 

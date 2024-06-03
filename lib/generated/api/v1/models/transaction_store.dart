@@ -17,9 +17,10 @@ class TransactionStore {
     required this.transactions,
     this.fireWebhooks = true,
   });
-  
-  factory TransactionStore.fromJson(Map<String, Object?> json) => _$TransactionStoreFromJson(json);
-  
+
+  factory TransactionStore.fromJson(Map<String, Object?> json) =>
+      _$TransactionStoreFromJson(json);
+
   /// Break if the submitted transaction exists already.
   @JsonKey(name: 'error_if_duplicate_hash')
   final bool errorIfDuplicateHash;

@@ -23,9 +23,10 @@ class BudgetLimit {
     required this.amount,
     required this.spent,
   });
-  
-  factory BudgetLimit.fromJson(Map<String, Object?> json) => _$BudgetLimitFromJson(json);
-  
+
+  factory BudgetLimit.fromJson(Map<String, Object?> json) =>
+      _$BudgetLimitFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

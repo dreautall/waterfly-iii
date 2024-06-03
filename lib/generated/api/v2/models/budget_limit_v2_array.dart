@@ -15,9 +15,10 @@ class BudgetLimitV2Array {
     required this.data,
     required this.meta,
   });
-  
-  factory BudgetLimitV2Array.fromJson(Map<String, Object?> json) => _$BudgetLimitV2ArrayFromJson(json);
-  
+
+  factory BudgetLimitV2Array.fromJson(Map<String, Object?> json) =>
+      _$BudgetLimitV2ArrayFromJson(json);
+
   final List<BudgetLimitReadV2> data;
   final Meta meta;
 

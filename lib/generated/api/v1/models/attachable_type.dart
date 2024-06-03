@@ -19,6 +19,7 @@ enum AttachableType {
   piggyBank('PiggyBank'),
   @JsonValue('Tag')
   tag('Tag'),
+
   /// Default value for all unparsed values, allows backward compatibility when adding new values on the backend.
   $unknown(null);
 

@@ -18,9 +18,10 @@ class RuleTriggerStore {
     this.prohibited = false,
     this.stopProcessing = false,
   });
-  
-  factory RuleTriggerStore.fromJson(Map<String, Object?> json) => _$RuleTriggerStoreFromJson(json);
-  
+
+  factory RuleTriggerStore.fromJson(Map<String, Object?> json) =>
+      _$RuleTriggerStoreFromJson(json);
+
   final RuleTriggerKeyword type;
 
   /// The accompanying value the trigger responds to. This value is often mandatory, but this depends on the trigger.

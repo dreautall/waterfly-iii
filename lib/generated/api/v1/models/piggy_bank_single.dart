@@ -13,9 +13,10 @@ class PiggyBankSingle {
   const PiggyBankSingle({
     required this.data,
   });
-  
-  factory PiggyBankSingle.fromJson(Map<String, Object?> json) => _$PiggyBankSingleFromJson(json);
-  
+
+  factory PiggyBankSingle.fromJson(Map<String, Object?> json) =>
+      _$PiggyBankSingleFromJson(json);
+
   final PiggyBankRead data;
 
   Map<String, Object?> toJson() => _$PiggyBankSingleToJson(this);

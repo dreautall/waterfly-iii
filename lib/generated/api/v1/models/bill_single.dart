@@ -13,9 +13,10 @@ class BillSingle {
   const BillSingle({
     required this.data,
   });
-  
-  factory BillSingle.fromJson(Map<String, Object?> json) => _$BillSingleFromJson(json);
-  
+
+  factory BillSingle.fromJson(Map<String, Object?> json) =>
+      _$BillSingleFromJson(json);
+
   final BillRead data;
 
   Map<String, Object?> toJson() => _$BillSingleToJson(this);

@@ -15,9 +15,10 @@ class WebhookMessageArray {
     required this.data,
     required this.meta,
   });
-  
-  factory WebhookMessageArray.fromJson(Map<String, Object?> json) => _$WebhookMessageArrayFromJson(json);
-  
+
+  factory WebhookMessageArray.fromJson(Map<String, Object?> json) =>
+      _$WebhookMessageArrayFromJson(json);
+
   final List<WebhookMessageRead> data;
   final Meta meta;
 

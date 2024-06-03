@@ -24,9 +24,10 @@ class RuleUpdate {
     this.active = true,
     this.stopProcessing = false,
   });
-  
-  factory RuleUpdate.fromJson(Map<String, Object?> json) => _$RuleUpdateFromJson(json);
-  
+
+  factory RuleUpdate.fromJson(Map<String, Object?> json) =>
+      _$RuleUpdateFromJson(json);
+
   final String title;
   final String description;
 

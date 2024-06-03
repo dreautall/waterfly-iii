@@ -16,9 +16,10 @@ class TagModelStore {
     required this.longitude,
     required this.zoomLevel,
   });
-  
-  factory TagModelStore.fromJson(Map<String, Object?> json) => _$TagModelStoreFromJson(json);
-  
+
+  factory TagModelStore.fromJson(Map<String, Object?> json) =>
+      _$TagModelStoreFromJson(json);
+
   /// The tag
   final String tag;
 

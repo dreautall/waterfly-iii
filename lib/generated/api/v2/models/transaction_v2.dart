@@ -18,9 +18,10 @@ class TransactionV2 {
     required this.groupTitle,
     required this.transactions,
   });
-  
-  factory TransactionV2.fromJson(Map<String, Object?> json) => _$TransactionV2FromJson(json);
-  
+
+  factory TransactionV2.fromJson(Map<String, Object?> json) =>
+      _$TransactionV2FromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

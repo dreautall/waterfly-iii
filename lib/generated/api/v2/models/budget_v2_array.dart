@@ -15,9 +15,10 @@ class BudgetV2Array {
     required this.data,
     required this.meta,
   });
-  
-  factory BudgetV2Array.fromJson(Map<String, Object?> json) => _$BudgetV2ArrayFromJson(json);
-  
+
+  factory BudgetV2Array.fromJson(Map<String, Object?> json) =>
+      _$BudgetV2ArrayFromJson(json);
+
   final List<BudgetV2Read> data;
   final Meta meta;
 

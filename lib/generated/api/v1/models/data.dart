@@ -15,9 +15,9 @@ class Data {
     required this.os,
     required this.driver,
   });
-  
+
   factory Data.fromJson(Map<String, Object?> json) => _$DataFromJson(json);
-  
+
   final String version;
   @JsonKey(name: 'api_version')
   final String apiVersion;

@@ -15,9 +15,10 @@ class TransactionLinkUpdate {
     required this.outwardId,
     required this.notes,
   });
-  
-  factory TransactionLinkUpdate.fromJson(Map<String, Object?> json) => _$TransactionLinkUpdateFromJson(json);
-  
+
+  factory TransactionLinkUpdate.fromJson(Map<String, Object?> json) =>
+      _$TransactionLinkUpdateFromJson(json);
+
   /// The link type ID to use. Use this field OR use the link_type_name field.
   @JsonKey(name: 'link_type_id')
   final String linkTypeId;

@@ -15,9 +15,10 @@ class AvailableBudgetRead {
     required this.id,
     required this.attributes,
   });
-  
-  factory AvailableBudgetRead.fromJson(Map<String, Object?> json) => _$AvailableBudgetReadFromJson(json);
-  
+
+  factory AvailableBudgetRead.fromJson(Map<String, Object?> json) =>
+      _$AvailableBudgetReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

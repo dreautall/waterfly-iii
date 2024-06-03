@@ -19,9 +19,9 @@ class User {
     required this.blockedCode,
     required this.role,
   });
-  
+
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
-  
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

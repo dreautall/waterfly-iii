@@ -14,9 +14,10 @@ class AutocompleteTransaction {
     required this.name,
     required this.description,
   });
-  
-  factory AutocompleteTransaction.fromJson(Map<String, Object?> json) => _$AutocompleteTransactionFromJson(json);
-  
+
+  factory AutocompleteTransaction.fromJson(Map<String, Object?> json) =>
+      _$AutocompleteTransactionFromJson(json);
+
   /// The ID of a transaction journal (basically a single split).
   final String id;
 

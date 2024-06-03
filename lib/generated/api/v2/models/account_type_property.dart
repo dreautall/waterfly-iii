@@ -30,6 +30,7 @@ enum AccountTypeProperty {
   debt('Debt'),
   @JsonValue('Mortgage')
   mortgage('Mortgage'),
+
   /// Default value for all unparsed values, allows backward compatibility when adding new values on the backend.
   $unknown(null);
 

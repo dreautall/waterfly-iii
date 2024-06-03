@@ -16,9 +16,10 @@ class InsightGroupEntry {
     required this.currencyId,
     required this.currencyCode,
   });
-  
-  factory InsightGroupEntry.fromJson(Map<String, Object?> json) => _$InsightGroupEntryFromJson(json);
-  
+
+  factory InsightGroupEntry.fromJson(Map<String, Object?> json) =>
+      _$InsightGroupEntryFromJson(json);
+
   /// This ID is a reference to the original object.
   final String id;
 

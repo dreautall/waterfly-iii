@@ -13,9 +13,10 @@ class AutocompleteBill {
     required this.name,
     required this.active,
   });
-  
-  factory AutocompleteBill.fromJson(Map<String, Object?> json) => _$AutocompleteBillFromJson(json);
-  
+
+  factory AutocompleteBill.fromJson(Map<String, Object?> json) =>
+      _$AutocompleteBillFromJson(json);
+
   final String id;
 
   /// Name of the bill found by an auto-complete search.

@@ -18,6 +18,7 @@ enum PeriodProperty {
   value6M('6M'),
   @JsonValue('1Y')
   value1Y('1Y'),
+
   /// Default value for all unparsed values, allows backward compatibility when adding new values on the backend.
   $unknown(null);
 

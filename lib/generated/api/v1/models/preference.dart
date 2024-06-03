@@ -16,9 +16,10 @@ class Preference {
     required this.name,
     required this.data,
   });
-  
-  factory Preference.fromJson(Map<String, Object?> json) => _$PreferenceFromJson(json);
-  
+
+  factory Preference.fromJson(Map<String, Object?> json) =>
+      _$PreferenceFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

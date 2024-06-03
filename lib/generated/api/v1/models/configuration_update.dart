@@ -13,9 +13,10 @@ class ConfigurationUpdate {
   const ConfigurationUpdate({
     required this.value,
   });
-  
-  factory ConfigurationUpdate.fromJson(Map<String, Object?> json) => _$ConfigurationUpdateFromJson(json);
-  
+
+  factory ConfigurationUpdate.fromJson(Map<String, Object?> json) =>
+      _$ConfigurationUpdateFromJson(json);
+
   final PolymorphicProperty value;
 
   Map<String, Object?> toJson() => _$ConfigurationUpdateToJson(this);

@@ -15,9 +15,10 @@ class CronResult {
     required this.autoBudgets,
     required this.telemetry,
   });
-  
-  factory CronResult.fromJson(Map<String, Object?> json) => _$CronResultFromJson(json);
-  
+
+  factory CronResult.fromJson(Map<String, Object?> json) =>
+      _$CronResultFromJson(json);
+
   @JsonKey(name: 'recurring_transactions')
   final CronResultRow recurringTransactions;
   @JsonKey(name: 'auto_budgets')

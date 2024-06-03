@@ -13,9 +13,10 @@ class PaidDates {
     required this.transactionJournalId,
     required this.date,
   });
-  
-  factory PaidDates.fromJson(Map<String, Object?> json) => _$PaidDatesFromJson(json);
-  
+
+  factory PaidDates.fromJson(Map<String, Object?> json) =>
+      _$PaidDatesFromJson(json);
+
   /// Transaction group ID of the paid bill.
   @JsonKey(name: 'transaction_group_id')
   final String transactionGroupId;

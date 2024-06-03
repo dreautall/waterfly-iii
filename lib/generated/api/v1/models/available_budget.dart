@@ -23,9 +23,10 @@ class AvailableBudget {
     required this.spentInBudgets,
     required this.spentOutsideBudget,
   });
-  
-  factory AvailableBudget.fromJson(Map<String, Object?> json) => _$AvailableBudgetFromJson(json);
-  
+
+  factory AvailableBudget.fromJson(Map<String, Object?> json) =>
+      _$AvailableBudgetFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

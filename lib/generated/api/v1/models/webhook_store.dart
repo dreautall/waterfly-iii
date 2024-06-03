@@ -20,9 +20,10 @@ class WebhookStore {
     required this.delivery,
     required this.url,
   });
-  
-  factory WebhookStore.fromJson(Map<String, Object?> json) => _$WebhookStoreFromJson(json);
-  
+
+  factory WebhookStore.fromJson(Map<String, Object?> json) =>
+      _$WebhookStoreFromJson(json);
+
   /// Boolean to indicate if the webhook is active
   final bool active;
 

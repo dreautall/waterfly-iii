@@ -13,9 +13,10 @@ class AutocompleteTransactionType {
     required this.name,
     required this.type,
   });
-  
-  factory AutocompleteTransactionType.fromJson(Map<String, Object?> json) => _$AutocompleteTransactionTypeFromJson(json);
-  
+
+  factory AutocompleteTransactionType.fromJson(Map<String, Object?> json) =>
+      _$AutocompleteTransactionTypeFromJson(json);
+
   final String id;
 
   /// Type of the object found by an auto-complete search.

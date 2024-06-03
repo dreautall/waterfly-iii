@@ -13,9 +13,10 @@ class CategorySingle {
   const CategorySingle({
     required this.data,
   });
-  
-  factory CategorySingle.fromJson(Map<String, Object?> json) => _$CategorySingleFromJson(json);
-  
+
+  factory CategorySingle.fromJson(Map<String, Object?> json) =>
+      _$CategorySingleFromJson(json);
+
   final CategoryRead data;
 
   Map<String, Object?> toJson() => _$CategorySingleToJson(this);

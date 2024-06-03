@@ -16,9 +16,10 @@ class RecurrenceRepetitionStore {
     required this.skip,
     required this.weekend,
   });
-  
-  factory RecurrenceRepetitionStore.fromJson(Map<String, Object?> json) => _$RecurrenceRepetitionStoreFromJson(json);
-  
+
+  factory RecurrenceRepetitionStore.fromJson(Map<String, Object?> json) =>
+      _$RecurrenceRepetitionStoreFromJson(json);
+
   final RecurrenceRepetitionType type;
 
   /// Information that defined the type of repetition.

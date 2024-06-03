@@ -15,9 +15,10 @@ class BudgetRead {
     required this.id,
     required this.attributes,
   });
-  
-  factory BudgetRead.fromJson(Map<String, Object?> json) => _$BudgetReadFromJson(json);
-  
+
+  factory BudgetRead.fromJson(Map<String, Object?> json) =>
+      _$BudgetReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

@@ -15,9 +15,10 @@ class BillArray {
     required this.data,
     required this.meta,
   });
-  
-  factory BillArray.fromJson(Map<String, Object?> json) => _$BillArrayFromJson(json);
-  
+
+  factory BillArray.fromJson(Map<String, Object?> json) =>
+      _$BillArrayFromJson(json);
+
   final List<BillRead> data;
   final Meta meta;
 

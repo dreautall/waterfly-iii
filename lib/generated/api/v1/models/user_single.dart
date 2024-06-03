@@ -13,9 +13,10 @@ class UserSingle {
   const UserSingle({
     required this.data,
   });
-  
-  factory UserSingle.fromJson(Map<String, Object?> json) => _$UserSingleFromJson(json);
-  
+
+  factory UserSingle.fromJson(Map<String, Object?> json) =>
+      _$UserSingleFromJson(json);
+
   final UserRead data;
 
   Map<String, Object?> toJson() => _$UserSingleToJson(this);

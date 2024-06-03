@@ -20,9 +20,9 @@ class Errors {
     required this.end,
     required this.date,
   });
-  
+
   factory Errors.fromJson(Map<String, Object?> json) => _$ErrorsFromJson(json);
-  
+
   final List<String> email;
   final List<String> blocked;
   final List<String> role;

@@ -19,9 +19,10 @@ class AutocompletePiggy {
     required this.objectGroupId,
     required this.objectGroupTitle,
   });
-  
-  factory AutocompletePiggy.fromJson(Map<String, Object?> json) => _$AutocompletePiggyFromJson(json);
-  
+
+  factory AutocompletePiggy.fromJson(Map<String, Object?> json) =>
+      _$AutocompletePiggyFromJson(json);
+
   final String id;
 
   /// Name of the piggy bank found by an auto-complete search.

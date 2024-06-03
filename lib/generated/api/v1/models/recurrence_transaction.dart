@@ -41,9 +41,10 @@ class RecurrenceTransaction {
     required this.billId,
     required this.billName,
   });
-  
-  factory RecurrenceTransaction.fromJson(Map<String, Object?> json) => _$RecurrenceTransactionFromJson(json);
-  
+
+  factory RecurrenceTransaction.fromJson(Map<String, Object?> json) =>
+      _$RecurrenceTransactionFromJson(json);
+
   final String id;
   final String description;
 

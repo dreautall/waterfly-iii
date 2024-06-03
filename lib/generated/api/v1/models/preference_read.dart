@@ -15,9 +15,10 @@ class PreferenceRead {
     required this.id,
     required this.attributes,
   });
-  
-  factory PreferenceRead.fromJson(Map<String, Object?> json) => _$PreferenceReadFromJson(json);
-  
+
+  factory PreferenceRead.fromJson(Map<String, Object?> json) =>
+      _$PreferenceReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

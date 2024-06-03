@@ -28,9 +28,10 @@ class Recurrence {
     required this.repetitions,
     required this.transactions,
   });
-  
-  factory Recurrence.fromJson(Map<String, Object?> json) => _$RecurrenceFromJson(json);
-  
+
+  factory Recurrence.fromJson(Map<String, Object?> json) =>
+      _$RecurrenceFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

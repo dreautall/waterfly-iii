@@ -17,9 +17,10 @@ class RecurrenceArray {
     required this.meta,
     required this.links,
   });
-  
-  factory RecurrenceArray.fromJson(Map<String, Object?> json) => _$RecurrenceArrayFromJson(json);
-  
+
+  factory RecurrenceArray.fromJson(Map<String, Object?> json) =>
+      _$RecurrenceArrayFromJson(json);
+
   final List<RecurrenceRead> data;
   final Meta meta;
   final PageLink links;

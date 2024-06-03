@@ -17,9 +17,10 @@ class WebhookArray {
     required this.meta,
     required this.links,
   });
-  
-  factory WebhookArray.fromJson(Map<String, Object?> json) => _$WebhookArrayFromJson(json);
-  
+
+  factory WebhookArray.fromJson(Map<String, Object?> json) =>
+      _$WebhookArrayFromJson(json);
+
   final List<WebhookRead> data;
   final Meta meta;
   final PageLink links;

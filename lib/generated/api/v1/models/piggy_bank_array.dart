@@ -17,9 +17,10 @@ class PiggyBankArray {
     required this.meta,
     required this.links,
   });
-  
-  factory PiggyBankArray.fromJson(Map<String, Object?> json) => _$PiggyBankArrayFromJson(json);
-  
+
+  factory PiggyBankArray.fromJson(Map<String, Object?> json) =>
+      _$PiggyBankArrayFromJson(json);
+
   final List<PiggyBankRead> data;
   final Meta meta;
   final PageLink links;

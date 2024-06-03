@@ -27,9 +27,9 @@ class Rule {
     this.active = true,
     this.stopProcessing = false,
   });
-  
+
   factory Rule.fromJson(Map<String, Object?> json) => _$RuleFromJson(json);
-  
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

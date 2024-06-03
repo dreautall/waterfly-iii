@@ -13,9 +13,10 @@ class AccountSingle {
   const AccountSingle({
     required this.data,
   });
-  
-  factory AccountSingle.fromJson(Map<String, Object?> json) => _$AccountSingleFromJson(json);
-  
+
+  factory AccountSingle.fromJson(Map<String, Object?> json) =>
+      _$AccountSingleFromJson(json);
+
   final AccountRead data;
 
   Map<String, Object?> toJson() => _$AccountSingleToJson(this);

@@ -15,9 +15,10 @@ class Pagination {
     required this.currentPage,
     required this.totalPages,
   });
-  
-  factory Pagination.fromJson(Map<String, Object?> json) => _$PaginationFromJson(json);
-  
+
+  factory Pagination.fromJson(Map<String, Object?> json) =>
+      _$PaginationFromJson(json);
+
   final int total;
   final int count;
   @JsonKey(name: 'per_page')

@@ -46,27 +46,37 @@ class APIv2 {
   NetworthClient? _networth;
   SummaryClient? _summary;
 
-  AutocompleteClient get autocomplete => _autocomplete ??= AutocompleteClient(_dio, baseUrl: _baseUrl);
+  AutocompleteClient get autocomplete =>
+      _autocomplete ??= AutocompleteClient(_dio, baseUrl: _baseUrl);
 
   ChartsClient get charts => _charts ??= ChartsClient(_dio, baseUrl: _baseUrl);
 
-  AccountsClient get accounts => _accounts ??= AccountsClient(_dio, baseUrl: _baseUrl);
+  AccountsClient get accounts =>
+      _accounts ??= AccountsClient(_dio, baseUrl: _baseUrl);
 
-  BudgetsClient get budgets => _budgets ??= BudgetsClient(_dio, baseUrl: _baseUrl);
+  BudgetsClient get budgets =>
+      _budgets ??= BudgetsClient(_dio, baseUrl: _baseUrl);
 
-  CurrenciesClient get currencies => _currencies ??= CurrenciesClient(_dio, baseUrl: _baseUrl);
+  CurrenciesClient get currencies =>
+      _currencies ??= CurrenciesClient(_dio, baseUrl: _baseUrl);
 
-  PiggyBanksClient get piggyBanks => _piggyBanks ??= PiggyBanksClient(_dio, baseUrl: _baseUrl);
+  PiggyBanksClient get piggyBanks =>
+      _piggyBanks ??= PiggyBanksClient(_dio, baseUrl: _baseUrl);
 
-  PreferencesClient get preferences => _preferences ??= PreferencesClient(_dio, baseUrl: _baseUrl);
+  PreferencesClient get preferences =>
+      _preferences ??= PreferencesClient(_dio, baseUrl: _baseUrl);
 
   BillsClient get bills => _bills ??= BillsClient(_dio, baseUrl: _baseUrl);
 
-  TransactionssumClient get transactionssum => _transactionssum ??= TransactionssumClient(_dio, baseUrl: _baseUrl);
+  TransactionssumClient get transactionssum =>
+      _transactionssum ??= TransactionssumClient(_dio, baseUrl: _baseUrl);
 
-  TransactionsClient get transactions => _transactions ??= TransactionsClient(_dio, baseUrl: _baseUrl);
+  TransactionsClient get transactions =>
+      _transactions ??= TransactionsClient(_dio, baseUrl: _baseUrl);
 
-  NetworthClient get networth => _networth ??= NetworthClient(_dio, baseUrl: _baseUrl);
+  NetworthClient get networth =>
+      _networth ??= NetworthClient(_dio, baseUrl: _baseUrl);
 
-  SummaryClient get summary => _summary ??= SummaryClient(_dio, baseUrl: _baseUrl);
+  SummaryClient get summary =>
+      _summary ??= SummaryClient(_dio, baseUrl: _baseUrl);
 }

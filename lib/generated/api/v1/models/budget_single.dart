@@ -13,9 +13,10 @@ class BudgetSingle {
   const BudgetSingle({
     required this.data,
   });
-  
-  factory BudgetSingle.fromJson(Map<String, Object?> json) => _$BudgetSingleFromJson(json);
-  
+
+  factory BudgetSingle.fromJson(Map<String, Object?> json) =>
+      _$BudgetSingleFromJson(json);
+
   final BudgetRead data;
 
   Map<String, Object?> toJson() => _$BudgetSingleToJson(this);

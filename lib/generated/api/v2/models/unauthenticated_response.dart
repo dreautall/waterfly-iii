@@ -12,9 +12,10 @@ class UnauthenticatedResponse {
     required this.message,
     required this.exception,
   });
-  
-  factory UnauthenticatedResponse.fromJson(Map<String, Object?> json) => _$UnauthenticatedResponseFromJson(json);
-  
+
+  factory UnauthenticatedResponse.fromJson(Map<String, Object?> json) =>
+      _$UnauthenticatedResponseFromJson(json);
+
   final String message;
   final String exception;
 

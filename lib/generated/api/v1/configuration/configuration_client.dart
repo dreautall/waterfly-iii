@@ -7,6 +7,7 @@ import 'package:retrofit/retrofit.dart';
 
 import '../models/config_value_filter.dart';
 import '../models/config_value_update_filter.dart';
+import '../models/configuration.dart';
 import '../models/configuration_array.dart';
 import '../models/configuration_single.dart';
 import '../models/configuration_update.dart';
@@ -15,7 +16,8 @@ part 'configuration_client.g.dart';
 
 @RestApi()
 abstract class ConfigurationClient {
-  factory ConfigurationClient(Dio dio, {String? baseUrl}) = _ConfigurationClient;
+  factory ConfigurationClient(Dio dio, {String? baseUrl}) =
+      _ConfigurationClient;
 
   /// Get Firefly III system configuration values.
   ///

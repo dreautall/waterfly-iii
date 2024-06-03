@@ -15,9 +15,10 @@ class BudgetSpent {
     required this.currencySymbol,
     required this.currencyDecimalPlaces,
   });
-  
-  factory BudgetSpent.fromJson(Map<String, Object?> json) => _$BudgetSpentFromJson(json);
-  
+
+  factory BudgetSpent.fromJson(Map<String, Object?> json) =>
+      _$BudgetSpentFromJson(json);
+
   /// The amount spent.
   final String sum;
   @JsonKey(name: 'currency_id')

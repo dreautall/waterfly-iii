@@ -15,9 +15,10 @@ class BudgetLimitReadV2 {
     required this.id,
     required this.attributes,
   });
-  
-  factory BudgetLimitReadV2.fromJson(Map<String, Object?> json) => _$BudgetLimitReadV2FromJson(json);
-  
+
+  factory BudgetLimitReadV2.fromJson(Map<String, Object?> json) =>
+      _$BudgetLimitReadV2FromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

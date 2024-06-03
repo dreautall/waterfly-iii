@@ -21,9 +21,10 @@ class RuleTrigger {
     this.active = true,
     this.stopProcessing = false,
   });
-  
-  factory RuleTrigger.fromJson(Map<String, Object?> json) => _$RuleTriggerFromJson(json);
-  
+
+  factory RuleTrigger.fromJson(Map<String, Object?> json) =>
+      _$RuleTriggerFromJson(json);
+
   final String id;
   @JsonKey(name: 'created_at')
   final DateTime createdAt;

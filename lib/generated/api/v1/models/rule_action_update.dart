@@ -17,9 +17,10 @@ class RuleActionUpdate {
     required this.active,
     required this.stopProcessing,
   });
-  
-  factory RuleActionUpdate.fromJson(Map<String, Object?> json) => _$RuleActionUpdateFromJson(json);
-  
+
+  factory RuleActionUpdate.fromJson(Map<String, Object?> json) =>
+      _$RuleActionUpdateFromJson(json);
+
   final RuleActionKeyword type;
 
   /// The accompanying value the action will set, change or update. Can be empty, but for some types this value is mandatory.

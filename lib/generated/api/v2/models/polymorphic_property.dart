@@ -9,8 +9,9 @@ part 'polymorphic_property.g.dart';
 @JsonSerializable()
 class PolymorphicProperty {
   const PolymorphicProperty();
-  
-  factory PolymorphicProperty.fromJson(Map<String, Object?> json) => _$PolymorphicPropertyFromJson(json);
-  
+
+  factory PolymorphicProperty.fromJson(Map<String, Object?> json) =>
+      _$PolymorphicPropertyFromJson(json);
+
   Map<String, Object?> toJson() => _$PolymorphicPropertyToJson(this);
 }

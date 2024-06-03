@@ -24,9 +24,10 @@ class RecurrenceTransactionStore {
     required this.piggyBankId,
     required this.billId,
   });
-  
-  factory RecurrenceTransactionStore.fromJson(Map<String, Object?> json) => _$RecurrenceTransactionStoreFromJson(json);
-  
+
+  factory RecurrenceTransactionStore.fromJson(Map<String, Object?> json) =>
+      _$RecurrenceTransactionStoreFromJson(json);
+
   final String description;
 
   /// Amount of the transaction.

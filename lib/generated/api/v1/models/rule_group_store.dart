@@ -14,9 +14,10 @@ class RuleGroupStore {
     required this.order,
     required this.active,
   });
-  
-  factory RuleGroupStore.fromJson(Map<String, Object?> json) => _$RuleGroupStoreFromJson(json);
-  
+
+  factory RuleGroupStore.fromJson(Map<String, Object?> json) =>
+      _$RuleGroupStoreFromJson(json);
+
   final String title;
   final String? description;
   final int order;

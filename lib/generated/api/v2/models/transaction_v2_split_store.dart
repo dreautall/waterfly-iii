@@ -55,9 +55,10 @@ class TransactionV2SplitStore {
     required this.paymentDate,
     required this.bunqPaymentId,
   });
-  
-  factory TransactionV2SplitStore.fromJson(Map<String, Object?> json) => _$TransactionV2SplitStoreFromJson(json);
-  
+
+  factory TransactionV2SplitStore.fromJson(Map<String, Object?> json) =>
+      _$TransactionV2SplitStoreFromJson(json);
+
   final TransactionTypeProperty type;
 
   /// Date of the transaction

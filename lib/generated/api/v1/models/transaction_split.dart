@@ -74,9 +74,10 @@ class TransactionSplit {
     required this.zoomLevel,
     required this.recurrenceCount,
   });
-  
-  factory TransactionSplit.fromJson(Map<String, Object?> json) => _$TransactionSplitFromJson(json);
-  
+
+  factory TransactionSplit.fromJson(Map<String, Object?> json) =>
+      _$TransactionSplitFromJson(json);
+
   /// User ID
   final String user;
 

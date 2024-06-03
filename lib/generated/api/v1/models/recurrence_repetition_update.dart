@@ -16,9 +16,10 @@ class RecurrenceRepetitionUpdate {
     required this.skip,
     required this.weekend,
   });
-  
-  factory RecurrenceRepetitionUpdate.fromJson(Map<String, Object?> json) => _$RecurrenceRepetitionUpdateFromJson(json);
-  
+
+  factory RecurrenceRepetitionUpdate.fromJson(Map<String, Object?> json) =>
+      _$RecurrenceRepetitionUpdateFromJson(json);
+
   final RecurrenceRepetitionType type;
 
   /// Information that defined the type of repetition.

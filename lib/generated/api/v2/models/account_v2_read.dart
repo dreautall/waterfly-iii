@@ -15,9 +15,10 @@ class AccountV2Read {
     required this.id,
     required this.attributes,
   });
-  
-  factory AccountV2Read.fromJson(Map<String, Object?> json) => _$AccountV2ReadFromJson(json);
-  
+
+  factory AccountV2Read.fromJson(Map<String, Object?> json) =>
+      _$AccountV2ReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

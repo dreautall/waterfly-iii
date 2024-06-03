@@ -6,7 +6,9 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../models/account_type_filter.dart';
+import '../models/autocomplete_account_v2.dart';
 import '../models/autocomplete_account_v2_array.dart';
+import '../models/autocomplete_td.dart';
 import '../models/autocomplete_td_array.dart';
 
 part 'autocomplete_client.g.dart';

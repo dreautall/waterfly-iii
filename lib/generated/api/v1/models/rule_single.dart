@@ -13,9 +13,10 @@ class RuleSingle {
   const RuleSingle({
     required this.data,
   });
-  
-  factory RuleSingle.fromJson(Map<String, Object?> json) => _$RuleSingleFromJson(json);
-  
+
+  factory RuleSingle.fromJson(Map<String, Object?> json) =>
+      _$RuleSingleFromJson(json);
+
   final RuleRead data;
 
   Map<String, Object?> toJson() => _$RuleSingleToJson(this);

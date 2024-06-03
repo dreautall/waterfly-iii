@@ -24,9 +24,10 @@ class RecurrenceTransactionUpdate {
     required this.piggyBankId,
     required this.billId,
   });
-  
-  factory RecurrenceTransactionUpdate.fromJson(Map<String, Object?> json) => _$RecurrenceTransactionUpdateFromJson(json);
-  
+
+  factory RecurrenceTransactionUpdate.fromJson(Map<String, Object?> json) =>
+      _$RecurrenceTransactionUpdateFromJson(json);
+
   final String id;
   final String description;
 

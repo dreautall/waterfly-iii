@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../models/chart_line.dart';
+import '../models/chart_data_set.dart';
 
 part 'charts_client.g.dart';
 

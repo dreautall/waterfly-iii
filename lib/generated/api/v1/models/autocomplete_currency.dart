@@ -15,9 +15,10 @@ class AutocompleteCurrency {
     required this.symbol,
     required this.decimalPlaces,
   });
-  
-  factory AutocompleteCurrency.fromJson(Map<String, Object?> json) => _$AutocompleteCurrencyFromJson(json);
-  
+
+  factory AutocompleteCurrency.fromJson(Map<String, Object?> json) =>
+      _$AutocompleteCurrencyFromJson(json);
+
   final String id;
 
   /// Currency name.

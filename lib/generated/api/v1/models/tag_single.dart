@@ -13,9 +13,10 @@ class TagSingle {
   const TagSingle({
     required this.data,
   });
-  
-  factory TagSingle.fromJson(Map<String, Object?> json) => _$TagSingleFromJson(json);
-  
+
+  factory TagSingle.fromJson(Map<String, Object?> json) =>
+      _$TagSingleFromJson(json);
+
   final TagRead data;
 
   Map<String, Object?> toJson() => _$TagSingleToJson(this);

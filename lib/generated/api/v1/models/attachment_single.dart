@@ -13,9 +13,10 @@ class AttachmentSingle {
   const AttachmentSingle({
     required this.data,
   });
-  
-  factory AttachmentSingle.fromJson(Map<String, Object?> json) => _$AttachmentSingleFromJson(json);
-  
+
+  factory AttachmentSingle.fromJson(Map<String, Object?> json) =>
+      _$AttachmentSingleFromJson(json);
+
   final AttachmentRead data;
 
   Map<String, Object?> toJson() => _$AttachmentSingleToJson(this);

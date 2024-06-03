@@ -16,9 +16,10 @@ class CurrencyStore {
     required this.decimalPlaces,
     this.enabled = true,
   });
-  
-  factory CurrencyStore.fromJson(Map<String, Object?> json) => _$CurrencyStoreFromJson(json);
-  
+
+  factory CurrencyStore.fromJson(Map<String, Object?> json) =>
+      _$CurrencyStoreFromJson(json);
+
   /// Defaults to true
   final bool enabled;
 

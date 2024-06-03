@@ -17,9 +17,10 @@ class UserArray {
     required this.meta,
     required this.links,
   });
-  
-  factory UserArray.fromJson(Map<String, Object?> json) => _$UserArrayFromJson(json);
-  
+
+  factory UserArray.fromJson(Map<String, Object?> json) =>
+      _$UserArrayFromJson(json);
+
   final List<UserRead> data;
   final Meta meta;
   final PageLink links;

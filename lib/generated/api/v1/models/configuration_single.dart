@@ -13,9 +13,10 @@ class ConfigurationSingle {
   const ConfigurationSingle({
     required this.data,
   });
-  
-  factory ConfigurationSingle.fromJson(Map<String, Object?> json) => _$ConfigurationSingleFromJson(json);
-  
+
+  factory ConfigurationSingle.fromJson(Map<String, Object?> json) =>
+      _$ConfigurationSingleFromJson(json);
+
   final Configuration data;
 
   Map<String, Object?> toJson() => _$ConfigurationSingleToJson(this);

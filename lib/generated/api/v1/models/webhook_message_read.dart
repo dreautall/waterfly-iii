@@ -15,9 +15,10 @@ class WebhookMessageRead {
     required this.id,
     required this.attributes,
   });
-  
-  factory WebhookMessageRead.fromJson(Map<String, Object?> json) => _$WebhookMessageReadFromJson(json);
-  
+
+  factory WebhookMessageRead.fromJson(Map<String, Object?> json) =>
+      _$WebhookMessageReadFromJson(json);
+
   /// Immutable value
   final String type;
   final String id;

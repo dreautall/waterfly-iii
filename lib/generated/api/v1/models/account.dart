@@ -48,9 +48,10 @@ class Account {
     this.active = true,
     this.includeNetWorth = true,
   });
-  
-  factory Account.fromJson(Map<String, Object?> json) => _$AccountFromJson(json);
-  
+
+  factory Account.fromJson(Map<String, Object?> json) =>
+      _$AccountFromJson(json);
+
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @JsonKey(name: 'updated_at')

@@ -17,9 +17,10 @@ class PreferenceArray {
     required this.meta,
     required this.links,
   });
-  
-  factory PreferenceArray.fromJson(Map<String, Object?> json) => _$PreferenceArrayFromJson(json);
-  
+
+  factory PreferenceArray.fromJson(Map<String, Object?> json) =>
+      _$PreferenceArrayFromJson(json);
+
   final List<PreferenceRead> data;
   final Meta meta;
   final PageLink links;

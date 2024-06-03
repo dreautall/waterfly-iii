@@ -53,25 +53,6 @@ class APITZReplyData {
   }
 }
 
-class SSLHttpOverride extends HttpOverrides {
-  SSLHttpOverride(this.validCert);
-  final String validCert;
-
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    // Needed for issue #75
-    //context ??= SecurityContext.defaultContext;
-    //context.useCertificateChainBytes(chainBytes);
-    //context.usePrivateKeyBytes(keyBytes);
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, _, __) {
-        log.fine("Using SSLHttpOverride");
-        return cert.pem.replaceAll("\r", "").trim() ==
-            validCert.replaceAll("\r", "").trim();
-      };
-  }
-}
-
 // :TODO: translate strings. cause returns just an identifier for the translation.
 class AuthError implements Exception {
   const AuthError(this.cause);
@@ -113,7 +94,10 @@ class AuthErrorNoInstance extends AuthError {
   final String host;
 }
 
-http.Client get httpClient => CronetClient.defaultCronetEngine();
+http.Client get httpClient => CronetClient.fromCronetEngine(
+      CronetEngine.build(),
+      closeEngine: false,
+    );
 
 class APIRequestInterceptor implements Interceptor {
   APIRequestInterceptor(this.headerFunc);
@@ -195,7 +179,7 @@ class AuthUser {
       final http.Request request = http.Request(HttpMethod.Get, aboutUri);
       request.headers[HttpHeaders.authorizationHeader] = "Bearer $apiKey";
       request.followRedirects = false;
-      final http.StreamedResponse response = await request.send();
+      final http.StreamedResponse response = await client.send(request);
 
       if (response.isRedirect) {
         throw const AuthErrorApiKey();

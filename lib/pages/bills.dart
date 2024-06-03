@@ -1,16 +1,15 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show Response;
 import 'package:syncfusion_flutter_charts/charts.dart' show SortingOrder;
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show APIv1, BillArray, BillRead, Currency, CurrencyRead;
 import 'package:waterflyiii/pages/bills/billdetails.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/timezonehandler.dart';
@@ -461,27 +460,26 @@ class _BillsPageState extends State<BillsPage>
   }
 
   Future<Map<String, List<BillRead>>> _fetchBills() async {
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
     // Start date set to first day of this month (period)
     final DateTime start = DateTime.now().copyWith(day: 1);
     // End date set to first day of upcoming month (period)
     final DateTime end = start.copyWith(month: start.month + 1);
     List<BillRead> bills = <BillRead>[];
-    late Response<BillArray> response;
+    late BillArray response;
     int pageNumber = 0;
 
     do {
       pageNumber += 1;
-      response = await api.v1BillsGet(
+      response = await api.bills.listBill(
         page: pageNumber,
-        start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
-        end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
+        start: start,
+        end: end,
       );
-      apiThrowErrorIfEmpty(response, mounted ? context : null);
 
-      bills.addAll(response.body!.data);
-    } while ((response.body!.meta.pagination?.currentPage ?? 1) <
-        (response.body!.meta.pagination?.totalPages ?? 1));
+      bills.addAll(response.data);
+    } while ((response.meta.pagination?.currentPage ?? 1) <
+        (response.meta.pagination?.totalPages ?? 1));
 
     bills.sort((BillRead a, BillRead b) => (a.attributes.objectGroupOrder ?? 0)
         .compareTo(b.attributes.objectGroupOrder ?? 0));

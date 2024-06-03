@@ -4,13 +4,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show Response;
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show APIv1, ChartDataSet, ChartLine, Currency, CurrencyRead;
 import 'package:waterflyiii/widgets/charts.dart';
 
 class SummaryChart extends StatelessWidget {
@@ -81,16 +81,13 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
   ValueNotifier<DateTime?> date = ValueNotifier<DateTime?>(null);
 
   Future<List<ChartDataSet>> _fetchData(BuildContext context) async {
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
     final DateTime now = DateTime.now().toLocal().clearTime();
 
-    final Response<ChartLine> respChartData =
-        await api.v1ChartAccountOverviewGet(
-      start:
-          DateFormat('yyyy-MM-dd').format(now.copyWith(month: now.month - 36)),
-      end: DateFormat('yyyy-MM-dd').format(now),
+    final ChartLine respChartData = await api.charts.getChartAccountOverview(
+      start: now.copyWith(month: now.month - 36),
+      end: now,
     );
-    apiThrowErrorIfEmpty(respChartData, mounted ? context : null);
 
     currencies.clear();
     balances.clear();
@@ -98,7 +95,7 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
 
     // Initialize table variables
     DateTime? latestDate;
-    for (ChartDataSet e in respChartData.body!) {
+    for (ChartDataSet e in respChartData) {
       if (latestDate == null || e.endDate!.isAfter(latestDate)) {
         latestDate = e.endDate;
       }
@@ -123,7 +120,7 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
     }
     date.value = latestDate!.clearTime();
 
-    return respChartData.body!;
+    return respChartData;
   }
 
   void trackballPositionChange(TrackballArgs args,

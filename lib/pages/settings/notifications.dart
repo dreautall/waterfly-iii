@@ -3,13 +3,18 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show Response;
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';
 
 import 'package:waterflyiii/auth.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show
+        Account,
+        AccountArray,
+        AccountRead,
+        AccountTypeFilter,
+        ShortAccountTypeProperty;
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/settings.dart';
 
@@ -203,16 +208,11 @@ class NotificationApps extends StatelessWidget {
     super.key,
   });
 
-  Future<AccountArray> _getAccounts(BuildContext context) async {
-    final FireflyIii api = context.read<FireflyService>().api;
-
-    // Accounts
-    final Response<AccountArray> respAccounts =
-        await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
-    apiThrowErrorIfEmpty(respAccounts, context.mounted ? context : null);
-
-    return respAccounts.body!;
-  }
+  Future<AccountArray> _getAccounts(BuildContext context) async => context
+      .read<FireflyService>()
+      .api
+      .accounts
+      .listAccount(type: AccountTypeFilter.assetAccount);
 
   @override
   Widget build(BuildContext context) {
@@ -300,7 +300,7 @@ class _AppCardState extends State<AppCard> {
           type: "dummy",
           attributes: Account(
             name: S.of(context).settingsNLAppAccountDynamic,
-            type: ShortAccountTypeProperty.swaggerGeneratedUnknown,
+            type: ShortAccountTypeProperty.$unknown,
           ),
         ),
         label: S.of(context).settingsNLAppAccountDynamic,

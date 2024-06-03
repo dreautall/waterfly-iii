@@ -4,13 +4,13 @@ import 'package:provider/provider.dart';
 
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
-import 'package:chopper/chopper.dart' show Response;
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show APIv1, InsightGroup, InsightGroupEntry, InsightTotalEntry;
 import 'package:waterflyiii/widgets/charts.dart';
 
 class NetEarningsChart extends StatelessWidget {
@@ -105,7 +105,7 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
   int monthOffset = 0;
 
   Future<Map<String, double>> _fetchData(BuildContext context) async {
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
 
     final Map<String, double> chartData = <String, double>{};
 
@@ -116,28 +116,24 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
       now = now.copyWith(month: now.month - monthOffset);
     }
 
-    final Response<InsightGroup> respCatIncomeData =
-        await api.v1InsightIncomeCategoryGet(
-      start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
-      end: DateFormat('yyyy-MM-dd', 'en_US')
-          .format(now.copyWith(day: 0, month: now.month + 1)),
+    final InsightGroup respCatIncomeData =
+        await api.insight.insightIncomeCategory(
+      start: now.copyWith(day: 1),
+      end: now.copyWith(day: 0, month: now.month + 1),
     );
-    final Response<InsightGroup> respCatExpenseData =
-        await api.v1InsightExpenseCategoryGet(
-      start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
-      end: DateFormat('yyyy-MM-dd', 'en_US')
-          .format(now.copyWith(day: 0, month: now.month + 1)),
+    final InsightGroup respCatExpenseData =
+        await api.insight.insightExpenseCategory(
+      start: now.copyWith(day: 1),
+      end: now.copyWith(day: 0, month: now.month + 1),
     );
 
-    apiThrowErrorIfEmpty(respCatExpenseData, mounted ? context : null);
-
-    for (InsightGroupEntry cat in respCatIncomeData.body!) {
+    for (InsightGroupEntry cat in respCatIncomeData) {
       if ((cat.name?.isEmpty ?? true) || cat.differenceFloat == 0) {
         continue;
       }
       chartData[cat.name!] = cat.differenceFloat!;
     }
-    for (InsightGroupEntry cat in respCatExpenseData.body!) {
+    for (InsightGroupEntry cat in respCatExpenseData) {
       if ((cat.name?.isEmpty ?? true) || cat.differenceFloat == 0) {
         continue;
       }

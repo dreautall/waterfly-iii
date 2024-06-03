@@ -4,7 +4,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show
+        AccountRead,
+        Currency,
+        CurrencyRead,
+        LiabilityDirectionProperty,
+        LiabilityTypeProperty,
+        ShortAccountTypeProperty;
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/widgets/fabs.dart';
 
@@ -84,7 +91,7 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
                     account.attributes.interest!,
                   ) ??
                   0,
-              account.attributes.interestPeriod!.value?.replaceAll('-', '') ??
+              account.attributes.interestPeriod!.json?.replaceAll('-', '') ??
                   "",
             );
       }
@@ -155,7 +162,7 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
           ],
         ),
       ),
-      enabled: account.attributes.active ?? true,
+      enabled: account.attributes.active,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16),

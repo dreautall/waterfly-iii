@@ -14,7 +14,16 @@ import 'package:version/version.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show
+        APIv1,
+        CategoryRead,
+        Currency,
+        CurrencyRead,
+        Transaction,
+        TransactionRead,
+        TransactionSplit,
+        TransactionTypeProperty;
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/pages/transaction.dart';
@@ -221,11 +230,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
           limit: _numberOfPostsPerRequest,
           end: context.read<SettingsProvider>().showFutureTXs
               ? null
-              : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
+              : _tzHandler.sNow(),
           start:
               (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
                   ? null
-                  : "1900-01-01",
+                  : DateTime(1900),
         );
       } else {
         transactionList = await stock.get(
@@ -233,11 +242,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
           limit: _numberOfPostsPerRequest,
           end: context.read<SettingsProvider>().showFutureTXs
               ? null
-              : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
+              : _tzHandler.sNow(),
           start:
               (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
                   ? null
-                  : "1900-01-01",
+                  : DateTime(1900),
         );
       }
 
@@ -249,7 +258,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
             type: "WF3_DUMMY_SPACING_ELEMENT",
             id: "WF3_DUMMY_SPACING_ELEMENT",
             attributes: Transaction(transactions: <TransactionSplit>[]),
-            links: ObjectLink(),
+            links: null,
           ));
           _pagingController.appendLastPage(transactionList);
         } else {
@@ -500,7 +509,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
               const PopupMenuDivider(),
               PopupMenuItem<Function>(
                 value: () async {
-                  final FireflyIii api = context.read<FireflyService>().api;
+                  final APIv1 api = context.read<FireflyService>().api;
                   bool? ok = await showDialog<bool>(
                     context: context,
                     builder: (BuildContext context) =>
@@ -510,7 +519,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     return;
                   }
 
-                  await api.v1TransactionsIdDelete(
+                  await api.transactions.deleteTransaction(
                     id: item.id,
                   );
                   _rowsWithDate = <int>[];

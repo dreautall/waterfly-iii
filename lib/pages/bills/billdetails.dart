@@ -5,13 +5,21 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:chopper/chopper.dart' show Response;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show
+        APIv1,
+        BillRead,
+        Currency,
+        CurrencyRead,
+        TransactionArray,
+        TransactionRead,
+        TransactionSingle,
+        TransactionSplit;
 import 'package:waterflyiii/pages/bills/billchart.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/timezonehandler.dart';
@@ -306,20 +314,19 @@ class _BillDetailsState extends State<BillDetails> {
   }
 
   Future<void> _fetchPage(int page) async {
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
 
-    Response<TransactionArray> response = await api.v1BillsIdTransactionsGet(
+    TransactionArray response = await api.bills.listTransactionByBill(
       id: widget.bill.id,
       page: page,
     );
-    apiThrowErrorIfEmpty(response, mounted ? context : null);
 
     _billChartKey.currentState!.doneLoading();
-    List<TransactionRead> transactions = response.body!.data;
+    List<TransactionRead> transactions = response.data;
     _billChartKey.currentState!.addTransactions(transactions);
 
-    if ((response.body!.meta.pagination?.currentPage ?? 1) ==
-        (response.body!.meta.pagination?.totalPages ?? 1)) {
+    if ((response.meta.pagination?.currentPage ?? 1) ==
+        (response.meta.pagination?.totalPages ?? 1)) {
       _pagingController.appendLastPage(transactions);
     } else {
       _pagingController.appendPage(transactions, page + 1);
@@ -327,13 +334,12 @@ class _BillDetailsState extends State<BillDetails> {
   }
 
   Future<TransactionRead> _fetchFullTx(String id) async {
-    final FireflyIii api = context.read<FireflyService>().api;
+    final APIv1 api = context.read<FireflyService>().api;
 
-    Response<TransactionSingle> response = await api.v1TransactionsIdGet(
+    TransactionSingle response = await api.transactions.getTransaction(
       id: id,
     );
-    apiThrowErrorIfEmpty(response, mounted ? context : null);
 
-    return response.body!.data;
+    return response.data;
   }
 }

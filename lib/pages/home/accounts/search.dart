@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chopper/chopper.dart' show Response;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:waterflyiii/animations.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/generated/api/v1/export.dart'
+    show
+        APIv1,
+        AccountArray,
+        AccountRead,
+        AccountSearchFieldFilter,
+        AccountTypeFilter;
 import 'package:waterflyiii/pages/home/accounts/row.dart';
 
 class AccountSearch extends StatefulWidget {
@@ -63,25 +68,24 @@ class _AccountSearchState extends State<AccountSearch> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final FireflyIii api = context.read<FireflyService>().api;
-      late Response<AccountArray> respAccounts;
+      final APIv1 api = context.read<FireflyService>().api;
+      late AccountArray respAccounts;
       if (_searchController.text.isNotEmpty) {
-        respAccounts = await api.v1SearchAccountsGet(
+        respAccounts = await api.search.searchAccounts(
           type: currentFilter,
           page: pageKey,
           query: _searchController.text,
           field: AccountSearchFieldFilter.all,
         );
       } else {
-        respAccounts = await api.v1AccountsGet(
+        respAccounts = await api.accounts.listAccount(
           type: currentFilter,
           page: pageKey,
         );
       }
-      apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
 
       if (mounted) {
-        final List<AccountRead> accountList = respAccounts.body!.data;
+        final List<AccountRead> accountList = respAccounts.data;
         final bool isLastPage = accountList.length < _numberOfItemsPerRequest;
         if (isLastPage) {
           _pagingController.appendLastPage(accountList);

@@ -1,5 +1,5 @@
 {
-  "@@locale": "zh",
+  "@@locale": "zh-CN",
   "@@x-reference": true,
   "accountRoleAssetCashWallet": "现金钱包",
   "@accountRoleAssetCashWallet": {
@@ -710,6 +710,10 @@
         "example": "2"
       }
     }
+  },
+  "homeTransactionsSettingsShowTags": "在交易列表中显示标签",
+  "@homeTransactionsSettingsShowTags": {
+    "description": "Setting label to show tags in transactioon list."
   },
   "liabilityDirectionCredit": "我欠了这笔债",
   "@liabilityDirectionCredit": {

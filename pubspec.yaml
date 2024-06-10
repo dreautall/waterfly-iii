@@ -55,7 +55,7 @@ dependencies:
 dev_dependencies:
   flutter_lints: ^4.0.0
   # needed for swagger_dart_code_generator
-  build_runner: ^2.4.7
+  build_runner: ^2.4.11
   chopper_generator: ^8.0.0
   json_serializable: ^6.7.1
   swagger_dart_code_generator: ^2.15.1

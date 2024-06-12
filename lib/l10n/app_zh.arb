@@ -711,6 +711,10 @@
       }
     }
   },
+  "homeTransactionsSettingsShowTags": "在交易列表中显示标签",
+  "@homeTransactionsSettingsShowTags": {
+    "description": "Setting label to show tags in transactioon list."
+  },
   "liabilityDirectionCredit": "我欠了这笔债",
   "@liabilityDirectionCredit": {
     "description": "Firefly Translation String: liability_direction_credit"

@@ -1,7 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
+import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 
 class NewTransactionFab extends StatelessWidget {
@@ -33,6 +35,13 @@ class NewTransactionFab extends StatelessWidget {
           tooltip: S.of(context).formButtonTransactionAdd,
           child: const Icon(Icons.add),
         );
+      },
+      onClosed: (bool? refresh) {
+        if (refresh ?? false == true) {
+          if (context.mounted) {
+            context.read<FireflyService>().transStock!.clear();
+          }
+        }
       },
     );
   }

@@ -140,6 +140,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
     }
 
     _stock = context.read<FireflyService>().transStock!;
+
+    _stock.addListener(() => _pagingController.refresh());
   }
 
   @override
@@ -486,8 +488,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   if (ok ?? false) {
                     _rowsWithDate = <int>[];
                     _lastDate = null;
-                    _pagingController.refresh();
+                    if (context.mounted) {
+                      context.read<FireflyService>().transStock!.clear();
+                    }
                   }
+                  _pagingController.refresh();
                 },
                 child: Row(
                   children: <Widget>[
@@ -650,8 +655,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
         if (refresh ?? false == true) {
           _rowsWithDate = <int>[];
           _lastDate = null;
-          _pagingController.refresh();
+          if (context.mounted) {
+            context.read<FireflyService>().transStock!.clear();
+          }
         }
+        _pagingController.refresh();
       },
     );
 

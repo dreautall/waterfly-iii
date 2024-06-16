@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cronet_http/cronet_http.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/io_client.dart';
 import 'package:logging/logging.dart';
 
 import 'package:chopper/chopper.dart'
@@ -53,25 +53,6 @@ class APITZReplyData {
   }
 }
 
-class SSLHttpOverride extends HttpOverrides {
-  SSLHttpOverride(this.validCert);
-  final String validCert;
-
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    // Needed for issue #75
-    //context ??= SecurityContext.defaultContext;
-    //context.useCertificateChainBytes(chainBytes);
-    //context.usePrivateKeyBytes(keyBytes);
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, _, __) {
-        log.fine("Using SSLHttpOverride");
-        return cert.pem.replaceAll("\r", "").trim() ==
-            validCert.replaceAll("\r", "").trim();
-      };
-  }
-}
-
 // :TODO: translate strings. cause returns just an identifier for the translation.
 class AuthError implements Exception {
   const AuthError(this.cause);
@@ -113,7 +94,10 @@ class AuthErrorNoInstance extends AuthError {
   final String host;
 }
 
-http.Client get httpClient => IOClient(HttpClient());
+http.Client get httpClient => CronetClient.fromCronetEngine(
+      CronetEngine.build(),
+      closeEngine: false,
+    );
 
 class APIRequestInterceptor implements Interceptor {
   APIRequestInterceptor(this.headerFunc);
@@ -195,7 +179,7 @@ class AuthUser {
       final http.Request request = http.Request(HttpMethod.Get, aboutUri);
       request.headers[HttpHeaders.authorizationHeader] = "Bearer $apiKey";
       request.followRedirects = false;
-      final http.StreamedResponse response = await request.send();
+      final http.StreamedResponse response = await client.send(request);
 
       if (response.isRedirect) {
         throw const AuthErrorApiKey();
@@ -270,17 +254,16 @@ class FireflyService with ChangeNotifier {
     _storageSignInException = null;
     String? apiHost = await storage.read(key: 'api_host');
     String? apiKey = await storage.read(key: 'api_key');
-    String? cert = await storage.read(key: 'api_cert');
 
     log.config(
-        "storage: $apiHost, apiKey ${apiKey?.isEmpty ?? true ? "unset" : "set"}, cert ${cert?.isEmpty ?? true ? "unset" : "set"}");
+        "storage: $apiHost, apiKey ${apiKey?.isEmpty ?? true ? "unset" : "set"}");
 
     if (apiHost == null || apiKey == null) {
       return false;
     }
 
     try {
-      return await signIn(apiHost, apiKey, cert);
+      return await signIn(apiHost, apiKey);
     } catch (e) {
       _storageSignInException = e;
       log.finest(() => "notify FireflyService->signInFromStorage");
@@ -302,16 +285,10 @@ class FireflyService with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> signIn(String host, String apiKey, [String? cert]) async {
+  Future<bool> signIn(String host, String apiKey) async {
     log.config("FireflyService->signIn($host)");
     host = host.strip().rightStrip('/');
     apiKey = apiKey.strip();
-
-    if (cert != null && cert.isNotEmpty) {
-      HttpOverrides.global = SSLHttpOverride(cert);
-    } else {
-      HttpOverrides.global = null;
-    }
 
     _lastTriedHost = host;
     _currentUser = await AuthUser.create(host, apiKey);
@@ -357,7 +334,6 @@ class FireflyService with ChangeNotifier {
 
     storage.write(key: 'api_host', value: host);
     storage.write(key: 'api_key', value: apiKey);
-    storage.write(key: 'api_cert', value: cert);
 
     return true;
   }

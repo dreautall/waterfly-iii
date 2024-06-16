@@ -961,14 +961,6 @@
   "@settingsVersionChecking": {
     "description": "Shown while checking for app version"
   },
-  "splashCustomSSLCert": "自定义 SSL 证书",
-  "@splashCustomSSLCert": {
-    "description": "Button text & Dialog title for using a custom SSL certificate"
-  },
-  "splashFormLabelCustomSSLCertPEM": "证书文件（PEM）",
-  "@splashFormLabelCustomSSLCertPEM": {
-    "description": "Label for certificate file text input in PEM format"
-  },
   "transactionAttachments": "附件",
   "@transactionAttachments": {
     "description": "Button Label: Attachments"

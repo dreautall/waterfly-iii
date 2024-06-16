@@ -140,6 +140,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
     }
 
     _stock = context.read<FireflyService>().transStock!;
+
+    _stock.addListener(() => _pagingController.refresh());
   }
 
   @override

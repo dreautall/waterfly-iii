@@ -489,8 +489,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     if (context.mounted) {
                       context.read<FireflyService>().transStock!.clear();
                     }
-                    _pagingController.refresh();
                   }
+                  _pagingController.refresh();
                 },
                 child: Row(
                   children: <Widget>[
@@ -656,8 +656,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
           if (context.mounted) {
             context.read<FireflyService>().transStock!.clear();
           }
-          _pagingController.refresh();
         }
+        _pagingController.refresh();
       },
     );
 

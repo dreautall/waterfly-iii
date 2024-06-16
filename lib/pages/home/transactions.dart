@@ -486,6 +486,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   if (ok ?? false) {
                     _rowsWithDate = <int>[];
                     _lastDate = null;
+                    if (context.mounted) {
+                      context.read<FireflyService>().transStock!.clear();
+                    }
                     _pagingController.refresh();
                   }
                 },
@@ -650,6 +653,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
         if (refresh ?? false == true) {
           _rowsWithDate = <int>[];
           _lastDate = null;
+          if (context.mounted) {
+            context.read<FireflyService>().transStock!.clear();
+          }
           _pagingController.refresh();
         }
       },

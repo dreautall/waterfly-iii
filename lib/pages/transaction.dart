@@ -1178,12 +1178,6 @@ class _TransactionPageState extends State<TransactionPage>
                       // This should only happen if:
                       // 1. it is a new transaction
                       // 2. the date has been changed (changing the order of the TX list)
-                      debugPrint(
-                          "Widget TX null? ${widget.transaction == null}");
-                      debugPrint(
-                          "Date changed? ${_date != widget.transaction!.attributes.transactions.first.date}");
-                      debugPrint(
-                          "Dates: ${_date.toIso8601String()} // ${_tzHandler.sTime(widget.transaction!.attributes.transactions.first.date).toIso8601String()}");
                       nav.pop(widget.transaction == null ||
                           _date !=
                               _tzHandler.sTime(widget.transaction!.attributes

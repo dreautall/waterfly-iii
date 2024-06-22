@@ -3,12 +3,12 @@ servers:
   - description: Firefly III demo site
     url: https://demo.firefly-iii.org/api
 info:
-  title: Firefly III API v2.1.0
+  title: Firefly III API v2.0.12
   description: |
-    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2024-05-19T04:33:01+00:00
+    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2024-01-03T07:10:56+00:00
 
     Please keep in mind that the demo site does not accept requests from curl, colly, wget, etc. You must use a browser or a tool like Postman to make requests. Too many script kiddies out there, sorry about that.
-  version: "2.1.0"
+  version: "2.0.12"
   contact:
     name: James Cole
     email: james@firefly-iii.org
@@ -5294,7 +5294,7 @@ paths:
           schema:
             type: string
             example: "123"
-          description: The ID of the bill.
+          description: The ID of the bill.          
         - in: query
           name: limit
           description: Number of items per page. The default pagination is per 50 items.
@@ -18996,12 +18996,6 @@ components:
           format: string
           example: "tag1"
           description: "The accompanying value the trigger responds to. This value is often mandatory, but this depends on the trigger."
-        prohibited:
-          type: boolean
-          format: boolean
-          example: false
-          default: false
-          description: If 'prohibited' is true, this rule trigger will be negated. 'Description is' will become 'Description is NOT' etc.
         order:
           type: integer
           format: int32
@@ -19044,12 +19038,6 @@ components:
           example: true
           default: true
           description: If the trigger is active. Defaults to true.
-        prohibited:
-          type: boolean
-          format: boolean
-          example: false
-          default: false
-          description: If 'prohibited' is true, this rule trigger will be negated. 'Description is' will become 'Description is NOT' etc.
         stop_processing:
           type: boolean
           format: boolean
@@ -19065,7 +19053,7 @@ components:
           type: string
           format: string
           example: "tag1"
-          description: "The accompanying value the trigger responds to. This value is often mandatory, but this depends on the trigger. If the rule trigger is something like 'has any tag', submit the string 'true'."
+          description: "The accompanying value the trigger responds to. This value is often mandatory, but this depends on the trigger."
         order:
           type: integer
           format: int32

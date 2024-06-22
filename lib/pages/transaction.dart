@@ -1174,7 +1174,14 @@ class _TransactionPageState extends State<TransactionPage>
                     }
 
                     if (nav.canPop()) {
-                      nav.pop(true);
+                      // Popping true means that the TX list will be refreshed.
+                      // This should only happen if:
+                      // 1. it is a new transaction
+                      // 2. the date has been changed (changing the order of the TX list)
+                      nav.pop(widget.transaction == null ||
+                          _date !=
+                              _tzHandler.sTime(widget.transaction!.attributes
+                                  .transactions.first.date));
                     } else {
                       // Launched from notification
                       // https://stackoverflow.com/questions/45109557/flutter-how-to-programmatically-exit-the-app

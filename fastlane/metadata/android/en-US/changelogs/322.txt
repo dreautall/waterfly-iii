@@ -1,0 +1,4 @@
+- BREAKING CHANGE: The app now uses the Android Certificate Store, and does not have the option to provide a custom server certificate anymore. If you are using a self-signed certificate, please add it to the Android Store to keep using the app. (#77)
+ - Thank you @j1mbl3s for testing this!
+- Net Worth chart removed for the time being due to API issues in latest Firefly version.
+- Bugfixes (#379, #394, #405, #406)

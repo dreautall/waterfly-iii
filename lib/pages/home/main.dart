@@ -76,7 +76,9 @@ class _HomeMainState extends State<HomeMain>
     lastDaysIncome.clear();
 
     // With a new API the number of API calls is reduced from 14 to 2
-    if (context.read<FireflyService>().apiVersion! >= Version(2, 0, 7)) {
+    // :TODO: currently there is a bug in the APIv2 call, disabled this for now..
+    if (false &&
+        context.read<FireflyService>().apiVersion! >= Version(2, 0, 7)) {
       final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
 
       final List<int> accounts = <int>[];
@@ -775,7 +777,9 @@ class _HomeMainState extends State<HomeMain>
             ),
           ),
           const SizedBox(height: 8),
-          if (context.read<FireflyService>().apiVersion! >= Version(2, 0, 7))
+          // :TODO: currently there is a bug in the APIv2 call, disabled this for now..
+          if (false &&
+              context.read<FireflyService>().apiVersion! >= Version(2, 0, 7))
             ChartCard(
               title: S.of(context).homeMainChartNetWorthTitle,
               future: _fetchBalance(),
@@ -923,7 +927,8 @@ class _HomeMainState extends State<HomeMain>
                 liabilities: lastMonthsLiabilities,
               ),
             ),
-          if (context.read<FireflyService>().apiVersion! >= Version(2, 0, 7))
+          if (false &&
+              context.read<FireflyService>().apiVersion! >= Version(2, 0, 7))
             const SizedBox(height: 8),
           AnimatedHeight(
             child: FutureBuilder<List<BudgetLimitRead>>(

@@ -1,0 +1,1 @@
+- Hotfix to enable non-HTTPS hosts again

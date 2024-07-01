@@ -1387,20 +1387,20 @@ class _TransactionPageState extends State<TransactionPage>
                       fetchOpSource?.cancel();
 
                       final FireflyIii api = context.read<FireflyService>().api;
-                  fetchOpSource = CancelableOperation<
-                      Response<AutocompleteAccountArray>>.fromFuture(
-                    api.v1AutocompleteAccountsGet(
-                        query: textEditingValue.text,
-                        types:
-                            _destinationAccountType.allowedOpposingTypes(false),
-                    ),
+                      fetchOpSource = CancelableOperation<
+                          Response<AutocompleteAccountArray>>.fromFuture(
+                        api.v1AutocompleteAccountsGet(
+                          query: textEditingValue.text,
+                          types: _destinationAccountType
+                              .allowedOpposingTypes(false),
+                        ),
                       );
-                                        final Response<AutocompleteAccountArray>? response =
-                      await fetchOpSource?.valueOrCancellation();
-                  if (response == null) {
-                    // Cancelled
-                    return const Iterable<AutocompleteAccount>.empty();
-                  }
+                      final Response<AutocompleteAccountArray>? response =
+                          await fetchOpSource?.valueOrCancellation();
+                      if (response == null) {
+                        // Cancelled
+                        return const Iterable<AutocompleteAccount>.empty();
+                      }
                       apiThrowErrorIfEmpty(response, mounted ? context : null);
 
                       return response.body!;
@@ -1469,19 +1469,20 @@ class _TransactionPageState extends State<TransactionPage>
 
                         final FireflyIii api =
                             context.read<FireflyService>().api;
-                  fetchOpDestination = CancelableOperation<
-                      Response<AutocompleteAccountArray>>.fromFuture(
-                    api.v1AutocompleteAccountsGet(
-                          query: textEditingValue.text,
-                          types: _sourceAccountType.allowedOpposingTypes(true),
-                    ),
+                        fetchOpDestination = CancelableOperation<
+                            Response<AutocompleteAccountArray>>.fromFuture(
+                          api.v1AutocompleteAccountsGet(
+                            query: textEditingValue.text,
+                            types:
+                                _sourceAccountType.allowedOpposingTypes(true),
+                          ),
                         );
-                                          final Response<AutocompleteAccountArray>? response =
-                      await fetchOpDestination?.valueOrCancellation();
-                  if (response == null) {
-                    // Cancelled
-                    return const Iterable<AutocompleteAccount>.empty();
-                  }
+                        final Response<AutocompleteAccountArray>? response =
+                            await fetchOpDestination?.valueOrCancellation();
+                        if (response == null) {
+                          // Cancelled
+                          return const Iterable<AutocompleteAccount>.empty();
+                        }
                         apiThrowErrorIfEmpty(
                             response, mounted ? context : null);
 
@@ -1707,12 +1708,12 @@ class _TransactionPageState extends State<TransactionPage>
                                           Response<
                                               AutocompleteAccountArray>>.fromFuture(
                                         api.v1AutocompleteAccountsGet(
-                                        query: textEditingValue.text,
-                                        types: _destinationAccountType
-                                            .allowedOpposingTypes(false),
+                                          query: textEditingValue.text,
+                                          types: _destinationAccountType
+                                              .allowedOpposingTypes(false),
                                         ),
                                       );
-                                                                            final Response<AutocompleteAccountArray>?
+                                      final Response<AutocompleteAccountArray>?
                                           response =
                                           await fetchOp?.valueOrCancellation();
                                       if (response == null) {
@@ -1774,12 +1775,12 @@ class _TransactionPageState extends State<TransactionPage>
                                           Response<
                                               AutocompleteAccountArray>>.fromFuture(
                                         api.v1AutocompleteAccountsGet(
-                                        query: textEditingValue.text,
-                                        types: _sourceAccountType
-                                            .allowedOpposingTypes(true),
-                                          ),
+                                          query: textEditingValue.text,
+                                          types: _sourceAccountType
+                                              .allowedOpposingTypes(true),
+                                        ),
                                       );
-                                                                            final Response<AutocompleteAccountArray>?
+                                      final Response<AutocompleteAccountArray>?
                                           response =
                                           await fetchOp?.valueOrCancellation();
                                       if (response == null) {

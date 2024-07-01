@@ -859,37 +859,18 @@ class _TransactionPageState extends State<TransactionPage>
               : S.of(context).transactionTitleEdit,
         ),
         actions: <Widget>[
-          if (!_newTX)
-            IconButton(
-              icon: const Icon(Icons.delete),
-              tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
-              onPressed: () async {
-                final FireflyIii api = context.read<FireflyService>().api;
-                final NavigatorState nav = Navigator.of(context);
-                bool? ok = await showDialog<bool>(
-                  context: context,
-                  builder: (BuildContext context) =>
-                      const DeletionConfirmDialog(),
-                );
-                if (!(ok ?? false)) {
-                  return;
-                }
-
-                await api.v1TransactionsIdDelete(
-                  id: widget.transaction?.id,
-                );
-                nav.pop(true);
-              },
-            ),
-          const SizedBox(width: 8),
+          if (!_newTX) ...<Widget>[
+            TransactionDeleteButton(transactionId: widget.transaction?.id),
+            const SizedBox(width: 8),
+          ],
           FilledButton(
             onPressed: _saving
                 ? null
                 : () async {
                     final ScaffoldMessengerState msg =
                         ScaffoldMessenger.of(context);
-                    final FireflyIii api = context.read<FireflyService>().api;
                     final NavigatorState nav = Navigator.of(context);
+                    final FireflyIii api = context.read<FireflyService>().api;
                     final AuthUser? user = context.read<FireflyService>().user;
                     final TransStock? stock =
                         context.read<FireflyService>().transStock;
@@ -906,6 +887,11 @@ class _TransactionPageState extends State<TransactionPage>
                     if (user == null || stock == null) {
                       error = S.of(context).errorAPIUnavailable;
                     }
+                    if (_transactionType ==
+                        TransactionTypeProperty.swaggerGeneratedUnknown) {
+                      error =
+                          "Please fill in the accounts first"; // :TODO: l10n
+                    }
                     if (error != null) {
                       msg.showSnackBar(SnackBar(
                         content: Text(error),
@@ -919,19 +905,8 @@ class _TransactionPageState extends State<TransactionPage>
                     });
                     late Response<TransactionSingle> resp;
 
+                    // Update existing transaction
                     if (!_newTX) {
-                      if (_transactionType ==
-                          TransactionTypeProperty.swaggerGeneratedUnknown) {
-                        msg.showSnackBar(const SnackBar(
-                          content: Text(
-                              "Please fill in the accounts first"), // :TODO: l10n
-                          behavior: SnackBarBehavior.floating,
-                        ));
-                        setState(() {
-                          _saving = false;
-                        });
-                        return;
-                      }
                       String id = widget.transaction!.id;
                       List<TransactionSplitUpdate> txS =
                           <TransactionSplitUpdate>[];
@@ -991,6 +966,7 @@ class _TransactionPageState extends State<TransactionPage>
                       resp =
                           await api.v1TransactionsIdPut(id: id, body: txUpdate);
                     } else {
+                      // New transaction
                       List<TransactionSplitStore> txS =
                           <TransactionSplitStore>[];
                       for (int i = 0; i < _localAmounts.length; i++) {
@@ -2086,6 +2062,39 @@ class _TransactionPageState extends State<TransactionPage>
           ],
         ),
       ),
+    );
+  }
+}
+
+class TransactionDeleteButton extends StatelessWidget {
+  const TransactionDeleteButton({
+    super.key,
+    required this.transactionId,
+  });
+
+  final String? transactionId;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.delete),
+      tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
+      onPressed: () async {
+        final FireflyIii api = context.read<FireflyService>().api;
+        final NavigatorState nav = Navigator.of(context);
+        bool? ok = await showDialog<bool>(
+          context: context,
+          builder: (BuildContext context) => const DeletionConfirmDialog(),
+        );
+        if (!(ok ?? false)) {
+          return;
+        }
+
+        await api.v1TransactionsIdDelete(
+          id: transactionId,
+        );
+        nav.pop(true);
+      },
     );
   }
 }

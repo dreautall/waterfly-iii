@@ -924,7 +924,8 @@ class _TransactionPageState extends State<TransactionPage>
                               _destinationAccountTextController.text;
                         }
 
-                        txS.add(TransactionSplitUpdate(
+                        final TransactionSplitUpdate txSs =
+                            TransactionSplitUpdate(
                           amount: _localAmounts[i].toString(),
                           billId: _bills[i]?.id ?? "0",
                           budgetName: (_transactionType ==
@@ -949,7 +950,19 @@ class _TransactionPageState extends State<TransactionPage>
                               _transactionJournalIDs.elementAtOrNull(i),
                           type: _transactionType,
                           reconciled: _reconciled,
-                        ));
+                        );
+
+                        final TransactionSplit? oldSplit = widget
+                            .transaction?.attributes.transactions
+                            .firstWhereOrNull((TransactionSplit e) =>
+                                e.transactionJournalId != null &&
+                                e.transactionJournalId ==
+                                    txSs.transactionJournalId);
+                        if (oldSplit != null) {
+                          txS.add(txFilterSameFields(txSs, oldSplit));
+                        } else {
+                          txS.add(txSs);
+                        }
                       }
                       TransactionUpdate txUpdate = TransactionUpdate(
                         groupTitle: _split ? _titleTextController.text : null,
@@ -2064,6 +2077,27 @@ class _TransactionPageState extends State<TransactionPage>
       ),
     );
   }
+}
+
+TransactionSplitUpdate txFilterSameFields(
+    TransactionSplitUpdate txU, TransactionSplit tx) {
+  /* https://github.com/firefly-iii/firefly-iii/blob/main/app/Validation/GroupValidation.php#L105
+     $forbidden = ['amount', 'foreign_amount', 'currency_code', 'currency_id', 'foreign_currency_code', 'foreign_currency_id',
+       'source_id', 'source_name', 'source_number', 'source_iban',
+       'destination_id', 'destination_name', 'destination_number', 'destination_iban',
+     ];
+       */
+  return txU.copyWith(
+    amount: tx.amount == txU.amount ? null : txU.amount,
+    foreignAmount:
+        tx.foreignAmount == txU.foreignAmount ? null : txU.foreignAmount,
+    foreignCurrencyId: tx.foreignCurrencyId == txU.foreignCurrencyId
+        ? null
+        : txU.foreignCurrencyId,
+    sourceName: tx.sourceName == txU.sourceName ? null : txU.sourceName,
+    destinationName:
+        tx.destinationName == txU.destinationName ? null : txU.destinationName,
+  );
 }
 
 class TransactionDeleteButton extends StatelessWidget {

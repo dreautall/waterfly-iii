@@ -149,6 +149,7 @@ class _TransactionPageState extends State<TransactionPage>
 
     _tzHandler = context.read<FireflyService>().tzHandler;
 
+    // opening an existing transaction, extract information
     if (widget.transaction != null) {
       TransactionRead transaction = widget.transaction!;
       List<TransactionSplit> transactions = transaction.attributes.transactions;
@@ -179,10 +180,7 @@ class _TransactionPageState extends State<TransactionPage>
       }
 
       /// date
-      _date = (widget.clone
-              ? _tzHandler.newTXTime()
-              : _tzHandler.sTime(transactions.first.date))
-          .toLocal();
+      _date = _tzHandler.sTime(transactions.first.date).toLocal();
 
       /// account currency
       _localCurrency = CurrencyRead(
@@ -197,8 +195,7 @@ class _TransactionPageState extends State<TransactionPage>
       );
 
       // Reconciled
-      _reconciled =
-          widget.clone ? false : transactions.first.reconciled ?? false;
+      _reconciled = transactions.first.reconciled ?? false;
 
       for (TransactionSplit trans in transactions) {
         // Always in card view
@@ -291,13 +288,10 @@ class _TransactionPageState extends State<TransactionPage>
         }
 
         //// Journal ID
-        _transactionJournalIDs
-            .add(widget.clone ? null : trans.transactionJournalId);
+        _transactionJournalIDs.add(trans.transactionJournalId);
 
         //// Attachments
-        _hasAttachments = widget.clone
-            ? false
-            : _hasAttachments || (trans.hasAttachments ?? false);
+        _hasAttachments = _hasAttachments || (trans.hasAttachments ?? false);
 
         // Card Animations
         _cardsAnimationController.add(AnimationController(
@@ -340,6 +334,7 @@ class _TransactionPageState extends State<TransactionPage>
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         splitTransactionAdd();
 
+        // Extract notification
         if (widget.notification != null) {
           final FireflyIii api = context.read<FireflyService>().api;
           final SettingsProvider settings = context.read<SettingsProvider>();
@@ -502,6 +497,7 @@ class _TransactionPageState extends State<TransactionPage>
 
           setState(() {});
         }
+        // Created from account screen, set account already
         if (widget.accountId != null && mounted) {
           // Check account
           final Response<AccountArray> response = await context
@@ -520,6 +516,7 @@ class _TransactionPageState extends State<TransactionPage>
             }
           }
         }
+        // Created from a file share to app
         if (widget.files != null && widget.files!.isNotEmpty) {
           _attachments = <AttachmentRead>[];
           for (SharedFile file in widget.files!) {
@@ -547,6 +544,16 @@ class _TransactionPageState extends State<TransactionPage>
       });
     }
 
+    // If we're cloning, unset some values
+    if (widget.clone) {
+      _date = _tzHandler.newTXTime().toLocal();
+      _reconciled = false;
+      _initiallyReconciled = false;
+      _transactionJournalIDs
+          .forEachIndexed((int i, _) => _transactionJournalIDs[i] = null);
+      _hasAttachments = false;
+    }
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _dateTextController.text = DateFormat.yMMMd().format(_date);
       _timeTextController.text = DateFormat.Hm().format(_date);
@@ -564,7 +571,6 @@ class _TransactionPageState extends State<TransactionPage>
     _destinationAccountFocusNode.dispose();
     _dateTextController.dispose();
     _timeTextController.dispose();
-
     _localAmountTextController.dispose();
 
     for (TextEditingController t in _sourceAccountTextControllers) {
@@ -597,7 +603,6 @@ class _TransactionPageState extends State<TransactionPage>
     for (TextEditingController t in _noteTextControllers) {
       t.dispose();
     }
-
     for (TextEditingController t in _titleTextControllers) {
       t.dispose();
     }

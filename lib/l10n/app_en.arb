@@ -711,6 +711,10 @@
       }
     }
   },
+  "homeTransactionsSettingsShowTags": "Show tags in transaction list",
+  "@homeTransactionsSettingsShowTags": {
+    "description": "Setting label to show tags in transactioon list."
+  },
   "liabilityDirectionCredit": "I am owed this debt",
   "@liabilityDirectionCredit": {
     "description": "Firefly Translation String: liability_direction_credit"
@@ -956,14 +960,6 @@
   "settingsVersionChecking": "checking…",
   "@settingsVersionChecking": {
     "description": "Shown while checking for app version"
-  },
-  "splashCustomSSLCert": "Custom SSL certificate",
-  "@splashCustomSSLCert": {
-    "description": "Button text & Dialog title for using a custom SSL certificate"
-  },
-  "splashFormLabelCustomSSLCertPEM": "Certificate File (PEM)",
-  "@splashFormLabelCustomSSLCertPEM": {
-    "description": "Label for certificate file text input in PEM format"
   },
   "transactionAttachments": "Attachments",
   "@transactionAttachments": {

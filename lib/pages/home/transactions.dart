@@ -51,6 +51,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
   late TimeZoneHandler _tzHandler;
 
   final TransactionFilters _filters = TransactionFilters();
+  final ValueNotifier<bool> _tagsHidden = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -59,6 +60,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     _tzHandler = context.read<FireflyService>().tzHandler;
     _pagingController
         .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
+    _tagsHidden.value = context.read<SettingsProvider>().hideTags;
 
     // Only add filter button when in own tab
     if (widget.accountId == null && widget.category == null) {
@@ -66,6 +68,24 @@ class _HomeTransactionsState extends State<HomeTransactions>
         context.read<PageActions>().set(
           widget.key!,
           <Widget>[
+            ValueListenableBuilder<bool>(
+              valueListenable: _tagsHidden,
+              builder: (BuildContext context, bool value, _) => IconButton(
+                icon: const Icon(Icons.bookmarks_outlined),
+                selectedIcon: Icon(
+                  Icons.bookmarks,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                isSelected: !value,
+                tooltip: S.of(context).homeTransactionsSettingsShowTags,
+                onPressed: () async {
+                  final SettingsProvider settings =
+                      context.read<SettingsProvider>();
+                  settings.hideTags = !settings.hideTags;
+                  _tagsHidden.value = settings.hideTags;
+                },
+              ),
+            ),
             ChangeNotifierProvider<TransactionFilters>.value(
               value: _filters,
               builder: (BuildContext context, _) => IconButton(
@@ -90,7 +110,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   );
                   if (ok == null || !ok) {
                     if (settings.showFutureTXs != oldShowFutureTXs) {
-                      settings.setShowFutureTXs(oldShowFutureTXs);
+                      settings.showFutureTXs = oldShowFutureTXs;
                       _pagingController.refresh();
                     }
                     _filters.account = oldFilters.account;
@@ -120,6 +140,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
     }
 
     _stock = context.read<FireflyService>().transStock!;
+
+    _stock.addListener(() => _pagingController.refresh());
   }
 
   @override
@@ -466,8 +488,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   if (ok ?? false) {
                     _rowsWithDate = <int>[];
                     _lastDate = null;
-                    _pagingController.refresh();
+                    if (context.mounted) {
+                      context.read<FireflyService>().transStock!.clear();
+                    }
                   }
+                  _pagingController.refresh();
                 },
                 child: Row(
                   children: <Widget>[
@@ -538,7 +563,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   children: subtitle,
                 ),
               ),
-              if (tags.isNotEmpty) ...<Widget>[
+              if (!context.watch<SettingsProvider>().hideTags &&
+                  tags.isNotEmpty) ...<Widget>[
                 Wrap(
                   children: tags
                       .map(
@@ -629,8 +655,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
         if (refresh ?? false == true) {
           _rowsWithDate = <int>[];
           _lastDate = null;
-          _pagingController.refresh();
+          if (context.mounted) {
+            context.read<FireflyService>().transStock!.clear();
+          }
         }
+        _pagingController.refresh();
       },
     );
 

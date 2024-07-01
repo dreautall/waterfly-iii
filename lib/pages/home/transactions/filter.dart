@@ -150,7 +150,7 @@ class FilterDialog extends StatelessWidget {
         TextButton(
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
           onPressed: () {
-            context.read<SettingsProvider>().setShowFutureTXs(oldShowFutureTXs);
+            context.read<SettingsProvider>().showFutureTXs = oldShowFutureTXs;
             Navigator.of(context).pop();
           },
         ),
@@ -158,7 +158,7 @@ class FilterDialog extends StatelessWidget {
           child: Text(S.of(context).generalReset),
           onPressed: () {
             filters.reset();
-            context.read<SettingsProvider>().setShowFutureTXs(false);
+            context.read<SettingsProvider>().showFutureTXs = false;
             Navigator.of(context).pop(true);
           },
         ),
@@ -190,7 +190,7 @@ class FilterDialog extends StatelessWidget {
                         value: context.watch<SettingsProvider>().showFutureTXs,
                         onChanged: (bool? value) => context
                             .read<SettingsProvider>()
-                            .setShowFutureTXs(value ?? false),
+                            .showFutureTXs = value ?? false,
                         title: Text(S
                             .of(context)
                             .homeTransactionsDialogFilterFutureTransactions),

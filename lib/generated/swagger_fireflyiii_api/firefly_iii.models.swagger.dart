@@ -9218,6 +9218,7 @@ class RuleTrigger {
     this.updatedAt,
     required this.type,
     required this.$value,
+    this.prohibited,
     this.order,
     this.active,
     this.stopProcessing,
@@ -9244,6 +9245,8 @@ class RuleTrigger {
   final enums.RuleTriggerKeyword type;
   @JsonKey(name: 'value', includeIfNull: false)
   final String $value;
+  @JsonKey(name: 'prohibited', includeIfNull: false, defaultValue: false)
+  final bool? prohibited;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
   @JsonKey(name: 'active', includeIfNull: false, defaultValue: true)
@@ -9263,6 +9266,7 @@ extension $RuleTriggerExtension on RuleTrigger {
       DateTime? updatedAt,
       enums.RuleTriggerKeyword? type,
       String? $value,
+      bool? prohibited,
       int? order,
       bool? active,
       bool? stopProcessing}) {
@@ -9272,6 +9276,7 @@ extension $RuleTriggerExtension on RuleTrigger {
         updatedAt: updatedAt ?? this.updatedAt,
         type: type ?? this.type,
         $value: $value ?? this.$value,
+        prohibited: prohibited ?? this.prohibited,
         order: order ?? this.order,
         active: active ?? this.active,
         stopProcessing: stopProcessing ?? this.stopProcessing);
@@ -9283,6 +9288,7 @@ extension $RuleTriggerExtension on RuleTrigger {
       Wrapped<DateTime?>? updatedAt,
       Wrapped<enums.RuleTriggerKeyword>? type,
       Wrapped<String>? $value,
+      Wrapped<bool?>? prohibited,
       Wrapped<int?>? order,
       Wrapped<bool?>? active,
       Wrapped<bool?>? stopProcessing}) {
@@ -9292,6 +9298,7 @@ extension $RuleTriggerExtension on RuleTrigger {
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
         type: (type != null ? type.value : this.type),
         $value: ($value != null ? $value.value : this.$value),
+        prohibited: (prohibited != null ? prohibited.value : this.prohibited),
         order: (order != null ? order.value : this.order),
         active: (active != null ? active.value : this.active),
         stopProcessing: (stopProcessing != null
@@ -9307,6 +9314,7 @@ class RuleTriggerStore {
     required this.$value,
     this.order,
     this.active,
+    this.prohibited,
     this.stopProcessing,
   });
 
@@ -9329,6 +9337,8 @@ class RuleTriggerStore {
   final int? order;
   @JsonKey(name: 'active', includeIfNull: false, defaultValue: true)
   final bool? active;
+  @JsonKey(name: 'prohibited', includeIfNull: false, defaultValue: false)
+  final bool? prohibited;
   @JsonKey(name: 'stop_processing', includeIfNull: false, defaultValue: false)
   final bool? stopProcessing;
   static const fromJsonFactory = _$RuleTriggerStoreFromJson;
@@ -9343,12 +9353,14 @@ extension $RuleTriggerStoreExtension on RuleTriggerStore {
       String? $value,
       int? order,
       bool? active,
+      bool? prohibited,
       bool? stopProcessing}) {
     return RuleTriggerStore(
         type: type ?? this.type,
         $value: $value ?? this.$value,
         order: order ?? this.order,
         active: active ?? this.active,
+        prohibited: prohibited ?? this.prohibited,
         stopProcessing: stopProcessing ?? this.stopProcessing);
   }
 
@@ -9357,12 +9369,14 @@ extension $RuleTriggerStoreExtension on RuleTriggerStore {
       Wrapped<String>? $value,
       Wrapped<int?>? order,
       Wrapped<bool?>? active,
+      Wrapped<bool?>? prohibited,
       Wrapped<bool?>? stopProcessing}) {
     return RuleTriggerStore(
         type: (type != null ? type.value : this.type),
         $value: ($value != null ? $value.value : this.$value),
         order: (order != null ? order.value : this.order),
         active: (active != null ? active.value : this.active),
+        prohibited: (prohibited != null ? prohibited.value : this.prohibited),
         stopProcessing: (stopProcessing != null
             ? stopProcessing.value
             : this.stopProcessing));

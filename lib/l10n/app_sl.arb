@@ -711,6 +711,10 @@
       }
     }
   },
+  "homeTransactionsSettingsShowTags": "Pokaži oznake na seznamu transakcij",
+  "@homeTransactionsSettingsShowTags": {
+    "description": "Setting label to show tags in transactioon list."
+  },
   "liabilityDirectionCredit": "Dolžan sem ta dolg",
   "@liabilityDirectionCredit": {
     "description": "Firefly Translation String: liability_direction_credit"
@@ -956,14 +960,6 @@
   "settingsVersionChecking": "preverjam…",
   "@settingsVersionChecking": {
     "description": "Shown while checking for app version"
-  },
-  "splashCustomSSLCert": "SSL potrdilo po meri",
-  "@splashCustomSSLCert": {
-    "description": "Button text & Dialog title for using a custom SSL certificate"
-  },
-  "splashFormLabelCustomSSLCertPEM": "Datoteka potrdila (PEM)",
-  "@splashFormLabelCustomSSLCertPEM": {
-    "description": "Label for certificate file text input in PEM format"
   },
   "transactionAttachments": "Priponke",
   "@transactionAttachments": {

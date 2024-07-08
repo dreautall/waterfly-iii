@@ -1,7 +1,7 @@
 {
-  "@@locale": "zh",
+  "@@locale": "zh-CN",
   "@@x-reference": true,
-  "accountRoleAssetCashWallet": "现金钱包",
+  "accountRoleAssetCashWallet": "现金",
   "@accountRoleAssetCashWallet": {
     "description": "Firefly Translation String: account_role_cashWalletAsset"
   },
@@ -239,7 +239,7 @@
   "@billsUngrouped": {
     "description": "Title for ungrouped bills"
   },
-  "categoryDeleteConfirm": "您确定要删除这个分类吗？与此分类关联的交易不会被删除，但不再含有此分类。",
+  "categoryDeleteConfirm": "您确定要删除这个分类吗？与该分类关联的账单不会被删除，但该分类将彻底删除。",
   "@categoryDeleteConfirm": {
     "description": "Confirmation text to delete category"
   },

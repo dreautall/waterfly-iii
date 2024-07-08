@@ -516,10 +516,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_timezone
-      sha256: b7448ff8a9e1350606727e40b3f314aa798a6a1cc07127eba58f09b98a66f03f
+      sha256: f9c328f66d58cd2af8a0cbd2f84d0c211fda8b7332b5e458d9848bd9ec936120
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -701,14 +701,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
-  js_interop:
-    dependency: transitive
-    description:
-      name: js_interop
-      sha256: "7ec859c296958ccea34dc770504bd3ff4ae52fdd9e7eeb2bacc7081ad476a1f5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.1"
   json_annotation:
     dependency: "direct main"
     description:

@@ -47,7 +47,7 @@ dependencies:
   syncfusion_flutter_charts: ^26.1.35
   image_picker: ^1.0.7
   timezone: ^0.9.4
-  flutter_timezone: ^2.0.0
+  flutter_timezone: ^2.0.1
   flutter_sharing_intent: ^1.1.1
   http: ^1.2.1
   open_file_plus: ^3.4.1+1

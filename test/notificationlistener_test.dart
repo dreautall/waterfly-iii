@@ -93,6 +93,9 @@ void main() {
       "Payment of Rs 12.34 using Amazon Pay Balance is successful at Amazon.in. Updated Balance: Rs 9876.54. For help/stmt: https://www.example.com/cstxn",
       // Tangerine, via mail Jan 4, 2024
       "A purchase of €12.34 made using your Tangerine Credit Card at Some Store on September 07, 2017",
+      // #417
+      "Du hast 12,34 € von Some Store erhalten",
+      "12,34 € bei Some Store ausgegeben"
     ];
 
     final List<String> validCurrencies = <String>["€", "F", "Rs", "EUR"];

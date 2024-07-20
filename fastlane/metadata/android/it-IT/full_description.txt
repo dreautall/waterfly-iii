@@ -1,6 +1,6 @@
 Waterfly III è un'app non ufficiale per la tua istanza personale di Firefly III, un gestore di finanze libero e open source.
 
-Quest'app necessita di collegarsi a una istanza FIrefly III installata sul tuo server, visita https://www.firefly-iii.org/ per maggiori informazioni su questo software. Si tratta di un'app integrativa e non funziona da sola!
+Quest'app necessita di collegarsi a una istanza Firefly III installata sul tuo server, visita https://www.firefly-iii.org/ per maggiori informazioni su questo software. Si tratta di un'app integrativa e non funziona da sola!
 
 Caratteristiche:
 

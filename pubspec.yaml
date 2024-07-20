@@ -2,7 +2,7 @@ name: waterflyiii
 description: WaterFly III, a mobile client for Firefly III
 publish_to: 'none'
 
-version: 1.0.6
+version: 1.0.7
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -46,8 +46,8 @@ dependencies:
   stock: ^1.1.0
   syncfusion_flutter_charts: ^26.1.35
   image_picker: ^1.0.7
-  timezone: ^0.9.2
-  flutter_timezone: ^1.0.8
+  timezone: ^0.9.4
+  flutter_timezone: ^2.0.0
   flutter_sharing_intent: ^1.1.1
   http: ^1.2.1
   open_file_plus: ^3.4.1+1

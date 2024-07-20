@@ -59,7 +59,7 @@ class CategoryChart extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
           alignment: ChartAlignment.center,
-          isResponsive: true,
+          isResponsive: false,
         ),
         series: <CircularSeries<LabelAmountChart, String>>[
           PieSeries<LabelAmountChart, String>(

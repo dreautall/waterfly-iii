@@ -51,6 +51,7 @@ class _BillDialogState extends State<BillDialog> {
       icon: const Icon(Icons.calendar_today),
       title: Text(S.of(context).transactionDialogBillTitle),
       clipBehavior: Clip.hardEdge,
+      scrollable: false,
       actions: <Widget>[
         TextButton(
           child: Text(S.of(context).transactionDialogBillNoBill),
@@ -88,17 +89,19 @@ class _BillDialogState extends State<BillDialog> {
           displayStringForOption: (AutocompleteBill option) => option.name,
           onSelected: (AutocompleteBill option) {
             log.finer(() => "selected bill ${option.id}");
-            _bill = BillRead(
-              type: "bill",
-              id: option.id,
-              attributes: Bill(
-                name: option.name,
-                amountMin: "",
-                amountMax: "",
-                date: DateTime.now(),
-                repeatFreq: BillRepeatFrequency.swaggerGeneratedUnknown,
-              ),
-            );
+            setState(() {
+              _bill = BillRead(
+                type: "bill",
+                id: option.id,
+                attributes: Bill(
+                  name: option.name,
+                  amountMin: "",
+                  amountMax: "",
+                  date: DateTime.now(),
+                  repeatFreq: BillRepeatFrequency.swaggerGeneratedUnknown,
+                ),
+              );
+            });
           },
           optionsBuilder: (TextEditingValue textEditingValue) async {
             try {

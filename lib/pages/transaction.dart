@@ -1930,6 +1930,7 @@ class _TransactionPageState extends State<TransactionPage>
                         onPressed: () async {
                           BillRead? newBill = await showDialog<BillRead>(
                             context: context,
+                            barrierDismissible: false,
                             builder: (BuildContext context) =>
                                 BillDialog(currentBill: _bills[i]),
                           );

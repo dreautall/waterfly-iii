@@ -1,0 +1,3 @@
+- Fix for notification amount parsing
+- Fix for selecting bill on transaction
+- Minor bug fixes & version updates

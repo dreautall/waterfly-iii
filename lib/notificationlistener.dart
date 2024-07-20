@@ -52,7 +52,7 @@ class NotificationListenerStatus {
 }
 
 final RegExp rFindMoney = RegExp(
-    r'(?:^|\s)(?<preCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})\s*(?<amount>(?:\d{1,3}(?:[.,]\d{3})*[.,]\d{2}|\d+))\s*(?<postCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})(?:$|\s)');
+    r'(?:^|\s)(?<preCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})\s*(?<amount>\d[.,\s\d]+(?:[.,]\d+)?)\s*(?<postCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})(?:$|\s)');
 
 Future<NotificationListenerStatus> nlStatus() async {
   return NotificationListenerStatus(

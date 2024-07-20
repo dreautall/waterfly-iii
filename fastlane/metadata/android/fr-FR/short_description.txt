@@ -1,1 +1,1 @@
-App non officielle pour Firefly III, un gestionnaire de finances personnelles.
+Application non officielle pour Firefly III, un gestionnaire de finances personnelles open source.

@@ -12,6 +12,6 @@ Caratteristiche:
 - Totalmente open source: https://github.com/dreautall/waterfly-iii
 - Nessun annuncio o tracciamento
 
-Contribuire:
+Contributo:
 
 Se si incappa in un problema o nella mancanza di una funzione, siete liberi d'inviare un riscontro attraverso il Play Store, per e-mail o aprendo una Issue su GitHub.

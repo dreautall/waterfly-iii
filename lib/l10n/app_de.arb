@@ -301,7 +301,7 @@
   "@errorAPIUnavailable": {
     "description": "Error thrown when API is unavailable."
   },
-  "errorFieldRequired": "Dies ist ein Pflichtfeld.",
+  "errorFieldRequired": "Dieses Feld wird benötigt.",
   "@errorFieldRequired": {
     "description": "Error: Required field was left empty."
   },
@@ -816,7 +816,7 @@
   "@settingsDialogDebugMailCreate": {
     "description": "Button to confirm mail creation after privacy disclaimer is shown."
   },
-  "settingsDialogDebugMailDisclaimer": "ACHTUNG: Ein E-Mail Entwurf wird mit angehängtem Fehlerprotokoll erstellt. Das Fehlerprotokoll kann sensitive Informationen wie zum Beispiel die URL deiner Firefly-Instanz enthalten (auch wenn ich versuche geheime Informationen wie den API-Schlüssel nicht zu protokollieren). Bitte lese vor dem Senden der Mail das Protokoll durch und zensiere alle Informationen, die du nicht teilen möchtest.\n\nBitte sende keine Fehlerprotokolle ohne vorherige Absprache mit mir via Mail/GitHub. Ich werde alle ohne Kontext eingesendete Protokolle aus Datenschutzgründen löschen. Lade die Protokolle nie auf GitHub oder anderswo hoch.",
+  "settingsDialogDebugMailDisclaimer": "ACHTUNG: Ein E-Mail Entwurf wird mit angehängtem Fehlerprotokoll (einer Textdatei) erstellt. Das Fehlerprotokoll kann sensible Informationen, wie zum Beispiel die URL deiner Firefly-Instanz, enthalten (auch wenn ich versuche, geheime Informationen wie den API-Schlüssel nicht zu protokollieren). Bitte lese vor dem Senden der Mail das Protokoll durch und zensiere alle Informationen, die du nicht teilen möchtest.\n\nBitte sende keine Fehlerprotokolle ohne vorherige Absprache mit mir via Mail/GitHub. Ich werde alle ohne Kontext eingesendete Protokolle aus Datenschutzgründen löschen. Lade die Protokolle nie auf GitHub oder anderswo hoch.",
   "@settingsDialogDebugMailDisclaimer": {
     "description": "Privacy disclaimer shown before sending logs"
   },
@@ -957,7 +957,7 @@
   "@settingsVersion": {
     "description": "Current App Version"
   },
-  "settingsVersionChecking": "Überprüfe…",
+  "settingsVersionChecking": "überprüfe…",
   "@settingsVersionChecking": {
     "description": "Shown while checking for app version"
   },

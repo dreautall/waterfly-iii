@@ -2,7 +2,7 @@ Waterfly III est une application non officielle pour votre propre instance de Fi
 
 Cette application nécessite une instance de Firefly III autohébergée sur votre propre serveur, veuillez visiter https://www.firefly-iiii.org/ pour plus d'informations sur ce logiciel. Il ne s'agit que d'une application cliente qui ne peut pas fonctionner de manière autonome!
 
-Fonctionnalités :
+Fonctionnalités:
 
 - Tableau de bord avec graphiques et aperçu du budget
 - Liste des opérations avec filtres

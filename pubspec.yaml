@@ -14,7 +14,7 @@ dependencies:
     sdk: flutter
   async: any
   intl: any
-  path_provider: ^2.0.13
+  path_provider: ^2.1.4
   collection: ^1.18.0
   flutter_secure_storage: ^9.0.0
   provider: ^6.1.2

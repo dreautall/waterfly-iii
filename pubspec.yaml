@@ -33,7 +33,7 @@ dependencies:
   notifications_listener_service:
     git:
       url: https://github.com/dreautall/notification_listener_service.git
-      ref: 280a7b869fe57c81dd1842cd08fa16045d828f0a
+      ref: 5f0d49d1b133943a6e6449059712514bf6506fd1
   device_apps: ^2.2.0
   package_info_plus: ^8.0.1
   logging: ^1.1.1

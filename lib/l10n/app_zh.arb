@@ -37,7 +37,7 @@
   "@accountsLabelRevenue": {
     "description": "Firefly Translation String: revenue_accounts"
   },
-  "accountsLiabilitiesInterest": "{period, select,weekly{每周} monthly{每月} quarterly{每季度} halfyear{每半年} yearly{每年} other{其它}}的利率为 {interest}%",
+  "accountsLiabilitiesInterest": "{period, select, weekly{每周} monthly{每月} quarterly{每季度} halfyear{每半年} yearly{每年} other{其它}}的利率为 {interest}%",
   "@accountsLiabilitiesInterest": {
     "description": "Interest in a certain period",
     "placeholders": {

@@ -18,7 +18,7 @@ dependencies:
   collection: ^1.18.0
   flutter_secure_storage: ^9.0.0
   provider: ^6.1.2
-  shared_preferences: ^2.3.1
+  shared_preferences: ^2.3.2
   chopper: ^8.0.0
   json_annotation: ^4.8.0
   flutter_svg: ^2.0.7

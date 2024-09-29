@@ -264,11 +264,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
     }
   }
 
-  String getCurrentDate() {
-    return "${DateFormat('EEE', 'en_US').format(_tzHandler.sNow())}, "
-        "${DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow())}";
-  }
-
   @override
   bool get wantKeepAlive => true;
 

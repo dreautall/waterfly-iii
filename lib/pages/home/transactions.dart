@@ -264,6 +264,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
     }
   }
 
+  String getCurrentDate() {
+    return "${DateFormat('EEE', 'en_US').format(_tzHandler.sNow())}, "
+        "${DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow())}";
+  }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -682,7 +687,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 0, 8),
             child: Text(
-              DateFormat.yMd().format(date),
+              DateFormat.yMMMMEEEEd().format(date),
               style: Theme.of(context).textTheme.labelLarge,
             ),
           ),

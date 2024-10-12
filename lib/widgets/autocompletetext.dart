@@ -81,6 +81,7 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
             }
             Actions.invoke(ctx, const DismissIntent());
           },
+          textCapitalization: TextCapitalization.sentences,
         ),
         optionsViewBuilder: (BuildContext context,
                 void Function(T) onOptionSelected, Iterable<T> options) =>

@@ -54,7 +54,9 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
           "Error fetching information",
           resp.error,
         );
-        Navigator.of(context).pop();
+        if (mounted) {
+          Navigator.of(context).pop();
+        }
       }
       setState(() {
         includeInSum = !context

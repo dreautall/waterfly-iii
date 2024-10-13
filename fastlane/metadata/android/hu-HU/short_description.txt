@@ -1,0 +1,1 @@
+Nem hivatalos alkalmazás Firefly III-hoz, egy nyílt forráskódú személyes pénzügyi menedzserhez.

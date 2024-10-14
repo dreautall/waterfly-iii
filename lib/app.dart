@@ -268,6 +268,12 @@ class _WaterflyAppState extends State<WaterflyApp> {
                 appBarTheme: const AppBarTheme(
                   shape: RoundedRectangleBorder(),
                 ),
+                pageTransitionsTheme: const PageTransitionsTheme(
+                  builders: <TargetPlatform, PageTransitionsBuilder>{
+                    TargetPlatform.android:
+                        PredictiveBackPageTransitionsBuilder(),
+                  },
+                ),
               ),
               darkTheme: ThemeData(
                 brightness: Brightness.dark,

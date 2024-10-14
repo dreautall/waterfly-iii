@@ -1,13 +1,13 @@
 A Waterfly III egy nem hivatalos alkalmazás a Firefly III-hoz, mely egy ingyenes, nyílt forráskódú, saját üzemeltetésű pénzügyi menedzser.
 
-Ehhez az alkalmazáshoz saját üzemeltetésű Firefly III szolgáltatásra van szükség. A szoftverrel kapcsolatos további információkért látogasson el a https://www.firefly-iii.org/ oldalra. Ez csak egy társalkalmazás, önálló használatra nem képes!
+Ehhez az alkalmazáshoz saját szerveren tárolt Firefly III példányra van szükség. A szoftverrel kapcsolatos további információkért látogasson el a https://www.firefly-iii.org/ oldalra. Ez csak egy társalkalmazás ami nem tud önállóan futni!
 
-Jellemzők:
+Funkciók:
 
 - Irányítópult diagramokkal és költségvetési áttekintéssel
 - Tranzakciós lista szűrőkkel
 - Tranzakciók hozzáadása és szerkesztése automatikus kiegészítéssel, beleértve a mellékleteket, az osztott tranzakciókat és a több pénznem támogatását
-- Malacpersely támogatás (megtekintés és pénz hozzáadása)
+- Persely támogatás (megtekintés és pénz hozzáadása)
 - Értesítésfigyelő szolgáltatás, amellyel egyszerűen hozhat létre új tranzakciókat a bejövő értesítések alapján (például a Google Pay szolgáltatásból vagy a banki alkalmazásból)
 - Teljesen nyílt forráskódú: https://github.com/dreautall/waterfly-iii
 - Nincsenek hirdetések vagy nyomkövetők

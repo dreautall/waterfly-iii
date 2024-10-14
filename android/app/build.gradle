@@ -33,15 +33,15 @@ android {
     ndkVersion flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
         
         // Added: flutter_local_notifications
         coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
 
     sourceSets {
@@ -101,7 +101,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.5.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0"
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5' // Added: flutter_local_notifications
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.2' // Added: flutter_local_notifications
     implementation 'androidx.window:window:1.1.0-rc01' // Added: flutter_local_notifications
     implementation 'androidx.window:window-java:1.1.0-rc01' // Added: flutter_local_notifications
 }

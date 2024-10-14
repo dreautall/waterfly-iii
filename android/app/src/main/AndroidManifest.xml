@@ -3,7 +3,7 @@
             android:label="Waterfly III"
             android:name="${applicationName}"
             android:icon="@mipmap/ic_launcher"
-            android:enableOnBackInvokedCallback="false"
+            android:enableOnBackInvokedCallback="true"
             android:usesCleartextTraffic="true"
             android:networkSecurityConfig="@xml/network_security_config"
     >

@@ -1,0 +1,5 @@
+- Hotfix for crashes at startup
+- Maintenance release to upgrade flutter, package versions etc.
+- Fix for notification listener handling
+- Add day in transaction page
+- Text fields are now initially capitalized

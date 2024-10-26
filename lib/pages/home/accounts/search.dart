@@ -200,7 +200,14 @@ class _AccountSearchState extends State<AccountSearch> {
                 ? PagedListView<int, AccountRead>(
                     pagingController: _pagingController,
                     builderDelegate: PagedChildBuilderDelegate<AccountRead>(
-                      itemBuilder: accountRowBuilder,
+                      itemBuilder:
+                          (BuildContext context, AccountRead item, int index) =>
+                              accountRowBuilder(
+                        context,
+                        item,
+                        index,
+                        _pagingController,
+                      ),
                     ),
                   )
                 : const SizedBox.expand(),

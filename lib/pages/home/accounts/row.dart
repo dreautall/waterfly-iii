@@ -6,6 +6,7 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -13,7 +14,13 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/widgets/fabs.dart';
 
-Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
+Widget accountRowBuilder(
+  BuildContext context,
+  AccountRead account,
+  int index,
+  PagingController<int, AccountRead> pagingController,
+) {
+  String name = account.attributes.name;
   late double currentAmount;
   if (account.attributes.type == ShortAccountTypeProperty.liability) {
     currentAmount = double.tryParse(account.attributes.currentDebt ?? "") ?? 0;
@@ -99,7 +106,10 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
   }
   return OpenContainer(
     openBuilder: (BuildContext context, Function closedContainer) =>
-        AccountTXpage(account: account),
+        AccountTXpage(
+      account: account,
+      nameUpdateFunc: (_) => pagingController.refresh(),
+    ),
     openColor: Theme.of(context).cardColor,
     closedColor: Theme.of(context).cardColor,
     closedShape: const RoundedRectangleBorder(
@@ -111,7 +121,7 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
     closedElevation: 0,
     closedBuilder: (BuildContext context, Function openContainer) => ListTile(
       title: Text(
-        account.attributes.name,
+        name,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
@@ -165,9 +175,11 @@ class AccountTXpage extends StatefulWidget {
   const AccountTXpage({
     super.key,
     required this.account,
+    required this.nameUpdateFunc,
   });
 
   final AccountRead account;
+  final Function(String) nameUpdateFunc;
 
   @override
   State<AccountTXpage> createState() => _AccountTXpageState();
@@ -234,6 +246,7 @@ class _AccountTXpageState extends State<AccountTXpage> {
         apiThrowErrorIfEmpty(response, mounted ? context : null);
 
         _name = response.body!.data.attributes.name;
+        widget.nameUpdateFunc(_name);
       } catch (e, stackTrace) {
         log.severe("Error while submitting new name to API", e, stackTrace);
       }

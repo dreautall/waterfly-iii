@@ -51,6 +51,238 @@
       }
     }
   },
+  "billsAddNewBill": "Afegeix factura",
+  "@billsAddNewBill": {
+    "description": "Text for add new bill flows"
+  },
+  "billsAmountAndFrequency": "Factures de transaccions entre {minValue} i {maxvalue}. Es repeteixen {frequency, select, weekly{setmanalment} monthly{mensualment} quarterly{quadrimestralment} halfyear{bianualment} yearly{anualment} other{en altres freqüències}}{skip, plural, one {}=0{} other{, salta a partir de {skip}}}.",
+  "@billsAmountAndFrequency": {
+    "description": "Bill match for min and max amounts, and frequency",
+    "placeholders": {
+      "minValue": {
+        "type": "String",
+        "example": "$50.12"
+      },
+      "maxvalue": {
+        "type": "String",
+        "example": "$60.50"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsChangeLayoutTooltip": "Canvia la disposició",
+  "@billsChangeLayoutTooltip": {
+    "description": "Text for layout change button tooltip"
+  },
+  "billsChangeSortOrderTooltip": "Canvia l'ordenació",
+  "@billsChangeSortOrderTooltip": {
+    "description": "Text for sort order change button tooltip"
+  },
+  "billsDialogLayoutTitle": "Disposició de vista de factures",
+  "@billsDialogLayoutTitle": {
+    "description": "Text for bills layout dialog title"
+  },
+  "billsDialogSortTitle": "Ordena la llista per",
+  "@billsDialogSortTitle": {
+    "description": "Text for bills sort dialog title"
+  },
+  "billsEditBill": "Edita la factura",
+  "@billsEditBill": {
+    "description": "Text for edit bill flows"
+  },
+  "billsErrorLoading": "Error carregant les factures.",
+  "@billsErrorLoading": {
+    "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+  },
+  "billsExactAmountAndFrequency": "Factures de transaccions {value}. Es repeteixen {frequency, select, weekly{setmanalment} monthly{mensualment} quarterly{quadrimestralment} halfyear{bianualment} yearly{anualment} other{en altres freqüències}}{skip, plural, one {}=0{} other{, salta a partir de {skip}}}.",
+  "@billsExactAmountAndFrequency": {
+    "description": "Bill match for exact amount and frequency",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "$50.12"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsExpectedOn": "Data estimada {date}",
+  "@billsExpectedOn": {
+    "description": "Describes what date the bill is expected",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "January 5, 2024"
+      }
+    }
+  },
+  "billsFrequency": "{frequency, select, weekly{Setmanal} monthly{Mensual} quarterly{Quadrimestral} halfyear{Bianual} yearly{Anual} other{Altres}}",
+  "@billsFrequency": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      }
+    }
+  },
+  "billsFrequencySkip": "{frequency, select, weekly{Setmanal} monthly{Mensual} quarterly{Qaudrimestral} halfyear{Bianual} yearly{Anual} other{Altres}}{skip, plural, one {}=0{} other{, salta a partir de {skip}}}",
+  "@billsFrequencySkip": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsInactive": "Inactiva",
+  "@billsInactive": {
+    "description": "Text: when the bill is inactive"
+  },
+  "billsIsActive": "Factura activa",
+  "@billsIsActive": {
+    "description": "Text: the bill is active"
+  },
+  "billsLayoutGroupSubtitle": "Factures mostrades als seus grups assignats.",
+  "@billsLayoutGroupSubtitle": {
+    "description": "Subtitle text for group layout option"
+  },
+  "billsLayoutGroupTitle": "Grup",
+  "@billsLayoutGroupTitle": {
+    "description": "Title text for group layout option"
+  },
+  "billsLayoutListSubtitle": "Factures ordenades segons algun criteri.",
+  "@billsLayoutListSubtitle": {
+    "description": "Subtitle text for list layout option"
+  },
+  "billsLayoutListTitle": "Llista",
+  "@billsLayoutListTitle": {
+    "description": "Title text for list layout option"
+  },
+  "billsListEmpty": "La llista es troba actualment buida.",
+  "@billsListEmpty": {
+    "description": "Describes that the list is empty"
+  },
+  "billsNextExpectedMatch": "Pròxima coincidència esperada",
+  "@billsNextExpectedMatch": {
+    "description": "Text: next expected match for bill"
+  },
+  "billsNotActive": "Factura inactiva",
+  "@billsNotActive": {
+    "description": "Text: the bill is inactive"
+  },
+  "billsNotExpected": "No s'espera aquest periode",
+  "@billsNotExpected": {
+    "description": "Describes that the bill is not expected this period"
+  },
+  "billsNoTransactions": "No s'ha trobat cap transacció.",
+  "@billsNoTransactions": {
+    "description": "Describes that there are no transactions connected to the bill"
+  },
+  "billsPaidOn": "Pagada a {date}",
+  "@billsPaidOn": {
+    "description": "Describes what date the bill was paid",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "January 5, 2024"
+      }
+    }
+  },
+  "billsSortAlphabetical": "Alfabètic",
+  "@billsSortAlphabetical": {
+    "description": "Text for alphabetical sort types"
+  },
+  "billsSortByTimePeriod": "Per període de temps",
+  "@billsSortByTimePeriod": {
+    "description": "Text for frequency sort type"
+  },
+  "billsSortDirection": "{sortDirection, select, ascending{Ascendent} descending{Descendent} other{Indiferent}}",
+  "@billsSortDirection": {
+    "description": "Bill sort direction",
+    "placeholders": {
+      "sortDirection": {
+        "type": "String",
+        "example": "Ascending"
+      }
+    }
+  },
+  "billsSortFrequency": "Freqüència",
+  "@billsSortFrequency": {
+    "description": "Text for sort by frequency"
+  },
+  "billsSortName": "Nom",
+  "@billsSortName": {
+    "description": "Text for sort by name"
+  },
+  "billsUngrouped": "Sense grup",
+  "@billsUngrouped": {
+    "description": "Title for ungrouped bills"
+  },
+  "categoryDeleteConfirm": "N'estàs segur que vols esborrar aquesta categoria? Les transaccions no s'esborraran, però ja no tindran cap categoria assignada.",
+  "@categoryDeleteConfirm": {
+    "description": "Confirmation text to delete category"
+  },
+  "categoryErrorLoading": "Error al carregar les categories.",
+  "@categoryErrorLoading": {
+    "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+  },
+  "categoryFormLabelIncludeInSum": "Inclou a la suma mensual",
+  "@categoryFormLabelIncludeInSum": {
+    "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+  },
+  "categoryFormLabelName": "Nom de la categoria",
+  "@categoryFormLabelName": {
+    "description": "Category Add/Edit Form: Label for name field"
+  },
+  "categoryMonthNext": "Mes següent",
+  "@categoryMonthNext": {
+    "description": "Button title to view overview for next month"
+  },
+  "categoryMonthPrev": "Mes anterior",
+  "@categoryMonthPrev": {
+    "description": "Button title to view overview for previous month"
+  },
+  "categorySumExcluded": "exclosa",
+  "@categorySumExcluded": {
+    "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+  },
+  "categoryTitleAdd": "Afegeix Categoria",
+  "@categoryTitleAdd": {
+    "description": "Title for Dialog: Add Category"
+  },
+  "categoryTitleDelete": "Esborra la categoria",
+  "@categoryTitleDelete": {
+    "description": "Title for Dialog: Delete Category"
+  },
+  "categoryTitleEdit": "Edita la categoria",
+  "@categoryTitleEdit": {
+    "description": "Title for Dialog: Edit Category"
+  },
+  "catNone": "<sense categoria>",
+  "@catNone": {
+    "description": "Placeholder when no category has been set."
+  },
   "catOther": "Altres",
   "@catOther": {
     "description": "Category description for summary category 'Other'"
@@ -179,6 +411,10 @@
   "@generalDismiss": {
     "description": "Dismiss window/dialog without action"
   },
+  "generalEarned": "Guanyat",
+  "@generalEarned": {
+    "description": "(Amount) Earned"
+  },
   "generalError": "Error",
   "@generalError": {
     "description": "Error (title in dialogs etc.)"
@@ -210,6 +446,10 @@
   "generalReset": "Restableix",
   "@generalReset": {
     "description": "Reset something (i.e. set filters)"
+  },
+  "generalSpent": "Gastat",
+  "@generalSpent": {
+    "description": "(Amount) Spent"
   },
   "generalSum": "Suma",
   "@generalSum": {
@@ -471,6 +711,10 @@
       }
     }
   },
+  "homeTransactionsSettingsShowTags": "Mostra les etiquetes a la llista de transaccions",
+  "@homeTransactionsSettingsShowTags": {
+    "description": "Setting label to show tags in transactioon list."
+  },
   "liabilityDirectionCredit": "Se'm deu aquest deute",
   "@liabilityDirectionCredit": {
     "description": "Firefly Translation String: liability_direction_credit"
@@ -515,6 +759,14 @@
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"
   },
+  "navigationBills": "Factures",
+  "@navigationBills": {
+    "description": "Navigation Label: Bills"
+  },
+  "navigationCategories": "Categories",
+  "@navigationCategories": {
+    "description": "Navigation Label: Categories"
+  },
   "navigationMain": "Tauler de control Principal",
   "@navigationMain": {
     "description": "Navigation Label: Main Dashboard"
@@ -522,6 +774,10 @@
   "navigationSettings": "Configuració",
   "@navigationSettings": {
     "description": "Navigation Label: Settings"
+  },
+  "no": "No",
+  "@no": {
+    "description": "The word no"
   },
   "numPercent": "{num}",
   "@numPercent": {
@@ -600,7 +856,7 @@
   "@settingsNLAppAccount": {
     "description": "Default account which will be used for the transaction."
   },
-  "settingsNLAppAccountDynamic": "<Dynamic>",
+  "settingsNLAppAccountDynamic": "<Dinàmic>",
   "@settingsNLAppAccountDynamic": {
     "description": "Account will be selected dynamically by the content of the notification."
   },
@@ -689,6 +945,14 @@
       }
     }
   },
+  "settingsUseServerTimezone": "Utilitza la zona horària del servidor",
+  "@settingsUseServerTimezone": {
+    "description": "Setting label to use server timezone."
+  },
+  "settingsUseServerTimezoneHelp": "Mostra totes les hores a la zona horària del servidor. Això mimetitza el comportament de la interfície web.",
+  "@settingsUseServerTimezoneHelp": {
+    "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
+  },
   "settingsVersion": "Versió de l'aplicació",
   "@settingsVersion": {
     "description": "Current App Version"
@@ -696,14 +960,6 @@
   "settingsVersionChecking": "comprovant…",
   "@settingsVersionChecking": {
     "description": "Shown while checking for app version"
-  },
-  "splashCustomSSLCert": "Certificat SSL personalitzat",
-  "@splashCustomSSLCert": {
-    "description": "Button text & Dialog title for using a custom SSL certificate"
-  },
-  "splashFormLabelCustomSSLCertPEM": "Fitxer de Certificat (PEM)",
-  "@splashFormLabelCustomSSLCertPEM": {
-    "description": "Label for certificate file text input in PEM format"
   },
   "transactionAttachments": "Adjunts",
   "@transactionAttachments": {
@@ -854,5 +1110,9 @@
   "transactionTypeWithdrawal": "Retirada",
   "@transactionTypeWithdrawal": {
     "description": "Withdrawal transaction type"
+  },
+  "yes": "Sí",
+  "@yes": {
+    "description": "The word yes"
   }
 }

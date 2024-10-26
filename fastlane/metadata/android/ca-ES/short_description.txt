@@ -1,1 +1,1 @@
-App no-oficial per a Firefly III, un administrador de finances de codi obert.
+Aplicació no oficial per a Firefly III, un gestor personal de finances de codi obert.

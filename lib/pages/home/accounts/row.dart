@@ -2,7 +2,10 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
+import 'package:provider/provider.dart';
 
+import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
@@ -169,13 +172,67 @@ class AccountTXpage extends StatefulWidget {
 }
 
 class _AccountTXpageState extends State<AccountTXpage> {
+  final Logger log = Logger("Pages.Accounts.Row.Page");
+
   late Widget _titleWidget;
+  late Widget _editIcon;
+
+  final TextEditingController _textController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
 
     _titleWidget = Text(widget.account.attributes.name);
+    _editIcon = IconButton(
+      icon: Icon(Icons.edit),
+      onPressed: showTextfield,
+    );
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _focusNode.dispose();
+
+    super.dispose();
+  }
+
+  void showTextfield() {
+    log.finest(() => "showing edit field");
+    setState(() {
+      _textController.text = widget.account.attributes.name;
+      _titleWidget = TextField(
+        controller: _textController,
+        focusNode: _focusNode,
+        onEditingComplete: submitTextfield,
+      );
+      _editIcon = IconButton(
+        icon: Icon(Icons.check),
+        onPressed: submitTextfield,
+      );
+
+      _focusNode.requestFocus();
+    });
+  }
+
+  void submitTextfield() {
+    log.finest(() => "submitting edit field");
+    if (_textController.text.isEmpty ||
+        _textController.text == widget.account.attributes.name) {
+      log.finest(() => "edit aborted");
+      setState(() {
+        _titleWidget = Text(widget.account.attributes.name);
+        _editIcon = IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: showTextfield,
+        );
+      });
+      return;
+    }
+
+    final FireflyIii api = context.read<FireflyService>().api;
   }
 
   @override
@@ -184,17 +241,7 @@ class _AccountTXpageState extends State<AccountTXpage> {
       appBar: AppBar(
         title: _titleWidget,
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () {
-              debugPrint("hi3");
-              setState(() {
-                _titleWidget = TextFormField(
-                  initialValue: widget.account.attributes.name,
-                );
-              });
-            },
-          )
+          _editIcon,
         ],
       ),
       floatingActionButton:

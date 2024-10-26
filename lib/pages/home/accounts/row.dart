@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
+import 'package:chopper/chopper.dart';
+
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
@@ -174,6 +176,7 @@ class AccountTXpage extends StatefulWidget {
 class _AccountTXpageState extends State<AccountTXpage> {
   final Logger log = Logger("Pages.Accounts.Row.Page");
 
+  late String _name;
   late Widget _titleWidget;
   late Widget _editIcon;
 
@@ -184,7 +187,8 @@ class _AccountTXpageState extends State<AccountTXpage> {
   void initState() {
     super.initState();
 
-    _titleWidget = Text(widget.account.attributes.name);
+    _name = widget.account.attributes.name;
+    _titleWidget = Text(_name);
     _editIcon = IconButton(
       icon: Icon(Icons.edit),
       onPressed: showTextfield,
@@ -217,22 +221,32 @@ class _AccountTXpageState extends State<AccountTXpage> {
     });
   }
 
-  void submitTextfield() {
+  void submitTextfield() async {
     log.finest(() => "submitting edit field");
-    if (_textController.text.isEmpty ||
-        _textController.text == widget.account.attributes.name) {
-      log.finest(() => "edit aborted");
-      setState(() {
-        _titleWidget = Text(widget.account.attributes.name);
-        _editIcon = IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: showTextfield,
+    if (_textController.text.isNotEmpty &&
+        _textController.text != widget.account.attributes.name) {
+      try {
+        final FireflyIii api = context.read<FireflyService>().api;
+        final Response<AccountSingle> response = await api.v1AccountsIdPut(
+          id: widget.account.id,
+          body: AccountUpdate(name: _textController.text),
         );
-      });
-      return;
+        apiThrowErrorIfEmpty(response, mounted ? context : null);
+
+        _name = response.body!.data.attributes.name;
+      } catch (e, stackTrace) {
+        log.severe("Error while submitting new name to API", e, stackTrace);
+      }
     }
 
-    final FireflyIii api = context.read<FireflyService>().api;
+    log.finest(() => "switching back to text field");
+    setState(() {
+      _titleWidget = Text(_name);
+      _editIcon = IconButton(
+        icon: Icon(Icons.edit),
+        onPressed: showTextfield,
+      );
+    });
   }
 
   @override

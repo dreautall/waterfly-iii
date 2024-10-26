@@ -93,19 +93,8 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
       subtitle = S.of(context).generalUnknown;
   }
   return OpenContainer(
-    openBuilder: (BuildContext context, Function closedContainer) => Scaffold(
-      appBar: AppBar(
-        title: Text(account.attributes.name),
-      ),
-      floatingActionButton:
-          account.attributes.type == ShortAccountTypeProperty.asset
-              ? NewTransactionFab(
-                  context: context,
-                  accountId: account.id,
-                )
-              : null,
-      body: HomeTransactions(accountId: account.id),
-    ),
+    openBuilder: (BuildContext context, Function closedContainer) =>
+        AccountTXpage(account: account),
     openColor: Theme.of(context).cardColor,
     closedColor: Theme.of(context).cardColor,
     closedShape: const RoundedRectangleBorder(
@@ -165,4 +154,57 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
       onTap: () => openContainer(),
     ),
   );
+}
+
+class AccountTXpage extends StatefulWidget {
+  const AccountTXpage({
+    super.key,
+    required this.account,
+  });
+
+  final AccountRead account;
+
+  @override
+  State<AccountTXpage> createState() => _AccountTXpageState();
+}
+
+class _AccountTXpageState extends State<AccountTXpage> {
+  late Widget _titleWidget;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _titleWidget = Text(widget.account.attributes.name);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: _titleWidget,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              debugPrint("hi3");
+              setState(() {
+                _titleWidget = TextFormField(
+                  initialValue: widget.account.attributes.name,
+                );
+              });
+            },
+          )
+        ],
+      ),
+      floatingActionButton:
+          widget.account.attributes.type == ShortAccountTypeProperty.asset
+              ? NewTransactionFab(
+                  context: context,
+                  accountId: widget.account.id,
+                )
+              : null,
+      body: HomeTransactions(accountId: widget.account.id),
+    );
+  }
 }

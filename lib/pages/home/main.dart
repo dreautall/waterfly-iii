@@ -55,7 +55,16 @@ class _HomeMainState extends State<HomeMain>
   final Map<String, Budget> budgetInfos = <String, Budget>{};
 
   @override
+  void initState() {
+    super.initState();
+
+    context.read<FireflyService>().transStock!.addListener(_refreshStats);
+  }
+
+  @override
   void dispose() {
+    context.read<FireflyService>().transStock!.removeListener(_refreshStats);
+
     super.dispose();
   }
 

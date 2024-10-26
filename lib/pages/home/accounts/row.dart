@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -235,6 +237,8 @@ class _AccountTXpageState extends State<AccountTXpage> {
 
   void submitTextfield() async {
     log.finest(() => "submitting edit field");
+    final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
+
     if (_textController.text.isNotEmpty &&
         _textController.text != widget.account.attributes.name) {
       try {
@@ -243,7 +247,33 @@ class _AccountTXpageState extends State<AccountTXpage> {
           id: widget.account.id,
           body: AccountUpdate(name: _textController.text),
         );
-        apiThrowErrorIfEmpty(response, mounted ? context : null);
+        if (!response.isSuccessful || response.body == null) {
+          log.severe("Error while submitting new name to API");
+          String error;
+          try {
+            ValidationErrorResponse valError = ValidationErrorResponse.fromJson(
+              json.decode(response.error.toString()),
+            );
+            error = valError.message ??
+                // ignore: use_build_context_synchronously
+                (context.mounted
+                    // ignore: use_build_context_synchronously
+                    ? S.of(context).errorUnknown
+                    : "[nocontext] Unknown error.");
+          } catch (_) {
+            // ignore: use_build_context_synchronously
+            error = context.mounted
+                // ignore: use_build_context_synchronously
+                ? S.of(context).errorUnknown
+                : "[nocontext] Unknown error.";
+          }
+
+          msg.showSnackBar(SnackBar(
+            content: Text(error),
+            behavior: SnackBarBehavior.floating,
+          ));
+          return;
+        }
 
         _name = response.body!.data.attributes.name;
         widget.nameUpdateFunc(_name);

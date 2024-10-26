@@ -26,6 +26,7 @@ import 'package:waterflyiii/pages/home/main_charts/lastdays.dart';
 import 'package:waterflyiii/pages/home/main_charts/netearnings.dart';
 import 'package:waterflyiii/pages/home/main_charts/networth.dart';
 import 'package:waterflyiii/pages/home/main_charts/summary.dart';
+import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
@@ -53,17 +54,19 @@ class _HomeMainState extends State<HomeMain>
   List<ChartDataSet> overviewChartData = <ChartDataSet>[];
   final List<InsightGroupEntry> catChartData = <InsightGroupEntry>[];
   final Map<String, Budget> budgetInfos = <String, Budget>{};
+  late TransStock _stock;
 
   @override
   void initState() {
     super.initState();
 
-    context.read<FireflyService>().transStock!.addListener(_refreshStats);
+    _stock = context.read<FireflyService>().transStock!;
+    _stock.addListener(_refreshStats);
   }
 
   @override
   void dispose() {
-    context.read<FireflyService>().transStock!.removeListener(_refreshStats);
+    _stock.removeListener(_refreshStats);
 
     super.dispose();
   }

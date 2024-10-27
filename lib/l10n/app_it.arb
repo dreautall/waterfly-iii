@@ -51,6 +51,238 @@
       }
     }
   },
+  "billsAddNewBill": "Aggiungi nuova bolletta",
+  "@billsAddNewBill": {
+    "description": "Text for add new bill flows"
+  },
+  "billsAmountAndFrequency": "La bolletta comprende le transazioni con importo tra {minValue} e {maxvalue}. Si ripete con frequenza {frequency, select, weekly{settimanale} monthly{mensile} quarterly{trimestrale} halfyear{semestrale} yearly{annuale} other{sconosciuta}}{skip, plural, =0{} other{, rimandata il {skip}}}.",
+  "@billsAmountAndFrequency": {
+    "description": "Bill match for min and max amounts, and frequency",
+    "placeholders": {
+      "minValue": {
+        "type": "String",
+        "example": "$50.12"
+      },
+      "maxvalue": {
+        "type": "String",
+        "example": "$60.50"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsChangeLayoutTooltip": "Cambia layout",
+  "@billsChangeLayoutTooltip": {
+    "description": "Text for layout change button tooltip"
+  },
+  "billsChangeSortOrderTooltip": "Modifica ordinamento",
+  "@billsChangeSortOrderTooltip": {
+    "description": "Text for sort order change button tooltip"
+  },
+  "billsDialogLayoutTitle": "Disposizione vista bollette",
+  "@billsDialogLayoutTitle": {
+    "description": "Text for bills layout dialog title"
+  },
+  "billsDialogSortTitle": "Ordina per",
+  "@billsDialogSortTitle": {
+    "description": "Text for bills sort dialog title"
+  },
+  "billsEditBill": "Modifica bolletta",
+  "@billsEditBill": {
+    "description": "Text for edit bill flows"
+  },
+  "billsErrorLoading": "Errore nel caricamento delle bollette.",
+  "@billsErrorLoading": {
+    "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+  },
+  "billsExactAmountAndFrequency": "La bolletta comprende transazioni di valore {value}. Si ripete con frequenza {frequency, select, weekly{settimanale} monthly{mensile} quarterly{trimestrale} halfyear{semestrale} yearly{annuale} other{sconosciuta}}{skip, plural, =0{} other{, rimandata il {skip}}}.",
+  "@billsExactAmountAndFrequency": {
+    "description": "Bill match for exact amount and frequency",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "$50.12"
+      },
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsExpectedOn": "Attesa per {date}",
+  "@billsExpectedOn": {
+    "description": "Describes what date the bill is expected",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "January 5, 2024"
+      }
+    }
+  },
+  "billsFrequency": "{frequency, select, weekly{Settimanale} monthly{Mensile} quarterly{Trimestrale} halfyear{Semestrale} yearly{Annuale} other{Sconosciuta}}",
+  "@billsFrequency": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      }
+    }
+  },
+  "billsFrequencySkip": "{frequency, select, weekly{Settimanale} monthly{Mensile} quarterly{Trimestrale} halfyear{Semestrale} yearly{Annuale} other{Sconosciuta}}{skip, plural, =0{} other{, rimandata il {skip}}}",
+  "@billsFrequencySkip": {
+    "description": "Bill frequency",
+    "placeholders": {
+      "frequency": {
+        "type": "String",
+        "example": "yearly"
+      },
+      "skip": {
+        "type": "num",
+        "example": "1"
+      }
+    }
+  },
+  "billsInactive": "Non attiva",
+  "@billsInactive": {
+    "description": "Text: when the bill is inactive"
+  },
+  "billsIsActive": "Bolletta attiva",
+  "@billsIsActive": {
+    "description": "Text: the bill is active"
+  },
+  "billsLayoutGroupSubtitle": "Bollette visualizzate nei gruppi assegnati.",
+  "@billsLayoutGroupSubtitle": {
+    "description": "Subtitle text for group layout option"
+  },
+  "billsLayoutGroupTitle": "Gruppo",
+  "@billsLayoutGroupTitle": {
+    "description": "Title text for group layout option"
+  },
+  "billsLayoutListSubtitle": "Bollette visualizzate in un elenco ordinate in base a determinati criteri.",
+  "@billsLayoutListSubtitle": {
+    "description": "Subtitle text for list layout option"
+  },
+  "billsLayoutListTitle": "Elenco",
+  "@billsLayoutListTitle": {
+    "description": "Title text for list layout option"
+  },
+  "billsListEmpty": "Questo elenco è attualmente vuoto.",
+  "@billsListEmpty": {
+    "description": "Describes that the list is empty"
+  },
+  "billsNextExpectedMatch": "Prossima",
+  "@billsNextExpectedMatch": {
+    "description": "Text: next expected match for bill"
+  },
+  "billsNotActive": "La bolletta non è attiva",
+  "@billsNotActive": {
+    "description": "Text: the bill is inactive"
+  },
+  "billsNotExpected": "Non prevista in questo periodo",
+  "@billsNotExpected": {
+    "description": "Describes that the bill is not expected this period"
+  },
+  "billsNoTransactions": "Nessuna transazione trovata.",
+  "@billsNoTransactions": {
+    "description": "Describes that there are no transactions connected to the bill"
+  },
+  "billsPaidOn": "Pagata {date}",
+  "@billsPaidOn": {
+    "description": "Describes what date the bill was paid",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd",
+        "example": "January 5, 2024"
+      }
+    }
+  },
+  "billsSortAlphabetical": "Alfabetico",
+  "@billsSortAlphabetical": {
+    "description": "Text for alphabetical sort types"
+  },
+  "billsSortByTimePeriod": "Per periodo di tempo",
+  "@billsSortByTimePeriod": {
+    "description": "Text for frequency sort type"
+  },
+  "billsSortDirection": "{sortDirection, select, ascending{Crescente} descending{Decrescente} other{Sconosciuto}}",
+  "@billsSortDirection": {
+    "description": "Bill sort direction",
+    "placeholders": {
+      "sortDirection": {
+        "type": "String",
+        "example": "Ascending"
+      }
+    }
+  },
+  "billsSortFrequency": "Frequenza",
+  "@billsSortFrequency": {
+    "description": "Text for sort by frequency"
+  },
+  "billsSortName": "Nome",
+  "@billsSortName": {
+    "description": "Text for sort by name"
+  },
+  "billsUngrouped": "Non raggruppate",
+  "@billsUngrouped": {
+    "description": "Title for ungrouped bills"
+  },
+  "categoryDeleteConfirm": "Sei sicuro di voler eliminare questa categoria? Le transazioni non saranno eliminate, ma non avranno più una categoria.",
+  "@categoryDeleteConfirm": {
+    "description": "Confirmation text to delete category"
+  },
+  "categoryErrorLoading": "Errore nel caricamento delle categorie.",
+  "@categoryErrorLoading": {
+    "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+  },
+  "categoryFormLabelIncludeInSum": "Includi nel totale mensile",
+  "@categoryFormLabelIncludeInSum": {
+    "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+  },
+  "categoryFormLabelName": "Nome categoria",
+  "@categoryFormLabelName": {
+    "description": "Category Add/Edit Form: Label for name field"
+  },
+  "categoryMonthNext": "Mese prossimo",
+  "@categoryMonthNext": {
+    "description": "Button title to view overview for next month"
+  },
+  "categoryMonthPrev": "Mese precedente",
+  "@categoryMonthPrev": {
+    "description": "Button title to view overview for previous month"
+  },
+  "categorySumExcluded": "esclusa",
+  "@categorySumExcluded": {
+    "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+  },
+  "categoryTitleAdd": "Aggiungi Categoria",
+  "@categoryTitleAdd": {
+    "description": "Title for Dialog: Add Category"
+  },
+  "categoryTitleDelete": "Elimina Categoria",
+  "@categoryTitleDelete": {
+    "description": "Title for Dialog: Delete Category"
+  },
+  "categoryTitleEdit": "Modifica Categoria",
+  "@categoryTitleEdit": {
+    "description": "Title for Dialog: Edit Category"
+  },
+  "catNone": "(nessuna categoria)",
+  "@catNone": {
+    "description": "Placeholder when no category has been set."
+  },
   "catOther": "Altro",
   "@catOther": {
     "description": "Category description for summary category 'Other'"
@@ -179,6 +411,10 @@
   "@generalDismiss": {
     "description": "Dismiss window/dialog without action"
   },
+  "generalEarned": "Guadagnato",
+  "@generalEarned": {
+    "description": "(Amount) Earned"
+  },
   "generalError": "Errore",
   "@generalError": {
     "description": "Error (title in dialogs etc.)"
@@ -210,6 +446,10 @@
   "generalReset": "Reimposta",
   "@generalReset": {
     "description": "Reset something (i.e. set filters)"
+  },
+  "generalSpent": "Speso",
+  "@generalSpent": {
+    "description": "(Amount) Spent"
   },
   "generalSum": "Totale",
   "@generalSum": {
@@ -311,7 +551,7 @@
   "@homeMainChartDailyTitle": {
     "description": "Chart Label: Daily Summary"
   },
-  "homeMainChartNetEarningsTitle": "Utili netti",
+  "homeMainChartNetEarningsTitle": "Guadagni Netti",
   "@homeMainChartNetEarningsTitle": {
     "description": "Chart Label: Net Earnings"
   },
@@ -471,6 +711,10 @@
       }
     }
   },
+  "homeTransactionsSettingsShowTags": "Mostra etichette nella lista transazioni",
+  "@homeTransactionsSettingsShowTags": {
+    "description": "Setting label to show tags in transactioon list."
+  },
   "liabilityDirectionCredit": "Questo debito mi è dovuto",
   "@liabilityDirectionCredit": {
     "description": "Firefly Translation String: liability_direction_credit"
@@ -515,6 +759,14 @@
   "@navigationAccounts": {
     "description": "Navigation Label: Accounts Page"
   },
+  "navigationBills": "Bollette",
+  "@navigationBills": {
+    "description": "Navigation Label: Bills"
+  },
+  "navigationCategories": "Categorie",
+  "@navigationCategories": {
+    "description": "Navigation Label: Categories"
+  },
   "navigationMain": "Dashboard principale",
   "@navigationMain": {
     "description": "Navigation Label: Main Dashboard"
@@ -522,6 +774,10 @@
   "navigationSettings": "Impostazioni",
   "@navigationSettings": {
     "description": "Navigation Label: Settings"
+  },
+  "no": "No",
+  "@no": {
+    "description": "The word no"
   },
   "numPercent": "{num}",
   "@numPercent": {
@@ -705,14 +961,6 @@
   "@settingsVersionChecking": {
     "description": "Shown while checking for app version"
   },
-  "splashCustomSSLCert": "Certificato SSL personalizzato",
-  "@splashCustomSSLCert": {
-    "description": "Button text & Dialog title for using a custom SSL certificate"
-  },
-  "splashFormLabelCustomSSLCertPEM": "File del Certificato (PEM)",
-  "@splashFormLabelCustomSSLCertPEM": {
-    "description": "Label for certificate file text input in PEM format"
-  },
   "transactionAttachments": "Allegati",
   "@transactionAttachments": {
     "description": "Button Label: Attachments"
@@ -862,5 +1110,9 @@
   "transactionTypeWithdrawal": "Prelievo",
   "@transactionTypeWithdrawal": {
     "description": "Withdrawal transaction type"
+  },
+  "yes": "Si",
+  "@yes": {
+    "description": "The word yes"
   }
 }

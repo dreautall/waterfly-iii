@@ -49,11 +49,11 @@ jobs:
           sed -i 's/^\(version: [0-9\.]\{1,\}\(-[a-z]\{1,\}\)\{0,1\}\)$/\1+${{ github.run_number }}/m' pubspec.yaml
 
       # Build apk.
-      - run: flutter build apk --obfuscate --split-debug-info=build/app/outputs/symbols/apk --release --split-per-abi --dart-define=cronetHttpNoPlay=true
+      - run: flutter build apk --target-platform=android-arm,android-arm64 --obfuscate --split-debug-info=build/app/outputs/symbols/apk --release --split-per-abi --dart-define=cronetHttpNoPlay=true
 
       # Build aab
       # Since the aab is only distributed to the play store and never uploaded somewhere else, we can use the Google Play Services cronet here.
-      - run: flutter build appbundle --obfuscate --split-debug-info=build/app/outputs/symbols/aab --release
+      - run: flutter build appbundle --target-platform=android-arm,android-arm64 --obfuscate --split-debug-info=build/app/outputs/symbols/aab --release
 
       # Zip symbols
       - uses: montudor/action-zip@v1

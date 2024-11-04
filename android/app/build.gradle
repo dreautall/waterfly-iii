@@ -90,15 +90,6 @@ android {
         // Disables dependency metadata when building Android App Bundles.
         includeInBundle = false
     }
-
-    splits {
-        abi {
-            enable true
-
-            reset()
-            include 'armeabi-v7a', 'arm64-v8a'
-        }
-    }
 }
 
 flutter {
@@ -115,7 +106,7 @@ dependencies {
     implementation 'androidx.window:window-java:1.1.0-rc01' // Added: flutter_local_notifications
 }
 
-ext.abiCodes = ["armeabi-v7a": 2, "arm64-v8a": 3]
+ext.abiCodes = ["x86_64": 1, "armeabi-v7a": 2, "arm64-v8a": 3]
 import com.android.build.OutputFile
 android.applicationVariants.all { variant ->
   variant.outputs.each { output ->

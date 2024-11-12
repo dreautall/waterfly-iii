@@ -1,2 +1,2 @@
 versionName=1.0.10
-versionCode=380
+versionCode=382

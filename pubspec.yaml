@@ -1,8 +1,8 @@
 name: waterflyiii
-description: WaterFly III, a mobile client for Firefly III
+description: Waterfly III, a mobile client for Firefly III
 publish_to: 'none'
 
-version: 1.0.9
+version: 1.0.10
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -29,12 +29,15 @@ dependencies:
   community_charts_flutter: ^1.0.2
   file_picker: ^8.1.2
   animations: ^2.0.11
-  flutter_local_notifications: ^17.2.3
+  flutter_local_notifications: ^18.0.0
   notifications_listener_service:
     git:
       url: https://github.com/dreautall/notification_listener_service.git
       ref: 5f0d49d1b133943a6e6449059712514bf6506fd1
-  device_apps: ^2.2.0
+  appcheck:
+    git:
+      url: https://github.com/bugrevealingbme/AppCheck.git
+      ref: ce371398f86412a8d9a2e0b75a9b51597ea1d79f
   package_info_plus: ^8.0.2
   logging: ^1.1.1
   flutter_email_sender: ^6.0.2
@@ -46,7 +49,7 @@ dependencies:
   stock: ^1.1.0
   syncfusion_flutter_charts: ^27.1.48
   image_picker: ^1.0.7
-  timezone: ^0.9.4
+  timezone: ^0.10.0
   flutter_timezone: ^3.0.1
   flutter_sharing_intent: ^1.1.1
   http: ^1.2.1

@@ -199,7 +199,8 @@ class _AccountDetailsState extends State<AccountDetails>
       child: PagedListView<int, AccountRead>(
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<AccountRead>(
-          itemBuilder: accountRowBuilder,
+          itemBuilder: (BuildContext context, AccountRead item, int index) =>
+              accountRowBuilder(context, item, index, _pagingController),
         ),
       ),
     );

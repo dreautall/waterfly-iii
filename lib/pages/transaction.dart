@@ -446,7 +446,6 @@ class _TransactionPageState extends State<TransactionPage>
           _timeTextController.text = DateFormat.Hm().format(_date);
 
           // Title & Note
-          _noteTextControllers[0].text = widget.notification!.body;
           final NotificationAppSettings appSettings = await settings
               .notificationGetAppSettings(widget.notification!.appName);
           if (appSettings.includeTitle) {
@@ -455,6 +454,9 @@ class _TransactionPageState extends State<TransactionPage>
             _titleTextController.text = "";
             _noteTextControllers[0].text =
                 "${widget.notification!.title} - ${_noteTextControllers[0].text}";
+          }
+          if (!appSettings.emptyNote) {
+            _noteTextControllers[0].text = widget.notification!.body;
           }
 
           // Check currency

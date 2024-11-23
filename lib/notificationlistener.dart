@@ -187,6 +187,23 @@ void nlCallback() async {
           }
         }
 
+        FlutterLocalNotificationsPlugin().show(
+          DateTime.now().millisecondsSinceEpoch ~/ 1000,
+          "Transaction created",
+          "Transaction created based on notification ${evt.title}",
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              'extract_transaction_created',
+              'Transaction from Notification Created',
+              channelDescription:
+                  'Notification that a Transaction has been created from another Notification.',
+              importance: Importance.low, // Android 8.0 and higher
+              priority: Priority.low, // Android 7.1 and lower
+            ),
+          ),
+          payload: "",
+        );
+
         showNotification = false;
       } catch (e, stackTrace) {
         log.severe("Error while auto-adding transaction", e, stackTrace);

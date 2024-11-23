@@ -358,6 +358,7 @@ class _AppCardState extends State<AppCard> {
                     title: Text(S.of(context).settingsNLPrefillTXTitle),
                     isThreeLine: false,
                     value: widget.settings.includeTitle,
+                    enabled: !widget.settings.autoAdd,
                     onChanged: (bool? value) async {
                       setState(() {
                         widget.settings.includeTitle = value ?? true;
@@ -376,6 +377,7 @@ class _AppCardState extends State<AppCard> {
                     onChanged: (bool? value) async {
                       setState(() {
                         widget.settings.autoAdd = value ?? false;
+                        widget.settings.includeTitle = true;
                       });
                       await context
                           .read<SettingsProvider>()

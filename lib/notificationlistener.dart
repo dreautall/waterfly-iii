@@ -6,6 +6,7 @@ import 'package:logging/logging.dart';
 import 'package:chopper/chopper.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 import 'package:waterflyiii/app.dart';
 import 'package:waterflyiii/auth.dart';
@@ -118,6 +119,7 @@ void nlCallback() async {
     bool showNotification = true;
 
     if (appSettings.autoAdd) {
+      tz.initializeTimeZones();
       log.finer(() =>
           "nlCallback(${evt.packageName}): trying to auto-add transaction");
       try {
@@ -125,7 +127,7 @@ void nlCallback() async {
         if (!await ffService.signInFromStorage()) {
           throw UnauthenticatedResponse;
         }
-        final FireflyIii api = FireflyService().api;
+        final FireflyIii api = ffService.api;
         final CurrencyRead localCurrency = ffService.defaultCurrency;
         late CurrencyRead? currency;
         late double amount;

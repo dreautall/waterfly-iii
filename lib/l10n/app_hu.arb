@@ -51,6 +51,212 @@
             }
         }
     },
+    "billsAmountAndFrequency": "A számla {minValue} és {maxvalue} közötti értékű tranzakcióknak felel meg. {frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}} ismétlődésű{skip, plural, =0{} other{, {skip} ismétlést átugorva}}.",
+    "@billsAmountAndFrequency": {
+        "description": "Bill match for min and max amounts, and frequency",
+        "placeholders": {
+            "minValue": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "maxvalue": {
+                "type": "String",
+                "example": "$60.50"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsChangeLayoutTooltip": "Elrendezés módosítása",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "Rendezési sorrend módosítása",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsErrorLoading": "Hiba a számla betöltése során.",
+    "@billsErrorLoading": {
+        "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+    },
+    "billsExactAmountAndFrequency": "A számla {value} értékű tranzakcióknak felel meg. {frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}} ismétlődésű{skip, plural, =0{} other{, {skip} ismétlést átugorva}}.",
+    "@billsExactAmountAndFrequency": {
+        "description": "Bill match for exact amount and frequency",
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsExpectedOn": "Várható dátum {date}",
+    "@billsExpectedOn": {
+        "description": "Describes what date the bill is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsFrequency": "{frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}}",
+    "@billsFrequency": {
+        "description": "Bill frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsFrequencySkip": "{frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}} ismétlődésű{skip, plural, =0{} other{, {skip} ismétlést átugorva}}",
+    "@billsFrequencySkip": {
+        "description": "Bill frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsInactive": "Inaktív",
+    "@billsInactive": {
+        "description": "Text: when the bill is inactive"
+    },
+    "billsIsActive": "Aktív számla",
+    "@billsIsActive": {
+        "description": "Text: the bill is active"
+    },
+    "billsLayoutGroupSubtitle": "Számlák megjelenítése a hozzájuk rendelt csoportokban.",
+    "@billsLayoutGroupSubtitle": {
+        "description": "Subtitle text for group layout option"
+    },
+    "billsLayoutGroupTitle": "Csoport",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListSubtitle": "Számlák megjelenítése egy listában bizonyos kritériumok szerint rendezve.",
+    "@billsLayoutListSubtitle": {
+        "description": "Subtitle text for list layout option"
+    },
+    "billsLayoutListTitle": "Lista",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "A lista jelenleg üres.",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "Következő várható egyezés",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for bill"
+    },
+    "billsNotActive": "Inaktív számla",
+    "@billsNotActive": {
+        "description": "Text: the bill is inactive"
+    },
+    "billsNotExpected": "Nem várható ebben az időszakban",
+    "@billsNotExpected": {
+        "description": "Describes that the bill is not expected this period"
+    },
+    "billsNoTransactions": "Nem található tranzakció.",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the bill"
+    },
+    "billsPaidOn": "Kifizetés dátuma {date}",
+    "@billsPaidOn": {
+        "description": "Describes what date the bill was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "Betűrendi",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "Időszak szerint",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "Gyakoriság",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "Név",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "Csoportosítatlan",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped bills"
+    },
+    "categoryDeleteConfirm": "Biztosan törli ezt a kategóriát? A tranzakciók nem kerülnek törlésre, ugyanakkor nem lesznek kategóriához rendelve.",
+    "@categoryDeleteConfirm": {
+        "description": "Confirmation text to delete category"
+    },
+    "categoryErrorLoading": "Hiba a kategóriák betöltése során.",
+    "@categoryErrorLoading": {
+        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+    },
+    "categoryFormLabelIncludeInSum": "Beleszámítani a havi összegbe",
+    "@categoryFormLabelIncludeInSum": {
+        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+    },
+    "categoryFormLabelName": "Kategória neve",
+    "@categoryFormLabelName": {
+        "description": "Category Add/Edit Form: Label for name field"
+    },
+    "categoryMonthNext": "Következő hónap",
+    "@categoryMonthNext": {
+        "description": "Button title to view overview for next month"
+    },
+    "categoryMonthPrev": "Előző hónap",
+    "@categoryMonthPrev": {
+        "description": "Button title to view overview for previous month"
+    },
+    "categorySumExcluded": "nem számított",
+    "@categorySumExcluded": {
+        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+    },
+    "categoryTitleAdd": "Kategória hozzáadása",
+    "@categoryTitleAdd": {
+        "description": "Title for Dialog: Add Category"
+    },
+    "categoryTitleDelete": "Kategória törlése",
+    "@categoryTitleDelete": {
+        "description": "Title for Dialog: Delete Category"
+    },
+    "categoryTitleEdit": "Kategória szerkesztése",
+    "@categoryTitleEdit": {
+        "description": "Title for Dialog: Edit Category"
+    },
+    "catNone": "<nincs kategória>",
+    "@catNone": {
+        "description": "Placeholder when no category has been set."
+    },
     "catOther": "Egyéb",
     "@catOther": {
         "description": "Category description for summary category 'Other'"
@@ -72,10 +278,6 @@
     "errorFieldRequired": "A mező kitöltése kötelező.",
     "@errorFieldRequired": {
         "description": "Error: Required field was left empty."
-    },
-    "errorInvalidSSLCert": "Érvénytelen SSL tanúsítvány",
-    "@errorInvalidSSLCert": {
-        "description": "Error: SSL certificate is invalid"
     },
     "errorInvalidURL": "Érvénytelen URL",
     "@errorInvalidURL": {
@@ -179,6 +381,10 @@
     "@generalDismiss": {
         "description": "Dismiss window/dialog without action"
     },
+    "generalEarned": "Megkeresett",
+    "@generalEarned": {
+        "description": "(Amount) Earned"
+    },
     "generalError": "Hiba",
     "@generalError": {
         "description": "Error (title in dialogs etc.)"
@@ -210,6 +416,10 @@
     "generalReset": "Visszaállítás",
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
+    },
+    "generalSpent": "Elköltött",
+    "@generalSpent": {
+        "description": "(Amount) Spent"
     },
     "generalSum": "Összesen",
     "@generalSum": {
@@ -257,7 +467,7 @@
             }
         }
     },
-    "homeMainBudgetIntervalSingle": " ({from} to {to})",
+    "homeMainBudgetIntervalSingle": " (Ettől: {from} eddig: {to})",
     "@homeMainBudgetIntervalSingle": {
         "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
         "placeholders": {
@@ -445,6 +655,10 @@
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
     },
+    "homeTransactionsDialogFilterFutureTransactions": "Jövőbeli tranzakciók megjelenítése",
+    "@homeTransactionsDialogFilterFutureTransactions": {
+        "description": "Setting to show future transactions"
+    },
     "homeTransactionsDialogFilterSearch": "Keresési Kifejezés",
     "@homeTransactionsDialogFilterSearch": {
         "description": "Search term for filter"
@@ -466,6 +680,10 @@
                 "example": "2"
             }
         }
+    },
+    "homeTransactionsSettingsShowTags": "Címkék megjelenítése a tranzakciós listában",
+    "@homeTransactionsSettingsShowTags": {
+        "description": "Setting label to show tags in transactioon list."
     },
     "liabilityDirectionCredit": "Tartoznak nekem ezzel az adóssággal",
     "@liabilityDirectionCredit": {
@@ -511,6 +729,14 @@
     "@navigationAccounts": {
         "description": "Navigation Label: Accounts Page"
     },
+    "navigationBills": "Számlák",
+    "@navigationBills": {
+        "description": "Navigation Label: Bills"
+    },
+    "navigationCategories": "Kategóriák",
+    "@navigationCategories": {
+        "description": "Navigation Label: Categories"
+    },
     "navigationMain": "Főoldal",
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
@@ -518,6 +744,10 @@
     "navigationSettings": "Beállítások",
     "@navigationSettings": {
         "description": "Navigation Label: Settings"
+    },
+    "no": "Nem",
+    "@no": {
+        "description": "The word no"
     },
     "numPercent": "{num}",
     "@numPercent": {
@@ -685,6 +915,14 @@
             }
         }
     },
+    "settingsUseServerTimezone": "Használja a szerver időzónáját",
+    "@settingsUseServerTimezone": {
+        "description": "Setting label to use server timezone."
+    },
+    "settingsUseServerTimezoneHelp": "Minden időpont megjelenítése a szerver időzónájában. Ez a webes felület viselkedését utánozza.",
+    "@settingsUseServerTimezoneHelp": {
+        "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
+    },
     "settingsVersion": "Alkalmazás Verzió",
     "@settingsVersion": {
         "description": "Current App Version"
@@ -692,14 +930,6 @@
     "settingsVersionChecking": "ellenőrzés…",
     "@settingsVersionChecking": {
         "description": "Shown while checking for app version"
-    },
-    "splashCustomSSLCert": "Egyedi SSL tanúsítvány",
-    "@splashCustomSSLCert": {
-        "description": "Button text & Dialog title for using a custom SSL certificate"
-    },
-    "splashFormLabelCustomSSLCertPEM": "Tanúsítványfájl (PEM)",
-    "@splashFormLabelCustomSSLCertPEM": {
-        "description": "Label for certificate file text input in PEM format"
     },
     "transactionAttachments": "Mellékletek",
     "@transactionAttachments": {

@@ -1,21 +1,6 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.dreautall.waterflyiii">
-    <application
-            android:label="Waterfly III"
-            android:name="${applicationName}"
-            android:icon="@mipmap/ic_launcher"
-            android:enableOnBackInvokedCallback="false"
-            android:usesCleartextTraffic="true"
-            android:networkSecurityConfig="@xml/network_security_config"
-    >
-        <activity
-                android:name=".MainActivity"
-                android:exported="true"
-                android:launchMode="singleTop"
-                android:theme="@style/LaunchTheme"
-                android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-                android:hardwareAccelerated="true"
-                android:windowSoftInputMode="adjustResize"
-        >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application android:label="Waterfly III" android:name="${applicationName}" android:icon="@mipmap/ic_launcher" android:enableOnBackInvokedCallback="true" android:usesCleartextTraffic="true" android:networkSecurityConfig="@xml/network_security_config">
+        <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:taskAffinity="" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
@@ -42,8 +27,7 @@
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data android:name="flutterEmbedding" android:value="2" />
         <!-- Try Impeller - see https://docs.flutter.dev/perf/impeller#android -->
-        <!-- Disabled due to https://github.com/dreautall/waterfly-iii/issues/406 -->
-        <meta-data android:name="io.flutter.embedding.android.EnableImpeller" android:value="false" />
+        <meta-data android:name="io.flutter.embedding.android.EnableImpeller" android:value="true" />
     </application>
 
     <!-- Permissions -->
@@ -53,6 +37,15 @@
 
     <!-- Queries, used by url_launcher -->
     <queries>
+        <!-- Required to query activities that can process text, see:
+         https://developer.android.com/training/package-visibility and
+         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+
+         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT"/>
+            <data android:mimeType="text/plain"/>
+        </intent>
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.BROWSABLE" />
@@ -89,6 +82,7 @@
         <package android:name="by.belinvestbank"/>
         <package android:name="ca.tangerine.clients.banking.app"/>
         <package android:name="capitec.acuity.mobile.prod"/>
+        <package android:name="ch.cembra.cmf"/>
         <package android:name="cl.android"/>
         <package android:name="cl.bancochile.mi_banco"/>
         <package android:name="cl.scotiabank.go"/>

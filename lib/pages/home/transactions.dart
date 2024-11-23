@@ -682,7 +682,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 0, 8),
             child: Text(
-              DateFormat.yMd().format(date),
+              DateFormat.yMMMMEEEEd().format(date),
               style: Theme.of(context).textTheme.labelLarge,
             ),
           ),

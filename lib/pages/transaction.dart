@@ -340,94 +340,15 @@ class _TransactionPageState extends State<TransactionPage>
           final SettingsProvider settings = context.read<SettingsProvider>();
 
           log.info("Got notification ${widget.notification?.title}");
-          CurrencyRead? currency;
-          double amount = 0;
           _transactionType = TransactionTypeProperty.withdrawal;
           final CurrencyRead defaultCurrency =
               context.read<FireflyService>().defaultCurrency;
+          late CurrencyRead? currency;
+          late double amount;
 
-          // Try to extract some money
-          final Iterable<RegExpMatch> matches =
-              rFindMoney.allMatches(widget.notification!.body);
-          if (matches.isNotEmpty) {
-            RegExpMatch? validMatch;
-            for (RegExpMatch match in matches) {
-              if ((match.namedGroup("postCurrency")?.isNotEmpty ?? false) ||
-                  (match.namedGroup("preCurrency")?.isNotEmpty ?? false)) {
-                validMatch = match;
-                break;
-              }
-            }
-            if (validMatch != null) {
-              // extract currency
-              String currencyStr = validMatch.namedGroup("preCurrency") ?? "";
-              String currencyStrAlt =
-                  validMatch.namedGroup("postCurrency") ?? "";
-              if (currencyStr.isEmpty) {
-                currencyStr = currencyStrAlt;
-              }
-              if (currencyStr.isEmpty) {
-                log.warning("no currency found");
-              }
-              if (defaultCurrency.attributes.code == currencyStr ||
-                  defaultCurrency.attributes.symbol == currencyStr ||
-                  defaultCurrency.attributes.code == currencyStrAlt ||
-                  defaultCurrency.attributes.symbol == currencyStrAlt) {
-                currency = defaultCurrency;
-              } else {
-                final Response<CurrencyArray> response =
-                    await api.v1CurrenciesGet();
-                if (!response.isSuccessful || response.body == null) {
-                  log.warning("api currency fetch failed");
-                } else {
-                  for (CurrencyRead cur in response.body!.data) {
-                    if (cur.attributes.code == currencyStr ||
-                        cur.attributes.symbol == currencyStr ||
-                        cur.attributes.code == currencyStrAlt ||
-                        cur.attributes.symbol == currencyStrAlt) {
-                      currency = cur;
-                      break;
-                    }
-                  }
-                }
-              }
-              // extract amount
-              // Check if string has a decimal separator
-              final String amountStr =
-                  (validMatch.namedGroup("amount") ?? "").replaceAll(" ", "");
-              final int decimalSepPos = amountStr.length >= 3 &&
-                      (amountStr[amountStr.length - 3] == "." ||
-                          amountStr[amountStr.length - 3] == ",")
-                  ? amountStr.length - 3
-                  : amountStr.length - 2;
-              final String decimalSep =
-                  amountStr.length >= decimalSepPos && decimalSepPos > 0
-                      ? amountStr[decimalSepPos]
-                      : "";
-              if (decimalSep == "," || decimalSep == ".") {
-                final double wholes = double.tryParse(amountStr
-                        .substring(0, decimalSepPos)
-                        .replaceAll(",", "")
-                        .replaceAll(".", "")) ??
-                    0;
-                final String decStr = amountStr
-                    .substring(decimalSepPos + 1)
-                    .replaceAll(",", "")
-                    .replaceAll(".", "");
-                final double dec = double.tryParse(decStr) ?? 0;
-                amount =
-                    decStr.length == 1 ? wholes + dec / 10 : wholes + dec / 100;
-              } else {
-                amount = double.tryParse(
-                        amountStr.replaceAll(",", "").replaceAll(".", "")) ??
-                    0;
-              }
-            } else {
-              log.info("no currency was found");
-            }
-          } else {
-            log.warning("regex did not match");
-          }
+          (currency, amount) = await parseNotificationText(
+              api, widget.notification!.body, _localCurrency!);
+
           // Fallback solution
           currency ??= defaultCurrency;
 
@@ -439,7 +360,6 @@ class _TransactionPageState extends State<TransactionPage>
           _timeTextController.text = DateFormat.Hm().format(_date);
 
           // Title & Note
-          _noteTextControllers[0].text = widget.notification!.body;
           final NotificationAppSettings appSettings = await settings
               .notificationGetAppSettings(widget.notification!.appName);
           if (appSettings.includeTitle) {
@@ -448,6 +368,10 @@ class _TransactionPageState extends State<TransactionPage>
             _titleTextController.text = "";
             _noteTextControllers[0].text =
                 "${widget.notification!.title} - ${_noteTextControllers[0].text}";
+          }
+
+          if (!appSettings.emptyNote) {
+            _noteTextControllers[0].text = widget.notification!.body;
           }
 
           // Check account

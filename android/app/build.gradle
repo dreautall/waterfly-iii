@@ -1,9 +1,10 @@
 plugins {
-    id "com.android.application"
-    id "kotlin-android"
-    id "dev.flutter.flutter-gradle-plugin"
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'dev.flutter.flutter-gradle-plugin'
 }
 
+/*
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -20,7 +21,7 @@ if (flutterVersionCode == null) {
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
-}
+}*/
 
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
@@ -29,33 +30,33 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
+    namespace = 'com.dreautall.waterflyiii'
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-        
+
         // Added: flutter_local_notifications
         coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+        jvmTarget = JavaVersion.VERSION_1_8
     }
 
     defaultConfig {
-        applicationId "com.dreautall.waterflyiii"
+        applicationId 'com.dreautall.waterflyiii'
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 21
-        targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        minSdk = 28
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+
+        // Added: flutter_local_notifications
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -70,7 +71,7 @@ android {
         debug {
             minifyEnabled false
             shrinkResources false
-            applicationIdSuffix ".debug"
+            applicationIdSuffix '.debug'
         }
 
         release {
@@ -96,23 +97,31 @@ flutter {
     source '../..'
 }
 
+// Added: flutter_local_notifications
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
+    implementation 'androidx.window:window:1.0.0'
+    implementation 'androidx.window:window-java:1.0.0'
+}
+/*
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0"
     implementation 'com.google.android.material:material:1.8.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.5.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0"
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5' // Added: flutter_local_notifications
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.2' // Added: flutter_local_notifications
     implementation 'androidx.window:window:1.1.0-rc01' // Added: flutter_local_notifications
     implementation 'androidx.window:window-java:1.1.0-rc01' // Added: flutter_local_notifications
-}
+}*/
 
-ext.abiCodes = ["x86_64": 1, "armeabi-v7a": 2, "arm64-v8a": 3]
+ext.abiCodes = ['x86_64': 1, 'armeabi-v7a': 2, 'arm64-v8a': 3]
 import com.android.build.OutputFile
+
 android.applicationVariants.all { variant ->
-  variant.outputs.each { output ->
-    def abiVersionCode = project.ext.abiCodes.get(output.getFilter(OutputFile.ABI))
-    if (abiVersionCode != null) {
-      output.versionCodeOverride = variant.versionCode * 10 + abiVersionCode
+    variant.outputs.each { output ->
+        def abiVersionCode = project.ext.abiCodes.get(output.getFilter(OutputFile.ABI))
+        if (abiVersionCode != null) {
+            output.versionCodeOverride = variant.versionCode * 10 + abiVersionCode
+        }
     }
-  }
 }

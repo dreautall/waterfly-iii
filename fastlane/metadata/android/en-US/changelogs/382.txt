@@ -1,0 +1,3 @@
+- New Feature: Edit Expense/Revenue Account Name
+- New Feature: Update Dashboard after creating / updating a transaction
+- Bugfixes, Dependency Updates etc

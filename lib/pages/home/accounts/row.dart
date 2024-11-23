@@ -1,14 +1,28 @@
+import 'dart:convert';
+
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
+import 'package:provider/provider.dart';
 
+import 'package:chopper/chopper.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+
+import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/widgets/fabs.dart';
 
-Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
+Widget accountRowBuilder(
+  BuildContext context,
+  AccountRead account,
+  int index,
+  PagingController<int, AccountRead> pagingController,
+) {
+  String name = account.attributes.name;
   late double currentAmount;
   if (account.attributes.type == ShortAccountTypeProperty.liability) {
     currentAmount = double.tryParse(account.attributes.currentDebt ?? "") ?? 0;
@@ -93,18 +107,10 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
       subtitle = S.of(context).generalUnknown;
   }
   return OpenContainer(
-    openBuilder: (BuildContext context, Function closedContainer) => Scaffold(
-      appBar: AppBar(
-        title: Text(account.attributes.name),
-      ),
-      floatingActionButton:
-          account.attributes.type == ShortAccountTypeProperty.asset
-              ? NewTransactionFab(
-                  context: context,
-                  accountId: account.id,
-                )
-              : null,
-      body: HomeTransactions(accountId: account.id),
+    openBuilder: (BuildContext context, Function closedContainer) =>
+        AccountTXpage(
+      account: account,
+      nameUpdateFunc: (_) => pagingController.refresh(),
     ),
     openColor: Theme.of(context).cardColor,
     closedColor: Theme.of(context).cardColor,
@@ -117,7 +123,7 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
     closedElevation: 0,
     closedBuilder: (BuildContext context, Function openContainer) => ListTile(
       title: Text(
-        account.attributes.name,
+        name,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
@@ -165,4 +171,144 @@ Widget accountRowBuilder(BuildContext context, AccountRead account, int index) {
       onTap: () => openContainer(),
     ),
   );
+}
+
+class AccountTXpage extends StatefulWidget {
+  const AccountTXpage({
+    super.key,
+    required this.account,
+    required this.nameUpdateFunc,
+  });
+
+  final AccountRead account;
+  final Function(String) nameUpdateFunc;
+
+  @override
+  State<AccountTXpage> createState() => _AccountTXpageState();
+}
+
+class _AccountTXpageState extends State<AccountTXpage> {
+  final Logger log = Logger("Pages.Accounts.Row.Page");
+
+  late String _name;
+  late Widget _titleWidget;
+  late Widget _editIcon;
+
+  final TextEditingController _textController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _name = widget.account.attributes.name;
+    _titleWidget = Text(_name);
+    _editIcon = IconButton(
+      icon: Icon(Icons.edit),
+      onPressed: showTextfield,
+    );
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _focusNode.dispose();
+
+    super.dispose();
+  }
+
+  void showTextfield() {
+    log.finest(() => "showing edit field");
+    setState(() {
+      _textController.text = widget.account.attributes.name;
+      _titleWidget = TextField(
+        controller: _textController,
+        focusNode: _focusNode,
+        onEditingComplete: submitTextfield,
+      );
+      _editIcon = IconButton(
+        icon: Icon(Icons.check),
+        onPressed: submitTextfield,
+      );
+
+      _focusNode.requestFocus();
+    });
+  }
+
+  void submitTextfield() async {
+    log.finest(() => "submitting edit field");
+    final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
+
+    if (_textController.text.isNotEmpty &&
+        _textController.text != widget.account.attributes.name) {
+      try {
+        final FireflyIii api = context.read<FireflyService>().api;
+        final Response<AccountSingle> response = await api.v1AccountsIdPut(
+          id: widget.account.id,
+          body: AccountUpdate(name: _textController.text),
+        );
+        if (!response.isSuccessful || response.body == null) {
+          log.severe("Error while submitting new name to API");
+          String error;
+          try {
+            ValidationErrorResponse valError = ValidationErrorResponse.fromJson(
+              json.decode(response.error.toString()),
+            );
+            error = valError.message ??
+                // ignore: use_build_context_synchronously
+                (context.mounted
+                    // ignore: use_build_context_synchronously
+                    ? S.of(context).errorUnknown
+                    : "[nocontext] Unknown error.");
+          } catch (_) {
+            // ignore: use_build_context_synchronously
+            error = context.mounted
+                // ignore: use_build_context_synchronously
+                ? S.of(context).errorUnknown
+                : "[nocontext] Unknown error.";
+          }
+
+          msg.showSnackBar(SnackBar(
+            content: Text(error),
+            behavior: SnackBarBehavior.floating,
+          ));
+          return;
+        }
+
+        _name = response.body!.data.attributes.name;
+        widget.nameUpdateFunc(_name);
+      } catch (e, stackTrace) {
+        log.severe("Error while submitting new name to API", e, stackTrace);
+      }
+    }
+
+    log.finest(() => "switching back to text field");
+    setState(() {
+      _titleWidget = Text(_name);
+      _editIcon = IconButton(
+        icon: Icon(Icons.edit),
+        onPressed: showTextfield,
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: _titleWidget,
+        actions: <Widget>[
+          _editIcon,
+        ],
+      ),
+      floatingActionButton:
+          widget.account.attributes.type == ShortAccountTypeProperty.asset
+              ? NewTransactionFab(
+                  context: context,
+                  accountId: widget.account.id,
+                )
+              : null,
+      body: HomeTransactions(accountId: widget.account.id),
+    );
+  }
 }

@@ -1,1122 +1,1080 @@
 {
-  "@@locale": "fa",
-  "@@x-reference": true,
-  "accountRoleAssetCashWallet": "کیف پول نقد\n",
-  "@accountRoleAssetCashWallet": {
-    "description": "Firefly Translation String: account_role_cashWalletAsset"
-  },
-  "accountRoleAssetCC": "کارت اعتباری",
-  "@accountRoleAssetCC": {
-    "description": "Firefly Translation String: account_role_ccAsset"
-  },
-  "accountRoleAssetDefault": "حساب دارایی پیش فرض\n",
-  "@accountRoleAssetDefault": {
-    "description": "Firefly Translation String: account_role_defaultAsset"
-  },
-  "accountRoleAssetSavings": "حساب پس انداز",
-  "@accountRoleAssetSavings": {
-    "description": "Firefly Translation String: account_role_savingAsset"
-  },
-  "accountRoleAssetShared": "حساب دارایی مشترک\n",
-  "@accountRoleAssetShared": {
-    "description": "Firefly Translation String: account_role_sharedAsset"
-  },
-  "accountsLabelAsset": "حساب های دارایی",
-  "@accountsLabelAsset": {
-    "description": "Firefly Translation String: asset_accounts"
-  },
-  "accountsLabelExpense": "حساب‌های هزینه",
-  "@accountsLabelExpense": {
-    "description": "Firefly Translation String: expense_accounts"
-  },
-  "accountsLabelLiabilities": "بدهی ها",
-  "@accountsLabelLiabilities": {
-    "description": "Firefly Translation String: liabilities_accounts"
-  },
-  "accountsLabelRevenue": "حساب‌های درآمد",
-  "@accountsLabelRevenue": {
-    "description": "Firefly Translation String: revenue_accounts"
-  },
-  "accountsLiabilitiesInterest": "{interest}% سود به ازای هر {period, select, weekly{هفته} monthly{ماه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سال} other{نامشخص}}",
-  "@accountsLiabilitiesInterest": {
-    "description": "Interest in a certain period",
-    "placeholders": {
-      "interest": {
-        "type": "double",
-        "example": "1.2"
-      },
-      "period": {
-        "type": "String",
-        "example": "yearly"
-      }
-    }
-  },
-  "billsAddNewBill": "افزودن صورتحساب جدید",
-  "@billsAddNewBill": {
-    "description": "Text for add new bill flows"
-  },
-  "billsAmountAndFrequency": "قبض مطابق با تراکنش‌ها بین {minValue} و {maxvalue} است. تکرارها {frequency, select, weekly{هفتگی} monthly{ماهیانه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سالیانه} other{نامشخص}}{skip, plural, =0{} other{، از {skip} گذر می‌کند}}.",
-  "@billsAmountAndFrequency": {
-    "description": "Bill match for min and max amounts, and frequency",
-    "placeholders": {
-      "minValue": {
-        "type": "String",
-        "example": "$50.12"
-      },
-      "maxvalue": {
-        "type": "String",
-        "example": "$60.50"
-      },
-      "frequency": {
-        "type": "String",
-        "example": "yearly"
-      },
-      "skip": {
-        "type": "num",
-        "example": "1"
-      }
-    }
-  },
-  "billsChangeLayoutTooltip": "تغییر چیدمان",
-  "@billsChangeLayoutTooltip": {
-    "description": "Text for layout change button tooltip"
-  },
-  "billsChangeSortOrderTooltip": "تغییر ترتیب مرتب‌سازی\n",
-  "@billsChangeSortOrderTooltip": {
-    "description": "Text for sort order change button tooltip"
-  },
-  "billsDialogLayoutTitle": "طرح نمای صورتحساب‌ها\n",
-  "@billsDialogLayoutTitle": {
-    "description": "Text for bills layout dialog title"
-  },
-  "billsDialogSortTitle": "مرتب‌سازی لیست بر اساس",
-  "@billsDialogSortTitle": {
-    "description": "Text for bills sort dialog title"
-  },
-  "billsEditBill": "ویرایش صورتحساب",
-  "@billsEditBill": {
-    "description": "Text for edit bill flows"
-  },
-  "billsErrorLoading": "خطا در بارگیری صورتحساب.\n",
-  "@billsErrorLoading": {
-    "description": "Generic error message when bills can't be loaded (shouldn't occur)"
-  },
-  "billsExactAmountAndFrequency": "قبض با تراکنش‌های مبلغ {value} مطابقت دارد. تکرارها {frequency, select, weekly{هفتگی} monthly{ماهیانه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سالیانه} other{نامشخص}}{skip, plural, =0{} other{، از {skip} گذر می‌کند}}.",
-  "@billsExactAmountAndFrequency": {
-    "description": "Bill match for exact amount and frequency",
-    "placeholders": {
-      "value": {
-        "type": "String",
-        "example": "$50.12"
-      },
-      "frequency": {
-        "type": "String",
-        "example": "yearly"
-      },
-      "skip": {
-        "type": "num",
-        "example": "1"
-      }
-    }
-  },
-  "billsExpectedOn": "تاریخ مورد انتظار: :date\n\n\n\n\n\n",
-  "@billsExpectedOn": {
-    "description": "Describes what date the bill is expected",
-    "placeholders": {
-      "date": {
-        "type": "DateTime",
-        "format": "yMMMMd",
-        "example": "January 5, 2024"
-      }
-    }
-  },
-  "billsFrequency": "{frequency, select, weekly{هفتگی} monthly{ماهیانه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سالیانه} other{نامشخص}}",
-  "@billsFrequency": {
-    "description": "Bill frequency",
-    "placeholders": {
-      "frequency": {
-        "type": "String",
-        "example": "yearly"
-      }
-    }
-  },
-  "billsFrequencySkip": "{frequency, select, weekly{هفتگی} monthly{ماهیانه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سالیانه} other{نامشخص}}{skip, plural, =0{} other{، از {skip} گذر می‌کند}}",
-  "@billsFrequencySkip": {
-    "description": "Bill frequency",
-    "placeholders": {
-      "frequency": {
-        "type": "String",
-        "example": "yearly"
-      },
-      "skip": {
-        "type": "num",
-        "example": "1"
-      }
-    }
-  },
-  "billsInactive": "غیر فعال",
-  "@billsInactive": {
-    "description": "Text: when the bill is inactive"
-  },
-  "billsIsActive": "قبض فعال است\n\n\n\n\n\n",
-  "@billsIsActive": {
-    "description": "Text: the bill is active"
-  },
-  "billsLayoutGroupSubtitle": "صورت‌حساب‌ها در گروه‌های اختصاص داده شده نمایش داده می‌شوند.\n",
-  "@billsLayoutGroupSubtitle": {
-    "description": "Subtitle text for group layout option"
-  },
-  "billsLayoutGroupTitle": "گروه",
-  "@billsLayoutGroupTitle": {
-    "description": "Title text for group layout option"
-  },
-  "billsLayoutListSubtitle": "صورت‌حساب‌ها در فهرستی که بر اساس معیارهای خاصی مرتب شده‌اند نمایش داده می‌شوند.\n",
-  "@billsLayoutListSubtitle": {
-    "description": "Subtitle text for list layout option"
-  },
-  "billsLayoutListTitle": "لیست",
-  "@billsLayoutListTitle": {
-    "description": "Title text for list layout option"
-  },
-  "billsListEmpty": "لیست در حال حاضر خالی است.\n",
-  "@billsListEmpty": {
-    "description": "Describes that the list is empty"
-  },
-  "billsNextExpectedMatch": "مسابقه بعدی مورد انتظار\n",
-  "@billsNextExpectedMatch": {
-    "description": "Text: next expected match for bill"
-  },
-  "billsNotActive": "قبض غیرفعال است\n\n\n\n\n\n",
-  "@billsNotActive": {
-    "description": "Text: the bill is inactive"
-  },
-  "billsNotExpected": "این دوره انتظار نمی رود\n",
-  "@billsNotExpected": {
-    "description": "Describes that the bill is not expected this period"
-  },
-  "billsNoTransactions": "هیچ تراکنشی یافت نشد",
-  "@billsNoTransactions": {
-    "description": "Describes that there are no transactions connected to the bill"
-  },
-  "billsPaidOn": "پرداخت شده {date}\n",
-  "@billsPaidOn": {
-    "description": "Describes what date the bill was paid",
-    "placeholders": {
-      "date": {
-        "type": "DateTime",
-        "format": "yMMMMd",
-        "example": "January 5, 2024"
-      }
-    }
-  },
-  "billsSortAlphabetical": "الفبایی",
-  "@billsSortAlphabetical": {
-    "description": "Text for alphabetical sort types"
-  },
-  "billsSortByTimePeriod": "بر اساس دوره زمانی\n",
-  "@billsSortByTimePeriod": {
-    "description": "Text for frequency sort type"
-  },
-  "billsSortDirection": "{sortDirection, select, ascending{صعودی} descending{نزولی} other{نامشخص}}",
-  "@billsSortDirection": {
-    "description": "Bill sort direction",
-    "placeholders": {
-      "sortDirection": {
-        "type": "String",
-        "example": "Ascending"
-      }
-    }
-  },
-  "billsSortFrequency": "فرکانس",
-  "@billsSortFrequency": {
-    "description": "Text for sort by frequency"
-  },
-  "billsSortName": "نام",
-  "@billsSortName": {
-    "description": "Text for sort by name"
-  },
-  "billsUngrouped": "گروه‌بندی نشده",
-  "@billsUngrouped": {
-    "description": "Title for ungrouped bills"
-  },
-  "categoryDeleteConfirm": "آیا مطمئن هستید که می‌خواهید این دسته را حذف کنید؟ تراکنش ها حذف نمی شوند، اما دیگر دسته بندی نخواهند داشت.\n",
-  "@categoryDeleteConfirm": {
-    "description": "Confirmation text to delete category"
-  },
-  "categoryErrorLoading": "خطا در بارگیری دسته‌ها.\n",
-  "@categoryErrorLoading": {
-    "description": "Generic error message when categories can't be loaded (shouldn't occur)"
-  },
-  "categoryFormLabelIncludeInSum": "در جمع ماهیانه لحاظ شود\n",
-  "@categoryFormLabelIncludeInSum": {
-    "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
-  },
-  "categoryFormLabelName": "نام دسته",
-  "@categoryFormLabelName": {
-    "description": "Category Add/Edit Form: Label for name field"
-  },
-  "categoryMonthNext": "ماه آینده",
-  "@categoryMonthNext": {
-    "description": "Button title to view overview for next month"
-  },
-  "categoryMonthPrev": "ماه قبل",
-  "@categoryMonthPrev": {
-    "description": "Button title to view overview for previous month"
-  },
-  "categorySumExcluded": "مستثتی شده",
-  "@categorySumExcluded": {
-    "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
-  },
-  "categoryTitleAdd": "افزودن دسته",
-  "@categoryTitleAdd": {
-    "description": "Title for Dialog: Add Category"
-  },
-  "categoryTitleDelete": "حذف دسته",
-  "@categoryTitleDelete": {
-    "description": "Title for Dialog: Delete Category"
-  },
-  "categoryTitleEdit": "ویرایش دسته‌ بندی",
-  "@categoryTitleEdit": {
-    "description": "Title for Dialog: Edit Category"
-  },
-  "catNone": "<no category>",
-  "@catNone": {
-    "description": "Placeholder when no category has been set."
-  },
-  "catOther": "دیگر",
-  "@catOther": {
-    "description": "Category description for summary category 'Other'"
-  },
-  "errorAPIInvalidResponse": "پاسخ نامعتبر از API: {message}\n",
-  "@errorAPIInvalidResponse": {
-    "description": "Invalid API response error",
-    "placeholders": {
-      "message": {
-        "type": "String",
-        "example": "API could not be reached."
-      }
-    }
-  },
-  "errorAPIUnavailable": "API در دسترس نیست\n",
-  "@errorAPIUnavailable": {
-    "description": "Error thrown when API is unavailable."
-  },
-  "errorFieldRequired": "این فیلد الزامی است.\n",
-  "@errorFieldRequired": {
-    "description": "Error: Required field was left empty."
-  },
-  "errorInvalidSSLCert": "گواهی SSL نامعتبر است\n",
-  "@errorInvalidSSLCert": {
-    "description": "Error: SSL certificate is invalid"
-  },
-  "errorInvalidURL": "آدرس نامعتبر",
-  "@errorInvalidURL": {
-    "description": "Error: URL is invalid"
-  },
-  "errorMinAPIVersion": "حداقل نسخه Firefly API v{requiredVersion} مورد نیاز است. لطفا ارتقا دهید.\n",
-  "@errorMinAPIVersion": {
-    "description": "Error: Required API version not met.",
-    "placeholders": {
-      "requiredVersion": {
-        "type": "String",
-        "example": "2.0.0"
-      }
-    }
-  },
-  "errorStatusCode": "کد وضعیت: {code}\n",
-  "@errorStatusCode": {
-    "description": "HTTP status code information on error",
-    "placeholders": {
-      "code": {
-        "type": "int",
-        "example": "500"
-      }
-    }
-  },
-  "errorUnknown": "خطای ناشناخته.\n",
-  "@errorUnknown": {
-    "description": "Error without further information occurred."
-  },
-  "formButtonHelp": "راهنما",
-  "@formButtonHelp": {
-    "description": "Button Label: Help"
-  },
-  "formButtonLogin": "ورود",
-  "@formButtonLogin": {
-    "description": "Button Label: Login"
-  },
-  "formButtonLogout": "خروج از سیستم",
-  "@formButtonLogout": {
-    "description": "Button Label: Logout"
-  },
-  "formButtonRemove": "پاک کردن",
-  "@formButtonRemove": {
-    "description": "Button Label: Remove"
-  },
-  "formButtonResetLogin": "بازنشانی ورود به سیستم\n",
-  "@formButtonResetLogin": {
-    "description": "Button Label: Reset login form (when error is shown)"
-  },
-  "formButtonTransactionAdd": "افزودن تراکنش",
-  "@formButtonTransactionAdd": {
-    "description": "Button Label: Add Transaction"
-  },
-  "formButtonTryAgain": "دوباره سعی کنید",
-  "@formButtonTryAgain": {
-    "description": "Button Label: Try that thing again (login etc)"
-  },
-  "generalAccount": "حساب",
-  "@generalAccount": {
-    "description": "Asset/Debt (Bank) Account"
-  },
-  "generalAssets": "دارایی ها",
-  "@generalAssets": {
-    "description": "(Monetary) Assets"
-  },
-  "generalBalance": "مانده حساب",
-  "@generalBalance": {
-    "description": "(Account) Balance"
-  },
-  "generalBalanceOn": "موجودی در تاریخ {date}",
-  "@generalBalanceOn": {
-    "placeholders": {
-      "date": {
-        "type": "DateTime",
-        "format": "yMd",
-        "example": "2023-05-13"
-      }
-    }
-  },
-  "generalBill": "صورت حساب",
-  "@generalBill": {
-    "description": "Bill"
-  },
-  "generalBudget": "بودجه",
-  "@generalBudget": {
-    "description": "(Monetary) Budget"
-  },
-  "generalCategory": "دسته‌بندی",
-  "@generalCategory": {
-    "description": "Category (of transaction etc.)."
-  },
-  "generalCurrency": "واحدپول",
-  "@generalCurrency": {
-    "description": "(Money) Currency"
-  },
-  "generalDefault": "پیش فرض",
-  "@generalDefault": {
-    "description": "Indicates that something is the default choice"
-  },
-  "generalDismiss": "نادیده گرفتن",
-  "@generalDismiss": {
-    "description": "Dismiss window/dialog without action"
-  },
-  "generalEarned": "به دست آورده",
-  "@generalEarned": {
-    "description": "(Amount) Earned"
-  },
-  "generalError": "خطا",
-  "@generalError": {
-    "description": "Error (title in dialogs etc.)"
-  },
-  "generalExpenses": "هزینه ها",
-  "@generalExpenses": {
-    "description": "(Account) Expenses"
-  },
-  "generalIncome": "درآمد",
-  "@generalIncome": {
-    "description": "(Account) Info"
-  },
-  "generalLiabilities": "بدهی ها",
-  "@generalLiabilities": {
-    "description": "Firefly Translation String: liabilities"
-  },
-  "generalMultiple": "چندتایی",
-  "@generalMultiple": {
-    "description": "Multiples of a single thing (e.g. source accounts) are existing"
-  },
-  "generalNever": "هرگز",
-  "@generalNever": {
-    "description": "Has never happened, no update etc."
-  },
-  "generalReconcile": "مغایرت گیری شده",
-  "@generalReconcile": {
-    "description": "Booking has been confirmed/reconciled"
-  },
-  "generalReset": "تنظیم مجدد",
-  "@generalReset": {
-    "description": "Reset something (i.e. set filters)"
-  },
-  "generalSpent": "خرج شده",
-  "@generalSpent": {
-    "description": "(Amount) Spent"
-  },
-  "generalSum": "مجموع",
-  "@generalSum": {
-    "description": "(Mathematical) Sum"
-  },
-  "generalTarget": "هدف",
-  "@generalTarget": {
-    "description": "Target value (i.e. a sum to save)"
-  },
-  "generalUnknown": "ناشناخته",
-  "@generalUnknown": {
-    "description": "Something is unknown."
-  },
-  "homeMainBillsInterval": "({period, select, weekly{هفتگی} monthly{ماهیانه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سالیانه} other{نامشخص}})",
-  "@homeMainBillsInterval": {
-    "description": "bill interval type",
-    "placeholders": {
-      "period": {
-        "type": "String",
-        "example": "weekly"
-      }
-    }
-  },
-  "homeMainBillsTitle": "صورت حساب های هفته آینده\n",
-  "@homeMainBillsTitle": {
-    "description": "Title: Bills for the next week"
-  },
-  "homeMainBudgetInterval": "({from} تا {to}، {period})",
-  "@homeMainBudgetInterval": {
-    "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
-    "placeholders": {
-      "from": {
-        "type": "DateTime",
-        "format": "MMMd",
-        "example": "May 13"
-      },
-      "to": {
-        "type": "DateTime",
-        "format": "MMMd",
-        "example": "May 17"
-      },
-      "period": {
-        "type": "String",
-        "example": "weekly"
-      }
-    }
-  },
-  "homeMainBudgetIntervalSingle": "({from} تا {to})",
-  "@homeMainBudgetIntervalSingle": {
-    "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
-    "placeholders": {
-      "from": {
-        "type": "DateTime",
-        "format": "MMMd",
-        "example": "May 13"
-      },
-      "to": {
-        "type": "DateTime",
-        "format": "MMMd",
-        "example": "May 17"
-      }
-    }
-  },
-  "homeMainBudgetSum": "{current} {status, select, over{از} other{باقیمانده از}} {available}",
-  "@homeMainBudgetSum": {
-    "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
-    "placeholders": {
-      "current": {
-        "type": "String",
-        "example": "12.34€"
-      },
-      "status": {
-        "type": "String",
-        "example": "left from"
-      },
-      "available": {
-        "type": "String",
-        "example": "12.34€"
-      }
-    }
-  },
-  "homeMainBudgetTitle": "بودجه ماه جاری",
-  "@homeMainBudgetTitle": {
-    "description": "Title: Budgets for current month"
-  },
-  "homeMainChartAccountsTitle": "خلاصه حساب\n",
-  "@homeMainChartAccountsTitle": {
-    "description": "Chart Label: Account Summary"
-  },
-  "homeMainChartCategoriesTitle": "خلاصه دسته برای ماه جاری\n",
-  "@homeMainChartCategoriesTitle": {
-    "description": "Chart Label: Category Summary"
-  },
-  "homeMainChartDailyAvg": "میانگین 7 روز\n",
-  "@homeMainChartDailyAvg": {
-    "description": "Text for last week average spent"
-  },
-  "homeMainChartDailyTitle": "خلاصه روزانه",
-  "@homeMainChartDailyTitle": {
-    "description": "Chart Label: Daily Summary"
-  },
-  "homeMainChartNetEarningsTitle": "دریافتی خالص",
-  "@homeMainChartNetEarningsTitle": {
-    "description": "Chart Label: Net Earnings"
-  },
-  "homeMainChartNetWorthTitle": "ارزش خالص\n",
-  "@homeMainChartNetWorthTitle": {
-    "description": "Chart Label: Net Worth"
-  },
-  "homePiggyAdjustDialogTitle": "پس انداز/خرج پول\n",
-  "@homePiggyAdjustDialogTitle": {
-    "description": "Title of the dialog where money can be added/removed to a piggy bank."
-  },
-  "homePiggyDateStart": "تاریخ شروع: {date}\n",
-  "@homePiggyDateStart": {
-    "description": "Start of the piggy bank",
-    "placeholders": {
-      "date": {
-        "type": "DateTime",
-        "format": "yMMMMd",
-        "example": "March 12, 2023"
-      }
-    }
-  },
-  "homePiggyDateTarget": "تاریخ هدف: {date}\n",
-  "@homePiggyDateTarget": {
-    "description": "Set target date of the piggy bank (when saving should be finished)",
-    "placeholders": {
-      "date": {
-        "type": "DateTime",
-        "format": "yMMMMd",
-        "example": "March 12, 2023"
-      }
-    }
-  },
-  "homePiggyLinked": "لینک به {account}\n",
-  "@homePiggyLinked": {
-    "description": "Piggy bank is linked to asset account {account}.",
-    "placeholders": {
-      "account": {
-        "type": "String",
-        "example": "Awesome Bank Account"
-      }
-    }
-  },
-  "homePiggyNoAccounts": "هیچ پس‌اندازی تنظیم نشده است.\n\n",
-  "@homePiggyNoAccounts": {
-    "description": "Information that no piggy banks are existing"
-  },
-  "homePiggyNoAccountsSubtitle": "مقداری در رابط وب ایجاد کنید!\n",
-  "@homePiggyNoAccountsSubtitle": {
-    "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
-  },
-  "homePiggyRemaining": "باقی مانده برای ذخیره: {amount}\n",
-  "@homePiggyRemaining": {
-    "description": "How much money is left to save",
-    "placeholders": {
-      "amount": {
-        "type": "String",
-        "example": "€12.34"
-      }
-    }
-  },
-  "homePiggySaved": "ذخیره شده تا کنون: {amount}\n",
-  "@homePiggySaved": {
-    "description": "How much money already was saved",
-    "placeholders": {
-      "amount": {
-        "type": "String",
-        "example": "€12.34"
-      }
-    }
-  },
-  "homePiggyTarget": "مقدار هدف: {amount}\n",
-  "@homePiggyTarget": {
-    "description": "How much money should be saved",
-    "placeholders": {
-      "amount": {
-        "type": "String",
-        "example": "€12.34"
-      }
-    }
-  },
-  "homeTabLabelBalance": "ترازنامه",
-  "@homeTabLabelBalance": {
-    "description": "Tab Label: Balance Sheet page"
-  },
-  "homeTabLabelMain": "اصلی",
-  "@homeTabLabelMain": {
-    "description": "Tab Label: Start page (\"main\")"
-  },
-  "homeTabLabelPiggybanks": "صندوق پس‌انداز\n\n\n\n\n\n",
-  "@homeTabLabelPiggybanks": {
-    "description": "Tab Label: Piggy Banks page"
-  },
-  "homeTabLabelTransactions": "تراکنش‌ها",
-  "@homeTabLabelTransactions": {
-    "description": "Tab Label: Transactions page"
-  },
-  "homeTransactionsActionFilter": "لیست فیلتر",
-  "@homeTransactionsActionFilter": {
-    "description": "Action Button Label: Filter list."
-  },
-  "homeTransactionsDialogFilterAccountsAll": "<همه حساب‌ها>",
-  "@homeTransactionsDialogFilterAccountsAll": {
-    "description": "Don't filter for a specific account (default entry)"
-  },
-  "homeTransactionsDialogFilterBillsAll": "<همه قبوض>",
-  "@homeTransactionsDialogFilterBillsAll": {
-    "description": "Don't filter for a specific bill (default entry)"
-  },
-  "homeTransactionsDialogFilterBillUnset": "<بدون تنظیم صورت حساب>\n",
-  "@homeTransactionsDialogFilterBillUnset": {
-    "description": "Filter for unset bills"
-  },
-  "homeTransactionsDialogFilterBudgetsAll": "<همه بودجه‌ها>\n",
-  "@homeTransactionsDialogFilterBudgetsAll": {
-    "description": "Don't filter for a specific budget (default entry)"
-  },
-  "homeTransactionsDialogFilterBudgetUnset": "<بدون تنظیم بودجه>\n",
-  "@homeTransactionsDialogFilterBudgetUnset": {
-    "description": "Filter for unset budgets"
-  },
-  "homeTransactionsDialogFilterCategoriesAll": "<همه دسته‌ها>\n",
-  "@homeTransactionsDialogFilterCategoriesAll": {
-    "description": "Don't filter for a specific category (default entry)"
-  },
-  "homeTransactionsDialogFilterCategoryUnset": "<بدون دسته بندی>\n",
-  "@homeTransactionsDialogFilterCategoryUnset": {
-    "description": "Filter for unset categories"
-  },
-  "homeTransactionsDialogFilterCurrenciesAll": "<همه ارزها>\n",
-  "@homeTransactionsDialogFilterCurrenciesAll": {
-    "description": "Don't filter for a specific currency (default entry)"
-  },
-  "homeTransactionsDialogFilterFutureTransactions": "نمایش معاملات آتی\n",
-  "@homeTransactionsDialogFilterFutureTransactions": {
-    "description": "Setting to show future transactions"
-  },
-  "homeTransactionsDialogFilterSearch": "عبارت جستجو",
-  "@homeTransactionsDialogFilterSearch": {
-    "description": "Search term for filter"
-  },
-  "homeTransactionsDialogFilterTitle": "فیلترها را انتخاب کنید",
-  "@homeTransactionsDialogFilterTitle": {
-    "description": "Title of Filter Dialog"
-  },
-  "homeTransactionsEmpty": "هیچ تراکنشی یافت نشد",
-  "@homeTransactionsEmpty": {
-    "description": "Message when no transactions are found."
-  },
-  "homeTransactionsMultipleCategories": "{num} دسته\n",
-  "@homeTransactionsMultipleCategories": {
-    "description": "$num categories for the transaction.",
-    "placeholders": {
-      "num": {
-        "type": "int",
-        "example": "2"
-      }
-    }
-  },
-  "liabilityDirectionCredit": "این بدهی متعلق به من است",
-  "@liabilityDirectionCredit": {
-    "description": "Firefly Translation String: liability_direction_credit"
-  },
-  "liabilityDirectionDebit": "این بدهی را بدهکارم\n",
-  "@liabilityDirectionDebit": {
-    "description": "Firefly Translation String: liability_direction_debit"
-  },
-  "liabilityTypeDebt": "بدهی",
-  "@liabilityTypeDebt": {
-    "description": "Firefly Translation String: account_type_debt"
-  },
-  "liabilityTypeLoan": "وام",
-  "@liabilityTypeLoan": {
-    "description": "Firefly Translation String: account_type_loan"
-  },
-  "liabilityTypeMortgage": "رهن",
-  "@liabilityTypeMortgage": {
-    "description": "Firefly Translation String: account_type_mortgage"
-  },
-  "loginAbout": "برای استفاده مؤثر از Waterfly III به سرور خود با نمونه Firefly III یا افزونه Firefly III برای Home Assistant نیاز دارید.\n\nلطفاً URL کامل و همچنین یک نشانه دسترسی شخصی (تنظیمات -> نمایه -> OAuth -> رمز دسترسی شخصی) را در زیر وارد کنید.\n",
-  "@loginAbout": {
-    "description": "Login screen welcome description"
-  },
-  "loginFormLabelAPIKey": "کلید API معتبر\n",
-  "@loginFormLabelAPIKey": {
-    "description": "Login Form: Label for API Key field"
-  },
-  "loginFormLabelHost": "URL میزبان\n",
-  "@loginFormLabelHost": {
-    "description": "Login Form: Label for Host field"
-  },
-  "loginWelcome": "به Waterfly III خوش آمدید\n",
-  "@loginWelcome": {
-    "description": "Login screen welcome banner"
-  },
-  "logoutConfirmation": "آیا برای خارج شدن مطمئن هستید؟\n",
-  "@logoutConfirmation": {
-    "description": "Get user confirmation if he really wants to log out"
-  },
-  "navigationAccounts": "حساب‌ها",
-  "@navigationAccounts": {
-    "description": "Navigation Label: Accounts Page"
-  },
-  "navigationBills": "صورت حساب",
-  "@navigationBills": {
-    "description": "Navigation Label: Bills"
-  },
-  "navigationCategories": "دسته\n",
-  "@navigationCategories": {
-    "description": "Navigation Label: Categories"
-  },
-  "navigationMain": "داشبورد اصلی\n",
-  "@navigationMain": {
-    "description": "Navigation Label: Main Dashboard"
-  },
-  "navigationSettings": "تنظیمات",
-  "@navigationSettings": {
-    "description": "Navigation Label: Settings"
-  },
-  "no": "نه",
-  "@no": {
-    "description": "The word no"
-  },
-  "numPercent": "{num}",
-  "@numPercent": {
-    "description": "Number formatted as percentage",
-    "placeholders": {
-      "num": {
-        "type": "double",
-        "format": "decimalPercentPattern",
-        "optionalParameters": {
-          "decimalDigits": 0
+    "@@locale": "fa",
+    "@@x-reference": true,
+    "accountRoleAssetCashWallet": "کیف پول نقد\n",
+    "@accountRoleAssetCashWallet": {
+        "description": "Firefly Translation String: account_role_cashWalletAsset"
+    },
+    "accountRoleAssetCC": "کارت اعتباری",
+    "@accountRoleAssetCC": {
+        "description": "Firefly Translation String: account_role_ccAsset"
+    },
+    "accountRoleAssetDefault": "حساب دارایی پیش فرض\n",
+    "@accountRoleAssetDefault": {
+        "description": "Firefly Translation String: account_role_defaultAsset"
+    },
+    "accountRoleAssetSavings": "حساب پس انداز",
+    "@accountRoleAssetSavings": {
+        "description": "Firefly Translation String: account_role_savingAsset"
+    },
+    "accountRoleAssetShared": "حساب دارایی مشترک\n",
+    "@accountRoleAssetShared": {
+        "description": "Firefly Translation String: account_role_sharedAsset"
+    },
+    "accountsLabelAsset": "حساب های دارایی",
+    "@accountsLabelAsset": {
+        "description": "Firefly Translation String: asset_accounts"
+    },
+    "accountsLabelExpense": "حساب‌های هزینه",
+    "@accountsLabelExpense": {
+        "description": "Firefly Translation String: expense_accounts"
+    },
+    "accountsLabelLiabilities": "بدهی ها",
+    "@accountsLabelLiabilities": {
+        "description": "Firefly Translation String: liabilities_accounts"
+    },
+    "accountsLabelRevenue": "حساب‌های درآمد",
+    "@accountsLabelRevenue": {
+        "description": "Firefly Translation String: revenue_accounts"
+    },
+    "accountsLiabilitiesInterest": "{interest}% سود به ازای هر {period, select, weekly{هفته} monthly{ماه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سال} other{نامشخص}}",
+    "@accountsLiabilitiesInterest": {
+        "description": "Interest in a certain period",
+        "placeholders": {
+            "interest": {
+                "type": "double",
+                "example": "1.2"
+            },
+            "period": {
+                "type": "String",
+                "example": "yearly"
+            }
         }
-      }
-    }
-  },
-  "numPercentOf": "{perc} از {of}\n\n\n\n\n\n",
-  "@numPercentOf": {
-    "description": "Number formatted as percentage, with total amount provided",
-    "placeholders": {
-      "perc": {
-        "type": "double",
-        "format": "decimalPercentPattern",
-        "optionalParameters": {
-          "decimalDigits": 0
+    },
+    "billsAmountAndFrequency": "قبض مطابق با تراکنش‌ها بین {minValue} و {maxvalue} است. تکرارها {frequency, select, weekly{هفتگی} monthly{ماهیانه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سالیانه} other{نامشخص}}{skip, plural, =0{} other{، از {skip} گذر می‌کند}}.",
+    "@billsAmountAndFrequency": {
+        "description": "Bill match for min and max amounts, and frequency",
+        "placeholders": {
+            "minValue": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "maxvalue": {
+                "type": "String",
+                "example": "$60.50"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
         }
-      },
-      "of": {
-        "type": "String"
-      }
+    },
+    "billsChangeLayoutTooltip": "تغییر چیدمان",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "تغییر ترتیب مرتب‌سازی\n",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsErrorLoading": "خطا در بارگیری صورتحساب.\n",
+    "@billsErrorLoading": {
+        "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+    },
+    "billsExactAmountAndFrequency": "قبض با تراکنش‌های مبلغ {value} مطابقت دارد. تکرارها {frequency, select, weekly{هفتگی} monthly{ماهیانه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سالیانه} other{نامشخص}}{skip, plural, =0{} other{، از {skip} گذر می‌کند}}.",
+    "@billsExactAmountAndFrequency": {
+        "description": "Bill match for exact amount and frequency",
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsExpectedOn": "تاریخ مورد انتظار: :date\n\n\n\n\n\n",
+    "@billsExpectedOn": {
+        "description": "Describes what date the bill is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsFrequency": "{frequency, select, weekly{هفتگی} monthly{ماهیانه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سالیانه} other{نامشخص}}",
+    "@billsFrequency": {
+        "description": "Bill frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsFrequencySkip": "{frequency, select, weekly{هفتگی} monthly{ماهیانه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سالیانه} other{نامشخص}}{skip, plural, =0{} other{، از {skip} گذر می‌کند}}",
+    "@billsFrequencySkip": {
+        "description": "Bill frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsInactive": "غیر فعال",
+    "@billsInactive": {
+        "description": "Text: when the bill is inactive"
+    },
+    "billsIsActive": "قبض فعال است\n\n\n\n\n\n",
+    "@billsIsActive": {
+        "description": "Text: the bill is active"
+    },
+    "billsLayoutGroupSubtitle": "صورت‌حساب‌ها در گروه‌های اختصاص داده شده نمایش داده می‌شوند.\n",
+    "@billsLayoutGroupSubtitle": {
+        "description": "Subtitle text for group layout option"
+    },
+    "billsLayoutGroupTitle": "گروه",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListSubtitle": "صورت‌حساب‌ها در فهرستی که بر اساس معیارهای خاصی مرتب شده‌اند نمایش داده می‌شوند.\n",
+    "@billsLayoutListSubtitle": {
+        "description": "Subtitle text for list layout option"
+    },
+    "billsLayoutListTitle": "لیست",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "لیست در حال حاضر خالی است.\n",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "مسابقه بعدی مورد انتظار\n",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for bill"
+    },
+    "billsNotActive": "قبض غیرفعال است\n\n\n\n\n\n",
+    "@billsNotActive": {
+        "description": "Text: the bill is inactive"
+    },
+    "billsNotExpected": "این دوره انتظار نمی رود\n",
+    "@billsNotExpected": {
+        "description": "Describes that the bill is not expected this period"
+    },
+    "billsNoTransactions": "هیچ تراکنشی یافت نشد",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the bill"
+    },
+    "billsPaidOn": "پرداخت شده {date}\n",
+    "@billsPaidOn": {
+        "description": "Describes what date the bill was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "الفبایی",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "بر اساس دوره زمانی\n",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "فرکانس",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "نام",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "گروه‌بندی نشده",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped bills"
+    },
+    "categoryDeleteConfirm": "آیا مطمئن هستید که می‌خواهید این دسته را حذف کنید؟ تراکنش ها حذف نمی شوند، اما دیگر دسته بندی نخواهند داشت.\n",
+    "@categoryDeleteConfirm": {
+        "description": "Confirmation text to delete category"
+    },
+    "categoryErrorLoading": "خطا در بارگیری دسته‌ها.\n",
+    "@categoryErrorLoading": {
+        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+    },
+    "categoryFormLabelIncludeInSum": "در جمع ماهیانه لحاظ شود\n",
+    "@categoryFormLabelIncludeInSum": {
+        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+    },
+    "categoryFormLabelName": "نام دسته",
+    "@categoryFormLabelName": {
+        "description": "Category Add/Edit Form: Label for name field"
+    },
+    "categoryMonthNext": "ماه آینده",
+    "@categoryMonthNext": {
+        "description": "Button title to view overview for next month"
+    },
+    "categoryMonthPrev": "ماه قبل",
+    "@categoryMonthPrev": {
+        "description": "Button title to view overview for previous month"
+    },
+    "categorySumExcluded": "مستثتی شده",
+    "@categorySumExcluded": {
+        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+    },
+    "categoryTitleAdd": "افزودن دسته",
+    "@categoryTitleAdd": {
+        "description": "Title for Dialog: Add Category"
+    },
+    "categoryTitleDelete": "حذف دسته",
+    "@categoryTitleDelete": {
+        "description": "Title for Dialog: Delete Category"
+    },
+    "categoryTitleEdit": "ویرایش دسته‌ بندی",
+    "@categoryTitleEdit": {
+        "description": "Title for Dialog: Edit Category"
+    },
+    "catNone": "<no category>",
+    "@catNone": {
+        "description": "Placeholder when no category has been set."
+    },
+    "catOther": "دیگر",
+    "@catOther": {
+        "description": "Category description for summary category 'Other'"
+    },
+    "errorAPIInvalidResponse": "پاسخ نامعتبر از API: {message}\n",
+    "@errorAPIInvalidResponse": {
+        "description": "Invalid API response error",
+        "placeholders": {
+            "message": {
+                "type": "String",
+                "example": "API could not be reached."
+            }
+        }
+    },
+    "errorAPIUnavailable": "API در دسترس نیست\n",
+    "@errorAPIUnavailable": {
+        "description": "Error thrown when API is unavailable."
+    },
+    "errorFieldRequired": "این فیلد الزامی است.\n",
+    "@errorFieldRequired": {
+        "description": "Error: Required field was left empty."
+    },
+    "errorInvalidURL": "آدرس نامعتبر",
+    "@errorInvalidURL": {
+        "description": "Error: URL is invalid"
+    },
+    "errorMinAPIVersion": "حداقل نسخه Firefly API v{requiredVersion} مورد نیاز است. لطفا ارتقا دهید.\n",
+    "@errorMinAPIVersion": {
+        "description": "Error: Required API version not met.",
+        "placeholders": {
+            "requiredVersion": {
+                "type": "String",
+                "example": "2.0.0"
+            }
+        }
+    },
+    "errorStatusCode": "کد وضعیت: {code}\n",
+    "@errorStatusCode": {
+        "description": "HTTP status code information on error",
+        "placeholders": {
+            "code": {
+                "type": "int",
+                "example": "500"
+            }
+        }
+    },
+    "errorUnknown": "خطای ناشناخته.\n",
+    "@errorUnknown": {
+        "description": "Error without further information occurred."
+    },
+    "formButtonHelp": "راهنما",
+    "@formButtonHelp": {
+        "description": "Button Label: Help"
+    },
+    "formButtonLogin": "ورود",
+    "@formButtonLogin": {
+        "description": "Button Label: Login"
+    },
+    "formButtonLogout": "خروج از سیستم",
+    "@formButtonLogout": {
+        "description": "Button Label: Logout"
+    },
+    "formButtonRemove": "پاک کردن",
+    "@formButtonRemove": {
+        "description": "Button Label: Remove"
+    },
+    "formButtonResetLogin": "بازنشانی ورود به سیستم\n",
+    "@formButtonResetLogin": {
+        "description": "Button Label: Reset login form (when error is shown)"
+    },
+    "formButtonTransactionAdd": "افزودن تراکنش",
+    "@formButtonTransactionAdd": {
+        "description": "Button Label: Add Transaction"
+    },
+    "formButtonTryAgain": "دوباره سعی کنید",
+    "@formButtonTryAgain": {
+        "description": "Button Label: Try that thing again (login etc)"
+    },
+    "generalAccount": "حساب",
+    "@generalAccount": {
+        "description": "Asset/Debt (Bank) Account"
+    },
+    "generalAssets": "دارایی ها",
+    "@generalAssets": {
+        "description": "(Monetary) Assets"
+    },
+    "generalBalance": "مانده حساب",
+    "@generalBalance": {
+        "description": "(Account) Balance"
+    },
+    "generalBalanceOn": "موجودی در تاریخ {date}",
+    "@generalBalanceOn": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMd",
+                "example": "2023-05-13"
+            }
+        }
+    },
+    "generalBill": "صورت حساب",
+    "@generalBill": {
+        "description": "Bill"
+    },
+    "generalBudget": "بودجه",
+    "@generalBudget": {
+        "description": "(Monetary) Budget"
+    },
+    "generalCategory": "دسته‌بندی",
+    "@generalCategory": {
+        "description": "Category (of transaction etc.)."
+    },
+    "generalCurrency": "واحدپول",
+    "@generalCurrency": {
+        "description": "(Money) Currency"
+    },
+    "generalDefault": "پیش فرض",
+    "@generalDefault": {
+        "description": "Indicates that something is the default choice"
+    },
+    "generalDismiss": "نادیده گرفتن",
+    "@generalDismiss": {
+        "description": "Dismiss window/dialog without action"
+    },
+    "generalEarned": "به دست آورده",
+    "@generalEarned": {
+        "description": "(Amount) Earned"
+    },
+    "generalError": "خطا",
+    "@generalError": {
+        "description": "Error (title in dialogs etc.)"
+    },
+    "generalExpenses": "هزینه ها",
+    "@generalExpenses": {
+        "description": "(Account) Expenses"
+    },
+    "generalIncome": "درآمد",
+    "@generalIncome": {
+        "description": "(Account) Info"
+    },
+    "generalLiabilities": "بدهی ها",
+    "@generalLiabilities": {
+        "description": "Firefly Translation String: liabilities"
+    },
+    "generalMultiple": "چندتایی",
+    "@generalMultiple": {
+        "description": "Multiples of a single thing (e.g. source accounts) are existing"
+    },
+    "generalNever": "هرگز",
+    "@generalNever": {
+        "description": "Has never happened, no update etc."
+    },
+    "generalReconcile": "مغایرت گیری شده",
+    "@generalReconcile": {
+        "description": "Booking has been confirmed/reconciled"
+    },
+    "generalReset": "تنظیم مجدد",
+    "@generalReset": {
+        "description": "Reset something (i.e. set filters)"
+    },
+    "generalSpent": "خرج شده",
+    "@generalSpent": {
+        "description": "(Amount) Spent"
+    },
+    "generalSum": "مجموع",
+    "@generalSum": {
+        "description": "(Mathematical) Sum"
+    },
+    "generalTarget": "هدف",
+    "@generalTarget": {
+        "description": "Target value (i.e. a sum to save)"
+    },
+    "generalUnknown": "ناشناخته",
+    "@generalUnknown": {
+        "description": "Something is unknown."
+    },
+    "homeMainBillsInterval": "({period, select, weekly{هفتگی} monthly{ماهیانه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سالیانه} other{نامشخص}})",
+    "@homeMainBillsInterval": {
+        "description": "bill interval type",
+        "placeholders": {
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBillsTitle": "صورت حساب های هفته آینده\n",
+    "@homeMainBillsTitle": {
+        "description": "Title: Bills for the next week"
+    },
+    "homeMainBudgetInterval": "({from} تا {to}، {period})",
+    "@homeMainBudgetInterval": {
+        "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
+            },
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBudgetIntervalSingle": "({from} تا {to})",
+    "@homeMainBudgetIntervalSingle": {
+        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
+            }
+        }
+    },
+    "homeMainBudgetSum": "{current} {status, select, over{از} other{باقیمانده از}} {available}",
+    "@homeMainBudgetSum": {
+        "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
+        "placeholders": {
+            "current": {
+                "type": "String",
+                "example": "12.34€"
+            },
+            "status": {
+                "type": "String",
+                "example": "left from"
+            },
+            "available": {
+                "type": "String",
+                "example": "12.34€"
+            }
+        }
+    },
+    "homeMainBudgetTitle": "بودجه ماه جاری",
+    "@homeMainBudgetTitle": {
+        "description": "Title: Budgets for current month"
+    },
+    "homeMainChartAccountsTitle": "خلاصه حساب\n",
+    "@homeMainChartAccountsTitle": {
+        "description": "Chart Label: Account Summary"
+    },
+    "homeMainChartCategoriesTitle": "خلاصه دسته برای ماه جاری\n",
+    "@homeMainChartCategoriesTitle": {
+        "description": "Chart Label: Category Summary"
+    },
+    "homeMainChartDailyAvg": "میانگین 7 روز\n",
+    "@homeMainChartDailyAvg": {
+        "description": "Text for last week average spent"
+    },
+    "homeMainChartDailyTitle": "خلاصه روزانه",
+    "@homeMainChartDailyTitle": {
+        "description": "Chart Label: Daily Summary"
+    },
+    "homeMainChartNetEarningsTitle": "دریافتی خالص",
+    "@homeMainChartNetEarningsTitle": {
+        "description": "Chart Label: Net Earnings"
+    },
+    "homeMainChartNetWorthTitle": "ارزش خالص\n",
+    "@homeMainChartNetWorthTitle": {
+        "description": "Chart Label: Net Worth"
+    },
+    "homePiggyAdjustDialogTitle": "پس انداز/خرج پول\n",
+    "@homePiggyAdjustDialogTitle": {
+        "description": "Title of the dialog where money can be added/removed to a piggy bank."
+    },
+    "homePiggyDateStart": "تاریخ شروع: {date}\n",
+    "@homePiggyDateStart": {
+        "description": "Start of the piggy bank",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "March 12, 2023"
+            }
+        }
+    },
+    "homePiggyDateTarget": "تاریخ هدف: {date}\n",
+    "@homePiggyDateTarget": {
+        "description": "Set target date of the piggy bank (when saving should be finished)",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "March 12, 2023"
+            }
+        }
+    },
+    "homePiggyLinked": "لینک به {account}\n",
+    "@homePiggyLinked": {
+        "description": "Piggy bank is linked to asset account {account}.",
+        "placeholders": {
+            "account": {
+                "type": "String",
+                "example": "Awesome Bank Account"
+            }
+        }
+    },
+    "homePiggyNoAccounts": "هیچ پس‌اندازی تنظیم نشده است.\n\n",
+    "@homePiggyNoAccounts": {
+        "description": "Information that no piggy banks are existing"
+    },
+    "homePiggyNoAccountsSubtitle": "مقداری در رابط وب ایجاد کنید!\n",
+    "@homePiggyNoAccountsSubtitle": {
+        "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
+    },
+    "homePiggyRemaining": "باقی مانده برای ذخیره: {amount}\n",
+    "@homePiggyRemaining": {
+        "description": "How much money is left to save",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggySaved": "ذخیره شده تا کنون: {amount}\n",
+    "@homePiggySaved": {
+        "description": "How much money already was saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyTarget": "مقدار هدف: {amount}\n",
+    "@homePiggyTarget": {
+        "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homeTabLabelBalance": "ترازنامه",
+    "@homeTabLabelBalance": {
+        "description": "Tab Label: Balance Sheet page"
+    },
+    "homeTabLabelMain": "اصلی",
+    "@homeTabLabelMain": {
+        "description": "Tab Label: Start page (\"main\")"
+    },
+    "homeTabLabelPiggybanks": "صندوق پس‌انداز\n\n\n\n\n\n",
+    "@homeTabLabelPiggybanks": {
+        "description": "Tab Label: Piggy Banks page"
+    },
+    "homeTabLabelTransactions": "تراکنش‌ها",
+    "@homeTabLabelTransactions": {
+        "description": "Tab Label: Transactions page"
+    },
+    "homeTransactionsActionFilter": "لیست فیلتر",
+    "@homeTransactionsActionFilter": {
+        "description": "Action Button Label: Filter list."
+    },
+    "homeTransactionsDialogFilterAccountsAll": "<همه حساب‌ها>",
+    "@homeTransactionsDialogFilterAccountsAll": {
+        "description": "Don't filter for a specific account (default entry)"
+    },
+    "homeTransactionsDialogFilterBillsAll": "<همه قبوض>",
+    "@homeTransactionsDialogFilterBillsAll": {
+        "description": "Don't filter for a specific bill (default entry)"
+    },
+    "homeTransactionsDialogFilterBillUnset": "<بدون تنظیم صورت حساب>\n",
+    "@homeTransactionsDialogFilterBillUnset": {
+        "description": "Filter for unset bills"
+    },
+    "homeTransactionsDialogFilterBudgetsAll": "<همه بودجه‌ها>\n",
+    "@homeTransactionsDialogFilterBudgetsAll": {
+        "description": "Don't filter for a specific budget (default entry)"
+    },
+    "homeTransactionsDialogFilterBudgetUnset": "<بدون تنظیم بودجه>\n",
+    "@homeTransactionsDialogFilterBudgetUnset": {
+        "description": "Filter for unset budgets"
+    },
+    "homeTransactionsDialogFilterCategoriesAll": "<همه دسته‌ها>\n",
+    "@homeTransactionsDialogFilterCategoriesAll": {
+        "description": "Don't filter for a specific category (default entry)"
+    },
+    "homeTransactionsDialogFilterCategoryUnset": "<بدون دسته بندی>\n",
+    "@homeTransactionsDialogFilterCategoryUnset": {
+        "description": "Filter for unset categories"
+    },
+    "homeTransactionsDialogFilterCurrenciesAll": "<همه ارزها>\n",
+    "@homeTransactionsDialogFilterCurrenciesAll": {
+        "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterFutureTransactions": "نمایش معاملات آتی\n",
+    "@homeTransactionsDialogFilterFutureTransactions": {
+        "description": "Setting to show future transactions"
+    },
+    "homeTransactionsDialogFilterSearch": "عبارت جستجو",
+    "@homeTransactionsDialogFilterSearch": {
+        "description": "Search term for filter"
+    },
+    "homeTransactionsDialogFilterTitle": "فیلترها را انتخاب کنید",
+    "@homeTransactionsDialogFilterTitle": {
+        "description": "Title of Filter Dialog"
+    },
+    "homeTransactionsEmpty": "هیچ تراکنشی یافت نشد",
+    "@homeTransactionsEmpty": {
+        "description": "Message when no transactions are found."
+    },
+    "homeTransactionsMultipleCategories": "{num} دسته\n",
+    "@homeTransactionsMultipleCategories": {
+        "description": "$num categories for the transaction.",
+        "placeholders": {
+            "num": {
+                "type": "int",
+                "example": "2"
+            }
+        }
+    },
+    "liabilityDirectionCredit": "این بدهی متعلق به من است",
+    "@liabilityDirectionCredit": {
+        "description": "Firefly Translation String: liability_direction_credit"
+    },
+    "liabilityDirectionDebit": "این بدهی را بدهکارم\n",
+    "@liabilityDirectionDebit": {
+        "description": "Firefly Translation String: liability_direction_debit"
+    },
+    "liabilityTypeDebt": "بدهی",
+    "@liabilityTypeDebt": {
+        "description": "Firefly Translation String: account_type_debt"
+    },
+    "liabilityTypeLoan": "وام",
+    "@liabilityTypeLoan": {
+        "description": "Firefly Translation String: account_type_loan"
+    },
+    "liabilityTypeMortgage": "رهن",
+    "@liabilityTypeMortgage": {
+        "description": "Firefly Translation String: account_type_mortgage"
+    },
+    "loginAbout": "برای استفاده مؤثر از Waterfly III به سرور خود با نمونه Firefly III یا افزونه Firefly III برای Home Assistant نیاز دارید.\n\nلطفاً URL کامل و همچنین یک نشانه دسترسی شخصی (تنظیمات -> نمایه -> OAuth -> رمز دسترسی شخصی) را در زیر وارد کنید.\n",
+    "@loginAbout": {
+        "description": "Login screen welcome description"
+    },
+    "loginFormLabelAPIKey": "کلید API معتبر\n",
+    "@loginFormLabelAPIKey": {
+        "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHost": "URL میزبان\n",
+    "@loginFormLabelHost": {
+        "description": "Login Form: Label for Host field"
+    },
+    "loginWelcome": "به Waterfly III خوش آمدید\n",
+    "@loginWelcome": {
+        "description": "Login screen welcome banner"
+    },
+    "logoutConfirmation": "آیا برای خارج شدن مطمئن هستید؟\n",
+    "@logoutConfirmation": {
+        "description": "Get user confirmation if he really wants to log out"
+    },
+    "navigationAccounts": "حساب‌ها",
+    "@navigationAccounts": {
+        "description": "Navigation Label: Accounts Page"
+    },
+    "navigationBills": "صورت حساب",
+    "@navigationBills": {
+        "description": "Navigation Label: Bills"
+    },
+    "navigationCategories": "دسته\n",
+    "@navigationCategories": {
+        "description": "Navigation Label: Categories"
+    },
+    "navigationMain": "داشبورد اصلی\n",
+    "@navigationMain": {
+        "description": "Navigation Label: Main Dashboard"
+    },
+    "navigationSettings": "تنظیمات",
+    "@navigationSettings": {
+        "description": "Navigation Label: Settings"
+    },
+    "no": "نه",
+    "@no": {
+        "description": "The word no"
+    },
+    "numPercent": "{num}",
+    "@numPercent": {
+        "description": "Number formatted as percentage",
+        "placeholders": {
+            "num": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            }
+        }
+    },
+    "numPercentOf": "{perc} از {of}\n\n\n\n\n\n",
+    "@numPercentOf": {
+        "description": "Number formatted as percentage, with total amount provided",
+        "placeholders": {
+            "perc": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            },
+            "of": {
+                "type": "String"
+            }
+        }
+    },
+    "settingsDialogDebugInfo": "می‌توانید گزارش‌های اشکال‌زدایی را در اینجا فعال و ارسال کنید. اینها تأثیر بدی بر عملکرد دارند، بنابراین لطفاً آنها را فعال نکنید مگر اینکه به شما توصیه شده باشد. غیرفعال کردن گزارش، گزارش ذخیره شده را حذف می کند.\n",
+    "@settingsDialogDebugInfo": {
+        "description": "Information about debug logs and their impact."
+    },
+    "settingsDialogDebugMailCreate": "ایجاد ایمیل\n",
+    "@settingsDialogDebugMailCreate": {
+        "description": "Button to confirm mail creation after privacy disclaimer is shown."
+    },
+    "settingsDialogDebugMailDisclaimer": "\nهشدار: یک پیش‌نویس ایمیل با پیوست فایل گزارش (به فرمت متنی) باز می‌شود. گزارش‌ها ممکن است اطلاعات حساسی را مانند نام میزبان نمونه Firefly شما (هرچند که سعی در ثبت اطلاعات محرمانه مانند کلید API نداریم) شامل شوند. لطفاً با دقت گزارش را مطالعه کرده و هرگونه اطلاعاتی که نمی‌خواهید به اشتراک بگذارید و/یا با موضوع گزارش مرتبط نیست را سانسور کنید.\n\nلطفاً قبل از ارسال هرگونه گزارش، توافق قبلی را از طریق ایمیل/گیت‌هاب برای انجام این کار داشته باشید. هرگونه گزارشی که بدون در نظر گرفتن متن مناسبی برای حریم خصوصی ارسال شود، توسط من به دلایل حفظ حریم خصوصی حذف خواهد شد.هرگز گزارش را بدون سانسور مطلق به گیت‌هاب یا جای دیگری آپلود نکنید.\n\n\n\n\n",
+    "@settingsDialogDebugMailDisclaimer": {
+        "description": "Privacy disclaimer shown before sending logs"
+    },
+    "settingsDialogDebugSendButton": "ارسال گزارش از طریق ایمیل\n",
+    "@settingsDialogDebugSendButton": {
+        "description": "Button to send logs via E-Mail"
+    },
+    "settingsDialogDebugTitle": "گزارش اشکالات",
+    "@settingsDialogDebugTitle": {
+        "description": "Dialog title: Debug Logs"
+    },
+    "settingsDialogLanguageTitle": "انتخاب زبان",
+    "@settingsDialogLanguageTitle": {
+        "description": "Dialog title: Select Language"
+    },
+    "settingsDialogThemeTitle": "انتخاب تم",
+    "@settingsDialogThemeTitle": {
+        "description": "Dialog title: Select theme"
+    },
+    "settingsLanguage": "زبان",
+    "@settingsLanguage": {
+        "description": "Currently selected language"
+    },
+    "settingsLockscreen": "صفحه قفل",
+    "@settingsLockscreen": {
+        "description": "Setting if a lockscreen is shown (authentication is required on startup)"
+    },
+    "settingsLockscreenHelp": "نیاز به احراز هویت در راه اندازی برنامه\n",
+    "@settingsLockscreenHelp": {
+        "description": "Description for lockscreen setting"
+    },
+    "settingsLockscreenInitial": "لطفاً برای فعال کردن صفحه قفل، احراز هویت کنید.\n",
+    "@settingsLockscreenInitial": {
+        "description": "Prompt to authenticate once to set up the lockscreen"
+    },
+    "settingsNLAppAccount": "حساب پیش فرض",
+    "@settingsNLAppAccount": {
+        "description": "Default account which will be used for the transaction."
+    },
+    "settingsNLAppAccountDynamic": "<Dynamic>",
+    "@settingsNLAppAccountDynamic": {
+        "description": "Account will be selected dynamically by the content of the notification."
+    },
+    "settingsNLAppAdd": "افزودن برنامه\n",
+    "@settingsNLAppAdd": {
+        "description": "Button title to add a new app."
+    },
+    "settingsNLAppAddHelp": "برای افزودن یک برنامه برای گوش دادن کلیک کنید. فقط برنامه های واجد شرایط در لیست نمایش داده می شوند.\n",
+    "@settingsNLAppAddHelp": {
+        "description": "Help text below adding the new app button."
+    },
+    "settingsNLAppAddInfo": "برخی از تراکنش‌ها را در جایی که اعلان‌های تلفن دریافت می‌کنید انجام دهید تا برنامه‌ها را به این فهرست اضافه کنید. اگر برنامه همچنان نمایش داده نشد، لطفاً آن را به app@vogt.pw گزارش دهید.\n",
+    "@settingsNLAppAddInfo": {
+        "description": "Help text when no more app is available to add."
+    },
+    "settingsNLDescription": "این سرویس به شما امکان می‌دهد جزئیات تراکنش را از اعلان‌های فشار دریافتی دریافت کنید. علاوه بر این، می‌توانید یک حساب پیش فرض را انتخاب کنید که تراکنش باید به آن اختصاص یابد - اگر مقداری تنظیم نشده باشد، سعی می‌کند یک حساب از اعلان استخراج کند.\n",
+    "@settingsNLDescription": {
+        "description": "Description text for the notification listener service."
+    },
+    "settingsNLPermissionGrant": "برای اعطای مجوز ضربه بزنید.\n",
+    "@settingsNLPermissionGrant": {
+        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
+    },
+    "settingsNLPermissionNotGranted": "مجوز داده نشد",
+    "@settingsNLPermissionNotGranted": {
+        "description": "A requested permission was not granted."
+    },
+    "settingsNLPermissionRemove": "مجوز حذف شود؟\n",
+    "@settingsNLPermissionRemove": {
+        "description": "Dialog title asking if permission should be removed."
+    },
+    "settingsNLPermissionRemoveHelp": "برای غیرفعال کردن این سرویس، روی برنامه کلیک کنید و مجوزها را در صفحه بعدی حذف کنید.\n",
+    "@settingsNLPermissionRemoveHelp": {
+        "description": "Dialog text giving hint how to remove the permission."
+    },
+    "settingsNLPrefillTXTitle": "عنوان تراکنش را با عنوان اعلان از قبل پر کنید\n",
+    "@settingsNLPrefillTXTitle": {
+        "description": "First line for setting to use pre-fill transaction title with notification title."
+    },
+    "settingsNLServiceChecking": "در حال بررسی وضعیت...",
+    "@settingsNLServiceChecking": {
+        "description": "Checking the status of the background service"
+    },
+    "settingsNLServiceCheckingError": "خطا در بررسی وضعیت: {error}\n",
+    "@settingsNLServiceCheckingError": {
+        "description": "An error occurred while checking the service status",
+        "placeholders": {
+            "error": {
+                "type": "String",
+                "description": "Error details",
+                "example": "Timeout"
+            }
+        }
+    },
+    "settingsNLServiceRunning": "سرویس در حال اجرا است.\n",
+    "@settingsNLServiceRunning": {
+        "description": "A background service is running normally."
+    },
+    "settingsNLServiceStatus": "وضعیت سرویس\n",
+    "@settingsNLServiceStatus": {
+        "description": "Status of a background service."
+    },
+    "settingsNLServiceStopped": "سرویس متوقف شده است.\n",
+    "@settingsNLServiceStopped": {
+        "description": "A background service is stopped."
+    },
+    "settingsNotificationListener": "سرویس شنونده اعلان\n",
+    "@settingsNotificationListener": {
+        "description": "Setting for the notification listener service."
+    },
+    "settingsTheme": "تم برنامه\n",
+    "@settingsTheme": {
+        "description": "App theme (dark or light)"
+    },
+    "settingsThemeDynamicColors": "رنگ‌های پویا",
+    "@settingsThemeDynamicColors": {
+        "description": "Material You Dynamic Colors feature"
+    },
+    "settingsThemeValue": "{theme, select, dark{حالت تاریک} light{حالت روشن} other{پیش‌فرض سیستم}}",
+    "@settingsThemeValue": {
+        "description": "Currently selected theme (either dark, light or system)",
+        "placeholders": {
+            "theme": {
+                "type": "String",
+                "example": "ThemeMode.dark"
+            }
+        }
+    },
+    "settingsUseServerTimezone": "از منطقه زمانی سرور استفاده کنید\n",
+    "@settingsUseServerTimezone": {
+        "description": "Setting label to use server timezone."
+    },
+    "settingsUseServerTimezoneHelp": "نمایش همه زمان‌ها در منطقه زمانی سرور. این رفتار رابط وب را تقلید می کند.\n",
+    "@settingsUseServerTimezoneHelp": {
+        "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
+    },
+    "settingsVersion": "نسخه نرم افزاز",
+    "@settingsVersion": {
+        "description": "Current App Version"
+    },
+    "settingsVersionChecking": "چک کردن…",
+    "@settingsVersionChecking": {
+        "description": "Shown while checking for app version"
+    },
+    "transactionAttachments": "پیوست ها",
+    "@transactionAttachments": {
+        "description": "Button Label: Attachments"
+    },
+    "transactionDeleteConfirm": "آیا مطمئن هستید که می خواهید این تراکنش را حذف کنید؟\n",
+    "@transactionDeleteConfirm": {
+        "description": "Confirmation text to delete transaction"
+    },
+    "transactionDialogAttachmentsDelete": "حذف پیوست\n",
+    "@transactionDialogAttachmentsDelete": {
+        "description": "Button Label: Delete Attachment"
+    },
+    "transactionDialogAttachmentsDeleteConfirm": "آیا مطمئن هستید که می خواهید این پیوست را حذف کنید؟\n",
+    "@transactionDialogAttachmentsDeleteConfirm": {
+        "description": "Confirmation text to delete attachment"
+    },
+    "transactionDialogAttachmentsErrorDownload": "فایل دانلود نشد\n",
+    "@transactionDialogAttachmentsErrorDownload": {
+        "description": "Snackbar Text: File download failed."
+    },
+    "transactionDialogAttachmentsErrorOpen": "فایل باز نشد: {error}\n",
+    "@transactionDialogAttachmentsErrorOpen": {
+        "description": "Snackbar Text: File could not be opened, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsErrorUpload": "فایل آپلود نشد: {error}\n",
+    "@transactionDialogAttachmentsErrorUpload": {
+        "description": "Snackbar Text: File could not be uploaded, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsTitle": "پیوست ها",
+    "@transactionDialogAttachmentsTitle": {
+        "description": "Dialog Title: Attachments Dialog"
+    },
+    "transactionDialogBillNoBill": "بدون صورتحساب\n",
+    "@transactionDialogBillNoBill": {
+        "description": "Button Label: no bill to be used"
+    },
+    "transactionDialogBillTitle": "پیوند به بیل\n",
+    "@transactionDialogBillTitle": {
+        "description": "Dialog Title: Link Bill to transaction"
+    },
+    "transactionDialogCurrencyTitle": "واحد پول را انتخاب کنید\n",
+    "@transactionDialogCurrencyTitle": {
+        "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogTagsAdd": "افزودن برچسب",
+    "@transactionDialogTagsAdd": {
+        "description": "Button Label: Add Tag"
+    },
+    "transactionDialogTagsHint": "جستجو/افزودن برچسب\n",
+    "@transactionDialogTagsHint": {
+        "description": "Hint Text for search tag field"
+    },
+    "transactionDialogTagsTitle": "برچسب ها را انتخاب کنید",
+    "@transactionDialogTagsTitle": {
+        "description": "Dialog Title: Select Tags"
+    },
+    "transactionDuplicate": "کپی کردن",
+    "@transactionDuplicate": {
+        "description": "Menu Label: Duplicate item"
+    },
+    "transactionErrorInvalidAccount": "حساب نامعتبر",
+    "@transactionErrorInvalidAccount": {
+        "description": "Transaction Save Error: Invalid account"
+    },
+    "transactionErrorInvalidBudget": "بودجه نامعتبر\n",
+    "@transactionErrorInvalidBudget": {
+        "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorTitle": "لطفا عنوان بفرمایید\n",
+    "@transactionErrorTitle": {
+        "description": "Transaction Save Error: No title provided"
+    },
+    "transactionFormLabelAccountDestination": "حساب مقصد\n",
+    "@transactionFormLabelAccountDestination": {
+        "description": "Transaction Form: Label for destination account for transfer transaction"
+    },
+    "transactionFormLabelAccountForeign": "حساب خارجی\n",
+    "@transactionFormLabelAccountForeign": {
+        "description": "Transaction Form: Label for foreign (other) account"
+    },
+    "transactionFormLabelAccountOwn": "حساب شخصی\n",
+    "@transactionFormLabelAccountOwn": {
+        "description": "Transaction Form: Label for own account"
+    },
+    "transactionFormLabelAccountSource": "حساب منبع\n",
+    "@transactionFormLabelAccountSource": {
+        "description": "Transaction Form: Label for source account for transfer transaction"
+    },
+    "transactionFormLabelNotes": "یادداشت",
+    "@transactionFormLabelNotes": {
+        "description": "Transaction Form: Label for notes field"
+    },
+    "transactionFormLabelTags": "برچسب ها",
+    "@transactionFormLabelTags": {
+        "description": "Transaction Form: Label for tags field"
+    },
+    "transactionFormLabelTitle": "عنوان معامله\n",
+    "@transactionFormLabelTitle": {
+        "description": "Transaction Form: Label for title field"
+    },
+    "transactionSplitAdd": "اضافه کردن تراکنش تقسیم\n",
+    "@transactionSplitAdd": {
+        "description": "Button Label: Add a split"
+    },
+    "transactionSplitChangeCurrency": "ارز تقسیم شده را تغییر دهید\n",
+    "@transactionSplitChangeCurrency": {
+        "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeTarget": "تغییر حساب هدف تقسیم شده\n",
+    "@transactionSplitChangeTarget": {
+        "description": "Hint Text: Change target account for single split"
+    },
+    "transactionSplitDelete": "حذف تقسیم\n",
+    "@transactionSplitDelete": {
+        "description": "Hint Text: Delete single split"
+    },
+    "transactionTitleAdd": "افزودن تراکنش",
+    "@transactionTitleAdd": {
+        "description": "Title: Add a new transaction"
+    },
+    "transactionTitleDelete": "حذف تراکنش\n",
+    "@transactionTitleDelete": {
+        "description": "Title: Delete existing transaction"
+    },
+    "transactionTitleEdit": "ویرایش تراکنش\n",
+    "@transactionTitleEdit": {
+        "description": "Title: Edit existing transaction"
+    },
+    "transactionTypeDeposit": "سپرده",
+    "@transactionTypeDeposit": {
+        "description": "Deposit transaction type"
+    },
+    "transactionTypeTransfer": "انتقال",
+    "@transactionTypeTransfer": {
+        "description": "Transfer transaction type"
+    },
+    "transactionTypeWithdrawal": "درخواست برداشت",
+    "@transactionTypeWithdrawal": {
+        "description": "Withdrawal transaction type"
     }
-  },
-  "settingsDialogDebugInfo": "می‌توانید گزارش‌های اشکال‌زدایی را در اینجا فعال و ارسال کنید. اینها تأثیر بدی بر عملکرد دارند، بنابراین لطفاً آنها را فعال نکنید مگر اینکه به شما توصیه شده باشد. غیرفعال کردن گزارش، گزارش ذخیره شده را حذف می کند.\n",
-  "@settingsDialogDebugInfo": {
-    "description": "Information about debug logs and their impact."
-  },
-  "settingsDialogDebugMailCreate": "ایجاد ایمیل\n",
-  "@settingsDialogDebugMailCreate": {
-    "description": "Button to confirm mail creation after privacy disclaimer is shown."
-  },
-  "settingsDialogDebugMailDisclaimer": "\nهشدار: یک پیش‌نویس ایمیل با پیوست فایل گزارش (به فرمت متنی) باز می‌شود. گزارش‌ها ممکن است اطلاعات حساسی را مانند نام میزبان نمونه Firefly شما (هرچند که سعی در ثبت اطلاعات محرمانه مانند کلید API نداریم) شامل شوند. لطفاً با دقت گزارش را مطالعه کرده و هرگونه اطلاعاتی که نمی‌خواهید به اشتراک بگذارید و/یا با موضوع گزارش مرتبط نیست را سانسور کنید.\n\nلطفاً قبل از ارسال هرگونه گزارش، توافق قبلی را از طریق ایمیل/گیت‌هاب برای انجام این کار داشته باشید. هرگونه گزارشی که بدون در نظر گرفتن متن مناسبی برای حریم خصوصی ارسال شود، توسط من به دلایل حفظ حریم خصوصی حذف خواهد شد.هرگز گزارش را بدون سانسور مطلق به گیت‌هاب یا جای دیگری آپلود نکنید.\n\n\n\n\n",
-  "@settingsDialogDebugMailDisclaimer": {
-    "description": "Privacy disclaimer shown before sending logs"
-  },
-  "settingsDialogDebugSendButton": "ارسال گزارش از طریق ایمیل\n",
-  "@settingsDialogDebugSendButton": {
-    "description": "Button to send logs via E-Mail"
-  },
-  "settingsDialogDebugTitle": "گزارش اشکالات",
-  "@settingsDialogDebugTitle": {
-    "description": "Dialog title: Debug Logs"
-  },
-  "settingsDialogLanguageTitle": "انتخاب زبان",
-  "@settingsDialogLanguageTitle": {
-    "description": "Dialog title: Select Language"
-  },
-  "settingsDialogThemeTitle": "انتخاب تم",
-  "@settingsDialogThemeTitle": {
-    "description": "Dialog title: Select theme"
-  },
-  "settingsLanguage": "زبان",
-  "@settingsLanguage": {
-    "description": "Currently selected language"
-  },
-  "settingsLockscreen": "صفحه قفل",
-  "@settingsLockscreen": {
-    "description": "Setting if a lockscreen is shown (authentication is required on startup)"
-  },
-  "settingsLockscreenHelp": "نیاز به احراز هویت در راه اندازی برنامه\n",
-  "@settingsLockscreenHelp": {
-    "description": "Description for lockscreen setting"
-  },
-  "settingsLockscreenInitial": "لطفاً برای فعال کردن صفحه قفل، احراز هویت کنید.\n",
-  "@settingsLockscreenInitial": {
-    "description": "Prompt to authenticate once to set up the lockscreen"
-  },
-  "settingsNLAppAccount": "حساب پیش فرض",
-  "@settingsNLAppAccount": {
-    "description": "Default account which will be used for the transaction."
-  },
-  "settingsNLAppAccountDynamic": "<Dynamic>",
-  "@settingsNLAppAccountDynamic": {
-    "description": "Account will be selected dynamically by the content of the notification."
-  },
-  "settingsNLAppAdd": "افزودن برنامه\n",
-  "@settingsNLAppAdd": {
-    "description": "Button title to add a new app."
-  },
-  "settingsNLAppAddHelp": "برای افزودن یک برنامه برای گوش دادن کلیک کنید. فقط برنامه های واجد شرایط در لیست نمایش داده می شوند.\n",
-  "@settingsNLAppAddHelp": {
-    "description": "Help text below adding the new app button."
-  },
-  "settingsNLAppAddInfo": "برخی از تراکنش‌ها را در جایی که اعلان‌های تلفن دریافت می‌کنید انجام دهید تا برنامه‌ها را به این فهرست اضافه کنید. اگر برنامه همچنان نمایش داده نشد، لطفاً آن را به app@vogt.pw گزارش دهید.\n",
-  "@settingsNLAppAddInfo": {
-    "description": "Help text when no more app is available to add."
-  },
-  "settingsNLDescription": "این سرویس به شما امکان می‌دهد جزئیات تراکنش را از اعلان‌های فشار دریافتی دریافت کنید. علاوه بر این، می‌توانید یک حساب پیش فرض را انتخاب کنید که تراکنش باید به آن اختصاص یابد - اگر مقداری تنظیم نشده باشد، سعی می‌کند یک حساب از اعلان استخراج کند.\n",
-  "@settingsNLDescription": {
-    "description": "Description text for the notification listener service."
-  },
-  "settingsNLPermissionGrant": "برای اعطای مجوز ضربه بزنید.\n",
-  "@settingsNLPermissionGrant": {
-    "description": "Indicates user should tap the text to grant certain permissions (notification access)."
-  },
-  "settingsNLPermissionNotGranted": "مجوز داده نشد",
-  "@settingsNLPermissionNotGranted": {
-    "description": "A requested permission was not granted."
-  },
-  "settingsNLPermissionRemove": "مجوز حذف شود؟\n",
-  "@settingsNLPermissionRemove": {
-    "description": "Dialog title asking if permission should be removed."
-  },
-  "settingsNLPermissionRemoveHelp": "برای غیرفعال کردن این سرویس، روی برنامه کلیک کنید و مجوزها را در صفحه بعدی حذف کنید.\n",
-  "@settingsNLPermissionRemoveHelp": {
-    "description": "Dialog text giving hint how to remove the permission."
-  },
-  "settingsNLPrefillTXTitle": "عنوان تراکنش را با عنوان اعلان از قبل پر کنید\n",
-  "@settingsNLPrefillTXTitle": {
-    "description": "First line for setting to use pre-fill transaction title with notification title."
-  },
-  "settingsNLServiceChecking": "در حال بررسی وضعیت...",
-  "@settingsNLServiceChecking": {
-    "description": "Checking the status of the background service"
-  },
-  "settingsNLServiceCheckingError": "خطا در بررسی وضعیت: {error}\n",
-  "@settingsNLServiceCheckingError": {
-    "description": "An error occurred while checking the service status",
-    "placeholders": {
-      "error": {
-        "type": "String",
-        "description": "Error details",
-        "example": "Timeout"
-      }
-    }
-  },
-  "settingsNLServiceRunning": "سرویس در حال اجرا است.\n",
-  "@settingsNLServiceRunning": {
-    "description": "A background service is running normally."
-  },
-  "settingsNLServiceStatus": "وضعیت سرویس\n",
-  "@settingsNLServiceStatus": {
-    "description": "Status of a background service."
-  },
-  "settingsNLServiceStopped": "سرویس متوقف شده است.\n",
-  "@settingsNLServiceStopped": {
-    "description": "A background service is stopped."
-  },
-  "settingsNotificationListener": "سرویس شنونده اعلان\n",
-  "@settingsNotificationListener": {
-    "description": "Setting for the notification listener service."
-  },
-  "settingsTheme": "تم برنامه\n",
-  "@settingsTheme": {
-    "description": "App theme (dark or light)"
-  },
-  "settingsThemeDynamicColors": "رنگ‌های پویا",
-  "@settingsThemeDynamicColors": {
-    "description": "Material You Dynamic Colors feature"
-  },
-  "settingsThemeValue": "{theme, select, dark{حالت تاریک} light{حالت روشن} other{پیش‌فرض سیستم}}",
-  "@settingsThemeValue": {
-    "description": "Currently selected theme (either dark, light or system)",
-    "placeholders": {
-      "theme": {
-        "type": "String",
-        "example": "ThemeMode.dark"
-      }
-    }
-  },
-  "settingsUseServerTimezone": "از منطقه زمانی سرور استفاده کنید\n",
-  "@settingsUseServerTimezone": {
-    "description": "Setting label to use server timezone."
-  },
-  "settingsUseServerTimezoneHelp": "نمایش همه زمان‌ها در منطقه زمانی سرور. این رفتار رابط وب را تقلید می کند.\n",
-  "@settingsUseServerTimezoneHelp": {
-    "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
-  },
-  "settingsVersion": "نسخه نرم افزاز",
-  "@settingsVersion": {
-    "description": "Current App Version"
-  },
-  "settingsVersionChecking": "چک کردن…",
-  "@settingsVersionChecking": {
-    "description": "Shown while checking for app version"
-  },
-  "splashCustomSSLCert": "گواهی SSL سفارشی\n",
-  "@splashCustomSSLCert": {
-    "description": "Button text & Dialog title for using a custom SSL certificate"
-  },
-  "splashFormLabelCustomSSLCertPEM": "فایل گواهی (PEM)\n",
-  "@splashFormLabelCustomSSLCertPEM": {
-    "description": "Label for certificate file text input in PEM format"
-  },
-  "transactionAttachments": "پیوست ها",
-  "@transactionAttachments": {
-    "description": "Button Label: Attachments"
-  },
-  "transactionDeleteConfirm": "آیا مطمئن هستید که می خواهید این تراکنش را حذف کنید؟\n",
-  "@transactionDeleteConfirm": {
-    "description": "Confirmation text to delete transaction"
-  },
-  "transactionDialogAttachmentsDelete": "حذف پیوست\n",
-  "@transactionDialogAttachmentsDelete": {
-    "description": "Button Label: Delete Attachment"
-  },
-  "transactionDialogAttachmentsDeleteConfirm": "آیا مطمئن هستید که می خواهید این پیوست را حذف کنید؟\n",
-  "@transactionDialogAttachmentsDeleteConfirm": {
-    "description": "Confirmation text to delete attachment"
-  },
-  "transactionDialogAttachmentsErrorDownload": "فایل دانلود نشد\n",
-  "@transactionDialogAttachmentsErrorDownload": {
-    "description": "Snackbar Text: File download failed."
-  },
-  "transactionDialogAttachmentsErrorOpen": "فایل باز نشد: {error}\n",
-  "@transactionDialogAttachmentsErrorOpen": {
-    "description": "Snackbar Text: File could not be opened, with reason.",
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "transactionDialogAttachmentsErrorUpload": "فایل آپلود نشد: {error}\n",
-  "@transactionDialogAttachmentsErrorUpload": {
-    "description": "Snackbar Text: File could not be uploaded, with reason.",
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "transactionDialogAttachmentsTitle": "پیوست ها",
-  "@transactionDialogAttachmentsTitle": {
-    "description": "Dialog Title: Attachments Dialog"
-  },
-  "transactionDialogBillNoBill": "بدون صورتحساب\n",
-  "@transactionDialogBillNoBill": {
-    "description": "Button Label: no bill to be used"
-  },
-  "transactionDialogBillTitle": "پیوند به بیل\n",
-  "@transactionDialogBillTitle": {
-    "description": "Dialog Title: Link Bill to transaction"
-  },
-  "transactionDialogCurrencyTitle": "واحد پول را انتخاب کنید\n",
-  "@transactionDialogCurrencyTitle": {
-    "description": "Dialog Title: Currency Selection"
-  },
-  "transactionDialogTagsAdd": "افزودن برچسب",
-  "@transactionDialogTagsAdd": {
-    "description": "Button Label: Add Tag"
-  },
-  "transactionDialogTagsHint": "جستجو/افزودن برچسب\n",
-  "@transactionDialogTagsHint": {
-    "description": "Hint Text for search tag field"
-  },
-  "transactionDialogTagsTitle": "برچسب ها را انتخاب کنید",
-  "@transactionDialogTagsTitle": {
-    "description": "Dialog Title: Select Tags"
-  },
-  "transactionDuplicate": "کپی کردن",
-  "@transactionDuplicate": {
-    "description": "Menu Label: Duplicate item"
-  },
-  "transactionErrorInvalidAccount": "حساب نامعتبر",
-  "@transactionErrorInvalidAccount": {
-    "description": "Transaction Save Error: Invalid account"
-  },
-  "transactionErrorInvalidBudget": "بودجه نامعتبر\n",
-  "@transactionErrorInvalidBudget": {
-    "description": "Transaction Save Error: Invalid budget"
-  },
-  "transactionErrorTitle": "لطفا عنوان بفرمایید\n",
-  "@transactionErrorTitle": {
-    "description": "Transaction Save Error: No title provided"
-  },
-  "transactionFormLabelAccountDestination": "حساب مقصد\n",
-  "@transactionFormLabelAccountDestination": {
-    "description": "Transaction Form: Label for destination account for transfer transaction"
-  },
-  "transactionFormLabelAccountForeign": "حساب خارجی\n",
-  "@transactionFormLabelAccountForeign": {
-    "description": "Transaction Form: Label for foreign (other) account"
-  },
-  "transactionFormLabelAccountOwn": "حساب شخصی\n",
-  "@transactionFormLabelAccountOwn": {
-    "description": "Transaction Form: Label for own account"
-  },
-  "transactionFormLabelAccountSource": "حساب منبع\n",
-  "@transactionFormLabelAccountSource": {
-    "description": "Transaction Form: Label for source account for transfer transaction"
-  },
-  "transactionFormLabelNotes": "یادداشت",
-  "@transactionFormLabelNotes": {
-    "description": "Transaction Form: Label for notes field"
-  },
-  "transactionFormLabelTags": "برچسب ها",
-  "@transactionFormLabelTags": {
-    "description": "Transaction Form: Label for tags field"
-  },
-  "transactionFormLabelTitle": "عنوان معامله\n",
-  "@transactionFormLabelTitle": {
-    "description": "Transaction Form: Label for title field"
-  },
-  "transactionSplitAdd": "اضافه کردن تراکنش تقسیم\n",
-  "@transactionSplitAdd": {
-    "description": "Button Label: Add a split"
-  },
-  "transactionSplitChangeCurrency": "ارز تقسیم شده را تغییر دهید\n",
-  "@transactionSplitChangeCurrency": {
-    "description": "Hint Text: Change currency for a single split"
-  },
-  "transactionSplitChangeTarget": "تغییر حساب هدف تقسیم شده\n",
-  "@transactionSplitChangeTarget": {
-    "description": "Hint Text: Change target account for single split"
-  },
-  "transactionSplitDelete": "حذف تقسیم\n",
-  "@transactionSplitDelete": {
-    "description": "Hint Text: Delete single split"
-  },
-  "transactionTitleAdd": "افزودن تراکنش",
-  "@transactionTitleAdd": {
-    "description": "Title: Add a new transaction"
-  },
-  "transactionTitleDelete": "حذف تراکنش\n",
-  "@transactionTitleDelete": {
-    "description": "Title: Delete existing transaction"
-  },
-  "transactionTitleEdit": "ویرایش تراکنش\n",
-  "@transactionTitleEdit": {
-    "description": "Title: Edit existing transaction"
-  },
-  "transactionTypeDeposit": "سپرده",
-  "@transactionTypeDeposit": {
-    "description": "Deposit transaction type"
-  },
-  "transactionTypeTransfer": "انتقال",
-  "@transactionTypeTransfer": {
-    "description": "Transfer transaction type"
-  },
-  "transactionTypeWithdrawal": "درخواست برداشت",
-  "@transactionTypeWithdrawal": {
-    "description": "Withdrawal transaction type"
-  },
-  "yes": "بله",
-  "@yes": {
-    "description": "The word yes"
-  }
 }

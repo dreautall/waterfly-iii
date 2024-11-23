@@ -4,7 +4,7 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'package:chopper/chopper.dart' show Response;
-import 'package:device_apps/device_apps.dart';
+import 'package:appcheck/appcheck.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';
 
@@ -173,18 +173,18 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
               onTap: () async {
                 final SettingsProvider settings =
                     context.read<SettingsProvider>();
-                Application? app = await showDialog<Application>(
+                AppInfo? app = await showDialog<AppInfo>(
                   context: context,
                   builder: (BuildContext context) => const AppDialog(),
                 );
-                if (app == null || app.packageName.isEmpty) {
+                if (app == null || app.appName == null) {
                   return;
                 }
 
                 await settings.notificationAddUsedApp(app.packageName);
                 await settings.notificationSetAppSettings(
                   app.packageName,
-                  NotificationAppSettings(app.appName),
+                  NotificationAppSettings(app.appName!),
                 );
                 setState(() {});
               },
@@ -339,11 +339,14 @@ class _AppCardState extends State<AppCard> {
                     width: MediaQuery.of(context).size.width - 128,
                     onSelected: (AccountRead? account) async {
                       FocusManager.instance.primaryFocus?.unfocus();
-                      if ((account?.id ?? "0") == "0") {
-                        widget.settings.defaultAccountId = null;
-                      } else {
-                        widget.settings.defaultAccountId = account!.id;
-                      }
+                      setState(() {
+                        if ((account?.id ?? "0") == "0") {
+                          widget.settings.defaultAccountId = null;
+                          widget.settings.autoAdd = false;
+                        } else {
+                          widget.settings.defaultAccountId = account!.id;
+                        }
+                      });
                       await context
                           .read<SettingsProvider>()
                           .notificationSetAppSettings(
@@ -355,9 +358,40 @@ class _AppCardState extends State<AppCard> {
                     title: Text(S.of(context).settingsNLPrefillTXTitle),
                     isThreeLine: false,
                     value: widget.settings.includeTitle,
+                    enabled: !widget.settings.autoAdd,
                     onChanged: (bool? value) async {
                       setState(() {
                         widget.settings.includeTitle = value ?? true;
+                      });
+                      await context
+                          .read<SettingsProvider>()
+                          .notificationSetAppSettings(
+                              widget.app, widget.settings);
+                    },
+                  ),
+                  CheckboxListTile(
+                    title: Text(S.of(context).settingsNLAutoAdd),
+                    isThreeLine: false,
+                    value: widget.settings.autoAdd,
+                    enabled: widget.settings.defaultAccountId != null,
+                    onChanged: (bool? value) async {
+                      setState(() {
+                        widget.settings.autoAdd = value ?? false;
+                        widget.settings.includeTitle = true;
+                      });
+                      await context
+                          .read<SettingsProvider>()
+                          .notificationSetAppSettings(
+                              widget.app, widget.settings);
+                    },
+                  ),
+                  CheckboxListTile(
+                    title: Text(S.of(context).settingsNLEmptyNote),
+                    isThreeLine: false,
+                    value: widget.settings.emptyNote,
+                    onChanged: (bool? value) async {
+                      setState(() {
+                        widget.settings.emptyNote = value ?? false;
                       });
                       await context
                           .read<SettingsProvider>()
@@ -453,18 +487,19 @@ class AppDialogEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     final Logger log = Logger("Notifications.AppDialog.Entry");
 
-    return FutureBuilder<Application?>(
-      future: DeviceApps.getApp(app, true),
-      builder: (BuildContext context, AsyncSnapshot<Application?> snapshot) {
+    return FutureBuilder<AppInfo?>(
+      future: AppCheck().checkAvailability(app),
+      builder: (BuildContext context, AsyncSnapshot<AppInfo?> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.data == null) {
+          if (snapshot.data == null || snapshot.data!.appName == null) {
             return const SizedBox.shrink();
           }
           late Widget leading;
           try {
-            final ApplicationWithIcon appIcon =
-                snapshot.data! as ApplicationWithIcon;
-            leading = Image.memory(appIcon.icon);
+            if (snapshot.data!.icon == null) {
+              throw Exception(); // will be caught below
+            }
+            leading = Image.memory(snapshot.data!.icon!);
           } catch (e) {
             leading = const Icon(Icons.api);
           }
@@ -472,7 +507,7 @@ class AppDialogEntry extends StatelessWidget {
             leading: CircleAvatar(
               child: leading,
             ),
-            title: Text(snapshot.data!.appName),
+            title: Text(snapshot.data!.appName!),
             subtitle: Text(app),
             onTap: () {
               Navigator.pop(context, snapshot.data);

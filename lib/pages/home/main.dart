@@ -26,6 +26,7 @@ import 'package:waterflyiii/pages/home/main_charts/lastdays.dart';
 import 'package:waterflyiii/pages/home/main_charts/netearnings.dart';
 import 'package:waterflyiii/pages/home/main_charts/networth.dart';
 import 'package:waterflyiii/pages/home/main_charts/summary.dart';
+import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
@@ -53,9 +54,20 @@ class _HomeMainState extends State<HomeMain>
   List<ChartDataSet> overviewChartData = <ChartDataSet>[];
   final List<InsightGroupEntry> catChartData = <InsightGroupEntry>[];
   final Map<String, Budget> budgetInfos = <String, Budget>{};
+  late TransStock _stock;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _stock = context.read<FireflyService>().transStock!;
+    _stock.addListener(_refreshStats);
+  }
 
   @override
   void dispose() {
+    _stock.removeListener(_refreshStats);
+
     super.dispose();
   }
 
@@ -1056,7 +1068,14 @@ class BudgetList extends StatelessWidget {
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             final List<Widget> widgets = <Widget>[];
+            final DateTime now = tzHandler
+                .sNow()
+                .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
+            final DateTime lastDayInMonth =
+                tzHandler.sTime(now.copyWith(month: now.month + 1, day: 0));
+            final double passedDays = now.day / lastDayInMonth.day;
             for (BudgetLimitRead budget in snapshot.data!) {
+              final List<Widget> stackWidgets = <Widget>[];
               final double spent =
                   (double.tryParse(budget.attributes.spent ?? "0") ?? 0).abs();
               final double available =
@@ -1087,40 +1106,38 @@ class BudgetList extends StatelessWidget {
               if (widgets.isNotEmpty) {
                 widgets.add(const SizedBox(height: 8));
               }
-              widgets.add(
-                RichText(
-                  text: TextSpan(
-                    children: <InlineSpan>[
-                      TextSpan(
-                        text: budgetInfo.name,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      TextSpan(
-                        text: budget.attributes.period?.isNotEmpty ?? false
-                            ? S.of(context).homeMainBudgetInterval(
-                                  tzHandler
-                                      .sTime(budget.attributes.start)
-                                      .toLocal(),
-                                  tzHandler
-                                      .sTime(budget.attributes.end)
-                                      .toLocal(),
-                                  budget.attributes.period!,
-                                )
-                            : S.of(context).homeMainBudgetIntervalSingle(
-                                  tzHandler
-                                      .sTime(budget.attributes.start)
-                                      .toLocal(),
-                                  tzHandler
-                                      .sTime(budget.attributes.end)
-                                      .toLocal(),
-                                ),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
-                  ),
+              widgets.add(RichText(
+                text: TextSpan(
+                  children: <InlineSpan>[
+                    TextSpan(
+                      text: budgetInfo.name,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    TextSpan(
+                      text: budget.attributes.period?.isNotEmpty ?? false
+                          ? S.of(context).homeMainBudgetInterval(
+                                tzHandler
+                                    .sTime(budget.attributes.start)
+                                    .toLocal(),
+                                tzHandler
+                                    .sTime(budget.attributes.end)
+                                    .toLocal(),
+                                budget.attributes.period!,
+                              )
+                          : S.of(context).homeMainBudgetIntervalSingle(
+                                tzHandler
+                                    .sTime(budget.attributes.start)
+                                    .toLocal(),
+                                tzHandler
+                                    .sTime(budget.attributes.end)
+                                    .toLocal(),
+                              ),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
                 ),
-              );
-              widgets.add(Row(
+              ));
+              stackWidgets.add(Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
@@ -1149,10 +1166,35 @@ class BudgetList extends StatelessWidget {
                   ),
                 ],
               ));
-              widgets.add(LinearProgressIndicator(
-                color: lineColor,
-                backgroundColor: bgColor,
-                value: value,
+              stackWidgets.add(Positioned.fill(
+                top: 20, // Height of Row() with text
+                bottom: 4,
+                child: LinearProgressIndicator(
+                  color: lineColor,
+                  backgroundColor: bgColor,
+                  value: value,
+                ),
+              ));
+              widgets.add(LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) =>
+                    Stack(
+                  children: <Widget>[
+                    // Row + ProgressIndicator + Bottom Padding
+                    const SizedBox(height: 20 + 4 + 4),
+                    ...stackWidgets,
+                    Positioned(
+                      left: constraints.biggest.width * passedDays,
+                      top: 16,
+                      bottom: 0,
+                      width: 3,
+                      child: Container(
+                        color: (spent / available > passedDays)
+                            ? Colors.redAccent
+                            : Colors.blueAccent,
+                      ),
+                    ),
+                  ],
+                ),
               ));
             }
             return Column(

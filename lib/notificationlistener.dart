@@ -70,17 +70,19 @@ void nlCallback() async {
   log.finest(() => "nlCallback()");
   NotificationServicePlugin.instance
       .executeNotificationListener((NotificationEvent? evt) async {
-    if (evt?.packageName?.startsWith("com.dreautall.waterflyiii") ?? false) {
+    if (evt == null || evt.packageName == null) {
       return;
     }
-    if (evt?.state == NotificationState.remove) {
+    if (evt.packageName?.startsWith("com.dreautall.waterflyiii") ?? false) {
+      return;
+    }
+    if (evt.state == NotificationState.remove) {
       return;
     }
 
-    final Iterable<RegExpMatch> matches =
-        rFindMoney.allMatches(evt?.text ?? "");
+    final Iterable<RegExpMatch> matches = rFindMoney.allMatches(evt.text ?? "");
     if (matches.isEmpty) {
-      log.finer(() => "nlCallback(${evt?.packageName}): no money found");
+      log.finer(() => "nlCallback(${evt.packageName}): no money found");
       return;
     }
 
@@ -93,40 +95,47 @@ void nlCallback() async {
       }
     }
     if (!validMatch) {
-      log.finer(() =>
-          "nlCallback(${evt?.packageName}): no money with currency found");
+      log.finer(
+          () => "nlCallback(${evt.packageName}): no money with currency found");
       return;
     }
 
-    SettingsProvider().notificationAddKnownApp(evt?.packageName ?? "");
+    SettingsProvider().notificationAddKnownApp(evt.packageName!);
 
     if (!(await SettingsProvider().notificationUsedApps(forceReload: true))
-        .contains(evt?.packageName ?? "")) {
-      log.finer(() => "nlCallback(${evt?.packageName}): app not used");
+        .contains(evt.packageName)) {
+      log.finer(() => "nlCallback(${evt.packageName}): app not used");
       return;
     }
 
-    FlutterLocalNotificationsPlugin().show(
-      DateTime.now().millisecondsSinceEpoch ~/ 1000,
-      "Create Transaction?",
-      "Click to create a transaction based on the notification ${evt?.title}",
-      const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'extract_transaction',
-          'Create Transaction from Notification',
-          channelDescription:
-              'Notification asking to create a transaction from another Notification.',
-          importance: Importance.low, // Android 8.0 and higher
-          priority: Priority.low, // Android 7.1 and lower
+    if ((await SettingsProvider().notificationGetAppSettings(evt.packageName!))
+        .autoAdd) {
+      // :TODO:
+      // Add notification (move currency extract logic to own file)
+      // Post confirmation notification with empty click action
+    } else {
+      FlutterLocalNotificationsPlugin().show(
+        DateTime.now().millisecondsSinceEpoch ~/ 1000,
+        "Create Transaction?",
+        "Click to create a transaction based on the notification ${evt.title}",
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'extract_transaction',
+            'Create Transaction from Notification',
+            channelDescription:
+                'Notification asking to create a transaction from another Notification.',
+            importance: Importance.low, // Android 8.0 and higher
+            priority: Priority.low, // Android 7.1 and lower
+          ),
         ),
-      ),
-      payload: jsonEncode(NotificationTransaction(
-        evt?.packageName ?? "",
-        evt?.title ?? "",
-        evt?.text ?? "",
-        DateTime.tryParse(evt?.postTime ?? "") ?? DateTime.now(),
-      )),
-    );
+        payload: jsonEncode(NotificationTransaction(
+          evt.packageName ?? "",
+          evt.title ?? "",
+          evt.text ?? "",
+          DateTime.tryParse(evt.postTime ?? "") ?? DateTime.now(),
+        )),
+      );
+    }
   });
 }
 

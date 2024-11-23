@@ -369,7 +369,7 @@ class _AppCardState extends State<AppCard> {
                     },
                   ),
                   CheckboxListTile(
-                    title: Text(S.of(context).settingsNLPrefillTXTitle),
+                    title: Text(S.of(context).settingsNLAutoAdd),
                     isThreeLine: false,
                     value: widget.settings.autoAdd,
                     enabled: widget.settings.defaultAccountId != null,
@@ -384,7 +384,7 @@ class _AppCardState extends State<AppCard> {
                     },
                   ),
                   CheckboxListTile(
-                    title: Text(S.of(context).settingsNLPrefillTXTitle),
+                    title: Text(S.of(context).settingsNLEmptyNote),
                     isThreeLine: false,
                     value: widget.settings.emptyNote,
                     onChanged: (bool? value) async {

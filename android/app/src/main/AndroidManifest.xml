@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.dreautall.waterflyiii">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application android:label="Waterfly III" android:name="${applicationName}" android:icon="@mipmap/ic_launcher" android:enableOnBackInvokedCallback="true" android:usesCleartextTraffic="true" android:networkSecurityConfig="@xml/network_security_config">
         <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:taskAffinity="" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
             <!-- Specifies an Android theme to apply to this Activity as soon as
@@ -27,8 +27,7 @@
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data android:name="flutterEmbedding" android:value="2" />
         <!-- Try Impeller - see https://docs.flutter.dev/perf/impeller#android -->
-        <!-- Disabled due to https://github.com/dreautall/waterfly-iii/issues/406 -->
-        <meta-data android:name="io.flutter.embedding.android.EnableImpeller" android:value="false" />
+        <meta-data android:name="io.flutter.embedding.android.EnableImpeller" android:value="true" />
     </application>
 
     <!-- Permissions -->

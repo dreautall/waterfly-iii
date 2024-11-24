@@ -760,8 +760,8 @@ class _TransactionPageState extends State<TransactionPage>
     // Withdrawal: splits have common source account --> show only target
     // Deposit: splits have common destination account --> show only source
     // Transfer: splits have common accounts for both --> show nothing
-    final bool _prevShowSource = _showSourceAccountSelection;
-    final bool _prevShowDest = _showDestinationAccountSelection;
+    final bool prevShowSource = _showSourceAccountSelection;
+    final bool prevShowDest = _showDestinationAccountSelection;
     _showSourceAccountSelection = _transactionType ==
             TransactionTypeProperty.deposit &&
         _sourceAccountTextControllers.every((TextEditingController e) =>
@@ -771,8 +771,8 @@ class _TransactionPageState extends State<TransactionPage>
         _destinationAccountTextControllers.every((TextEditingController e) =>
             e.text.isNotEmpty &&
             e.text != _destinationAccountTextController.text);
-    if (_prevShowSource != _showSourceAccountSelection ||
-        _prevShowDest != _showDestinationAccountSelection) {
+    if (prevShowSource != _showSourceAccountSelection ||
+        prevShowDest != _showDestinationAccountSelection) {
       update = true;
     }
 
@@ -895,9 +895,11 @@ class _TransactionPageState extends State<TransactionPage>
                               ? _titleTextControllers[i].text
                               : _titleTextController.text,
                           destinationName: destinationName,
+                          // :HAX: Since nulled fields are not submitted, we set
+                          // the value to 0 so the foreign currency is gone...
                           foreignAmount: _foreignCurrencies[i] != null
                               ? _foreignAmounts[i].toString()
-                              : null,
+                              : "0",
                           foreignCurrencyId: _foreignCurrencies[i]?.id,
                           notes: _noteTextControllers[i].text,
                           order: i,
@@ -967,9 +969,11 @@ class _TransactionPageState extends State<TransactionPage>
                               : "",
                           categoryName: _categoryTextControllers[i].text,
                           destinationName: destinationName,
+                          // :HAX: Since nulled fields are not submitted, we set
+                          // the value to 0 so the foreign currency is gone...
                           foreignAmount: _foreignCurrencies[i] != null
                               ? _foreignAmounts[i].toString()
-                              : null,
+                              : "0",
                           foreignCurrencyId: _foreignCurrencies[i]?.id,
                           notes: _noteTextControllers[i].text,
                           order: i,
@@ -1558,9 +1562,6 @@ class _TransactionPageState extends State<TransactionPage>
   }
 
   void checkTXType() {
-    // Don't change TX type when editing!
-    if (!_newTX) return;
-
     TransactionTypeProperty txType =
         accountsToTransaction(_sourceAccountType, _destinationAccountType);
     /* WATERFLY CUSTOM - NOT FIREFLY BEHAVIOR!
@@ -1588,6 +1589,25 @@ class _TransactionPageState extends State<TransactionPage>
       txType = TransactionTypeProperty.deposit;
     }
 
+    // Withdrawal: splits have common source account
+    // Deposit: splits have common destination account
+    // Transfer: splits have common accounts for both
+    if (txType == TransactionTypeProperty.withdrawal ||
+        txType == TransactionTypeProperty.transfer) {
+      for (TextEditingController e in _sourceAccountTextControllers) {
+        e.text = _sourceAccountTextController.text;
+      }
+    }
+    if (txType == TransactionTypeProperty.deposit ||
+        txType == TransactionTypeProperty.transfer) {
+      for (TextEditingController e in _destinationAccountTextControllers) {
+        e.text = _destinationAccountTextController.text;
+      }
+    }
+
+    // Don't change TX type when editing!
+    if (!_newTX) return;
+
     if (_transactionType != txType) {
       setState(() {
         if (txType != TransactionTypeProperty.swaggerGeneratedUnknown) {
@@ -1599,21 +1619,6 @@ class _TransactionPageState extends State<TransactionPage>
           });
         }
         _transactionType = txType;
-        // Withdrawal: splits have common source account
-        // Deposit: splits have common destination account
-        // Transfer: splits have common accounts for both
-        if (txType == TransactionTypeProperty.withdrawal ||
-            txType == TransactionTypeProperty.transfer) {
-          for (TextEditingController e in _sourceAccountTextControllers) {
-            e.text = _sourceAccountTextController.text;
-          }
-        }
-        if (txType == TransactionTypeProperty.deposit ||
-            txType == TransactionTypeProperty.transfer) {
-          for (TextEditingController e in _destinationAccountTextControllers) {
-            e.text = _destinationAccountTextController.text;
-          }
-        }
       });
     }
   }
@@ -1805,12 +1810,14 @@ class _TransactionPageState extends State<TransactionPage>
                   ),
                   // (Split) Foreign Currency
                   AnimatedHeight(
-                    child: (_split)
+                    child: (_split || _foreignCurrencies[i] != null)
                         ? Row(
                             children: <Widget>[
                               Expanded(
                                 child: NumberInput(
-                                  icon: Icon(_transactionType.icon),
+                                  icon: (_foreignCurrencies[i] != null)
+                                      ? Icon(Icons.currency_exchange)
+                                      : Icon(Icons.monetization_on),
                                   controller: (_foreignCurrencies[i] != null)
                                       ? _foreignAmountTextControllers[i]
                                       : _localAmountTextControllers[i],
@@ -1844,7 +1851,9 @@ class _TransactionPageState extends State<TransactionPage>
                         : const SizedBox.shrink(),
                   ),
                   AnimatedHeight(
-                    child: (_split) ? hDivider : const SizedBox.shrink(),
+                    child: (_split || _foreignCurrencies[i] != null)
+                        ? hDivider
+                        : const SizedBox.shrink(),
                   ),
                   // (Split) Local Currency (when foreign selected)
                   AnimatedHeight(
@@ -1955,6 +1964,7 @@ class _TransactionPageState extends State<TransactionPage>
                       // Foreign Currency Button
                       IconButton(
                         icon: const Icon(Icons.currency_exchange),
+                        isSelected: _foreignCurrencies[i] != null,
                         onPressed: !(_reconciled && _initiallyReconciled)
                             ? () async {
                                 CurrencyRead? newCurrency =
@@ -1975,6 +1985,10 @@ class _TransactionPageState extends State<TransactionPage>
                                   _foreignAmounts[i] = 0;
                                   _foreignAmountTextControllers[i].text = "";
                                 }
+
+                                log.fine(() =>
+                                    "adding foreign currency ${newCurrency?.id ?? "null"} for $i");
+
                                 setState(() {
                                   _foreignCurrencies[i] = newCurrency;
                                 });

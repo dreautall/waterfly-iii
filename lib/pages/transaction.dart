@@ -724,19 +724,21 @@ class _TransactionPageState extends State<TransactionPage>
     // Withdrawal: splits have common source account --> show only target
     // Deposit: splits have common destination account --> show only source
     // Transfer: splits have common accounts for both --> show nothing
-    _showSourceAccountSelection =
-        _transactionType != TransactionTypeProperty.withdrawal &&
-            _sourceAccountTextControllers.every((TextEditingController e) =>
-                e.text != _sourceAccountTextController.text);
+    _showSourceAccountSelection = _transactionType !=
+            TransactionTypeProperty.withdrawal &&
+        _sourceAccountTextControllers.every((TextEditingController e) =>
+            e.text.isNotEmpty && e.text != _sourceAccountTextController.text);
     _showDestinationAccountSelection = _transactionType !=
             TransactionTypeProperty.deposit &&
         _destinationAccountTextControllers.every((TextEditingController e) =>
+            e.text.isNotEmpty &&
             e.text != _destinationAccountTextController.text);
 
     if (_sourceAccountTextControllers.every((TextEditingController e) =>
         e.text == _sourceAccountTextControllers.first.text)) {
       if (_sourceAccountTextController.text !=
-          _sourceAccountTextControllers.first.text) {
+              _sourceAccountTextControllers.first.text &&
+          _sourceAccountTextControllers.first.text.isNotEmpty) {
         _sourceAccountTextController.text =
             _sourceAccountTextControllers.first.text;
         update = true;
@@ -752,7 +754,8 @@ class _TransactionPageState extends State<TransactionPage>
     if (_destinationAccountTextControllers.every((TextEditingController e) =>
         e.text == _destinationAccountTextControllers.first.text)) {
       if (_destinationAccountTextController.text !=
-          _destinationAccountTextControllers.first.text) {
+              _destinationAccountTextControllers.first.text &&
+          _destinationAccountTextControllers.first.text.isNotEmpty) {
         _destinationAccountTextController.text =
             _destinationAccountTextControllers.first.text;
         update = true;
@@ -1546,8 +1549,33 @@ class _TransactionPageState extends State<TransactionPage>
     // Don't change TX type when editing!
     if (!_newTX) return;
 
-    final TransactionTypeProperty txType =
+    TransactionTypeProperty txType =
         accountsToTransaction(_sourceAccountType, _destinationAccountType);
+    /* WATERFLY CUSTOM - NOT FIREFLY BEHAVIOR!
+     * To ease UX, two assumptions:
+     * 1. If only source is entered & it's an asset account, it'll be a
+     *    withdrawal
+     * 2. If only destination is entered & it's an asset account, it'll be a
+     *    deposit
+     * 
+     * As _ownAccountId will be set for both of these scenaries, the other one
+     * would potentially be created by FF3 when saving. The actual webinterface
+     * only does this when saving (but also throws an error when no ownAccount
+     * is explicitely selected from the dropdown! Just typing the name [just as
+     * in this app] will throw an error!).
+     */
+
+    if (txType == TransactionTypeProperty.swaggerGeneratedUnknown &&
+        _sourceAccountType == AccountTypeProperty.assetAccount &&
+        _destinationAccountType ==
+            AccountTypeProperty.swaggerGeneratedUnknown) {
+      txType = TransactionTypeProperty.withdrawal;
+    } else if (txType == TransactionTypeProperty.swaggerGeneratedUnknown &&
+        _sourceAccountType == AccountTypeProperty.swaggerGeneratedUnknown &&
+        _destinationAccountType == AccountTypeProperty.assetAccount) {
+      txType = TransactionTypeProperty.deposit;
+    }
+
     if (_transactionType != txType) {
       setState(() {
         if (txType != TransactionTypeProperty.swaggerGeneratedUnknown) {

@@ -156,27 +156,79 @@ class SettingsProvider with ChangeNotifier {
   late SettingsBitmask _boolSettings;
   SettingsBitmask get boolSettings => _boolSettings;
 
-  Future<void> loadSettings() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    log.config("reading prefs");
+  Future<void> migrateLegacy(SharedPreferencesAsync prefs) async {
+    log.config("triny to migrate old prefs");
+    SharedPreferences oldPrefs = await SharedPreferences.getInstance();
 
-    _boolSettings = SettingsBitmask(prefs.getInt(settingsBitmask) ?? 0);
-    if (!prefs.containsKey(settingsBitmask)) {
+    _boolSettings = SettingsBitmask(oldPrefs.getInt(settingsBitmask) ?? 0);
+    if (!oldPrefs.containsKey(settingsBitmask)) {
       // Fallback solution for migration
       log.config("no bitmask saved, trying legacy settings");
-      _boolSettings[BoolSettings.debug] = prefs.getBool(settingDebug) ?? false;
-      _boolSettings[BoolSettings.lock] = prefs.getBool(settingLock) ?? false;
+      _boolSettings[BoolSettings.debug] =
+          oldPrefs.getBool(settingDebug) ?? false;
+      _boolSettings[BoolSettings.lock] = oldPrefs.getBool(settingLock) ?? false;
       _boolSettings[BoolSettings.showFutureTXs] =
-          prefs.getBool(settingShowFutureTXs) ?? false;
+          oldPrefs.getBool(settingShowFutureTXs) ?? false;
       _boolSettings[BoolSettings.dynamicColors] =
-          prefs.getBool(settingDynamicColors) ?? false;
+          oldPrefs.getBool(settingDynamicColors) ?? false;
       _boolSettings[BoolSettings.useServerTime] =
-          prefs.getBool(settingUseServerTime) ?? true;
+          oldPrefs.getBool(settingUseServerTime) ?? true;
       _boolSettings[BoolSettings.hideTags] = false;
     }
+    await prefs.setInt(settingsBitmask, _boolSettings.value);
+
+    final String? theme = oldPrefs.getString(settingTheme);
+    if (theme != null) {
+      await prefs.setString(settingTheme, theme);
+    }
+
+    final String? locale = oldPrefs.getString(settingLocale);
+    if (locale != null) {
+      await prefs.setString(settingLocale, locale);
+    }
+
+    final List<String>? notificationApps =
+        oldPrefs.getStringList(settingNLUsedApps);
+    if (notificationApps != null) {
+      await prefs.setStringList(settingNLUsedApps, notificationApps);
+    }
+
+    final int? billsLayoutIndex = oldPrefs.getInt(settingBillsDefaultLayout);
+    if (billsLayoutIndex != null) {
+      await prefs.setInt(settingBillsDefaultLayout, billsLayoutIndex);
+    }
+
+    final int? billsSortIndex = oldPrefs.getInt(settingBillsDefaultSort);
+    if (billsSortIndex != null) {
+      await prefs.setInt(settingBillsDefaultSort, billsSortIndex);
+    }
+
+    final int? billsSortOrderIndex =
+        oldPrefs.getInt(settingBillsDefaultSortOrder);
+    if (billsSortOrderIndex != null) {
+      await prefs.setInt(settingBillsDefaultSortOrder, billsSortOrderIndex);
+    }
+
+    final List<String>? categoriesSumExcluded =
+        oldPrefs.getStringList(settingsCategoriesSumExcluded);
+    if (categoriesSumExcluded != null) {
+      await prefs.setStringList(
+          settingsCategoriesSumExcluded, categoriesSumExcluded);
+    }
+  }
+
+  Future<void> loadSettings() async {
+    SharedPreferencesAsync prefs = SharedPreferencesAsync();
+    log.config("reading prefs");
+
+    _boolSettings = SettingsBitmask(await prefs.getInt(settingsBitmask) ?? 0);
+    if (!await prefs.containsKey(settingsBitmask)) {
+      await migrateLegacy(prefs);
+    }
+    _boolSettings = SettingsBitmask(await prefs.getInt(settingsBitmask) ?? 0);
     log.config("read bool bitmask $_boolSettings");
 
-    final String theme = prefs.getString(settingTheme) ?? "unset";
+    final String theme = await prefs.getString(settingTheme) ?? "unset";
     log.config("read theme $theme");
     switch (theme) {
       case settingThemeDark:
@@ -191,7 +243,8 @@ class SettingsProvider with ChangeNotifier {
     }
 
     final String? countryCode = Intl.defaultLocale?.split("_").last;
-    final Locale locale = Locale(prefs.getString(settingLocale) ?? "unset");
+    final Locale locale =
+        Locale(await prefs.getString(settingLocale) ?? "unset");
     log.config("read locale $locale");
     if (S.supportedLocales.contains(locale)) {
       _locale = locale;
@@ -209,25 +262,26 @@ class SettingsProvider with ChangeNotifier {
       Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
     }
 
-    _notificationApps = prefs.getStringList(settingNLUsedApps) ?? <String>[];
+    _notificationApps =
+        await prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
-    int? billsLayoutIndex = prefs.getInt(settingBillsDefaultLayout);
+    int? billsLayoutIndex = await prefs.getInt(settingBillsDefaultLayout);
     _billsLayout = billsLayoutIndex == null
         ? BillsLayout.grouped
         : BillsLayout.values[billsLayoutIndex];
 
-    int? billsSortIndex = prefs.getInt(settingBillsDefaultSort);
+    int? billsSortIndex = await prefs.getInt(settingBillsDefaultSort);
     _billsSort = billsSortIndex == null
         ? BillsSort.name
         : BillsSort.values[billsSortIndex];
 
-    int? billsSortOrderIndex = prefs.getInt(settingBillsDefaultSortOrder);
+    int? billsSortOrderIndex = await prefs.getInt(settingBillsDefaultSortOrder);
     _billsSortOrder = billsSortOrderIndex == null
         ? SortingOrder.ascending
         : SortingOrder.values[billsSortOrderIndex];
 
     _categoriesSumExcluded =
-        prefs.getStringList(settingsCategoriesSumExcluded) ?? <String>[];
+        await prefs.getStringList(settingsCategoriesSumExcluded) ?? <String>[];
 
     _loaded = true;
     log.finest(() => "notify SettingsProvider->loadSettings()");
@@ -242,8 +296,8 @@ class SettingsProvider with ChangeNotifier {
     _boolSettings[setting] = value;
 
     () async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setInt(settingsBitmask, _boolSettings.value);
+      await SharedPreferencesAsync()
+          .setInt(settingsBitmask, _boolSettings.value);
 
       log.finest(() => "notify SettingsProvider->_setBool($setting)");
       notifyListeners();
@@ -281,17 +335,19 @@ class SettingsProvider with ChangeNotifier {
 
   Future<void> setTheme(ThemeMode theme) async {
     _theme = theme;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     switch (theme) {
       case ThemeMode.dark:
-        await prefs.setString(settingTheme, settingThemeDark);
+        await SharedPreferencesAsync()
+            .setString(settingTheme, settingThemeDark);
         break;
       case ThemeMode.light:
-        await prefs.setString(settingTheme, settingThemeLight);
+        await SharedPreferencesAsync()
+            .setString(settingTheme, settingThemeLight);
         break;
       case ThemeMode.system:
       default:
-        await prefs.setString(settingTheme, settingThemeSystem);
+        await SharedPreferencesAsync()
+            .setString(settingTheme, settingThemeSystem);
     }
 
     log.finest(() => "notify SettingsProvider->setTheme()");
@@ -303,23 +359,23 @@ class SettingsProvider with ChangeNotifier {
       return;
     }
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     _locale = Locale(locale.languageCode);
     final String? countryCode = Intl.defaultLocale?.split("_").last;
     Intl.defaultLocale = "${locale.languageCode}_$countryCode";
-    await prefs.setString(settingLocale, locale.languageCode);
+    await SharedPreferencesAsync()
+        .setString(settingLocale, locale.languageCode);
 
     log.finest(() => "notify SettingsProvider->setLocale()");
     notifyListeners();
   }
 
-  Future<bool> notificationAddKnownApp(String packageName) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  Future<void> notificationAddKnownApp(String packageName) async {
+    final SharedPreferencesAsync prefs = SharedPreferencesAsync();
     final List<String> apps =
-        prefs.getStringList(settingNLKnownApps) ?? <String>[];
+        await prefs.getStringList(settingNLKnownApps) ?? <String>[];
 
     if (packageName.isEmpty || apps.contains(packageName)) {
-      return false;
+      return;
     }
 
     apps.add(packageName);
@@ -327,9 +383,9 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<List<String>> notificationKnownApps({bool filterUsed = false}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     final List<String> apps =
-        prefs.getStringList(settingNLKnownApps) ?? <String>[];
+        await SharedPreferencesAsync().getStringList(settingNLKnownApps) ??
+            <String>[];
     if (filterUsed) {
       final List<String> knownApps = await notificationUsedApps();
       return apps
@@ -341,10 +397,9 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<bool> notificationAddUsedApp(String packageName) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.reload();
+    final SharedPreferencesAsync prefs = SharedPreferencesAsync();
     final List<String> apps =
-        prefs.getStringList(settingNLUsedApps) ?? <String>[];
+        await prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
     if (packageName.isEmpty || apps.contains(packageName)) {
       return false;
@@ -361,9 +416,9 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<bool> notificationRemoveUsedApp(String packageName) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final SharedPreferencesAsync prefs = SharedPreferencesAsync();
     final List<String> apps =
-        prefs.getStringList(settingNLUsedApps) ?? <String>[];
+        await prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
     if (packageName.isEmpty || !apps.contains(packageName)) {
       return false;
@@ -381,13 +436,10 @@ class SettingsProvider with ChangeNotifier {
     return true;
   }
 
-  Future<List<String>> notificationUsedApps({bool forceReload = false}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (forceReload) {
-      await prefs.reload();
-    }
+  Future<List<String>> notificationUsedApps() async {
     final List<String> apps =
-        prefs.getStringList(settingNLUsedApps) ?? <String>[];
+        await SharedPreferencesAsync().getStringList(settingNLUsedApps) ??
+            <String>[];
     if (!const ListEquality<String>().equals(apps, _notificationApps)) {
       _notificationApps = apps;
 
@@ -399,11 +451,10 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<NotificationAppSettings> notificationGetAppSettings(
-    String packageName,
-  ) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String json =
-        prefs.getString("$settingNLAppPrefix$packageName") ?? "";
+      String packageName) async {
+    final String json = await SharedPreferencesAsync()
+            .getString("$settingNLAppPrefix$packageName") ??
+        "";
     try {
       return NotificationAppSettings.fromJson(jsonDecode(json));
     } on FormatException catch (_) {
@@ -415,9 +466,8 @@ class SettingsProvider with ChangeNotifier {
     String packageName,
     NotificationAppSettings settings,
   ) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(
-        "$settingNLAppPrefix$packageName", jsonEncode(settings));
+    await SharedPreferencesAsync()
+        .setString("$settingNLAppPrefix$packageName", jsonEncode(settings));
   }
 
   Future<void> setBillsLayout(BillsLayout billsLayout) async {
@@ -425,9 +475,9 @@ class SettingsProvider with ChangeNotifier {
       return;
     }
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     _billsLayout = billsLayout;
-    await prefs.setInt(settingBillsDefaultLayout, billsLayout.index);
+    await SharedPreferencesAsync()
+        .setInt(settingBillsDefaultLayout, billsLayout.index);
 
     log.finest(() => "notify SettingsProvider->billsLayout()");
     notifyListeners();
@@ -438,9 +488,9 @@ class SettingsProvider with ChangeNotifier {
       return;
     }
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     _billsSort = billsSort;
-    await prefs.setInt(settingBillsDefaultSort, billsSort.index);
+    await SharedPreferencesAsync()
+        .setInt(settingBillsDefaultSort, billsSort.index);
 
     log.finest(() => "notify SettingsProvider->billsSort()");
     notifyListeners();
@@ -451,9 +501,9 @@ class SettingsProvider with ChangeNotifier {
       return;
     }
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     _billsSortOrder = sortOrder;
-    await prefs.setInt(settingBillsDefaultSortOrder, sortOrder.index);
+    await SharedPreferencesAsync()
+        .setInt(settingBillsDefaultSortOrder, sortOrder.index);
 
     log.finest(() => "notify SettingsProvider->billsSortOrder()");
     notifyListeners();
@@ -464,9 +514,8 @@ class SettingsProvider with ChangeNotifier {
       return;
     }
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     _categoriesSumExcluded.add(categoryId);
-    await prefs.setStringList(
+    await SharedPreferencesAsync().setStringList(
       settingsCategoriesSumExcluded,
       categoriesSumExcluded,
     );
@@ -480,9 +529,8 @@ class SettingsProvider with ChangeNotifier {
       return;
     }
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     _categoriesSumExcluded.remove(categoryId);
-    await prefs.setStringList(
+    await SharedPreferencesAsync().setStringList(
       settingsCategoriesSumExcluded,
       categoriesSumExcluded,
     );

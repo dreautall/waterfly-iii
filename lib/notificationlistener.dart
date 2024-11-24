@@ -108,8 +108,7 @@ void nlCallback() async {
 
     settings.notificationAddKnownApp(evt.packageName!);
 
-    if (!(await settings.notificationUsedApps(forceReload: true))
-        .contains(evt.packageName)) {
+    if (!(await settings.notificationUsedApps()).contains(evt.packageName)) {
       log.finer(() => "nlCallback(${evt.packageName}): app not used");
       return;
     }

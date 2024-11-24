@@ -721,18 +721,6 @@ class _TransactionPageState extends State<TransactionPage>
 
   void splitTransactionCheckAccounts() {
     bool update = false;
-    // Withdrawal: splits have common source account --> show only target
-    // Deposit: splits have common destination account --> show only source
-    // Transfer: splits have common accounts for both --> show nothing
-    _showSourceAccountSelection = _transactionType !=
-            TransactionTypeProperty.withdrawal &&
-        _sourceAccountTextControllers.every((TextEditingController e) =>
-            e.text.isNotEmpty && e.text != _sourceAccountTextController.text);
-    _showDestinationAccountSelection = _transactionType !=
-            TransactionTypeProperty.deposit &&
-        _destinationAccountTextControllers.every((TextEditingController e) =>
-            e.text.isNotEmpty &&
-            e.text != _destinationAccountTextController.text);
 
     if (_sourceAccountTextControllers.every((TextEditingController e) =>
         e.text == _sourceAccountTextControllers.first.text)) {
@@ -768,6 +756,26 @@ class _TransactionPageState extends State<TransactionPage>
         update = true;
       }
     }
+
+    // Withdrawal: splits have common source account --> show only target
+    // Deposit: splits have common destination account --> show only source
+    // Transfer: splits have common accounts for both --> show nothing
+    final bool _prevShowSource = _showSourceAccountSelection;
+    final bool _prevShowDest = _showDestinationAccountSelection;
+    _showSourceAccountSelection = _transactionType ==
+            TransactionTypeProperty.deposit &&
+        _sourceAccountTextControllers.every((TextEditingController e) =>
+            e.text.isNotEmpty && e.text != _sourceAccountTextController.text);
+    _showDestinationAccountSelection = _transactionType ==
+            TransactionTypeProperty.withdrawal &&
+        _destinationAccountTextControllers.every((TextEditingController e) =>
+            e.text.isNotEmpty &&
+            e.text != _destinationAccountTextController.text);
+    if (_prevShowSource != _showSourceAccountSelection ||
+        _prevShowDest != _showDestinationAccountSelection) {
+      update = true;
+    }
+
     if (update) {
       setState(() {});
     }
@@ -1287,7 +1295,6 @@ class _TransactionPageState extends State<TransactionPage>
                   labelText: "Source account", // :TODO: l10n
                   //labelIcon: Icons.account_balance,
                   textController: _sourceAccountTextController,
-                  disabled: _reconciled && _initiallyReconciled,
                   focusNode: _sourceAccountFocusNode,
                   /*errorText:
                   _transactionType == TransactionTypeProperty.withdrawal &&
@@ -1353,6 +1360,9 @@ class _TransactionPageState extends State<TransactionPage>
                       return const Iterable<AutocompleteAccount>.empty();
                     }
                   },
+                  disabled: (_reconciled && _initiallyReconciled) ||
+                      _sourceAccountTextController.text ==
+                          "<${S.of(context).generalMultiple}>",
                 ),
               ),
             ],
@@ -1436,7 +1446,9 @@ class _TransactionPageState extends State<TransactionPage>
                         return const Iterable<AutocompleteAccount>.empty();
                       }
                     },
-                    disabled: _reconciled && _initiallyReconciled,
+                    disabled: (_reconciled && _initiallyReconciled) ||
+                        _destinationAccountTextController.text ==
+                            "<${S.of(context).generalMultiple}>",
                   ),
                 ),
               ],
@@ -1989,7 +2001,9 @@ class _TransactionPageState extends State<TransactionPage>
                                     log.fine(() =>
                                         "adding separate source account for $i");
                                     _sourceAccountTextControllers[i].text = "";
-                                    _showSourceAccountSelection = true;
+                                    setState(() {
+                                      _showSourceAccountSelection = true;
+                                    });
                                   }
                                 : null,
                             tooltip: (_split)
@@ -2014,7 +2028,9 @@ class _TransactionPageState extends State<TransactionPage>
                                         "adding separate destination account for $i");
                                     _destinationAccountTextControllers[i].text =
                                         "";
-                                    _showDestinationAccountSelection = true;
+                                    setState(() {
+                                      _showDestinationAccountSelection = true;
+                                    });
                                   }
                                 : null,
                             tooltip: (_split)

@@ -66,7 +66,6 @@ class _TransactionPageState extends State<TransactionPage>
 
   // Common values
   late TransactionTypeProperty _transactionType;
-  final FocusNode _typeFocusNode = FocusNode();
   final TextEditingController _titleTextController = TextEditingController();
   final FocusNode _titleFocusNode = FocusNode();
   String? _ownAccountId;
@@ -129,6 +128,9 @@ class _TransactionPageState extends State<TransactionPage>
   bool _hasAttachments = false;
   List<AttachmentRead>? _attachments;
   bool _txTypeChipExtended = false;
+  bool _showSourceAccountSelection = false;
+  bool _showDestinationAccountSelection = false;
+
   late bool _newTX;
 
   late TimeZoneHandler _tzHandler;
@@ -486,7 +488,6 @@ class _TransactionPageState extends State<TransactionPage>
 
   @override
   void dispose() {
-    _typeFocusNode.dispose();
     _titleTextController.dispose();
     _titleFocusNode.dispose();
     _sourceAccountTextController.dispose();
@@ -615,13 +616,22 @@ class _TransactionPageState extends State<TransactionPage>
 
     // Update summary values
     updateTransactionAmounts();
-    splitTransactionCheckAccounts();
     if (_localAmounts.length == 1) {
       // This is similar to the web interface --> summary text gets deleted when split is removed.
       if (_titleTextControllers.first.text.isNotEmpty) {
         _titleTextController.text = _titleTextControllers.first.text;
       }
     }
+    // Check if Source/Destination account selection should still be shown
+    if (_sourceAccountTextControllers.every((TextEditingController e) =>
+        e.text == _sourceAccountTextControllers.first.text)) {
+      _showSourceAccountSelection = false;
+    }
+    if (_destinationAccountTextControllers.every((TextEditingController e) =>
+        e.text == _destinationAccountTextControllers.first.text)) {
+      _showDestinationAccountSelection = false;
+    }
+    splitTransactionCheckAccounts();
 
     // Redo animationcallbacks due to new "i"s
     for (int i = 0; i < _cardsAnimationController.length; i++) {
@@ -711,6 +721,18 @@ class _TransactionPageState extends State<TransactionPage>
 
   void splitTransactionCheckAccounts() {
     bool update = false;
+    // Withdrawal: splits have common source account --> show only target
+    // Deposit: splits have common destination account --> show only source
+    // Transfer: splits have common accounts for both --> show nothing
+    _showSourceAccountSelection =
+        _transactionType != TransactionTypeProperty.withdrawal &&
+            _sourceAccountTextControllers.every((TextEditingController e) =>
+                e.text != _sourceAccountTextController.text);
+    _showDestinationAccountSelection = _transactionType !=
+            TransactionTypeProperty.deposit &&
+        _destinationAccountTextControllers.every((TextEditingController e) =>
+            e.text != _destinationAccountTextController.text);
+
     if (_sourceAccountTextControllers.every((TextEditingController e) =>
         e.text == _sourceAccountTextControllers.first.text)) {
       if (_sourceAccountTextController.text !=
@@ -1464,6 +1486,8 @@ class _TransactionPageState extends State<TransactionPage>
   }
 
   void checkAccountCurrency(AutocompleteAccount option, bool isSource) {
+    // :TODO: ONLY ASSET ACCOUNTS HAVE A CURRENCY!
+
     // Update currency when:
     // 1. set account is source & assetAccount
     // 2. set account is destination & assetAccount & source account is NOT an
@@ -1559,18 +1583,6 @@ class _TransactionPageState extends State<TransactionPage>
 
     CancelableOperation<Response<AutocompleteAccountArray>>? fetchOp;
 
-    // Withdrawal: splits have common source account
-    // Deposit: splits have common destination account
-    // Transfer: splits have common accounts for both
-    final bool showSourceAccountSelection =
-        _transactionType != TransactionTypeProperty.withdrawal &&
-            _sourceAccountTextControllers.every((TextEditingController e) =>
-                e.text != _sourceAccountTextController.text);
-    final bool showDestinationAccountSelection = _transactionType !=
-            TransactionTypeProperty.deposit &&
-        _destinationAccountTextControllers.every((TextEditingController e) =>
-            e.text != _destinationAccountTextController.text);
-
     return Card(
       key: ValueKey<int>(i),
       child: Padding(
@@ -1580,6 +1592,7 @@ class _TransactionPageState extends State<TransactionPage>
             Expanded(
               child: Column(
                 children: <Widget>[
+                  // (Split) Transaction title
                   AnimatedHeight(
                     child: _split
                         ? Row(
@@ -1595,26 +1608,25 @@ class _TransactionPageState extends State<TransactionPage>
                   AnimatedHeight(
                     child: _split ? hDivider : const SizedBox.shrink(),
                   ),
+                  // (Split) Source Account
                   AnimatedHeight(
-                    child: showSourceAccountSelection
+                    child: _showSourceAccountSelection
                         ? Row(
                             children: <Widget>[
                               Expanded(
                                 child: AutoCompleteText<AutocompleteAccount>(
                                   labelText: "Source Account", // :TODO: l10n
-                                  labelIcon: Icons.account_balance,
+                                  labelIcon: Icons.arrow_back,
                                   textController:
                                       _sourceAccountTextControllers[i],
                                   focusNode: _sourceAccountFocusNodes[i],
-                                  onChanged: (String text) {
-                                    splitTransactionCheckAccounts();
-                                  },
-                                  onSelected: (AutocompleteAccount option) {
-                                    splitTransactionCheckAccounts();
-                                  },
                                   displayStringForOption:
                                       (AutocompleteAccount option) =>
                                           option.name,
+                                  onChanged: (_) =>
+                                      splitTransactionCheckAccounts(),
+                                  onSelected: (_) =>
+                                      splitTransactionCheckAccounts(),
                                   optionsBuilder: (TextEditingValue
                                       textEditingValue) async {
                                     try {
@@ -1659,28 +1671,27 @@ class _TransactionPageState extends State<TransactionPage>
                         : const SizedBox.shrink(),
                   ),
                   AnimatedHeight(
-                    child: showSourceAccountSelection
+                    child: _showSourceAccountSelection
                         ? hDivider
                         : const SizedBox.shrink(),
                   ),
+                  // (Split) Destination Account
                   AnimatedHeight(
-                    child: showDestinationAccountSelection
+                    child: _showDestinationAccountSelection
                         ? Row(
                             children: <Widget>[
                               Expanded(
                                 child: AutoCompleteText<AutocompleteAccount>(
                                   labelText:
                                       "Destination Account", // :TODO: l10n
-                                  labelIcon: Icons.account_balance,
+                                  labelIcon: Icons.arrow_forward,
                                   textController:
                                       _destinationAccountTextControllers[i],
                                   focusNode: _destinationAccountFocusNodes[i],
-                                  onChanged: (String text) {
-                                    splitTransactionCheckAccounts();
-                                  },
-                                  onSelected: (AutocompleteAccount option) {
-                                    splitTransactionCheckAccounts();
-                                  },
+                                  onChanged: (_) =>
+                                      splitTransactionCheckAccounts(),
+                                  onSelected: (_) =>
+                                      splitTransactionCheckAccounts(),
                                   displayStringForOption:
                                       (AutocompleteAccount option) =>
                                           option.name,
@@ -1726,15 +1737,17 @@ class _TransactionPageState extends State<TransactionPage>
                         : const SizedBox.shrink(),
                   ),
                   AnimatedHeight(
-                    child: showDestinationAccountSelection
+                    child: _showDestinationAccountSelection
                         ? hDivider
                         : const SizedBox.shrink(),
                   ),
+                  // Category (always)
                   TransactionCategory(
                     textController: _categoryTextControllers[i],
                     focusNode: _categoryFocusNodes[i],
                   ),
                   hDivider,
+                  // Budget (for withdrawals)
                   AnimatedHeight(
                     child:
                         (_transactionType == TransactionTypeProperty.withdrawal)
@@ -1750,6 +1763,7 @@ class _TransactionPageState extends State<TransactionPage>
                             ? hDivider
                             : const SizedBox.shrink(),
                   ),
+                  // (Split) Foreign Currency
                   AnimatedHeight(
                     child: (_split)
                         ? Row(
@@ -1792,6 +1806,7 @@ class _TransactionPageState extends State<TransactionPage>
                   AnimatedHeight(
                     child: (_split) ? hDivider : const SizedBox.shrink(),
                   ),
+                  // (Split) Local Currency (when foreign selected)
                   AnimatedHeight(
                     child: (_split && _foreignCurrencies[i] != null)
                         ? Row(
@@ -1825,10 +1840,12 @@ class _TransactionPageState extends State<TransactionPage>
                         ? hDivider
                         : const SizedBox.shrink(),
                   ),
+                  // Tags (always)
                   TransactionTags(
                     textController: _tagsTextControllers[i],
                     tagsController: _tags[i],
                   ),
+                  // Note (always)
                   hDivider,
                   TransactionNote(
                     textController: _noteTextControllers[i],
@@ -1846,6 +1863,7 @@ class _TransactionPageState extends State<TransactionPage>
                   alignment: Alignment.topCenter,
                   child: Column(
                     children: <Widget>[
+                      // Reconciled Button
                       // Reconcile is broken before API V2.0.6
                       // ref https://github.com/dreautall/waterfly-iii/issues/56
                       // ref https://github.com/firefly-iii/firefly-iii/issues/7845
@@ -1865,6 +1883,7 @@ class _TransactionPageState extends State<TransactionPage>
                         ),
                         hDivider,
                       ],
+                      // Bills Button
                       IconButton(
                         icon: const Icon(Icons.calendar_today),
                         isSelected: _bills[i] != null,
@@ -1893,10 +1912,10 @@ class _TransactionPageState extends State<TransactionPage>
                         tooltip: S.of(context).transactionDialogBillTitle,
                       ),
                       hDivider,
+                      // Foreign Currency Button
                       IconButton(
                         icon: const Icon(Icons.currency_exchange),
-                        onPressed: _split &&
-                                !(_reconciled && _initiallyReconciled)
+                        onPressed: !(_reconciled && _initiallyReconciled)
                             ? () async {
                                 CurrencyRead? newCurrency =
                                     await showDialog<CurrencyRead>(
@@ -1926,14 +1945,15 @@ class _TransactionPageState extends State<TransactionPage>
                             : null,
                       ),
                       hDivider,
+                      // (Split) Source Account Button (for deposits)
                       if (_split) ...<Widget>[
-                        if (!showSourceAccountSelection &&
+                        if (!_showSourceAccountSelection &&
                             _transactionType ==
                                 TransactionTypeProperty.deposit) ...<Widget>[
                           IconButton(
                             icon: const Icon(Icons.add_business),
                             onPressed: _split &&
-                                    !showSourceAccountSelection &&
+                                    !_showSourceAccountSelection &&
                                     _transactionType ==
                                         TransactionTypeProperty.deposit &&
                                     !(_reconciled && _initiallyReconciled)
@@ -1941,24 +1961,23 @@ class _TransactionPageState extends State<TransactionPage>
                                     log.fine(() =>
                                         "adding separate source account for $i");
                                     _sourceAccountTextControllers[i].text = "";
-                                    splitTransactionCheckAccounts();
+                                    _showSourceAccountSelection = true;
                                   }
                                 : null,
                             tooltip: (_split)
-                                ? S
-                                    .of(context)
-                                    .transactionSplitChangeTarget // :TODO:
+                                ? "Change Split Source Account" // :TODO:
                                 : null,
                           ),
                           hDivider,
                         ],
-                        if (!showDestinationAccountSelection &&
+                        // (Split) Destination Account Button (for withdrawals)
+                        if (!_showDestinationAccountSelection &&
                             _transactionType ==
                                 TransactionTypeProperty.withdrawal) ...<Widget>[
                           IconButton(
                             icon: const Icon(Icons.add_business),
                             onPressed: _split &&
-                                    !showDestinationAccountSelection &&
+                                    !_showDestinationAccountSelection &&
                                     _transactionType ==
                                         TransactionTypeProperty.withdrawal &&
                                     !(_reconciled && _initiallyReconciled)
@@ -1967,17 +1986,16 @@ class _TransactionPageState extends State<TransactionPage>
                                         "adding separate destination account for $i");
                                     _destinationAccountTextControllers[i].text =
                                         "";
-                                    splitTransactionCheckAccounts();
+                                    _showDestinationAccountSelection = true;
                                   }
                                 : null,
                             tooltip: (_split)
-                                ? S
-                                    .of(context)
-                                    .transactionSplitChangeTarget // :TODO:
+                                ? "Change Split Destination Account" // :TODO:
                                 : null,
                           ),
                           hDivider,
                         ],
+                        // Delete Split Button
                         IconButton(
                           icon: const Icon(Icons.delete),
                           onPressed:

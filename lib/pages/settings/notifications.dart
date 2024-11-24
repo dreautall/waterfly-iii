@@ -339,11 +339,14 @@ class _AppCardState extends State<AppCard> {
                     width: MediaQuery.of(context).size.width - 128,
                     onSelected: (AccountRead? account) async {
                       FocusManager.instance.primaryFocus?.unfocus();
-                      if ((account?.id ?? "0") == "0") {
-                        widget.settings.defaultAccountId = null;
-                      } else {
-                        widget.settings.defaultAccountId = account!.id;
-                      }
+                      setState(() {
+                        if ((account?.id ?? "0") == "0") {
+                          widget.settings.defaultAccountId = null;
+                          widget.settings.autoAdd = false;
+                        } else {
+                          widget.settings.defaultAccountId = account!.id;
+                        }
+                      });
                       await context
                           .read<SettingsProvider>()
                           .notificationSetAppSettings(
@@ -355,9 +358,40 @@ class _AppCardState extends State<AppCard> {
                     title: Text(S.of(context).settingsNLPrefillTXTitle),
                     isThreeLine: false,
                     value: widget.settings.includeTitle,
+                    enabled: !widget.settings.autoAdd,
                     onChanged: (bool? value) async {
                       setState(() {
                         widget.settings.includeTitle = value ?? true;
+                      });
+                      await context
+                          .read<SettingsProvider>()
+                          .notificationSetAppSettings(
+                              widget.app, widget.settings);
+                    },
+                  ),
+                  CheckboxListTile(
+                    title: Text(S.of(context).settingsNLAutoAdd),
+                    isThreeLine: false,
+                    value: widget.settings.autoAdd,
+                    enabled: widget.settings.defaultAccountId != null,
+                    onChanged: (bool? value) async {
+                      setState(() {
+                        widget.settings.autoAdd = value ?? false;
+                        widget.settings.includeTitle = true;
+                      });
+                      await context
+                          .read<SettingsProvider>()
+                          .notificationSetAppSettings(
+                              widget.app, widget.settings);
+                    },
+                  ),
+                  CheckboxListTile(
+                    title: Text(S.of(context).settingsNLEmptyNote),
+                    isThreeLine: false,
+                    value: widget.settings.emptyNote,
+                    onChanged: (bool? value) async {
+                      setState(() {
+                        widget.settings.emptyNote = value ?? false;
                       });
                       await context
                           .read<SettingsProvider>()

@@ -46,7 +46,7 @@ jobs:
 
       # Set build number
       - run: |
-          sed -i 's/^\(version: [0-9\.]\{1,\}\(-[a-z]\{1,\}\)\{0,1\}\)$/\1+${{ github.run_number }}/m' pubspec.yaml
+          sed -i 's/^\(version: [0-9\.]\{1,\}\(-[a-z]\{1,\}\)\{0,1\}\([0-9\.]\)\{0,\}\)$/\1+${{ github.run_number }}/m' pubspec.yaml
 
       # Build apk.
       - run: flutter build apk --obfuscate --split-debug-info=build/app/outputs/symbols/apk --release --split-per-abi --dart-define=cronetHttpNoPlay=true

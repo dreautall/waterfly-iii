@@ -842,9 +842,17 @@
     "@settingsNLAppAddInfo": {
         "description": "Help text when no more app is available to add."
     },
+    "settingsNLAutoAdd": "Ustvari transakcijo brez interakcije",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
     "settingsNLDescription": "Ta storitev vam omogoča pridobivanje podrobnosti transakcije iz dohodnih potisnih obvestil. Poleg tega lahko izberete privzeti račun, ki naj mu bo dodeljena transakcija - če vrednost ni nastavljena, poskuša iz obvestila izvleči račun.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "Polje za opombo naj bo prazno",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
     "settingsNLPermissionGrant": "Pritisnite za odobritev dovoljenja.",
     "@settingsNLPermissionGrant": {
@@ -864,7 +872,7 @@
     },
     "settingsNLPrefillTXTitle": "Vnaprej izpolnite naslov transakcije z naslovom obvestila",
     "@settingsNLPrefillTXTitle": {
-        "description": "First line for setting to use pre-fill transaction title with notification title."
+        "description": "Setting pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "Preverjanje stanja…",
     "@settingsNLServiceChecking": {

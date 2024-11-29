@@ -306,8 +306,8 @@ Future<(CurrencyRead?, double)> parseNotificationText(
       }
       // extract amount
       // Check if string has a decimal separator
-      final String amountStr =
-          (validMatch.namedGroup("amount") ?? "").replaceAll(" ", "");
+      final String amountStr = (validMatch.namedGroup("amount") ?? "")
+          .replaceAll(RegExp(r"\s+"), "");
       final int decimalSepPos = amountStr.length >= 3 &&
               (amountStr[amountStr.length - 3] == "." ||
                   amountStr[amountStr.length - 3] == ",")

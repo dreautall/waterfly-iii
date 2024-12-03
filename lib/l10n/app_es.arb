@@ -1,5 +1,5 @@
 {
-    "@@locale": "es",
+    "@@locale": "es-ES",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "Billetera de efectivo",
     "@accountRoleAssetCashWallet": {
@@ -51,6 +51,168 @@
             }
         }
     },
+    "billsAmountAndFrequency": "Factura coincide con transacciones entre {minValue} y {maxvalue}. Se repite {frequency, select, weekly{semanalmente} monthly{mensualmente} quarterly{trimestralmente} halfyear{semestralmente} yearly{anualmente} other{desconocido}}{skip, plural, =0{} other{, saltarse {skip}}}.",
+    "@billsAmountAndFrequency": {
+        "description": "Bill match for min and max amounts, and frequency",
+        "placeholders": {
+            "minValue": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "maxvalue": {
+                "type": "String",
+                "example": "$60.50"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsChangeLayoutTooltip": "Cambiar diseño",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "Cambiar orden de clasificación",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsErrorLoading": "Error al cargar facturas.",
+    "@billsErrorLoading": {
+        "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+    },
+    "billsExactAmountAndFrequency": "La factura coincide con las transacciones de {value}. Se repite {frequency, select, weekly{semanalmente} monthly{mensualmente} quarterly{trimestralmente} halfyear{semestralmente} yearly{anualmente} other{desconocido}}{skip, plural, =0{} other{, saltarse {skip}}}.",
+    "@billsExactAmountAndFrequency": {
+        "description": "Bill match for exact amount and frequency",
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsExpectedOn": "Esperado {date}",
+    "@billsExpectedOn": {
+        "description": "Describes what date the bill is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsFrequency": "{frequency, select, weekly{Semanal} monthly{Mensual} quarterly{Trimestral} halfyear{Semestral} yearly{Anual} other{Desconocido}}",
+    "@billsFrequency": {
+        "description": "Bill frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsFrequencySkip": "{frequency, select, weekly{Semanal} monthly{Mensual} quarterly{Trimestral} halfyear{Semestral} yearly{Anual} other{Desconocido}}{skip, plural, =0{} other{, saltarse {skip}}}",
+    "@billsFrequencySkip": {
+        "description": "Bill frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsInactive": "Inactiva",
+    "@billsInactive": {
+        "description": "Text: when the bill is inactive"
+    },
+    "billsIsActive": "La factura está activa",
+    "@billsIsActive": {
+        "description": "Text: the bill is active"
+    },
+    "billsLayoutGroupSubtitle": "Facturas mostradas en sus grupos asignados.",
+    "@billsLayoutGroupSubtitle": {
+        "description": "Subtitle text for group layout option"
+    },
+    "billsLayoutGroupTitle": "Grupo",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListSubtitle": "Facturas mostradas en una lista ordenada por ciertos criterios.",
+    "@billsLayoutListSubtitle": {
+        "description": "Subtitle text for list layout option"
+    },
+    "billsLayoutListTitle": "Lista",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "La lista está actualmente vacía.",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "Próxima coincidencia esperada",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for bill"
+    },
+    "billsNotActive": "La factura está inactiva",
+    "@billsNotActive": {
+        "description": "Text: the bill is inactive"
+    },
+    "billsNotExpected": "No se esperaba este período",
+    "@billsNotExpected": {
+        "description": "Describes that the bill is not expected this period"
+    },
+    "billsNoTransactions": "No se encontraron transacciones.",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the bill"
+    },
+    "billsPaidOn": "Pagado {date}",
+    "@billsPaidOn": {
+        "description": "Describes what date the bill was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "Alfabético",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "Por período de tiempo",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "Frecuencia",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "Nombre",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "Sin agrupar",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped bills"
+    },
     "categoryDeleteConfirm": "¿Estás seguro de que deseas eliminar esta categoría? Las transacciones no serán eliminadas, pero ya no tendrán categoría.",
     "@categoryDeleteConfirm": {
         "description": "Confirmation text to delete category"
@@ -59,9 +221,13 @@
     "@categoryErrorLoading": {
         "description": "Generic error message when categories can't be loaded (shouldn't occur)"
     },
-    "categoryTitleAdd": "Agregar categoría",
-    "@categoryTitleAdd": {
-        "description": "Title for Dialog: Add Category"
+    "categoryFormLabelIncludeInSum": "Incluir en suma mensual",
+    "@categoryFormLabelIncludeInSum": {
+        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+    },
+    "categoryFormLabelName": "Nombre de la categoría",
+    "@categoryFormLabelName": {
+        "description": "Category Add/Edit Form: Label for name field"
     },
     "categoryMonthNext": "Próximo Mes",
     "@categoryMonthNext": {
@@ -71,6 +237,14 @@
     "@categoryMonthPrev": {
         "description": "Button title to view overview for previous month"
     },
+    "categorySumExcluded": "excluida",
+    "@categorySumExcluded": {
+        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+    },
+    "categoryTitleAdd": "Agregar categoría",
+    "@categoryTitleAdd": {
+        "description": "Title for Dialog: Add Category"
+    },
     "categoryTitleDelete": "Eliminar categoría",
     "@categoryTitleDelete": {
         "description": "Title for Dialog: Delete Category"
@@ -79,13 +253,13 @@
     "@categoryTitleEdit": {
         "description": "Title for Dialog: Edit Category"
     },
-    "catOther": "Otros",
-    "@catOther": {
-        "description": "Category description for summary category 'Other'"
-    },
     "catNone": "(sin categoría)",
     "@catNone": {
         "description": "Placeholder when no category has been set."
+    },
+    "catOther": "Otros",
+    "@catOther": {
+        "description": "Category description for summary category 'Other'"
     },
     "errorAPIInvalidResponse": "Respuesta inválida de la API: {message}",
     "@errorAPIInvalidResponse": {
@@ -169,7 +343,7 @@
     "@generalAssets": {
         "description": "(Monetary) Assets"
     },
-    "generalBalance": "Balance",
+    "generalBalance": "Saldo",
     "@generalBalance": {
         "description": "(Account) Balance"
     },
@@ -259,7 +433,7 @@
     "@generalUnknown": {
         "description": "Something is unknown."
     },
-    "homeMainBillsInterval": " ({period, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-year} yearly{yearly} other{unknown}})",
+    "homeMainBillsInterval": " ({period, select, weekly{semanalmente} monthly{mensualmente} quarterly{trimestralmente} halfyear{semestralmente} yearly{anualmente} other{desconocido}})",
     "@homeMainBillsInterval": {
         "description": "bill interval type",
         "placeholders": {
@@ -507,6 +681,10 @@
             }
         }
     },
+    "homeTransactionsSettingsShowTags": "Mostrar etiquetas en la lista de transacciones",
+    "@homeTransactionsSettingsShowTags": {
+        "description": "Setting label to show tags in transactioon list."
+    },
     "liabilityDirectionCredit": "Se me debe esta deuda",
     "@liabilityDirectionCredit": {
         "description": "Firefly Translation String: liability_direction_credit"
@@ -551,6 +729,10 @@
     "@navigationAccounts": {
         "description": "Navigation Label: Accounts Page"
     },
+    "navigationBills": "Facturas",
+    "@navigationBills": {
+        "description": "Navigation Label: Bills"
+    },
     "navigationCategories": "Categorías",
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
@@ -562,6 +744,10 @@
     "navigationSettings": "Ajustes",
     "@navigationSettings": {
         "description": "Navigation Label: Settings"
+    },
+    "no": "No",
+    "@no": {
+        "description": "The word no"
     },
     "numPercent": "{num}",
     "@numPercent": {
@@ -656,9 +842,17 @@
     "@settingsNLAppAddInfo": {
         "description": "Help text when no more app is available to add."
     },
+    "settingsNLAutoAdd": "Crear transacción sin interacción",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
     "settingsNLDescription": "Este servicio permite obtener detalles de la transacción a partir de notificaciones entrantes. Además, puede seleccionar una cuenta por defecto a la que asignar la transacción. Si no se establece ningún valor, trata de extraer la información de la notificación.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "Mantener campo nota vacío",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
     "settingsNLPermissionGrant": "Toque para conceder permiso.",
     "@settingsNLPermissionGrant": {
@@ -678,7 +872,7 @@
     },
     "settingsNLPrefillTXTitle": "Rellenar el título de la transacción con el título de la notificación",
     "@settingsNLPrefillTXTitle": {
-        "description": "First line for setting to use pre-fill transaction title with notification title."
+        "description": "Setting pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "Comprobando estado…",
     "@settingsNLServiceChecking": {

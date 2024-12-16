@@ -38,7 +38,7 @@ dependencies:
     git:
       url: https://github.com/bugrevealingbme/AppCheck.git
       ref: ce371398f86412a8d9a2e0b75a9b51597ea1d79f
-  package_info_plus: ^8.0.2
+  package_info_plus: ^8.1.2
   logging: ^1.1.1
   flutter_email_sender: ^6.0.2
   local_auth: ^2.1.8

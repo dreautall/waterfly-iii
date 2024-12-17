@@ -363,7 +363,6 @@ class SettingsProvider with ChangeNotifier {
             .setString(settingTheme, settingThemeLight);
         break;
       case ThemeMode.system:
-      default:
         await SharedPreferencesAsync()
             .setString(settingTheme, settingThemeSystem);
     }

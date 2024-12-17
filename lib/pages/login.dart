@@ -133,7 +133,9 @@ class _LoginPageState extends State<LoginPage> {
                         (Set<String> newSelection) {
                       _hostFocusNode.requestFocus();
                       if (!UriScheme.valid(newSelection.first) ||
-                          _uriScheme == newSelection.first) return;
+                          _uriScheme == newSelection.first) {
+                        return;
+                      }
                       String currentUrl = _hostTextController.text;
                       String oldScheme, newScheme;
                       if (UriScheme.isHttp(newSelection.first)) {

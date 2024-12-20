@@ -842,9 +842,17 @@
     "@settingsNLAppAddInfo": {
         "description": "Help text when no more app is available to add."
     },
+    "settingsNLAutoAdd": "Créer une transaction sans interaction",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
     "settingsNLDescription": "Ce service vous permet de récupérer les détails des opérations à partir des notifications push entrantes. De plus, vous pouvez sélectionner un compte par défaut auquel l'opération doit être affectée - si aucune valeur n'est définie, il essaie d'extraire un compte de la notification.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "Conserver le champ de note vide",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
     "settingsNLPermissionGrant": "Appuyez pour accorder la permission.",
     "@settingsNLPermissionGrant": {
@@ -864,7 +872,7 @@
     },
     "settingsNLPrefillTXTitle": "Pré-remplir le titre de la transaction avec le titre de la notification",
     "@settingsNLPrefillTXTitle": {
-        "description": "First line for setting to use pre-fill transaction title with notification title."
+        "description": "Setting pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "Vérification de l'état…",
     "@settingsNLServiceChecking": {

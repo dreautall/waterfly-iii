@@ -842,9 +842,17 @@
     "@settingsNLAppAddInfo": {
         "description": "Help text when no more app is available to add."
     },
+    "settingsNLAutoAdd": "Transaktion ohne Nachfragen erstellen",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
     "settingsNLDescription": "Dieser Dienst erlaubt dir, Transaktionen aus Benachrichtigungen zu erstellen. Außerdem kannst du das Standard-Konto auswählen, zu dem die Transaktion zugeordnet wird - ansonsten wird dynamisch versucht, ein Konto zu ermitteln.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "Notizfeld leer lassen",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
     "settingsNLPermissionGrant": "Klicke, um die Berechtigung zu erteilen.",
     "@settingsNLPermissionGrant": {
@@ -864,7 +872,7 @@
     },
     "settingsNLPrefillTXTitle": "Transaktionstitel mit Benachrichtigungstitel befüllen",
     "@settingsNLPrefillTXTitle": {
-        "description": "First line for setting to use pre-fill transaction title with notification title."
+        "description": "Setting pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "Status wird geprüft…",
     "@settingsNLServiceChecking": {

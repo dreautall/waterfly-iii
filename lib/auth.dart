@@ -110,8 +110,8 @@ class APIRequestInterceptor implements Interceptor {
     log.finest(() => "API query to ${chain.request.url}");
     final Request request =
         applyHeaders(chain.request, headerFunc(), override: true);
-    request.followRedirects = false;
-    request.maxRedirects = 0;
+    request.followRedirects = true;
+    request.maxRedirects = 5;
     return chain.proceed(request);
   }
 }
@@ -180,6 +180,7 @@ class AuthUser {
       request.headers[HttpHeaders.authorizationHeader] = "Bearer $apiKey";
       // See #497, redirect is a bad way to check for (un)successful login.
       request.followRedirects = true;
+      request.maxRedirects = 5;
       final http.StreamedResponse response = await client.send(request);
 
       // If we get an html page, it's most likely the login page, and auth failed

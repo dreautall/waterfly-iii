@@ -178,10 +178,14 @@ class AuthUser {
     try {
       final http.Request request = http.Request(HttpMethod.Get, aboutUri);
       request.headers[HttpHeaders.authorizationHeader] = "Bearer $apiKey";
-      request.followRedirects = false;
+      // See #497, redirect is a bad way to check for (un)successful login.
+      request.followRedirects = true;
       final http.StreamedResponse response = await client.send(request);
 
-      if (response.isRedirect) {
+      // If we get an html page, it's most likely the login page, and auth failed
+      if (response.headers[HttpHeaders.contentTypeHeader]
+              ?.startsWith("text/html") ??
+          true) {
         throw const AuthErrorApiKey();
       }
       if (response.statusCode != 200) {

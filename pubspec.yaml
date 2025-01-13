@@ -16,7 +16,7 @@ dependencies:
   intl: any
   path_provider: ^2.1.4
   collection: ^1.18.0
-  flutter_secure_storage: ^9.0.0
+  flutter_secure_storage: ^10.0.0-beta.4
   provider: ^6.1.2
   shared_preferences: ^2.3.4
   chopper: ^8.0.2

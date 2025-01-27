@@ -61,7 +61,7 @@ dev_dependencies:
   # needed for swagger_dart_code_generator
   build_runner: ^2.4.13
   chopper_generator: ^8.0.3
-  json_serializable: ^6.9.0
+  json_serializable: ^6.9.3
   swagger_dart_code_generator: ^3.0.1
   flutter_native_splash: ^2.4.3
   translations_cleaner: ^0.0.5

@@ -179,10 +179,10 @@ packages:
     dependency: "direct dev"
     description:
       name: chopper_generator
-      sha256: de438569cba1e2a2888e8d91e3c2ac60106574eea7f36823ed0334e96146328a
+      sha256: "9e943e6da6b187c7cccfb5023b275ba65d34a75765bae388c8401dd4405353ef"
       url: "https://pub.dev"
     source: hosted
-    version: "8.0.3"
+    version: "8.0.4"
   clock:
     dependency: transitive
     description:
@@ -719,10 +719,10 @@ packages:
     dependency: "direct dev"
     description:
       name: json_serializable
-      sha256: c2fcb3920cf2b6ae6845954186420fca40bc0a8abcc84903b7801f17d7050d7c
+      sha256: b0a98230538fe5d0b60a22fb6bf1b6cb03471b53e3324ff6069c591679dd59c9
       url: "https://pub.dev"
     source: hosted
-    version: "6.9.0"
+    version: "6.9.3"
   leak_tracker:
     dependency: transitive
     description:
@@ -1189,10 +1189,10 @@ packages:
     dependency: transitive
     description:
       name: source_gen
-      sha256: "14658ba5f669685cd3d63701d01b31ea748310f7ab854e471962670abcf57832"
+      sha256: "35c8150ece9e8c8d263337a265153c3329667640850b9304861faea59fc98f6b"
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.0"
+    version: "2.0.0"
   source_helper:
     dependency: transitive
     description:

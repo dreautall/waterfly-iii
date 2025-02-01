@@ -1,13 +1,11 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
-
 import 'package:chopper/chopper.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:logging/logging.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';
 import 'package:timezone/data/latest.dart' as tz;
-
 import 'package:waterflyiii/app.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
@@ -83,7 +81,6 @@ void nlCallback() async {
     if (evt.state == NotificationState.remove) {
       return;
     }
-
     final Iterable<RegExpMatch> matches = rFindMoney.allMatches(evt.text ?? "");
     if (matches.isEmpty) {
       log.finer(() => "nlCallback(${evt.packageName}): no money found");
@@ -105,8 +102,7 @@ void nlCallback() async {
     }
 
     final SettingsProvider settings = SettingsProvider();
-
-    settings.notificationAddKnownApp(evt.packageName!);
+    await settings.notificationAddKnownApp(evt.packageName!);
 
     if (!(await settings.notificationUsedApps()).contains(evt.packageName)) {
       log.finer(() => "nlCallback(${evt.packageName}): app not used");
@@ -241,6 +237,7 @@ void nlCallback() async {
 Future<void> nlInit() async {
   log.finest(() => "nlInit()");
   await NotificationServicePlugin.instance.initialize(nlCallback);
+  nlCallback();
 }
 
 Future<void> nlNotificationTap(

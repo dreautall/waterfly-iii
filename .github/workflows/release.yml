@@ -81,7 +81,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: aab-debug-symbols.zip
-          path: build/app/intermediates/merged_native_libs/release/out/lib/aab-debug-symbols.zip
+          path: build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/aab-debug-symbols.zip
       - uses: actions/upload-artifact@v4
         with:
           name: mapping.txt

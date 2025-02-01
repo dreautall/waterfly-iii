@@ -58,7 +58,7 @@ jobs:
       # Zip symbols
       - uses: montudor/action-zip@v1
       - run: zip -qq -r aab-debug-symbols.zip *
-        working-directory: build/app/intermediates/merged_native_libs/release/out/lib/
+        working-directory: build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/
 
       # Upload generated apk to the artifacts.
       - uses: actions/upload-artifact@v4

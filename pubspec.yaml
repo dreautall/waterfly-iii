@@ -33,7 +33,7 @@ dependencies:
   notifications_listener_service:
     git:
       url: https://github.com/dreautall/notification_listener_service.git
-      ref: 5f0d49d1b133943a6e6449059712514bf6506fd1
+      ref: 9c3fcb495f65f7ac2b96bc5492cf378a7169f884
   appcheck:
     git:
       url: https://github.com/bugrevealingbme/AppCheck.git

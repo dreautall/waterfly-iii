@@ -290,9 +290,6 @@ class FireflyService with ChangeNotifier {
     _currentUser = await AuthUser.create(host, apiKey);
     if (_currentUser == null || !hasApi) return false;
 
-    Response<CurrencySingle> currencyInfo = await api.v1CurrenciesDefaultGet();
-    defaultCurrency = currencyInfo.body!.data;
-
     Response<SystemInfo> about = await api.v1AboutGet();
     try {
       String apiVersionStr = about.body?.data?.apiVersion ?? "";
@@ -307,6 +304,14 @@ class FireflyService with ChangeNotifier {
     if (apiVersion == null || apiVersion! < minApiVersion) {
       throw AuthErrorVersionTooLow(minApiVersion);
     }
+
+    late Response<CurrencySingle> currencyInfo;
+    if (apiVersion! >= Version(6, 2, 0)) {
+      currencyInfo = await api.v1CurrenciesNativeGet();
+    } else {
+      currencyInfo = await api.v1CurrenciesDefaultGet();
+    }
+    defaultCurrency = currencyInfo.body!.data;
 
     // Manual API query as the Swagger type doesn't resolve in Flutter :(
     final http.Client client = httpClient;

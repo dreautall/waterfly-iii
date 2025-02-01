@@ -1,18 +1,15 @@
 // ignore_for_file: type=lint
 
-import 'package:json_annotation/json_annotation.dart';
-import 'package:collection/collection.dart';
-import 'dart:convert';
+import 'dart:async';
 
-import 'firefly_iii_v2.models.swagger.dart';
+import 'package:chopper/chopper.dart' as chopper;
 import 'package:chopper/chopper.dart';
+import 'package:http/http.dart' as http;
 
 import 'client_mapping.dart';
-import 'dart:async';
-import 'package:http/http.dart' as http;
-import 'package:http/http.dart' show MultipartFile;
-import 'package:chopper/chopper.dart' as chopper;
 import 'firefly_iii_v2.enums.swagger.dart' as enums;
+import 'firefly_iii_v2.models.swagger.dart';
+
 export 'firefly_iii_v2.enums.swagger.dart';
 export 'firefly_iii_v2.models.swagger.dart';
 

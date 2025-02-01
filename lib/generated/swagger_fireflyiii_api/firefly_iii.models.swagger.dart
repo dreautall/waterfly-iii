@@ -1,9 +1,8 @@
 // ignore_for_file: type=lint
 
-import 'dart:convert';
-
-import 'package:collection/collection.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:collection/collection.dart';
+import 'dart:convert';
 
 import 'firefly_iii.enums.swagger.dart' as enums;
 
@@ -341,7 +340,6 @@ class CurrencyExchangeRateArray {
       _$CurrencyExchangeRateArrayFromJson(json);
 
   static const toJsonFactory = _$CurrencyExchangeRateArrayToJson;
-
   Map<String, dynamic> toJson() => _$CurrencyExchangeRateArrayToJson(this);
 
   @JsonKey(
@@ -934,7 +932,6 @@ class UserGroupArray {
       _$UserGroupArrayFromJson(json);
 
   static const toJsonFactory = _$UserGroupArrayToJson;
-
   Map<String, dynamic> toJson() => _$UserGroupArrayToJson(this);
 
   @JsonKey(name: 'data', includeIfNull: false, defaultValue: <UserGroupRead>[])
@@ -6987,7 +6984,6 @@ class CurrencyExchangeRateRead {
       _$CurrencyExchangeRateReadFromJson(json);
 
   static const toJsonFactory = _$CurrencyExchangeRateReadToJson;
-
   Map<String, dynamic> toJson() => _$CurrencyExchangeRateReadToJson(this);
 
   @JsonKey(name: 'type', includeIfNull: false)
@@ -7052,7 +7048,6 @@ class CurrencyExchangeRateReadAttributes {
       _$CurrencyExchangeRateReadAttributesFromJson(json);
 
   static const toJsonFactory = _$CurrencyExchangeRateReadAttributesToJson;
-
   Map<String, dynamic> toJson() =>
       _$CurrencyExchangeRateReadAttributesToJson(this);
 
@@ -7172,7 +7167,6 @@ class CurrencyExchangeRateSingle {
       _$CurrencyExchangeRateSingleFromJson(json);
 
   static const toJsonFactory = _$CurrencyExchangeRateSingleToJson;
-
   Map<String, dynamic> toJson() => _$CurrencyExchangeRateSingleToJson(this);
 
   @JsonKey(name: 'data', includeIfNull: false)
@@ -7206,7 +7200,6 @@ class CurrencyExchangeRateUpdate {
       _$CurrencyExchangeRateUpdateFromJson(json);
 
   static const toJsonFactory = _$CurrencyExchangeRateUpdateToJson;
-
   Map<String, dynamic> toJson() => _$CurrencyExchangeRateUpdateToJson(this);
 
   @JsonKey(name: 'date', includeIfNull: false, toJson: _dateToJson)
@@ -7415,9 +7408,10 @@ class PiggyBank {
   const PiggyBank({
     this.createdAt,
     this.updatedAt,
-    required this.accountId,
-    this.accountName,
     required this.name,
+    this.accountId,
+    this.accountName,
+    this.accounts,
     this.currencyId,
     this.currencyCode,
     this.currencySymbol,
@@ -7447,12 +7441,17 @@ class PiggyBank {
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
   final DateTime? updatedAt;
-  @JsonKey(name: 'account_id', includeIfNull: false)
-  final String accountId;
-  @JsonKey(name: 'account_name', includeIfNull: false)
-  final String? accountName;
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
+  @JsonKey(name: 'account_id', includeIfNull: false)
+  final String? accountId;
+  @JsonKey(name: 'account_name', includeIfNull: false)
+  final String? accountName;
+  @JsonKey(
+      name: 'accounts',
+      includeIfNull: false,
+      defaultValue: <PiggyBankAccountRead>[])
+  final List<PiggyBankAccountRead>? accounts;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
@@ -7497,9 +7496,10 @@ extension $PiggyBankExtension on PiggyBank {
   PiggyBank copyWith(
       {DateTime? createdAt,
       DateTime? updatedAt,
+      String? name,
       String? accountId,
       String? accountName,
-      String? name,
+      List<PiggyBankAccountRead>? accounts,
       String? currencyId,
       String? currencyCode,
       String? currencySymbol,
@@ -7520,9 +7520,10 @@ extension $PiggyBankExtension on PiggyBank {
     return PiggyBank(
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
+        name: name ?? this.name,
         accountId: accountId ?? this.accountId,
         accountName: accountName ?? this.accountName,
-        name: name ?? this.name,
+        accounts: accounts ?? this.accounts,
         currencyId: currencyId ?? this.currencyId,
         currencyCode: currencyCode ?? this.currencyCode,
         currencySymbol: currencySymbol ?? this.currencySymbol,
@@ -7546,9 +7547,10 @@ extension $PiggyBankExtension on PiggyBank {
   PiggyBank copyWithWrapped(
       {Wrapped<DateTime?>? createdAt,
       Wrapped<DateTime?>? updatedAt,
-      Wrapped<String>? accountId,
-      Wrapped<String?>? accountName,
       Wrapped<String>? name,
+      Wrapped<String?>? accountId,
+      Wrapped<String?>? accountName,
+      Wrapped<List<PiggyBankAccountRead>?>? accounts,
       Wrapped<String?>? currencyId,
       Wrapped<String?>? currencyCode,
       Wrapped<String?>? currencySymbol,
@@ -7569,10 +7571,11 @@ extension $PiggyBankExtension on PiggyBank {
     return PiggyBank(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        name: (name != null ? name.value : this.name),
         accountId: (accountId != null ? accountId.value : this.accountId),
         accountName:
             (accountName != null ? accountName.value : this.accountName),
-        name: (name != null ? name.value : this.name),
+        accounts: (accounts != null ? accounts.value : this.accounts),
         currencyId: (currencyId != null ? currencyId.value : this.currencyId),
         currencyCode:
             (currencyCode != null ? currencyCode.value : this.currencyCode),
@@ -7607,10 +7610,165 @@ extension $PiggyBankExtension on PiggyBank {
 }
 
 @JsonSerializable(explicitToJson: true)
+class PiggyBankAccountRead {
+  const PiggyBankAccountRead({
+    this.id,
+    this.name,
+    required this.currentAmount,
+    required this.nativeCurrentAmount,
+  });
+
+  factory PiggyBankAccountRead.fromJson(Map<String, dynamic> json) =>
+      _$PiggyBankAccountReadFromJson(json);
+
+  static const toJsonFactory = _$PiggyBankAccountReadToJson;
+
+  Map<String, dynamic> toJson() => _$PiggyBankAccountReadToJson(this);
+
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String? id;
+  @JsonKey(name: 'name', includeIfNull: false)
+  final String? name;
+  @JsonKey(name: 'current_amount', includeIfNull: false)
+  final String currentAmount;
+  @JsonKey(name: 'native_current_amount', includeIfNull: false)
+  final String nativeCurrentAmount;
+  static const fromJsonFactory = _$PiggyBankAccountReadFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $PiggyBankAccountReadExtension on PiggyBankAccountRead {
+  PiggyBankAccountRead copyWith(
+      {String? id,
+      String? name,
+      String? currentAmount,
+      String? nativeCurrentAmount}) {
+    return PiggyBankAccountRead(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        currentAmount: currentAmount ?? this.currentAmount,
+        nativeCurrentAmount: nativeCurrentAmount ?? this.nativeCurrentAmount);
+  }
+
+  PiggyBankAccountRead copyWithWrapped(
+      {Wrapped<String?>? id,
+      Wrapped<String?>? name,
+      Wrapped<String>? currentAmount,
+      Wrapped<String>? nativeCurrentAmount}) {
+    return PiggyBankAccountRead(
+        id: (id != null ? id.value : this.id),
+        name: (name != null ? name.value : this.name),
+        currentAmount:
+            (currentAmount != null ? currentAmount.value : this.currentAmount),
+        nativeCurrentAmount: (nativeCurrentAmount != null
+            ? nativeCurrentAmount.value
+            : this.nativeCurrentAmount));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class PiggyBankAccountStore {
+  const PiggyBankAccountStore({
+    this.id,
+    this.name,
+    this.currentAmount,
+  });
+
+  factory PiggyBankAccountStore.fromJson(Map<String, dynamic> json) =>
+      _$PiggyBankAccountStoreFromJson(json);
+
+  static const toJsonFactory = _$PiggyBankAccountStoreToJson;
+
+  Map<String, dynamic> toJson() => _$PiggyBankAccountStoreToJson(this);
+
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String? id;
+  @JsonKey(name: 'name', includeIfNull: false)
+  final String? name;
+  @JsonKey(name: 'current_amount', includeIfNull: false)
+  final String? currentAmount;
+  static const fromJsonFactory = _$PiggyBankAccountStoreFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $PiggyBankAccountStoreExtension on PiggyBankAccountStore {
+  PiggyBankAccountStore copyWith(
+      {String? id, String? name, String? currentAmount}) {
+    return PiggyBankAccountStore(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        currentAmount: currentAmount ?? this.currentAmount);
+  }
+
+  PiggyBankAccountStore copyWithWrapped(
+      {Wrapped<String?>? id,
+      Wrapped<String?>? name,
+      Wrapped<String?>? currentAmount}) {
+    return PiggyBankAccountStore(
+        id: (id != null ? id.value : this.id),
+        name: (name != null ? name.value : this.name),
+        currentAmount:
+            (currentAmount != null ? currentAmount.value : this.currentAmount));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class PiggyBankAccountUpdate {
+  const PiggyBankAccountUpdate({
+    this.id,
+    this.name,
+    this.currentAmount,
+  });
+
+  factory PiggyBankAccountUpdate.fromJson(Map<String, dynamic> json) =>
+      _$PiggyBankAccountUpdateFromJson(json);
+
+  static const toJsonFactory = _$PiggyBankAccountUpdateToJson;
+
+  Map<String, dynamic> toJson() => _$PiggyBankAccountUpdateToJson(this);
+
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String? id;
+  @JsonKey(name: 'name', includeIfNull: false)
+  final String? name;
+  @JsonKey(name: 'current_amount', includeIfNull: false)
+  final String? currentAmount;
+  static const fromJsonFactory = _$PiggyBankAccountUpdateFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $PiggyBankAccountUpdateExtension on PiggyBankAccountUpdate {
+  PiggyBankAccountUpdate copyWith(
+      {String? id, String? name, String? currentAmount}) {
+    return PiggyBankAccountUpdate(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        currentAmount: currentAmount ?? this.currentAmount);
+  }
+
+  PiggyBankAccountUpdate copyWithWrapped(
+      {Wrapped<String?>? id,
+      Wrapped<String?>? name,
+      Wrapped<String?>? currentAmount}) {
+    return PiggyBankAccountUpdate(
+        id: (id != null ? id.value : this.id),
+        name: (name != null ? name.value : this.name),
+        currentAmount:
+            (currentAmount != null ? currentAmount.value : this.currentAmount));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class PiggyBankStore {
   const PiggyBankStore({
     required this.name,
-    required this.accountId,
+    this.accounts,
     this.targetAmount,
     this.currentAmount,
     this.startDate,
@@ -7630,8 +7788,11 @@ class PiggyBankStore {
 
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
-  @JsonKey(name: 'account_id', includeIfNull: false)
-  final String accountId;
+  @JsonKey(
+      name: 'accounts',
+      includeIfNull: false,
+      defaultValue: <PiggyBankAccountStore>[])
+  final List<PiggyBankAccountStore>? accounts;
   @JsonKey(name: 'target_amount', includeIfNull: false)
   final String? targetAmount;
   @JsonKey(name: 'current_amount', includeIfNull: false)
@@ -7659,7 +7820,7 @@ class PiggyBankStore {
 extension $PiggyBankStoreExtension on PiggyBankStore {
   PiggyBankStore copyWith(
       {String? name,
-      String? accountId,
+      List<PiggyBankAccountStore>? accounts,
       String? targetAmount,
       String? currentAmount,
       DateTime? startDate,
@@ -7671,7 +7832,7 @@ extension $PiggyBankStoreExtension on PiggyBankStore {
       String? objectGroupTitle}) {
     return PiggyBankStore(
         name: name ?? this.name,
-        accountId: accountId ?? this.accountId,
+        accounts: accounts ?? this.accounts,
         targetAmount: targetAmount ?? this.targetAmount,
         currentAmount: currentAmount ?? this.currentAmount,
         startDate: startDate ?? this.startDate,
@@ -7685,7 +7846,7 @@ extension $PiggyBankStoreExtension on PiggyBankStore {
 
   PiggyBankStore copyWithWrapped(
       {Wrapped<String>? name,
-      Wrapped<String>? accountId,
+      Wrapped<List<PiggyBankAccountStore>?>? accounts,
       Wrapped<String?>? targetAmount,
       Wrapped<String?>? currentAmount,
       Wrapped<DateTime?>? startDate,
@@ -7697,7 +7858,7 @@ extension $PiggyBankStoreExtension on PiggyBankStore {
       Wrapped<String?>? objectGroupTitle}) {
     return PiggyBankStore(
         name: (name != null ? name.value : this.name),
-        accountId: (accountId != null ? accountId.value : this.accountId),
+        accounts: (accounts != null ? accounts.value : this.accounts),
         targetAmount:
             (targetAmount != null ? targetAmount.value : this.targetAmount),
         currentAmount:
@@ -7719,7 +7880,7 @@ extension $PiggyBankStoreExtension on PiggyBankStore {
 class PiggyBankUpdate {
   const PiggyBankUpdate({
     this.name,
-    this.accountId,
+    this.accounts,
     this.currencyId,
     this.currencyCode,
     this.targetAmount,
@@ -7741,8 +7902,11 @@ class PiggyBankUpdate {
 
   @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
-  @JsonKey(name: 'account_id', includeIfNull: false)
-  final String? accountId;
+  @JsonKey(
+      name: 'accounts',
+      includeIfNull: false,
+      defaultValue: <PiggyBankAccountUpdate>[])
+  final List<PiggyBankAccountUpdate>? accounts;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
@@ -7774,7 +7938,7 @@ class PiggyBankUpdate {
 extension $PiggyBankUpdateExtension on PiggyBankUpdate {
   PiggyBankUpdate copyWith(
       {String? name,
-      String? accountId,
+      List<PiggyBankAccountUpdate>? accounts,
       String? currencyId,
       String? currencyCode,
       String? targetAmount,
@@ -7788,7 +7952,7 @@ extension $PiggyBankUpdateExtension on PiggyBankUpdate {
       String? objectGroupTitle}) {
     return PiggyBankUpdate(
         name: name ?? this.name,
-        accountId: accountId ?? this.accountId,
+        accounts: accounts ?? this.accounts,
         currencyId: currencyId ?? this.currencyId,
         currencyCode: currencyCode ?? this.currencyCode,
         targetAmount: targetAmount ?? this.targetAmount,
@@ -7804,7 +7968,7 @@ extension $PiggyBankUpdateExtension on PiggyBankUpdate {
 
   PiggyBankUpdate copyWithWrapped(
       {Wrapped<String?>? name,
-      Wrapped<String?>? accountId,
+      Wrapped<List<PiggyBankAccountUpdate>?>? accounts,
       Wrapped<String?>? currencyId,
       Wrapped<String?>? currencyCode,
       Wrapped<String?>? targetAmount,
@@ -7818,7 +7982,7 @@ extension $PiggyBankUpdateExtension on PiggyBankUpdate {
       Wrapped<String?>? objectGroupTitle}) {
     return PiggyBankUpdate(
         name: (name != null ? name.value : this.name),
-        accountId: (accountId != null ? accountId.value : this.accountId),
+        accounts: (accounts != null ? accounts.value : this.accounts),
         currencyId: (currencyId != null ? currencyId.value : this.currencyId),
         currencyCode:
             (currencyCode != null ? currencyCode.value : this.currencyCode),
@@ -12480,7 +12644,6 @@ class UserGroupRead {
       _$UserGroupReadFromJson(json);
 
   static const toJsonFactory = _$UserGroupReadToJson;
-
   Map<String, dynamic> toJson() => _$UserGroupReadToJson(this);
 
   @JsonKey(name: 'type', includeIfNull: false)
@@ -12542,7 +12705,6 @@ class UserGroupReadAttributes {
       _$UserGroupReadAttributesFromJson(json);
 
   static const toJsonFactory = _$UserGroupReadAttributesToJson;
-
   Map<String, dynamic> toJson() => _$UserGroupReadAttributesToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
@@ -12647,7 +12809,6 @@ class UserGroupReadMembers {
       _$UserGroupReadMembersFromJson(json);
 
   static const toJsonFactory = _$UserGroupReadMembersToJson;
-
   Map<String, dynamic> toJson() => _$UserGroupReadMembersToJson(this);
 
   @JsonKey(name: 'user_id', includeIfNull: false)
@@ -12705,7 +12866,6 @@ class UserGroupSingle {
       _$UserGroupSingleFromJson(json);
 
   static const toJsonFactory = _$UserGroupSingleToJson;
-
   Map<String, dynamic> toJson() => _$UserGroupSingleToJson(this);
 
   @JsonKey(name: 'data', includeIfNull: false)
@@ -12738,7 +12898,6 @@ class UserGroupUpdate {
       _$UserGroupUpdateFromJson(json);
 
   static const toJsonFactory = _$UserGroupUpdateToJson;
-
   Map<String, dynamic> toJson() => _$UserGroupUpdateToJson(this);
 
   @JsonKey(name: 'title', includeIfNull: false)

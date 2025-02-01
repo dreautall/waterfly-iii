@@ -7,7 +7,7 @@ servers:
 info:
   title: Firefly III API v6.2.0
   description: |
-    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2025-02-01T10:33:05+00:00
+    This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the "Authorize" button to try the API below. This file was last generated on 2025-02-01T17:59:05+00:00
     Please keep in mind that the demo site does not accept requests from curl, colly, wget, etc. You must use a browser or a tool like Postman to make requests. Too many script kiddies out there, sorry about that.
 
   version: "v6.2.0"
@@ -19,90 +19,90 @@ info:
     name: AGPLv3
     url: 'https://www.gnu.org/licenses/agpl-3.0.en.html'
 tags:
-- name: about
-  description: These endpoints deliver general system information, version- and meta
-    information.
-- name: accounts
-  description: Endpoints that deliver all of the user&#039;s asset, expense and other accounts
-    (and the metadata) together with related transactions, piggy banks and other objects.
-    Also delivers endpoints for CRUD operations for accounts.
-- name: attachments
-  description: Endpoints to manage the attachments of the authenticated user, including
-    up- and downloading of the files.
-- name: autocomplete
-  description: Auto-complete endpoints show basic information about Firefly III models,
-    like the name and maybe some amounts. They all support a search query and can
-    be used to autocomplete data in forms. Autocomplete return values always have
-    a &quot;name&quot;-field.
-- name: available_budgets
-  description: Endpoints to manage the total available amount that the user has made
-    available to themselves. Used in periodic budgeting.
-- name: bills
-  description: Endpoints to manage a user&#039;s bills and all related objects.
-- name: budgets
-  description: Endpoints to manage a user&#039;s budgets and get info on the related objects,
-    like limits.
-- name: categories
-  description: Endpoints to manage a user&#039;s categories and get information on transactions
-    and other related objects.
-- name: charts
-  description: The &quot;charts&quot; endpoints deliver optimised data for charts and graphs.
-- name: configuration
-  description: These endpoints allow you to manage and update the Firefly III configuration.
-    You need to have the &quot;owner&quot; role to update configuration.
-- name: currencies
-  description: Endpoints to manage the currencies in Firefly III. Depending on the
-    user&#039;s role you can also disable and enable them, or add new ones.
-- name: currency_exchange_rates
-  description: All currency exchange rates.
-- name: data
-  description: The &quot;data&quot;-endpoints manage generic Firefly III and user-specific data.
-- name: insight
-  description: The &quot;insight&quot; endpoints try to deliver sums, balances and insightful
-    information in the broadest sense of the word.
-- name: links
-  description: Endpoints to manage links between transactions, and manage the type
-    of links available.
-- name: object_groups
-  description: Endpoints to control and manage all of the user&#039;s object groups. Can
-    only be created in conjunction with another object (for example a piggy bank)
-    and will auto-delete when no other items are linked to it.
-- name: piggy_banks
-  description: Endpoints to control and manage all of the user&#039;s piggy banks and related
-    objects and information.
-- name: preferences
-  description: These endpoints can be used to manage the user&#039;s preferences, including
-    some hidden ones.
-- name: recurrences
-  description: Use these endpoints to manage the user&#039;s recurring transactions, trigger
-    the creation of transactions and manage the settings.
-- name: rule_groups
-  description: Manage all of the user&#039;s groups of rules and trigger the execution
-    of entire groups.
-- name: rules
-  description: These endpoints can be used to manage all of the user&#039;s rules. Also
-    includes triggers to execute or test rules and individual triggers.
-- name: search
-  description: Endpoints that allow you to search through the user&#039;s financial data.
-    Different from the autocomplete endpoints, the search accepts more advanced arguments.
-- name: summary
-  description: These endpoints deliver summaries, like sums, lists of numbers and
-    other processed information. Mainly used for the main dashboard and pretty specific
-    for Firefly III itself.
-- name: tags
-  description: This endpoint manages all of the user&#039;s tags.
-- name: transactions
-  description: The most-used endpoints in Firefly III, these endpoints are used to
-    manage the user&#039;s transactions.
-- name: user_groups
-  description: User groups are the objects around which &quot;financial administrations&quot;
-    are built.
-- name: users
-  description: Use these endpoints to manage the users registered within Firefly III.
-    You need to have the &quot;owner&quot; role to access these endpoints.
-- name: webhooks
-  description: These endpoints can be used to manage the user&#039;s webhooks and triggers
-    them if necessary.
+  - name: about
+    description: These endpoints deliver general system information, version- and meta
+      information.
+  - name: accounts
+    description: Endpoints that deliver all of the user&#039;s asset, expense and other accounts
+      (and the metadata) together with related transactions, piggy banks and other objects.
+      Also delivers endpoints for CRUD operations for accounts.
+  - name: attachments
+    description: Endpoints to manage the attachments of the authenticated user, including
+      up- and downloading of the files.
+  - name: autocomplete
+    description: Auto-complete endpoints show basic information about Firefly III models,
+      like the name and maybe some amounts. They all support a search query and can
+      be used to autocomplete data in forms. Autocomplete return values always have
+      a &quot;name&quot;-field.
+  - name: available_budgets
+    description: Endpoints to manage the total available amount that the user has made
+      available to themselves. Used in periodic budgeting.
+  - name: bills
+    description: Endpoints to manage a user&#039;s bills and all related objects.
+  - name: budgets
+    description: Endpoints to manage a user&#039;s budgets and get info on the related objects,
+      like limits.
+  - name: categories
+    description: Endpoints to manage a user&#039;s categories and get information on transactions
+      and other related objects.
+  - name: charts
+    description: The &quot;charts&quot; endpoints deliver optimised data for charts and graphs.
+  - name: configuration
+    description: These endpoints allow you to manage and update the Firefly III configuration.
+      You need to have the &quot;owner&quot; role to update configuration.
+  - name: currencies
+    description: Endpoints to manage the currencies in Firefly III. Depending on the
+      user&#039;s role you can also disable and enable them, or add new ones.
+  - name: currency_exchange_rates
+    description: All currency exchange rates.
+  - name: data
+    description: The &quot;data&quot;-endpoints manage generic Firefly III and user-specific data.
+  - name: insight
+    description: The &quot;insight&quot; endpoints try to deliver sums, balances and insightful
+      information in the broadest sense of the word.
+  - name: links
+    description: Endpoints to manage links between transactions, and manage the type
+      of links available.
+  - name: object_groups
+    description: Endpoints to control and manage all of the user&#039;s object groups. Can
+      only be created in conjunction with another object (for example a piggy bank)
+      and will auto-delete when no other items are linked to it.
+  - name: piggy_banks
+    description: Endpoints to control and manage all of the user&#039;s piggy banks and related
+      objects and information.
+  - name: preferences
+    description: These endpoints can be used to manage the user&#039;s preferences, including
+      some hidden ones.
+  - name: recurrences
+    description: Use these endpoints to manage the user&#039;s recurring transactions, trigger
+      the creation of transactions and manage the settings.
+  - name: rule_groups
+    description: Manage all of the user&#039;s groups of rules and trigger the execution
+      of entire groups.
+  - name: rules
+    description: These endpoints can be used to manage all of the user&#039;s rules. Also
+      includes triggers to execute or test rules and individual triggers.
+  - name: search
+    description: Endpoints that allow you to search through the user&#039;s financial data.
+      Different from the autocomplete endpoints, the search accepts more advanced arguments.
+  - name: summary
+    description: These endpoints deliver summaries, like sums, lists of numbers and
+      other processed information. Mainly used for the main dashboard and pretty specific
+      for Firefly III itself.
+  - name: tags
+    description: This endpoint manages all of the user&#039;s tags.
+  - name: transactions
+    description: The most-used endpoints in Firefly III, these endpoints are used to
+      manage the user&#039;s transactions.
+  - name: user_groups
+    description: User groups are the objects around which &quot;financial administrations&quot;
+      are built.
+  - name: users
+    description: Use these endpoints to manage the users registered within Firefly III.
+      You need to have the &quot;owner&quot; role to access these endpoints.
+  - name: webhooks
+    description: These endpoints can be used to manage the user&#039;s webhooks and triggers
+      them if necessary.
 paths:
   /v1/autocomplete/accounts:
     get:
@@ -4470,7 +4470,7 @@ paths:
   /v1/accounts/{id}:
     get:
       tags:
-      - accounts
+        - accounts
       summary: Get single account.
       description: |
         Returns a single account by its ID.
@@ -7603,7 +7603,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BadRequestResponse'
-  
+
   /v1/exchange-rates/rates/{from}/{to}:
     get:
       summary: List all exchange rate from/to the mentioned currencies.
@@ -9013,7 +9013,7 @@ paths:
             type: integer
             format: int32
             example: 1
-  
+
       responses:
         "200":
           description: A list of piggy banks
@@ -10918,7 +10918,7 @@ paths:
             type: integer
             format: int32
             example: 1
-  
+
       responses:
         "200":
           description: A list of tags
@@ -13833,7 +13833,7 @@ paths:
     post:
       summary: Store a new user
       description: |
-          Creates a new user. The data required can be submitted as a JSON body or as a list of parameters. The user will be given a random password, which they can reset using the "forgot password" function.
+        Creates a new user. The data required can be submitted as a JSON body or as a list of parameters. The user will be given a random password, which they can reset using the "forgot password" function.
       operationId: storeUser
       parameters:
         - name: X-Trace-Id
@@ -14874,7 +14874,7 @@ paths:
     post:
       summary: Store a new webhook
       description: |
-          Creates a new webhook. The data required can be submitted as a JSON body or as a list of parameters. The webhook will be given a random secret.
+        Creates a new webhook. The data required can be submitted as a JSON body or as a list of parameters. The webhook will be given a random secret.
       operationId: storeWebhook
       parameters:
         - name: X-Trace-Id
@@ -18482,7 +18482,6 @@ components:
       type: object
       required:
         - name
-        - account_id
         - target_amount
       properties:
         created_at:
@@ -18495,6 +18494,11 @@ components:
           format: date-time
           example: "2018-09-17T12:46:47+01:00"
           readOnly: true
+        name:
+          type: string
+          format: string
+          example: "New digital camera"
+        #### WATERFLY III CUSTOM FOR API COMPATIBILITY START ####
         account_id:
           type: string
           format: string
@@ -18506,10 +18510,11 @@ components:
           example: "Savings account"
           description: The name of the asset account this piggy bank is connected to.
           readOnly: true
-        name:
-          type: string
-          format: string
-          example: "New digital camera"
+        #### WATERFLY III CUSTOM FOR API COMPATIBILITY END ####
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PiggyBankAccountRead'
         currency_id:
           type: string
           format: string
@@ -18602,6 +18607,80 @@ components:
           example: "Example Group"
           nullable: true
           description: The name of the group. NULL if no group.
+    PiggyBankAccountRead:
+      type: object
+      required:
+        - id
+        - name
+        - current_amount
+        - native_current_amount
+      properties:
+        id:
+          type: string
+          format: string
+          example: "3"
+          readOnly: true
+          nullable: false
+          description: "The ID of the account."
+        name:
+          type: string
+          format: string
+          readOnly: true
+          nullable: false
+          example: "Checking account"
+        current_amount:
+          type: string
+          format: amount
+          example: "123.45"
+        native_current_amount:
+          type: string
+          format: amount
+          example: "123.45"
+          description: "If convertToNative is on, this will show the amount in the native currency."
+    PiggyBankAccountStore:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: string
+          example: "3"
+          nullable: true
+          description: "The ID of the account."
+        name:
+          type: string
+          format: string
+          nullable: true
+          example: "Checking account"
+          description: "The name of the account."
+        current_amount:
+          type: string
+          format: amount
+          example: "123.45"
+          description: "The amount saved currently."
+    PiggyBankAccountUpdate:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: string
+          example: "3"
+          nullable: true
+          description: "The ID of the account."
+        name:
+          type: string
+          format: string
+          nullable: true
+          example: "Checking account"
+          description: "The name of the account."
+        current_amount:
+          type: string
+          format: amount
+          example: "123.45"
+          description: "The amount saved currently."
     PiggyBankStore:
       type: object
       required:
@@ -18613,11 +18692,10 @@ components:
           type: string
           format: string
           example: "New digital camera"
-        account_id:
-          type: string
-          format: string
-          example: 13
-          description: The ID of the asset account this piggy bank is connected to.
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PiggyBankAccountStore'
         target_amount:
           type: string
           format: amount
@@ -18671,11 +18749,10 @@ components:
           type: string
           format: string
           example: "New digital camera"
-        account_id:
-          type: string
-          format: string
-          example: "13"
-          description: The ID of the asset account this piggy bank is connected to.
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PiggyBankAccountUpdate'
         currency_id:
           type: string
           format: string
@@ -21974,7 +22051,7 @@ components:
         - data
       properties:
         data:
-            $ref: '#/components/schemas/UserRead'
+          $ref: '#/components/schemas/UserRead'
     AccountTypeFilter:
       type: string
       enum:
@@ -22243,8 +22320,8 @@ components:
             end:
               type: array
               items:
-                  type: string
-                  format: string
+                type: string
+                format: string
             date:
               type: array
               items:

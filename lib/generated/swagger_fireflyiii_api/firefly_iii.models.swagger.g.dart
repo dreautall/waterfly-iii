@@ -2470,9 +2470,14 @@ PiggyBank _$PiggyBankFromJson(Map<String, dynamic> json) => PiggyBank(
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
-      accountId: json['account_id'] as String,
-      accountName: json['account_name'] as String?,
       name: json['name'] as String,
+      accountId: json['account_id'] as String?,
+      accountName: json['account_name'] as String?,
+      accounts: (json['accounts'] as List<dynamic>?)
+              ?.map((e) =>
+                  PiggyBankAccountRead.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       currencySymbol: json['currency_symbol'] as String?,
@@ -2501,9 +2506,11 @@ Map<String, dynamic> _$PiggyBankToJson(PiggyBank instance) => <String, dynamic>{
         'created_at': value,
       if (instance.updatedAt?.toIso8601String() case final value?)
         'updated_at': value,
-      'account_id': instance.accountId,
-      if (instance.accountName case final value?) 'account_name': value,
       'name': instance.name,
+      if (instance.accountId case final value?) 'account_id': value,
+      if (instance.accountName case final value?) 'account_name': value,
+      if (instance.accounts?.map((e) => e.toJson()).toList() case final value?)
+        'accounts': value,
       if (instance.currencyId case final value?) 'currency_id': value,
       if (instance.currencyCode case final value?) 'currency_code': value,
       if (instance.currencySymbol case final value?) 'currency_symbol': value,
@@ -2528,10 +2535,64 @@ Map<String, dynamic> _$PiggyBankToJson(PiggyBank instance) => <String, dynamic>{
         'object_group_title': value,
     };
 
+PiggyBankAccountRead _$PiggyBankAccountReadFromJson(
+        Map<String, dynamic> json) =>
+    PiggyBankAccountRead(
+      id: json['id'] as String?,
+      name: json['name'] as String?,
+      currentAmount: json['current_amount'] as String,
+      nativeCurrentAmount: json['native_current_amount'] as String,
+    );
+
+Map<String, dynamic> _$PiggyBankAccountReadToJson(
+        PiggyBankAccountRead instance) =>
+    <String, dynamic>{
+      if (instance.id case final value?) 'id': value,
+      if (instance.name case final value?) 'name': value,
+      'current_amount': instance.currentAmount,
+      'native_current_amount': instance.nativeCurrentAmount,
+    };
+
+PiggyBankAccountStore _$PiggyBankAccountStoreFromJson(
+        Map<String, dynamic> json) =>
+    PiggyBankAccountStore(
+      id: json['id'] as String?,
+      name: json['name'] as String?,
+      currentAmount: json['current_amount'] as String?,
+    );
+
+Map<String, dynamic> _$PiggyBankAccountStoreToJson(
+        PiggyBankAccountStore instance) =>
+    <String, dynamic>{
+      if (instance.id case final value?) 'id': value,
+      if (instance.name case final value?) 'name': value,
+      if (instance.currentAmount case final value?) 'current_amount': value,
+    };
+
+PiggyBankAccountUpdate _$PiggyBankAccountUpdateFromJson(
+        Map<String, dynamic> json) =>
+    PiggyBankAccountUpdate(
+      id: json['id'] as String?,
+      name: json['name'] as String?,
+      currentAmount: json['current_amount'] as String?,
+    );
+
+Map<String, dynamic> _$PiggyBankAccountUpdateToJson(
+        PiggyBankAccountUpdate instance) =>
+    <String, dynamic>{
+      if (instance.id case final value?) 'id': value,
+      if (instance.name case final value?) 'name': value,
+      if (instance.currentAmount case final value?) 'current_amount': value,
+    };
+
 PiggyBankStore _$PiggyBankStoreFromJson(Map<String, dynamic> json) =>
     PiggyBankStore(
       name: json['name'] as String,
-      accountId: json['account_id'] as String,
+      accounts: (json['accounts'] as List<dynamic>?)
+              ?.map((e) =>
+                  PiggyBankAccountStore.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       targetAmount: json['target_amount'] as String?,
       currentAmount: json['current_amount'] as String?,
       startDate: json['start_date'] == null
@@ -2550,7 +2611,8 @@ PiggyBankStore _$PiggyBankStoreFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$PiggyBankStoreToJson(PiggyBankStore instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'account_id': instance.accountId,
+      if (instance.accounts?.map((e) => e.toJson()).toList() case final value?)
+        'accounts': value,
       if (instance.targetAmount case final value?) 'target_amount': value,
       if (instance.currentAmount case final value?) 'current_amount': value,
       if (_dateToJson(instance.startDate) case final value?)
@@ -2568,7 +2630,11 @@ Map<String, dynamic> _$PiggyBankStoreToJson(PiggyBankStore instance) =>
 PiggyBankUpdate _$PiggyBankUpdateFromJson(Map<String, dynamic> json) =>
     PiggyBankUpdate(
       name: json['name'] as String?,
-      accountId: json['account_id'] as String?,
+      accounts: (json['accounts'] as List<dynamic>?)
+              ?.map((e) =>
+                  PiggyBankAccountUpdate.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       targetAmount: json['target_amount'] as String?,
@@ -2589,7 +2655,8 @@ PiggyBankUpdate _$PiggyBankUpdateFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$PiggyBankUpdateToJson(PiggyBankUpdate instance) =>
     <String, dynamic>{
       if (instance.name case final value?) 'name': value,
-      if (instance.accountId case final value?) 'account_id': value,
+      if (instance.accounts?.map((e) => e.toJson()).toList() case final value?)
+        'accounts': value,
       if (instance.currencyId case final value?) 'currency_id': value,
       if (instance.currencyCode case final value?) 'currency_code': value,
       if (instance.targetAmount case final value?) 'target_amount': value,

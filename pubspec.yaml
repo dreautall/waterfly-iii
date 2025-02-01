@@ -15,7 +15,7 @@ dependencies:
   async: any
   intl: any
   path_provider: ^2.1.4
-  collection: ^1.18.0
+  collection: ^1.19.0
   flutter_secure_storage: ^10.0.0-beta.4
   provider: ^6.1.2
   shared_preferences: ^2.3.4
@@ -33,7 +33,7 @@ dependencies:
   notifications_listener_service:
     git:
       url: https://github.com/dreautall/notification_listener_service.git
-      ref: 9c3fcb495f65f7ac2b96bc5492cf378a7169f884
+      ref: 684ffa4f51f7a698d45f7a24ab64fd01c84c37cf
   appcheck:
     git:
       url: https://github.com/bugrevealingbme/AppCheck.git

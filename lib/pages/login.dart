@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/pages/splash.dart';
 import 'package:waterflyiii/widgets/erroricon.dart';
@@ -133,7 +132,9 @@ class _LoginPageState extends State<LoginPage> {
                         (Set<String> newSelection) {
                       _hostFocusNode.requestFocus();
                       if (!UriScheme.valid(newSelection.first) ||
-                          _uriScheme == newSelection.first) return;
+                          _uriScheme == newSelection.first) {
+                        return;
+                      }
                       String currentUrl = _hostTextController.text;
                       String oldScheme, newScheme;
                       if (UriScheme.isHttp(newSelection.first)) {

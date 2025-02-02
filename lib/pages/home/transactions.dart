@@ -225,7 +225,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
             query = "tag_is:\"$tag\" $query";
           }
         }
-        query = "date_before:today $query ";
+        if (!context.read<SettingsProvider>().showFutureTXs) {
+          query = "date_before:today $query ";
+        }
         log.fine(() => "Search query: $query");
         transactionList = await stock.getSearch(
           query: query,

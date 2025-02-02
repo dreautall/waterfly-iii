@@ -23,30 +23,27 @@ TransactionSum _$TransactionSumFromJson(Map<String, dynamic> json) =>
       nativeSum: json['native_sum'] as String?,
     );
 
-Map<String, dynamic> _$TransactionSumToJson(TransactionSum instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('currency_id', instance.currencyId);
-  writeNotNull('currency_name', instance.currencyName);
-  writeNotNull('currency_symbol', instance.currencySymbol);
-  writeNotNull('currency_code', instance.currencyCode);
-  writeNotNull('currency_decimal_places', instance.currencyDecimalPlaces);
-  writeNotNull('native_currency_id', instance.nativeCurrencyId);
-  writeNotNull('native_currency_name', instance.nativeCurrencyName);
-  writeNotNull('native_currency_symbol', instance.nativeCurrencySymbol);
-  writeNotNull('native_currency_code', instance.nativeCurrencyCode);
-  writeNotNull(
-      'native_currency_decimal_places', instance.nativeCurrencyDecimalPlaces);
-  writeNotNull('sum', instance.sum);
-  writeNotNull('native_sum', instance.nativeSum);
-  return val;
-}
+Map<String, dynamic> _$TransactionSumToJson(TransactionSum instance) =>
+    <String, dynamic>{
+      if (instance.currencyId case final value?) 'currency_id': value,
+      if (instance.currencyName case final value?) 'currency_name': value,
+      if (instance.currencySymbol case final value?) 'currency_symbol': value,
+      if (instance.currencyCode case final value?) 'currency_code': value,
+      if (instance.currencyDecimalPlaces case final value?)
+        'currency_decimal_places': value,
+      if (instance.nativeCurrencyId case final value?)
+        'native_currency_id': value,
+      if (instance.nativeCurrencyName case final value?)
+        'native_currency_name': value,
+      if (instance.nativeCurrencySymbol case final value?)
+        'native_currency_symbol': value,
+      if (instance.nativeCurrencyCode case final value?)
+        'native_currency_code': value,
+      if (instance.nativeCurrencyDecimalPlaces case final value?)
+        'native_currency_decimal_places': value,
+      if (instance.sum case final value?) 'sum': value,
+      if (instance.nativeSum case final value?) 'native_sum': value,
+    };
 
 AutocompleteAccountV2 _$AutocompleteAccountV2FromJson(
         Map<String, dynamic> json) =>
@@ -84,22 +81,14 @@ AutocompleteTD _$AutocompleteTDFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String,
     );
 
-Map<String, dynamic> _$AutocompleteTDToJson(AutocompleteTD instance) {
-  final val = <String, dynamic>{
-    'id': instance.id,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('transaction_journal_id', instance.transactionJournalId);
-  val['name'] = instance.name;
-  val['description'] = instance.description;
-  return val;
-}
+Map<String, dynamic> _$AutocompleteTDToJson(AutocompleteTD instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      if (instance.transactionJournalId case final value?)
+        'transaction_journal_id': value,
+      'name': instance.name,
+      'description': instance.description,
+    };
 
 ObjectLinkV2 _$ObjectLinkV2FromJson(Map<String, dynamic> json) =>
     ObjectLinkV2();
@@ -115,22 +104,14 @@ PageLinkV2 _$PageLinkV2FromJson(Map<String, dynamic> json) => PageLinkV2(
       last: json['last'] as String?,
     );
 
-Map<String, dynamic> _$PageLinkV2ToJson(PageLinkV2 instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('self', instance.self);
-  writeNotNull('first', instance.first);
-  writeNotNull('next', instance.next);
-  writeNotNull('prev', instance.prev);
-  writeNotNull('last', instance.last);
-  return val;
-}
+Map<String, dynamic> _$PageLinkV2ToJson(PageLinkV2 instance) =>
+    <String, dynamic>{
+      if (instance.self case final value?) 'self': value,
+      if (instance.first case final value?) 'first': value,
+      if (instance.next case final value?) 'next': value,
+      if (instance.prev case final value?) 'prev': value,
+      if (instance.last case final value?) 'last': value,
+    };
 
 AccountV2 _$AccountV2FromJson(Map<String, dynamic> json) => AccountV2(
       createdAt: json['created_at'] == null
@@ -161,39 +142,39 @@ AccountV2 _$AccountV2FromJson(Map<String, dynamic> json) => AccountV2(
           : DateTime.parse(json['current_balance_date'] as String),
     );
 
-Map<String, dynamic> _$AccountV2ToJson(AccountV2 instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('created_at', instance.createdAt?.toIso8601String());
-  writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
-  writeNotNull('active', instance.active);
-  writeNotNull('order', instance.order);
-  val['name'] = instance.name;
-  writeNotNull('iban', instance.iban);
-  writeNotNull('type', shortAccountTypePropertyToJson(instance.type));
-  writeNotNull(
-      'account_role', accountRolePropertyNullableToJson(instance.accountRole));
-  writeNotNull('currency_id', instance.currencyId);
-  writeNotNull('currency_code', instance.currencyCode);
-  writeNotNull('currency_symbol', instance.currencySymbol);
-  writeNotNull('currency_decimal_places', instance.currencyDecimalPlaces);
-  writeNotNull('native_currency_id', instance.nativeCurrencyId);
-  writeNotNull('native_currency_code', instance.nativeCurrencyCode);
-  writeNotNull('native_currency_symbol', instance.nativeCurrencySymbol);
-  writeNotNull(
-      'native_currency_decimal_places', instance.nativeCurrencyDecimalPlaces);
-  writeNotNull('current_balance', instance.currentBalance);
-  writeNotNull('native_current_balance', instance.nativeCurrentBalance);
-  writeNotNull(
-      'current_balance_date', instance.currentBalanceDate?.toIso8601String());
-  return val;
-}
+Map<String, dynamic> _$AccountV2ToJson(AccountV2 instance) => <String, dynamic>{
+      if (instance.createdAt?.toIso8601String() case final value?)
+        'created_at': value,
+      if (instance.updatedAt?.toIso8601String() case final value?)
+        'updated_at': value,
+      if (instance.active case final value?) 'active': value,
+      if (instance.order case final value?) 'order': value,
+      'name': instance.name,
+      if (instance.iban case final value?) 'iban': value,
+      if (shortAccountTypePropertyToJson(instance.type) case final value?)
+        'type': value,
+      if (accountRolePropertyNullableToJson(instance.accountRole)
+          case final value?)
+        'account_role': value,
+      if (instance.currencyId case final value?) 'currency_id': value,
+      if (instance.currencyCode case final value?) 'currency_code': value,
+      if (instance.currencySymbol case final value?) 'currency_symbol': value,
+      if (instance.currencyDecimalPlaces case final value?)
+        'currency_decimal_places': value,
+      if (instance.nativeCurrencyId case final value?)
+        'native_currency_id': value,
+      if (instance.nativeCurrencyCode case final value?)
+        'native_currency_code': value,
+      if (instance.nativeCurrencySymbol case final value?)
+        'native_currency_symbol': value,
+      if (instance.nativeCurrencyDecimalPlaces case final value?)
+        'native_currency_decimal_places': value,
+      if (instance.currentBalance case final value?) 'current_balance': value,
+      if (instance.nativeCurrentBalance case final value?)
+        'native_current_balance': value,
+      if (instance.currentBalanceDate?.toIso8601String() case final value?)
+        'current_balance_date': value,
+    };
 
 AccountV2Read _$AccountV2ReadFromJson(Map<String, dynamic> json) =>
     AccountV2Read(
@@ -240,29 +221,24 @@ BudgetLimitV2 _$BudgetLimitV2FromJson(Map<String, dynamic> json) =>
       amount: json['amount'] as String,
     );
 
-Map<String, dynamic> _$BudgetLimitV2ToJson(BudgetLimitV2 instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('created_at', instance.createdAt?.toIso8601String());
-  writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
-  val['start'] = instance.start.toIso8601String();
-  val['end'] = instance.end.toIso8601String();
-  writeNotNull('currency_id', instance.currencyId);
-  writeNotNull('currency_code', instance.currencyCode);
-  writeNotNull('currency_name', instance.currencyName);
-  writeNotNull('currency_symbol', instance.currencySymbol);
-  writeNotNull('currency_decimal_places', instance.currencyDecimalPlaces);
-  writeNotNull('budget_id', instance.budgetId);
-  writeNotNull('period', instance.period);
-  val['amount'] = instance.amount;
-  return val;
-}
+Map<String, dynamic> _$BudgetLimitV2ToJson(BudgetLimitV2 instance) =>
+    <String, dynamic>{
+      if (instance.createdAt?.toIso8601String() case final value?)
+        'created_at': value,
+      if (instance.updatedAt?.toIso8601String() case final value?)
+        'updated_at': value,
+      'start': instance.start.toIso8601String(),
+      'end': instance.end.toIso8601String(),
+      if (instance.currencyId case final value?) 'currency_id': value,
+      if (instance.currencyCode case final value?) 'currency_code': value,
+      if (instance.currencyName case final value?) 'currency_name': value,
+      if (instance.currencySymbol case final value?) 'currency_symbol': value,
+      if (instance.currencyDecimalPlaces case final value?)
+        'currency_decimal_places': value,
+      if (instance.budgetId case final value?) 'budget_id': value,
+      if (instance.period case final value?) 'period': value,
+      'amount': instance.amount,
+    };
 
 BudgetLimitV2Array _$BudgetLimitV2ArrayFromJson(Map<String, dynamic> json) =>
     BudgetLimitV2Array(
@@ -307,22 +283,15 @@ BudgetV2 _$BudgetV2FromJson(Map<String, dynamic> json) => BudgetV2(
       order: (json['order'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$BudgetV2ToJson(BudgetV2 instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('created_at', instance.createdAt?.toIso8601String());
-  writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
-  val['name'] = instance.name;
-  writeNotNull('active', instance.active);
-  writeNotNull('order', instance.order);
-  return val;
-}
+Map<String, dynamic> _$BudgetV2ToJson(BudgetV2 instance) => <String, dynamic>{
+      if (instance.createdAt?.toIso8601String() case final value?)
+        'created_at': value,
+      if (instance.updatedAt?.toIso8601String() case final value?)
+        'updated_at': value,
+      'name': instance.name,
+      if (instance.active case final value?) 'active': value,
+      if (instance.order case final value?) 'order': value,
+    };
 
 BudgetV2Array _$BudgetV2ArrayFromJson(Map<String, dynamic> json) =>
     BudgetV2Array(
@@ -357,18 +326,10 @@ ChartDataPointV2 _$ChartDataPointV2FromJson(Map<String, dynamic> json) =>
       key: json['key'] as String?,
     );
 
-Map<String, dynamic> _$ChartDataPointV2ToJson(ChartDataPointV2 instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('key', instance.key);
-  return val;
-}
+Map<String, dynamic> _$ChartDataPointV2ToJson(ChartDataPointV2 instance) =>
+    <String, dynamic>{
+      if (instance.key case final value?) 'key': value,
+    };
 
 ChartDataSetV2 _$ChartDataSetV2FromJson(Map<String, dynamic> json) =>
     ChartDataSetV2(
@@ -391,32 +352,30 @@ ChartDataSetV2 _$ChartDataSetV2FromJson(Map<String, dynamic> json) =>
       nativeEntries: json['native_entries'],
     );
 
-Map<String, dynamic> _$ChartDataSetV2ToJson(ChartDataSetV2 instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('label', instance.label);
-  writeNotNull('currency_id', instance.currencyId);
-  writeNotNull('currency_code', instance.currencyCode);
-  writeNotNull('currency_symbol', instance.currencySymbol);
-  writeNotNull('currency_decimal_places', instance.currencyDecimalPlaces);
-  writeNotNull('native_currency_id', instance.nativeCurrencyId);
-  writeNotNull('native_currency_code', instance.nativeCurrencyCode);
-  writeNotNull('native_currency_symbol', instance.nativeCurrencySymbol);
-  writeNotNull(
-      'native_currency_decimal_places', instance.nativeCurrencyDecimalPlaces);
-  writeNotNull('start', instance.start?.toIso8601String());
-  writeNotNull('end', instance.end?.toIso8601String());
-  writeNotNull('period', chartV2PeriodPropertyNullableToJson(instance.period));
-  writeNotNull('entries', instance.entries);
-  writeNotNull('native_entries', instance.nativeEntries);
-  return val;
-}
+Map<String, dynamic> _$ChartDataSetV2ToJson(ChartDataSetV2 instance) =>
+    <String, dynamic>{
+      if (instance.label case final value?) 'label': value,
+      if (instance.currencyId case final value?) 'currency_id': value,
+      if (instance.currencyCode case final value?) 'currency_code': value,
+      if (instance.currencySymbol case final value?) 'currency_symbol': value,
+      if (instance.currencyDecimalPlaces case final value?)
+        'currency_decimal_places': value,
+      if (instance.nativeCurrencyId case final value?)
+        'native_currency_id': value,
+      if (instance.nativeCurrencyCode case final value?)
+        'native_currency_code': value,
+      if (instance.nativeCurrencySymbol case final value?)
+        'native_currency_symbol': value,
+      if (instance.nativeCurrencyDecimalPlaces case final value?)
+        'native_currency_decimal_places': value,
+      if (instance.start?.toIso8601String() case final value?) 'start': value,
+      if (instance.end?.toIso8601String() case final value?) 'end': value,
+      if (chartV2PeriodPropertyNullableToJson(instance.period)
+          case final value?)
+        'period': value,
+      if (instance.entries case final value?) 'entries': value,
+      if (instance.nativeEntries case final value?) 'native_entries': value,
+    };
 
 CurrencyV2 _$CurrencyV2FromJson(Map<String, dynamic> json) => CurrencyV2(
       createdAt: json['created_at'] == null
@@ -433,25 +392,19 @@ CurrencyV2 _$CurrencyV2FromJson(Map<String, dynamic> json) => CurrencyV2(
       decimalPlaces: (json['decimal_places'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$CurrencyV2ToJson(CurrencyV2 instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('created_at', instance.createdAt?.toIso8601String());
-  writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
-  writeNotNull('enabled', instance.enabled);
-  writeNotNull('default', instance.$default);
-  val['code'] = instance.code;
-  val['name'] = instance.name;
-  val['symbol'] = instance.symbol;
-  writeNotNull('decimal_places', instance.decimalPlaces);
-  return val;
-}
+Map<String, dynamic> _$CurrencyV2ToJson(CurrencyV2 instance) =>
+    <String, dynamic>{
+      if (instance.createdAt?.toIso8601String() case final value?)
+        'created_at': value,
+      if (instance.updatedAt?.toIso8601String() case final value?)
+        'updated_at': value,
+      if (instance.enabled case final value?) 'enabled': value,
+      if (instance.$default case final value?) 'default': value,
+      'code': instance.code,
+      'name': instance.name,
+      'symbol': instance.symbol,
+      if (instance.decimalPlaces case final value?) 'decimal_places': value,
+    };
 
 CurrencyV2Array _$CurrencyV2ArrayFromJson(Map<String, dynamic> json) =>
     CurrencyV2Array(
@@ -527,48 +480,54 @@ PiggyBankV2 _$PiggyBankV2FromJson(Map<String, dynamic> json) => PiggyBankV2(
       objectGroupTitle: json['object_group_title'] as String?,
     );
 
-Map<String, dynamic> _$PiggyBankV2ToJson(PiggyBankV2 instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('created_at', instance.createdAt?.toIso8601String());
-  writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
-  val['account_id'] = instance.accountId;
-  writeNotNull('account_name', instance.accountName);
-  val['name'] = instance.name;
-  writeNotNull('currency_id', instance.currencyId);
-  writeNotNull('currency_code', instance.currencyCode);
-  writeNotNull('currency_symbol', instance.currencySymbol);
-  writeNotNull('currency_decimal_places', instance.currencyDecimalPlaces);
-  writeNotNull('native_currency_id', instance.nativeCurrencyId);
-  writeNotNull('native_currency_code', instance.nativeCurrencyCode);
-  writeNotNull('native_currency_symbol', instance.nativeCurrencySymbol);
-  writeNotNull(
-      'native_currency_decimal_places', instance.nativeCurrencyDecimalPlaces);
-  writeNotNull('current_amount', instance.currentAmount);
-  writeNotNull('native_current_amount', instance.nativeCurrentAmount);
-  writeNotNull('target_amount', instance.targetAmount);
-  writeNotNull('native_target_amount', instance.nativeTargetAmount);
-  writeNotNull('percentage', instance.percentage);
-  writeNotNull('left_to_save', instance.leftToSave);
-  writeNotNull('native_left_to_save', instance.nativeLeftToSave);
-  writeNotNull('save_per_month', instance.savePerMonth);
-  writeNotNull('native_save_per_month', instance.nativeSavePerMonth);
-  writeNotNull('start_date', _dateToJson(instance.startDate));
-  writeNotNull('target_date', _dateToJson(instance.targetDate));
-  writeNotNull('order', instance.order);
-  writeNotNull('active', instance.active);
-  writeNotNull('notes', instance.notes);
-  writeNotNull('object_group_id', instance.objectGroupId);
-  writeNotNull('object_group_order', instance.objectGroupOrder);
-  writeNotNull('object_group_title', instance.objectGroupTitle);
-  return val;
-}
+Map<String, dynamic> _$PiggyBankV2ToJson(PiggyBankV2 instance) =>
+    <String, dynamic>{
+      if (instance.createdAt?.toIso8601String() case final value?)
+        'created_at': value,
+      if (instance.updatedAt?.toIso8601String() case final value?)
+        'updated_at': value,
+      'account_id': instance.accountId,
+      if (instance.accountName case final value?) 'account_name': value,
+      'name': instance.name,
+      if (instance.currencyId case final value?) 'currency_id': value,
+      if (instance.currencyCode case final value?) 'currency_code': value,
+      if (instance.currencySymbol case final value?) 'currency_symbol': value,
+      if (instance.currencyDecimalPlaces case final value?)
+        'currency_decimal_places': value,
+      if (instance.nativeCurrencyId case final value?)
+        'native_currency_id': value,
+      if (instance.nativeCurrencyCode case final value?)
+        'native_currency_code': value,
+      if (instance.nativeCurrencySymbol case final value?)
+        'native_currency_symbol': value,
+      if (instance.nativeCurrencyDecimalPlaces case final value?)
+        'native_currency_decimal_places': value,
+      if (instance.currentAmount case final value?) 'current_amount': value,
+      if (instance.nativeCurrentAmount case final value?)
+        'native_current_amount': value,
+      if (instance.targetAmount case final value?) 'target_amount': value,
+      if (instance.nativeTargetAmount case final value?)
+        'native_target_amount': value,
+      if (instance.percentage case final value?) 'percentage': value,
+      if (instance.leftToSave case final value?) 'left_to_save': value,
+      if (instance.nativeLeftToSave case final value?)
+        'native_left_to_save': value,
+      if (instance.savePerMonth case final value?) 'save_per_month': value,
+      if (instance.nativeSavePerMonth case final value?)
+        'native_save_per_month': value,
+      if (_dateToJson(instance.startDate) case final value?)
+        'start_date': value,
+      if (_dateToJson(instance.targetDate) case final value?)
+        'target_date': value,
+      if (instance.order case final value?) 'order': value,
+      if (instance.active case final value?) 'active': value,
+      if (instance.notes case final value?) 'notes': value,
+      if (instance.objectGroupId case final value?) 'object_group_id': value,
+      if (instance.objectGroupOrder case final value?)
+        'object_group_order': value,
+      if (instance.objectGroupTitle case final value?)
+        'object_group_title': value,
+    };
 
 PiggyBankV2Array _$PiggyBankV2ArrayFromJson(Map<String, dynamic> json) =>
     PiggyBankV2Array(
@@ -615,21 +574,15 @@ Preference _$PreferenceFromJson(Map<String, dynamic> json) => Preference(
       data: PolymorphicProperty.fromJson(json['data'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$PreferenceToJson(Preference instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('created_at', instance.createdAt?.toIso8601String());
-  writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
-  val['name'] = instance.name;
-  val['data'] = instance.data.toJson();
-  return val;
-}
+Map<String, dynamic> _$PreferenceToJson(Preference instance) =>
+    <String, dynamic>{
+      if (instance.createdAt?.toIso8601String() case final value?)
+        'created_at': value,
+      if (instance.updatedAt?.toIso8601String() case final value?)
+        'updated_at': value,
+      'name': instance.name,
+      'data': instance.data.toJson(),
+    };
 
 PreferenceRead _$PreferenceReadFromJson(Map<String, dynamic> json) =>
     PreferenceRead(
@@ -706,52 +659,59 @@ Subscription _$SubscriptionFromJson(Map<String, dynamic> json) => Subscription(
           .toList(),
     );
 
-Map<String, dynamic> _$SubscriptionToJson(Subscription instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('created_at', instance.createdAt?.toIso8601String());
-  writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
-  val['name'] = instance.name;
-  val['amount_min'] = instance.amountMin;
-  val['amount_max'] = instance.amountMax;
-  writeNotNull('native_amount_min', instance.nativeAmountMin);
-  writeNotNull('native_amount_max', instance.nativeAmountMax);
-  writeNotNull('currency_id', instance.currencyId);
-  writeNotNull('currency_code', instance.currencyCode);
-  writeNotNull('currency_symbol', instance.currencySymbol);
-  writeNotNull('currency_decimal_places', instance.currencyDecimalPlaces);
-  writeNotNull('native_currency_id', instance.nativeCurrencyId);
-  writeNotNull('native_currency_code', instance.nativeCurrencyCode);
-  writeNotNull('native_currency_symbol', instance.nativeCurrencySymbol);
-  writeNotNull(
-      'native_currency_decimal_places', instance.nativeCurrencyDecimalPlaces);
-  val['date'] = instance.date.toIso8601String();
-  writeNotNull('end_date', instance.endDate?.toIso8601String());
-  writeNotNull('extension_date', instance.extensionDate?.toIso8601String());
-  writeNotNull(
-      'repeat_freq', subscriptionRepeatPropertyToJson(instance.repeatFreq));
-  writeNotNull('skip', instance.skip);
-  writeNotNull('active', instance.active);
-  writeNotNull('order', instance.order);
-  writeNotNull('notes', instance.notes);
-  writeNotNull('object_group_id', instance.objectGroupId);
-  writeNotNull('object_group_order', instance.objectGroupOrder);
-  writeNotNull('object_group_title', instance.objectGroupTitle);
-  writeNotNull(
-      'next_expected_match', instance.nextExpectedMatch?.toIso8601String());
-  writeNotNull('next_expected_match_diff', instance.nextExpectedMatchDiff);
-  writeNotNull(
-      'pay_dates', instance.payDates?.map((e) => e.toIso8601String()).toList());
-  writeNotNull(
-      'paid_dates', instance.paidDates?.map((e) => e.toJson()).toList());
-  return val;
-}
+Map<String, dynamic> _$SubscriptionToJson(Subscription instance) =>
+    <String, dynamic>{
+      if (instance.createdAt?.toIso8601String() case final value?)
+        'created_at': value,
+      if (instance.updatedAt?.toIso8601String() case final value?)
+        'updated_at': value,
+      'name': instance.name,
+      'amount_min': instance.amountMin,
+      'amount_max': instance.amountMax,
+      if (instance.nativeAmountMin case final value?)
+        'native_amount_min': value,
+      if (instance.nativeAmountMax case final value?)
+        'native_amount_max': value,
+      if (instance.currencyId case final value?) 'currency_id': value,
+      if (instance.currencyCode case final value?) 'currency_code': value,
+      if (instance.currencySymbol case final value?) 'currency_symbol': value,
+      if (instance.currencyDecimalPlaces case final value?)
+        'currency_decimal_places': value,
+      if (instance.nativeCurrencyId case final value?)
+        'native_currency_id': value,
+      if (instance.nativeCurrencyCode case final value?)
+        'native_currency_code': value,
+      if (instance.nativeCurrencySymbol case final value?)
+        'native_currency_symbol': value,
+      if (instance.nativeCurrencyDecimalPlaces case final value?)
+        'native_currency_decimal_places': value,
+      'date': instance.date.toIso8601String(),
+      if (instance.endDate?.toIso8601String() case final value?)
+        'end_date': value,
+      if (instance.extensionDate?.toIso8601String() case final value?)
+        'extension_date': value,
+      if (subscriptionRepeatPropertyToJson(instance.repeatFreq)
+          case final value?)
+        'repeat_freq': value,
+      if (instance.skip case final value?) 'skip': value,
+      if (instance.active case final value?) 'active': value,
+      if (instance.order case final value?) 'order': value,
+      if (instance.notes case final value?) 'notes': value,
+      if (instance.objectGroupId case final value?) 'object_group_id': value,
+      if (instance.objectGroupOrder case final value?)
+        'object_group_order': value,
+      if (instance.objectGroupTitle case final value?)
+        'object_group_title': value,
+      if (instance.nextExpectedMatch?.toIso8601String() case final value?)
+        'next_expected_match': value,
+      if (instance.nextExpectedMatchDiff case final value?)
+        'next_expected_match_diff': value,
+      if (instance.payDates?.map((e) => e.toIso8601String()).toList()
+          case final value?)
+        'pay_dates': value,
+      if (instance.paidDates?.map((e) => e.toJson()).toList() case final value?)
+        'paid_dates': value,
+    };
 
 SubscriptionArray _$SubscriptionArrayFromJson(Map<String, dynamic> json) =>
     SubscriptionArray(
@@ -811,23 +771,17 @@ TransactionV2 _$TransactionV2FromJson(Map<String, dynamic> json) =>
           [],
     );
 
-Map<String, dynamic> _$TransactionV2ToJson(TransactionV2 instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('created_at', instance.createdAt?.toIso8601String());
-  writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
-  writeNotNull('user', instance.user);
-  writeNotNull('user_group', instance.userGroup);
-  writeNotNull('group_title', instance.groupTitle);
-  val['transactions'] = instance.transactions.map((e) => e.toJson()).toList();
-  return val;
-}
+Map<String, dynamic> _$TransactionV2ToJson(TransactionV2 instance) =>
+    <String, dynamic>{
+      if (instance.createdAt?.toIso8601String() case final value?)
+        'created_at': value,
+      if (instance.updatedAt?.toIso8601String() case final value?)
+        'updated_at': value,
+      if (instance.user case final value?) 'user': value,
+      if (instance.userGroup case final value?) 'user_group': value,
+      if (instance.groupTitle case final value?) 'group_title': value,
+      'transactions': instance.transactions.map((e) => e.toJson()).toList(),
+    };
 
 TransactionV2Array _$TransactionV2ArrayFromJson(Map<String, dynamic> json) =>
     TransactionV2Array(
@@ -960,85 +914,97 @@ TransactionV2Split _$TransactionV2SplitFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['invoice_date'] as String),
     );
 
-Map<String, dynamic> _$TransactionV2SplitToJson(TransactionV2Split instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('user', instance.user);
-  writeNotNull('user_group', instance.userGroup);
-  writeNotNull('transaction_journal_id', instance.transactionJournalId);
-  writeNotNull('type', transactionTypePropertyToJson(instance.type));
-  val['date'] = instance.date.toIso8601String();
-  writeNotNull('order', instance.order);
-  val['amount'] = instance.amount;
-  writeNotNull('native_amount', instance.nativeAmount);
-  writeNotNull('foreign_amount', instance.foreignAmount);
-  writeNotNull('native_foreign_amount', instance.nativeForeignAmount);
-  writeNotNull('currency_id', instance.currencyId);
-  writeNotNull('currency_code', instance.currencyCode);
-  writeNotNull('currency_symbol', instance.currencySymbol);
-  writeNotNull('currency_name', instance.currencyName);
-  writeNotNull('currency_decimal_places', instance.currencyDecimalPlaces);
-  writeNotNull('native_currency_id', instance.nativeCurrencyId);
-  writeNotNull('native_currency_code', instance.nativeCurrencyCode);
-  writeNotNull('native_currency_symbol', instance.nativeCurrencySymbol);
-  writeNotNull('native_currency_name', instance.nativeCurrencyName);
-  writeNotNull(
-      'native_currency_decimal_places', instance.nativeCurrencyDecimalPlaces);
-  writeNotNull('foreign_currency_id', instance.foreignCurrencyId);
-  writeNotNull('foreign_currency_code', instance.foreignCurrencyCode);
-  writeNotNull('foreign_currency_symbol', instance.foreignCurrencySymbol);
-  writeNotNull(
-      'foreign_currency_decimal_places', instance.foreignCurrencyDecimalPlaces);
-  val['description'] = instance.description;
-  writeNotNull('source_id', instance.sourceId);
-  writeNotNull('source_name', instance.sourceName);
-  writeNotNull('source_iban', instance.sourceIban);
-  writeNotNull(
-      'source_type', accountTypePropertyNullableToJson(instance.sourceType));
-  writeNotNull('destination_id', instance.destinationId);
-  writeNotNull('destination_name', instance.destinationName);
-  writeNotNull('destination_iban', instance.destinationIban);
-  writeNotNull('destination_type',
-      accountTypePropertyNullableToJson(instance.destinationType));
-  writeNotNull('budget_id', instance.budgetId);
-  writeNotNull('budget_name', instance.budgetName);
-  writeNotNull('category_id', instance.categoryId);
-  writeNotNull('category_name', instance.categoryName);
-  writeNotNull('bill_id', instance.billId);
-  writeNotNull('bill_name', instance.billName);
-  writeNotNull('reconciled', instance.reconciled);
-  writeNotNull('notes', instance.notes);
-  writeNotNull('tags', instance.tags);
-  writeNotNull('internal_reference', instance.internalReference);
-  writeNotNull('external_id', instance.externalId);
-  writeNotNull('external_url', instance.externalUrl);
-  writeNotNull('original_source', instance.originalSource);
-  writeNotNull('recurrence_id', instance.recurrenceId);
-  writeNotNull('recurrence_total', instance.recurrenceTotal);
-  writeNotNull('recurrence_count', instance.recurrenceCount);
-  writeNotNull('import_hash_v2', instance.importHashV2);
-  writeNotNull('sepa_cc', instance.sepaCc);
-  writeNotNull('sepa_ct_op', instance.sepaCtOp);
-  writeNotNull('sepa_ct_id', instance.sepaCtId);
-  writeNotNull('sepa_db', instance.sepaDb);
-  writeNotNull('sepa_country', instance.sepaCountry);
-  writeNotNull('sepa_ep', instance.sepaEp);
-  writeNotNull('sepa_ci', instance.sepaCi);
-  writeNotNull('sepa_batch_id', instance.sepaBatchId);
-  writeNotNull('interest_date', instance.interestDate?.toIso8601String());
-  writeNotNull('book_date', instance.bookDate?.toIso8601String());
-  writeNotNull('process_date', instance.processDate?.toIso8601String());
-  writeNotNull('due_date', instance.dueDate?.toIso8601String());
-  writeNotNull('payment_date', instance.paymentDate?.toIso8601String());
-  writeNotNull('invoice_date', instance.invoiceDate?.toIso8601String());
-  return val;
-}
+Map<String, dynamic> _$TransactionV2SplitToJson(TransactionV2Split instance) =>
+    <String, dynamic>{
+      if (instance.user case final value?) 'user': value,
+      if (instance.userGroup case final value?) 'user_group': value,
+      if (instance.transactionJournalId case final value?)
+        'transaction_journal_id': value,
+      if (transactionTypePropertyToJson(instance.type) case final value?)
+        'type': value,
+      'date': instance.date.toIso8601String(),
+      if (instance.order case final value?) 'order': value,
+      'amount': instance.amount,
+      if (instance.nativeAmount case final value?) 'native_amount': value,
+      if (instance.foreignAmount case final value?) 'foreign_amount': value,
+      if (instance.nativeForeignAmount case final value?)
+        'native_foreign_amount': value,
+      if (instance.currencyId case final value?) 'currency_id': value,
+      if (instance.currencyCode case final value?) 'currency_code': value,
+      if (instance.currencySymbol case final value?) 'currency_symbol': value,
+      if (instance.currencyName case final value?) 'currency_name': value,
+      if (instance.currencyDecimalPlaces case final value?)
+        'currency_decimal_places': value,
+      if (instance.nativeCurrencyId case final value?)
+        'native_currency_id': value,
+      if (instance.nativeCurrencyCode case final value?)
+        'native_currency_code': value,
+      if (instance.nativeCurrencySymbol case final value?)
+        'native_currency_symbol': value,
+      if (instance.nativeCurrencyName case final value?)
+        'native_currency_name': value,
+      if (instance.nativeCurrencyDecimalPlaces case final value?)
+        'native_currency_decimal_places': value,
+      if (instance.foreignCurrencyId case final value?)
+        'foreign_currency_id': value,
+      if (instance.foreignCurrencyCode case final value?)
+        'foreign_currency_code': value,
+      if (instance.foreignCurrencySymbol case final value?)
+        'foreign_currency_symbol': value,
+      if (instance.foreignCurrencyDecimalPlaces case final value?)
+        'foreign_currency_decimal_places': value,
+      'description': instance.description,
+      if (instance.sourceId case final value?) 'source_id': value,
+      if (instance.sourceName case final value?) 'source_name': value,
+      if (instance.sourceIban case final value?) 'source_iban': value,
+      if (accountTypePropertyNullableToJson(instance.sourceType)
+          case final value?)
+        'source_type': value,
+      if (instance.destinationId case final value?) 'destination_id': value,
+      if (instance.destinationName case final value?) 'destination_name': value,
+      if (instance.destinationIban case final value?) 'destination_iban': value,
+      if (accountTypePropertyNullableToJson(instance.destinationType)
+          case final value?)
+        'destination_type': value,
+      if (instance.budgetId case final value?) 'budget_id': value,
+      if (instance.budgetName case final value?) 'budget_name': value,
+      if (instance.categoryId case final value?) 'category_id': value,
+      if (instance.categoryName case final value?) 'category_name': value,
+      if (instance.billId case final value?) 'bill_id': value,
+      if (instance.billName case final value?) 'bill_name': value,
+      if (instance.reconciled case final value?) 'reconciled': value,
+      if (instance.notes case final value?) 'notes': value,
+      if (instance.tags case final value?) 'tags': value,
+      if (instance.internalReference case final value?)
+        'internal_reference': value,
+      if (instance.externalId case final value?) 'external_id': value,
+      if (instance.externalUrl case final value?) 'external_url': value,
+      if (instance.originalSource case final value?) 'original_source': value,
+      if (instance.recurrenceId case final value?) 'recurrence_id': value,
+      if (instance.recurrenceTotal case final value?) 'recurrence_total': value,
+      if (instance.recurrenceCount case final value?) 'recurrence_count': value,
+      if (instance.importHashV2 case final value?) 'import_hash_v2': value,
+      if (instance.sepaCc case final value?) 'sepa_cc': value,
+      if (instance.sepaCtOp case final value?) 'sepa_ct_op': value,
+      if (instance.sepaCtId case final value?) 'sepa_ct_id': value,
+      if (instance.sepaDb case final value?) 'sepa_db': value,
+      if (instance.sepaCountry case final value?) 'sepa_country': value,
+      if (instance.sepaEp case final value?) 'sepa_ep': value,
+      if (instance.sepaCi case final value?) 'sepa_ci': value,
+      if (instance.sepaBatchId case final value?) 'sepa_batch_id': value,
+      if (instance.interestDate?.toIso8601String() case final value?)
+        'interest_date': value,
+      if (instance.bookDate?.toIso8601String() case final value?)
+        'book_date': value,
+      if (instance.processDate?.toIso8601String() case final value?)
+        'process_date': value,
+      if (instance.dueDate?.toIso8601String() case final value?)
+        'due_date': value,
+      if (instance.paymentDate?.toIso8601String() case final value?)
+        'payment_date': value,
+      if (instance.invoiceDate?.toIso8601String() case final value?)
+        'invoice_date': value,
+    };
 
 TransactionV2SplitStore _$TransactionV2SplitStoreFromJson(
         Map<String, dynamic> json) =>
@@ -1103,60 +1069,62 @@ TransactionV2SplitStore _$TransactionV2SplitStoreFromJson(
     );
 
 Map<String, dynamic> _$TransactionV2SplitStoreToJson(
-    TransactionV2SplitStore instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('type', transactionTypePropertyToJson(instance.type));
-  val['date'] = instance.date.toIso8601String();
-  val['amount'] = instance.amount;
-  val['description'] = instance.description;
-  writeNotNull('order', instance.order);
-  writeNotNull('currency_id', instance.currencyId);
-  writeNotNull('currency_code', instance.currencyCode);
-  writeNotNull('foreign_amount', instance.foreignAmount);
-  writeNotNull('foreign_currency_id', instance.foreignCurrencyId);
-  writeNotNull('foreign_currency_code', instance.foreignCurrencyCode);
-  writeNotNull('budget_id', instance.budgetId);
-  writeNotNull('budget_name', instance.budgetName);
-  writeNotNull('category_id', instance.categoryId);
-  writeNotNull('category_name', instance.categoryName);
-  writeNotNull('source_id', instance.sourceId);
-  writeNotNull('source_name', instance.sourceName);
-  writeNotNull('destination_id', instance.destinationId);
-  writeNotNull('destination_name', instance.destinationName);
-  writeNotNull('reconciled', instance.reconciled);
-  writeNotNull('piggy_bank_id', instance.piggyBankId);
-  writeNotNull('piggy_bank_name', instance.piggyBankName);
-  writeNotNull('bill_id', instance.billId);
-  writeNotNull('bill_name', instance.billName);
-  writeNotNull('tags', instance.tags);
-  writeNotNull('notes', instance.notes);
-  writeNotNull('internal_reference', instance.internalReference);
-  writeNotNull('external_id', instance.externalId);
-  writeNotNull('external_url', instance.externalUrl);
-  writeNotNull('bunq_payment_id', instance.bunqPaymentId);
-  writeNotNull('sepa_cc', instance.sepaCc);
-  writeNotNull('sepa_ct_op', instance.sepaCtOp);
-  writeNotNull('sepa_ct_id', instance.sepaCtId);
-  writeNotNull('sepa_db', instance.sepaDb);
-  writeNotNull('sepa_country', instance.sepaCountry);
-  writeNotNull('sepa_ep', instance.sepaEp);
-  writeNotNull('sepa_ci', instance.sepaCi);
-  writeNotNull('sepa_batch_id', instance.sepaBatchId);
-  writeNotNull('interest_date', instance.interestDate?.toIso8601String());
-  writeNotNull('book_date', instance.bookDate?.toIso8601String());
-  writeNotNull('process_date', instance.processDate?.toIso8601String());
-  writeNotNull('due_date', instance.dueDate?.toIso8601String());
-  writeNotNull('payment_date', instance.paymentDate?.toIso8601String());
-  writeNotNull('invoice_date', instance.invoiceDate?.toIso8601String());
-  return val;
-}
+        TransactionV2SplitStore instance) =>
+    <String, dynamic>{
+      if (transactionTypePropertyToJson(instance.type) case final value?)
+        'type': value,
+      'date': instance.date.toIso8601String(),
+      'amount': instance.amount,
+      'description': instance.description,
+      if (instance.order case final value?) 'order': value,
+      if (instance.currencyId case final value?) 'currency_id': value,
+      if (instance.currencyCode case final value?) 'currency_code': value,
+      if (instance.foreignAmount case final value?) 'foreign_amount': value,
+      if (instance.foreignCurrencyId case final value?)
+        'foreign_currency_id': value,
+      if (instance.foreignCurrencyCode case final value?)
+        'foreign_currency_code': value,
+      if (instance.budgetId case final value?) 'budget_id': value,
+      if (instance.budgetName case final value?) 'budget_name': value,
+      if (instance.categoryId case final value?) 'category_id': value,
+      if (instance.categoryName case final value?) 'category_name': value,
+      if (instance.sourceId case final value?) 'source_id': value,
+      if (instance.sourceName case final value?) 'source_name': value,
+      if (instance.destinationId case final value?) 'destination_id': value,
+      if (instance.destinationName case final value?) 'destination_name': value,
+      if (instance.reconciled case final value?) 'reconciled': value,
+      if (instance.piggyBankId case final value?) 'piggy_bank_id': value,
+      if (instance.piggyBankName case final value?) 'piggy_bank_name': value,
+      if (instance.billId case final value?) 'bill_id': value,
+      if (instance.billName case final value?) 'bill_name': value,
+      if (instance.tags case final value?) 'tags': value,
+      if (instance.notes case final value?) 'notes': value,
+      if (instance.internalReference case final value?)
+        'internal_reference': value,
+      if (instance.externalId case final value?) 'external_id': value,
+      if (instance.externalUrl case final value?) 'external_url': value,
+      if (instance.bunqPaymentId case final value?) 'bunq_payment_id': value,
+      if (instance.sepaCc case final value?) 'sepa_cc': value,
+      if (instance.sepaCtOp case final value?) 'sepa_ct_op': value,
+      if (instance.sepaCtId case final value?) 'sepa_ct_id': value,
+      if (instance.sepaDb case final value?) 'sepa_db': value,
+      if (instance.sepaCountry case final value?) 'sepa_country': value,
+      if (instance.sepaEp case final value?) 'sepa_ep': value,
+      if (instance.sepaCi case final value?) 'sepa_ci': value,
+      if (instance.sepaBatchId case final value?) 'sepa_batch_id': value,
+      if (instance.interestDate?.toIso8601String() case final value?)
+        'interest_date': value,
+      if (instance.bookDate?.toIso8601String() case final value?)
+        'book_date': value,
+      if (instance.processDate?.toIso8601String() case final value?)
+        'process_date': value,
+      if (instance.dueDate?.toIso8601String() case final value?)
+        'due_date': value,
+      if (instance.paymentDate?.toIso8601String() case final value?)
+        'payment_date': value,
+      if (instance.invoiceDate?.toIso8601String() case final value?)
+        'invoice_date': value,
+    };
 
 TransactionV2Store _$TransactionV2StoreFromJson(Map<String, dynamic> json) =>
     TransactionV2Store(
@@ -1171,22 +1139,15 @@ TransactionV2Store _$TransactionV2StoreFromJson(Map<String, dynamic> json) =>
           [],
     );
 
-Map<String, dynamic> _$TransactionV2StoreToJson(TransactionV2Store instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('error_if_duplicate_hash', instance.errorIfDuplicateHash);
-  writeNotNull('apply_rules', instance.applyRules);
-  writeNotNull('fire_webhooks', instance.fireWebhooks);
-  writeNotNull('group_title', instance.groupTitle);
-  val['transactions'] = instance.transactions.map((e) => e.toJson()).toList();
-  return val;
-}
+Map<String, dynamic> _$TransactionV2StoreToJson(TransactionV2Store instance) =>
+    <String, dynamic>{
+      if (instance.errorIfDuplicateHash case final value?)
+        'error_if_duplicate_hash': value,
+      if (instance.applyRules case final value?) 'apply_rules': value,
+      if (instance.fireWebhooks case final value?) 'fire_webhooks': value,
+      if (instance.groupTitle case final value?) 'group_title': value,
+      'transactions': instance.transactions.map((e) => e.toJson()).toList(),
+    };
 
 NetWorthArray _$NetWorthArrayFromJson(Map<String, dynamic> json) =>
     NetWorthArray(
@@ -1196,18 +1157,11 @@ NetWorthArray _$NetWorthArrayFromJson(Map<String, dynamic> json) =>
               json['currency_code'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$NetWorthArrayToJson(NetWorthArray instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('currency_code', instance.currencyCode?.toJson());
-  return val;
-}
+Map<String, dynamic> _$NetWorthArrayToJson(NetWorthArray instance) =>
+    <String, dynamic>{
+      if (instance.currencyCode?.toJson() case final value?)
+        'currency_code': value,
+    };
 
 NetWorthItem _$NetWorthItemFromJson(Map<String, dynamic> json) => NetWorthItem(
       balance: json['balance'] as String?,
@@ -1225,30 +1179,27 @@ NetWorthItem _$NetWorthItemFromJson(Map<String, dynamic> json) => NetWorthItem(
           (json['native_currency_decimal_places'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$NetWorthItemToJson(NetWorthItem instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('balance', instance.balance);
-  writeNotNull('native_balance', instance.nativeBalance);
-  writeNotNull('currency_id', instance.currencyId);
-  writeNotNull('currency_name', instance.currencyName);
-  writeNotNull('currency_symbol', instance.currencySymbol);
-  writeNotNull('currency_code', instance.currencyCode);
-  writeNotNull('currency_decimal_places', instance.currencyDecimalPlaces);
-  writeNotNull('native_currency_id', instance.nativeCurrencyId);
-  writeNotNull('native_currency_name', instance.nativeCurrencyName);
-  writeNotNull('native_currency_symbol', instance.nativeCurrencySymbol);
-  writeNotNull('native_currency_code', instance.nativeCurrencyCode);
-  writeNotNull(
-      'native_currency_decimal_places', instance.nativeCurrencyDecimalPlaces);
-  return val;
-}
+Map<String, dynamic> _$NetWorthItemToJson(NetWorthItem instance) =>
+    <String, dynamic>{
+      if (instance.balance case final value?) 'balance': value,
+      if (instance.nativeBalance case final value?) 'native_balance': value,
+      if (instance.currencyId case final value?) 'currency_id': value,
+      if (instance.currencyName case final value?) 'currency_name': value,
+      if (instance.currencySymbol case final value?) 'currency_symbol': value,
+      if (instance.currencyCode case final value?) 'currency_code': value,
+      if (instance.currencyDecimalPlaces case final value?)
+        'currency_decimal_places': value,
+      if (instance.nativeCurrencyId case final value?)
+        'native_currency_id': value,
+      if (instance.nativeCurrencyName case final value?)
+        'native_currency_name': value,
+      if (instance.nativeCurrencySymbol case final value?)
+        'native_currency_symbol': value,
+      if (instance.nativeCurrencyCode case final value?)
+        'native_currency_code': value,
+      if (instance.nativeCurrencyDecimalPlaces case final value?)
+        'native_currency_decimal_places': value,
+    };
 
 PolymorphicProperty _$PolymorphicPropertyFromJson(Map<String, dynamic> json) =>
     PolymorphicProperty();
@@ -1273,23 +1224,17 @@ BasicSummaryV2Entry _$BasicSummaryV2EntryFromJson(Map<String, dynamic> json) =>
       currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$BasicSummaryV2EntryToJson(BasicSummaryV2Entry instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('key', instance.key);
-  writeNotNull('value', instance.$value);
-  writeNotNull('currency_id', instance.currencyId);
-  writeNotNull('currency_code', instance.currencyCode);
-  writeNotNull('currency_symbol', instance.currencySymbol);
-  writeNotNull('currency_decimal_places', instance.currencyDecimalPlaces);
-  return val;
-}
+Map<String, dynamic> _$BasicSummaryV2EntryToJson(
+        BasicSummaryV2Entry instance) =>
+    <String, dynamic>{
+      if (instance.key case final value?) 'key': value,
+      if (instance.$value case final value?) 'value': value,
+      if (instance.currencyId case final value?) 'currency_id': value,
+      if (instance.currencyCode case final value?) 'currency_code': value,
+      if (instance.currencySymbol case final value?) 'currency_symbol': value,
+      if (instance.currencyDecimalPlaces case final value?)
+        'currency_decimal_places': value,
+    };
 
 Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
       pagination: json['pagination'] == null
@@ -1298,18 +1243,9 @@ Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
               json['pagination'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$MetaToJson(Meta instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('pagination', instance.pagination?.toJson());
-  return val;
-}
+Map<String, dynamic> _$MetaToJson(Meta instance) => <String, dynamic>{
+      if (instance.pagination?.toJson() case final value?) 'pagination': value,
+    };
 
 BadRequestResponse _$BadRequestResponseFromJson(Map<String, dynamic> json) =>
     BadRequestResponse(
@@ -1317,19 +1253,11 @@ BadRequestResponse _$BadRequestResponseFromJson(Map<String, dynamic> json) =>
       exception: json['exception'] as String?,
     );
 
-Map<String, dynamic> _$BadRequestResponseToJson(BadRequestResponse instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('message', instance.message);
-  writeNotNull('exception', instance.exception);
-  return val;
-}
+Map<String, dynamic> _$BadRequestResponseToJson(BadRequestResponse instance) =>
+    <String, dynamic>{
+      if (instance.message case final value?) 'message': value,
+      if (instance.exception case final value?) 'exception': value,
+    };
 
 InternalExceptionResponse _$InternalExceptionResponseFromJson(
         Map<String, dynamic> json) =>
@@ -1339,19 +1267,11 @@ InternalExceptionResponse _$InternalExceptionResponseFromJson(
     );
 
 Map<String, dynamic> _$InternalExceptionResponseToJson(
-    InternalExceptionResponse instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('message', instance.message);
-  writeNotNull('exception', instance.exception);
-  return val;
-}
+        InternalExceptionResponse instance) =>
+    <String, dynamic>{
+      if (instance.message case final value?) 'message': value,
+      if (instance.exception case final value?) 'exception': value,
+    };
 
 NotFoundResponse _$NotFoundResponseFromJson(Map<String, dynamic> json) =>
     NotFoundResponse(
@@ -1359,19 +1279,11 @@ NotFoundResponse _$NotFoundResponseFromJson(Map<String, dynamic> json) =>
       exception: json['exception'] as String?,
     );
 
-Map<String, dynamic> _$NotFoundResponseToJson(NotFoundResponse instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('message', instance.message);
-  writeNotNull('exception', instance.exception);
-  return val;
-}
+Map<String, dynamic> _$NotFoundResponseToJson(NotFoundResponse instance) =>
+    <String, dynamic>{
+      if (instance.message case final value?) 'message': value,
+      if (instance.exception case final value?) 'exception': value,
+    };
 
 UnauthenticatedResponse _$UnauthenticatedResponseFromJson(
         Map<String, dynamic> json) =>
@@ -1381,19 +1293,11 @@ UnauthenticatedResponse _$UnauthenticatedResponseFromJson(
     );
 
 Map<String, dynamic> _$UnauthenticatedResponseToJson(
-    UnauthenticatedResponse instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('message', instance.message);
-  writeNotNull('exception', instance.exception);
-  return val;
-}
+        UnauthenticatedResponse instance) =>
+    <String, dynamic>{
+      if (instance.message case final value?) 'message': value,
+      if (instance.exception case final value?) 'exception': value,
+    };
 
 ValidationErrorResponse _$ValidationErrorResponseFromJson(
         Map<String, dynamic> json) =>
@@ -1406,19 +1310,11 @@ ValidationErrorResponse _$ValidationErrorResponseFromJson(
     );
 
 Map<String, dynamic> _$ValidationErrorResponseToJson(
-    ValidationErrorResponse instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('message', instance.message);
-  writeNotNull('errors', instance.errors?.toJson());
-  return val;
-}
+        ValidationErrorResponse instance) =>
+    <String, dynamic>{
+      if (instance.message case final value?) 'message': value,
+      if (instance.errors?.toJson() case final value?) 'errors': value,
+    };
 
 Subscription$PaidDates$Item _$Subscription$PaidDates$ItemFromJson(
         Map<String, dynamic> json) =>
@@ -1430,20 +1326,14 @@ Subscription$PaidDates$Item _$Subscription$PaidDates$ItemFromJson(
     );
 
 Map<String, dynamic> _$Subscription$PaidDates$ItemToJson(
-    Subscription$PaidDates$Item instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('transaction_group_id', instance.transactionGroupId);
-  writeNotNull('transaction_journal_id', instance.transactionJournalId);
-  writeNotNull('date', instance.date?.toIso8601String());
-  return val;
-}
+        Subscription$PaidDates$Item instance) =>
+    <String, dynamic>{
+      if (instance.transactionGroupId case final value?)
+        'transaction_group_id': value,
+      if (instance.transactionJournalId case final value?)
+        'transaction_journal_id': value,
+      if (instance.date?.toIso8601String() case final value?) 'date': value,
+    };
 
 Meta$Pagination _$Meta$PaginationFromJson(Map<String, dynamic> json) =>
     Meta$Pagination(
@@ -1454,22 +1344,14 @@ Meta$Pagination _$Meta$PaginationFromJson(Map<String, dynamic> json) =>
       totalPages: (json['total_pages'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$Meta$PaginationToJson(Meta$Pagination instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('total', instance.total);
-  writeNotNull('count', instance.count);
-  writeNotNull('per_page', instance.perPage);
-  writeNotNull('current_page', instance.currentPage);
-  writeNotNull('total_pages', instance.totalPages);
-  return val;
-}
+Map<String, dynamic> _$Meta$PaginationToJson(Meta$Pagination instance) =>
+    <String, dynamic>{
+      if (instance.total case final value?) 'total': value,
+      if (instance.count case final value?) 'count': value,
+      if (instance.perPage case final value?) 'per_page': value,
+      if (instance.currentPage case final value?) 'current_page': value,
+      if (instance.totalPages case final value?) 'total_pages': value,
+    };
 
 ValidationErrorResponse$Errors _$ValidationErrorResponse$ErrorsFromJson(
         Map<String, dynamic> json) =>
@@ -1508,24 +1390,16 @@ ValidationErrorResponse$Errors _$ValidationErrorResponse$ErrorsFromJson(
     );
 
 Map<String, dynamic> _$ValidationErrorResponse$ErrorsToJson(
-    ValidationErrorResponse$Errors instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('email', instance.email);
-  writeNotNull('blocked', instance.blocked);
-  writeNotNull('role', instance.role);
-  writeNotNull('blocked_code', instance.blockedCode);
-  writeNotNull('name', instance.name);
-  writeNotNull('type', instance.type);
-  writeNotNull('iban', instance.iban);
-  writeNotNull('start', instance.start);
-  writeNotNull('end', instance.end);
-  writeNotNull('date', instance.date);
-  return val;
-}
+        ValidationErrorResponse$Errors instance) =>
+    <String, dynamic>{
+      if (instance.email case final value?) 'email': value,
+      if (instance.blocked case final value?) 'blocked': value,
+      if (instance.role case final value?) 'role': value,
+      if (instance.blockedCode case final value?) 'blocked_code': value,
+      if (instance.name case final value?) 'name': value,
+      if (instance.type case final value?) 'type': value,
+      if (instance.iban case final value?) 'iban': value,
+      if (instance.start case final value?) 'start': value,
+      if (instance.end case final value?) 'end': value,
+      if (instance.date case final value?) 'date': value,
+    };

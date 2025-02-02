@@ -329,6 +329,55 @@ extension $CurrencyArrayExtension on CurrencyArray {
 }
 
 @JsonSerializable(explicitToJson: true)
+class CurrencyExchangeRateArray {
+  const CurrencyExchangeRateArray({
+    required this.data,
+    required this.meta,
+    required this.links,
+  });
+
+  factory CurrencyExchangeRateArray.fromJson(Map<String, dynamic> json) =>
+      _$CurrencyExchangeRateArrayFromJson(json);
+
+  static const toJsonFactory = _$CurrencyExchangeRateArrayToJson;
+  Map<String, dynamic> toJson() => _$CurrencyExchangeRateArrayToJson(this);
+
+  @JsonKey(
+      name: 'data',
+      includeIfNull: false,
+      defaultValue: <CurrencyExchangeRateRead>[])
+  final List<CurrencyExchangeRateRead> data;
+  @JsonKey(name: 'meta', includeIfNull: false)
+  final Meta meta;
+  @JsonKey(name: 'links', includeIfNull: false)
+  final PageLink links;
+  static const fromJsonFactory = _$CurrencyExchangeRateArrayFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $CurrencyExchangeRateArrayExtension on CurrencyExchangeRateArray {
+  CurrencyExchangeRateArray copyWith(
+      {List<CurrencyExchangeRateRead>? data, Meta? meta, PageLink? links}) {
+    return CurrencyExchangeRateArray(
+        data: data ?? this.data,
+        meta: meta ?? this.meta,
+        links: links ?? this.links);
+  }
+
+  CurrencyExchangeRateArray copyWithWrapped(
+      {Wrapped<List<CurrencyExchangeRateRead>>? data,
+      Wrapped<Meta>? meta,
+      Wrapped<PageLink>? links}) {
+    return CurrencyExchangeRateArray(
+        data: (data != null ? data.value : this.data),
+        meta: (meta != null ? meta.value : this.meta),
+        links: (links != null ? links.value : this.links));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class LinkTypeArray {
   const LinkTypeArray({
     required this.data,
@@ -865,6 +914,52 @@ extension $UserArrayExtension on UserArray {
       Wrapped<Meta>? meta,
       Wrapped<PageLink>? links}) {
     return UserArray(
+        data: (data != null ? data.value : this.data),
+        meta: (meta != null ? meta.value : this.meta),
+        links: (links != null ? links.value : this.links));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserGroupArray {
+  const UserGroupArray({
+    required this.data,
+    required this.meta,
+    required this.links,
+  });
+
+  factory UserGroupArray.fromJson(Map<String, dynamic> json) =>
+      _$UserGroupArrayFromJson(json);
+
+  static const toJsonFactory = _$UserGroupArrayToJson;
+  Map<String, dynamic> toJson() => _$UserGroupArrayToJson(this);
+
+  @JsonKey(name: 'data', includeIfNull: false, defaultValue: <UserGroupRead>[])
+  final List<UserGroupRead> data;
+  @JsonKey(name: 'meta', includeIfNull: false)
+  final Meta meta;
+  @JsonKey(name: 'links', includeIfNull: false)
+  final PageLink links;
+  static const fromJsonFactory = _$UserGroupArrayFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $UserGroupArrayExtension on UserGroupArray {
+  UserGroupArray copyWith(
+      {List<UserGroupRead>? data, Meta? meta, PageLink? links}) {
+    return UserGroupArray(
+        data: data ?? this.data,
+        meta: meta ?? this.meta,
+        links: links ?? this.links);
+  }
+
+  UserGroupArray copyWithWrapped(
+      {Wrapped<List<UserGroupRead>>? data,
+      Wrapped<Meta>? meta,
+      Wrapped<PageLink>? links}) {
+    return UserGroupArray(
         data: (data != null ? data.value : this.data),
         meta: (meta != null ? meta.value : this.meta),
         links: (links != null ? links.value : this.links));
@@ -4087,25 +4182,32 @@ class Account {
     this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
+    this.nativeCurrencyId,
+    this.nativeCurrencyCode,
+    this.nativeCurrencySymbol,
+    this.nativeCurrencyDecimalPlaces,
     this.currentBalance,
+    this.nativeCurrentBalance,
     this.currentBalanceDate,
+    this.notes,
+    this.monthlyPaymentDate,
+    this.creditCardType,
+    this.accountNumber,
     this.iban,
     this.bic,
-    this.accountNumber,
-    this.openingBalance,
-    this.currentDebt,
-    this.openingBalanceDate,
     this.virtualBalance,
-    this.includeNetWorth,
-    this.creditCardType,
-    this.monthlyPaymentDate,
+    this.nativeVirtualBalance,
+    this.openingBalance,
+    this.nativeOpeningBalance,
+    this.openingBalanceDate,
     this.liabilityType,
     this.liabilityDirection,
     this.interest,
     this.interestPeriod,
-    this.notes,
-    this.latitude,
+    this.currentDebt,
+    this.includeNetWorth,
     this.longitude,
+    this.latitude,
     this.zoomLevel,
   });
 
@@ -4147,26 +4249,24 @@ class Account {
   final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
+  @JsonKey(name: 'native_currency_id', includeIfNull: false)
+  final String? nativeCurrencyId;
+  @JsonKey(name: 'native_currency_code', includeIfNull: false)
+  final String? nativeCurrencyCode;
+  @JsonKey(name: 'native_currency_symbol', includeIfNull: false)
+  final String? nativeCurrencySymbol;
+  @JsonKey(name: 'native_currency_decimal_places', includeIfNull: false)
+  final int? nativeCurrencyDecimalPlaces;
   @JsonKey(name: 'current_balance', includeIfNull: false)
   final String? currentBalance;
+  @JsonKey(name: 'native_current_balance', includeIfNull: false)
+  final String? nativeCurrentBalance;
   @JsonKey(name: 'current_balance_date', includeIfNull: false)
   final DateTime? currentBalanceDate;
-  @JsonKey(name: 'iban', includeIfNull: false)
-  final String? iban;
-  @JsonKey(name: 'bic', includeIfNull: false)
-  final String? bic;
-  @JsonKey(name: 'account_number', includeIfNull: false)
-  final String? accountNumber;
-  @JsonKey(name: 'opening_balance', includeIfNull: false)
-  final String? openingBalance;
-  @JsonKey(name: 'current_debt', includeIfNull: false)
-  final String? currentDebt;
-  @JsonKey(name: 'opening_balance_date', includeIfNull: false)
-  final DateTime? openingBalanceDate;
-  @JsonKey(name: 'virtual_balance', includeIfNull: false)
-  final String? virtualBalance;
-  @JsonKey(name: 'include_net_worth', includeIfNull: false, defaultValue: true)
-  final bool? includeNetWorth;
+  @JsonKey(name: 'notes', includeIfNull: false)
+  final String? notes;
+  @JsonKey(name: 'monthly_payment_date', includeIfNull: false)
+  final DateTime? monthlyPaymentDate;
   @JsonKey(
     name: 'credit_card_type',
     includeIfNull: false,
@@ -4174,8 +4274,22 @@ class Account {
     fromJson: creditCardTypePropertyNullableFromJson,
   )
   final enums.CreditCardTypeProperty? creditCardType;
-  @JsonKey(name: 'monthly_payment_date', includeIfNull: false)
-  final DateTime? monthlyPaymentDate;
+  @JsonKey(name: 'account_number', includeIfNull: false)
+  final String? accountNumber;
+  @JsonKey(name: 'iban', includeIfNull: false)
+  final String? iban;
+  @JsonKey(name: 'bic', includeIfNull: false)
+  final String? bic;
+  @JsonKey(name: 'virtual_balance', includeIfNull: false)
+  final String? virtualBalance;
+  @JsonKey(name: 'native_virtual_balance', includeIfNull: false)
+  final String? nativeVirtualBalance;
+  @JsonKey(name: 'opening_balance', includeIfNull: false)
+  final String? openingBalance;
+  @JsonKey(name: 'native_opening_balance', includeIfNull: false)
+  final String? nativeOpeningBalance;
+  @JsonKey(name: 'opening_balance_date', includeIfNull: false)
+  final DateTime? openingBalanceDate;
   @JsonKey(
     name: 'liability_type',
     includeIfNull: false,
@@ -4199,12 +4313,14 @@ class Account {
     fromJson: interestPeriodPropertyNullableFromJson,
   )
   final enums.InterestPeriodProperty? interestPeriod;
-  @JsonKey(name: 'notes', includeIfNull: false)
-  final String? notes;
-  @JsonKey(name: 'latitude', includeIfNull: false)
-  final double? latitude;
+  @JsonKey(name: 'current_debt', includeIfNull: false)
+  final String? currentDebt;
+  @JsonKey(name: 'include_net_worth', includeIfNull: false, defaultValue: true)
+  final bool? includeNetWorth;
   @JsonKey(name: 'longitude', includeIfNull: false)
   final double? longitude;
+  @JsonKey(name: 'latitude', includeIfNull: false)
+  final double? latitude;
   @JsonKey(name: 'zoom_level', includeIfNull: false)
   final int? zoomLevel;
   static const fromJsonFactory = _$AccountFromJson;
@@ -4226,25 +4342,32 @@ extension $AccountExtension on Account {
       String? currencyCode,
       String? currencySymbol,
       int? currencyDecimalPlaces,
+      String? nativeCurrencyId,
+      String? nativeCurrencyCode,
+      String? nativeCurrencySymbol,
+      int? nativeCurrencyDecimalPlaces,
       String? currentBalance,
+      String? nativeCurrentBalance,
       DateTime? currentBalanceDate,
+      String? notes,
+      DateTime? monthlyPaymentDate,
+      enums.CreditCardTypeProperty? creditCardType,
+      String? accountNumber,
       String? iban,
       String? bic,
-      String? accountNumber,
-      String? openingBalance,
-      String? currentDebt,
-      DateTime? openingBalanceDate,
       String? virtualBalance,
-      bool? includeNetWorth,
-      enums.CreditCardTypeProperty? creditCardType,
-      DateTime? monthlyPaymentDate,
+      String? nativeVirtualBalance,
+      String? openingBalance,
+      String? nativeOpeningBalance,
+      DateTime? openingBalanceDate,
       enums.LiabilityTypeProperty? liabilityType,
       enums.LiabilityDirectionProperty? liabilityDirection,
       String? interest,
       enums.InterestPeriodProperty? interestPeriod,
-      String? notes,
-      double? latitude,
+      String? currentDebt,
+      bool? includeNetWorth,
       double? longitude,
+      double? latitude,
       int? zoomLevel}) {
     return Account(
         createdAt: createdAt ?? this.createdAt,
@@ -4259,25 +4382,33 @@ extension $AccountExtension on Account {
         currencySymbol: currencySymbol ?? this.currencySymbol,
         currencyDecimalPlaces:
             currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+        nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
+        nativeCurrencyDecimalPlaces:
+            nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
         currentBalance: currentBalance ?? this.currentBalance,
+        nativeCurrentBalance: nativeCurrentBalance ?? this.nativeCurrentBalance,
         currentBalanceDate: currentBalanceDate ?? this.currentBalanceDate,
+        notes: notes ?? this.notes,
+        monthlyPaymentDate: monthlyPaymentDate ?? this.monthlyPaymentDate,
+        creditCardType: creditCardType ?? this.creditCardType,
+        accountNumber: accountNumber ?? this.accountNumber,
         iban: iban ?? this.iban,
         bic: bic ?? this.bic,
-        accountNumber: accountNumber ?? this.accountNumber,
-        openingBalance: openingBalance ?? this.openingBalance,
-        currentDebt: currentDebt ?? this.currentDebt,
-        openingBalanceDate: openingBalanceDate ?? this.openingBalanceDate,
         virtualBalance: virtualBalance ?? this.virtualBalance,
-        includeNetWorth: includeNetWorth ?? this.includeNetWorth,
-        creditCardType: creditCardType ?? this.creditCardType,
-        monthlyPaymentDate: monthlyPaymentDate ?? this.monthlyPaymentDate,
+        nativeVirtualBalance: nativeVirtualBalance ?? this.nativeVirtualBalance,
+        openingBalance: openingBalance ?? this.openingBalance,
+        nativeOpeningBalance: nativeOpeningBalance ?? this.nativeOpeningBalance,
+        openingBalanceDate: openingBalanceDate ?? this.openingBalanceDate,
         liabilityType: liabilityType ?? this.liabilityType,
         liabilityDirection: liabilityDirection ?? this.liabilityDirection,
         interest: interest ?? this.interest,
         interestPeriod: interestPeriod ?? this.interestPeriod,
-        notes: notes ?? this.notes,
-        latitude: latitude ?? this.latitude,
+        currentDebt: currentDebt ?? this.currentDebt,
+        includeNetWorth: includeNetWorth ?? this.includeNetWorth,
         longitude: longitude ?? this.longitude,
+        latitude: latitude ?? this.latitude,
         zoomLevel: zoomLevel ?? this.zoomLevel);
   }
 
@@ -4293,25 +4424,32 @@ extension $AccountExtension on Account {
       Wrapped<String?>? currencyCode,
       Wrapped<String?>? currencySymbol,
       Wrapped<int?>? currencyDecimalPlaces,
+      Wrapped<String?>? nativeCurrencyId,
+      Wrapped<String?>? nativeCurrencyCode,
+      Wrapped<String?>? nativeCurrencySymbol,
+      Wrapped<int?>? nativeCurrencyDecimalPlaces,
       Wrapped<String?>? currentBalance,
+      Wrapped<String?>? nativeCurrentBalance,
       Wrapped<DateTime?>? currentBalanceDate,
+      Wrapped<String?>? notes,
+      Wrapped<DateTime?>? monthlyPaymentDate,
+      Wrapped<enums.CreditCardTypeProperty?>? creditCardType,
+      Wrapped<String?>? accountNumber,
       Wrapped<String?>? iban,
       Wrapped<String?>? bic,
-      Wrapped<String?>? accountNumber,
-      Wrapped<String?>? openingBalance,
-      Wrapped<String?>? currentDebt,
-      Wrapped<DateTime?>? openingBalanceDate,
       Wrapped<String?>? virtualBalance,
-      Wrapped<bool?>? includeNetWorth,
-      Wrapped<enums.CreditCardTypeProperty?>? creditCardType,
-      Wrapped<DateTime?>? monthlyPaymentDate,
+      Wrapped<String?>? nativeVirtualBalance,
+      Wrapped<String?>? openingBalance,
+      Wrapped<String?>? nativeOpeningBalance,
+      Wrapped<DateTime?>? openingBalanceDate,
       Wrapped<enums.LiabilityTypeProperty?>? liabilityType,
       Wrapped<enums.LiabilityDirectionProperty?>? liabilityDirection,
       Wrapped<String?>? interest,
       Wrapped<enums.InterestPeriodProperty?>? interestPeriod,
-      Wrapped<String?>? notes,
-      Wrapped<double?>? latitude,
+      Wrapped<String?>? currentDebt,
+      Wrapped<bool?>? includeNetWorth,
       Wrapped<double?>? longitude,
+      Wrapped<double?>? latitude,
       Wrapped<int?>? zoomLevel}) {
     return Account(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
@@ -4331,36 +4469,53 @@ extension $AccountExtension on Account {
         currencyDecimalPlaces: (currencyDecimalPlaces != null
             ? currencyDecimalPlaces.value
             : this.currencyDecimalPlaces),
+        nativeCurrencyId: (nativeCurrencyId != null
+            ? nativeCurrencyId.value
+            : this.nativeCurrencyId),
+        nativeCurrencyCode: (nativeCurrencyCode != null
+            ? nativeCurrencyCode.value
+            : this.nativeCurrencyCode),
+        nativeCurrencySymbol: (nativeCurrencySymbol != null
+            ? nativeCurrencySymbol.value
+            : this.nativeCurrencySymbol),
+        nativeCurrencyDecimalPlaces: (nativeCurrencyDecimalPlaces != null
+            ? nativeCurrencyDecimalPlaces.value
+            : this.nativeCurrencyDecimalPlaces),
         currentBalance: (currentBalance != null
             ? currentBalance.value
             : this.currentBalance),
+        nativeCurrentBalance: (nativeCurrentBalance != null
+            ? nativeCurrentBalance.value
+            : this.nativeCurrentBalance),
         currentBalanceDate: (currentBalanceDate != null
             ? currentBalanceDate.value
             : this.currentBalanceDate),
-        iban: (iban != null ? iban.value : this.iban),
-        bic: (bic != null ? bic.value : this.bic),
-        accountNumber:
-            (accountNumber != null ? accountNumber.value : this.accountNumber),
-        openingBalance: (openingBalance != null
-            ? openingBalance.value
-            : this.openingBalance),
-        currentDebt:
-            (currentDebt != null ? currentDebt.value : this.currentDebt),
-        openingBalanceDate: (openingBalanceDate != null
-            ? openingBalanceDate.value
-            : this.openingBalanceDate),
-        virtualBalance: (virtualBalance != null
-            ? virtualBalance.value
-            : this.virtualBalance),
-        includeNetWorth: (includeNetWorth != null
-            ? includeNetWorth.value
-            : this.includeNetWorth),
-        creditCardType: (creditCardType != null
-            ? creditCardType.value
-            : this.creditCardType),
+        notes: (notes != null ? notes.value : this.notes),
         monthlyPaymentDate: (monthlyPaymentDate != null
             ? monthlyPaymentDate.value
             : this.monthlyPaymentDate),
+        creditCardType: (creditCardType != null
+            ? creditCardType.value
+            : this.creditCardType),
+        accountNumber:
+            (accountNumber != null ? accountNumber.value : this.accountNumber),
+        iban: (iban != null ? iban.value : this.iban),
+        bic: (bic != null ? bic.value : this.bic),
+        virtualBalance: (virtualBalance != null
+            ? virtualBalance.value
+            : this.virtualBalance),
+        nativeVirtualBalance: (nativeVirtualBalance != null
+            ? nativeVirtualBalance.value
+            : this.nativeVirtualBalance),
+        openingBalance: (openingBalance != null
+            ? openingBalance.value
+            : this.openingBalance),
+        nativeOpeningBalance: (nativeOpeningBalance != null
+            ? nativeOpeningBalance.value
+            : this.nativeOpeningBalance),
+        openingBalanceDate: (openingBalanceDate != null
+            ? openingBalanceDate.value
+            : this.openingBalanceDate),
         liabilityType:
             (liabilityType != null ? liabilityType.value : this.liabilityType),
         liabilityDirection: (liabilityDirection != null
@@ -4370,9 +4525,13 @@ extension $AccountExtension on Account {
         interestPeriod: (interestPeriod != null
             ? interestPeriod.value
             : this.interestPeriod),
-        notes: (notes != null ? notes.value : this.notes),
-        latitude: (latitude != null ? latitude.value : this.latitude),
+        currentDebt:
+            (currentDebt != null ? currentDebt.value : this.currentDebt),
+        includeNetWorth: (includeNetWorth != null
+            ? includeNetWorth.value
+            : this.includeNetWorth),
         longitude: (longitude != null ? longitude.value : this.longitude),
+        latitude: (latitude != null ? latitude.value : this.latitude),
         zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel));
   }
 }
@@ -4849,6 +5008,7 @@ class Attachment {
     required this.attachableType,
     required this.attachableId,
     this.md5,
+    this.hash,
     required this.filename,
     this.downloadUrl,
     this.uploadUrl,
@@ -4879,6 +5039,8 @@ class Attachment {
   final String attachableId;
   @JsonKey(name: 'md5', includeIfNull: false)
   final String? md5;
+  @JsonKey(name: 'hash', includeIfNull: false)
+  final String? hash;
   @JsonKey(name: 'filename', includeIfNull: false)
   final String filename;
   @JsonKey(name: 'download_url', includeIfNull: false)
@@ -4906,6 +5068,7 @@ extension $AttachmentExtension on Attachment {
       enums.AttachableType? attachableType,
       String? attachableId,
       String? md5,
+      String? hash,
       String? filename,
       String? downloadUrl,
       String? uploadUrl,
@@ -4919,6 +5082,7 @@ extension $AttachmentExtension on Attachment {
         attachableType: attachableType ?? this.attachableType,
         attachableId: attachableId ?? this.attachableId,
         md5: md5 ?? this.md5,
+        hash: hash ?? this.hash,
         filename: filename ?? this.filename,
         downloadUrl: downloadUrl ?? this.downloadUrl,
         uploadUrl: uploadUrl ?? this.uploadUrl,
@@ -4934,6 +5098,7 @@ extension $AttachmentExtension on Attachment {
       Wrapped<enums.AttachableType>? attachableType,
       Wrapped<String>? attachableId,
       Wrapped<String?>? md5,
+      Wrapped<String?>? hash,
       Wrapped<String>? filename,
       Wrapped<String?>? downloadUrl,
       Wrapped<String?>? uploadUrl,
@@ -4950,6 +5115,7 @@ extension $AttachmentExtension on Attachment {
         attachableId:
             (attachableId != null ? attachableId.value : this.attachableId),
         md5: (md5 != null ? md5.value : this.md5),
+        hash: (hash != null ? hash.value : this.hash),
         filename: (filename != null ? filename.value : this.filename),
         downloadUrl:
             (downloadUrl != null ? downloadUrl.value : this.downloadUrl),
@@ -5085,7 +5251,12 @@ class AvailableBudget {
     this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
+    this.nativeCurrencyId,
+    this.nativeCurrencyCode,
+    this.nativeCurrencySymbol,
+    this.nativeCurrencyDecimalPlaces,
     required this.amount,
+    this.nativeAmount,
     required this.start,
     required this.end,
     this.spentInBudgets,
@@ -5110,8 +5281,18 @@ class AvailableBudget {
   final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
+  @JsonKey(name: 'native_currency_id', includeIfNull: false)
+  final String? nativeCurrencyId;
+  @JsonKey(name: 'native_currency_code', includeIfNull: false)
+  final String? nativeCurrencyCode;
+  @JsonKey(name: 'native_currency_symbol', includeIfNull: false)
+  final String? nativeCurrencySymbol;
+  @JsonKey(name: 'native_currency_decimal_places', includeIfNull: false)
+  final int? nativeCurrencyDecimalPlaces;
   @JsonKey(name: 'amount', includeIfNull: false)
   final String amount;
+  @JsonKey(name: 'native_amount', includeIfNull: false)
+  final String? nativeAmount;
   @JsonKey(name: 'start', includeIfNull: false)
   final DateTime start;
   @JsonKey(name: 'end', includeIfNull: false)
@@ -5140,7 +5321,12 @@ extension $AvailableBudgetExtension on AvailableBudget {
       String? currencyCode,
       String? currencySymbol,
       int? currencyDecimalPlaces,
+      String? nativeCurrencyId,
+      String? nativeCurrencyCode,
+      String? nativeCurrencySymbol,
+      int? nativeCurrencyDecimalPlaces,
       String? amount,
+      String? nativeAmount,
       DateTime? start,
       DateTime? end,
       List<BudgetSpent>? spentInBudgets,
@@ -5153,7 +5339,13 @@ extension $AvailableBudgetExtension on AvailableBudget {
         currencySymbol: currencySymbol ?? this.currencySymbol,
         currencyDecimalPlaces:
             currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+        nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
+        nativeCurrencyDecimalPlaces:
+            nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
         amount: amount ?? this.amount,
+        nativeAmount: nativeAmount ?? this.nativeAmount,
         start: start ?? this.start,
         end: end ?? this.end,
         spentInBudgets: spentInBudgets ?? this.spentInBudgets,
@@ -5167,7 +5359,12 @@ extension $AvailableBudgetExtension on AvailableBudget {
       Wrapped<String?>? currencyCode,
       Wrapped<String?>? currencySymbol,
       Wrapped<int?>? currencyDecimalPlaces,
+      Wrapped<String?>? nativeCurrencyId,
+      Wrapped<String?>? nativeCurrencyCode,
+      Wrapped<String?>? nativeCurrencySymbol,
+      Wrapped<int?>? nativeCurrencyDecimalPlaces,
       Wrapped<String>? amount,
+      Wrapped<String?>? nativeAmount,
       Wrapped<DateTime>? start,
       Wrapped<DateTime>? end,
       Wrapped<List<BudgetSpent>?>? spentInBudgets,
@@ -5184,7 +5381,21 @@ extension $AvailableBudgetExtension on AvailableBudget {
         currencyDecimalPlaces: (currencyDecimalPlaces != null
             ? currencyDecimalPlaces.value
             : this.currencyDecimalPlaces),
+        nativeCurrencyId: (nativeCurrencyId != null
+            ? nativeCurrencyId.value
+            : this.nativeCurrencyId),
+        nativeCurrencyCode: (nativeCurrencyCode != null
+            ? nativeCurrencyCode.value
+            : this.nativeCurrencyCode),
+        nativeCurrencySymbol: (nativeCurrencySymbol != null
+            ? nativeCurrencySymbol.value
+            : this.nativeCurrencySymbol),
+        nativeCurrencyDecimalPlaces: (nativeCurrencyDecimalPlaces != null
+            ? nativeCurrencyDecimalPlaces.value
+            : this.nativeCurrencyDecimalPlaces),
         amount: (amount != null ? amount.value : this.amount),
+        nativeAmount:
+            (nativeAmount != null ? nativeAmount.value : this.nativeAmount),
         start: (start != null ? start.value : this.start),
         end: (end != null ? end.value : this.end),
         spentInBudgets: (spentInBudgets != null
@@ -5205,9 +5416,15 @@ class Bill {
     this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
+    this.nativeCurrencyId,
+    this.nativeCurrencyCode,
+    this.nativeCurrencySymbol,
+    this.nativeCurrencyDecimalPlaces,
     required this.name,
     required this.amountMin,
     required this.amountMax,
+    this.nativeAmountMin,
+    this.nativeAmountMax,
     required this.date,
     this.endDate,
     this.extensionDate,
@@ -5242,12 +5459,24 @@ class Bill {
   final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
+  @JsonKey(name: 'native_currency_id', includeIfNull: false)
+  final String? nativeCurrencyId;
+  @JsonKey(name: 'native_currency_code', includeIfNull: false)
+  final String? nativeCurrencyCode;
+  @JsonKey(name: 'native_currency_symbol', includeIfNull: false)
+  final String? nativeCurrencySymbol;
+  @JsonKey(name: 'native_currency_decimal_places', includeIfNull: false)
+  final int? nativeCurrencyDecimalPlaces;
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   @JsonKey(name: 'amount_min', includeIfNull: false)
   final String amountMin;
   @JsonKey(name: 'amount_max', includeIfNull: false)
   final String amountMax;
+  @JsonKey(name: 'native_amount_min', includeIfNull: false)
+  final String? nativeAmountMin;
+  @JsonKey(name: 'native_amount_max', includeIfNull: false)
+  final String? nativeAmountMax;
   @JsonKey(name: 'date', includeIfNull: false)
   final DateTime date;
   @JsonKey(name: 'end_date', includeIfNull: false)
@@ -5297,9 +5526,15 @@ extension $BillExtension on Bill {
       String? currencyCode,
       String? currencySymbol,
       int? currencyDecimalPlaces,
+      String? nativeCurrencyId,
+      String? nativeCurrencyCode,
+      String? nativeCurrencySymbol,
+      int? nativeCurrencyDecimalPlaces,
       String? name,
       String? amountMin,
       String? amountMax,
+      String? nativeAmountMin,
+      String? nativeAmountMax,
       DateTime? date,
       DateTime? endDate,
       DateTime? extensionDate,
@@ -5323,9 +5558,16 @@ extension $BillExtension on Bill {
         currencySymbol: currencySymbol ?? this.currencySymbol,
         currencyDecimalPlaces:
             currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+        nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
+        nativeCurrencyDecimalPlaces:
+            nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
         name: name ?? this.name,
         amountMin: amountMin ?? this.amountMin,
         amountMax: amountMax ?? this.amountMax,
+        nativeAmountMin: nativeAmountMin ?? this.nativeAmountMin,
+        nativeAmountMax: nativeAmountMax ?? this.nativeAmountMax,
         date: date ?? this.date,
         endDate: endDate ?? this.endDate,
         extensionDate: extensionDate ?? this.extensionDate,
@@ -5351,9 +5593,15 @@ extension $BillExtension on Bill {
       Wrapped<String?>? currencyCode,
       Wrapped<String?>? currencySymbol,
       Wrapped<int?>? currencyDecimalPlaces,
+      Wrapped<String?>? nativeCurrencyId,
+      Wrapped<String?>? nativeCurrencyCode,
+      Wrapped<String?>? nativeCurrencySymbol,
+      Wrapped<int?>? nativeCurrencyDecimalPlaces,
       Wrapped<String>? name,
       Wrapped<String>? amountMin,
       Wrapped<String>? amountMax,
+      Wrapped<String?>? nativeAmountMin,
+      Wrapped<String?>? nativeAmountMax,
       Wrapped<DateTime>? date,
       Wrapped<DateTime?>? endDate,
       Wrapped<DateTime?>? extensionDate,
@@ -5381,9 +5629,27 @@ extension $BillExtension on Bill {
         currencyDecimalPlaces: (currencyDecimalPlaces != null
             ? currencyDecimalPlaces.value
             : this.currencyDecimalPlaces),
+        nativeCurrencyId: (nativeCurrencyId != null
+            ? nativeCurrencyId.value
+            : this.nativeCurrencyId),
+        nativeCurrencyCode: (nativeCurrencyCode != null
+            ? nativeCurrencyCode.value
+            : this.nativeCurrencyCode),
+        nativeCurrencySymbol: (nativeCurrencySymbol != null
+            ? nativeCurrencySymbol.value
+            : this.nativeCurrencySymbol),
+        nativeCurrencyDecimalPlaces: (nativeCurrencyDecimalPlaces != null
+            ? nativeCurrencyDecimalPlaces.value
+            : this.nativeCurrencyDecimalPlaces),
         name: (name != null ? name.value : this.name),
         amountMin: (amountMin != null ? amountMin.value : this.amountMin),
         amountMax: (amountMax != null ? amountMax.value : this.amountMax),
+        nativeAmountMin: (nativeAmountMin != null
+            ? nativeAmountMin.value
+            : this.nativeAmountMin),
+        nativeAmountMax: (nativeAmountMax != null
+            ? nativeAmountMax.value
+            : this.nativeAmountMax),
         date: (date != null ? date.value : this.date),
         endDate: (endDate != null ? endDate.value : this.endDate),
         extensionDate:
@@ -5692,9 +5958,16 @@ class Budget {
     this.notes,
     this.order,
     this.autoBudgetType,
-    this.autoBudgetCurrencyId,
-    this.autoBudgetCurrencyCode,
+    this.currencyId,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyDecimalPlaces,
+    this.nativeCurrencyId,
+    this.nativeCurrencyCode,
+    this.nativeCurrencySymbol,
+    this.nativeCurrencyDecimalPlaces,
     this.autoBudgetAmount,
+    this.nativeAutoBudgetAmount,
     this.autoBudgetPeriod,
     this.spent,
   });
@@ -5723,12 +5996,26 @@ class Budget {
     fromJson: autoBudgetTypeNullableFromJson,
   )
   final enums.AutoBudgetType? autoBudgetType;
-  @JsonKey(name: 'auto_budget_currency_id', includeIfNull: false)
-  final String? autoBudgetCurrencyId;
-  @JsonKey(name: 'auto_budget_currency_code', includeIfNull: false)
-  final String? autoBudgetCurrencyCode;
+  @JsonKey(name: 'currency_id', includeIfNull: false)
+  final String? currencyId;
+  @JsonKey(name: 'currency_code', includeIfNull: false)
+  final String? currencyCode;
+  @JsonKey(name: 'currency_symbol', includeIfNull: false)
+  final String? currencySymbol;
+  @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
+  final int? currencyDecimalPlaces;
+  @JsonKey(name: 'native_currency_id', includeIfNull: false)
+  final String? nativeCurrencyId;
+  @JsonKey(name: 'native_currency_code', includeIfNull: false)
+  final String? nativeCurrencyCode;
+  @JsonKey(name: 'native_currency_symbol', includeIfNull: false)
+  final String? nativeCurrencySymbol;
+  @JsonKey(name: 'native_currency_decimal_places', includeIfNull: false)
+  final int? nativeCurrencyDecimalPlaces;
   @JsonKey(name: 'auto_budget_amount', includeIfNull: false)
   final String? autoBudgetAmount;
+  @JsonKey(name: 'native_auto_budget_amount', includeIfNull: false)
+  final String? nativeAutoBudgetAmount;
   @JsonKey(
     name: 'auto_budget_period',
     includeIfNull: false,
@@ -5753,9 +6040,16 @@ extension $BudgetExtension on Budget {
       String? notes,
       int? order,
       enums.AutoBudgetType? autoBudgetType,
-      String? autoBudgetCurrencyId,
-      String? autoBudgetCurrencyCode,
+      String? currencyId,
+      String? currencyCode,
+      String? currencySymbol,
+      int? currencyDecimalPlaces,
+      String? nativeCurrencyId,
+      String? nativeCurrencyCode,
+      String? nativeCurrencySymbol,
+      int? nativeCurrencyDecimalPlaces,
       String? autoBudgetAmount,
+      String? nativeAutoBudgetAmount,
       enums.AutoBudgetPeriod? autoBudgetPeriod,
       List<BudgetSpent>? spent}) {
     return Budget(
@@ -5766,10 +6060,19 @@ extension $BudgetExtension on Budget {
         notes: notes ?? this.notes,
         order: order ?? this.order,
         autoBudgetType: autoBudgetType ?? this.autoBudgetType,
-        autoBudgetCurrencyId: autoBudgetCurrencyId ?? this.autoBudgetCurrencyId,
-        autoBudgetCurrencyCode:
-            autoBudgetCurrencyCode ?? this.autoBudgetCurrencyCode,
+        currencyId: currencyId ?? this.currencyId,
+        currencyCode: currencyCode ?? this.currencyCode,
+        currencySymbol: currencySymbol ?? this.currencySymbol,
+        currencyDecimalPlaces:
+            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+        nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
+        nativeCurrencyDecimalPlaces:
+            nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
         autoBudgetAmount: autoBudgetAmount ?? this.autoBudgetAmount,
+        nativeAutoBudgetAmount:
+            nativeAutoBudgetAmount ?? this.nativeAutoBudgetAmount,
         autoBudgetPeriod: autoBudgetPeriod ?? this.autoBudgetPeriod,
         spent: spent ?? this.spent);
   }
@@ -5782,9 +6085,16 @@ extension $BudgetExtension on Budget {
       Wrapped<String?>? notes,
       Wrapped<int?>? order,
       Wrapped<enums.AutoBudgetType?>? autoBudgetType,
-      Wrapped<String?>? autoBudgetCurrencyId,
-      Wrapped<String?>? autoBudgetCurrencyCode,
+      Wrapped<String?>? currencyId,
+      Wrapped<String?>? currencyCode,
+      Wrapped<String?>? currencySymbol,
+      Wrapped<int?>? currencyDecimalPlaces,
+      Wrapped<String?>? nativeCurrencyId,
+      Wrapped<String?>? nativeCurrencyCode,
+      Wrapped<String?>? nativeCurrencySymbol,
+      Wrapped<int?>? nativeCurrencyDecimalPlaces,
       Wrapped<String?>? autoBudgetAmount,
+      Wrapped<String?>? nativeAutoBudgetAmount,
       Wrapped<enums.AutoBudgetPeriod?>? autoBudgetPeriod,
       Wrapped<List<BudgetSpent>?>? spent}) {
     return Budget(
@@ -5797,15 +6107,33 @@ extension $BudgetExtension on Budget {
         autoBudgetType: (autoBudgetType != null
             ? autoBudgetType.value
             : this.autoBudgetType),
-        autoBudgetCurrencyId: (autoBudgetCurrencyId != null
-            ? autoBudgetCurrencyId.value
-            : this.autoBudgetCurrencyId),
-        autoBudgetCurrencyCode: (autoBudgetCurrencyCode != null
-            ? autoBudgetCurrencyCode.value
-            : this.autoBudgetCurrencyCode),
+        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+        currencyCode:
+            (currencyCode != null ? currencyCode.value : this.currencyCode),
+        currencySymbol: (currencySymbol != null
+            ? currencySymbol.value
+            : this.currencySymbol),
+        currencyDecimalPlaces: (currencyDecimalPlaces != null
+            ? currencyDecimalPlaces.value
+            : this.currencyDecimalPlaces),
+        nativeCurrencyId: (nativeCurrencyId != null
+            ? nativeCurrencyId.value
+            : this.nativeCurrencyId),
+        nativeCurrencyCode: (nativeCurrencyCode != null
+            ? nativeCurrencyCode.value
+            : this.nativeCurrencyCode),
+        nativeCurrencySymbol: (nativeCurrencySymbol != null
+            ? nativeCurrencySymbol.value
+            : this.nativeCurrencySymbol),
+        nativeCurrencyDecimalPlaces: (nativeCurrencyDecimalPlaces != null
+            ? nativeCurrencyDecimalPlaces.value
+            : this.nativeCurrencyDecimalPlaces),
         autoBudgetAmount: (autoBudgetAmount != null
             ? autoBudgetAmount.value
             : this.autoBudgetAmount),
+        nativeAutoBudgetAmount: (nativeAutoBudgetAmount != null
+            ? nativeAutoBudgetAmount.value
+            : this.nativeAutoBudgetAmount),
         autoBudgetPeriod: (autoBudgetPeriod != null
             ? autoBudgetPeriod.value
             : this.autoBudgetPeriod),
@@ -6047,10 +6375,16 @@ class BudgetLimit {
     this.currencyName,
     this.currencySymbol,
     this.currencyDecimalPlaces,
+    this.nativeCurrencyId,
+    this.nativeCurrencyCode,
+    this.nativeCurrencySymbol,
+    this.nativeCurrencyDecimalPlaces,
     this.budgetId,
     this.period,
     required this.amount,
+    this.nativeAmount,
     this.spent,
+    this.notes,
   });
 
   factory BudgetLimit.fromJson(Map<String, dynamic> json) =>
@@ -6077,14 +6411,26 @@ class BudgetLimit {
   final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
+  @JsonKey(name: 'native_currency_id', includeIfNull: false)
+  final String? nativeCurrencyId;
+  @JsonKey(name: 'native_currency_code', includeIfNull: false)
+  final String? nativeCurrencyCode;
+  @JsonKey(name: 'native_currency_symbol', includeIfNull: false)
+  final String? nativeCurrencySymbol;
+  @JsonKey(name: 'native_currency_decimal_places', includeIfNull: false)
+  final int? nativeCurrencyDecimalPlaces;
   @JsonKey(name: 'budget_id', includeIfNull: false)
   final String? budgetId;
   @JsonKey(name: 'period', includeIfNull: false)
   final String? period;
   @JsonKey(name: 'amount', includeIfNull: false)
   final String amount;
+  @JsonKey(name: 'native_amount', includeIfNull: false)
+  final String? nativeAmount;
   @JsonKey(name: 'spent', includeIfNull: false)
   final String? spent;
+  @JsonKey(name: 'notes', includeIfNull: false)
+  final String? notes;
   static const fromJsonFactory = _$BudgetLimitFromJson;
 
   @override
@@ -6102,10 +6448,16 @@ extension $BudgetLimitExtension on BudgetLimit {
       String? currencyName,
       String? currencySymbol,
       int? currencyDecimalPlaces,
+      String? nativeCurrencyId,
+      String? nativeCurrencyCode,
+      String? nativeCurrencySymbol,
+      int? nativeCurrencyDecimalPlaces,
       String? budgetId,
       String? period,
       String? amount,
-      String? spent}) {
+      String? nativeAmount,
+      String? spent,
+      String? notes}) {
     return BudgetLimit(
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
@@ -6117,10 +6469,17 @@ extension $BudgetLimitExtension on BudgetLimit {
         currencySymbol: currencySymbol ?? this.currencySymbol,
         currencyDecimalPlaces:
             currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+        nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
+        nativeCurrencyDecimalPlaces:
+            nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
         budgetId: budgetId ?? this.budgetId,
         period: period ?? this.period,
         amount: amount ?? this.amount,
-        spent: spent ?? this.spent);
+        nativeAmount: nativeAmount ?? this.nativeAmount,
+        spent: spent ?? this.spent,
+        notes: notes ?? this.notes);
   }
 
   BudgetLimit copyWithWrapped(
@@ -6133,10 +6492,16 @@ extension $BudgetLimitExtension on BudgetLimit {
       Wrapped<String?>? currencyName,
       Wrapped<String?>? currencySymbol,
       Wrapped<int?>? currencyDecimalPlaces,
+      Wrapped<String?>? nativeCurrencyId,
+      Wrapped<String?>? nativeCurrencyCode,
+      Wrapped<String?>? nativeCurrencySymbol,
+      Wrapped<int?>? nativeCurrencyDecimalPlaces,
       Wrapped<String?>? budgetId,
       Wrapped<String?>? period,
       Wrapped<String>? amount,
-      Wrapped<String?>? spent}) {
+      Wrapped<String?>? nativeAmount,
+      Wrapped<String?>? spent,
+      Wrapped<String?>? notes}) {
     return BudgetLimit(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
@@ -6153,10 +6518,25 @@ extension $BudgetLimitExtension on BudgetLimit {
         currencyDecimalPlaces: (currencyDecimalPlaces != null
             ? currencyDecimalPlaces.value
             : this.currencyDecimalPlaces),
+        nativeCurrencyId: (nativeCurrencyId != null
+            ? nativeCurrencyId.value
+            : this.nativeCurrencyId),
+        nativeCurrencyCode: (nativeCurrencyCode != null
+            ? nativeCurrencyCode.value
+            : this.nativeCurrencyCode),
+        nativeCurrencySymbol: (nativeCurrencySymbol != null
+            ? nativeCurrencySymbol.value
+            : this.nativeCurrencySymbol),
+        nativeCurrencyDecimalPlaces: (nativeCurrencyDecimalPlaces != null
+            ? nativeCurrencyDecimalPlaces.value
+            : this.nativeCurrencyDecimalPlaces),
         budgetId: (budgetId != null ? budgetId.value : this.budgetId),
         period: (period != null ? period.value : this.period),
         amount: (amount != null ? amount.value : this.amount),
-        spent: (spent != null ? spent.value : this.spent));
+        nativeAmount:
+            (nativeAmount != null ? nativeAmount.value : this.nativeAmount),
+        spent: (spent != null ? spent.value : this.spent),
+        notes: (notes != null ? notes.value : this.notes));
   }
 }
 
@@ -6170,6 +6550,7 @@ class BudgetLimitStore {
     this.period,
     required this.end,
     required this.amount,
+    this.notes,
   });
 
   factory BudgetLimitStore.fromJson(Map<String, dynamic> json) =>
@@ -6192,6 +6573,8 @@ class BudgetLimitStore {
   final DateTime end;
   @JsonKey(name: 'amount', includeIfNull: false)
   final String amount;
+  @JsonKey(name: 'notes', includeIfNull: false)
+  final String? notes;
   static const fromJsonFactory = _$BudgetLimitStoreFromJson;
 
   @override
@@ -6206,7 +6589,8 @@ extension $BudgetLimitStoreExtension on BudgetLimitStore {
       DateTime? start,
       String? period,
       DateTime? end,
-      String? amount}) {
+      String? amount,
+      String? notes}) {
     return BudgetLimitStore(
         currencyId: currencyId ?? this.currencyId,
         currencyCode: currencyCode ?? this.currencyCode,
@@ -6214,7 +6598,8 @@ extension $BudgetLimitStoreExtension on BudgetLimitStore {
         start: start ?? this.start,
         period: period ?? this.period,
         end: end ?? this.end,
-        amount: amount ?? this.amount);
+        amount: amount ?? this.amount,
+        notes: notes ?? this.notes);
   }
 
   BudgetLimitStore copyWithWrapped(
@@ -6224,7 +6609,8 @@ extension $BudgetLimitStoreExtension on BudgetLimitStore {
       Wrapped<DateTime>? start,
       Wrapped<String?>? period,
       Wrapped<DateTime>? end,
-      Wrapped<String>? amount}) {
+      Wrapped<String>? amount,
+      Wrapped<String?>? notes}) {
     return BudgetLimitStore(
         currencyId: (currencyId != null ? currencyId.value : this.currencyId),
         currencyCode:
@@ -6233,7 +6619,8 @@ extension $BudgetLimitStoreExtension on BudgetLimitStore {
         start: (start != null ? start.value : this.start),
         period: (period != null ? period.value : this.period),
         end: (end != null ? end.value : this.end),
-        amount: (amount != null ? amount.value : this.amount));
+        amount: (amount != null ? amount.value : this.amount),
+        notes: (notes != null ? notes.value : this.notes));
   }
 }
 
@@ -6312,6 +6699,10 @@ class Category {
     this.updatedAt,
     required this.name,
     this.notes,
+    this.nativeCurrencyId,
+    this.nativeCurrencyCode,
+    this.nativeCurrencySymbol,
+    this.nativeCurrencyDecimalPlaces,
     this.spent,
     this.earned,
   });
@@ -6330,6 +6721,14 @@ class Category {
   final String name;
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
+  @JsonKey(name: 'native_currency_id', includeIfNull: false)
+  final String? nativeCurrencyId;
+  @JsonKey(name: 'native_currency_code', includeIfNull: false)
+  final String? nativeCurrencyCode;
+  @JsonKey(name: 'native_currency_symbol', includeIfNull: false)
+  final String? nativeCurrencySymbol;
+  @JsonKey(name: 'native_currency_decimal_places', includeIfNull: false)
+  final int? nativeCurrencyDecimalPlaces;
   @JsonKey(name: 'spent', includeIfNull: false, defaultValue: <CategorySpent>[])
   final List<CategorySpent>? spent;
   @JsonKey(
@@ -6347,6 +6746,10 @@ extension $CategoryExtension on Category {
       DateTime? updatedAt,
       String? name,
       String? notes,
+      String? nativeCurrencyId,
+      String? nativeCurrencyCode,
+      String? nativeCurrencySymbol,
+      int? nativeCurrencyDecimalPlaces,
       List<CategorySpent>? spent,
       List<CategoryEarned>? earned}) {
     return Category(
@@ -6354,6 +6757,11 @@ extension $CategoryExtension on Category {
         updatedAt: updatedAt ?? this.updatedAt,
         name: name ?? this.name,
         notes: notes ?? this.notes,
+        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+        nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
+        nativeCurrencyDecimalPlaces:
+            nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
         spent: spent ?? this.spent,
         earned: earned ?? this.earned);
   }
@@ -6363,6 +6771,10 @@ extension $CategoryExtension on Category {
       Wrapped<DateTime?>? updatedAt,
       Wrapped<String>? name,
       Wrapped<String?>? notes,
+      Wrapped<String?>? nativeCurrencyId,
+      Wrapped<String?>? nativeCurrencyCode,
+      Wrapped<String?>? nativeCurrencySymbol,
+      Wrapped<int?>? nativeCurrencyDecimalPlaces,
       Wrapped<List<CategorySpent>?>? spent,
       Wrapped<List<CategoryEarned>?>? earned}) {
     return Category(
@@ -6370,6 +6782,18 @@ extension $CategoryExtension on Category {
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
         name: (name != null ? name.value : this.name),
         notes: (notes != null ? notes.value : this.notes),
+        nativeCurrencyId: (nativeCurrencyId != null
+            ? nativeCurrencyId.value
+            : this.nativeCurrencyId),
+        nativeCurrencyCode: (nativeCurrencyCode != null
+            ? nativeCurrencyCode.value
+            : this.nativeCurrencyCode),
+        nativeCurrencySymbol: (nativeCurrencySymbol != null
+            ? nativeCurrencySymbol.value
+            : this.nativeCurrencySymbol),
+        nativeCurrencyDecimalPlaces: (nativeCurrencyDecimalPlaces != null
+            ? nativeCurrencyDecimalPlaces.value
+            : this.nativeCurrencyDecimalPlaces),
         spent: (spent != null ? spent.value : this.spent),
         earned: (earned != null ? earned.value : this.earned));
   }
@@ -6548,6 +6972,261 @@ extension $CategorySpentExtension on CategorySpent {
 }
 
 @JsonSerializable(explicitToJson: true)
+class CurrencyExchangeRateRead {
+  const CurrencyExchangeRateRead({
+    required this.type,
+    required this.id,
+    required this.attributes,
+    required this.links,
+  });
+
+  factory CurrencyExchangeRateRead.fromJson(Map<String, dynamic> json) =>
+      _$CurrencyExchangeRateReadFromJson(json);
+
+  static const toJsonFactory = _$CurrencyExchangeRateReadToJson;
+  Map<String, dynamic> toJson() => _$CurrencyExchangeRateReadToJson(this);
+
+  @JsonKey(name: 'type', includeIfNull: false)
+  final String type;
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String id;
+  @JsonKey(name: 'attributes', includeIfNull: false)
+  final CurrencyExchangeRateReadAttributes attributes;
+  @JsonKey(name: 'links', includeIfNull: false)
+  final ObjectLink links;
+  static const fromJsonFactory = _$CurrencyExchangeRateReadFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $CurrencyExchangeRateReadExtension on CurrencyExchangeRateRead {
+  CurrencyExchangeRateRead copyWith(
+      {String? type,
+      String? id,
+      CurrencyExchangeRateReadAttributes? attributes,
+      ObjectLink? links}) {
+    return CurrencyExchangeRateRead(
+        type: type ?? this.type,
+        id: id ?? this.id,
+        attributes: attributes ?? this.attributes,
+        links: links ?? this.links);
+  }
+
+  CurrencyExchangeRateRead copyWithWrapped(
+      {Wrapped<String>? type,
+      Wrapped<String>? id,
+      Wrapped<CurrencyExchangeRateReadAttributes>? attributes,
+      Wrapped<ObjectLink>? links}) {
+    return CurrencyExchangeRateRead(
+        type: (type != null ? type.value : this.type),
+        id: (id != null ? id.value : this.id),
+        attributes: (attributes != null ? attributes.value : this.attributes),
+        links: (links != null ? links.value : this.links));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class CurrencyExchangeRateReadAttributes {
+  const CurrencyExchangeRateReadAttributes({
+    this.createdAt,
+    this.updatedAt,
+    this.fromCurrencyId,
+    this.fromCurrencyCode,
+    this.fromCurrencySymbol,
+    this.fromCurrencyDecimalPlaces,
+    this.toCurrencyId,
+    this.toCurrencyCode,
+    this.toCurrencySymbol,
+    this.toCurrencyDecimalPlaces,
+    this.rate,
+    this.date,
+  });
+
+  factory CurrencyExchangeRateReadAttributes.fromJson(
+          Map<String, dynamic> json) =>
+      _$CurrencyExchangeRateReadAttributesFromJson(json);
+
+  static const toJsonFactory = _$CurrencyExchangeRateReadAttributesToJson;
+  Map<String, dynamic> toJson() =>
+      _$CurrencyExchangeRateReadAttributesToJson(this);
+
+  @JsonKey(name: 'created_at', includeIfNull: false)
+  final DateTime? createdAt;
+  @JsonKey(name: 'updated_at', includeIfNull: false)
+  final DateTime? updatedAt;
+  @JsonKey(name: 'from_currency_id', includeIfNull: false)
+  final String? fromCurrencyId;
+  @JsonKey(name: 'from_currency_code', includeIfNull: false)
+  final String? fromCurrencyCode;
+  @JsonKey(name: 'from_currency_symbol', includeIfNull: false)
+  final String? fromCurrencySymbol;
+  @JsonKey(name: 'from_currency_decimal_places', includeIfNull: false)
+  final int? fromCurrencyDecimalPlaces;
+  @JsonKey(name: 'to_currency_id', includeIfNull: false)
+  final String? toCurrencyId;
+  @JsonKey(name: 'to_currency_code', includeIfNull: false)
+  final String? toCurrencyCode;
+  @JsonKey(name: 'to_currency_symbol', includeIfNull: false)
+  final String? toCurrencySymbol;
+  @JsonKey(name: 'to_currency_decimal_places', includeIfNull: false)
+  final int? toCurrencyDecimalPlaces;
+  @JsonKey(name: 'rate', includeIfNull: false)
+  final String? rate;
+  @JsonKey(name: 'date', includeIfNull: false)
+  final DateTime? date;
+  static const fromJsonFactory = _$CurrencyExchangeRateReadAttributesFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $CurrencyExchangeRateReadAttributesExtension
+    on CurrencyExchangeRateReadAttributes {
+  CurrencyExchangeRateReadAttributes copyWith(
+      {DateTime? createdAt,
+      DateTime? updatedAt,
+      String? fromCurrencyId,
+      String? fromCurrencyCode,
+      String? fromCurrencySymbol,
+      int? fromCurrencyDecimalPlaces,
+      String? toCurrencyId,
+      String? toCurrencyCode,
+      String? toCurrencySymbol,
+      int? toCurrencyDecimalPlaces,
+      String? rate,
+      DateTime? date}) {
+    return CurrencyExchangeRateReadAttributes(
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        fromCurrencyId: fromCurrencyId ?? this.fromCurrencyId,
+        fromCurrencyCode: fromCurrencyCode ?? this.fromCurrencyCode,
+        fromCurrencySymbol: fromCurrencySymbol ?? this.fromCurrencySymbol,
+        fromCurrencyDecimalPlaces:
+            fromCurrencyDecimalPlaces ?? this.fromCurrencyDecimalPlaces,
+        toCurrencyId: toCurrencyId ?? this.toCurrencyId,
+        toCurrencyCode: toCurrencyCode ?? this.toCurrencyCode,
+        toCurrencySymbol: toCurrencySymbol ?? this.toCurrencySymbol,
+        toCurrencyDecimalPlaces:
+            toCurrencyDecimalPlaces ?? this.toCurrencyDecimalPlaces,
+        rate: rate ?? this.rate,
+        date: date ?? this.date);
+  }
+
+  CurrencyExchangeRateReadAttributes copyWithWrapped(
+      {Wrapped<DateTime?>? createdAt,
+      Wrapped<DateTime?>? updatedAt,
+      Wrapped<String?>? fromCurrencyId,
+      Wrapped<String?>? fromCurrencyCode,
+      Wrapped<String?>? fromCurrencySymbol,
+      Wrapped<int?>? fromCurrencyDecimalPlaces,
+      Wrapped<String?>? toCurrencyId,
+      Wrapped<String?>? toCurrencyCode,
+      Wrapped<String?>? toCurrencySymbol,
+      Wrapped<int?>? toCurrencyDecimalPlaces,
+      Wrapped<String?>? rate,
+      Wrapped<DateTime?>? date}) {
+    return CurrencyExchangeRateReadAttributes(
+        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        fromCurrencyId: (fromCurrencyId != null
+            ? fromCurrencyId.value
+            : this.fromCurrencyId),
+        fromCurrencyCode: (fromCurrencyCode != null
+            ? fromCurrencyCode.value
+            : this.fromCurrencyCode),
+        fromCurrencySymbol: (fromCurrencySymbol != null
+            ? fromCurrencySymbol.value
+            : this.fromCurrencySymbol),
+        fromCurrencyDecimalPlaces: (fromCurrencyDecimalPlaces != null
+            ? fromCurrencyDecimalPlaces.value
+            : this.fromCurrencyDecimalPlaces),
+        toCurrencyId:
+            (toCurrencyId != null ? toCurrencyId.value : this.toCurrencyId),
+        toCurrencyCode: (toCurrencyCode != null
+            ? toCurrencyCode.value
+            : this.toCurrencyCode),
+        toCurrencySymbol: (toCurrencySymbol != null
+            ? toCurrencySymbol.value
+            : this.toCurrencySymbol),
+        toCurrencyDecimalPlaces: (toCurrencyDecimalPlaces != null
+            ? toCurrencyDecimalPlaces.value
+            : this.toCurrencyDecimalPlaces),
+        rate: (rate != null ? rate.value : this.rate),
+        date: (date != null ? date.value : this.date));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class CurrencyExchangeRateSingle {
+  const CurrencyExchangeRateSingle({
+    required this.data,
+  });
+
+  factory CurrencyExchangeRateSingle.fromJson(Map<String, dynamic> json) =>
+      _$CurrencyExchangeRateSingleFromJson(json);
+
+  static const toJsonFactory = _$CurrencyExchangeRateSingleToJson;
+  Map<String, dynamic> toJson() => _$CurrencyExchangeRateSingleToJson(this);
+
+  @JsonKey(name: 'data', includeIfNull: false)
+  final CurrencyExchangeRateRead data;
+  static const fromJsonFactory = _$CurrencyExchangeRateSingleFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $CurrencyExchangeRateSingleExtension on CurrencyExchangeRateSingle {
+  CurrencyExchangeRateSingle copyWith({CurrencyExchangeRateRead? data}) {
+    return CurrencyExchangeRateSingle(data: data ?? this.data);
+  }
+
+  CurrencyExchangeRateSingle copyWithWrapped(
+      {Wrapped<CurrencyExchangeRateRead>? data}) {
+    return CurrencyExchangeRateSingle(
+        data: (data != null ? data.value : this.data));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class CurrencyExchangeRateUpdate {
+  const CurrencyExchangeRateUpdate({
+    required this.date,
+    required this.rate,
+  });
+
+  factory CurrencyExchangeRateUpdate.fromJson(Map<String, dynamic> json) =>
+      _$CurrencyExchangeRateUpdateFromJson(json);
+
+  static const toJsonFactory = _$CurrencyExchangeRateUpdateToJson;
+  Map<String, dynamic> toJson() => _$CurrencyExchangeRateUpdateToJson(this);
+
+  @JsonKey(name: 'date', includeIfNull: false, toJson: _dateToJson)
+  final DateTime date;
+  @JsonKey(name: 'rate', includeIfNull: false)
+  final String rate;
+  static const fromJsonFactory = _$CurrencyExchangeRateUpdateFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $CurrencyExchangeRateUpdateExtension on CurrencyExchangeRateUpdate {
+  CurrencyExchangeRateUpdate copyWith({DateTime? date, String? rate}) {
+    return CurrencyExchangeRateUpdate(
+        date: date ?? this.date, rate: rate ?? this.rate);
+  }
+
+  CurrencyExchangeRateUpdate copyWithWrapped(
+      {Wrapped<DateTime>? date, Wrapped<String>? rate}) {
+    return CurrencyExchangeRateUpdate(
+        date: (date != null ? date.value : this.date),
+        rate: (rate != null ? rate.value : this.rate));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class ObjectGroup {
   const ObjectGroup({
     this.createdAt,
@@ -6638,7 +7317,9 @@ extension $ObjectGroupUpdateExtension on ObjectGroupUpdate {
 
 @JsonSerializable(explicitToJson: true)
 class ObjectLink {
-  const ObjectLink();
+  const ObjectLink({
+    this.self,
+  });
 
   factory ObjectLink.fromJson(Map<String, dynamic> json) =>
       _$ObjectLinkFromJson(json);
@@ -6646,10 +7327,22 @@ class ObjectLink {
   static const toJsonFactory = _$ObjectLinkToJson;
   Map<String, dynamic> toJson() => _$ObjectLinkToJson(this);
 
+  @JsonKey(name: 'self', includeIfNull: false)
+  final String? self;
   static const fromJsonFactory = _$ObjectLinkFromJson;
 
   @override
   String toString() => jsonEncode(this);
+}
+
+extension $ObjectLinkExtension on ObjectLink {
+  ObjectLink copyWith({String? self}) {
+    return ObjectLink(self: self ?? this.self);
+  }
+
+  ObjectLink copyWithWrapped({Wrapped<String?>? self}) {
+    return ObjectLink(self: (self != null ? self.value : this.self));
+  }
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -6715,9 +7408,10 @@ class PiggyBank {
   const PiggyBank({
     this.createdAt,
     this.updatedAt,
-    required this.accountId,
-    this.accountName,
     required this.name,
+    this.accountId,
+    this.accountName,
+    this.accounts,
     this.currencyId,
     this.currencyCode,
     this.currencySymbol,
@@ -6747,12 +7441,17 @@ class PiggyBank {
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
   final DateTime? updatedAt;
-  @JsonKey(name: 'account_id', includeIfNull: false)
-  final String accountId;
-  @JsonKey(name: 'account_name', includeIfNull: false)
-  final String? accountName;
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
+  @JsonKey(name: 'account_id', includeIfNull: false)
+  final String? accountId;
+  @JsonKey(name: 'account_name', includeIfNull: false)
+  final String? accountName;
+  @JsonKey(
+      name: 'accounts',
+      includeIfNull: false,
+      defaultValue: <PiggyBankAccountRead>[])
+  final List<PiggyBankAccountRead>? accounts;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
@@ -6797,9 +7496,10 @@ extension $PiggyBankExtension on PiggyBank {
   PiggyBank copyWith(
       {DateTime? createdAt,
       DateTime? updatedAt,
+      String? name,
       String? accountId,
       String? accountName,
-      String? name,
+      List<PiggyBankAccountRead>? accounts,
       String? currencyId,
       String? currencyCode,
       String? currencySymbol,
@@ -6820,9 +7520,10 @@ extension $PiggyBankExtension on PiggyBank {
     return PiggyBank(
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
+        name: name ?? this.name,
         accountId: accountId ?? this.accountId,
         accountName: accountName ?? this.accountName,
-        name: name ?? this.name,
+        accounts: accounts ?? this.accounts,
         currencyId: currencyId ?? this.currencyId,
         currencyCode: currencyCode ?? this.currencyCode,
         currencySymbol: currencySymbol ?? this.currencySymbol,
@@ -6846,9 +7547,10 @@ extension $PiggyBankExtension on PiggyBank {
   PiggyBank copyWithWrapped(
       {Wrapped<DateTime?>? createdAt,
       Wrapped<DateTime?>? updatedAt,
-      Wrapped<String>? accountId,
-      Wrapped<String?>? accountName,
       Wrapped<String>? name,
+      Wrapped<String?>? accountId,
+      Wrapped<String?>? accountName,
+      Wrapped<List<PiggyBankAccountRead>?>? accounts,
       Wrapped<String?>? currencyId,
       Wrapped<String?>? currencyCode,
       Wrapped<String?>? currencySymbol,
@@ -6869,10 +7571,11 @@ extension $PiggyBankExtension on PiggyBank {
     return PiggyBank(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        name: (name != null ? name.value : this.name),
         accountId: (accountId != null ? accountId.value : this.accountId),
         accountName:
             (accountName != null ? accountName.value : this.accountName),
-        name: (name != null ? name.value : this.name),
+        accounts: (accounts != null ? accounts.value : this.accounts),
         currencyId: (currencyId != null ? currencyId.value : this.currencyId),
         currencyCode:
             (currencyCode != null ? currencyCode.value : this.currencyCode),
@@ -6907,10 +7610,165 @@ extension $PiggyBankExtension on PiggyBank {
 }
 
 @JsonSerializable(explicitToJson: true)
+class PiggyBankAccountRead {
+  const PiggyBankAccountRead({
+    this.id,
+    this.name,
+    required this.currentAmount,
+    required this.nativeCurrentAmount,
+  });
+
+  factory PiggyBankAccountRead.fromJson(Map<String, dynamic> json) =>
+      _$PiggyBankAccountReadFromJson(json);
+
+  static const toJsonFactory = _$PiggyBankAccountReadToJson;
+
+  Map<String, dynamic> toJson() => _$PiggyBankAccountReadToJson(this);
+
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String? id;
+  @JsonKey(name: 'name', includeIfNull: false)
+  final String? name;
+  @JsonKey(name: 'current_amount', includeIfNull: false)
+  final String currentAmount;
+  @JsonKey(name: 'native_current_amount', includeIfNull: false)
+  final String nativeCurrentAmount;
+  static const fromJsonFactory = _$PiggyBankAccountReadFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $PiggyBankAccountReadExtension on PiggyBankAccountRead {
+  PiggyBankAccountRead copyWith(
+      {String? id,
+      String? name,
+      String? currentAmount,
+      String? nativeCurrentAmount}) {
+    return PiggyBankAccountRead(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        currentAmount: currentAmount ?? this.currentAmount,
+        nativeCurrentAmount: nativeCurrentAmount ?? this.nativeCurrentAmount);
+  }
+
+  PiggyBankAccountRead copyWithWrapped(
+      {Wrapped<String?>? id,
+      Wrapped<String?>? name,
+      Wrapped<String>? currentAmount,
+      Wrapped<String>? nativeCurrentAmount}) {
+    return PiggyBankAccountRead(
+        id: (id != null ? id.value : this.id),
+        name: (name != null ? name.value : this.name),
+        currentAmount:
+            (currentAmount != null ? currentAmount.value : this.currentAmount),
+        nativeCurrentAmount: (nativeCurrentAmount != null
+            ? nativeCurrentAmount.value
+            : this.nativeCurrentAmount));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class PiggyBankAccountStore {
+  const PiggyBankAccountStore({
+    this.id,
+    this.name,
+    this.currentAmount,
+  });
+
+  factory PiggyBankAccountStore.fromJson(Map<String, dynamic> json) =>
+      _$PiggyBankAccountStoreFromJson(json);
+
+  static const toJsonFactory = _$PiggyBankAccountStoreToJson;
+
+  Map<String, dynamic> toJson() => _$PiggyBankAccountStoreToJson(this);
+
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String? id;
+  @JsonKey(name: 'name', includeIfNull: false)
+  final String? name;
+  @JsonKey(name: 'current_amount', includeIfNull: false)
+  final String? currentAmount;
+  static const fromJsonFactory = _$PiggyBankAccountStoreFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $PiggyBankAccountStoreExtension on PiggyBankAccountStore {
+  PiggyBankAccountStore copyWith(
+      {String? id, String? name, String? currentAmount}) {
+    return PiggyBankAccountStore(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        currentAmount: currentAmount ?? this.currentAmount);
+  }
+
+  PiggyBankAccountStore copyWithWrapped(
+      {Wrapped<String?>? id,
+      Wrapped<String?>? name,
+      Wrapped<String?>? currentAmount}) {
+    return PiggyBankAccountStore(
+        id: (id != null ? id.value : this.id),
+        name: (name != null ? name.value : this.name),
+        currentAmount:
+            (currentAmount != null ? currentAmount.value : this.currentAmount));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class PiggyBankAccountUpdate {
+  const PiggyBankAccountUpdate({
+    this.id,
+    this.name,
+    this.currentAmount,
+  });
+
+  factory PiggyBankAccountUpdate.fromJson(Map<String, dynamic> json) =>
+      _$PiggyBankAccountUpdateFromJson(json);
+
+  static const toJsonFactory = _$PiggyBankAccountUpdateToJson;
+
+  Map<String, dynamic> toJson() => _$PiggyBankAccountUpdateToJson(this);
+
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String? id;
+  @JsonKey(name: 'name', includeIfNull: false)
+  final String? name;
+  @JsonKey(name: 'current_amount', includeIfNull: false)
+  final String? currentAmount;
+  static const fromJsonFactory = _$PiggyBankAccountUpdateFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $PiggyBankAccountUpdateExtension on PiggyBankAccountUpdate {
+  PiggyBankAccountUpdate copyWith(
+      {String? id, String? name, String? currentAmount}) {
+    return PiggyBankAccountUpdate(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        currentAmount: currentAmount ?? this.currentAmount);
+  }
+
+  PiggyBankAccountUpdate copyWithWrapped(
+      {Wrapped<String?>? id,
+      Wrapped<String?>? name,
+      Wrapped<String?>? currentAmount}) {
+    return PiggyBankAccountUpdate(
+        id: (id != null ? id.value : this.id),
+        name: (name != null ? name.value : this.name),
+        currentAmount:
+            (currentAmount != null ? currentAmount.value : this.currentAmount));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class PiggyBankStore {
   const PiggyBankStore({
     required this.name,
-    required this.accountId,
+    this.accounts,
     this.targetAmount,
     this.currentAmount,
     this.startDate,
@@ -6930,8 +7788,11 @@ class PiggyBankStore {
 
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
-  @JsonKey(name: 'account_id', includeIfNull: false)
-  final String accountId;
+  @JsonKey(
+      name: 'accounts',
+      includeIfNull: false,
+      defaultValue: <PiggyBankAccountStore>[])
+  final List<PiggyBankAccountStore>? accounts;
   @JsonKey(name: 'target_amount', includeIfNull: false)
   final String? targetAmount;
   @JsonKey(name: 'current_amount', includeIfNull: false)
@@ -6959,7 +7820,7 @@ class PiggyBankStore {
 extension $PiggyBankStoreExtension on PiggyBankStore {
   PiggyBankStore copyWith(
       {String? name,
-      String? accountId,
+      List<PiggyBankAccountStore>? accounts,
       String? targetAmount,
       String? currentAmount,
       DateTime? startDate,
@@ -6971,7 +7832,7 @@ extension $PiggyBankStoreExtension on PiggyBankStore {
       String? objectGroupTitle}) {
     return PiggyBankStore(
         name: name ?? this.name,
-        accountId: accountId ?? this.accountId,
+        accounts: accounts ?? this.accounts,
         targetAmount: targetAmount ?? this.targetAmount,
         currentAmount: currentAmount ?? this.currentAmount,
         startDate: startDate ?? this.startDate,
@@ -6985,7 +7846,7 @@ extension $PiggyBankStoreExtension on PiggyBankStore {
 
   PiggyBankStore copyWithWrapped(
       {Wrapped<String>? name,
-      Wrapped<String>? accountId,
+      Wrapped<List<PiggyBankAccountStore>?>? accounts,
       Wrapped<String?>? targetAmount,
       Wrapped<String?>? currentAmount,
       Wrapped<DateTime?>? startDate,
@@ -6997,7 +7858,7 @@ extension $PiggyBankStoreExtension on PiggyBankStore {
       Wrapped<String?>? objectGroupTitle}) {
     return PiggyBankStore(
         name: (name != null ? name.value : this.name),
-        accountId: (accountId != null ? accountId.value : this.accountId),
+        accounts: (accounts != null ? accounts.value : this.accounts),
         targetAmount:
             (targetAmount != null ? targetAmount.value : this.targetAmount),
         currentAmount:
@@ -7019,7 +7880,7 @@ extension $PiggyBankStoreExtension on PiggyBankStore {
 class PiggyBankUpdate {
   const PiggyBankUpdate({
     this.name,
-    this.accountId,
+    this.accounts,
     this.currencyId,
     this.currencyCode,
     this.targetAmount,
@@ -7041,8 +7902,11 @@ class PiggyBankUpdate {
 
   @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
-  @JsonKey(name: 'account_id', includeIfNull: false)
-  final String? accountId;
+  @JsonKey(
+      name: 'accounts',
+      includeIfNull: false,
+      defaultValue: <PiggyBankAccountUpdate>[])
+  final List<PiggyBankAccountUpdate>? accounts;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
@@ -7074,7 +7938,7 @@ class PiggyBankUpdate {
 extension $PiggyBankUpdateExtension on PiggyBankUpdate {
   PiggyBankUpdate copyWith(
       {String? name,
-      String? accountId,
+      List<PiggyBankAccountUpdate>? accounts,
       String? currencyId,
       String? currencyCode,
       String? targetAmount,
@@ -7088,7 +7952,7 @@ extension $PiggyBankUpdateExtension on PiggyBankUpdate {
       String? objectGroupTitle}) {
     return PiggyBankUpdate(
         name: name ?? this.name,
-        accountId: accountId ?? this.accountId,
+        accounts: accounts ?? this.accounts,
         currencyId: currencyId ?? this.currencyId,
         currencyCode: currencyCode ?? this.currencyCode,
         targetAmount: targetAmount ?? this.targetAmount,
@@ -7104,7 +7968,7 @@ extension $PiggyBankUpdateExtension on PiggyBankUpdate {
 
   PiggyBankUpdate copyWithWrapped(
       {Wrapped<String?>? name,
-      Wrapped<String?>? accountId,
+      Wrapped<List<PiggyBankAccountUpdate>?>? accounts,
       Wrapped<String?>? currencyId,
       Wrapped<String?>? currencyCode,
       Wrapped<String?>? targetAmount,
@@ -7118,7 +7982,7 @@ extension $PiggyBankUpdateExtension on PiggyBankUpdate {
       Wrapped<String?>? objectGroupTitle}) {
     return PiggyBankUpdate(
         name: (name != null ? name.value : this.name),
-        accountId: (accountId != null ? accountId.value : this.accountId),
+        accounts: (accounts != null ? accounts.value : this.accounts),
         currencyId: (currencyId != null ? currencyId.value : this.currencyId),
         currencyCode:
             (currencyCode != null ? currencyCode.value : this.currencyCode),
@@ -9683,6 +10547,7 @@ class Currency {
     this.updatedAt,
     this.enabled,
     this.$default,
+    this.native,
     required this.code,
     required this.name,
     required this.symbol,
@@ -9703,6 +10568,8 @@ class Currency {
   final bool? enabled;
   @JsonKey(name: 'default', includeIfNull: false)
   final bool? $default;
+  @JsonKey(name: 'native', includeIfNull: false)
+  final bool? native;
   @JsonKey(name: 'code', includeIfNull: false)
   final String code;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -9723,6 +10590,7 @@ extension $CurrencyExtension on Currency {
       DateTime? updatedAt,
       bool? enabled,
       bool? $default,
+      bool? native,
       String? code,
       String? name,
       String? symbol,
@@ -9732,6 +10600,7 @@ extension $CurrencyExtension on Currency {
         updatedAt: updatedAt ?? this.updatedAt,
         enabled: enabled ?? this.enabled,
         $default: $default ?? this.$default,
+        native: native ?? this.native,
         code: code ?? this.code,
         name: name ?? this.name,
         symbol: symbol ?? this.symbol,
@@ -9743,6 +10612,7 @@ extension $CurrencyExtension on Currency {
       Wrapped<DateTime?>? updatedAt,
       Wrapped<bool?>? enabled,
       Wrapped<bool?>? $default,
+      Wrapped<bool?>? native,
       Wrapped<String>? code,
       Wrapped<String>? name,
       Wrapped<String>? symbol,
@@ -9752,6 +10622,7 @@ extension $CurrencyExtension on Currency {
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
         enabled: (enabled != null ? enabled.value : this.enabled),
         $default: ($default != null ? $default.value : this.$default),
+        native: (native != null ? native.value : this.native),
         code: (code != null ? code.value : this.code),
         name: (name != null ? name.value : this.name),
         symbol: (symbol != null ? symbol.value : this.symbol),
@@ -11761,6 +12632,311 @@ extension $UserExtension on User {
 }
 
 @JsonSerializable(explicitToJson: true)
+class UserGroupRead {
+  const UserGroupRead({
+    required this.type,
+    required this.id,
+    required this.attributes,
+    required this.links,
+  });
+
+  factory UserGroupRead.fromJson(Map<String, dynamic> json) =>
+      _$UserGroupReadFromJson(json);
+
+  static const toJsonFactory = _$UserGroupReadToJson;
+  Map<String, dynamic> toJson() => _$UserGroupReadToJson(this);
+
+  @JsonKey(name: 'type', includeIfNull: false)
+  final String type;
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String id;
+  @JsonKey(name: 'attributes', includeIfNull: false)
+  final UserGroupReadAttributes attributes;
+  @JsonKey(name: 'links', includeIfNull: false)
+  final ObjectLink links;
+  static const fromJsonFactory = _$UserGroupReadFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $UserGroupReadExtension on UserGroupRead {
+  UserGroupRead copyWith(
+      {String? type,
+      String? id,
+      UserGroupReadAttributes? attributes,
+      ObjectLink? links}) {
+    return UserGroupRead(
+        type: type ?? this.type,
+        id: id ?? this.id,
+        attributes: attributes ?? this.attributes,
+        links: links ?? this.links);
+  }
+
+  UserGroupRead copyWithWrapped(
+      {Wrapped<String>? type,
+      Wrapped<String>? id,
+      Wrapped<UserGroupReadAttributes>? attributes,
+      Wrapped<ObjectLink>? links}) {
+    return UserGroupRead(
+        type: (type != null ? type.value : this.type),
+        id: (id != null ? id.value : this.id),
+        attributes: (attributes != null ? attributes.value : this.attributes),
+        links: (links != null ? links.value : this.links));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserGroupReadAttributes {
+  const UserGroupReadAttributes({
+    this.createdAt,
+    this.updatedAt,
+    this.inUse,
+    this.canSeeMembers,
+    this.title,
+    this.nativeCurrencyId,
+    this.nativeCurrencyCode,
+    this.nativeCurrencySymbol,
+    this.nativeCurrencyDecimalPlaces,
+    this.members,
+  });
+
+  factory UserGroupReadAttributes.fromJson(Map<String, dynamic> json) =>
+      _$UserGroupReadAttributesFromJson(json);
+
+  static const toJsonFactory = _$UserGroupReadAttributesToJson;
+  Map<String, dynamic> toJson() => _$UserGroupReadAttributesToJson(this);
+
+  @JsonKey(name: 'created_at', includeIfNull: false)
+  final DateTime? createdAt;
+  @JsonKey(name: 'updated_at', includeIfNull: false)
+  final DateTime? updatedAt;
+  @JsonKey(name: 'in_use', includeIfNull: false)
+  final bool? inUse;
+  @JsonKey(name: 'can_see_members', includeIfNull: false)
+  final bool? canSeeMembers;
+  @JsonKey(name: 'title', includeIfNull: false)
+  final String? title;
+  @JsonKey(name: 'native_currency_id', includeIfNull: false)
+  final String? nativeCurrencyId;
+  @JsonKey(name: 'native_currency_code', includeIfNull: false)
+  final String? nativeCurrencyCode;
+  @JsonKey(name: 'native_currency_symbol', includeIfNull: false)
+  final String? nativeCurrencySymbol;
+  @JsonKey(name: 'native_currency_decimal_places', includeIfNull: false)
+  final int? nativeCurrencyDecimalPlaces;
+  @JsonKey(
+      name: 'members',
+      includeIfNull: false,
+      defaultValue: <UserGroupReadMembers>[])
+  final List<UserGroupReadMembers>? members;
+  static const fromJsonFactory = _$UserGroupReadAttributesFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $UserGroupReadAttributesExtension on UserGroupReadAttributes {
+  UserGroupReadAttributes copyWith(
+      {DateTime? createdAt,
+      DateTime? updatedAt,
+      bool? inUse,
+      bool? canSeeMembers,
+      String? title,
+      String? nativeCurrencyId,
+      String? nativeCurrencyCode,
+      String? nativeCurrencySymbol,
+      int? nativeCurrencyDecimalPlaces,
+      List<UserGroupReadMembers>? members}) {
+    return UserGroupReadAttributes(
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        inUse: inUse ?? this.inUse,
+        canSeeMembers: canSeeMembers ?? this.canSeeMembers,
+        title: title ?? this.title,
+        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+        nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
+        nativeCurrencyDecimalPlaces:
+            nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
+        members: members ?? this.members);
+  }
+
+  UserGroupReadAttributes copyWithWrapped(
+      {Wrapped<DateTime?>? createdAt,
+      Wrapped<DateTime?>? updatedAt,
+      Wrapped<bool?>? inUse,
+      Wrapped<bool?>? canSeeMembers,
+      Wrapped<String?>? title,
+      Wrapped<String?>? nativeCurrencyId,
+      Wrapped<String?>? nativeCurrencyCode,
+      Wrapped<String?>? nativeCurrencySymbol,
+      Wrapped<int?>? nativeCurrencyDecimalPlaces,
+      Wrapped<List<UserGroupReadMembers>?>? members}) {
+    return UserGroupReadAttributes(
+        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        inUse: (inUse != null ? inUse.value : this.inUse),
+        canSeeMembers:
+            (canSeeMembers != null ? canSeeMembers.value : this.canSeeMembers),
+        title: (title != null ? title.value : this.title),
+        nativeCurrencyId: (nativeCurrencyId != null
+            ? nativeCurrencyId.value
+            : this.nativeCurrencyId),
+        nativeCurrencyCode: (nativeCurrencyCode != null
+            ? nativeCurrencyCode.value
+            : this.nativeCurrencyCode),
+        nativeCurrencySymbol: (nativeCurrencySymbol != null
+            ? nativeCurrencySymbol.value
+            : this.nativeCurrencySymbol),
+        nativeCurrencyDecimalPlaces: (nativeCurrencyDecimalPlaces != null
+            ? nativeCurrencyDecimalPlaces.value
+            : this.nativeCurrencyDecimalPlaces),
+        members: (members != null ? members.value : this.members));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserGroupReadMembers {
+  const UserGroupReadMembers({
+    this.userId,
+    this.userEmail,
+    this.you,
+    this.roles,
+  });
+
+  factory UserGroupReadMembers.fromJson(Map<String, dynamic> json) =>
+      _$UserGroupReadMembersFromJson(json);
+
+  static const toJsonFactory = _$UserGroupReadMembersToJson;
+  Map<String, dynamic> toJson() => _$UserGroupReadMembersToJson(this);
+
+  @JsonKey(name: 'user_id', includeIfNull: false)
+  final String? userId;
+  @JsonKey(name: 'user_email', includeIfNull: false)
+  final String? userEmail;
+  @JsonKey(name: 'you', includeIfNull: false)
+  final bool? you;
+  @JsonKey(
+    name: 'roles',
+    includeIfNull: false,
+    toJson: userGroupReadRoleListToJson,
+    fromJson: userGroupReadRoleListFromJson,
+  )
+  final List<enums.UserGroupReadRole>? roles;
+  static const fromJsonFactory = _$UserGroupReadMembersFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $UserGroupReadMembersExtension on UserGroupReadMembers {
+  UserGroupReadMembers copyWith(
+      {String? userId,
+      String? userEmail,
+      bool? you,
+      List<enums.UserGroupReadRole>? roles}) {
+    return UserGroupReadMembers(
+        userId: userId ?? this.userId,
+        userEmail: userEmail ?? this.userEmail,
+        you: you ?? this.you,
+        roles: roles ?? this.roles);
+  }
+
+  UserGroupReadMembers copyWithWrapped(
+      {Wrapped<String?>? userId,
+      Wrapped<String?>? userEmail,
+      Wrapped<bool?>? you,
+      Wrapped<List<enums.UserGroupReadRole>?>? roles}) {
+    return UserGroupReadMembers(
+        userId: (userId != null ? userId.value : this.userId),
+        userEmail: (userEmail != null ? userEmail.value : this.userEmail),
+        you: (you != null ? you.value : this.you),
+        roles: (roles != null ? roles.value : this.roles));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserGroupSingle {
+  const UserGroupSingle({
+    required this.data,
+  });
+
+  factory UserGroupSingle.fromJson(Map<String, dynamic> json) =>
+      _$UserGroupSingleFromJson(json);
+
+  static const toJsonFactory = _$UserGroupSingleToJson;
+  Map<String, dynamic> toJson() => _$UserGroupSingleToJson(this);
+
+  @JsonKey(name: 'data', includeIfNull: false)
+  final UserGroupRead data;
+  static const fromJsonFactory = _$UserGroupSingleFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $UserGroupSingleExtension on UserGroupSingle {
+  UserGroupSingle copyWith({UserGroupRead? data}) {
+    return UserGroupSingle(data: data ?? this.data);
+  }
+
+  UserGroupSingle copyWithWrapped({Wrapped<UserGroupRead>? data}) {
+    return UserGroupSingle(data: (data != null ? data.value : this.data));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserGroupUpdate {
+  const UserGroupUpdate({
+    required this.title,
+    this.nativeCurrencyId,
+    this.nativeCurrencyCode,
+  });
+
+  factory UserGroupUpdate.fromJson(Map<String, dynamic> json) =>
+      _$UserGroupUpdateFromJson(json);
+
+  static const toJsonFactory = _$UserGroupUpdateToJson;
+  Map<String, dynamic> toJson() => _$UserGroupUpdateToJson(this);
+
+  @JsonKey(name: 'title', includeIfNull: false)
+  final String title;
+  @JsonKey(name: 'native_currency_id', includeIfNull: false)
+  final String? nativeCurrencyId;
+  @JsonKey(name: 'native_currency_code', includeIfNull: false)
+  final String? nativeCurrencyCode;
+  static const fromJsonFactory = _$UserGroupUpdateFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $UserGroupUpdateExtension on UserGroupUpdate {
+  UserGroupUpdate copyWith(
+      {String? title, String? nativeCurrencyId, String? nativeCurrencyCode}) {
+    return UserGroupUpdate(
+        title: title ?? this.title,
+        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode);
+  }
+
+  UserGroupUpdate copyWithWrapped(
+      {Wrapped<String>? title,
+      Wrapped<String?>? nativeCurrencyId,
+      Wrapped<String?>? nativeCurrencyCode}) {
+    return UserGroupUpdate(
+        title: (title != null ? title.value : this.title),
+        nativeCurrencyId: (nativeCurrencyId != null
+            ? nativeCurrencyId.value
+            : this.nativeCurrencyId),
+        nativeCurrencyCode: (nativeCurrencyCode != null
+            ? nativeCurrencyCode.value
+            : this.nativeCurrencyCode));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class Webhook {
   const Webhook({
     this.createdAt,
@@ -12975,7 +14151,9 @@ extension $Meta$PaginationExtension on Meta$Pagination {
 class ValidationErrorResponse$Errors {
   const ValidationErrorResponse$Errors({
     this.email,
+    this.force,
     this.blocked,
+    this.field,
     this.role,
     this.blockedCode,
     this.name,
@@ -12994,8 +14172,12 @@ class ValidationErrorResponse$Errors {
 
   @JsonKey(name: 'email', includeIfNull: false, defaultValue: <String>[])
   final List<String>? email;
+  @JsonKey(name: 'force', includeIfNull: false, defaultValue: <String>[])
+  final List<String>? force;
   @JsonKey(name: 'blocked', includeIfNull: false, defaultValue: <String>[])
   final List<String>? blocked;
+  @JsonKey(name: 'field', includeIfNull: false, defaultValue: <String>[])
+  final List<String>? field;
   @JsonKey(name: 'role', includeIfNull: false, defaultValue: <String>[])
   final List<String>? role;
   @JsonKey(name: 'blocked_code', includeIfNull: false, defaultValue: <String>[])
@@ -13022,7 +14204,9 @@ extension $ValidationErrorResponse$ErrorsExtension
     on ValidationErrorResponse$Errors {
   ValidationErrorResponse$Errors copyWith(
       {List<String>? email,
+      List<String>? force,
       List<String>? blocked,
+      List<String>? field,
       List<String>? role,
       List<String>? blockedCode,
       List<String>? name,
@@ -13033,7 +14217,9 @@ extension $ValidationErrorResponse$ErrorsExtension
       List<String>? date}) {
     return ValidationErrorResponse$Errors(
         email: email ?? this.email,
+        force: force ?? this.force,
         blocked: blocked ?? this.blocked,
+        field: field ?? this.field,
         role: role ?? this.role,
         blockedCode: blockedCode ?? this.blockedCode,
         name: name ?? this.name,
@@ -13046,7 +14232,9 @@ extension $ValidationErrorResponse$ErrorsExtension
 
   ValidationErrorResponse$Errors copyWithWrapped(
       {Wrapped<List<String>?>? email,
+      Wrapped<List<String>?>? force,
       Wrapped<List<String>?>? blocked,
+      Wrapped<List<String>?>? field,
       Wrapped<List<String>?>? role,
       Wrapped<List<String>?>? blockedCode,
       Wrapped<List<String>?>? name,
@@ -13057,7 +14245,9 @@ extension $ValidationErrorResponse$ErrorsExtension
       Wrapped<List<String>?>? date}) {
     return ValidationErrorResponse$Errors(
         email: (email != null ? email.value : this.email),
+        force: (force != null ? force.value : this.force),
         blocked: (blocked != null ? blocked.value : this.blocked),
+        field: (field != null ? field.value : this.field),
         role: (role != null ? role.value : this.role),
         blockedCode:
             (blockedCode != null ? blockedCode.value : this.blockedCode),
@@ -13498,6 +14688,77 @@ List<enums.CurrencyUpdateDefault>? currencyUpdateDefaultNullableListFromJson(
 
   return currencyUpdateDefault
       .map((e) => currencyUpdateDefaultFromJson(e.toString()))
+      .toList();
+}
+
+String? userGroupReadRoleNullableToJson(
+    enums.UserGroupReadRole? userGroupReadRole) {
+  return userGroupReadRole?.value;
+}
+
+String? userGroupReadRoleToJson(enums.UserGroupReadRole userGroupReadRole) {
+  return userGroupReadRole.value;
+}
+
+enums.UserGroupReadRole userGroupReadRoleFromJson(
+  Object? userGroupReadRole, [
+  enums.UserGroupReadRole? defaultValue,
+]) {
+  return enums.UserGroupReadRole.values
+          .firstWhereOrNull((e) => e.value == userGroupReadRole) ??
+      defaultValue ??
+      enums.UserGroupReadRole.swaggerGeneratedUnknown;
+}
+
+enums.UserGroupReadRole? userGroupReadRoleNullableFromJson(
+  Object? userGroupReadRole, [
+  enums.UserGroupReadRole? defaultValue,
+]) {
+  if (userGroupReadRole == null) {
+    return null;
+  }
+  return enums.UserGroupReadRole.values
+          .firstWhereOrNull((e) => e.value == userGroupReadRole) ??
+      defaultValue;
+}
+
+String userGroupReadRoleExplodedListToJson(
+    List<enums.UserGroupReadRole>? userGroupReadRole) {
+  return userGroupReadRole?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> userGroupReadRoleListToJson(
+    List<enums.UserGroupReadRole>? userGroupReadRole) {
+  if (userGroupReadRole == null) {
+    return [];
+  }
+
+  return userGroupReadRole.map((e) => e.value!).toList();
+}
+
+List<enums.UserGroupReadRole> userGroupReadRoleListFromJson(
+  List? userGroupReadRole, [
+  List<enums.UserGroupReadRole>? defaultValue,
+]) {
+  if (userGroupReadRole == null) {
+    return defaultValue ?? [];
+  }
+
+  return userGroupReadRole
+      .map((e) => userGroupReadRoleFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.UserGroupReadRole>? userGroupReadRoleNullableListFromJson(
+  List? userGroupReadRole, [
+  List<enums.UserGroupReadRole>? defaultValue,
+]) {
+  if (userGroupReadRole == null) {
+    return defaultValue;
+  }
+
+  return userGroupReadRole
+      .map((e) => userGroupReadRoleFromJson(e.toString()))
       .toList();
 }
 
@@ -14496,6 +15757,149 @@ List<enums.WebhookTrigger>? webhookTriggerNullableListFromJson(
       .toList();
 }
 
+String? accountTypeFilterNullableToJson(
+    enums.AccountTypeFilter? accountTypeFilter) {
+  return accountTypeFilter?.value;
+}
+
+String? accountTypeFilterToJson(enums.AccountTypeFilter accountTypeFilter) {
+  return accountTypeFilter.value;
+}
+
+enums.AccountTypeFilter accountTypeFilterFromJson(
+  Object? accountTypeFilter, [
+  enums.AccountTypeFilter? defaultValue,
+]) {
+  return enums.AccountTypeFilter.values
+          .firstWhereOrNull((e) => e.value == accountTypeFilter) ??
+      defaultValue ??
+      enums.AccountTypeFilter.swaggerGeneratedUnknown;
+}
+
+enums.AccountTypeFilter? accountTypeFilterNullableFromJson(
+  Object? accountTypeFilter, [
+  enums.AccountTypeFilter? defaultValue,
+]) {
+  if (accountTypeFilter == null) {
+    return null;
+  }
+  return enums.AccountTypeFilter.values
+          .firstWhereOrNull((e) => e.value == accountTypeFilter) ??
+      defaultValue;
+}
+
+String accountTypeFilterExplodedListToJson(
+    List<enums.AccountTypeFilter>? accountTypeFilter) {
+  return accountTypeFilter?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> accountTypeFilterListToJson(
+    List<enums.AccountTypeFilter>? accountTypeFilter) {
+  if (accountTypeFilter == null) {
+    return [];
+  }
+
+  return accountTypeFilter.map((e) => e.value!).toList();
+}
+
+List<enums.AccountTypeFilter> accountTypeFilterListFromJson(
+  List? accountTypeFilter, [
+  List<enums.AccountTypeFilter>? defaultValue,
+]) {
+  if (accountTypeFilter == null) {
+    return defaultValue ?? [];
+  }
+
+  return accountTypeFilter
+      .map((e) => accountTypeFilterFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.AccountTypeFilter>? accountTypeFilterNullableListFromJson(
+  List? accountTypeFilter, [
+  List<enums.AccountTypeFilter>? defaultValue,
+]) {
+  if (accountTypeFilter == null) {
+    return defaultValue;
+  }
+
+  return accountTypeFilter
+      .map((e) => accountTypeFilterFromJson(e.toString()))
+      .toList();
+}
+
+String? transactionTypeFilterNullableToJson(
+    enums.TransactionTypeFilter? transactionTypeFilter) {
+  return transactionTypeFilter?.value;
+}
+
+String? transactionTypeFilterToJson(
+    enums.TransactionTypeFilter transactionTypeFilter) {
+  return transactionTypeFilter.value;
+}
+
+enums.TransactionTypeFilter transactionTypeFilterFromJson(
+  Object? transactionTypeFilter, [
+  enums.TransactionTypeFilter? defaultValue,
+]) {
+  return enums.TransactionTypeFilter.values
+          .firstWhereOrNull((e) => e.value == transactionTypeFilter) ??
+      defaultValue ??
+      enums.TransactionTypeFilter.swaggerGeneratedUnknown;
+}
+
+enums.TransactionTypeFilter? transactionTypeFilterNullableFromJson(
+  Object? transactionTypeFilter, [
+  enums.TransactionTypeFilter? defaultValue,
+]) {
+  if (transactionTypeFilter == null) {
+    return null;
+  }
+  return enums.TransactionTypeFilter.values
+          .firstWhereOrNull((e) => e.value == transactionTypeFilter) ??
+      defaultValue;
+}
+
+String transactionTypeFilterExplodedListToJson(
+    List<enums.TransactionTypeFilter>? transactionTypeFilter) {
+  return transactionTypeFilter?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> transactionTypeFilterListToJson(
+    List<enums.TransactionTypeFilter>? transactionTypeFilter) {
+  if (transactionTypeFilter == null) {
+    return [];
+  }
+
+  return transactionTypeFilter.map((e) => e.value!).toList();
+}
+
+List<enums.TransactionTypeFilter> transactionTypeFilterListFromJson(
+  List? transactionTypeFilter, [
+  List<enums.TransactionTypeFilter>? defaultValue,
+]) {
+  if (transactionTypeFilter == null) {
+    return defaultValue ?? [];
+  }
+
+  return transactionTypeFilter
+      .map((e) => transactionTypeFilterFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.TransactionTypeFilter>? transactionTypeFilterNullableListFromJson(
+  List? transactionTypeFilter, [
+  List<enums.TransactionTypeFilter>? defaultValue,
+]) {
+  if (transactionTypeFilter == null) {
+    return defaultValue;
+  }
+
+  return transactionTypeFilter
+      .map((e) => transactionTypeFilterFromJson(e.toString()))
+      .toList();
+}
+
 String? accountRolePropertyNullableToJson(
     enums.AccountRoleProperty? accountRoleProperty) {
   return accountRoleProperty?.value;
@@ -15072,149 +16476,6 @@ List<enums.TransactionTypeProperty>?
 
   return transactionTypeProperty
       .map((e) => transactionTypePropertyFromJson(e.toString()))
-      .toList();
-}
-
-String? accountTypeFilterNullableToJson(
-    enums.AccountTypeFilter? accountTypeFilter) {
-  return accountTypeFilter?.value;
-}
-
-String? accountTypeFilterToJson(enums.AccountTypeFilter accountTypeFilter) {
-  return accountTypeFilter.value;
-}
-
-enums.AccountTypeFilter accountTypeFilterFromJson(
-  Object? accountTypeFilter, [
-  enums.AccountTypeFilter? defaultValue,
-]) {
-  return enums.AccountTypeFilter.values
-          .firstWhereOrNull((e) => e.value == accountTypeFilter) ??
-      defaultValue ??
-      enums.AccountTypeFilter.swaggerGeneratedUnknown;
-}
-
-enums.AccountTypeFilter? accountTypeFilterNullableFromJson(
-  Object? accountTypeFilter, [
-  enums.AccountTypeFilter? defaultValue,
-]) {
-  if (accountTypeFilter == null) {
-    return null;
-  }
-  return enums.AccountTypeFilter.values
-          .firstWhereOrNull((e) => e.value == accountTypeFilter) ??
-      defaultValue;
-}
-
-String accountTypeFilterExplodedListToJson(
-    List<enums.AccountTypeFilter>? accountTypeFilter) {
-  return accountTypeFilter?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> accountTypeFilterListToJson(
-    List<enums.AccountTypeFilter>? accountTypeFilter) {
-  if (accountTypeFilter == null) {
-    return [];
-  }
-
-  return accountTypeFilter.map((e) => e.value!).toList();
-}
-
-List<enums.AccountTypeFilter> accountTypeFilterListFromJson(
-  List? accountTypeFilter, [
-  List<enums.AccountTypeFilter>? defaultValue,
-]) {
-  if (accountTypeFilter == null) {
-    return defaultValue ?? [];
-  }
-
-  return accountTypeFilter
-      .map((e) => accountTypeFilterFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.AccountTypeFilter>? accountTypeFilterNullableListFromJson(
-  List? accountTypeFilter, [
-  List<enums.AccountTypeFilter>? defaultValue,
-]) {
-  if (accountTypeFilter == null) {
-    return defaultValue;
-  }
-
-  return accountTypeFilter
-      .map((e) => accountTypeFilterFromJson(e.toString()))
-      .toList();
-}
-
-String? transactionTypeFilterNullableToJson(
-    enums.TransactionTypeFilter? transactionTypeFilter) {
-  return transactionTypeFilter?.value;
-}
-
-String? transactionTypeFilterToJson(
-    enums.TransactionTypeFilter transactionTypeFilter) {
-  return transactionTypeFilter.value;
-}
-
-enums.TransactionTypeFilter transactionTypeFilterFromJson(
-  Object? transactionTypeFilter, [
-  enums.TransactionTypeFilter? defaultValue,
-]) {
-  return enums.TransactionTypeFilter.values
-          .firstWhereOrNull((e) => e.value == transactionTypeFilter) ??
-      defaultValue ??
-      enums.TransactionTypeFilter.swaggerGeneratedUnknown;
-}
-
-enums.TransactionTypeFilter? transactionTypeFilterNullableFromJson(
-  Object? transactionTypeFilter, [
-  enums.TransactionTypeFilter? defaultValue,
-]) {
-  if (transactionTypeFilter == null) {
-    return null;
-  }
-  return enums.TransactionTypeFilter.values
-          .firstWhereOrNull((e) => e.value == transactionTypeFilter) ??
-      defaultValue;
-}
-
-String transactionTypeFilterExplodedListToJson(
-    List<enums.TransactionTypeFilter>? transactionTypeFilter) {
-  return transactionTypeFilter?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> transactionTypeFilterListToJson(
-    List<enums.TransactionTypeFilter>? transactionTypeFilter) {
-  if (transactionTypeFilter == null) {
-    return [];
-  }
-
-  return transactionTypeFilter.map((e) => e.value!).toList();
-}
-
-List<enums.TransactionTypeFilter> transactionTypeFilterListFromJson(
-  List? transactionTypeFilter, [
-  List<enums.TransactionTypeFilter>? defaultValue,
-]) {
-  if (transactionTypeFilter == null) {
-    return defaultValue ?? [];
-  }
-
-  return transactionTypeFilter
-      .map((e) => transactionTypeFilterFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.TransactionTypeFilter>? transactionTypeFilterNullableListFromJson(
-  List? transactionTypeFilter, [
-  List<enums.TransactionTypeFilter>? defaultValue,
-]) {
-  if (transactionTypeFilter == null) {
-    return defaultValue;
-  }
-
-  return transactionTypeFilter
-      .map((e) => transactionTypeFilterFromJson(e.toString()))
       .toList();
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/timezone.dart';
 
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
@@ -27,7 +28,7 @@ class LastDaysChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
     // Use noon due to dailylight saving time
-    final DateTime now =
+    final TZDateTime now =
         tzHandler.sNow().setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
     final List<DateTime> lastDays = <DateTime>[];
     for (int i = 0; i < 7; i++) {

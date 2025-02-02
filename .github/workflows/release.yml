@@ -46,7 +46,7 @@ jobs:
 
       # Set build number
       - run: |
-          sed -i 's/^\(version: [0-9\.]\{1,\}\(-[a-z]\{1,\}\)\{0,1\}\)$/\1+${{ github.run_number }}/m' pubspec.yaml
+          sed -i 's/^\(version: [0-9\.]\{1,\}\(-[a-z]\{1,\}\)\{0,1\}\([0-9\.]\)\{0,\}\)$/\1+${{ github.run_number }}/m' pubspec.yaml
 
       # Build apk.
       - run: flutter build apk --obfuscate --split-debug-info=build/app/outputs/symbols/apk --release --split-per-abi --dart-define=cronetHttpNoPlay=true
@@ -58,7 +58,7 @@ jobs:
       # Zip symbols
       - uses: montudor/action-zip@v1
       - run: zip -qq -r aab-debug-symbols.zip *
-        working-directory: build/app/intermediates/merged_native_libs/release/out/lib/
+        working-directory: build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/
 
       # Upload generated apk to the artifacts.
       - uses: actions/upload-artifact@v4
@@ -81,7 +81,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: aab-debug-symbols.zip
-          path: build/app/intermediates/merged_native_libs/release/out/lib/aab-debug-symbols.zip
+          path: build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/aab-debug-symbols.zip
       - uses: actions/upload-artifact@v4
         with:
           name: mapping.txt

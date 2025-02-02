@@ -215,6 +215,24 @@ class SettingsProvider with ChangeNotifier {
       await prefs.setStringList(
           settingsCategoriesSumExcluded, categoriesSumExcluded);
     }
+
+    // Migrate notification settings
+    final List<String>? knownApps = oldPrefs.getStringList(settingNLKnownApps);
+    if (knownApps != null) {
+      await prefs.setStringList(settingNLKnownApps, knownApps);
+    }
+    final List<String>? usedApps = oldPrefs.getStringList(settingNLUsedApps);
+    if (usedApps != null) {
+      await prefs.setStringList(settingNLUsedApps, usedApps);
+      for (String packageName in usedApps) {
+        final String? json =
+            oldPrefs.getString("$settingNLAppPrefix$packageName");
+        if (json == null) {
+          continue;
+        }
+        await prefs.setString("$settingNLAppPrefix$packageName", json);
+      }
+    }
   }
 
   Future<void> loadSettings() async {
@@ -345,7 +363,6 @@ class SettingsProvider with ChangeNotifier {
             .setString(settingTheme, settingThemeLight);
         break;
       case ThemeMode.system:
-      default:
         await SharedPreferencesAsync()
             .setString(settingTheme, settingThemeSystem);
     }

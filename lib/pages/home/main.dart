@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/timezone.dart';
 
 import 'package:chopper/chopper.dart' show Response;
 import 'package:community_charts_flutter/community_charts_flutter.dart'
@@ -81,15 +82,15 @@ class _HomeMainState extends State<HomeMain>
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
     // Use noon due to dailylight saving time
-    final DateTime now =
+    final TZDateTime now =
         tzHandler.sNow().setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
 
     lastDaysExpense.clear();
     lastDaysIncome.clear();
 
     // With a new API the number of API calls is reduced from 14 to 2
-    // :TODO: currently there is a bug in the APIv2 call, disabled this for now..
-    if (context.read<FireflyService>().apiVersion! >= Version(99, 0, 7)) {
+    // There was a fixed bug with Firefly v6.1.23, use it only afterwards!
+    if (context.read<FireflyService>().apiVersion! >= Version(6, 1, 23)) {
       final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
 
       final List<int> accounts = <int>[];
@@ -128,7 +129,7 @@ class _HomeMainState extends State<HomeMain>
       }
     } else {
       // Old Method (before API v2.0.6 (Firefly III v6.0.20))
-      final List<DateTime> lastDays = <DateTime>[];
+      final List<TZDateTime> lastDays = <TZDateTime>[];
       for (int i = 0; i < 7; i++) {
         lastDays.add(
           now
@@ -137,7 +138,7 @@ class _HomeMainState extends State<HomeMain>
         );
       }
 
-      for (DateTime e in lastDays) {
+      for (TZDateTime e in lastDays) {
         final Response<InsightTotal> respInsightExpense =
             await api.v1InsightExpenseTotalGet(
           start: DateFormat('yyyy-MM-dd', 'en_US').format(e),

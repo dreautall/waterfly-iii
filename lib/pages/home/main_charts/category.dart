@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'package:syncfusion_flutter_charts/charts.dart';
-
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
+import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
 class CategoryChart extends StatelessWidget {
@@ -100,10 +99,12 @@ class CategoryChart extends StatelessWidget {
                       title: Text(category.name!),
                     ),
                     body: HomeTransactions(
-                      category: CategoryRead(
-                        id: category.id!,
-                        type: "filter-category",
-                        attributes: Category(name: category.name!),
+                      filters: TransactionFilters(
+                        category: CategoryRead(
+                          id: category.id!,
+                          type: "filter-category",
+                          attributes: Category(name: category.name!),
+                        ),
                       ),
                     ),
                   ),

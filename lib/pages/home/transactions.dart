@@ -4,14 +4,12 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:waterflyiii/animations.dart';
 import 'package:version/version.dart';
-
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
@@ -24,10 +22,9 @@ import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 
 class HomeTransactions extends StatefulWidget {
-  const HomeTransactions({super.key, this.accountId, this.category});
+  const HomeTransactions({super.key, this.filters});
 
-  final String? accountId;
-  final CategoryRead? category;
+  final TransactionFilters? filters;
 
   @override
   State<HomeTransactions> createState() => _HomeTransactionsState();
@@ -63,7 +60,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     _tagsHidden.value = context.read<SettingsProvider>().hideTags;
 
     // Only add filter button when in own tab
-    if (widget.accountId == null && widget.category == null) {
+    if (widget.filters == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         context.read<PageActions>().set(
           widget.key!,
@@ -167,15 +164,33 @@ class _HomeTransactionsState extends State<HomeTransactions>
     try {
       late List<TransactionRead> transactionList;
 
-      // simply add a search filter for category id
-      // logic later already detects categoryId == -1 (= no category)
-      // there is no /api/v1/categories call for "no category" anyways
-      if (widget.category != null) {
-        _filters.category = widget.category;
+      if (widget.filters != null) {
+        _filters.account = widget.filters!.account;
+        _filters.text = widget.filters!.text;
+        _filters.currency = widget.filters!.currency;
+        _filters.category = widget.filters!.category;
+        _filters.budget = widget.filters!.budget;
+        _filters.bill = widget.filters!.bill;
+        _filters.tags = widget.filters!.tags;
         _filters.updateFilters();
       }
 
-      if (_filters.hasFilters) {
+      // Faster than searching for an account, and also has cache (stock) behind
+      // This search should never have additional filters!
+      if (widget.filters?.account != null) {
+        transactionList = await stock.getAccount(
+          id: _filters.account!.id,
+          page: pageKey,
+          limit: _numberOfPostsPerRequest,
+          end: context.read<SettingsProvider>().showFutureTXs
+              ? null
+              : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
+          start:
+              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
+                  ? null
+                  : "1900-01-01",
+        );
+      } else if (_filters.hasFilters) {
         String query = _filters.text ?? "";
         if (_filters.account != null) {
           query = "account_id:${_filters.account!.id} $query";
@@ -210,24 +225,13 @@ class _HomeTransactionsState extends State<HomeTransactions>
             query = "tag_is:\"$tag\" $query";
           }
         }
-        query = "date_before:today $query ";
+        if (!context.read<SettingsProvider>().showFutureTXs) {
+          query = "date_before:today $query ";
+        }
         log.fine(() => "Search query: $query");
         transactionList = await stock.getSearch(
           query: query,
           page: pageKey,
-        );
-      } else if (widget.accountId != null || _filters.account != null) {
-        transactionList = await stock.getAccount(
-          id: widget.accountId ?? _filters.account!.id,
-          page: pageKey,
-          limit: _numberOfPostsPerRequest,
-          end: context.read<SettingsProvider>().showFutureTXs
-              ? null
-              : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
-          start:
-              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
-                  ? null
-                  : "1900-01-01",
         );
       } else {
         transactionList = await stock.get(

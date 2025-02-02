@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:async/async.dart';
+import 'package:badges/badges.dart' as badges;
+import 'package:chopper/chopper.dart' show HttpMethod, Response;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,12 +14,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-
-import 'package:badges/badges.dart' as badges;
-import 'package:chopper/chopper.dart' show HttpMethod, Response;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:version/version.dart';
-
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -1204,7 +1202,15 @@ class _TransactionPageState extends State<TransactionPage>
             SizedBox(
               width: 130,
               child: NumberInput(
-                icon: const Icon(Icons.monetization_on),
+                icon: _localCurrency != null
+                    ? SizedBox(
+                        width: 24,
+                        height: 32,
+                        child: FittedBox(
+                          child: Text(_localCurrency!.attributes.symbol),
+                        ),
+                      )
+                    : Icon(Icons.monetization_on),
                 hintText: _localCurrency?.zero() ??
                     NumberFormat.currency(decimalDigits: 2).format(0),
                 decimals: _localCurrency?.attributes.decimalPlaces ?? 2,

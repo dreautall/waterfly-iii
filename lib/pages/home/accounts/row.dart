@@ -1,19 +1,18 @@
 import 'dart:convert';
 
 import 'package:animations/animations.dart';
+import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-
-import 'package:chopper/chopper.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
+import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/widgets/fabs.dart';
 
 Widget accountRowBuilder(
@@ -308,7 +307,8 @@ class _AccountTXpageState extends State<AccountTXpage> {
                   accountId: widget.account.id,
                 )
               : null,
-      body: HomeTransactions(accountId: widget.account.id),
+      body: HomeTransactions(
+          filters: TransactionFilters(account: widget.account)),
     );
   }
 }

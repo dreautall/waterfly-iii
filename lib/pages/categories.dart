@@ -5,12 +5,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/categories/addedit.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
+import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
@@ -391,7 +391,7 @@ class CategoryLine extends StatelessWidget {
             ),
           ],
         ),
-        body: HomeTransactions(category: category),
+        body: HomeTransactions(filters: TransactionFilters(category: category)),
       ),
       openColor: Theme.of(context).cardColor,
       closedColor: Theme.of(context).cardColor,

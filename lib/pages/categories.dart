@@ -243,6 +243,7 @@ class _CategoriesPageState extends State<CategoriesPage>
             totalSpent: totalSpent,
             totalEarned: totalEarned,
             excluded: categoriesSumExcluded.contains(category.id),
+            month: selectedMonth,
           ));
         }
 
@@ -356,6 +357,7 @@ class CategoryLine extends StatelessWidget {
     required this.totalEarned,
     required this.stock,
     required this.excluded,
+    required this.month,
   });
 
   final CategoryRead category;
@@ -364,6 +366,7 @@ class CategoryLine extends StatelessWidget {
   final double totalEarned;
   final CatStock stock;
   final bool excluded;
+  final DateTime month;
 
   @override
   Widget build(BuildContext context) {
@@ -391,7 +394,11 @@ class CategoryLine extends StatelessWidget {
             ),
           ],
         ),
-        body: HomeTransactions(filters: TransactionFilters(category: category)),
+        body: HomeTransactions(
+            filters: TransactionFilters(
+          category: category,
+          text: "date:${DateFormat("yyyy-MM").format(month)}-xx",
+        )),
       ),
       openColor: Theme.of(context).cardColor,
       closedColor: Theme.of(context).cardColor,

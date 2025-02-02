@@ -7,7 +7,9 @@
 
 **Unofficial** Android App for [Firefly III](https://github.com/firefly-iii/firefly-iii), a free and open source personal finance manager.
 
-The app design is heavily influenced by [Bluecoins](https://play.google.com/store/apps/details?id=com.rammigsoftware.bluecoins).
+The app design is heavily influenced
+by [Bluecoins](https://play.google.com/store/apps/details?id=com.rammigsoftware.bluecoins). Please
+also read the [FAQ](https://github.com/dreautall/waterfly-iii/blob/master/FAQ.md).
 
 ## Features
 

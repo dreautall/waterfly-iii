@@ -1,13 +1,16 @@
 # FAQ
 
-### App Functionality
+## App Functionality
 
 **Q: How can I copy an existing transaction? (Alternatively: Use a transaction template)**
+
 A: Long press on any transaction and select "Duplicate" from the context menu. It will open the new
 transaction dialogue with all information pre-filled, only the date & time will be set to the
 current time. You can modify any fields before saving it.
 
+
 **Q: How do I use a custom (self-signed) SSL certificate?**
+
 A: With the current technical implementation, the app uses the Android certificate store. You can
 create your own CA (Certificate Authority) to create your self-signed certificates and add the
 CA's (long-living) certificate into the Android Certificate Store. Then, any certificates signed by
@@ -17,12 +20,15 @@ answer [here](https://github.com/dreautall/waterfly-iii/issues/77#issuecomment-2
 and [here](https://github.com/dreautall/waterfly-iii/issues/418#issuecomment-2237184561).
 
 **Q: How does the notification listener service work?**
+
 A: When enabled, the app will monitor incoming notifications containing a monetary value (something
 like "*$12.34*"). If it detects such a notification, you can add the app in the settings. Then,
 whenever you receive a notification from that app, Waterfly III will offer you the option to add a
 new transaction.
 
+
 **Q: I enabled the notification listener, but my app is not listed!**
+
 A: After enabling, you need to receive at least one valid notification from your app for it to show
 up. A valid notification is one that contains a monetary value (something like "*$12.34*"). If it
 still doesn't show up, there are a couple of reasons why:
@@ -42,7 +48,9 @@ still doesn't show up, there are a couple of reasons why:
       Android settings. I'm not sure what the potential drawbacks of this are, but it will disable
       Android-suggested replies.
 
+
 **Q: How do I report bugs?**
+
 A: If you encounter a bug, please help me fix it by providing a detailed report:
 
 1. **Enable debug logs:** Go to the Settings page and click on the version number. This will show an
@@ -56,26 +64,35 @@ A: If you encounter a bug, please help me fix it by providing a detailed report:
   there. The log may contain sensitive information. If you upload the log to GitHub, please make
   sure to remove or redact any sensitive data before sharing it.
 
+
 **Q: How do I request new features?**
+
 A: I welcome your suggestions for new features! Either open
 a [new GitHub issue](https://github.com/dreautall/waterfly-iii/issues/new) or send me a mail. You
 can find the mail on
 the [Play Store page](https://play.google.com/store/apps/details?id=com.dreautall.waterflyiii).
 
-### Misc
+
+
+## Misc
 
 **Q: Any plans to make money with the app?**
+
 A: No, there are no plans to monetize the app. There will be no ads, no paid features, and no price.
 I want to keep the app free for everyone. If you want to thank me, you can do so
 via [GitHub Sponsors](https://github.com/sponsors/dreautall), but I do not expect it.
 
+
 **Q: Where is the privacy policy?**
+
 A: The app has a minimal privacy policy. The app only sends data to the server you specify during
 setup. Google may collect crash reports if you install the app via the Play Store that are forwarded
 to me. Google requires a Privacy Policy for the Play Store listing, which you can
 find [here](https://github.com/dreautall/waterfly-iii/blob/master/.playstore/privacy-policy.md).
 
+
 **Q: Why can't I find the app on F-Droid?**
+
 A: I honestly don't know. Opening the request to include the app into the F-Droid store was made
 pretty
 early ([GitHub issue](https://github.com/dreautall/waterfly-iii/issues/2), [F-Droid issue](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/12959)).

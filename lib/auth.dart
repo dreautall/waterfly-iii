@@ -237,7 +237,10 @@ class FireflyService with ChangeNotifier {
   late TimeZoneHandler tzHandler;
 
   final FlutterSecureStorage storage = const FlutterSecureStorage(
-    aOptions: AndroidOptions(),
+    aOptions: AndroidOptions(
+      encryptedSharedPreferences: true,
+      resetOnError: true,
+    ),
   );
 
   final Logger log = Logger("Auth.FireflyService");

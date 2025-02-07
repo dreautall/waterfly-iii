@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:collection/collection.dart';
 
 enum DataDestroyObject {
   @JsonValue(null)
@@ -81,8 +80,6 @@ enum ConfigValueFilter {
   configurationSingleUserMode('configuration.single_user_mode'),
   @JsonValue('firefly.version')
   fireflyVersion('firefly.version'),
-  @JsonValue('firefly.api_version')
-  fireflyApiVersion('firefly.api_version'),
   @JsonValue('firefly.default_location')
   fireflyDefaultLocation('firefly.default_location'),
   @JsonValue('firefly.account_to_transaction')
@@ -155,6 +152,59 @@ enum CurrencyUpdateDefault {
   final String? value;
 
   const CurrencyUpdateDefault(this.value);
+}
+
+enum UserGroupReadRole {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+  @JsonValue('owner')
+  owner('owner'),
+  @JsonValue('ro')
+  ro('ro'),
+  @JsonValue('mng_trx')
+  mngTrx('mng_trx'),
+  @JsonValue('mng_meta')
+  mngMeta('mng_meta'),
+  @JsonValue('read_budgets')
+  readBudgets('read_budgets'),
+  @JsonValue('read_piggies')
+  readPiggies('read_piggies'),
+  @JsonValue('read_subscriptions')
+  readSubscriptions('read_subscriptions'),
+  @JsonValue('read_rules')
+  readRules('read_rules'),
+  @JsonValue('read_recurring')
+  readRecurring('read_recurring'),
+  @JsonValue('read_webhooks')
+  readWebhooks('read_webhooks'),
+  @JsonValue('read_currencies')
+  readCurrencies('read_currencies'),
+  @JsonValue('mng_budgets')
+  mngBudgets('mng_budgets'),
+  @JsonValue('mng_piggies')
+  mngPiggies('mng_piggies'),
+  @JsonValue('mng_subscriptions')
+  mngSubscriptions('mng_subscriptions'),
+  @JsonValue('mng_rules')
+  mngRules('mng_rules'),
+  @JsonValue('mng_recurring')
+  mngRecurring('mng_recurring'),
+  @JsonValue('mng_webhooks')
+  mngWebhooks('mng_webhooks'),
+  @JsonValue('mng_currencies')
+  mngCurrencies('mng_currencies'),
+  @JsonValue('view_reports')
+  viewReports('view_reports'),
+  @JsonValue('view_memberships')
+  viewMemberships('view_memberships'),
+  @JsonValue('full')
+  full('full'),
+  @JsonValue('owner')
+  $owner('owner');
+
+  final String? value;
+
+  const UserGroupReadRole(this.value);
 }
 
 enum AttachableType {
@@ -501,6 +551,94 @@ enum WebhookTrigger {
   const WebhookTrigger(this.value);
 }
 
+enum AccountTypeFilter {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+  @JsonValue('all')
+  all('all'),
+  @JsonValue('asset')
+  asset('asset'),
+  @JsonValue('cash')
+  cash('cash'),
+  @JsonValue('expense')
+  expense('expense'),
+  @JsonValue('revenue')
+  revenue('revenue'),
+  @JsonValue('special')
+  special('special'),
+  @JsonValue('hidden')
+  hidden('hidden'),
+  @JsonValue('liability')
+  liability('liability'),
+  @JsonValue('liabilities')
+  liabilities('liabilities'),
+  @JsonValue('Default account')
+  defaultAccount('Default account'),
+  @JsonValue('Cash account')
+  cashAccount('Cash account'),
+  @JsonValue('Asset account')
+  assetAccount('Asset account'),
+  @JsonValue('Expense account')
+  expenseAccount('Expense account'),
+  @JsonValue('Revenue account')
+  revenueAccount('Revenue account'),
+  @JsonValue('Initial balance account')
+  initialBalanceAccount('Initial balance account'),
+  @JsonValue('Beneficiary account')
+  beneficiaryAccount('Beneficiary account'),
+  @JsonValue('Import account')
+  importAccount('Import account'),
+  @JsonValue('Reconciliation account')
+  reconciliationAccount('Reconciliation account'),
+  @JsonValue('Loan')
+  loan('Loan'),
+  @JsonValue('Debt')
+  debt('Debt'),
+  @JsonValue('Mortgage')
+  mortgage('Mortgage');
+
+  final String? value;
+
+  const AccountTypeFilter(this.value);
+}
+
+enum TransactionTypeFilter {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+  @JsonValue('all')
+  all('all'),
+  @JsonValue('withdrawal')
+  withdrawal('withdrawal'),
+  @JsonValue('withdrawals')
+  withdrawals('withdrawals'),
+  @JsonValue('expense')
+  expense('expense'),
+  @JsonValue('deposit')
+  deposit('deposit'),
+  @JsonValue('deposits')
+  deposits('deposits'),
+  @JsonValue('income')
+  income('income'),
+  @JsonValue('transfer')
+  transfer('transfer'),
+  @JsonValue('transfers')
+  transfers('transfers'),
+  @JsonValue('opening_balance')
+  openingBalance('opening_balance'),
+  @JsonValue('reconciliation')
+  reconciliation('reconciliation'),
+  @JsonValue('special')
+  special('special'),
+  @JsonValue('specials')
+  specials('specials'),
+  @JsonValue('default')
+  $default('default');
+
+  final String? value;
+
+  const TransactionTypeFilter(this.value);
+}
+
 enum AccountRoleProperty {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
@@ -673,94 +811,4 @@ enum TransactionTypeProperty {
   final String? value;
 
   const TransactionTypeProperty(this.value);
-}
-
-enum AccountTypeFilter {
-  @JsonValue(null)
-  swaggerGeneratedUnknown(null),
-
-  @JsonValue('all')
-  all('all'),
-  @JsonValue('asset')
-  asset('asset'),
-  @JsonValue('cash')
-  cash('cash'),
-  @JsonValue('expense')
-  expense('expense'),
-  @JsonValue('revenue')
-  revenue('revenue'),
-  @JsonValue('special')
-  special('special'),
-  @JsonValue('hidden')
-  hidden('hidden'),
-  @JsonValue('liability')
-  liability('liability'),
-  @JsonValue('liabilities')
-  liabilities('liabilities'),
-  @JsonValue('Default account')
-  defaultAccount('Default account'),
-  @JsonValue('Cash account')
-  cashAccount('Cash account'),
-  @JsonValue('Asset account')
-  assetAccount('Asset account'),
-  @JsonValue('Expense account')
-  expenseAccount('Expense account'),
-  @JsonValue('Revenue account')
-  revenueAccount('Revenue account'),
-  @JsonValue('Initial balance account')
-  initialBalanceAccount('Initial balance account'),
-  @JsonValue('Beneficiary account')
-  beneficiaryAccount('Beneficiary account'),
-  @JsonValue('Import account')
-  importAccount('Import account'),
-  @JsonValue('Reconciliation account')
-  reconciliationAccount('Reconciliation account'),
-  @JsonValue('Loan')
-  loan('Loan'),
-  @JsonValue('Debt')
-  debt('Debt'),
-  @JsonValue('Mortgage')
-  mortgage('Mortgage');
-
-  final String? value;
-
-  const AccountTypeFilter(this.value);
-}
-
-enum TransactionTypeFilter {
-  @JsonValue(null)
-  swaggerGeneratedUnknown(null),
-
-  @JsonValue('all')
-  all('all'),
-  @JsonValue('withdrawal')
-  withdrawal('withdrawal'),
-  @JsonValue('withdrawals')
-  withdrawals('withdrawals'),
-  @JsonValue('expense')
-  expense('expense'),
-  @JsonValue('deposit')
-  deposit('deposit'),
-  @JsonValue('deposits')
-  deposits('deposits'),
-  @JsonValue('income')
-  income('income'),
-  @JsonValue('transfer')
-  transfer('transfer'),
-  @JsonValue('transfers')
-  transfers('transfers'),
-  @JsonValue('opening_balance')
-  openingBalance('opening_balance'),
-  @JsonValue('reconciliation')
-  reconciliation('reconciliation'),
-  @JsonValue('special')
-  special('special'),
-  @JsonValue('specials')
-  specials('specials'),
-  @JsonValue('default')
-  $default('default');
-
-  final String? value;
-
-  const TransactionTypeFilter(this.value);
 }

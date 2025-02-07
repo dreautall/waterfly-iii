@@ -1,0 +1,4 @@
+- Fixes for Firefly III v6.2.0
+ - Piggybank feature requires Firefly III v6.2.2 to work due to a bug in Firefly III.
+ - The new native currency feature has not been tested at all.
+- Hotfix for login issues.

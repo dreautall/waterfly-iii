@@ -806,6 +806,14 @@
     "@settingsDialogThemeTitle": {
         "description": "Dialog title: Select theme"
     },
+    "settingsFAQ": "FAQ",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
+    "settingsFAQHelp": "Öffnet im Browser. Nur auf Englisch verfügbar.",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
+    },
     "settingsLanguage": "Sprache",
     "@settingsLanguage": {
         "description": "Currently selected language"

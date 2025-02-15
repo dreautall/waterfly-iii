@@ -342,12 +342,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
       }
       amount += double.parse(trans.amount);
       if (trans.foreignAmount?.isNotEmpty ?? false) {
-        final double amount = double.parse(trans.foreignAmount!);
+        final double foreignAmount = double.parse(trans.foreignAmount!);
         final String foreignSymbol =
             trans.foreignCurrencySymbol ?? trans.foreignCurrencyCode ?? "";
-        if (amount != 0 && foreignSymbol.isNotEmpty) {
+        if (foreignAmount != 0 && foreignSymbol.isNotEmpty) {
           foreignAmounts[foreignSymbol] =
-              foreignAmounts[foreignSymbol] ?? 0 + amount;
+              (foreignAmounts[foreignSymbol] ?? 0) + foreignAmount;
           foreignCurrencies[foreignSymbol] = CurrencyRead(
             id: trans.foreignCurrencyId ?? "0",
             type: "currencies",

@@ -200,7 +200,8 @@ class _BillDetailsState extends State<BillDetails> {
         },
       ),
       openColor: Theme.of(context).cardColor,
-      closedColor: Theme.of(context).dialogBackgroundColor,
+      closedColor:
+          Theme.of(context).dialogTheme.backgroundColor ?? Colors.white,
       closedShape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),

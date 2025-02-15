@@ -40,7 +40,7 @@ dependencies:
       ref: ce371398f86412a8d9a2e0b75a9b51597ea1d79f
   package_info_plus: ^8.2.0
   logging: ^1.1.1
-  flutter_email_sender: ^6.0.2
+  flutter_email_sender: ^7.0.0
   local_auth: ^2.1.8
   dynamic_color: ^1.7.0
   material_color_utilities: ^0.11.1

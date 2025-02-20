@@ -1,21 +1,19 @@
 import 'dart:async';
 
+import 'package:chopper/chopper.dart' show Response;
 import 'package:collection/collection.dart';
+import 'package:community_charts_flutter/community_charts_flutter.dart'
+    as charts;
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart';
-
-import 'package:chopper/chopper.dart' show Response;
-import 'package:community_charts_flutter/community_charts_flutter.dart'
-    as charts;
 import 'package:version/version.dart';
-
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
+import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii_v2.enums.swagger.dart'

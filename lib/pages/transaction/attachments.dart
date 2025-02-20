@@ -1,21 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:chopper/chopper.dart' show HttpMethod, Response;
+import 'package:file_picker/file_picker.dart';
+import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:provider/provider.dart';
-
-import 'package:chopper/chopper.dart' show HttpMethod, Response;
-import 'package:file_picker/file_picker.dart';
-import 'package:filesize/filesize.dart';
-import 'package:open_file_plus/open_file_plus.dart';
-
 import 'package:waterflyiii/auth.dart';
+import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
 

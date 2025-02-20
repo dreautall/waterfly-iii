@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
@@ -12,6 +11,7 @@ import 'package:version/version.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
+import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
@@ -342,12 +342,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
       }
       amount += double.parse(trans.amount);
       if (trans.foreignAmount?.isNotEmpty ?? false) {
-        final double amount = double.parse(trans.foreignAmount!);
+        final double foreignAmount = double.parse(trans.foreignAmount!);
         final String foreignSymbol =
             trans.foreignCurrencySymbol ?? trans.foreignCurrencyCode ?? "";
-        if (amount != 0 && foreignSymbol.isNotEmpty) {
+        if (foreignAmount != 0 && foreignSymbol.isNotEmpty) {
           foreignAmounts[foreignSymbol] =
-              foreignAmounts[foreignSymbol] ?? 0 + amount;
+              (foreignAmounts[foreignSymbol] ?? 0) + foreignAmount;
           foreignCurrencies[foreignSymbol] = CurrencyRead(
             id: trans.foreignCurrencyId ?? "0",
             type: "currencies",

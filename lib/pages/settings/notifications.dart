@@ -1,14 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:logging/logging.dart';
-import 'package:provider/provider.dart';
-
-import 'package:chopper/chopper.dart' show Response;
 import 'package:appcheck/appcheck.dart';
+import 'package:chopper/chopper.dart' show Response;
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:logging/logging.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';
-
+import 'package:provider/provider.dart';
 import 'package:waterflyiii/auth.dart';
+import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/settings.dart';

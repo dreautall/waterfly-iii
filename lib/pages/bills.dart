@@ -1,20 +1,18 @@
 import 'package:animations/animations.dart';
+import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-
-import 'package:chopper/chopper.dart' show Response;
 import 'package:syncfusion_flutter_charts/charts.dart' show SortingOrder;
-
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
+import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/bills/billdetails.dart';
+import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/timezonehandler.dart';
-import 'package:waterflyiii/pages/navigation.dart';
 
 class BillsPage extends StatefulWidget {
   const BillsPage({super.key});

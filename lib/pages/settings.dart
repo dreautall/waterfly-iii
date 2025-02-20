@@ -1,17 +1,16 @@
 import 'package:animations/animations.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:logging/logging.dart';
 import 'package:material_color_utilities/material_color_utilities.dart'
     show CorePalette;
-import 'package:provider/provider.dart';
-
-import 'package:local_auth/local_auth.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:provider/provider.dart';
 import 'package:quick_actions/quick_actions.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:waterflyiii/auth.dart';
-
+import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/settings/debug.dart';
 import 'package:waterflyiii/pages/settings/notifications.dart';
@@ -212,6 +211,22 @@ class SettingsPageState extends State<SettingsPage>
           },
         ),
         const Divider(),
+        ListTile(
+          title: Text(S.of(context).settingsFAQ),
+          subtitle: Text(S.of(context).settingsFAQHelp),
+          leading: const CircleAvatar(
+            child: Icon(Icons.question_answer),
+          ),
+          onTap: () async {
+            final Uri uri = Uri.parse(
+                "https://github.com/dreautall/waterfly-iii/blob/master/FAQ.md");
+            if (await canLaunchUrl(uri)) {
+              await launchUrl(uri);
+            } else {
+              throw "Could not open URL";
+            }
+          },
+        ),
         FutureBuilder<PackageInfo>(
           future: PackageInfo.fromPlatform(),
           builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {

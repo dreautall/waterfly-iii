@@ -1,17 +1,16 @@
 import 'dart:convert';
 
+import 'package:chopper/chopper.dart' show Response;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-
-import 'package:chopper/chopper.dart' show Response;
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-
+import 'package:version/version.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
+import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/piggybank/chart.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
@@ -129,17 +128,36 @@ class _HomePiggybankState extends State<HomePiggybank>
             if (!(piggy.attributes.active ?? false)) {
               return const SizedBox.shrink();
             }
+            String subtitle = "";
+            if (context.read<FireflyService>().apiVersion! >=
+                Version(6, 2, 0)) {
+              if (piggy.attributes.accounts?.isNotEmpty ?? false) {
+                if (piggy.attributes.accounts!.length == 1 &&
+                    (piggy.attributes.accounts!.first.name?.isNotEmpty ??
+                        false)) {
+                  subtitle = S
+                      .of(context)
+                      .homePiggyLinked(piggy.attributes.accounts!.first.name!);
+                } else if (piggy.attributes.accounts!.length > 1) {
+                  subtitle = S
+                      .of(context)
+                      .homePiggyLinked(S.of(context).generalMultiple);
+                }
+              } else {
+                if (piggy.attributes.accountName != null) {
+                  subtitle = S
+                      .of(context)
+                      .homePiggyLinked(piggy.attributes.accountName!);
+                }
+              }
+            }
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 groupHeader ?? const SizedBox.shrink(),
                 ListTile(
                   title: Text(piggy.attributes.name),
-                  subtitle: (piggy.attributes.accountName != null)
-                      ? Text(S
-                          .of(context)
-                          .homePiggyLinked(piggy.attributes.accountName!))
-                      : const Text(""),
+                  subtitle: Text(subtitle),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(16),

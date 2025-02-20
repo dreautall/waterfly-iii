@@ -834,7 +834,7 @@ class _TransactionPageState extends State<TransactionPage>
                     String? error;
 
                     if (_ownAccountId == null) {
-                      error = "Please select an asset account."; // :TODO: l10n
+                      error = S.of(context).transactionErrorNoAssetAccount;
                     }
                     if (_titleTextController.text.isEmpty) {
                       error = S.of(context).transactionErrorTitle;
@@ -844,8 +844,7 @@ class _TransactionPageState extends State<TransactionPage>
                     }
                     if (_transactionType ==
                         TransactionTypeProperty.swaggerGeneratedUnknown) {
-                      error =
-                          "Please fill in the accounts first"; // :TODO: l10n
+                      error = S.of(context).transactionErrorNoAccounts;
                     }
                     if (error != null) {
                       msg.showSnackBar(SnackBar(
@@ -1302,7 +1301,7 @@ class _TransactionPageState extends State<TransactionPage>
               vDivider,
               Expanded(
                 child: AutoCompleteText<AutocompleteAccount>(
-                  labelText: "Source account", // :TODO: l10n
+                  labelText: S.of(context).generalSourceAccount,
                   //labelIcon: Icons.account_balance,
                   textController: _sourceAccountTextController,
                   focusNode: _sourceAccountFocusNode,
@@ -1386,7 +1385,7 @@ class _TransactionPageState extends State<TransactionPage>
                 vDivider,
                 Expanded(
                   child: AutoCompleteText<AutocompleteAccount>(
-                    labelText: "Destination account", // :TODO: l10n
+                    labelText: S.of(context).generalDestinationAccount,
                     textController: _destinationAccountTextController,
                     focusNode: _destinationAccountFocusNode,
                     /*errorText: _transactionType == TransactionTypeProperty.deposit &&
@@ -1542,9 +1541,11 @@ class _TransactionPageState extends State<TransactionPage>
     }
     // set foreign currency if account is destination & asset account and source
     // account is also asset account (transfer from one currency to other)
-    if (!isSource &&
-        _destinationAccountType == AccountTypeProperty.assetAccount &&
-        _sourceAccountType == AccountTypeProperty.assetAccount) {
+    if ((!isSource &&
+            _destinationAccountType == AccountTypeProperty.assetAccount &&
+            _sourceAccountType == AccountTypeProperty.assetAccount) &&
+        _localCurrency?.id != option.currencyId) {
+      // Only when destination & source account have different currency
       if (!_foreignCurrencies
           .every((CurrencyRead? e) => e?.id == option.currencyId)) {
         setState(() {
@@ -1666,7 +1667,7 @@ class _TransactionPageState extends State<TransactionPage>
                             children: <Widget>[
                               Expanded(
                                 child: AutoCompleteText<AutocompleteAccount>(
-                                  labelText: "Source Account", // :TODO: l10n
+                                  labelText: S.of(context).generalSourceAccount,
                                   labelIcon: Icons.arrow_back,
                                   textController:
                                       _sourceAccountTextControllers[i],
@@ -1734,7 +1735,7 @@ class _TransactionPageState extends State<TransactionPage>
                               Expanded(
                                 child: AutoCompleteText<AutocompleteAccount>(
                                   labelText:
-                                      "Destination Account", // :TODO: l10n
+                                      S.of(context).generalDestinationAccount,
                                   labelIcon: Icons.arrow_forward,
                                   textController:
                                       _destinationAccountTextControllers[i],
@@ -2027,7 +2028,9 @@ class _TransactionPageState extends State<TransactionPage>
                                   }
                                 : null,
                             tooltip: (_split)
-                                ? "Change Split Source Account" // :TODO:
+                                ? S
+                                    .of(context)
+                                    .transactionSplitChangeSourceAccount
                                 : null,
                           ),
                           hDivider,
@@ -2054,7 +2057,9 @@ class _TransactionPageState extends State<TransactionPage>
                                   }
                                 : null,
                             tooltip: (_split)
-                                ? "Change Split Destination Account" // :TODO:
+                                ? S
+                                    .of(context)
+                                    .transactionSplitChangeDestinationAccount
                                 : null,
                           ),
                           hDivider,

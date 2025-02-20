@@ -377,6 +377,10 @@
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
     },
+    "generalDestinationAccount": "Destination Account",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
+    },
     "generalDismiss": "Dismiss",
     "@generalDismiss": {
         "description": "Dismiss window/dialog without action"
@@ -416,6 +420,10 @@
     "generalReset": "Reset",
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
+    },
+    "generalSourceAccount": "Source Account",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
     },
     "generalSpent": "Spent",
     "@generalSpent": {
@@ -1025,6 +1033,14 @@
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
     },
+    "transactionErrorNoAccounts": "Please fill in the accounts first.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Please select an asset account.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
+    },
     "transactionErrorTitle": "Please provide a title.",
     "@transactionErrorTitle": {
         "description": "Transaction Save Error: No title provided"
@@ -1064,6 +1080,14 @@
     "transactionSplitChangeCurrency": "Change Split Currency",
     "@transactionSplitChangeCurrency": {
         "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Change Split Destination Account",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Change Split Source Account",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
     },
     "transactionSplitChangeTarget": "Change Split Target Account",
     "@transactionSplitChangeTarget": {

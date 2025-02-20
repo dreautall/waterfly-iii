@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -329,6 +328,9 @@ class SPt extends S {
   String get generalDefault => 'padrão';
 
   @override
+  String get generalDestinationAccount => 'Destination Account';
+
+  @override
   String get generalDismiss => 'Dispensar';
 
   @override
@@ -357,6 +359,9 @@ class SPt extends S {
 
   @override
   String get generalReset => 'Reset';
+
+  @override
+  String get generalSourceAccount => 'Source Account';
 
   @override
   String get generalSpent => 'Spent';
@@ -816,6 +821,13 @@ class SPt extends S {
   String get transactionErrorInvalidBudget => 'Orçamento Inválido';
 
   @override
+  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+
+  @override
+  String get transactionErrorNoAssetAccount =>
+      'Please select an asset account.';
+
+  @override
   String get transactionErrorTitle => 'Por favor, especifique um título.';
 
   @override
@@ -844,6 +856,14 @@ class SPt extends S {
 
   @override
   String get transactionSplitChangeCurrency => 'Alterar Moeda da Divisão';
+
+  @override
+  String get transactionSplitChangeDestinationAccount =>
+      'Change Split Destination Account';
+
+  @override
+  String get transactionSplitChangeSourceAccount =>
+      'Change Split Source Account';
 
   @override
   String get transactionSplitChangeTarget => 'Alterar Conta Alvo da Divisão';

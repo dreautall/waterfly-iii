@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -329,6 +328,9 @@ class SIt extends S {
   String get generalDefault => 'predefinito';
 
   @override
+  String get generalDestinationAccount => 'Destination Account';
+
+  @override
   String get generalDismiss => 'Ignora';
 
   @override
@@ -357,6 +359,9 @@ class SIt extends S {
 
   @override
   String get generalReset => 'Reimposta';
+
+  @override
+  String get generalSourceAccount => 'Source Account';
 
   @override
   String get generalSpent => 'Spent';
@@ -818,6 +823,13 @@ class SIt extends S {
   String get transactionErrorInvalidBudget => 'Bilancio non valido';
 
   @override
+  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+
+  @override
+  String get transactionErrorNoAssetAccount =>
+      'Please select an asset account.';
+
+  @override
   String get transactionErrorTitle => 'Si prega di fornire un titolo.';
 
   @override
@@ -846,6 +858,14 @@ class SIt extends S {
 
   @override
   String get transactionSplitChangeCurrency => 'Modifica Valuta Suddivisa';
+
+  @override
+  String get transactionSplitChangeDestinationAccount =>
+      'Change Split Destination Account';
+
+  @override
+  String get transactionSplitChangeSourceAccount =>
+      'Change Split Source Account';
 
   @override
   String get transactionSplitChangeTarget =>

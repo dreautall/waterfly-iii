@@ -550,6 +550,12 @@ abstract class S {
   /// **'default'**
   String get generalDefault;
 
+  /// Destination Account (for transaction)
+  ///
+  /// In en, this message translates to:
+  /// **'Destination Account'**
+  String get generalDestinationAccount;
+
   /// Dismiss window/dialog without action
   ///
   /// In en, this message translates to:
@@ -609,6 +615,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Reset'**
   String get generalReset;
+
+  /// Source Account (of transaction)
+  ///
+  /// In en, this message translates to:
+  /// **'Source Account'**
+  String get generalSourceAccount;
 
   /// (Amount) Spent
   ///
@@ -1318,6 +1330,18 @@ abstract class S {
   /// **'Invalid Budget'**
   String get transactionErrorInvalidBudget;
 
+  /// Transaction Save Error: No accounts have been entered
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in the accounts first.'**
+  String get transactionErrorNoAccounts;
+
+  /// Transaction Save Error: No account is an asset (own) account
+  ///
+  /// In en, this message translates to:
+  /// **'Please select an asset account.'**
+  String get transactionErrorNoAssetAccount;
+
   /// Transaction Save Error: No title provided
   ///
   /// In en, this message translates to:
@@ -1377,6 +1401,18 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Change Split Currency'**
   String get transactionSplitChangeCurrency;
+
+  /// Hint Text: Change destination account for a single split
+  ///
+  /// In en, this message translates to:
+  /// **'Change Split Destination Account'**
+  String get transactionSplitChangeDestinationAccount;
+
+  /// Hint Text: Change source account for a single split
+  ///
+  /// In en, this message translates to:
+  /// **'Change Split Source Account'**
+  String get transactionSplitChangeSourceAccount;
 
   /// Hint Text: Change target account for single split
   ///

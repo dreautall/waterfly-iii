@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -329,6 +328,9 @@ class SDa extends S {
   String get generalDefault => 'standard';
 
   @override
+  String get generalDestinationAccount => 'Destination Account';
+
+  @override
   String get generalDismiss => 'Afvis';
 
   @override
@@ -357,6 +359,9 @@ class SDa extends S {
 
   @override
   String get generalReset => 'Nulstil';
+
+  @override
+  String get generalSourceAccount => 'Source Account';
 
   @override
   String get generalSpent => 'Brugt';
@@ -814,6 +819,13 @@ class SDa extends S {
   String get transactionErrorInvalidBudget => 'Ugyldigt Budget';
 
   @override
+  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+
+  @override
+  String get transactionErrorNoAssetAccount =>
+      'Please select an asset account.';
+
+  @override
   String get transactionErrorTitle => 'Angiv venligst en titel.';
 
   @override
@@ -842,6 +854,14 @@ class SDa extends S {
 
   @override
   String get transactionSplitChangeCurrency => 'Ændr delt valuta';
+
+  @override
+  String get transactionSplitChangeDestinationAccount =>
+      'Change Split Destination Account';
+
+  @override
+  String get transactionSplitChangeSourceAccount =>
+      'Change Split Source Account';
 
   @override
   String get transactionSplitChangeTarget => 'Ændr delt målkonto';

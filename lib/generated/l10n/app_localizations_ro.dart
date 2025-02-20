@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -329,6 +328,9 @@ class SRo extends S {
   String get generalDefault => 'implicit';
 
   @override
+  String get generalDestinationAccount => 'Destination Account';
+
+  @override
   String get generalDismiss => 'Închide';
 
   @override
@@ -357,6 +359,9 @@ class SRo extends S {
 
   @override
   String get generalReset => 'Reset';
+
+  @override
+  String get generalSourceAccount => 'Source Account';
 
   @override
   String get generalSpent => 'Spent';
@@ -819,6 +824,13 @@ class SRo extends S {
   String get transactionErrorInvalidBudget => 'Buget invalid';
 
   @override
+  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+
+  @override
+  String get transactionErrorNoAssetAccount =>
+      'Please select an asset account.';
+
+  @override
   String get transactionErrorTitle => 'Te rog introdu un titlu.';
 
   @override
@@ -847,6 +859,14 @@ class SRo extends S {
 
   @override
   String get transactionSplitChangeCurrency => 'Schimbă moneda divizată';
+
+  @override
+  String get transactionSplitChangeDestinationAccount =>
+      'Change Split Destination Account';
+
+  @override
+  String get transactionSplitChangeSourceAccount =>
+      'Change Split Source Account';
 
   @override
   String get transactionSplitChangeTarget => 'Schimbă contul țintă divizat';

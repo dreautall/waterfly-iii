@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -329,6 +328,9 @@ class SSl extends S {
   String get generalDefault => 'privzeto';
 
   @override
+  String get generalDestinationAccount => 'Destination Account';
+
+  @override
   String get generalDismiss => 'Opusti';
 
   @override
@@ -357,6 +359,9 @@ class SSl extends S {
 
   @override
   String get generalReset => 'Ponastavi';
+
+  @override
+  String get generalSourceAccount => 'Source Account';
 
   @override
   String get generalSpent => 'Porabljeno';
@@ -819,6 +824,13 @@ class SSl extends S {
   String get transactionErrorInvalidBudget => 'Neveljaven proračun';
 
   @override
+  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+
+  @override
+  String get transactionErrorNoAssetAccount =>
+      'Please select an asset account.';
+
+  @override
   String get transactionErrorTitle => 'Prosim navedite naslov.';
 
   @override
@@ -847,6 +859,14 @@ class SSl extends S {
 
   @override
   String get transactionSplitChangeCurrency => 'Spremeni valuto razdelitve';
+
+  @override
+  String get transactionSplitChangeDestinationAccount =>
+      'Change Split Destination Account';
+
+  @override
+  String get transactionSplitChangeSourceAccount =>
+      'Change Split Source Account';
 
   @override
   String get transactionSplitChangeTarget => 'Spremeni ciljni račun razdelitve';

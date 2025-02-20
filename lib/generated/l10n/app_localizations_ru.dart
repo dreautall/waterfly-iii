@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -329,6 +328,9 @@ class SRu extends S {
   String get generalDefault => 'по умолчанию';
 
   @override
+  String get generalDestinationAccount => 'Destination Account';
+
+  @override
   String get generalDismiss => 'Отмена';
 
   @override
@@ -357,6 +359,9 @@ class SRu extends S {
 
   @override
   String get generalReset => 'Сбросить';
+
+  @override
+  String get generalSourceAccount => 'Source Account';
 
   @override
   String get generalSpent => 'Потрачено';
@@ -816,6 +821,13 @@ class SRu extends S {
   String get transactionErrorInvalidBudget => 'Неверный бюджет';
 
   @override
+  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+
+  @override
+  String get transactionErrorNoAssetAccount =>
+      'Please select an asset account.';
+
+  @override
   String get transactionErrorTitle => 'Пожалуйста, укажите заголовок.';
 
   @override
@@ -844,6 +856,14 @@ class SRu extends S {
 
   @override
   String get transactionSplitChangeCurrency => 'Изменить раздельную валюту';
+
+  @override
+  String get transactionSplitChangeDestinationAccount =>
+      'Change Split Destination Account';
+
+  @override
+  String get transactionSplitChangeSourceAccount =>
+      'Change Split Source Account';
 
   @override
   String get transactionSplitChangeTarget =>

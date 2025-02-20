@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -329,6 +328,9 @@ class SPl extends S {
   String get generalDefault => 'domyślnie';
 
   @override
+  String get generalDestinationAccount => 'Destination Account';
+
+  @override
   String get generalDismiss => 'Anuluj';
 
   @override
@@ -357,6 +359,9 @@ class SPl extends S {
 
   @override
   String get generalReset => 'Resetuj';
+
+  @override
+  String get generalSourceAccount => 'Source Account';
 
   @override
   String get generalSpent => 'Spent';
@@ -822,6 +827,13 @@ class SPl extends S {
   String get transactionErrorInvalidBudget => 'Błędny budżet';
 
   @override
+  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+
+  @override
+  String get transactionErrorNoAssetAccount =>
+      'Please select an asset account.';
+
+  @override
   String get transactionErrorTitle => 'Proszę podać tytuł.';
 
   @override
@@ -850,6 +862,14 @@ class SPl extends S {
 
   @override
   String get transactionSplitChangeCurrency => 'Zmień walutę podziału';
+
+  @override
+  String get transactionSplitChangeDestinationAccount =>
+      'Change Split Destination Account';
+
+  @override
+  String get transactionSplitChangeSourceAccount =>
+      'Change Split Source Account';
 
   @override
   String get transactionSplitChangeTarget => 'Zmień docelowe konto dzielenia';

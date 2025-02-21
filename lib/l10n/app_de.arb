@@ -51,9 +51,9 @@
             }
         }
     },
-    "billsAmountAndFrequency": "Rechnung passt zu Transaktionen zwischen {minValue} und {maxvalue}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
+    "billsAmountAndFrequency": "Abonnement passt zu Transaktionen zwischen {minValue} und {maxvalue}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
     "@billsAmountAndFrequency": {
-        "description": "Bill match for min and max amounts, and frequency",
+        "description": "Subscription match for min and max amounts, and frequency",
         "placeholders": {
             "minValue": {
                 "type": "String",
@@ -81,13 +81,13 @@
     "@billsChangeSortOrderTooltip": {
         "description": "Text for sort order change button tooltip"
     },
-    "billsErrorLoading": "Fehler beim Laden der Rechnungen.",
+    "billsErrorLoading": "Fehler beim Laden der Abonnements.",
     "@billsErrorLoading": {
-        "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
     },
-    "billsExactAmountAndFrequency": "Rechnung passt zu Transaktionen mit {value}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
+    "billsExactAmountAndFrequency": "Abonnement passt zu Transaktionen mit {value}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
     "@billsExactAmountAndFrequency": {
-        "description": "Bill match for exact amount and frequency",
+        "description": "Subscription match for exact amount and frequency",
         "placeholders": {
             "value": {
                 "type": "String",
@@ -105,7 +105,7 @@
     },
     "billsExpectedOn": "Voraussichtlich {date}",
     "@billsExpectedOn": {
-        "description": "Describes what date the bill is expected",
+        "description": "Describes what date the subscription is expected",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -116,7 +116,7 @@
     },
     "billsFrequency": "{frequency, select, weekly{Wöchentlich} monthly{Monatlich} quarterly{Vierteljährlich} halfyear{Halbjährlich} yearly{Jährlich} other{Unbekannt}}",
     "@billsFrequency": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -126,7 +126,7 @@
     },
     "billsFrequencySkip": "{frequency, select, weekly{Wöchentlich} monthly{Monatlich} quarterly{Vierteljährlich} halfyear{Halbjährlich} yearly{Jährlich} other{Unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}",
     "@billsFrequencySkip": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -140,13 +140,13 @@
     },
     "billsInactive": "Inaktiv",
     "@billsInactive": {
-        "description": "Text: when the bill is inactive"
+        "description": "Text: when the subscription is inactive"
     },
-    "billsIsActive": "Rechnung ist aktiv",
+    "billsIsActive": "Abonnement ist aktiv",
     "@billsIsActive": {
-        "description": "Text: the bill is active"
+        "description": "Text: the subscription is active"
     },
-    "billsLayoutGroupSubtitle": "Rechnungen werden in ihrer Gruppe angezeigt.",
+    "billsLayoutGroupSubtitle": "Abonnements werden in ihrer Gruppe angezeigt.",
     "@billsLayoutGroupSubtitle": {
         "description": "Subtitle text for group layout option"
     },
@@ -154,7 +154,7 @@
     "@billsLayoutGroupTitle": {
         "description": "Title text for group layout option"
     },
-    "billsLayoutListSubtitle": "Rechnungen werden sortiert in einer Liste angezeigt.",
+    "billsLayoutListSubtitle": "Abonnements werden sortiert in einer Liste angezeigt.",
     "@billsLayoutListSubtitle": {
         "description": "Subtitle text for list layout option"
     },
@@ -168,23 +168,23 @@
     },
     "billsNextExpectedMatch": "Nächste erwartete Übereinstimmung",
     "@billsNextExpectedMatch": {
-        "description": "Text: next expected match for bill"
+        "description": "Text: next expected match for subscription"
     },
-    "billsNotActive": "Rechnung ist inaktiv",
+    "billsNotActive": "Abonnement ist inaktiv",
     "@billsNotActive": {
-        "description": "Text: the bill is inactive"
+        "description": "Text: the subscription is inactive"
     },
     "billsNotExpected": "In diesem Zeitraum nicht erwartet",
     "@billsNotExpected": {
-        "description": "Describes that the bill is not expected this period"
+        "description": "Describes that the subscription is not expected this period"
     },
     "billsNoTransactions": "Keine Transaktionen gefunden.",
     "@billsNoTransactions": {
-        "description": "Describes that there are no transactions connected to the bill"
+        "description": "Describes that there are no transactions connected to the subscription"
     },
     "billsPaidOn": "Bezahlt am {date}",
     "@billsPaidOn": {
-        "description": "Describes what date the bill was paid",
+        "description": "Describes what date the subscription was paid",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -211,7 +211,7 @@
     },
     "billsUngrouped": "Keine Gruppe",
     "@billsUngrouped": {
-        "description": "Title for ungrouped bills"
+        "description": "Title for ungrouped subscriptions"
     },
     "categoryDeleteConfirm": "Möchtest du diese Kategorie wirklich löschen? Die Transaktionen werden nicht gelöscht, werden aber keine Kategorie mehr haben.",
     "@categoryDeleteConfirm": {
@@ -357,9 +357,9 @@
             }
         }
     },
-    "generalBill": "Rechnung",
+    "generalBill": "Abonnement",
     "@generalBill": {
-        "description": "Bill"
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
     "generalBudget": "Budget",
     "@generalBudget": {
@@ -435,7 +435,7 @@
     },
     "homeMainBillsInterval": " ({period, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}})",
     "@homeMainBillsInterval": {
-        "description": "bill interval type",
+        "description": "subscription interval type",
         "placeholders": {
             "period": {
                 "type": "String",
@@ -443,9 +443,9 @@
             }
         }
     },
-    "homeMainBillsTitle": "Rechnungen in der nächsten Woche",
+    "homeMainBillsTitle": "Abonnements für die nächste Woche",
     "@homeMainBillsTitle": {
-        "description": "Title: Bills for the next week"
+        "description": "Title: Subscriptions for the next week"
     },
     "homeMainBudgetInterval": " ({from} bis {to}, {period})",
     "@homeMainBudgetInterval": {
@@ -627,13 +627,13 @@
     "@homeTransactionsDialogFilterAccountsAll": {
         "description": "Don't filter for a specific account (default entry)"
     },
-    "homeTransactionsDialogFilterBillsAll": "<Alle Rechnungen>",
+    "homeTransactionsDialogFilterBillsAll": "<Alle Abonnements>",
     "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
+        "description": "Don't filter for a specific subscription (default entry)"
     },
-    "homeTransactionsDialogFilterBillUnset": "<Ohne Rechnung>",
+    "homeTransactionsDialogFilterBillUnset": "<Ohne Abonnement>",
     "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
+        "description": "Filter for unset subscription"
     },
     "homeTransactionsDialogFilterBudgetsAll": "<Alle Budgets>",
     "@homeTransactionsDialogFilterBudgetsAll": {
@@ -729,9 +729,9 @@
     "@navigationAccounts": {
         "description": "Navigation Label: Accounts Page"
     },
-    "navigationBills": "Rechnungen",
+    "navigationBills": "Abonnements",
     "@navigationBills": {
-        "description": "Navigation Label: Bills"
+        "description": "Navigation Label: Subscriptions"
     },
     "navigationCategories": "Kategorien",
     "@navigationCategories": {
@@ -989,13 +989,13 @@
     "@transactionDialogAttachmentsTitle": {
         "description": "Dialog Title: Attachments Dialog"
     },
-    "transactionDialogBillNoBill": "Ohne Rechnung",
+    "transactionDialogBillNoBill": "Kein Abonnement",
     "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
+        "description": "Button Label: no subscription to be used"
     },
-    "transactionDialogBillTitle": "Mit Rechnung verknüpfen",
+    "transactionDialogBillTitle": "Mit Abonnement verknüpfen",
     "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
+        "description": "Dialog Title: Link Subscription to transaction"
     },
     "transactionDialogCurrencyTitle": "Währung auswählen",
     "@transactionDialogCurrencyTitle": {

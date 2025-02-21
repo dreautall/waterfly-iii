@@ -760,14 +760,13 @@ class _TransactionPageState extends State<TransactionPage>
     // Transfer: splits have common accounts for both --> show nothing
     final bool prevShowSource = _showSourceAccountSelection;
     final bool prevShowDest = _showDestinationAccountSelection;
-    _showSourceAccountSelection = _transactionType ==
-            TransactionTypeProperty.deposit &&
-        _sourceAccountTextControllers.every((TextEditingController e) =>
-            e.text.isNotEmpty && e.text != _sourceAccountTextController.text);
+    _showSourceAccountSelection =
+        _transactionType == TransactionTypeProperty.deposit &&
+            _sourceAccountTextControllers.every((TextEditingController e) =>
+                e.text != _sourceAccountTextController.text);
     _showDestinationAccountSelection = _transactionType ==
             TransactionTypeProperty.withdrawal &&
         _destinationAccountTextControllers.every((TextEditingController e) =>
-            e.text.isNotEmpty &&
             e.text != _destinationAccountTextController.text);
     if (prevShowSource != _showSourceAccountSelection ||
         prevShowDest != _showDestinationAccountSelection) {
@@ -877,6 +876,8 @@ class _TransactionPageState extends State<TransactionPage>
                           destinationName =
                               _destinationAccountTextController.text;
                         }
+
+                        debugPrint(destinationName);
 
                         final TransactionSplitUpdate txSs =
                             TransactionSplitUpdate(
@@ -1392,7 +1393,12 @@ class _TransactionPageState extends State<TransactionPage>
                       _destinationAccountId == null
                   ? S.of(context).transactionErrorInvalidAccount
                   : null,*/
-                    onChanged: (_) {
+                    onChanged: (String val) {
+                      for (TextEditingController e
+                          in _destinationAccountTextControllers) {
+                        e.text = val;
+                      }
+
                       // Reset own account & account type when changed
                       if (_destinationAccountType ==
                           AccountTypeProperty.assetAccount) {
@@ -1569,6 +1575,8 @@ class _TransactionPageState extends State<TransactionPage>
   }
 
   void checkTXType() {
+    log.finest(() => "checkTXType()");
+
     TransactionTypeProperty txType =
         accountsToTransaction(_sourceAccountType, _destinationAccountType);
     /* WATERFLY CUSTOM - NOT FIREFLY BEHAVIOR!
@@ -1578,10 +1586,10 @@ class _TransactionPageState extends State<TransactionPage>
      * 2. If only destination is entered & it's an asset account, it'll be a
      *    deposit
      * 
-     * As _ownAccountId will be set for both of these scenaries, the other one
+     * As _ownAccountId will be set for both of these scenarios, the other one
      * would potentially be created by FF3 when saving. The actual webinterface
      * only does this when saving (but also throws an error when no ownAccount
-     * is explicitely selected from the dropdown! Just typing the name [just as
+     * is explicitly selected from the dropdown! Just typing the name [just as
      * in this app] will throw an error!).
      */
 
@@ -1750,6 +1758,7 @@ class _TransactionPageState extends State<TransactionPage>
                                   optionsBuilder: (TextEditingValue
                                       textEditingValue) async {
                                     try {
+                                      debugPrint("building options");
                                       final FireflyIii api =
                                           context.read<FireflyService>().api;
                                       fetchOp = CancelableOperation<

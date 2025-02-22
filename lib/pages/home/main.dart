@@ -21,11 +21,12 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii_v2.enum
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii_v2.swagger.dart'
     as api_v2;
 import 'package:waterflyiii/pages/home.dart';
-import 'package:waterflyiii/pages/home/main_charts/category.dart';
-import 'package:waterflyiii/pages/home/main_charts/lastdays.dart';
-import 'package:waterflyiii/pages/home/main_charts/netearnings.dart';
-import 'package:waterflyiii/pages/home/main_charts/networth.dart';
-import 'package:waterflyiii/pages/home/main_charts/summary.dart';
+import 'package:waterflyiii/pages/home/main/charts/category.dart';
+import 'package:waterflyiii/pages/home/main/charts/lastdays.dart';
+import 'package:waterflyiii/pages/home/main/charts/netearnings.dart';
+import 'package:waterflyiii/pages/home/main/charts/networth.dart';
+import 'package:waterflyiii/pages/home/main/charts/summary.dart';
+import 'package:waterflyiii/pages/home/main/dashboard.dart';
 import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/charts.dart';
@@ -64,15 +65,20 @@ class _HomeMainState extends State<HomeMain>
     _stock.addListener(_refreshStats);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      debugPrint("calling back");
       context.read<PageActions>().set(
         widget.key!,
         <Widget>[
           IconButton(
             icon: const Icon(Icons.dashboard_customize_outlined),
-            tooltip: "Customize Dashboard",
-            onPressed: () {
-              debugPrint("hi");
+            tooltip: "Customize Dashboard", // :TODO: l10n
+            onPressed: () async {
+              bool? ok = await showDialog<bool>(
+                context: context,
+                builder: (BuildContext context) => const DashboardDialog(),
+              );
+              if (ok == null || !ok) {
+                return;
+              }
             },
           ),
         ],

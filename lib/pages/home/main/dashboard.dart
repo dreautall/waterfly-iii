@@ -2,24 +2,43 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:provider/provider.dart';
+import 'package:version/version.dart';
+import 'package:waterflyiii/auth.dart';
+import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 
 final Logger log = Logger("Pages.Home.Main.Dashboard");
 
-class DashboardDialog extends StatelessWidget {
+class DashboardDialog extends StatefulWidget {
   const DashboardDialog({super.key});
+
+  @override
+  State<DashboardDialog> createState() => _DashboardDialogState();
+}
+
+class _DashboardDialogState extends State<DashboardDialog> {
+  late List<String> cards;
+
+  @override
+  void initState() {
+    super.initState();
+
+    cards = <String>[
+      "dailyavg",
+      "categories",
+      "accounts",
+      "netearnings",
+      "budgets",
+    ];
+
+    if (context.read<FireflyService>().apiVersion! >= Version(2, 0, 12)) {
+      cards.add("bills");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final Logger log = Logger("Pages.Home.Main.Dashboard.Dialog");
-
-    final List<String> cards = <String>[
-      "dailysummary",
-      "categorysummary",
-      "accountsummary",
-      "netearnings",
-      "budgets",
-      "bills"
-    ];
 
     final List<Widget> cardWidgets = <Widget>[
       for (int i = 0; i < cards.length; i += 1)
@@ -55,7 +74,13 @@ class DashboardDialog extends StatelessWidget {
         height: cardWidgets.length * 100, // :TODO: proper height
         child: ReorderableListView(
           onReorder: (int oldIndex, int newIndex) {
-            debugPrint("oldIndex: $oldIndex, newIndex: $newIndex");
+            setState(() {
+              if (oldIndex < newIndex) {
+                newIndex -= 1;
+              }
+              final String item = cards.removeAt(oldIndex);
+              cards.insert(newIndex, item);
+            });
           },
           padding: const EdgeInsets.all(8),
           proxyDecorator: proxyDecorator,
@@ -74,14 +99,41 @@ class DashboardCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    late String chartTitle;
+    switch (chartKey) {
+      case "dailyavg":
+        chartTitle = S.of(context).homeMainChartDailyAvg;
+        break;
+      case "categories":
+        chartTitle = S.of(context).homeMainChartCategoriesTitle;
+        break;
+      case "accounts":
+        chartTitle = S.of(context).homeMainChartAccountsTitle;
+        break;
+      case "netearnings":
+        chartTitle = S.of(context).homeMainChartNetEarningsTitle;
+        break;
+      case "budgets":
+        chartTitle = S.of(context).homeMainBudgetTitle;
+        break;
+      case "bills":
+        chartTitle = S.of(context).homeMainBillsTitle;
+        break;
+    }
+
     return Card(
       child: SizedBox(
         child: ListTile(
+          leading: IconButton(
+            icon: const Icon(Icons.visibility),
+            selectedIcon: Icon(Icons.visibility_off),
+            onPressed: () => debugPrint("hi"),
+          ),
           trailing: ReorderableDragStartListener(
             index: index,
             child: const Icon(Icons.drag_indicator_outlined),
           ),
-          title: Text(chartKey),
+          title: Text(chartTitle),
         ),
       ),
     );

@@ -166,10 +166,9 @@ class SettingsProvider with ChangeNotifier {
   List<String> get categoriesSumExcluded => _categoriesSumExcluded;
 
   List<DashboardCards> _dashboardOrder = <DashboardCards>[];
-
   List<DashboardCards> get dashboardOrder => _dashboardOrder;
-  final List<DashboardCards> _dashboardHidden = <DashboardCards>[];
 
+  final List<DashboardCards> _dashboardHidden = <DashboardCards>[];
   List<DashboardCards> get dashboardHidden => _dashboardHidden;
 
   late SettingsBitmask _boolSettings;
@@ -326,8 +325,9 @@ class SettingsProvider with ChangeNotifier {
       _dashboardOrder.add(
           DashboardCards.values.firstWhere((DashboardCards e) => e.name == s));
     }
-    if (_dashboardOrder.isEmpty) {
-      _dashboardOrder = DashboardCards.values;
+    if (_dashboardOrder.isEmpty ||
+        DashboardCards.values.length != _dashboardOrder.length) {
+      _dashboardOrder = List<DashboardCards>.from(DashboardCards.values);
     }
     final List<String> dashboardHiddenStr =
         await prefs.getStringList(settingsDashboardHidden) ?? <String>[];

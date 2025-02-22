@@ -1,18 +1,15 @@
+import 'package:community_charts_flutter/community_charts_flutter.dart'
+    as charts;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart';
-
-import 'package:community_charts_flutter/community_charts_flutter.dart'
-    as charts;
-
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
-import 'package:waterflyiii/widgets/charts.dart';
-
 import 'package:waterflyiii/timezonehandler.dart';
+import 'package:waterflyiii/widgets/charts.dart';
 
 class LastDaysChart extends StatelessWidget {
   const LastDaysChart({

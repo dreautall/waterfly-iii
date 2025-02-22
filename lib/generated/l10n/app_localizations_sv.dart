@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -461,6 +460,9 @@ class SSv extends S {
 
     return 'Måldatum: $dateString';
   }
+
+  @override
+  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
 
   @override
   String homePiggyLinked(String account) {

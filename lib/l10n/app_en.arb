@@ -555,6 +555,10 @@
             }
         }
     },
+    "homeMainDialogSettingsTitle": "Customize Dashboard",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
+    },
     "homePiggyLinked": "Linked to {account}",
     "@homePiggyLinked": {
         "description": "Piggy bank is linked to asset account {account}.",

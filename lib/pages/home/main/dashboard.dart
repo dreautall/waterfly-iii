@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:version/version.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
+import 'package:waterflyiii/settings.dart';
 
 final Logger log = Logger("Pages.Home.Main.Dashboard");
 
@@ -17,32 +18,42 @@ class DashboardDialog extends StatefulWidget {
 }
 
 class _DashboardDialogState extends State<DashboardDialog> {
-  late List<String> cards;
+  late List<DashboardCards> cards;
+
+  final Logger log = Logger("Pages.Home.Main.Dashboard.Dialog");
 
   @override
   void initState() {
     super.initState();
 
-    cards = <String>[
-      "dailyavg",
-      "categories",
-      "accounts",
-      "netearnings",
-      "budgets",
-    ];
+    cards = List<DashboardCards>.from(
+        context.read<SettingsProvider>().dashboardOrder);
 
-    if (context.read<FireflyService>().apiVersion! >= Version(2, 0, 12)) {
-      cards.add("bills");
+    // Remove dupes, that would throw errors later!
+    cards = cards.toSet().toList();
+
+    // Remove bills if the server is too old
+    if (context.read<FireflyService>().apiVersion! < Version(2, 0, 12)) {
+      cards.remove(DashboardCards.bills);
+    }
+
+    // :TODO: currently there is a bug in the APIv2 call, disabled this for now..
+    if (context.read<FireflyService>().apiVersion! < Version(99, 0, 7)) {
+      cards.remove(DashboardCards.networth);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final Logger log = Logger("Pages.Home.Main.Dashboard.Dialog");
+    log.finest("build()");
 
     final List<Widget> cardWidgets = <Widget>[
       for (int i = 0; i < cards.length; i += 1)
-        DashboardCard(key: Key('$i'), chartKey: cards[i], index: i),
+        DashboardCard(
+          key: ValueKey<DashboardCards>(cards[i]),
+          card: cards[i],
+          index: i,
+        ),
     ];
 
     Widget proxyDecorator(
@@ -68,19 +79,20 @@ class _DashboardDialogState extends State<DashboardDialog> {
     }
 
     return AlertDialog(
-      title: Text("Dashboard Settings"),
+      title: Text("Dashboard Settings"), // :TODO: l10n
       content: SizedBox(
         width: double.maxFinite,
-        height: cardWidgets.length * 100, // :TODO: proper height
+        height: cardWidgets.length * (88 + 12), // :TODO: measure paddings
         child: ReorderableListView(
-          onReorder: (int oldIndex, int newIndex) {
+          onReorder: (int oldIndex, int newIndex) async {
             setState(() {
               if (oldIndex < newIndex) {
                 newIndex -= 1;
               }
-              final String item = cards.removeAt(oldIndex);
+              final DashboardCards item = cards.removeAt(oldIndex);
               cards.insert(newIndex, item);
             });
+            await context.read<SettingsProvider>().setDashboardOrder(cards);
           },
           padding: const EdgeInsets.all(8),
           proxyDecorator: proxyDecorator,
@@ -92,42 +104,40 @@ class _DashboardDialogState extends State<DashboardDialog> {
 }
 
 class DashboardCard extends StatelessWidget {
-  const DashboardCard({super.key, required this.chartKey, required this.index});
+  const DashboardCard({super.key, required this.card, required this.index});
 
-  final String chartKey;
+  final DashboardCards card;
   final int index;
 
   @override
   Widget build(BuildContext context) {
+    log.finest("build()");
+
     late String chartTitle;
-    switch (chartKey) {
-      case "dailyavg":
-        chartTitle = S.of(context).homeMainChartDailyAvg;
-        break;
-      case "categories":
-        chartTitle = S.of(context).homeMainChartCategoriesTitle;
-        break;
-      case "accounts":
-        chartTitle = S.of(context).homeMainChartAccountsTitle;
-        break;
-      case "netearnings":
-        chartTitle = S.of(context).homeMainChartNetEarningsTitle;
-        break;
-      case "budgets":
-        chartTitle = S.of(context).homeMainBudgetTitle;
-        break;
-      case "bills":
-        chartTitle = S.of(context).homeMainBillsTitle;
-        break;
-    }
+    chartTitle = switch (card) {
+      DashboardCards.dailyavg => S.of(context).homeMainChartDailyAvg,
+      DashboardCards.categories => S.of(context).homeMainChartCategoriesTitle,
+      DashboardCards.accounts => S.of(context).homeMainChartAccountsTitle,
+      DashboardCards.netearnings => S.of(context).homeMainChartNetEarningsTitle,
+      DashboardCards.networth => S.of(context).homeMainChartNetWorthTitle,
+      DashboardCards.budgets => S.of(context).homeMainBudgetTitle,
+      DashboardCards.bills => S.of(context).homeMainBillsTitle,
+    };
+
+    final bool hidden =
+        context.watch<SettingsProvider>().dashboardHidden.contains(card);
 
     return Card(
       child: SizedBox(
         child: ListTile(
+          minTileHeight: 88,
           leading: IconButton(
             icon: const Icon(Icons.visibility),
-            selectedIcon: Icon(Icons.visibility_off),
-            onPressed: () => debugPrint("hi"),
+            selectedIcon: Icon(Icons.visibility_off_outlined),
+            isSelected: hidden,
+            onPressed: () async => hidden
+                ? context.read<SettingsProvider>().dashboardShowCard(card)
+                : context.read<SettingsProvider>().dashboardHideCard(card),
           ),
           trailing: ReorderableDragStartListener(
             index: index,

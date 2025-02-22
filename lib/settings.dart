@@ -168,7 +168,7 @@ class SettingsProvider with ChangeNotifier {
   List<DashboardCards> _dashboardOrder = <DashboardCards>[];
 
   List<DashboardCards> get dashboardOrder => _dashboardOrder;
-  List<DashboardCards> _dashboardHidden = <DashboardCards>[];
+  final List<DashboardCards> _dashboardHidden = <DashboardCards>[];
 
   List<DashboardCards> get dashboardHidden => _dashboardHidden;
 
@@ -594,8 +594,13 @@ class SettingsProvider with ChangeNotifier {
   Future<void> setDashboardOrder(List<DashboardCards> order) async {
     final List<String> orderStr = <String>[];
     for (DashboardCards e in order) {
+      if (orderStr.contains(e.name)) {
+        continue;
+      }
       orderStr.add(e.name);
     }
+
+    _dashboardOrder = order;
     await SharedPreferencesAsync().setStringList(
       settingsDashboardOrder,
       orderStr,

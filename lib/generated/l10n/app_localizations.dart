@@ -189,10 +189,10 @@ abstract class S {
   /// **'{interest}% interest per {period, select, weekly{week} monthly{month} quarterly{quarter} halfyear{half-year} yearly{year} other{unknown}}'**
   String accountsLiabilitiesInterest(double interest, String period);
 
-  /// Bill match for min and max amounts, and frequency
+  /// Subscription match for min and max amounts, and frequency
   ///
   /// In en, this message translates to:
-  /// **'Bill matches transactions between {minValue} and {maxvalue}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}{skip, plural, =0{} other{, skips over {skip}}}.'**
+  /// **'Subscription matches transactions between {minValue} and {maxvalue}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}{skip, plural, =0{} other{, skips over {skip}}}.'**
   String billsAmountAndFrequency(
       String minValue, String maxvalue, String frequency, num skip);
 
@@ -208,52 +208,52 @@ abstract class S {
   /// **'Change sort order'**
   String get billsChangeSortOrderTooltip;
 
-  /// Generic error message when bills can't be loaded (shouldn't occur)
+  /// Generic error message when subscriptions can't be loaded (shouldn't occur)
   ///
   /// In en, this message translates to:
-  /// **'Error loading bills.'**
+  /// **'Error loading subscriptions.'**
   String get billsErrorLoading;
 
-  /// Bill match for exact amount and frequency
+  /// Subscription match for exact amount and frequency
   ///
   /// In en, this message translates to:
-  /// **'Bill matches transactions of {value}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}{skip, plural, =0{} other{, skips over {skip}}}.'**
+  /// **'Subscription matches transactions of {value}. Repeats {frequency, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-yearly} yearly{yearly} other{unknown}}{skip, plural, =0{} other{, skips over {skip}}}.'**
   String billsExactAmountAndFrequency(String value, String frequency, num skip);
 
-  /// Describes what date the bill is expected
+  /// Describes what date the subscription is expected
   ///
   /// In en, this message translates to:
   /// **'Expected {date}'**
   String billsExpectedOn(DateTime date);
 
-  /// Bill frequency
+  /// Subscription frequency
   ///
   /// In en, this message translates to:
   /// **'{frequency, select, weekly{Weekly} monthly{Monthly} quarterly{Quarterly} halfyear{Half-yearly} yearly{Yearly} other{Unknown}}'**
   String billsFrequency(String frequency);
 
-  /// Bill frequency
+  /// Subscription frequency
   ///
   /// In en, this message translates to:
   /// **'{frequency, select, weekly{Weekly} monthly{Monthly} quarterly{Quarterly} halfyear{Half-yearly} yearly{Yearly} other{Unknown}}{skip, plural, =0{} other{, skips over {skip}}}'**
   String billsFrequencySkip(String frequency, num skip);
 
-  /// Text: when the bill is inactive
+  /// Text: when the subscription is inactive
   ///
   /// In en, this message translates to:
   /// **'Inactive'**
   String get billsInactive;
 
-  /// Text: the bill is active
+  /// Text: the subscription is active
   ///
   /// In en, this message translates to:
-  /// **'Bill is active'**
+  /// **'Subscription is active'**
   String get billsIsActive;
 
   /// Subtitle text for group layout option
   ///
   /// In en, this message translates to:
-  /// **'Bills displayed in their assigned groups.'**
+  /// **'Subscriptions displayed in their assigned groups.'**
   String get billsLayoutGroupSubtitle;
 
   /// Title text for group layout option
@@ -265,7 +265,7 @@ abstract class S {
   /// Subtitle text for list layout option
   ///
   /// In en, this message translates to:
-  /// **'Bills displayed in a list sorted by certain criteria.'**
+  /// **'Subscriptions displayed in a list sorted by certain criteria.'**
   String get billsLayoutListSubtitle;
 
   /// Title text for list layout option
@@ -280,31 +280,31 @@ abstract class S {
   /// **'The list is currently empty.'**
   String get billsListEmpty;
 
-  /// Text: next expected match for bill
+  /// Text: next expected match for subscription
   ///
   /// In en, this message translates to:
   /// **'Next expected match'**
   String get billsNextExpectedMatch;
 
-  /// Text: the bill is inactive
+  /// Text: the subscription is inactive
   ///
   /// In en, this message translates to:
-  /// **'Bill is inactive'**
+  /// **'Subscription is inactive'**
   String get billsNotActive;
 
-  /// Describes that the bill is not expected this period
+  /// Describes that the subscription is not expected this period
   ///
   /// In en, this message translates to:
   /// **'Not expected this period'**
   String get billsNotExpected;
 
-  /// Describes that there are no transactions connected to the bill
+  /// Describes that there are no transactions connected to the subscription
   ///
   /// In en, this message translates to:
   /// **'No transactions found.'**
   String get billsNoTransactions;
 
-  /// Describes what date the bill was paid
+  /// Describes what date the subscription was paid
   ///
   /// In en, this message translates to:
   /// **'Paid {date}'**
@@ -334,7 +334,7 @@ abstract class S {
   /// **'Name'**
   String get billsSortName;
 
-  /// Title for ungrouped bills
+  /// Title for ungrouped subscriptions
   ///
   /// In en, this message translates to:
   /// **'Ungrouped'**
@@ -520,10 +520,10 @@ abstract class S {
   /// **'Balance on {date}'**
   String generalBalanceOn(DateTime date);
 
-  /// Bill
+  /// Subscription (caution: was named Bill until Firefly version 6.2.0)
   ///
   /// In en, this message translates to:
-  /// **'Bill'**
+  /// **'Subscription'**
   String get generalBill;
 
   /// (Monetary) Budget
@@ -634,16 +634,16 @@ abstract class S {
   /// **'Unknown'**
   String get generalUnknown;
 
-  /// bill interval type
+  /// subscription interval type
   ///
   /// In en, this message translates to:
   /// **' ({period, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-year} yearly{yearly} other{unknown}})'**
   String homeMainBillsInterval(String period);
 
-  /// Title: Bills for the next week
+  /// Title: Subscriptions for the next week
   ///
   /// In en, this message translates to:
-  /// **'Bills for the next week'**
+  /// **'Subscriptions for the next week'**
   String get homeMainBillsTitle;
 
   /// Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.
@@ -796,16 +796,16 @@ abstract class S {
   /// **'<All Accounts>'**
   String get homeTransactionsDialogFilterAccountsAll;
 
-  /// Don't filter for a specific bill (default entry)
+  /// Don't filter for a specific subscription (default entry)
   ///
   /// In en, this message translates to:
-  /// **'<All Bills>'**
+  /// **'<All Subscriptions>'**
   String get homeTransactionsDialogFilterBillsAll;
 
-  /// Filter for unset bills
+  /// Filter for unset subscription
   ///
   /// In en, this message translates to:
-  /// **'<No Bill set>'**
+  /// **'<No Subscription set>'**
   String get homeTransactionsDialogFilterBillUnset;
 
   /// Don't filter for a specific budget (default entry)
@@ -940,10 +940,10 @@ abstract class S {
   /// **'Accounts'**
   String get navigationAccounts;
 
-  /// Navigation Label: Bills
+  /// Navigation Label: Subscriptions
   ///
   /// In en, this message translates to:
-  /// **'Bills'**
+  /// **'Subscriptions'**
   String get navigationBills;
 
   /// Navigation Label: Categories
@@ -1264,16 +1264,16 @@ abstract class S {
   /// **'Attachments'**
   String get transactionDialogAttachmentsTitle;
 
-  /// Button Label: no bill to be used
+  /// Button Label: no subscription to be used
   ///
   /// In en, this message translates to:
-  /// **'No bill'**
+  /// **'No subscription'**
   String get transactionDialogBillNoBill;
 
-  /// Dialog Title: Link Bill to transaction
+  /// Dialog Title: Link Subscription to transaction
   ///
   /// In en, this message translates to:
-  /// **'Link to Bill'**
+  /// **'Link to Subscription'**
   String get transactionDialogBillTitle;
 
   /// Dialog Title: Currency Selection

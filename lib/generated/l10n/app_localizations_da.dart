@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -72,7 +71,7 @@ class SDa extends S {
       other: ', skips over $skip',
       zero: '',
     );
-    return 'Bill matches transactions between $minValue and $maxvalue. Repeats $_temp0$_temp1.';
+    return 'Subscription matches transactions between $minValue and $maxvalue. Repeats $_temp0$_temp1.';
   }
 
   @override
@@ -82,7 +81,7 @@ class SDa extends S {
   String get billsChangeSortOrderTooltip => 'Change sort order';
 
   @override
-  String get billsErrorLoading => 'Error loading bills.';
+  String get billsErrorLoading => 'Error loading subscriptions.';
 
   @override
   String billsExactAmountAndFrequency(
@@ -104,7 +103,7 @@ class SDa extends S {
       other: ', skips over $skip',
       zero: '',
     );
-    return 'Bill matches transactions of $value. Repeats $_temp0$_temp1.';
+    return 'Subscription matches transactions of $value. Repeats $_temp0$_temp1.';
   }
 
   @override
@@ -157,18 +156,18 @@ class SDa extends S {
   String get billsInactive => 'Inactive';
 
   @override
-  String get billsIsActive => 'Bill is active';
+  String get billsIsActive => 'Subscription is active';
 
   @override
   String get billsLayoutGroupSubtitle =>
-      'Bills displayed in their assigned groups.';
+      'Subscriptions displayed in their assigned groups.';
 
   @override
   String get billsLayoutGroupTitle => 'Group';
 
   @override
   String get billsLayoutListSubtitle =>
-      'Bills displayed in a list sorted by certain criteria.';
+      'Subscriptions displayed in a list sorted by certain criteria.';
 
   @override
   String get billsLayoutListTitle => 'List';
@@ -180,7 +179,7 @@ class SDa extends S {
   String get billsNextExpectedMatch => 'Next expected match';
 
   @override
-  String get billsNotActive => 'Bill is inactive';
+  String get billsNotActive => 'Subscription is inactive';
 
   @override
   String get billsNotExpected => 'Not expected this period';
@@ -583,7 +582,7 @@ class SDa extends S {
   String get navigationAccounts => 'Konti';
 
   @override
-  String get navigationBills => 'Bills';
+  String get navigationBills => 'Subscriptions';
 
   @override
   String get navigationCategories => 'Kategorier';

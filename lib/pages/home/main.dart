@@ -20,6 +20,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii_v2.enum
     as api_v2_enums;
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii_v2.swagger.dart'
     as api_v2;
+import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/main_charts/category.dart';
 import 'package:waterflyiii/pages/home/main_charts/lastdays.dart';
 import 'package:waterflyiii/pages/home/main_charts/netearnings.dart';
@@ -61,6 +62,22 @@ class _HomeMainState extends State<HomeMain>
 
     _stock = context.read<FireflyService>().transStock!;
     _stock.addListener(_refreshStats);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      debugPrint("calling back");
+      context.read<PageActions>().set(
+        widget.key!,
+        <Widget>[
+          IconButton(
+            icon: const Icon(Icons.dashboard_customize_outlined),
+            tooltip: "Customize Dashboard",
+            onPressed: () {
+              debugPrint("hi");
+            },
+          ),
+        ],
+      );
+    });
   }
 
   @override
@@ -1351,6 +1368,7 @@ class ChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Logger log = Logger("Pages.Home.Main.ChartCard");
     List<Widget> summaryWidgets = <Widget>[];
 
     return AnimatedHeight(

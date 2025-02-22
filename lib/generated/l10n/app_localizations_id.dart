@@ -462,6 +462,9 @@ class SId extends S {
   }
 
   @override
+  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+
+  @override
   String homePiggyLinked(String account) {
     return 'Tautkan ke $account';
   }

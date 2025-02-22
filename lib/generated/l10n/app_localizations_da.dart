@@ -461,6 +461,9 @@ class SDa extends S {
   }
 
   @override
+  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+
+  @override
   String homePiggyLinked(String account) {
     return 'Knyttet til $account';
   }

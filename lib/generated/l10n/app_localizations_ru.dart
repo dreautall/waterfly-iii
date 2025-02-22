@@ -462,6 +462,9 @@ class SRu extends S {
   }
 
   @override
+  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+
+  @override
   String homePiggyLinked(String account) {
     return 'Привязано к $account';
   }

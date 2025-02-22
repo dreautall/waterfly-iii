@@ -71,7 +71,7 @@ class _HomeMainState extends State<HomeMain>
         <Widget>[
           IconButton(
             icon: const Icon(Icons.dashboard_customize_outlined),
-            tooltip: "Customize Dashboard", // :TODO: l10n
+            tooltip: S.of(context).homeMainDialogSettingsTitle,
             onPressed: () async {
               bool? ok = await showDialog<bool>(
                 context: context,

@@ -462,6 +462,9 @@ class SEs extends S {
   }
 
   @override
+  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+
+  @override
   String homePiggyLinked(String account) {
     return 'Vinculado a $account';
   }

@@ -458,6 +458,9 @@ class SFa extends S {
   }
 
   @override
+  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+
+  @override
   String homePiggyLinked(String account) {
     return 'لینک به $account\n';
   }

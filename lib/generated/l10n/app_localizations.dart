@@ -724,6 +724,12 @@ abstract class S {
   /// **'Target date: {date}'**
   String homePiggyDateTarget(DateTime date);
 
+  /// Dialog title for dashboard settings (card order & visibility)
+  ///
+  /// In en, this message translates to:
+  /// **'Customize Dashboard'**
+  String get homeMainDialogSettingsTitle;
+
   /// Piggy bank is linked to asset account {account}.
   ///
   /// In en, this message translates to:

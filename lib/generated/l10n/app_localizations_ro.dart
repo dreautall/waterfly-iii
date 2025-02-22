@@ -462,6 +462,9 @@ class SRo extends S {
   }
 
   @override
+  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+
+  @override
   String homePiggyLinked(String account) {
     return 'Conectat la $account';
   }

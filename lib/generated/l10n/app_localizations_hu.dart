@@ -469,6 +469,9 @@ class SHu extends S {
   }
 
   @override
+  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+
+  @override
   String homePiggyLinked(String account) {
     return 'Összekapcsolva a következővel: $account';
   }

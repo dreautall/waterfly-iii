@@ -462,6 +462,9 @@ class SSv extends S {
   }
 
   @override
+  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+
+  @override
   String homePiggyLinked(String account) {
     return 'Länkad till $account';
   }

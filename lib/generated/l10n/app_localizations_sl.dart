@@ -462,6 +462,9 @@ class SSl extends S {
   }
 
   @override
+  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+
+  @override
   String homePiggyLinked(String account) {
     return 'Povezano z $account';
   }

@@ -79,10 +79,33 @@ class _DashboardDialogState extends State<DashboardDialog> {
     }
 
     return AlertDialog(
-      title: Text("Dashboard Settings"), // :TODO: l10n
+      title: Text(S.of(context).homeMainDialogSettingsTitle),
+      clipBehavior: Clip.hardEdge,
+      actions: <Widget>[
+        OutlinedButton(
+          child: Text(S.of(context).generalReset),
+          onPressed: () {
+            context
+                .read<SettingsProvider>()
+                .setDashboardOrder(DashboardCards.values);
+            final List<DashboardCards> hidden = List<DashboardCards>.from(
+                context.read<SettingsProvider>().dashboardHidden);
+            for (DashboardCards e in hidden) {
+              context.read<SettingsProvider>().dashboardShowCard(e);
+            }
+            Navigator.of(context).pop(true);
+          },
+        ),
+        FilledButton(
+          child: Text(MaterialLocalizations.of(context).saveButtonLabel),
+          onPressed: () {
+            Navigator.of(context).pop(true);
+          },
+        ),
+      ],
       content: SizedBox(
         width: double.maxFinite,
-        height: cardWidgets.length * (88 + 12), // :TODO: measure paddings
+        height: cardWidgets.length * 96,
         child: ReorderableListView(
           onReorder: (int oldIndex, int newIndex) async {
             setState(() {

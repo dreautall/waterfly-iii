@@ -465,6 +465,9 @@ class SCa extends S {
   }
 
   @override
+  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+
+  @override
   String homePiggyLinked(String account) {
     return 'Enllaçada a $account';
   }

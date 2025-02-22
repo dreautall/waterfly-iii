@@ -22,8 +22,8 @@ class DashboardDialog extends StatelessWidget {
     ];
 
     final List<Widget> cardWidgets = <Widget>[
-      for (String s in cards)
-        DashboardCard(key: ValueKey<String>(s), chartKey: s),
+      for (int i = 0; i < cards.length; i += 1)
+        DashboardCard(key: Key('$i'), chartKey: cards[i], index: i),
     ];
 
     Widget proxyDecorator(
@@ -52,11 +52,12 @@ class DashboardDialog extends StatelessWidget {
       title: Text("Dashboard Settings"),
       content: SizedBox(
         width: double.maxFinite,
-        height: cardWidgets.length * 100,
+        height: cardWidgets.length * 100, // :TODO: proper height
         child: ReorderableListView(
           onReorder: (int oldIndex, int newIndex) {
             debugPrint("oldIndex: $oldIndex, newIndex: $newIndex");
           },
+          padding: const EdgeInsets.all(8),
           proxyDecorator: proxyDecorator,
           children: cardWidgets,
         ),
@@ -66,17 +67,21 @@ class DashboardDialog extends StatelessWidget {
 }
 
 class DashboardCard extends StatelessWidget {
-  const DashboardCard({super.key, required this.chartKey});
+  const DashboardCard({super.key, required this.chartKey, required this.index});
 
   final String chartKey;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: SizedBox(
-        height: 80,
-        child: Center(
-          child: Text(chartKey),
+        child: ListTile(
+          trailing: ReorderableDragStartListener(
+            index: index,
+            child: const Icon(Icons.drag_indicator_outlined),
+          ),
+          title: Text(chartKey),
         ),
       ),
     );

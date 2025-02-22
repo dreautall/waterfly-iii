@@ -46,6 +46,17 @@ class NotificationAppSettings {
       };
 }
 
+// in default order
+enum DashboardCards {
+  dailyavg,
+  categories,
+  accounts,
+  netearnings,
+  networth,
+  budgets,
+  bills,
+}
+
 enum BoolSettings {
   debug,
   lock,
@@ -117,6 +128,8 @@ class SettingsProvider with ChangeNotifier {
   static const String settingBillsDefaultSort = "BILLSDEFAULTSORT";
   static const String settingBillsDefaultSortOrder = "BILLSDEFAULTSORTORDER";
   static const String settingsCategoriesSumExcluded = "CAT_SUMEXCLUDED";
+  static const String settingsDashboardOrder = "DASHBOARD_ORDER";
+  static const String settingsDashboardHidden = "DASHBOARD_HIDDEN";
 
   bool get debug => _loaded ? _boolSettings[BoolSettings.debug] : false;
   bool get lock => _loaded ? _boolSettings[BoolSettings.lock] : false;
@@ -152,11 +165,18 @@ class SettingsProvider with ChangeNotifier {
   List<String> _categoriesSumExcluded = <String>[];
   List<String> get categoriesSumExcluded => _categoriesSumExcluded;
 
+  List<DashboardCards> _dashboardOrder = <DashboardCards>[];
+
+  List<DashboardCards> get dashboardOrder => _dashboardOrder;
+  List<DashboardCards> _dashboardHidden = <DashboardCards>[];
+
+  List<DashboardCards> get dashboardHidden => _dashboardHidden;
+
   late SettingsBitmask _boolSettings;
   SettingsBitmask get boolSettings => _boolSettings;
 
   Future<void> migrateLegacy(SharedPreferencesAsync prefs) async {
-    log.config("triny to migrate old prefs");
+    log.config("trying to migrate old prefs");
     SharedPreferences oldPrefs = await SharedPreferences.getInstance();
 
     _boolSettings = SettingsBitmask(oldPrefs.getInt(settingsBitmask) ?? 0);
@@ -299,6 +319,22 @@ class SettingsProvider with ChangeNotifier {
 
     _categoriesSumExcluded =
         await prefs.getStringList(settingsCategoriesSumExcluded) ?? <String>[];
+
+    final List<String> dashboardOrderStr =
+        await prefs.getStringList(settingsDashboardOrder) ?? <String>[];
+    for (String s in dashboardOrderStr) {
+      _dashboardOrder.add(
+          DashboardCards.values.firstWhere((DashboardCards e) => e.name == s));
+    }
+    if (_dashboardOrder.isEmpty) {
+      _dashboardOrder = DashboardCards.values;
+    }
+    final List<String> dashboardHiddenStr =
+        await prefs.getStringList(settingsDashboardHidden) ?? <String>[];
+    for (String s in dashboardHiddenStr) {
+      _dashboardHidden.add(
+          DashboardCards.values.firstWhere((DashboardCards e) => e.name == s));
+    }
 
     _loaded = true;
     log.finest(() => "notify SettingsProvider->loadSettings()");
@@ -552,7 +588,58 @@ class SettingsProvider with ChangeNotifier {
     );
 
     log.finest(() => "notify SettingsProvider->categoryRemoveSumExcluded()");
+    notifyListeners();
+  }
 
+  Future<void> setDashboardOrder(List<DashboardCards> order) async {
+    final List<String> orderStr = <String>[];
+    for (DashboardCards e in order) {
+      orderStr.add(e.name);
+    }
+    await SharedPreferencesAsync().setStringList(
+      settingsDashboardOrder,
+      orderStr,
+    );
+
+    log.finest(() => "notify SettingsProvider->setDashboardOrder()");
+    notifyListeners();
+  }
+
+  Future<void> dashboardHideCard(DashboardCards card) async {
+    if (dashboardHidden.contains(card)) {
+      return;
+    }
+    _dashboardHidden.add(card);
+
+    final List<String> hiddenStr = <String>[];
+    for (DashboardCards e in dashboardHidden) {
+      hiddenStr.add(e.name);
+    }
+    await SharedPreferencesAsync().setStringList(
+      settingsDashboardHidden,
+      hiddenStr,
+    );
+
+    log.finest(() => "notify SettingsProvider->dashboardHideCard()");
+    notifyListeners();
+  }
+
+  Future<void> dashboardShowCard(DashboardCards card) async {
+    if (!dashboardHidden.contains(card)) {
+      return;
+    }
+    _dashboardHidden.remove(card);
+
+    final List<String> hiddenStr = <String>[];
+    for (DashboardCards e in dashboardHidden) {
+      hiddenStr.add(e.name);
+    }
+    await SharedPreferencesAsync().setStringList(
+      settingsDashboardHidden,
+      hiddenStr,
+    );
+
+    log.finest(() => "notify SettingsProvider->dashboardShowCard()");
     notifyListeners();
   }
 }

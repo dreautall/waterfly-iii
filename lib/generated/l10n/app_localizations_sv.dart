@@ -328,6 +328,9 @@ class SSv extends S {
   String get generalDefault => 'förvald';
 
   @override
+  String get generalDestinationAccount => 'Destination Account';
+
+  @override
   String get generalDismiss => 'Stäng';
 
   @override
@@ -356,6 +359,9 @@ class SSv extends S {
 
   @override
   String get generalReset => 'Återställ';
+
+  @override
+  String get generalSourceAccount => 'Source Account';
 
   @override
   String get generalSpent => 'Spenderat';
@@ -817,6 +823,13 @@ class SSv extends S {
   String get transactionErrorInvalidBudget => 'Ogiltig budget';
 
   @override
+  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+
+  @override
+  String get transactionErrorNoAssetAccount =>
+      'Please select an asset account.';
+
+  @override
   String get transactionErrorTitle => 'Vänligen ange en titel.';
 
   @override
@@ -845,6 +858,14 @@ class SSv extends S {
 
   @override
   String get transactionSplitChangeCurrency => 'Ändra delad valuta';
+
+  @override
+  String get transactionSplitChangeDestinationAccount =>
+      'Change Split Destination Account';
+
+  @override
+  String get transactionSplitChangeSourceAccount =>
+      'Change Split Source Account';
 
   @override
   String get transactionSplitChangeTarget => 'Ändra delat målkonto';

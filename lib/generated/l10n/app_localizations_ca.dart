@@ -331,6 +331,9 @@ class SCa extends S {
   String get generalDefault => 'per defecte';
 
   @override
+  String get generalDestinationAccount => 'Destination Account';
+
+  @override
   String get generalDismiss => 'Ignora';
 
   @override
@@ -359,6 +362,9 @@ class SCa extends S {
 
   @override
   String get generalReset => 'Restableix';
+
+  @override
+  String get generalSourceAccount => 'Source Account';
 
   @override
   String get generalSpent => 'Gastat';
@@ -829,6 +835,13 @@ class SCa extends S {
   String get transactionErrorInvalidBudget => 'Pressupost Invàlid';
 
   @override
+  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+
+  @override
+  String get transactionErrorNoAssetAccount =>
+      'Please select an asset account.';
+
+  @override
   String get transactionErrorTitle => 'Per favor, introdueix un títol.';
 
   @override
@@ -857,6 +870,14 @@ class SCa extends S {
 
   @override
   String get transactionSplitChangeCurrency => 'Canvia la moneda de la divisió';
+
+  @override
+  String get transactionSplitChangeDestinationAccount =>
+      'Change Split Destination Account';
+
+  @override
+  String get transactionSplitChangeSourceAccount =>
+      'Change Split Source Account';
 
   @override
   String get transactionSplitChangeTarget =>

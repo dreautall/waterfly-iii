@@ -325,6 +325,9 @@ class SFa extends S {
   String get generalDefault => 'پیش فرض';
 
   @override
+  String get generalDestinationAccount => 'Destination Account';
+
+  @override
   String get generalDismiss => 'نادیده گرفتن';
 
   @override
@@ -353,6 +356,9 @@ class SFa extends S {
 
   @override
   String get generalReset => 'تنظیم مجدد';
+
+  @override
+  String get generalSourceAccount => 'Source Account';
 
   @override
   String get generalSpent => 'خرج شده';
@@ -814,6 +820,13 @@ class SFa extends S {
   String get transactionErrorInvalidBudget => 'بودجه نامعتبر\n';
 
   @override
+  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+
+  @override
+  String get transactionErrorNoAssetAccount =>
+      'Please select an asset account.';
+
+  @override
   String get transactionErrorTitle => 'لطفا عنوان بفرمایید\n';
 
   @override
@@ -842,6 +855,14 @@ class SFa extends S {
 
   @override
   String get transactionSplitChangeCurrency => 'ارز تقسیم شده را تغییر دهید\n';
+
+  @override
+  String get transactionSplitChangeDestinationAccount =>
+      'Change Split Destination Account';
+
+  @override
+  String get transactionSplitChangeSourceAccount =>
+      'Change Split Source Account';
 
   @override
   String get transactionSplitChangeTarget => 'تغییر حساب هدف تقسیم شده\n';

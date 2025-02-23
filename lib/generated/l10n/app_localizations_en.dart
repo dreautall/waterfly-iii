@@ -328,6 +328,9 @@ class SEn extends S {
   String get generalDefault => 'default';
 
   @override
+  String get generalDestinationAccount => 'Destination Account';
+
+  @override
   String get generalDismiss => 'Dismiss';
 
   @override
@@ -356,6 +359,9 @@ class SEn extends S {
 
   @override
   String get generalReset => 'Reset';
+
+  @override
+  String get generalSourceAccount => 'Source Account';
 
   @override
   String get generalSpent => 'Spent';
@@ -817,6 +823,13 @@ class SEn extends S {
   String get transactionErrorInvalidBudget => 'Invalid Budget';
 
   @override
+  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+
+  @override
+  String get transactionErrorNoAssetAccount =>
+      'Please select an asset account.';
+
+  @override
   String get transactionErrorTitle => 'Please provide a title.';
 
   @override
@@ -845,6 +858,14 @@ class SEn extends S {
 
   @override
   String get transactionSplitChangeCurrency => 'Change Split Currency';
+
+  @override
+  String get transactionSplitChangeDestinationAccount =>
+      'Change Split Destination Account';
+
+  @override
+  String get transactionSplitChangeSourceAccount =>
+      'Change Split Source Account';
 
   @override
   String get transactionSplitChangeTarget => 'Change Split Target Account';

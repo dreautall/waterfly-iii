@@ -328,6 +328,9 @@ class SId extends S {
   String get generalDefault => 'bawaan';
 
   @override
+  String get generalDestinationAccount => 'Destination Account';
+
+  @override
   String get generalDismiss => 'Tutup';
 
   @override
@@ -356,6 +359,9 @@ class SId extends S {
 
   @override
   String get generalReset => 'Setel ulang';
+
+  @override
+  String get generalSourceAccount => 'Source Account';
 
   @override
   String get generalSpent => 'Spent';
@@ -820,6 +826,13 @@ class SId extends S {
   String get transactionErrorInvalidBudget => 'Anggaran tidak Valid';
 
   @override
+  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+
+  @override
+  String get transactionErrorNoAssetAccount =>
+      'Please select an asset account.';
+
+  @override
   String get transactionErrorTitle => 'Harap berikan judul.';
 
   @override
@@ -848,6 +861,14 @@ class SId extends S {
 
   @override
   String get transactionSplitChangeCurrency => 'Ubah Mata Uang Terpisah';
+
+  @override
+  String get transactionSplitChangeDestinationAccount =>
+      'Change Split Destination Account';
+
+  @override
+  String get transactionSplitChangeSourceAccount =>
+      'Change Split Source Account';
 
   @override
   String get transactionSplitChangeTarget =>

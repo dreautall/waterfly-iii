@@ -105,7 +105,10 @@ class APIRequestInterceptor implements Interceptor {
   @override
   FutureOr<Response<BodyType>> intercept<BodyType>(
       Chain<BodyType> chain) async {
-    log.finest(() => "API query to ${chain.request.url}");
+    log.finest(() => "API query ${chain.request.method} ${chain.request.url}");
+    if (chain.request.body != null) {
+      log.finest(() => "Query Body: ${chain.request.body}");
+    }
     final Request request =
         applyHeaders(chain.request, headerFunc(), override: true);
     request.followRedirects = true;

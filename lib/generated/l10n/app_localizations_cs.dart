@@ -328,6 +328,9 @@ class SCs extends S {
   String get generalDefault => 'výchozí';
 
   @override
+  String get generalDestinationAccount => 'Destination Account';
+
+  @override
   String get generalDismiss => 'Zrušit';
 
   @override
@@ -356,6 +359,9 @@ class SCs extends S {
 
   @override
   String get generalReset => 'Resetovat';
+
+  @override
+  String get generalSourceAccount => 'Source Account';
 
   @override
   String get generalSpent => 'Spent';
@@ -822,6 +828,13 @@ class SCs extends S {
   String get transactionErrorInvalidBudget => 'Neplatný rozpočet';
 
   @override
+  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+
+  @override
+  String get transactionErrorNoAssetAccount =>
+      'Please select an asset account.';
+
+  @override
   String get transactionErrorTitle => 'Zadejte prosím název.';
 
   @override
@@ -850,6 +863,14 @@ class SCs extends S {
 
   @override
   String get transactionSplitChangeCurrency => 'Změnit rozdělenou měnu';
+
+  @override
+  String get transactionSplitChangeDestinationAccount =>
+      'Change Split Destination Account';
+
+  @override
+  String get transactionSplitChangeSourceAccount =>
+      'Change Split Source Account';
 
   @override
   String get transactionSplitChangeTarget => 'Změnit cílový účet rozdělení';

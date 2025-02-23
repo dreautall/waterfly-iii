@@ -325,6 +325,9 @@ class SZh extends S {
   String get generalDefault => '默认';
 
   @override
+  String get generalDestinationAccount => 'Destination Account';
+
+  @override
   String get generalDismiss => '放弃';
 
   @override
@@ -353,6 +356,9 @@ class SZh extends S {
 
   @override
   String get generalReset => '重置';
+
+  @override
+  String get generalSourceAccount => 'Source Account';
 
   @override
   String get generalSpent => '支出';
@@ -803,6 +809,13 @@ class SZh extends S {
   String get transactionErrorInvalidBudget => '无效的预算';
 
   @override
+  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+
+  @override
+  String get transactionErrorNoAssetAccount =>
+      'Please select an asset account.';
+
+  @override
   String get transactionErrorTitle => '请输入标题';
 
   @override
@@ -831,6 +844,14 @@ class SZh extends S {
 
   @override
   String get transactionSplitChangeCurrency => '更改基本货币';
+
+  @override
+  String get transactionSplitChangeDestinationAccount =>
+      'Change Split Destination Account';
+
+  @override
+  String get transactionSplitChangeSourceAccount =>
+      'Change Split Source Account';
 
   @override
   String get transactionSplitChangeTarget => '更改拆分目标账户';

@@ -388,6 +388,7 @@ class _TransactionPageState extends State<TransactionPage>
                     .containsIgnoreCase(acc.attributes.name)) {
               _sourceAccountTextController.text = acc.attributes.name;
               _ownAccountId = acc.id;
+              _sourceAccountType = AccountTypeProperty.assetAccount;
               if (currency.id == acc.attributes.currencyId) {
                 _localCurrency = currency;
               } else {
@@ -419,7 +420,9 @@ class _TransactionPageState extends State<TransactionPage>
                 amount.toStringAsFixed(currency.attributes.decimalPlaces ?? 2);
           }
 
-          setState(() {});
+          setState(() {
+            checkTXType();
+          });
         }
         // Created from account screen, set account already
         if (widget.accountId != null && mounted) {
@@ -435,6 +438,7 @@ class _TransactionPageState extends State<TransactionPage>
           for (AccountRead acc in response.body!.data) {
             if (acc.id == widget.accountId) {
               _sourceAccountTextController.text = acc.attributes.name;
+              _sourceAccountType = AccountTypeProperty.assetAccount;
               _ownAccountId = acc.id;
               break;
             }

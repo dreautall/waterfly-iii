@@ -51,9 +51,9 @@
             }
         }
     },
-    "billsAmountAndFrequency": "La bolletta comprende le transazioni con importo tra {minValue} e {maxvalue}. Si ripete con frequenza {frequency, select, weekly{settimanale} monthly{mensile} quarterly{trimestrale} halfyear{semestrale} yearly{annuale} other{sconosciuta}}{skip, plural, =0{} other{, rimandata il {skip}}}.",
+    "billsAmountAndFrequency": "Il pagamento ricorrente comprende le transazioni con importo tra {minValue} e {maxvalue}. Si ripete con frequenza {frequency, select, weekly{settimanale} monthly{mensile} quarterly{trimestrale} halfyear{semestrale} yearly{annuale} other{sconosciuta}}{skip, plural, =0{} other{, rimandata il {skip}}}.",
     "@billsAmountAndFrequency": {
-        "description": "Bill match for min and max amounts, and frequency",
+        "description": "Subscription match for min and max amounts, and frequency",
         "placeholders": {
             "minValue": {
                 "type": "String",
@@ -81,13 +81,13 @@
     "@billsChangeSortOrderTooltip": {
         "description": "Text for sort order change button tooltip"
     },
-    "billsErrorLoading": "Errore nel caricamento delle bollette.",
+    "billsErrorLoading": "Errore caricando i pagamenti ricorrenti.",
     "@billsErrorLoading": {
-        "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
     },
-    "billsExactAmountAndFrequency": "La bolletta comprende transazioni di valore {value}. Si ripete con frequenza {frequency, select, weekly{settimanale} monthly{mensile} quarterly{trimestrale} halfyear{semestrale} yearly{annuale} other{sconosciuta}}{skip, plural, =0{} other{, rimandata il {skip}}}.",
+    "billsExactAmountAndFrequency": "Il pagamento ricorrente comprende transazioni di valore {value}. Si ripete con frequenza {frequency, select, weekly{settimanale} monthly{mensile} quarterly{trimestrale} halfyear{semestrale} yearly{annuale} other{sconosciuta}}{skip, plural, =0{} other{, rimandata il {skip}}}.",
     "@billsExactAmountAndFrequency": {
-        "description": "Bill match for exact amount and frequency",
+        "description": "Subscription match for exact amount and frequency",
         "placeholders": {
             "value": {
                 "type": "String",
@@ -105,7 +105,7 @@
     },
     "billsExpectedOn": "Attesa per {date}",
     "@billsExpectedOn": {
-        "description": "Describes what date the bill is expected",
+        "description": "Describes what date the subscription is expected",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -116,7 +116,7 @@
     },
     "billsFrequency": "{frequency, select, weekly{Settimanale} monthly{Mensile} quarterly{Trimestrale} halfyear{Semestrale} yearly{Annuale} other{Sconosciuta}}",
     "@billsFrequency": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -126,7 +126,7 @@
     },
     "billsFrequencySkip": "{frequency, select, weekly{Settimanale} monthly{Mensile} quarterly{Trimestrale} halfyear{Semestrale} yearly{Annuale} other{Sconosciuta}}{skip, plural, =0{} other{, rimandata il {skip}}}",
     "@billsFrequencySkip": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -140,13 +140,13 @@
     },
     "billsInactive": "Non attiva",
     "@billsInactive": {
-        "description": "Text: when the bill is inactive"
+        "description": "Text: when the subscription is inactive"
     },
-    "billsIsActive": "Bolletta attiva",
+    "billsIsActive": "Il pagamento ricorrente è attivo",
     "@billsIsActive": {
-        "description": "Text: the bill is active"
+        "description": "Text: the subscription is active"
     },
-    "billsLayoutGroupSubtitle": "Bollette visualizzate nei gruppi assegnati.",
+    "billsLayoutGroupSubtitle": "Pagamenti ricorrenti visualizzati nei gruppi assegnati.",
     "@billsLayoutGroupSubtitle": {
         "description": "Subtitle text for group layout option"
     },
@@ -154,7 +154,7 @@
     "@billsLayoutGroupTitle": {
         "description": "Title text for group layout option"
     },
-    "billsLayoutListSubtitle": "Bollette visualizzate in un elenco ordinate in base a determinati criteri.",
+    "billsLayoutListSubtitle": "Pagamenti ricorrenti visualizzati in un elenco ordinate in base a determinati criteri.",
     "@billsLayoutListSubtitle": {
         "description": "Subtitle text for list layout option"
     },
@@ -168,23 +168,23 @@
     },
     "billsNextExpectedMatch": "Prossima",
     "@billsNextExpectedMatch": {
-        "description": "Text: next expected match for bill"
+        "description": "Text: next expected match for subscription"
     },
-    "billsNotActive": "La bolletta non è attiva",
+    "billsNotActive": "Il pagamento ricorrente è inattivo",
     "@billsNotActive": {
-        "description": "Text: the bill is inactive"
+        "description": "Text: the subscription is inactive"
     },
     "billsNotExpected": "Non prevista in questo periodo",
     "@billsNotExpected": {
-        "description": "Describes that the bill is not expected this period"
+        "description": "Describes that the subscription is not expected this period"
     },
     "billsNoTransactions": "Nessuna transazione trovata.",
     "@billsNoTransactions": {
-        "description": "Describes that there are no transactions connected to the bill"
+        "description": "Describes that there are no transactions connected to the subscription"
     },
     "billsPaidOn": "Pagata {date}",
     "@billsPaidOn": {
-        "description": "Describes what date the bill was paid",
+        "description": "Describes what date the subscription was paid",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -211,7 +211,7 @@
     },
     "billsUngrouped": "Non raggruppate",
     "@billsUngrouped": {
-        "description": "Title for ungrouped bills"
+        "description": "Title for ungrouped subscriptions"
     },
     "categoryDeleteConfirm": "Sei sicuro di voler eliminare questa categoria? Le transazioni non saranno eliminate, ma non avranno più una categoria.",
     "@categoryDeleteConfirm": {
@@ -359,7 +359,7 @@
     },
     "generalBill": "Bolletta",
     "@generalBill": {
-        "description": "Bill"
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
     "generalBudget": "Bilancio",
     "@generalBudget": {
@@ -376,6 +376,10 @@
     "generalDefault": "predefinito",
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "Conto di destinazione",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
     },
     "generalDismiss": "Ignora",
     "@generalDismiss": {
@@ -417,6 +421,10 @@
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
     },
+    "generalSourceAccount": "Conto di origine",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
     "generalSpent": "Speso",
     "@generalSpent": {
         "description": "(Amount) Spent"
@@ -435,7 +443,7 @@
     },
     "homeMainBillsInterval": " ({period, select, weekly{settimanale} monthly{mensile} quarterly{trimestrale} halfyear{semestrale} yearly{annuale} other{sconosciuto}})",
     "@homeMainBillsInterval": {
-        "description": "bill interval type",
+        "description": "subscription interval type",
         "placeholders": {
             "period": {
                 "type": "String",
@@ -445,7 +453,7 @@
     },
     "homeMainBillsTitle": "Bollette per la prossima settimana",
     "@homeMainBillsTitle": {
-        "description": "Title: Bills for the next week"
+        "description": "Title: Subscriptions for the next week"
     },
     "homeMainBudgetInterval": " (da {from} a {to}, {period})",
     "@homeMainBudgetInterval": {
@@ -555,6 +563,10 @@
             }
         }
     },
+    "homeMainDialogSettingsTitle": "Personalizza Dashboard",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
+    },
     "homePiggyLinked": "Collegato a {account}",
     "@homePiggyLinked": {
         "description": "Piggy bank is linked to asset account {account}.",
@@ -629,11 +641,11 @@
     },
     "homeTransactionsDialogFilterBillsAll": "<Tutte le bollette>",
     "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
+        "description": "Don't filter for a specific subscription (default entry)"
     },
     "homeTransactionsDialogFilterBillUnset": "<Nessuna bolletta>",
     "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
+        "description": "Filter for unset subscription"
     },
     "homeTransactionsDialogFilterBudgetsAll": "<Tutti i bilanci>",
     "@homeTransactionsDialogFilterBudgetsAll": {
@@ -729,9 +741,9 @@
     "@navigationAccounts": {
         "description": "Navigation Label: Accounts Page"
     },
-    "navigationBills": "Bollette",
+    "navigationBills": "Pagamenti ricorrenti",
     "@navigationBills": {
-        "description": "Navigation Label: Bills"
+        "description": "Navigation Label: Subscriptions"
     },
     "navigationCategories": "Categorie",
     "@navigationCategories": {
@@ -991,11 +1003,11 @@
     },
     "transactionDialogBillNoBill": "Nessuna bolletta",
     "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
+        "description": "Button Label: no subscription to be used"
     },
     "transactionDialogBillTitle": "Collega a bolletta",
     "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
+        "description": "Dialog Title: Link Subscription to transaction"
     },
     "transactionDialogCurrencyTitle": "Seleziona la valuta",
     "@transactionDialogCurrencyTitle": {
@@ -1024,6 +1036,14 @@
     "transactionErrorInvalidBudget": "Bilancio non valido",
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Si prega di compilare prima i conti.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Si prega di selezionare un conto attività.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
     },
     "transactionErrorTitle": "Si prega di fornire un titolo.",
     "@transactionErrorTitle": {
@@ -1064,6 +1084,14 @@
     "transactionSplitChangeCurrency": "Modifica Valuta Suddivisa",
     "@transactionSplitChangeCurrency": {
         "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Cambia conto di destinazione diviso",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Cambia conto di origine diviso",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
     },
     "transactionSplitChangeTarget": "Modifica conto destinazione suddivisa",
     "@transactionSplitChangeTarget": {

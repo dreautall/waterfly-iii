@@ -135,32 +135,19 @@ class AccountDetails extends StatefulWidget {
 class _AccountDetailsState extends State<AccountDetails>
     with AutomaticKeepAliveClientMixin {
   final int _numberOfItemsPerRequest = 50;
-  final PagingController<int, AccountRead> _pagingController =
-      PagingController<int, AccountRead>(
-    firstPageKey: 1,
-    invisibleItemsThreshold: 10,
-  );
+  PagingState<int, AccountRead> _pagingState = PagingState<int, AccountRead>();
 
   final Logger log = Logger("Pages.Accounts.Details");
 
-  @override
-  void initState() {
-    super.initState();
+  Future<void> _fetchPage() async {
+    if (_pagingState.isLoading) return;
 
-    _pagingController
-        .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
-  }
-
-  @override
-  void dispose() {
-    _pagingController.dispose();
-
-    super.dispose();
-  }
-
-  Future<void> _fetchPage(int pageKey) async {
     try {
       final FireflyIii api = context.read<FireflyService>().api;
+
+      final int pageKey = (_pagingState.keys?.last ?? 0) + 1;
+      log.finest(
+          "Getting page $pageKey (${_pagingState.pages?.length} pages loaded)");
 
       final Response<AccountArray> respAccounts = await api.v1AccountsGet(
         type: widget.accountType,
@@ -168,19 +155,36 @@ class _AccountDetailsState extends State<AccountDetails>
       );
       apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
 
+      final List<AccountRead> accountList = respAccounts.body!.data;
+      final bool isLastPage = accountList.length < _numberOfItemsPerRequest;
+
       if (mounted) {
-        final List<AccountRead> accountList = respAccounts.body!.data;
-        final bool isLastPage = accountList.length < _numberOfItemsPerRequest;
-        if (isLastPage) {
-          _pagingController.appendLastPage(accountList);
-        } else {
-          final int nextPageKey = pageKey + 1;
-          _pagingController.appendPage(accountList, nextPageKey);
-        }
+        setState(() {
+          _pagingState = _pagingState.copyWith(
+            pages: <List<AccountRead>>[
+              ...?_pagingState.pages,
+              accountList,
+            ],
+            keys: <int>[
+              ...?_pagingState.keys,
+              pageKey,
+            ],
+            hasNextPage: !isLastPage,
+            isLoading: false,
+            error: null,
+          );
+        });
       }
     } catch (e, stackTrace) {
-      log.severe("_fetchPage($pageKey)", e, stackTrace);
-      _pagingController.error = e;
+      log.severe("_fetchPage()", e, stackTrace);
+      if (mounted) {
+        setState(() {
+          _pagingState = _pagingState.copyWith(
+            error: e,
+            isLoading: false,
+          );
+        });
+      }
     }
   }
 
@@ -193,12 +197,27 @@ class _AccountDetailsState extends State<AccountDetails>
     log.fine(() => "build()");
 
     return RefreshIndicator(
-      onRefresh: () => Future<void>.sync(() => _pagingController.refresh()),
+      onRefresh: () => Future<void>.sync(
+        () => setState(() {
+          _pagingState = _pagingState.reset();
+        }),
+      ),
       child: PagedListView<int, AccountRead>(
-        pagingController: _pagingController,
+        state: _pagingState,
+        fetchNextPage: _fetchPage,
         builderDelegate: PagedChildBuilderDelegate<AccountRead>(
+          animateTransitions: true,
+          transitionDuration: animDurationStandard,
+          invisibleItemsThreshold: 10,
           itemBuilder: (BuildContext context, AccountRead item, int index) =>
-              accountRowBuilder(context, item, index, _pagingController),
+              accountRowBuilder(
+            context,
+            item,
+            index,
+            () => setState(() {
+              _pagingState = _pagingState.reset();
+            }),
+          ),
         ),
       ),
     );

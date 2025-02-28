@@ -36,11 +36,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   final int _numberOfPostsPerRequest = 50;
 
-  final PagingController<int, TransactionRead> _pagingController =
-      PagingController<int, TransactionRead>(
-    firstPageKey: 1,
-    invisibleItemsThreshold: 20,
-  );
+  late PagingState<int, TransactionRead> _pagingState;
 
   DateTime? _lastDate;
   List<int> _rowsWithDate = <int>[];
@@ -55,8 +51,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     super.initState();
 
     _tzHandler = context.read<FireflyService>().tzHandler;
-    _pagingController
-        .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
+    _pagingState = PagingState<int, TransactionRead>();
     _tagsHidden.value = context.read<SettingsProvider>().hideTags;
 
     // Only add filter button when in own tab
@@ -108,7 +103,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   if (ok == null || !ok) {
                     if (settings.showFutureTXs != oldShowFutureTXs) {
                       settings.showFutureTXs = oldShowFutureTXs;
-                      _pagingController.refresh();
+                      setState(() {
+                        _pagingState = _pagingState.reset();
+                      });
                     }
                     _filters.account = oldFilters.account;
                     _filters.budget = oldFilters.budget;
@@ -127,7 +124,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   _filters.updateFilters();
                   _rowsWithDate = <int>[];
                   _lastDate = null;
-                  _pagingController.refresh();
+                  setState(() {
+                    _pagingState = _pagingState.reset();
+                  });
                 },
               ),
             ),
@@ -138,31 +137,43 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
     _stock = context.read<FireflyService>().transStock!;
 
-    _stock.addListener(() => _pagingController.refresh());
+    _stock.addListener(notifRefresh);
   }
 
   @override
   void dispose() {
     _stock.removeListener(notifRefresh);
-    _pagingController.dispose();
 
     super.dispose();
   }
 
   void notifRefresh() {
-    _pagingController.refresh();
+    setState(() {
+      _pagingState = _pagingState.reset();
+    });
   }
 
-  Future<void> _fetchPage(int pageKey) async {
-    final TransStock? stock = context.read<FireflyService>().transStock;
+  void _fetchPage() async {
+    if (_pagingState.isLoading) return;
 
+    final TransStock? stock = context.read<FireflyService>().transStock;
     if (stock == null) {
-      // Throw error
-      return;
+      throw Exception("Stock not available");
     }
+
+    setState(() {
+      _pagingState = _pagingState.copyWith(
+        isLoading: true,
+        error: null,
+      );
+    });
 
     try {
       late List<TransactionRead> transactionList;
+
+      final int pageKey = (_pagingState.keys?.last ?? 0) + 1;
+      log.finest(
+          "Getting page $pageKey (${_pagingState.pages?.length} pages loaded)");
 
       if (widget.filters != null) {
         _filters.account = widget.filters!.account;
@@ -247,24 +258,35 @@ class _HomeTransactionsState extends State<HomeTransactions>
         );
       }
 
+      final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
+
       if (mounted) {
-        // check if it is the last page
-        // adds spacing for the FAB button to not overlap.
-        if (transactionList.length < _numberOfPostsPerRequest) {
-          transactionList.add(const TransactionRead(
-            type: "WF3_DUMMY_SPACING_ELEMENT",
-            id: "WF3_DUMMY_SPACING_ELEMENT",
-            attributes: Transaction(transactions: <TransactionSplit>[]),
-            links: ObjectLink(),
-          ));
-          _pagingController.appendLastPage(transactionList);
-        } else {
-          _pagingController.appendPage(transactionList, pageKey + 1);
-        }
+        setState(() {
+          _pagingState = _pagingState.copyWith(
+            pages: <List<TransactionRead>>[
+              ...?_pagingState.pages,
+              transactionList,
+            ],
+            keys: <int>[
+              ...?_pagingState.keys,
+              pageKey,
+            ],
+            hasNextPage: !isLastPage,
+            isLoading: false,
+            error: null,
+          );
+        });
       }
     } catch (e, stackTrace) {
-      log.severe("_fetchPage($pageKey)", e, stackTrace);
-      _pagingController.error = e;
+      log.severe("_fetchPage()", e, stackTrace);
+      if (mounted) {
+        setState(() {
+          _pagingState = _pagingState.copyWith(
+            error: e,
+            isLoading: false,
+          );
+        });
+      }
     }
   }
 
@@ -281,17 +303,22 @@ class _HomeTransactionsState extends State<HomeTransactions>
         _rowsWithDate = <int>[];
         _lastDate = null;
         context.read<FireflyService>().transStock!.clear();
-        return _pagingController.refresh();
+        setState(() {
+          _pagingState = _pagingState.reset();
+        });
       }),
       child: PagedListView<int, TransactionRead>(
-        pagingController: _pagingController,
+        state: _pagingState,
+        fetchNextPage: _fetchPage,
         builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
           animateTransitions: true,
           transitionDuration: animDurationStandard,
+          invisibleItemsThreshold: 10,
           itemBuilder: transactionRowBuilder,
+          noMoreItemsIndicatorBuilder: (_) => const SizedBox(height: 68),
         ),
-        //itemExtent: 80,
       ),
+      //itemExtent: 80,
     );
   }
 
@@ -300,10 +327,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
     TransactionRead item,
     int index,
   ) {
-    if (item.type == "WF3_DUMMY_SPACING_ELEMENT" &&
-        item.id == "WF3_DUMMY_SPACING_ELEMENT") {
-      return const SizedBox(height: 68);
-    }
     List<TransactionSplit> transactions = item.attributes.transactions;
     if (transactions.isEmpty) {
       return Text(S.of(context).homeTransactionsEmpty);
@@ -496,7 +519,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                       context.read<FireflyService>().transStock!.clear();
                     }
                   }
-                  _pagingController.refresh();
+                  setState(() {
+                    _pagingState = _pagingState.reset();
+                  });
                 },
                 child: Row(
                   children: <Widget>[
@@ -527,7 +552,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   if (context.mounted) {
                     context.read<FireflyService>().transStock!.clear();
                   }
-                  _pagingController.refresh();
+                  setState(() {
+                    _pagingState = _pagingState.reset();
+                  });
                 },
                 child: Row(
                   children: <Widget>[
@@ -663,7 +690,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
             context.read<FireflyService>().transStock!.clear();
           }
         }
-        _pagingController.refresh();
+        setState(() {
+          _pagingState = _pagingState.reset();
+        });
       },
     );
 

@@ -30,52 +30,58 @@ class _HomePiggybankState extends State<HomePiggybank>
   final Logger log = Logger("Pages.Home.Piggybank");
 
   final int _numberOfItemsPerRequest = 100;
-  final PagingController<int, PiggyBankRead> _pagingController =
-      PagingController<int, PiggyBankRead>(
-    firstPageKey: 1,
-    invisibleItemsThreshold: 10,
-  );
+  PagingState<int, PiggyBankRead> _pagingState =
+      PagingState<int, PiggyBankRead>();
 
-  @override
-  void initState() {
-    super.initState();
+  Future<void> _fetchPage() async {
+    if (_pagingState.isLoading) return;
 
-    _pagingController
-        .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
-  }
-
-  @override
-  void dispose() {
-    _pagingController.dispose();
-
-    super.dispose();
-  }
-
-  Future<void> _fetchPage(int pageKey) async {
     try {
       final FireflyIii api = context.read<FireflyService>().api;
+
+      final int pageKey = (_pagingState.keys?.last ?? 0) + 1;
+      log.finest(
+          "Getting page $pageKey (${_pagingState.pages?.length} pages loaded)");
+
       final Response<PiggyBankArray> respAccounts = await api.v1PiggyBanksGet(
         page: pageKey,
         limit: _numberOfItemsPerRequest,
       );
       apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
 
+      final List<PiggyBankRead> piggyList = respAccounts.body!.data;
+      piggyList.sortByCompare(
+          (PiggyBankRead element) => element.attributes.objectGroupOrder,
+          (int? a, int? b) => (a ?? 0).compareTo(b ?? 0));
+      final bool isLastPage = piggyList.length < _numberOfItemsPerRequest;
+
       if (mounted) {
-        final List<PiggyBankRead> piggyList = respAccounts.body!.data;
-        piggyList.sortByCompare(
-            (PiggyBankRead element) => element.attributes.objectGroupOrder,
-            (int? a, int? b) => (a ?? 0).compareTo(b ?? 0));
-        final bool isLastPage = piggyList.length < _numberOfItemsPerRequest;
-        if (isLastPage) {
-          _pagingController.appendLastPage(piggyList);
-        } else {
-          final int nextPageKey = pageKey + 1;
-          _pagingController.appendPage(piggyList, nextPageKey);
-        }
+        setState(() {
+          _pagingState = _pagingState.copyWith(
+            pages: <List<PiggyBankRead>>[
+              ...?_pagingState.pages,
+              piggyList,
+            ],
+            keys: <int>[
+              ...?_pagingState.keys,
+              pageKey,
+            ],
+            hasNextPage: !isLastPage,
+            isLoading: false,
+            error: null,
+          );
+        });
       }
     } catch (e, stackTrace) {
-      log.severe("_fetchPage($pageKey)", e, stackTrace);
-      _pagingController.error = e;
+      log.severe("_fetchPage()", e, stackTrace);
+      if (mounted) {
+        setState(() {
+          _pagingState = _pagingState.copyWith(
+            error: e,
+            isLoading: false,
+          );
+        });
+      }
     }
   }
 
@@ -90,10 +96,18 @@ class _HomePiggybankState extends State<HomePiggybank>
     int lastGroupId = -1;
 
     return RefreshIndicator(
-      onRefresh: () => Future<void>.sync(() => _pagingController.refresh()),
+      onRefresh: () => Future<void>.sync(
+        () => setState(() {
+          _pagingState = _pagingState.reset();
+        }),
+      ),
       child: PagedListView<int, PiggyBankRead>(
-        pagingController: _pagingController,
+        state: _pagingState,
+        fetchNextPage: _fetchPage,
         builderDelegate: PagedChildBuilderDelegate<PiggyBankRead>(
+          animateTransitions: true,
+          transitionDuration: animDurationStandard,
+          invisibleItemsThreshold: 10,
           itemBuilder: (BuildContext context, PiggyBankRead piggy, int index) {
             Widget? groupHeader;
             final int groupId =

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:animations/animations.dart';
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +18,7 @@ Widget accountRowBuilder(
   BuildContext context,
   AccountRead account,
   int index,
-  PagingController<int, AccountRead> pagingController,
+  void Function() pagingResetFunc,
 ) {
   String name = account.attributes.name;
   late double currentAmount;
@@ -109,7 +108,7 @@ Widget accountRowBuilder(
     openBuilder: (BuildContext context, Function closedContainer) =>
         AccountTXpage(
       account: account,
-      nameUpdateFunc: (_) => pagingController.refresh(),
+      nameUpdateFunc: (_) => pagingResetFunc(),
     ),
     openColor: Theme.of(context).cardColor,
     closedColor: Theme.of(context).cardColor,

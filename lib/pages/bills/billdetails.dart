@@ -25,11 +25,8 @@ class BillDetails extends StatefulWidget {
 
 class _BillDetailsState extends State<BillDetails> {
   final Logger log = Logger("Pages.Bills.Details");
-  final PagingController<int, TransactionRead> _pagingController =
-      PagingController<int, TransactionRead>(
-    firstPageKey: 1,
-    invisibleItemsThreshold: 20,
-  );
+  PagingState<int, TransactionRead> _pagingState =
+      PagingState<int, TransactionRead>();
   final GlobalKey<BillChartState> _billChartKey = GlobalKey<BillChartState>();
 
   late final CurrencyRead _currency;
@@ -52,16 +49,6 @@ class _BillDetailsState extends State<BillDetails> {
       ),
     );
     _tzHandler = context.read<FireflyService>().tzHandler;
-
-    _pagingController
-        .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
-  }
-
-  @override
-  void dispose() {
-    _pagingController.dispose();
-
-    super.dispose();
   }
 
   @override
@@ -158,11 +145,13 @@ class _BillDetailsState extends State<BillDetails> {
               crossAxisMargin: 4,
               mainAxisMargin: 4,*/
             child: PagedListView<int, TransactionRead>(
-              pagingController: _pagingController,
+              state: _pagingState,
+              fetchNextPage: _fetchPage,
               physics: const ClampingScrollPhysics(),
               builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
                 animateTransitions: true,
                 transitionDuration: animDurationStandard,
+                invisibleItemsThreshold: 20,
                 itemBuilder: _transactionRowBuilder,
                 noItemsFoundIndicatorBuilder: _emptyListBuilder,
               ),
@@ -304,24 +293,57 @@ class _BillDetailsState extends State<BillDetails> {
     );
   }
 
-  Future<void> _fetchPage(int page) async {
-    final FireflyIii api = context.read<FireflyService>().api;
+  Future<void> _fetchPage() async {
+    if (_pagingState.isLoading) return;
 
-    Response<TransactionArray> response = await api.v1BillsIdTransactionsGet(
-      id: widget.bill.id,
-      page: page,
-    );
-    apiThrowErrorIfEmpty(response, mounted ? context : null);
+    try {
+      final FireflyIii api = context.read<FireflyService>().api;
 
-    _billChartKey.currentState!.doneLoading();
-    List<TransactionRead> transactions = response.body!.data;
-    _billChartKey.currentState!.addTransactions(transactions);
+      final int pageKey = (_pagingState.keys?.last ?? 0) + 1;
+      log.finest(
+          "Getting page $pageKey (${_pagingState.pages?.length} items loaded so far)");
 
-    if ((response.body!.meta.pagination?.currentPage ?? 1) ==
-        (response.body!.meta.pagination?.totalPages ?? 1)) {
-      _pagingController.appendLastPage(transactions);
-    } else {
-      _pagingController.appendPage(transactions, page + 1);
+      Response<TransactionArray> response = await api.v1BillsIdTransactionsGet(
+        id: widget.bill.id,
+        page: pageKey,
+      );
+      apiThrowErrorIfEmpty(response, mounted ? context : null);
+
+      _billChartKey.currentState!.doneLoading();
+      List<TransactionRead> transactions = response.body!.data;
+      _billChartKey.currentState!.addTransactions(transactions);
+
+      final bool isLastPage =
+          (response.body!.meta.pagination?.currentPage ?? 1) ==
+              (response.body!.meta.pagination?.totalPages ?? 1);
+
+      if (mounted) {
+        setState(() {
+          _pagingState = _pagingState.copyWith(
+            pages: <List<TransactionRead>>[
+              ...?_pagingState.pages,
+              transactions,
+            ],
+            keys: <int>[
+              ...?_pagingState.keys,
+              pageKey,
+            ],
+            hasNextPage: !isLastPage,
+            isLoading: false,
+            error: null,
+          );
+        });
+      }
+    } catch (e, stackTrace) {
+      log.severe("_fetchPage()", e, stackTrace);
+      if (mounted) {
+        setState(() {
+          _pagingState = _pagingState.copyWith(
+            error: e,
+            isLoading: false,
+          );
+        });
+      }
     }
   }
 

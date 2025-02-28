@@ -37,34 +37,32 @@ class SCs extends S {
 
   @override
   String accountsLiabilitiesInterest(double interest, String period) {
-    String _temp0 = intl.Intl.selectLogic(
-      period,
-      {
-        'weekly': 'týden',
-        'monthly': 'měsíc',
-        'quarterly': 'čtvrtletí',
-        'halfyear': 'půlrok',
-        'yearly': 'rok',
-        'other': 'neznámé',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(period, {
+      'weekly': 'týden',
+      'monthly': 'měsíc',
+      'quarterly': 'čtvrtletí',
+      'halfyear': 'půlrok',
+      'yearly': 'rok',
+      'other': 'neznámé',
+    });
     return '$interest% úrok za $_temp0';
   }
 
   @override
   String billsAmountAndFrequency(
-      String minValue, String maxvalue, String frequency, num skip) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'weekly',
-        'monthly': 'monthly',
-        'quarterly': 'quarterly',
-        'halfyear': 'half-yearly',
-        'yearly': 'yearly',
-        'other': 'unknown',
-      },
-    );
+    String minValue,
+    String maxvalue,
+    String frequency,
+    num skip,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'weekly',
+      'monthly': 'monthly',
+      'quarterly': 'quarterly',
+      'halfyear': 'half-yearly',
+      'yearly': 'yearly',
+      'other': 'unknown',
+    });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
@@ -85,18 +83,18 @@ class SCs extends S {
 
   @override
   String billsExactAmountAndFrequency(
-      String value, String frequency, num skip) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'weekly',
-        'monthly': 'monthly',
-        'quarterly': 'quarterly',
-        'halfyear': 'half-yearly',
-        'yearly': 'yearly',
-        'other': 'unknown',
-      },
-    );
+    String value,
+    String frequency,
+    num skip,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'weekly',
+      'monthly': 'monthly',
+      'quarterly': 'quarterly',
+      'halfyear': 'half-yearly',
+      'yearly': 'yearly',
+      'other': 'unknown',
+    });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
@@ -116,33 +114,27 @@ class SCs extends S {
 
   @override
   String billsFrequency(String frequency) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'Weekly',
-        'monthly': 'Monthly',
-        'quarterly': 'Quarterly',
-        'halfyear': 'Half-yearly',
-        'yearly': 'Yearly',
-        'other': 'Unknown',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'Weekly',
+      'monthly': 'Monthly',
+      'quarterly': 'Quarterly',
+      'halfyear': 'Half-yearly',
+      'yearly': 'Yearly',
+      'other': 'Unknown',
+    });
     return '$_temp0';
   }
 
   @override
   String billsFrequencySkip(String frequency, num skip) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'Weekly',
-        'monthly': 'Monthly',
-        'quarterly': 'Quarterly',
-        'halfyear': 'Half-yearly',
-        'yearly': 'Yearly',
-        'other': 'Unknown',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'Weekly',
+      'monthly': 'Monthly',
+      'quarterly': 'Quarterly',
+      'halfyear': 'Half-yearly',
+      'yearly': 'Yearly',
+      'other': 'Unknown',
+    });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
@@ -377,17 +369,14 @@ class SCs extends S {
 
   @override
   String homeMainBillsInterval(String period) {
-    String _temp0 = intl.Intl.selectLogic(
-      period,
-      {
-        'weekly': 'týdně',
-        'monthly': 'měsíčně',
-        'quarterly': 'čtvrtletně',
-        'halfyear': 'půlročně',
-        'yearly': 'ročně',
-        'other': 'neznámé',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(period, {
+      'weekly': 'týdně',
+      'monthly': 'měsíčně',
+      'quarterly': 'čtvrtletně',
+      'halfyear': 'půlročně',
+      'yearly': 'ročně',
+      'other': 'neznámé',
+    });
     return ' ($_temp0)';
   }
 
@@ -416,13 +405,10 @@ class SCs extends S {
 
   @override
   String homeMainBudgetSum(String current, String status, String available) {
-    String _temp0 = intl.Intl.selectLogic(
-      status,
-      {
-        'over': 'přes',
-        'other': 'zbývá z',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(status, {
+      'over': 'přes',
+      'other': 'zbývá z',
+    });
     return '$current $_temp0 $available';
   }
 
@@ -612,9 +598,11 @@ class SCs extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat =
-        intl.NumberFormat.decimalPercentPattern(
-            locale: localeName, decimalDigits: 0);
+    final intl.NumberFormat numNumberFormat = intl
+        .NumberFormat.decimalPercentPattern(
+      locale: localeName,
+      decimalDigits: 0,
+    );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -622,9 +610,11 @@ class SCs extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat =
-        intl.NumberFormat.decimalPercentPattern(
-            locale: localeName, decimalDigits: 0);
+    final intl.NumberFormat percNumberFormat = intl
+        .NumberFormat.decimalPercentPattern(
+      locale: localeName,
+      decimalDigits: 0,
+    );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString z $of';
@@ -745,14 +735,11 @@ class SCs extends S {
 
   @override
   String settingsThemeValue(String theme) {
-    String _temp0 = intl.Intl.selectLogic(
-      theme,
-      {
-        'dark': 'Tmavý motiv',
-        'light': 'Světlý motiv',
-        'other': 'Výchozí systému',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(theme, {
+      'dark': 'Tmavý motiv',
+      'light': 'Světlý motiv',
+      'other': 'Výchozí systému',
+    });
     return '$_temp0';
   }
 

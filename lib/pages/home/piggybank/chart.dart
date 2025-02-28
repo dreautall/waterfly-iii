@@ -9,11 +9,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/widgets/charts.dart';
 
 class PiggyChart extends StatefulWidget {
-  const PiggyChart(
-    this.piggy,
-    this.data, {
-    super.key,
-  });
+  const PiggyChart(this.piggy, this.data, {super.key});
 
   final PiggyBankRead piggy;
   final List<PiggyBankEventRead> data;
@@ -60,10 +56,7 @@ class _PiggyChartState extends State<PiggyChart> {
     double total = 0;
 
     if (widget.piggy.attributes.startDate != null) {
-      data.add(TimeSeriesChart(
-        widget.piggy.attributes.startDate!,
-        0,
-      ));
+      data.add(TimeSeriesChart(widget.piggy.attributes.startDate!, 0));
     }
 
     for (PiggyBankEventRead e in widget.data) {
@@ -104,9 +97,9 @@ class _PiggyChartState extends State<PiggyChart> {
           text: S.of(context).generalTarget,
           textAngle: 0,
           textStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                fontWeight: FontWeight.normal,
-                color: Colors.deepOrange,
-              ),
+            fontWeight: FontWeight.normal,
+            color: Colors.deepOrange,
+          ),
           verticalTextAlignment: TextAnchor.start,
           horizontalTextAlignment: TextAnchor.start,
           verticalTextPadding: '-1%',
@@ -117,24 +110,29 @@ class _PiggyChartState extends State<PiggyChart> {
 
     return SfCartesianChart(
       primaryXAxis: DateTimeAxis(
-        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-              fontWeight: FontWeight.normal,
-            ),
+        labelStyle: Theme.of(
+          context,
+        ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
         dateFormat: DateFormat(DateFormat.ABBR_MONTH_DAY),
-        axisLine:
-            AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
+        axisLine: AxisLine(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
         minorTicksPerInterval: 1,
       ),
       primaryYAxis: NumericAxis(
-        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-              fontWeight: FontWeight.normal,
-            ),
-        axisLine:
-            AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
+        labelStyle: Theme.of(
+          context,
+        ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+        axisLine: AxisLine(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
         plotBands: targetAnnotation,
         maximum: targetAmount != 0 ? targetAmount : null,
-        axisLabelFormatter: (AxisLabelRenderDetails args) => ChartAxisLabel(
-            NumberFormat().format(double.parse(args.text)), args.textStyle),
+        axisLabelFormatter:
+            (AxisLabelRenderDetails args) => ChartAxisLabel(
+              NumberFormat().format(double.parse(args.text)),
+              args.textStyle,
+            ),
       ),
       series: chartData,
       palette: possibleChartColorsDart,

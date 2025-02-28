@@ -57,9 +57,10 @@ class TimeZoneHandler {
   tz.TZDateTime dTime(DateTime t) => tz.TZDateTime.from(t, dLocation);
   tz.TZDateTime sTime(DateTime t) => tz.TZDateTime.from(t, sLocation);
 
-  tz.TZDateTime newTXTime() => useServerTime
-      ? getLocalTimeAsServerTime(tz.TZDateTime.now(dLocation))
-      : dNow();
+  tz.TZDateTime newTXTime() =>
+      useServerTime
+          ? getLocalTimeAsServerTime(tz.TZDateTime.now(dLocation))
+          : dNow();
 
   tz.TZDateTime notificationTXTime(DateTime t) =>
       useServerTime ? getLocalTimeAsServerTime(dTime(t)) : dTime(t);

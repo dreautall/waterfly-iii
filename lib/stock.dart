@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stock/stock.dart';
 import 'package:waterflyiii/extensions.dart';
-
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.enums.swagger.dart'
-    as enums show TransactionTypeFilter;
+    as enums
+    show TransactionTypeFilter;
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 class TransStock with ChangeNotifier {
@@ -35,56 +35,50 @@ class TransStock with ChangeNotifier {
       sourceOfTruth: _singleSoT,
     );
     _getStock = Stock<String, List<String>>(
-      fetcher: Fetcher.ofFuture<String, List<String>>(
-        (String id) {
-          final _getOptions query = _getOptions.fromJson(jsonDecode(id));
-          return api
-              .v1TransactionsGet(
-                xTraceId: query.xTraceId,
-                page: query.page,
-                limit: query.limit,
-                start: query.start,
-                end: query.end,
-                type: query.type,
-              )
-              .then<List<String>>(_onAPIValue);
-        },
-      ),
+      fetcher: Fetcher.ofFuture<String, List<String>>((String id) {
+        final _getOptions query = _getOptions.fromJson(jsonDecode(id));
+        return api
+            .v1TransactionsGet(
+              xTraceId: query.xTraceId,
+              page: query.page,
+              limit: query.limit,
+              start: query.start,
+              end: query.end,
+              type: query.type,
+            )
+            .then<List<String>>(_onAPIValue);
+      }),
       sourceOfTruth: _listSoT,
     );
     _getAccountStock = Stock<String, List<String>>(
-      fetcher: Fetcher.ofFuture<String, List<String>>(
-        (String id) {
-          final _getOptions query = _getOptions.fromJson(jsonDecode(id));
-          return api
-              .v1AccountsIdTransactionsGet(
-                xTraceId: query.xTraceId,
-                id: query.id,
-                page: query.page,
-                limit: query.limit,
-                start: query.start,
-                end: query.end,
-                type: query.type,
-              )
-              .then<List<String>>(_onAPIValue);
-        },
-      ),
+      fetcher: Fetcher.ofFuture<String, List<String>>((String id) {
+        final _getOptions query = _getOptions.fromJson(jsonDecode(id));
+        return api
+            .v1AccountsIdTransactionsGet(
+              xTraceId: query.xTraceId,
+              id: query.id,
+              page: query.page,
+              limit: query.limit,
+              start: query.start,
+              end: query.end,
+              type: query.type,
+            )
+            .then<List<String>>(_onAPIValue);
+      }),
       sourceOfTruth: _listSoT,
     );
     _getSearchStock = Stock<String, List<String>>(
-      fetcher: Fetcher.ofFuture<String, List<String>>(
-        (String id) {
-          final _getOptions query = _getOptions.fromJson(jsonDecode(id));
-          return api
-              .v1SearchTransactionsGet(
-                xTraceId: query.xTraceId,
-                query: query.query,
-                page: query.page,
-                limit: query.limit,
-              )
-              .then<List<String>>(_onAPIValue);
-        },
-      ),
+      fetcher: Fetcher.ofFuture<String, List<String>>((String id) {
+        final _getOptions query = _getOptions.fromJson(jsonDecode(id));
+        return api
+            .v1SearchTransactionsGet(
+              xTraceId: query.xTraceId,
+              query: query.query,
+              page: query.page,
+              limit: query.limit,
+            )
+            .then<List<String>>(_onAPIValue);
+      }),
       sourceOfTruth: _listSoT,
     );
   }
@@ -108,14 +102,18 @@ class TransStock with ChangeNotifier {
     enums.TransactionTypeFilter? type,
   }) async {
     return _getStock
-        .get(jsonEncode(_getOptions(
-          xTraceId: xTraceId,
-          page: page,
-          limit: limit,
-          start: start,
-          end: end,
-          type: type,
-        )))
+        .get(
+          jsonEncode(
+            _getOptions(
+              xTraceId: xTraceId,
+              page: page,
+              limit: limit,
+              start: start,
+              end: end,
+              type: type,
+            ),
+          ),
+        )
         .then(_onGetValue);
   }
 
@@ -129,15 +127,19 @@ class TransStock with ChangeNotifier {
     enums.TransactionTypeFilter? type,
   }) async {
     return _getAccountStock
-        .get(jsonEncode(_getOptions(
-          xTraceId: xTraceId,
-          id: id,
-          page: page,
-          limit: limit,
-          start: start,
-          end: end,
-          type: type,
-        )))
+        .get(
+          jsonEncode(
+            _getOptions(
+              xTraceId: xTraceId,
+              id: id,
+              page: page,
+              limit: limit,
+              start: start,
+              end: end,
+              type: type,
+            ),
+          ),
+        )
         .then(_onGetValue);
   }
 
@@ -148,12 +150,16 @@ class TransStock with ChangeNotifier {
     int? limit,
   }) async {
     return _getSearchStock
-        .get(jsonEncode(_getOptions(
-          xTraceId: xTraceId,
-          query: query,
-          page: page,
-          limit: limit,
-        )))
+        .get(
+          jsonEncode(
+            _getOptions(
+              xTraceId: xTraceId,
+              query: query,
+              page: page,
+              limit: limit,
+            ),
+          ),
+        )
         .then(_onGetValue);
   }
 
@@ -209,25 +215,25 @@ class _getOptions {
   });
 
   _getOptions.fromJson(Map<String, dynamic> json)
-      : xTraceId = json['xTraceId'],
-        page = json['page'],
-        start = json['start'],
-        end = json['end'],
-        type = json['type'],
-        id = json['id'],
-        limit = json['limit'],
-        query = json['query'];
+    : xTraceId = json['xTraceId'],
+      page = json['page'],
+      start = json['start'],
+      end = json['end'],
+      type = json['type'],
+      id = json['id'],
+      limit = json['limit'],
+      query = json['query'];
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'xTraceId': xTraceId,
-        'page': page,
-        'start': start,
-        'end': end,
-        'type': type,
-        'id': id,
-        'limit': limit,
-        'query': query,
-      };
+    'xTraceId': xTraceId,
+    'page': page,
+    'start': start,
+    'end': end,
+    'type': type,
+    'id': id,
+    'limit': limit,
+    'query': query,
+  };
 }
 
 class CatStock {
@@ -240,183 +246,169 @@ class CatStock {
 
   CatStock(this.api, this.defaultCurrency) {
     _stock = Stock<DateTime, CategoryArray>(
-      fetcher: Fetcher.ofFuture<DateTime, CategoryArray>(
-        (DateTime t) async {
-          final String startDate =
-              DateFormat('yyyy-MM-dd', 'en_US').format(t.copyWith(day: 1));
-          final String endDate = DateFormat('yyyy-MM-dd', 'en_US').format(t);
+      fetcher: Fetcher.ofFuture<DateTime, CategoryArray>((DateTime t) async {
+        final String startDate = DateFormat(
+          'yyyy-MM-dd',
+          'en_US',
+        ).format(t.copyWith(day: 1));
+        final String endDate = DateFormat('yyyy-MM-dd', 'en_US').format(t);
 
-          final Response<InsightGroup> respIncomeCat =
-              await api.v1InsightIncomeCategoryGet(
-            start: startDate,
-            end: endDate,
+        final Response<InsightGroup> respIncomeCat = await api
+            .v1InsightIncomeCategoryGet(start: startDate, end: endDate);
+        if (!respIncomeCat.isSuccessful || respIncomeCat.body == null) {
+          throw Exception(
+            "[stock] Invalid API response: ${respIncomeCat.error}",
           );
-          if (!respIncomeCat.isSuccessful || respIncomeCat.body == null) {
-            throw Exception(
-              "[stock] Invalid API response: ${respIncomeCat.error}",
+        }
+        final Response<InsightTotal> respIncomeNoCat = await api
+            .v1InsightIncomeNoCategoryGet(start: startDate, end: endDate);
+        if (!respIncomeNoCat.isSuccessful || respIncomeNoCat.body == null) {
+          throw Exception(
+            "[stock] Invalid API response: ${respIncomeNoCat.error}",
+          );
+        }
+        final Response<InsightGroup> respExpenseCat = await api
+            .v1InsightExpenseCategoryGet(start: startDate, end: endDate);
+        if (!respExpenseCat.isSuccessful || respExpenseCat.body == null) {
+          throw Exception(
+            "[stock] Invalid API response: ${respExpenseCat.error}",
+          );
+        }
+        final Response<InsightTotal> respExpenseNoCat = await api
+            .v1InsightExpenseNoCategoryGet(start: startDate, end: endDate);
+        if (!respExpenseNoCat.isSuccessful || respExpenseNoCat.body == null) {
+          throw Exception(
+            "[stock] Invalid API response: ${respExpenseNoCat.error}",
+          );
+        }
+
+        final Map<String, CategoryRead> categories = <String, CategoryRead>{};
+        for (InsightGroupEntry cat in respIncomeCat.body!) {
+          if ((cat.id?.isEmpty ?? true) || (cat.name?.isEmpty ?? true)) {
+            continue;
+          }
+
+          if (cat.currencyId != defaultCurrency.id) {
+            continue;
+          }
+          if (!categories.containsKey(cat.id)) {
+            categories[cat.id!] = CategoryRead(
+              id: cat.id!,
+              type: "categories",
+              attributes: CategoryWithSum(
+                name: cat.name!,
+                spent: <CategorySpent>[],
+                earned: <CategoryEarned>[],
+              ),
             );
           }
-          final Response<InsightTotal> respIncomeNoCat =
-              await api.v1InsightIncomeNoCategoryGet(
-            start: startDate,
-            end: endDate,
+          categories[cat.id!]!.attributes.earned!.add(
+            CategoryEarned(
+              currencyId: cat.currencyId,
+              currencyCode: cat.currencyCode,
+              currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
+              currencySymbol: defaultCurrency.attributes.symbol,
+              sum: cat.difference,
+            ),
           );
-          if (!respIncomeNoCat.isSuccessful || respIncomeNoCat.body == null) {
-            throw Exception(
-              "[stock] Invalid API response: ${respIncomeNoCat.error}",
+        }
+        for (InsightGroupEntry cat in respExpenseCat.body!) {
+          if ((cat.id?.isEmpty ?? true) || (cat.name?.isEmpty ?? true)) {
+            continue;
+          }
+
+          if (cat.currencyId != defaultCurrency.id) {
+            continue;
+          }
+          if (!categories.containsKey(cat.id)) {
+            categories[cat.id!] = CategoryRead(
+              id: cat.id!,
+              type: "categories",
+              attributes: CategoryWithSum(
+                name: cat.name!,
+                spent: <CategorySpent>[],
+                earned: <CategoryEarned>[],
+              ),
             );
           }
-          final Response<InsightGroup> respExpenseCat =
-              await api.v1InsightExpenseCategoryGet(
-            start: startDate,
-            end: endDate,
+          categories[cat.id!]!.attributes.spent!.add(
+            CategorySpent(
+              currencyId: cat.currencyId,
+              currencyCode: cat.currencyCode,
+              currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
+              currencySymbol: defaultCurrency.attributes.symbol,
+              sum: cat.difference,
+            ),
           );
-          if (!respExpenseCat.isSuccessful || respExpenseCat.body == null) {
-            throw Exception(
-              "[stock] Invalid API response: ${respExpenseCat.error}",
+        }
+        for (InsightTotalEntry cat in respIncomeNoCat.body!) {
+          if (cat.currencyId != defaultCurrency.id) {
+            continue;
+          }
+          if (!categories.containsKey("-1")) {
+            categories["-1"] = CategoryRead(
+              id: "-1",
+              type: "no-category",
+              attributes: CategoryWithSum(
+                name: "L10NNONE",
+                spent: <CategorySpent>[],
+                earned: <CategoryEarned>[],
+              ),
             );
           }
-          final Response<InsightTotal> respExpenseNoCat =
-              await api.v1InsightExpenseNoCategoryGet(
-            start: startDate,
-            end: endDate,
+          categories["-1"]!.attributes.earned!.add(
+            CategoryEarned(
+              currencyId: cat.currencyId,
+              currencyCode: cat.currencyCode,
+              currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
+              currencySymbol: defaultCurrency.attributes.symbol,
+              sum: cat.difference,
+            ),
           );
-          if (!respExpenseNoCat.isSuccessful || respExpenseNoCat.body == null) {
-            throw Exception(
-              "[stock] Invalid API response: ${respExpenseNoCat.error}",
+        }
+        for (InsightTotalEntry cat in respExpenseNoCat.body!) {
+          if (cat.currencyId != defaultCurrency.id) {
+            continue;
+          }
+          if (!categories.containsKey("-1")) {
+            categories["-1"] = CategoryRead(
+              id: "-1",
+              type: "no-category",
+              attributes: CategoryWithSum(
+                name: "L10NNONE",
+                spent: <CategorySpent>[],
+                earned: <CategoryEarned>[],
+              ),
             );
           }
-
-          final Map<String, CategoryRead> categories = <String, CategoryRead>{};
-          for (InsightGroupEntry cat in respIncomeCat.body!) {
-            if ((cat.id?.isEmpty ?? true) || (cat.name?.isEmpty ?? true)) {
-              continue;
-            }
-
-            if (cat.currencyId != defaultCurrency.id) {
-              continue;
-            }
-            if (!categories.containsKey(cat.id)) {
-              categories[cat.id!] = CategoryRead(
-                id: cat.id!,
-                type: "categories",
-                attributes: CategoryWithSum(
-                  name: cat.name!,
-                  spent: <CategorySpent>[],
-                  earned: <CategoryEarned>[],
-                ),
-              );
-            }
-            categories[cat.id!]!.attributes.earned!.add(
-                  CategoryEarned(
-                    currencyId: cat.currencyId,
-                    currencyCode: cat.currencyCode,
-                    currencyDecimalPlaces:
-                        defaultCurrency.attributes.decimalPlaces,
-                    currencySymbol: defaultCurrency.attributes.symbol,
-                    sum: cat.difference,
-                  ),
-                );
-          }
-          for (InsightGroupEntry cat in respExpenseCat.body!) {
-            if ((cat.id?.isEmpty ?? true) || (cat.name?.isEmpty ?? true)) {
-              continue;
-            }
-
-            if (cat.currencyId != defaultCurrency.id) {
-              continue;
-            }
-            if (!categories.containsKey(cat.id)) {
-              categories[cat.id!] = CategoryRead(
-                id: cat.id!,
-                type: "categories",
-                attributes: CategoryWithSum(
-                  name: cat.name!,
-                  spent: <CategorySpent>[],
-                  earned: <CategoryEarned>[],
-                ),
-              );
-            }
-            categories[cat.id!]!.attributes.spent!.add(
-                  CategorySpent(
-                    currencyId: cat.currencyId,
-                    currencyCode: cat.currencyCode,
-                    currencyDecimalPlaces:
-                        defaultCurrency.attributes.decimalPlaces,
-                    currencySymbol: defaultCurrency.attributes.symbol,
-                    sum: cat.difference,
-                  ),
-                );
-          }
-          for (InsightTotalEntry cat in respIncomeNoCat.body!) {
-            if (cat.currencyId != defaultCurrency.id) {
-              continue;
-            }
-            if (!categories.containsKey("-1")) {
-              categories["-1"] = CategoryRead(
-                id: "-1",
-                type: "no-category",
-                attributes: CategoryWithSum(
-                  name: "L10NNONE",
-                  spent: <CategorySpent>[],
-                  earned: <CategoryEarned>[],
-                ),
-              );
-            }
-            categories["-1"]!.attributes.earned!.add(
-                  CategoryEarned(
-                    currencyId: cat.currencyId,
-                    currencyCode: cat.currencyCode,
-                    currencyDecimalPlaces:
-                        defaultCurrency.attributes.decimalPlaces,
-                    currencySymbol: defaultCurrency.attributes.symbol,
-                    sum: cat.difference,
-                  ),
-                );
-          }
-          for (InsightTotalEntry cat in respExpenseNoCat.body!) {
-            if (cat.currencyId != defaultCurrency.id) {
-              continue;
-            }
-            if (!categories.containsKey("-1")) {
-              categories["-1"] = CategoryRead(
-                id: "-1",
-                type: "no-category",
-                attributes: CategoryWithSum(
-                  name: "L10NNONE",
-                  spent: <CategorySpent>[],
-                  earned: <CategoryEarned>[],
-                ),
-              );
-            }
-            categories["-1"]!.attributes.spent!.add(
-                  CategorySpent(
-                    currencyId: cat.currencyId,
-                    currencyCode: cat.currencyCode,
-                    currencyDecimalPlaces:
-                        defaultCurrency.attributes.decimalPlaces,
-                    currencySymbol: defaultCurrency.attributes.symbol,
-                    sum: cat.difference,
-                  ),
-                );
-          }
-
-          categories.forEach((_, CategoryRead c) {
-            CategoryWithSum cs = c.attributes as CategoryWithSum;
-            cs.sumEarned = c.attributes.earned!.fold<double>(
-                0,
-                (double p, CategoryEarned e) =>
-                    p += double.parse(e.sum ?? "0"));
-            cs.sumSpent = c.attributes.spent!.fold<double>(0,
-                (double p, CategorySpent e) => p += double.parse(e.sum ?? "0"));
-          });
-
-          return CategoryArray(
-            data: categories.values.toList(growable: false),
-            meta: const Meta(),
+          categories["-1"]!.attributes.spent!.add(
+            CategorySpent(
+              currencyId: cat.currencyId,
+              currencyCode: cat.currencyCode,
+              currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
+              currencySymbol: defaultCurrency.attributes.symbol,
+              sum: cat.difference,
+            ),
           );
-        },
-      ),
+        }
+
+        categories.forEach((_, CategoryRead c) {
+          CategoryWithSum cs = c.attributes as CategoryWithSum;
+          cs.sumEarned = c.attributes.earned!.fold<double>(
+            0,
+            (double p, CategoryEarned e) => p += double.parse(e.sum ?? "0"),
+          );
+          cs.sumSpent = c.attributes.spent!.fold<double>(
+            0,
+            (double p, CategorySpent e) => p += double.parse(e.sum ?? "0"),
+          );
+        });
+
+        return CategoryArray(
+          data: categories.values.toList(growable: false),
+          meta: const Meta(),
+        );
+      }),
       sourceOfTruth: _sot,
     );
   }

@@ -80,29 +80,45 @@ class _BillDetailsState extends State<BillDetails> {
                     leading: const CircleAvatar(
                       child: Icon(Icons.info_outline),
                     ),
-                    title: widget.bill.attributes.amountMax ==
-                            widget.bill.attributes.amountMin
-                        ? Text(
-                            S.of(context).billsExactAmountAndFrequency(
-                                  _currency.fmt(double.tryParse(
-                                          widget.bill.attributes.amountMin) ??
-                                      0),
-                                  widget.bill.attributes.repeatFreq.toString(),
-                                  widget.bill.attributes.skip ?? 0,
-                                ),
-                          )
-                        : Text(
-                            S.of(context).billsAmountAndFrequency(
-                                  _currency.fmt(double.tryParse(
-                                          widget.bill.attributes.amountMin) ??
-                                      0),
-                                  _currency.fmt(double.tryParse(
-                                          widget.bill.attributes.amountMax) ??
-                                      0),
-                                  widget.bill.attributes.repeatFreq.toString(),
-                                  widget.bill.attributes.skip ?? 0,
-                                ),
-                          ),
+                    title:
+                        widget.bill.attributes.amountMax ==
+                                widget.bill.attributes.amountMin
+                            ? Text(
+                              S
+                                  .of(context)
+                                  .billsExactAmountAndFrequency(
+                                    _currency.fmt(
+                                      double.tryParse(
+                                            widget.bill.attributes.amountMin,
+                                          ) ??
+                                          0,
+                                    ),
+                                    widget.bill.attributes.repeatFreq
+                                        .toString(),
+                                    widget.bill.attributes.skip ?? 0,
+                                  ),
+                            )
+                            : Text(
+                              S
+                                  .of(context)
+                                  .billsAmountAndFrequency(
+                                    _currency.fmt(
+                                      double.tryParse(
+                                            widget.bill.attributes.amountMin,
+                                          ) ??
+                                          0,
+                                    ),
+                                    _currency.fmt(
+                                      double.tryParse(
+                                            widget.bill.attributes.amountMax,
+                                          ) ??
+                                          0,
+                                    ),
+                                    widget.bill.attributes.repeatFreq
+                                        .toString(),
+                                    widget.bill.attributes.skip ?? 0,
+                                  ),
+                            ),
                   ),
                   ListTile(
                     leading: CircleAvatar(
@@ -112,9 +128,11 @@ class _BillDetailsState extends State<BillDetails> {
                             : Icons.check_box_outline_blank,
                       ),
                     ),
-                    title: Text(widget.bill.attributes.active ?? false
-                        ? S.of(context).billsIsActive
-                        : S.of(context).billsNotActive),
+                    title: Text(
+                      widget.bill.attributes.active ?? false
+                          ? S.of(context).billsIsActive
+                          : S.of(context).billsNotActive,
+                    ),
                   ),
                   ListTile(
                     leading: const CircleAvatar(
@@ -164,30 +182,35 @@ class _BillDetailsState extends State<BillDetails> {
   }
 
   Widget _transactionRowBuilder(
-      BuildContext context, TransactionRead transaction, int index) {
-    DateTime date = _tzHandler
-        .sTime(transaction.attributes.transactions.first.date)
-        .toLocal();
+    BuildContext context,
+    TransactionRead transaction,
+    int index,
+  ) {
+    DateTime date =
+        _tzHandler
+            .sTime(transaction.attributes.transactions.first.date)
+            .toLocal();
 
     return OpenContainer(
-      openBuilder: (BuildContext context, Function closedContainer) =>
-          FutureBuilder<TransactionRead>(
-        future: _fetchFullTx(transaction.id),
-        builder:
-            (BuildContext context, AsyncSnapshot<TransactionRead> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.hasData &&
-              snapshot.data != null) {
-            return TransactionPage(transaction: snapshot.data);
-          }
-          if (snapshot.hasError) {
-            Navigator.of(context).pop();
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
+      openBuilder:
+          (BuildContext context, Function closedContainer) =>
+              FutureBuilder<TransactionRead>(
+                future: _fetchFullTx(transaction.id),
+                builder: (
+                  BuildContext context,
+                  AsyncSnapshot<TransactionRead> snapshot,
+                ) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData &&
+                      snapshot.data != null) {
+                    return TransactionPage(transaction: snapshot.data);
+                  }
+                  if (snapshot.hasError) {
+                    Navigator.of(context).pop();
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ),
       openColor: Theme.of(context).cardColor,
       closedColor:
           Theme.of(context).dialogTheme.backgroundColor ?? Colors.white,
@@ -195,54 +218,59 @@ class _BillDetailsState extends State<BillDetails> {
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
       closedElevation: 0,
-      closedBuilder: (BuildContext context, Function openContainer) => ListTile(
-        title: Text.rich(_getTransactionTitle(transaction)),
-        subtitle: Text(
-          DateFormat.yMMMMd().format(date),
-          style: Theme.of(context)
-              .textTheme
-              .bodySmall!
-              .copyWith(color: Theme.of(context).colorScheme.secondary),
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-        ),
-        isThreeLine: false,
-        trailing: RichText(
-          textAlign: TextAlign.end,
-          maxLines: 2,
-          text: TextSpan(
-              text: _getTransactionAmount(transaction),
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                color: Colors.red,
-                fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
+      closedBuilder:
+          (BuildContext context, Function openContainer) => ListTile(
+            title: Text.rich(_getTransactionTitle(transaction)),
+            subtitle: Text(
+              DateFormat.yMMMMd().format(date),
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: Theme.of(context).colorScheme.secondary,
               ),
-              children: <InlineSpan>[
-                const TextSpan(text: "\n"),
-                TextSpan(
-                  text: _getTransactionSource(transaction),
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                )
-              ]),
-        ),
-        onTap: () => openContainer(),
-      ),
+            ),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+            ),
+            isThreeLine: false,
+            trailing: RichText(
+              textAlign: TextAlign.end,
+              maxLines: 2,
+              text: TextSpan(
+                text: _getTransactionAmount(transaction),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Colors.red,
+                  fontFeatures: const <FontFeature>[
+                    FontFeature.tabularFigures(),
+                  ],
+                ),
+                children: <InlineSpan>[
+                  const TextSpan(text: "\n"),
+                  TextSpan(
+                    text: _getTransactionSource(transaction),
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            onTap: () => openContainer(),
+          ),
     );
   }
 
   TextSpan _getTransactionTitle(TransactionRead transaction) {
     if (transaction.attributes.groupTitle != null) {
       return TextSpan(
-          text: transaction.attributes.groupTitle,
-          children: <InlineSpan>[
-            TextSpan(
-                text: " (${S.of(context).generalMultiple})",
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ))
-          ]);
+        text: transaction.attributes.groupTitle,
+        children: <InlineSpan>[
+          TextSpan(
+            text: " (${S.of(context).generalMultiple})",
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+          ),
+        ],
+      );
     }
 
     return TextSpan(
@@ -285,7 +313,7 @@ class _BillDetailsState extends State<BillDetails> {
               TextSpan(
                 text: S.of(context).billsListEmpty,
                 style: Theme.of(context).textTheme.bodyMedium,
-              )
+              ),
             ],
           ),
         ),
@@ -301,7 +329,8 @@ class _BillDetailsState extends State<BillDetails> {
 
       final int pageKey = (_pagingState.keys?.last ?? 0) + 1;
       log.finest(
-          "Getting page $pageKey (${_pagingState.pages?.length} items loaded so far)");
+        "Getting page $pageKey (${_pagingState.pages?.length} items loaded so far)",
+      );
 
       Response<TransactionArray> response = await api.v1BillsIdTransactionsGet(
         id: widget.bill.id,
@@ -315,7 +344,7 @@ class _BillDetailsState extends State<BillDetails> {
 
       final bool isLastPage =
           (response.body!.meta.pagination?.currentPage ?? 1) ==
-              (response.body!.meta.pagination?.totalPages ?? 1);
+          (response.body!.meta.pagination?.totalPages ?? 1);
 
       if (mounted) {
         setState(() {
@@ -324,10 +353,7 @@ class _BillDetailsState extends State<BillDetails> {
               ...?_pagingState.pages,
               transactions,
             ],
-            keys: <int>[
-              ...?_pagingState.keys,
-              pageKey,
-            ],
+            keys: <int>[...?_pagingState.keys, pageKey],
             hasNextPage: !isLastPage,
             isLoading: false,
             error: null,
@@ -338,10 +364,7 @@ class _BillDetailsState extends State<BillDetails> {
       log.severe("_fetchPage()", e, stackTrace);
       if (mounted) {
         setState(() {
-          _pagingState = _pagingState.copyWith(
-            error: e,
-            isLoading: false,
-          );
+          _pagingState = _pagingState.copyWith(error: e, isLoading: false);
         });
       }
     }

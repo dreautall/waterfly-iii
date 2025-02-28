@@ -12,9 +12,7 @@ import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/settings.dart';
 
 class SettingsNotifications extends StatefulWidget {
-  const SettingsNotifications({
-    super.key,
-  });
+  const SettingsNotifications({super.key});
 
   @override
   State<SettingsNotifications> createState() => _SettingsNotificationsState();
@@ -37,9 +35,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(S.of(context).settingsNotificationListener),
-      ),
+      appBar: AppBar(title: Text(S.of(context).settingsNotificationListener)),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         primary: false,
@@ -51,8 +47,10 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
           const Divider(),
           FutureBuilder<NotificationListenerStatus>(
             future: updateStatus(),
-            builder: (BuildContext context,
-                AsyncSnapshot<NotificationListenerStatus> snapshot) {
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<NotificationListenerStatus> snapshot,
+            ) {
               final S l10n = S.of(context);
               final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
 
@@ -63,16 +61,20 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                 if (!snapshot.data!.servicePermission) {
                   subtitle = l10n.settingsNLPermissionGrant;
                   clickFn = () async {
-                    bool granted = await FlutterLocalNotificationsPlugin()
+                    bool granted =
+                        await FlutterLocalNotificationsPlugin()
                             .resolvePlatformSpecificImplementation<
-                                AndroidFlutterLocalNotificationsPlugin>()!
+                              AndroidFlutterLocalNotificationsPlugin
+                            >()!
                             .requestNotificationsPermission() ??
                         false;
                     if (!granted) {
-                      msg.showSnackBar(SnackBar(
-                        content: Text(l10n.settingsNLPermissionNotGranted),
-                        behavior: SnackBarBehavior.floating,
-                      ));
+                      msg.showSnackBar(
+                        SnackBar(
+                          content: Text(l10n.settingsNLPermissionNotGranted),
+                          behavior: SnackBarBehavior.floating,
+                        ),
+                      );
                       return;
                     }
                     await NotificationServicePlugin.instance
@@ -84,7 +86,8 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                   clickFn = () async {
                     await FlutterLocalNotificationsPlugin()
                         .resolvePlatformSpecificImplementation<
-                            AndroidFlutterLocalNotificationsPlugin>()!
+                          AndroidFlutterLocalNotificationsPlugin
+                        >()!
                         .requestNotificationsPermission();
                   };
                 } else if (!snapshot.data!.serviceRunning) {
@@ -97,28 +100,35 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                   clickFn = () async {
                     final bool? ok = await showDialog<bool>(
                       context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        icon: const Icon(Icons.remove_done),
-                        title: Text(S.of(context).settingsNLPermissionRemove),
-                        clipBehavior: Clip.hardEdge,
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text(MaterialLocalizations.of(context)
-                                .cancelButtonLabel),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
+                      builder:
+                          (BuildContext context) => AlertDialog(
+                            icon: const Icon(Icons.remove_done),
+                            title: Text(
+                              S.of(context).settingsNLPermissionRemove,
+                            ),
+                            clipBehavior: Clip.hardEdge,
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text(
+                                  MaterialLocalizations.of(
+                                    context,
+                                  ).cancelButtonLabel,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              FilledButton(
+                                child: Text(S.of(context).formButtonRemove),
+                                onPressed: () {
+                                  Navigator.of(context).pop(true);
+                                },
+                              ),
+                            ],
+                            content: Text(
+                              S.of(context).settingsNLPermissionRemoveHelp,
+                            ),
                           ),
-                          FilledButton(
-                            child: Text(S.of(context).formButtonRemove),
-                            onPressed: () {
-                              Navigator.of(context).pop(true);
-                            },
-                          ),
-                        ],
-                        content:
-                            Text(S.of(context).settingsNLPermissionRemoveHelp),
-                      ),
                     );
                     if (!(ok ?? false)) {
                       return;
@@ -128,8 +138,11 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                   };
                 }
               } else if (snapshot.hasError) {
-                log.severe("error updating status", snapshot.error,
-                    snapshot.stackTrace);
+                log.severe(
+                  "error updating status",
+                  snapshot.error,
+                  snapshot.stackTrace,
+                );
                 subtitle = S
                     .of(context)
                     .settingsNLServiceCheckingError(snapshot.error.toString());
@@ -139,14 +152,12 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
               return ListTile(
                 title: Text(S.of(context).settingsNLServiceStatus),
                 leading: CircleAvatar(
-                  child: (snapshot.data?.serviceRunning ?? false)
-                      ? const Icon(Icons.check)
-                      : const Icon(Icons.close),
+                  child:
+                      (snapshot.data?.serviceRunning ?? false)
+                          ? const Icon(Icons.check)
+                          : const Icon(Icons.close),
                 ),
-                subtitle: Text(
-                  subtitle,
-                  maxLines: 1,
-                ),
+                subtitle: Text(subtitle, maxLines: 1),
                 onTap: () async {
                   await clickFn();
                   setState(() {});
@@ -160,13 +171,8 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
             const Divider(),
             ListTile(
               title: Text(S.of(context).settingsNLAppAdd),
-              leading: const CircleAvatar(
-                child: Icon(Icons.add),
-              ),
-              subtitle: Text(
-                S.of(context).settingsNLAppAddHelp,
-                maxLines: 2,
-              ),
+              leading: const CircleAvatar(child: Icon(Icons.add)),
+              subtitle: Text(S.of(context).settingsNLAppAddHelp, maxLines: 2),
               isThreeLine: true,
               onTap: () async {
                 final SettingsProvider settings =
@@ -197,16 +203,15 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
 }
 
 class NotificationApps extends StatelessWidget {
-  const NotificationApps({
-    super.key,
-  });
+  const NotificationApps({super.key});
 
   Future<AccountArray> _getAccounts(BuildContext context) async {
     final FireflyIii api = context.read<FireflyService>().api;
 
     // Accounts
-    final Response<AccountArray> respAccounts =
-        await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
+    final Response<AccountArray> respAccounts = await api.v1AccountsGet(
+      type: AccountTypeFilter.assetAccount,
+    );
     apiThrowErrorIfEmpty(respAccounts, context.mounted ? context : null);
 
     return respAccounts.body!;
@@ -224,40 +229,50 @@ class NotificationApps extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              ...context.watch<SettingsProvider>().notificationApps.map(
-                (String app) {
-                  return FutureBuilder<NotificationAppSettings>(
-                    future: context
-                        .read<SettingsProvider>()
-                        .notificationGetAppSettings(app),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<NotificationAppSettings> snap) {
-                      if (snap.connectionState == ConnectionState.done &&
-                          snap.hasData) {
-                        return AppCard(
-                          app: app,
-                          accounts: snapshot.data!,
-                          settings: snap.data!,
-                        );
-                      } else if (snapshot.hasError) {
-                        log.severe("error getting app settings", snapshot.error,
-                            snapshot.stackTrace);
-                        return const SizedBox.shrink();
-                      } else {
-                        return const CircularProgressIndicator();
-                      }
-                    },
-                  );
-                },
-              ),
+              ...context.watch<SettingsProvider>().notificationApps.map((
+                String app,
+              ) {
+                return FutureBuilder<NotificationAppSettings>(
+                  future: context
+                      .read<SettingsProvider>()
+                      .notificationGetAppSettings(app),
+                  builder: (
+                    BuildContext context,
+                    AsyncSnapshot<NotificationAppSettings> snap,
+                  ) {
+                    if (snap.connectionState == ConnectionState.done &&
+                        snap.hasData) {
+                      return AppCard(
+                        app: app,
+                        accounts: snapshot.data!,
+                        settings: snap.data!,
+                      );
+                    } else if (snapshot.hasError) {
+                      log.severe(
+                        "error getting app settings",
+                        snapshot.error,
+                        snapshot.stackTrace,
+                      );
+                      return const SizedBox.shrink();
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  },
+                );
+              }),
             ],
           );
         } else if (snapshot.hasError) {
           log.severe(
-              "error getting accounts", snapshot.error, snapshot.stackTrace);
-          return Text(S
-              .of(context)
-              .settingsNLServiceCheckingError(snapshot.error.toString()));
+            "error getting accounts",
+            snapshot.error,
+            snapshot.stackTrace,
+          );
+          return Text(
+            S
+                .of(context)
+                .settingsNLServiceCheckingError(snapshot.error.toString()),
+          );
         } else {
           return const Center(child: CircularProgressIndicator());
         }
@@ -292,24 +307,23 @@ class _AppCardState extends State<AppCard> {
   Widget build(BuildContext context) {
     List<DropdownMenuEntry<AccountRead>> accountOptions =
         <DropdownMenuEntry<AccountRead>>[
-      DropdownMenuEntry<AccountRead>(
-        value: AccountRead(
-          id: "0",
-          type: "dummy",
-          attributes: Account(
-            name: S.of(context).settingsNLAppAccountDynamic,
-            type: ShortAccountTypeProperty.swaggerGeneratedUnknown,
+          DropdownMenuEntry<AccountRead>(
+            value: AccountRead(
+              id: "0",
+              type: "dummy",
+              attributes: Account(
+                name: S.of(context).settingsNLAppAccountDynamic,
+                type: ShortAccountTypeProperty.swaggerGeneratedUnknown,
+              ),
+            ),
+            label: S.of(context).settingsNLAppAccountDynamic,
           ),
-        ),
-        label: S.of(context).settingsNLAppAccountDynamic,
-      )
-    ];
+        ];
     AccountRead? currentAccount = accountOptions.first.value;
     for (AccountRead e in widget.accounts.data) {
-      accountOptions.add(DropdownMenuEntry<AccountRead>(
-        value: e,
-        label: e.attributes.name,
-      ));
+      accountOptions.add(
+        DropdownMenuEntry<AccountRead>(value: e, label: e.attributes.name),
+      );
       if (widget.settings.defaultAccountId == e.id) {
         currentAccount = e;
       }
@@ -348,7 +362,9 @@ class _AppCardState extends State<AppCard> {
                       await context
                           .read<SettingsProvider>()
                           .notificationSetAppSettings(
-                              widget.app, widget.settings);
+                            widget.app,
+                            widget.settings,
+                          );
                     },
                   ),
                   const SizedBox(height: 16),
@@ -364,7 +380,9 @@ class _AppCardState extends State<AppCard> {
                       await context
                           .read<SettingsProvider>()
                           .notificationSetAppSettings(
-                              widget.app, widget.settings);
+                            widget.app,
+                            widget.settings,
+                          );
                     },
                   ),
                   CheckboxListTile(
@@ -380,7 +398,9 @@ class _AppCardState extends State<AppCard> {
                       await context
                           .read<SettingsProvider>()
                           .notificationSetAppSettings(
-                              widget.app, widget.settings);
+                            widget.app,
+                            widget.settings,
+                          );
                     },
                   ),
                   CheckboxListTile(
@@ -394,7 +414,9 @@ class _AppCardState extends State<AppCard> {
                       await context
                           .read<SettingsProvider>()
                           .notificationSetAppSettings(
-                              widget.app, widget.settings);
+                            widget.app,
+                            widget.settings,
+                          );
                     },
                   ),
                 ],
@@ -407,9 +429,9 @@ class _AppCardState extends State<AppCard> {
                 child: IconButton(
                   icon: const Icon(Icons.delete),
                   onPressed: () {
-                    context
-                        .read<SettingsProvider>()
-                        .notificationRemoveUsedApp(widget.app);
+                    context.read<SettingsProvider>().notificationRemoveUsedApp(
+                      widget.app,
+                    );
                   },
                   tooltip: S.of(context).transactionSplitDelete,
                 ),
@@ -423,9 +445,7 @@ class _AppCardState extends State<AppCard> {
 }
 
 class AppDialog extends StatelessWidget {
-  const AppDialog({
-    super.key,
-  });
+  const AppDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -436,11 +456,13 @@ class AppDialog extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       children: <Widget>[
         FutureBuilder<List<String>>(
-          future: context
-              .read<SettingsProvider>()
-              .notificationKnownApps(filterUsed: true),
-          builder:
-              (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+          future: context.read<SettingsProvider>().notificationKnownApps(
+            filterUsed: true,
+          ),
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<List<String>> snapshot,
+          ) {
             if (snapshot.hasData) {
               List<Widget> child = <Widget>[];
               child.add(
@@ -457,14 +479,15 @@ class AppDialog extends StatelessWidget {
                 children: child,
               );
             } else if (snapshot.hasError) {
-              log.severe("error getting app settings", snapshot.error,
-                  snapshot.stackTrace);
+              log.severe(
+                "error getting app settings",
+                snapshot.error,
+                snapshot.stackTrace,
+              );
               Navigator.pop(context);
               return const SizedBox.shrink();
             } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Center(child: CircularProgressIndicator());
             }
           },
         ),
@@ -474,10 +497,7 @@ class AppDialog extends StatelessWidget {
 }
 
 class AppDialogEntry extends StatelessWidget {
-  const AppDialogEntry({
-    super.key,
-    required this.app,
-  });
+  const AppDialogEntry({super.key, required this.app});
 
   final String app;
 
@@ -502,9 +522,7 @@ class AppDialogEntry extends StatelessWidget {
             leading = const Icon(Icons.api);
           }
           return ListTile(
-            leading: CircleAvatar(
-              child: leading,
-            ),
+            leading: CircleAvatar(child: leading),
             title: Text(snapshot.data!.appName!),
             subtitle: Text(app),
             onTap: () {
@@ -513,7 +531,10 @@ class AppDialogEntry extends StatelessWidget {
           );
         } else if (snapshot.hasError) {
           log.severe(
-              "error getting app details", snapshot.error, snapshot.stackTrace);
+            "error getting app details",
+            snapshot.error,
+            snapshot.stackTrace,
+          );
           return const SizedBox.shrink();
         } else {
           return const CircularProgressIndicator();

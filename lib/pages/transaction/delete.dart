@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 
 class DeletionConfirmDialog extends StatelessWidget {
-  const DeletionConfirmDialog({
-    super.key,
-  });
+  const DeletionConfirmDialog({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -37,34 +37,32 @@ class SZh extends S {
 
   @override
   String accountsLiabilitiesInterest(double interest, String period) {
-    String _temp0 = intl.Intl.selectLogic(
-      period,
-      {
-        'weekly': '每周',
-        'monthly': '每月',
-        'quarterly': '每季度',
-        'halfyear': '每半年',
-        'yearly': '每年',
-        'other': '其它',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(period, {
+      'weekly': '每周',
+      'monthly': '每月',
+      'quarterly': '每季度',
+      'halfyear': '每半年',
+      'yearly': '每年',
+      'other': '其它',
+    });
     return '$_temp0的利率为 $interest%';
   }
 
   @override
   String billsAmountAndFrequency(
-      String minValue, String maxvalue, String frequency, num skip) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': '每周',
-        'monthly': '每月',
-        'quarterly': '每季度',
-        'halfyear': '每半年',
-        'yearly': '每年',
-        'other': '未知',
-      },
-    );
+    String minValue,
+    String maxvalue,
+    String frequency,
+    num skip,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': '每周',
+      'monthly': '每月',
+      'quarterly': '每季度',
+      'halfyear': '每半年',
+      'yearly': '每年',
+      'other': '未知',
+    });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
@@ -85,18 +83,18 @@ class SZh extends S {
 
   @override
   String billsExactAmountAndFrequency(
-      String value, String frequency, num skip) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': '每周',
-        'monthly': '每月',
-        'quarterly': '每季度',
-        'halfyear': '每半年',
-        'yearly': '每年',
-        'other': '未知',
-      },
-    );
+    String value,
+    String frequency,
+    num skip,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': '每周',
+      'monthly': '每月',
+      'quarterly': '每季度',
+      'halfyear': '每半年',
+      'yearly': '每年',
+      'other': '未知',
+    });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
@@ -116,33 +114,27 @@ class SZh extends S {
 
   @override
   String billsFrequency(String frequency) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': '每周',
-        'monthly': '每月',
-        'quarterly': '每季度',
-        'halfyear': '每半年',
-        'yearly': '每年',
-        'other': '未知',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': '每周',
+      'monthly': '每月',
+      'quarterly': '每季度',
+      'halfyear': '每半年',
+      'yearly': '每年',
+      'other': '未知',
+    });
     return '$_temp0';
   }
 
   @override
   String billsFrequencySkip(String frequency, num skip) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': '每周',
-        'monthly': '每月',
-        'quarterly': '每季度',
-        'halfyear': '每半年',
-        'yearly': '每年',
-        'other': '未知',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': '每周',
+      'monthly': '每月',
+      'quarterly': '每季度',
+      'halfyear': '每半年',
+      'yearly': '每年',
+      'other': '未知',
+    });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
@@ -374,17 +366,14 @@ class SZh extends S {
 
   @override
   String homeMainBillsInterval(String period) {
-    String _temp0 = intl.Intl.selectLogic(
-      period,
-      {
-        'weekly': '每周',
-        'monthly': '每月',
-        'quarterly': '每季度',
-        'halfyear': '每半年',
-        'yearly': '每年',
-        'other': '其它',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(period, {
+      'weekly': '每周',
+      'monthly': '每月',
+      'quarterly': '每季度',
+      'halfyear': '每半年',
+      'yearly': '每年',
+      'other': '其它',
+    });
     return ' （$_temp0）';
   }
 
@@ -413,13 +402,10 @@ class SZh extends S {
 
   @override
   String homeMainBudgetSum(String current, String status, String available) {
-    String _temp0 = intl.Intl.selectLogic(
-      status,
-      {
-        'over': '超出',
-        'other': '剩余',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(status, {
+      'over': '超出',
+      'other': '剩余',
+    });
     return '总计 $available $_temp0 $current';
   }
 
@@ -602,9 +588,11 @@ class SZh extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat =
-        intl.NumberFormat.decimalPercentPattern(
-            locale: localeName, decimalDigits: 0);
+    final intl.NumberFormat numNumberFormat = intl
+        .NumberFormat.decimalPercentPattern(
+      locale: localeName,
+      decimalDigits: 0,
+    );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -612,9 +600,11 @@ class SZh extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat =
-        intl.NumberFormat.decimalPercentPattern(
-            locale: localeName, decimalDigits: 0);
+    final intl.NumberFormat percNumberFormat = intl
+        .NumberFormat.decimalPercentPattern(
+      locale: localeName,
+      decimalDigits: 0,
+    );
     final String percString = percNumberFormat.format(perc);
 
     return '$of 中的 $percString';
@@ -730,14 +720,11 @@ class SZh extends S {
 
   @override
   String settingsThemeValue(String theme) {
-    String _temp0 = intl.Intl.selectLogic(
-      theme,
-      {
-        'dark': '暗色模式',
-        'light': '光明模式',
-        'other': '系统默认',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(theme, {
+      'dark': '暗色模式',
+      'light': '光明模式',
+      'other': '系统默认',
+    });
     return '$_temp0';
   }
 

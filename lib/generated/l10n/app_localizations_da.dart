@@ -37,34 +37,32 @@ class SDa extends S {
 
   @override
   String accountsLiabilitiesInterest(double interest, String period) {
-    String _temp0 = intl.Intl.selectLogic(
-      period,
-      {
-        'weekly': 'uge',
-        'monthly': 'måned',
-        'quarterly': 'kvartal',
-        'halfyear': 'halvår',
-        'yearly': 'år',
-        'other': 'ukendt',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(period, {
+      'weekly': 'uge',
+      'monthly': 'måned',
+      'quarterly': 'kvartal',
+      'halfyear': 'halvår',
+      'yearly': 'år',
+      'other': 'ukendt',
+    });
     return '$interest% renter per $_temp0';
   }
 
   @override
   String billsAmountAndFrequency(
-      String minValue, String maxvalue, String frequency, num skip) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'weekly',
-        'monthly': 'monthly',
-        'quarterly': 'quarterly',
-        'halfyear': 'half-yearly',
-        'yearly': 'yearly',
-        'other': 'unknown',
-      },
-    );
+    String minValue,
+    String maxvalue,
+    String frequency,
+    num skip,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'weekly',
+      'monthly': 'monthly',
+      'quarterly': 'quarterly',
+      'halfyear': 'half-yearly',
+      'yearly': 'yearly',
+      'other': 'unknown',
+    });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
@@ -85,18 +83,18 @@ class SDa extends S {
 
   @override
   String billsExactAmountAndFrequency(
-      String value, String frequency, num skip) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'weekly',
-        'monthly': 'monthly',
-        'quarterly': 'quarterly',
-        'halfyear': 'half-yearly',
-        'yearly': 'yearly',
-        'other': 'unknown',
-      },
-    );
+    String value,
+    String frequency,
+    num skip,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'weekly',
+      'monthly': 'monthly',
+      'quarterly': 'quarterly',
+      'halfyear': 'half-yearly',
+      'yearly': 'yearly',
+      'other': 'unknown',
+    });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
@@ -116,33 +114,27 @@ class SDa extends S {
 
   @override
   String billsFrequency(String frequency) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'Weekly',
-        'monthly': 'Monthly',
-        'quarterly': 'Quarterly',
-        'halfyear': 'Half-yearly',
-        'yearly': 'Yearly',
-        'other': 'Unknown',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'Weekly',
+      'monthly': 'Monthly',
+      'quarterly': 'Quarterly',
+      'halfyear': 'Half-yearly',
+      'yearly': 'Yearly',
+      'other': 'Unknown',
+    });
     return '$_temp0';
   }
 
   @override
   String billsFrequencySkip(String frequency, num skip) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'Weekly',
-        'monthly': 'Monthly',
-        'quarterly': 'Quarterly',
-        'halfyear': 'Half-yearly',
-        'yearly': 'Yearly',
-        'other': 'Unknown',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'Weekly',
+      'monthly': 'Monthly',
+      'quarterly': 'Quarterly',
+      'halfyear': 'Half-yearly',
+      'yearly': 'Yearly',
+      'other': 'Unknown',
+    });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
@@ -377,17 +369,14 @@ class SDa extends S {
 
   @override
   String homeMainBillsInterval(String period) {
-    String _temp0 = intl.Intl.selectLogic(
-      period,
-      {
-        'weekly': 'ugentligt',
-        'monthly': 'månedligt',
-        'quarterly': 'kvartalsvis',
-        'halfyear': 'halvårligt',
-        'yearly': 'årligt',
-        'other': 'ukendt',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(period, {
+      'weekly': 'ugentligt',
+      'monthly': 'månedligt',
+      'quarterly': 'kvartalsvis',
+      'halfyear': 'halvårligt',
+      'yearly': 'årligt',
+      'other': 'ukendt',
+    });
     return '($_temp0)';
   }
 
@@ -416,13 +405,10 @@ class SDa extends S {
 
   @override
   String homeMainBudgetSum(String current, String status, String available) {
-    String _temp0 = intl.Intl.selectLogic(
-      status,
-      {
-        'over': 'over',
-        'other': 'tilbage af',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(status, {
+      'over': 'over',
+      'other': 'tilbage af',
+    });
     return '$current$_temp0 $available';
   }
 
@@ -607,9 +593,11 @@ class SDa extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat =
-        intl.NumberFormat.decimalPercentPattern(
-            locale: localeName, decimalDigits: 0);
+    final intl.NumberFormat numNumberFormat = intl
+        .NumberFormat.decimalPercentPattern(
+      locale: localeName,
+      decimalDigits: 0,
+    );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -617,9 +605,11 @@ class SDa extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat =
-        intl.NumberFormat.decimalPercentPattern(
-            locale: localeName, decimalDigits: 0);
+    final intl.NumberFormat percNumberFormat = intl
+        .NumberFormat.decimalPercentPattern(
+      locale: localeName,
+      decimalDigits: 0,
+    );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString af $of';
@@ -739,14 +729,11 @@ class SDa extends S {
 
   @override
   String settingsThemeValue(String theme) {
-    String _temp0 = intl.Intl.selectLogic(
-      theme,
-      {
-        'dark': 'Mørk tilstand',
-        'light': 'Lys tilstand',
-        'other': 'Systemstandard',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(theme, {
+      'dark': 'Mørk tilstand',
+      'light': 'Lys tilstand',
+      'other': 'Systemstandard',
+    });
     return '$_temp0';
   }
 

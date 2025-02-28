@@ -31,19 +31,19 @@ class NotificationAppSettings {
   bool emptyNote = false;
 
   NotificationAppSettings.fromJson(Map<String, dynamic> json)
-      : appName = json['appName'],
-        defaultAccountId = json['defaultAccountId'],
-        includeTitle = json['includeTitle'] ?? true,
-        autoAdd = json['autoAdd'] ?? false,
-        emptyNote = json['emptyNote'] ?? false;
+    : appName = json['appName'],
+      defaultAccountId = json['defaultAccountId'],
+      includeTitle = json['includeTitle'] ?? true,
+      autoAdd = json['autoAdd'] ?? false,
+      emptyNote = json['emptyNote'] ?? false;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'appName': appName,
-        'defaultAccountId': defaultAccountId,
-        'includeTitle': includeTitle,
-        'autoAdd': autoAdd,
-        'emptyNote': emptyNote,
-      };
+    'appName': appName,
+    'defaultAccountId': defaultAccountId,
+    'includeTitle': includeTitle,
+    'autoAdd': autoAdd,
+    'emptyNote': emptyNote,
+  };
 }
 
 // in default order
@@ -205,8 +205,9 @@ class SettingsProvider with ChangeNotifier {
       await prefs.setString(settingLocale, locale);
     }
 
-    final List<String>? notificationApps =
-        oldPrefs.getStringList(settingNLUsedApps);
+    final List<String>? notificationApps = oldPrefs.getStringList(
+      settingNLUsedApps,
+    );
     if (notificationApps != null) {
       await prefs.setStringList(settingNLUsedApps, notificationApps);
     }
@@ -221,17 +222,21 @@ class SettingsProvider with ChangeNotifier {
       await prefs.setInt(settingBillsDefaultSort, billsSortIndex);
     }
 
-    final int? billsSortOrderIndex =
-        oldPrefs.getInt(settingBillsDefaultSortOrder);
+    final int? billsSortOrderIndex = oldPrefs.getInt(
+      settingBillsDefaultSortOrder,
+    );
     if (billsSortOrderIndex != null) {
       await prefs.setInt(settingBillsDefaultSortOrder, billsSortOrderIndex);
     }
 
-    final List<String>? categoriesSumExcluded =
-        oldPrefs.getStringList(settingsCategoriesSumExcluded);
+    final List<String>? categoriesSumExcluded = oldPrefs.getStringList(
+      settingsCategoriesSumExcluded,
+    );
     if (categoriesSumExcluded != null) {
       await prefs.setStringList(
-          settingsCategoriesSumExcluded, categoriesSumExcluded);
+        settingsCategoriesSumExcluded,
+        categoriesSumExcluded,
+      );
     }
 
     // Migrate notification settings
@@ -243,8 +248,9 @@ class SettingsProvider with ChangeNotifier {
     if (usedApps != null) {
       await prefs.setStringList(settingNLUsedApps, usedApps);
       for (String packageName in usedApps) {
-        final String? json =
-            oldPrefs.getString("$settingNLAppPrefix$packageName");
+        final String? json = oldPrefs.getString(
+          "$settingNLAppPrefix$packageName",
+        );
         if (json == null) {
           continue;
         }
@@ -279,8 +285,9 @@ class SettingsProvider with ChangeNotifier {
     }
 
     final String? countryCode = Intl.defaultLocale?.split("_").last;
-    final Locale locale =
-        Locale(await prefs.getString(settingLocale) ?? "unset");
+    final Locale locale = Locale(
+      await prefs.getString(settingLocale) ?? "unset",
+    );
     log.config("read locale $locale");
     if (S.supportedLocales.contains(locale)) {
       _locale = locale;
@@ -302,19 +309,22 @@ class SettingsProvider with ChangeNotifier {
         await prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
     int? billsLayoutIndex = await prefs.getInt(settingBillsDefaultLayout);
-    _billsLayout = billsLayoutIndex == null
-        ? BillsLayout.grouped
-        : BillsLayout.values[billsLayoutIndex];
+    _billsLayout =
+        billsLayoutIndex == null
+            ? BillsLayout.grouped
+            : BillsLayout.values[billsLayoutIndex];
 
     int? billsSortIndex = await prefs.getInt(settingBillsDefaultSort);
-    _billsSort = billsSortIndex == null
-        ? BillsSort.name
-        : BillsSort.values[billsSortIndex];
+    _billsSort =
+        billsSortIndex == null
+            ? BillsSort.name
+            : BillsSort.values[billsSortIndex];
 
     int? billsSortOrderIndex = await prefs.getInt(settingBillsDefaultSortOrder);
-    _billsSortOrder = billsSortOrderIndex == null
-        ? SortingOrder.ascending
-        : SortingOrder.values[billsSortOrderIndex];
+    _billsSortOrder =
+        billsSortOrderIndex == null
+            ? SortingOrder.ascending
+            : SortingOrder.values[billsSortOrderIndex];
 
     _categoriesSumExcluded =
         await prefs.getStringList(settingsCategoriesSumExcluded) ?? <String>[];
@@ -323,7 +333,8 @@ class SettingsProvider with ChangeNotifier {
         await prefs.getStringList(settingsDashboardOrder) ?? <String>[];
     for (String s in dashboardOrderStr) {
       _dashboardOrder.add(
-          DashboardCards.values.firstWhere((DashboardCards e) => e.name == s));
+        DashboardCards.values.firstWhere((DashboardCards e) => e.name == s),
+      );
     }
     if (_dashboardOrder.isEmpty ||
         DashboardCards.values.length != _dashboardOrder.length) {
@@ -333,7 +344,8 @@ class SettingsProvider with ChangeNotifier {
         await prefs.getStringList(settingsDashboardHidden) ?? <String>[];
     for (String s in dashboardHiddenStr) {
       _dashboardHidden.add(
-          DashboardCards.values.firstWhere((DashboardCards e) => e.name == s));
+        DashboardCards.values.firstWhere((DashboardCards e) => e.name == s),
+      );
     }
 
     _loaded = true;
@@ -349,8 +361,10 @@ class SettingsProvider with ChangeNotifier {
     _boolSettings[setting] = value;
 
     () async {
-      await SharedPreferencesAsync()
-          .setInt(settingsBitmask, _boolSettings.value);
+      await SharedPreferencesAsync().setInt(
+        settingsBitmask,
+        _boolSettings.value,
+      );
 
       log.finest(() => "notify SettingsProvider->_setBool($setting)");
       notifyListeners();
@@ -390,16 +404,22 @@ class SettingsProvider with ChangeNotifier {
     _theme = theme;
     switch (theme) {
       case ThemeMode.dark:
-        await SharedPreferencesAsync()
-            .setString(settingTheme, settingThemeDark);
+        await SharedPreferencesAsync().setString(
+          settingTheme,
+          settingThemeDark,
+        );
         break;
       case ThemeMode.light:
-        await SharedPreferencesAsync()
-            .setString(settingTheme, settingThemeLight);
+        await SharedPreferencesAsync().setString(
+          settingTheme,
+          settingThemeLight,
+        );
         break;
       case ThemeMode.system:
-        await SharedPreferencesAsync()
-            .setString(settingTheme, settingThemeSystem);
+        await SharedPreferencesAsync().setString(
+          settingTheme,
+          settingThemeSystem,
+        );
     }
 
     log.finest(() => "notify SettingsProvider->setTheme()");
@@ -414,8 +434,10 @@ class SettingsProvider with ChangeNotifier {
     _locale = Locale(locale.languageCode);
     final String? countryCode = Intl.defaultLocale?.split("_").last;
     Intl.defaultLocale = "${locale.languageCode}_$countryCode";
-    await SharedPreferencesAsync()
-        .setString(settingLocale, locale.languageCode);
+    await SharedPreferencesAsync().setString(
+      settingLocale,
+      locale.languageCode,
+    );
 
     log.finest(() => "notify SettingsProvider->setLocale()");
     notifyListeners();
@@ -437,7 +459,7 @@ class SettingsProvider with ChangeNotifier {
   Future<List<String>> notificationKnownApps({bool filterUsed = false}) async {
     final List<String> apps =
         await SharedPreferencesAsync().getStringList(settingNLKnownApps) ??
-            <String>[];
+        <String>[];
     if (filterUsed) {
       final List<String> knownApps = await notificationUsedApps();
       return apps
@@ -491,7 +513,7 @@ class SettingsProvider with ChangeNotifier {
   Future<List<String>> notificationUsedApps() async {
     final List<String> apps =
         await SharedPreferencesAsync().getStringList(settingNLUsedApps) ??
-            <String>[];
+        <String>[];
     if (!const ListEquality<String>().equals(apps, _notificationApps)) {
       _notificationApps = apps;
 
@@ -503,9 +525,12 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<NotificationAppSettings> notificationGetAppSettings(
-      String packageName) async {
-    final String json = await SharedPreferencesAsync()
-            .getString("$settingNLAppPrefix$packageName") ??
+    String packageName,
+  ) async {
+    final String json =
+        await SharedPreferencesAsync().getString(
+          "$settingNLAppPrefix$packageName",
+        ) ??
         "";
     try {
       return NotificationAppSettings.fromJson(jsonDecode(json));
@@ -518,8 +543,10 @@ class SettingsProvider with ChangeNotifier {
     String packageName,
     NotificationAppSettings settings,
   ) async {
-    await SharedPreferencesAsync()
-        .setString("$settingNLAppPrefix$packageName", jsonEncode(settings));
+    await SharedPreferencesAsync().setString(
+      "$settingNLAppPrefix$packageName",
+      jsonEncode(settings),
+    );
   }
 
   Future<void> setBillsLayout(BillsLayout billsLayout) async {
@@ -528,8 +555,10 @@ class SettingsProvider with ChangeNotifier {
     }
 
     _billsLayout = billsLayout;
-    await SharedPreferencesAsync()
-        .setInt(settingBillsDefaultLayout, billsLayout.index);
+    await SharedPreferencesAsync().setInt(
+      settingBillsDefaultLayout,
+      billsLayout.index,
+    );
 
     log.finest(() => "notify SettingsProvider->billsLayout()");
     notifyListeners();
@@ -541,8 +570,10 @@ class SettingsProvider with ChangeNotifier {
     }
 
     _billsSort = billsSort;
-    await SharedPreferencesAsync()
-        .setInt(settingBillsDefaultSort, billsSort.index);
+    await SharedPreferencesAsync().setInt(
+      settingBillsDefaultSort,
+      billsSort.index,
+    );
 
     log.finest(() => "notify SettingsProvider->billsSort()");
     notifyListeners();
@@ -554,8 +585,10 @@ class SettingsProvider with ChangeNotifier {
     }
 
     _billsSortOrder = sortOrder;
-    await SharedPreferencesAsync()
-        .setInt(settingBillsDefaultSortOrder, sortOrder.index);
+    await SharedPreferencesAsync().setInt(
+      settingBillsDefaultSortOrder,
+      sortOrder.index,
+    );
 
     log.finest(() => "notify SettingsProvider->billsSortOrder()");
     notifyListeners();

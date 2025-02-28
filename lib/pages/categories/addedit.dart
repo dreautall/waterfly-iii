@@ -12,10 +12,7 @@ import 'package:waterflyiii/settings.dart';
 final Logger log = Logger("Pages.Categories.AddEdit");
 
 class CategoryAddEditDialog extends StatefulWidget {
-  const CategoryAddEditDialog({
-    super.key,
-    this.category,
-  });
+  const CategoryAddEditDialog({super.key, this.category});
 
   final CategoryRead? category;
 
@@ -47,24 +44,22 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
         .api
         .v1CategoriesIdGet(id: widget.category!.id)
         .then((Response<CategorySingle> resp) {
-      if (!resp.isSuccessful || resp.body == null) {
-        log.severe(
-          "Error fetching information",
-          resp.error,
-        );
-        if (mounted) {
-          Navigator.of(context).pop();
-        }
-      }
-      setState(() {
-        includeInSum = !context
-            .read<SettingsProvider>()
-            .categoriesSumExcluded
-            .contains(widget.category!.id);
-        notesController.text = resp.body?.data.attributes.notes ?? "";
-        loaded = true;
-      });
-    });
+          if (!resp.isSuccessful || resp.body == null) {
+            log.severe("Error fetching information", resp.error);
+            if (mounted) {
+              Navigator.of(context).pop();
+            }
+          }
+          setState(() {
+            includeInSum =
+                !context
+                    .read<SettingsProvider>()
+                    .categoriesSumExcluded
+                    .contains(widget.category!.id);
+            notesController.text = resp.body?.data.attributes.notes ?? "";
+            loaded = true;
+          });
+        });
   }
 
   @override
@@ -74,9 +69,11 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
 
     return AlertDialog(
       icon: const Icon(Icons.assignment),
-      title: Text(widget.category == null
-          ? S.of(context).categoryTitleAdd
-          : S.of(context).categoryTitleEdit),
+      title: Text(
+        widget.category == null
+            ? S.of(context).categoryTitleAdd
+            : S.of(context).categoryTitleEdit,
+      ),
       clipBehavior: Clip.hardEdge,
       actions: <Widget>[
         if (widget.category != null)
@@ -93,8 +90,8 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
 
               bool? ok = await showDialog(
                 context: context,
-                builder: (BuildContext context) =>
-                    const DeletionConfirmDialog(),
+                builder:
+                    (BuildContext context) => const DeletionConfirmDialog(),
               );
               if (!(ok ?? false)) {
                 return;
@@ -121,17 +118,19 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
             late Response<CategorySingle> resp;
             if (widget.category == null) {
               resp = await context.read<FireflyService>().api.v1CategoriesPost(
-                      body: Category(
-                    name: titleController.text,
-                    notes: notesController.text,
-                  ));
+                body: Category(
+                  name: titleController.text,
+                  notes: notesController.text,
+                ),
+              );
             } else {
               resp = await context.read<FireflyService>().api.v1CategoriesIdPut(
-                  id: widget.category!.id,
-                  body: CategoryUpdate(
-                    name: titleController.text,
-                    notes: notesController.text,
-                  ));
+                id: widget.category!.id,
+                body: CategoryUpdate(
+                  name: titleController.text,
+                  notes: notesController.text,
+                ),
+              );
             }
 
             // Check if insert/update was successful
@@ -140,22 +139,26 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
               try {
                 ValidationErrorResponse valError =
                     ValidationErrorResponse.fromJson(
-                  json.decode(resp.error.toString()),
-                );
-                error = valError.message ??
+                      json.decode(resp.error.toString()),
+                    );
+                error =
+                    valError.message ??
                     (context.mounted
                         ? S.of(context).errorUnknown
                         : "[nocontext] Unknown error.");
               } catch (_) {
-                error = context.mounted
-                    ? S.of(context).errorUnknown
-                    : "[nocontext] Unknown error.";
+                error =
+                    context.mounted
+                        ? S.of(context).errorUnknown
+                        : "[nocontext] Unknown error.";
               }
 
-              msg.showSnackBar(SnackBar(
-                content: Text(error),
-                behavior: SnackBarBehavior.floating,
-              ));
+              msg.showSnackBar(
+                SnackBar(
+                  content: Text(error),
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
               return;
             }
 
@@ -165,9 +168,9 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
                     .read<SettingsProvider>()
                     .categoryRemoveSumExcluded(widget.category!.id);
               } else {
-                await context
-                    .read<SettingsProvider>()
-                    .categoryAddSumExcluded(widget.category!.id);
+                await context.read<SettingsProvider>().categoryAddSumExcluded(
+                  widget.category!.id,
+                );
               }
             }
             if (context.mounted) {
@@ -215,13 +218,14 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
                   title: Text(S.of(context).categoryFormLabelIncludeInSum),
                   value: includeInSum,
                   isThreeLine: false,
-                  onChanged: loaded != true
-                      ? null
-                      : (bool value) => setState(() {
+                  onChanged:
+                      loaded != true
+                          ? null
+                          : (bool value) => setState(() {
                             includeInSum = value;
                           }),
                 ),
-              )
+              ),
           ],
         ),
       ),
@@ -230,9 +234,7 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
 }
 
 class DeletionConfirmDialog extends StatelessWidget {
-  const DeletionConfirmDialog({
-    super.key,
-  });
+  const DeletionConfirmDialog({super.key});
 
   @override
   Widget build(BuildContext context) {

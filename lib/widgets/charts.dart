@@ -1,14 +1,12 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
-
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
 // ignore: implementation_imports
-import 'package:community_charts_flutter/src/text_style.dart' as charts_style;
-// ignore: implementation_imports
 import 'package:community_charts_flutter/src/text_element.dart' as charts_text;
-
+// ignore: implementation_imports
+import 'package:community_charts_flutter/src/text_style.dart' as charts_style;
+import 'package:flutter/material.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 class TimeSeriesChart {
@@ -25,10 +23,7 @@ extension ConvertChartDataSet on ChartDataSet {
     final Map<String, dynamic> e = entries! as Map<String, dynamic>;
     e.forEach(
       (String key, dynamic value) => data.add(
-        TimeSeriesChart(
-          DateTime.parse(key),
-          double.tryParse(value) ?? 0,
-        ),
+        TimeSeriesChart(DateTime.parse(key), double.tryParse(value) ?? 0),
       ),
     );
     return data;
@@ -52,8 +47,9 @@ final List<charts.Color> possibleChartColors = <charts.Color>[
 ];
 
 final List<Color> possibleChartColorsDart = <Color>[
-  ...possibleChartColors
-      .map((charts.Color c) => charts.ColorUtil.toDartColor(c))
+  ...possibleChartColors.map(
+    (charts.Color c) => charts.ColorUtil.toDartColor(c),
+  ),
 ];
 
 class TextSymbolRenderer extends charts.CircleSymbolRenderer {
@@ -70,18 +66,24 @@ class TextSymbolRenderer extends charts.CircleSymbolRenderer {
   final EdgeInsets padding;
 
   @override
-  void paint(charts.ChartCanvas canvas, Rectangle<num> bounds,
-      {List<int>? dashPattern,
-      charts.Color? fillColor,
-      charts.FillPatternType? fillPattern,
-      charts.Color? strokeColor,
-      double? strokeWidthPx}) {
-    super.paint(canvas, bounds,
-        dashPattern: dashPattern,
-        fillColor: fillColor,
-        fillPattern: fillPattern,
-        strokeColor: strokeColor,
-        strokeWidthPx: strokeWidthPx);
+  void paint(
+    charts.ChartCanvas canvas,
+    Rectangle<num> bounds, {
+    List<int>? dashPattern,
+    charts.Color? fillColor,
+    charts.FillPatternType? fillPattern,
+    charts.Color? strokeColor,
+    double? strokeWidthPx,
+  }) {
+    super.paint(
+      canvas,
+      bounds,
+      dashPattern: dashPattern,
+      fillColor: fillColor,
+      fillPattern: fillPattern,
+      strokeColor: strokeColor,
+      strokeWidthPx: strokeWidthPx,
+    );
 
     charts_style.TextStyle textStyle = charts_style.TextStyle();
     textStyle.color = charts.ColorUtil.fromDartColor(
@@ -98,7 +100,8 @@ class TextSymbolRenderer extends charts.CircleSymbolRenderer {
     double height = textElement.measurement.verticalSliceWidth;
 
     double centerX = bounds.left + bounds.width / 2;
-    double centerY = bounds.top +
+    double centerY =
+        bounds.top +
         bounds.height / 2 -
         marginBottom -
         (padding.top + padding.bottom);

@@ -37,34 +37,32 @@ class SHu extends S {
 
   @override
   String accountsLiabilitiesInterest(double interest, String period) {
-    String _temp0 = intl.Intl.selectLogic(
-      period,
-      {
-        'weekly': 'hét',
-        'monthly': 'hónap',
-        'quarterly': 'negyedév',
-        'halfyear': 'félév',
-        'yearly': 'év',
-        'other': 'ismeretlen',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(period, {
+      'weekly': 'hét',
+      'monthly': 'hónap',
+      'quarterly': 'negyedév',
+      'halfyear': 'félév',
+      'yearly': 'év',
+      'other': 'ismeretlen',
+    });
     return '$interest% kamat per $_temp0';
   }
 
   @override
   String billsAmountAndFrequency(
-      String minValue, String maxvalue, String frequency, num skip) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'Heti',
-        'monthly': 'Havi',
-        'quarterly': 'Negyedéves',
-        'halfyear': 'Féléves',
-        'yearly': 'Éves',
-        'other': 'Ismeretlen',
-      },
-    );
+    String minValue,
+    String maxvalue,
+    String frequency,
+    num skip,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'Heti',
+      'monthly': 'Havi',
+      'quarterly': 'Negyedéves',
+      'halfyear': 'Féléves',
+      'yearly': 'Éves',
+      'other': 'Ismeretlen',
+    });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
@@ -85,18 +83,18 @@ class SHu extends S {
 
   @override
   String billsExactAmountAndFrequency(
-      String value, String frequency, num skip) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'Heti',
-        'monthly': 'Havi',
-        'quarterly': 'Negyedéves',
-        'halfyear': 'Féléves',
-        'yearly': 'Éves',
-        'other': 'Ismeretlen',
-      },
-    );
+    String value,
+    String frequency,
+    num skip,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'Heti',
+      'monthly': 'Havi',
+      'quarterly': 'Negyedéves',
+      'halfyear': 'Féléves',
+      'yearly': 'Éves',
+      'other': 'Ismeretlen',
+    });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
@@ -116,33 +114,27 @@ class SHu extends S {
 
   @override
   String billsFrequency(String frequency) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'Heti',
-        'monthly': 'Havi',
-        'quarterly': 'Negyedéves',
-        'halfyear': 'Féléves',
-        'yearly': 'Éves',
-        'other': 'Ismeretlen',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'Heti',
+      'monthly': 'Havi',
+      'quarterly': 'Negyedéves',
+      'halfyear': 'Féléves',
+      'yearly': 'Éves',
+      'other': 'Ismeretlen',
+    });
     return '$_temp0';
   }
 
   @override
   String billsFrequencySkip(String frequency, num skip) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'Heti',
-        'monthly': 'Havi',
-        'quarterly': 'Negyedéves',
-        'halfyear': 'Féléves',
-        'yearly': 'Éves',
-        'other': 'Ismeretlen',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'Heti',
+      'monthly': 'Havi',
+      'quarterly': 'Negyedéves',
+      'halfyear': 'Féléves',
+      'yearly': 'Éves',
+      'other': 'Ismeretlen',
+    });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
@@ -377,17 +369,14 @@ class SHu extends S {
 
   @override
   String homeMainBillsInterval(String period) {
-    String _temp0 = intl.Intl.selectLogic(
-      period,
-      {
-        'weekly': 'heti',
-        'monthly': 'havi',
-        'quarterly': 'negyedéves',
-        'halfyear': 'féléves',
-        'yearly': 'éves',
-        'other': 'ismeretlen',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(period, {
+      'weekly': 'heti',
+      'monthly': 'havi',
+      'quarterly': 'negyedéves',
+      'halfyear': 'féléves',
+      'yearly': 'éves',
+      'other': 'ismeretlen',
+    });
     return ' ($_temp0)';
   }
 
@@ -416,20 +405,14 @@ class SHu extends S {
 
   @override
   String homeMainBudgetSum(String current, String status, String available) {
-    String _temp0 = intl.Intl.selectLogic(
-      status,
-      {
-        'over': 'többletköltség a',
-        'other': 'maradt a',
-      },
-    );
-    String _temp1 = intl.Intl.selectLogic(
-      status,
-      {
-        'over': 'limithez képest',
-        'other': 'limitből',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(status, {
+      'over': 'többletköltség a',
+      'other': 'maradt a',
+    });
+    String _temp1 = intl.Intl.selectLogic(status, {
+      'over': 'limithez képest',
+      'other': 'limitből',
+    });
     return '$current $_temp0 $available $_temp1';
   }
 
@@ -619,9 +602,11 @@ class SHu extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat =
-        intl.NumberFormat.decimalPercentPattern(
-            locale: localeName, decimalDigits: 0);
+    final intl.NumberFormat numNumberFormat = intl
+        .NumberFormat.decimalPercentPattern(
+      locale: localeName,
+      decimalDigits: 0,
+    );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -629,9 +614,11 @@ class SHu extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat =
-        intl.NumberFormat.decimalPercentPattern(
-            locale: localeName, decimalDigits: 0);
+    final intl.NumberFormat percNumberFormat = intl
+        .NumberFormat.decimalPercentPattern(
+      locale: localeName,
+      decimalDigits: 0,
+    );
     final String percString = percNumberFormat.format(perc);
 
     return '$of $percString-a';
@@ -752,14 +739,11 @@ class SHu extends S {
 
   @override
   String settingsThemeValue(String theme) {
-    String _temp0 = intl.Intl.selectLogic(
-      theme,
-      {
-        'dark': 'Sötét',
-        'light': 'Világos',
-        'other': 'Alapértelmezett',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(theme, {
+      'dark': 'Sötét',
+      'light': 'Világos',
+      'other': 'Alapértelmezett',
+    });
     return '$_temp0';
   }
 

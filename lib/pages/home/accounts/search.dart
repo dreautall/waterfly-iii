@@ -10,10 +10,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/home/accounts/row.dart';
 
 class AccountSearch extends StatefulWidget {
-  const AccountSearch({
-    super.key,
-    required this.type,
-  });
+  const AccountSearch({super.key, required this.type});
 
   final AccountTypeFilter type;
 
@@ -32,7 +29,7 @@ class _AccountSearchState extends State<AccountSearch> {
     AccountTypeFilter.asset,
     AccountTypeFilter.expense,
     AccountTypeFilter.revenue,
-    AccountTypeFilter.liabilities
+    AccountTypeFilter.liabilities,
   ];
 
   bool _searched = false;
@@ -47,7 +44,8 @@ class _AccountSearchState extends State<AccountSearch> {
 
       final int pageKey = (_pagingState.keys?.last ?? 0) + 1;
       log.finest(
-          "Getting page $pageKey (${_pagingState.pages?.length} pages loaded)");
+        "Getting page $pageKey (${_pagingState.pages?.length} pages loaded)",
+      );
 
       late Response<AccountArray> respAccounts;
       if (_searchController.text.isNotEmpty) {
@@ -70,14 +68,8 @@ class _AccountSearchState extends State<AccountSearch> {
       if (mounted) {
         setState(() {
           _pagingState = _pagingState.copyWith(
-            pages: <List<AccountRead>>[
-              ...?_pagingState.pages,
-              accountList,
-            ],
-            keys: <int>[
-              ...?_pagingState.keys,
-              pageKey,
-            ],
+            pages: <List<AccountRead>>[...?_pagingState.pages, accountList],
+            keys: <int>[...?_pagingState.keys, pageKey],
             hasNextPage: !isLastPage,
             isLoading: false,
             error: null,
@@ -88,10 +80,7 @@ class _AccountSearchState extends State<AccountSearch> {
       log.severe("_fetchPage()", e, stackTrace);
       if (mounted) {
         setState(() {
-          _pagingState = _pagingState.copyWith(
-            error: e,
-            isLoading: false,
-          );
+          _pagingState = _pagingState.copyWith(error: e, isLoading: false);
         });
       }
     }
@@ -108,40 +97,42 @@ class _AccountSearchState extends State<AccountSearch> {
           alignment: Alignment.center,
           child: SizedBox(
             height: 40,
-            child: currentFilter == accType
-                ? FilterChip(
-                    label: Text(currentFilter!.friendlyName(context)),
-                    onSelected: (bool selected) {
-                      log.finest(
-                          () => "current chip $currentFilter now $selected");
-                      setState(() {
-                        currentFilter = null;
-                        if (_searchController.text.isEmpty) {
-                          _searched = false;
-                          _searchFocusNode.requestFocus();
-                        } else {
-                          _pagingState = _pagingState.reset();
-                        }
-                      });
-                    },
-                    selected: true,
-                    visualDensity: const VisualDensity(vertical: -2),
-                  )
-                : currentFilter == null
-                    ? ActionChip(
-                        label: Text(accType.friendlyName(context)),
-                        onPressed: () {
-                          log.finest(() => "chip $accType selected");
-                          setState(() {
-                            currentFilter = accType;
-                            _searched = true;
+            child:
+                currentFilter == accType
+                    ? FilterChip(
+                      label: Text(currentFilter!.friendlyName(context)),
+                      onSelected: (bool selected) {
+                        log.finest(
+                          () => "current chip $currentFilter now $selected",
+                        );
+                        setState(() {
+                          currentFilter = null;
+                          if (_searchController.text.isEmpty) {
+                            _searched = false;
+                            _searchFocusNode.requestFocus();
+                          } else {
                             _pagingState = _pagingState.reset();
-                          });
-                          FocusScope.of(context).unfocus();
-                        },
-                        avatar: Icon(accType.icon()),
-                        visualDensity: const VisualDensity(vertical: -2),
-                      )
+                          }
+                        });
+                      },
+                      selected: true,
+                      visualDensity: const VisualDensity(vertical: -2),
+                    )
+                    : currentFilter == null
+                    ? ActionChip(
+                      label: Text(accType.friendlyName(context)),
+                      onPressed: () {
+                        log.finest(() => "chip $accType selected");
+                        setState(() {
+                          currentFilter = accType;
+                          _searched = true;
+                          _pagingState = _pagingState.reset();
+                        });
+                        FocusScope.of(context).unfocus();
+                      },
+                      avatar: Icon(accType.icon()),
+                      visualDensity: const VisualDensity(vertical: -2),
+                    )
                     : const SizedBox.shrink(),
           ),
         ),
@@ -162,26 +153,29 @@ class _AccountSearchState extends State<AccountSearch> {
           decoration: InputDecoration(
             hintText: MaterialLocalizations.of(context).searchFieldLabel,
             border: InputBorder.none,
-            suffixIcon: _searchController.text.isNotEmpty
-                ? IconButton(
-                    icon: const Icon(Icons.clear),
-                    onPressed: () {
-                      _searchController.clear();
-                      _searchFocusNode.requestFocus();
-                      setState(() {
-                        _searched = false;
-                      });
-                    })
-                : null,
+            suffixIcon:
+                _searchController.text.isNotEmpty
+                    ? IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        _searchController.clear();
+                        _searchFocusNode.requestFocus();
+                        setState(() {
+                          _searched = false;
+                        });
+                      },
+                    )
+                    : null,
           ),
           autofocus: true,
           onChanged: (_) => setState(() {}),
-          onSubmitted: (_) => setState(() {
-            if (!_searched) {
-              _searched = true;
-              _pagingState = _pagingState.reset();
-            }
-          }),
+          onSubmitted:
+              (_) => setState(() {
+                if (!_searched) {
+                  _searched = true;
+                  _pagingState = _pagingState.reset();
+                }
+              }),
         ),
       ),
       body: Column(
@@ -195,27 +189,31 @@ class _AccountSearchState extends State<AccountSearch> {
             ),
           ),
           Expanded(
-            child: _searched
-                ? PagedListView<int, AccountRead>(
-                    state: _pagingState,
-                    fetchNextPage: _fetchPage,
-                    builderDelegate: PagedChildBuilderDelegate<AccountRead>(
-                      animateTransitions: true,
-                      transitionDuration: animDurationStandard,
-                      invisibleItemsThreshold: 10,
-                      itemBuilder:
-                          (BuildContext context, AccountRead item, int index) =>
-                              accountRowBuilder(
-                        context,
-                        item,
-                        index,
-                        () => setState(() {
-                          _pagingState = _pagingState.reset();
-                        }),
+            child:
+                _searched
+                    ? PagedListView<int, AccountRead>(
+                      state: _pagingState,
+                      fetchNextPage: _fetchPage,
+                      builderDelegate: PagedChildBuilderDelegate<AccountRead>(
+                        animateTransitions: true,
+                        transitionDuration: animDurationStandard,
+                        invisibleItemsThreshold: 10,
+                        itemBuilder:
+                            (
+                              BuildContext context,
+                              AccountRead item,
+                              int index,
+                            ) => accountRowBuilder(
+                              context,
+                              item,
+                              index,
+                              () => setState(() {
+                                _pagingState = _pagingState.reset();
+                              }),
+                            ),
                       ),
-                    ),
-                  )
-                : const SizedBox.expand(),
+                    )
+                    : const SizedBox.expand(),
           ),
         ],
       ),

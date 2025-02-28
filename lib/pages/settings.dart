@@ -42,9 +42,7 @@ class SettingsPageState extends State<SettingsPage>
         ListTile(
           title: Text(S.of(context).settingsLanguage),
           subtitle: Text(S.of(context).localeName),
-          leading: const CircleAvatar(
-            child: Icon(Icons.language),
-          ),
+          leading: const CircleAvatar(child: Icon(Icons.language)),
           onTap: () {
             showDialog<Locale?>(
               context: context,
@@ -55,23 +53,23 @@ class SettingsPageState extends State<SettingsPage>
               }
               await settings.setLocale(locale);
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                const QuickActions().setShortcutItems(
-                  <ShortcutItem>[
-                    ShortcutItem(
-                      type: "action_transaction_add",
-                      localizedTitle: S.of(context).transactionTitleAdd,
-                      icon: "action_icon_add",
-                    ),
-                  ],
-                );
+                const QuickActions().setShortcutItems(<ShortcutItem>[
+                  ShortcutItem(
+                    type: "action_transaction_add",
+                    localizedTitle: S.of(context).transactionTitleAdd,
+                    icon: "action_icon_add",
+                  ),
+                ]);
               });
             });
           },
         ),
         FutureBuilder<CorePalette?>(
           future: DynamicColorPlugin.getCorePalette(),
-          builder:
-              (BuildContext context, AsyncSnapshot<CorePalette?> snapshot) {
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<CorePalette?> snapshot,
+          ) {
             String dynamicColor = "";
             bool dynamicColorAvailable = false;
             if (snapshot.connectionState == ConnectionState.done &&
@@ -88,15 +86,14 @@ class SettingsPageState extends State<SettingsPage>
               subtitle: Text(
                 "${S.of(context).settingsThemeValue(context.select((SettingsProvider s) => s.theme).toString().split('.').last)}$dynamicColor",
               ),
-              leading: const CircleAvatar(
-                child: Icon(Icons.format_paint),
-              ),
+              leading: const CircleAvatar(child: Icon(Icons.format_paint)),
               onTap: () {
                 showDialog<ThemeMode?>(
                   context: context,
-                  builder: (BuildContext context) => ThemeDialog(
-                    dynamicColorAvailable: dynamicColorAvailable,
-                  ),
+                  builder:
+                      (BuildContext context) => ThemeDialog(
+                        dynamicColorAvailable: dynamicColorAvailable,
+                      ),
                 ).then((ThemeMode? theme) {
                   if (theme == null) {
                     return;
@@ -119,10 +116,9 @@ class SettingsPageState extends State<SettingsPage>
             ),
           ),
           onChanged: (bool value) async {
-            await context
-                .read<FireflyService>()
-                .tzHandler
-                .setUseServerTime(value);
+            await context.read<FireflyService>().tzHandler.setUseServerTime(
+              value,
+            );
             settings.useServerTime = value;
           },
         ),
@@ -142,7 +138,8 @@ class SettingsPageState extends State<SettingsPage>
             final S l10n = S.of(context);
             if (value == true) {
               final LocalAuthentication auth = LocalAuthentication();
-              final bool canAuth = await auth.isDeviceSupported() ||
+              final bool canAuth =
+                  await auth.isDeviceSupported() ||
                   await auth.canCheckBiometrics;
               if (!canAuth) {
                 log.warning("no auth method supported");
@@ -164,8 +161,10 @@ class SettingsPageState extends State<SettingsPage>
         const Divider(),
         FutureBuilder<NotificationListenerStatus>(
           future: nlStatus(),
-          builder: (BuildContext context,
-              AsyncSnapshot<NotificationListenerStatus> snapshot) {
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<NotificationListenerStatus> snapshot,
+          ) {
             final S l10n = S.of(context);
 
             late String subtitle;
@@ -180,8 +179,11 @@ class SettingsPageState extends State<SettingsPage>
                 subtitle = l10n.settingsNLServiceRunning;
               }
             } else if (snapshot.hasError) {
-              log.severe("error getting nlStatus", snapshot.error,
-                  snapshot.stackTrace);
+              log.severe(
+                "error getting nlStatus",
+                snapshot.error,
+                snapshot.stackTrace,
+              );
               subtitle = S
                   .of(context)
                   .settingsNLServiceCheckingError(snapshot.error.toString());
@@ -189,23 +191,21 @@ class SettingsPageState extends State<SettingsPage>
               subtitle = S.of(context).settingsNLServiceChecking;
             }
             return OpenContainer(
-              openBuilder: (BuildContext context, Function closedContainer) =>
-                  const SettingsNotifications(),
+              openBuilder:
+                  (BuildContext context, Function closedContainer) =>
+                      const SettingsNotifications(),
               openColor: Theme.of(context).cardColor,
               closedColor: Theme.of(context).cardColor,
               closedElevation: 0,
-              closedBuilder: (BuildContext context, Function openContainer) =>
-                  ListTile(
-                title: Text(S.of(context).settingsNotificationListener),
-                subtitle: Text(
-                  subtitle,
-                  maxLines: 2,
-                ),
-                leading: const CircleAvatar(
-                  child: Icon(Icons.notifications),
-                ),
-                onTap: () => openContainer(),
-              ),
+              closedBuilder:
+                  (BuildContext context, Function openContainer) => ListTile(
+                    title: Text(S.of(context).settingsNotificationListener),
+                    subtitle: Text(subtitle, maxLines: 2),
+                    leading: const CircleAvatar(
+                      child: Icon(Icons.notifications),
+                    ),
+                    onTap: () => openContainer(),
+                  ),
               onClosed: (_) => setState(() {}),
             );
           },
@@ -214,12 +214,11 @@ class SettingsPageState extends State<SettingsPage>
         ListTile(
           title: Text(S.of(context).settingsFAQ),
           subtitle: Text(S.of(context).settingsFAQHelp),
-          leading: const CircleAvatar(
-            child: Icon(Icons.question_answer),
-          ),
+          leading: const CircleAvatar(child: Icon(Icons.question_answer)),
           onTap: () async {
             final Uri uri = Uri.parse(
-                "https://github.com/dreautall/waterfly-iii/blob/master/FAQ.md");
+              "https://github.com/dreautall/waterfly-iii/blob/master/FAQ.md",
+            );
             if (await canLaunchUrl(uri)) {
               await launchUrl(uri);
             } else {
@@ -232,18 +231,19 @@ class SettingsPageState extends State<SettingsPage>
           builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
             return ListTile(
               title: Text(S.of(context).settingsVersion),
-              subtitle: Text((snapshot.data != null)
-                  ? "${snapshot.data!.appName}, ${snapshot.data!.version}+${snapshot.data!.buildNumber}"
-                  : S.of(context).settingsVersionChecking),
+              subtitle: Text(
+                (snapshot.data != null)
+                    ? "${snapshot.data!.appName}, ${snapshot.data!.version}+${snapshot.data!.buildNumber}"
+                    : S.of(context).settingsVersionChecking,
+              ),
               leading: const CircleAvatar(
-                child: Icon(
-                  Icons.info_outline_rounded,
-                ),
+                child: Icon(Icons.info_outline_rounded),
               ),
-              onTap: () => showDialog(
-                context: context,
-                builder: (BuildContext context) => const DebugDialog(),
-              ),
+              onTap:
+                  () => showDialog(
+                    context: context,
+                    builder: (BuildContext context) => const DebugDialog(),
+                  ),
             );
           },
         ),
@@ -253,9 +253,7 @@ class SettingsPageState extends State<SettingsPage>
 }
 
 class LanguageDialog extends StatelessWidget {
-  const LanguageDialog({
-    super.key,
-  });
+  const LanguageDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -278,10 +276,7 @@ class LanguageDialog extends StatelessWidget {
 }
 
 class ThemeDialog extends StatelessWidget {
-  const ThemeDialog({
-    super.key,
-    required this.dynamicColorAvailable,
-  });
+  const ThemeDialog({super.key, required this.dynamicColorAvailable});
 
   final bool dynamicColorAvailable;
 
@@ -293,11 +288,11 @@ class ThemeDialog extends StatelessWidget {
       children: <Widget>[
         dynamicColorAvailable
             ? SwitchListTile(
-                title: Text(S.of(context).settingsThemeDynamicColors),
-                value: context.select((SettingsProvider s) => s.dynamicColors),
-                isThreeLine: false,
-                onChanged: (bool value) => settings.dynamicColors = value,
-              )
+              title: Text(S.of(context).settingsThemeDynamicColors),
+              value: context.select((SettingsProvider s) => s.dynamicColors),
+              isThreeLine: false,
+              onChanged: (bool value) => settings.dynamicColors = value,
+            )
             : const SizedBox.shrink(),
         ...ThemeMode.values.map(
           (ThemeMode theme) => RadioListTile<ThemeMode>(

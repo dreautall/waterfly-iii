@@ -27,7 +27,8 @@ class _DashboardDialogState extends State<DashboardDialog> {
     super.initState();
 
     cards = List<DashboardCards>.from(
-        context.read<SettingsProvider>().dashboardOrder);
+      context.read<SettingsProvider>().dashboardOrder,
+    );
 
     // Remove dupes, that would throw errors later!
     cards = cards.toSet().toList();
@@ -57,7 +58,10 @@ class _DashboardDialogState extends State<DashboardDialog> {
     ];
 
     Widget proxyDecorator(
-        Widget child, int index, Animation<double> animation) {
+      Widget child,
+      int index,
+      Animation<double> animation,
+    ) {
       return AnimatedBuilder(
         animation: animation,
         builder: (BuildContext context, Widget? child) {
@@ -68,10 +72,7 @@ class _DashboardDialogState extends State<DashboardDialog> {
             scale: scale,
             // Create a Card based on the color and the content of the dragged one
             // and set its elevation to the animated value.
-            child: Card(
-              elevation: elevation,
-              child: cardWidgets[index],
-            ),
+            child: Card(elevation: elevation, child: cardWidgets[index]),
           );
         },
         child: child,
@@ -85,11 +86,12 @@ class _DashboardDialogState extends State<DashboardDialog> {
         OutlinedButton(
           child: Text(S.of(context).generalReset),
           onPressed: () {
-            context
-                .read<SettingsProvider>()
-                .setDashboardOrder(DashboardCards.values);
+            context.read<SettingsProvider>().setDashboardOrder(
+              DashboardCards.values,
+            );
             final List<DashboardCards> hidden = List<DashboardCards>.from(
-                context.read<SettingsProvider>().dashboardHidden);
+              context.read<SettingsProvider>().dashboardHidden,
+            );
             for (DashboardCards e in hidden) {
               context.read<SettingsProvider>().dashboardShowCard(e);
             }
@@ -147,8 +149,10 @@ class DashboardCard extends StatelessWidget {
       DashboardCards.bills => S.of(context).homeMainBillsTitle,
     };
 
-    final bool hidden =
-        context.watch<SettingsProvider>().dashboardHidden.contains(card);
+    final bool hidden = context
+        .watch<SettingsProvider>()
+        .dashboardHidden
+        .contains(card);
 
     return Card(
       child: SizedBox(
@@ -158,9 +162,15 @@ class DashboardCard extends StatelessWidget {
             icon: const Icon(Icons.visibility),
             selectedIcon: Icon(Icons.visibility_off_outlined),
             isSelected: hidden,
-            onPressed: () async => hidden
-                ? context.read<SettingsProvider>().dashboardShowCard(card)
-                : context.read<SettingsProvider>().dashboardHideCard(card),
+            onPressed:
+                () async =>
+                    hidden
+                        ? context.read<SettingsProvider>().dashboardShowCard(
+                          card,
+                        )
+                        : context.read<SettingsProvider>().dashboardHideCard(
+                          card,
+                        ),
           ),
           trailing: ReorderableDragStartListener(
             index: index,

@@ -43,13 +43,14 @@ final class _$FireflyIiiV2 extends FireflyIiiV2 {
       parameters: $params,
       headers: $headers,
     );
-    return client
-        .send<List<AutocompleteAccountV2>, AutocompleteAccountV2>($request);
+    return client.send<List<AutocompleteAccountV2>, AutocompleteAccountV2>(
+      $request,
+    );
   }
 
   @override
   Future<Response<List<AutocompleteTD>>>
-      _v2AutocompleteTransactionDescriptionsGet({
+  _v2AutocompleteTransactionDescriptionsGet({
     String? xTraceId,
     String? query,
     int? limit,

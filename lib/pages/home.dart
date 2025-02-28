@@ -85,8 +85,9 @@ class HomePageState extends State<HomePage>
       log.finer(() => "_handleTabChange(${_tabController.index})");
       context.read<NavPageElements>().fab =
           (_tabController.index < 2) ? _newTransactionFab : null;
-      context.read<NavPageElements>().appBarActions =
-          _actions.get(tabPages[_tabController.index].key ?? const Key(''));
+      context.read<NavPageElements>().appBarActions = _actions.get(
+        tabPages[_tabController.index].key ?? const Key(''),
+      );
     }
   }
 
@@ -104,10 +105,7 @@ class HomePageState extends State<HomePage>
     log.finest(() => "build(tab: ${_tabController.index})");
     return ChangeNotifierProvider<PageActions>.value(
       value: _actions,
-      child: TabBarView(
-        controller: _tabController,
-        children: tabPages,
-      ),
+      child: TabBarView(controller: _tabController, children: tabPages),
     );
   }
 }

@@ -57,81 +57,81 @@ class _HomeTransactionsState extends State<HomeTransactions>
     // Only add filter button when in own tab
     if (widget.filters == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        context.read<PageActions>().set(
-          widget.key!,
-          <Widget>[
-            ValueListenableBuilder<bool>(
-              valueListenable: _tagsHidden,
-              builder: (BuildContext context, bool value, _) => IconButton(
-                icon: const Icon(Icons.bookmarks_outlined),
-                selectedIcon: Icon(
-                  Icons.bookmarks,
-                  color: Theme.of(context).colorScheme.primary,
+        context.read<PageActions>().set(widget.key!, <Widget>[
+          ValueListenableBuilder<bool>(
+            valueListenable: _tagsHidden,
+            builder:
+                (BuildContext context, bool value, _) => IconButton(
+                  icon: const Icon(Icons.bookmarks_outlined),
+                  selectedIcon: Icon(
+                    Icons.bookmarks,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  isSelected: !value,
+                  tooltip: S.of(context).homeTransactionsSettingsShowTags,
+                  onPressed: () async {
+                    final SettingsProvider settings =
+                        context.read<SettingsProvider>();
+                    settings.hideTags = !settings.hideTags;
+                    _tagsHidden.value = settings.hideTags;
+                  },
                 ),
-                isSelected: !value,
-                tooltip: S.of(context).homeTransactionsSettingsShowTags,
-                onPressed: () async {
-                  final SettingsProvider settings =
-                      context.read<SettingsProvider>();
-                  settings.hideTags = !settings.hideTags;
-                  _tagsHidden.value = settings.hideTags;
-                },
-              ),
-            ),
-            ChangeNotifierProvider<TransactionFilters>.value(
-              value: _filters,
-              builder: (BuildContext context, _) => IconButton(
-                icon: const Icon(Icons.filter_alt_outlined),
-                selectedIcon: Icon(
-                  Icons.filter_alt,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                isSelected: context.watch<TransactionFilters>().hasFilters,
-                tooltip: S.of(context).homeTransactionsActionFilter,
-                onPressed: () async {
-                  TransactionFilters oldFilters = _filters.copyWith();
-                  final SettingsProvider settings =
-                      context.read<SettingsProvider>();
-                  final bool oldShowFutureTXs = settings.showFutureTXs;
-                  bool? ok = await showDialog<bool>(
-                    context: context,
-                    builder: (BuildContext context) => FilterDialog(
-                      // passed by reference -> auto updated
-                      filters: _filters,
-                    ),
-                  );
-                  if (ok == null || !ok) {
-                    if (settings.showFutureTXs != oldShowFutureTXs) {
-                      settings.showFutureTXs = oldShowFutureTXs;
-                      setState(() {
-                        _pagingState = _pagingState.reset();
-                      });
-                    }
-                    _filters.account = oldFilters.account;
-                    _filters.budget = oldFilters.budget;
-                    _filters.category = oldFilters.category;
-                    _filters.currency = oldFilters.currency;
-                    _filters.text = oldFilters.text;
-                    _filters.bill = oldFilters.bill;
-                    _filters.tags = oldFilters.tags;
+          ),
+          ChangeNotifierProvider<TransactionFilters>.value(
+            value: _filters,
+            builder:
+                (BuildContext context, _) => IconButton(
+                  icon: const Icon(Icons.filter_alt_outlined),
+                  selectedIcon: Icon(
+                    Icons.filter_alt,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  isSelected: context.watch<TransactionFilters>().hasFilters,
+                  tooltip: S.of(context).homeTransactionsActionFilter,
+                  onPressed: () async {
+                    TransactionFilters oldFilters = _filters.copyWith();
+                    final SettingsProvider settings =
+                        context.read<SettingsProvider>();
+                    final bool oldShowFutureTXs = settings.showFutureTXs;
+                    bool? ok = await showDialog<bool>(
+                      context: context,
+                      builder:
+                          (BuildContext context) => FilterDialog(
+                            // passed by reference -> auto updated
+                            filters: _filters,
+                          ),
+                    );
+                    if (ok == null || !ok) {
+                      if (settings.showFutureTXs != oldShowFutureTXs) {
+                        settings.showFutureTXs = oldShowFutureTXs;
+                        setState(() {
+                          _pagingState = _pagingState.reset();
+                        });
+                      }
+                      _filters.account = oldFilters.account;
+                      _filters.budget = oldFilters.budget;
+                      _filters.category = oldFilters.category;
+                      _filters.currency = oldFilters.currency;
+                      _filters.text = oldFilters.text;
+                      _filters.bill = oldFilters.bill;
+                      _filters.tags = oldFilters.tags;
 
-                    return;
-                  }
-                  if (oldFilters == _filters &&
-                      settings.showFutureTXs == oldShowFutureTXs) {
-                    return;
-                  }
-                  _filters.updateFilters();
-                  _rowsWithDate = <int>[];
-                  _lastDate = null;
-                  setState(() {
-                    _pagingState = _pagingState.reset();
-                  });
-                },
-              ),
-            ),
-          ],
-        );
+                      return;
+                    }
+                    if (oldFilters == _filters &&
+                        settings.showFutureTXs == oldShowFutureTXs) {
+                      return;
+                    }
+                    _filters.updateFilters();
+                    _rowsWithDate = <int>[];
+                    _lastDate = null;
+                    setState(() {
+                      _pagingState = _pagingState.reset();
+                    });
+                  },
+                ),
+          ),
+        ]);
       });
     }
 
@@ -162,10 +162,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     }
 
     setState(() {
-      _pagingState = _pagingState.copyWith(
-        isLoading: true,
-        error: null,
-      );
+      _pagingState = _pagingState.copyWith(isLoading: true, error: null);
     });
 
     try {
@@ -173,7 +170,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
       final int pageKey = (_pagingState.keys?.last ?? 0) + 1;
       log.finest(
-          "Getting page $pageKey (${_pagingState.pages?.length} pages loaded)");
+        "Getting page $pageKey (${_pagingState.pages?.length} pages loaded)",
+      );
 
       if (widget.filters != null) {
         _filters.account = widget.filters!.account;
@@ -193,9 +191,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
           id: _filters.account!.id,
           page: pageKey,
           limit: _numberOfPostsPerRequest,
-          end: context.read<SettingsProvider>().showFutureTXs
-              ? null
-              : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
+          end:
+              context.read<SettingsProvider>().showFutureTXs
+                  ? null
+                  : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
           start:
               (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
                   ? null
@@ -240,17 +239,15 @@ class _HomeTransactionsState extends State<HomeTransactions>
           query = "date_before:today $query ";
         }
         log.fine(() => "Search query: $query");
-        transactionList = await stock.getSearch(
-          query: query,
-          page: pageKey,
-        );
+        transactionList = await stock.getSearch(query: query, page: pageKey);
       } else {
         transactionList = await stock.get(
           page: pageKey,
           limit: _numberOfPostsPerRequest,
-          end: context.read<SettingsProvider>().showFutureTXs
-              ? null
-              : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
+          end:
+              context.read<SettingsProvider>().showFutureTXs
+                  ? null
+                  : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
           start:
               (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
                   ? null
@@ -267,10 +264,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
               ...?_pagingState.pages,
               transactionList,
             ],
-            keys: <int>[
-              ...?_pagingState.keys,
-              pageKey,
-            ],
+            keys: <int>[...?_pagingState.keys, pageKey],
             hasNextPage: !isLastPage,
             isLoading: false,
             error: null,
@@ -281,10 +275,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       log.severe("_fetchPage()", e, stackTrace);
       if (mounted) {
         setState(() {
-          _pagingState = _pagingState.copyWith(
-            error: e,
-            isLoading: false,
-          );
+          _pagingState = _pagingState.copyWith(error: e, isLoading: false);
         });
       }
     }
@@ -299,14 +290,15 @@ class _HomeTransactionsState extends State<HomeTransactions>
     super.build(context);
 
     return RefreshIndicator(
-      onRefresh: () => Future<void>.sync(() {
-        _rowsWithDate = <int>[];
-        _lastDate = null;
-        context.read<FireflyService>().transStock!.clear();
-        setState(() {
-          _pagingState = _pagingState.reset();
-        });
-      }),
+      onRefresh:
+          () => Future<void>.sync(() {
+            _rowsWithDate = <int>[];
+            _lastDate = null;
+            context.read<FireflyService>().transStock!.clear();
+            setState(() {
+              _pagingState = _pagingState.reset();
+            });
+          }),
       child: PagedListView<int, TransactionRead>(
         state: _pagingState,
         fetchNextPage: _fetchPage,
@@ -408,14 +400,16 @@ class _HomeTransactionsState extends State<HomeTransactions>
     // Subtitle
     List<InlineSpan> subtitle = <InlineSpan>[];
     if (hasAttachments) {
-      subtitle.add(const WidgetSpan(
-        baseline: TextBaseline.ideographic,
-        alignment: PlaceholderAlignment.middle,
-        child: Padding(
-          padding: EdgeInsets.only(right: 2),
-          child: Icon(Icons.attachment),
+      subtitle.add(
+        const WidgetSpan(
+          baseline: TextBaseline.ideographic,
+          alignment: PlaceholderAlignment.middle,
+          child: Padding(
+            padding: EdgeInsets.only(right: 2),
+            child: Icon(Icons.attachment),
+          ),
         ),
-      ));
+      );
     }
     if (transactions.first.type == TransactionTypeProperty.transfer) {
       subtitle.add(
@@ -432,18 +426,23 @@ class _HomeTransactionsState extends State<HomeTransactions>
         ),
       );
     }
-    subtitle.add(TextSpan(
-      text: (transactions.first.type == TransactionTypeProperty.withdrawal ||
-              transactions.first.type == TransactionTypeProperty.transfer)
-          ? destinationName
-          : sourceName,
-    ));
+    subtitle.add(
+      TextSpan(
+        text:
+            (transactions.first.type == TransactionTypeProperty.withdrawal ||
+                    transactions.first.type == TransactionTypeProperty.transfer)
+                ? destinationName
+                : sourceName,
+      ),
+    );
     subtitle.add(const TextSpan(text: "\n"));
     if (category.isNotEmpty) {
-      subtitle.add(TextSpan(
-        text: category,
-        style: const TextStyle(fontStyle: FontStyle.italic),
-      ));
+      subtitle.add(
+        TextSpan(
+          text: category,
+          style: const TextStyle(fontStyle: FontStyle.italic),
+        ),
+      );
     }
     if (notes.isNotEmpty) {
       subtitle.add(
@@ -475,8 +474,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
     }
 
     Widget transactionWidget = OpenContainer(
-      openBuilder: (BuildContext context, Function closedContainer) =>
-          TransactionPage(transaction: item),
+      openBuilder:
+          (BuildContext context, Function closedContainer) =>
+              TransactionPage(transaction: item),
       openColor: Theme.of(context).cardColor,
       closedColor: Theme.of(context).cardColor,
       closedShape: const RoundedRectangleBorder(
@@ -486,202 +486,203 @@ class _HomeTransactionsState extends State<HomeTransactions>
         ),
       ),
       closedElevation: 0,
-      closedBuilder: (BuildContext context, Function openContainer) =>
-          GestureDetector(
-        onLongPressStart: (LongPressStartDetails details) async {
-          final Size screenSize = MediaQuery.of(context).size;
-          final Offset offset = details.globalPosition;
-          HapticFeedback.vibrate();
-          final Function? func = await showMenu<Function>(
-            context: context,
-            position: RelativeRect.fromLTRB(
-              offset.dx,
-              offset.dy,
-              screenSize.width - offset.dx,
-              screenSize.height - offset.dy,
-            ),
-            items: <PopupMenuEntry<Function>>[
-              PopupMenuItem<Function>(
-                value: () async {
-                  bool? ok = await Navigator.push(
-                    context,
-                    MaterialPageRoute<bool>(
-                      builder: (BuildContext context) => TransactionPage(
-                        transaction: item,
-                        clone: true,
-                      ),
+      closedBuilder:
+          (BuildContext context, Function openContainer) => GestureDetector(
+            onLongPressStart: (LongPressStartDetails details) async {
+              final Size screenSize = MediaQuery.of(context).size;
+              final Offset offset = details.globalPosition;
+              HapticFeedback.vibrate();
+              final Function? func = await showMenu<Function>(
+                context: context,
+                position: RelativeRect.fromLTRB(
+                  offset.dx,
+                  offset.dy,
+                  screenSize.width - offset.dx,
+                  screenSize.height - offset.dy,
+                ),
+                items: <PopupMenuEntry<Function>>[
+                  PopupMenuItem<Function>(
+                    value: () async {
+                      bool? ok = await Navigator.push(
+                        context,
+                        MaterialPageRoute<bool>(
+                          builder:
+                              (BuildContext context) => TransactionPage(
+                                transaction: item,
+                                clone: true,
+                              ),
+                        ),
+                      );
+                      if (ok ?? false) {
+                        _rowsWithDate = <int>[];
+                        _lastDate = null;
+                        if (context.mounted) {
+                          context.read<FireflyService>().transStock!.clear();
+                        }
+                      }
+                      setState(() {
+                        _pagingState = _pagingState.reset();
+                      });
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.copy),
+                        const SizedBox(width: 12),
+                        Text(S.of(context).transactionDuplicate),
+                      ],
                     ),
-                  );
-                  if (ok ?? false) {
-                    _rowsWithDate = <int>[];
-                    _lastDate = null;
-                    if (context.mounted) {
-                      context.read<FireflyService>().transStock!.clear();
-                    }
-                  }
-                  setState(() {
-                    _pagingState = _pagingState.reset();
-                  });
-                },
-                child: Row(
-                  children: <Widget>[
-                    const Icon(Icons.copy),
-                    const SizedBox(width: 12),
-                    Text(S.of(context).transactionDuplicate),
-                  ],
-                ),
-              ),
-              const PopupMenuDivider(),
-              PopupMenuItem<Function>(
-                value: () async {
-                  final FireflyIii api = context.read<FireflyService>().api;
-                  bool? ok = await showDialog<bool>(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        const DeletionConfirmDialog(),
-                  );
-                  if (!(ok ?? false)) {
-                    return;
-                  }
+                  ),
+                  const PopupMenuDivider(),
+                  PopupMenuItem<Function>(
+                    value: () async {
+                      final FireflyIii api = context.read<FireflyService>().api;
+                      bool? ok = await showDialog<bool>(
+                        context: context,
+                        builder:
+                            (BuildContext context) =>
+                                const DeletionConfirmDialog(),
+                      );
+                      if (!(ok ?? false)) {
+                        return;
+                      }
 
-                  await api.v1TransactionsIdDelete(
-                    id: item.id,
-                  );
-                  _rowsWithDate = <int>[];
-                  _lastDate = null;
-                  if (context.mounted) {
-                    context.read<FireflyService>().transStock!.clear();
-                  }
-                  setState(() {
-                    _pagingState = _pagingState.reset();
-                  });
-                },
-                child: Row(
-                  children: <Widget>[
-                    const Icon(Icons.delete),
-                    const SizedBox(width: 12),
-                    Text(MaterialLocalizations.of(context).deleteButtonTooltip),
-                  ],
-                ),
+                      await api.v1TransactionsIdDelete(id: item.id);
+                      _rowsWithDate = <int>[];
+                      _lastDate = null;
+                      if (context.mounted) {
+                        context.read<FireflyService>().transStock!.clear();
+                      }
+                      setState(() {
+                        _pagingState = _pagingState.reset();
+                      });
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.delete),
+                        const SizedBox(width: 12),
+                        Text(
+                          MaterialLocalizations.of(context).deleteButtonTooltip,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+                clipBehavior: Clip.hardEdge,
+              );
+              if (func == null) {
+                return;
+              }
+              func();
+            },
+            child: ListTile(
+              leading: CircleAvatar(
+                foregroundColor: Colors.white,
+                backgroundColor: transactions.first.type.color,
+                child: Icon(transactions.first.type.icon),
               ),
-            ],
-            clipBehavior: Clip.hardEdge,
-          );
-          if (func == null) {
-            return;
-          }
-          func();
-        },
-        child: ListTile(
-          leading: CircleAvatar(
-            foregroundColor: Colors.white,
-            backgroundColor: transactions.first.type.color,
-            child: Icon(transactions.first.type.icon),
-          ),
-          title: Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              RichText(
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  children: subtitle,
-                ),
-              ),
-              if (!context.watch<SettingsProvider>().hideTags &&
-                  tags.isNotEmpty) ...<Widget>[
-                Wrap(
-                  children: tags
-                      .map(
-                        (String tag) => Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                const Icon(
-                                  Icons.label_outline,
-                                  size: 16,
-                                ),
-                                const SizedBox(width: 5),
-                                Flexible(
-                                  child: RichText(
-                                    overflow: TextOverflow.fade,
-                                    text: TextSpan(
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                      text: tag,
+              title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  RichText(
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      children: subtitle,
+                    ),
+                  ),
+                  if (!context.watch<SettingsProvider>().hideTags &&
+                      tags.isNotEmpty) ...<Widget>[
+                    Wrap(
+                      children:
+                          tags
+                              .map(
+                                (String tag) => Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(6.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        const Icon(
+                                          Icons.label_outline,
+                                          size: 16,
+                                        ),
+                                        const SizedBox(width: 5),
+                                        Flexible(
+                                          child: RichText(
+                                            overflow: TextOverflow.fade,
+                                            text: TextSpan(
+                                              style:
+                                                  Theme.of(
+                                                    context,
+                                                  ).textTheme.bodyMedium,
+                                              text: tag,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                )
-              ]
-            ],
-          ),
-          isThreeLine: true,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              bottomLeft: Radius.circular(16),
-            ),
-          ),
-          trailing: RichText(
-            textAlign: TextAlign.end,
-            maxLines: 2,
-            text: TextSpan(
-              style: Theme.of(context).textTheme.bodyMedium,
-              children: <InlineSpan>[
-                if (foreignText.isNotEmpty)
-                  TextSpan(
-                    text: foreignText,
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Colors.blue,
-                        ),
-                  ),
-                TextSpan(
-                  text: currency.fmt(amount),
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: transactions.first.type.color,
-                    fontFeatures: const <FontFeature>[
-                      FontFeature.tabularFigures()
-                    ],
-                  ),
-                ),
-                const TextSpan(text: "\n"),
-                if (reconciled)
-                  const WidgetSpan(
-                    baseline: TextBaseline.ideographic,
-                    alignment: PlaceholderAlignment.middle,
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 2),
-                      child: Icon(Icons.check),
+                              )
+                              .toList(),
                     ),
-                  ),
-                TextSpan(
-                  text: (transactions.first.type ==
-                          TransactionTypeProperty.deposit)
-                      ? destinationName
-                      : sourceName,
+                  ],
+                ],
+              ),
+              isThreeLine: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  bottomLeft: Radius.circular(16),
                 ),
-              ],
+              ),
+              trailing: RichText(
+                textAlign: TextAlign.end,
+                maxLines: 2,
+                text: TextSpan(
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  children: <InlineSpan>[
+                    if (foreignText.isNotEmpty)
+                      TextSpan(
+                        text: foreignText,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodySmall!.copyWith(color: Colors.blue),
+                      ),
+                    TextSpan(
+                      text: currency.fmt(amount),
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: transactions.first.type.color,
+                        fontFeatures: const <FontFeature>[
+                          FontFeature.tabularFigures(),
+                        ],
+                      ),
+                    ),
+                    const TextSpan(text: "\n"),
+                    if (reconciled)
+                      const WidgetSpan(
+                        baseline: TextBaseline.ideographic,
+                        alignment: PlaceholderAlignment.middle,
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 2),
+                          child: Icon(Icons.check),
+                        ),
+                      ),
+                    TextSpan(
+                      text:
+                          (transactions.first.type ==
+                                  TransactionTypeProperty.deposit)
+                              ? destinationName
+                              : sourceName,
+                    ),
+                  ],
+                ),
+              ),
+              onTap: () => openContainer(),
             ),
           ),
-          onTap: () => openContainer(),
-        ),
-      ),
       onClosed: (bool? refresh) {
         if (refresh ?? false == true) {
           _rowsWithDate = <int>[];

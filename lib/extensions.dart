@@ -15,20 +15,19 @@ extension CurrencyFormat on CurrencyRead {
     String? locale,
     bool forceCode = false,
     int? decimalDigits,
-  }) =>
-      NumberFormat.currency(
-        locale: locale ?? Intl.defaultLocale,
-        name: attributes.code,
-        decimalDigits: decimalDigits ?? attributes.decimalPlaces,
-        symbol: forceCode ? null : attributes.symbol,
-      ).format(amount);
+  }) => NumberFormat.currency(
+    locale: locale ?? Intl.defaultLocale,
+    name: attributes.code,
+    decimalDigits: decimalDigits ?? attributes.decimalPlaces,
+    symbol: forceCode ? null : attributes.symbol,
+  ).format(amount);
 
   String zero({String? locale}) => NumberFormat.currency(
-        locale: locale ?? Intl.defaultLocale,
-        name: "",
-        symbol: "",
-        decimalDigits: attributes.decimalPlaces,
-      ).format(0);
+    locale: locale ?? Intl.defaultLocale,
+    name: "",
+    symbol: "",
+    decimalDigits: attributes.decimalPlaces,
+  ).format(0);
 }
 
 extension AccountRole on AccountRoleProperty {
@@ -236,7 +235,7 @@ extension TransactionType on TransactionTypeProperty {
               AccountTypeFilter.loan,
               AccountTypeFilter.debt,
               AccountTypeFilter.mortgage,
-              AccountTypeFilter.cashAccount
+              AccountTypeFilter.cashAccount,
             ];
           case AccountTypeFilter.loan:
           case AccountTypeFilter.debt:
@@ -261,9 +260,7 @@ extension TransactionType on TransactionTypeProperty {
           case AccountTypeFilter.loan:
           case AccountTypeFilter.debt:
           case AccountTypeFilter.mortgage:
-            return <AccountTypeFilter>[
-              AccountTypeFilter.assetAccount,
-            ];
+            return <AccountTypeFilter>[AccountTypeFilter.assetAccount];
           default:
             return <AccountTypeFilter>[];
         }
@@ -304,9 +301,7 @@ extension TransactionType on TransactionTypeProperty {
           case AccountTypeFilter.reconciliationAccount:
             return <AccountTypeFilter>[AccountTypeFilter.assetAccount];
           case AccountTypeFilter.assetAccount:
-            return <AccountTypeFilter>[
-              AccountTypeFilter.reconciliationAccount,
-            ];
+            return <AccountTypeFilter>[AccountTypeFilter.reconciliationAccount];
           default:
             return <AccountTypeFilter>[];
         }
@@ -330,21 +325,14 @@ extension TransactionType on TransactionTypeProperty {
         }*/
 
       default:
-        return <AccountTypeFilter>[
-          AccountTypeFilter.all,
-        ];
+        return <AccountTypeFilter>[AccountTypeFilter.all];
     }
   }
 }
 
 extension DateTimeExtension on DateTime {
-  DateTime setTimeOfDay(TimeOfDay time) => DateTime(
-        year,
-        month,
-        day,
-        time.hour,
-        time.minute,
-      );
+  DateTime setTimeOfDay(TimeOfDay time) =>
+      DateTime(year, month, day, time.hour, time.minute);
 
   DateTime setTime({
     int hours = 0,
@@ -352,17 +340,16 @@ extension DateTimeExtension on DateTime {
     int seconds = 0,
     int milliSeconds = 0,
     int microSeconds = 0,
-  }) =>
-      DateTime(
-        year,
-        month,
-        day,
-        hours,
-        minutes,
-        seconds,
-        milliSeconds,
-        microSeconds,
-      );
+  }) => DateTime(
+    year,
+    month,
+    day,
+    hours,
+    minutes,
+    seconds,
+    milliSeconds,
+    microSeconds,
+  );
 
   DateTime clearTime() => DateTime(year, month, day, 0, 0, 0, 0, 0);
 
@@ -370,14 +357,8 @@ extension DateTimeExtension on DateTime {
 }
 
 extension TZDateTimeExtension on tz.TZDateTime {
-  tz.TZDateTime setTimeOfDay(TimeOfDay time) => tz.TZDateTime(
-        location,
-        year,
-        month,
-        day,
-        time.hour,
-        time.minute,
-      );
+  tz.TZDateTime setTimeOfDay(TimeOfDay time) =>
+      tz.TZDateTime(location, year, month, day, time.hour, time.minute);
 
   tz.TZDateTime setTime({
     int hours = 0,
@@ -385,18 +366,17 @@ extension TZDateTimeExtension on tz.TZDateTime {
     int seconds = 0,
     int milliSeconds = 0,
     int microSeconds = 0,
-  }) =>
-      tz.TZDateTime(
-        location,
-        year,
-        month,
-        day,
-        hours,
-        minutes,
-        seconds,
-        milliSeconds,
-        microSeconds,
-      );
+  }) => tz.TZDateTime(
+    location,
+    year,
+    month,
+    day,
+    hours,
+    minutes,
+    seconds,
+    milliSeconds,
+    microSeconds,
+  );
 
   tz.TZDateTime clearTime() =>
       tz.TZDateTime(location, year, month, day, 0, 0, 0, 0, 0);
@@ -467,9 +447,7 @@ extension AccountType on AccountTypeProperty {
             AccountTypeFilter.mortgage,
           ];
         case AccountTypeProperty.cashAccount:
-          return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-          ];
+          return <AccountTypeFilter>[AccountTypeFilter.assetAccount];
         case AccountTypeProperty.debt:
           return <AccountTypeFilter>[
             AccountTypeFilter.assetAccount,
@@ -501,9 +479,7 @@ extension AccountType on AccountTypeProperty {
             AccountTypeFilter.liability,
           ];
         case AccountTypeProperty.reconciliationAccount:
-          return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-          ];
+          return <AccountTypeFilter>[AccountTypeFilter.assetAccount];
         case AccountTypeProperty.revenueAccount:
           return <AccountTypeFilter>[
             AccountTypeFilter.assetAccount,
@@ -540,9 +516,7 @@ extension AccountType on AccountTypeProperty {
             AccountTypeFilter.revenueAccount,
           ];
         case AccountTypeProperty.cashAccount:
-          return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-          ];
+          return <AccountTypeFilter>[AccountTypeFilter.assetAccount];
         case AccountTypeProperty.debt:
           return <AccountTypeFilter>[
             AccountTypeFilter.assetAccount,
@@ -571,9 +545,7 @@ extension AccountType on AccountTypeProperty {
             AccountTypeFilter.revenueAccount,
           ];
         case AccountTypeProperty.reconciliationAccount:
-          return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-          ];
+          return <AccountTypeFilter>[AccountTypeFilter.assetAccount];
         case AccountTypeProperty.revenueAccount:
         /*case AccountTypeProperty.liability:
           return <AccountTypeFilter>[];*/
@@ -602,9 +574,7 @@ extension AccountType on AccountTypeProperty {
         case AccountTypeProperty.expenseAccount:
           return <TransactionTypeProperty>[];
         case AccountTypeProperty.revenueAccount:
-          return <TransactionTypeProperty>[
-            TransactionTypeProperty.deposit,
-          ];
+          return <TransactionTypeProperty>[TransactionTypeProperty.deposit];
         case AccountTypeProperty.loan:
         case AccountTypeProperty.debt:
         case AccountTypeProperty.mortgage:
@@ -640,9 +610,7 @@ extension AccountType on AccountTypeProperty {
             TransactionTypeProperty.reconciliation,
           ];
         case AccountTypeProperty.expenseAccount:
-          return <TransactionTypeProperty>[
-            TransactionTypeProperty.withdrawal,
-          ];
+          return <TransactionTypeProperty>[TransactionTypeProperty.withdrawal];
         case AccountTypeProperty.revenueAccount:
           return <TransactionTypeProperty>[];
         case AccountTypeProperty.loan:
@@ -671,12 +639,16 @@ extension AccountType on AccountTypeProperty {
 }
 
 TransactionTypeProperty accountsToTransaction(
-    AccountTypeProperty source, AccountTypeProperty destination) {
+  AccountTypeProperty source,
+  AccountTypeProperty destination,
+) {
   Map<AccountTypeProperty, Map<AccountTypeProperty, TransactionTypeProperty>>
-      map =
-      <AccountTypeProperty, Map<AccountTypeProperty, TransactionTypeProperty>>{
-    AccountTypeProperty.assetAccount:
-        <AccountTypeProperty, TransactionTypeProperty>{
+  map = <
+    AccountTypeProperty,
+    Map<AccountTypeProperty, TransactionTypeProperty>
+  >{
+    AccountTypeProperty
+        .assetAccount: <AccountTypeProperty, TransactionTypeProperty>{
       AccountTypeProperty.assetAccount: TransactionTypeProperty.transfer,
       AccountTypeProperty.cashAccount: TransactionTypeProperty.withdrawal,
       AccountTypeProperty.debt: TransactionTypeProperty.withdrawal,
@@ -688,8 +660,8 @@ TransactionTypeProperty accountsToTransaction(
       AccountTypeProperty.reconciliationAccount:
           TransactionTypeProperty.reconciliation,
     },
-    AccountTypeProperty.cashAccount:
-        <AccountTypeProperty, TransactionTypeProperty>{
+    AccountTypeProperty
+        .cashAccount: <AccountTypeProperty, TransactionTypeProperty>{
       AccountTypeProperty.assetAccount: TransactionTypeProperty.deposit,
       AccountTypeProperty.loan: TransactionTypeProperty.deposit,
       AccountTypeProperty.debt: TransactionTypeProperty.deposit,
@@ -704,8 +676,8 @@ TransactionTypeProperty accountsToTransaction(
       AccountTypeProperty.loan: TransactionTypeProperty.transfer,
       AccountTypeProperty.mortgage: TransactionTypeProperty.transfer,
     },
-    AccountTypeProperty.initialBalanceAccount:
-        <AccountTypeProperty, TransactionTypeProperty>{
+    AccountTypeProperty
+        .initialBalanceAccount: <AccountTypeProperty, TransactionTypeProperty>{
       AccountTypeProperty.assetAccount: TransactionTypeProperty.openingBalance,
       AccountTypeProperty.debt: TransactionTypeProperty.openingBalance,
       AccountTypeProperty.loan: TransactionTypeProperty.openingBalance,
@@ -720,8 +692,8 @@ TransactionTypeProperty accountsToTransaction(
       AccountTypeProperty.loan: TransactionTypeProperty.transfer,
       AccountTypeProperty.mortgage: TransactionTypeProperty.transfer,
     },
-    AccountTypeProperty.mortgage:
-        <AccountTypeProperty, TransactionTypeProperty>{
+    AccountTypeProperty
+        .mortgage: <AccountTypeProperty, TransactionTypeProperty>{
       AccountTypeProperty.assetAccount: TransactionTypeProperty.deposit,
       AccountTypeProperty.debt: TransactionTypeProperty.transfer,
       AccountTypeProperty.expenseAccount: TransactionTypeProperty.withdrawal,
@@ -730,12 +702,12 @@ TransactionTypeProperty accountsToTransaction(
       AccountTypeProperty.loan: TransactionTypeProperty.transfer,
       AccountTypeProperty.mortgage: TransactionTypeProperty.transfer,
     },
-    AccountTypeProperty.reconciliationAccount:
-        <AccountTypeProperty, TransactionTypeProperty>{
+    AccountTypeProperty
+        .reconciliationAccount: <AccountTypeProperty, TransactionTypeProperty>{
       AccountTypeProperty.assetAccount: TransactionTypeProperty.reconciliation,
     },
-    AccountTypeProperty.revenueAccount:
-        <AccountTypeProperty, TransactionTypeProperty>{
+    AccountTypeProperty
+        .revenueAccount: <AccountTypeProperty, TransactionTypeProperty>{
       AccountTypeProperty.assetAccount: TransactionTypeProperty.deposit,
       AccountTypeProperty.debt: TransactionTypeProperty.deposit,
       AccountTypeProperty.loan: TransactionTypeProperty.deposit,

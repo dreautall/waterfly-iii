@@ -6,11 +6,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 
 class NewTransactionFab extends StatelessWidget {
-  const NewTransactionFab({
-    super.key,
-    required this.context,
-    this.accountId,
-  });
+  const NewTransactionFab({super.key, required this.context, this.accountId});
 
   final BuildContext context;
   final String? accountId;
@@ -23,9 +19,11 @@ class NewTransactionFab extends StatelessWidget {
       },
       openColor: Theme.of(context).cardColor,
       closedColor: Theme.of(context).colorScheme.primaryContainer,
-      closedShape: Theme.of(context).floatingActionButtonTheme.shape ??
+      closedShape:
+          Theme.of(context).floatingActionButtonTheme.shape ??
           const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(16.0))),
+            borderRadius: BorderRadius.all(Radius.circular(16.0)),
+          ),
       closedElevation:
           Theme.of(context).floatingActionButtonTheme.elevation ?? 6,
       closedBuilder: (BuildContext context, Function openContainer) {

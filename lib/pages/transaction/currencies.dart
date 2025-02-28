@@ -6,10 +6,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 class CurrencyDialog extends StatelessWidget {
-  const CurrencyDialog({
-    super.key,
-    required this.currentCurrency,
-  });
+  const CurrencyDialog({super.key, required this.currentCurrency});
 
   final CurrencyRead currentCurrency;
 
@@ -19,19 +16,17 @@ class CurrencyDialog extends StatelessWidget {
     apiThrowErrorIfEmpty(response, context.mounted ? context : null);
 
     List<CurrencyRead> currencies = response.body!.data;
-    currencies.sort(
-      (CurrencyRead a, CurrencyRead b) {
-        if (a.id == context.read<FireflyService>().defaultCurrency.id) {
-          return -1;
-        } else if (b.id == context.read<FireflyService>().defaultCurrency.id) {
-          return 1;
-        } else {
-          return a.attributes.code
-              .toLowerCase()
-              .compareTo(b.attributes.code.toLowerCase());
-        }
-      },
-    );
+    currencies.sort((CurrencyRead a, CurrencyRead b) {
+      if (a.id == context.read<FireflyService>().defaultCurrency.id) {
+        return -1;
+      } else if (b.id == context.read<FireflyService>().defaultCurrency.id) {
+        return 1;
+      } else {
+        return a.attributes.code.toLowerCase().compareTo(
+          b.attributes.code.toLowerCase(),
+        );
+      }
+    });
     return currencies;
   }
 
@@ -43,15 +38,19 @@ class CurrencyDialog extends StatelessWidget {
       children: <Widget>[
         FutureBuilder<List<CurrencyRead>>(
           future: _getCurrencies(context),
-          builder: (BuildContext context,
-              AsyncSnapshot<List<CurrencyRead>> snapshot) {
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<List<CurrencyRead>> snapshot,
+          ) {
             if (snapshot.hasData) {
               List<Widget> child = <Widget>[];
               for (CurrencyRead currency in snapshot.data!) {
-                child.add(CurrencyDialogOption(
-                  optionCurrency: currency,
-                  currentCurrency: currentCurrency,
-                ));
+                child.add(
+                  CurrencyDialogOption(
+                    optionCurrency: currency,
+                    currentCurrency: currentCurrency,
+                  ),
+                );
                 child.add(const Divider());
               }
               child.removeLast();
@@ -60,14 +59,15 @@ class CurrencyDialog extends StatelessWidget {
                 children: child,
               );
             } else if (snapshot.hasError) {
-              log.severe("error getting currencies", snapshot.error,
-                  snapshot.stackTrace);
+              log.severe(
+                "error getting currencies",
+                snapshot.error,
+                snapshot.stackTrace,
+              );
               Navigator.pop(context);
               return const CircularProgressIndicator();
             } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Center(child: CircularProgressIndicator());
             }
           },
         ),
@@ -105,21 +105,21 @@ class CurrencyDialogOption extends StatelessWidget {
         ],
       ),*/
       padding: EdgeInsets.zero,
-      child: */
-        ListTile(
+      child: */ ListTile(
       leading: CircleAvatar(child: Text(optionCurrency.attributes.symbol)),
       title: Text(optionCurrency.attributes.code),
       subtitle: Text(optionCurrency.attributes.name),
       onTap: () {
         Navigator.pop(context, optionCurrency);
       },
-      trailing: (optionCurrency.id ==
-              context.read<FireflyService>().defaultCurrency.id)
-          ? Text(
-              S.of(context).generalDefault,
-              style: const TextStyle(fontStyle: FontStyle.italic),
-            )
-          : null,
+      trailing:
+          (optionCurrency.id ==
+                  context.read<FireflyService>().defaultCurrency.id)
+              ? Text(
+                S.of(context).generalDefault,
+                style: const TextStyle(fontStyle: FontStyle.italic),
+              )
+              : null,
       selected: (optionCurrency.id == currentCurrency.id),
     );
   }

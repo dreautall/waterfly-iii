@@ -37,34 +37,32 @@ class SSl extends S {
 
   @override
   String accountsLiabilitiesInterest(double interest, String period) {
-    String _temp0 = intl.Intl.selectLogic(
-      period,
-      {
-        'weekly': 'tedensko',
-        'monthly': 'mesečno',
-        'quarterly': 'četrtletno',
-        'halfyear': 'polletno',
-        'yearly': 'letno',
-        'other': 'neznano',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(period, {
+      'weekly': 'tedensko',
+      'monthly': 'mesečno',
+      'quarterly': 'četrtletno',
+      'halfyear': 'polletno',
+      'yearly': 'letno',
+      'other': 'neznano',
+    });
     return '$interest% obresti $_temp0';
   }
 
   @override
   String billsAmountAndFrequency(
-      String minValue, String maxvalue, String frequency, num skip) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'tedensko',
-        'monthly': 'mesečno',
-        'quarterly': 'četrtletno',
-        'halfyear': 'polletno',
-        'yearly': 'letno',
-        'other': 'neznano',
-      },
-    );
+    String minValue,
+    String maxvalue,
+    String frequency,
+    num skip,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'tedensko',
+      'monthly': 'mesečno',
+      'quarterly': 'četrtletno',
+      'halfyear': 'polletno',
+      'yearly': 'letno',
+      'other': 'neznano',
+    });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
@@ -85,18 +83,18 @@ class SSl extends S {
 
   @override
   String billsExactAmountAndFrequency(
-      String value, String frequency, num skip) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'tedensko',
-        'monthly': 'mesečno',
-        'quarterly': 'četrtletno',
-        'halfyear': 'polletno',
-        'yearly': 'letno',
-        'other': 'neznano',
-      },
-    );
+    String value,
+    String frequency,
+    num skip,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'tedensko',
+      'monthly': 'mesečno',
+      'quarterly': 'četrtletno',
+      'halfyear': 'polletno',
+      'yearly': 'letno',
+      'other': 'neznano',
+    });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
@@ -116,33 +114,27 @@ class SSl extends S {
 
   @override
   String billsFrequency(String frequency) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'Tedensko',
-        'monthly': 'Mesečno',
-        'quarterly': 'Četrtletno',
-        'halfyear': 'Polletno',
-        'yearly': 'Letno',
-        'other': 'Neznano',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'Tedensko',
+      'monthly': 'Mesečno',
+      'quarterly': 'Četrtletno',
+      'halfyear': 'Polletno',
+      'yearly': 'Letno',
+      'other': 'Neznano',
+    });
     return '$_temp0';
   }
 
   @override
   String billsFrequencySkip(String frequency, num skip) {
-    String _temp0 = intl.Intl.selectLogic(
-      frequency,
-      {
-        'weekly': 'Tedensko',
-        'monthly': 'Mesečno',
-        'quarterly': 'Četrtletno',
-        'halfyear': 'Polletno',
-        'yearly': 'Letno',
-        'other': 'Neznano',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': 'Tedensko',
+      'monthly': 'Mesečno',
+      'quarterly': 'Četrtletno',
+      'halfyear': 'Polletno',
+      'yearly': 'Letno',
+      'other': 'Neznano',
+    });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
@@ -377,17 +369,14 @@ class SSl extends S {
 
   @override
   String homeMainBillsInterval(String period) {
-    String _temp0 = intl.Intl.selectLogic(
-      period,
-      {
-        'weekly': 'tedensko',
-        'monthly': 'mesečno',
-        'quarterly': 'četrtletno',
-        'halfyear': 'polletno',
-        'yearly': 'letno',
-        'other': 'neznano',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(period, {
+      'weekly': 'tedensko',
+      'monthly': 'mesečno',
+      'quarterly': 'četrtletno',
+      'halfyear': 'polletno',
+      'yearly': 'letno',
+      'other': 'neznano',
+    });
     return ' ($_temp0)';
   }
 
@@ -416,13 +405,10 @@ class SSl extends S {
 
   @override
   String homeMainBudgetSum(String current, String status, String available) {
-    String _temp0 = intl.Intl.selectLogic(
-      status,
-      {
-        'over': 'čez',
-        'other': 'ostane še',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(status, {
+      'over': 'čez',
+      'other': 'ostane še',
+    });
     return '$current $_temp0 $available';
   }
 
@@ -611,9 +597,11 @@ class SSl extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat =
-        intl.NumberFormat.decimalPercentPattern(
-            locale: localeName, decimalDigits: 0);
+    final intl.NumberFormat numNumberFormat = intl
+        .NumberFormat.decimalPercentPattern(
+      locale: localeName,
+      decimalDigits: 0,
+    );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -621,9 +609,11 @@ class SSl extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat =
-        intl.NumberFormat.decimalPercentPattern(
-            locale: localeName, decimalDigits: 0);
+    final intl.NumberFormat percNumberFormat = intl
+        .NumberFormat.decimalPercentPattern(
+      locale: localeName,
+      decimalDigits: 0,
+    );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString od $of';
@@ -744,14 +734,11 @@ class SSl extends S {
 
   @override
   String settingsThemeValue(String theme) {
-    String _temp0 = intl.Intl.selectLogic(
-      theme,
-      {
-        'dark': 'Temen način',
-        'light': 'Svetel način',
-        'other': 'Sistemsko privzeto',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(theme, {
+      'dark': 'Temen način',
+      'light': 'Svetel način',
+      'other': 'Sistemsko privzeto',
+    });
     return '$_temp0';
   }
 

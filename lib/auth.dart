@@ -74,7 +74,7 @@ class AuthErrorVersionInvalid extends AuthError {
 
 class AuthErrorVersionTooLow extends AuthError {
   const AuthErrorVersionTooLow(this.requiredVersion)
-      : super("Firefly API version too low");
+    : super("Firefly API version too low");
 
   final Version requiredVersion;
 }
@@ -87,15 +87,13 @@ class AuthErrorStatusCode extends AuthError {
 
 class AuthErrorNoInstance extends AuthError {
   const AuthErrorNoInstance(this.host)
-      : super("Not a valid Firefly III instance");
+    : super("Not a valid Firefly III instance");
 
   final String host;
 }
 
-http.Client get httpClient => CronetClient.fromCronetEngine(
-      CronetEngine.build(),
-      closeEngine: false,
-    );
+http.Client get httpClient =>
+    CronetClient.fromCronetEngine(CronetEngine.build(), closeEngine: false);
 
 class APIRequestInterceptor implements Interceptor {
   APIRequestInterceptor(this.headerFunc);
@@ -104,13 +102,17 @@ class APIRequestInterceptor implements Interceptor {
 
   @override
   FutureOr<Response<BodyType>> intercept<BodyType>(
-      Chain<BodyType> chain) async {
+    Chain<BodyType> chain,
+  ) async {
     log.finest(() => "API query ${chain.request.method} ${chain.request.url}");
     if (chain.request.body != null) {
       log.finest(() => "Query Body: ${chain.request.body}");
     }
-    final Request request =
-        applyHeaders(chain.request, headerFunc(), override: true);
+    final Request request = applyHeaders(
+      chain.request,
+      headerFunc(),
+      override: true,
+    );
     request.followRedirects = true;
     request.maxRedirects = 5;
     return chain.proceed(request);
@@ -169,12 +171,9 @@ class AuthUser {
       throw AuthErrorHost(host);
     }
 
-    Uri aboutUri = uri.replace(pathSegments: <String>[
-      ...uri.pathSegments,
-      "api",
-      "v1",
-      "about",
-    ]);
+    Uri aboutUri = uri.replace(
+      pathSegments: <String>[...uri.pathSegments, "api", "v1", "about"],
+    );
 
     try {
       final http.Request request = http.Request(HttpMethod.Get, aboutUri);
@@ -185,8 +184,9 @@ class AuthUser {
       final http.StreamedResponse response = await client.send(request);
 
       // If we get an html page, it's most likely the login page, and auth failed
-      if (response.headers[HttpHeaders.contentTypeHeader]
-              ?.startsWith("text/html") ??
+      if (response.headers[HttpHeaders.contentTypeHeader]?.startsWith(
+            "text/html",
+          ) ??
           true) {
         throw const AuthErrorApiKey();
       }
@@ -245,9 +245,7 @@ class FireflyService with ChangeNotifier {
   late TimeZoneHandler tzHandler;
 
   final FlutterSecureStorage storage = const FlutterSecureStorage(
-    aOptions: AndroidOptions(
-      resetOnError: true,
-    ),
+    aOptions: AndroidOptions(resetOnError: true),
   );
 
   final Logger log = Logger("Auth.FireflyService");
@@ -262,7 +260,8 @@ class FireflyService with ChangeNotifier {
     String? apiKey = await storage.read(key: 'api_key');
 
     log.config(
-        "storage: $apiHost, apiKey ${apiKey?.isEmpty ?? true ? "unset" : "set"}");
+      "storage: $apiHost, apiKey ${apiKey?.isEmpty ?? true ? "unset" : "set"}",
+    );
 
     if (apiHost == null || apiKey == null) {
       return false;
@@ -320,12 +319,14 @@ class FireflyService with ChangeNotifier {
 
     // Manual API query as the Swagger type doesn't resolve in Flutter :(
     final http.Client client = httpClient;
-    Uri tzUri = user!.host.replace(pathSegments: <String>[
-      ...user!.host.pathSegments,
-      "v1",
-      "configuration",
-      ConfigValueFilter.appTimezone.value!
-    ]);
+    Uri tzUri = user!.host.replace(
+      pathSegments: <String>[
+        ...user!.host.pathSegments,
+        "v1",
+        "configuration",
+        ConfigValueFilter.appTimezone.value!,
+      ],
+    );
     try {
       final http.Response response = await client.get(
         tzUri,
@@ -359,8 +360,6 @@ void apiThrowErrorIfEmpty(Response<dynamic> response, BuildContext? context) {
       S.of(context!).errorAPIInvalidResponse(response.error?.toString() ?? ""),
     );
   } else {
-    throw Exception(
-      "[nocontext] Invalid API response: ${response.error}",
-    );
+    throw Exception("[nocontext] Invalid API response: ${response.error}");
   }
 }

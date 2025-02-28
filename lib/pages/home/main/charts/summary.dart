@@ -12,10 +12,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/widgets/charts.dart';
 
 class SummaryChart extends StatelessWidget {
-  const SummaryChart({
-    super.key,
-    required this.data,
-  });
+  const SummaryChart({super.key, required this.data});
 
   final List<ChartDataSet> data;
 
@@ -39,22 +36,27 @@ class SummaryChart extends StatelessWidget {
 
     return SfCartesianChart(
       primaryXAxis: DateTimeAxis(
-        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-              fontWeight: FontWeight.normal,
-            ),
+        labelStyle: Theme.of(
+          context,
+        ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
         dateFormat: DateFormat(DateFormat.ABBR_MONTH_DAY),
-        axisLine:
-            AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
+        axisLine: AxisLine(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
         minorTicksPerInterval: 1,
       ),
       primaryYAxis: NumericAxis(
-        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-              fontWeight: FontWeight.normal,
+        labelStyle: Theme.of(
+          context,
+        ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+        axisLine: AxisLine(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
+        axisLabelFormatter:
+            (AxisLabelRenderDetails args) => ChartAxisLabel(
+              NumberFormat().format(double.parse(args.text)),
+              args.textStyle,
             ),
-        axisLine:
-            AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
-        axisLabelFormatter: (AxisLabelRenderDetails args) => ChartAxisLabel(
-            NumberFormat().format(double.parse(args.text)), args.textStyle),
       ),
       series: chartData,
       palette: possibleChartColorsDart,
@@ -64,9 +66,7 @@ class SummaryChart extends StatelessWidget {
 }
 
 class SummaryChartPopup extends StatefulWidget {
-  const SummaryChartPopup({
-    super.key,
-  });
+  const SummaryChartPopup({super.key});
 
   @override
   State<SummaryChartPopup> createState() => _SummaryChartPopupState();
@@ -82,12 +82,13 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
     final FireflyIii api = context.read<FireflyService>().api;
     final DateTime now = DateTime.now().toLocal().clearTime();
 
-    final Response<ChartLine> respChartData =
-        await api.v1ChartAccountOverviewGet(
-      start:
-          DateFormat('yyyy-MM-dd').format(now.copyWith(month: now.month - 36)),
-      end: DateFormat('yyyy-MM-dd').format(now),
-    );
+    final Response<ChartLine> respChartData = await api
+        .v1ChartAccountOverviewGet(
+          start: DateFormat(
+            'yyyy-MM-dd',
+          ).format(now.copyWith(month: now.month - 36)),
+          end: DateFormat('yyyy-MM-dd').format(now),
+        );
     apiThrowErrorIfEmpty(respChartData, mounted ? context : null);
 
     currencies.clear();
@@ -124,8 +125,10 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
     return respChartData.body!;
   }
 
-  void trackballPositionChange(TrackballArgs args,
-      List<ChartSeries<TimeSeriesChart, DateTime>> chartData) {
+  void trackballPositionChange(
+    TrackballArgs args,
+    List<ChartSeries<TimeSeriesChart, DateTime>> chartData,
+  ) {
     if (args.chartPointInfo.chartPoint == null) {
       return;
     }
@@ -148,8 +151,10 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
       children: <Widget>[
         FutureBuilder<List<ChartDataSet>>(
           future: _fetchData(context),
-          builder: (BuildContext context,
-              AsyncSnapshot<List<ChartDataSet>> snapshot) {
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<List<ChartDataSet>> snapshot,
+          ) {
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData) {
               final List<CartesianSeries<TimeSeriesChart, DateTime>> chartData =
@@ -181,40 +186,34 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                       child: SfCartesianChart(
                         primaryXAxis: DateTimeAxis(
                           enableAutoIntervalOnZooming: true,
-                          labelStyle:
-                              Theme.of(context).textTheme.labelMedium?.copyWith(
-                                    fontWeight: FontWeight.normal,
-                                  ),
+                          labelStyle: Theme.of(context).textTheme.labelMedium
+                              ?.copyWith(fontWeight: FontWeight.normal),
                           dateFormat: DateFormat(DateFormat.ABBR_MONTH_DAY),
                           axisLine: AxisLine(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurfaceVariant),
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
                           minorTicksPerInterval: 3,
                           initialZoomFactor: 0.09,
                           initialZoomPosition: 1,
                         ),
                         primaryYAxis: NumericAxis(
-                          labelStyle:
-                              Theme.of(context).textTheme.labelMedium?.copyWith(
-                                    fontWeight: FontWeight.normal,
-                                  ),
+                          labelStyle: Theme.of(context).textTheme.labelMedium
+                              ?.copyWith(fontWeight: FontWeight.normal),
                           axisLine: AxisLine(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurfaceVariant),
-                          axisLabelFormatter: (AxisLabelRenderDetails args) =>
-                              ChartAxisLabel(
-                                  NumberFormat()
-                                      .format(double.parse(args.text)),
-                                  args.textStyle),
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
+                          axisLabelFormatter:
+                              (AxisLabelRenderDetails args) => ChartAxisLabel(
+                                NumberFormat().format(double.parse(args.text)),
+                                args.textStyle,
+                              ),
                         ),
                         series: chartData,
                         enableAxisAnimation: true,
                         palette: possibleChartColorsDart,
-                        tooltipBehavior: TooltipBehavior(
-                          enable: false,
-                        ),
+                        tooltipBehavior: TooltipBehavior(enable: false),
                         crosshairBehavior: CrosshairBehavior(enable: false),
                         zoomPanBehavior: ZoomPanBehavior(
                           enablePanning: true,
@@ -232,8 +231,9 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                           ),
                           shouldAlwaysShow: true,
                         ),
-                        onTrackballPositionChanging: (TrackballArgs args) =>
-                            trackballPositionChange(args, chartData),
+                        onTrackballPositionChanging:
+                            (TrackballArgs args) =>
+                                trackballPositionChange(args, chartData),
                       ),
                     ),
                   ),
@@ -241,29 +241,33 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                     padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                     child: ValueListenableBuilder<DateTime?>(
                       valueListenable: date,
-                      builder: (BuildContext context, DateTime? value,
-                              Widget? child) =>
-                          SummaryTable(
-                        accounts: accounts,
-                        balances: balances,
-                        currencies: currencies,
-                        date: value!,
-                      ),
+                      builder:
+                          (
+                            BuildContext context,
+                            DateTime? value,
+                            Widget? child,
+                          ) => SummaryTable(
+                            accounts: accounts,
+                            balances: balances,
+                            currencies: currencies,
+                            date: value!,
+                          ),
                     ),
                   ),
                 ],
               );
             } else if (snapshot.hasError) {
-              log.severe("error getting chart card data", snapshot.error,
-                  snapshot.stackTrace);
+              log.severe(
+                "error getting chart card data",
+                snapshot.error,
+                snapshot.stackTrace,
+              );
               Navigator.of(context).pop();
               return const SizedBox.shrink();
             } else {
               return const Padding(
                 padding: EdgeInsets.all(8),
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
+                child: Center(child: CircularProgressIndicator()),
               );
             }
           },
@@ -305,45 +309,41 @@ class SummaryTable extends StatelessWidget {
             2: IntrinsicColumnWidth(),
           },
           children: <TableRow>[
-            ...accounts.mapIndexed(
-              (int i, String account) {
-                final CurrencyRead currency = currencies[i];
-                final double balance = balances[i];
-                return TableRow(
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "⬤",
-                        style: TextStyle(
-                          color: possibleChartColorsDart[
-                              i % possibleChartColorsDart.length],
-                          textBaseline: TextBaseline.ideographic,
-                          height: 1.3,
-                        ),
+            ...accounts.mapIndexed((int i, String account) {
+              final CurrencyRead currency = currencies[i];
+              final double balance = balances[i];
+              return TableRow(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "⬤",
+                      style: TextStyle(
+                        color:
+                            possibleChartColorsDart[i %
+                                possibleChartColorsDart.length],
+                        textBaseline: TextBaseline.ideographic,
+                        height: 1.3,
                       ),
                     ),
-                    Text(account),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        currency.fmt(
-                          balance,
-                          locale: S.of(context).localeName,
-                        ),
-                        style: TextStyle(
-                          color: (balance < 0) ? Colors.red : Colors.green,
-                          fontWeight: FontWeight.bold,
-                          fontFeatures: const <FontFeature>[
-                            FontFeature.tabularFigures()
-                          ],
-                        ),
+                  ),
+                  Text(account),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      currency.fmt(balance, locale: S.of(context).localeName),
+                      style: TextStyle(
+                        color: (balance < 0) ? Colors.red : Colors.green,
+                        fontWeight: FontWeight.bold,
+                        fontFeatures: const <FontFeature>[
+                          FontFeature.tabularFigures(),
+                        ],
                       ),
                     ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                ],
+              );
+            }),
           ],
         ),
       ],

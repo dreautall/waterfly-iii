@@ -128,8 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                     selected: <String>{_uriScheme},
                     onSelectionChanged: /*_formSubmitted
                         ? null
-                        : */
-                        (Set<String> newSelection) {
+                        : */ (Set<String> newSelection) {
                       _hostFocusNode.requestFocus();
                       if (!UriScheme.valid(newSelection.first) ||
                           _uriScheme == newSelection.first) {
@@ -152,11 +151,13 @@ class _LoginPageState extends State<LoginPage> {
                       } else {
                         _hostTextController.text = "$newScheme$currentUrl";
                       }
-                      _hostTextController.selection =
-                          TextSelection.fromPosition(TextPosition(
-                              offset: _hostTextController.text.length));
+                      _hostTextController
+                          .selection = TextSelection.fromPosition(
+                        TextPosition(offset: _hostTextController.text.length),
+                      );
 
-                      bool error = _hostTextController.text.isNotEmpty &&
+                      bool error =
+                          _hostTextController.text.isNotEmpty &&
                           !_hostValid(_hostTextController.text);
                       setState(() {
                         _uriScheme = newScheme;
@@ -195,7 +196,8 @@ class _LoginPageState extends State<LoginPage> {
                           });
                         }
 
-                        bool error = value.isNotEmpty &&
+                        bool error =
+                            value.isNotEmpty &&
                             (!UriScheme.valid(value) || !_hostValid(value));
                         if (error != _hostErrorIcon.isError ||
                             (_hostError != null &&
@@ -210,9 +212,10 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       autovalidateMode: AutovalidateMode.disabled,
                       validator: (String? value) {
-                        String? error = value == null || value.isEmpty
-                            ? S.of(context).errorFieldRequired
-                            : !_hostValid(value)
+                        String? error =
+                            value == null || value.isEmpty
+                                ? S.of(context).errorFieldRequired
+                                : !_hostValid(value)
                                 ? S.of(context).errorInvalidURL
                                 : null;
                         if (_hostError != error ||
@@ -247,9 +250,10 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       autovalidateMode: AutovalidateMode.disabled,
                       validator: (String? value) {
-                        String? error = value == null || value.isEmpty
-                            ? S.of(context).errorFieldRequired
-                            : null;
+                        String? error =
+                            value == null || value.isEmpty
+                                ? S.of(context).errorFieldRequired
+                                : null;
                         if (_keyError != error ||
                             _keyErrorIcon.isError != (error != null)) {
                           setState(() {
@@ -270,7 +274,8 @@ class _LoginPageState extends State<LoginPage> {
                       OutlinedButton(
                         onPressed: () async {
                           final Uri uri = Uri.parse(
-                              "https://docs.firefly-iii.org/how-to/firefly-iii/features/api/#personal-access-tokens");
+                            "https://docs.firefly-iii.org/how-to/firefly-iii/features/api/#personal-access-tokens",
+                          );
                           if (await canLaunchUrl(uri)) {
                             await launchUrl(uri);
                           } else {
@@ -282,8 +287,7 @@ class _LoginPageState extends State<LoginPage> {
                       FilledButton(
                         onPressed: /*_formSubmitted
                             ? null
-                            : */
-                            () {
+                            : */ () {
                           _formKey.currentState!.validate();
                           if ((_keyError != null && _keyError!.isNotEmpty) ||
                               (_hostError != null && _hostError!.isNotEmpty)) {
@@ -292,10 +296,11 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute<Widget>(
-                              builder: (BuildContext context) => SplashPage(
-                                host: _hostTextController.text,
-                                apiKey: _keyTextController.text,
-                              ),
+                              builder:
+                                  (BuildContext context) => SplashPage(
+                                    host: _hostTextController.text,
+                                    apiKey: _keyTextController.text,
+                                  ),
                             ),
                           );
                           /*setState(() {

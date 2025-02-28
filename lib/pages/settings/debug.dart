@@ -9,9 +9,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/settings.dart';
 
 class DebugDialog extends StatelessWidget {
-  const DebugDialog({
-    super.key,
-  });
+  const DebugDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +26,8 @@ class DebugDialog extends StatelessWidget {
             context.read<SettingsProvider>().debug = value;
             PackageInfo appInfo = await PackageInfo.fromPlatform();
             log.info(
-                "Enabling debug logs, app ${appInfo.appName}, ${appInfo.version}+${appInfo.buildNumber}");
+              "Enabling debug logs, app ${appInfo.appName}, ${appInfo.version}+${appInfo.buildNumber}",
+            );
           },
           title: Text(S.of(context).settingsDialogDebugTitle),
           secondary: const Icon(Icons.bug_report),
@@ -41,27 +40,33 @@ class DebugDialog extends StatelessWidget {
           onTap: () async {
             final bool? ok = await showDialog<bool>(
               context: context,
-              builder: (BuildContext context) => AlertDialog(
-                icon: const Icon(Icons.mail),
-                title: Text(S.of(context).settingsDialogDebugSendButton),
-                clipBehavior: Clip.hardEdge,
-                actions: <Widget>[
-                  TextButton(
-                    child: Text(
-                        MaterialLocalizations.of(context).cancelButtonLabel),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
+              builder:
+                  (BuildContext context) => AlertDialog(
+                    icon: const Icon(Icons.mail),
+                    title: Text(S.of(context).settingsDialogDebugSendButton),
+                    clipBehavior: Clip.hardEdge,
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text(
+                          MaterialLocalizations.of(context).cancelButtonLabel,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      FilledButton(
+                        child: Text(
+                          S.of(context).settingsDialogDebugMailCreate,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop(true);
+                        },
+                      ),
+                    ],
+                    content: Text(
+                      S.of(context).settingsDialogDebugMailDisclaimer,
+                    ),
                   ),
-                  FilledButton(
-                    child: Text(S.of(context).settingsDialogDebugMailCreate),
-                    onPressed: () {
-                      Navigator.of(context).pop(true);
-                    },
-                  ),
-                ],
-                content: Text(S.of(context).settingsDialogDebugMailDisclaimer),
-              ),
             );
             if (!(ok ?? false)) {
               return;

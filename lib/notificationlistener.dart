@@ -15,12 +15,7 @@ import 'package:waterflyiii/settings.dart';
 final Logger log = Logger("NotificationListener");
 
 class NotificationTransaction {
-  NotificationTransaction(
-    this.appName,
-    this.title,
-    this.body,
-    this.date,
-  );
+  NotificationTransaction(this.appName, this.title, this.body, this.date);
 
   final String appName;
   final String title;
@@ -28,17 +23,17 @@ class NotificationTransaction {
   final DateTime date;
 
   NotificationTransaction.fromJson(Map<String, dynamic> json)
-      : appName = json['appName'],
-        title = json['title'],
-        body = json['body'],
-        date = DateTime.parse(json['date']);
+    : appName = json['appName'],
+      title = json['title'],
+      body = json['body'],
+      date = DateTime.parse(json['date']);
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'appName': appName,
-        'title': title,
-        'body': body,
-        'date': date.toIso8601String(),
-      };
+    'appName': appName,
+    'title': title,
+    'body': body,
+    'date': date.toIso8601String(),
+  };
 }
 
 class NotificationListenerStatus {
@@ -54,24 +49,28 @@ class NotificationListenerStatus {
 }
 
 final RegExp rFindMoney = RegExp(
-    r'(?:^|\s)(?<preCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})\s*(?<amount>\d[.,\s\d]+(?:[.,]\d+)?)\s*(?<postCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})(?:$|\s)');
+  r'(?:^|\s)(?<preCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})\s*(?<amount>\d[.,\s\d]+(?:[.,]\d+)?)\s*(?<postCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})(?:$|\s)',
+);
 
 Future<NotificationListenerStatus> nlStatus() async {
   return NotificationListenerStatus(
-      await NotificationServicePlugin.instance.isServicePermissionGranted(),
-      await NotificationServicePlugin.instance.isServiceRunning(),
-      await FlutterLocalNotificationsPlugin()
-              .resolvePlatformSpecificImplementation<
-                  AndroidFlutterLocalNotificationsPlugin>()!
-              .areNotificationsEnabled() ??
-          false);
+    await NotificationServicePlugin.instance.isServicePermissionGranted(),
+    await NotificationServicePlugin.instance.isServiceRunning(),
+    await FlutterLocalNotificationsPlugin()
+            .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin
+            >()!
+            .areNotificationsEnabled() ??
+        false,
+  );
 }
 
 @pragma('vm:entry-point')
 void nlCallback() async {
   log.finest(() => "nlCallback()");
-  NotificationServicePlugin.instance
-      .executeNotificationListener((NotificationEvent? evt) async {
+  NotificationServicePlugin.instance.executeNotificationListener((
+    NotificationEvent? evt,
+  ) async {
     if (evt == null || evt.packageName == null) {
       return;
     }
@@ -97,7 +96,8 @@ void nlCallback() async {
     }
     if (!validMatch) {
       log.finer(
-          () => "nlCallback(${evt.packageName}): no money with currency found");
+        () => "nlCallback(${evt.packageName}): no money with currency found",
+      );
       return;
     }
 
@@ -109,14 +109,15 @@ void nlCallback() async {
       return;
     }
 
-    final NotificationAppSettings appSettings =
-        await settings.notificationGetAppSettings(evt.packageName!);
+    final NotificationAppSettings appSettings = await settings
+        .notificationGetAppSettings(evt.packageName!);
     bool showNotification = true;
 
     if (appSettings.autoAdd) {
       tz.initializeTimeZones();
-      log.finer(() =>
-          "nlCallback(${evt.packageName}): trying to auto-add transaction");
+      log.finer(
+        () => "nlCallback(${evt.packageName}): trying to auto-add transaction",
+      );
       try {
         final FireflyService ffService = FireflyService();
         if (!await ffService.signInFromStorage()) {
@@ -127,16 +128,21 @@ void nlCallback() async {
         late CurrencyRead? currency;
         late double amount;
 
-        (currency, amount) =
-            await parseNotificationText(api, evt.text!, localCurrency);
+        (currency, amount) = await parseNotificationText(
+          api,
+          evt.text!,
+          localCurrency,
+        );
         // Fallback solution
         currency ??= localCurrency;
 
         // Set date
-        DateTime date = ffService.tzHandler
-            .notificationTXTime(
-                DateTime.tryParse(evt.postTime ?? "") ?? DateTime.now())
-            .toLocal();
+        DateTime date =
+            ffService.tzHandler
+                .notificationTXTime(
+                  DateTime.tryParse(evt.postTime ?? "") ?? DateTime.now(),
+                )
+                .toLocal();
         String note = "";
         if (appSettings.autoAdd) {
           note = evt.text ?? "";
@@ -165,14 +171,15 @@ void nlCallback() async {
               notes: note,
               order: 0,
               sourceId: appSettings.defaultAccountId,
-            )
+            ),
           ],
           applyRules: true,
           fireWebhooks: true,
           errorIfDuplicateHash: true,
         );
-        final Response<TransactionSingle> resp =
-            await api.v1TransactionsPost(body: newTx);
+        final Response<TransactionSingle> resp = await api.v1TransactionsPost(
+          body: newTx,
+        );
         if (!resp.isSuccessful || resp.body == null) {
           try {
             ValidationErrorResponse valError = ValidationErrorResponse.fromJson(
@@ -223,12 +230,14 @@ void nlCallback() async {
             priority: Priority.low, // Android 7.1 and lower
           ),
         ),
-        payload: jsonEncode(NotificationTransaction(
-          evt.packageName ?? "",
-          evt.title ?? "",
-          evt.text ?? "",
-          DateTime.tryParse(evt.postTime ?? "") ?? DateTime.now(),
-        )),
+        payload: jsonEncode(
+          NotificationTransaction(
+            evt.packageName ?? "",
+            evt.title ?? "",
+            evt.text ?? "",
+            DateTime.tryParse(evt.postTime ?? "") ?? DateTime.now(),
+          ),
+        ),
       );
     }
   });
@@ -241,23 +250,28 @@ Future<void> nlInit() async {
 }
 
 Future<void> nlNotificationTap(
-    NotificationResponse notificationResponse) async {
+  NotificationResponse notificationResponse,
+) async {
   log.finest(() => "nlNotificationTap()");
   if (notificationResponse.payload?.isEmpty ?? true) {
     return;
   }
   await showDialog(
     context: navigatorKey.currentState!.context,
-    builder: (BuildContext context) => TransactionPage(
-      notification: NotificationTransaction.fromJson(
-        jsonDecode(notificationResponse.payload!),
-      ),
-    ),
+    builder:
+        (BuildContext context) => TransactionPage(
+          notification: NotificationTransaction.fromJson(
+            jsonDecode(notificationResponse.payload!),
+          ),
+        ),
   );
 }
 
 Future<(CurrencyRead?, double)> parseNotificationText(
-    FireflyIii api, String notificationBody, CurrencyRead localCurrency) async {
+  FireflyIii api,
+  String notificationBody,
+  CurrencyRead localCurrency,
+) async {
   CurrencyRead? currency;
   double amount = 0;
   // Try to extract some money
@@ -305,20 +319,24 @@ Future<(CurrencyRead?, double)> parseNotificationText(
       // Check if string has a decimal separator
       final String amountStr = (validMatch.namedGroup("amount") ?? "")
           .replaceAll(RegExp(r"\s+"), "");
-      final int decimalSepPos = amountStr.length >= 3 &&
-              (amountStr[amountStr.length - 3] == "." ||
-                  amountStr[amountStr.length - 3] == ",")
-          ? amountStr.length - 3
-          : amountStr.length - 2;
+      final int decimalSepPos =
+          amountStr.length >= 3 &&
+                  (amountStr[amountStr.length - 3] == "." ||
+                      amountStr[amountStr.length - 3] == ",")
+              ? amountStr.length - 3
+              : amountStr.length - 2;
       final String decimalSep =
           amountStr.length >= decimalSepPos && decimalSepPos > 0
               ? amountStr[decimalSepPos]
               : "";
       if (decimalSep == "," || decimalSep == ".") {
-        final double wholes = double.tryParse(amountStr
-                .substring(0, decimalSepPos)
-                .replaceAll(",", "")
-                .replaceAll(".", "")) ??
+        final double wholes =
+            double.tryParse(
+              amountStr
+                  .substring(0, decimalSepPos)
+                  .replaceAll(",", "")
+                  .replaceAll(".", ""),
+            ) ??
             0;
         final String decStr = amountStr
             .substring(decimalSepPos + 1)
@@ -327,8 +345,10 @@ Future<(CurrencyRead?, double)> parseNotificationText(
         final double dec = double.tryParse(decStr) ?? 0;
         amount = decStr.length == 1 ? wholes + dec / 10 : wholes + dec / 100;
       } else {
-        amount = double.tryParse(
-                amountStr.replaceAll(",", "").replaceAll(".", "")) ??
+        amount =
+            double.tryParse(
+              amountStr.replaceAll(",", "").replaceAll(".", ""),
+            ) ??
             0;
       }
     } else {

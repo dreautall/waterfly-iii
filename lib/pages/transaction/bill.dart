@@ -8,10 +8,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 
 class BillDialog extends StatefulWidget {
-  const BillDialog({
-    super.key,
-    required this.currentBill,
-  });
+  const BillDialog({super.key, required this.currentBill});
 
   final BillRead? currentBill;
 
@@ -104,16 +101,17 @@ class _BillDialogState extends State<BillDialog> {
           optionsBuilder: (TextEditingValue textEditingValue) async {
             try {
               final FireflyIii api = context.read<FireflyService>().api;
-              final Response<List<AutocompleteBill>> response =
-                  await api.v1AutocompleteBillsGet(
-                query: textEditingValue.text,
-              );
+              final Response<List<AutocompleteBill>> response = await api
+                  .v1AutocompleteBillsGet(query: textEditingValue.text);
               apiThrowErrorIfEmpty(response, mounted ? context : null);
 
               return response.body!;
             } catch (e, stackTrace) {
               log.severe(
-                  "Error while fetching autocomplete from API", e, stackTrace);
+                "Error while fetching autocomplete from API",
+                e,
+                stackTrace,
+              );
               return const Iterable<AutocompleteBill>.empty();
             }
           },

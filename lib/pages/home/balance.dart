@@ -13,9 +13,7 @@ import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/widgets/fabs.dart';
 
 class HomeBalance extends StatefulWidget {
-  const HomeBalance({
-    super.key,
-  });
+  const HomeBalance({super.key});
 
   @override
   State<HomeBalance> createState() => _HomeBalanceState();
@@ -28,8 +26,9 @@ class _HomeBalanceState extends State<HomeBalance>
   Future<AccountArray> _fetchAccounts() async {
     final FireflyIii api = context.read<FireflyService>().api;
 
-    final Response<AccountArray> respAccounts =
-        await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
+    final Response<AccountArray> respAccounts = await api.v1AccountsGet(
+      type: AccountTypeFilter.assetAccount,
+    );
     apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
 
     return Future<AccountArray>.value(respAccounts.body);
@@ -58,110 +57,121 @@ class _HomeBalanceState extends State<HomeBalance>
               cacheExtent: 1000,
               padding: const EdgeInsets.all(8),
               children: <Widget>[
-                ...snapshot.data!.data.map(
-                  (AccountRead account) {
-                    if (!(account.attributes.active ?? false)) {
-                      return const SizedBox.shrink();
-                    }
-                    final double balance =
-                        double.parse(account.attributes.currentBalance ?? "");
-                    final CurrencyRead currency = CurrencyRead(
-                      id: account.attributes.currencyId ?? "",
-                      type: "currencies",
-                      attributes: Currency(
-                        code: account.attributes.currencyCode ?? "",
-                        name: "",
-                        symbol: account.attributes.currencySymbol ?? "",
-                        decimalPlaces: account.attributes.currencyDecimalPlaces,
-                      ),
-                    );
+                ...snapshot.data!.data.map((AccountRead account) {
+                  if (!(account.attributes.active ?? false)) {
+                    return const SizedBox.shrink();
+                  }
+                  final double balance = double.parse(
+                    account.attributes.currentBalance ?? "",
+                  );
+                  final CurrencyRead currency = CurrencyRead(
+                    id: account.attributes.currencyId ?? "",
+                    type: "currencies",
+                    attributes: Currency(
+                      code: account.attributes.currencyCode ?? "",
+                      name: "",
+                      symbol: account.attributes.currencySymbol ?? "",
+                      decimalPlaces: account.attributes.currencyDecimalPlaces,
+                    ),
+                  );
 
-                    return OpenContainer(
-                      openBuilder:
-                          (BuildContext context, Function closedContainer) =>
-                              Scaffold(
-                        appBar: AppBar(
+                  return OpenContainer(
+                    openBuilder:
+                        (BuildContext context, Function closedContainer) =>
+                            Scaffold(
+                              appBar: AppBar(
+                                title: Text(account.attributes.name),
+                              ),
+                              floatingActionButton: NewTransactionFab(
+                                context: context,
+                                accountId: account.id,
+                              ),
+                              body: HomeTransactions(
+                                filters: TransactionFilters(account: account),
+                              ),
+                            ),
+                    openColor: Theme.of(context).cardColor,
+                    closedColor: Theme.of(context).cardColor,
+                    closedShape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16),
+                        bottomLeft: Radius.circular(16),
+                      ),
+                    ),
+                    closedElevation: 0,
+                    closedBuilder:
+                        (
+                          BuildContext context,
+                          Function openContainer,
+                        ) => ListTile(
                           title: Text(account.attributes.name),
-                        ),
-                        floatingActionButton: NewTransactionFab(
-                          context: context,
-                          accountId: account.id,
-                        ),
-                        body: HomeTransactions(
-                            filters: TransactionFilters(account: account)),
-                      ),
-                      openColor: Theme.of(context).cardColor,
-                      closedColor: Theme.of(context).cardColor,
-                      closedShape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(16),
-                          bottomLeft: Radius.circular(16),
-                        ),
-                      ),
-                      closedElevation: 0,
-                      closedBuilder:
-                          (BuildContext context, Function openContainer) =>
-                              ListTile(
-                        title: Text(account.attributes.name),
-                        subtitle: Text(account.attributes.accountRole
-                                ?.friendlyName(context) ??
-                            S.of(context).generalUnknown),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(16),
-                            bottomLeft: Radius.circular(16),
+                          subtitle: Text(
+                            account.attributes.accountRole?.friendlyName(
+                                  context,
+                                ) ??
+                                S.of(context).generalUnknown,
                           ),
-                        ),
-                        isThreeLine: false,
-                        trailing: RichText(
-                          textAlign: TextAlign.end,
-                          maxLines: 2,
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.bodyMedium,
-                            children: <InlineSpan>[
-                              TextSpan(
-                                text: currency.fmt(balance),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium!
-                                    .copyWith(
-                                  color:
-                                      (balance < 0) ? Colors.red : Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                  fontFeatures: const <FontFeature>[
-                                    FontFeature.tabularFigures()
-                                  ],
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              bottomLeft: Radius.circular(16),
+                            ),
+                          ),
+                          isThreeLine: false,
+                          trailing: RichText(
+                            textAlign: TextAlign.end,
+                            maxLines: 2,
+                            text: TextSpan(
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              children: <InlineSpan>[
+                                TextSpan(
+                                  text: currency.fmt(balance),
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.titleMedium!.copyWith(
+                                    color:
+                                        (balance < 0)
+                                            ? Colors.red
+                                            : Colors.green,
+                                    fontWeight: FontWeight.bold,
+                                    fontFeatures: const <FontFeature>[
+                                      FontFeature.tabularFigures(),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              const TextSpan(text: "\n"),
-                              TextSpan(
-                                text: account.attributes.currentBalanceDate !=
-                                        null
-                                    ? DateFormat.yMd().add_Hms().format(account
-                                        .attributes.currentBalanceDate!
-                                        .toLocal())
-                                    : S.of(context).generalNever,
-                              ),
-                            ],
+                                const TextSpan(text: "\n"),
+                                TextSpan(
+                                  text:
+                                      account.attributes.currentBalanceDate !=
+                                              null
+                                          ? DateFormat.yMd().add_Hms().format(
+                                            account
+                                                .attributes
+                                                .currentBalanceDate!
+                                                .toLocal(),
+                                          )
+                                          : S.of(context).generalNever,
+                                ),
+                              ],
+                            ),
                           ),
+                          onTap: () => openContainer(),
                         ),
-                        onTap: () => openContainer(),
-                      ),
-                    );
-                  },
-                ),
+                  );
+                }),
               ],
             );
           } else if (snapshot.hasError) {
             log.severe(
-                "error fetching accounts", snapshot.error, snapshot.stackTrace);
+              "error fetching accounts",
+              snapshot.error,
+              snapshot.stackTrace,
+            );
             return Text(snapshot.error!.toString());
           } else {
             return const Padding(
               padding: EdgeInsets.all(8),
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
+              child: Center(child: CircularProgressIndicator()),
             );
           }
         },

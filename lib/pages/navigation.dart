@@ -5,6 +5,7 @@ import 'package:version/version.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
+import 'package:waterflyiii/layout.dart';
 import 'package:waterflyiii/pages/accounts.dart';
 import 'package:waterflyiii/pages/bills.dart';
 import 'package:waterflyiii/pages/categories.dart';
@@ -149,6 +150,21 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  void navOnDestinationSelected(BuildContext context, int index) {
+    if (screenIndex == index) {
+      return;
+    }
+    context.read<NavPageElements>().appBarActions = null;
+    context.read<NavPageElements>().appBarBottom = null;
+    context.read<NavPageElements>().fab = null;
+    context.read<NavPageElements>().appBarTitle = Text(
+      navDestinations[index].label,
+    );
+    setState(() {
+      screenIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final NavDestination currentPage = navDestinations[screenIndex];
@@ -163,82 +179,112 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
               actions: context.select((NavPageElements n) => n.appBarActions),
               bottom: context.select((NavPageElements n) => n.appBarBottom),
             ),
-            drawer: NavigationDrawer(
-              selectedIndex: screenIndex,
-              onDestinationSelected: (int index) {
-                Navigator.pop(context); // closes the drawer
-                if (screenIndex == index) {
-                  return;
-                }
-                context.read<NavPageElements>().appBarActions = null;
-                context.read<NavPageElements>().appBarBottom = null;
-                context.read<NavPageElements>().fab = null;
-                context.read<NavPageElements>().appBarTitle = Text(
-                  navDestinations[index].label,
-                );
-                setState(() {
-                  screenIndex = index;
-                });
-              },
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 28,
-                    vertical: 16,
-                  ),
-                  child: Text(
-                    'Waterfly III',
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                ),
-                ...navDestinations.map((NavDestination destination) {
-                  return NavigationDrawerDestination(
-                    label: Text(destination.label),
-                    icon: destination.icon,
-                    selectedIcon: destination.selectedIcon,
-                  );
-                }),
-                const Divider(indent: 28, endIndent: 28),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 28,
-                    vertical: 16,
-                  ),
-                  child: GestureDetector(
-                    onTap: () async {
-                      final FireflyService ff = context.read<FireflyService>();
-                      bool? ok = await showDialog<bool>(
-                        context: context,
-                        builder:
-                            (BuildContext context) =>
-                                const LogoutConfirmDialog(),
-                      );
-                      if (!(ok ?? false)) {
-                        return;
-                      }
+            drawer:
+                context.watch<LayoutProvider>().currentSize >= ScreenSize.medium
+                    ? null
+                    : NavigationDrawer(
+                      selectedIndex: screenIndex,
+                      onDestinationSelected: (int index) {
+                        Navigator.pop(context); // closes the drawer
+                        navOnDestinationSelected(context, index);
+                      },
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 28,
+                            vertical: 16,
+                          ),
+                          child: Text(
+                            'Waterfly III',
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                        ),
+                        ...navDestinations.map((NavDestination destination) {
+                          return NavigationDrawerDestination(
+                            label: Text(destination.label),
+                            icon: destination.icon,
+                            selectedIcon: destination.selectedIcon,
+                          );
+                        }),
+                        const Divider(indent: 28, endIndent: 28),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 28,
+                            vertical: 16,
+                          ),
+                          child: GestureDetector(
+                            onTap: () async {
+                              final FireflyService ff =
+                                  context.read<FireflyService>();
+                              bool? ok = await showDialog<bool>(
+                                context: context,
+                                builder:
+                                    (BuildContext context) =>
+                                        const LogoutConfirmDialog(),
+                              );
+                              if (!(ok ?? false)) {
+                                return;
+                              }
 
-                      ff.signOut();
-                    },
-                    child: Text(
-                      S.of(context).formButtonLogout,
-                      style: Theme.of(context).textTheme.labelMedium,
+                              ff.signOut();
+                            },
+                            child: Text(
+                              S.of(context).formButtonLogout,
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
+            body: Row(
+              children: <Widget>[
+                if (context.watch<LayoutProvider>().currentSize >=
+                    ScreenSize.medium)
+                  NavigationRail(
+                    selectedIndex: screenIndex,
+                    labelType: NavigationRailLabelType.all,
+                    onDestinationSelected:
+                        (int index) => navOnDestinationSelected(context, index),
+                    leading:
+                        (context.watch<LayoutProvider>().currentSize >=
+                                ScreenSize.expanded)
+                            ? context.select((NavPageElements n) => n.fab)
+                            : null,
+                    destinations:
+                        navDestinations.map((NavDestination destination) {
+                          return NavigationRailDestination(
+                            label: Text(destination.label),
+                            icon: destination.icon,
+                            selectedIcon: destination.selectedIcon,
+                          );
+                        }).toList(),
+                  ),
+                Expanded(
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 100),
+                    switchInCurve: animCurveStandard,
+                    transitionBuilder: (
+                      Widget child,
+                      Animation<double> animation,
+                    ) {
+                      return FadeTransition(
+                        opacity: Tween<double>(
+                          begin: 0,
+                          end: 1,
+                        ).animate(animation),
+                        child: child,
+                      );
+                    },
+                    child: currentPage.pageHandler,
                   ),
                 ),
               ],
             ),
-            body: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 100),
-              switchInCurve: animCurveStandard,
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                return FadeTransition(
-                  opacity: Tween<double>(begin: 0, end: 1).animate(animation),
-                  child: child,
-                );
-              },
-              child: currentPage.pageHandler,
-            ),
-            floatingActionButton: context.select((NavPageElements n) => n.fab),
+            floatingActionButton:
+                context.watch<LayoutProvider>().currentSize >=
+                        ScreenSize.expanded
+                    ? null
+                    : context.select((NavPageElements n) => n.fab),
           ),
     );
   }

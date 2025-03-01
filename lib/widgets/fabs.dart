@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
+import 'package:waterflyiii/layout.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 
 class NewTransactionFab extends StatelessWidget {
@@ -25,7 +26,9 @@ class NewTransactionFab extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(16.0)),
           ),
       closedElevation:
-          Theme.of(context).floatingActionButtonTheme.elevation ?? 6,
+          (context.watch<LayoutProvider>().currentSize >= ScreenSize.expanded)
+              ? 0
+              : Theme.of(context).floatingActionButtonTheme.elevation ?? 6,
       closedBuilder: (BuildContext context, Function openContainer) {
         return FloatingActionButton(
           onPressed: () => openContainer(),

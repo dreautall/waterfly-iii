@@ -6,6 +6,24 @@ final Logger log = Logger("Layout");
 // https://m3.material.io/foundations/layout/applying-layout/window-size-classes
 enum ScreenSize { compact, medium, expanded }
 
+extension ScreenSizeComparisonOperators<T extends ScreenSize> on T {
+  bool operator <(T other) {
+    return index < other.index;
+  }
+
+  bool operator <=(T other) {
+    return index <= other.index;
+  }
+
+  bool operator >(T other) {
+    return index > other.index;
+  }
+
+  bool operator >=(T other) {
+    return index >= other.index;
+  }
+}
+
 class LayoutProvider with ChangeNotifier {
   ScreenSize? _currentSize;
   ScreenSize get currentSize => _currentSize!;

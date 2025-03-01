@@ -7,13 +7,8 @@ final Logger log = Logger("Layout");
 enum ScreenSize { compact, medium, expanded }
 
 class LayoutProvider with ChangeNotifier {
-  late ScreenSize _currentSize;
-  ScreenSize get currentSize => _currentSize;
-
-  LayoutProvider(BuildContext context) {
-    _currentSize = fromContext(context);
-    log.finest(() => "init done, currentSize: $_currentSize");
-  }
+  ScreenSize? _currentSize;
+  ScreenSize get currentSize => _currentSize!;
 
   ScreenSize getSize(double width) {
     if (width < 600) {
@@ -29,9 +24,14 @@ class LayoutProvider with ChangeNotifier {
       getSize(MediaQuery.sizeOf(context).width);
 
   void updateSize(BuildContext context) {
+    if (_currentSize == null) {
+      _currentSize = fromContext(context);
+      log.finest(() => "init done, currentSize: $currentSize");
+      return;
+    }
     final ScreenSize newSize = fromContext(context);
-    if (newSize == _currentSize) return;
-    log.finest(() => "size updating, old: $_currentSize, new: $newSize");
+    if (newSize == currentSize) return;
+    log.finest(() => "size updating, old: $currentSize, new: $newSize");
     _currentSize = newSize;
     notifyListeners();
   }

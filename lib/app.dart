@@ -45,6 +45,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
   bool _requiresAuth = false;
   DateTime? _lcLastOpen;
 
+  final _layoutProvider = LayoutProvider();
+
   @override
   void initState() {
     super.initState();
@@ -164,6 +166,17 @@ class _WaterflyAppState extends State<WaterflyApp> {
     super.dispose();
   }*/
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // Always called after initState() --> can be used to init _layoutProvider.
+    // No separate init needed inside initState()
+    if (mounted) {
+      _layoutProvider.updateSize(context);
+    }
+  }
+
   Future<bool> auth() {
     final LocalAuthentication auth = LocalAuthentication();
     return auth.authenticate(
@@ -206,8 +219,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
             ChangeNotifierProvider<SettingsProvider>(
               create: (_) => SettingsProvider(),
             ),
-            ChangeNotifierProvider<LayoutProvider>(
-              create: (BuildContext context) => LayoutProvider(context),
+            ChangeNotifierProvider<LayoutProvider>.value(
+              value: _layoutProvider,
             ),
           ],
           builder: (BuildContext context, _) {

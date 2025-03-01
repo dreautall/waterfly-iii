@@ -51,7 +51,7 @@
             }
         }
     },
-    "billsAmountAndFrequency": "Abonnement passt zu Transaktionen zwischen {minValue} und {maxvalue}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
+    "billsAmountAndFrequency": "Rechnung passt zu Transaktionen zwischen {minValue} und {maxvalue}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
     "@billsAmountAndFrequency": {
         "description": "Subscription match for min and max amounts, and frequency",
         "placeholders": {
@@ -81,11 +81,11 @@
     "@billsChangeSortOrderTooltip": {
         "description": "Text for sort order change button tooltip"
     },
-    "billsErrorLoading": "Fehler beim Laden der Abonnements.",
+    "billsErrorLoading": "Fehler beim Laden der Rechnungen.",
     "@billsErrorLoading": {
         "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
     },
-    "billsExactAmountAndFrequency": "Abonnement passt zu Transaktionen mit {value}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
+    "billsExactAmountAndFrequency": "Rechnung passt zu Transaktionen mit {value}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
     "@billsExactAmountAndFrequency": {
         "description": "Subscription match for exact amount and frequency",
         "placeholders": {
@@ -142,11 +142,11 @@
     "@billsInactive": {
         "description": "Text: when the subscription is inactive"
     },
-    "billsIsActive": "Abonnement ist aktiv",
+    "billsIsActive": "Rechnung ist aktiv",
     "@billsIsActive": {
         "description": "Text: the subscription is active"
     },
-    "billsLayoutGroupSubtitle": "Abonnements werden in ihrer Gruppe angezeigt.",
+    "billsLayoutGroupSubtitle": "Rechnungen werden in ihrer Gruppe angezeigt.",
     "@billsLayoutGroupSubtitle": {
         "description": "Subtitle text for group layout option"
     },
@@ -154,7 +154,7 @@
     "@billsLayoutGroupTitle": {
         "description": "Title text for group layout option"
     },
-    "billsLayoutListSubtitle": "Abonnements werden sortiert in einer Liste angezeigt.",
+    "billsLayoutListSubtitle": "Rechnungen werden sortiert in einer Liste angezeigt.",
     "@billsLayoutListSubtitle": {
         "description": "Subtitle text for list layout option"
     },
@@ -170,7 +170,7 @@
     "@billsNextExpectedMatch": {
         "description": "Text: next expected match for subscription"
     },
-    "billsNotActive": "Abonnement ist inaktiv",
+    "billsNotActive": "Rechnung ist inaktiv",
     "@billsNotActive": {
         "description": "Text: the subscription is inactive"
     },
@@ -357,7 +357,7 @@
             }
         }
     },
-    "generalBill": "Abonnement",
+    "generalBill": "Rechnung",
     "@generalBill": {
         "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
@@ -376,6 +376,10 @@
     "generalDefault": "Standard",
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "Zielkonto",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
     },
     "generalDismiss": "Verwerfen",
     "@generalDismiss": {
@@ -417,6 +421,10 @@
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
     },
+    "generalSourceAccount": "Quellkonto",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
     "generalSpent": "Ausgegeben",
     "@generalSpent": {
         "description": "(Amount) Spent"
@@ -443,7 +451,7 @@
             }
         }
     },
-    "homeMainBillsTitle": "Abonnements für die nächste Woche",
+    "homeMainBillsTitle": "Rechnungen in der nächsten Woche",
     "@homeMainBillsTitle": {
         "description": "Title: Subscriptions for the next week"
     },
@@ -555,6 +563,10 @@
             }
         }
     },
+    "homeMainDialogSettingsTitle": "Übersicht anpassen",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
+    },
     "homePiggyLinked": "Verknüpft mit {account}",
     "@homePiggyLinked": {
         "description": "Piggy bank is linked to asset account {account}.",
@@ -627,11 +639,11 @@
     "@homeTransactionsDialogFilterAccountsAll": {
         "description": "Don't filter for a specific account (default entry)"
     },
-    "homeTransactionsDialogFilterBillsAll": "<Alle Abonnements>",
+    "homeTransactionsDialogFilterBillsAll": "<Alle Rechnungen>",
     "@homeTransactionsDialogFilterBillsAll": {
         "description": "Don't filter for a specific subscription (default entry)"
     },
-    "homeTransactionsDialogFilterBillUnset": "<Ohne Abonnement>",
+    "homeTransactionsDialogFilterBillUnset": "<Ohne Rechnung>",
     "@homeTransactionsDialogFilterBillUnset": {
         "description": "Filter for unset subscription"
     },
@@ -729,7 +741,7 @@
     "@navigationAccounts": {
         "description": "Navigation Label: Accounts Page"
     },
-    "navigationBills": "Abonnements",
+    "navigationBills": "Rechnungen",
     "@navigationBills": {
         "description": "Navigation Label: Subscriptions"
     },
@@ -989,11 +1001,11 @@
     "@transactionDialogAttachmentsTitle": {
         "description": "Dialog Title: Attachments Dialog"
     },
-    "transactionDialogBillNoBill": "Kein Abonnement",
+    "transactionDialogBillNoBill": "Ohne Rechnung",
     "@transactionDialogBillNoBill": {
         "description": "Button Label: no subscription to be used"
     },
-    "transactionDialogBillTitle": "Mit Abonnement verknüpfen",
+    "transactionDialogBillTitle": "Mit Rechnung verknüpfen",
     "@transactionDialogBillTitle": {
         "description": "Dialog Title: Link Subscription to transaction"
     },
@@ -1024,6 +1036,14 @@
     "transactionErrorInvalidBudget": "Ungültiges Budget",
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Bitte tragen Sie zuerst die Konten ein.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Bitte ein Bestandskonto auswählen.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
     },
     "transactionErrorTitle": "Bitte gebe einen Titel an.",
     "@transactionErrorTitle": {
@@ -1064,6 +1084,14 @@
     "transactionSplitChangeCurrency": "Währung der Aufteilung ändern",
     "@transactionSplitChangeCurrency": {
         "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Zielkonto der Aufteilung ändern",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Quellkonto der Aufteilung ändern",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
     },
     "transactionSplitChangeTarget": "Zielkonto der Aufteilung ändern",
     "@transactionSplitChangeTarget": {

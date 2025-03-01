@@ -13,6 +13,7 @@ import 'package:provider/single_child_widget.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
+import 'package:waterflyiii/layout.dart';
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/login.dart';
 import 'package:waterflyiii/pages/navigation.dart';
@@ -204,6 +205,9 @@ class _WaterflyAppState extends State<WaterflyApp> {
             ),
             ChangeNotifierProvider<SettingsProvider>(
               create: (_) => SettingsProvider(),
+            ),
+            ChangeNotifierProvider<LayoutProvider>(
+              create: (BuildContext context) => LayoutProvider(context),
             ),
           ],
           builder: (BuildContext context, _) {

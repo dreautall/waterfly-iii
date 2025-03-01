@@ -69,7 +69,7 @@ class SDe extends S {
       other: ', überspringt $skip',
       zero: '',
     );
-    return 'Abonnement passt zu Transaktionen zwischen $minValue und $maxvalue. Wiederholt sich $_temp0$_temp1.';
+    return 'Rechnung passt zu Transaktionen zwischen $minValue und $maxvalue. Wiederholt sich $_temp0$_temp1.';
   }
 
   @override
@@ -79,7 +79,7 @@ class SDe extends S {
   String get billsChangeSortOrderTooltip => 'Sortierung ändern';
 
   @override
-  String get billsErrorLoading => 'Fehler beim Laden der Abonnements.';
+  String get billsErrorLoading => 'Fehler beim Laden der Rechnungen.';
 
   @override
   String billsExactAmountAndFrequency(
@@ -101,7 +101,7 @@ class SDe extends S {
       other: ', überspringt $skip',
       zero: '',
     );
-    return 'Abonnement passt zu Transaktionen mit $value. Wiederholt sich $_temp0$_temp1.';
+    return 'Rechnung passt zu Transaktionen mit $value. Wiederholt sich $_temp0$_temp1.';
   }
 
   @override
@@ -148,18 +148,18 @@ class SDe extends S {
   String get billsInactive => 'Inaktiv';
 
   @override
-  String get billsIsActive => 'Abonnement ist aktiv';
+  String get billsIsActive => 'Rechnung ist aktiv';
 
   @override
   String get billsLayoutGroupSubtitle =>
-      'Abonnements werden in ihrer Gruppe angezeigt.';
+      'Rechnungen werden in ihrer Gruppe angezeigt.';
 
   @override
   String get billsLayoutGroupTitle => 'Gruppe';
 
   @override
   String get billsLayoutListSubtitle =>
-      'Abonnements werden sortiert in einer Liste angezeigt.';
+      'Rechnungen werden sortiert in einer Liste angezeigt.';
 
   @override
   String get billsLayoutListTitle => 'Liste';
@@ -171,7 +171,7 @@ class SDe extends S {
   String get billsNextExpectedMatch => 'Nächste erwartete Übereinstimmung';
 
   @override
-  String get billsNotActive => 'Abonnement ist inaktiv';
+  String get billsNotActive => 'Rechnung ist inaktiv';
 
   @override
   String get billsNotExpected => 'In diesem Zeitraum nicht erwartet';
@@ -305,7 +305,7 @@ class SDe extends S {
   }
 
   @override
-  String get generalBill => 'Abonnement';
+  String get generalBill => 'Rechnung';
 
   @override
   String get generalBudget => 'Budget';
@@ -320,7 +320,7 @@ class SDe extends S {
   String get generalDefault => 'Standard';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'Zielkonto';
 
   @override
   String get generalDismiss => 'Verwerfen';
@@ -353,7 +353,7 @@ class SDe extends S {
   String get generalReset => 'Zurücksetzen';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'Quellkonto';
 
   @override
   String get generalSpent => 'Ausgegeben';
@@ -381,7 +381,7 @@ class SDe extends S {
   }
 
   @override
-  String get homeMainBillsTitle => 'Abonnements für die nächste Woche';
+  String get homeMainBillsTitle => 'Rechnungen in der nächsten Woche';
 
   @override
   String homeMainBudgetInterval(DateTime from, DateTime to, String period) {
@@ -454,7 +454,7 @@ class SDe extends S {
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'Übersicht anpassen';
 
   @override
   String homePiggyLinked(String account) {
@@ -501,10 +501,10 @@ class SDe extends S {
   String get homeTransactionsDialogFilterAccountsAll => '<Alle Konten>';
 
   @override
-  String get homeTransactionsDialogFilterBillsAll => '<Alle Abonnements>';
+  String get homeTransactionsDialogFilterBillsAll => '<Alle Rechnungen>';
 
   @override
-  String get homeTransactionsDialogFilterBillUnset => '<Ohne Abonnement>';
+  String get homeTransactionsDialogFilterBillUnset => '<Ohne Rechnung>';
 
   @override
   String get homeTransactionsDialogFilterBudgetsAll => '<Alle Budgets>';
@@ -578,7 +578,7 @@ class SDe extends S {
   String get navigationAccounts => 'Konten';
 
   @override
-  String get navigationBills => 'Abonnements';
+  String get navigationBills => 'Rechnungen';
 
   @override
   String get navigationCategories => 'Kategorien';
@@ -787,10 +787,10 @@ class SDe extends S {
   String get transactionDialogAttachmentsTitle => 'Anhänge';
 
   @override
-  String get transactionDialogBillNoBill => 'Kein Abonnement';
+  String get transactionDialogBillNoBill => 'Ohne Rechnung';
 
   @override
-  String get transactionDialogBillTitle => 'Mit Abonnement verknüpfen';
+  String get transactionDialogBillTitle => 'Mit Rechnung verknüpfen';
 
   @override
   String get transactionDialogCurrencyTitle => 'Währung auswählen';
@@ -814,11 +814,12 @@ class SDe extends S {
   String get transactionErrorInvalidBudget => 'Ungültiges Budget';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts =>
+      'Bitte tragen Sie zuerst die Konten ein.';
 
   @override
   String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+      'Bitte ein Bestandskonto auswählen.';
 
   @override
   String get transactionErrorTitle => 'Bitte gebe einen Titel an.';
@@ -852,11 +853,11 @@ class SDe extends S {
 
   @override
   String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+      'Zielkonto der Aufteilung ändern';
 
   @override
   String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+      'Quellkonto der Aufteilung ändern';
 
   @override
   String get transactionSplitChangeTarget => 'Zielkonto der Aufteilung ändern';

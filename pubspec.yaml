@@ -75,9 +75,6 @@ flutter:
   assets:
     - assets/images/logo.svg
 
-flutter_intl:
-  enabled: true
-
 flutter_native_splash:
   android: true
   ios: false

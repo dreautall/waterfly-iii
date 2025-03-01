@@ -69,7 +69,7 @@ class SDe extends S {
       other: ', überspringt $skip',
       zero: '',
     );
-    return 'Rechnung passt zu Transaktionen zwischen $minValue und $maxvalue. Wiederholt sich $_temp0$_temp1.';
+    return 'Abonnement passt zu Transaktionen zwischen $minValue und $maxvalue. Wiederholt sich $_temp0$_temp1.';
   }
 
   @override
@@ -79,7 +79,7 @@ class SDe extends S {
   String get billsChangeSortOrderTooltip => 'Sortierung ändern';
 
   @override
-  String get billsErrorLoading => 'Fehler beim Laden der Rechnungen.';
+  String get billsErrorLoading => 'Fehler beim Laden der Abonnements.';
 
   @override
   String billsExactAmountAndFrequency(
@@ -101,7 +101,7 @@ class SDe extends S {
       other: ', überspringt $skip',
       zero: '',
     );
-    return 'Rechnung passt zu Transaktionen mit $value. Wiederholt sich $_temp0$_temp1.';
+    return 'Abonnement passt zu Transaktionen mit $value. Wiederholt sich $_temp0$_temp1.';
   }
 
   @override
@@ -148,18 +148,18 @@ class SDe extends S {
   String get billsInactive => 'Inaktiv';
 
   @override
-  String get billsIsActive => 'Rechnung ist aktiv';
+  String get billsIsActive => 'Abonnement ist aktiv';
 
   @override
   String get billsLayoutGroupSubtitle =>
-      'Rechnungen werden in ihrer Gruppe angezeigt.';
+      'Abonnements werden in ihrer Gruppe angezeigt.';
 
   @override
   String get billsLayoutGroupTitle => 'Gruppe';
 
   @override
   String get billsLayoutListSubtitle =>
-      'Rechnungen werden sortiert in einer Liste angezeigt.';
+      'Abonnements werden sortiert in einer Liste angezeigt.';
 
   @override
   String get billsLayoutListTitle => 'Liste';
@@ -171,7 +171,7 @@ class SDe extends S {
   String get billsNextExpectedMatch => 'Nächste erwartete Übereinstimmung';
 
   @override
-  String get billsNotActive => 'Rechnung ist inaktiv';
+  String get billsNotActive => 'Abonnement ist inaktiv';
 
   @override
   String get billsNotExpected => 'In diesem Zeitraum nicht erwartet';
@@ -305,7 +305,7 @@ class SDe extends S {
   }
 
   @override
-  String get generalBill => 'Rechnung';
+  String get generalBill => 'Abonnement';
 
   @override
   String get generalBudget => 'Budget';
@@ -381,7 +381,7 @@ class SDe extends S {
   }
 
   @override
-  String get homeMainBillsTitle => 'Rechnungen in der nächsten Woche';
+  String get homeMainBillsTitle => 'Abonnements für die nächste Woche';
 
   @override
   String homeMainBudgetInterval(DateTime from, DateTime to, String period) {
@@ -501,10 +501,10 @@ class SDe extends S {
   String get homeTransactionsDialogFilterAccountsAll => '<Alle Konten>';
 
   @override
-  String get homeTransactionsDialogFilterBillsAll => '<Alle Rechnungen>';
+  String get homeTransactionsDialogFilterBillsAll => '<Alle Abonnements>';
 
   @override
-  String get homeTransactionsDialogFilterBillUnset => '<Ohne Rechnung>';
+  String get homeTransactionsDialogFilterBillUnset => '<Ohne Abonnement>';
 
   @override
   String get homeTransactionsDialogFilterBudgetsAll => '<Alle Budgets>';
@@ -578,7 +578,7 @@ class SDe extends S {
   String get navigationAccounts => 'Konten';
 
   @override
-  String get navigationBills => 'Rechnungen';
+  String get navigationBills => 'Abonnements';
 
   @override
   String get navigationCategories => 'Kategorien';
@@ -643,7 +643,8 @@ class SDe extends S {
   String get settingsFAQ => 'FAQ';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'Öffnet im Browser. Nur auf Englisch verfügbar.';
 
   @override
   String get settingsLanguage => 'Sprache';
@@ -786,10 +787,10 @@ class SDe extends S {
   String get transactionDialogAttachmentsTitle => 'Anhänge';
 
   @override
-  String get transactionDialogBillNoBill => 'Ohne Rechnung';
+  String get transactionDialogBillNoBill => 'Kein Abonnement';
 
   @override
-  String get transactionDialogBillTitle => 'Mit Rechnung verknüpfen';
+  String get transactionDialogBillTitle => 'Mit Abonnement verknüpfen';
 
   @override
   String get transactionDialogCurrencyTitle => 'Währung auswählen';

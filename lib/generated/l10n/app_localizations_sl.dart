@@ -646,7 +646,8 @@ class SSl extends S {
   String get settingsFAQ => 'FAQ';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'Odpre se v brskalniku. Na voljo samo v angleščini.';
 
   @override
   String get settingsLanguage => 'Jezik';

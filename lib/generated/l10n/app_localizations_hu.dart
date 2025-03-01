@@ -648,10 +648,11 @@ class SHu extends S {
   String get settingsDialogThemeTitle => 'Téma Kiválasztása';
 
   @override
-  String get settingsFAQ => 'FAQ';
+  String get settingsFAQ => 'GYIK';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'Megnyitás böngészőben. Csak angol nyelven elérhető.';
 
   @override
   String get settingsLanguage => 'Nyelv';
@@ -685,14 +686,15 @@ class SHu extends S {
       'Egy alkalmazás ezen listához adásához indítson olyan tranzakciókat amelyek telefonértesítéseket generálnak. Ha az alkalmazás továbbra sem jelenik meg, kérjük, jelentse az app@vogt.pw email címre írva.';
 
   @override
-  String get settingsNLAutoAdd => 'Create transaction without interaction';
+  String get settingsNLAutoAdd =>
+      'Tranzakció létrehozása felhasználói beavatkozás nélkül';
 
   @override
   String get settingsNLDescription =>
       'Ez a szolgáltatás lehetővé teszi a tranzakció részleteinek lekérését a bejövő értesítésekből. Továbbá kiválaszthat egy alapértelmezett számlát, amelyhez a tranzakciót hozzá kívánja rendelni - amennyiben ez nincs beállítva, akkor a szolgáltatás az értesítés szövegéből kisérli meg annak kinyerését.';
 
   @override
-  String get settingsNLEmptyNote => 'Keep note field empty';
+  String get settingsNLEmptyNote => 'A \"Jegyzetek\" mező maradjon üres';
 
   @override
   String get settingsNLPermissionGrant => 'Koppintson az engedélyezéshez.';

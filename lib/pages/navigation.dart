@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
@@ -242,6 +243,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                   NavigationRail(
                     selectedIndex: screenIndex,
                     labelType: NavigationRailLabelType.all,
+                    minWidth: 80,
                     onDestinationSelected:
                         (int index) => navOnDestinationSelected(context, index),
                     leading:
@@ -264,22 +266,20 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                         }).toList(),
                   ),
                 Expanded(
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 100),
-                    switchInCurve: animCurveStandard,
-                    transitionBuilder: (
-                      Widget child,
-                      Animation<double> animation,
-                    ) {
-                      return FadeTransition(
-                        opacity: Tween<double>(
-                          begin: 0,
-                          end: 1,
-                        ).animate(animation),
-                        child: child,
-                      );
-                    },
+                  child: PageTransitionSwitcher(
+                    duration: animDurationStandard,
+                    transitionBuilder:
+                        (
+                          Widget child,
+                          Animation<double> primary,
+                          Animation<double> secondary,
+                        ) => FadeThroughTransition(
+                          animation: primary,
+                          secondaryAnimation: secondary,
+                          child: child,
+                        ),
                     child: Column(
+                      key: ValueKey<String>(currentPage.label),
                       children: <Widget>[
                         context.select((NavPageElements n) => n.appBarBottom) ??
                             const SizedBox.shrink(),

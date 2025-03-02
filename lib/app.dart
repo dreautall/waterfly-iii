@@ -45,7 +45,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
   bool _requiresAuth = false;
   DateTime? _lcLastOpen;
 
-  final _layoutProvider = LayoutProvider();
+  final LayoutProvider _layoutProvider = LayoutProvider();
 
   @override
   void initState() {

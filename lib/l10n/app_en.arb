@@ -749,9 +749,9 @@
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
-    "navigationMain": "Main Dashboard",
+    "navigationMain": "Dashboard",
     "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
+        "description": "Navigation Label: Dashboard"
     },
     "navigationSettings": "Settings",
     "@navigationSettings": {

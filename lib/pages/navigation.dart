@@ -44,9 +44,9 @@ class NavPageElements with ChangeNotifier {
     notifyListeners();
   }
 
-  PreferredSizeWidget? _appBarBottom;
-  PreferredSizeWidget? get appBarBottom => _appBarBottom;
-  set appBarBottom(PreferredSizeWidget? value) {
+  Widget? _appBarBottom;
+  Widget? get appBarBottom => _appBarBottom;
+  set appBarBottom(Widget? value) {
     if (value == appBarBottom) {
       log.finer(() => "NavPageElements->setAppBarBottom equal, skipping");
       return;
@@ -177,7 +177,6 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
             appBar: AppBar(
               title: context.select((NavPageElements n) => n.appBarTitle),
               actions: context.select((NavPageElements n) => n.appBarActions),
-              bottom: context.select((NavPageElements n) => n.appBarBottom),
             ),
             drawer:
                 context.watch<LayoutProvider>().currentSize >= ScreenSize.medium
@@ -250,6 +249,11 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                                 ScreenSize.expanded)
                             ? context.select((NavPageElements n) => n.fab)
                             : null,
+                    groupAlignment:
+                        (context.watch<LayoutProvider>().currentSize >=
+                                ScreenSize.expanded)
+                            ? 0
+                            : -1,
                     destinations:
                         navDestinations.map((NavDestination destination) {
                           return NavigationRailDestination(
@@ -275,7 +279,13 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                         child: child,
                       );
                     },
-                    child: currentPage.pageHandler,
+                    child: Column(
+                      children: <Widget>[
+                        context.select((NavPageElements n) => n.appBarBottom) ??
+                            const SizedBox.shrink(),
+                        Expanded(child: currentPage.pageHandler),
+                      ],
+                    ),
                   ),
                 ),
               ],

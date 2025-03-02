@@ -249,7 +249,8 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                     leading:
                         (context.watch<LayoutProvider>().currentSize >=
                                 ScreenSize.expanded)
-                            ? context.select((NavPageElements n) => n.fab)
+                            ? context.select((NavPageElements n) => n.fab) ??
+                                const SizedBox(height: 56)
                             : null,
                     groupAlignment:
                         (context.watch<LayoutProvider>().currentSize >=

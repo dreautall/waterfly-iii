@@ -1,5 +1,5 @@
 {
-    "@@locale": "zh",
+    "@@locale": "zh-CN",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "现金",
     "@accountRoleAssetCashWallet": {
@@ -53,7 +53,7 @@
     },
     "billsAmountAndFrequency": "账单匹配金额在 {minValue} 和 {maxvalue} 之间的交易。{frequency, select, weekly{每周} monthly{每月} quarterly{每季度} halfyear{每半年} yearly{每年} other{未知}}重复{skip, plural, =0{} other{，跳过 {skip} 次}}。",
     "@billsAmountAndFrequency": {
-        "description": "Bill match for min and max amounts, and frequency",
+        "description": "Subscription match for min and max amounts, and frequency",
         "placeholders": {
             "minValue": {
                 "type": "String",
@@ -83,11 +83,11 @@
     },
     "billsErrorLoading": "加载账单时出错。",
     "@billsErrorLoading": {
-        "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
     },
     "billsExactAmountAndFrequency": "账单匹配金额为 {value} 的交易。{frequency, select, weekly{每周} monthly{每月} quarterly{每季度} halfyear{每半年} yearly{每年} other{未知}}重复{skip, plural, =0{} other{，跳过 {skip} 次}}。",
     "@billsExactAmountAndFrequency": {
-        "description": "Bill match for exact amount and frequency",
+        "description": "Subscription match for exact amount and frequency",
         "placeholders": {
             "value": {
                 "type": "String",
@@ -105,7 +105,7 @@
     },
     "billsExpectedOn": "预计日期 {date}",
     "@billsExpectedOn": {
-        "description": "Describes what date the bill is expected",
+        "description": "Describes what date the subscription is expected",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -116,7 +116,7 @@
     },
     "billsFrequency": "{frequency, select,weekly{每周} monthly{每月} quarterly{每季度} halfyear{每半年} yearly{每年} other{未知}}",
     "@billsFrequency": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -126,7 +126,7 @@
     },
     "billsFrequencySkip": "{frequency, select, weekly{每周} monthly{每月} quarterly{每季度} halfyear{每半年} yearly{每年} other{未知}}重复{skip, plural, =0{} other{，跳过 {skip} 次}}",
     "@billsFrequencySkip": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -140,11 +140,11 @@
     },
     "billsInactive": "未启用",
     "@billsInactive": {
-        "description": "Text: when the bill is inactive"
+        "description": "Text: when the subscription is inactive"
     },
     "billsIsActive": "账单已启用",
     "@billsIsActive": {
-        "description": "Text: the bill is active"
+        "description": "Text: the subscription is active"
     },
     "billsLayoutGroupSubtitle": "账单显示在指定的组中。",
     "@billsLayoutGroupSubtitle": {
@@ -168,23 +168,23 @@
     },
     "billsNextExpectedMatch": "下次预期的支付匹配",
     "@billsNextExpectedMatch": {
-        "description": "Text: next expected match for bill"
+        "description": "Text: next expected match for subscription"
     },
     "billsNotActive": "账单未启用",
     "@billsNotActive": {
-        "description": "Text: the bill is inactive"
+        "description": "Text: the subscription is inactive"
     },
     "billsNotExpected": "此周期内没有预期的支付",
     "@billsNotExpected": {
-        "description": "Describes that the bill is not expected this period"
+        "description": "Describes that the subscription is not expected this period"
     },
     "billsNoTransactions": "未找到交易记录。",
     "@billsNoTransactions": {
-        "description": "Describes that there are no transactions connected to the bill"
+        "description": "Describes that there are no transactions connected to the subscription"
     },
     "billsPaidOn": "支付日期 {date}",
     "@billsPaidOn": {
-        "description": "Describes what date the bill was paid",
+        "description": "Describes what date the subscription was paid",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -211,7 +211,7 @@
     },
     "billsUngrouped": "未分组的",
     "@billsUngrouped": {
-        "description": "Title for ungrouped bills"
+        "description": "Title for ungrouped subscriptions"
     },
     "categoryDeleteConfirm": "您确定要删除这个分类吗？与该分类关联的账单不会被删除，但该分类将彻底删除。",
     "@categoryDeleteConfirm": {
@@ -359,7 +359,7 @@
     },
     "generalBill": "账单",
     "@generalBill": {
-        "description": "Bill"
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
     "generalBudget": "预算",
     "@generalBudget": {
@@ -376,6 +376,10 @@
     "generalDefault": "默认",
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "目标账户",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
     },
     "generalDismiss": "放弃",
     "@generalDismiss": {
@@ -417,6 +421,10 @@
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
     },
+    "generalSourceAccount": "源账户",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
     "generalSpent": "支出",
     "@generalSpent": {
         "description": "(Amount) Spent"
@@ -435,7 +443,7 @@
     },
     "homeMainBillsInterval": " （{period, select,weekly{每周} monthly{每月} quarterly{每季度} halfyear{每半年} yearly{每年} other{其它}}）",
     "@homeMainBillsInterval": {
-        "description": "bill interval type",
+        "description": "subscription interval type",
         "placeholders": {
             "period": {
                 "type": "String",
@@ -445,7 +453,7 @@
     },
     "homeMainBillsTitle": "下周的账单",
     "@homeMainBillsTitle": {
-        "description": "Title: Bills for the next week"
+        "description": "Title: Subscriptions for the next week"
     },
     "homeMainBudgetInterval": " （从 {from} 至 {to}，{period}）",
     "@homeMainBudgetInterval": {
@@ -555,6 +563,10 @@
             }
         }
     },
+    "homeMainDialogSettingsTitle": "自定义面板",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
+    },
     "homePiggyLinked": "关联账号 {account}",
     "@homePiggyLinked": {
         "description": "Piggy bank is linked to asset account {account}.",
@@ -629,11 +641,11 @@
     },
     "homeTransactionsDialogFilterBillsAll": "<全部账单>",
     "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
+        "description": "Don't filter for a specific subscription (default entry)"
     },
     "homeTransactionsDialogFilterBillUnset": "<未设置账单>",
     "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
+        "description": "Filter for unset subscription"
     },
     "homeTransactionsDialogFilterBudgetsAll": "<全部预算>",
     "@homeTransactionsDialogFilterBudgetsAll": {
@@ -731,7 +743,7 @@
     },
     "navigationBills": "账单",
     "@navigationBills": {
-        "description": "Navigation Label: Bills"
+        "description": "Navigation Label: Subscriptions"
     },
     "navigationCategories": "分类",
     "@navigationCategories": {
@@ -806,6 +818,14 @@
     "@settingsDialogThemeTitle": {
         "description": "Dialog title: Select theme"
     },
+    "settingsFAQ": "常见问答（FAQ）",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
+    "settingsFAQHelp": "在浏览器内打开。仅支持英文。",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
+    },
     "settingsLanguage": "切换语言",
     "@settingsLanguage": {
         "description": "Currently selected language"
@@ -842,9 +862,17 @@
     "@settingsNLAppAddInfo": {
         "description": "Help text when no more app is available to add."
     },
+    "settingsNLAutoAdd": "创建无互动的交易",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
     "settingsNLDescription": "此服务允许您从传入推送通知中获取交易细节。 此外，您可以选择一个交易应该分配给的默认账户 - 如果没有设置值。 它试图从通知中提取一个帐户。",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "不填写备注",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
     "settingsNLPermissionGrant": "轻触来授予权限。",
     "@settingsNLPermissionGrant": {
@@ -864,7 +892,7 @@
     },
     "settingsNLPrefillTXTitle": "使用通知标题预填交易标题",
     "@settingsNLPrefillTXTitle": {
-        "description": "First line for setting to use pre-fill transaction title with notification title."
+        "description": "Setting pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "正在检查状态...",
     "@settingsNLServiceChecking": {
@@ -975,11 +1003,11 @@
     },
     "transactionDialogBillNoBill": "无账单",
     "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
+        "description": "Button Label: no subscription to be used"
     },
     "transactionDialogBillTitle": "链接账单",
     "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
+        "description": "Dialog Title: Link Subscription to transaction"
     },
     "transactionDialogCurrencyTitle": "选择货币种类",
     "@transactionDialogCurrencyTitle": {
@@ -1008,6 +1036,14 @@
     "transactionErrorInvalidBudget": "无效的预算",
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "请先填写账户。",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "请选择一个资产账户。",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
     },
     "transactionErrorTitle": "请输入标题",
     "@transactionErrorTitle": {
@@ -1048,6 +1084,14 @@
     "transactionSplitChangeCurrency": "更改基本货币",
     "@transactionSplitChangeCurrency": {
         "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "更改拆分目的账户",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "更改拆分源账户",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
     },
     "transactionSplitChangeTarget": "更改拆分目标账户",
     "@transactionSplitChangeTarget": {

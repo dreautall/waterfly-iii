@@ -341,12 +341,7 @@ class _BillsPageState extends State<BillsPage>
     }
 
     // Bill not expected this period
-    return TextSpan(
-      text: S.of(context).billsNotExpected,
-      style: Theme.of(
-        context,
-      ).textTheme.bodySmall!.copyWith(color: Colors.orangeAccent),
-    );
+    return TextSpan(text: S.of(context).billsNotExpected);
   }
 
   void _showLayoutPickerDialog() => showModalBottomSheet<void>(

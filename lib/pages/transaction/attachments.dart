@@ -50,6 +50,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     final List<int> fileData = <int>[];
 
     if (user == null) {
+      log.severe("downloadAttachment: user was null");
       throw Exception(l10n.errorAPIUnavailable);
     }
 
@@ -151,6 +152,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     final S l10n = S.of(context);
 
     if (user == null) {
+      log.severe("uploadAttachment: user was null");
       throw Exception(l10n.errorAPIUnavailable);
     }
 

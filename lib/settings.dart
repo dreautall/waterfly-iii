@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -383,6 +384,10 @@ class SettingsProvider with ChangeNotifier {
       if (debug) {
         Logger.root.level = Level.ALL;
         _debugLogger = Logger.root.onRecord.listen(await DebugLogger().get());
+        PackageInfo appInfo = await PackageInfo.fromPlatform();
+        log.info(
+          "Enabling debug logs, app ${appInfo.appName}, ${appInfo.version}+${appInfo.buildNumber}",
+        );
       } else {
         Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
         await _debugLogger?.cancel();

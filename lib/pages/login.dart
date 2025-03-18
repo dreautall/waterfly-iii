@@ -279,7 +279,7 @@ class _LoginPageState extends State<LoginPage> {
                           if (await canLaunchUrl(uri)) {
                             await launchUrl(uri);
                           } else {
-                            throw "Could not open URL";
+                            throw Exception("Could not open URL");
                           }
                         },
                         child: Text(S.of(context).formButtonHelp),

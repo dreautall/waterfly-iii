@@ -51,7 +51,7 @@
             }
         }
     },
-    "billsAmountAndFrequency": "La bolletta comprende le transazioni con importo tra {minValue} e {maxvalue}. Si ripete con frequenza {frequency, select, weekly{settimanale} monthly{mensile} quarterly{trimestrale} halfyear{semestrale} yearly{annuale} other{sconosciuta}}{skip, plural, =0{} other{, rimandata il {skip}}}.",
+    "billsAmountAndFrequency": "Il pagamento ricorrente comprende le transazioni con importo tra {minValue} e {maxvalue}. Si ripete con frequenza {frequency, select, weekly{settimanale} monthly{mensile} quarterly{trimestrale} halfyear{semestrale} yearly{annuale} other{sconosciuta}}{skip, plural, =0{} other{, rimandata il {skip}}}.",
     "@billsAmountAndFrequency": {
         "description": "Subscription match for min and max amounts, and frequency",
         "placeholders": {
@@ -81,11 +81,11 @@
     "@billsChangeSortOrderTooltip": {
         "description": "Text for sort order change button tooltip"
     },
-    "billsErrorLoading": "Errore nel caricamento delle bollette.",
+    "billsErrorLoading": "Errore caricando i pagamenti ricorrenti.",
     "@billsErrorLoading": {
         "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
     },
-    "billsExactAmountAndFrequency": "La bolletta comprende transazioni di valore {value}. Si ripete con frequenza {frequency, select, weekly{settimanale} monthly{mensile} quarterly{trimestrale} halfyear{semestrale} yearly{annuale} other{sconosciuta}}{skip, plural, =0{} other{, rimandata il {skip}}}.",
+    "billsExactAmountAndFrequency": "Il pagamento ricorrente comprende transazioni di valore {value}. Si ripete con frequenza {frequency, select, weekly{settimanale} monthly{mensile} quarterly{trimestrale} halfyear{semestrale} yearly{annuale} other{sconosciuta}}{skip, plural, =0{} other{, rimandata il {skip}}}.",
     "@billsExactAmountAndFrequency": {
         "description": "Subscription match for exact amount and frequency",
         "placeholders": {
@@ -142,11 +142,11 @@
     "@billsInactive": {
         "description": "Text: when the subscription is inactive"
     },
-    "billsIsActive": "Bolletta attiva",
+    "billsIsActive": "Il pagamento ricorrente è attivo",
     "@billsIsActive": {
         "description": "Text: the subscription is active"
     },
-    "billsLayoutGroupSubtitle": "Bollette visualizzate nei gruppi assegnati.",
+    "billsLayoutGroupSubtitle": "Pagamenti ricorrenti visualizzati nei gruppi assegnati.",
     "@billsLayoutGroupSubtitle": {
         "description": "Subtitle text for group layout option"
     },
@@ -154,7 +154,7 @@
     "@billsLayoutGroupTitle": {
         "description": "Title text for group layout option"
     },
-    "billsLayoutListSubtitle": "Bollette visualizzate in un elenco ordinate in base a determinati criteri.",
+    "billsLayoutListSubtitle": "Pagamenti ricorrenti visualizzati in un elenco ordinate in base a determinati criteri.",
     "@billsLayoutListSubtitle": {
         "description": "Subtitle text for list layout option"
     },
@@ -170,7 +170,7 @@
     "@billsNextExpectedMatch": {
         "description": "Text: next expected match for subscription"
     },
-    "billsNotActive": "La bolletta non è attiva",
+    "billsNotActive": "Il pagamento ricorrente è inattivo",
     "@billsNotActive": {
         "description": "Text: the subscription is inactive"
     },
@@ -741,7 +741,7 @@
     "@navigationAccounts": {
         "description": "Navigation Label: Accounts Page"
     },
-    "navigationBills": "Bollette",
+    "navigationBills": "Pagamenti ricorrenti",
     "@navigationBills": {
         "description": "Navigation Label: Subscriptions"
     },

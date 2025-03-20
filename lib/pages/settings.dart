@@ -222,7 +222,7 @@ class SettingsPageState extends State<SettingsPage>
             if (await canLaunchUrl(uri)) {
               await launchUrl(uri);
             } else {
-              throw "Could not open URL";
+              throw Exception("Could not open URL");
             }
           },
         ),

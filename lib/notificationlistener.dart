@@ -185,9 +185,9 @@ void nlCallback() async {
             ValidationErrorResponse valError = ValidationErrorResponse.fromJson(
               json.decode(resp.error.toString()),
             );
-            throw Exception(valError.message);
+            throw Exception("nlCallBack PostTransaction: ${valError.message}");
           } catch (_) {
-            throw Exception("unknown");
+            throw Exception("nlCallBack PostTransaction: unknown");
           }
         }
 

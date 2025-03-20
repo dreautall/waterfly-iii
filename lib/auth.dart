@@ -228,7 +228,7 @@ class FireflyService with ChangeNotifier {
   FireflyIii get api {
     if (_currentUser?.api == null) {
       signOut();
-      throw Exception("API unavailable");
+      throw Exception("FireflyService.api: API unavailable");
     }
     return _currentUser!.api;
   }
@@ -236,7 +236,7 @@ class FireflyService with ChangeNotifier {
   FireflyIiiV2 get apiV2 {
     if (_currentUser?.apiV2 == null) {
       signOut();
-      throw Exception("API unavailable");
+      throw Exception("FireflyService.apiV2: API unavailable");
     }
     return _currentUser!.apiV2;
   }

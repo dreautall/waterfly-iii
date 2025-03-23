@@ -2302,17 +2302,38 @@ TransactionSplitUpdate txFilterSameFields(
        'destination_id', 'destination_name', 'destination_number', 'destination_iban',
      ];
        */
-  return txU.copyWith(
-    amount: tx.amount == txU.amount ? null : txU.amount,
-    foreignAmount:
-        tx.foreignAmount == txU.foreignAmount ? null : txU.foreignAmount,
+  final String? amount =
+      (txU.amount == null ||
+              double.parse(tx.amount) == double.parse(txU.amount!))
+          ? null
+          : txU.amount;
+  String? foreignAmount;
+  if (txU.foreignAmount != null) {
+    if (tx.foreignAmount == null) {
+      foreignAmount = txU.foreignAmount;
+    } else if (double.parse(tx.foreignAmount!) ==
+        double.parse(txU.foreignAmount!)) {
+      foreignAmount = null;
+    } else {
+      foreignAmount = txU.foreignAmount;
+    }
+  }
+
+  return txU.copyWithWrapped(
+    amount: Wrapped<String?>.value(amount),
+    foreignAmount: Wrapped<String?>.value(foreignAmount),
     foreignCurrencyId:
         tx.foreignCurrencyId == txU.foreignCurrencyId
-            ? null
-            : txU.foreignCurrencyId,
-    sourceName: tx.sourceName == txU.sourceName ? null : txU.sourceName,
+            ? Wrapped<String?>.value(null)
+            : Wrapped<String?>.value(txU.foreignCurrencyId),
+    sourceName:
+        tx.sourceName == txU.sourceName
+            ? Wrapped<String?>.value(null)
+            : Wrapped<String?>.value(txU.sourceName),
     destinationName:
-        tx.destinationName == txU.destinationName ? null : txU.destinationName,
+        tx.destinationName == txU.destinationName
+            ? Wrapped<String?>.value(null)
+            : Wrapped<String?>.value(txU.destinationName),
   );
 }
 

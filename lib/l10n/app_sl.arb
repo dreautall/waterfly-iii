@@ -53,7 +53,7 @@
     },
     "billsAmountAndFrequency": "Račun se ujema s transakcijami med {minValue} in {maxvalue}. Ponavlja se {frequency, select, weekly{tedensko} monthly{mesečno} quarterly{četrtletno} halfyear{polletno} yearly{letno} other{neznano}}{skip, plural, =0{} other{, preskoči čez {skip}}}.",
     "@billsAmountAndFrequency": {
-        "description": "Bill match for min and max amounts, and frequency",
+        "description": "Subscription match for min and max amounts, and frequency",
         "placeholders": {
             "minValue": {
                 "type": "String",
@@ -83,11 +83,11 @@
     },
     "billsErrorLoading": "Napaka pri nalaganju transakcij.",
     "@billsErrorLoading": {
-        "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
     },
     "billsExactAmountAndFrequency": "Račun se ujema s transakcijami v vrednosti {value}. Ponavlja se {frequency, select, weekly{tedensko} monthly{mesečno} quarterly{četrtletno} halfyear{polletno} yearly{letno} other{neznano}}{skip, plural, =0{} other{, preskoči čez {skip}}}.",
     "@billsExactAmountAndFrequency": {
-        "description": "Bill match for exact amount and frequency",
+        "description": "Subscription match for exact amount and frequency",
         "placeholders": {
             "value": {
                 "type": "String",
@@ -105,7 +105,7 @@
     },
     "billsExpectedOn": "Predvideno {date}",
     "@billsExpectedOn": {
-        "description": "Describes what date the bill is expected",
+        "description": "Describes what date the subscription is expected",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -116,7 +116,7 @@
     },
     "billsFrequency": "{frequency, select, weekly{Tedensko} monthly{Mesečno} quarterly{Četrtletno} halfyear{Polletno} yearly{Letno} other{Neznano}}",
     "@billsFrequency": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -126,7 +126,7 @@
     },
     "billsFrequencySkip": "{frequency, select, weekly{Tedensko} monthly{Mesečno} quarterly{Četrtletno} halfyear{Polletno} yearly{Letno} other{Neznano}}{skip, plural, =0{} other{, preskoči čez {skip}}}",
     "@billsFrequencySkip": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -140,11 +140,11 @@
     },
     "billsInactive": "Neaktiven",
     "@billsInactive": {
-        "description": "Text: when the bill is inactive"
+        "description": "Text: when the subscription is inactive"
     },
     "billsIsActive": "Transakcija je aktivna",
     "@billsIsActive": {
-        "description": "Text: the bill is active"
+        "description": "Text: the subscription is active"
     },
     "billsLayoutGroupSubtitle": "Transakcije, prikazane v dodeljenih skupinah.",
     "@billsLayoutGroupSubtitle": {
@@ -168,23 +168,23 @@
     },
     "billsNextExpectedMatch": "Naslednje pričakovano ujemanje",
     "@billsNextExpectedMatch": {
-        "description": "Text: next expected match for bill"
+        "description": "Text: next expected match for subscription"
     },
     "billsNotActive": "Transakcija ni aktivna",
     "@billsNotActive": {
-        "description": "Text: the bill is inactive"
+        "description": "Text: the subscription is inactive"
     },
     "billsNotExpected": "Ni pričakovano v tem obdobju",
     "@billsNotExpected": {
-        "description": "Describes that the bill is not expected this period"
+        "description": "Describes that the subscription is not expected this period"
     },
     "billsNoTransactions": "Ni najdenih transakcij.",
     "@billsNoTransactions": {
-        "description": "Describes that there are no transactions connected to the bill"
+        "description": "Describes that there are no transactions connected to the subscription"
     },
     "billsPaidOn": "Plačano dne {date}",
     "@billsPaidOn": {
-        "description": "Describes what date the bill was paid",
+        "description": "Describes what date the subscription was paid",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -211,7 +211,7 @@
     },
     "billsUngrouped": "Nezdruženo",
     "@billsUngrouped": {
-        "description": "Title for ungrouped bills"
+        "description": "Title for ungrouped subscriptions"
     },
     "categoryDeleteConfirm": "Ali ste prepričani, da želite izbrisati to kategorijo? Transakcije ne bodo izbrisane, vendar ne bodo imele več kategorije.",
     "@categoryDeleteConfirm": {
@@ -359,7 +359,7 @@
     },
     "generalBill": "Račun",
     "@generalBill": {
-        "description": "Bill"
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
     "generalBudget": "Proračun",
     "@generalBudget": {
@@ -376,6 +376,10 @@
     "generalDefault": "privzeto",
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "Ciljni račun",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
     },
     "generalDismiss": "Opusti",
     "@generalDismiss": {
@@ -417,6 +421,10 @@
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
     },
+    "generalSourceAccount": "Izvorni račun",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
     "generalSpent": "Porabljeno",
     "@generalSpent": {
         "description": "(Amount) Spent"
@@ -435,7 +443,7 @@
     },
     "homeMainBillsInterval": " ({period, select, weekly{tedensko} monthly{mesečno} quarterly{četrtletno} halfyear{polletno} yearly{letno} other{neznano}})",
     "@homeMainBillsInterval": {
-        "description": "bill interval type",
+        "description": "subscription interval type",
         "placeholders": {
             "period": {
                 "type": "String",
@@ -445,7 +453,7 @@
     },
     "homeMainBillsTitle": "Računi za naslednji teden",
     "@homeMainBillsTitle": {
-        "description": "Title: Bills for the next week"
+        "description": "Title: Subscriptions for the next week"
     },
     "homeMainBudgetInterval": " ({from} do {to}, {period})",
     "@homeMainBudgetInterval": {
@@ -555,6 +563,10 @@
             }
         }
     },
+    "homeMainDialogSettingsTitle": "Prilagodi nadzorno ploščo",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
+    },
     "homePiggyLinked": "Povezano z {account}",
     "@homePiggyLinked": {
         "description": "Piggy bank is linked to asset account {account}.",
@@ -629,11 +641,11 @@
     },
     "homeTransactionsDialogFilterBillsAll": "<Vsi računi>",
     "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
+        "description": "Don't filter for a specific subscription (default entry)"
     },
     "homeTransactionsDialogFilterBillUnset": "<Ni računov>",
     "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
+        "description": "Filter for unset subscription"
     },
     "homeTransactionsDialogFilterBudgetsAll": "<Vsi proračuni>",
     "@homeTransactionsDialogFilterBudgetsAll": {
@@ -731,7 +743,7 @@
     },
     "navigationBills": "Transakcije",
     "@navigationBills": {
-        "description": "Navigation Label: Bills"
+        "description": "Navigation Label: Subscriptions"
     },
     "navigationCategories": "Kategorije",
     "@navigationCategories": {
@@ -991,11 +1003,11 @@
     },
     "transactionDialogBillNoBill": "Ni računa",
     "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
+        "description": "Button Label: no subscription to be used"
     },
     "transactionDialogBillTitle": "Poveži z računom",
     "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
+        "description": "Dialog Title: Link Subscription to transaction"
     },
     "transactionDialogCurrencyTitle": "Izberi valuto",
     "@transactionDialogCurrencyTitle": {
@@ -1024,6 +1036,14 @@
     "transactionErrorInvalidBudget": "Neveljaven proračun",
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Najprej izpolni račune.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Izberi račun sredstev.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
     },
     "transactionErrorTitle": "Prosim navedite naslov.",
     "@transactionErrorTitle": {
@@ -1064,6 +1084,14 @@
     "transactionSplitChangeCurrency": "Spremeni valuto razdelitve",
     "@transactionSplitChangeCurrency": {
         "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Spremeni razdeljeni ciljni račun",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Spremeni izvirni račun razdeljenega vira",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
     },
     "transactionSplitChangeTarget": "Spremeni ciljni račun razdelitve",
     "@transactionSplitChangeTarget": {

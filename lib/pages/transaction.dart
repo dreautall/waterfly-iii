@@ -1417,7 +1417,8 @@ class _TransactionPageState extends State<TransactionPage>
                   onChanged: (_) {
                     // Reset own account & account type when changed
                     if (_sourceAccountType ==
-                        AccountTypeProperty.assetAccount) {
+                            AccountTypeProperty.assetAccount ||
+                        _sourceAccountType == AccountTypeProperty.debt) {
                       _ownAccountId = null;
                     }
                     _sourceAccountType =
@@ -1438,7 +1439,8 @@ class _TransactionPageState extends State<TransactionPage>
                           "selected source account ${option.name}, type ${_sourceAccountType.toString()} (${option.type})",
                     );
                     if (_sourceAccountType ==
-                        AccountTypeProperty.assetAccount) {
+                            AccountTypeProperty.assetAccount ||
+                        _sourceAccountType == AccountTypeProperty.debt) {
                       _ownAccountId = option.id;
                     }
                     checkTXType();
@@ -1511,7 +1513,8 @@ class _TransactionPageState extends State<TransactionPage>
 
                       // Reset own account & account type when changed
                       if (_destinationAccountType ==
-                          AccountTypeProperty.assetAccount) {
+                              AccountTypeProperty.assetAccount ||
+                          _destinationAccountType == AccountTypeProperty.debt) {
                         _ownAccountId = null;
                       }
                       _destinationAccountType =
@@ -1534,7 +1537,8 @@ class _TransactionPageState extends State<TransactionPage>
                                     AccountTypeProperty.swaggerGeneratedUnknown,
                           );
                       if (_destinationAccountType ==
-                          AccountTypeProperty.assetAccount) {
+                              AccountTypeProperty.assetAccount ||
+                          _destinationAccountType == AccountTypeProperty.debt) {
                         _ownAccountId = option.id;
                       }
                       log.finer(
@@ -1648,10 +1652,14 @@ class _TransactionPageState extends State<TransactionPage>
     // 2. set account is destination & assetAccount & source account is NOT an
     //    asset account
     // 3. either source or destination account are still unset, so first to set
-    if ((isSource && _sourceAccountType == AccountTypeProperty.assetAccount) ||
+    if ((isSource &&
+            (_sourceAccountType == AccountTypeProperty.assetAccount ||
+                _sourceAccountType == AccountTypeProperty.debt)) ||
         (!isSource &&
-            _destinationAccountType == AccountTypeProperty.assetAccount &&
-            _sourceAccountType != AccountTypeProperty.assetAccount) ||
+            (_destinationAccountType == AccountTypeProperty.assetAccount ||
+                _destinationAccountType == AccountTypeProperty.debt) &&
+            (_sourceAccountType != AccountTypeProperty.assetAccount &&
+                _sourceAccountType != AccountTypeProperty.debt)) ||
         (_sourceAccountType == AccountTypeProperty.swaggerGeneratedUnknown ||
             _destinationAccountType ==
                 AccountTypeProperty.swaggerGeneratedUnknown)) {
@@ -1673,8 +1681,10 @@ class _TransactionPageState extends State<TransactionPage>
     // set foreign currency if account is destination & asset account and source
     // account is also asset account (transfer from one currency to other)
     if ((!isSource &&
-            _destinationAccountType == AccountTypeProperty.assetAccount &&
-            _sourceAccountType == AccountTypeProperty.assetAccount) &&
+            (_destinationAccountType == AccountTypeProperty.assetAccount ||
+                _destinationAccountType == AccountTypeProperty.debt) &&
+            (_sourceAccountType == AccountTypeProperty.assetAccount ||
+                _destinationAccountType == AccountTypeProperty.debt)) &&
         _localCurrency?.id != option.currencyId) {
       // Only when destination & source account have different currency
       if (!_foreignCurrencies.every(
@@ -1709,10 +1719,10 @@ class _TransactionPageState extends State<TransactionPage>
     );
     /* WATERFLY CUSTOM - NOT FIREFLY BEHAVIOR!
      * To ease UX, two assumptions:
-     * 1. If only source is entered & it's an asset account, it'll be a
-     *    withdrawal
-     * 2. If only destination is entered & it's an asset account, it'll be a
-     *    deposit
+     * 1. If only source is entered & it's an asset/liability account, it'll be
+     *    a withdrawal
+     * 2. If only destination is entered & it's an asset/liability account,
+     *    it'll be a deposit
      *
      * As _ownAccountId will be set for both of these scenarios, the other one
      * would potentially be created by FF3 when saving. The actual webinterface
@@ -1722,13 +1732,15 @@ class _TransactionPageState extends State<TransactionPage>
      */
 
     if (txType == TransactionTypeProperty.swaggerGeneratedUnknown &&
-        _sourceAccountType == AccountTypeProperty.assetAccount &&
+        (_sourceAccountType == AccountTypeProperty.assetAccount ||
+            _sourceAccountType == AccountTypeProperty.debt) &&
         _destinationAccountType ==
             AccountTypeProperty.swaggerGeneratedUnknown) {
       txType = TransactionTypeProperty.withdrawal;
     } else if (txType == TransactionTypeProperty.swaggerGeneratedUnknown &&
         _sourceAccountType == AccountTypeProperty.swaggerGeneratedUnknown &&
-        _destinationAccountType == AccountTypeProperty.assetAccount) {
+        (_destinationAccountType == AccountTypeProperty.assetAccount ||
+            _destinationAccountType == AccountTypeProperty.debt)) {
       txType = TransactionTypeProperty.deposit;
     }
 

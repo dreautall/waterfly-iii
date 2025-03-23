@@ -933,8 +933,6 @@ class _TransactionPageState extends State<TransactionPage>
                                 _destinationAccountTextController.text;
                           }
 
-                          debugPrint(destinationName);
-
                           final TransactionSplitUpdate
                           txSs = TransactionSplitUpdate(
                             amount: _localAmounts[i].toString(),
@@ -1913,7 +1911,6 @@ class _TransactionPageState extends State<TransactionPage>
                                       TextEditingValue textEditingValue,
                                     ) async {
                                       try {
-                                        debugPrint("building options");
                                         final FireflyIii api =
                                             context.read<FireflyService>().api;
                                         fetchOp = CancelableOperation<

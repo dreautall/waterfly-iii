@@ -2319,6 +2319,13 @@ TransactionSplitUpdate txFilterSameFields(
     }
   }
 
+  // Undo "HAX" from above if not needed (foreign currency was zero, is zero)
+  if (tx.foreignCurrencyId == null &&
+      txU.foreignCurrencyId == null &&
+      foreignAmount == "0") {
+    foreignAmount = null;
+  }
+
   return txU.copyWithWrapped(
     amount: Wrapped<String?>.value(amount),
     foreignAmount: Wrapped<String?>.value(foreignAmount),

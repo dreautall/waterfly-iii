@@ -386,7 +386,7 @@ class SettingsProvider with ChangeNotifier {
         _debugLogger = Logger.root.onRecord.listen(await DebugLogger().get());
         PackageInfo appInfo = await PackageInfo.fromPlatform();
         log.info(
-          "Enabling debug logs, app ${appInfo.appName}, ${appInfo.version}+${appInfo.buildNumber}",
+          "Enabling debug logs, app ${appInfo.appName} v${appInfo.version}+${appInfo.buildNumber}",
         );
       } else {
         Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;

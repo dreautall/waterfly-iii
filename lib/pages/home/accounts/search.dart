@@ -36,6 +36,13 @@ class _AccountSearchState extends State<AccountSearch> {
 
   final Logger log = Logger("Pages.Accounts.Search");
 
+  @override
+  void initState() {
+    super.initState();
+
+    currentFilter = widget.type;
+  }
+
   Future<void> _fetchPage() async {
     if (_pagingState.isLoading) return;
 

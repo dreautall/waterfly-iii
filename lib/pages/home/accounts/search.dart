@@ -175,7 +175,10 @@ class _AccountSearchState extends State<AccountSearch> {
                     : null,
           ),
           autofocus: true,
-          onChanged: (_) => setState(() {}),
+          onChanged:
+              (_) => setState(() {
+                _searched = false;
+              }),
           onSubmitted:
               (_) => setState(() {
                 if (!_searched) {

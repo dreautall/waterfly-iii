@@ -104,6 +104,9 @@ Widget accountRowBuilder(
     default:
       subtitle = S.of(context).generalUnknown;
   }
+  if (subtitle == S.of(context).generalUnknown) {
+    return const SizedBox.shrink();
+  }
   return OpenContainer(
     openBuilder:
         (BuildContext context, Function closedContainer) => AccountTXpage(

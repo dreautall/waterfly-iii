@@ -1252,43 +1252,26 @@ class _TransactionPageState extends State<TransactionPage>
             focusNode: _titleFocusNode,
           ),
           const SizedBox(width: 12),
-          badges.Badge(
-            badgeContent: Text(
-              _attachments?.length.toString() ?? "..",
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-            ),
-            showBadge: _hasAttachments,
-            badgeStyle: badges.BadgeStyle(
-              badgeColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-            ),
-            badgeAnimation: const badges.BadgeAnimation.scale(
-              animationDuration: animDurationEmphasized,
-              curve: animCurveEmphasized,
-            ),
-            child: MaterialIconButton(
-              icon: Icons.attach_file,
-              tooltip: S.of(context).transactionAttachments,
-              onPressed: () async {
-                List<AttachmentRead> dialogAttachments =
-                    _attachments ?? <AttachmentRead>[];
-                await showDialog<List<AttachmentRead>>(
-                  context: context,
-                  builder:
-                      (BuildContext context) => AttachmentDialog(
-                        attachments: dialogAttachments,
-                        transactionId: _transactionJournalIDs.firstWhereOrNull(
-                          (String? element) => element != null,
-                        ),
+          AttachmentButton(
+            attachments: _attachments,
+            onPressed: () async {
+              List<AttachmentRead> dialogAttachments =
+                  _attachments ?? <AttachmentRead>[];
+              await showDialog<List<AttachmentRead>>(
+                context: context,
+                builder:
+                    (BuildContext context) => AttachmentDialog(
+                      attachments: dialogAttachments,
+                      transactionId: _transactionJournalIDs.firstWhereOrNull(
+                        (String? element) => element != null,
                       ),
-                );
-                setState(() {
-                  _attachments = dialogAttachments;
-                  _hasAttachments = _attachments?.isNotEmpty ?? false;
-                });
-              },
-            ),
+                    ),
+              );
+              setState(() {
+                _attachments = dialogAttachments;
+                _hasAttachments = _attachments?.isNotEmpty ?? false;
+              });
+            },
           ),
         ],
       ),
@@ -2639,6 +2622,63 @@ class _TransactionBudgetState extends State<TransactionBudget> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class AttachmentButton extends StatefulWidget {
+  final List<AttachmentRead>? attachments;
+  final Future<void> Function() onPressed;
+
+  const AttachmentButton({
+    super.key,
+    required this.attachments,
+    required this.onPressed,
+  });
+
+  @override
+  State<AttachmentButton> createState() => _AttachmentButtonState();
+}
+
+class _AttachmentButtonState extends State<AttachmentButton> {
+  late bool _hasAttachments;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _hasAttachments = widget.attachments?.isNotEmpty ?? false;
+  }
+
+  @override
+  void didUpdateWidget(covariant AttachmentButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    _hasAttachments = widget.attachments?.isNotEmpty ?? false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return badges.Badge(
+      badgeContent: Text(
+        widget.attachments?.length.toString() ?? "..",
+        style: Theme.of(context).textTheme.labelMedium!.copyWith(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
+      ),
+      showBadge: _hasAttachments,
+      badgeStyle: badges.BadgeStyle(
+        badgeColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+      ),
+      badgeAnimation: const badges.BadgeAnimation.scale(
+        animationDuration: animDurationEmphasized,
+        curve: animCurveEmphasized,
+      ),
+      child: MaterialIconButton(
+        icon: Icons.attach_file,
+        tooltip: S.of(context).transactionAttachments,
+        onPressed: widget.onPressed,
+      ),
     );
   }
 }

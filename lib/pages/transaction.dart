@@ -68,8 +68,6 @@ class _TransactionPageState extends State<TransactionPage>
   final FocusNode _titleFocusNode = FocusNode();
   String? _ownAccountId;
   late tz.TZDateTime _date;
-  final TextEditingController _dateTextController = TextEditingController();
-  final TextEditingController _timeTextController = TextEditingController();
   CurrencyRead? _localCurrency;
   bool _reconciled = false;
   bool _initiallyReconciled = false;
@@ -376,8 +374,6 @@ class _TransactionPageState extends State<TransactionPage>
               _tzHandler
                   .notificationTXTime(widget.notification!.date)
                   .toLocal();
-          _dateTextController.text = DateFormat.yMMMd().format(_date);
-          _timeTextController.text = DateFormat.Hm().format(_date);
 
           // Title & Note
           final NotificationAppSettings appSettings = await settings
@@ -507,10 +503,10 @@ class _TransactionPageState extends State<TransactionPage>
       _hasAttachments = false;
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    /*WidgetsBinding.instance.addPostFrameCallback((_) {
       _dateTextController.text = DateFormat.yMMMd().format(_date);
       _timeTextController.text = DateFormat.Hm().format(_date);
-    });
+    });*/
   }
 
   @override
@@ -521,8 +517,6 @@ class _TransactionPageState extends State<TransactionPage>
     _sourceAccountFocusNode.dispose();
     _destinationAccountTextController.dispose();
     _destinationAccountFocusNode.dispose();
-    _dateTextController.dispose();
-    _timeTextController.dispose();
     _localAmountTextController.dispose();
 
     for (TextEditingController t in _sourceAccountTextControllers) {
@@ -1313,66 +1307,13 @@ class _TransactionPageState extends State<TransactionPage>
               ),
             ),
             vDivider,
-            IntrinsicWidth(
-              child: TextFormField(
-                controller: _dateTextController,
-                decoration: const InputDecoration(
-                  //prefixIcon: Icon(Icons.calendar_month),
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: _date,
-                    locale: Locale(
-                      Intl.defaultLocale!.split("_").first,
-                      Intl.defaultLocale!.split("_").last,
-                    ),
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2101),
-                  );
-
-                  if (pickedDate == null) {
-                    return;
-                  }
-
-                  setState(() {
-                    _date = tz.TZDateTime.from(
-                      _date.copyWith(
-                        year: pickedDate.year,
-                        month: pickedDate.month,
-                        day: pickedDate.day,
-                      ),
-                      _date.location,
-                    );
-                    _dateTextController.text = DateFormat.yMMMd().format(_date);
-                  });
-                },
-              ),
-            ),
-            vDivider,
-            IntrinsicWidth(
-              child: TextFormField(
-                controller: _timeTextController,
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-                readOnly: true,
-                onTap: () async {
-                  TimeOfDay? pickedTime = await showTimePicker(
-                    context: context,
-                    initialTime: _date.getTimeOfDay(),
-                  );
-
-                  if (pickedTime == null) {
-                    return;
-                  }
-
-                  setState(() {
-                    _date = _date.setTimeOfDay(pickedTime);
-                    _timeTextController.text = DateFormat.Hm().format(_date);
-                  });
-                },
-              ),
+            DateTimePicker(
+              initialDateTime: _date,
+              onDateTimeChanged: (tz.TZDateTime newDateTime) {
+                setState(() {
+                  _date = newDateTime;
+                });
+              },
             ),
           ],
         ),
@@ -2679,6 +2620,121 @@ class _AttachmentButtonState extends State<AttachmentButton> {
         tooltip: S.of(context).transactionAttachments,
         onPressed: widget.onPressed,
       ),
+    );
+  }
+}
+
+class DateTimePicker extends StatefulWidget {
+  const DateTimePicker({
+    super.key,
+    required this.initialDateTime,
+    required this.onDateTimeChanged,
+  });
+
+  final tz.TZDateTime initialDateTime;
+  final ValueChanged<tz.TZDateTime> onDateTimeChanged;
+
+  @override
+  State<DateTimePicker> createState() => _DateTimePickerState();
+}
+
+class _DateTimePickerState extends State<DateTimePicker> {
+  late tz.TZDateTime _selectedDateTime;
+  late TextEditingController _dateTextController;
+  late TextEditingController _timeTextController;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDateTime = widget.initialDateTime;
+    _dateTextController = TextEditingController(
+      text: DateFormat.yMMMd().format(_selectedDateTime),
+    );
+    _timeTextController = TextEditingController(
+      text: DateFormat.Hm().format(_selectedDateTime),
+    );
+  }
+
+  @override
+  void dispose() {
+    _dateTextController.dispose();
+    _timeTextController.dispose();
+
+    super.dispose();
+  }
+
+  Future<void> _pickDate() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDateTime,
+      locale: Locale(
+        Intl.defaultLocale!.split('_').first,
+        Intl.defaultLocale!.split('_').last,
+      ),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate == null) {
+      return;
+    }
+
+    setState(() {
+      _selectedDateTime = tz.TZDateTime.from(
+        _selectedDateTime.copyWith(
+          year: pickedDate.year,
+          month: pickedDate.month,
+          day: pickedDate.day,
+        ),
+        _selectedDateTime.location,
+      );
+      _dateTextController.text = DateFormat.yMMMd().format(_selectedDateTime);
+      widget.onDateTimeChanged(_selectedDateTime);
+    });
+  }
+
+  Future<void> _pickTime() async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: _selectedDateTime.getTimeOfDay(),
+    );
+
+    if (pickedTime == null) {
+      return;
+    }
+
+    setState(() {
+      _selectedDateTime = _selectedDateTime.setTimeOfDay(pickedTime);
+      _timeTextController.text = DateFormat.Hm().format(_selectedDateTime);
+      widget.onDateTimeChanged(_selectedDateTime);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        IntrinsicWidth(
+          child: TextFormField(
+            controller: _dateTextController,
+            decoration: const InputDecoration(
+              //prefixIcon: Icon(Icons.calendar_month),
+              border: OutlineInputBorder(),
+            ),
+            readOnly: true,
+            onTap: _pickDate,
+          ),
+        ),
+        const SizedBox(width: 16),
+        IntrinsicWidth(
+          child: TextFormField(
+            controller: _timeTextController,
+            decoration: const InputDecoration(border: OutlineInputBorder()),
+            readOnly: true,
+            onTap: _pickTime,
+          ),
+        ),
+      ],
     );
   }
 }

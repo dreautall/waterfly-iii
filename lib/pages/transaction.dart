@@ -987,12 +987,18 @@ class _TransactionPageState extends State<TransactionPage>
                           transactions: txS,
                         );
                         // Delete old splits
-                        for (String id in _deletedSplitIDs) {
-                          if (id.isEmpty) {
-                            continue;
-                          }
-                          log.fine(() => "deleting split $id");
-                          await api.v1TransactionJournalsIdDelete(id: id);
+                        final List<Future<Response<dynamic>>> futures =
+                            _deletedSplitIDs
+                                .where((String id) => id.isNotEmpty)
+                                .map((String id) {
+                                  log.fine(() => "deleting split $id");
+                                  return api.v1TransactionJournalsIdDelete(
+                                    id: id,
+                                  );
+                                })
+                                .toList();
+                        if (futures.isNotEmpty) {
+                          await Future.wait(futures);
                         }
                         resp = await api.v1TransactionsIdPut(
                           id: id,

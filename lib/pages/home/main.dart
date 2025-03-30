@@ -160,24 +160,26 @@ class _HomeMainState extends State<HomeMain>
       }
 
       for (TZDateTime e in lastDays) {
-        final Response<InsightTotal> respInsightExpense = await api
-            .v1InsightExpenseTotalGet(
-              start: DateFormat('yyyy-MM-dd', 'en_US').format(e),
-              end: DateFormat('yyyy-MM-dd', 'en_US').format(e),
-            );
+        final (
+          Response<InsightTotal> respInsightExpense,
+          Response<InsightTotal> respInsightIncome,
+        ) = await (
+              api.v1InsightExpenseTotalGet(
+                start: DateFormat('yyyy-MM-dd', 'en_US').format(e),
+                end: DateFormat('yyyy-MM-dd', 'en_US').format(e),
+              ),
+              api.v1InsightIncomeTotalGet(
+                start: DateFormat('yyyy-MM-dd', 'en_US').format(e),
+                end: DateFormat('yyyy-MM-dd', 'en_US').format(e),
+              ),
+            ).wait;
         apiThrowErrorIfEmpty(respInsightExpense, mounted ? context : null);
+        apiThrowErrorIfEmpty(respInsightIncome, mounted ? context : null);
 
         lastDaysExpense[e] =
             (respInsightExpense.body?.isNotEmpty ?? false)
                 ? respInsightExpense.body?.first.differenceFloat ?? 0
                 : 0;
-
-        final Response<InsightTotal> respInsightIncome = await api
-            .v1InsightIncomeTotalGet(
-              start: DateFormat('yyyy-MM-dd', 'en_US').format(e),
-              end: DateFormat('yyyy-MM-dd', 'en_US').format(e),
-            );
-        apiThrowErrorIfEmpty(respInsightIncome, mounted ? context : null);
 
         lastDaysIncome[e] =
             (respInsightIncome.body?.isNotEmpty ?? false)
@@ -242,24 +244,26 @@ class _HomeMainState extends State<HomeMain>
         start = e;
         end = e.copyWith(month: e.month + 1, day: 0);
       }
-      final Response<InsightTotal> respInsightExpense = await api
-          .v1InsightExpenseTotalGet(
-            start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
-            end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
-          );
+      final (
+        Response<InsightTotal> respInsightExpense,
+        Response<InsightTotal> respInsightIncome,
+      ) = await (
+            api.v1InsightExpenseTotalGet(
+              start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
+              end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
+            ),
+            api.v1InsightIncomeTotalGet(
+              start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
+              end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
+            ),
+          ).wait;
       apiThrowErrorIfEmpty(respInsightExpense, mounted ? context : null);
+      apiThrowErrorIfEmpty(respInsightIncome, mounted ? context : null);
 
       lastMonthsExpense[e] =
           respInsightExpense.body!.isNotEmpty
               ? respInsightExpense.body!.first
               : const InsightTotalEntry(differenceFloat: 0);
-      final Response<InsightTotal> respInsightIncome = await api
-          .v1InsightIncomeTotalGet(
-            start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
-            end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
-          );
-      apiThrowErrorIfEmpty(respInsightIncome, mounted ? context : null);
-
       lastMonthsIncome[e] =
           respInsightIncome.body!.isNotEmpty
               ? respInsightIncome.body!.first
@@ -300,16 +304,26 @@ class _HomeMainState extends State<HomeMain>
 
     catChartData.clear();
 
-    final Response<InsightGroup> respCatIncomeData = await api
-        .v1InsightIncomeCategoryGet(
-          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
-          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-        );
-    final Response<InsightGroup> respCatExpenseData = await api
-        .v1InsightExpenseCategoryGet(
-          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
-          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-        );
+    final (
+      Response<InsightGroup> respCatIncomeData,
+      Response<InsightGroup> respCatExpenseData,
+    ) = await (
+          api.v1InsightIncomeCategoryGet(
+            start: DateFormat(
+              'yyyy-MM-dd',
+              'en_US',
+            ).format(now.copyWith(day: 1)),
+            end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+          ),
+          api.v1InsightExpenseCategoryGet(
+            start: DateFormat(
+              'yyyy-MM-dd',
+              'en_US',
+            ).format(now.copyWith(day: 1)),
+            end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+          ),
+        ).wait;
+    apiThrowErrorIfEmpty(respCatIncomeData, mounted ? context : null);
     apiThrowErrorIfEmpty(respCatExpenseData, mounted ? context : null);
 
     Map<String, double> catIncomes = <String, double>{};
@@ -343,19 +357,27 @@ class _HomeMainState extends State<HomeMain>
     final FireflyIii api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
-    final Response<BudgetArray> respBudgetInfos = await api.v1BudgetsGet();
+    final DateTime now = tzHandler.sNow().clearTime();
+
+    final (
+      Response<BudgetArray> respBudgetInfos,
+      Response<BudgetLimitArray> respBudgets,
+    ) = await (
+          api.v1BudgetsGet(),
+          api.v1BudgetLimitsGet(
+            start: DateFormat(
+              'yyyy-MM-dd',
+              'en_US',
+            ).format(now.copyWith(day: 1)),
+            end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+          ),
+        ).wait;
     apiThrowErrorIfEmpty(respBudgetInfos, mounted ? context : null);
+    apiThrowErrorIfEmpty(respBudgets, mounted ? context : null);
 
     for (BudgetRead budget in respBudgetInfos.body!.data) {
       budgetInfos[budget.id] = budget.attributes;
     }
-
-    final DateTime now = tzHandler.sNow().clearTime();
-    final Response<BudgetLimitArray> respBudgets = await api.v1BudgetLimitsGet(
-      start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
-      end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-    );
-    apiThrowErrorIfEmpty(respBudgets, mounted ? context : null);
 
     respBudgets.body!.data.sort((BudgetLimitRead a, BudgetLimitRead b) {
       Budget? budgetA = budgetInfos[a.attributes.budgetId];
@@ -434,30 +456,31 @@ class _HomeMainState extends State<HomeMain>
     lastMonthsAssets.clear();
     lastMonthsLiabilities.clear();
 
-    final Response<AccountArray> respAssetAccounts = await api.v1AccountsGet(
-      type: AccountTypeFilter.asset,
-    );
+    final (
+      Response<AccountArray> respAssetAccounts,
+      Response<AccountArray> respLiabilityAccounts,
+      Response<List<api_v2.ChartDataSetV2>> respBalanceData,
+    ) = await (
+          api.v1AccountsGet(type: AccountTypeFilter.asset),
+          api.v1AccountsGet(type: AccountTypeFilter.liabilities),
+          apiV2.v2ChartAccountDashboardGet(
+            start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
+            end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
+            preselected: api_v2_enums.PreselectedAccountProperty.assets,
+          ),
+        ).wait;
     apiThrowErrorIfEmpty(respAssetAccounts, mounted ? context : null);
+    apiThrowErrorIfEmpty(respLiabilityAccounts, mounted ? context : null);
+    apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
+
     final Map<String, bool> includeInNetWorth = <String, bool>{
       for (AccountRead e in respAssetAccounts.body!.data)
         e.attributes.name: e.attributes.includeNetWorth ?? true,
     };
-    final Response<AccountArray> respLiabilityAccounts = await api
-        .v1AccountsGet(type: AccountTypeFilter.liabilities);
-    apiThrowErrorIfEmpty(respLiabilityAccounts, mounted ? context : null);
     includeInNetWorth.addAll(<String, bool>{
       for (AccountRead e in respLiabilityAccounts.body!.data)
         e.attributes.name: e.attributes.includeNetWorth ?? true,
     });
-
-    final Response<List<api_v2.ChartDataSetV2>> respBalanceData = await apiV2
-        .v2ChartAccountDashboardGet(
-          start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
-          end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
-          preselected: api_v2_enums.PreselectedAccountProperty.assets,
-        );
-    apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
-
     for (api_v2.ChartDataSetV2 e in respBalanceData.body!) {
       if (includeInNetWorth.containsKey(e.label) &&
           includeInNetWorth[e.label] != true) {

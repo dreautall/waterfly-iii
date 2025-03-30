@@ -100,26 +100,23 @@ class FilterDialog extends StatelessWidget {
   Future<FilterData> _getData(BuildContext context) async {
     final FireflyIii api = context.read<FireflyService>().api;
 
-    // Accounts
-    final Response<AccountArray> respAccounts = await api.v1AccountsGet(
-      type: AccountTypeFilter.assetAccount,
-    );
+    final (
+      Response<AccountArray> respAccounts,
+      Response<CurrencyArray> respCurrencies,
+      Response<CategoryArray> respCats,
+      Response<BudgetArray> respBudgets,
+      Response<BillArray> respBills,
+    ) = await (
+          api.v1AccountsGet(type: AccountTypeFilter.assetAccount),
+          api.v1CurrenciesGet(),
+          api.v1CategoriesGet(),
+          api.v1BudgetsGet(),
+          api.v1BillsGet(),
+        ).wait;
     apiThrowErrorIfEmpty(respAccounts, context.mounted ? context : null);
-
-    // Currencies
-    final Response<CurrencyArray> respCurrencies = await api.v1CurrenciesGet();
     apiThrowErrorIfEmpty(respCurrencies, context.mounted ? context : null);
-
-    // Categories
-    final Response<CategoryArray> respCats = await api.v1CategoriesGet();
     apiThrowErrorIfEmpty(respCats, context.mounted ? context : null);
-
-    // Budgets
-    final Response<BudgetArray> respBudgets = await api.v1BudgetsGet();
     apiThrowErrorIfEmpty(respBudgets, context.mounted ? context : null);
-
-    // Bills
-    final Response<BillArray> respBills = await api.v1BillsGet();
     apiThrowErrorIfEmpty(respBills, context.mounted ? context : null);
 
     return FilterData(

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'package:syncfusion_flutter_charts/charts.dart';
-
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
@@ -27,17 +25,20 @@ class NetWorthChart extends StatelessWidget {
 
     assets.forEach((DateTime d, double v) {
       chartDataAssets.add(
-          LabelAmountChart(DateFormat(DateFormat.ABBR_MONTH).format(d), v));
+        LabelAmountChart(DateFormat(DateFormat.ABBR_MONTH).format(d), v),
+      );
       balance[DateFormat(DateFormat.ABBR_MONTH).format(d)] = v;
     });
     liabilities.forEach((DateTime d, double v) {
-      chartDataLiabilities.add(LabelAmountChart(
-          DateFormat(DateFormat.ABBR_MONTH).format(d), v.abs()));
+      chartDataLiabilities.add(
+        LabelAmountChart(DateFormat(DateFormat.ABBR_MONTH).format(d), v.abs()),
+      );
       balance[DateFormat(DateFormat.ABBR_MONTH).format(d)] =
           (balance[DateFormat(DateFormat.ABBR_MONTH).format(d)] ?? 0) + v;
     });
     balance.forEach(
-        (String d, double v) => chartDataBalance.add(LabelAmountChart(d, v)));
+      (String d, double v) => chartDataBalance.add(LabelAmountChart(d, v)),
+    );
 
     chartData.add(
       AreaSeries<LabelAmountChart, String>(
@@ -115,20 +116,25 @@ class NetWorthChart extends StatelessWidget {
 
     return SfCartesianChart(
       primaryXAxis: CategoryAxis(
-        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-              fontWeight: FontWeight.normal,
-            ),
-        axisLine:
-            AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
+        labelStyle: Theme.of(
+          context,
+        ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+        axisLine: AxisLine(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
       ),
       primaryYAxis: NumericAxis(
-        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-              fontWeight: FontWeight.normal,
+        labelStyle: Theme.of(
+          context,
+        ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+        axisLine: AxisLine(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
+        axisLabelFormatter:
+            (AxisLabelRenderDetails args) => ChartAxisLabel(
+              NumberFormat().format(double.parse(args.text)),
+              args.textStyle,
             ),
-        axisLine:
-            AxisLine(color: Theme.of(context).colorScheme.onSurfaceVariant),
-        axisLabelFormatter: (AxisLabelRenderDetails args) => ChartAxisLabel(
-            NumberFormat().format(double.parse(args.text)), args.textStyle),
       ),
       series: chartData,
       enableAxisAnimation: true,

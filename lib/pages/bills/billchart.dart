@@ -8,10 +8,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.models.
 import 'package:waterflyiii/widgets/charts.dart';
 
 class BillChart extends StatefulWidget {
-  const BillChart({
-    super.key,
-    required this.billId,
-  });
+  const BillChart({super.key, required this.billId});
 
   final String billId;
 
@@ -38,31 +35,35 @@ class BillChartState extends State<BillChart> {
       return Padding(
         padding: const EdgeInsets.all(8),
         child: SizedBox(
-            height: 125,
-            child: SfCartesianChart(
-              primaryXAxis: DateTimeCategoryAxis(
-                dateFormat: DateFormat.yMMM(),
-                labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      fontWeight: FontWeight.normal,
-                    ),
-                axisLine: AxisLine(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant),
+          height: 125,
+          child: SfCartesianChart(
+            primaryXAxis: DateTimeCategoryAxis(
+              dateFormat: DateFormat.yMMM(),
+              labelStyle: Theme.of(
+                context,
+              ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+              axisLine: AxisLine(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
-              primaryYAxis: NumericAxis(
-                labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      fontWeight: FontWeight.normal,
-                    ),
-                axisLine: AxisLine(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant),
-                axisLabelFormatter: (AxisLabelRenderDetails args) =>
-                    ChartAxisLabel(
-                        NumberFormat().format(double.parse(args.text)),
-                        args.textStyle),
+            ),
+            primaryYAxis: NumericAxis(
+              labelStyle: Theme.of(
+                context,
+              ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+              axisLine: AxisLine(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
-              series: _getUpdateDataSourceSeries(),
-              enableAxisAnimation: false,
-              enableSideBySideSeriesPlacement: false,
-            )),
+              axisLabelFormatter:
+                  (AxisLabelRenderDetails args) => ChartAxisLabel(
+                    NumberFormat().format(double.parse(args.text)),
+                    args.textStyle,
+                  ),
+            ),
+            series: _getUpdateDataSourceSeries(),
+            enableAxisAnimation: false,
+            enableSideBySideSeriesPlacement: false,
+          ),
+        ),
       );
     }
 
@@ -102,10 +103,11 @@ class BillChartState extends State<BillChart> {
   }
 
   List<CartesianSeries<TimeSeriesChart, DateTime>>
-      _getUpdateDataSourceSeries() {
+  _getUpdateDataSourceSeries() {
     final List<TimeSeriesChart> chartDataBalance = <TimeSeriesChart>[];
     _values.forEach(
-        (DateTime d, double v) => chartDataBalance.add(TimeSeriesChart(d, v)));
+      (DateTime d, double v) => chartDataBalance.add(TimeSeriesChart(d, v)),
+    );
 
     return <CartesianSeries<TimeSeriesChart, DateTime>>[
       AreaSeries<TimeSeriesChart, DateTime>(

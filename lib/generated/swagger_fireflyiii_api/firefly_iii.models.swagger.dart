@@ -10,10 +10,7 @@ part 'firefly_iii.models.swagger.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class AccountArray {
-  const AccountArray({
-    required this.data,
-    required this.meta,
-  });
+  const AccountArray({required this.data, required this.meta});
 
   factory AccountArray.fromJson(Map<String, dynamic> json) =>
       _$AccountArrayFromJson(json);
@@ -36,20 +33,20 @@ extension $AccountArrayExtension on AccountArray {
     return AccountArray(data: data ?? this.data, meta: meta ?? this.meta);
   }
 
-  AccountArray copyWithWrapped(
-      {Wrapped<List<AccountRead>>? data, Wrapped<Meta>? meta}) {
+  AccountArray copyWithWrapped({
+    Wrapped<List<AccountRead>>? data,
+    Wrapped<Meta>? meta,
+  }) {
     return AccountArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class AttachmentArray {
-  const AttachmentArray({
-    required this.data,
-    required this.meta,
-  });
+  const AttachmentArray({required this.data, required this.meta});
 
   factory AttachmentArray.fromJson(Map<String, dynamic> json) =>
       _$AttachmentArrayFromJson(json);
@@ -72,11 +69,14 @@ extension $AttachmentArrayExtension on AttachmentArray {
     return AttachmentArray(data: data ?? this.data, meta: meta ?? this.meta);
   }
 
-  AttachmentArray copyWithWrapped(
-      {Wrapped<List<AttachmentRead>>? data, Wrapped<Meta>? meta}) {
+  AttachmentArray copyWithWrapped({
+    Wrapped<List<AttachmentRead>>? data,
+    Wrapped<Meta>? meta,
+  }) {
     return AttachmentArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+    );
   }
 }
 
@@ -99,10 +99,7 @@ typedef AutocompleteTransactionTypeArray = List<AutocompleteTransactionType>;
 
 @JsonSerializable(explicitToJson: true)
 class AvailableBudgetArray {
-  const AvailableBudgetArray({
-    required this.data,
-    required this.meta,
-  });
+  const AvailableBudgetArray({required this.data, required this.meta});
 
   factory AvailableBudgetArray.fromJson(Map<String, dynamic> json) =>
       _$AvailableBudgetArrayFromJson(json);
@@ -111,7 +108,10 @@ class AvailableBudgetArray {
   Map<String, dynamic> toJson() => _$AvailableBudgetArrayToJson(this);
 
   @JsonKey(
-      name: 'data', includeIfNull: false, defaultValue: <AvailableBudgetRead>[])
+    name: 'data',
+    includeIfNull: false,
+    defaultValue: <AvailableBudgetRead>[],
+  )
   final List<AvailableBudgetRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
@@ -124,23 +124,25 @@ class AvailableBudgetArray {
 extension $AvailableBudgetArrayExtension on AvailableBudgetArray {
   AvailableBudgetArray copyWith({List<AvailableBudgetRead>? data, Meta? meta}) {
     return AvailableBudgetArray(
-        data: data ?? this.data, meta: meta ?? this.meta);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+    );
   }
 
-  AvailableBudgetArray copyWithWrapped(
-      {Wrapped<List<AvailableBudgetRead>>? data, Wrapped<Meta>? meta}) {
+  AvailableBudgetArray copyWithWrapped({
+    Wrapped<List<AvailableBudgetRead>>? data,
+    Wrapped<Meta>? meta,
+  }) {
     return AvailableBudgetArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class BillArray {
-  const BillArray({
-    required this.data,
-    required this.meta,
-  });
+  const BillArray({required this.data, required this.meta});
 
   factory BillArray.fromJson(Map<String, dynamic> json) =>
       _$BillArrayFromJson(json);
@@ -163,20 +165,20 @@ extension $BillArrayExtension on BillArray {
     return BillArray(data: data ?? this.data, meta: meta ?? this.meta);
   }
 
-  BillArray copyWithWrapped(
-      {Wrapped<List<BillRead>>? data, Wrapped<Meta>? meta}) {
+  BillArray copyWithWrapped({
+    Wrapped<List<BillRead>>? data,
+    Wrapped<Meta>? meta,
+  }) {
     return BillArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class BudgetArray {
-  const BudgetArray({
-    required this.data,
-    required this.meta,
-  });
+  const BudgetArray({required this.data, required this.meta});
 
   factory BudgetArray.fromJson(Map<String, dynamic> json) =>
       _$BudgetArrayFromJson(json);
@@ -199,20 +201,20 @@ extension $BudgetArrayExtension on BudgetArray {
     return BudgetArray(data: data ?? this.data, meta: meta ?? this.meta);
   }
 
-  BudgetArray copyWithWrapped(
-      {Wrapped<List<BudgetRead>>? data, Wrapped<Meta>? meta}) {
+  BudgetArray copyWithWrapped({
+    Wrapped<List<BudgetRead>>? data,
+    Wrapped<Meta>? meta,
+  }) {
     return BudgetArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class BudgetLimitArray {
-  const BudgetLimitArray({
-    required this.data,
-    required this.meta,
-  });
+  const BudgetLimitArray({required this.data, required this.meta});
 
   factory BudgetLimitArray.fromJson(Map<String, dynamic> json) =>
       _$BudgetLimitArrayFromJson(json);
@@ -221,7 +223,10 @@ class BudgetLimitArray {
   Map<String, dynamic> toJson() => _$BudgetLimitArrayToJson(this);
 
   @JsonKey(
-      name: 'data', includeIfNull: false, defaultValue: <BudgetLimitRead>[])
+    name: 'data',
+    includeIfNull: false,
+    defaultValue: <BudgetLimitRead>[],
+  )
   final List<BudgetLimitRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
@@ -236,20 +241,20 @@ extension $BudgetLimitArrayExtension on BudgetLimitArray {
     return BudgetLimitArray(data: data ?? this.data, meta: meta ?? this.meta);
   }
 
-  BudgetLimitArray copyWithWrapped(
-      {Wrapped<List<BudgetLimitRead>>? data, Wrapped<Meta>? meta}) {
+  BudgetLimitArray copyWithWrapped({
+    Wrapped<List<BudgetLimitRead>>? data,
+    Wrapped<Meta>? meta,
+  }) {
     return BudgetLimitArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class CategoryArray {
-  const CategoryArray({
-    required this.data,
-    required this.meta,
-  });
+  const CategoryArray({required this.data, required this.meta});
 
   factory CategoryArray.fromJson(Map<String, dynamic> json) =>
       _$CategoryArrayFromJson(json);
@@ -272,11 +277,14 @@ extension $CategoryArrayExtension on CategoryArray {
     return CategoryArray(data: data ?? this.data, meta: meta ?? this.meta);
   }
 
-  CategoryArray copyWithWrapped(
-      {Wrapped<List<CategoryRead>>? data, Wrapped<Meta>? meta}) {
+  CategoryArray copyWithWrapped({
+    Wrapped<List<CategoryRead>>? data,
+    Wrapped<Meta>? meta,
+  }) {
     return CategoryArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+    );
   }
 }
 
@@ -309,22 +317,28 @@ class CurrencyArray {
 }
 
 extension $CurrencyArrayExtension on CurrencyArray {
-  CurrencyArray copyWith(
-      {List<CurrencyRead>? data, Meta? meta, PageLink? links}) {
+  CurrencyArray copyWith({
+    List<CurrencyRead>? data,
+    Meta? meta,
+    PageLink? links,
+  }) {
     return CurrencyArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+      links: links ?? this.links,
+    );
   }
 
-  CurrencyArray copyWithWrapped(
-      {Wrapped<List<CurrencyRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
+  CurrencyArray copyWithWrapped({
+    Wrapped<List<CurrencyRead>>? data,
+    Wrapped<Meta>? meta,
+    Wrapped<PageLink>? links,
+  }) {
     return CurrencyArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -343,9 +357,10 @@ class CurrencyExchangeRateArray {
   Map<String, dynamic> toJson() => _$CurrencyExchangeRateArrayToJson(this);
 
   @JsonKey(
-      name: 'data',
-      includeIfNull: false,
-      defaultValue: <CurrencyExchangeRateRead>[])
+    name: 'data',
+    includeIfNull: false,
+    defaultValue: <CurrencyExchangeRateRead>[],
+  )
   final List<CurrencyExchangeRateRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
@@ -358,22 +373,28 @@ class CurrencyExchangeRateArray {
 }
 
 extension $CurrencyExchangeRateArrayExtension on CurrencyExchangeRateArray {
-  CurrencyExchangeRateArray copyWith(
-      {List<CurrencyExchangeRateRead>? data, Meta? meta, PageLink? links}) {
+  CurrencyExchangeRateArray copyWith({
+    List<CurrencyExchangeRateRead>? data,
+    Meta? meta,
+    PageLink? links,
+  }) {
     return CurrencyExchangeRateArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+      links: links ?? this.links,
+    );
   }
 
-  CurrencyExchangeRateArray copyWithWrapped(
-      {Wrapped<List<CurrencyExchangeRateRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
+  CurrencyExchangeRateArray copyWithWrapped({
+    Wrapped<List<CurrencyExchangeRateRead>>? data,
+    Wrapped<Meta>? meta,
+    Wrapped<PageLink>? links,
+  }) {
     return CurrencyExchangeRateArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -404,31 +425,34 @@ class LinkTypeArray {
 }
 
 extension $LinkTypeArrayExtension on LinkTypeArray {
-  LinkTypeArray copyWith(
-      {List<LinkTypeRead>? data, Meta? meta, PageLink? links}) {
+  LinkTypeArray copyWith({
+    List<LinkTypeRead>? data,
+    Meta? meta,
+    PageLink? links,
+  }) {
     return LinkTypeArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+      links: links ?? this.links,
+    );
   }
 
-  LinkTypeArray copyWithWrapped(
-      {Wrapped<List<LinkTypeRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
+  LinkTypeArray copyWithWrapped({
+    Wrapped<List<LinkTypeRead>>? data,
+    Wrapped<Meta>? meta,
+    Wrapped<PageLink>? links,
+  }) {
     return LinkTypeArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class ObjectGroupArray {
-  const ObjectGroupArray({
-    required this.data,
-    required this.meta,
-  });
+  const ObjectGroupArray({required this.data, required this.meta});
 
   factory ObjectGroupArray.fromJson(Map<String, dynamic> json) =>
       _$ObjectGroupArrayFromJson(json);
@@ -437,7 +461,10 @@ class ObjectGroupArray {
   Map<String, dynamic> toJson() => _$ObjectGroupArrayToJson(this);
 
   @JsonKey(
-      name: 'data', includeIfNull: false, defaultValue: <ObjectGroupRead>[])
+    name: 'data',
+    includeIfNull: false,
+    defaultValue: <ObjectGroupRead>[],
+  )
   final List<ObjectGroupRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
@@ -452,11 +479,14 @@ extension $ObjectGroupArrayExtension on ObjectGroupArray {
     return ObjectGroupArray(data: data ?? this.data, meta: meta ?? this.meta);
   }
 
-  ObjectGroupArray copyWithWrapped(
-      {Wrapped<List<ObjectGroupRead>>? data, Wrapped<Meta>? meta}) {
+  ObjectGroupArray copyWithWrapped({
+    Wrapped<List<ObjectGroupRead>>? data,
+    Wrapped<Meta>? meta,
+  }) {
     return ObjectGroupArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+    );
   }
 }
 
@@ -487,22 +517,28 @@ class PiggyBankArray {
 }
 
 extension $PiggyBankArrayExtension on PiggyBankArray {
-  PiggyBankArray copyWith(
-      {List<PiggyBankRead>? data, Meta? meta, PageLink? links}) {
+  PiggyBankArray copyWith({
+    List<PiggyBankRead>? data,
+    Meta? meta,
+    PageLink? links,
+  }) {
     return PiggyBankArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+      links: links ?? this.links,
+    );
   }
 
-  PiggyBankArray copyWithWrapped(
-      {Wrapped<List<PiggyBankRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
+  PiggyBankArray copyWithWrapped({
+    Wrapped<List<PiggyBankRead>>? data,
+    Wrapped<Meta>? meta,
+    Wrapped<PageLink>? links,
+  }) {
     return PiggyBankArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -521,7 +557,10 @@ class PiggyBankEventArray {
   Map<String, dynamic> toJson() => _$PiggyBankEventArrayToJson(this);
 
   @JsonKey(
-      name: 'data', includeIfNull: false, defaultValue: <PiggyBankEventRead>[])
+    name: 'data',
+    includeIfNull: false,
+    defaultValue: <PiggyBankEventRead>[],
+  )
   final List<PiggyBankEventRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
@@ -534,22 +573,28 @@ class PiggyBankEventArray {
 }
 
 extension $PiggyBankEventArrayExtension on PiggyBankEventArray {
-  PiggyBankEventArray copyWith(
-      {List<PiggyBankEventRead>? data, Meta? meta, PageLink? links}) {
+  PiggyBankEventArray copyWith({
+    List<PiggyBankEventRead>? data,
+    Meta? meta,
+    PageLink? links,
+  }) {
     return PiggyBankEventArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+      links: links ?? this.links,
+    );
   }
 
-  PiggyBankEventArray copyWithWrapped(
-      {Wrapped<List<PiggyBankEventRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
+  PiggyBankEventArray copyWithWrapped({
+    Wrapped<List<PiggyBankEventRead>>? data,
+    Wrapped<Meta>? meta,
+    Wrapped<PageLink>? links,
+  }) {
     return PiggyBankEventArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -580,22 +625,28 @@ class PreferenceArray {
 }
 
 extension $PreferenceArrayExtension on PreferenceArray {
-  PreferenceArray copyWith(
-      {List<PreferenceRead>? data, Meta? meta, PageLink? links}) {
+  PreferenceArray copyWith({
+    List<PreferenceRead>? data,
+    Meta? meta,
+    PageLink? links,
+  }) {
     return PreferenceArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+      links: links ?? this.links,
+    );
   }
 
-  PreferenceArray copyWithWrapped(
-      {Wrapped<List<PreferenceRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
+  PreferenceArray copyWithWrapped({
+    Wrapped<List<PreferenceRead>>? data,
+    Wrapped<Meta>? meta,
+    Wrapped<PageLink>? links,
+  }) {
     return PreferenceArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -626,22 +677,28 @@ class RecurrenceArray {
 }
 
 extension $RecurrenceArrayExtension on RecurrenceArray {
-  RecurrenceArray copyWith(
-      {List<RecurrenceRead>? data, Meta? meta, PageLink? links}) {
+  RecurrenceArray copyWith({
+    List<RecurrenceRead>? data,
+    Meta? meta,
+    PageLink? links,
+  }) {
     return RecurrenceArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+      links: links ?? this.links,
+    );
   }
 
-  RecurrenceArray copyWithWrapped(
-      {Wrapped<List<RecurrenceRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
+  RecurrenceArray copyWithWrapped({
+    Wrapped<List<RecurrenceRead>>? data,
+    Wrapped<Meta>? meta,
+    Wrapped<PageLink>? links,
+  }) {
     return RecurrenceArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -674,19 +731,22 @@ class RuleArray {
 extension $RuleArrayExtension on RuleArray {
   RuleArray copyWith({List<RuleRead>? data, Meta? meta, PageLink? links}) {
     return RuleArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+      links: links ?? this.links,
+    );
   }
 
-  RuleArray copyWithWrapped(
-      {Wrapped<List<RuleRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
+  RuleArray copyWithWrapped({
+    Wrapped<List<RuleRead>>? data,
+    Wrapped<Meta>? meta,
+    Wrapped<PageLink>? links,
+  }) {
     return RuleArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -717,32 +777,34 @@ class RuleGroupArray {
 }
 
 extension $RuleGroupArrayExtension on RuleGroupArray {
-  RuleGroupArray copyWith(
-      {List<RuleGroupRead>? data, Meta? meta, PageLink? links}) {
+  RuleGroupArray copyWith({
+    List<RuleGroupRead>? data,
+    Meta? meta,
+    PageLink? links,
+  }) {
     return RuleGroupArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+      links: links ?? this.links,
+    );
   }
 
-  RuleGroupArray copyWithWrapped(
-      {Wrapped<List<RuleGroupRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
+  RuleGroupArray copyWithWrapped({
+    Wrapped<List<RuleGroupRead>>? data,
+    Wrapped<Meta>? meta,
+    Wrapped<PageLink>? links,
+  }) {
     return RuleGroupArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class TagArray {
-  const TagArray({
-    required this.data,
-    required this.meta,
-    required this.links,
-  });
+  const TagArray({required this.data, required this.meta, required this.links});
 
   factory TagArray.fromJson(Map<String, dynamic> json) =>
       _$TagArrayFromJson(json);
@@ -765,19 +827,22 @@ class TagArray {
 extension $TagArrayExtension on TagArray {
   TagArray copyWith({List<TagRead>? data, Meta? meta, PageLink? links}) {
     return TagArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+      links: links ?? this.links,
+    );
   }
 
-  TagArray copyWithWrapped(
-      {Wrapped<List<TagRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
+  TagArray copyWithWrapped({
+    Wrapped<List<TagRead>>? data,
+    Wrapped<Meta>? meta,
+    Wrapped<PageLink>? links,
+  }) {
     return TagArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -796,7 +861,10 @@ class TransactionArray {
   Map<String, dynamic> toJson() => _$TransactionArrayToJson(this);
 
   @JsonKey(
-      name: 'data', includeIfNull: false, defaultValue: <TransactionRead>[])
+    name: 'data',
+    includeIfNull: false,
+    defaultValue: <TransactionRead>[],
+  )
   final List<TransactionRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
@@ -809,22 +877,28 @@ class TransactionArray {
 }
 
 extension $TransactionArrayExtension on TransactionArray {
-  TransactionArray copyWith(
-      {List<TransactionRead>? data, Meta? meta, PageLink? links}) {
+  TransactionArray copyWith({
+    List<TransactionRead>? data,
+    Meta? meta,
+    PageLink? links,
+  }) {
     return TransactionArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+      links: links ?? this.links,
+    );
   }
 
-  TransactionArray copyWithWrapped(
-      {Wrapped<List<TransactionRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
+  TransactionArray copyWithWrapped({
+    Wrapped<List<TransactionRead>>? data,
+    Wrapped<Meta>? meta,
+    Wrapped<PageLink>? links,
+  }) {
     return TransactionArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -843,7 +917,10 @@ class TransactionLinkArray {
   Map<String, dynamic> toJson() => _$TransactionLinkArrayToJson(this);
 
   @JsonKey(
-      name: 'data', includeIfNull: false, defaultValue: <TransactionLinkRead>[])
+    name: 'data',
+    includeIfNull: false,
+    defaultValue: <TransactionLinkRead>[],
+  )
   final List<TransactionLinkRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
@@ -856,22 +933,28 @@ class TransactionLinkArray {
 }
 
 extension $TransactionLinkArrayExtension on TransactionLinkArray {
-  TransactionLinkArray copyWith(
-      {List<TransactionLinkRead>? data, Meta? meta, PageLink? links}) {
+  TransactionLinkArray copyWith({
+    List<TransactionLinkRead>? data,
+    Meta? meta,
+    PageLink? links,
+  }) {
     return TransactionLinkArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+      links: links ?? this.links,
+    );
   }
 
-  TransactionLinkArray copyWithWrapped(
-      {Wrapped<List<TransactionLinkRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
+  TransactionLinkArray copyWithWrapped({
+    Wrapped<List<TransactionLinkRead>>? data,
+    Wrapped<Meta>? meta,
+    Wrapped<PageLink>? links,
+  }) {
     return TransactionLinkArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -904,19 +987,22 @@ class UserArray {
 extension $UserArrayExtension on UserArray {
   UserArray copyWith({List<UserRead>? data, Meta? meta, PageLink? links}) {
     return UserArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+      links: links ?? this.links,
+    );
   }
 
-  UserArray copyWithWrapped(
-      {Wrapped<List<UserRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
+  UserArray copyWithWrapped({
+    Wrapped<List<UserRead>>? data,
+    Wrapped<Meta>? meta,
+    Wrapped<PageLink>? links,
+  }) {
     return UserArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -947,22 +1033,28 @@ class UserGroupArray {
 }
 
 extension $UserGroupArrayExtension on UserGroupArray {
-  UserGroupArray copyWith(
-      {List<UserGroupRead>? data, Meta? meta, PageLink? links}) {
+  UserGroupArray copyWith({
+    List<UserGroupRead>? data,
+    Meta? meta,
+    PageLink? links,
+  }) {
     return UserGroupArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+      links: links ?? this.links,
+    );
   }
 
-  UserGroupArray copyWithWrapped(
-      {Wrapped<List<UserGroupRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
+  UserGroupArray copyWithWrapped({
+    Wrapped<List<UserGroupRead>>? data,
+    Wrapped<Meta>? meta,
+    Wrapped<PageLink>? links,
+  }) {
     return UserGroupArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -993,31 +1085,34 @@ class WebhookArray {
 }
 
 extension $WebhookArrayExtension on WebhookArray {
-  WebhookArray copyWith(
-      {List<WebhookRead>? data, Meta? meta, PageLink? links}) {
+  WebhookArray copyWith({
+    List<WebhookRead>? data,
+    Meta? meta,
+    PageLink? links,
+  }) {
     return WebhookArray(
-        data: data ?? this.data,
-        meta: meta ?? this.meta,
-        links: links ?? this.links);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+      links: links ?? this.links,
+    );
   }
 
-  WebhookArray copyWithWrapped(
-      {Wrapped<List<WebhookRead>>? data,
-      Wrapped<Meta>? meta,
-      Wrapped<PageLink>? links}) {
+  WebhookArray copyWithWrapped({
+    Wrapped<List<WebhookRead>>? data,
+    Wrapped<Meta>? meta,
+    Wrapped<PageLink>? links,
+  }) {
     return WebhookArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta),
-        links: (links != null ? links.value : this.links));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class WebhookAttemptArray {
-  const WebhookAttemptArray({
-    required this.data,
-    required this.meta,
-  });
+  const WebhookAttemptArray({required this.data, required this.meta});
 
   factory WebhookAttemptArray.fromJson(Map<String, dynamic> json) =>
       _$WebhookAttemptArrayFromJson(json);
@@ -1026,7 +1121,10 @@ class WebhookAttemptArray {
   Map<String, dynamic> toJson() => _$WebhookAttemptArrayToJson(this);
 
   @JsonKey(
-      name: 'data', includeIfNull: false, defaultValue: <WebhookAttemptRead>[])
+    name: 'data',
+    includeIfNull: false,
+    defaultValue: <WebhookAttemptRead>[],
+  )
   final List<WebhookAttemptRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
@@ -1039,23 +1137,25 @@ class WebhookAttemptArray {
 extension $WebhookAttemptArrayExtension on WebhookAttemptArray {
   WebhookAttemptArray copyWith({List<WebhookAttemptRead>? data, Meta? meta}) {
     return WebhookAttemptArray(
-        data: data ?? this.data, meta: meta ?? this.meta);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+    );
   }
 
-  WebhookAttemptArray copyWithWrapped(
-      {Wrapped<List<WebhookAttemptRead>>? data, Wrapped<Meta>? meta}) {
+  WebhookAttemptArray copyWithWrapped({
+    Wrapped<List<WebhookAttemptRead>>? data,
+    Wrapped<Meta>? meta,
+  }) {
     return WebhookAttemptArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class WebhookMessageArray {
-  const WebhookMessageArray({
-    required this.data,
-    required this.meta,
-  });
+  const WebhookMessageArray({required this.data, required this.meta});
 
   factory WebhookMessageArray.fromJson(Map<String, dynamic> json) =>
       _$WebhookMessageArrayFromJson(json);
@@ -1064,7 +1164,10 @@ class WebhookMessageArray {
   Map<String, dynamic> toJson() => _$WebhookMessageArrayToJson(this);
 
   @JsonKey(
-      name: 'data', includeIfNull: false, defaultValue: <WebhookMessageRead>[])
+    name: 'data',
+    includeIfNull: false,
+    defaultValue: <WebhookMessageRead>[],
+  )
   final List<WebhookMessageRead> data;
   @JsonKey(name: 'meta', includeIfNull: false)
   final Meta meta;
@@ -1077,14 +1180,19 @@ class WebhookMessageArray {
 extension $WebhookMessageArrayExtension on WebhookMessageArray {
   WebhookMessageArray copyWith({List<WebhookMessageRead>? data, Meta? meta}) {
     return WebhookMessageArray(
-        data: data ?? this.data, meta: meta ?? this.meta);
+      data: data ?? this.data,
+      meta: meta ?? this.meta,
+    );
   }
 
-  WebhookMessageArray copyWithWrapped(
-      {Wrapped<List<WebhookMessageRead>>? data, Wrapped<Meta>? meta}) {
+  WebhookMessageArray copyWithWrapped({
+    Wrapped<List<WebhookMessageRead>>? data,
+    Wrapped<Meta>? meta,
+  }) {
     return WebhookMessageArray(
-        data: (data != null ? data.value : this.data),
-        meta: (meta != null ? meta.value : this.meta));
+      data: (data != null ? data.value : this.data),
+      meta: (meta != null ? meta.value : this.meta),
+    );
   }
 }
 
@@ -1133,67 +1241,68 @@ class AutocompleteAccount {
 }
 
 extension $AutocompleteAccountExtension on AutocompleteAccount {
-  AutocompleteAccount copyWith(
-      {String? id,
-      String? name,
-      String? nameWithBalance,
-      String? type,
-      String? currencyId,
-      String? currencyName,
-      String? currencyCode,
-      String? currencySymbol,
-      int? currencyDecimalPlaces}) {
+  AutocompleteAccount copyWith({
+    String? id,
+    String? name,
+    String? nameWithBalance,
+    String? type,
+    String? currencyId,
+    String? currencyName,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+  }) {
     return AutocompleteAccount(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        nameWithBalance: nameWithBalance ?? this.nameWithBalance,
-        type: type ?? this.type,
-        currencyId: currencyId ?? this.currencyId,
-        currencyName: currencyName ?? this.currencyName,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      nameWithBalance: nameWithBalance ?? this.nameWithBalance,
+      type: type ?? this.type,
+      currencyId: currencyId ?? this.currencyId,
+      currencyName: currencyName ?? this.currencyName,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+    );
   }
 
-  AutocompleteAccount copyWithWrapped(
-      {Wrapped<String>? id,
-      Wrapped<String>? name,
-      Wrapped<String>? nameWithBalance,
-      Wrapped<String>? type,
-      Wrapped<String>? currencyId,
-      Wrapped<String>? currencyName,
-      Wrapped<String>? currencyCode,
-      Wrapped<String>? currencySymbol,
-      Wrapped<int>? currencyDecimalPlaces}) {
+  AutocompleteAccount copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String>? name,
+    Wrapped<String>? nameWithBalance,
+    Wrapped<String>? type,
+    Wrapped<String>? currencyId,
+    Wrapped<String>? currencyName,
+    Wrapped<String>? currencyCode,
+    Wrapped<String>? currencySymbol,
+    Wrapped<int>? currencyDecimalPlaces,
+  }) {
     return AutocompleteAccount(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        nameWithBalance: (nameWithBalance != null
-            ? nameWithBalance.value
-            : this.nameWithBalance),
-        type: (type != null ? type.value : this.type),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyName:
-            (currencyName != null ? currencyName.value : this.currencyName),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      nameWithBalance:
+          (nameWithBalance != null
+              ? nameWithBalance.value
+              : this.nameWithBalance),
+      type: (type != null ? type.value : this.type),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyName:
+          (currencyName != null ? currencyName.value : this.currencyName),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteBill {
-  const AutocompleteBill({
-    required this.id,
-    required this.name,
-    this.active,
-  });
+  const AutocompleteBill({required this.id, required this.name, this.active});
 
   factory AutocompleteBill.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteBillFromJson(json);
@@ -1216,26 +1325,28 @@ class AutocompleteBill {
 extension $AutocompleteBillExtension on AutocompleteBill {
   AutocompleteBill copyWith({String? id, String? name, bool? active}) {
     return AutocompleteBill(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        active: active ?? this.active);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      active: active ?? this.active,
+    );
   }
 
-  AutocompleteBill copyWithWrapped(
-      {Wrapped<String>? id, Wrapped<String>? name, Wrapped<bool?>? active}) {
+  AutocompleteBill copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String>? name,
+    Wrapped<bool?>? active,
+  }) {
     return AutocompleteBill(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        active: (active != null ? active.value : this.active));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      active: (active != null ? active.value : this.active),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteBudget {
-  const AutocompleteBudget({
-    required this.id,
-    required this.name,
-  });
+  const AutocompleteBudget({required this.id, required this.name});
 
   factory AutocompleteBudget.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteBudgetFromJson(json);
@@ -1258,20 +1369,20 @@ extension $AutocompleteBudgetExtension on AutocompleteBudget {
     return AutocompleteBudget(id: id ?? this.id, name: name ?? this.name);
   }
 
-  AutocompleteBudget copyWithWrapped(
-      {Wrapped<String>? id, Wrapped<String>? name}) {
+  AutocompleteBudget copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String>? name,
+  }) {
     return AutocompleteBudget(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteCategory {
-  const AutocompleteCategory({
-    required this.id,
-    required this.name,
-  });
+  const AutocompleteCategory({required this.id, required this.name});
 
   factory AutocompleteCategory.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteCategoryFromJson(json);
@@ -1294,11 +1405,14 @@ extension $AutocompleteCategoryExtension on AutocompleteCategory {
     return AutocompleteCategory(id: id ?? this.id, name: name ?? this.name);
   }
 
-  AutocompleteCategory copyWithWrapped(
-      {Wrapped<String>? id, Wrapped<String>? name}) {
+  AutocompleteCategory copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String>? name,
+  }) {
     return AutocompleteCategory(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+    );
   }
 }
 
@@ -1335,33 +1449,37 @@ class AutocompleteCurrency {
 }
 
 extension $AutocompleteCurrencyExtension on AutocompleteCurrency {
-  AutocompleteCurrency copyWith(
-      {String? id,
-      String? name,
-      String? code,
-      String? symbol,
-      int? decimalPlaces}) {
+  AutocompleteCurrency copyWith({
+    String? id,
+    String? name,
+    String? code,
+    String? symbol,
+    int? decimalPlaces,
+  }) {
     return AutocompleteCurrency(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        code: code ?? this.code,
-        symbol: symbol ?? this.symbol,
-        decimalPlaces: decimalPlaces ?? this.decimalPlaces);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      code: code ?? this.code,
+      symbol: symbol ?? this.symbol,
+      decimalPlaces: decimalPlaces ?? this.decimalPlaces,
+    );
   }
 
-  AutocompleteCurrency copyWithWrapped(
-      {Wrapped<String>? id,
-      Wrapped<String>? name,
-      Wrapped<String>? code,
-      Wrapped<String>? symbol,
-      Wrapped<int>? decimalPlaces}) {
+  AutocompleteCurrency copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String>? name,
+    Wrapped<String>? code,
+    Wrapped<String>? symbol,
+    Wrapped<int>? decimalPlaces,
+  }) {
     return AutocompleteCurrency(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        code: (code != null ? code.value : this.code),
-        symbol: (symbol != null ? symbol.value : this.symbol),
-        decimalPlaces:
-            (decimalPlaces != null ? decimalPlaces.value : this.decimalPlaces));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      code: (code != null ? code.value : this.code),
+      symbol: (symbol != null ? symbol.value : this.symbol),
+      decimalPlaces:
+          (decimalPlaces != null ? decimalPlaces.value : this.decimalPlaces),
+    );
   }
 }
 
@@ -1398,33 +1516,37 @@ class AutocompleteCurrencyCode {
 }
 
 extension $AutocompleteCurrencyCodeExtension on AutocompleteCurrencyCode {
-  AutocompleteCurrencyCode copyWith(
-      {String? id,
-      String? name,
-      String? code,
-      String? symbol,
-      int? decimalPlaces}) {
+  AutocompleteCurrencyCode copyWith({
+    String? id,
+    String? name,
+    String? code,
+    String? symbol,
+    int? decimalPlaces,
+  }) {
     return AutocompleteCurrencyCode(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        code: code ?? this.code,
-        symbol: symbol ?? this.symbol,
-        decimalPlaces: decimalPlaces ?? this.decimalPlaces);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      code: code ?? this.code,
+      symbol: symbol ?? this.symbol,
+      decimalPlaces: decimalPlaces ?? this.decimalPlaces,
+    );
   }
 
-  AutocompleteCurrencyCode copyWithWrapped(
-      {Wrapped<String>? id,
-      Wrapped<String>? name,
-      Wrapped<String>? code,
-      Wrapped<String>? symbol,
-      Wrapped<int>? decimalPlaces}) {
+  AutocompleteCurrencyCode copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String>? name,
+    Wrapped<String>? code,
+    Wrapped<String>? symbol,
+    Wrapped<int>? decimalPlaces,
+  }) {
     return AutocompleteCurrencyCode(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        code: (code != null ? code.value : this.code),
-        symbol: (symbol != null ? symbol.value : this.symbol),
-        decimalPlaces:
-            (decimalPlaces != null ? decimalPlaces.value : this.decimalPlaces));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      code: (code != null ? code.value : this.code),
+      symbol: (symbol != null ? symbol.value : this.symbol),
+      decimalPlaces:
+          (decimalPlaces != null ? decimalPlaces.value : this.decimalPlaces),
+    );
   }
 }
 
@@ -1457,15 +1579,22 @@ class AutocompleteObjectGroup {
 extension $AutocompleteObjectGroupExtension on AutocompleteObjectGroup {
   AutocompleteObjectGroup copyWith({String? id, String? title, String? name}) {
     return AutocompleteObjectGroup(
-        id: id ?? this.id, title: title ?? this.title, name: name ?? this.name);
+      id: id ?? this.id,
+      title: title ?? this.title,
+      name: name ?? this.name,
+    );
   }
 
-  AutocompleteObjectGroup copyWithWrapped(
-      {Wrapped<String>? id, Wrapped<String>? title, Wrapped<String>? name}) {
+  AutocompleteObjectGroup copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String>? title,
+    Wrapped<String>? name,
+  }) {
     return AutocompleteObjectGroup(
-        id: (id != null ? id.value : this.id),
-        title: (title != null ? title.value : this.title),
-        name: (name != null ? name.value : this.name));
+      id: (id != null ? id.value : this.id),
+      title: (title != null ? title.value : this.title),
+      name: (name != null ? name.value : this.name),
+    );
   }
 }
 
@@ -1514,58 +1643,63 @@ class AutocompletePiggy {
 }
 
 extension $AutocompletePiggyExtension on AutocompletePiggy {
-  AutocompletePiggy copyWith(
-      {String? id,
-      String? name,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      String? currencyName,
-      int? currencyDecimalPlaces,
-      String? objectGroupId,
-      String? objectGroupTitle}) {
+  AutocompletePiggy copyWith({
+    String? id,
+    String? name,
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    String? currencyName,
+    int? currencyDecimalPlaces,
+    String? objectGroupId,
+    String? objectGroupTitle,
+  }) {
     return AutocompletePiggy(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyName: currencyName ?? this.currencyName,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        objectGroupId: objectGroupId ?? this.objectGroupId,
-        objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyName: currencyName ?? this.currencyName,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      objectGroupId: objectGroupId ?? this.objectGroupId,
+      objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle,
+    );
   }
 
-  AutocompletePiggy copyWithWrapped(
-      {Wrapped<String>? id,
-      Wrapped<String>? name,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<String?>? currencyName,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? objectGroupId,
-      Wrapped<String?>? objectGroupTitle}) {
+  AutocompletePiggy copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String>? name,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<String?>? currencyName,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? objectGroupId,
+    Wrapped<String?>? objectGroupTitle,
+  }) {
     return AutocompletePiggy(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyName:
-            (currencyName != null ? currencyName.value : this.currencyName),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        objectGroupId:
-            (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-        objectGroupTitle: (objectGroupTitle != null
-            ? objectGroupTitle.value
-            : this.objectGroupTitle));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyName:
+          (currencyName != null ? currencyName.value : this.currencyName),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      objectGroupId:
+          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
+      objectGroupTitle:
+          (objectGroupTitle != null
+              ? objectGroupTitle.value
+              : this.objectGroupTitle),
+    );
   }
 }
 
@@ -1614,59 +1748,65 @@ class AutocompletePiggyBalance {
 }
 
 extension $AutocompletePiggyBalanceExtension on AutocompletePiggyBalance {
-  AutocompletePiggyBalance copyWith(
-      {String? id,
-      String? name,
-      String? nameWithBalance,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      int? currencyDecimalPlaces,
-      String? objectGroupId,
-      String? objectGroupTitle}) {
+  AutocompletePiggyBalance copyWith({
+    String? id,
+    String? name,
+    String? nameWithBalance,
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    String? objectGroupId,
+    String? objectGroupTitle,
+  }) {
     return AutocompletePiggyBalance(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        nameWithBalance: nameWithBalance ?? this.nameWithBalance,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        objectGroupId: objectGroupId ?? this.objectGroupId,
-        objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      nameWithBalance: nameWithBalance ?? this.nameWithBalance,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      objectGroupId: objectGroupId ?? this.objectGroupId,
+      objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle,
+    );
   }
 
-  AutocompletePiggyBalance copyWithWrapped(
-      {Wrapped<String>? id,
-      Wrapped<String>? name,
-      Wrapped<String?>? nameWithBalance,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? objectGroupId,
-      Wrapped<String?>? objectGroupTitle}) {
+  AutocompletePiggyBalance copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String>? name,
+    Wrapped<String?>? nameWithBalance,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? objectGroupId,
+    Wrapped<String?>? objectGroupTitle,
+  }) {
     return AutocompletePiggyBalance(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        nameWithBalance: (nameWithBalance != null
-            ? nameWithBalance.value
-            : this.nameWithBalance),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        objectGroupId:
-            (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-        objectGroupTitle: (objectGroupTitle != null
-            ? objectGroupTitle.value
-            : this.objectGroupTitle));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      nameWithBalance:
+          (nameWithBalance != null
+              ? nameWithBalance.value
+              : this.nameWithBalance),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      objectGroupId:
+          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
+      objectGroupTitle:
+          (objectGroupTitle != null
+              ? objectGroupTitle.value
+              : this.objectGroupTitle),
+    );
   }
 }
 
@@ -1697,23 +1837,28 @@ class AutocompleteRecurrence {
 }
 
 extension $AutocompleteRecurrenceExtension on AutocompleteRecurrence {
-  AutocompleteRecurrence copyWith(
-      {String? id, String? name, String? description}) {
+  AutocompleteRecurrence copyWith({
+    String? id,
+    String? name,
+    String? description,
+  }) {
     return AutocompleteRecurrence(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        description: description ?? this.description);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+    );
   }
 
-  AutocompleteRecurrence copyWithWrapped(
-      {Wrapped<String>? id,
-      Wrapped<String>? name,
-      Wrapped<String?>? description}) {
+  AutocompleteRecurrence copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String>? name,
+    Wrapped<String?>? description,
+  }) {
     return AutocompleteRecurrence(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        description:
-            (description != null ? description.value : this.description));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      description: (description != null ? description.value : this.description),
+    );
   }
 }
 
@@ -1746,20 +1891,22 @@ class AutocompleteRule {
 extension $AutocompleteRuleExtension on AutocompleteRule {
   AutocompleteRule copyWith({String? id, String? name, String? description}) {
     return AutocompleteRule(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        description: description ?? this.description);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+    );
   }
 
-  AutocompleteRule copyWithWrapped(
-      {Wrapped<String>? id,
-      Wrapped<String>? name,
-      Wrapped<String?>? description}) {
+  AutocompleteRule copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String>? name,
+    Wrapped<String?>? description,
+  }) {
     return AutocompleteRule(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        description:
-            (description != null ? description.value : this.description));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      description: (description != null ? description.value : this.description),
+    );
   }
 }
 
@@ -1790,23 +1937,28 @@ class AutocompleteRuleGroup {
 }
 
 extension $AutocompleteRuleGroupExtension on AutocompleteRuleGroup {
-  AutocompleteRuleGroup copyWith(
-      {String? id, String? name, String? description}) {
+  AutocompleteRuleGroup copyWith({
+    String? id,
+    String? name,
+    String? description,
+  }) {
     return AutocompleteRuleGroup(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        description: description ?? this.description);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+    );
   }
 
-  AutocompleteRuleGroup copyWithWrapped(
-      {Wrapped<String>? id,
-      Wrapped<String>? name,
-      Wrapped<String?>? description}) {
+  AutocompleteRuleGroup copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String>? name,
+    Wrapped<String?>? description,
+  }) {
     return AutocompleteRuleGroup(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        description:
-            (description != null ? description.value : this.description));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      description: (description != null ? description.value : this.description),
+    );
   }
 }
 
@@ -1839,15 +1991,22 @@ class AutocompleteTag {
 extension $AutocompleteTagExtension on AutocompleteTag {
   AutocompleteTag copyWith({String? id, String? name, String? tag}) {
     return AutocompleteTag(
-        id: id ?? this.id, name: name ?? this.name, tag: tag ?? this.tag);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      tag: tag ?? this.tag,
+    );
   }
 
-  AutocompleteTag copyWithWrapped(
-      {Wrapped<String>? id, Wrapped<String>? name, Wrapped<String>? tag}) {
+  AutocompleteTag copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String>? name,
+    Wrapped<String>? tag,
+  }) {
     return AutocompleteTag(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        tag: (tag != null ? tag.value : this.tag));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      tag: (tag != null ? tag.value : this.tag),
+    );
   }
 }
 
@@ -1881,31 +2040,35 @@ class AutocompleteTransaction {
 }
 
 extension $AutocompleteTransactionExtension on AutocompleteTransaction {
-  AutocompleteTransaction copyWith(
-      {String? id,
-      String? transactionGroupId,
-      String? name,
-      String? description}) {
+  AutocompleteTransaction copyWith({
+    String? id,
+    String? transactionGroupId,
+    String? name,
+    String? description,
+  }) {
     return AutocompleteTransaction(
-        id: id ?? this.id,
-        transactionGroupId: transactionGroupId ?? this.transactionGroupId,
-        name: name ?? this.name,
-        description: description ?? this.description);
+      id: id ?? this.id,
+      transactionGroupId: transactionGroupId ?? this.transactionGroupId,
+      name: name ?? this.name,
+      description: description ?? this.description,
+    );
   }
 
-  AutocompleteTransaction copyWithWrapped(
-      {Wrapped<String>? id,
-      Wrapped<String?>? transactionGroupId,
-      Wrapped<String>? name,
-      Wrapped<String>? description}) {
+  AutocompleteTransaction copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String?>? transactionGroupId,
+    Wrapped<String>? name,
+    Wrapped<String>? description,
+  }) {
     return AutocompleteTransaction(
-        id: (id != null ? id.value : this.id),
-        transactionGroupId: (transactionGroupId != null
-            ? transactionGroupId.value
-            : this.transactionGroupId),
-        name: (name != null ? name.value : this.name),
-        description:
-            (description != null ? description.value : this.description));
+      id: (id != null ? id.value : this.id),
+      transactionGroupId:
+          (transactionGroupId != null
+              ? transactionGroupId.value
+              : this.transactionGroupId),
+      name: (name != null ? name.value : this.name),
+      description: (description != null ? description.value : this.description),
+    );
   }
 }
 
@@ -1939,31 +2102,35 @@ class AutocompleteTransactionID {
 }
 
 extension $AutocompleteTransactionIDExtension on AutocompleteTransactionID {
-  AutocompleteTransactionID copyWith(
-      {String? id,
-      String? transactionGroupId,
-      String? name,
-      String? description}) {
+  AutocompleteTransactionID copyWith({
+    String? id,
+    String? transactionGroupId,
+    String? name,
+    String? description,
+  }) {
     return AutocompleteTransactionID(
-        id: id ?? this.id,
-        transactionGroupId: transactionGroupId ?? this.transactionGroupId,
-        name: name ?? this.name,
-        description: description ?? this.description);
+      id: id ?? this.id,
+      transactionGroupId: transactionGroupId ?? this.transactionGroupId,
+      name: name ?? this.name,
+      description: description ?? this.description,
+    );
   }
 
-  AutocompleteTransactionID copyWithWrapped(
-      {Wrapped<String>? id,
-      Wrapped<String?>? transactionGroupId,
-      Wrapped<String>? name,
-      Wrapped<String>? description}) {
+  AutocompleteTransactionID copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String?>? transactionGroupId,
+    Wrapped<String>? name,
+    Wrapped<String>? description,
+  }) {
     return AutocompleteTransactionID(
-        id: (id != null ? id.value : this.id),
-        transactionGroupId: (transactionGroupId != null
-            ? transactionGroupId.value
-            : this.transactionGroupId),
-        name: (name != null ? name.value : this.name),
-        description:
-            (description != null ? description.value : this.description));
+      id: (id != null ? id.value : this.id),
+      transactionGroupId:
+          (transactionGroupId != null
+              ? transactionGroupId.value
+              : this.transactionGroupId),
+      name: (name != null ? name.value : this.name),
+      description: (description != null ? description.value : this.description),
+    );
   }
 }
 
@@ -1994,26 +2161,34 @@ class AutocompleteTransactionType {
 }
 
 extension $AutocompleteTransactionTypeExtension on AutocompleteTransactionType {
-  AutocompleteTransactionType copyWith(
-      {String? id, String? name, String? type}) {
+  AutocompleteTransactionType copyWith({
+    String? id,
+    String? name,
+    String? type,
+  }) {
     return AutocompleteTransactionType(
-        id: id ?? this.id, name: name ?? this.name, type: type ?? this.type);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      type: type ?? this.type,
+    );
   }
 
-  AutocompleteTransactionType copyWithWrapped(
-      {Wrapped<String>? id, Wrapped<String>? name, Wrapped<String>? type}) {
+  AutocompleteTransactionType copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String>? name,
+    Wrapped<String>? type,
+  }) {
     return AutocompleteTransactionType(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        type: (type != null ? type.value : this.type));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      type: (type != null ? type.value : this.type),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class ChartDataPoint {
-  const ChartDataPoint({
-    this.key,
-  });
+  const ChartDataPoint({this.key});
 
   factory ChartDataPoint.fromJson(Map<String, dynamic> json) =>
       _$ChartDataPointFromJson(json);
@@ -2087,58 +2262,62 @@ class ChartDataSet {
 }
 
 extension $ChartDataSetExtension on ChartDataSet {
-  ChartDataSet copyWith(
-      {String? label,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      int? currencyDecimalPlaces,
-      DateTime? startDate,
-      DateTime? endDate,
-      String? type,
-      int? yAxisID,
-      Object? entries}) {
+  ChartDataSet copyWith({
+    String? label,
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    DateTime? startDate,
+    DateTime? endDate,
+    String? type,
+    int? yAxisID,
+    Object? entries,
+  }) {
     return ChartDataSet(
-        label: label ?? this.label,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        startDate: startDate ?? this.startDate,
-        endDate: endDate ?? this.endDate,
-        type: type ?? this.type,
-        yAxisID: yAxisID ?? this.yAxisID,
-        entries: entries ?? this.entries);
+      label: label ?? this.label,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+      type: type ?? this.type,
+      yAxisID: yAxisID ?? this.yAxisID,
+      entries: entries ?? this.entries,
+    );
   }
 
-  ChartDataSet copyWithWrapped(
-      {Wrapped<String?>? label,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<DateTime?>? startDate,
-      Wrapped<DateTime?>? endDate,
-      Wrapped<String?>? type,
-      Wrapped<int?>? yAxisID,
-      Wrapped<Object?>? entries}) {
+  ChartDataSet copyWithWrapped({
+    Wrapped<String?>? label,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<DateTime?>? startDate,
+    Wrapped<DateTime?>? endDate,
+    Wrapped<String?>? type,
+    Wrapped<int?>? yAxisID,
+    Wrapped<Object?>? entries,
+  }) {
     return ChartDataSet(
-        label: (label != null ? label.value : this.label),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        startDate: (startDate != null ? startDate.value : this.startDate),
-        endDate: (endDate != null ? endDate.value : this.endDate),
-        type: (type != null ? type.value : this.type),
-        yAxisID: (yAxisID != null ? yAxisID.value : this.yAxisID),
-        entries: (entries != null ? entries.value : this.entries));
+      label: (label != null ? label.value : this.label),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      startDate: (startDate != null ? startDate.value : this.startDate),
+      endDate: (endDate != null ? endDate.value : this.endDate),
+      type: (type != null ? type.value : this.type),
+      yAxisID: (yAxisID != null ? yAxisID.value : this.yAxisID),
+      entries: (entries != null ? entries.value : this.entries),
+    );
   }
 }
 
@@ -2182,39 +2361,44 @@ class InsightGroupEntry {
 }
 
 extension $InsightGroupEntryExtension on InsightGroupEntry {
-  InsightGroupEntry copyWith(
-      {String? id,
-      String? name,
-      String? difference,
-      double? differenceFloat,
-      String? currencyId,
-      String? currencyCode}) {
+  InsightGroupEntry copyWith({
+    String? id,
+    String? name,
+    String? difference,
+    double? differenceFloat,
+    String? currencyId,
+    String? currencyCode,
+  }) {
     return InsightGroupEntry(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        difference: difference ?? this.difference,
-        differenceFloat: differenceFloat ?? this.differenceFloat,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      difference: difference ?? this.difference,
+      differenceFloat: differenceFloat ?? this.differenceFloat,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+    );
   }
 
-  InsightGroupEntry copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? name,
-      Wrapped<String?>? difference,
-      Wrapped<double?>? differenceFloat,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode}) {
+  InsightGroupEntry copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? name,
+    Wrapped<String?>? difference,
+    Wrapped<double?>? differenceFloat,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+  }) {
     return InsightGroupEntry(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        difference: (difference != null ? difference.value : this.difference),
-        differenceFloat: (differenceFloat != null
-            ? differenceFloat.value
-            : this.differenceFloat),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      difference: (difference != null ? difference.value : this.difference),
+      differenceFloat:
+          (differenceFloat != null
+              ? differenceFloat.value
+              : this.differenceFloat),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+    );
   }
 }
 
@@ -2250,31 +2434,36 @@ class InsightTotalEntry {
 }
 
 extension $InsightTotalEntryExtension on InsightTotalEntry {
-  InsightTotalEntry copyWith(
-      {String? difference,
-      double? differenceFloat,
-      String? currencyId,
-      String? currencyCode}) {
+  InsightTotalEntry copyWith({
+    String? difference,
+    double? differenceFloat,
+    String? currencyId,
+    String? currencyCode,
+  }) {
     return InsightTotalEntry(
-        difference: difference ?? this.difference,
-        differenceFloat: differenceFloat ?? this.differenceFloat,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode);
+      difference: difference ?? this.difference,
+      differenceFloat: differenceFloat ?? this.differenceFloat,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+    );
   }
 
-  InsightTotalEntry copyWithWrapped(
-      {Wrapped<String?>? difference,
-      Wrapped<double?>? differenceFloat,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode}) {
+  InsightTotalEntry copyWithWrapped({
+    Wrapped<String?>? difference,
+    Wrapped<double?>? differenceFloat,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+  }) {
     return InsightTotalEntry(
-        difference: (difference != null ? difference.value : this.difference),
-        differenceFloat: (differenceFloat != null
-            ? differenceFloat.value
-            : this.differenceFloat),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode));
+      difference: (difference != null ? difference.value : this.difference),
+      differenceFloat:
+          (differenceFloat != null
+              ? differenceFloat.value
+              : this.differenceFloat),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+    );
   }
 }
 
@@ -2328,55 +2517,60 @@ class InsightTransferEntry {
 }
 
 extension $InsightTransferEntryExtension on InsightTransferEntry {
-  InsightTransferEntry copyWith(
-      {String? id,
-      String? name,
-      String? difference,
-      double? differenceFloat,
-      String? $in,
-      double? inFloat,
-      String? out,
-      double? outFloat,
-      String? currencyId,
-      String? currencyCode}) {
+  InsightTransferEntry copyWith({
+    String? id,
+    String? name,
+    String? difference,
+    double? differenceFloat,
+    String? $in,
+    double? inFloat,
+    String? out,
+    double? outFloat,
+    String? currencyId,
+    String? currencyCode,
+  }) {
     return InsightTransferEntry(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        difference: difference ?? this.difference,
-        differenceFloat: differenceFloat ?? this.differenceFloat,
-        $in: $in ?? this.$in,
-        inFloat: inFloat ?? this.inFloat,
-        out: out ?? this.out,
-        outFloat: outFloat ?? this.outFloat,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      difference: difference ?? this.difference,
+      differenceFloat: differenceFloat ?? this.differenceFloat,
+      $in: $in ?? this.$in,
+      inFloat: inFloat ?? this.inFloat,
+      out: out ?? this.out,
+      outFloat: outFloat ?? this.outFloat,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+    );
   }
 
-  InsightTransferEntry copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? name,
-      Wrapped<String?>? difference,
-      Wrapped<double?>? differenceFloat,
-      Wrapped<String?>? $in,
-      Wrapped<double?>? inFloat,
-      Wrapped<String?>? out,
-      Wrapped<double?>? outFloat,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode}) {
+  InsightTransferEntry copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? name,
+    Wrapped<String?>? difference,
+    Wrapped<double?>? differenceFloat,
+    Wrapped<String?>? $in,
+    Wrapped<double?>? inFloat,
+    Wrapped<String?>? out,
+    Wrapped<double?>? outFloat,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+  }) {
     return InsightTransferEntry(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        difference: (difference != null ? difference.value : this.difference),
-        differenceFloat: (differenceFloat != null
-            ? differenceFloat.value
-            : this.differenceFloat),
-        $in: ($in != null ? $in.value : this.$in),
-        inFloat: (inFloat != null ? inFloat.value : this.inFloat),
-        out: (out != null ? out.value : this.out),
-        outFloat: (outFloat != null ? outFloat.value : this.outFloat),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      difference: (difference != null ? difference.value : this.difference),
+      differenceFloat:
+          (differenceFloat != null
+              ? differenceFloat.value
+              : this.differenceFloat),
+      $in: ($in != null ? $in.value : this.$in),
+      inFloat: (inFloat != null ? inFloat.value : this.inFloat),
+      out: (out != null ? out.value : this.out),
+      outFloat: (outFloat != null ? outFloat.value : this.outFloat),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+    );
   }
 }
 
@@ -2409,27 +2603,28 @@ class AccountRead {
 extension $AccountReadExtension on AccountRead {
   AccountRead copyWith({String? type, String? id, Account? attributes}) {
     return AccountRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
   }
 
-  AccountRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<Account>? attributes}) {
+  AccountRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<Account>? attributes,
+  }) {
     return AccountRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class AccountSingle {
-  const AccountSingle({
-    required this.data,
-  });
+  const AccountSingle({required this.data});
 
   factory AccountSingle.fromJson(Map<String, dynamic> json) =>
       _$AccountSingleFromJson(json);
@@ -2485,33 +2680,38 @@ class AttachmentRead {
 }
 
 extension $AttachmentReadExtension on AttachmentRead {
-  AttachmentRead copyWith(
-      {String? type, String? id, Attachment? attributes, ObjectLink? links}) {
+  AttachmentRead copyWith({
+    String? type,
+    String? id,
+    Attachment? attributes,
+    ObjectLink? links,
+  }) {
     return AttachmentRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+      links: links ?? this.links,
+    );
   }
 
-  AttachmentRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<Attachment>? attributes,
-      Wrapped<ObjectLink>? links}) {
+  AttachmentRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<Attachment>? attributes,
+    Wrapped<ObjectLink>? links,
+  }) {
     return AttachmentRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class AttachmentSingle {
-  const AttachmentSingle({
-    required this.data,
-  });
+  const AttachmentSingle({required this.data});
 
   factory AttachmentSingle.fromJson(Map<String, dynamic> json) =>
       _$AttachmentSingleFromJson(json);
@@ -2564,30 +2764,34 @@ class AvailableBudgetRead {
 }
 
 extension $AvailableBudgetReadExtension on AvailableBudgetRead {
-  AvailableBudgetRead copyWith(
-      {String? type, String? id, AvailableBudget? attributes}) {
+  AvailableBudgetRead copyWith({
+    String? type,
+    String? id,
+    AvailableBudget? attributes,
+  }) {
     return AvailableBudgetRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
   }
 
-  AvailableBudgetRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<AvailableBudget>? attributes}) {
+  AvailableBudgetRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<AvailableBudget>? attributes,
+  }) {
     return AvailableBudgetRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class AvailableBudgetSingle {
-  const AvailableBudgetSingle({
-    required this.data,
-  });
+  const AvailableBudgetSingle({required this.data});
 
   factory AvailableBudgetSingle.fromJson(Map<String, dynamic> json) =>
       _$AvailableBudgetSingleFromJson(json);
@@ -2642,25 +2846,28 @@ class BillRead {
 extension $BillReadExtension on BillRead {
   BillRead copyWith({String? type, String? id, Bill? attributes}) {
     return BillRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
   }
 
-  BillRead copyWithWrapped(
-      {Wrapped<String>? type, Wrapped<String>? id, Wrapped<Bill>? attributes}) {
+  BillRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<Bill>? attributes,
+  }) {
     return BillRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class BillSingle {
-  const BillSingle({
-    required this.data,
-  });
+  const BillSingle({required this.data});
 
   factory BillSingle.fromJson(Map<String, dynamic> json) =>
       _$BillSingleFromJson(json);
@@ -2713,30 +2920,34 @@ class BudgetLimitRead {
 }
 
 extension $BudgetLimitReadExtension on BudgetLimitRead {
-  BudgetLimitRead copyWith(
-      {String? type, String? id, BudgetLimit? attributes}) {
+  BudgetLimitRead copyWith({
+    String? type,
+    String? id,
+    BudgetLimit? attributes,
+  }) {
     return BudgetLimitRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
   }
 
-  BudgetLimitRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<BudgetLimit>? attributes}) {
+  BudgetLimitRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<BudgetLimit>? attributes,
+  }) {
     return BudgetLimitRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class BudgetLimitSingle {
-  const BudgetLimitSingle({
-    required this.data,
-  });
+  const BudgetLimitSingle({required this.data});
 
   factory BudgetLimitSingle.fromJson(Map<String, dynamic> json) =>
       _$BudgetLimitSingleFromJson(json);
@@ -2791,27 +3002,28 @@ class BudgetRead {
 extension $BudgetReadExtension on BudgetRead {
   BudgetRead copyWith({String? type, String? id, Budget? attributes}) {
     return BudgetRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
   }
 
-  BudgetRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<Budget>? attributes}) {
+  BudgetRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<Budget>? attributes,
+  }) {
     return BudgetRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class BudgetSingle {
-  const BudgetSingle({
-    required this.data,
-  });
+  const BudgetSingle({required this.data});
 
   factory BudgetSingle.fromJson(Map<String, dynamic> json) =>
       _$BudgetSingleFromJson(json);
@@ -2866,27 +3078,28 @@ class CategoryRead {
 extension $CategoryReadExtension on CategoryRead {
   CategoryRead copyWith({String? type, String? id, Category? attributes}) {
     return CategoryRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
   }
 
-  CategoryRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<Category>? attributes}) {
+  CategoryRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<Category>? attributes,
+  }) {
     return CategoryRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class CategorySingle {
-  const CategorySingle({
-    required this.data,
-  });
+  const CategorySingle({required this.data});
 
   factory CategorySingle.fromJson(Map<String, dynamic> json) =>
       _$CategorySingleFromJson(json);
@@ -2914,9 +3127,7 @@ extension $CategorySingleExtension on CategorySingle {
 
 @JsonSerializable(explicitToJson: true)
 class ConfigurationSingle {
-  const ConfigurationSingle({
-    required this.data,
-  });
+  const ConfigurationSingle({required this.data});
 
   factory ConfigurationSingle.fromJson(Map<String, dynamic> json) =>
       _$ConfigurationSingleFromJson(json);
@@ -2971,27 +3182,28 @@ class CurrencyRead {
 extension $CurrencyReadExtension on CurrencyRead {
   CurrencyRead copyWith({String? type, String? id, Currency? attributes}) {
     return CurrencyRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
   }
 
-  CurrencyRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<Currency>? attributes}) {
+  CurrencyRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<Currency>? attributes,
+  }) {
     return CurrencyRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class CurrencySingle {
-  const CurrencySingle({
-    required this.data,
-  });
+  const CurrencySingle({required this.data});
 
   factory CurrencySingle.fromJson(Map<String, dynamic> json) =>
       _$CurrencySingleFromJson(json);
@@ -3047,33 +3259,38 @@ class LinkTypeRead {
 }
 
 extension $LinkTypeReadExtension on LinkTypeRead {
-  LinkTypeRead copyWith(
-      {String? type, String? id, LinkType? attributes, ObjectLink? links}) {
+  LinkTypeRead copyWith({
+    String? type,
+    String? id,
+    LinkType? attributes,
+    ObjectLink? links,
+  }) {
     return LinkTypeRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+      links: links ?? this.links,
+    );
   }
 
-  LinkTypeRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<LinkType>? attributes,
-      Wrapped<ObjectLink>? links}) {
+  LinkTypeRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<LinkType>? attributes,
+    Wrapped<ObjectLink>? links,
+  }) {
     return LinkTypeRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class LinkTypeSingle {
-  const LinkTypeSingle({
-    required this.data,
-  });
+  const LinkTypeSingle({required this.data});
 
   factory LinkTypeSingle.fromJson(Map<String, dynamic> json) =>
       _$LinkTypeSingleFromJson(json);
@@ -3126,30 +3343,34 @@ class ObjectGroupRead {
 }
 
 extension $ObjectGroupReadExtension on ObjectGroupRead {
-  ObjectGroupRead copyWith(
-      {String? type, String? id, ObjectGroup? attributes}) {
+  ObjectGroupRead copyWith({
+    String? type,
+    String? id,
+    ObjectGroup? attributes,
+  }) {
     return ObjectGroupRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
   }
 
-  ObjectGroupRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<ObjectGroup>? attributes}) {
+  ObjectGroupRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<ObjectGroup>? attributes,
+  }) {
     return ObjectGroupRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class ObjectGroupSingle {
-  const ObjectGroupSingle({
-    required this.data,
-  });
+  const ObjectGroupSingle({required this.data});
 
   factory ObjectGroupSingle.fromJson(Map<String, dynamic> json) =>
       _$ObjectGroupSingleFromJson(json);
@@ -3205,28 +3426,32 @@ class PiggyBankEventRead {
 }
 
 extension $PiggyBankEventReadExtension on PiggyBankEventRead {
-  PiggyBankEventRead copyWith(
-      {String? type,
-      String? id,
-      PiggyBankEvent? attributes,
-      ObjectLink? links}) {
+  PiggyBankEventRead copyWith({
+    String? type,
+    String? id,
+    PiggyBankEvent? attributes,
+    ObjectLink? links,
+  }) {
     return PiggyBankEventRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+      links: links ?? this.links,
+    );
   }
 
-  PiggyBankEventRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<PiggyBankEvent>? attributes,
-      Wrapped<ObjectLink>? links}) {
+  PiggyBankEventRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<PiggyBankEvent>? attributes,
+    Wrapped<ObjectLink>? links,
+  }) {
     return PiggyBankEventRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -3260,33 +3485,38 @@ class PiggyBankRead {
 }
 
 extension $PiggyBankReadExtension on PiggyBankRead {
-  PiggyBankRead copyWith(
-      {String? type, String? id, PiggyBank? attributes, ObjectLink? links}) {
+  PiggyBankRead copyWith({
+    String? type,
+    String? id,
+    PiggyBank? attributes,
+    ObjectLink? links,
+  }) {
     return PiggyBankRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+      links: links ?? this.links,
+    );
   }
 
-  PiggyBankRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<PiggyBank>? attributes,
-      Wrapped<ObjectLink>? links}) {
+  PiggyBankRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<PiggyBank>? attributes,
+    Wrapped<ObjectLink>? links,
+  }) {
     return PiggyBankRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class PiggyBankSingle {
-  const PiggyBankSingle({
-    required this.data,
-  });
+  const PiggyBankSingle({required this.data});
 
   factory PiggyBankSingle.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankSingleFromJson(json);
@@ -3341,27 +3571,28 @@ class PreferenceRead {
 extension $PreferenceReadExtension on PreferenceRead {
   PreferenceRead copyWith({String? type, String? id, Preference? attributes}) {
     return PreferenceRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
   }
 
-  PreferenceRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<Preference>? attributes}) {
+  PreferenceRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<Preference>? attributes,
+  }) {
     return PreferenceRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class PreferenceSingle {
-  const PreferenceSingle({
-    required this.data,
-  });
+  const PreferenceSingle({required this.data});
 
   factory PreferenceSingle.fromJson(Map<String, dynamic> json) =>
       _$PreferenceSingleFromJson(json);
@@ -3417,33 +3648,38 @@ class RecurrenceRead {
 }
 
 extension $RecurrenceReadExtension on RecurrenceRead {
-  RecurrenceRead copyWith(
-      {String? type, String? id, Recurrence? attributes, ObjectLink? links}) {
+  RecurrenceRead copyWith({
+    String? type,
+    String? id,
+    Recurrence? attributes,
+    ObjectLink? links,
+  }) {
     return RecurrenceRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+      links: links ?? this.links,
+    );
   }
 
-  RecurrenceRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<Recurrence>? attributes,
-      Wrapped<ObjectLink>? links}) {
+  RecurrenceRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<Recurrence>? attributes,
+    Wrapped<ObjectLink>? links,
+  }) {
     return RecurrenceRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class RecurrenceSingle {
-  const RecurrenceSingle({
-    required this.data,
-  });
+  const RecurrenceSingle({required this.data});
 
   factory RecurrenceSingle.fromJson(Map<String, dynamic> json) =>
       _$RecurrenceSingleFromJson(json);
@@ -3499,33 +3735,38 @@ class RuleGroupRead {
 }
 
 extension $RuleGroupReadExtension on RuleGroupRead {
-  RuleGroupRead copyWith(
-      {String? type, String? id, RuleGroup? attributes, ObjectLink? links}) {
+  RuleGroupRead copyWith({
+    String? type,
+    String? id,
+    RuleGroup? attributes,
+    ObjectLink? links,
+  }) {
     return RuleGroupRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+      links: links ?? this.links,
+    );
   }
 
-  RuleGroupRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<RuleGroup>? attributes,
-      Wrapped<ObjectLink>? links}) {
+  RuleGroupRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<RuleGroup>? attributes,
+    Wrapped<ObjectLink>? links,
+  }) {
     return RuleGroupRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class RuleGroupSingle {
-  const RuleGroupSingle({
-    required this.data,
-  });
+  const RuleGroupSingle({required this.data});
 
   factory RuleGroupSingle.fromJson(Map<String, dynamic> json) =>
       _$RuleGroupSingleFromJson(json);
@@ -3581,33 +3822,38 @@ class RuleRead {
 }
 
 extension $RuleReadExtension on RuleRead {
-  RuleRead copyWith(
-      {String? type, String? id, Rule? attributes, ObjectLink? links}) {
+  RuleRead copyWith({
+    String? type,
+    String? id,
+    Rule? attributes,
+    ObjectLink? links,
+  }) {
     return RuleRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+      links: links ?? this.links,
+    );
   }
 
-  RuleRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<Rule>? attributes,
-      Wrapped<ObjectLink>? links}) {
+  RuleRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<Rule>? attributes,
+    Wrapped<ObjectLink>? links,
+  }) {
     return RuleRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class RuleSingle {
-  const RuleSingle({
-    required this.data,
-  });
+  const RuleSingle({required this.data});
 
   factory RuleSingle.fromJson(Map<String, dynamic> json) =>
       _$RuleSingleFromJson(json);
@@ -3663,33 +3909,38 @@ class TagRead {
 }
 
 extension $TagReadExtension on TagRead {
-  TagRead copyWith(
-      {String? type, String? id, TagModel? attributes, ObjectLink? links}) {
+  TagRead copyWith({
+    String? type,
+    String? id,
+    TagModel? attributes,
+    ObjectLink? links,
+  }) {
     return TagRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+      links: links ?? this.links,
+    );
   }
 
-  TagRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<TagModel>? attributes,
-      Wrapped<ObjectLink>? links}) {
+  TagRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<TagModel>? attributes,
+    Wrapped<ObjectLink>? links,
+  }) {
     return TagRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class TagSingle {
-  const TagSingle({
-    required this.data,
-  });
+  const TagSingle({required this.data});
 
   factory TagSingle.fromJson(Map<String, dynamic> json) =>
       _$TagSingleFromJson(json);
@@ -3745,36 +3996,38 @@ class TransactionLinkRead {
 }
 
 extension $TransactionLinkReadExtension on TransactionLinkRead {
-  TransactionLinkRead copyWith(
-      {String? type,
-      String? id,
-      TransactionLink? attributes,
-      ObjectLink? links}) {
+  TransactionLinkRead copyWith({
+    String? type,
+    String? id,
+    TransactionLink? attributes,
+    ObjectLink? links,
+  }) {
     return TransactionLinkRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+      links: links ?? this.links,
+    );
   }
 
-  TransactionLinkRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<TransactionLink>? attributes,
-      Wrapped<ObjectLink>? links}) {
+  TransactionLinkRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<TransactionLink>? attributes,
+    Wrapped<ObjectLink>? links,
+  }) {
     return TransactionLinkRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class TransactionLinkSingle {
-  const TransactionLinkSingle({
-    required this.data,
-  });
+  const TransactionLinkSingle({required this.data});
 
   factory TransactionLinkSingle.fromJson(Map<String, dynamic> json) =>
       _$TransactionLinkSingleFromJson(json);
@@ -3830,33 +4083,38 @@ class TransactionRead {
 }
 
 extension $TransactionReadExtension on TransactionRead {
-  TransactionRead copyWith(
-      {String? type, String? id, Transaction? attributes, ObjectLink? links}) {
+  TransactionRead copyWith({
+    String? type,
+    String? id,
+    Transaction? attributes,
+    ObjectLink? links,
+  }) {
     return TransactionRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+      links: links ?? this.links,
+    );
   }
 
-  TransactionRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<Transaction>? attributes,
-      Wrapped<ObjectLink>? links}) {
+  TransactionRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<Transaction>? attributes,
+    Wrapped<ObjectLink>? links,
+  }) {
     return TransactionRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class TransactionSingle {
-  const TransactionSingle({
-    required this.data,
-  });
+  const TransactionSingle({required this.data});
 
   factory TransactionSingle.fromJson(Map<String, dynamic> json) =>
       _$TransactionSingleFromJson(json);
@@ -3912,25 +4170,32 @@ class UserRead {
 }
 
 extension $UserReadExtension on UserRead {
-  UserRead copyWith(
-      {String? type, String? id, User? attributes, ObjectLink? links}) {
+  UserRead copyWith({
+    String? type,
+    String? id,
+    User? attributes,
+    ObjectLink? links,
+  }) {
     return UserRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+      links: links ?? this.links,
+    );
   }
 
-  UserRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<User>? attributes,
-      Wrapped<ObjectLink>? links}) {
+  UserRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<User>? attributes,
+    Wrapped<ObjectLink>? links,
+  }) {
     return UserRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -3961,30 +4226,34 @@ class WebhookAttemptRead {
 }
 
 extension $WebhookAttemptReadExtension on WebhookAttemptRead {
-  WebhookAttemptRead copyWith(
-      {String? type, String? id, WebhookAttempt? attributes}) {
+  WebhookAttemptRead copyWith({
+    String? type,
+    String? id,
+    WebhookAttempt? attributes,
+  }) {
     return WebhookAttemptRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
   }
 
-  WebhookAttemptRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<WebhookAttempt>? attributes}) {
+  WebhookAttemptRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<WebhookAttempt>? attributes,
+  }) {
     return WebhookAttemptRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class WebhookAttemptSingle {
-  const WebhookAttemptSingle({
-    required this.data,
-  });
+  const WebhookAttemptSingle({required this.data});
 
   factory WebhookAttemptSingle.fromJson(Map<String, dynamic> json) =>
       _$WebhookAttemptSingleFromJson(json);
@@ -4037,30 +4306,34 @@ class WebhookMessageRead {
 }
 
 extension $WebhookMessageReadExtension on WebhookMessageRead {
-  WebhookMessageRead copyWith(
-      {String? type, String? id, WebhookMessage? attributes}) {
+  WebhookMessageRead copyWith({
+    String? type,
+    String? id,
+    WebhookMessage? attributes,
+  }) {
     return WebhookMessageRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
   }
 
-  WebhookMessageRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<WebhookMessage>? attributes}) {
+  WebhookMessageRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<WebhookMessage>? attributes,
+  }) {
     return WebhookMessageRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class WebhookMessageSingle {
-  const WebhookMessageSingle({
-    required this.data,
-  });
+  const WebhookMessageSingle({required this.data});
 
   factory WebhookMessageSingle.fromJson(Map<String, dynamic> json) =>
       _$WebhookMessageSingleFromJson(json);
@@ -4116,33 +4389,38 @@ class WebhookRead {
 }
 
 extension $WebhookReadExtension on WebhookRead {
-  WebhookRead copyWith(
-      {String? type, String? id, Webhook? attributes, ObjectLink? links}) {
+  WebhookRead copyWith({
+    String? type,
+    String? id,
+    Webhook? attributes,
+    ObjectLink? links,
+  }) {
     return WebhookRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+      links: links ?? this.links,
+    );
   }
 
-  WebhookRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<Webhook>? attributes,
-      Wrapped<ObjectLink>? links}) {
+  WebhookRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<Webhook>? attributes,
+    Wrapped<ObjectLink>? links,
+  }) {
     return WebhookRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class WebhookSingle {
-  const WebhookSingle({
-    required this.data,
-  });
+  const WebhookSingle({required this.data});
 
   factory WebhookSingle.fromJson(Map<String, dynamic> json) =>
       _$WebhookSingleFromJson(json);
@@ -4330,209 +4608,218 @@ class Account {
 }
 
 extension $AccountExtension on Account {
-  Account copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      bool? active,
-      int? order,
-      String? name,
-      enums.ShortAccountTypeProperty? type,
-      enums.AccountRoleProperty? accountRole,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      int? currencyDecimalPlaces,
-      String? nativeCurrencyId,
-      String? nativeCurrencyCode,
-      String? nativeCurrencySymbol,
-      int? nativeCurrencyDecimalPlaces,
-      String? currentBalance,
-      String? nativeCurrentBalance,
-      DateTime? currentBalanceDate,
-      String? notes,
-      DateTime? monthlyPaymentDate,
-      enums.CreditCardTypeProperty? creditCardType,
-      String? accountNumber,
-      String? iban,
-      String? bic,
-      String? virtualBalance,
-      String? nativeVirtualBalance,
-      String? openingBalance,
-      String? nativeOpeningBalance,
-      DateTime? openingBalanceDate,
-      enums.LiabilityTypeProperty? liabilityType,
-      enums.LiabilityDirectionProperty? liabilityDirection,
-      String? interest,
-      enums.InterestPeriodProperty? interestPeriod,
-      String? currentDebt,
-      bool? includeNetWorth,
-      double? longitude,
-      double? latitude,
-      int? zoomLevel}) {
+  Account copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? active,
+    int? order,
+    String? name,
+    enums.ShortAccountTypeProperty? type,
+    enums.AccountRoleProperty? accountRole,
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    String? nativeCurrencyId,
+    String? nativeCurrencyCode,
+    String? nativeCurrencySymbol,
+    int? nativeCurrencyDecimalPlaces,
+    String? currentBalance,
+    String? nativeCurrentBalance,
+    DateTime? currentBalanceDate,
+    String? notes,
+    DateTime? monthlyPaymentDate,
+    enums.CreditCardTypeProperty? creditCardType,
+    String? accountNumber,
+    String? iban,
+    String? bic,
+    String? virtualBalance,
+    String? nativeVirtualBalance,
+    String? openingBalance,
+    String? nativeOpeningBalance,
+    DateTime? openingBalanceDate,
+    enums.LiabilityTypeProperty? liabilityType,
+    enums.LiabilityDirectionProperty? liabilityDirection,
+    String? interest,
+    enums.InterestPeriodProperty? interestPeriod,
+    String? currentDebt,
+    bool? includeNetWorth,
+    double? longitude,
+    double? latitude,
+    int? zoomLevel,
+  }) {
     return Account(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        active: active ?? this.active,
-        order: order ?? this.order,
-        name: name ?? this.name,
-        type: type ?? this.type,
-        accountRole: accountRole ?? this.accountRole,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
-        nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
-        nativeCurrencyDecimalPlaces:
-            nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
-        currentBalance: currentBalance ?? this.currentBalance,
-        nativeCurrentBalance: nativeCurrentBalance ?? this.nativeCurrentBalance,
-        currentBalanceDate: currentBalanceDate ?? this.currentBalanceDate,
-        notes: notes ?? this.notes,
-        monthlyPaymentDate: monthlyPaymentDate ?? this.monthlyPaymentDate,
-        creditCardType: creditCardType ?? this.creditCardType,
-        accountNumber: accountNumber ?? this.accountNumber,
-        iban: iban ?? this.iban,
-        bic: bic ?? this.bic,
-        virtualBalance: virtualBalance ?? this.virtualBalance,
-        nativeVirtualBalance: nativeVirtualBalance ?? this.nativeVirtualBalance,
-        openingBalance: openingBalance ?? this.openingBalance,
-        nativeOpeningBalance: nativeOpeningBalance ?? this.nativeOpeningBalance,
-        openingBalanceDate: openingBalanceDate ?? this.openingBalanceDate,
-        liabilityType: liabilityType ?? this.liabilityType,
-        liabilityDirection: liabilityDirection ?? this.liabilityDirection,
-        interest: interest ?? this.interest,
-        interestPeriod: interestPeriod ?? this.interestPeriod,
-        currentDebt: currentDebt ?? this.currentDebt,
-        includeNetWorth: includeNetWorth ?? this.includeNetWorth,
-        longitude: longitude ?? this.longitude,
-        latitude: latitude ?? this.latitude,
-        zoomLevel: zoomLevel ?? this.zoomLevel);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      active: active ?? this.active,
+      order: order ?? this.order,
+      name: name ?? this.name,
+      type: type ?? this.type,
+      accountRole: accountRole ?? this.accountRole,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+      nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
+      nativeCurrencyDecimalPlaces:
+          nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
+      currentBalance: currentBalance ?? this.currentBalance,
+      nativeCurrentBalance: nativeCurrentBalance ?? this.nativeCurrentBalance,
+      currentBalanceDate: currentBalanceDate ?? this.currentBalanceDate,
+      notes: notes ?? this.notes,
+      monthlyPaymentDate: monthlyPaymentDate ?? this.monthlyPaymentDate,
+      creditCardType: creditCardType ?? this.creditCardType,
+      accountNumber: accountNumber ?? this.accountNumber,
+      iban: iban ?? this.iban,
+      bic: bic ?? this.bic,
+      virtualBalance: virtualBalance ?? this.virtualBalance,
+      nativeVirtualBalance: nativeVirtualBalance ?? this.nativeVirtualBalance,
+      openingBalance: openingBalance ?? this.openingBalance,
+      nativeOpeningBalance: nativeOpeningBalance ?? this.nativeOpeningBalance,
+      openingBalanceDate: openingBalanceDate ?? this.openingBalanceDate,
+      liabilityType: liabilityType ?? this.liabilityType,
+      liabilityDirection: liabilityDirection ?? this.liabilityDirection,
+      interest: interest ?? this.interest,
+      interestPeriod: interestPeriod ?? this.interestPeriod,
+      currentDebt: currentDebt ?? this.currentDebt,
+      includeNetWorth: includeNetWorth ?? this.includeNetWorth,
+      longitude: longitude ?? this.longitude,
+      latitude: latitude ?? this.latitude,
+      zoomLevel: zoomLevel ?? this.zoomLevel,
+    );
   }
 
-  Account copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<bool?>? active,
-      Wrapped<int?>? order,
-      Wrapped<String>? name,
-      Wrapped<enums.ShortAccountTypeProperty>? type,
-      Wrapped<enums.AccountRoleProperty?>? accountRole,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? nativeCurrencyId,
-      Wrapped<String?>? nativeCurrencyCode,
-      Wrapped<String?>? nativeCurrencySymbol,
-      Wrapped<int?>? nativeCurrencyDecimalPlaces,
-      Wrapped<String?>? currentBalance,
-      Wrapped<String?>? nativeCurrentBalance,
-      Wrapped<DateTime?>? currentBalanceDate,
-      Wrapped<String?>? notes,
-      Wrapped<DateTime?>? monthlyPaymentDate,
-      Wrapped<enums.CreditCardTypeProperty?>? creditCardType,
-      Wrapped<String?>? accountNumber,
-      Wrapped<String?>? iban,
-      Wrapped<String?>? bic,
-      Wrapped<String?>? virtualBalance,
-      Wrapped<String?>? nativeVirtualBalance,
-      Wrapped<String?>? openingBalance,
-      Wrapped<String?>? nativeOpeningBalance,
-      Wrapped<DateTime?>? openingBalanceDate,
-      Wrapped<enums.LiabilityTypeProperty?>? liabilityType,
-      Wrapped<enums.LiabilityDirectionProperty?>? liabilityDirection,
-      Wrapped<String?>? interest,
-      Wrapped<enums.InterestPeriodProperty?>? interestPeriod,
-      Wrapped<String?>? currentDebt,
-      Wrapped<bool?>? includeNetWorth,
-      Wrapped<double?>? longitude,
-      Wrapped<double?>? latitude,
-      Wrapped<int?>? zoomLevel}) {
+  Account copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<bool?>? active,
+    Wrapped<int?>? order,
+    Wrapped<String>? name,
+    Wrapped<enums.ShortAccountTypeProperty>? type,
+    Wrapped<enums.AccountRoleProperty?>? accountRole,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? nativeCurrencyId,
+    Wrapped<String?>? nativeCurrencyCode,
+    Wrapped<String?>? nativeCurrencySymbol,
+    Wrapped<int?>? nativeCurrencyDecimalPlaces,
+    Wrapped<String?>? currentBalance,
+    Wrapped<String?>? nativeCurrentBalance,
+    Wrapped<DateTime?>? currentBalanceDate,
+    Wrapped<String?>? notes,
+    Wrapped<DateTime?>? monthlyPaymentDate,
+    Wrapped<enums.CreditCardTypeProperty?>? creditCardType,
+    Wrapped<String?>? accountNumber,
+    Wrapped<String?>? iban,
+    Wrapped<String?>? bic,
+    Wrapped<String?>? virtualBalance,
+    Wrapped<String?>? nativeVirtualBalance,
+    Wrapped<String?>? openingBalance,
+    Wrapped<String?>? nativeOpeningBalance,
+    Wrapped<DateTime?>? openingBalanceDate,
+    Wrapped<enums.LiabilityTypeProperty?>? liabilityType,
+    Wrapped<enums.LiabilityDirectionProperty?>? liabilityDirection,
+    Wrapped<String?>? interest,
+    Wrapped<enums.InterestPeriodProperty?>? interestPeriod,
+    Wrapped<String?>? currentDebt,
+    Wrapped<bool?>? includeNetWorth,
+    Wrapped<double?>? longitude,
+    Wrapped<double?>? latitude,
+    Wrapped<int?>? zoomLevel,
+  }) {
     return Account(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        active: (active != null ? active.value : this.active),
-        order: (order != null ? order.value : this.order),
-        name: (name != null ? name.value : this.name),
-        type: (type != null ? type.value : this.type),
-        accountRole:
-            (accountRole != null ? accountRole.value : this.accountRole),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        nativeCurrencyId: (nativeCurrencyId != null
-            ? nativeCurrencyId.value
-            : this.nativeCurrencyId),
-        nativeCurrencyCode: (nativeCurrencyCode != null
-            ? nativeCurrencyCode.value
-            : this.nativeCurrencyCode),
-        nativeCurrencySymbol: (nativeCurrencySymbol != null
-            ? nativeCurrencySymbol.value
-            : this.nativeCurrencySymbol),
-        nativeCurrencyDecimalPlaces: (nativeCurrencyDecimalPlaces != null
-            ? nativeCurrencyDecimalPlaces.value
-            : this.nativeCurrencyDecimalPlaces),
-        currentBalance: (currentBalance != null
-            ? currentBalance.value
-            : this.currentBalance),
-        nativeCurrentBalance: (nativeCurrentBalance != null
-            ? nativeCurrentBalance.value
-            : this.nativeCurrentBalance),
-        currentBalanceDate: (currentBalanceDate != null
-            ? currentBalanceDate.value
-            : this.currentBalanceDate),
-        notes: (notes != null ? notes.value : this.notes),
-        monthlyPaymentDate: (monthlyPaymentDate != null
-            ? monthlyPaymentDate.value
-            : this.monthlyPaymentDate),
-        creditCardType: (creditCardType != null
-            ? creditCardType.value
-            : this.creditCardType),
-        accountNumber:
-            (accountNumber != null ? accountNumber.value : this.accountNumber),
-        iban: (iban != null ? iban.value : this.iban),
-        bic: (bic != null ? bic.value : this.bic),
-        virtualBalance: (virtualBalance != null
-            ? virtualBalance.value
-            : this.virtualBalance),
-        nativeVirtualBalance: (nativeVirtualBalance != null
-            ? nativeVirtualBalance.value
-            : this.nativeVirtualBalance),
-        openingBalance: (openingBalance != null
-            ? openingBalance.value
-            : this.openingBalance),
-        nativeOpeningBalance: (nativeOpeningBalance != null
-            ? nativeOpeningBalance.value
-            : this.nativeOpeningBalance),
-        openingBalanceDate: (openingBalanceDate != null
-            ? openingBalanceDate.value
-            : this.openingBalanceDate),
-        liabilityType:
-            (liabilityType != null ? liabilityType.value : this.liabilityType),
-        liabilityDirection: (liabilityDirection != null
-            ? liabilityDirection.value
-            : this.liabilityDirection),
-        interest: (interest != null ? interest.value : this.interest),
-        interestPeriod: (interestPeriod != null
-            ? interestPeriod.value
-            : this.interestPeriod),
-        currentDebt:
-            (currentDebt != null ? currentDebt.value : this.currentDebt),
-        includeNetWorth: (includeNetWorth != null
-            ? includeNetWorth.value
-            : this.includeNetWorth),
-        longitude: (longitude != null ? longitude.value : this.longitude),
-        latitude: (latitude != null ? latitude.value : this.latitude),
-        zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      active: (active != null ? active.value : this.active),
+      order: (order != null ? order.value : this.order),
+      name: (name != null ? name.value : this.name),
+      type: (type != null ? type.value : this.type),
+      accountRole: (accountRole != null ? accountRole.value : this.accountRole),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      nativeCurrencyId:
+          (nativeCurrencyId != null
+              ? nativeCurrencyId.value
+              : this.nativeCurrencyId),
+      nativeCurrencyCode:
+          (nativeCurrencyCode != null
+              ? nativeCurrencyCode.value
+              : this.nativeCurrencyCode),
+      nativeCurrencySymbol:
+          (nativeCurrencySymbol != null
+              ? nativeCurrencySymbol.value
+              : this.nativeCurrencySymbol),
+      nativeCurrencyDecimalPlaces:
+          (nativeCurrencyDecimalPlaces != null
+              ? nativeCurrencyDecimalPlaces.value
+              : this.nativeCurrencyDecimalPlaces),
+      currentBalance:
+          (currentBalance != null ? currentBalance.value : this.currentBalance),
+      nativeCurrentBalance:
+          (nativeCurrentBalance != null
+              ? nativeCurrentBalance.value
+              : this.nativeCurrentBalance),
+      currentBalanceDate:
+          (currentBalanceDate != null
+              ? currentBalanceDate.value
+              : this.currentBalanceDate),
+      notes: (notes != null ? notes.value : this.notes),
+      monthlyPaymentDate:
+          (monthlyPaymentDate != null
+              ? monthlyPaymentDate.value
+              : this.monthlyPaymentDate),
+      creditCardType:
+          (creditCardType != null ? creditCardType.value : this.creditCardType),
+      accountNumber:
+          (accountNumber != null ? accountNumber.value : this.accountNumber),
+      iban: (iban != null ? iban.value : this.iban),
+      bic: (bic != null ? bic.value : this.bic),
+      virtualBalance:
+          (virtualBalance != null ? virtualBalance.value : this.virtualBalance),
+      nativeVirtualBalance:
+          (nativeVirtualBalance != null
+              ? nativeVirtualBalance.value
+              : this.nativeVirtualBalance),
+      openingBalance:
+          (openingBalance != null ? openingBalance.value : this.openingBalance),
+      nativeOpeningBalance:
+          (nativeOpeningBalance != null
+              ? nativeOpeningBalance.value
+              : this.nativeOpeningBalance),
+      openingBalanceDate:
+          (openingBalanceDate != null
+              ? openingBalanceDate.value
+              : this.openingBalanceDate),
+      liabilityType:
+          (liabilityType != null ? liabilityType.value : this.liabilityType),
+      liabilityDirection:
+          (liabilityDirection != null
+              ? liabilityDirection.value
+              : this.liabilityDirection),
+      interest: (interest != null ? interest.value : this.interest),
+      interestPeriod:
+          (interestPeriod != null ? interestPeriod.value : this.interestPeriod),
+      currentDebt: (currentDebt != null ? currentDebt.value : this.currentDebt),
+      includeNetWorth:
+          (includeNetWorth != null
+              ? includeNetWorth.value
+              : this.includeNetWorth),
+      longitude: (longitude != null ? longitude.value : this.longitude),
+      latitude: (latitude != null ? latitude.value : this.latitude),
+      zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel),
+    );
   }
 }
 
@@ -4656,128 +4943,131 @@ class AccountStore {
 }
 
 extension $AccountStoreExtension on AccountStore {
-  AccountStore copyWith(
-      {String? name,
-      enums.ShortAccountTypeProperty? type,
-      String? iban,
-      String? bic,
-      String? accountNumber,
-      String? openingBalance,
-      DateTime? openingBalanceDate,
-      String? virtualBalance,
-      String? currencyId,
-      String? currencyCode,
-      bool? active,
-      int? order,
-      bool? includeNetWorth,
-      enums.AccountRoleProperty? accountRole,
-      enums.CreditCardTypeProperty? creditCardType,
-      DateTime? monthlyPaymentDate,
-      enums.LiabilityTypeProperty? liabilityType,
-      enums.LiabilityDirectionProperty? liabilityDirection,
-      String? interest,
-      enums.InterestPeriodProperty? interestPeriod,
-      String? notes,
-      double? latitude,
-      double? longitude,
-      int? zoomLevel}) {
+  AccountStore copyWith({
+    String? name,
+    enums.ShortAccountTypeProperty? type,
+    String? iban,
+    String? bic,
+    String? accountNumber,
+    String? openingBalance,
+    DateTime? openingBalanceDate,
+    String? virtualBalance,
+    String? currencyId,
+    String? currencyCode,
+    bool? active,
+    int? order,
+    bool? includeNetWorth,
+    enums.AccountRoleProperty? accountRole,
+    enums.CreditCardTypeProperty? creditCardType,
+    DateTime? monthlyPaymentDate,
+    enums.LiabilityTypeProperty? liabilityType,
+    enums.LiabilityDirectionProperty? liabilityDirection,
+    String? interest,
+    enums.InterestPeriodProperty? interestPeriod,
+    String? notes,
+    double? latitude,
+    double? longitude,
+    int? zoomLevel,
+  }) {
     return AccountStore(
-        name: name ?? this.name,
-        type: type ?? this.type,
-        iban: iban ?? this.iban,
-        bic: bic ?? this.bic,
-        accountNumber: accountNumber ?? this.accountNumber,
-        openingBalance: openingBalance ?? this.openingBalance,
-        openingBalanceDate: openingBalanceDate ?? this.openingBalanceDate,
-        virtualBalance: virtualBalance ?? this.virtualBalance,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        active: active ?? this.active,
-        order: order ?? this.order,
-        includeNetWorth: includeNetWorth ?? this.includeNetWorth,
-        accountRole: accountRole ?? this.accountRole,
-        creditCardType: creditCardType ?? this.creditCardType,
-        monthlyPaymentDate: monthlyPaymentDate ?? this.monthlyPaymentDate,
-        liabilityType: liabilityType ?? this.liabilityType,
-        liabilityDirection: liabilityDirection ?? this.liabilityDirection,
-        interest: interest ?? this.interest,
-        interestPeriod: interestPeriod ?? this.interestPeriod,
-        notes: notes ?? this.notes,
-        latitude: latitude ?? this.latitude,
-        longitude: longitude ?? this.longitude,
-        zoomLevel: zoomLevel ?? this.zoomLevel);
+      name: name ?? this.name,
+      type: type ?? this.type,
+      iban: iban ?? this.iban,
+      bic: bic ?? this.bic,
+      accountNumber: accountNumber ?? this.accountNumber,
+      openingBalance: openingBalance ?? this.openingBalance,
+      openingBalanceDate: openingBalanceDate ?? this.openingBalanceDate,
+      virtualBalance: virtualBalance ?? this.virtualBalance,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      active: active ?? this.active,
+      order: order ?? this.order,
+      includeNetWorth: includeNetWorth ?? this.includeNetWorth,
+      accountRole: accountRole ?? this.accountRole,
+      creditCardType: creditCardType ?? this.creditCardType,
+      monthlyPaymentDate: monthlyPaymentDate ?? this.monthlyPaymentDate,
+      liabilityType: liabilityType ?? this.liabilityType,
+      liabilityDirection: liabilityDirection ?? this.liabilityDirection,
+      interest: interest ?? this.interest,
+      interestPeriod: interestPeriod ?? this.interestPeriod,
+      notes: notes ?? this.notes,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      zoomLevel: zoomLevel ?? this.zoomLevel,
+    );
   }
 
-  AccountStore copyWithWrapped(
-      {Wrapped<String>? name,
-      Wrapped<enums.ShortAccountTypeProperty>? type,
-      Wrapped<String?>? iban,
-      Wrapped<String?>? bic,
-      Wrapped<String?>? accountNumber,
-      Wrapped<String?>? openingBalance,
-      Wrapped<DateTime?>? openingBalanceDate,
-      Wrapped<String?>? virtualBalance,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<bool?>? active,
-      Wrapped<int?>? order,
-      Wrapped<bool?>? includeNetWorth,
-      Wrapped<enums.AccountRoleProperty?>? accountRole,
-      Wrapped<enums.CreditCardTypeProperty?>? creditCardType,
-      Wrapped<DateTime?>? monthlyPaymentDate,
-      Wrapped<enums.LiabilityTypeProperty?>? liabilityType,
-      Wrapped<enums.LiabilityDirectionProperty?>? liabilityDirection,
-      Wrapped<String?>? interest,
-      Wrapped<enums.InterestPeriodProperty?>? interestPeriod,
-      Wrapped<String?>? notes,
-      Wrapped<double?>? latitude,
-      Wrapped<double?>? longitude,
-      Wrapped<int?>? zoomLevel}) {
+  AccountStore copyWithWrapped({
+    Wrapped<String>? name,
+    Wrapped<enums.ShortAccountTypeProperty>? type,
+    Wrapped<String?>? iban,
+    Wrapped<String?>? bic,
+    Wrapped<String?>? accountNumber,
+    Wrapped<String?>? openingBalance,
+    Wrapped<DateTime?>? openingBalanceDate,
+    Wrapped<String?>? virtualBalance,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<bool?>? active,
+    Wrapped<int?>? order,
+    Wrapped<bool?>? includeNetWorth,
+    Wrapped<enums.AccountRoleProperty?>? accountRole,
+    Wrapped<enums.CreditCardTypeProperty?>? creditCardType,
+    Wrapped<DateTime?>? monthlyPaymentDate,
+    Wrapped<enums.LiabilityTypeProperty?>? liabilityType,
+    Wrapped<enums.LiabilityDirectionProperty?>? liabilityDirection,
+    Wrapped<String?>? interest,
+    Wrapped<enums.InterestPeriodProperty?>? interestPeriod,
+    Wrapped<String?>? notes,
+    Wrapped<double?>? latitude,
+    Wrapped<double?>? longitude,
+    Wrapped<int?>? zoomLevel,
+  }) {
     return AccountStore(
-        name: (name != null ? name.value : this.name),
-        type: (type != null ? type.value : this.type),
-        iban: (iban != null ? iban.value : this.iban),
-        bic: (bic != null ? bic.value : this.bic),
-        accountNumber:
-            (accountNumber != null ? accountNumber.value : this.accountNumber),
-        openingBalance: (openingBalance != null
-            ? openingBalance.value
-            : this.openingBalance),
-        openingBalanceDate: (openingBalanceDate != null
-            ? openingBalanceDate.value
-            : this.openingBalanceDate),
-        virtualBalance: (virtualBalance != null
-            ? virtualBalance.value
-            : this.virtualBalance),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        active: (active != null ? active.value : this.active),
-        order: (order != null ? order.value : this.order),
-        includeNetWorth: (includeNetWorth != null
-            ? includeNetWorth.value
-            : this.includeNetWorth),
-        accountRole:
-            (accountRole != null ? accountRole.value : this.accountRole),
-        creditCardType: (creditCardType != null
-            ? creditCardType.value
-            : this.creditCardType),
-        monthlyPaymentDate: (monthlyPaymentDate != null
-            ? monthlyPaymentDate.value
-            : this.monthlyPaymentDate),
-        liabilityType:
-            (liabilityType != null ? liabilityType.value : this.liabilityType),
-        liabilityDirection: (liabilityDirection != null
-            ? liabilityDirection.value
-            : this.liabilityDirection),
-        interest: (interest != null ? interest.value : this.interest),
-        interestPeriod: (interestPeriod != null
-            ? interestPeriod.value
-            : this.interestPeriod),
-        notes: (notes != null ? notes.value : this.notes),
-        latitude: (latitude != null ? latitude.value : this.latitude),
-        longitude: (longitude != null ? longitude.value : this.longitude),
-        zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel));
+      name: (name != null ? name.value : this.name),
+      type: (type != null ? type.value : this.type),
+      iban: (iban != null ? iban.value : this.iban),
+      bic: (bic != null ? bic.value : this.bic),
+      accountNumber:
+          (accountNumber != null ? accountNumber.value : this.accountNumber),
+      openingBalance:
+          (openingBalance != null ? openingBalance.value : this.openingBalance),
+      openingBalanceDate:
+          (openingBalanceDate != null
+              ? openingBalanceDate.value
+              : this.openingBalanceDate),
+      virtualBalance:
+          (virtualBalance != null ? virtualBalance.value : this.virtualBalance),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      active: (active != null ? active.value : this.active),
+      order: (order != null ? order.value : this.order),
+      includeNetWorth:
+          (includeNetWorth != null
+              ? includeNetWorth.value
+              : this.includeNetWorth),
+      accountRole: (accountRole != null ? accountRole.value : this.accountRole),
+      creditCardType:
+          (creditCardType != null ? creditCardType.value : this.creditCardType),
+      monthlyPaymentDate:
+          (monthlyPaymentDate != null
+              ? monthlyPaymentDate.value
+              : this.monthlyPaymentDate),
+      liabilityType:
+          (liabilityType != null ? liabilityType.value : this.liabilityType),
+      liabilityDirection:
+          (liabilityDirection != null
+              ? liabilityDirection.value
+              : this.liabilityDirection),
+      interest: (interest != null ? interest.value : this.interest),
+      interestPeriod:
+          (interestPeriod != null ? interestPeriod.value : this.interestPeriod),
+      notes: (notes != null ? notes.value : this.notes),
+      latitude: (latitude != null ? latitude.value : this.latitude),
+      longitude: (longitude != null ? longitude.value : this.longitude),
+      zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel),
+    );
   }
 }
 
@@ -4885,118 +5175,120 @@ class AccountUpdate {
 }
 
 extension $AccountUpdateExtension on AccountUpdate {
-  AccountUpdate copyWith(
-      {String? name,
-      String? iban,
-      String? bic,
-      String? accountNumber,
-      String? openingBalance,
-      DateTime? openingBalanceDate,
-      String? virtualBalance,
-      String? currencyId,
-      String? currencyCode,
-      bool? active,
-      int? order,
-      bool? includeNetWorth,
-      enums.AccountRoleProperty? accountRole,
-      enums.CreditCardTypeProperty? creditCardType,
-      DateTime? monthlyPaymentDate,
-      enums.LiabilityTypeProperty? liabilityType,
-      String? interest,
-      enums.InterestPeriodProperty? interestPeriod,
-      String? notes,
-      double? latitude,
-      double? longitude,
-      int? zoomLevel}) {
+  AccountUpdate copyWith({
+    String? name,
+    String? iban,
+    String? bic,
+    String? accountNumber,
+    String? openingBalance,
+    DateTime? openingBalanceDate,
+    String? virtualBalance,
+    String? currencyId,
+    String? currencyCode,
+    bool? active,
+    int? order,
+    bool? includeNetWorth,
+    enums.AccountRoleProperty? accountRole,
+    enums.CreditCardTypeProperty? creditCardType,
+    DateTime? monthlyPaymentDate,
+    enums.LiabilityTypeProperty? liabilityType,
+    String? interest,
+    enums.InterestPeriodProperty? interestPeriod,
+    String? notes,
+    double? latitude,
+    double? longitude,
+    int? zoomLevel,
+  }) {
     return AccountUpdate(
-        name: name ?? this.name,
-        iban: iban ?? this.iban,
-        bic: bic ?? this.bic,
-        accountNumber: accountNumber ?? this.accountNumber,
-        openingBalance: openingBalance ?? this.openingBalance,
-        openingBalanceDate: openingBalanceDate ?? this.openingBalanceDate,
-        virtualBalance: virtualBalance ?? this.virtualBalance,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        active: active ?? this.active,
-        order: order ?? this.order,
-        includeNetWorth: includeNetWorth ?? this.includeNetWorth,
-        accountRole: accountRole ?? this.accountRole,
-        creditCardType: creditCardType ?? this.creditCardType,
-        monthlyPaymentDate: monthlyPaymentDate ?? this.monthlyPaymentDate,
-        liabilityType: liabilityType ?? this.liabilityType,
-        interest: interest ?? this.interest,
-        interestPeriod: interestPeriod ?? this.interestPeriod,
-        notes: notes ?? this.notes,
-        latitude: latitude ?? this.latitude,
-        longitude: longitude ?? this.longitude,
-        zoomLevel: zoomLevel ?? this.zoomLevel);
+      name: name ?? this.name,
+      iban: iban ?? this.iban,
+      bic: bic ?? this.bic,
+      accountNumber: accountNumber ?? this.accountNumber,
+      openingBalance: openingBalance ?? this.openingBalance,
+      openingBalanceDate: openingBalanceDate ?? this.openingBalanceDate,
+      virtualBalance: virtualBalance ?? this.virtualBalance,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      active: active ?? this.active,
+      order: order ?? this.order,
+      includeNetWorth: includeNetWorth ?? this.includeNetWorth,
+      accountRole: accountRole ?? this.accountRole,
+      creditCardType: creditCardType ?? this.creditCardType,
+      monthlyPaymentDate: monthlyPaymentDate ?? this.monthlyPaymentDate,
+      liabilityType: liabilityType ?? this.liabilityType,
+      interest: interest ?? this.interest,
+      interestPeriod: interestPeriod ?? this.interestPeriod,
+      notes: notes ?? this.notes,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      zoomLevel: zoomLevel ?? this.zoomLevel,
+    );
   }
 
-  AccountUpdate copyWithWrapped(
-      {Wrapped<String>? name,
-      Wrapped<String?>? iban,
-      Wrapped<String?>? bic,
-      Wrapped<String?>? accountNumber,
-      Wrapped<String?>? openingBalance,
-      Wrapped<DateTime?>? openingBalanceDate,
-      Wrapped<String?>? virtualBalance,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<bool?>? active,
-      Wrapped<int?>? order,
-      Wrapped<bool?>? includeNetWorth,
-      Wrapped<enums.AccountRoleProperty?>? accountRole,
-      Wrapped<enums.CreditCardTypeProperty?>? creditCardType,
-      Wrapped<DateTime?>? monthlyPaymentDate,
-      Wrapped<enums.LiabilityTypeProperty?>? liabilityType,
-      Wrapped<String?>? interest,
-      Wrapped<enums.InterestPeriodProperty?>? interestPeriod,
-      Wrapped<String?>? notes,
-      Wrapped<double?>? latitude,
-      Wrapped<double?>? longitude,
-      Wrapped<int?>? zoomLevel}) {
+  AccountUpdate copyWithWrapped({
+    Wrapped<String>? name,
+    Wrapped<String?>? iban,
+    Wrapped<String?>? bic,
+    Wrapped<String?>? accountNumber,
+    Wrapped<String?>? openingBalance,
+    Wrapped<DateTime?>? openingBalanceDate,
+    Wrapped<String?>? virtualBalance,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<bool?>? active,
+    Wrapped<int?>? order,
+    Wrapped<bool?>? includeNetWorth,
+    Wrapped<enums.AccountRoleProperty?>? accountRole,
+    Wrapped<enums.CreditCardTypeProperty?>? creditCardType,
+    Wrapped<DateTime?>? monthlyPaymentDate,
+    Wrapped<enums.LiabilityTypeProperty?>? liabilityType,
+    Wrapped<String?>? interest,
+    Wrapped<enums.InterestPeriodProperty?>? interestPeriod,
+    Wrapped<String?>? notes,
+    Wrapped<double?>? latitude,
+    Wrapped<double?>? longitude,
+    Wrapped<int?>? zoomLevel,
+  }) {
     return AccountUpdate(
-        name: (name != null ? name.value : this.name),
-        iban: (iban != null ? iban.value : this.iban),
-        bic: (bic != null ? bic.value : this.bic),
-        accountNumber:
-            (accountNumber != null ? accountNumber.value : this.accountNumber),
-        openingBalance: (openingBalance != null
-            ? openingBalance.value
-            : this.openingBalance),
-        openingBalanceDate: (openingBalanceDate != null
-            ? openingBalanceDate.value
-            : this.openingBalanceDate),
-        virtualBalance: (virtualBalance != null
-            ? virtualBalance.value
-            : this.virtualBalance),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        active: (active != null ? active.value : this.active),
-        order: (order != null ? order.value : this.order),
-        includeNetWorth: (includeNetWorth != null
-            ? includeNetWorth.value
-            : this.includeNetWorth),
-        accountRole:
-            (accountRole != null ? accountRole.value : this.accountRole),
-        creditCardType: (creditCardType != null
-            ? creditCardType.value
-            : this.creditCardType),
-        monthlyPaymentDate: (monthlyPaymentDate != null
-            ? monthlyPaymentDate.value
-            : this.monthlyPaymentDate),
-        liabilityType:
-            (liabilityType != null ? liabilityType.value : this.liabilityType),
-        interest: (interest != null ? interest.value : this.interest),
-        interestPeriod: (interestPeriod != null
-            ? interestPeriod.value
-            : this.interestPeriod),
-        notes: (notes != null ? notes.value : this.notes),
-        latitude: (latitude != null ? latitude.value : this.latitude),
-        longitude: (longitude != null ? longitude.value : this.longitude),
-        zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel));
+      name: (name != null ? name.value : this.name),
+      iban: (iban != null ? iban.value : this.iban),
+      bic: (bic != null ? bic.value : this.bic),
+      accountNumber:
+          (accountNumber != null ? accountNumber.value : this.accountNumber),
+      openingBalance:
+          (openingBalance != null ? openingBalance.value : this.openingBalance),
+      openingBalanceDate:
+          (openingBalanceDate != null
+              ? openingBalanceDate.value
+              : this.openingBalanceDate),
+      virtualBalance:
+          (virtualBalance != null ? virtualBalance.value : this.virtualBalance),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      active: (active != null ? active.value : this.active),
+      order: (order != null ? order.value : this.order),
+      includeNetWorth:
+          (includeNetWorth != null
+              ? includeNetWorth.value
+              : this.includeNetWorth),
+      accountRole: (accountRole != null ? accountRole.value : this.accountRole),
+      creditCardType:
+          (creditCardType != null ? creditCardType.value : this.creditCardType),
+      monthlyPaymentDate:
+          (monthlyPaymentDate != null
+              ? monthlyPaymentDate.value
+              : this.monthlyPaymentDate),
+      liabilityType:
+          (liabilityType != null ? liabilityType.value : this.liabilityType),
+      interest: (interest != null ? interest.value : this.interest),
+      interestPeriod:
+          (interestPeriod != null ? interestPeriod.value : this.interestPeriod),
+      notes: (notes != null ? notes.value : this.notes),
+      latitude: (latitude != null ? latitude.value : this.latitude),
+      longitude: (longitude != null ? longitude.value : this.longitude),
+      zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel),
+    );
   }
 }
 
@@ -5062,68 +5354,70 @@ class Attachment {
 }
 
 extension $AttachmentExtension on Attachment {
-  Attachment copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      enums.AttachableType? attachableType,
-      String? attachableId,
-      String? md5,
-      String? hash,
-      String? filename,
-      String? downloadUrl,
-      String? uploadUrl,
-      String? title,
-      String? notes,
-      String? mime,
-      int? size}) {
+  Attachment copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    enums.AttachableType? attachableType,
+    String? attachableId,
+    String? md5,
+    String? hash,
+    String? filename,
+    String? downloadUrl,
+    String? uploadUrl,
+    String? title,
+    String? notes,
+    String? mime,
+    int? size,
+  }) {
     return Attachment(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        attachableType: attachableType ?? this.attachableType,
-        attachableId: attachableId ?? this.attachableId,
-        md5: md5 ?? this.md5,
-        hash: hash ?? this.hash,
-        filename: filename ?? this.filename,
-        downloadUrl: downloadUrl ?? this.downloadUrl,
-        uploadUrl: uploadUrl ?? this.uploadUrl,
-        title: title ?? this.title,
-        notes: notes ?? this.notes,
-        mime: mime ?? this.mime,
-        size: size ?? this.size);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      attachableType: attachableType ?? this.attachableType,
+      attachableId: attachableId ?? this.attachableId,
+      md5: md5 ?? this.md5,
+      hash: hash ?? this.hash,
+      filename: filename ?? this.filename,
+      downloadUrl: downloadUrl ?? this.downloadUrl,
+      uploadUrl: uploadUrl ?? this.uploadUrl,
+      title: title ?? this.title,
+      notes: notes ?? this.notes,
+      mime: mime ?? this.mime,
+      size: size ?? this.size,
+    );
   }
 
-  Attachment copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<enums.AttachableType>? attachableType,
-      Wrapped<String>? attachableId,
-      Wrapped<String?>? md5,
-      Wrapped<String?>? hash,
-      Wrapped<String>? filename,
-      Wrapped<String?>? downloadUrl,
-      Wrapped<String?>? uploadUrl,
-      Wrapped<String?>? title,
-      Wrapped<String?>? notes,
-      Wrapped<String?>? mime,
-      Wrapped<int?>? size}) {
+  Attachment copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<enums.AttachableType>? attachableType,
+    Wrapped<String>? attachableId,
+    Wrapped<String?>? md5,
+    Wrapped<String?>? hash,
+    Wrapped<String>? filename,
+    Wrapped<String?>? downloadUrl,
+    Wrapped<String?>? uploadUrl,
+    Wrapped<String?>? title,
+    Wrapped<String?>? notes,
+    Wrapped<String?>? mime,
+    Wrapped<int?>? size,
+  }) {
     return Attachment(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        attachableType: (attachableType != null
-            ? attachableType.value
-            : this.attachableType),
-        attachableId:
-            (attachableId != null ? attachableId.value : this.attachableId),
-        md5: (md5 != null ? md5.value : this.md5),
-        hash: (hash != null ? hash.value : this.hash),
-        filename: (filename != null ? filename.value : this.filename),
-        downloadUrl:
-            (downloadUrl != null ? downloadUrl.value : this.downloadUrl),
-        uploadUrl: (uploadUrl != null ? uploadUrl.value : this.uploadUrl),
-        title: (title != null ? title.value : this.title),
-        notes: (notes != null ? notes.value : this.notes),
-        mime: (mime != null ? mime.value : this.mime),
-        size: (size != null ? size.value : this.size));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      attachableType:
+          (attachableType != null ? attachableType.value : this.attachableType),
+      attachableId:
+          (attachableId != null ? attachableId.value : this.attachableId),
+      md5: (md5 != null ? md5.value : this.md5),
+      hash: (hash != null ? hash.value : this.hash),
+      filename: (filename != null ? filename.value : this.filename),
+      downloadUrl: (downloadUrl != null ? downloadUrl.value : this.downloadUrl),
+      uploadUrl: (uploadUrl != null ? uploadUrl.value : this.uploadUrl),
+      title: (title != null ? title.value : this.title),
+      notes: (notes != null ? notes.value : this.notes),
+      mime: (mime != null ? mime.value : this.mime),
+      size: (size != null ? size.value : this.size),
+    );
   }
 }
 
@@ -5165,45 +5459,44 @@ class AttachmentStore {
 }
 
 extension $AttachmentStoreExtension on AttachmentStore {
-  AttachmentStore copyWith(
-      {String? filename,
-      enums.AttachableType? attachableType,
-      String? attachableId,
-      String? title,
-      String? notes}) {
+  AttachmentStore copyWith({
+    String? filename,
+    enums.AttachableType? attachableType,
+    String? attachableId,
+    String? title,
+    String? notes,
+  }) {
     return AttachmentStore(
-        filename: filename ?? this.filename,
-        attachableType: attachableType ?? this.attachableType,
-        attachableId: attachableId ?? this.attachableId,
-        title: title ?? this.title,
-        notes: notes ?? this.notes);
+      filename: filename ?? this.filename,
+      attachableType: attachableType ?? this.attachableType,
+      attachableId: attachableId ?? this.attachableId,
+      title: title ?? this.title,
+      notes: notes ?? this.notes,
+    );
   }
 
-  AttachmentStore copyWithWrapped(
-      {Wrapped<String>? filename,
-      Wrapped<enums.AttachableType>? attachableType,
-      Wrapped<String>? attachableId,
-      Wrapped<String?>? title,
-      Wrapped<String?>? notes}) {
+  AttachmentStore copyWithWrapped({
+    Wrapped<String>? filename,
+    Wrapped<enums.AttachableType>? attachableType,
+    Wrapped<String>? attachableId,
+    Wrapped<String?>? title,
+    Wrapped<String?>? notes,
+  }) {
     return AttachmentStore(
-        filename: (filename != null ? filename.value : this.filename),
-        attachableType: (attachableType != null
-            ? attachableType.value
-            : this.attachableType),
-        attachableId:
-            (attachableId != null ? attachableId.value : this.attachableId),
-        title: (title != null ? title.value : this.title),
-        notes: (notes != null ? notes.value : this.notes));
+      filename: (filename != null ? filename.value : this.filename),
+      attachableType:
+          (attachableType != null ? attachableType.value : this.attachableType),
+      attachableId:
+          (attachableId != null ? attachableId.value : this.attachableId),
+      title: (title != null ? title.value : this.title),
+      notes: (notes != null ? notes.value : this.notes),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class AttachmentUpdate {
-  const AttachmentUpdate({
-    this.filename,
-    this.title,
-    this.notes,
-  });
+  const AttachmentUpdate({this.filename, this.title, this.notes});
 
   factory AttachmentUpdate.fromJson(Map<String, dynamic> json) =>
       _$AttachmentUpdateFromJson(json);
@@ -5226,19 +5519,22 @@ class AttachmentUpdate {
 extension $AttachmentUpdateExtension on AttachmentUpdate {
   AttachmentUpdate copyWith({String? filename, String? title, String? notes}) {
     return AttachmentUpdate(
-        filename: filename ?? this.filename,
-        title: title ?? this.title,
-        notes: notes ?? this.notes);
+      filename: filename ?? this.filename,
+      title: title ?? this.title,
+      notes: notes ?? this.notes,
+    );
   }
 
-  AttachmentUpdate copyWithWrapped(
-      {Wrapped<String?>? filename,
-      Wrapped<String?>? title,
-      Wrapped<String?>? notes}) {
+  AttachmentUpdate copyWithWrapped({
+    Wrapped<String?>? filename,
+    Wrapped<String?>? title,
+    Wrapped<String?>? notes,
+  }) {
     return AttachmentUpdate(
-        filename: (filename != null ? filename.value : this.filename),
-        title: (title != null ? title.value : this.title),
-        notes: (notes != null ? notes.value : this.notes));
+      filename: (filename != null ? filename.value : this.filename),
+      title: (title != null ? title.value : this.title),
+      notes: (notes != null ? notes.value : this.notes),
+    );
   }
 }
 
@@ -5298,14 +5594,16 @@ class AvailableBudget {
   @JsonKey(name: 'end', includeIfNull: false)
   final DateTime end;
   @JsonKey(
-      name: 'spent_in_budgets',
-      includeIfNull: false,
-      defaultValue: <BudgetSpent>[])
+    name: 'spent_in_budgets',
+    includeIfNull: false,
+    defaultValue: <BudgetSpent>[],
+  )
   final List<BudgetSpent>? spentInBudgets;
   @JsonKey(
-      name: 'spent_outside_budget',
-      includeIfNull: false,
-      defaultValue: <BudgetSpent>[])
+    name: 'spent_outside_budget',
+    includeIfNull: false,
+    defaultValue: <BudgetSpent>[],
+  )
   final List<BudgetSpent>? spentOutsideBudget;
   static const fromJsonFactory = _$AvailableBudgetFromJson;
 
@@ -5314,96 +5612,104 @@ class AvailableBudget {
 }
 
 extension $AvailableBudgetExtension on AvailableBudget {
-  AvailableBudget copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      int? currencyDecimalPlaces,
-      String? nativeCurrencyId,
-      String? nativeCurrencyCode,
-      String? nativeCurrencySymbol,
-      int? nativeCurrencyDecimalPlaces,
-      String? amount,
-      String? nativeAmount,
-      DateTime? start,
-      DateTime? end,
-      List<BudgetSpent>? spentInBudgets,
-      List<BudgetSpent>? spentOutsideBudget}) {
+  AvailableBudget copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    String? nativeCurrencyId,
+    String? nativeCurrencyCode,
+    String? nativeCurrencySymbol,
+    int? nativeCurrencyDecimalPlaces,
+    String? amount,
+    String? nativeAmount,
+    DateTime? start,
+    DateTime? end,
+    List<BudgetSpent>? spentInBudgets,
+    List<BudgetSpent>? spentOutsideBudget,
+  }) {
     return AvailableBudget(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
-        nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
-        nativeCurrencyDecimalPlaces:
-            nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
-        amount: amount ?? this.amount,
-        nativeAmount: nativeAmount ?? this.nativeAmount,
-        start: start ?? this.start,
-        end: end ?? this.end,
-        spentInBudgets: spentInBudgets ?? this.spentInBudgets,
-        spentOutsideBudget: spentOutsideBudget ?? this.spentOutsideBudget);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+      nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
+      nativeCurrencyDecimalPlaces:
+          nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
+      amount: amount ?? this.amount,
+      nativeAmount: nativeAmount ?? this.nativeAmount,
+      start: start ?? this.start,
+      end: end ?? this.end,
+      spentInBudgets: spentInBudgets ?? this.spentInBudgets,
+      spentOutsideBudget: spentOutsideBudget ?? this.spentOutsideBudget,
+    );
   }
 
-  AvailableBudget copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? nativeCurrencyId,
-      Wrapped<String?>? nativeCurrencyCode,
-      Wrapped<String?>? nativeCurrencySymbol,
-      Wrapped<int?>? nativeCurrencyDecimalPlaces,
-      Wrapped<String>? amount,
-      Wrapped<String?>? nativeAmount,
-      Wrapped<DateTime>? start,
-      Wrapped<DateTime>? end,
-      Wrapped<List<BudgetSpent>?>? spentInBudgets,
-      Wrapped<List<BudgetSpent>?>? spentOutsideBudget}) {
+  AvailableBudget copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? nativeCurrencyId,
+    Wrapped<String?>? nativeCurrencyCode,
+    Wrapped<String?>? nativeCurrencySymbol,
+    Wrapped<int?>? nativeCurrencyDecimalPlaces,
+    Wrapped<String>? amount,
+    Wrapped<String?>? nativeAmount,
+    Wrapped<DateTime>? start,
+    Wrapped<DateTime>? end,
+    Wrapped<List<BudgetSpent>?>? spentInBudgets,
+    Wrapped<List<BudgetSpent>?>? spentOutsideBudget,
+  }) {
     return AvailableBudget(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        nativeCurrencyId: (nativeCurrencyId != null
-            ? nativeCurrencyId.value
-            : this.nativeCurrencyId),
-        nativeCurrencyCode: (nativeCurrencyCode != null
-            ? nativeCurrencyCode.value
-            : this.nativeCurrencyCode),
-        nativeCurrencySymbol: (nativeCurrencySymbol != null
-            ? nativeCurrencySymbol.value
-            : this.nativeCurrencySymbol),
-        nativeCurrencyDecimalPlaces: (nativeCurrencyDecimalPlaces != null
-            ? nativeCurrencyDecimalPlaces.value
-            : this.nativeCurrencyDecimalPlaces),
-        amount: (amount != null ? amount.value : this.amount),
-        nativeAmount:
-            (nativeAmount != null ? nativeAmount.value : this.nativeAmount),
-        start: (start != null ? start.value : this.start),
-        end: (end != null ? end.value : this.end),
-        spentInBudgets: (spentInBudgets != null
-            ? spentInBudgets.value
-            : this.spentInBudgets),
-        spentOutsideBudget: (spentOutsideBudget != null
-            ? spentOutsideBudget.value
-            : this.spentOutsideBudget));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      nativeCurrencyId:
+          (nativeCurrencyId != null
+              ? nativeCurrencyId.value
+              : this.nativeCurrencyId),
+      nativeCurrencyCode:
+          (nativeCurrencyCode != null
+              ? nativeCurrencyCode.value
+              : this.nativeCurrencyCode),
+      nativeCurrencySymbol:
+          (nativeCurrencySymbol != null
+              ? nativeCurrencySymbol.value
+              : this.nativeCurrencySymbol),
+      nativeCurrencyDecimalPlaces:
+          (nativeCurrencyDecimalPlaces != null
+              ? nativeCurrencyDecimalPlaces.value
+              : this.nativeCurrencyDecimalPlaces),
+      amount: (amount != null ? amount.value : this.amount),
+      nativeAmount:
+          (nativeAmount != null ? nativeAmount.value : this.nativeAmount),
+      start: (start != null ? start.value : this.start),
+      end: (end != null ? end.value : this.end),
+      spentInBudgets:
+          (spentInBudgets != null ? spentInBudgets.value : this.spentInBudgets),
+      spentOutsideBudget:
+          (spentOutsideBudget != null
+              ? spentOutsideBudget.value
+              : this.spentOutsideBudget),
+    );
   }
 }
 
@@ -5519,162 +5825,176 @@ class Bill {
 }
 
 extension $BillExtension on Bill {
-  Bill copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      int? currencyDecimalPlaces,
-      String? nativeCurrencyId,
-      String? nativeCurrencyCode,
-      String? nativeCurrencySymbol,
-      int? nativeCurrencyDecimalPlaces,
-      String? name,
-      String? amountMin,
-      String? amountMax,
-      String? nativeAmountMin,
-      String? nativeAmountMax,
-      DateTime? date,
-      DateTime? endDate,
-      DateTime? extensionDate,
-      enums.BillRepeatFrequency? repeatFreq,
-      int? skip,
-      bool? active,
-      int? order,
-      String? notes,
-      DateTime? nextExpectedMatch,
-      String? nextExpectedMatchDiff,
-      String? objectGroupId,
-      int? objectGroupOrder,
-      String? objectGroupTitle,
-      List<DateTime>? payDates,
-      List<Bill$PaidDates$Item>? paidDates}) {
+  Bill copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    String? nativeCurrencyId,
+    String? nativeCurrencyCode,
+    String? nativeCurrencySymbol,
+    int? nativeCurrencyDecimalPlaces,
+    String? name,
+    String? amountMin,
+    String? amountMax,
+    String? nativeAmountMin,
+    String? nativeAmountMax,
+    DateTime? date,
+    DateTime? endDate,
+    DateTime? extensionDate,
+    enums.BillRepeatFrequency? repeatFreq,
+    int? skip,
+    bool? active,
+    int? order,
+    String? notes,
+    DateTime? nextExpectedMatch,
+    String? nextExpectedMatchDiff,
+    String? objectGroupId,
+    int? objectGroupOrder,
+    String? objectGroupTitle,
+    List<DateTime>? payDates,
+    List<Bill$PaidDates$Item>? paidDates,
+  }) {
     return Bill(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
-        nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
-        nativeCurrencyDecimalPlaces:
-            nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
-        name: name ?? this.name,
-        amountMin: amountMin ?? this.amountMin,
-        amountMax: amountMax ?? this.amountMax,
-        nativeAmountMin: nativeAmountMin ?? this.nativeAmountMin,
-        nativeAmountMax: nativeAmountMax ?? this.nativeAmountMax,
-        date: date ?? this.date,
-        endDate: endDate ?? this.endDate,
-        extensionDate: extensionDate ?? this.extensionDate,
-        repeatFreq: repeatFreq ?? this.repeatFreq,
-        skip: skip ?? this.skip,
-        active: active ?? this.active,
-        order: order ?? this.order,
-        notes: notes ?? this.notes,
-        nextExpectedMatch: nextExpectedMatch ?? this.nextExpectedMatch,
-        nextExpectedMatchDiff:
-            nextExpectedMatchDiff ?? this.nextExpectedMatchDiff,
-        objectGroupId: objectGroupId ?? this.objectGroupId,
-        objectGroupOrder: objectGroupOrder ?? this.objectGroupOrder,
-        objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle,
-        payDates: payDates ?? this.payDates,
-        paidDates: paidDates ?? this.paidDates);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+      nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
+      nativeCurrencyDecimalPlaces:
+          nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
+      name: name ?? this.name,
+      amountMin: amountMin ?? this.amountMin,
+      amountMax: amountMax ?? this.amountMax,
+      nativeAmountMin: nativeAmountMin ?? this.nativeAmountMin,
+      nativeAmountMax: nativeAmountMax ?? this.nativeAmountMax,
+      date: date ?? this.date,
+      endDate: endDate ?? this.endDate,
+      extensionDate: extensionDate ?? this.extensionDate,
+      repeatFreq: repeatFreq ?? this.repeatFreq,
+      skip: skip ?? this.skip,
+      active: active ?? this.active,
+      order: order ?? this.order,
+      notes: notes ?? this.notes,
+      nextExpectedMatch: nextExpectedMatch ?? this.nextExpectedMatch,
+      nextExpectedMatchDiff:
+          nextExpectedMatchDiff ?? this.nextExpectedMatchDiff,
+      objectGroupId: objectGroupId ?? this.objectGroupId,
+      objectGroupOrder: objectGroupOrder ?? this.objectGroupOrder,
+      objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle,
+      payDates: payDates ?? this.payDates,
+      paidDates: paidDates ?? this.paidDates,
+    );
   }
 
-  Bill copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? nativeCurrencyId,
-      Wrapped<String?>? nativeCurrencyCode,
-      Wrapped<String?>? nativeCurrencySymbol,
-      Wrapped<int?>? nativeCurrencyDecimalPlaces,
-      Wrapped<String>? name,
-      Wrapped<String>? amountMin,
-      Wrapped<String>? amountMax,
-      Wrapped<String?>? nativeAmountMin,
-      Wrapped<String?>? nativeAmountMax,
-      Wrapped<DateTime>? date,
-      Wrapped<DateTime?>? endDate,
-      Wrapped<DateTime?>? extensionDate,
-      Wrapped<enums.BillRepeatFrequency>? repeatFreq,
-      Wrapped<int?>? skip,
-      Wrapped<bool?>? active,
-      Wrapped<int?>? order,
-      Wrapped<String?>? notes,
-      Wrapped<DateTime?>? nextExpectedMatch,
-      Wrapped<String?>? nextExpectedMatchDiff,
-      Wrapped<String?>? objectGroupId,
-      Wrapped<int?>? objectGroupOrder,
-      Wrapped<String?>? objectGroupTitle,
-      Wrapped<List<DateTime>?>? payDates,
-      Wrapped<List<Bill$PaidDates$Item>?>? paidDates}) {
+  Bill copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? nativeCurrencyId,
+    Wrapped<String?>? nativeCurrencyCode,
+    Wrapped<String?>? nativeCurrencySymbol,
+    Wrapped<int?>? nativeCurrencyDecimalPlaces,
+    Wrapped<String>? name,
+    Wrapped<String>? amountMin,
+    Wrapped<String>? amountMax,
+    Wrapped<String?>? nativeAmountMin,
+    Wrapped<String?>? nativeAmountMax,
+    Wrapped<DateTime>? date,
+    Wrapped<DateTime?>? endDate,
+    Wrapped<DateTime?>? extensionDate,
+    Wrapped<enums.BillRepeatFrequency>? repeatFreq,
+    Wrapped<int?>? skip,
+    Wrapped<bool?>? active,
+    Wrapped<int?>? order,
+    Wrapped<String?>? notes,
+    Wrapped<DateTime?>? nextExpectedMatch,
+    Wrapped<String?>? nextExpectedMatchDiff,
+    Wrapped<String?>? objectGroupId,
+    Wrapped<int?>? objectGroupOrder,
+    Wrapped<String?>? objectGroupTitle,
+    Wrapped<List<DateTime>?>? payDates,
+    Wrapped<List<Bill$PaidDates$Item>?>? paidDates,
+  }) {
     return Bill(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        nativeCurrencyId: (nativeCurrencyId != null
-            ? nativeCurrencyId.value
-            : this.nativeCurrencyId),
-        nativeCurrencyCode: (nativeCurrencyCode != null
-            ? nativeCurrencyCode.value
-            : this.nativeCurrencyCode),
-        nativeCurrencySymbol: (nativeCurrencySymbol != null
-            ? nativeCurrencySymbol.value
-            : this.nativeCurrencySymbol),
-        nativeCurrencyDecimalPlaces: (nativeCurrencyDecimalPlaces != null
-            ? nativeCurrencyDecimalPlaces.value
-            : this.nativeCurrencyDecimalPlaces),
-        name: (name != null ? name.value : this.name),
-        amountMin: (amountMin != null ? amountMin.value : this.amountMin),
-        amountMax: (amountMax != null ? amountMax.value : this.amountMax),
-        nativeAmountMin: (nativeAmountMin != null
-            ? nativeAmountMin.value
-            : this.nativeAmountMin),
-        nativeAmountMax: (nativeAmountMax != null
-            ? nativeAmountMax.value
-            : this.nativeAmountMax),
-        date: (date != null ? date.value : this.date),
-        endDate: (endDate != null ? endDate.value : this.endDate),
-        extensionDate:
-            (extensionDate != null ? extensionDate.value : this.extensionDate),
-        repeatFreq: (repeatFreq != null ? repeatFreq.value : this.repeatFreq),
-        skip: (skip != null ? skip.value : this.skip),
-        active: (active != null ? active.value : this.active),
-        order: (order != null ? order.value : this.order),
-        notes: (notes != null ? notes.value : this.notes),
-        nextExpectedMatch: (nextExpectedMatch != null
-            ? nextExpectedMatch.value
-            : this.nextExpectedMatch),
-        nextExpectedMatchDiff: (nextExpectedMatchDiff != null
-            ? nextExpectedMatchDiff.value
-            : this.nextExpectedMatchDiff),
-        objectGroupId:
-            (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-        objectGroupOrder: (objectGroupOrder != null
-            ? objectGroupOrder.value
-            : this.objectGroupOrder),
-        objectGroupTitle: (objectGroupTitle != null
-            ? objectGroupTitle.value
-            : this.objectGroupTitle),
-        payDates: (payDates != null ? payDates.value : this.payDates),
-        paidDates: (paidDates != null ? paidDates.value : this.paidDates));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      nativeCurrencyId:
+          (nativeCurrencyId != null
+              ? nativeCurrencyId.value
+              : this.nativeCurrencyId),
+      nativeCurrencyCode:
+          (nativeCurrencyCode != null
+              ? nativeCurrencyCode.value
+              : this.nativeCurrencyCode),
+      nativeCurrencySymbol:
+          (nativeCurrencySymbol != null
+              ? nativeCurrencySymbol.value
+              : this.nativeCurrencySymbol),
+      nativeCurrencyDecimalPlaces:
+          (nativeCurrencyDecimalPlaces != null
+              ? nativeCurrencyDecimalPlaces.value
+              : this.nativeCurrencyDecimalPlaces),
+      name: (name != null ? name.value : this.name),
+      amountMin: (amountMin != null ? amountMin.value : this.amountMin),
+      amountMax: (amountMax != null ? amountMax.value : this.amountMax),
+      nativeAmountMin:
+          (nativeAmountMin != null
+              ? nativeAmountMin.value
+              : this.nativeAmountMin),
+      nativeAmountMax:
+          (nativeAmountMax != null
+              ? nativeAmountMax.value
+              : this.nativeAmountMax),
+      date: (date != null ? date.value : this.date),
+      endDate: (endDate != null ? endDate.value : this.endDate),
+      extensionDate:
+          (extensionDate != null ? extensionDate.value : this.extensionDate),
+      repeatFreq: (repeatFreq != null ? repeatFreq.value : this.repeatFreq),
+      skip: (skip != null ? skip.value : this.skip),
+      active: (active != null ? active.value : this.active),
+      order: (order != null ? order.value : this.order),
+      notes: (notes != null ? notes.value : this.notes),
+      nextExpectedMatch:
+          (nextExpectedMatch != null
+              ? nextExpectedMatch.value
+              : this.nextExpectedMatch),
+      nextExpectedMatchDiff:
+          (nextExpectedMatchDiff != null
+              ? nextExpectedMatchDiff.value
+              : this.nextExpectedMatchDiff),
+      objectGroupId:
+          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
+      objectGroupOrder:
+          (objectGroupOrder != null
+              ? objectGroupOrder.value
+              : this.objectGroupOrder),
+      objectGroupTitle:
+          (objectGroupTitle != null
+              ? objectGroupTitle.value
+              : this.objectGroupTitle),
+      payDates: (payDates != null ? payDates.value : this.payDates),
+      paidDates: (paidDates != null ? paidDates.value : this.paidDates),
+    );
   }
 }
 
@@ -5743,73 +6063,78 @@ class BillStore {
 }
 
 extension $BillStoreExtension on BillStore {
-  BillStore copyWith(
-      {String? currencyId,
-      String? currencyCode,
-      String? name,
-      String? amountMin,
-      String? amountMax,
-      DateTime? date,
-      DateTime? endDate,
-      DateTime? extensionDate,
-      enums.BillRepeatFrequency? repeatFreq,
-      int? skip,
-      bool? active,
-      String? notes,
-      String? objectGroupId,
-      String? objectGroupTitle}) {
+  BillStore copyWith({
+    String? currencyId,
+    String? currencyCode,
+    String? name,
+    String? amountMin,
+    String? amountMax,
+    DateTime? date,
+    DateTime? endDate,
+    DateTime? extensionDate,
+    enums.BillRepeatFrequency? repeatFreq,
+    int? skip,
+    bool? active,
+    String? notes,
+    String? objectGroupId,
+    String? objectGroupTitle,
+  }) {
     return BillStore(
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        name: name ?? this.name,
-        amountMin: amountMin ?? this.amountMin,
-        amountMax: amountMax ?? this.amountMax,
-        date: date ?? this.date,
-        endDate: endDate ?? this.endDate,
-        extensionDate: extensionDate ?? this.extensionDate,
-        repeatFreq: repeatFreq ?? this.repeatFreq,
-        skip: skip ?? this.skip,
-        active: active ?? this.active,
-        notes: notes ?? this.notes,
-        objectGroupId: objectGroupId ?? this.objectGroupId,
-        objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle);
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      name: name ?? this.name,
+      amountMin: amountMin ?? this.amountMin,
+      amountMax: amountMax ?? this.amountMax,
+      date: date ?? this.date,
+      endDate: endDate ?? this.endDate,
+      extensionDate: extensionDate ?? this.extensionDate,
+      repeatFreq: repeatFreq ?? this.repeatFreq,
+      skip: skip ?? this.skip,
+      active: active ?? this.active,
+      notes: notes ?? this.notes,
+      objectGroupId: objectGroupId ?? this.objectGroupId,
+      objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle,
+    );
   }
 
-  BillStore copyWithWrapped(
-      {Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String>? name,
-      Wrapped<String>? amountMin,
-      Wrapped<String>? amountMax,
-      Wrapped<DateTime>? date,
-      Wrapped<DateTime?>? endDate,
-      Wrapped<DateTime?>? extensionDate,
-      Wrapped<enums.BillRepeatFrequency>? repeatFreq,
-      Wrapped<int?>? skip,
-      Wrapped<bool?>? active,
-      Wrapped<String?>? notes,
-      Wrapped<String?>? objectGroupId,
-      Wrapped<String?>? objectGroupTitle}) {
+  BillStore copyWithWrapped({
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String>? name,
+    Wrapped<String>? amountMin,
+    Wrapped<String>? amountMax,
+    Wrapped<DateTime>? date,
+    Wrapped<DateTime?>? endDate,
+    Wrapped<DateTime?>? extensionDate,
+    Wrapped<enums.BillRepeatFrequency>? repeatFreq,
+    Wrapped<int?>? skip,
+    Wrapped<bool?>? active,
+    Wrapped<String?>? notes,
+    Wrapped<String?>? objectGroupId,
+    Wrapped<String?>? objectGroupTitle,
+  }) {
     return BillStore(
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        name: (name != null ? name.value : this.name),
-        amountMin: (amountMin != null ? amountMin.value : this.amountMin),
-        amountMax: (amountMax != null ? amountMax.value : this.amountMax),
-        date: (date != null ? date.value : this.date),
-        endDate: (endDate != null ? endDate.value : this.endDate),
-        extensionDate:
-            (extensionDate != null ? extensionDate.value : this.extensionDate),
-        repeatFreq: (repeatFreq != null ? repeatFreq.value : this.repeatFreq),
-        skip: (skip != null ? skip.value : this.skip),
-        active: (active != null ? active.value : this.active),
-        notes: (notes != null ? notes.value : this.notes),
-        objectGroupId:
-            (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-        objectGroupTitle: (objectGroupTitle != null
-            ? objectGroupTitle.value
-            : this.objectGroupTitle));
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      name: (name != null ? name.value : this.name),
+      amountMin: (amountMin != null ? amountMin.value : this.amountMin),
+      amountMax: (amountMax != null ? amountMax.value : this.amountMax),
+      date: (date != null ? date.value : this.date),
+      endDate: (endDate != null ? endDate.value : this.endDate),
+      extensionDate:
+          (extensionDate != null ? extensionDate.value : this.extensionDate),
+      repeatFreq: (repeatFreq != null ? repeatFreq.value : this.repeatFreq),
+      skip: (skip != null ? skip.value : this.skip),
+      active: (active != null ? active.value : this.active),
+      notes: (notes != null ? notes.value : this.notes),
+      objectGroupId:
+          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
+      objectGroupTitle:
+          (objectGroupTitle != null
+              ? objectGroupTitle.value
+              : this.objectGroupTitle),
+    );
   }
 }
 
@@ -5878,73 +6203,78 @@ class BillUpdate {
 }
 
 extension $BillUpdateExtension on BillUpdate {
-  BillUpdate copyWith(
-      {String? currencyId,
-      String? currencyCode,
-      String? name,
-      String? amountMin,
-      String? amountMax,
-      DateTime? date,
-      DateTime? endDate,
-      DateTime? extensionDate,
-      enums.BillRepeatFrequency? repeatFreq,
-      int? skip,
-      bool? active,
-      String? notes,
-      String? objectGroupId,
-      String? objectGroupTitle}) {
+  BillUpdate copyWith({
+    String? currencyId,
+    String? currencyCode,
+    String? name,
+    String? amountMin,
+    String? amountMax,
+    DateTime? date,
+    DateTime? endDate,
+    DateTime? extensionDate,
+    enums.BillRepeatFrequency? repeatFreq,
+    int? skip,
+    bool? active,
+    String? notes,
+    String? objectGroupId,
+    String? objectGroupTitle,
+  }) {
     return BillUpdate(
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        name: name ?? this.name,
-        amountMin: amountMin ?? this.amountMin,
-        amountMax: amountMax ?? this.amountMax,
-        date: date ?? this.date,
-        endDate: endDate ?? this.endDate,
-        extensionDate: extensionDate ?? this.extensionDate,
-        repeatFreq: repeatFreq ?? this.repeatFreq,
-        skip: skip ?? this.skip,
-        active: active ?? this.active,
-        notes: notes ?? this.notes,
-        objectGroupId: objectGroupId ?? this.objectGroupId,
-        objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle);
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      name: name ?? this.name,
+      amountMin: amountMin ?? this.amountMin,
+      amountMax: amountMax ?? this.amountMax,
+      date: date ?? this.date,
+      endDate: endDate ?? this.endDate,
+      extensionDate: extensionDate ?? this.extensionDate,
+      repeatFreq: repeatFreq ?? this.repeatFreq,
+      skip: skip ?? this.skip,
+      active: active ?? this.active,
+      notes: notes ?? this.notes,
+      objectGroupId: objectGroupId ?? this.objectGroupId,
+      objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle,
+    );
   }
 
-  BillUpdate copyWithWrapped(
-      {Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String>? name,
-      Wrapped<String?>? amountMin,
-      Wrapped<String?>? amountMax,
-      Wrapped<DateTime?>? date,
-      Wrapped<DateTime?>? endDate,
-      Wrapped<DateTime?>? extensionDate,
-      Wrapped<enums.BillRepeatFrequency?>? repeatFreq,
-      Wrapped<int?>? skip,
-      Wrapped<bool?>? active,
-      Wrapped<String?>? notes,
-      Wrapped<String?>? objectGroupId,
-      Wrapped<String?>? objectGroupTitle}) {
+  BillUpdate copyWithWrapped({
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String>? name,
+    Wrapped<String?>? amountMin,
+    Wrapped<String?>? amountMax,
+    Wrapped<DateTime?>? date,
+    Wrapped<DateTime?>? endDate,
+    Wrapped<DateTime?>? extensionDate,
+    Wrapped<enums.BillRepeatFrequency?>? repeatFreq,
+    Wrapped<int?>? skip,
+    Wrapped<bool?>? active,
+    Wrapped<String?>? notes,
+    Wrapped<String?>? objectGroupId,
+    Wrapped<String?>? objectGroupTitle,
+  }) {
     return BillUpdate(
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        name: (name != null ? name.value : this.name),
-        amountMin: (amountMin != null ? amountMin.value : this.amountMin),
-        amountMax: (amountMax != null ? amountMax.value : this.amountMax),
-        date: (date != null ? date.value : this.date),
-        endDate: (endDate != null ? endDate.value : this.endDate),
-        extensionDate:
-            (extensionDate != null ? extensionDate.value : this.extensionDate),
-        repeatFreq: (repeatFreq != null ? repeatFreq.value : this.repeatFreq),
-        skip: (skip != null ? skip.value : this.skip),
-        active: (active != null ? active.value : this.active),
-        notes: (notes != null ? notes.value : this.notes),
-        objectGroupId:
-            (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-        objectGroupTitle: (objectGroupTitle != null
-            ? objectGroupTitle.value
-            : this.objectGroupTitle));
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      name: (name != null ? name.value : this.name),
+      amountMin: (amountMin != null ? amountMin.value : this.amountMin),
+      amountMax: (amountMax != null ? amountMax.value : this.amountMax),
+      date: (date != null ? date.value : this.date),
+      endDate: (endDate != null ? endDate.value : this.endDate),
+      extensionDate:
+          (extensionDate != null ? extensionDate.value : this.extensionDate),
+      repeatFreq: (repeatFreq != null ? repeatFreq.value : this.repeatFreq),
+      skip: (skip != null ? skip.value : this.skip),
+      active: (active != null ? active.value : this.active),
+      notes: (notes != null ? notes.value : this.notes),
+      objectGroupId:
+          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
+      objectGroupTitle:
+          (objectGroupTitle != null
+              ? objectGroupTitle.value
+              : this.objectGroupTitle),
+    );
   }
 }
 
@@ -6032,112 +6362,122 @@ class Budget {
 }
 
 extension $BudgetExtension on Budget {
-  Budget copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? name,
-      bool? active,
-      String? notes,
-      int? order,
-      enums.AutoBudgetType? autoBudgetType,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      int? currencyDecimalPlaces,
-      String? nativeCurrencyId,
-      String? nativeCurrencyCode,
-      String? nativeCurrencySymbol,
-      int? nativeCurrencyDecimalPlaces,
-      String? autoBudgetAmount,
-      String? nativeAutoBudgetAmount,
-      enums.AutoBudgetPeriod? autoBudgetPeriod,
-      List<BudgetSpent>? spent}) {
+  Budget copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? name,
+    bool? active,
+    String? notes,
+    int? order,
+    enums.AutoBudgetType? autoBudgetType,
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    String? nativeCurrencyId,
+    String? nativeCurrencyCode,
+    String? nativeCurrencySymbol,
+    int? nativeCurrencyDecimalPlaces,
+    String? autoBudgetAmount,
+    String? nativeAutoBudgetAmount,
+    enums.AutoBudgetPeriod? autoBudgetPeriod,
+    List<BudgetSpent>? spent,
+  }) {
     return Budget(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        name: name ?? this.name,
-        active: active ?? this.active,
-        notes: notes ?? this.notes,
-        order: order ?? this.order,
-        autoBudgetType: autoBudgetType ?? this.autoBudgetType,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
-        nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
-        nativeCurrencyDecimalPlaces:
-            nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
-        autoBudgetAmount: autoBudgetAmount ?? this.autoBudgetAmount,
-        nativeAutoBudgetAmount:
-            nativeAutoBudgetAmount ?? this.nativeAutoBudgetAmount,
-        autoBudgetPeriod: autoBudgetPeriod ?? this.autoBudgetPeriod,
-        spent: spent ?? this.spent);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      name: name ?? this.name,
+      active: active ?? this.active,
+      notes: notes ?? this.notes,
+      order: order ?? this.order,
+      autoBudgetType: autoBudgetType ?? this.autoBudgetType,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+      nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
+      nativeCurrencyDecimalPlaces:
+          nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
+      autoBudgetAmount: autoBudgetAmount ?? this.autoBudgetAmount,
+      nativeAutoBudgetAmount:
+          nativeAutoBudgetAmount ?? this.nativeAutoBudgetAmount,
+      autoBudgetPeriod: autoBudgetPeriod ?? this.autoBudgetPeriod,
+      spent: spent ?? this.spent,
+    );
   }
 
-  Budget copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String>? name,
-      Wrapped<bool?>? active,
-      Wrapped<String?>? notes,
-      Wrapped<int?>? order,
-      Wrapped<enums.AutoBudgetType?>? autoBudgetType,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? nativeCurrencyId,
-      Wrapped<String?>? nativeCurrencyCode,
-      Wrapped<String?>? nativeCurrencySymbol,
-      Wrapped<int?>? nativeCurrencyDecimalPlaces,
-      Wrapped<String?>? autoBudgetAmount,
-      Wrapped<String?>? nativeAutoBudgetAmount,
-      Wrapped<enums.AutoBudgetPeriod?>? autoBudgetPeriod,
-      Wrapped<List<BudgetSpent>?>? spent}) {
+  Budget copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String>? name,
+    Wrapped<bool?>? active,
+    Wrapped<String?>? notes,
+    Wrapped<int?>? order,
+    Wrapped<enums.AutoBudgetType?>? autoBudgetType,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? nativeCurrencyId,
+    Wrapped<String?>? nativeCurrencyCode,
+    Wrapped<String?>? nativeCurrencySymbol,
+    Wrapped<int?>? nativeCurrencyDecimalPlaces,
+    Wrapped<String?>? autoBudgetAmount,
+    Wrapped<String?>? nativeAutoBudgetAmount,
+    Wrapped<enums.AutoBudgetPeriod?>? autoBudgetPeriod,
+    Wrapped<List<BudgetSpent>?>? spent,
+  }) {
     return Budget(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        name: (name != null ? name.value : this.name),
-        active: (active != null ? active.value : this.active),
-        notes: (notes != null ? notes.value : this.notes),
-        order: (order != null ? order.value : this.order),
-        autoBudgetType: (autoBudgetType != null
-            ? autoBudgetType.value
-            : this.autoBudgetType),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        nativeCurrencyId: (nativeCurrencyId != null
-            ? nativeCurrencyId.value
-            : this.nativeCurrencyId),
-        nativeCurrencyCode: (nativeCurrencyCode != null
-            ? nativeCurrencyCode.value
-            : this.nativeCurrencyCode),
-        nativeCurrencySymbol: (nativeCurrencySymbol != null
-            ? nativeCurrencySymbol.value
-            : this.nativeCurrencySymbol),
-        nativeCurrencyDecimalPlaces: (nativeCurrencyDecimalPlaces != null
-            ? nativeCurrencyDecimalPlaces.value
-            : this.nativeCurrencyDecimalPlaces),
-        autoBudgetAmount: (autoBudgetAmount != null
-            ? autoBudgetAmount.value
-            : this.autoBudgetAmount),
-        nativeAutoBudgetAmount: (nativeAutoBudgetAmount != null
-            ? nativeAutoBudgetAmount.value
-            : this.nativeAutoBudgetAmount),
-        autoBudgetPeriod: (autoBudgetPeriod != null
-            ? autoBudgetPeriod.value
-            : this.autoBudgetPeriod),
-        spent: (spent != null ? spent.value : this.spent));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      name: (name != null ? name.value : this.name),
+      active: (active != null ? active.value : this.active),
+      notes: (notes != null ? notes.value : this.notes),
+      order: (order != null ? order.value : this.order),
+      autoBudgetType:
+          (autoBudgetType != null ? autoBudgetType.value : this.autoBudgetType),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      nativeCurrencyId:
+          (nativeCurrencyId != null
+              ? nativeCurrencyId.value
+              : this.nativeCurrencyId),
+      nativeCurrencyCode:
+          (nativeCurrencyCode != null
+              ? nativeCurrencyCode.value
+              : this.nativeCurrencyCode),
+      nativeCurrencySymbol:
+          (nativeCurrencySymbol != null
+              ? nativeCurrencySymbol.value
+              : this.nativeCurrencySymbol),
+      nativeCurrencyDecimalPlaces:
+          (nativeCurrencyDecimalPlaces != null
+              ? nativeCurrencyDecimalPlaces.value
+              : this.nativeCurrencyDecimalPlaces),
+      autoBudgetAmount:
+          (autoBudgetAmount != null
+              ? autoBudgetAmount.value
+              : this.autoBudgetAmount),
+      nativeAutoBudgetAmount:
+          (nativeAutoBudgetAmount != null
+              ? nativeAutoBudgetAmount.value
+              : this.nativeAutoBudgetAmount),
+      autoBudgetPeriod:
+          (autoBudgetPeriod != null
+              ? autoBudgetPeriod.value
+              : this.autoBudgetPeriod),
+      spent: (spent != null ? spent.value : this.spent),
+    );
   }
 }
 
@@ -6196,59 +6536,66 @@ class BudgetStore {
 }
 
 extension $BudgetStoreExtension on BudgetStore {
-  BudgetStore copyWith(
-      {String? name,
-      bool? active,
-      int? order,
-      String? notes,
-      enums.AutoBudgetType? autoBudgetType,
-      String? autoBudgetCurrencyId,
-      String? autoBudgetCurrencyCode,
-      String? autoBudgetAmount,
-      enums.AutoBudgetPeriod? autoBudgetPeriod}) {
+  BudgetStore copyWith({
+    String? name,
+    bool? active,
+    int? order,
+    String? notes,
+    enums.AutoBudgetType? autoBudgetType,
+    String? autoBudgetCurrencyId,
+    String? autoBudgetCurrencyCode,
+    String? autoBudgetAmount,
+    enums.AutoBudgetPeriod? autoBudgetPeriod,
+  }) {
     return BudgetStore(
-        name: name ?? this.name,
-        active: active ?? this.active,
-        order: order ?? this.order,
-        notes: notes ?? this.notes,
-        autoBudgetType: autoBudgetType ?? this.autoBudgetType,
-        autoBudgetCurrencyId: autoBudgetCurrencyId ?? this.autoBudgetCurrencyId,
-        autoBudgetCurrencyCode:
-            autoBudgetCurrencyCode ?? this.autoBudgetCurrencyCode,
-        autoBudgetAmount: autoBudgetAmount ?? this.autoBudgetAmount,
-        autoBudgetPeriod: autoBudgetPeriod ?? this.autoBudgetPeriod);
+      name: name ?? this.name,
+      active: active ?? this.active,
+      order: order ?? this.order,
+      notes: notes ?? this.notes,
+      autoBudgetType: autoBudgetType ?? this.autoBudgetType,
+      autoBudgetCurrencyId: autoBudgetCurrencyId ?? this.autoBudgetCurrencyId,
+      autoBudgetCurrencyCode:
+          autoBudgetCurrencyCode ?? this.autoBudgetCurrencyCode,
+      autoBudgetAmount: autoBudgetAmount ?? this.autoBudgetAmount,
+      autoBudgetPeriod: autoBudgetPeriod ?? this.autoBudgetPeriod,
+    );
   }
 
-  BudgetStore copyWithWrapped(
-      {Wrapped<String>? name,
-      Wrapped<bool?>? active,
-      Wrapped<int?>? order,
-      Wrapped<String?>? notes,
-      Wrapped<enums.AutoBudgetType?>? autoBudgetType,
-      Wrapped<String?>? autoBudgetCurrencyId,
-      Wrapped<String?>? autoBudgetCurrencyCode,
-      Wrapped<String?>? autoBudgetAmount,
-      Wrapped<enums.AutoBudgetPeriod?>? autoBudgetPeriod}) {
+  BudgetStore copyWithWrapped({
+    Wrapped<String>? name,
+    Wrapped<bool?>? active,
+    Wrapped<int?>? order,
+    Wrapped<String?>? notes,
+    Wrapped<enums.AutoBudgetType?>? autoBudgetType,
+    Wrapped<String?>? autoBudgetCurrencyId,
+    Wrapped<String?>? autoBudgetCurrencyCode,
+    Wrapped<String?>? autoBudgetAmount,
+    Wrapped<enums.AutoBudgetPeriod?>? autoBudgetPeriod,
+  }) {
     return BudgetStore(
-        name: (name != null ? name.value : this.name),
-        active: (active != null ? active.value : this.active),
-        order: (order != null ? order.value : this.order),
-        notes: (notes != null ? notes.value : this.notes),
-        autoBudgetType: (autoBudgetType != null
-            ? autoBudgetType.value
-            : this.autoBudgetType),
-        autoBudgetCurrencyId: (autoBudgetCurrencyId != null
-            ? autoBudgetCurrencyId.value
-            : this.autoBudgetCurrencyId),
-        autoBudgetCurrencyCode: (autoBudgetCurrencyCode != null
-            ? autoBudgetCurrencyCode.value
-            : this.autoBudgetCurrencyCode),
-        autoBudgetAmount: (autoBudgetAmount != null
-            ? autoBudgetAmount.value
-            : this.autoBudgetAmount),
-        autoBudgetPeriod: (autoBudgetPeriod != null
-            ? autoBudgetPeriod.value
-            : this.autoBudgetPeriod));
+      name: (name != null ? name.value : this.name),
+      active: (active != null ? active.value : this.active),
+      order: (order != null ? order.value : this.order),
+      notes: (notes != null ? notes.value : this.notes),
+      autoBudgetType:
+          (autoBudgetType != null ? autoBudgetType.value : this.autoBudgetType),
+      autoBudgetCurrencyId:
+          (autoBudgetCurrencyId != null
+              ? autoBudgetCurrencyId.value
+              : this.autoBudgetCurrencyId),
+      autoBudgetCurrencyCode:
+          (autoBudgetCurrencyCode != null
+              ? autoBudgetCurrencyCode.value
+              : this.autoBudgetCurrencyCode),
+      autoBudgetAmount:
+          (autoBudgetAmount != null
+              ? autoBudgetAmount.value
+              : this.autoBudgetAmount),
+      autoBudgetPeriod:
+          (autoBudgetPeriod != null
+              ? autoBudgetPeriod.value
+              : this.autoBudgetPeriod),
+    );
   }
 }
 
@@ -6307,59 +6654,66 @@ class BudgetUpdate {
 }
 
 extension $BudgetUpdateExtension on BudgetUpdate {
-  BudgetUpdate copyWith(
-      {String? name,
-      bool? active,
-      int? order,
-      String? notes,
-      enums.AutoBudgetType? autoBudgetType,
-      String? autoBudgetCurrencyId,
-      String? autoBudgetCurrencyCode,
-      String? autoBudgetAmount,
-      enums.AutoBudgetPeriod? autoBudgetPeriod}) {
+  BudgetUpdate copyWith({
+    String? name,
+    bool? active,
+    int? order,
+    String? notes,
+    enums.AutoBudgetType? autoBudgetType,
+    String? autoBudgetCurrencyId,
+    String? autoBudgetCurrencyCode,
+    String? autoBudgetAmount,
+    enums.AutoBudgetPeriod? autoBudgetPeriod,
+  }) {
     return BudgetUpdate(
-        name: name ?? this.name,
-        active: active ?? this.active,
-        order: order ?? this.order,
-        notes: notes ?? this.notes,
-        autoBudgetType: autoBudgetType ?? this.autoBudgetType,
-        autoBudgetCurrencyId: autoBudgetCurrencyId ?? this.autoBudgetCurrencyId,
-        autoBudgetCurrencyCode:
-            autoBudgetCurrencyCode ?? this.autoBudgetCurrencyCode,
-        autoBudgetAmount: autoBudgetAmount ?? this.autoBudgetAmount,
-        autoBudgetPeriod: autoBudgetPeriod ?? this.autoBudgetPeriod);
+      name: name ?? this.name,
+      active: active ?? this.active,
+      order: order ?? this.order,
+      notes: notes ?? this.notes,
+      autoBudgetType: autoBudgetType ?? this.autoBudgetType,
+      autoBudgetCurrencyId: autoBudgetCurrencyId ?? this.autoBudgetCurrencyId,
+      autoBudgetCurrencyCode:
+          autoBudgetCurrencyCode ?? this.autoBudgetCurrencyCode,
+      autoBudgetAmount: autoBudgetAmount ?? this.autoBudgetAmount,
+      autoBudgetPeriod: autoBudgetPeriod ?? this.autoBudgetPeriod,
+    );
   }
 
-  BudgetUpdate copyWithWrapped(
-      {Wrapped<String>? name,
-      Wrapped<bool?>? active,
-      Wrapped<int?>? order,
-      Wrapped<String?>? notes,
-      Wrapped<enums.AutoBudgetType?>? autoBudgetType,
-      Wrapped<String?>? autoBudgetCurrencyId,
-      Wrapped<String?>? autoBudgetCurrencyCode,
-      Wrapped<String?>? autoBudgetAmount,
-      Wrapped<enums.AutoBudgetPeriod?>? autoBudgetPeriod}) {
+  BudgetUpdate copyWithWrapped({
+    Wrapped<String>? name,
+    Wrapped<bool?>? active,
+    Wrapped<int?>? order,
+    Wrapped<String?>? notes,
+    Wrapped<enums.AutoBudgetType?>? autoBudgetType,
+    Wrapped<String?>? autoBudgetCurrencyId,
+    Wrapped<String?>? autoBudgetCurrencyCode,
+    Wrapped<String?>? autoBudgetAmount,
+    Wrapped<enums.AutoBudgetPeriod?>? autoBudgetPeriod,
+  }) {
     return BudgetUpdate(
-        name: (name != null ? name.value : this.name),
-        active: (active != null ? active.value : this.active),
-        order: (order != null ? order.value : this.order),
-        notes: (notes != null ? notes.value : this.notes),
-        autoBudgetType: (autoBudgetType != null
-            ? autoBudgetType.value
-            : this.autoBudgetType),
-        autoBudgetCurrencyId: (autoBudgetCurrencyId != null
-            ? autoBudgetCurrencyId.value
-            : this.autoBudgetCurrencyId),
-        autoBudgetCurrencyCode: (autoBudgetCurrencyCode != null
-            ? autoBudgetCurrencyCode.value
-            : this.autoBudgetCurrencyCode),
-        autoBudgetAmount: (autoBudgetAmount != null
-            ? autoBudgetAmount.value
-            : this.autoBudgetAmount),
-        autoBudgetPeriod: (autoBudgetPeriod != null
-            ? autoBudgetPeriod.value
-            : this.autoBudgetPeriod));
+      name: (name != null ? name.value : this.name),
+      active: (active != null ? active.value : this.active),
+      order: (order != null ? order.value : this.order),
+      notes: (notes != null ? notes.value : this.notes),
+      autoBudgetType:
+          (autoBudgetType != null ? autoBudgetType.value : this.autoBudgetType),
+      autoBudgetCurrencyId:
+          (autoBudgetCurrencyId != null
+              ? autoBudgetCurrencyId.value
+              : this.autoBudgetCurrencyId),
+      autoBudgetCurrencyCode:
+          (autoBudgetCurrencyCode != null
+              ? autoBudgetCurrencyCode.value
+              : this.autoBudgetCurrencyCode),
+      autoBudgetAmount:
+          (autoBudgetAmount != null
+              ? autoBudgetAmount.value
+              : this.autoBudgetAmount),
+      autoBudgetPeriod:
+          (autoBudgetPeriod != null
+              ? autoBudgetPeriod.value
+              : this.autoBudgetPeriod),
+    );
   }
 }
 
@@ -6438,105 +6792,113 @@ class BudgetLimit {
 }
 
 extension $BudgetLimitExtension on BudgetLimit {
-  BudgetLimit copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      DateTime? start,
-      DateTime? end,
-      String? currencyId,
-      String? currencyCode,
-      String? currencyName,
-      String? currencySymbol,
-      int? currencyDecimalPlaces,
-      String? nativeCurrencyId,
-      String? nativeCurrencyCode,
-      String? nativeCurrencySymbol,
-      int? nativeCurrencyDecimalPlaces,
-      String? budgetId,
-      String? period,
-      String? amount,
-      String? nativeAmount,
-      String? spent,
-      String? notes}) {
+  BudgetLimit copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? start,
+    DateTime? end,
+    String? currencyId,
+    String? currencyCode,
+    String? currencyName,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    String? nativeCurrencyId,
+    String? nativeCurrencyCode,
+    String? nativeCurrencySymbol,
+    int? nativeCurrencyDecimalPlaces,
+    String? budgetId,
+    String? period,
+    String? amount,
+    String? nativeAmount,
+    String? spent,
+    String? notes,
+  }) {
     return BudgetLimit(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        start: start ?? this.start,
-        end: end ?? this.end,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencyName: currencyName ?? this.currencyName,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
-        nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
-        nativeCurrencyDecimalPlaces:
-            nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
-        budgetId: budgetId ?? this.budgetId,
-        period: period ?? this.period,
-        amount: amount ?? this.amount,
-        nativeAmount: nativeAmount ?? this.nativeAmount,
-        spent: spent ?? this.spent,
-        notes: notes ?? this.notes);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      start: start ?? this.start,
+      end: end ?? this.end,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencyName: currencyName ?? this.currencyName,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+      nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
+      nativeCurrencyDecimalPlaces:
+          nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
+      budgetId: budgetId ?? this.budgetId,
+      period: period ?? this.period,
+      amount: amount ?? this.amount,
+      nativeAmount: nativeAmount ?? this.nativeAmount,
+      spent: spent ?? this.spent,
+      notes: notes ?? this.notes,
+    );
   }
 
-  BudgetLimit copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<DateTime>? start,
-      Wrapped<DateTime>? end,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencyName,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? nativeCurrencyId,
-      Wrapped<String?>? nativeCurrencyCode,
-      Wrapped<String?>? nativeCurrencySymbol,
-      Wrapped<int?>? nativeCurrencyDecimalPlaces,
-      Wrapped<String?>? budgetId,
-      Wrapped<String?>? period,
-      Wrapped<String>? amount,
-      Wrapped<String?>? nativeAmount,
-      Wrapped<String?>? spent,
-      Wrapped<String?>? notes}) {
+  BudgetLimit copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<DateTime>? start,
+    Wrapped<DateTime>? end,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencyName,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? nativeCurrencyId,
+    Wrapped<String?>? nativeCurrencyCode,
+    Wrapped<String?>? nativeCurrencySymbol,
+    Wrapped<int?>? nativeCurrencyDecimalPlaces,
+    Wrapped<String?>? budgetId,
+    Wrapped<String?>? period,
+    Wrapped<String>? amount,
+    Wrapped<String?>? nativeAmount,
+    Wrapped<String?>? spent,
+    Wrapped<String?>? notes,
+  }) {
     return BudgetLimit(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        start: (start != null ? start.value : this.start),
-        end: (end != null ? end.value : this.end),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencyName:
-            (currencyName != null ? currencyName.value : this.currencyName),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        nativeCurrencyId: (nativeCurrencyId != null
-            ? nativeCurrencyId.value
-            : this.nativeCurrencyId),
-        nativeCurrencyCode: (nativeCurrencyCode != null
-            ? nativeCurrencyCode.value
-            : this.nativeCurrencyCode),
-        nativeCurrencySymbol: (nativeCurrencySymbol != null
-            ? nativeCurrencySymbol.value
-            : this.nativeCurrencySymbol),
-        nativeCurrencyDecimalPlaces: (nativeCurrencyDecimalPlaces != null
-            ? nativeCurrencyDecimalPlaces.value
-            : this.nativeCurrencyDecimalPlaces),
-        budgetId: (budgetId != null ? budgetId.value : this.budgetId),
-        period: (period != null ? period.value : this.period),
-        amount: (amount != null ? amount.value : this.amount),
-        nativeAmount:
-            (nativeAmount != null ? nativeAmount.value : this.nativeAmount),
-        spent: (spent != null ? spent.value : this.spent),
-        notes: (notes != null ? notes.value : this.notes));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      start: (start != null ? start.value : this.start),
+      end: (end != null ? end.value : this.end),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencyName:
+          (currencyName != null ? currencyName.value : this.currencyName),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      nativeCurrencyId:
+          (nativeCurrencyId != null
+              ? nativeCurrencyId.value
+              : this.nativeCurrencyId),
+      nativeCurrencyCode:
+          (nativeCurrencyCode != null
+              ? nativeCurrencyCode.value
+              : this.nativeCurrencyCode),
+      nativeCurrencySymbol:
+          (nativeCurrencySymbol != null
+              ? nativeCurrencySymbol.value
+              : this.nativeCurrencySymbol),
+      nativeCurrencyDecimalPlaces:
+          (nativeCurrencyDecimalPlaces != null
+              ? nativeCurrencyDecimalPlaces.value
+              : this.nativeCurrencyDecimalPlaces),
+      budgetId: (budgetId != null ? budgetId.value : this.budgetId),
+      period: (period != null ? period.value : this.period),
+      amount: (amount != null ? amount.value : this.amount),
+      nativeAmount:
+          (nativeAmount != null ? nativeAmount.value : this.nativeAmount),
+      spent: (spent != null ? spent.value : this.spent),
+      notes: (notes != null ? notes.value : this.notes),
+    );
   }
 }
 
@@ -6582,45 +6944,49 @@ class BudgetLimitStore {
 }
 
 extension $BudgetLimitStoreExtension on BudgetLimitStore {
-  BudgetLimitStore copyWith(
-      {String? currencyId,
-      String? currencyCode,
-      String? budgetId,
-      DateTime? start,
-      String? period,
-      DateTime? end,
-      String? amount,
-      String? notes}) {
+  BudgetLimitStore copyWith({
+    String? currencyId,
+    String? currencyCode,
+    String? budgetId,
+    DateTime? start,
+    String? period,
+    DateTime? end,
+    String? amount,
+    String? notes,
+  }) {
     return BudgetLimitStore(
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        budgetId: budgetId ?? this.budgetId,
-        start: start ?? this.start,
-        period: period ?? this.period,
-        end: end ?? this.end,
-        amount: amount ?? this.amount,
-        notes: notes ?? this.notes);
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      budgetId: budgetId ?? this.budgetId,
+      start: start ?? this.start,
+      period: period ?? this.period,
+      end: end ?? this.end,
+      amount: amount ?? this.amount,
+      notes: notes ?? this.notes,
+    );
   }
 
-  BudgetLimitStore copyWithWrapped(
-      {Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? budgetId,
-      Wrapped<DateTime>? start,
-      Wrapped<String?>? period,
-      Wrapped<DateTime>? end,
-      Wrapped<String>? amount,
-      Wrapped<String?>? notes}) {
+  BudgetLimitStore copyWithWrapped({
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? budgetId,
+    Wrapped<DateTime>? start,
+    Wrapped<String?>? period,
+    Wrapped<DateTime>? end,
+    Wrapped<String>? amount,
+    Wrapped<String?>? notes,
+  }) {
     return BudgetLimitStore(
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        budgetId: (budgetId != null ? budgetId.value : this.budgetId),
-        start: (start != null ? start.value : this.start),
-        period: (period != null ? period.value : this.period),
-        end: (end != null ? end.value : this.end),
-        amount: (amount != null ? amount.value : this.amount),
-        notes: (notes != null ? notes.value : this.notes));
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      budgetId: (budgetId != null ? budgetId.value : this.budgetId),
+      start: (start != null ? start.value : this.start),
+      period: (period != null ? period.value : this.period),
+      end: (end != null ? end.value : this.end),
+      amount: (amount != null ? amount.value : this.amount),
+      notes: (notes != null ? notes.value : this.notes),
+    );
   }
 }
 
@@ -6657,38 +7023,42 @@ class BudgetSpent {
 }
 
 extension $BudgetSpentExtension on BudgetSpent {
-  BudgetSpent copyWith(
-      {String? sum,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      int? currencyDecimalPlaces}) {
+  BudgetSpent copyWith({
+    String? sum,
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+  }) {
     return BudgetSpent(
-        sum: sum ?? this.sum,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces);
+      sum: sum ?? this.sum,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+    );
   }
 
-  BudgetSpent copyWithWrapped(
-      {Wrapped<String?>? sum,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<int?>? currencyDecimalPlaces}) {
+  BudgetSpent copyWithWrapped({
+    Wrapped<String?>? sum,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+  }) {
     return BudgetSpent(
-        sum: (sum != null ? sum.value : this.sum),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces));
+      sum: (sum != null ? sum.value : this.sum),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+    );
   }
 }
 
@@ -6732,7 +7102,10 @@ class Category {
   @JsonKey(name: 'spent', includeIfNull: false, defaultValue: <CategorySpent>[])
   final List<CategorySpent>? spent;
   @JsonKey(
-      name: 'earned', includeIfNull: false, defaultValue: <CategoryEarned>[])
+    name: 'earned',
+    includeIfNull: false,
+    defaultValue: <CategoryEarned>[],
+  )
   final List<CategoryEarned>? earned;
   static const fromJsonFactory = _$CategoryFromJson;
 
@@ -6741,70 +7114,75 @@ class Category {
 }
 
 extension $CategoryExtension on Category {
-  Category copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? name,
-      String? notes,
-      String? nativeCurrencyId,
-      String? nativeCurrencyCode,
-      String? nativeCurrencySymbol,
-      int? nativeCurrencyDecimalPlaces,
-      List<CategorySpent>? spent,
-      List<CategoryEarned>? earned}) {
+  Category copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? name,
+    String? notes,
+    String? nativeCurrencyId,
+    String? nativeCurrencyCode,
+    String? nativeCurrencySymbol,
+    int? nativeCurrencyDecimalPlaces,
+    List<CategorySpent>? spent,
+    List<CategoryEarned>? earned,
+  }) {
     return Category(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        name: name ?? this.name,
-        notes: notes ?? this.notes,
-        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
-        nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
-        nativeCurrencyDecimalPlaces:
-            nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
-        spent: spent ?? this.spent,
-        earned: earned ?? this.earned);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      name: name ?? this.name,
+      notes: notes ?? this.notes,
+      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+      nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
+      nativeCurrencyDecimalPlaces:
+          nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
+      spent: spent ?? this.spent,
+      earned: earned ?? this.earned,
+    );
   }
 
-  Category copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String>? name,
-      Wrapped<String?>? notes,
-      Wrapped<String?>? nativeCurrencyId,
-      Wrapped<String?>? nativeCurrencyCode,
-      Wrapped<String?>? nativeCurrencySymbol,
-      Wrapped<int?>? nativeCurrencyDecimalPlaces,
-      Wrapped<List<CategorySpent>?>? spent,
-      Wrapped<List<CategoryEarned>?>? earned}) {
+  Category copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String>? name,
+    Wrapped<String?>? notes,
+    Wrapped<String?>? nativeCurrencyId,
+    Wrapped<String?>? nativeCurrencyCode,
+    Wrapped<String?>? nativeCurrencySymbol,
+    Wrapped<int?>? nativeCurrencyDecimalPlaces,
+    Wrapped<List<CategorySpent>?>? spent,
+    Wrapped<List<CategoryEarned>?>? earned,
+  }) {
     return Category(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        name: (name != null ? name.value : this.name),
-        notes: (notes != null ? notes.value : this.notes),
-        nativeCurrencyId: (nativeCurrencyId != null
-            ? nativeCurrencyId.value
-            : this.nativeCurrencyId),
-        nativeCurrencyCode: (nativeCurrencyCode != null
-            ? nativeCurrencyCode.value
-            : this.nativeCurrencyCode),
-        nativeCurrencySymbol: (nativeCurrencySymbol != null
-            ? nativeCurrencySymbol.value
-            : this.nativeCurrencySymbol),
-        nativeCurrencyDecimalPlaces: (nativeCurrencyDecimalPlaces != null
-            ? nativeCurrencyDecimalPlaces.value
-            : this.nativeCurrencyDecimalPlaces),
-        spent: (spent != null ? spent.value : this.spent),
-        earned: (earned != null ? earned.value : this.earned));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      name: (name != null ? name.value : this.name),
+      notes: (notes != null ? notes.value : this.notes),
+      nativeCurrencyId:
+          (nativeCurrencyId != null
+              ? nativeCurrencyId.value
+              : this.nativeCurrencyId),
+      nativeCurrencyCode:
+          (nativeCurrencyCode != null
+              ? nativeCurrencyCode.value
+              : this.nativeCurrencyCode),
+      nativeCurrencySymbol:
+          (nativeCurrencySymbol != null
+              ? nativeCurrencySymbol.value
+              : this.nativeCurrencySymbol),
+      nativeCurrencyDecimalPlaces:
+          (nativeCurrencyDecimalPlaces != null
+              ? nativeCurrencyDecimalPlaces.value
+              : this.nativeCurrencyDecimalPlaces),
+      spent: (spent != null ? spent.value : this.spent),
+      earned: (earned != null ? earned.value : this.earned),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class CategoryUpdate {
-  const CategoryUpdate({
-    required this.name,
-    this.notes,
-  });
+  const CategoryUpdate({required this.name, this.notes});
 
   factory CategoryUpdate.fromJson(Map<String, dynamic> json) =>
       _$CategoryUpdateFromJson(json);
@@ -6827,11 +7205,14 @@ extension $CategoryUpdateExtension on CategoryUpdate {
     return CategoryUpdate(name: name ?? this.name, notes: notes ?? this.notes);
   }
 
-  CategoryUpdate copyWithWrapped(
-      {Wrapped<String>? name, Wrapped<String?>? notes}) {
+  CategoryUpdate copyWithWrapped({
+    Wrapped<String>? name,
+    Wrapped<String?>? notes,
+  }) {
     return CategoryUpdate(
-        name: (name != null ? name.value : this.name),
-        notes: (notes != null ? notes.value : this.notes));
+      name: (name != null ? name.value : this.name),
+      notes: (notes != null ? notes.value : this.notes),
+    );
   }
 }
 
@@ -6868,38 +7249,42 @@ class CategoryEarned {
 }
 
 extension $CategoryEarnedExtension on CategoryEarned {
-  CategoryEarned copyWith(
-      {String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      int? currencyDecimalPlaces,
-      String? sum}) {
+  CategoryEarned copyWith({
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    String? sum,
+  }) {
     return CategoryEarned(
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        sum: sum ?? this.sum);
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      sum: sum ?? this.sum,
+    );
   }
 
-  CategoryEarned copyWithWrapped(
-      {Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? sum}) {
+  CategoryEarned copyWithWrapped({
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? sum,
+  }) {
     return CategoryEarned(
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        sum: (sum != null ? sum.value : this.sum));
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      sum: (sum != null ? sum.value : this.sum),
+    );
   }
 }
 
@@ -6936,38 +7321,42 @@ class CategorySpent {
 }
 
 extension $CategorySpentExtension on CategorySpent {
-  CategorySpent copyWith(
-      {String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      int? currencyDecimalPlaces,
-      String? sum}) {
+  CategorySpent copyWith({
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    String? sum,
+  }) {
     return CategorySpent(
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        sum: sum ?? this.sum);
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      sum: sum ?? this.sum,
+    );
   }
 
-  CategorySpent copyWithWrapped(
-      {Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? sum}) {
+  CategorySpent copyWithWrapped({
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? sum,
+  }) {
     return CategorySpent(
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        sum: (sum != null ? sum.value : this.sum));
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      sum: (sum != null ? sum.value : this.sum),
+    );
   }
 }
 
@@ -7001,28 +7390,32 @@ class CurrencyExchangeRateRead {
 }
 
 extension $CurrencyExchangeRateReadExtension on CurrencyExchangeRateRead {
-  CurrencyExchangeRateRead copyWith(
-      {String? type,
-      String? id,
-      CurrencyExchangeRateReadAttributes? attributes,
-      ObjectLink? links}) {
+  CurrencyExchangeRateRead copyWith({
+    String? type,
+    String? id,
+    CurrencyExchangeRateReadAttributes? attributes,
+    ObjectLink? links,
+  }) {
     return CurrencyExchangeRateRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+      links: links ?? this.links,
+    );
   }
 
-  CurrencyExchangeRateRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<CurrencyExchangeRateReadAttributes>? attributes,
-      Wrapped<ObjectLink>? links}) {
+  CurrencyExchangeRateRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<CurrencyExchangeRateReadAttributes>? attributes,
+    Wrapped<ObjectLink>? links,
+  }) {
     return CurrencyExchangeRateRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -7044,8 +7437,8 @@ class CurrencyExchangeRateReadAttributes {
   });
 
   factory CurrencyExchangeRateReadAttributes.fromJson(
-          Map<String, dynamic> json) =>
-      _$CurrencyExchangeRateReadAttributesFromJson(json);
+    Map<String, dynamic> json,
+  ) => _$CurrencyExchangeRateReadAttributesFromJson(json);
 
   static const toJsonFactory = _$CurrencyExchangeRateReadAttributesToJson;
   Map<String, dynamic> toJson() =>
@@ -7083,85 +7476,90 @@ class CurrencyExchangeRateReadAttributes {
 
 extension $CurrencyExchangeRateReadAttributesExtension
     on CurrencyExchangeRateReadAttributes {
-  CurrencyExchangeRateReadAttributes copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? fromCurrencyId,
-      String? fromCurrencyCode,
-      String? fromCurrencySymbol,
-      int? fromCurrencyDecimalPlaces,
-      String? toCurrencyId,
-      String? toCurrencyCode,
-      String? toCurrencySymbol,
-      int? toCurrencyDecimalPlaces,
-      String? rate,
-      DateTime? date}) {
+  CurrencyExchangeRateReadAttributes copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? fromCurrencyId,
+    String? fromCurrencyCode,
+    String? fromCurrencySymbol,
+    int? fromCurrencyDecimalPlaces,
+    String? toCurrencyId,
+    String? toCurrencyCode,
+    String? toCurrencySymbol,
+    int? toCurrencyDecimalPlaces,
+    String? rate,
+    DateTime? date,
+  }) {
     return CurrencyExchangeRateReadAttributes(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        fromCurrencyId: fromCurrencyId ?? this.fromCurrencyId,
-        fromCurrencyCode: fromCurrencyCode ?? this.fromCurrencyCode,
-        fromCurrencySymbol: fromCurrencySymbol ?? this.fromCurrencySymbol,
-        fromCurrencyDecimalPlaces:
-            fromCurrencyDecimalPlaces ?? this.fromCurrencyDecimalPlaces,
-        toCurrencyId: toCurrencyId ?? this.toCurrencyId,
-        toCurrencyCode: toCurrencyCode ?? this.toCurrencyCode,
-        toCurrencySymbol: toCurrencySymbol ?? this.toCurrencySymbol,
-        toCurrencyDecimalPlaces:
-            toCurrencyDecimalPlaces ?? this.toCurrencyDecimalPlaces,
-        rate: rate ?? this.rate,
-        date: date ?? this.date);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      fromCurrencyId: fromCurrencyId ?? this.fromCurrencyId,
+      fromCurrencyCode: fromCurrencyCode ?? this.fromCurrencyCode,
+      fromCurrencySymbol: fromCurrencySymbol ?? this.fromCurrencySymbol,
+      fromCurrencyDecimalPlaces:
+          fromCurrencyDecimalPlaces ?? this.fromCurrencyDecimalPlaces,
+      toCurrencyId: toCurrencyId ?? this.toCurrencyId,
+      toCurrencyCode: toCurrencyCode ?? this.toCurrencyCode,
+      toCurrencySymbol: toCurrencySymbol ?? this.toCurrencySymbol,
+      toCurrencyDecimalPlaces:
+          toCurrencyDecimalPlaces ?? this.toCurrencyDecimalPlaces,
+      rate: rate ?? this.rate,
+      date: date ?? this.date,
+    );
   }
 
-  CurrencyExchangeRateReadAttributes copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String?>? fromCurrencyId,
-      Wrapped<String?>? fromCurrencyCode,
-      Wrapped<String?>? fromCurrencySymbol,
-      Wrapped<int?>? fromCurrencyDecimalPlaces,
-      Wrapped<String?>? toCurrencyId,
-      Wrapped<String?>? toCurrencyCode,
-      Wrapped<String?>? toCurrencySymbol,
-      Wrapped<int?>? toCurrencyDecimalPlaces,
-      Wrapped<String?>? rate,
-      Wrapped<DateTime?>? date}) {
+  CurrencyExchangeRateReadAttributes copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String?>? fromCurrencyId,
+    Wrapped<String?>? fromCurrencyCode,
+    Wrapped<String?>? fromCurrencySymbol,
+    Wrapped<int?>? fromCurrencyDecimalPlaces,
+    Wrapped<String?>? toCurrencyId,
+    Wrapped<String?>? toCurrencyCode,
+    Wrapped<String?>? toCurrencySymbol,
+    Wrapped<int?>? toCurrencyDecimalPlaces,
+    Wrapped<String?>? rate,
+    Wrapped<DateTime?>? date,
+  }) {
     return CurrencyExchangeRateReadAttributes(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        fromCurrencyId: (fromCurrencyId != null
-            ? fromCurrencyId.value
-            : this.fromCurrencyId),
-        fromCurrencyCode: (fromCurrencyCode != null
-            ? fromCurrencyCode.value
-            : this.fromCurrencyCode),
-        fromCurrencySymbol: (fromCurrencySymbol != null
-            ? fromCurrencySymbol.value
-            : this.fromCurrencySymbol),
-        fromCurrencyDecimalPlaces: (fromCurrencyDecimalPlaces != null
-            ? fromCurrencyDecimalPlaces.value
-            : this.fromCurrencyDecimalPlaces),
-        toCurrencyId:
-            (toCurrencyId != null ? toCurrencyId.value : this.toCurrencyId),
-        toCurrencyCode: (toCurrencyCode != null
-            ? toCurrencyCode.value
-            : this.toCurrencyCode),
-        toCurrencySymbol: (toCurrencySymbol != null
-            ? toCurrencySymbol.value
-            : this.toCurrencySymbol),
-        toCurrencyDecimalPlaces: (toCurrencyDecimalPlaces != null
-            ? toCurrencyDecimalPlaces.value
-            : this.toCurrencyDecimalPlaces),
-        rate: (rate != null ? rate.value : this.rate),
-        date: (date != null ? date.value : this.date));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      fromCurrencyId:
+          (fromCurrencyId != null ? fromCurrencyId.value : this.fromCurrencyId),
+      fromCurrencyCode:
+          (fromCurrencyCode != null
+              ? fromCurrencyCode.value
+              : this.fromCurrencyCode),
+      fromCurrencySymbol:
+          (fromCurrencySymbol != null
+              ? fromCurrencySymbol.value
+              : this.fromCurrencySymbol),
+      fromCurrencyDecimalPlaces:
+          (fromCurrencyDecimalPlaces != null
+              ? fromCurrencyDecimalPlaces.value
+              : this.fromCurrencyDecimalPlaces),
+      toCurrencyId:
+          (toCurrencyId != null ? toCurrencyId.value : this.toCurrencyId),
+      toCurrencyCode:
+          (toCurrencyCode != null ? toCurrencyCode.value : this.toCurrencyCode),
+      toCurrencySymbol:
+          (toCurrencySymbol != null
+              ? toCurrencySymbol.value
+              : this.toCurrencySymbol),
+      toCurrencyDecimalPlaces:
+          (toCurrencyDecimalPlaces != null
+              ? toCurrencyDecimalPlaces.value
+              : this.toCurrencyDecimalPlaces),
+      rate: (rate != null ? rate.value : this.rate),
+      date: (date != null ? date.value : this.date),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class CurrencyExchangeRateSingle {
-  const CurrencyExchangeRateSingle({
-    required this.data,
-  });
+  const CurrencyExchangeRateSingle({required this.data});
 
   factory CurrencyExchangeRateSingle.fromJson(Map<String, dynamic> json) =>
       _$CurrencyExchangeRateSingleFromJson(json);
@@ -7182,19 +7580,18 @@ extension $CurrencyExchangeRateSingleExtension on CurrencyExchangeRateSingle {
     return CurrencyExchangeRateSingle(data: data ?? this.data);
   }
 
-  CurrencyExchangeRateSingle copyWithWrapped(
-      {Wrapped<CurrencyExchangeRateRead>? data}) {
+  CurrencyExchangeRateSingle copyWithWrapped({
+    Wrapped<CurrencyExchangeRateRead>? data,
+  }) {
     return CurrencyExchangeRateSingle(
-        data: (data != null ? data.value : this.data));
+      data: (data != null ? data.value : this.data),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class CurrencyExchangeRateUpdate {
-  const CurrencyExchangeRateUpdate({
-    required this.date,
-    required this.rate,
-  });
+  const CurrencyExchangeRateUpdate({required this.date, required this.rate});
 
   factory CurrencyExchangeRateUpdate.fromJson(Map<String, dynamic> json) =>
       _$CurrencyExchangeRateUpdateFromJson(json);
@@ -7215,14 +7612,19 @@ class CurrencyExchangeRateUpdate {
 extension $CurrencyExchangeRateUpdateExtension on CurrencyExchangeRateUpdate {
   CurrencyExchangeRateUpdate copyWith({DateTime? date, String? rate}) {
     return CurrencyExchangeRateUpdate(
-        date: date ?? this.date, rate: rate ?? this.rate);
+      date: date ?? this.date,
+      rate: rate ?? this.rate,
+    );
   }
 
-  CurrencyExchangeRateUpdate copyWithWrapped(
-      {Wrapped<DateTime>? date, Wrapped<String>? rate}) {
+  CurrencyExchangeRateUpdate copyWithWrapped({
+    Wrapped<DateTime>? date,
+    Wrapped<String>? rate,
+  }) {
     return CurrencyExchangeRateUpdate(
-        date: (date != null ? date.value : this.date),
-        rate: (rate != null ? rate.value : this.rate));
+      date: (date != null ? date.value : this.date),
+      rate: (rate != null ? rate.value : this.rate),
+    );
   }
 }
 
@@ -7256,34 +7658,38 @@ class ObjectGroup {
 }
 
 extension $ObjectGroupExtension on ObjectGroup {
-  ObjectGroup copyWith(
-      {DateTime? createdAt, DateTime? updatedAt, String? title, int? order}) {
+  ObjectGroup copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? title,
+    int? order,
+  }) {
     return ObjectGroup(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        title: title ?? this.title,
-        order: order ?? this.order);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      title: title ?? this.title,
+      order: order ?? this.order,
+    );
   }
 
-  ObjectGroup copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String>? title,
-      Wrapped<int>? order}) {
+  ObjectGroup copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String>? title,
+    Wrapped<int>? order,
+  }) {
     return ObjectGroup(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        title: (title != null ? title.value : this.title),
-        order: (order != null ? order.value : this.order));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      title: (title != null ? title.value : this.title),
+      order: (order != null ? order.value : this.order),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class ObjectGroupUpdate {
-  const ObjectGroupUpdate({
-    required this.title,
-    this.order,
-  });
+  const ObjectGroupUpdate({required this.title, this.order});
 
   factory ObjectGroupUpdate.fromJson(Map<String, dynamic> json) =>
       _$ObjectGroupUpdateFromJson(json);
@@ -7304,22 +7710,25 @@ class ObjectGroupUpdate {
 extension $ObjectGroupUpdateExtension on ObjectGroupUpdate {
   ObjectGroupUpdate copyWith({String? title, int? order}) {
     return ObjectGroupUpdate(
-        title: title ?? this.title, order: order ?? this.order);
+      title: title ?? this.title,
+      order: order ?? this.order,
+    );
   }
 
-  ObjectGroupUpdate copyWithWrapped(
-      {Wrapped<String>? title, Wrapped<int?>? order}) {
+  ObjectGroupUpdate copyWithWrapped({
+    Wrapped<String>? title,
+    Wrapped<int?>? order,
+  }) {
     return ObjectGroupUpdate(
-        title: (title != null ? title.value : this.title),
-        order: (order != null ? order.value : this.order));
+      title: (title != null ? title.value : this.title),
+      order: (order != null ? order.value : this.order),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class ObjectLink {
-  const ObjectLink({
-    this.self,
-  });
+  const ObjectLink({this.self});
 
   factory ObjectLink.fromJson(Map<String, dynamic> json) =>
       _$ObjectLinkFromJson(json);
@@ -7347,13 +7756,7 @@ extension $ObjectLinkExtension on ObjectLink {
 
 @JsonSerializable(explicitToJson: true)
 class PageLink {
-  const PageLink({
-    this.self,
-    this.first,
-    this.next,
-    this.prev,
-    this.last,
-  });
+  const PageLink({this.self, this.first, this.next, this.prev, this.last});
 
   factory PageLink.fromJson(Map<String, dynamic> json) =>
       _$PageLinkFromJson(json);
@@ -7378,28 +7781,36 @@ class PageLink {
 }
 
 extension $PageLinkExtension on PageLink {
-  PageLink copyWith(
-      {String? self, String? first, String? next, String? prev, String? last}) {
+  PageLink copyWith({
+    String? self,
+    String? first,
+    String? next,
+    String? prev,
+    String? last,
+  }) {
     return PageLink(
-        self: self ?? this.self,
-        first: first ?? this.first,
-        next: next ?? this.next,
-        prev: prev ?? this.prev,
-        last: last ?? this.last);
+      self: self ?? this.self,
+      first: first ?? this.first,
+      next: next ?? this.next,
+      prev: prev ?? this.prev,
+      last: last ?? this.last,
+    );
   }
 
-  PageLink copyWithWrapped(
-      {Wrapped<String?>? self,
-      Wrapped<String?>? first,
-      Wrapped<String?>? next,
-      Wrapped<String?>? prev,
-      Wrapped<String?>? last}) {
+  PageLink copyWithWrapped({
+    Wrapped<String?>? self,
+    Wrapped<String?>? first,
+    Wrapped<String?>? next,
+    Wrapped<String?>? prev,
+    Wrapped<String?>? last,
+  }) {
     return PageLink(
-        self: (self != null ? self.value : this.self),
-        first: (first != null ? first.value : this.first),
-        next: (next != null ? next.value : this.next),
-        prev: (prev != null ? prev.value : this.prev),
-        last: (last != null ? last.value : this.last));
+      self: (self != null ? self.value : this.self),
+      first: (first != null ? first.value : this.first),
+      next: (next != null ? next.value : this.next),
+      prev: (prev != null ? prev.value : this.prev),
+      last: (last != null ? last.value : this.last),
+    );
   }
 }
 
@@ -7448,9 +7859,10 @@ class PiggyBank {
   @JsonKey(name: 'account_name', includeIfNull: false)
   final String? accountName;
   @JsonKey(
-      name: 'accounts',
-      includeIfNull: false,
-      defaultValue: <PiggyBankAccountRead>[])
+    name: 'accounts',
+    includeIfNull: false,
+    defaultValue: <PiggyBankAccountRead>[],
+  )
   final List<PiggyBankAccountRead>? accounts;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
@@ -7493,119 +7905,124 @@ class PiggyBank {
 }
 
 extension $PiggyBankExtension on PiggyBank {
-  PiggyBank copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? name,
-      String? accountId,
-      String? accountName,
-      List<PiggyBankAccountRead>? accounts,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      int? currencyDecimalPlaces,
-      String? targetAmount,
-      double? percentage,
-      String? currentAmount,
-      String? leftToSave,
-      String? savePerMonth,
-      DateTime? startDate,
-      DateTime? targetDate,
-      int? order,
-      bool? active,
-      String? notes,
-      String? objectGroupId,
-      int? objectGroupOrder,
-      String? objectGroupTitle}) {
+  PiggyBank copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? name,
+    String? accountId,
+    String? accountName,
+    List<PiggyBankAccountRead>? accounts,
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    String? targetAmount,
+    double? percentage,
+    String? currentAmount,
+    String? leftToSave,
+    String? savePerMonth,
+    DateTime? startDate,
+    DateTime? targetDate,
+    int? order,
+    bool? active,
+    String? notes,
+    String? objectGroupId,
+    int? objectGroupOrder,
+    String? objectGroupTitle,
+  }) {
     return PiggyBank(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        name: name ?? this.name,
-        accountId: accountId ?? this.accountId,
-        accountName: accountName ?? this.accountName,
-        accounts: accounts ?? this.accounts,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        targetAmount: targetAmount ?? this.targetAmount,
-        percentage: percentage ?? this.percentage,
-        currentAmount: currentAmount ?? this.currentAmount,
-        leftToSave: leftToSave ?? this.leftToSave,
-        savePerMonth: savePerMonth ?? this.savePerMonth,
-        startDate: startDate ?? this.startDate,
-        targetDate: targetDate ?? this.targetDate,
-        order: order ?? this.order,
-        active: active ?? this.active,
-        notes: notes ?? this.notes,
-        objectGroupId: objectGroupId ?? this.objectGroupId,
-        objectGroupOrder: objectGroupOrder ?? this.objectGroupOrder,
-        objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      name: name ?? this.name,
+      accountId: accountId ?? this.accountId,
+      accountName: accountName ?? this.accountName,
+      accounts: accounts ?? this.accounts,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      targetAmount: targetAmount ?? this.targetAmount,
+      percentage: percentage ?? this.percentage,
+      currentAmount: currentAmount ?? this.currentAmount,
+      leftToSave: leftToSave ?? this.leftToSave,
+      savePerMonth: savePerMonth ?? this.savePerMonth,
+      startDate: startDate ?? this.startDate,
+      targetDate: targetDate ?? this.targetDate,
+      order: order ?? this.order,
+      active: active ?? this.active,
+      notes: notes ?? this.notes,
+      objectGroupId: objectGroupId ?? this.objectGroupId,
+      objectGroupOrder: objectGroupOrder ?? this.objectGroupOrder,
+      objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle,
+    );
   }
 
-  PiggyBank copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String>? name,
-      Wrapped<String?>? accountId,
-      Wrapped<String?>? accountName,
-      Wrapped<List<PiggyBankAccountRead>?>? accounts,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? targetAmount,
-      Wrapped<double?>? percentage,
-      Wrapped<String?>? currentAmount,
-      Wrapped<String?>? leftToSave,
-      Wrapped<String?>? savePerMonth,
-      Wrapped<DateTime?>? startDate,
-      Wrapped<DateTime?>? targetDate,
-      Wrapped<int?>? order,
-      Wrapped<bool?>? active,
-      Wrapped<String?>? notes,
-      Wrapped<String?>? objectGroupId,
-      Wrapped<int?>? objectGroupOrder,
-      Wrapped<String?>? objectGroupTitle}) {
+  PiggyBank copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String>? name,
+    Wrapped<String?>? accountId,
+    Wrapped<String?>? accountName,
+    Wrapped<List<PiggyBankAccountRead>?>? accounts,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? targetAmount,
+    Wrapped<double?>? percentage,
+    Wrapped<String?>? currentAmount,
+    Wrapped<String?>? leftToSave,
+    Wrapped<String?>? savePerMonth,
+    Wrapped<DateTime?>? startDate,
+    Wrapped<DateTime?>? targetDate,
+    Wrapped<int?>? order,
+    Wrapped<bool?>? active,
+    Wrapped<String?>? notes,
+    Wrapped<String?>? objectGroupId,
+    Wrapped<int?>? objectGroupOrder,
+    Wrapped<String?>? objectGroupTitle,
+  }) {
     return PiggyBank(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        name: (name != null ? name.value : this.name),
-        accountId: (accountId != null ? accountId.value : this.accountId),
-        accountName:
-            (accountName != null ? accountName.value : this.accountName),
-        accounts: (accounts != null ? accounts.value : this.accounts),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        targetAmount:
-            (targetAmount != null ? targetAmount.value : this.targetAmount),
-        percentage: (percentage != null ? percentage.value : this.percentage),
-        currentAmount:
-            (currentAmount != null ? currentAmount.value : this.currentAmount),
-        leftToSave: (leftToSave != null ? leftToSave.value : this.leftToSave),
-        savePerMonth:
-            (savePerMonth != null ? savePerMonth.value : this.savePerMonth),
-        startDate: (startDate != null ? startDate.value : this.startDate),
-        targetDate: (targetDate != null ? targetDate.value : this.targetDate),
-        order: (order != null ? order.value : this.order),
-        active: (active != null ? active.value : this.active),
-        notes: (notes != null ? notes.value : this.notes),
-        objectGroupId:
-            (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-        objectGroupOrder: (objectGroupOrder != null
-            ? objectGroupOrder.value
-            : this.objectGroupOrder),
-        objectGroupTitle: (objectGroupTitle != null
-            ? objectGroupTitle.value
-            : this.objectGroupTitle));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      name: (name != null ? name.value : this.name),
+      accountId: (accountId != null ? accountId.value : this.accountId),
+      accountName: (accountName != null ? accountName.value : this.accountName),
+      accounts: (accounts != null ? accounts.value : this.accounts),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      targetAmount:
+          (targetAmount != null ? targetAmount.value : this.targetAmount),
+      percentage: (percentage != null ? percentage.value : this.percentage),
+      currentAmount:
+          (currentAmount != null ? currentAmount.value : this.currentAmount),
+      leftToSave: (leftToSave != null ? leftToSave.value : this.leftToSave),
+      savePerMonth:
+          (savePerMonth != null ? savePerMonth.value : this.savePerMonth),
+      startDate: (startDate != null ? startDate.value : this.startDate),
+      targetDate: (targetDate != null ? targetDate.value : this.targetDate),
+      order: (order != null ? order.value : this.order),
+      active: (active != null ? active.value : this.active),
+      notes: (notes != null ? notes.value : this.notes),
+      objectGroupId:
+          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
+      objectGroupOrder:
+          (objectGroupOrder != null
+              ? objectGroupOrder.value
+              : this.objectGroupOrder),
+      objectGroupTitle:
+          (objectGroupTitle != null
+              ? objectGroupTitle.value
+              : this.objectGroupTitle),
+    );
   }
 }
 
@@ -7640,41 +8057,42 @@ class PiggyBankAccountRead {
 }
 
 extension $PiggyBankAccountReadExtension on PiggyBankAccountRead {
-  PiggyBankAccountRead copyWith(
-      {String? id,
-      String? name,
-      String? currentAmount,
-      String? nativeCurrentAmount}) {
+  PiggyBankAccountRead copyWith({
+    String? id,
+    String? name,
+    String? currentAmount,
+    String? nativeCurrentAmount,
+  }) {
     return PiggyBankAccountRead(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        currentAmount: currentAmount ?? this.currentAmount,
-        nativeCurrentAmount: nativeCurrentAmount ?? this.nativeCurrentAmount);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      currentAmount: currentAmount ?? this.currentAmount,
+      nativeCurrentAmount: nativeCurrentAmount ?? this.nativeCurrentAmount,
+    );
   }
 
-  PiggyBankAccountRead copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? name,
-      Wrapped<String>? currentAmount,
-      Wrapped<String>? nativeCurrentAmount}) {
+  PiggyBankAccountRead copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? name,
+    Wrapped<String>? currentAmount,
+    Wrapped<String>? nativeCurrentAmount,
+  }) {
     return PiggyBankAccountRead(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        currentAmount:
-            (currentAmount != null ? currentAmount.value : this.currentAmount),
-        nativeCurrentAmount: (nativeCurrentAmount != null
-            ? nativeCurrentAmount.value
-            : this.nativeCurrentAmount));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      currentAmount:
+          (currentAmount != null ? currentAmount.value : this.currentAmount),
+      nativeCurrentAmount:
+          (nativeCurrentAmount != null
+              ? nativeCurrentAmount.value
+              : this.nativeCurrentAmount),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class PiggyBankAccountStore {
-  const PiggyBankAccountStore({
-    this.id,
-    this.name,
-    this.currentAmount,
-  });
+  const PiggyBankAccountStore({this.id, this.name, this.currentAmount});
 
   factory PiggyBankAccountStore.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankAccountStoreFromJson(json);
@@ -7696,33 +8114,35 @@ class PiggyBankAccountStore {
 }
 
 extension $PiggyBankAccountStoreExtension on PiggyBankAccountStore {
-  PiggyBankAccountStore copyWith(
-      {String? id, String? name, String? currentAmount}) {
+  PiggyBankAccountStore copyWith({
+    String? id,
+    String? name,
+    String? currentAmount,
+  }) {
     return PiggyBankAccountStore(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        currentAmount: currentAmount ?? this.currentAmount);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      currentAmount: currentAmount ?? this.currentAmount,
+    );
   }
 
-  PiggyBankAccountStore copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? name,
-      Wrapped<String?>? currentAmount}) {
+  PiggyBankAccountStore copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? name,
+    Wrapped<String?>? currentAmount,
+  }) {
     return PiggyBankAccountStore(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        currentAmount:
-            (currentAmount != null ? currentAmount.value : this.currentAmount));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      currentAmount:
+          (currentAmount != null ? currentAmount.value : this.currentAmount),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class PiggyBankAccountUpdate {
-  const PiggyBankAccountUpdate({
-    this.id,
-    this.name,
-    this.currentAmount,
-  });
+  const PiggyBankAccountUpdate({this.id, this.name, this.currentAmount});
 
   factory PiggyBankAccountUpdate.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankAccountUpdateFromJson(json);
@@ -7744,23 +8164,29 @@ class PiggyBankAccountUpdate {
 }
 
 extension $PiggyBankAccountUpdateExtension on PiggyBankAccountUpdate {
-  PiggyBankAccountUpdate copyWith(
-      {String? id, String? name, String? currentAmount}) {
+  PiggyBankAccountUpdate copyWith({
+    String? id,
+    String? name,
+    String? currentAmount,
+  }) {
     return PiggyBankAccountUpdate(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        currentAmount: currentAmount ?? this.currentAmount);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      currentAmount: currentAmount ?? this.currentAmount,
+    );
   }
 
-  PiggyBankAccountUpdate copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? name,
-      Wrapped<String?>? currentAmount}) {
+  PiggyBankAccountUpdate copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? name,
+    Wrapped<String?>? currentAmount,
+  }) {
     return PiggyBankAccountUpdate(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name),
-        currentAmount:
-            (currentAmount != null ? currentAmount.value : this.currentAmount));
+      id: (id != null ? id.value : this.id),
+      name: (name != null ? name.value : this.name),
+      currentAmount:
+          (currentAmount != null ? currentAmount.value : this.currentAmount),
+    );
   }
 }
 
@@ -7789,9 +8215,10 @@ class PiggyBankStore {
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
   @JsonKey(
-      name: 'accounts',
-      includeIfNull: false,
-      defaultValue: <PiggyBankAccountStore>[])
+    name: 'accounts',
+    includeIfNull: false,
+    defaultValue: <PiggyBankAccountStore>[],
+  )
   final List<PiggyBankAccountStore>? accounts;
   @JsonKey(name: 'target_amount', includeIfNull: false)
   final String? targetAmount;
@@ -7818,61 +8245,66 @@ class PiggyBankStore {
 }
 
 extension $PiggyBankStoreExtension on PiggyBankStore {
-  PiggyBankStore copyWith(
-      {String? name,
-      List<PiggyBankAccountStore>? accounts,
-      String? targetAmount,
-      String? currentAmount,
-      DateTime? startDate,
-      DateTime? targetDate,
-      int? order,
-      bool? active,
-      String? notes,
-      String? objectGroupId,
-      String? objectGroupTitle}) {
+  PiggyBankStore copyWith({
+    String? name,
+    List<PiggyBankAccountStore>? accounts,
+    String? targetAmount,
+    String? currentAmount,
+    DateTime? startDate,
+    DateTime? targetDate,
+    int? order,
+    bool? active,
+    String? notes,
+    String? objectGroupId,
+    String? objectGroupTitle,
+  }) {
     return PiggyBankStore(
-        name: name ?? this.name,
-        accounts: accounts ?? this.accounts,
-        targetAmount: targetAmount ?? this.targetAmount,
-        currentAmount: currentAmount ?? this.currentAmount,
-        startDate: startDate ?? this.startDate,
-        targetDate: targetDate ?? this.targetDate,
-        order: order ?? this.order,
-        active: active ?? this.active,
-        notes: notes ?? this.notes,
-        objectGroupId: objectGroupId ?? this.objectGroupId,
-        objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle);
+      name: name ?? this.name,
+      accounts: accounts ?? this.accounts,
+      targetAmount: targetAmount ?? this.targetAmount,
+      currentAmount: currentAmount ?? this.currentAmount,
+      startDate: startDate ?? this.startDate,
+      targetDate: targetDate ?? this.targetDate,
+      order: order ?? this.order,
+      active: active ?? this.active,
+      notes: notes ?? this.notes,
+      objectGroupId: objectGroupId ?? this.objectGroupId,
+      objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle,
+    );
   }
 
-  PiggyBankStore copyWithWrapped(
-      {Wrapped<String>? name,
-      Wrapped<List<PiggyBankAccountStore>?>? accounts,
-      Wrapped<String?>? targetAmount,
-      Wrapped<String?>? currentAmount,
-      Wrapped<DateTime?>? startDate,
-      Wrapped<DateTime?>? targetDate,
-      Wrapped<int?>? order,
-      Wrapped<bool?>? active,
-      Wrapped<String?>? notes,
-      Wrapped<String?>? objectGroupId,
-      Wrapped<String?>? objectGroupTitle}) {
+  PiggyBankStore copyWithWrapped({
+    Wrapped<String>? name,
+    Wrapped<List<PiggyBankAccountStore>?>? accounts,
+    Wrapped<String?>? targetAmount,
+    Wrapped<String?>? currentAmount,
+    Wrapped<DateTime?>? startDate,
+    Wrapped<DateTime?>? targetDate,
+    Wrapped<int?>? order,
+    Wrapped<bool?>? active,
+    Wrapped<String?>? notes,
+    Wrapped<String?>? objectGroupId,
+    Wrapped<String?>? objectGroupTitle,
+  }) {
     return PiggyBankStore(
-        name: (name != null ? name.value : this.name),
-        accounts: (accounts != null ? accounts.value : this.accounts),
-        targetAmount:
-            (targetAmount != null ? targetAmount.value : this.targetAmount),
-        currentAmount:
-            (currentAmount != null ? currentAmount.value : this.currentAmount),
-        startDate: (startDate != null ? startDate.value : this.startDate),
-        targetDate: (targetDate != null ? targetDate.value : this.targetDate),
-        order: (order != null ? order.value : this.order),
-        active: (active != null ? active.value : this.active),
-        notes: (notes != null ? notes.value : this.notes),
-        objectGroupId:
-            (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-        objectGroupTitle: (objectGroupTitle != null
-            ? objectGroupTitle.value
-            : this.objectGroupTitle));
+      name: (name != null ? name.value : this.name),
+      accounts: (accounts != null ? accounts.value : this.accounts),
+      targetAmount:
+          (targetAmount != null ? targetAmount.value : this.targetAmount),
+      currentAmount:
+          (currentAmount != null ? currentAmount.value : this.currentAmount),
+      startDate: (startDate != null ? startDate.value : this.startDate),
+      targetDate: (targetDate != null ? targetDate.value : this.targetDate),
+      order: (order != null ? order.value : this.order),
+      active: (active != null ? active.value : this.active),
+      notes: (notes != null ? notes.value : this.notes),
+      objectGroupId:
+          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
+      objectGroupTitle:
+          (objectGroupTitle != null
+              ? objectGroupTitle.value
+              : this.objectGroupTitle),
+    );
   }
 }
 
@@ -7903,9 +8335,10 @@ class PiggyBankUpdate {
   @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
   @JsonKey(
-      name: 'accounts',
-      includeIfNull: false,
-      defaultValue: <PiggyBankAccountUpdate>[])
+    name: 'accounts',
+    includeIfNull: false,
+    defaultValue: <PiggyBankAccountUpdate>[],
+  )
   final List<PiggyBankAccountUpdate>? accounts;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
@@ -7936,70 +8369,75 @@ class PiggyBankUpdate {
 }
 
 extension $PiggyBankUpdateExtension on PiggyBankUpdate {
-  PiggyBankUpdate copyWith(
-      {String? name,
-      List<PiggyBankAccountUpdate>? accounts,
-      String? currencyId,
-      String? currencyCode,
-      String? targetAmount,
-      String? currentAmount,
-      DateTime? startDate,
-      DateTime? targetDate,
-      int? order,
-      bool? active,
-      String? notes,
-      String? objectGroupId,
-      String? objectGroupTitle}) {
+  PiggyBankUpdate copyWith({
+    String? name,
+    List<PiggyBankAccountUpdate>? accounts,
+    String? currencyId,
+    String? currencyCode,
+    String? targetAmount,
+    String? currentAmount,
+    DateTime? startDate,
+    DateTime? targetDate,
+    int? order,
+    bool? active,
+    String? notes,
+    String? objectGroupId,
+    String? objectGroupTitle,
+  }) {
     return PiggyBankUpdate(
-        name: name ?? this.name,
-        accounts: accounts ?? this.accounts,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        targetAmount: targetAmount ?? this.targetAmount,
-        currentAmount: currentAmount ?? this.currentAmount,
-        startDate: startDate ?? this.startDate,
-        targetDate: targetDate ?? this.targetDate,
-        order: order ?? this.order,
-        active: active ?? this.active,
-        notes: notes ?? this.notes,
-        objectGroupId: objectGroupId ?? this.objectGroupId,
-        objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle);
+      name: name ?? this.name,
+      accounts: accounts ?? this.accounts,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      targetAmount: targetAmount ?? this.targetAmount,
+      currentAmount: currentAmount ?? this.currentAmount,
+      startDate: startDate ?? this.startDate,
+      targetDate: targetDate ?? this.targetDate,
+      order: order ?? this.order,
+      active: active ?? this.active,
+      notes: notes ?? this.notes,
+      objectGroupId: objectGroupId ?? this.objectGroupId,
+      objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle,
+    );
   }
 
-  PiggyBankUpdate copyWithWrapped(
-      {Wrapped<String?>? name,
-      Wrapped<List<PiggyBankAccountUpdate>?>? accounts,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? targetAmount,
-      Wrapped<String?>? currentAmount,
-      Wrapped<DateTime?>? startDate,
-      Wrapped<DateTime?>? targetDate,
-      Wrapped<int?>? order,
-      Wrapped<bool?>? active,
-      Wrapped<String?>? notes,
-      Wrapped<String?>? objectGroupId,
-      Wrapped<String?>? objectGroupTitle}) {
+  PiggyBankUpdate copyWithWrapped({
+    Wrapped<String?>? name,
+    Wrapped<List<PiggyBankAccountUpdate>?>? accounts,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? targetAmount,
+    Wrapped<String?>? currentAmount,
+    Wrapped<DateTime?>? startDate,
+    Wrapped<DateTime?>? targetDate,
+    Wrapped<int?>? order,
+    Wrapped<bool?>? active,
+    Wrapped<String?>? notes,
+    Wrapped<String?>? objectGroupId,
+    Wrapped<String?>? objectGroupTitle,
+  }) {
     return PiggyBankUpdate(
-        name: (name != null ? name.value : this.name),
-        accounts: (accounts != null ? accounts.value : this.accounts),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        targetAmount:
-            (targetAmount != null ? targetAmount.value : this.targetAmount),
-        currentAmount:
-            (currentAmount != null ? currentAmount.value : this.currentAmount),
-        startDate: (startDate != null ? startDate.value : this.startDate),
-        targetDate: (targetDate != null ? targetDate.value : this.targetDate),
-        order: (order != null ? order.value : this.order),
-        active: (active != null ? active.value : this.active),
-        notes: (notes != null ? notes.value : this.notes),
-        objectGroupId:
-            (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-        objectGroupTitle: (objectGroupTitle != null
-            ? objectGroupTitle.value
-            : this.objectGroupTitle));
+      name: (name != null ? name.value : this.name),
+      accounts: (accounts != null ? accounts.value : this.accounts),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      targetAmount:
+          (targetAmount != null ? targetAmount.value : this.targetAmount),
+      currentAmount:
+          (currentAmount != null ? currentAmount.value : this.currentAmount),
+      startDate: (startDate != null ? startDate.value : this.startDate),
+      targetDate: (targetDate != null ? targetDate.value : this.targetDate),
+      order: (order != null ? order.value : this.order),
+      active: (active != null ? active.value : this.active),
+      notes: (notes != null ? notes.value : this.notes),
+      objectGroupId:
+          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
+      objectGroupTitle:
+          (objectGroupTitle != null
+              ? objectGroupTitle.value
+              : this.objectGroupTitle),
+    );
   }
 }
 
@@ -8048,58 +8486,64 @@ class PiggyBankEvent {
 }
 
 extension $PiggyBankEventExtension on PiggyBankEvent {
-  PiggyBankEvent copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      int? currencyDecimalPlaces,
-      String? amount,
-      String? transactionJournalId,
-      String? transactionGroupId}) {
+  PiggyBankEvent copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    String? amount,
+    String? transactionJournalId,
+    String? transactionGroupId,
+  }) {
     return PiggyBankEvent(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        amount: amount ?? this.amount,
-        transactionJournalId: transactionJournalId ?? this.transactionJournalId,
-        transactionGroupId: transactionGroupId ?? this.transactionGroupId);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      amount: amount ?? this.amount,
+      transactionJournalId: transactionJournalId ?? this.transactionJournalId,
+      transactionGroupId: transactionGroupId ?? this.transactionGroupId,
+    );
   }
 
-  PiggyBankEvent copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? amount,
-      Wrapped<String?>? transactionJournalId,
-      Wrapped<String?>? transactionGroupId}) {
+  PiggyBankEvent copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? amount,
+    Wrapped<String?>? transactionJournalId,
+    Wrapped<String?>? transactionGroupId,
+  }) {
     return PiggyBankEvent(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        amount: (amount != null ? amount.value : this.amount),
-        transactionJournalId: (transactionJournalId != null
-            ? transactionJournalId.value
-            : this.transactionJournalId),
-        transactionGroupId: (transactionGroupId != null
-            ? transactionGroupId.value
-            : this.transactionGroupId));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      amount: (amount != null ? amount.value : this.amount),
+      transactionJournalId:
+          (transactionJournalId != null
+              ? transactionJournalId.value
+              : this.transactionJournalId),
+      transactionGroupId:
+          (transactionGroupId != null
+              ? transactionGroupId.value
+              : this.transactionGroupId),
+    );
   }
 }
 
@@ -8133,36 +8577,38 @@ class Preference {
 }
 
 extension $PreferenceExtension on Preference {
-  Preference copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? name,
-      PolymorphicProperty? data}) {
+  Preference copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? name,
+    PolymorphicProperty? data,
+  }) {
     return Preference(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        name: name ?? this.name,
-        data: data ?? this.data);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      name: name ?? this.name,
+      data: data ?? this.data,
+    );
   }
 
-  Preference copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String>? name,
-      Wrapped<PolymorphicProperty>? data}) {
+  Preference copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String>? name,
+    Wrapped<PolymorphicProperty>? data,
+  }) {
     return Preference(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        name: (name != null ? name.value : this.name),
-        data: (data != null ? data.value : this.data));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      name: (name != null ? name.value : this.name),
+      data: (data != null ? data.value : this.data),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class PreferenceUpdate {
-  const PreferenceUpdate({
-    required this.data,
-  });
+  const PreferenceUpdate({required this.data});
 
   factory PreferenceUpdate.fromJson(Map<String, dynamic> json) =>
       _$PreferenceUpdateFromJson(json);
@@ -8243,14 +8689,16 @@ class Recurrence {
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   @JsonKey(
-      name: 'repetitions',
-      includeIfNull: false,
-      defaultValue: <RecurrenceRepetition>[])
+    name: 'repetitions',
+    includeIfNull: false,
+    defaultValue: <RecurrenceRepetition>[],
+  )
   final List<RecurrenceRepetition>? repetitions;
   @JsonKey(
-      name: 'transactions',
-      includeIfNull: false,
-      defaultValue: <RecurrenceTransaction>[])
+    name: 'transactions',
+    includeIfNull: false,
+    defaultValue: <RecurrenceTransaction>[],
+  )
   final List<RecurrenceTransaction>? transactions;
   static const fromJsonFactory = _$RecurrenceFromJson;
 
@@ -8259,74 +8707,76 @@ class Recurrence {
 }
 
 extension $RecurrenceExtension on Recurrence {
-  Recurrence copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      enums.RecurrenceTransactionType? type,
-      String? title,
-      String? description,
-      DateTime? firstDate,
-      DateTime? latestDate,
-      DateTime? repeatUntil,
-      int? nrOfRepetitions,
-      bool? applyRules,
-      bool? active,
-      String? notes,
-      List<RecurrenceRepetition>? repetitions,
-      List<RecurrenceTransaction>? transactions}) {
+  Recurrence copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    enums.RecurrenceTransactionType? type,
+    String? title,
+    String? description,
+    DateTime? firstDate,
+    DateTime? latestDate,
+    DateTime? repeatUntil,
+    int? nrOfRepetitions,
+    bool? applyRules,
+    bool? active,
+    String? notes,
+    List<RecurrenceRepetition>? repetitions,
+    List<RecurrenceTransaction>? transactions,
+  }) {
     return Recurrence(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        type: type ?? this.type,
-        title: title ?? this.title,
-        description: description ?? this.description,
-        firstDate: firstDate ?? this.firstDate,
-        latestDate: latestDate ?? this.latestDate,
-        repeatUntil: repeatUntil ?? this.repeatUntil,
-        nrOfRepetitions: nrOfRepetitions ?? this.nrOfRepetitions,
-        applyRules: applyRules ?? this.applyRules,
-        active: active ?? this.active,
-        notes: notes ?? this.notes,
-        repetitions: repetitions ?? this.repetitions,
-        transactions: transactions ?? this.transactions);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      type: type ?? this.type,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      firstDate: firstDate ?? this.firstDate,
+      latestDate: latestDate ?? this.latestDate,
+      repeatUntil: repeatUntil ?? this.repeatUntil,
+      nrOfRepetitions: nrOfRepetitions ?? this.nrOfRepetitions,
+      applyRules: applyRules ?? this.applyRules,
+      active: active ?? this.active,
+      notes: notes ?? this.notes,
+      repetitions: repetitions ?? this.repetitions,
+      transactions: transactions ?? this.transactions,
+    );
   }
 
-  Recurrence copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<enums.RecurrenceTransactionType?>? type,
-      Wrapped<String?>? title,
-      Wrapped<String?>? description,
-      Wrapped<DateTime?>? firstDate,
-      Wrapped<DateTime?>? latestDate,
-      Wrapped<DateTime?>? repeatUntil,
-      Wrapped<int?>? nrOfRepetitions,
-      Wrapped<bool?>? applyRules,
-      Wrapped<bool?>? active,
-      Wrapped<String?>? notes,
-      Wrapped<List<RecurrenceRepetition>?>? repetitions,
-      Wrapped<List<RecurrenceTransaction>?>? transactions}) {
+  Recurrence copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<enums.RecurrenceTransactionType?>? type,
+    Wrapped<String?>? title,
+    Wrapped<String?>? description,
+    Wrapped<DateTime?>? firstDate,
+    Wrapped<DateTime?>? latestDate,
+    Wrapped<DateTime?>? repeatUntil,
+    Wrapped<int?>? nrOfRepetitions,
+    Wrapped<bool?>? applyRules,
+    Wrapped<bool?>? active,
+    Wrapped<String?>? notes,
+    Wrapped<List<RecurrenceRepetition>?>? repetitions,
+    Wrapped<List<RecurrenceTransaction>?>? transactions,
+  }) {
     return Recurrence(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        type: (type != null ? type.value : this.type),
-        title: (title != null ? title.value : this.title),
-        description:
-            (description != null ? description.value : this.description),
-        firstDate: (firstDate != null ? firstDate.value : this.firstDate),
-        latestDate: (latestDate != null ? latestDate.value : this.latestDate),
-        repeatUntil:
-            (repeatUntil != null ? repeatUntil.value : this.repeatUntil),
-        nrOfRepetitions: (nrOfRepetitions != null
-            ? nrOfRepetitions.value
-            : this.nrOfRepetitions),
-        applyRules: (applyRules != null ? applyRules.value : this.applyRules),
-        active: (active != null ? active.value : this.active),
-        notes: (notes != null ? notes.value : this.notes),
-        repetitions:
-            (repetitions != null ? repetitions.value : this.repetitions),
-        transactions:
-            (transactions != null ? transactions.value : this.transactions));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      type: (type != null ? type.value : this.type),
+      title: (title != null ? title.value : this.title),
+      description: (description != null ? description.value : this.description),
+      firstDate: (firstDate != null ? firstDate.value : this.firstDate),
+      latestDate: (latestDate != null ? latestDate.value : this.latestDate),
+      repeatUntil: (repeatUntil != null ? repeatUntil.value : this.repeatUntil),
+      nrOfRepetitions:
+          (nrOfRepetitions != null
+              ? nrOfRepetitions.value
+              : this.nrOfRepetitions),
+      applyRules: (applyRules != null ? applyRules.value : this.applyRules),
+      active: (active != null ? active.value : this.active),
+      notes: (notes != null ? notes.value : this.notes),
+      repetitions: (repetitions != null ? repetitions.value : this.repetitions),
+      transactions:
+          (transactions != null ? transactions.value : this.transactions),
+    );
   }
 }
 
@@ -8376,14 +8826,16 @@ class RecurrenceStore {
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   @JsonKey(
-      name: 'repetitions',
-      includeIfNull: false,
-      defaultValue: <RecurrenceRepetitionStore>[])
+    name: 'repetitions',
+    includeIfNull: false,
+    defaultValue: <RecurrenceRepetitionStore>[],
+  )
   final List<RecurrenceRepetitionStore> repetitions;
   @JsonKey(
-      name: 'transactions',
-      includeIfNull: false,
-      defaultValue: <RecurrenceTransactionStore>[])
+    name: 'transactions',
+    includeIfNull: false,
+    defaultValue: <RecurrenceTransactionStore>[],
+  )
   final List<RecurrenceTransactionStore> transactions;
   static const fromJsonFactory = _$RecurrenceStoreFromJson;
 
@@ -8392,62 +8844,64 @@ class RecurrenceStore {
 }
 
 extension $RecurrenceStoreExtension on RecurrenceStore {
-  RecurrenceStore copyWith(
-      {enums.RecurrenceTransactionType? type,
-      String? title,
-      String? description,
-      DateTime? firstDate,
-      DateTime? repeatUntil,
-      int? nrOfRepetitions,
-      bool? applyRules,
-      bool? active,
-      String? notes,
-      List<RecurrenceRepetitionStore>? repetitions,
-      List<RecurrenceTransactionStore>? transactions}) {
+  RecurrenceStore copyWith({
+    enums.RecurrenceTransactionType? type,
+    String? title,
+    String? description,
+    DateTime? firstDate,
+    DateTime? repeatUntil,
+    int? nrOfRepetitions,
+    bool? applyRules,
+    bool? active,
+    String? notes,
+    List<RecurrenceRepetitionStore>? repetitions,
+    List<RecurrenceTransactionStore>? transactions,
+  }) {
     return RecurrenceStore(
-        type: type ?? this.type,
-        title: title ?? this.title,
-        description: description ?? this.description,
-        firstDate: firstDate ?? this.firstDate,
-        repeatUntil: repeatUntil ?? this.repeatUntil,
-        nrOfRepetitions: nrOfRepetitions ?? this.nrOfRepetitions,
-        applyRules: applyRules ?? this.applyRules,
-        active: active ?? this.active,
-        notes: notes ?? this.notes,
-        repetitions: repetitions ?? this.repetitions,
-        transactions: transactions ?? this.transactions);
+      type: type ?? this.type,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      firstDate: firstDate ?? this.firstDate,
+      repeatUntil: repeatUntil ?? this.repeatUntil,
+      nrOfRepetitions: nrOfRepetitions ?? this.nrOfRepetitions,
+      applyRules: applyRules ?? this.applyRules,
+      active: active ?? this.active,
+      notes: notes ?? this.notes,
+      repetitions: repetitions ?? this.repetitions,
+      transactions: transactions ?? this.transactions,
+    );
   }
 
-  RecurrenceStore copyWithWrapped(
-      {Wrapped<enums.RecurrenceTransactionType>? type,
-      Wrapped<String>? title,
-      Wrapped<String?>? description,
-      Wrapped<DateTime>? firstDate,
-      Wrapped<DateTime?>? repeatUntil,
-      Wrapped<int?>? nrOfRepetitions,
-      Wrapped<bool?>? applyRules,
-      Wrapped<bool?>? active,
-      Wrapped<String?>? notes,
-      Wrapped<List<RecurrenceRepetitionStore>>? repetitions,
-      Wrapped<List<RecurrenceTransactionStore>>? transactions}) {
+  RecurrenceStore copyWithWrapped({
+    Wrapped<enums.RecurrenceTransactionType>? type,
+    Wrapped<String>? title,
+    Wrapped<String?>? description,
+    Wrapped<DateTime>? firstDate,
+    Wrapped<DateTime?>? repeatUntil,
+    Wrapped<int?>? nrOfRepetitions,
+    Wrapped<bool?>? applyRules,
+    Wrapped<bool?>? active,
+    Wrapped<String?>? notes,
+    Wrapped<List<RecurrenceRepetitionStore>>? repetitions,
+    Wrapped<List<RecurrenceTransactionStore>>? transactions,
+  }) {
     return RecurrenceStore(
-        type: (type != null ? type.value : this.type),
-        title: (title != null ? title.value : this.title),
-        description:
-            (description != null ? description.value : this.description),
-        firstDate: (firstDate != null ? firstDate.value : this.firstDate),
-        repeatUntil:
-            (repeatUntil != null ? repeatUntil.value : this.repeatUntil),
-        nrOfRepetitions: (nrOfRepetitions != null
-            ? nrOfRepetitions.value
-            : this.nrOfRepetitions),
-        applyRules: (applyRules != null ? applyRules.value : this.applyRules),
-        active: (active != null ? active.value : this.active),
-        notes: (notes != null ? notes.value : this.notes),
-        repetitions:
-            (repetitions != null ? repetitions.value : this.repetitions),
-        transactions:
-            (transactions != null ? transactions.value : this.transactions));
+      type: (type != null ? type.value : this.type),
+      title: (title != null ? title.value : this.title),
+      description: (description != null ? description.value : this.description),
+      firstDate: (firstDate != null ? firstDate.value : this.firstDate),
+      repeatUntil: (repeatUntil != null ? repeatUntil.value : this.repeatUntil),
+      nrOfRepetitions:
+          (nrOfRepetitions != null
+              ? nrOfRepetitions.value
+              : this.nrOfRepetitions),
+      applyRules: (applyRules != null ? applyRules.value : this.applyRules),
+      active: (active != null ? active.value : this.active),
+      notes: (notes != null ? notes.value : this.notes),
+      repetitions: (repetitions != null ? repetitions.value : this.repetitions),
+      transactions:
+          (transactions != null ? transactions.value : this.transactions),
+    );
   }
 }
 
@@ -8489,14 +8943,16 @@ class RecurrenceUpdate {
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   @JsonKey(
-      name: 'repetitions',
-      includeIfNull: false,
-      defaultValue: <RecurrenceRepetitionUpdate>[])
+    name: 'repetitions',
+    includeIfNull: false,
+    defaultValue: <RecurrenceRepetitionUpdate>[],
+  )
   final List<RecurrenceRepetitionUpdate>? repetitions;
   @JsonKey(
-      name: 'transactions',
-      includeIfNull: false,
-      defaultValue: <RecurrenceTransactionUpdate>[])
+    name: 'transactions',
+    includeIfNull: false,
+    defaultValue: <RecurrenceTransactionUpdate>[],
+  )
   final List<RecurrenceTransactionUpdate>? transactions;
   static const fromJsonFactory = _$RecurrenceUpdateFromJson;
 
@@ -8505,58 +8961,60 @@ class RecurrenceUpdate {
 }
 
 extension $RecurrenceUpdateExtension on RecurrenceUpdate {
-  RecurrenceUpdate copyWith(
-      {String? title,
-      String? description,
-      DateTime? firstDate,
-      DateTime? repeatUntil,
-      int? nrOfRepetitions,
-      bool? applyRules,
-      bool? active,
-      String? notes,
-      List<RecurrenceRepetitionUpdate>? repetitions,
-      List<RecurrenceTransactionUpdate>? transactions}) {
+  RecurrenceUpdate copyWith({
+    String? title,
+    String? description,
+    DateTime? firstDate,
+    DateTime? repeatUntil,
+    int? nrOfRepetitions,
+    bool? applyRules,
+    bool? active,
+    String? notes,
+    List<RecurrenceRepetitionUpdate>? repetitions,
+    List<RecurrenceTransactionUpdate>? transactions,
+  }) {
     return RecurrenceUpdate(
-        title: title ?? this.title,
-        description: description ?? this.description,
-        firstDate: firstDate ?? this.firstDate,
-        repeatUntil: repeatUntil ?? this.repeatUntil,
-        nrOfRepetitions: nrOfRepetitions ?? this.nrOfRepetitions,
-        applyRules: applyRules ?? this.applyRules,
-        active: active ?? this.active,
-        notes: notes ?? this.notes,
-        repetitions: repetitions ?? this.repetitions,
-        transactions: transactions ?? this.transactions);
+      title: title ?? this.title,
+      description: description ?? this.description,
+      firstDate: firstDate ?? this.firstDate,
+      repeatUntil: repeatUntil ?? this.repeatUntil,
+      nrOfRepetitions: nrOfRepetitions ?? this.nrOfRepetitions,
+      applyRules: applyRules ?? this.applyRules,
+      active: active ?? this.active,
+      notes: notes ?? this.notes,
+      repetitions: repetitions ?? this.repetitions,
+      transactions: transactions ?? this.transactions,
+    );
   }
 
-  RecurrenceUpdate copyWithWrapped(
-      {Wrapped<String?>? title,
-      Wrapped<String?>? description,
-      Wrapped<DateTime?>? firstDate,
-      Wrapped<DateTime?>? repeatUntil,
-      Wrapped<int?>? nrOfRepetitions,
-      Wrapped<bool?>? applyRules,
-      Wrapped<bool?>? active,
-      Wrapped<String?>? notes,
-      Wrapped<List<RecurrenceRepetitionUpdate>?>? repetitions,
-      Wrapped<List<RecurrenceTransactionUpdate>?>? transactions}) {
+  RecurrenceUpdate copyWithWrapped({
+    Wrapped<String?>? title,
+    Wrapped<String?>? description,
+    Wrapped<DateTime?>? firstDate,
+    Wrapped<DateTime?>? repeatUntil,
+    Wrapped<int?>? nrOfRepetitions,
+    Wrapped<bool?>? applyRules,
+    Wrapped<bool?>? active,
+    Wrapped<String?>? notes,
+    Wrapped<List<RecurrenceRepetitionUpdate>?>? repetitions,
+    Wrapped<List<RecurrenceTransactionUpdate>?>? transactions,
+  }) {
     return RecurrenceUpdate(
-        title: (title != null ? title.value : this.title),
-        description:
-            (description != null ? description.value : this.description),
-        firstDate: (firstDate != null ? firstDate.value : this.firstDate),
-        repeatUntil:
-            (repeatUntil != null ? repeatUntil.value : this.repeatUntil),
-        nrOfRepetitions: (nrOfRepetitions != null
-            ? nrOfRepetitions.value
-            : this.nrOfRepetitions),
-        applyRules: (applyRules != null ? applyRules.value : this.applyRules),
-        active: (active != null ? active.value : this.active),
-        notes: (notes != null ? notes.value : this.notes),
-        repetitions:
-            (repetitions != null ? repetitions.value : this.repetitions),
-        transactions:
-            (transactions != null ? transactions.value : this.transactions));
+      title: (title != null ? title.value : this.title),
+      description: (description != null ? description.value : this.description),
+      firstDate: (firstDate != null ? firstDate.value : this.firstDate),
+      repeatUntil: (repeatUntil != null ? repeatUntil.value : this.repeatUntil),
+      nrOfRepetitions:
+          (nrOfRepetitions != null
+              ? nrOfRepetitions.value
+              : this.nrOfRepetitions),
+      applyRules: (applyRules != null ? applyRules.value : this.applyRules),
+      active: (active != null ? active.value : this.active),
+      notes: (notes != null ? notes.value : this.notes),
+      repetitions: (repetitions != null ? repetitions.value : this.repetitions),
+      transactions:
+          (transactions != null ? transactions.value : this.transactions),
+    );
   }
 }
 
@@ -8602,7 +9060,10 @@ class RecurrenceRepetition {
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
   @JsonKey(
-      name: 'occurrences', includeIfNull: false, defaultValue: <DateTime>[])
+    name: 'occurrences',
+    includeIfNull: false,
+    defaultValue: <DateTime>[],
+  )
   final List<DateTime>? occurrences;
   static const fromJsonFactory = _$RecurrenceRepetitionFromJson;
 
@@ -8611,50 +9072,52 @@ class RecurrenceRepetition {
 }
 
 extension $RecurrenceRepetitionExtension on RecurrenceRepetition {
-  RecurrenceRepetition copyWith(
-      {String? id,
-      DateTime? createdAt,
-      DateTime? updatedAt,
-      enums.RecurrenceRepetitionType? type,
-      String? moment,
-      int? skip,
-      int? weekend,
-      String? description,
-      List<DateTime>? occurrences}) {
+  RecurrenceRepetition copyWith({
+    String? id,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    enums.RecurrenceRepetitionType? type,
+    String? moment,
+    int? skip,
+    int? weekend,
+    String? description,
+    List<DateTime>? occurrences,
+  }) {
     return RecurrenceRepetition(
-        id: id ?? this.id,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        type: type ?? this.type,
-        moment: moment ?? this.moment,
-        skip: skip ?? this.skip,
-        weekend: weekend ?? this.weekend,
-        description: description ?? this.description,
-        occurrences: occurrences ?? this.occurrences);
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      type: type ?? this.type,
+      moment: moment ?? this.moment,
+      skip: skip ?? this.skip,
+      weekend: weekend ?? this.weekend,
+      description: description ?? this.description,
+      occurrences: occurrences ?? this.occurrences,
+    );
   }
 
-  RecurrenceRepetition copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<enums.RecurrenceRepetitionType>? type,
-      Wrapped<String>? moment,
-      Wrapped<int?>? skip,
-      Wrapped<int?>? weekend,
-      Wrapped<String?>? description,
-      Wrapped<List<DateTime>?>? occurrences}) {
+  RecurrenceRepetition copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<enums.RecurrenceRepetitionType>? type,
+    Wrapped<String>? moment,
+    Wrapped<int?>? skip,
+    Wrapped<int?>? weekend,
+    Wrapped<String?>? description,
+    Wrapped<List<DateTime>?>? occurrences,
+  }) {
     return RecurrenceRepetition(
-        id: (id != null ? id.value : this.id),
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        type: (type != null ? type.value : this.type),
-        moment: (moment != null ? moment.value : this.moment),
-        skip: (skip != null ? skip.value : this.skip),
-        weekend: (weekend != null ? weekend.value : this.weekend),
-        description:
-            (description != null ? description.value : this.description),
-        occurrences:
-            (occurrences != null ? occurrences.value : this.occurrences));
+      id: (id != null ? id.value : this.id),
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      type: (type != null ? type.value : this.type),
+      moment: (moment != null ? moment.value : this.moment),
+      skip: (skip != null ? skip.value : this.skip),
+      weekend: (weekend != null ? weekend.value : this.weekend),
+      description: (description != null ? description.value : this.description),
+      occurrences: (occurrences != null ? occurrences.value : this.occurrences),
+    );
   }
 }
 
@@ -8693,28 +9156,32 @@ class RecurrenceRepetitionStore {
 }
 
 extension $RecurrenceRepetitionStoreExtension on RecurrenceRepetitionStore {
-  RecurrenceRepetitionStore copyWith(
-      {enums.RecurrenceRepetitionType? type,
-      String? moment,
-      int? skip,
-      int? weekend}) {
+  RecurrenceRepetitionStore copyWith({
+    enums.RecurrenceRepetitionType? type,
+    String? moment,
+    int? skip,
+    int? weekend,
+  }) {
     return RecurrenceRepetitionStore(
-        type: type ?? this.type,
-        moment: moment ?? this.moment,
-        skip: skip ?? this.skip,
-        weekend: weekend ?? this.weekend);
+      type: type ?? this.type,
+      moment: moment ?? this.moment,
+      skip: skip ?? this.skip,
+      weekend: weekend ?? this.weekend,
+    );
   }
 
-  RecurrenceRepetitionStore copyWithWrapped(
-      {Wrapped<enums.RecurrenceRepetitionType>? type,
-      Wrapped<String>? moment,
-      Wrapped<int?>? skip,
-      Wrapped<int?>? weekend}) {
+  RecurrenceRepetitionStore copyWithWrapped({
+    Wrapped<enums.RecurrenceRepetitionType>? type,
+    Wrapped<String>? moment,
+    Wrapped<int?>? skip,
+    Wrapped<int?>? weekend,
+  }) {
     return RecurrenceRepetitionStore(
-        type: (type != null ? type.value : this.type),
-        moment: (moment != null ? moment.value : this.moment),
-        skip: (skip != null ? skip.value : this.skip),
-        weekend: (weekend != null ? weekend.value : this.weekend));
+      type: (type != null ? type.value : this.type),
+      moment: (moment != null ? moment.value : this.moment),
+      skip: (skip != null ? skip.value : this.skip),
+      weekend: (weekend != null ? weekend.value : this.weekend),
+    );
   }
 }
 
@@ -8753,28 +9220,32 @@ class RecurrenceRepetitionUpdate {
 }
 
 extension $RecurrenceRepetitionUpdateExtension on RecurrenceRepetitionUpdate {
-  RecurrenceRepetitionUpdate copyWith(
-      {enums.RecurrenceRepetitionType? type,
-      String? moment,
-      int? skip,
-      int? weekend}) {
+  RecurrenceRepetitionUpdate copyWith({
+    enums.RecurrenceRepetitionType? type,
+    String? moment,
+    int? skip,
+    int? weekend,
+  }) {
     return RecurrenceRepetitionUpdate(
-        type: type ?? this.type,
-        moment: moment ?? this.moment,
-        skip: skip ?? this.skip,
-        weekend: weekend ?? this.weekend);
+      type: type ?? this.type,
+      moment: moment ?? this.moment,
+      skip: skip ?? this.skip,
+      weekend: weekend ?? this.weekend,
+    );
   }
 
-  RecurrenceRepetitionUpdate copyWithWrapped(
-      {Wrapped<enums.RecurrenceRepetitionType?>? type,
-      Wrapped<String?>? moment,
-      Wrapped<int?>? skip,
-      Wrapped<int?>? weekend}) {
+  RecurrenceRepetitionUpdate copyWithWrapped({
+    Wrapped<enums.RecurrenceRepetitionType?>? type,
+    Wrapped<String?>? moment,
+    Wrapped<int?>? skip,
+    Wrapped<int?>? weekend,
+  }) {
     return RecurrenceRepetitionUpdate(
-        type: (type != null ? type.value : this.type),
-        moment: (moment != null ? moment.value : this.moment),
-        skip: (skip != null ? skip.value : this.skip),
-        weekend: (weekend != null ? weekend.value : this.weekend));
+      type: (type != null ? type.value : this.type),
+      moment: (moment != null ? moment.value : this.moment),
+      skip: (skip != null ? skip.value : this.skip),
+      weekend: (weekend != null ? weekend.value : this.weekend),
+    );
   }
 }
 
@@ -8893,156 +9364,165 @@ class RecurrenceTransaction {
 }
 
 extension $RecurrenceTransactionExtension on RecurrenceTransaction {
-  RecurrenceTransaction copyWith(
-      {String? id,
-      String? description,
-      String? amount,
-      String? foreignAmount,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      int? currencyDecimalPlaces,
-      String? foreignCurrencyId,
-      String? foreignCurrencyCode,
-      String? foreignCurrencySymbol,
-      int? foreignCurrencyDecimalPlaces,
-      String? budgetId,
-      String? budgetName,
-      String? categoryId,
-      String? categoryName,
-      String? sourceId,
-      String? sourceName,
-      String? sourceIban,
-      enums.AccountTypeProperty? sourceType,
-      String? destinationId,
-      String? destinationName,
-      String? destinationIban,
-      enums.AccountTypeProperty? destinationType,
-      List<String>? tags,
-      String? piggyBankId,
-      String? piggyBankName,
-      String? billId,
-      String? billName}) {
+  RecurrenceTransaction copyWith({
+    String? id,
+    String? description,
+    String? amount,
+    String? foreignAmount,
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    String? foreignCurrencyId,
+    String? foreignCurrencyCode,
+    String? foreignCurrencySymbol,
+    int? foreignCurrencyDecimalPlaces,
+    String? budgetId,
+    String? budgetName,
+    String? categoryId,
+    String? categoryName,
+    String? sourceId,
+    String? sourceName,
+    String? sourceIban,
+    enums.AccountTypeProperty? sourceType,
+    String? destinationId,
+    String? destinationName,
+    String? destinationIban,
+    enums.AccountTypeProperty? destinationType,
+    List<String>? tags,
+    String? piggyBankId,
+    String? piggyBankName,
+    String? billId,
+    String? billName,
+  }) {
     return RecurrenceTransaction(
-        id: id ?? this.id,
-        description: description ?? this.description,
-        amount: amount ?? this.amount,
-        foreignAmount: foreignAmount ?? this.foreignAmount,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
-        foreignCurrencyCode: foreignCurrencyCode ?? this.foreignCurrencyCode,
-        foreignCurrencySymbol:
-            foreignCurrencySymbol ?? this.foreignCurrencySymbol,
-        foreignCurrencyDecimalPlaces:
-            foreignCurrencyDecimalPlaces ?? this.foreignCurrencyDecimalPlaces,
-        budgetId: budgetId ?? this.budgetId,
-        budgetName: budgetName ?? this.budgetName,
-        categoryId: categoryId ?? this.categoryId,
-        categoryName: categoryName ?? this.categoryName,
-        sourceId: sourceId ?? this.sourceId,
-        sourceName: sourceName ?? this.sourceName,
-        sourceIban: sourceIban ?? this.sourceIban,
-        sourceType: sourceType ?? this.sourceType,
-        destinationId: destinationId ?? this.destinationId,
-        destinationName: destinationName ?? this.destinationName,
-        destinationIban: destinationIban ?? this.destinationIban,
-        destinationType: destinationType ?? this.destinationType,
-        tags: tags ?? this.tags,
-        piggyBankId: piggyBankId ?? this.piggyBankId,
-        piggyBankName: piggyBankName ?? this.piggyBankName,
-        billId: billId ?? this.billId,
-        billName: billName ?? this.billName);
+      id: id ?? this.id,
+      description: description ?? this.description,
+      amount: amount ?? this.amount,
+      foreignAmount: foreignAmount ?? this.foreignAmount,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
+      foreignCurrencyCode: foreignCurrencyCode ?? this.foreignCurrencyCode,
+      foreignCurrencySymbol:
+          foreignCurrencySymbol ?? this.foreignCurrencySymbol,
+      foreignCurrencyDecimalPlaces:
+          foreignCurrencyDecimalPlaces ?? this.foreignCurrencyDecimalPlaces,
+      budgetId: budgetId ?? this.budgetId,
+      budgetName: budgetName ?? this.budgetName,
+      categoryId: categoryId ?? this.categoryId,
+      categoryName: categoryName ?? this.categoryName,
+      sourceId: sourceId ?? this.sourceId,
+      sourceName: sourceName ?? this.sourceName,
+      sourceIban: sourceIban ?? this.sourceIban,
+      sourceType: sourceType ?? this.sourceType,
+      destinationId: destinationId ?? this.destinationId,
+      destinationName: destinationName ?? this.destinationName,
+      destinationIban: destinationIban ?? this.destinationIban,
+      destinationType: destinationType ?? this.destinationType,
+      tags: tags ?? this.tags,
+      piggyBankId: piggyBankId ?? this.piggyBankId,
+      piggyBankName: piggyBankName ?? this.piggyBankName,
+      billId: billId ?? this.billId,
+      billName: billName ?? this.billName,
+    );
   }
 
-  RecurrenceTransaction copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String>? description,
-      Wrapped<String>? amount,
-      Wrapped<String?>? foreignAmount,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? foreignCurrencyId,
-      Wrapped<String?>? foreignCurrencyCode,
-      Wrapped<String?>? foreignCurrencySymbol,
-      Wrapped<int?>? foreignCurrencyDecimalPlaces,
-      Wrapped<String?>? budgetId,
-      Wrapped<String?>? budgetName,
-      Wrapped<String?>? categoryId,
-      Wrapped<String?>? categoryName,
-      Wrapped<String?>? sourceId,
-      Wrapped<String?>? sourceName,
-      Wrapped<String?>? sourceIban,
-      Wrapped<enums.AccountTypeProperty?>? sourceType,
-      Wrapped<String?>? destinationId,
-      Wrapped<String?>? destinationName,
-      Wrapped<String?>? destinationIban,
-      Wrapped<enums.AccountTypeProperty?>? destinationType,
-      Wrapped<List<String>?>? tags,
-      Wrapped<String?>? piggyBankId,
-      Wrapped<String?>? piggyBankName,
-      Wrapped<String?>? billId,
-      Wrapped<String?>? billName}) {
+  RecurrenceTransaction copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String>? description,
+    Wrapped<String>? amount,
+    Wrapped<String?>? foreignAmount,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? foreignCurrencyId,
+    Wrapped<String?>? foreignCurrencyCode,
+    Wrapped<String?>? foreignCurrencySymbol,
+    Wrapped<int?>? foreignCurrencyDecimalPlaces,
+    Wrapped<String?>? budgetId,
+    Wrapped<String?>? budgetName,
+    Wrapped<String?>? categoryId,
+    Wrapped<String?>? categoryName,
+    Wrapped<String?>? sourceId,
+    Wrapped<String?>? sourceName,
+    Wrapped<String?>? sourceIban,
+    Wrapped<enums.AccountTypeProperty?>? sourceType,
+    Wrapped<String?>? destinationId,
+    Wrapped<String?>? destinationName,
+    Wrapped<String?>? destinationIban,
+    Wrapped<enums.AccountTypeProperty?>? destinationType,
+    Wrapped<List<String>?>? tags,
+    Wrapped<String?>? piggyBankId,
+    Wrapped<String?>? piggyBankName,
+    Wrapped<String?>? billId,
+    Wrapped<String?>? billName,
+  }) {
     return RecurrenceTransaction(
-        id: (id != null ? id.value : this.id),
-        description:
-            (description != null ? description.value : this.description),
-        amount: (amount != null ? amount.value : this.amount),
-        foreignAmount:
-            (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        foreignCurrencyId: (foreignCurrencyId != null
-            ? foreignCurrencyId.value
-            : this.foreignCurrencyId),
-        foreignCurrencyCode: (foreignCurrencyCode != null
-            ? foreignCurrencyCode.value
-            : this.foreignCurrencyCode),
-        foreignCurrencySymbol: (foreignCurrencySymbol != null
-            ? foreignCurrencySymbol.value
-            : this.foreignCurrencySymbol),
-        foreignCurrencyDecimalPlaces: (foreignCurrencyDecimalPlaces != null
-            ? foreignCurrencyDecimalPlaces.value
-            : this.foreignCurrencyDecimalPlaces),
-        budgetId: (budgetId != null ? budgetId.value : this.budgetId),
-        budgetName: (budgetName != null ? budgetName.value : this.budgetName),
-        categoryId: (categoryId != null ? categoryId.value : this.categoryId),
-        categoryName:
-            (categoryName != null ? categoryName.value : this.categoryName),
-        sourceId: (sourceId != null ? sourceId.value : this.sourceId),
-        sourceName: (sourceName != null ? sourceName.value : this.sourceName),
-        sourceIban: (sourceIban != null ? sourceIban.value : this.sourceIban),
-        sourceType: (sourceType != null ? sourceType.value : this.sourceType),
-        destinationId:
-            (destinationId != null ? destinationId.value : this.destinationId),
-        destinationName: (destinationName != null
-            ? destinationName.value
-            : this.destinationName),
-        destinationIban: (destinationIban != null
-            ? destinationIban.value
-            : this.destinationIban),
-        destinationType: (destinationType != null
-            ? destinationType.value
-            : this.destinationType),
-        tags: (tags != null ? tags.value : this.tags),
-        piggyBankId:
-            (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
-        piggyBankName:
-            (piggyBankName != null ? piggyBankName.value : this.piggyBankName),
-        billId: (billId != null ? billId.value : this.billId),
-        billName: (billName != null ? billName.value : this.billName));
+      id: (id != null ? id.value : this.id),
+      description: (description != null ? description.value : this.description),
+      amount: (amount != null ? amount.value : this.amount),
+      foreignAmount:
+          (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      foreignCurrencyId:
+          (foreignCurrencyId != null
+              ? foreignCurrencyId.value
+              : this.foreignCurrencyId),
+      foreignCurrencyCode:
+          (foreignCurrencyCode != null
+              ? foreignCurrencyCode.value
+              : this.foreignCurrencyCode),
+      foreignCurrencySymbol:
+          (foreignCurrencySymbol != null
+              ? foreignCurrencySymbol.value
+              : this.foreignCurrencySymbol),
+      foreignCurrencyDecimalPlaces:
+          (foreignCurrencyDecimalPlaces != null
+              ? foreignCurrencyDecimalPlaces.value
+              : this.foreignCurrencyDecimalPlaces),
+      budgetId: (budgetId != null ? budgetId.value : this.budgetId),
+      budgetName: (budgetName != null ? budgetName.value : this.budgetName),
+      categoryId: (categoryId != null ? categoryId.value : this.categoryId),
+      categoryName:
+          (categoryName != null ? categoryName.value : this.categoryName),
+      sourceId: (sourceId != null ? sourceId.value : this.sourceId),
+      sourceName: (sourceName != null ? sourceName.value : this.sourceName),
+      sourceIban: (sourceIban != null ? sourceIban.value : this.sourceIban),
+      sourceType: (sourceType != null ? sourceType.value : this.sourceType),
+      destinationId:
+          (destinationId != null ? destinationId.value : this.destinationId),
+      destinationName:
+          (destinationName != null
+              ? destinationName.value
+              : this.destinationName),
+      destinationIban:
+          (destinationIban != null
+              ? destinationIban.value
+              : this.destinationIban),
+      destinationType:
+          (destinationType != null
+              ? destinationType.value
+              : this.destinationType),
+      tags: (tags != null ? tags.value : this.tags),
+      piggyBankId: (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
+      piggyBankName:
+          (piggyBankName != null ? piggyBankName.value : this.piggyBankName),
+      billId: (billId != null ? billId.value : this.billId),
+      billName: (billName != null ? billName.value : this.billName),
+    );
   }
 }
 
@@ -9106,77 +9586,81 @@ class RecurrenceTransactionStore {
 }
 
 extension $RecurrenceTransactionStoreExtension on RecurrenceTransactionStore {
-  RecurrenceTransactionStore copyWith(
-      {String? description,
-      String? amount,
-      String? foreignAmount,
-      String? currencyId,
-      String? currencyCode,
-      String? foreignCurrencyId,
-      String? foreignCurrencyCode,
-      String? budgetId,
-      String? categoryId,
-      String? sourceId,
-      String? destinationId,
-      List<String>? tags,
-      String? piggyBankId,
-      String? billId}) {
+  RecurrenceTransactionStore copyWith({
+    String? description,
+    String? amount,
+    String? foreignAmount,
+    String? currencyId,
+    String? currencyCode,
+    String? foreignCurrencyId,
+    String? foreignCurrencyCode,
+    String? budgetId,
+    String? categoryId,
+    String? sourceId,
+    String? destinationId,
+    List<String>? tags,
+    String? piggyBankId,
+    String? billId,
+  }) {
     return RecurrenceTransactionStore(
-        description: description ?? this.description,
-        amount: amount ?? this.amount,
-        foreignAmount: foreignAmount ?? this.foreignAmount,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
-        foreignCurrencyCode: foreignCurrencyCode ?? this.foreignCurrencyCode,
-        budgetId: budgetId ?? this.budgetId,
-        categoryId: categoryId ?? this.categoryId,
-        sourceId: sourceId ?? this.sourceId,
-        destinationId: destinationId ?? this.destinationId,
-        tags: tags ?? this.tags,
-        piggyBankId: piggyBankId ?? this.piggyBankId,
-        billId: billId ?? this.billId);
+      description: description ?? this.description,
+      amount: amount ?? this.amount,
+      foreignAmount: foreignAmount ?? this.foreignAmount,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
+      foreignCurrencyCode: foreignCurrencyCode ?? this.foreignCurrencyCode,
+      budgetId: budgetId ?? this.budgetId,
+      categoryId: categoryId ?? this.categoryId,
+      sourceId: sourceId ?? this.sourceId,
+      destinationId: destinationId ?? this.destinationId,
+      tags: tags ?? this.tags,
+      piggyBankId: piggyBankId ?? this.piggyBankId,
+      billId: billId ?? this.billId,
+    );
   }
 
-  RecurrenceTransactionStore copyWithWrapped(
-      {Wrapped<String>? description,
-      Wrapped<String>? amount,
-      Wrapped<String?>? foreignAmount,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? foreignCurrencyId,
-      Wrapped<String?>? foreignCurrencyCode,
-      Wrapped<String?>? budgetId,
-      Wrapped<String?>? categoryId,
-      Wrapped<String>? sourceId,
-      Wrapped<String>? destinationId,
-      Wrapped<List<String>?>? tags,
-      Wrapped<String?>? piggyBankId,
-      Wrapped<String?>? billId}) {
+  RecurrenceTransactionStore copyWithWrapped({
+    Wrapped<String>? description,
+    Wrapped<String>? amount,
+    Wrapped<String?>? foreignAmount,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? foreignCurrencyId,
+    Wrapped<String?>? foreignCurrencyCode,
+    Wrapped<String?>? budgetId,
+    Wrapped<String?>? categoryId,
+    Wrapped<String>? sourceId,
+    Wrapped<String>? destinationId,
+    Wrapped<List<String>?>? tags,
+    Wrapped<String?>? piggyBankId,
+    Wrapped<String?>? billId,
+  }) {
     return RecurrenceTransactionStore(
-        description:
-            (description != null ? description.value : this.description),
-        amount: (amount != null ? amount.value : this.amount),
-        foreignAmount:
-            (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        foreignCurrencyId: (foreignCurrencyId != null
-            ? foreignCurrencyId.value
-            : this.foreignCurrencyId),
-        foreignCurrencyCode: (foreignCurrencyCode != null
-            ? foreignCurrencyCode.value
-            : this.foreignCurrencyCode),
-        budgetId: (budgetId != null ? budgetId.value : this.budgetId),
-        categoryId: (categoryId != null ? categoryId.value : this.categoryId),
-        sourceId: (sourceId != null ? sourceId.value : this.sourceId),
-        destinationId:
-            (destinationId != null ? destinationId.value : this.destinationId),
-        tags: (tags != null ? tags.value : this.tags),
-        piggyBankId:
-            (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
-        billId: (billId != null ? billId.value : this.billId));
+      description: (description != null ? description.value : this.description),
+      amount: (amount != null ? amount.value : this.amount),
+      foreignAmount:
+          (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      foreignCurrencyId:
+          (foreignCurrencyId != null
+              ? foreignCurrencyId.value
+              : this.foreignCurrencyId),
+      foreignCurrencyCode:
+          (foreignCurrencyCode != null
+              ? foreignCurrencyCode.value
+              : this.foreignCurrencyCode),
+      budgetId: (budgetId != null ? budgetId.value : this.budgetId),
+      categoryId: (categoryId != null ? categoryId.value : this.categoryId),
+      sourceId: (sourceId != null ? sourceId.value : this.sourceId),
+      destinationId:
+          (destinationId != null ? destinationId.value : this.destinationId),
+      tags: (tags != null ? tags.value : this.tags),
+      piggyBankId: (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
+      billId: (billId != null ? billId.value : this.billId),
+    );
   }
 }
 
@@ -9240,75 +9724,78 @@ class RecurrenceTransactionUpdate {
 }
 
 extension $RecurrenceTransactionUpdateExtension on RecurrenceTransactionUpdate {
-  RecurrenceTransactionUpdate copyWith(
-      {String? id,
-      String? description,
-      String? amount,
-      String? foreignAmount,
-      String? currencyId,
-      String? currencyCode,
-      String? foreignCurrencyId,
-      String? budgetId,
-      String? categoryId,
-      String? sourceId,
-      String? destinationId,
-      List<String>? tags,
-      String? piggyBankId,
-      String? billId}) {
+  RecurrenceTransactionUpdate copyWith({
+    String? id,
+    String? description,
+    String? amount,
+    String? foreignAmount,
+    String? currencyId,
+    String? currencyCode,
+    String? foreignCurrencyId,
+    String? budgetId,
+    String? categoryId,
+    String? sourceId,
+    String? destinationId,
+    List<String>? tags,
+    String? piggyBankId,
+    String? billId,
+  }) {
     return RecurrenceTransactionUpdate(
-        id: id ?? this.id,
-        description: description ?? this.description,
-        amount: amount ?? this.amount,
-        foreignAmount: foreignAmount ?? this.foreignAmount,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
-        budgetId: budgetId ?? this.budgetId,
-        categoryId: categoryId ?? this.categoryId,
-        sourceId: sourceId ?? this.sourceId,
-        destinationId: destinationId ?? this.destinationId,
-        tags: tags ?? this.tags,
-        piggyBankId: piggyBankId ?? this.piggyBankId,
-        billId: billId ?? this.billId);
+      id: id ?? this.id,
+      description: description ?? this.description,
+      amount: amount ?? this.amount,
+      foreignAmount: foreignAmount ?? this.foreignAmount,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
+      budgetId: budgetId ?? this.budgetId,
+      categoryId: categoryId ?? this.categoryId,
+      sourceId: sourceId ?? this.sourceId,
+      destinationId: destinationId ?? this.destinationId,
+      tags: tags ?? this.tags,
+      piggyBankId: piggyBankId ?? this.piggyBankId,
+      billId: billId ?? this.billId,
+    );
   }
 
-  RecurrenceTransactionUpdate copyWithWrapped(
-      {Wrapped<String>? id,
-      Wrapped<String?>? description,
-      Wrapped<String?>? amount,
-      Wrapped<String?>? foreignAmount,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? foreignCurrencyId,
-      Wrapped<String?>? budgetId,
-      Wrapped<String?>? categoryId,
-      Wrapped<String?>? sourceId,
-      Wrapped<String?>? destinationId,
-      Wrapped<List<String>?>? tags,
-      Wrapped<String?>? piggyBankId,
-      Wrapped<String?>? billId}) {
+  RecurrenceTransactionUpdate copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String?>? description,
+    Wrapped<String?>? amount,
+    Wrapped<String?>? foreignAmount,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? foreignCurrencyId,
+    Wrapped<String?>? budgetId,
+    Wrapped<String?>? categoryId,
+    Wrapped<String?>? sourceId,
+    Wrapped<String?>? destinationId,
+    Wrapped<List<String>?>? tags,
+    Wrapped<String?>? piggyBankId,
+    Wrapped<String?>? billId,
+  }) {
     return RecurrenceTransactionUpdate(
-        id: (id != null ? id.value : this.id),
-        description:
-            (description != null ? description.value : this.description),
-        amount: (amount != null ? amount.value : this.amount),
-        foreignAmount:
-            (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        foreignCurrencyId: (foreignCurrencyId != null
-            ? foreignCurrencyId.value
-            : this.foreignCurrencyId),
-        budgetId: (budgetId != null ? budgetId.value : this.budgetId),
-        categoryId: (categoryId != null ? categoryId.value : this.categoryId),
-        sourceId: (sourceId != null ? sourceId.value : this.sourceId),
-        destinationId:
-            (destinationId != null ? destinationId.value : this.destinationId),
-        tags: (tags != null ? tags.value : this.tags),
-        piggyBankId:
-            (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
-        billId: (billId != null ? billId.value : this.billId));
+      id: (id != null ? id.value : this.id),
+      description: (description != null ? description.value : this.description),
+      amount: (amount != null ? amount.value : this.amount),
+      foreignAmount:
+          (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      foreignCurrencyId:
+          (foreignCurrencyId != null
+              ? foreignCurrencyId.value
+              : this.foreignCurrencyId),
+      budgetId: (budgetId != null ? budgetId.value : this.budgetId),
+      categoryId: (categoryId != null ? categoryId.value : this.categoryId),
+      sourceId: (sourceId != null ? sourceId.value : this.sourceId),
+      destinationId:
+          (destinationId != null ? destinationId.value : this.destinationId),
+      tags: (tags != null ? tags.value : this.tags),
+      piggyBankId: (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
+      billId: (billId != null ? billId.value : this.billId),
+    );
   }
 }
 
@@ -9363,7 +9850,10 @@ class Rule {
   @JsonKey(name: 'stop_processing', includeIfNull: false, defaultValue: false)
   final bool? stopProcessing;
   @JsonKey(
-      name: 'triggers', includeIfNull: false, defaultValue: <RuleTrigger>[])
+    name: 'triggers',
+    includeIfNull: false,
+    defaultValue: <RuleTrigger>[],
+  )
   final List<RuleTrigger> triggers;
   @JsonKey(name: 'actions', includeIfNull: false, defaultValue: <RuleAction>[])
   final List<RuleAction> actions;
@@ -9374,70 +9864,70 @@ class Rule {
 }
 
 extension $RuleExtension on Rule {
-  Rule copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? title,
-      String? description,
-      String? ruleGroupId,
-      String? ruleGroupTitle,
-      int? order,
-      enums.RuleTriggerType? trigger,
-      bool? active,
-      bool? strict,
-      bool? stopProcessing,
-      List<RuleTrigger>? triggers,
-      List<RuleAction>? actions}) {
+  Rule copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? title,
+    String? description,
+    String? ruleGroupId,
+    String? ruleGroupTitle,
+    int? order,
+    enums.RuleTriggerType? trigger,
+    bool? active,
+    bool? strict,
+    bool? stopProcessing,
+    List<RuleTrigger>? triggers,
+    List<RuleAction>? actions,
+  }) {
     return Rule(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        title: title ?? this.title,
-        description: description ?? this.description,
-        ruleGroupId: ruleGroupId ?? this.ruleGroupId,
-        ruleGroupTitle: ruleGroupTitle ?? this.ruleGroupTitle,
-        order: order ?? this.order,
-        trigger: trigger ?? this.trigger,
-        active: active ?? this.active,
-        strict: strict ?? this.strict,
-        stopProcessing: stopProcessing ?? this.stopProcessing,
-        triggers: triggers ?? this.triggers,
-        actions: actions ?? this.actions);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      ruleGroupId: ruleGroupId ?? this.ruleGroupId,
+      ruleGroupTitle: ruleGroupTitle ?? this.ruleGroupTitle,
+      order: order ?? this.order,
+      trigger: trigger ?? this.trigger,
+      active: active ?? this.active,
+      strict: strict ?? this.strict,
+      stopProcessing: stopProcessing ?? this.stopProcessing,
+      triggers: triggers ?? this.triggers,
+      actions: actions ?? this.actions,
+    );
   }
 
-  Rule copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String>? title,
-      Wrapped<String?>? description,
-      Wrapped<String>? ruleGroupId,
-      Wrapped<String?>? ruleGroupTitle,
-      Wrapped<int?>? order,
-      Wrapped<enums.RuleTriggerType>? trigger,
-      Wrapped<bool?>? active,
-      Wrapped<bool?>? strict,
-      Wrapped<bool?>? stopProcessing,
-      Wrapped<List<RuleTrigger>>? triggers,
-      Wrapped<List<RuleAction>>? actions}) {
+  Rule copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String>? title,
+    Wrapped<String?>? description,
+    Wrapped<String>? ruleGroupId,
+    Wrapped<String?>? ruleGroupTitle,
+    Wrapped<int?>? order,
+    Wrapped<enums.RuleTriggerType>? trigger,
+    Wrapped<bool?>? active,
+    Wrapped<bool?>? strict,
+    Wrapped<bool?>? stopProcessing,
+    Wrapped<List<RuleTrigger>>? triggers,
+    Wrapped<List<RuleAction>>? actions,
+  }) {
     return Rule(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        title: (title != null ? title.value : this.title),
-        description:
-            (description != null ? description.value : this.description),
-        ruleGroupId:
-            (ruleGroupId != null ? ruleGroupId.value : this.ruleGroupId),
-        ruleGroupTitle: (ruleGroupTitle != null
-            ? ruleGroupTitle.value
-            : this.ruleGroupTitle),
-        order: (order != null ? order.value : this.order),
-        trigger: (trigger != null ? trigger.value : this.trigger),
-        active: (active != null ? active.value : this.active),
-        strict: (strict != null ? strict.value : this.strict),
-        stopProcessing: (stopProcessing != null
-            ? stopProcessing.value
-            : this.stopProcessing),
-        triggers: (triggers != null ? triggers.value : this.triggers),
-        actions: (actions != null ? actions.value : this.actions));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      title: (title != null ? title.value : this.title),
+      description: (description != null ? description.value : this.description),
+      ruleGroupId: (ruleGroupId != null ? ruleGroupId.value : this.ruleGroupId),
+      ruleGroupTitle:
+          (ruleGroupTitle != null ? ruleGroupTitle.value : this.ruleGroupTitle),
+      order: (order != null ? order.value : this.order),
+      trigger: (trigger != null ? trigger.value : this.trigger),
+      active: (active != null ? active.value : this.active),
+      strict: (strict != null ? strict.value : this.strict),
+      stopProcessing:
+          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+      triggers: (triggers != null ? triggers.value : this.triggers),
+      actions: (actions != null ? actions.value : this.actions),
+    );
   }
 }
 
@@ -9487,12 +9977,16 @@ class RuleStore {
   @JsonKey(name: 'stop_processing', includeIfNull: false)
   final bool? stopProcessing;
   @JsonKey(
-      name: 'triggers',
-      includeIfNull: false,
-      defaultValue: <RuleTriggerStore>[])
+    name: 'triggers',
+    includeIfNull: false,
+    defaultValue: <RuleTriggerStore>[],
+  )
   final List<RuleTriggerStore> triggers;
   @JsonKey(
-      name: 'actions', includeIfNull: false, defaultValue: <RuleActionStore>[])
+    name: 'actions',
+    includeIfNull: false,
+    defaultValue: <RuleActionStore>[],
+  )
   final List<RuleActionStore> actions;
   static const fromJsonFactory = _$RuleStoreFromJson;
 
@@ -9501,62 +9995,62 @@ class RuleStore {
 }
 
 extension $RuleStoreExtension on RuleStore {
-  RuleStore copyWith(
-      {String? title,
-      String? description,
-      String? ruleGroupId,
-      String? ruleGroupTitle,
-      int? order,
-      enums.RuleTriggerType? trigger,
-      bool? active,
-      bool? strict,
-      bool? stopProcessing,
-      List<RuleTriggerStore>? triggers,
-      List<RuleActionStore>? actions}) {
+  RuleStore copyWith({
+    String? title,
+    String? description,
+    String? ruleGroupId,
+    String? ruleGroupTitle,
+    int? order,
+    enums.RuleTriggerType? trigger,
+    bool? active,
+    bool? strict,
+    bool? stopProcessing,
+    List<RuleTriggerStore>? triggers,
+    List<RuleActionStore>? actions,
+  }) {
     return RuleStore(
-        title: title ?? this.title,
-        description: description ?? this.description,
-        ruleGroupId: ruleGroupId ?? this.ruleGroupId,
-        ruleGroupTitle: ruleGroupTitle ?? this.ruleGroupTitle,
-        order: order ?? this.order,
-        trigger: trigger ?? this.trigger,
-        active: active ?? this.active,
-        strict: strict ?? this.strict,
-        stopProcessing: stopProcessing ?? this.stopProcessing,
-        triggers: triggers ?? this.triggers,
-        actions: actions ?? this.actions);
+      title: title ?? this.title,
+      description: description ?? this.description,
+      ruleGroupId: ruleGroupId ?? this.ruleGroupId,
+      ruleGroupTitle: ruleGroupTitle ?? this.ruleGroupTitle,
+      order: order ?? this.order,
+      trigger: trigger ?? this.trigger,
+      active: active ?? this.active,
+      strict: strict ?? this.strict,
+      stopProcessing: stopProcessing ?? this.stopProcessing,
+      triggers: triggers ?? this.triggers,
+      actions: actions ?? this.actions,
+    );
   }
 
-  RuleStore copyWithWrapped(
-      {Wrapped<String>? title,
-      Wrapped<String?>? description,
-      Wrapped<String>? ruleGroupId,
-      Wrapped<String?>? ruleGroupTitle,
-      Wrapped<int?>? order,
-      Wrapped<enums.RuleTriggerType>? trigger,
-      Wrapped<bool?>? active,
-      Wrapped<bool?>? strict,
-      Wrapped<bool?>? stopProcessing,
-      Wrapped<List<RuleTriggerStore>>? triggers,
-      Wrapped<List<RuleActionStore>>? actions}) {
+  RuleStore copyWithWrapped({
+    Wrapped<String>? title,
+    Wrapped<String?>? description,
+    Wrapped<String>? ruleGroupId,
+    Wrapped<String?>? ruleGroupTitle,
+    Wrapped<int?>? order,
+    Wrapped<enums.RuleTriggerType>? trigger,
+    Wrapped<bool?>? active,
+    Wrapped<bool?>? strict,
+    Wrapped<bool?>? stopProcessing,
+    Wrapped<List<RuleTriggerStore>>? triggers,
+    Wrapped<List<RuleActionStore>>? actions,
+  }) {
     return RuleStore(
-        title: (title != null ? title.value : this.title),
-        description:
-            (description != null ? description.value : this.description),
-        ruleGroupId:
-            (ruleGroupId != null ? ruleGroupId.value : this.ruleGroupId),
-        ruleGroupTitle: (ruleGroupTitle != null
-            ? ruleGroupTitle.value
-            : this.ruleGroupTitle),
-        order: (order != null ? order.value : this.order),
-        trigger: (trigger != null ? trigger.value : this.trigger),
-        active: (active != null ? active.value : this.active),
-        strict: (strict != null ? strict.value : this.strict),
-        stopProcessing: (stopProcessing != null
-            ? stopProcessing.value
-            : this.stopProcessing),
-        triggers: (triggers != null ? triggers.value : this.triggers),
-        actions: (actions != null ? actions.value : this.actions));
+      title: (title != null ? title.value : this.title),
+      description: (description != null ? description.value : this.description),
+      ruleGroupId: (ruleGroupId != null ? ruleGroupId.value : this.ruleGroupId),
+      ruleGroupTitle:
+          (ruleGroupTitle != null ? ruleGroupTitle.value : this.ruleGroupTitle),
+      order: (order != null ? order.value : this.order),
+      trigger: (trigger != null ? trigger.value : this.trigger),
+      active: (active != null ? active.value : this.active),
+      strict: (strict != null ? strict.value : this.strict),
+      stopProcessing:
+          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+      triggers: (triggers != null ? triggers.value : this.triggers),
+      actions: (actions != null ? actions.value : this.actions),
+    );
   }
 }
 
@@ -9603,12 +10097,16 @@ class RuleUpdate {
   @JsonKey(name: 'stop_processing', includeIfNull: false, defaultValue: false)
   final bool? stopProcessing;
   @JsonKey(
-      name: 'triggers',
-      includeIfNull: false,
-      defaultValue: <RuleTriggerUpdate>[])
+    name: 'triggers',
+    includeIfNull: false,
+    defaultValue: <RuleTriggerUpdate>[],
+  )
   final List<RuleTriggerUpdate>? triggers;
   @JsonKey(
-      name: 'actions', includeIfNull: false, defaultValue: <RuleActionUpdate>[])
+    name: 'actions',
+    includeIfNull: false,
+    defaultValue: <RuleActionUpdate>[],
+  )
   final List<RuleActionUpdate>? actions;
   static const fromJsonFactory = _$RuleUpdateFromJson;
 
@@ -9617,56 +10115,57 @@ class RuleUpdate {
 }
 
 extension $RuleUpdateExtension on RuleUpdate {
-  RuleUpdate copyWith(
-      {String? title,
-      String? description,
-      String? ruleGroupId,
-      int? order,
-      enums.RuleTriggerType? trigger,
-      bool? active,
-      bool? strict,
-      bool? stopProcessing,
-      List<RuleTriggerUpdate>? triggers,
-      List<RuleActionUpdate>? actions}) {
+  RuleUpdate copyWith({
+    String? title,
+    String? description,
+    String? ruleGroupId,
+    int? order,
+    enums.RuleTriggerType? trigger,
+    bool? active,
+    bool? strict,
+    bool? stopProcessing,
+    List<RuleTriggerUpdate>? triggers,
+    List<RuleActionUpdate>? actions,
+  }) {
     return RuleUpdate(
-        title: title ?? this.title,
-        description: description ?? this.description,
-        ruleGroupId: ruleGroupId ?? this.ruleGroupId,
-        order: order ?? this.order,
-        trigger: trigger ?? this.trigger,
-        active: active ?? this.active,
-        strict: strict ?? this.strict,
-        stopProcessing: stopProcessing ?? this.stopProcessing,
-        triggers: triggers ?? this.triggers,
-        actions: actions ?? this.actions);
+      title: title ?? this.title,
+      description: description ?? this.description,
+      ruleGroupId: ruleGroupId ?? this.ruleGroupId,
+      order: order ?? this.order,
+      trigger: trigger ?? this.trigger,
+      active: active ?? this.active,
+      strict: strict ?? this.strict,
+      stopProcessing: stopProcessing ?? this.stopProcessing,
+      triggers: triggers ?? this.triggers,
+      actions: actions ?? this.actions,
+    );
   }
 
-  RuleUpdate copyWithWrapped(
-      {Wrapped<String?>? title,
-      Wrapped<String?>? description,
-      Wrapped<String?>? ruleGroupId,
-      Wrapped<int?>? order,
-      Wrapped<enums.RuleTriggerType?>? trigger,
-      Wrapped<bool?>? active,
-      Wrapped<bool?>? strict,
-      Wrapped<bool?>? stopProcessing,
-      Wrapped<List<RuleTriggerUpdate>?>? triggers,
-      Wrapped<List<RuleActionUpdate>?>? actions}) {
+  RuleUpdate copyWithWrapped({
+    Wrapped<String?>? title,
+    Wrapped<String?>? description,
+    Wrapped<String?>? ruleGroupId,
+    Wrapped<int?>? order,
+    Wrapped<enums.RuleTriggerType?>? trigger,
+    Wrapped<bool?>? active,
+    Wrapped<bool?>? strict,
+    Wrapped<bool?>? stopProcessing,
+    Wrapped<List<RuleTriggerUpdate>?>? triggers,
+    Wrapped<List<RuleActionUpdate>?>? actions,
+  }) {
     return RuleUpdate(
-        title: (title != null ? title.value : this.title),
-        description:
-            (description != null ? description.value : this.description),
-        ruleGroupId:
-            (ruleGroupId != null ? ruleGroupId.value : this.ruleGroupId),
-        order: (order != null ? order.value : this.order),
-        trigger: (trigger != null ? trigger.value : this.trigger),
-        active: (active != null ? active.value : this.active),
-        strict: (strict != null ? strict.value : this.strict),
-        stopProcessing: (stopProcessing != null
-            ? stopProcessing.value
-            : this.stopProcessing),
-        triggers: (triggers != null ? triggers.value : this.triggers),
-        actions: (actions != null ? actions.value : this.actions));
+      title: (title != null ? title.value : this.title),
+      description: (description != null ? description.value : this.description),
+      ruleGroupId: (ruleGroupId != null ? ruleGroupId.value : this.ruleGroupId),
+      order: (order != null ? order.value : this.order),
+      trigger: (trigger != null ? trigger.value : this.trigger),
+      active: (active != null ? active.value : this.active),
+      strict: (strict != null ? strict.value : this.strict),
+      stopProcessing:
+          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+      triggers: (triggers != null ? triggers.value : this.triggers),
+      actions: (actions != null ? actions.value : this.actions),
+    );
   }
 }
 
@@ -9717,46 +10216,49 @@ class RuleAction {
 }
 
 extension $RuleActionExtension on RuleAction {
-  RuleAction copyWith(
-      {String? id,
-      DateTime? createdAt,
-      DateTime? updatedAt,
-      enums.RuleActionKeyword? type,
-      String? $value,
-      int? order,
-      bool? active,
-      bool? stopProcessing}) {
+  RuleAction copyWith({
+    String? id,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    enums.RuleActionKeyword? type,
+    String? $value,
+    int? order,
+    bool? active,
+    bool? stopProcessing,
+  }) {
     return RuleAction(
-        id: id ?? this.id,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        type: type ?? this.type,
-        $value: $value ?? this.$value,
-        order: order ?? this.order,
-        active: active ?? this.active,
-        stopProcessing: stopProcessing ?? this.stopProcessing);
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      type: type ?? this.type,
+      $value: $value ?? this.$value,
+      order: order ?? this.order,
+      active: active ?? this.active,
+      stopProcessing: stopProcessing ?? this.stopProcessing,
+    );
   }
 
-  RuleAction copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<enums.RuleActionKeyword>? type,
-      Wrapped<String?>? $value,
-      Wrapped<int?>? order,
-      Wrapped<bool?>? active,
-      Wrapped<bool?>? stopProcessing}) {
+  RuleAction copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<enums.RuleActionKeyword>? type,
+    Wrapped<String?>? $value,
+    Wrapped<int?>? order,
+    Wrapped<bool?>? active,
+    Wrapped<bool?>? stopProcessing,
+  }) {
     return RuleAction(
-        id: (id != null ? id.value : this.id),
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        type: (type != null ? type.value : this.type),
-        $value: ($value != null ? $value.value : this.$value),
-        order: (order != null ? order.value : this.order),
-        active: (active != null ? active.value : this.active),
-        stopProcessing: (stopProcessing != null
-            ? stopProcessing.value
-            : this.stopProcessing));
+      id: (id != null ? id.value : this.id),
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      type: (type != null ? type.value : this.type),
+      $value: ($value != null ? $value.value : this.$value),
+      order: (order != null ? order.value : this.order),
+      active: (active != null ? active.value : this.active),
+      stopProcessing:
+          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+    );
   }
 }
 
@@ -9798,34 +10300,37 @@ class RuleActionStore {
 }
 
 extension $RuleActionStoreExtension on RuleActionStore {
-  RuleActionStore copyWith(
-      {enums.RuleActionKeyword? type,
-      String? $value,
-      int? order,
-      bool? active,
-      bool? stopProcessing}) {
+  RuleActionStore copyWith({
+    enums.RuleActionKeyword? type,
+    String? $value,
+    int? order,
+    bool? active,
+    bool? stopProcessing,
+  }) {
     return RuleActionStore(
-        type: type ?? this.type,
-        $value: $value ?? this.$value,
-        order: order ?? this.order,
-        active: active ?? this.active,
-        stopProcessing: stopProcessing ?? this.stopProcessing);
+      type: type ?? this.type,
+      $value: $value ?? this.$value,
+      order: order ?? this.order,
+      active: active ?? this.active,
+      stopProcessing: stopProcessing ?? this.stopProcessing,
+    );
   }
 
-  RuleActionStore copyWithWrapped(
-      {Wrapped<enums.RuleActionKeyword>? type,
-      Wrapped<String?>? $value,
-      Wrapped<int?>? order,
-      Wrapped<bool?>? active,
-      Wrapped<bool?>? stopProcessing}) {
+  RuleActionStore copyWithWrapped({
+    Wrapped<enums.RuleActionKeyword>? type,
+    Wrapped<String?>? $value,
+    Wrapped<int?>? order,
+    Wrapped<bool?>? active,
+    Wrapped<bool?>? stopProcessing,
+  }) {
     return RuleActionStore(
-        type: (type != null ? type.value : this.type),
-        $value: ($value != null ? $value.value : this.$value),
-        order: (order != null ? order.value : this.order),
-        active: (active != null ? active.value : this.active),
-        stopProcessing: (stopProcessing != null
-            ? stopProcessing.value
-            : this.stopProcessing));
+      type: (type != null ? type.value : this.type),
+      $value: ($value != null ? $value.value : this.$value),
+      order: (order != null ? order.value : this.order),
+      active: (active != null ? active.value : this.active),
+      stopProcessing:
+          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+    );
   }
 }
 
@@ -9867,34 +10372,37 @@ class RuleActionUpdate {
 }
 
 extension $RuleActionUpdateExtension on RuleActionUpdate {
-  RuleActionUpdate copyWith(
-      {enums.RuleActionKeyword? type,
-      String? $value,
-      int? order,
-      bool? active,
-      bool? stopProcessing}) {
+  RuleActionUpdate copyWith({
+    enums.RuleActionKeyword? type,
+    String? $value,
+    int? order,
+    bool? active,
+    bool? stopProcessing,
+  }) {
     return RuleActionUpdate(
-        type: type ?? this.type,
-        $value: $value ?? this.$value,
-        order: order ?? this.order,
-        active: active ?? this.active,
-        stopProcessing: stopProcessing ?? this.stopProcessing);
+      type: type ?? this.type,
+      $value: $value ?? this.$value,
+      order: order ?? this.order,
+      active: active ?? this.active,
+      stopProcessing: stopProcessing ?? this.stopProcessing,
+    );
   }
 
-  RuleActionUpdate copyWithWrapped(
-      {Wrapped<enums.RuleActionKeyword?>? type,
-      Wrapped<String?>? $value,
-      Wrapped<int?>? order,
-      Wrapped<bool?>? active,
-      Wrapped<bool?>? stopProcessing}) {
+  RuleActionUpdate copyWithWrapped({
+    Wrapped<enums.RuleActionKeyword?>? type,
+    Wrapped<String?>? $value,
+    Wrapped<int?>? order,
+    Wrapped<bool?>? active,
+    Wrapped<bool?>? stopProcessing,
+  }) {
     return RuleActionUpdate(
-        type: (type != null ? type.value : this.type),
-        $value: ($value != null ? $value.value : this.$value),
-        order: (order != null ? order.value : this.order),
-        active: (active != null ? active.value : this.active),
-        stopProcessing: (stopProcessing != null
-            ? stopProcessing.value
-            : this.stopProcessing));
+      type: (type != null ? type.value : this.type),
+      $value: ($value != null ? $value.value : this.$value),
+      order: (order != null ? order.value : this.order),
+      active: (active != null ? active.value : this.active),
+      stopProcessing:
+          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+    );
   }
 }
 
@@ -9934,37 +10442,40 @@ class RuleGroup {
 }
 
 extension $RuleGroupExtension on RuleGroup {
-  RuleGroup copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? title,
-      String? description,
-      int? order,
-      bool? active}) {
+  RuleGroup copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? title,
+    String? description,
+    int? order,
+    bool? active,
+  }) {
     return RuleGroup(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        title: title ?? this.title,
-        description: description ?? this.description,
-        order: order ?? this.order,
-        active: active ?? this.active);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      order: order ?? this.order,
+      active: active ?? this.active,
+    );
   }
 
-  RuleGroup copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String>? title,
-      Wrapped<String?>? description,
-      Wrapped<int?>? order,
-      Wrapped<bool?>? active}) {
+  RuleGroup copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String>? title,
+    Wrapped<String?>? description,
+    Wrapped<int?>? order,
+    Wrapped<bool?>? active,
+  }) {
     return RuleGroup(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        title: (title != null ? title.value : this.title),
-        description:
-            (description != null ? description.value : this.description),
-        order: (order != null ? order.value : this.order),
-        active: (active != null ? active.value : this.active));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      title: (title != null ? title.value : this.title),
+      description: (description != null ? description.value : this.description),
+      order: (order != null ? order.value : this.order),
+      active: (active != null ? active.value : this.active),
+    );
   }
 }
 
@@ -9998,26 +10509,32 @@ class RuleGroupStore {
 }
 
 extension $RuleGroupStoreExtension on RuleGroupStore {
-  RuleGroupStore copyWith(
-      {String? title, String? description, int? order, bool? active}) {
+  RuleGroupStore copyWith({
+    String? title,
+    String? description,
+    int? order,
+    bool? active,
+  }) {
     return RuleGroupStore(
-        title: title ?? this.title,
-        description: description ?? this.description,
-        order: order ?? this.order,
-        active: active ?? this.active);
+      title: title ?? this.title,
+      description: description ?? this.description,
+      order: order ?? this.order,
+      active: active ?? this.active,
+    );
   }
 
-  RuleGroupStore copyWithWrapped(
-      {Wrapped<String>? title,
-      Wrapped<String?>? description,
-      Wrapped<int?>? order,
-      Wrapped<bool?>? active}) {
+  RuleGroupStore copyWithWrapped({
+    Wrapped<String>? title,
+    Wrapped<String?>? description,
+    Wrapped<int?>? order,
+    Wrapped<bool?>? active,
+  }) {
     return RuleGroupStore(
-        title: (title != null ? title.value : this.title),
-        description:
-            (description != null ? description.value : this.description),
-        order: (order != null ? order.value : this.order),
-        active: (active != null ? active.value : this.active));
+      title: (title != null ? title.value : this.title),
+      description: (description != null ? description.value : this.description),
+      order: (order != null ? order.value : this.order),
+      active: (active != null ? active.value : this.active),
+    );
   }
 }
 
@@ -10051,26 +10568,32 @@ class RuleGroupUpdate {
 }
 
 extension $RuleGroupUpdateExtension on RuleGroupUpdate {
-  RuleGroupUpdate copyWith(
-      {String? title, String? description, int? order, bool? active}) {
+  RuleGroupUpdate copyWith({
+    String? title,
+    String? description,
+    int? order,
+    bool? active,
+  }) {
     return RuleGroupUpdate(
-        title: title ?? this.title,
-        description: description ?? this.description,
-        order: order ?? this.order,
-        active: active ?? this.active);
+      title: title ?? this.title,
+      description: description ?? this.description,
+      order: order ?? this.order,
+      active: active ?? this.active,
+    );
   }
 
-  RuleGroupUpdate copyWithWrapped(
-      {Wrapped<String?>? title,
-      Wrapped<String?>? description,
-      Wrapped<int?>? order,
-      Wrapped<bool?>? active}) {
+  RuleGroupUpdate copyWithWrapped({
+    Wrapped<String?>? title,
+    Wrapped<String?>? description,
+    Wrapped<int?>? order,
+    Wrapped<bool?>? active,
+  }) {
     return RuleGroupUpdate(
-        title: (title != null ? title.value : this.title),
-        description:
-            (description != null ? description.value : this.description),
-        order: (order != null ? order.value : this.order),
-        active: (active != null ? active.value : this.active));
+      title: (title != null ? title.value : this.title),
+      description: (description != null ? description.value : this.description),
+      order: (order != null ? order.value : this.order),
+      active: (active != null ? active.value : this.active),
+    );
   }
 }
 
@@ -10124,50 +10647,53 @@ class RuleTrigger {
 }
 
 extension $RuleTriggerExtension on RuleTrigger {
-  RuleTrigger copyWith(
-      {String? id,
-      DateTime? createdAt,
-      DateTime? updatedAt,
-      enums.RuleTriggerKeyword? type,
-      String? $value,
-      bool? prohibited,
-      int? order,
-      bool? active,
-      bool? stopProcessing}) {
+  RuleTrigger copyWith({
+    String? id,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    enums.RuleTriggerKeyword? type,
+    String? $value,
+    bool? prohibited,
+    int? order,
+    bool? active,
+    bool? stopProcessing,
+  }) {
     return RuleTrigger(
-        id: id ?? this.id,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        type: type ?? this.type,
-        $value: $value ?? this.$value,
-        prohibited: prohibited ?? this.prohibited,
-        order: order ?? this.order,
-        active: active ?? this.active,
-        stopProcessing: stopProcessing ?? this.stopProcessing);
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      type: type ?? this.type,
+      $value: $value ?? this.$value,
+      prohibited: prohibited ?? this.prohibited,
+      order: order ?? this.order,
+      active: active ?? this.active,
+      stopProcessing: stopProcessing ?? this.stopProcessing,
+    );
   }
 
-  RuleTrigger copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<enums.RuleTriggerKeyword>? type,
-      Wrapped<String>? $value,
-      Wrapped<bool?>? prohibited,
-      Wrapped<int?>? order,
-      Wrapped<bool?>? active,
-      Wrapped<bool?>? stopProcessing}) {
+  RuleTrigger copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<enums.RuleTriggerKeyword>? type,
+    Wrapped<String>? $value,
+    Wrapped<bool?>? prohibited,
+    Wrapped<int?>? order,
+    Wrapped<bool?>? active,
+    Wrapped<bool?>? stopProcessing,
+  }) {
     return RuleTrigger(
-        id: (id != null ? id.value : this.id),
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        type: (type != null ? type.value : this.type),
-        $value: ($value != null ? $value.value : this.$value),
-        prohibited: (prohibited != null ? prohibited.value : this.prohibited),
-        order: (order != null ? order.value : this.order),
-        active: (active != null ? active.value : this.active),
-        stopProcessing: (stopProcessing != null
-            ? stopProcessing.value
-            : this.stopProcessing));
+      id: (id != null ? id.value : this.id),
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      type: (type != null ? type.value : this.type),
+      $value: ($value != null ? $value.value : this.$value),
+      prohibited: (prohibited != null ? prohibited.value : this.prohibited),
+      order: (order != null ? order.value : this.order),
+      active: (active != null ? active.value : this.active),
+      stopProcessing:
+          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+    );
   }
 }
 
@@ -10212,38 +10738,41 @@ class RuleTriggerStore {
 }
 
 extension $RuleTriggerStoreExtension on RuleTriggerStore {
-  RuleTriggerStore copyWith(
-      {enums.RuleTriggerKeyword? type,
-      String? $value,
-      int? order,
-      bool? active,
-      bool? prohibited,
-      bool? stopProcessing}) {
+  RuleTriggerStore copyWith({
+    enums.RuleTriggerKeyword? type,
+    String? $value,
+    int? order,
+    bool? active,
+    bool? prohibited,
+    bool? stopProcessing,
+  }) {
     return RuleTriggerStore(
-        type: type ?? this.type,
-        $value: $value ?? this.$value,
-        order: order ?? this.order,
-        active: active ?? this.active,
-        prohibited: prohibited ?? this.prohibited,
-        stopProcessing: stopProcessing ?? this.stopProcessing);
+      type: type ?? this.type,
+      $value: $value ?? this.$value,
+      order: order ?? this.order,
+      active: active ?? this.active,
+      prohibited: prohibited ?? this.prohibited,
+      stopProcessing: stopProcessing ?? this.stopProcessing,
+    );
   }
 
-  RuleTriggerStore copyWithWrapped(
-      {Wrapped<enums.RuleTriggerKeyword>? type,
-      Wrapped<String>? $value,
-      Wrapped<int?>? order,
-      Wrapped<bool?>? active,
-      Wrapped<bool?>? prohibited,
-      Wrapped<bool?>? stopProcessing}) {
+  RuleTriggerStore copyWithWrapped({
+    Wrapped<enums.RuleTriggerKeyword>? type,
+    Wrapped<String>? $value,
+    Wrapped<int?>? order,
+    Wrapped<bool?>? active,
+    Wrapped<bool?>? prohibited,
+    Wrapped<bool?>? stopProcessing,
+  }) {
     return RuleTriggerStore(
-        type: (type != null ? type.value : this.type),
-        $value: ($value != null ? $value.value : this.$value),
-        order: (order != null ? order.value : this.order),
-        active: (active != null ? active.value : this.active),
-        prohibited: (prohibited != null ? prohibited.value : this.prohibited),
-        stopProcessing: (stopProcessing != null
-            ? stopProcessing.value
-            : this.stopProcessing));
+      type: (type != null ? type.value : this.type),
+      $value: ($value != null ? $value.value : this.$value),
+      order: (order != null ? order.value : this.order),
+      active: (active != null ? active.value : this.active),
+      prohibited: (prohibited != null ? prohibited.value : this.prohibited),
+      stopProcessing:
+          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+    );
   }
 }
 
@@ -10285,34 +10814,37 @@ class RuleTriggerUpdate {
 }
 
 extension $RuleTriggerUpdateExtension on RuleTriggerUpdate {
-  RuleTriggerUpdate copyWith(
-      {enums.RuleTriggerKeyword? type,
-      String? $value,
-      int? order,
-      bool? active,
-      bool? stopProcessing}) {
+  RuleTriggerUpdate copyWith({
+    enums.RuleTriggerKeyword? type,
+    String? $value,
+    int? order,
+    bool? active,
+    bool? stopProcessing,
+  }) {
     return RuleTriggerUpdate(
-        type: type ?? this.type,
-        $value: $value ?? this.$value,
-        order: order ?? this.order,
-        active: active ?? this.active,
-        stopProcessing: stopProcessing ?? this.stopProcessing);
+      type: type ?? this.type,
+      $value: $value ?? this.$value,
+      order: order ?? this.order,
+      active: active ?? this.active,
+      stopProcessing: stopProcessing ?? this.stopProcessing,
+    );
   }
 
-  RuleTriggerUpdate copyWithWrapped(
-      {Wrapped<enums.RuleTriggerKeyword?>? type,
-      Wrapped<String?>? $value,
-      Wrapped<int?>? order,
-      Wrapped<bool?>? active,
-      Wrapped<bool?>? stopProcessing}) {
+  RuleTriggerUpdate copyWithWrapped({
+    Wrapped<enums.RuleTriggerKeyword?>? type,
+    Wrapped<String?>? $value,
+    Wrapped<int?>? order,
+    Wrapped<bool?>? active,
+    Wrapped<bool?>? stopProcessing,
+  }) {
     return RuleTriggerUpdate(
-        type: (type != null ? type.value : this.type),
-        $value: ($value != null ? $value.value : this.$value),
-        order: (order != null ? order.value : this.order),
-        active: (active != null ? active.value : this.active),
-        stopProcessing: (stopProcessing != null
-            ? stopProcessing.value
-            : this.stopProcessing));
+      type: (type != null ? type.value : this.type),
+      $value: ($value != null ? $value.value : this.$value),
+      order: (order != null ? order.value : this.order),
+      active: (active != null ? active.value : this.active),
+      stopProcessing:
+          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+    );
   }
 }
 
@@ -10358,45 +10890,48 @@ class TagModel {
 }
 
 extension $TagModelExtension on TagModel {
-  TagModel copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? tag,
-      DateTime? date,
-      String? description,
-      double? latitude,
-      double? longitude,
-      int? zoomLevel}) {
+  TagModel copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? tag,
+    DateTime? date,
+    String? description,
+    double? latitude,
+    double? longitude,
+    int? zoomLevel,
+  }) {
     return TagModel(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        tag: tag ?? this.tag,
-        date: date ?? this.date,
-        description: description ?? this.description,
-        latitude: latitude ?? this.latitude,
-        longitude: longitude ?? this.longitude,
-        zoomLevel: zoomLevel ?? this.zoomLevel);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      tag: tag ?? this.tag,
+      date: date ?? this.date,
+      description: description ?? this.description,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      zoomLevel: zoomLevel ?? this.zoomLevel,
+    );
   }
 
-  TagModel copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String>? tag,
-      Wrapped<DateTime?>? date,
-      Wrapped<String?>? description,
-      Wrapped<double?>? latitude,
-      Wrapped<double?>? longitude,
-      Wrapped<int?>? zoomLevel}) {
+  TagModel copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String>? tag,
+    Wrapped<DateTime?>? date,
+    Wrapped<String?>? description,
+    Wrapped<double?>? latitude,
+    Wrapped<double?>? longitude,
+    Wrapped<int?>? zoomLevel,
+  }) {
     return TagModel(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        tag: (tag != null ? tag.value : this.tag),
-        date: (date != null ? date.value : this.date),
-        description:
-            (description != null ? description.value : this.description),
-        latitude: (latitude != null ? latitude.value : this.latitude),
-        longitude: (longitude != null ? longitude.value : this.longitude),
-        zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      tag: (tag != null ? tag.value : this.tag),
+      date: (date != null ? date.value : this.date),
+      description: (description != null ? description.value : this.description),
+      latitude: (latitude != null ? latitude.value : this.latitude),
+      longitude: (longitude != null ? longitude.value : this.longitude),
+      zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel),
+    );
   }
 }
 
@@ -10436,37 +10971,40 @@ class TagModelStore {
 }
 
 extension $TagModelStoreExtension on TagModelStore {
-  TagModelStore copyWith(
-      {String? tag,
-      DateTime? date,
-      String? description,
-      double? latitude,
-      double? longitude,
-      int? zoomLevel}) {
+  TagModelStore copyWith({
+    String? tag,
+    DateTime? date,
+    String? description,
+    double? latitude,
+    double? longitude,
+    int? zoomLevel,
+  }) {
     return TagModelStore(
-        tag: tag ?? this.tag,
-        date: date ?? this.date,
-        description: description ?? this.description,
-        latitude: latitude ?? this.latitude,
-        longitude: longitude ?? this.longitude,
-        zoomLevel: zoomLevel ?? this.zoomLevel);
+      tag: tag ?? this.tag,
+      date: date ?? this.date,
+      description: description ?? this.description,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      zoomLevel: zoomLevel ?? this.zoomLevel,
+    );
   }
 
-  TagModelStore copyWithWrapped(
-      {Wrapped<String>? tag,
-      Wrapped<DateTime?>? date,
-      Wrapped<String?>? description,
-      Wrapped<double?>? latitude,
-      Wrapped<double?>? longitude,
-      Wrapped<int?>? zoomLevel}) {
+  TagModelStore copyWithWrapped({
+    Wrapped<String>? tag,
+    Wrapped<DateTime?>? date,
+    Wrapped<String?>? description,
+    Wrapped<double?>? latitude,
+    Wrapped<double?>? longitude,
+    Wrapped<int?>? zoomLevel,
+  }) {
     return TagModelStore(
-        tag: (tag != null ? tag.value : this.tag),
-        date: (date != null ? date.value : this.date),
-        description:
-            (description != null ? description.value : this.description),
-        latitude: (latitude != null ? latitude.value : this.latitude),
-        longitude: (longitude != null ? longitude.value : this.longitude),
-        zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel));
+      tag: (tag != null ? tag.value : this.tag),
+      date: (date != null ? date.value : this.date),
+      description: (description != null ? description.value : this.description),
+      latitude: (latitude != null ? latitude.value : this.latitude),
+      longitude: (longitude != null ? longitude.value : this.longitude),
+      zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel),
+    );
   }
 }
 
@@ -10506,37 +11044,40 @@ class TagModelUpdate {
 }
 
 extension $TagModelUpdateExtension on TagModelUpdate {
-  TagModelUpdate copyWith(
-      {String? tag,
-      DateTime? date,
-      String? description,
-      double? latitude,
-      double? longitude,
-      int? zoomLevel}) {
+  TagModelUpdate copyWith({
+    String? tag,
+    DateTime? date,
+    String? description,
+    double? latitude,
+    double? longitude,
+    int? zoomLevel,
+  }) {
     return TagModelUpdate(
-        tag: tag ?? this.tag,
-        date: date ?? this.date,
-        description: description ?? this.description,
-        latitude: latitude ?? this.latitude,
-        longitude: longitude ?? this.longitude,
-        zoomLevel: zoomLevel ?? this.zoomLevel);
+      tag: tag ?? this.tag,
+      date: date ?? this.date,
+      description: description ?? this.description,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      zoomLevel: zoomLevel ?? this.zoomLevel,
+    );
   }
 
-  TagModelUpdate copyWithWrapped(
-      {Wrapped<String?>? tag,
-      Wrapped<DateTime?>? date,
-      Wrapped<String?>? description,
-      Wrapped<double?>? latitude,
-      Wrapped<double?>? longitude,
-      Wrapped<int?>? zoomLevel}) {
+  TagModelUpdate copyWithWrapped({
+    Wrapped<String?>? tag,
+    Wrapped<DateTime?>? date,
+    Wrapped<String?>? description,
+    Wrapped<double?>? latitude,
+    Wrapped<double?>? longitude,
+    Wrapped<int?>? zoomLevel,
+  }) {
     return TagModelUpdate(
-        tag: (tag != null ? tag.value : this.tag),
-        date: (date != null ? date.value : this.date),
-        description:
-            (description != null ? description.value : this.description),
-        latitude: (latitude != null ? latitude.value : this.latitude),
-        longitude: (longitude != null ? longitude.value : this.longitude),
-        zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel));
+      tag: (tag != null ? tag.value : this.tag),
+      date: (date != null ? date.value : this.date),
+      description: (description != null ? description.value : this.description),
+      latitude: (latitude != null ? latitude.value : this.latitude),
+      longitude: (longitude != null ? longitude.value : this.longitude),
+      zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel),
+    );
   }
 }
 
@@ -10585,49 +11126,53 @@ class Currency {
 }
 
 extension $CurrencyExtension on Currency {
-  Currency copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      bool? enabled,
-      bool? $default,
-      bool? native,
-      String? code,
-      String? name,
-      String? symbol,
-      int? decimalPlaces}) {
+  Currency copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? enabled,
+    bool? $default,
+    bool? native,
+    String? code,
+    String? name,
+    String? symbol,
+    int? decimalPlaces,
+  }) {
     return Currency(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        enabled: enabled ?? this.enabled,
-        $default: $default ?? this.$default,
-        native: native ?? this.native,
-        code: code ?? this.code,
-        name: name ?? this.name,
-        symbol: symbol ?? this.symbol,
-        decimalPlaces: decimalPlaces ?? this.decimalPlaces);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      enabled: enabled ?? this.enabled,
+      $default: $default ?? this.$default,
+      native: native ?? this.native,
+      code: code ?? this.code,
+      name: name ?? this.name,
+      symbol: symbol ?? this.symbol,
+      decimalPlaces: decimalPlaces ?? this.decimalPlaces,
+    );
   }
 
-  Currency copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<bool?>? enabled,
-      Wrapped<bool?>? $default,
-      Wrapped<bool?>? native,
-      Wrapped<String>? code,
-      Wrapped<String>? name,
-      Wrapped<String>? symbol,
-      Wrapped<int?>? decimalPlaces}) {
+  Currency copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<bool?>? enabled,
+    Wrapped<bool?>? $default,
+    Wrapped<bool?>? native,
+    Wrapped<String>? code,
+    Wrapped<String>? name,
+    Wrapped<String>? symbol,
+    Wrapped<int?>? decimalPlaces,
+  }) {
     return Currency(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        enabled: (enabled != null ? enabled.value : this.enabled),
-        $default: ($default != null ? $default.value : this.$default),
-        native: (native != null ? native.value : this.native),
-        code: (code != null ? code.value : this.code),
-        name: (name != null ? name.value : this.name),
-        symbol: (symbol != null ? symbol.value : this.symbol),
-        decimalPlaces:
-            (decimalPlaces != null ? decimalPlaces.value : this.decimalPlaces));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      enabled: (enabled != null ? enabled.value : this.enabled),
+      $default: ($default != null ? $default.value : this.$default),
+      native: (native != null ? native.value : this.native),
+      code: (code != null ? code.value : this.code),
+      name: (name != null ? name.value : this.name),
+      symbol: (symbol != null ? symbol.value : this.symbol),
+      decimalPlaces:
+          (decimalPlaces != null ? decimalPlaces.value : this.decimalPlaces),
+    );
   }
 }
 
@@ -10667,37 +11212,41 @@ class CurrencyStore {
 }
 
 extension $CurrencyStoreExtension on CurrencyStore {
-  CurrencyStore copyWith(
-      {bool? enabled,
-      bool? $default,
-      String? code,
-      String? name,
-      String? symbol,
-      int? decimalPlaces}) {
+  CurrencyStore copyWith({
+    bool? enabled,
+    bool? $default,
+    String? code,
+    String? name,
+    String? symbol,
+    int? decimalPlaces,
+  }) {
     return CurrencyStore(
-        enabled: enabled ?? this.enabled,
-        $default: $default ?? this.$default,
-        code: code ?? this.code,
-        name: name ?? this.name,
-        symbol: symbol ?? this.symbol,
-        decimalPlaces: decimalPlaces ?? this.decimalPlaces);
+      enabled: enabled ?? this.enabled,
+      $default: $default ?? this.$default,
+      code: code ?? this.code,
+      name: name ?? this.name,
+      symbol: symbol ?? this.symbol,
+      decimalPlaces: decimalPlaces ?? this.decimalPlaces,
+    );
   }
 
-  CurrencyStore copyWithWrapped(
-      {Wrapped<bool?>? enabled,
-      Wrapped<bool?>? $default,
-      Wrapped<String>? code,
-      Wrapped<String>? name,
-      Wrapped<String>? symbol,
-      Wrapped<int?>? decimalPlaces}) {
+  CurrencyStore copyWithWrapped({
+    Wrapped<bool?>? enabled,
+    Wrapped<bool?>? $default,
+    Wrapped<String>? code,
+    Wrapped<String>? name,
+    Wrapped<String>? symbol,
+    Wrapped<int?>? decimalPlaces,
+  }) {
     return CurrencyStore(
-        enabled: (enabled != null ? enabled.value : this.enabled),
-        $default: ($default != null ? $default.value : this.$default),
-        code: (code != null ? code.value : this.code),
-        name: (name != null ? name.value : this.name),
-        symbol: (symbol != null ? symbol.value : this.symbol),
-        decimalPlaces:
-            (decimalPlaces != null ? decimalPlaces.value : this.decimalPlaces));
+      enabled: (enabled != null ? enabled.value : this.enabled),
+      $default: ($default != null ? $default.value : this.$default),
+      code: (code != null ? code.value : this.code),
+      name: (name != null ? name.value : this.name),
+      symbol: (symbol != null ? symbol.value : this.symbol),
+      decimalPlaces:
+          (decimalPlaces != null ? decimalPlaces.value : this.decimalPlaces),
+    );
   }
 }
 
@@ -10737,37 +11286,41 @@ class CurrencyUpdate {
 }
 
 extension $CurrencyUpdateExtension on CurrencyUpdate {
-  CurrencyUpdate copyWith(
-      {bool? enabled,
-      bool? $default,
-      String? code,
-      String? name,
-      String? symbol,
-      int? decimalPlaces}) {
+  CurrencyUpdate copyWith({
+    bool? enabled,
+    bool? $default,
+    String? code,
+    String? name,
+    String? symbol,
+    int? decimalPlaces,
+  }) {
     return CurrencyUpdate(
-        enabled: enabled ?? this.enabled,
-        $default: $default ?? this.$default,
-        code: code ?? this.code,
-        name: name ?? this.name,
-        symbol: symbol ?? this.symbol,
-        decimalPlaces: decimalPlaces ?? this.decimalPlaces);
+      enabled: enabled ?? this.enabled,
+      $default: $default ?? this.$default,
+      code: code ?? this.code,
+      name: name ?? this.name,
+      symbol: symbol ?? this.symbol,
+      decimalPlaces: decimalPlaces ?? this.decimalPlaces,
+    );
   }
 
-  CurrencyUpdate copyWithWrapped(
-      {Wrapped<bool?>? enabled,
-      Wrapped<bool?>? $default,
-      Wrapped<String?>? code,
-      Wrapped<String?>? name,
-      Wrapped<String?>? symbol,
-      Wrapped<int?>? decimalPlaces}) {
+  CurrencyUpdate copyWithWrapped({
+    Wrapped<bool?>? enabled,
+    Wrapped<bool?>? $default,
+    Wrapped<String?>? code,
+    Wrapped<String?>? name,
+    Wrapped<String?>? symbol,
+    Wrapped<int?>? decimalPlaces,
+  }) {
     return CurrencyUpdate(
-        enabled: (enabled != null ? enabled.value : this.enabled),
-        $default: ($default != null ? $default.value : this.$default),
-        code: (code != null ? code.value : this.code),
-        name: (name != null ? name.value : this.name),
-        symbol: (symbol != null ? symbol.value : this.symbol),
-        decimalPlaces:
-            (decimalPlaces != null ? decimalPlaces.value : this.decimalPlaces));
+      enabled: (enabled != null ? enabled.value : this.enabled),
+      $default: ($default != null ? $default.value : this.$default),
+      code: (code != null ? code.value : this.code),
+      name: (name != null ? name.value : this.name),
+      symbol: (symbol != null ? symbol.value : this.symbol),
+      decimalPlaces:
+          (decimalPlaces != null ? decimalPlaces.value : this.decimalPlaces),
+    );
   }
 }
 
@@ -10796,9 +11349,10 @@ class Transaction {
   @JsonKey(name: 'group_title', includeIfNull: false)
   final String? groupTitle;
   @JsonKey(
-      name: 'transactions',
-      includeIfNull: false,
-      defaultValue: <TransactionSplit>[])
+    name: 'transactions',
+    includeIfNull: false,
+    defaultValue: <TransactionSplit>[],
+  )
   final List<TransactionSplit> transactions;
   static const fromJsonFactory = _$TransactionFromJson;
 
@@ -10807,33 +11361,37 @@ class Transaction {
 }
 
 extension $TransactionExtension on Transaction {
-  Transaction copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? user,
-      String? groupTitle,
-      List<TransactionSplit>? transactions}) {
+  Transaction copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? user,
+    String? groupTitle,
+    List<TransactionSplit>? transactions,
+  }) {
     return Transaction(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        user: user ?? this.user,
-        groupTitle: groupTitle ?? this.groupTitle,
-        transactions: transactions ?? this.transactions);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      user: user ?? this.user,
+      groupTitle: groupTitle ?? this.groupTitle,
+      transactions: transactions ?? this.transactions,
+    );
   }
 
-  Transaction copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String?>? user,
-      Wrapped<String?>? groupTitle,
-      Wrapped<List<TransactionSplit>>? transactions}) {
+  Transaction copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String?>? user,
+    Wrapped<String?>? groupTitle,
+    Wrapped<List<TransactionSplit>>? transactions,
+  }) {
     return Transaction(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        user: (user != null ? user.value : this.user),
-        groupTitle: (groupTitle != null ? groupTitle.value : this.groupTitle),
-        transactions:
-            (transactions != null ? transactions.value : this.transactions));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      user: (user != null ? user.value : this.user),
+      groupTitle: (groupTitle != null ? groupTitle.value : this.groupTitle),
+      transactions:
+          (transactions != null ? transactions.value : this.transactions),
+    );
   }
 }
 
@@ -10862,9 +11420,10 @@ class TransactionStore {
   @JsonKey(name: 'group_title', includeIfNull: false)
   final String? groupTitle;
   @JsonKey(
-      name: 'transactions',
-      includeIfNull: false,
-      defaultValue: <TransactionSplitStore>[])
+    name: 'transactions',
+    includeIfNull: false,
+    defaultValue: <TransactionSplitStore>[],
+  )
   final List<TransactionSplitStore> transactions;
   static const fromJsonFactory = _$TransactionStoreFromJson;
 
@@ -10873,36 +11432,41 @@ class TransactionStore {
 }
 
 extension $TransactionStoreExtension on TransactionStore {
-  TransactionStore copyWith(
-      {bool? errorIfDuplicateHash,
-      bool? applyRules,
-      bool? fireWebhooks,
-      String? groupTitle,
-      List<TransactionSplitStore>? transactions}) {
+  TransactionStore copyWith({
+    bool? errorIfDuplicateHash,
+    bool? applyRules,
+    bool? fireWebhooks,
+    String? groupTitle,
+    List<TransactionSplitStore>? transactions,
+  }) {
     return TransactionStore(
-        errorIfDuplicateHash: errorIfDuplicateHash ?? this.errorIfDuplicateHash,
-        applyRules: applyRules ?? this.applyRules,
-        fireWebhooks: fireWebhooks ?? this.fireWebhooks,
-        groupTitle: groupTitle ?? this.groupTitle,
-        transactions: transactions ?? this.transactions);
+      errorIfDuplicateHash: errorIfDuplicateHash ?? this.errorIfDuplicateHash,
+      applyRules: applyRules ?? this.applyRules,
+      fireWebhooks: fireWebhooks ?? this.fireWebhooks,
+      groupTitle: groupTitle ?? this.groupTitle,
+      transactions: transactions ?? this.transactions,
+    );
   }
 
-  TransactionStore copyWithWrapped(
-      {Wrapped<bool?>? errorIfDuplicateHash,
-      Wrapped<bool?>? applyRules,
-      Wrapped<bool?>? fireWebhooks,
-      Wrapped<String?>? groupTitle,
-      Wrapped<List<TransactionSplitStore>>? transactions}) {
+  TransactionStore copyWithWrapped({
+    Wrapped<bool?>? errorIfDuplicateHash,
+    Wrapped<bool?>? applyRules,
+    Wrapped<bool?>? fireWebhooks,
+    Wrapped<String?>? groupTitle,
+    Wrapped<List<TransactionSplitStore>>? transactions,
+  }) {
     return TransactionStore(
-        errorIfDuplicateHash: (errorIfDuplicateHash != null
-            ? errorIfDuplicateHash.value
-            : this.errorIfDuplicateHash),
-        applyRules: (applyRules != null ? applyRules.value : this.applyRules),
-        fireWebhooks:
-            (fireWebhooks != null ? fireWebhooks.value : this.fireWebhooks),
-        groupTitle: (groupTitle != null ? groupTitle.value : this.groupTitle),
-        transactions:
-            (transactions != null ? transactions.value : this.transactions));
+      errorIfDuplicateHash:
+          (errorIfDuplicateHash != null
+              ? errorIfDuplicateHash.value
+              : this.errorIfDuplicateHash),
+      applyRules: (applyRules != null ? applyRules.value : this.applyRules),
+      fireWebhooks:
+          (fireWebhooks != null ? fireWebhooks.value : this.fireWebhooks),
+      groupTitle: (groupTitle != null ? groupTitle.value : this.groupTitle),
+      transactions:
+          (transactions != null ? transactions.value : this.transactions),
+    );
   }
 }
 
@@ -10928,9 +11492,10 @@ class TransactionUpdate {
   @JsonKey(name: 'group_title', includeIfNull: false)
   final String? groupTitle;
   @JsonKey(
-      name: 'transactions',
-      includeIfNull: false,
-      defaultValue: <TransactionSplitUpdate>[])
+    name: 'transactions',
+    includeIfNull: false,
+    defaultValue: <TransactionSplitUpdate>[],
+  )
   final List<TransactionSplitUpdate>? transactions;
   static const fromJsonFactory = _$TransactionUpdateFromJson;
 
@@ -10939,30 +11504,34 @@ class TransactionUpdate {
 }
 
 extension $TransactionUpdateExtension on TransactionUpdate {
-  TransactionUpdate copyWith(
-      {bool? applyRules,
-      bool? fireWebhooks,
-      String? groupTitle,
-      List<TransactionSplitUpdate>? transactions}) {
+  TransactionUpdate copyWith({
+    bool? applyRules,
+    bool? fireWebhooks,
+    String? groupTitle,
+    List<TransactionSplitUpdate>? transactions,
+  }) {
     return TransactionUpdate(
-        applyRules: applyRules ?? this.applyRules,
-        fireWebhooks: fireWebhooks ?? this.fireWebhooks,
-        groupTitle: groupTitle ?? this.groupTitle,
-        transactions: transactions ?? this.transactions);
+      applyRules: applyRules ?? this.applyRules,
+      fireWebhooks: fireWebhooks ?? this.fireWebhooks,
+      groupTitle: groupTitle ?? this.groupTitle,
+      transactions: transactions ?? this.transactions,
+    );
   }
 
-  TransactionUpdate copyWithWrapped(
-      {Wrapped<bool?>? applyRules,
-      Wrapped<bool?>? fireWebhooks,
-      Wrapped<String?>? groupTitle,
-      Wrapped<List<TransactionSplitUpdate>?>? transactions}) {
+  TransactionUpdate copyWithWrapped({
+    Wrapped<bool?>? applyRules,
+    Wrapped<bool?>? fireWebhooks,
+    Wrapped<String?>? groupTitle,
+    Wrapped<List<TransactionSplitUpdate>?>? transactions,
+  }) {
     return TransactionUpdate(
-        applyRules: (applyRules != null ? applyRules.value : this.applyRules),
-        fireWebhooks:
-            (fireWebhooks != null ? fireWebhooks.value : this.fireWebhooks),
-        groupTitle: (groupTitle != null ? groupTitle.value : this.groupTitle),
-        transactions:
-            (transactions != null ? transactions.value : this.transactions));
+      applyRules: (applyRules != null ? applyRules.value : this.applyRules),
+      fireWebhooks:
+          (fireWebhooks != null ? fireWebhooks.value : this.fireWebhooks),
+      groupTitle: (groupTitle != null ? groupTitle.value : this.groupTitle),
+      transactions:
+          (transactions != null ? transactions.value : this.transactions),
+    );
   }
 }
 
@@ -11005,41 +11574,45 @@ class TransactionLink {
 }
 
 extension $TransactionLinkExtension on TransactionLink {
-  TransactionLink copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? linkTypeId,
-      String? linkTypeName,
-      String? inwardId,
-      String? outwardId,
-      String? notes}) {
+  TransactionLink copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? linkTypeId,
+    String? linkTypeName,
+    String? inwardId,
+    String? outwardId,
+    String? notes,
+  }) {
     return TransactionLink(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        linkTypeId: linkTypeId ?? this.linkTypeId,
-        linkTypeName: linkTypeName ?? this.linkTypeName,
-        inwardId: inwardId ?? this.inwardId,
-        outwardId: outwardId ?? this.outwardId,
-        notes: notes ?? this.notes);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      linkTypeId: linkTypeId ?? this.linkTypeId,
+      linkTypeName: linkTypeName ?? this.linkTypeName,
+      inwardId: inwardId ?? this.inwardId,
+      outwardId: outwardId ?? this.outwardId,
+      notes: notes ?? this.notes,
+    );
   }
 
-  TransactionLink copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String?>? linkTypeId,
-      Wrapped<String?>? linkTypeName,
-      Wrapped<String>? inwardId,
-      Wrapped<String>? outwardId,
-      Wrapped<String?>? notes}) {
+  TransactionLink copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String?>? linkTypeId,
+    Wrapped<String?>? linkTypeName,
+    Wrapped<String>? inwardId,
+    Wrapped<String>? outwardId,
+    Wrapped<String?>? notes,
+  }) {
     return TransactionLink(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        linkTypeId: (linkTypeId != null ? linkTypeId.value : this.linkTypeId),
-        linkTypeName:
-            (linkTypeName != null ? linkTypeName.value : this.linkTypeName),
-        inwardId: (inwardId != null ? inwardId.value : this.inwardId),
-        outwardId: (outwardId != null ? outwardId.value : this.outwardId),
-        notes: (notes != null ? notes.value : this.notes));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      linkTypeId: (linkTypeId != null ? linkTypeId.value : this.linkTypeId),
+      linkTypeName:
+          (linkTypeName != null ? linkTypeName.value : this.linkTypeName),
+      inwardId: (inwardId != null ? inwardId.value : this.inwardId),
+      outwardId: (outwardId != null ? outwardId.value : this.outwardId),
+      notes: (notes != null ? notes.value : this.notes),
+    );
   }
 }
 
@@ -11076,33 +11649,37 @@ class TransactionLinkStore {
 }
 
 extension $TransactionLinkStoreExtension on TransactionLinkStore {
-  TransactionLinkStore copyWith(
-      {String? linkTypeId,
-      String? linkTypeName,
-      String? inwardId,
-      String? outwardId,
-      String? notes}) {
+  TransactionLinkStore copyWith({
+    String? linkTypeId,
+    String? linkTypeName,
+    String? inwardId,
+    String? outwardId,
+    String? notes,
+  }) {
     return TransactionLinkStore(
-        linkTypeId: linkTypeId ?? this.linkTypeId,
-        linkTypeName: linkTypeName ?? this.linkTypeName,
-        inwardId: inwardId ?? this.inwardId,
-        outwardId: outwardId ?? this.outwardId,
-        notes: notes ?? this.notes);
+      linkTypeId: linkTypeId ?? this.linkTypeId,
+      linkTypeName: linkTypeName ?? this.linkTypeName,
+      inwardId: inwardId ?? this.inwardId,
+      outwardId: outwardId ?? this.outwardId,
+      notes: notes ?? this.notes,
+    );
   }
 
-  TransactionLinkStore copyWithWrapped(
-      {Wrapped<String?>? linkTypeId,
-      Wrapped<String?>? linkTypeName,
-      Wrapped<String>? inwardId,
-      Wrapped<String>? outwardId,
-      Wrapped<String?>? notes}) {
+  TransactionLinkStore copyWithWrapped({
+    Wrapped<String?>? linkTypeId,
+    Wrapped<String?>? linkTypeName,
+    Wrapped<String>? inwardId,
+    Wrapped<String>? outwardId,
+    Wrapped<String?>? notes,
+  }) {
     return TransactionLinkStore(
-        linkTypeId: (linkTypeId != null ? linkTypeId.value : this.linkTypeId),
-        linkTypeName:
-            (linkTypeName != null ? linkTypeName.value : this.linkTypeName),
-        inwardId: (inwardId != null ? inwardId.value : this.inwardId),
-        outwardId: (outwardId != null ? outwardId.value : this.outwardId),
-        notes: (notes != null ? notes.value : this.notes));
+      linkTypeId: (linkTypeId != null ? linkTypeId.value : this.linkTypeId),
+      linkTypeName:
+          (linkTypeName != null ? linkTypeName.value : this.linkTypeName),
+      inwardId: (inwardId != null ? inwardId.value : this.inwardId),
+      outwardId: (outwardId != null ? outwardId.value : this.outwardId),
+      notes: (notes != null ? notes.value : this.notes),
+    );
   }
 }
 
@@ -11139,33 +11716,37 @@ class TransactionLinkUpdate {
 }
 
 extension $TransactionLinkUpdateExtension on TransactionLinkUpdate {
-  TransactionLinkUpdate copyWith(
-      {String? linkTypeId,
-      String? linkTypeName,
-      String? inwardId,
-      String? outwardId,
-      String? notes}) {
+  TransactionLinkUpdate copyWith({
+    String? linkTypeId,
+    String? linkTypeName,
+    String? inwardId,
+    String? outwardId,
+    String? notes,
+  }) {
     return TransactionLinkUpdate(
-        linkTypeId: linkTypeId ?? this.linkTypeId,
-        linkTypeName: linkTypeName ?? this.linkTypeName,
-        inwardId: inwardId ?? this.inwardId,
-        outwardId: outwardId ?? this.outwardId,
-        notes: notes ?? this.notes);
+      linkTypeId: linkTypeId ?? this.linkTypeId,
+      linkTypeName: linkTypeName ?? this.linkTypeName,
+      inwardId: inwardId ?? this.inwardId,
+      outwardId: outwardId ?? this.outwardId,
+      notes: notes ?? this.notes,
+    );
   }
 
-  TransactionLinkUpdate copyWithWrapped(
-      {Wrapped<String?>? linkTypeId,
-      Wrapped<String?>? linkTypeName,
-      Wrapped<String?>? inwardId,
-      Wrapped<String?>? outwardId,
-      Wrapped<String?>? notes}) {
+  TransactionLinkUpdate copyWithWrapped({
+    Wrapped<String?>? linkTypeId,
+    Wrapped<String?>? linkTypeName,
+    Wrapped<String?>? inwardId,
+    Wrapped<String?>? outwardId,
+    Wrapped<String?>? notes,
+  }) {
     return TransactionLinkUpdate(
-        linkTypeId: (linkTypeId != null ? linkTypeId.value : this.linkTypeId),
-        linkTypeName:
-            (linkTypeName != null ? linkTypeName.value : this.linkTypeName),
-        inwardId: (inwardId != null ? inwardId.value : this.inwardId),
-        outwardId: (outwardId != null ? outwardId.value : this.outwardId),
-        notes: (notes != null ? notes.value : this.notes));
+      linkTypeId: (linkTypeId != null ? linkTypeId.value : this.linkTypeId),
+      linkTypeName:
+          (linkTypeName != null ? linkTypeName.value : this.linkTypeName),
+      inwardId: (inwardId != null ? inwardId.value : this.inwardId),
+      outwardId: (outwardId != null ? outwardId.value : this.outwardId),
+      notes: (notes != null ? notes.value : this.notes),
+    );
   }
 }
 
@@ -11199,35 +11780,38 @@ class LinkType {
 }
 
 extension $LinkTypeExtension on LinkType {
-  LinkType copyWith(
-      {String? name, String? inward, String? outward, bool? editable}) {
+  LinkType copyWith({
+    String? name,
+    String? inward,
+    String? outward,
+    bool? editable,
+  }) {
     return LinkType(
-        name: name ?? this.name,
-        inward: inward ?? this.inward,
-        outward: outward ?? this.outward,
-        editable: editable ?? this.editable);
+      name: name ?? this.name,
+      inward: inward ?? this.inward,
+      outward: outward ?? this.outward,
+      editable: editable ?? this.editable,
+    );
   }
 
-  LinkType copyWithWrapped(
-      {Wrapped<String>? name,
-      Wrapped<String>? inward,
-      Wrapped<String>? outward,
-      Wrapped<bool?>? editable}) {
+  LinkType copyWithWrapped({
+    Wrapped<String>? name,
+    Wrapped<String>? inward,
+    Wrapped<String>? outward,
+    Wrapped<bool?>? editable,
+  }) {
     return LinkType(
-        name: (name != null ? name.value : this.name),
-        inward: (inward != null ? inward.value : this.inward),
-        outward: (outward != null ? outward.value : this.outward),
-        editable: (editable != null ? editable.value : this.editable));
+      name: (name != null ? name.value : this.name),
+      inward: (inward != null ? inward.value : this.inward),
+      outward: (outward != null ? outward.value : this.outward),
+      editable: (editable != null ? editable.value : this.editable),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class LinkTypeUpdate {
-  const LinkTypeUpdate({
-    this.name,
-    this.inward,
-    this.outward,
-  });
+  const LinkTypeUpdate({this.name, this.inward, this.outward});
 
   factory LinkTypeUpdate.fromJson(Map<String, dynamic> json) =>
       _$LinkTypeUpdateFromJson(json);
@@ -11250,19 +11834,22 @@ class LinkTypeUpdate {
 extension $LinkTypeUpdateExtension on LinkTypeUpdate {
   LinkTypeUpdate copyWith({String? name, String? inward, String? outward}) {
     return LinkTypeUpdate(
-        name: name ?? this.name,
-        inward: inward ?? this.inward,
-        outward: outward ?? this.outward);
+      name: name ?? this.name,
+      inward: inward ?? this.inward,
+      outward: outward ?? this.outward,
+    );
   }
 
-  LinkTypeUpdate copyWithWrapped(
-      {Wrapped<String?>? name,
-      Wrapped<String?>? inward,
-      Wrapped<String?>? outward}) {
+  LinkTypeUpdate copyWithWrapped({
+    Wrapped<String?>? name,
+    Wrapped<String?>? inward,
+    Wrapped<String?>? outward,
+  }) {
     return LinkTypeUpdate(
-        name: (name != null ? name.value : this.name),
-        inward: (inward != null ? inward.value : this.inward),
-        outward: (outward != null ? outward.value : this.outward));
+      name: (name != null ? name.value : this.name),
+      inward: (inward != null ? inward.value : this.inward),
+      outward: (outward != null ? outward.value : this.outward),
+    );
   }
 }
 
@@ -11482,305 +12069,311 @@ class TransactionSplit {
 }
 
 extension $TransactionSplitExtension on TransactionSplit {
-  TransactionSplit copyWith(
-      {String? user,
-      String? transactionJournalId,
-      enums.TransactionTypeProperty? type,
-      DateTime? date,
-      int? order,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      String? currencyName,
-      int? currencyDecimalPlaces,
-      String? foreignCurrencyId,
-      String? foreignCurrencyCode,
-      String? foreignCurrencySymbol,
-      int? foreignCurrencyDecimalPlaces,
-      String? amount,
-      String? foreignAmount,
-      String? description,
-      String? sourceId,
-      String? sourceName,
-      String? sourceIban,
-      enums.AccountTypeProperty? sourceType,
-      String? destinationId,
-      String? destinationName,
-      String? destinationIban,
-      enums.AccountTypeProperty? destinationType,
-      String? budgetId,
-      String? budgetName,
-      String? categoryId,
-      String? categoryName,
-      String? billId,
-      String? billName,
-      bool? reconciled,
-      String? notes,
-      List<String>? tags,
-      String? internalReference,
-      String? externalId,
-      String? externalUrl,
-      String? originalSource,
-      String? recurrenceId,
-      int? recurrenceTotal,
-      int? recurrenceCount,
-      String? bunqPaymentId,
-      String? importHashV2,
-      String? sepaCc,
-      String? sepaCtOp,
-      String? sepaCtId,
-      String? sepaDb,
-      String? sepaCountry,
-      String? sepaEp,
-      String? sepaCi,
-      String? sepaBatchId,
-      DateTime? interestDate,
-      DateTime? bookDate,
-      DateTime? processDate,
-      DateTime? dueDate,
-      DateTime? paymentDate,
-      DateTime? invoiceDate,
-      double? latitude,
-      double? longitude,
-      int? zoomLevel,
-      bool? hasAttachments}) {
+  TransactionSplit copyWith({
+    String? user,
+    String? transactionJournalId,
+    enums.TransactionTypeProperty? type,
+    DateTime? date,
+    int? order,
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    String? currencyName,
+    int? currencyDecimalPlaces,
+    String? foreignCurrencyId,
+    String? foreignCurrencyCode,
+    String? foreignCurrencySymbol,
+    int? foreignCurrencyDecimalPlaces,
+    String? amount,
+    String? foreignAmount,
+    String? description,
+    String? sourceId,
+    String? sourceName,
+    String? sourceIban,
+    enums.AccountTypeProperty? sourceType,
+    String? destinationId,
+    String? destinationName,
+    String? destinationIban,
+    enums.AccountTypeProperty? destinationType,
+    String? budgetId,
+    String? budgetName,
+    String? categoryId,
+    String? categoryName,
+    String? billId,
+    String? billName,
+    bool? reconciled,
+    String? notes,
+    List<String>? tags,
+    String? internalReference,
+    String? externalId,
+    String? externalUrl,
+    String? originalSource,
+    String? recurrenceId,
+    int? recurrenceTotal,
+    int? recurrenceCount,
+    String? bunqPaymentId,
+    String? importHashV2,
+    String? sepaCc,
+    String? sepaCtOp,
+    String? sepaCtId,
+    String? sepaDb,
+    String? sepaCountry,
+    String? sepaEp,
+    String? sepaCi,
+    String? sepaBatchId,
+    DateTime? interestDate,
+    DateTime? bookDate,
+    DateTime? processDate,
+    DateTime? dueDate,
+    DateTime? paymentDate,
+    DateTime? invoiceDate,
+    double? latitude,
+    double? longitude,
+    int? zoomLevel,
+    bool? hasAttachments,
+  }) {
     return TransactionSplit(
-        user: user ?? this.user,
-        transactionJournalId: transactionJournalId ?? this.transactionJournalId,
-        type: type ?? this.type,
-        date: date ?? this.date,
-        order: order ?? this.order,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyName: currencyName ?? this.currencyName,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
-        foreignCurrencyCode: foreignCurrencyCode ?? this.foreignCurrencyCode,
-        foreignCurrencySymbol:
-            foreignCurrencySymbol ?? this.foreignCurrencySymbol,
-        foreignCurrencyDecimalPlaces:
-            foreignCurrencyDecimalPlaces ?? this.foreignCurrencyDecimalPlaces,
-        amount: amount ?? this.amount,
-        foreignAmount: foreignAmount ?? this.foreignAmount,
-        description: description ?? this.description,
-        sourceId: sourceId ?? this.sourceId,
-        sourceName: sourceName ?? this.sourceName,
-        sourceIban: sourceIban ?? this.sourceIban,
-        sourceType: sourceType ?? this.sourceType,
-        destinationId: destinationId ?? this.destinationId,
-        destinationName: destinationName ?? this.destinationName,
-        destinationIban: destinationIban ?? this.destinationIban,
-        destinationType: destinationType ?? this.destinationType,
-        budgetId: budgetId ?? this.budgetId,
-        budgetName: budgetName ?? this.budgetName,
-        categoryId: categoryId ?? this.categoryId,
-        categoryName: categoryName ?? this.categoryName,
-        billId: billId ?? this.billId,
-        billName: billName ?? this.billName,
-        reconciled: reconciled ?? this.reconciled,
-        notes: notes ?? this.notes,
-        tags: tags ?? this.tags,
-        internalReference: internalReference ?? this.internalReference,
-        externalId: externalId ?? this.externalId,
-        externalUrl: externalUrl ?? this.externalUrl,
-        originalSource: originalSource ?? this.originalSource,
-        recurrenceId: recurrenceId ?? this.recurrenceId,
-        recurrenceTotal: recurrenceTotal ?? this.recurrenceTotal,
-        recurrenceCount: recurrenceCount ?? this.recurrenceCount,
-        bunqPaymentId: bunqPaymentId ?? this.bunqPaymentId,
-        importHashV2: importHashV2 ?? this.importHashV2,
-        sepaCc: sepaCc ?? this.sepaCc,
-        sepaCtOp: sepaCtOp ?? this.sepaCtOp,
-        sepaCtId: sepaCtId ?? this.sepaCtId,
-        sepaDb: sepaDb ?? this.sepaDb,
-        sepaCountry: sepaCountry ?? this.sepaCountry,
-        sepaEp: sepaEp ?? this.sepaEp,
-        sepaCi: sepaCi ?? this.sepaCi,
-        sepaBatchId: sepaBatchId ?? this.sepaBatchId,
-        interestDate: interestDate ?? this.interestDate,
-        bookDate: bookDate ?? this.bookDate,
-        processDate: processDate ?? this.processDate,
-        dueDate: dueDate ?? this.dueDate,
-        paymentDate: paymentDate ?? this.paymentDate,
-        invoiceDate: invoiceDate ?? this.invoiceDate,
-        latitude: latitude ?? this.latitude,
-        longitude: longitude ?? this.longitude,
-        zoomLevel: zoomLevel ?? this.zoomLevel,
-        hasAttachments: hasAttachments ?? this.hasAttachments);
+      user: user ?? this.user,
+      transactionJournalId: transactionJournalId ?? this.transactionJournalId,
+      type: type ?? this.type,
+      date: date ?? this.date,
+      order: order ?? this.order,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyName: currencyName ?? this.currencyName,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
+      foreignCurrencyCode: foreignCurrencyCode ?? this.foreignCurrencyCode,
+      foreignCurrencySymbol:
+          foreignCurrencySymbol ?? this.foreignCurrencySymbol,
+      foreignCurrencyDecimalPlaces:
+          foreignCurrencyDecimalPlaces ?? this.foreignCurrencyDecimalPlaces,
+      amount: amount ?? this.amount,
+      foreignAmount: foreignAmount ?? this.foreignAmount,
+      description: description ?? this.description,
+      sourceId: sourceId ?? this.sourceId,
+      sourceName: sourceName ?? this.sourceName,
+      sourceIban: sourceIban ?? this.sourceIban,
+      sourceType: sourceType ?? this.sourceType,
+      destinationId: destinationId ?? this.destinationId,
+      destinationName: destinationName ?? this.destinationName,
+      destinationIban: destinationIban ?? this.destinationIban,
+      destinationType: destinationType ?? this.destinationType,
+      budgetId: budgetId ?? this.budgetId,
+      budgetName: budgetName ?? this.budgetName,
+      categoryId: categoryId ?? this.categoryId,
+      categoryName: categoryName ?? this.categoryName,
+      billId: billId ?? this.billId,
+      billName: billName ?? this.billName,
+      reconciled: reconciled ?? this.reconciled,
+      notes: notes ?? this.notes,
+      tags: tags ?? this.tags,
+      internalReference: internalReference ?? this.internalReference,
+      externalId: externalId ?? this.externalId,
+      externalUrl: externalUrl ?? this.externalUrl,
+      originalSource: originalSource ?? this.originalSource,
+      recurrenceId: recurrenceId ?? this.recurrenceId,
+      recurrenceTotal: recurrenceTotal ?? this.recurrenceTotal,
+      recurrenceCount: recurrenceCount ?? this.recurrenceCount,
+      bunqPaymentId: bunqPaymentId ?? this.bunqPaymentId,
+      importHashV2: importHashV2 ?? this.importHashV2,
+      sepaCc: sepaCc ?? this.sepaCc,
+      sepaCtOp: sepaCtOp ?? this.sepaCtOp,
+      sepaCtId: sepaCtId ?? this.sepaCtId,
+      sepaDb: sepaDb ?? this.sepaDb,
+      sepaCountry: sepaCountry ?? this.sepaCountry,
+      sepaEp: sepaEp ?? this.sepaEp,
+      sepaCi: sepaCi ?? this.sepaCi,
+      sepaBatchId: sepaBatchId ?? this.sepaBatchId,
+      interestDate: interestDate ?? this.interestDate,
+      bookDate: bookDate ?? this.bookDate,
+      processDate: processDate ?? this.processDate,
+      dueDate: dueDate ?? this.dueDate,
+      paymentDate: paymentDate ?? this.paymentDate,
+      invoiceDate: invoiceDate ?? this.invoiceDate,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      zoomLevel: zoomLevel ?? this.zoomLevel,
+      hasAttachments: hasAttachments ?? this.hasAttachments,
+    );
   }
 
-  TransactionSplit copyWithWrapped(
-      {Wrapped<String?>? user,
-      Wrapped<String?>? transactionJournalId,
-      Wrapped<enums.TransactionTypeProperty>? type,
-      Wrapped<DateTime>? date,
-      Wrapped<int?>? order,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<String?>? currencyName,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? foreignCurrencyId,
-      Wrapped<String?>? foreignCurrencyCode,
-      Wrapped<String?>? foreignCurrencySymbol,
-      Wrapped<int?>? foreignCurrencyDecimalPlaces,
-      Wrapped<String>? amount,
-      Wrapped<String?>? foreignAmount,
-      Wrapped<String>? description,
-      Wrapped<String?>? sourceId,
-      Wrapped<String?>? sourceName,
-      Wrapped<String?>? sourceIban,
-      Wrapped<enums.AccountTypeProperty?>? sourceType,
-      Wrapped<String?>? destinationId,
-      Wrapped<String?>? destinationName,
-      Wrapped<String?>? destinationIban,
-      Wrapped<enums.AccountTypeProperty?>? destinationType,
-      Wrapped<String?>? budgetId,
-      Wrapped<String?>? budgetName,
-      Wrapped<String?>? categoryId,
-      Wrapped<String?>? categoryName,
-      Wrapped<String?>? billId,
-      Wrapped<String?>? billName,
-      Wrapped<bool?>? reconciled,
-      Wrapped<String?>? notes,
-      Wrapped<List<String>?>? tags,
-      Wrapped<String?>? internalReference,
-      Wrapped<String?>? externalId,
-      Wrapped<String?>? externalUrl,
-      Wrapped<String?>? originalSource,
-      Wrapped<String?>? recurrenceId,
-      Wrapped<int?>? recurrenceTotal,
-      Wrapped<int?>? recurrenceCount,
-      Wrapped<String?>? bunqPaymentId,
-      Wrapped<String?>? importHashV2,
-      Wrapped<String?>? sepaCc,
-      Wrapped<String?>? sepaCtOp,
-      Wrapped<String?>? sepaCtId,
-      Wrapped<String?>? sepaDb,
-      Wrapped<String?>? sepaCountry,
-      Wrapped<String?>? sepaEp,
-      Wrapped<String?>? sepaCi,
-      Wrapped<String?>? sepaBatchId,
-      Wrapped<DateTime?>? interestDate,
-      Wrapped<DateTime?>? bookDate,
-      Wrapped<DateTime?>? processDate,
-      Wrapped<DateTime?>? dueDate,
-      Wrapped<DateTime?>? paymentDate,
-      Wrapped<DateTime?>? invoiceDate,
-      Wrapped<double?>? latitude,
-      Wrapped<double?>? longitude,
-      Wrapped<int?>? zoomLevel,
-      Wrapped<bool?>? hasAttachments}) {
+  TransactionSplit copyWithWrapped({
+    Wrapped<String?>? user,
+    Wrapped<String?>? transactionJournalId,
+    Wrapped<enums.TransactionTypeProperty>? type,
+    Wrapped<DateTime>? date,
+    Wrapped<int?>? order,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<String?>? currencyName,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? foreignCurrencyId,
+    Wrapped<String?>? foreignCurrencyCode,
+    Wrapped<String?>? foreignCurrencySymbol,
+    Wrapped<int?>? foreignCurrencyDecimalPlaces,
+    Wrapped<String>? amount,
+    Wrapped<String?>? foreignAmount,
+    Wrapped<String>? description,
+    Wrapped<String?>? sourceId,
+    Wrapped<String?>? sourceName,
+    Wrapped<String?>? sourceIban,
+    Wrapped<enums.AccountTypeProperty?>? sourceType,
+    Wrapped<String?>? destinationId,
+    Wrapped<String?>? destinationName,
+    Wrapped<String?>? destinationIban,
+    Wrapped<enums.AccountTypeProperty?>? destinationType,
+    Wrapped<String?>? budgetId,
+    Wrapped<String?>? budgetName,
+    Wrapped<String?>? categoryId,
+    Wrapped<String?>? categoryName,
+    Wrapped<String?>? billId,
+    Wrapped<String?>? billName,
+    Wrapped<bool?>? reconciled,
+    Wrapped<String?>? notes,
+    Wrapped<List<String>?>? tags,
+    Wrapped<String?>? internalReference,
+    Wrapped<String?>? externalId,
+    Wrapped<String?>? externalUrl,
+    Wrapped<String?>? originalSource,
+    Wrapped<String?>? recurrenceId,
+    Wrapped<int?>? recurrenceTotal,
+    Wrapped<int?>? recurrenceCount,
+    Wrapped<String?>? bunqPaymentId,
+    Wrapped<String?>? importHashV2,
+    Wrapped<String?>? sepaCc,
+    Wrapped<String?>? sepaCtOp,
+    Wrapped<String?>? sepaCtId,
+    Wrapped<String?>? sepaDb,
+    Wrapped<String?>? sepaCountry,
+    Wrapped<String?>? sepaEp,
+    Wrapped<String?>? sepaCi,
+    Wrapped<String?>? sepaBatchId,
+    Wrapped<DateTime?>? interestDate,
+    Wrapped<DateTime?>? bookDate,
+    Wrapped<DateTime?>? processDate,
+    Wrapped<DateTime?>? dueDate,
+    Wrapped<DateTime?>? paymentDate,
+    Wrapped<DateTime?>? invoiceDate,
+    Wrapped<double?>? latitude,
+    Wrapped<double?>? longitude,
+    Wrapped<int?>? zoomLevel,
+    Wrapped<bool?>? hasAttachments,
+  }) {
     return TransactionSplit(
-        user: (user != null ? user.value : this.user),
-        transactionJournalId: (transactionJournalId != null
-            ? transactionJournalId.value
-            : this.transactionJournalId),
-        type: (type != null ? type.value : this.type),
-        date: (date != null ? date.value : this.date),
-        order: (order != null ? order.value : this.order),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyName:
-            (currencyName != null ? currencyName.value : this.currencyName),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        foreignCurrencyId: (foreignCurrencyId != null
-            ? foreignCurrencyId.value
-            : this.foreignCurrencyId),
-        foreignCurrencyCode: (foreignCurrencyCode != null
-            ? foreignCurrencyCode.value
-            : this.foreignCurrencyCode),
-        foreignCurrencySymbol: (foreignCurrencySymbol != null
-            ? foreignCurrencySymbol.value
-            : this.foreignCurrencySymbol),
-        foreignCurrencyDecimalPlaces: (foreignCurrencyDecimalPlaces != null
-            ? foreignCurrencyDecimalPlaces.value
-            : this.foreignCurrencyDecimalPlaces),
-        amount: (amount != null ? amount.value : this.amount),
-        foreignAmount:
-            (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
-        description:
-            (description != null ? description.value : this.description),
-        sourceId: (sourceId != null ? sourceId.value : this.sourceId),
-        sourceName: (sourceName != null ? sourceName.value : this.sourceName),
-        sourceIban: (sourceIban != null ? sourceIban.value : this.sourceIban),
-        sourceType: (sourceType != null ? sourceType.value : this.sourceType),
-        destinationId:
-            (destinationId != null ? destinationId.value : this.destinationId),
-        destinationName: (destinationName != null
-            ? destinationName.value
-            : this.destinationName),
-        destinationIban: (destinationIban != null
-            ? destinationIban.value
-            : this.destinationIban),
-        destinationType: (destinationType != null
-            ? destinationType.value
-            : this.destinationType),
-        budgetId: (budgetId != null ? budgetId.value : this.budgetId),
-        budgetName: (budgetName != null ? budgetName.value : this.budgetName),
-        categoryId: (categoryId != null ? categoryId.value : this.categoryId),
-        categoryName:
-            (categoryName != null ? categoryName.value : this.categoryName),
-        billId: (billId != null ? billId.value : this.billId),
-        billName: (billName != null ? billName.value : this.billName),
-        reconciled: (reconciled != null ? reconciled.value : this.reconciled),
-        notes: (notes != null ? notes.value : this.notes),
-        tags: (tags != null ? tags.value : this.tags),
-        internalReference: (internalReference != null
-            ? internalReference.value
-            : this.internalReference),
-        externalId: (externalId != null ? externalId.value : this.externalId),
-        externalUrl:
-            (externalUrl != null ? externalUrl.value : this.externalUrl),
-        originalSource: (originalSource != null
-            ? originalSource.value
-            : this.originalSource),
-        recurrenceId:
-            (recurrenceId != null ? recurrenceId.value : this.recurrenceId),
-        recurrenceTotal: (recurrenceTotal != null
-            ? recurrenceTotal.value
-            : this.recurrenceTotal),
-        recurrenceCount: (recurrenceCount != null
-            ? recurrenceCount.value
-            : this.recurrenceCount),
-        bunqPaymentId:
-            (bunqPaymentId != null ? bunqPaymentId.value : this.bunqPaymentId),
-        importHashV2:
-            (importHashV2 != null ? importHashV2.value : this.importHashV2),
-        sepaCc: (sepaCc != null ? sepaCc.value : this.sepaCc),
-        sepaCtOp: (sepaCtOp != null ? sepaCtOp.value : this.sepaCtOp),
-        sepaCtId: (sepaCtId != null ? sepaCtId.value : this.sepaCtId),
-        sepaDb: (sepaDb != null ? sepaDb.value : this.sepaDb),
-        sepaCountry:
-            (sepaCountry != null ? sepaCountry.value : this.sepaCountry),
-        sepaEp: (sepaEp != null ? sepaEp.value : this.sepaEp),
-        sepaCi: (sepaCi != null ? sepaCi.value : this.sepaCi),
-        sepaBatchId:
-            (sepaBatchId != null ? sepaBatchId.value : this.sepaBatchId),
-        interestDate:
-            (interestDate != null ? interestDate.value : this.interestDate),
-        bookDate: (bookDate != null ? bookDate.value : this.bookDate),
-        processDate:
-            (processDate != null ? processDate.value : this.processDate),
-        dueDate: (dueDate != null ? dueDate.value : this.dueDate),
-        paymentDate:
-            (paymentDate != null ? paymentDate.value : this.paymentDate),
-        invoiceDate:
-            (invoiceDate != null ? invoiceDate.value : this.invoiceDate),
-        latitude: (latitude != null ? latitude.value : this.latitude),
-        longitude: (longitude != null ? longitude.value : this.longitude),
-        zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel),
-        hasAttachments: (hasAttachments != null
-            ? hasAttachments.value
-            : this.hasAttachments));
+      user: (user != null ? user.value : this.user),
+      transactionJournalId:
+          (transactionJournalId != null
+              ? transactionJournalId.value
+              : this.transactionJournalId),
+      type: (type != null ? type.value : this.type),
+      date: (date != null ? date.value : this.date),
+      order: (order != null ? order.value : this.order),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyName:
+          (currencyName != null ? currencyName.value : this.currencyName),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      foreignCurrencyId:
+          (foreignCurrencyId != null
+              ? foreignCurrencyId.value
+              : this.foreignCurrencyId),
+      foreignCurrencyCode:
+          (foreignCurrencyCode != null
+              ? foreignCurrencyCode.value
+              : this.foreignCurrencyCode),
+      foreignCurrencySymbol:
+          (foreignCurrencySymbol != null
+              ? foreignCurrencySymbol.value
+              : this.foreignCurrencySymbol),
+      foreignCurrencyDecimalPlaces:
+          (foreignCurrencyDecimalPlaces != null
+              ? foreignCurrencyDecimalPlaces.value
+              : this.foreignCurrencyDecimalPlaces),
+      amount: (amount != null ? amount.value : this.amount),
+      foreignAmount:
+          (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
+      description: (description != null ? description.value : this.description),
+      sourceId: (sourceId != null ? sourceId.value : this.sourceId),
+      sourceName: (sourceName != null ? sourceName.value : this.sourceName),
+      sourceIban: (sourceIban != null ? sourceIban.value : this.sourceIban),
+      sourceType: (sourceType != null ? sourceType.value : this.sourceType),
+      destinationId:
+          (destinationId != null ? destinationId.value : this.destinationId),
+      destinationName:
+          (destinationName != null
+              ? destinationName.value
+              : this.destinationName),
+      destinationIban:
+          (destinationIban != null
+              ? destinationIban.value
+              : this.destinationIban),
+      destinationType:
+          (destinationType != null
+              ? destinationType.value
+              : this.destinationType),
+      budgetId: (budgetId != null ? budgetId.value : this.budgetId),
+      budgetName: (budgetName != null ? budgetName.value : this.budgetName),
+      categoryId: (categoryId != null ? categoryId.value : this.categoryId),
+      categoryName:
+          (categoryName != null ? categoryName.value : this.categoryName),
+      billId: (billId != null ? billId.value : this.billId),
+      billName: (billName != null ? billName.value : this.billName),
+      reconciled: (reconciled != null ? reconciled.value : this.reconciled),
+      notes: (notes != null ? notes.value : this.notes),
+      tags: (tags != null ? tags.value : this.tags),
+      internalReference:
+          (internalReference != null
+              ? internalReference.value
+              : this.internalReference),
+      externalId: (externalId != null ? externalId.value : this.externalId),
+      externalUrl: (externalUrl != null ? externalUrl.value : this.externalUrl),
+      originalSource:
+          (originalSource != null ? originalSource.value : this.originalSource),
+      recurrenceId:
+          (recurrenceId != null ? recurrenceId.value : this.recurrenceId),
+      recurrenceTotal:
+          (recurrenceTotal != null
+              ? recurrenceTotal.value
+              : this.recurrenceTotal),
+      recurrenceCount:
+          (recurrenceCount != null
+              ? recurrenceCount.value
+              : this.recurrenceCount),
+      bunqPaymentId:
+          (bunqPaymentId != null ? bunqPaymentId.value : this.bunqPaymentId),
+      importHashV2:
+          (importHashV2 != null ? importHashV2.value : this.importHashV2),
+      sepaCc: (sepaCc != null ? sepaCc.value : this.sepaCc),
+      sepaCtOp: (sepaCtOp != null ? sepaCtOp.value : this.sepaCtOp),
+      sepaCtId: (sepaCtId != null ? sepaCtId.value : this.sepaCtId),
+      sepaDb: (sepaDb != null ? sepaDb.value : this.sepaDb),
+      sepaCountry: (sepaCountry != null ? sepaCountry.value : this.sepaCountry),
+      sepaEp: (sepaEp != null ? sepaEp.value : this.sepaEp),
+      sepaCi: (sepaCi != null ? sepaCi.value : this.sepaCi),
+      sepaBatchId: (sepaBatchId != null ? sepaBatchId.value : this.sepaBatchId),
+      interestDate:
+          (interestDate != null ? interestDate.value : this.interestDate),
+      bookDate: (bookDate != null ? bookDate.value : this.bookDate),
+      processDate: (processDate != null ? processDate.value : this.processDate),
+      dueDate: (dueDate != null ? dueDate.value : this.dueDate),
+      paymentDate: (paymentDate != null ? paymentDate.value : this.paymentDate),
+      invoiceDate: (invoiceDate != null ? invoiceDate.value : this.invoiceDate),
+      latitude: (latitude != null ? latitude.value : this.latitude),
+      longitude: (longitude != null ? longitude.value : this.longitude),
+      zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel),
+      hasAttachments:
+          (hasAttachments != null ? hasAttachments.value : this.hasAttachments),
+    );
   }
 }
 
@@ -11936,207 +12529,207 @@ class TransactionSplitStore {
 }
 
 extension $TransactionSplitStoreExtension on TransactionSplitStore {
-  TransactionSplitStore copyWith(
-      {enums.TransactionTypeProperty? type,
-      DateTime? date,
-      String? amount,
-      String? description,
-      int? order,
-      String? currencyId,
-      String? currencyCode,
-      String? foreignAmount,
-      String? foreignCurrencyId,
-      String? foreignCurrencyCode,
-      String? budgetId,
-      String? budgetName,
-      String? categoryId,
-      String? categoryName,
-      String? sourceId,
-      String? sourceName,
-      String? destinationId,
-      String? destinationName,
-      bool? reconciled,
-      int? piggyBankId,
-      String? piggyBankName,
-      String? billId,
-      String? billName,
-      List<String>? tags,
-      String? notes,
-      String? internalReference,
-      String? externalId,
-      String? externalUrl,
-      String? bunqPaymentId,
-      String? sepaCc,
-      String? sepaCtOp,
-      String? sepaCtId,
-      String? sepaDb,
-      String? sepaCountry,
-      String? sepaEp,
-      String? sepaCi,
-      String? sepaBatchId,
-      DateTime? interestDate,
-      DateTime? bookDate,
-      DateTime? processDate,
-      DateTime? dueDate,
-      DateTime? paymentDate,
-      DateTime? invoiceDate}) {
+  TransactionSplitStore copyWith({
+    enums.TransactionTypeProperty? type,
+    DateTime? date,
+    String? amount,
+    String? description,
+    int? order,
+    String? currencyId,
+    String? currencyCode,
+    String? foreignAmount,
+    String? foreignCurrencyId,
+    String? foreignCurrencyCode,
+    String? budgetId,
+    String? budgetName,
+    String? categoryId,
+    String? categoryName,
+    String? sourceId,
+    String? sourceName,
+    String? destinationId,
+    String? destinationName,
+    bool? reconciled,
+    int? piggyBankId,
+    String? piggyBankName,
+    String? billId,
+    String? billName,
+    List<String>? tags,
+    String? notes,
+    String? internalReference,
+    String? externalId,
+    String? externalUrl,
+    String? bunqPaymentId,
+    String? sepaCc,
+    String? sepaCtOp,
+    String? sepaCtId,
+    String? sepaDb,
+    String? sepaCountry,
+    String? sepaEp,
+    String? sepaCi,
+    String? sepaBatchId,
+    DateTime? interestDate,
+    DateTime? bookDate,
+    DateTime? processDate,
+    DateTime? dueDate,
+    DateTime? paymentDate,
+    DateTime? invoiceDate,
+  }) {
     return TransactionSplitStore(
-        type: type ?? this.type,
-        date: date ?? this.date,
-        amount: amount ?? this.amount,
-        description: description ?? this.description,
-        order: order ?? this.order,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        foreignAmount: foreignAmount ?? this.foreignAmount,
-        foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
-        foreignCurrencyCode: foreignCurrencyCode ?? this.foreignCurrencyCode,
-        budgetId: budgetId ?? this.budgetId,
-        budgetName: budgetName ?? this.budgetName,
-        categoryId: categoryId ?? this.categoryId,
-        categoryName: categoryName ?? this.categoryName,
-        sourceId: sourceId ?? this.sourceId,
-        sourceName: sourceName ?? this.sourceName,
-        destinationId: destinationId ?? this.destinationId,
-        destinationName: destinationName ?? this.destinationName,
-        reconciled: reconciled ?? this.reconciled,
-        piggyBankId: piggyBankId ?? this.piggyBankId,
-        piggyBankName: piggyBankName ?? this.piggyBankName,
-        billId: billId ?? this.billId,
-        billName: billName ?? this.billName,
-        tags: tags ?? this.tags,
-        notes: notes ?? this.notes,
-        internalReference: internalReference ?? this.internalReference,
-        externalId: externalId ?? this.externalId,
-        externalUrl: externalUrl ?? this.externalUrl,
-        bunqPaymentId: bunqPaymentId ?? this.bunqPaymentId,
-        sepaCc: sepaCc ?? this.sepaCc,
-        sepaCtOp: sepaCtOp ?? this.sepaCtOp,
-        sepaCtId: sepaCtId ?? this.sepaCtId,
-        sepaDb: sepaDb ?? this.sepaDb,
-        sepaCountry: sepaCountry ?? this.sepaCountry,
-        sepaEp: sepaEp ?? this.sepaEp,
-        sepaCi: sepaCi ?? this.sepaCi,
-        sepaBatchId: sepaBatchId ?? this.sepaBatchId,
-        interestDate: interestDate ?? this.interestDate,
-        bookDate: bookDate ?? this.bookDate,
-        processDate: processDate ?? this.processDate,
-        dueDate: dueDate ?? this.dueDate,
-        paymentDate: paymentDate ?? this.paymentDate,
-        invoiceDate: invoiceDate ?? this.invoiceDate);
+      type: type ?? this.type,
+      date: date ?? this.date,
+      amount: amount ?? this.amount,
+      description: description ?? this.description,
+      order: order ?? this.order,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      foreignAmount: foreignAmount ?? this.foreignAmount,
+      foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
+      foreignCurrencyCode: foreignCurrencyCode ?? this.foreignCurrencyCode,
+      budgetId: budgetId ?? this.budgetId,
+      budgetName: budgetName ?? this.budgetName,
+      categoryId: categoryId ?? this.categoryId,
+      categoryName: categoryName ?? this.categoryName,
+      sourceId: sourceId ?? this.sourceId,
+      sourceName: sourceName ?? this.sourceName,
+      destinationId: destinationId ?? this.destinationId,
+      destinationName: destinationName ?? this.destinationName,
+      reconciled: reconciled ?? this.reconciled,
+      piggyBankId: piggyBankId ?? this.piggyBankId,
+      piggyBankName: piggyBankName ?? this.piggyBankName,
+      billId: billId ?? this.billId,
+      billName: billName ?? this.billName,
+      tags: tags ?? this.tags,
+      notes: notes ?? this.notes,
+      internalReference: internalReference ?? this.internalReference,
+      externalId: externalId ?? this.externalId,
+      externalUrl: externalUrl ?? this.externalUrl,
+      bunqPaymentId: bunqPaymentId ?? this.bunqPaymentId,
+      sepaCc: sepaCc ?? this.sepaCc,
+      sepaCtOp: sepaCtOp ?? this.sepaCtOp,
+      sepaCtId: sepaCtId ?? this.sepaCtId,
+      sepaDb: sepaDb ?? this.sepaDb,
+      sepaCountry: sepaCountry ?? this.sepaCountry,
+      sepaEp: sepaEp ?? this.sepaEp,
+      sepaCi: sepaCi ?? this.sepaCi,
+      sepaBatchId: sepaBatchId ?? this.sepaBatchId,
+      interestDate: interestDate ?? this.interestDate,
+      bookDate: bookDate ?? this.bookDate,
+      processDate: processDate ?? this.processDate,
+      dueDate: dueDate ?? this.dueDate,
+      paymentDate: paymentDate ?? this.paymentDate,
+      invoiceDate: invoiceDate ?? this.invoiceDate,
+    );
   }
 
-  TransactionSplitStore copyWithWrapped(
-      {Wrapped<enums.TransactionTypeProperty>? type,
-      Wrapped<DateTime>? date,
-      Wrapped<String>? amount,
-      Wrapped<String>? description,
-      Wrapped<int?>? order,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? foreignAmount,
-      Wrapped<String?>? foreignCurrencyId,
-      Wrapped<String?>? foreignCurrencyCode,
-      Wrapped<String?>? budgetId,
-      Wrapped<String?>? budgetName,
-      Wrapped<String?>? categoryId,
-      Wrapped<String?>? categoryName,
-      Wrapped<String?>? sourceId,
-      Wrapped<String?>? sourceName,
-      Wrapped<String?>? destinationId,
-      Wrapped<String?>? destinationName,
-      Wrapped<bool?>? reconciled,
-      Wrapped<int?>? piggyBankId,
-      Wrapped<String?>? piggyBankName,
-      Wrapped<String?>? billId,
-      Wrapped<String?>? billName,
-      Wrapped<List<String>?>? tags,
-      Wrapped<String?>? notes,
-      Wrapped<String?>? internalReference,
-      Wrapped<String?>? externalId,
-      Wrapped<String?>? externalUrl,
-      Wrapped<String?>? bunqPaymentId,
-      Wrapped<String?>? sepaCc,
-      Wrapped<String?>? sepaCtOp,
-      Wrapped<String?>? sepaCtId,
-      Wrapped<String?>? sepaDb,
-      Wrapped<String?>? sepaCountry,
-      Wrapped<String?>? sepaEp,
-      Wrapped<String?>? sepaCi,
-      Wrapped<String?>? sepaBatchId,
-      Wrapped<DateTime?>? interestDate,
-      Wrapped<DateTime?>? bookDate,
-      Wrapped<DateTime?>? processDate,
-      Wrapped<DateTime?>? dueDate,
-      Wrapped<DateTime?>? paymentDate,
-      Wrapped<DateTime?>? invoiceDate}) {
+  TransactionSplitStore copyWithWrapped({
+    Wrapped<enums.TransactionTypeProperty>? type,
+    Wrapped<DateTime>? date,
+    Wrapped<String>? amount,
+    Wrapped<String>? description,
+    Wrapped<int?>? order,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? foreignAmount,
+    Wrapped<String?>? foreignCurrencyId,
+    Wrapped<String?>? foreignCurrencyCode,
+    Wrapped<String?>? budgetId,
+    Wrapped<String?>? budgetName,
+    Wrapped<String?>? categoryId,
+    Wrapped<String?>? categoryName,
+    Wrapped<String?>? sourceId,
+    Wrapped<String?>? sourceName,
+    Wrapped<String?>? destinationId,
+    Wrapped<String?>? destinationName,
+    Wrapped<bool?>? reconciled,
+    Wrapped<int?>? piggyBankId,
+    Wrapped<String?>? piggyBankName,
+    Wrapped<String?>? billId,
+    Wrapped<String?>? billName,
+    Wrapped<List<String>?>? tags,
+    Wrapped<String?>? notes,
+    Wrapped<String?>? internalReference,
+    Wrapped<String?>? externalId,
+    Wrapped<String?>? externalUrl,
+    Wrapped<String?>? bunqPaymentId,
+    Wrapped<String?>? sepaCc,
+    Wrapped<String?>? sepaCtOp,
+    Wrapped<String?>? sepaCtId,
+    Wrapped<String?>? sepaDb,
+    Wrapped<String?>? sepaCountry,
+    Wrapped<String?>? sepaEp,
+    Wrapped<String?>? sepaCi,
+    Wrapped<String?>? sepaBatchId,
+    Wrapped<DateTime?>? interestDate,
+    Wrapped<DateTime?>? bookDate,
+    Wrapped<DateTime?>? processDate,
+    Wrapped<DateTime?>? dueDate,
+    Wrapped<DateTime?>? paymentDate,
+    Wrapped<DateTime?>? invoiceDate,
+  }) {
     return TransactionSplitStore(
-        type: (type != null ? type.value : this.type),
-        date: (date != null ? date.value : this.date),
-        amount: (amount != null ? amount.value : this.amount),
-        description:
-            (description != null ? description.value : this.description),
-        order: (order != null ? order.value : this.order),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        foreignAmount:
-            (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
-        foreignCurrencyId: (foreignCurrencyId != null
-            ? foreignCurrencyId.value
-            : this.foreignCurrencyId),
-        foreignCurrencyCode: (foreignCurrencyCode != null
-            ? foreignCurrencyCode.value
-            : this.foreignCurrencyCode),
-        budgetId: (budgetId != null ? budgetId.value : this.budgetId),
-        budgetName: (budgetName != null ? budgetName.value : this.budgetName),
-        categoryId: (categoryId != null ? categoryId.value : this.categoryId),
-        categoryName:
-            (categoryName != null ? categoryName.value : this.categoryName),
-        sourceId: (sourceId != null ? sourceId.value : this.sourceId),
-        sourceName: (sourceName != null ? sourceName.value : this.sourceName),
-        destinationId:
-            (destinationId != null ? destinationId.value : this.destinationId),
-        destinationName: (destinationName != null
-            ? destinationName.value
-            : this.destinationName),
-        reconciled: (reconciled != null ? reconciled.value : this.reconciled),
-        piggyBankId:
-            (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
-        piggyBankName:
-            (piggyBankName != null ? piggyBankName.value : this.piggyBankName),
-        billId: (billId != null ? billId.value : this.billId),
-        billName: (billName != null ? billName.value : this.billName),
-        tags: (tags != null ? tags.value : this.tags),
-        notes: (notes != null ? notes.value : this.notes),
-        internalReference: (internalReference != null
-            ? internalReference.value
-            : this.internalReference),
-        externalId: (externalId != null ? externalId.value : this.externalId),
-        externalUrl:
-            (externalUrl != null ? externalUrl.value : this.externalUrl),
-        bunqPaymentId:
-            (bunqPaymentId != null ? bunqPaymentId.value : this.bunqPaymentId),
-        sepaCc: (sepaCc != null ? sepaCc.value : this.sepaCc),
-        sepaCtOp: (sepaCtOp != null ? sepaCtOp.value : this.sepaCtOp),
-        sepaCtId: (sepaCtId != null ? sepaCtId.value : this.sepaCtId),
-        sepaDb: (sepaDb != null ? sepaDb.value : this.sepaDb),
-        sepaCountry:
-            (sepaCountry != null ? sepaCountry.value : this.sepaCountry),
-        sepaEp: (sepaEp != null ? sepaEp.value : this.sepaEp),
-        sepaCi: (sepaCi != null ? sepaCi.value : this.sepaCi),
-        sepaBatchId:
-            (sepaBatchId != null ? sepaBatchId.value : this.sepaBatchId),
-        interestDate:
-            (interestDate != null ? interestDate.value : this.interestDate),
-        bookDate: (bookDate != null ? bookDate.value : this.bookDate),
-        processDate:
-            (processDate != null ? processDate.value : this.processDate),
-        dueDate: (dueDate != null ? dueDate.value : this.dueDate),
-        paymentDate:
-            (paymentDate != null ? paymentDate.value : this.paymentDate),
-        invoiceDate:
-            (invoiceDate != null ? invoiceDate.value : this.invoiceDate));
+      type: (type != null ? type.value : this.type),
+      date: (date != null ? date.value : this.date),
+      amount: (amount != null ? amount.value : this.amount),
+      description: (description != null ? description.value : this.description),
+      order: (order != null ? order.value : this.order),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      foreignAmount:
+          (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
+      foreignCurrencyId:
+          (foreignCurrencyId != null
+              ? foreignCurrencyId.value
+              : this.foreignCurrencyId),
+      foreignCurrencyCode:
+          (foreignCurrencyCode != null
+              ? foreignCurrencyCode.value
+              : this.foreignCurrencyCode),
+      budgetId: (budgetId != null ? budgetId.value : this.budgetId),
+      budgetName: (budgetName != null ? budgetName.value : this.budgetName),
+      categoryId: (categoryId != null ? categoryId.value : this.categoryId),
+      categoryName:
+          (categoryName != null ? categoryName.value : this.categoryName),
+      sourceId: (sourceId != null ? sourceId.value : this.sourceId),
+      sourceName: (sourceName != null ? sourceName.value : this.sourceName),
+      destinationId:
+          (destinationId != null ? destinationId.value : this.destinationId),
+      destinationName:
+          (destinationName != null
+              ? destinationName.value
+              : this.destinationName),
+      reconciled: (reconciled != null ? reconciled.value : this.reconciled),
+      piggyBankId: (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
+      piggyBankName:
+          (piggyBankName != null ? piggyBankName.value : this.piggyBankName),
+      billId: (billId != null ? billId.value : this.billId),
+      billName: (billName != null ? billName.value : this.billName),
+      tags: (tags != null ? tags.value : this.tags),
+      notes: (notes != null ? notes.value : this.notes),
+      internalReference:
+          (internalReference != null
+              ? internalReference.value
+              : this.internalReference),
+      externalId: (externalId != null ? externalId.value : this.externalId),
+      externalUrl: (externalUrl != null ? externalUrl.value : this.externalUrl),
+      bunqPaymentId:
+          (bunqPaymentId != null ? bunqPaymentId.value : this.bunqPaymentId),
+      sepaCc: (sepaCc != null ? sepaCc.value : this.sepaCc),
+      sepaCtOp: (sepaCtOp != null ? sepaCtOp.value : this.sepaCtOp),
+      sepaCtId: (sepaCtId != null ? sepaCtId.value : this.sepaCtId),
+      sepaDb: (sepaDb != null ? sepaDb.value : this.sepaDb),
+      sepaCountry: (sepaCountry != null ? sepaCountry.value : this.sepaCountry),
+      sepaEp: (sepaEp != null ? sepaEp.value : this.sepaEp),
+      sepaCi: (sepaCi != null ? sepaCi.value : this.sepaCi),
+      sepaBatchId: (sepaBatchId != null ? sepaBatchId.value : this.sepaBatchId),
+      interestDate:
+          (interestDate != null ? interestDate.value : this.interestDate),
+      bookDate: (bookDate != null ? bookDate.value : this.bookDate),
+      processDate: (processDate != null ? processDate.value : this.processDate),
+      dueDate: (dueDate != null ? dueDate.value : this.dueDate),
+      paymentDate: (paymentDate != null ? paymentDate.value : this.paymentDate),
+      invoiceDate: (invoiceDate != null ? invoiceDate.value : this.invoiceDate),
+    );
   }
 }
 
@@ -12310,245 +12903,250 @@ class TransactionSplitUpdate {
 }
 
 extension $TransactionSplitUpdateExtension on TransactionSplitUpdate {
-  TransactionSplitUpdate copyWith(
-      {String? transactionJournalId,
-      enums.TransactionTypeProperty? type,
-      DateTime? date,
-      String? amount,
-      String? description,
-      int? order,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      String? currencyName,
-      int? currencyDecimalPlaces,
-      String? foreignAmount,
-      String? foreignCurrencyId,
-      String? foreignCurrencyCode,
-      String? foreignCurrencySymbol,
-      int? foreignCurrencyDecimalPlaces,
-      String? budgetId,
-      String? budgetName,
-      String? categoryId,
-      String? categoryName,
-      String? sourceId,
-      String? sourceName,
-      String? sourceIban,
-      String? destinationId,
-      String? destinationName,
-      String? destinationIban,
-      bool? reconciled,
-      String? billId,
-      String? billName,
-      List<String>? tags,
-      String? notes,
-      String? internalReference,
-      String? externalId,
-      String? externalUrl,
-      String? bunqPaymentId,
-      String? sepaCc,
-      String? sepaCtOp,
-      String? sepaCtId,
-      String? sepaDb,
-      String? sepaCountry,
-      String? sepaEp,
-      String? sepaCi,
-      String? sepaBatchId,
-      DateTime? interestDate,
-      DateTime? bookDate,
-      DateTime? processDate,
-      DateTime? dueDate,
-      DateTime? paymentDate,
-      DateTime? invoiceDate}) {
+  TransactionSplitUpdate copyWith({
+    String? transactionJournalId,
+    enums.TransactionTypeProperty? type,
+    DateTime? date,
+    String? amount,
+    String? description,
+    int? order,
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    String? currencyName,
+    int? currencyDecimalPlaces,
+    String? foreignAmount,
+    String? foreignCurrencyId,
+    String? foreignCurrencyCode,
+    String? foreignCurrencySymbol,
+    int? foreignCurrencyDecimalPlaces,
+    String? budgetId,
+    String? budgetName,
+    String? categoryId,
+    String? categoryName,
+    String? sourceId,
+    String? sourceName,
+    String? sourceIban,
+    String? destinationId,
+    String? destinationName,
+    String? destinationIban,
+    bool? reconciled,
+    String? billId,
+    String? billName,
+    List<String>? tags,
+    String? notes,
+    String? internalReference,
+    String? externalId,
+    String? externalUrl,
+    String? bunqPaymentId,
+    String? sepaCc,
+    String? sepaCtOp,
+    String? sepaCtId,
+    String? sepaDb,
+    String? sepaCountry,
+    String? sepaEp,
+    String? sepaCi,
+    String? sepaBatchId,
+    DateTime? interestDate,
+    DateTime? bookDate,
+    DateTime? processDate,
+    DateTime? dueDate,
+    DateTime? paymentDate,
+    DateTime? invoiceDate,
+  }) {
     return TransactionSplitUpdate(
-        transactionJournalId: transactionJournalId ?? this.transactionJournalId,
-        type: type ?? this.type,
-        date: date ?? this.date,
-        amount: amount ?? this.amount,
-        description: description ?? this.description,
-        order: order ?? this.order,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyName: currencyName ?? this.currencyName,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        foreignAmount: foreignAmount ?? this.foreignAmount,
-        foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
-        foreignCurrencyCode: foreignCurrencyCode ?? this.foreignCurrencyCode,
-        foreignCurrencySymbol:
-            foreignCurrencySymbol ?? this.foreignCurrencySymbol,
-        foreignCurrencyDecimalPlaces:
-            foreignCurrencyDecimalPlaces ?? this.foreignCurrencyDecimalPlaces,
-        budgetId: budgetId ?? this.budgetId,
-        budgetName: budgetName ?? this.budgetName,
-        categoryId: categoryId ?? this.categoryId,
-        categoryName: categoryName ?? this.categoryName,
-        sourceId: sourceId ?? this.sourceId,
-        sourceName: sourceName ?? this.sourceName,
-        sourceIban: sourceIban ?? this.sourceIban,
-        destinationId: destinationId ?? this.destinationId,
-        destinationName: destinationName ?? this.destinationName,
-        destinationIban: destinationIban ?? this.destinationIban,
-        reconciled: reconciled ?? this.reconciled,
-        billId: billId ?? this.billId,
-        billName: billName ?? this.billName,
-        tags: tags ?? this.tags,
-        notes: notes ?? this.notes,
-        internalReference: internalReference ?? this.internalReference,
-        externalId: externalId ?? this.externalId,
-        externalUrl: externalUrl ?? this.externalUrl,
-        bunqPaymentId: bunqPaymentId ?? this.bunqPaymentId,
-        sepaCc: sepaCc ?? this.sepaCc,
-        sepaCtOp: sepaCtOp ?? this.sepaCtOp,
-        sepaCtId: sepaCtId ?? this.sepaCtId,
-        sepaDb: sepaDb ?? this.sepaDb,
-        sepaCountry: sepaCountry ?? this.sepaCountry,
-        sepaEp: sepaEp ?? this.sepaEp,
-        sepaCi: sepaCi ?? this.sepaCi,
-        sepaBatchId: sepaBatchId ?? this.sepaBatchId,
-        interestDate: interestDate ?? this.interestDate,
-        bookDate: bookDate ?? this.bookDate,
-        processDate: processDate ?? this.processDate,
-        dueDate: dueDate ?? this.dueDate,
-        paymentDate: paymentDate ?? this.paymentDate,
-        invoiceDate: invoiceDate ?? this.invoiceDate);
+      transactionJournalId: transactionJournalId ?? this.transactionJournalId,
+      type: type ?? this.type,
+      date: date ?? this.date,
+      amount: amount ?? this.amount,
+      description: description ?? this.description,
+      order: order ?? this.order,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyName: currencyName ?? this.currencyName,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      foreignAmount: foreignAmount ?? this.foreignAmount,
+      foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
+      foreignCurrencyCode: foreignCurrencyCode ?? this.foreignCurrencyCode,
+      foreignCurrencySymbol:
+          foreignCurrencySymbol ?? this.foreignCurrencySymbol,
+      foreignCurrencyDecimalPlaces:
+          foreignCurrencyDecimalPlaces ?? this.foreignCurrencyDecimalPlaces,
+      budgetId: budgetId ?? this.budgetId,
+      budgetName: budgetName ?? this.budgetName,
+      categoryId: categoryId ?? this.categoryId,
+      categoryName: categoryName ?? this.categoryName,
+      sourceId: sourceId ?? this.sourceId,
+      sourceName: sourceName ?? this.sourceName,
+      sourceIban: sourceIban ?? this.sourceIban,
+      destinationId: destinationId ?? this.destinationId,
+      destinationName: destinationName ?? this.destinationName,
+      destinationIban: destinationIban ?? this.destinationIban,
+      reconciled: reconciled ?? this.reconciled,
+      billId: billId ?? this.billId,
+      billName: billName ?? this.billName,
+      tags: tags ?? this.tags,
+      notes: notes ?? this.notes,
+      internalReference: internalReference ?? this.internalReference,
+      externalId: externalId ?? this.externalId,
+      externalUrl: externalUrl ?? this.externalUrl,
+      bunqPaymentId: bunqPaymentId ?? this.bunqPaymentId,
+      sepaCc: sepaCc ?? this.sepaCc,
+      sepaCtOp: sepaCtOp ?? this.sepaCtOp,
+      sepaCtId: sepaCtId ?? this.sepaCtId,
+      sepaDb: sepaDb ?? this.sepaDb,
+      sepaCountry: sepaCountry ?? this.sepaCountry,
+      sepaEp: sepaEp ?? this.sepaEp,
+      sepaCi: sepaCi ?? this.sepaCi,
+      sepaBatchId: sepaBatchId ?? this.sepaBatchId,
+      interestDate: interestDate ?? this.interestDate,
+      bookDate: bookDate ?? this.bookDate,
+      processDate: processDate ?? this.processDate,
+      dueDate: dueDate ?? this.dueDate,
+      paymentDate: paymentDate ?? this.paymentDate,
+      invoiceDate: invoiceDate ?? this.invoiceDate,
+    );
   }
 
-  TransactionSplitUpdate copyWithWrapped(
-      {Wrapped<String?>? transactionJournalId,
-      Wrapped<enums.TransactionTypeProperty?>? type,
-      Wrapped<DateTime?>? date,
-      Wrapped<String?>? amount,
-      Wrapped<String?>? description,
-      Wrapped<int?>? order,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<String?>? currencyName,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? foreignAmount,
-      Wrapped<String?>? foreignCurrencyId,
-      Wrapped<String?>? foreignCurrencyCode,
-      Wrapped<String?>? foreignCurrencySymbol,
-      Wrapped<int?>? foreignCurrencyDecimalPlaces,
-      Wrapped<String?>? budgetId,
-      Wrapped<String?>? budgetName,
-      Wrapped<String?>? categoryId,
-      Wrapped<String?>? categoryName,
-      Wrapped<String?>? sourceId,
-      Wrapped<String?>? sourceName,
-      Wrapped<String?>? sourceIban,
-      Wrapped<String?>? destinationId,
-      Wrapped<String?>? destinationName,
-      Wrapped<String?>? destinationIban,
-      Wrapped<bool?>? reconciled,
-      Wrapped<String?>? billId,
-      Wrapped<String?>? billName,
-      Wrapped<List<String>?>? tags,
-      Wrapped<String?>? notes,
-      Wrapped<String?>? internalReference,
-      Wrapped<String?>? externalId,
-      Wrapped<String?>? externalUrl,
-      Wrapped<String?>? bunqPaymentId,
-      Wrapped<String?>? sepaCc,
-      Wrapped<String?>? sepaCtOp,
-      Wrapped<String?>? sepaCtId,
-      Wrapped<String?>? sepaDb,
-      Wrapped<String?>? sepaCountry,
-      Wrapped<String?>? sepaEp,
-      Wrapped<String?>? sepaCi,
-      Wrapped<String?>? sepaBatchId,
-      Wrapped<DateTime?>? interestDate,
-      Wrapped<DateTime?>? bookDate,
-      Wrapped<DateTime?>? processDate,
-      Wrapped<DateTime?>? dueDate,
-      Wrapped<DateTime?>? paymentDate,
-      Wrapped<DateTime?>? invoiceDate}) {
+  TransactionSplitUpdate copyWithWrapped({
+    Wrapped<String?>? transactionJournalId,
+    Wrapped<enums.TransactionTypeProperty?>? type,
+    Wrapped<DateTime?>? date,
+    Wrapped<String?>? amount,
+    Wrapped<String?>? description,
+    Wrapped<int?>? order,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<String?>? currencyName,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? foreignAmount,
+    Wrapped<String?>? foreignCurrencyId,
+    Wrapped<String?>? foreignCurrencyCode,
+    Wrapped<String?>? foreignCurrencySymbol,
+    Wrapped<int?>? foreignCurrencyDecimalPlaces,
+    Wrapped<String?>? budgetId,
+    Wrapped<String?>? budgetName,
+    Wrapped<String?>? categoryId,
+    Wrapped<String?>? categoryName,
+    Wrapped<String?>? sourceId,
+    Wrapped<String?>? sourceName,
+    Wrapped<String?>? sourceIban,
+    Wrapped<String?>? destinationId,
+    Wrapped<String?>? destinationName,
+    Wrapped<String?>? destinationIban,
+    Wrapped<bool?>? reconciled,
+    Wrapped<String?>? billId,
+    Wrapped<String?>? billName,
+    Wrapped<List<String>?>? tags,
+    Wrapped<String?>? notes,
+    Wrapped<String?>? internalReference,
+    Wrapped<String?>? externalId,
+    Wrapped<String?>? externalUrl,
+    Wrapped<String?>? bunqPaymentId,
+    Wrapped<String?>? sepaCc,
+    Wrapped<String?>? sepaCtOp,
+    Wrapped<String?>? sepaCtId,
+    Wrapped<String?>? sepaDb,
+    Wrapped<String?>? sepaCountry,
+    Wrapped<String?>? sepaEp,
+    Wrapped<String?>? sepaCi,
+    Wrapped<String?>? sepaBatchId,
+    Wrapped<DateTime?>? interestDate,
+    Wrapped<DateTime?>? bookDate,
+    Wrapped<DateTime?>? processDate,
+    Wrapped<DateTime?>? dueDate,
+    Wrapped<DateTime?>? paymentDate,
+    Wrapped<DateTime?>? invoiceDate,
+  }) {
     return TransactionSplitUpdate(
-        transactionJournalId: (transactionJournalId != null
-            ? transactionJournalId.value
-            : this.transactionJournalId),
-        type: (type != null ? type.value : this.type),
-        date: (date != null ? date.value : this.date),
-        amount: (amount != null ? amount.value : this.amount),
-        description:
-            (description != null ? description.value : this.description),
-        order: (order != null ? order.value : this.order),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyName:
-            (currencyName != null ? currencyName.value : this.currencyName),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        foreignAmount:
-            (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
-        foreignCurrencyId: (foreignCurrencyId != null
-            ? foreignCurrencyId.value
-            : this.foreignCurrencyId),
-        foreignCurrencyCode: (foreignCurrencyCode != null
-            ? foreignCurrencyCode.value
-            : this.foreignCurrencyCode),
-        foreignCurrencySymbol: (foreignCurrencySymbol != null
-            ? foreignCurrencySymbol.value
-            : this.foreignCurrencySymbol),
-        foreignCurrencyDecimalPlaces: (foreignCurrencyDecimalPlaces != null
-            ? foreignCurrencyDecimalPlaces.value
-            : this.foreignCurrencyDecimalPlaces),
-        budgetId: (budgetId != null ? budgetId.value : this.budgetId),
-        budgetName: (budgetName != null ? budgetName.value : this.budgetName),
-        categoryId: (categoryId != null ? categoryId.value : this.categoryId),
-        categoryName:
-            (categoryName != null ? categoryName.value : this.categoryName),
-        sourceId: (sourceId != null ? sourceId.value : this.sourceId),
-        sourceName: (sourceName != null ? sourceName.value : this.sourceName),
-        sourceIban: (sourceIban != null ? sourceIban.value : this.sourceIban),
-        destinationId:
-            (destinationId != null ? destinationId.value : this.destinationId),
-        destinationName: (destinationName != null
-            ? destinationName.value
-            : this.destinationName),
-        destinationIban: (destinationIban != null
-            ? destinationIban.value
-            : this.destinationIban),
-        reconciled: (reconciled != null ? reconciled.value : this.reconciled),
-        billId: (billId != null ? billId.value : this.billId),
-        billName: (billName != null ? billName.value : this.billName),
-        tags: (tags != null ? tags.value : this.tags),
-        notes: (notes != null ? notes.value : this.notes),
-        internalReference: (internalReference != null
-            ? internalReference.value
-            : this.internalReference),
-        externalId: (externalId != null ? externalId.value : this.externalId),
-        externalUrl:
-            (externalUrl != null ? externalUrl.value : this.externalUrl),
-        bunqPaymentId:
-            (bunqPaymentId != null ? bunqPaymentId.value : this.bunqPaymentId),
-        sepaCc: (sepaCc != null ? sepaCc.value : this.sepaCc),
-        sepaCtOp: (sepaCtOp != null ? sepaCtOp.value : this.sepaCtOp),
-        sepaCtId: (sepaCtId != null ? sepaCtId.value : this.sepaCtId),
-        sepaDb: (sepaDb != null ? sepaDb.value : this.sepaDb),
-        sepaCountry:
-            (sepaCountry != null ? sepaCountry.value : this.sepaCountry),
-        sepaEp: (sepaEp != null ? sepaEp.value : this.sepaEp),
-        sepaCi: (sepaCi != null ? sepaCi.value : this.sepaCi),
-        sepaBatchId:
-            (sepaBatchId != null ? sepaBatchId.value : this.sepaBatchId),
-        interestDate:
-            (interestDate != null ? interestDate.value : this.interestDate),
-        bookDate: (bookDate != null ? bookDate.value : this.bookDate),
-        processDate:
-            (processDate != null ? processDate.value : this.processDate),
-        dueDate: (dueDate != null ? dueDate.value : this.dueDate),
-        paymentDate:
-            (paymentDate != null ? paymentDate.value : this.paymentDate),
-        invoiceDate:
-            (invoiceDate != null ? invoiceDate.value : this.invoiceDate));
+      transactionJournalId:
+          (transactionJournalId != null
+              ? transactionJournalId.value
+              : this.transactionJournalId),
+      type: (type != null ? type.value : this.type),
+      date: (date != null ? date.value : this.date),
+      amount: (amount != null ? amount.value : this.amount),
+      description: (description != null ? description.value : this.description),
+      order: (order != null ? order.value : this.order),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyName:
+          (currencyName != null ? currencyName.value : this.currencyName),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      foreignAmount:
+          (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
+      foreignCurrencyId:
+          (foreignCurrencyId != null
+              ? foreignCurrencyId.value
+              : this.foreignCurrencyId),
+      foreignCurrencyCode:
+          (foreignCurrencyCode != null
+              ? foreignCurrencyCode.value
+              : this.foreignCurrencyCode),
+      foreignCurrencySymbol:
+          (foreignCurrencySymbol != null
+              ? foreignCurrencySymbol.value
+              : this.foreignCurrencySymbol),
+      foreignCurrencyDecimalPlaces:
+          (foreignCurrencyDecimalPlaces != null
+              ? foreignCurrencyDecimalPlaces.value
+              : this.foreignCurrencyDecimalPlaces),
+      budgetId: (budgetId != null ? budgetId.value : this.budgetId),
+      budgetName: (budgetName != null ? budgetName.value : this.budgetName),
+      categoryId: (categoryId != null ? categoryId.value : this.categoryId),
+      categoryName:
+          (categoryName != null ? categoryName.value : this.categoryName),
+      sourceId: (sourceId != null ? sourceId.value : this.sourceId),
+      sourceName: (sourceName != null ? sourceName.value : this.sourceName),
+      sourceIban: (sourceIban != null ? sourceIban.value : this.sourceIban),
+      destinationId:
+          (destinationId != null ? destinationId.value : this.destinationId),
+      destinationName:
+          (destinationName != null
+              ? destinationName.value
+              : this.destinationName),
+      destinationIban:
+          (destinationIban != null
+              ? destinationIban.value
+              : this.destinationIban),
+      reconciled: (reconciled != null ? reconciled.value : this.reconciled),
+      billId: (billId != null ? billId.value : this.billId),
+      billName: (billName != null ? billName.value : this.billName),
+      tags: (tags != null ? tags.value : this.tags),
+      notes: (notes != null ? notes.value : this.notes),
+      internalReference:
+          (internalReference != null
+              ? internalReference.value
+              : this.internalReference),
+      externalId: (externalId != null ? externalId.value : this.externalId),
+      externalUrl: (externalUrl != null ? externalUrl.value : this.externalUrl),
+      bunqPaymentId:
+          (bunqPaymentId != null ? bunqPaymentId.value : this.bunqPaymentId),
+      sepaCc: (sepaCc != null ? sepaCc.value : this.sepaCc),
+      sepaCtOp: (sepaCtOp != null ? sepaCtOp.value : this.sepaCtOp),
+      sepaCtId: (sepaCtId != null ? sepaCtId.value : this.sepaCtId),
+      sepaDb: (sepaDb != null ? sepaDb.value : this.sepaDb),
+      sepaCountry: (sepaCountry != null ? sepaCountry.value : this.sepaCountry),
+      sepaEp: (sepaEp != null ? sepaEp.value : this.sepaEp),
+      sepaCi: (sepaCi != null ? sepaCi.value : this.sepaCi),
+      sepaBatchId: (sepaBatchId != null ? sepaBatchId.value : this.sepaBatchId),
+      interestDate:
+          (interestDate != null ? interestDate.value : this.interestDate),
+      bookDate: (bookDate != null ? bookDate.value : this.bookDate),
+      processDate: (processDate != null ? processDate.value : this.processDate),
+      dueDate: (dueDate != null ? dueDate.value : this.dueDate),
+      paymentDate: (paymentDate != null ? paymentDate.value : this.paymentDate),
+      invoiceDate: (invoiceDate != null ? invoiceDate.value : this.invoiceDate),
+    );
   }
 }
 
@@ -12597,37 +13195,40 @@ class User {
 }
 
 extension $UserExtension on User {
-  User copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? email,
-      bool? blocked,
-      enums.UserBlockedCodeProperty? blockedCode,
-      enums.UserRoleProperty? role}) {
+  User copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? email,
+    bool? blocked,
+    enums.UserBlockedCodeProperty? blockedCode,
+    enums.UserRoleProperty? role,
+  }) {
     return User(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        email: email ?? this.email,
-        blocked: blocked ?? this.blocked,
-        blockedCode: blockedCode ?? this.blockedCode,
-        role: role ?? this.role);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      email: email ?? this.email,
+      blocked: blocked ?? this.blocked,
+      blockedCode: blockedCode ?? this.blockedCode,
+      role: role ?? this.role,
+    );
   }
 
-  User copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String>? email,
-      Wrapped<bool?>? blocked,
-      Wrapped<enums.UserBlockedCodeProperty?>? blockedCode,
-      Wrapped<enums.UserRoleProperty?>? role}) {
+  User copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String>? email,
+    Wrapped<bool?>? blocked,
+    Wrapped<enums.UserBlockedCodeProperty?>? blockedCode,
+    Wrapped<enums.UserRoleProperty?>? role,
+  }) {
     return User(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        email: (email != null ? email.value : this.email),
-        blocked: (blocked != null ? blocked.value : this.blocked),
-        blockedCode:
-            (blockedCode != null ? blockedCode.value : this.blockedCode),
-        role: (role != null ? role.value : this.role));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      email: (email != null ? email.value : this.email),
+      blocked: (blocked != null ? blocked.value : this.blocked),
+      blockedCode: (blockedCode != null ? blockedCode.value : this.blockedCode),
+      role: (role != null ? role.value : this.role),
+    );
   }
 }
 
@@ -12661,28 +13262,32 @@ class UserGroupRead {
 }
 
 extension $UserGroupReadExtension on UserGroupRead {
-  UserGroupRead copyWith(
-      {String? type,
-      String? id,
-      UserGroupReadAttributes? attributes,
-      ObjectLink? links}) {
+  UserGroupRead copyWith({
+    String? type,
+    String? id,
+    UserGroupReadAttributes? attributes,
+    ObjectLink? links,
+  }) {
     return UserGroupRead(
-        type: type ?? this.type,
-        id: id ?? this.id,
-        attributes: attributes ?? this.attributes,
-        links: links ?? this.links);
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+      links: links ?? this.links,
+    );
   }
 
-  UserGroupRead copyWithWrapped(
-      {Wrapped<String>? type,
-      Wrapped<String>? id,
-      Wrapped<UserGroupReadAttributes>? attributes,
-      Wrapped<ObjectLink>? links}) {
+  UserGroupRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<UserGroupReadAttributes>? attributes,
+    Wrapped<ObjectLink>? links,
+  }) {
     return UserGroupRead(
-        type: (type != null ? type.value : this.type),
-        id: (id != null ? id.value : this.id),
-        attributes: (attributes != null ? attributes.value : this.attributes),
-        links: (links != null ? links.value : this.links));
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
@@ -12726,9 +13331,10 @@ class UserGroupReadAttributes {
   @JsonKey(name: 'native_currency_decimal_places', includeIfNull: false)
   final int? nativeCurrencyDecimalPlaces;
   @JsonKey(
-      name: 'members',
-      includeIfNull: false,
-      defaultValue: <UserGroupReadMembers>[])
+    name: 'members',
+    includeIfNull: false,
+    defaultValue: <UserGroupReadMembers>[],
+  )
   final List<UserGroupReadMembers>? members;
   static const fromJsonFactory = _$UserGroupReadAttributesFromJson;
 
@@ -12737,62 +13343,70 @@ class UserGroupReadAttributes {
 }
 
 extension $UserGroupReadAttributesExtension on UserGroupReadAttributes {
-  UserGroupReadAttributes copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      bool? inUse,
-      bool? canSeeMembers,
-      String? title,
-      String? nativeCurrencyId,
-      String? nativeCurrencyCode,
-      String? nativeCurrencySymbol,
-      int? nativeCurrencyDecimalPlaces,
-      List<UserGroupReadMembers>? members}) {
+  UserGroupReadAttributes copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? inUse,
+    bool? canSeeMembers,
+    String? title,
+    String? nativeCurrencyId,
+    String? nativeCurrencyCode,
+    String? nativeCurrencySymbol,
+    int? nativeCurrencyDecimalPlaces,
+    List<UserGroupReadMembers>? members,
+  }) {
     return UserGroupReadAttributes(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        inUse: inUse ?? this.inUse,
-        canSeeMembers: canSeeMembers ?? this.canSeeMembers,
-        title: title ?? this.title,
-        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
-        nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
-        nativeCurrencyDecimalPlaces:
-            nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
-        members: members ?? this.members);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      inUse: inUse ?? this.inUse,
+      canSeeMembers: canSeeMembers ?? this.canSeeMembers,
+      title: title ?? this.title,
+      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+      nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
+      nativeCurrencyDecimalPlaces:
+          nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
+      members: members ?? this.members,
+    );
   }
 
-  UserGroupReadAttributes copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<bool?>? inUse,
-      Wrapped<bool?>? canSeeMembers,
-      Wrapped<String?>? title,
-      Wrapped<String?>? nativeCurrencyId,
-      Wrapped<String?>? nativeCurrencyCode,
-      Wrapped<String?>? nativeCurrencySymbol,
-      Wrapped<int?>? nativeCurrencyDecimalPlaces,
-      Wrapped<List<UserGroupReadMembers>?>? members}) {
+  UserGroupReadAttributes copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<bool?>? inUse,
+    Wrapped<bool?>? canSeeMembers,
+    Wrapped<String?>? title,
+    Wrapped<String?>? nativeCurrencyId,
+    Wrapped<String?>? nativeCurrencyCode,
+    Wrapped<String?>? nativeCurrencySymbol,
+    Wrapped<int?>? nativeCurrencyDecimalPlaces,
+    Wrapped<List<UserGroupReadMembers>?>? members,
+  }) {
     return UserGroupReadAttributes(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        inUse: (inUse != null ? inUse.value : this.inUse),
-        canSeeMembers:
-            (canSeeMembers != null ? canSeeMembers.value : this.canSeeMembers),
-        title: (title != null ? title.value : this.title),
-        nativeCurrencyId: (nativeCurrencyId != null
-            ? nativeCurrencyId.value
-            : this.nativeCurrencyId),
-        nativeCurrencyCode: (nativeCurrencyCode != null
-            ? nativeCurrencyCode.value
-            : this.nativeCurrencyCode),
-        nativeCurrencySymbol: (nativeCurrencySymbol != null
-            ? nativeCurrencySymbol.value
-            : this.nativeCurrencySymbol),
-        nativeCurrencyDecimalPlaces: (nativeCurrencyDecimalPlaces != null
-            ? nativeCurrencyDecimalPlaces.value
-            : this.nativeCurrencyDecimalPlaces),
-        members: (members != null ? members.value : this.members));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      inUse: (inUse != null ? inUse.value : this.inUse),
+      canSeeMembers:
+          (canSeeMembers != null ? canSeeMembers.value : this.canSeeMembers),
+      title: (title != null ? title.value : this.title),
+      nativeCurrencyId:
+          (nativeCurrencyId != null
+              ? nativeCurrencyId.value
+              : this.nativeCurrencyId),
+      nativeCurrencyCode:
+          (nativeCurrencyCode != null
+              ? nativeCurrencyCode.value
+              : this.nativeCurrencyCode),
+      nativeCurrencySymbol:
+          (nativeCurrencySymbol != null
+              ? nativeCurrencySymbol.value
+              : this.nativeCurrencySymbol),
+      nativeCurrencyDecimalPlaces:
+          (nativeCurrencyDecimalPlaces != null
+              ? nativeCurrencyDecimalPlaces.value
+              : this.nativeCurrencyDecimalPlaces),
+      members: (members != null ? members.value : this.members),
+    );
   }
 }
 
@@ -12831,36 +13445,38 @@ class UserGroupReadMembers {
 }
 
 extension $UserGroupReadMembersExtension on UserGroupReadMembers {
-  UserGroupReadMembers copyWith(
-      {String? userId,
-      String? userEmail,
-      bool? you,
-      List<enums.UserGroupReadRole>? roles}) {
+  UserGroupReadMembers copyWith({
+    String? userId,
+    String? userEmail,
+    bool? you,
+    List<enums.UserGroupReadRole>? roles,
+  }) {
     return UserGroupReadMembers(
-        userId: userId ?? this.userId,
-        userEmail: userEmail ?? this.userEmail,
-        you: you ?? this.you,
-        roles: roles ?? this.roles);
+      userId: userId ?? this.userId,
+      userEmail: userEmail ?? this.userEmail,
+      you: you ?? this.you,
+      roles: roles ?? this.roles,
+    );
   }
 
-  UserGroupReadMembers copyWithWrapped(
-      {Wrapped<String?>? userId,
-      Wrapped<String?>? userEmail,
-      Wrapped<bool?>? you,
-      Wrapped<List<enums.UserGroupReadRole>?>? roles}) {
+  UserGroupReadMembers copyWithWrapped({
+    Wrapped<String?>? userId,
+    Wrapped<String?>? userEmail,
+    Wrapped<bool?>? you,
+    Wrapped<List<enums.UserGroupReadRole>?>? roles,
+  }) {
     return UserGroupReadMembers(
-        userId: (userId != null ? userId.value : this.userId),
-        userEmail: (userEmail != null ? userEmail.value : this.userEmail),
-        you: (you != null ? you.value : this.you),
-        roles: (roles != null ? roles.value : this.roles));
+      userId: (userId != null ? userId.value : this.userId),
+      userEmail: (userEmail != null ? userEmail.value : this.userEmail),
+      you: (you != null ? you.value : this.you),
+      roles: (roles != null ? roles.value : this.roles),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class UserGroupSingle {
-  const UserGroupSingle({
-    required this.data,
-  });
+  const UserGroupSingle({required this.data});
 
   factory UserGroupSingle.fromJson(Map<String, dynamic> json) =>
       _$UserGroupSingleFromJson(json);
@@ -12913,26 +13529,34 @@ class UserGroupUpdate {
 }
 
 extension $UserGroupUpdateExtension on UserGroupUpdate {
-  UserGroupUpdate copyWith(
-      {String? title, String? nativeCurrencyId, String? nativeCurrencyCode}) {
+  UserGroupUpdate copyWith({
+    String? title,
+    String? nativeCurrencyId,
+    String? nativeCurrencyCode,
+  }) {
     return UserGroupUpdate(
-        title: title ?? this.title,
-        nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-        nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode);
+      title: title ?? this.title,
+      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
+      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+    );
   }
 
-  UserGroupUpdate copyWithWrapped(
-      {Wrapped<String>? title,
-      Wrapped<String?>? nativeCurrencyId,
-      Wrapped<String?>? nativeCurrencyCode}) {
+  UserGroupUpdate copyWithWrapped({
+    Wrapped<String>? title,
+    Wrapped<String?>? nativeCurrencyId,
+    Wrapped<String?>? nativeCurrencyCode,
+  }) {
     return UserGroupUpdate(
-        title: (title != null ? title.value : this.title),
-        nativeCurrencyId: (nativeCurrencyId != null
-            ? nativeCurrencyId.value
-            : this.nativeCurrencyId),
-        nativeCurrencyCode: (nativeCurrencyCode != null
-            ? nativeCurrencyCode.value
-            : this.nativeCurrencyCode));
+      title: (title != null ? title.value : this.title),
+      nativeCurrencyId:
+          (nativeCurrencyId != null
+              ? nativeCurrencyId.value
+              : this.nativeCurrencyId),
+      nativeCurrencyCode:
+          (nativeCurrencyCode != null
+              ? nativeCurrencyCode.value
+              : this.nativeCurrencyCode),
+    );
   }
 }
 
@@ -12996,48 +13620,52 @@ class Webhook {
 }
 
 extension $WebhookExtension on Webhook {
-  Webhook copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      bool? active,
-      String? title,
-      String? secret,
-      enums.WebhookTrigger? trigger,
-      enums.WebhookResponse? response,
-      enums.WebhookDelivery? delivery,
-      String? url}) {
+  Webhook copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? active,
+    String? title,
+    String? secret,
+    enums.WebhookTrigger? trigger,
+    enums.WebhookResponse? response,
+    enums.WebhookDelivery? delivery,
+    String? url,
+  }) {
     return Webhook(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        active: active ?? this.active,
-        title: title ?? this.title,
-        secret: secret ?? this.secret,
-        trigger: trigger ?? this.trigger,
-        response: response ?? this.response,
-        delivery: delivery ?? this.delivery,
-        url: url ?? this.url);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      active: active ?? this.active,
+      title: title ?? this.title,
+      secret: secret ?? this.secret,
+      trigger: trigger ?? this.trigger,
+      response: response ?? this.response,
+      delivery: delivery ?? this.delivery,
+      url: url ?? this.url,
+    );
   }
 
-  Webhook copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<bool?>? active,
-      Wrapped<String>? title,
-      Wrapped<String?>? secret,
-      Wrapped<enums.WebhookTrigger>? trigger,
-      Wrapped<enums.WebhookResponse>? response,
-      Wrapped<enums.WebhookDelivery>? delivery,
-      Wrapped<String>? url}) {
+  Webhook copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<bool?>? active,
+    Wrapped<String>? title,
+    Wrapped<String?>? secret,
+    Wrapped<enums.WebhookTrigger>? trigger,
+    Wrapped<enums.WebhookResponse>? response,
+    Wrapped<enums.WebhookDelivery>? delivery,
+    Wrapped<String>? url,
+  }) {
     return Webhook(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        active: (active != null ? active.value : this.active),
-        title: (title != null ? title.value : this.title),
-        secret: (secret != null ? secret.value : this.secret),
-        trigger: (trigger != null ? trigger.value : this.trigger),
-        response: (response != null ? response.value : this.response),
-        delivery: (delivery != null ? delivery.value : this.delivery),
-        url: (url != null ? url.value : this.url));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      active: (active != null ? active.value : this.active),
+      title: (title != null ? title.value : this.title),
+      secret: (secret != null ? secret.value : this.secret),
+      trigger: (trigger != null ? trigger.value : this.trigger),
+      response: (response != null ? response.value : this.response),
+      delivery: (delivery != null ? delivery.value : this.delivery),
+      url: (url != null ? url.value : this.url),
+    );
   }
 }
 
@@ -13092,36 +13720,40 @@ class WebhookStore {
 }
 
 extension $WebhookStoreExtension on WebhookStore {
-  WebhookStore copyWith(
-      {bool? active,
-      String? title,
-      enums.WebhookTrigger? trigger,
-      enums.WebhookResponse? response,
-      enums.WebhookDelivery? delivery,
-      String? url}) {
+  WebhookStore copyWith({
+    bool? active,
+    String? title,
+    enums.WebhookTrigger? trigger,
+    enums.WebhookResponse? response,
+    enums.WebhookDelivery? delivery,
+    String? url,
+  }) {
     return WebhookStore(
-        active: active ?? this.active,
-        title: title ?? this.title,
-        trigger: trigger ?? this.trigger,
-        response: response ?? this.response,
-        delivery: delivery ?? this.delivery,
-        url: url ?? this.url);
+      active: active ?? this.active,
+      title: title ?? this.title,
+      trigger: trigger ?? this.trigger,
+      response: response ?? this.response,
+      delivery: delivery ?? this.delivery,
+      url: url ?? this.url,
+    );
   }
 
-  WebhookStore copyWithWrapped(
-      {Wrapped<bool?>? active,
-      Wrapped<String>? title,
-      Wrapped<enums.WebhookTrigger>? trigger,
-      Wrapped<enums.WebhookResponse>? response,
-      Wrapped<enums.WebhookDelivery>? delivery,
-      Wrapped<String>? url}) {
+  WebhookStore copyWithWrapped({
+    Wrapped<bool?>? active,
+    Wrapped<String>? title,
+    Wrapped<enums.WebhookTrigger>? trigger,
+    Wrapped<enums.WebhookResponse>? response,
+    Wrapped<enums.WebhookDelivery>? delivery,
+    Wrapped<String>? url,
+  }) {
     return WebhookStore(
-        active: (active != null ? active.value : this.active),
-        title: (title != null ? title.value : this.title),
-        trigger: (trigger != null ? trigger.value : this.trigger),
-        response: (response != null ? response.value : this.response),
-        delivery: (delivery != null ? delivery.value : this.delivery),
-        url: (url != null ? url.value : this.url));
+      active: (active != null ? active.value : this.active),
+      title: (title != null ? title.value : this.title),
+      trigger: (trigger != null ? trigger.value : this.trigger),
+      response: (response != null ? response.value : this.response),
+      delivery: (delivery != null ? delivery.value : this.delivery),
+      url: (url != null ? url.value : this.url),
+    );
   }
 }
 
@@ -13179,40 +13811,44 @@ class WebhookUpdate {
 }
 
 extension $WebhookUpdateExtension on WebhookUpdate {
-  WebhookUpdate copyWith(
-      {bool? active,
-      String? title,
-      String? secret,
-      enums.WebhookTrigger? trigger,
-      enums.WebhookResponse? response,
-      enums.WebhookDelivery? delivery,
-      String? url}) {
+  WebhookUpdate copyWith({
+    bool? active,
+    String? title,
+    String? secret,
+    enums.WebhookTrigger? trigger,
+    enums.WebhookResponse? response,
+    enums.WebhookDelivery? delivery,
+    String? url,
+  }) {
     return WebhookUpdate(
-        active: active ?? this.active,
-        title: title ?? this.title,
-        secret: secret ?? this.secret,
-        trigger: trigger ?? this.trigger,
-        response: response ?? this.response,
-        delivery: delivery ?? this.delivery,
-        url: url ?? this.url);
+      active: active ?? this.active,
+      title: title ?? this.title,
+      secret: secret ?? this.secret,
+      trigger: trigger ?? this.trigger,
+      response: response ?? this.response,
+      delivery: delivery ?? this.delivery,
+      url: url ?? this.url,
+    );
   }
 
-  WebhookUpdate copyWithWrapped(
-      {Wrapped<bool?>? active,
-      Wrapped<String?>? title,
-      Wrapped<String?>? secret,
-      Wrapped<enums.WebhookTrigger?>? trigger,
-      Wrapped<enums.WebhookResponse?>? response,
-      Wrapped<enums.WebhookDelivery?>? delivery,
-      Wrapped<String?>? url}) {
+  WebhookUpdate copyWithWrapped({
+    Wrapped<bool?>? active,
+    Wrapped<String?>? title,
+    Wrapped<String?>? secret,
+    Wrapped<enums.WebhookTrigger?>? trigger,
+    Wrapped<enums.WebhookResponse?>? response,
+    Wrapped<enums.WebhookDelivery?>? delivery,
+    Wrapped<String?>? url,
+  }) {
     return WebhookUpdate(
-        active: (active != null ? active.value : this.active),
-        title: (title != null ? title.value : this.title),
-        secret: (secret != null ? secret.value : this.secret),
-        trigger: (trigger != null ? trigger.value : this.trigger),
-        response: (response != null ? response.value : this.response),
-        delivery: (delivery != null ? delivery.value : this.delivery),
-        url: (url != null ? url.value : this.url));
+      active: (active != null ? active.value : this.active),
+      title: (title != null ? title.value : this.title),
+      secret: (secret != null ? secret.value : this.secret),
+      trigger: (trigger != null ? trigger.value : this.trigger),
+      response: (response != null ? response.value : this.response),
+      delivery: (delivery != null ? delivery.value : this.delivery),
+      url: (url != null ? url.value : this.url),
+    );
   }
 }
 
@@ -13252,38 +13888,43 @@ class WebhookAttempt {
 }
 
 extension $WebhookAttemptExtension on WebhookAttempt {
-  WebhookAttempt copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      String? webhookMessageId,
-      int? statusCode,
-      String? logs,
-      String? response}) {
+  WebhookAttempt copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? webhookMessageId,
+    int? statusCode,
+    String? logs,
+    String? response,
+  }) {
     return WebhookAttempt(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        webhookMessageId: webhookMessageId ?? this.webhookMessageId,
-        statusCode: statusCode ?? this.statusCode,
-        logs: logs ?? this.logs,
-        response: response ?? this.response);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      webhookMessageId: webhookMessageId ?? this.webhookMessageId,
+      statusCode: statusCode ?? this.statusCode,
+      logs: logs ?? this.logs,
+      response: response ?? this.response,
+    );
   }
 
-  WebhookAttempt copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<String?>? webhookMessageId,
-      Wrapped<int?>? statusCode,
-      Wrapped<String?>? logs,
-      Wrapped<String?>? response}) {
+  WebhookAttempt copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String?>? webhookMessageId,
+    Wrapped<int?>? statusCode,
+    Wrapped<String?>? logs,
+    Wrapped<String?>? response,
+  }) {
     return WebhookAttempt(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        webhookMessageId: (webhookMessageId != null
-            ? webhookMessageId.value
-            : this.webhookMessageId),
-        statusCode: (statusCode != null ? statusCode.value : this.statusCode),
-        logs: (logs != null ? logs.value : this.logs),
-        response: (response != null ? response.value : this.response));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      webhookMessageId:
+          (webhookMessageId != null
+              ? webhookMessageId.value
+              : this.webhookMessageId),
+      statusCode: (statusCode != null ? statusCode.value : this.statusCode),
+      logs: (logs != null ? logs.value : this.logs),
+      response: (response != null ? response.value : this.response),
+    );
   }
 }
 
@@ -13326,40 +13967,44 @@ class WebhookMessage {
 }
 
 extension $WebhookMessageExtension on WebhookMessage {
-  WebhookMessage copyWith(
-      {DateTime? createdAt,
-      DateTime? updatedAt,
-      bool? sent,
-      bool? errored,
-      String? webhookId,
-      String? uuid,
-      String? message}) {
+  WebhookMessage copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? sent,
+    bool? errored,
+    String? webhookId,
+    String? uuid,
+    String? message,
+  }) {
     return WebhookMessage(
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        sent: sent ?? this.sent,
-        errored: errored ?? this.errored,
-        webhookId: webhookId ?? this.webhookId,
-        uuid: uuid ?? this.uuid,
-        message: message ?? this.message);
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      sent: sent ?? this.sent,
+      errored: errored ?? this.errored,
+      webhookId: webhookId ?? this.webhookId,
+      uuid: uuid ?? this.uuid,
+      message: message ?? this.message,
+    );
   }
 
-  WebhookMessage copyWithWrapped(
-      {Wrapped<DateTime?>? createdAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<bool?>? sent,
-      Wrapped<bool?>? errored,
-      Wrapped<String?>? webhookId,
-      Wrapped<String?>? uuid,
-      Wrapped<String?>? message}) {
+  WebhookMessage copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<bool?>? sent,
+    Wrapped<bool?>? errored,
+    Wrapped<String?>? webhookId,
+    Wrapped<String?>? uuid,
+    Wrapped<String?>? message,
+  }) {
     return WebhookMessage(
-        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        sent: (sent != null ? sent.value : this.sent),
-        errored: (errored != null ? errored.value : this.errored),
-        webhookId: (webhookId != null ? webhookId.value : this.webhookId),
-        uuid: (uuid != null ? uuid.value : this.uuid),
-        message: (message != null ? message.value : this.message));
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      sent: (sent != null ? sent.value : this.sent),
+      errored: (errored != null ? errored.value : this.errored),
+      webhookId: (webhookId != null ? webhookId.value : this.webhookId),
+      uuid: (uuid != null ? uuid.value : this.uuid),
+      message: (message != null ? message.value : this.message),
+    );
   }
 }
 
@@ -13443,60 +14088,63 @@ class BasicSummaryEntry {
 }
 
 extension $BasicSummaryEntryExtension on BasicSummaryEntry {
-  BasicSummaryEntry copyWith(
-      {String? key,
-      String? title,
-      double? monetaryValue,
-      String? currencyId,
-      String? currencyCode,
-      String? currencySymbol,
-      int? currencyDecimalPlaces,
-      String? valueParsed,
-      String? localIcon,
-      String? subTitle}) {
+  BasicSummaryEntry copyWith({
+    String? key,
+    String? title,
+    double? monetaryValue,
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    String? valueParsed,
+    String? localIcon,
+    String? subTitle,
+  }) {
     return BasicSummaryEntry(
-        key: key ?? this.key,
-        title: title ?? this.title,
-        monetaryValue: monetaryValue ?? this.monetaryValue,
-        currencyId: currencyId ?? this.currencyId,
-        currencyCode: currencyCode ?? this.currencyCode,
-        currencySymbol: currencySymbol ?? this.currencySymbol,
-        currencyDecimalPlaces:
-            currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-        valueParsed: valueParsed ?? this.valueParsed,
-        localIcon: localIcon ?? this.localIcon,
-        subTitle: subTitle ?? this.subTitle);
+      key: key ?? this.key,
+      title: title ?? this.title,
+      monetaryValue: monetaryValue ?? this.monetaryValue,
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      valueParsed: valueParsed ?? this.valueParsed,
+      localIcon: localIcon ?? this.localIcon,
+      subTitle: subTitle ?? this.subTitle,
+    );
   }
 
-  BasicSummaryEntry copyWithWrapped(
-      {Wrapped<String?>? key,
-      Wrapped<String?>? title,
-      Wrapped<double?>? monetaryValue,
-      Wrapped<String?>? currencyId,
-      Wrapped<String?>? currencyCode,
-      Wrapped<String?>? currencySymbol,
-      Wrapped<int?>? currencyDecimalPlaces,
-      Wrapped<String?>? valueParsed,
-      Wrapped<String?>? localIcon,
-      Wrapped<String?>? subTitle}) {
+  BasicSummaryEntry copyWithWrapped({
+    Wrapped<String?>? key,
+    Wrapped<String?>? title,
+    Wrapped<double?>? monetaryValue,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? valueParsed,
+    Wrapped<String?>? localIcon,
+    Wrapped<String?>? subTitle,
+  }) {
     return BasicSummaryEntry(
-        key: (key != null ? key.value : this.key),
-        title: (title != null ? title.value : this.title),
-        monetaryValue:
-            (monetaryValue != null ? monetaryValue.value : this.monetaryValue),
-        currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-        currencyCode:
-            (currencyCode != null ? currencyCode.value : this.currencyCode),
-        currencySymbol: (currencySymbol != null
-            ? currencySymbol.value
-            : this.currencySymbol),
-        currencyDecimalPlaces: (currencyDecimalPlaces != null
-            ? currencyDecimalPlaces.value
-            : this.currencyDecimalPlaces),
-        valueParsed:
-            (valueParsed != null ? valueParsed.value : this.valueParsed),
-        localIcon: (localIcon != null ? localIcon.value : this.localIcon),
-        subTitle: (subTitle != null ? subTitle.value : this.subTitle));
+      key: (key != null ? key.value : this.key),
+      title: (title != null ? title.value : this.title),
+      monetaryValue:
+          (monetaryValue != null ? monetaryValue.value : this.monetaryValue),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode:
+          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencySymbol:
+          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
+      currencyDecimalPlaces:
+          (currencyDecimalPlaces != null
+              ? currencyDecimalPlaces.value
+              : this.currencyDecimalPlaces),
+      valueParsed: (valueParsed != null ? valueParsed.value : this.valueParsed),
+      localIcon: (localIcon != null ? localIcon.value : this.localIcon),
+      subTitle: (subTitle != null ? subTitle.value : this.subTitle),
+    );
   }
 }
 
@@ -13532,32 +14180,34 @@ class Configuration {
 }
 
 extension $ConfigurationExtension on Configuration {
-  Configuration copyWith(
-      {enums.ConfigValueFilter? title,
-      PolymorphicProperty? $value,
-      bool? editable}) {
+  Configuration copyWith({
+    enums.ConfigValueFilter? title,
+    PolymorphicProperty? $value,
+    bool? editable,
+  }) {
     return Configuration(
-        title: title ?? this.title,
-        $value: $value ?? this.$value,
-        editable: editable ?? this.editable);
+      title: title ?? this.title,
+      $value: $value ?? this.$value,
+      editable: editable ?? this.editable,
+    );
   }
 
-  Configuration copyWithWrapped(
-      {Wrapped<enums.ConfigValueFilter>? title,
-      Wrapped<PolymorphicProperty>? $value,
-      Wrapped<bool>? editable}) {
+  Configuration copyWithWrapped({
+    Wrapped<enums.ConfigValueFilter>? title,
+    Wrapped<PolymorphicProperty>? $value,
+    Wrapped<bool>? editable,
+  }) {
     return Configuration(
-        title: (title != null ? title.value : this.title),
-        $value: ($value != null ? $value.value : this.$value),
-        editable: (editable != null ? editable.value : this.editable));
+      title: (title != null ? title.value : this.title),
+      $value: ($value != null ? $value.value : this.$value),
+      editable: (editable != null ? editable.value : this.editable),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class ConfigurationUpdate {
-  const ConfigurationUpdate({
-    required this.$value,
-  });
+  const ConfigurationUpdate({required this.$value});
 
   factory ConfigurationUpdate.fromJson(Map<String, dynamic> json) =>
       _$ConfigurationUpdateFromJson(json);
@@ -13580,7 +14230,8 @@ extension $ConfigurationUpdateExtension on ConfigurationUpdate {
 
   ConfigurationUpdate copyWithWrapped({Wrapped<PolymorphicProperty>? $value}) {
     return ConfigurationUpdate(
-        $value: ($value != null ? $value.value : this.$value));
+      $value: ($value != null ? $value.value : this.$value),
+    );
   }
 }
 
@@ -13611,28 +14262,32 @@ class CronResult {
 }
 
 extension $CronResultExtension on CronResult {
-  CronResult copyWith(
-      {CronResultRow? recurringTransactions,
-      CronResultRow? autoBudgets,
-      CronResultRow? telemetry}) {
+  CronResult copyWith({
+    CronResultRow? recurringTransactions,
+    CronResultRow? autoBudgets,
+    CronResultRow? telemetry,
+  }) {
     return CronResult(
-        recurringTransactions:
-            recurringTransactions ?? this.recurringTransactions,
-        autoBudgets: autoBudgets ?? this.autoBudgets,
-        telemetry: telemetry ?? this.telemetry);
+      recurringTransactions:
+          recurringTransactions ?? this.recurringTransactions,
+      autoBudgets: autoBudgets ?? this.autoBudgets,
+      telemetry: telemetry ?? this.telemetry,
+    );
   }
 
-  CronResult copyWithWrapped(
-      {Wrapped<CronResultRow?>? recurringTransactions,
-      Wrapped<CronResultRow?>? autoBudgets,
-      Wrapped<CronResultRow?>? telemetry}) {
+  CronResult copyWithWrapped({
+    Wrapped<CronResultRow?>? recurringTransactions,
+    Wrapped<CronResultRow?>? autoBudgets,
+    Wrapped<CronResultRow?>? telemetry,
+  }) {
     return CronResult(
-        recurringTransactions: (recurringTransactions != null
-            ? recurringTransactions.value
-            : this.recurringTransactions),
-        autoBudgets:
-            (autoBudgets != null ? autoBudgets.value : this.autoBudgets),
-        telemetry: (telemetry != null ? telemetry.value : this.telemetry));
+      recurringTransactions:
+          (recurringTransactions != null
+              ? recurringTransactions.value
+              : this.recurringTransactions),
+      autoBudgets: (autoBudgets != null ? autoBudgets.value : this.autoBudgets),
+      telemetry: (telemetry != null ? telemetry.value : this.telemetry),
+    );
   }
 }
 
@@ -13666,34 +14321,39 @@ class CronResultRow {
 }
 
 extension $CronResultRowExtension on CronResultRow {
-  CronResultRow copyWith(
-      {bool? jobFired, bool? jobSucceeded, bool? jobErrored, String? message}) {
+  CronResultRow copyWith({
+    bool? jobFired,
+    bool? jobSucceeded,
+    bool? jobErrored,
+    String? message,
+  }) {
     return CronResultRow(
-        jobFired: jobFired ?? this.jobFired,
-        jobSucceeded: jobSucceeded ?? this.jobSucceeded,
-        jobErrored: jobErrored ?? this.jobErrored,
-        message: message ?? this.message);
+      jobFired: jobFired ?? this.jobFired,
+      jobSucceeded: jobSucceeded ?? this.jobSucceeded,
+      jobErrored: jobErrored ?? this.jobErrored,
+      message: message ?? this.message,
+    );
   }
 
-  CronResultRow copyWithWrapped(
-      {Wrapped<bool?>? jobFired,
-      Wrapped<bool?>? jobSucceeded,
-      Wrapped<bool?>? jobErrored,
-      Wrapped<String?>? message}) {
+  CronResultRow copyWithWrapped({
+    Wrapped<bool?>? jobFired,
+    Wrapped<bool?>? jobSucceeded,
+    Wrapped<bool?>? jobErrored,
+    Wrapped<String?>? message,
+  }) {
     return CronResultRow(
-        jobFired: (jobFired != null ? jobFired.value : this.jobFired),
-        jobSucceeded:
-            (jobSucceeded != null ? jobSucceeded.value : this.jobSucceeded),
-        jobErrored: (jobErrored != null ? jobErrored.value : this.jobErrored),
-        message: (message != null ? message.value : this.message));
+      jobFired: (jobFired != null ? jobFired.value : this.jobFired),
+      jobSucceeded:
+          (jobSucceeded != null ? jobSucceeded.value : this.jobSucceeded),
+      jobErrored: (jobErrored != null ? jobErrored.value : this.jobErrored),
+      message: (message != null ? message.value : this.message),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class SystemInfo {
-  const SystemInfo({
-    this.data,
-  });
+  const SystemInfo({this.data});
 
   factory SystemInfo.fromJson(Map<String, dynamic> json) =>
       _$SystemInfoFromJson(json);
@@ -13721,9 +14381,7 @@ extension $SystemInfoExtension on SystemInfo {
 
 @JsonSerializable(explicitToJson: true)
 class UserSingle {
-  const UserSingle({
-    required this.data,
-  });
+  const UserSingle({required this.data});
 
   factory UserSingle.fromJson(Map<String, dynamic> json) =>
       _$UserSingleFromJson(json);
@@ -13751,9 +14409,7 @@ extension $UserSingleExtension on UserSingle {
 
 @JsonSerializable(explicitToJson: true)
 class Meta {
-  const Meta({
-    this.pagination,
-  });
+  const Meta({this.pagination});
 
   factory Meta.fromJson(Map<String, dynamic> json) => _$MetaFromJson(json);
 
@@ -13775,16 +14431,14 @@ extension $MetaExtension on Meta {
 
   Meta copyWithWrapped({Wrapped<Meta$Pagination?>? pagination}) {
     return Meta(
-        pagination: (pagination != null ? pagination.value : this.pagination));
+      pagination: (pagination != null ? pagination.value : this.pagination),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class BadRequestResponse {
-  const BadRequestResponse({
-    this.message,
-    this.exception,
-  });
+  const BadRequestResponse({this.message, this.exception});
 
   factory BadRequestResponse.fromJson(Map<String, dynamic> json) =>
       _$BadRequestResponseFromJson(json);
@@ -13805,24 +14459,25 @@ class BadRequestResponse {
 extension $BadRequestResponseExtension on BadRequestResponse {
   BadRequestResponse copyWith({String? message, String? exception}) {
     return BadRequestResponse(
-        message: message ?? this.message,
-        exception: exception ?? this.exception);
+      message: message ?? this.message,
+      exception: exception ?? this.exception,
+    );
   }
 
-  BadRequestResponse copyWithWrapped(
-      {Wrapped<String?>? message, Wrapped<String?>? exception}) {
+  BadRequestResponse copyWithWrapped({
+    Wrapped<String?>? message,
+    Wrapped<String?>? exception,
+  }) {
     return BadRequestResponse(
-        message: (message != null ? message.value : this.message),
-        exception: (exception != null ? exception.value : this.exception));
+      message: (message != null ? message.value : this.message),
+      exception: (exception != null ? exception.value : this.exception),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class InternalExceptionResponse {
-  const InternalExceptionResponse({
-    this.message,
-    this.exception,
-  });
+  const InternalExceptionResponse({this.message, this.exception});
 
   factory InternalExceptionResponse.fromJson(Map<String, dynamic> json) =>
       _$InternalExceptionResponseFromJson(json);
@@ -13843,24 +14498,25 @@ class InternalExceptionResponse {
 extension $InternalExceptionResponseExtension on InternalExceptionResponse {
   InternalExceptionResponse copyWith({String? message, String? exception}) {
     return InternalExceptionResponse(
-        message: message ?? this.message,
-        exception: exception ?? this.exception);
+      message: message ?? this.message,
+      exception: exception ?? this.exception,
+    );
   }
 
-  InternalExceptionResponse copyWithWrapped(
-      {Wrapped<String?>? message, Wrapped<String?>? exception}) {
+  InternalExceptionResponse copyWithWrapped({
+    Wrapped<String?>? message,
+    Wrapped<String?>? exception,
+  }) {
     return InternalExceptionResponse(
-        message: (message != null ? message.value : this.message),
-        exception: (exception != null ? exception.value : this.exception));
+      message: (message != null ? message.value : this.message),
+      exception: (exception != null ? exception.value : this.exception),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class NotFoundResponse {
-  const NotFoundResponse({
-    this.message,
-    this.exception,
-  });
+  const NotFoundResponse({this.message, this.exception});
 
   factory NotFoundResponse.fromJson(Map<String, dynamic> json) =>
       _$NotFoundResponseFromJson(json);
@@ -13881,24 +14537,25 @@ class NotFoundResponse {
 extension $NotFoundResponseExtension on NotFoundResponse {
   NotFoundResponse copyWith({String? message, String? exception}) {
     return NotFoundResponse(
-        message: message ?? this.message,
-        exception: exception ?? this.exception);
+      message: message ?? this.message,
+      exception: exception ?? this.exception,
+    );
   }
 
-  NotFoundResponse copyWithWrapped(
-      {Wrapped<String?>? message, Wrapped<String?>? exception}) {
+  NotFoundResponse copyWithWrapped({
+    Wrapped<String?>? message,
+    Wrapped<String?>? exception,
+  }) {
     return NotFoundResponse(
-        message: (message != null ? message.value : this.message),
-        exception: (exception != null ? exception.value : this.exception));
+      message: (message != null ? message.value : this.message),
+      exception: (exception != null ? exception.value : this.exception),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class UnauthenticatedResponse {
-  const UnauthenticatedResponse({
-    this.message,
-    this.exception,
-  });
+  const UnauthenticatedResponse({this.message, this.exception});
 
   factory UnauthenticatedResponse.fromJson(Map<String, dynamic> json) =>
       _$UnauthenticatedResponseFromJson(json);
@@ -13919,24 +14576,25 @@ class UnauthenticatedResponse {
 extension $UnauthenticatedResponseExtension on UnauthenticatedResponse {
   UnauthenticatedResponse copyWith({String? message, String? exception}) {
     return UnauthenticatedResponse(
-        message: message ?? this.message,
-        exception: exception ?? this.exception);
+      message: message ?? this.message,
+      exception: exception ?? this.exception,
+    );
   }
 
-  UnauthenticatedResponse copyWithWrapped(
-      {Wrapped<String?>? message, Wrapped<String?>? exception}) {
+  UnauthenticatedResponse copyWithWrapped({
+    Wrapped<String?>? message,
+    Wrapped<String?>? exception,
+  }) {
     return UnauthenticatedResponse(
-        message: (message != null ? message.value : this.message),
-        exception: (exception != null ? exception.value : this.exception));
+      message: (message != null ? message.value : this.message),
+      exception: (exception != null ? exception.value : this.exception),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class ValidationErrorResponse {
-  const ValidationErrorResponse({
-    this.message,
-    this.errors,
-  });
+  const ValidationErrorResponse({this.message, this.errors});
 
   factory ValidationErrorResponse.fromJson(Map<String, dynamic> json) =>
       _$ValidationErrorResponseFromJson(json);
@@ -13955,18 +14613,24 @@ class ValidationErrorResponse {
 }
 
 extension $ValidationErrorResponseExtension on ValidationErrorResponse {
-  ValidationErrorResponse copyWith(
-      {String? message, ValidationErrorResponse$Errors? errors}) {
+  ValidationErrorResponse copyWith({
+    String? message,
+    ValidationErrorResponse$Errors? errors,
+  }) {
     return ValidationErrorResponse(
-        message: message ?? this.message, errors: errors ?? this.errors);
+      message: message ?? this.message,
+      errors: errors ?? this.errors,
+    );
   }
 
-  ValidationErrorResponse copyWithWrapped(
-      {Wrapped<String?>? message,
-      Wrapped<ValidationErrorResponse$Errors?>? errors}) {
+  ValidationErrorResponse copyWithWrapped({
+    Wrapped<String?>? message,
+    Wrapped<ValidationErrorResponse$Errors?>? errors,
+  }) {
     return ValidationErrorResponse(
-        message: (message != null ? message.value : this.message),
-        errors: (errors != null ? errors.value : this.errors));
+      message: (message != null ? message.value : this.message),
+      errors: (errors != null ? errors.value : this.errors),
+    );
   }
 }
 
@@ -13997,28 +14661,34 @@ class Bill$PaidDates$Item {
 }
 
 extension $Bill$PaidDates$ItemExtension on Bill$PaidDates$Item {
-  Bill$PaidDates$Item copyWith(
-      {String? transactionGroupId,
-      String? transactionJournalId,
-      DateTime? date}) {
+  Bill$PaidDates$Item copyWith({
+    String? transactionGroupId,
+    String? transactionJournalId,
+    DateTime? date,
+  }) {
     return Bill$PaidDates$Item(
-        transactionGroupId: transactionGroupId ?? this.transactionGroupId,
-        transactionJournalId: transactionJournalId ?? this.transactionJournalId,
-        date: date ?? this.date);
+      transactionGroupId: transactionGroupId ?? this.transactionGroupId,
+      transactionJournalId: transactionJournalId ?? this.transactionJournalId,
+      date: date ?? this.date,
+    );
   }
 
-  Bill$PaidDates$Item copyWithWrapped(
-      {Wrapped<String?>? transactionGroupId,
-      Wrapped<String?>? transactionJournalId,
-      Wrapped<DateTime?>? date}) {
+  Bill$PaidDates$Item copyWithWrapped({
+    Wrapped<String?>? transactionGroupId,
+    Wrapped<String?>? transactionJournalId,
+    Wrapped<DateTime?>? date,
+  }) {
     return Bill$PaidDates$Item(
-        transactionGroupId: (transactionGroupId != null
-            ? transactionGroupId.value
-            : this.transactionGroupId),
-        transactionJournalId: (transactionJournalId != null
-            ? transactionJournalId.value
-            : this.transactionJournalId),
-        date: (date != null ? date.value : this.date));
+      transactionGroupId:
+          (transactionGroupId != null
+              ? transactionGroupId.value
+              : this.transactionGroupId),
+      transactionJournalId:
+          (transactionJournalId != null
+              ? transactionJournalId.value
+              : this.transactionJournalId),
+      date: (date != null ? date.value : this.date),
+    );
   }
 }
 
@@ -14055,32 +14725,36 @@ class SystemInfo$Data {
 }
 
 extension $SystemInfo$DataExtension on SystemInfo$Data {
-  SystemInfo$Data copyWith(
-      {String? version,
-      String? apiVersion,
-      String? phpVersion,
-      String? os,
-      String? driver}) {
+  SystemInfo$Data copyWith({
+    String? version,
+    String? apiVersion,
+    String? phpVersion,
+    String? os,
+    String? driver,
+  }) {
     return SystemInfo$Data(
-        version: version ?? this.version,
-        apiVersion: apiVersion ?? this.apiVersion,
-        phpVersion: phpVersion ?? this.phpVersion,
-        os: os ?? this.os,
-        driver: driver ?? this.driver);
+      version: version ?? this.version,
+      apiVersion: apiVersion ?? this.apiVersion,
+      phpVersion: phpVersion ?? this.phpVersion,
+      os: os ?? this.os,
+      driver: driver ?? this.driver,
+    );
   }
 
-  SystemInfo$Data copyWithWrapped(
-      {Wrapped<String?>? version,
-      Wrapped<String?>? apiVersion,
-      Wrapped<String?>? phpVersion,
-      Wrapped<String?>? os,
-      Wrapped<String?>? driver}) {
+  SystemInfo$Data copyWithWrapped({
+    Wrapped<String?>? version,
+    Wrapped<String?>? apiVersion,
+    Wrapped<String?>? phpVersion,
+    Wrapped<String?>? os,
+    Wrapped<String?>? driver,
+  }) {
     return SystemInfo$Data(
-        version: (version != null ? version.value : this.version),
-        apiVersion: (apiVersion != null ? apiVersion.value : this.apiVersion),
-        phpVersion: (phpVersion != null ? phpVersion.value : this.phpVersion),
-        os: (os != null ? os.value : this.os),
-        driver: (driver != null ? driver.value : this.driver));
+      version: (version != null ? version.value : this.version),
+      apiVersion: (apiVersion != null ? apiVersion.value : this.apiVersion),
+      phpVersion: (phpVersion != null ? phpVersion.value : this.phpVersion),
+      os: (os != null ? os.value : this.os),
+      driver: (driver != null ? driver.value : this.driver),
+    );
   }
 }
 
@@ -14117,33 +14791,36 @@ class Meta$Pagination {
 }
 
 extension $Meta$PaginationExtension on Meta$Pagination {
-  Meta$Pagination copyWith(
-      {int? total,
-      int? count,
-      int? perPage,
-      int? currentPage,
-      int? totalPages}) {
+  Meta$Pagination copyWith({
+    int? total,
+    int? count,
+    int? perPage,
+    int? currentPage,
+    int? totalPages,
+  }) {
     return Meta$Pagination(
-        total: total ?? this.total,
-        count: count ?? this.count,
-        perPage: perPage ?? this.perPage,
-        currentPage: currentPage ?? this.currentPage,
-        totalPages: totalPages ?? this.totalPages);
+      total: total ?? this.total,
+      count: count ?? this.count,
+      perPage: perPage ?? this.perPage,
+      currentPage: currentPage ?? this.currentPage,
+      totalPages: totalPages ?? this.totalPages,
+    );
   }
 
-  Meta$Pagination copyWithWrapped(
-      {Wrapped<int?>? total,
-      Wrapped<int?>? count,
-      Wrapped<int?>? perPage,
-      Wrapped<int?>? currentPage,
-      Wrapped<int?>? totalPages}) {
+  Meta$Pagination copyWithWrapped({
+    Wrapped<int?>? total,
+    Wrapped<int?>? count,
+    Wrapped<int?>? perPage,
+    Wrapped<int?>? currentPage,
+    Wrapped<int?>? totalPages,
+  }) {
     return Meta$Pagination(
-        total: (total != null ? total.value : this.total),
-        count: (count != null ? count.value : this.count),
-        perPage: (perPage != null ? perPage.value : this.perPage),
-        currentPage:
-            (currentPage != null ? currentPage.value : this.currentPage),
-        totalPages: (totalPages != null ? totalPages.value : this.totalPages));
+      total: (total != null ? total.value : this.total),
+      count: (count != null ? count.value : this.count),
+      perPage: (perPage != null ? perPage.value : this.perPage),
+      currentPage: (currentPage != null ? currentPage.value : this.currentPage),
+      totalPages: (totalPages != null ? totalPages.value : this.totalPages),
+    );
   }
 }
 
@@ -14202,66 +14879,70 @@ class ValidationErrorResponse$Errors {
 
 extension $ValidationErrorResponse$ErrorsExtension
     on ValidationErrorResponse$Errors {
-  ValidationErrorResponse$Errors copyWith(
-      {List<String>? email,
-      List<String>? force,
-      List<String>? blocked,
-      List<String>? field,
-      List<String>? role,
-      List<String>? blockedCode,
-      List<String>? name,
-      List<String>? type,
-      List<String>? iban,
-      List<String>? start,
-      List<String>? end,
-      List<String>? date}) {
+  ValidationErrorResponse$Errors copyWith({
+    List<String>? email,
+    List<String>? force,
+    List<String>? blocked,
+    List<String>? field,
+    List<String>? role,
+    List<String>? blockedCode,
+    List<String>? name,
+    List<String>? type,
+    List<String>? iban,
+    List<String>? start,
+    List<String>? end,
+    List<String>? date,
+  }) {
     return ValidationErrorResponse$Errors(
-        email: email ?? this.email,
-        force: force ?? this.force,
-        blocked: blocked ?? this.blocked,
-        field: field ?? this.field,
-        role: role ?? this.role,
-        blockedCode: blockedCode ?? this.blockedCode,
-        name: name ?? this.name,
-        type: type ?? this.type,
-        iban: iban ?? this.iban,
-        start: start ?? this.start,
-        end: end ?? this.end,
-        date: date ?? this.date);
+      email: email ?? this.email,
+      force: force ?? this.force,
+      blocked: blocked ?? this.blocked,
+      field: field ?? this.field,
+      role: role ?? this.role,
+      blockedCode: blockedCode ?? this.blockedCode,
+      name: name ?? this.name,
+      type: type ?? this.type,
+      iban: iban ?? this.iban,
+      start: start ?? this.start,
+      end: end ?? this.end,
+      date: date ?? this.date,
+    );
   }
 
-  ValidationErrorResponse$Errors copyWithWrapped(
-      {Wrapped<List<String>?>? email,
-      Wrapped<List<String>?>? force,
-      Wrapped<List<String>?>? blocked,
-      Wrapped<List<String>?>? field,
-      Wrapped<List<String>?>? role,
-      Wrapped<List<String>?>? blockedCode,
-      Wrapped<List<String>?>? name,
-      Wrapped<List<String>?>? type,
-      Wrapped<List<String>?>? iban,
-      Wrapped<List<String>?>? start,
-      Wrapped<List<String>?>? end,
-      Wrapped<List<String>?>? date}) {
+  ValidationErrorResponse$Errors copyWithWrapped({
+    Wrapped<List<String>?>? email,
+    Wrapped<List<String>?>? force,
+    Wrapped<List<String>?>? blocked,
+    Wrapped<List<String>?>? field,
+    Wrapped<List<String>?>? role,
+    Wrapped<List<String>?>? blockedCode,
+    Wrapped<List<String>?>? name,
+    Wrapped<List<String>?>? type,
+    Wrapped<List<String>?>? iban,
+    Wrapped<List<String>?>? start,
+    Wrapped<List<String>?>? end,
+    Wrapped<List<String>?>? date,
+  }) {
     return ValidationErrorResponse$Errors(
-        email: (email != null ? email.value : this.email),
-        force: (force != null ? force.value : this.force),
-        blocked: (blocked != null ? blocked.value : this.blocked),
-        field: (field != null ? field.value : this.field),
-        role: (role != null ? role.value : this.role),
-        blockedCode:
-            (blockedCode != null ? blockedCode.value : this.blockedCode),
-        name: (name != null ? name.value : this.name),
-        type: (type != null ? type.value : this.type),
-        iban: (iban != null ? iban.value : this.iban),
-        start: (start != null ? start.value : this.start),
-        end: (end != null ? end.value : this.end),
-        date: (date != null ? date.value : this.date));
+      email: (email != null ? email.value : this.email),
+      force: (force != null ? force.value : this.force),
+      blocked: (blocked != null ? blocked.value : this.blocked),
+      field: (field != null ? field.value : this.field),
+      role: (role != null ? role.value : this.role),
+      blockedCode: (blockedCode != null ? blockedCode.value : this.blockedCode),
+      name: (name != null ? name.value : this.name),
+      type: (type != null ? type.value : this.type),
+      iban: (iban != null ? iban.value : this.iban),
+      start: (start != null ? start.value : this.start),
+      end: (end != null ? end.value : this.end),
+      date: (date != null ? date.value : this.date),
+    );
   }
 }
 
 String? dataDestroyObjectNullableToJson(
-    enums.DataDestroyObject? dataDestroyObject) {
+  enums.DataDestroyObject? dataDestroyObject,
+) {
   return dataDestroyObject?.value;
 }
 
@@ -14273,8 +14954,9 @@ enums.DataDestroyObject dataDestroyObjectFromJson(
   Object? dataDestroyObject, [
   enums.DataDestroyObject? defaultValue,
 ]) {
-  return enums.DataDestroyObject.values
-          .firstWhereOrNull((e) => e.value == dataDestroyObject) ??
+  return enums.DataDestroyObject.values.firstWhereOrNull(
+        (e) => e.value == dataDestroyObject,
+      ) ??
       defaultValue ??
       enums.DataDestroyObject.swaggerGeneratedUnknown;
 }
@@ -14286,18 +14968,21 @@ enums.DataDestroyObject? dataDestroyObjectNullableFromJson(
   if (dataDestroyObject == null) {
     return null;
   }
-  return enums.DataDestroyObject.values
-          .firstWhereOrNull((e) => e.value == dataDestroyObject) ??
+  return enums.DataDestroyObject.values.firstWhereOrNull(
+        (e) => e.value == dataDestroyObject,
+      ) ??
       defaultValue;
 }
 
 String dataDestroyObjectExplodedListToJson(
-    List<enums.DataDestroyObject>? dataDestroyObject) {
+  List<enums.DataDestroyObject>? dataDestroyObject,
+) {
   return dataDestroyObject?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> dataDestroyObjectListToJson(
-    List<enums.DataDestroyObject>? dataDestroyObject) {
+  List<enums.DataDestroyObject>? dataDestroyObject,
+) {
   if (dataDestroyObject == null) {
     return [];
   }
@@ -14332,12 +15017,14 @@ List<enums.DataDestroyObject>? dataDestroyObjectNullableListFromJson(
 }
 
 String? accountSearchFieldFilterNullableToJson(
-    enums.AccountSearchFieldFilter? accountSearchFieldFilter) {
+  enums.AccountSearchFieldFilter? accountSearchFieldFilter,
+) {
   return accountSearchFieldFilter?.value;
 }
 
 String? accountSearchFieldFilterToJson(
-    enums.AccountSearchFieldFilter accountSearchFieldFilter) {
+  enums.AccountSearchFieldFilter accountSearchFieldFilter,
+) {
   return accountSearchFieldFilter.value;
 }
 
@@ -14345,8 +15032,9 @@ enums.AccountSearchFieldFilter accountSearchFieldFilterFromJson(
   Object? accountSearchFieldFilter, [
   enums.AccountSearchFieldFilter? defaultValue,
 ]) {
-  return enums.AccountSearchFieldFilter.values
-          .firstWhereOrNull((e) => e.value == accountSearchFieldFilter) ??
+  return enums.AccountSearchFieldFilter.values.firstWhereOrNull(
+        (e) => e.value == accountSearchFieldFilter,
+      ) ??
       defaultValue ??
       enums.AccountSearchFieldFilter.swaggerGeneratedUnknown;
 }
@@ -14358,18 +15046,21 @@ enums.AccountSearchFieldFilter? accountSearchFieldFilterNullableFromJson(
   if (accountSearchFieldFilter == null) {
     return null;
   }
-  return enums.AccountSearchFieldFilter.values
-          .firstWhereOrNull((e) => e.value == accountSearchFieldFilter) ??
+  return enums.AccountSearchFieldFilter.values.firstWhereOrNull(
+        (e) => e.value == accountSearchFieldFilter,
+      ) ??
       defaultValue;
 }
 
 String accountSearchFieldFilterExplodedListToJson(
-    List<enums.AccountSearchFieldFilter>? accountSearchFieldFilter) {
+  List<enums.AccountSearchFieldFilter>? accountSearchFieldFilter,
+) {
   return accountSearchFieldFilter?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> accountSearchFieldFilterListToJson(
-    List<enums.AccountSearchFieldFilter>? accountSearchFieldFilter) {
+  List<enums.AccountSearchFieldFilter>? accountSearchFieldFilter,
+) {
   if (accountSearchFieldFilter == null) {
     return [];
   }
@@ -14391,7 +15082,7 @@ List<enums.AccountSearchFieldFilter> accountSearchFieldFilterListFromJson(
 }
 
 List<enums.AccountSearchFieldFilter>?
-    accountSearchFieldFilterNullableListFromJson(
+accountSearchFieldFilterNullableListFromJson(
   List? accountSearchFieldFilter, [
   List<enums.AccountSearchFieldFilter>? defaultValue,
 ]) {
@@ -14405,7 +15096,8 @@ List<enums.AccountSearchFieldFilter>?
 }
 
 String? configValueFilterNullableToJson(
-    enums.ConfigValueFilter? configValueFilter) {
+  enums.ConfigValueFilter? configValueFilter,
+) {
   return configValueFilter?.value;
 }
 
@@ -14417,8 +15109,9 @@ enums.ConfigValueFilter configValueFilterFromJson(
   Object? configValueFilter, [
   enums.ConfigValueFilter? defaultValue,
 ]) {
-  return enums.ConfigValueFilter.values
-          .firstWhereOrNull((e) => e.value == configValueFilter) ??
+  return enums.ConfigValueFilter.values.firstWhereOrNull(
+        (e) => e.value == configValueFilter,
+      ) ??
       defaultValue ??
       enums.ConfigValueFilter.swaggerGeneratedUnknown;
 }
@@ -14430,18 +15123,21 @@ enums.ConfigValueFilter? configValueFilterNullableFromJson(
   if (configValueFilter == null) {
     return null;
   }
-  return enums.ConfigValueFilter.values
-          .firstWhereOrNull((e) => e.value == configValueFilter) ??
+  return enums.ConfigValueFilter.values.firstWhereOrNull(
+        (e) => e.value == configValueFilter,
+      ) ??
       defaultValue;
 }
 
 String configValueFilterExplodedListToJson(
-    List<enums.ConfigValueFilter>? configValueFilter) {
+  List<enums.ConfigValueFilter>? configValueFilter,
+) {
   return configValueFilter?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> configValueFilterListToJson(
-    List<enums.ConfigValueFilter>? configValueFilter) {
+  List<enums.ConfigValueFilter>? configValueFilter,
+) {
   if (configValueFilter == null) {
     return [];
   }
@@ -14476,12 +15172,14 @@ List<enums.ConfigValueFilter>? configValueFilterNullableListFromJson(
 }
 
 String? configValueUpdateFilterNullableToJson(
-    enums.ConfigValueUpdateFilter? configValueUpdateFilter) {
+  enums.ConfigValueUpdateFilter? configValueUpdateFilter,
+) {
   return configValueUpdateFilter?.value;
 }
 
 String? configValueUpdateFilterToJson(
-    enums.ConfigValueUpdateFilter configValueUpdateFilter) {
+  enums.ConfigValueUpdateFilter configValueUpdateFilter,
+) {
   return configValueUpdateFilter.value;
 }
 
@@ -14489,8 +15187,9 @@ enums.ConfigValueUpdateFilter configValueUpdateFilterFromJson(
   Object? configValueUpdateFilter, [
   enums.ConfigValueUpdateFilter? defaultValue,
 ]) {
-  return enums.ConfigValueUpdateFilter.values
-          .firstWhereOrNull((e) => e.value == configValueUpdateFilter) ??
+  return enums.ConfigValueUpdateFilter.values.firstWhereOrNull(
+        (e) => e.value == configValueUpdateFilter,
+      ) ??
       defaultValue ??
       enums.ConfigValueUpdateFilter.swaggerGeneratedUnknown;
 }
@@ -14502,18 +15201,21 @@ enums.ConfigValueUpdateFilter? configValueUpdateFilterNullableFromJson(
   if (configValueUpdateFilter == null) {
     return null;
   }
-  return enums.ConfigValueUpdateFilter.values
-          .firstWhereOrNull((e) => e.value == configValueUpdateFilter) ??
+  return enums.ConfigValueUpdateFilter.values.firstWhereOrNull(
+        (e) => e.value == configValueUpdateFilter,
+      ) ??
       defaultValue;
 }
 
 String configValueUpdateFilterExplodedListToJson(
-    List<enums.ConfigValueUpdateFilter>? configValueUpdateFilter) {
+  List<enums.ConfigValueUpdateFilter>? configValueUpdateFilter,
+) {
   return configValueUpdateFilter?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> configValueUpdateFilterListToJson(
-    List<enums.ConfigValueUpdateFilter>? configValueUpdateFilter) {
+  List<enums.ConfigValueUpdateFilter>? configValueUpdateFilter,
+) {
   if (configValueUpdateFilter == null) {
     return [];
   }
@@ -14535,7 +15237,7 @@ List<enums.ConfigValueUpdateFilter> configValueUpdateFilterListFromJson(
 }
 
 List<enums.ConfigValueUpdateFilter>?
-    configValueUpdateFilterNullableListFromJson(
+configValueUpdateFilterNullableListFromJson(
   List? configValueUpdateFilter, [
   List<enums.ConfigValueUpdateFilter>? defaultValue,
 ]) {
@@ -14549,7 +15251,8 @@ List<enums.ConfigValueUpdateFilter>?
 }
 
 String? exportFileFilterNullableToJson(
-    enums.ExportFileFilter? exportFileFilter) {
+  enums.ExportFileFilter? exportFileFilter,
+) {
   return exportFileFilter?.value;
 }
 
@@ -14561,8 +15264,9 @@ enums.ExportFileFilter exportFileFilterFromJson(
   Object? exportFileFilter, [
   enums.ExportFileFilter? defaultValue,
 ]) {
-  return enums.ExportFileFilter.values
-          .firstWhereOrNull((e) => e.value == exportFileFilter) ??
+  return enums.ExportFileFilter.values.firstWhereOrNull(
+        (e) => e.value == exportFileFilter,
+      ) ??
       defaultValue ??
       enums.ExportFileFilter.swaggerGeneratedUnknown;
 }
@@ -14574,18 +15278,21 @@ enums.ExportFileFilter? exportFileFilterNullableFromJson(
   if (exportFileFilter == null) {
     return null;
   }
-  return enums.ExportFileFilter.values
-          .firstWhereOrNull((e) => e.value == exportFileFilter) ??
+  return enums.ExportFileFilter.values.firstWhereOrNull(
+        (e) => e.value == exportFileFilter,
+      ) ??
       defaultValue;
 }
 
 String exportFileFilterExplodedListToJson(
-    List<enums.ExportFileFilter>? exportFileFilter) {
+  List<enums.ExportFileFilter>? exportFileFilter,
+) {
   return exportFileFilter?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> exportFileFilterListToJson(
-    List<enums.ExportFileFilter>? exportFileFilter) {
+  List<enums.ExportFileFilter>? exportFileFilter,
+) {
   if (exportFileFilter == null) {
     return [];
   }
@@ -14620,12 +15327,14 @@ List<enums.ExportFileFilter>? exportFileFilterNullableListFromJson(
 }
 
 String? currencyUpdateDefaultNullableToJson(
-    enums.CurrencyUpdateDefault? currencyUpdateDefault) {
+  enums.CurrencyUpdateDefault? currencyUpdateDefault,
+) {
   return currencyUpdateDefault?.value;
 }
 
 String? currencyUpdateDefaultToJson(
-    enums.CurrencyUpdateDefault currencyUpdateDefault) {
+  enums.CurrencyUpdateDefault currencyUpdateDefault,
+) {
   return currencyUpdateDefault.value;
 }
 
@@ -14633,8 +15342,9 @@ enums.CurrencyUpdateDefault currencyUpdateDefaultFromJson(
   Object? currencyUpdateDefault, [
   enums.CurrencyUpdateDefault? defaultValue,
 ]) {
-  return enums.CurrencyUpdateDefault.values
-          .firstWhereOrNull((e) => e.value == currencyUpdateDefault) ??
+  return enums.CurrencyUpdateDefault.values.firstWhereOrNull(
+        (e) => e.value == currencyUpdateDefault,
+      ) ??
       defaultValue ??
       enums.CurrencyUpdateDefault.swaggerGeneratedUnknown;
 }
@@ -14646,18 +15356,21 @@ enums.CurrencyUpdateDefault? currencyUpdateDefaultNullableFromJson(
   if (currencyUpdateDefault == null) {
     return null;
   }
-  return enums.CurrencyUpdateDefault.values
-          .firstWhereOrNull((e) => e.value == currencyUpdateDefault) ??
+  return enums.CurrencyUpdateDefault.values.firstWhereOrNull(
+        (e) => e.value == currencyUpdateDefault,
+      ) ??
       defaultValue;
 }
 
 String currencyUpdateDefaultExplodedListToJson(
-    List<enums.CurrencyUpdateDefault>? currencyUpdateDefault) {
+  List<enums.CurrencyUpdateDefault>? currencyUpdateDefault,
+) {
   return currencyUpdateDefault?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> currencyUpdateDefaultListToJson(
-    List<enums.CurrencyUpdateDefault>? currencyUpdateDefault) {
+  List<enums.CurrencyUpdateDefault>? currencyUpdateDefault,
+) {
   if (currencyUpdateDefault == null) {
     return [];
   }
@@ -14692,7 +15405,8 @@ List<enums.CurrencyUpdateDefault>? currencyUpdateDefaultNullableListFromJson(
 }
 
 String? userGroupReadRoleNullableToJson(
-    enums.UserGroupReadRole? userGroupReadRole) {
+  enums.UserGroupReadRole? userGroupReadRole,
+) {
   return userGroupReadRole?.value;
 }
 
@@ -14704,8 +15418,9 @@ enums.UserGroupReadRole userGroupReadRoleFromJson(
   Object? userGroupReadRole, [
   enums.UserGroupReadRole? defaultValue,
 ]) {
-  return enums.UserGroupReadRole.values
-          .firstWhereOrNull((e) => e.value == userGroupReadRole) ??
+  return enums.UserGroupReadRole.values.firstWhereOrNull(
+        (e) => e.value == userGroupReadRole,
+      ) ??
       defaultValue ??
       enums.UserGroupReadRole.swaggerGeneratedUnknown;
 }
@@ -14717,18 +15432,21 @@ enums.UserGroupReadRole? userGroupReadRoleNullableFromJson(
   if (userGroupReadRole == null) {
     return null;
   }
-  return enums.UserGroupReadRole.values
-          .firstWhereOrNull((e) => e.value == userGroupReadRole) ??
+  return enums.UserGroupReadRole.values.firstWhereOrNull(
+        (e) => e.value == userGroupReadRole,
+      ) ??
       defaultValue;
 }
 
 String userGroupReadRoleExplodedListToJson(
-    List<enums.UserGroupReadRole>? userGroupReadRole) {
+  List<enums.UserGroupReadRole>? userGroupReadRole,
+) {
   return userGroupReadRole?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> userGroupReadRoleListToJson(
-    List<enums.UserGroupReadRole>? userGroupReadRole) {
+  List<enums.UserGroupReadRole>? userGroupReadRole,
+) {
   if (userGroupReadRole == null) {
     return [];
   }
@@ -14774,8 +15492,9 @@ enums.AttachableType attachableTypeFromJson(
   Object? attachableType, [
   enums.AttachableType? defaultValue,
 ]) {
-  return enums.AttachableType.values
-          .firstWhereOrNull((e) => e.value == attachableType) ??
+  return enums.AttachableType.values.firstWhereOrNull(
+        (e) => e.value == attachableType,
+      ) ??
       defaultValue ??
       enums.AttachableType.swaggerGeneratedUnknown;
 }
@@ -14787,18 +15506,21 @@ enums.AttachableType? attachableTypeNullableFromJson(
   if (attachableType == null) {
     return null;
   }
-  return enums.AttachableType.values
-          .firstWhereOrNull((e) => e.value == attachableType) ??
+  return enums.AttachableType.values.firstWhereOrNull(
+        (e) => e.value == attachableType,
+      ) ??
       defaultValue;
 }
 
 String attachableTypeExplodedListToJson(
-    List<enums.AttachableType>? attachableType) {
+  List<enums.AttachableType>? attachableType,
+) {
   return attachableType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> attachableTypeListToJson(
-    List<enums.AttachableType>? attachableType) {
+  List<enums.AttachableType>? attachableType,
+) {
   if (attachableType == null) {
     return [];
   }
@@ -14833,7 +15555,8 @@ List<enums.AttachableType>? attachableTypeNullableListFromJson(
 }
 
 String? autoBudgetPeriodNullableToJson(
-    enums.AutoBudgetPeriod? autoBudgetPeriod) {
+  enums.AutoBudgetPeriod? autoBudgetPeriod,
+) {
   return autoBudgetPeriod?.value;
 }
 
@@ -14845,8 +15568,9 @@ enums.AutoBudgetPeriod autoBudgetPeriodFromJson(
   Object? autoBudgetPeriod, [
   enums.AutoBudgetPeriod? defaultValue,
 ]) {
-  return enums.AutoBudgetPeriod.values
-          .firstWhereOrNull((e) => e.value == autoBudgetPeriod) ??
+  return enums.AutoBudgetPeriod.values.firstWhereOrNull(
+        (e) => e.value == autoBudgetPeriod,
+      ) ??
       defaultValue ??
       enums.AutoBudgetPeriod.swaggerGeneratedUnknown;
 }
@@ -14858,18 +15582,21 @@ enums.AutoBudgetPeriod? autoBudgetPeriodNullableFromJson(
   if (autoBudgetPeriod == null) {
     return null;
   }
-  return enums.AutoBudgetPeriod.values
-          .firstWhereOrNull((e) => e.value == autoBudgetPeriod) ??
+  return enums.AutoBudgetPeriod.values.firstWhereOrNull(
+        (e) => e.value == autoBudgetPeriod,
+      ) ??
       defaultValue;
 }
 
 String autoBudgetPeriodExplodedListToJson(
-    List<enums.AutoBudgetPeriod>? autoBudgetPeriod) {
+  List<enums.AutoBudgetPeriod>? autoBudgetPeriod,
+) {
   return autoBudgetPeriod?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> autoBudgetPeriodListToJson(
-    List<enums.AutoBudgetPeriod>? autoBudgetPeriod) {
+  List<enums.AutoBudgetPeriod>? autoBudgetPeriod,
+) {
   if (autoBudgetPeriod == null) {
     return [];
   }
@@ -14915,8 +15642,9 @@ enums.AutoBudgetType autoBudgetTypeFromJson(
   Object? autoBudgetType, [
   enums.AutoBudgetType? defaultValue,
 ]) {
-  return enums.AutoBudgetType.values
-          .firstWhereOrNull((e) => e.value == autoBudgetType) ??
+  return enums.AutoBudgetType.values.firstWhereOrNull(
+        (e) => e.value == autoBudgetType,
+      ) ??
       defaultValue ??
       enums.AutoBudgetType.swaggerGeneratedUnknown;
 }
@@ -14928,18 +15656,21 @@ enums.AutoBudgetType? autoBudgetTypeNullableFromJson(
   if (autoBudgetType == null) {
     return null;
   }
-  return enums.AutoBudgetType.values
-          .firstWhereOrNull((e) => e.value == autoBudgetType) ??
+  return enums.AutoBudgetType.values.firstWhereOrNull(
+        (e) => e.value == autoBudgetType,
+      ) ??
       defaultValue;
 }
 
 String autoBudgetTypeExplodedListToJson(
-    List<enums.AutoBudgetType>? autoBudgetType) {
+  List<enums.AutoBudgetType>? autoBudgetType,
+) {
   return autoBudgetType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> autoBudgetTypeListToJson(
-    List<enums.AutoBudgetType>? autoBudgetType) {
+  List<enums.AutoBudgetType>? autoBudgetType,
+) {
   if (autoBudgetType == null) {
     return [];
   }
@@ -14974,12 +15705,14 @@ List<enums.AutoBudgetType>? autoBudgetTypeNullableListFromJson(
 }
 
 String? billRepeatFrequencyNullableToJson(
-    enums.BillRepeatFrequency? billRepeatFrequency) {
+  enums.BillRepeatFrequency? billRepeatFrequency,
+) {
   return billRepeatFrequency?.value;
 }
 
 String? billRepeatFrequencyToJson(
-    enums.BillRepeatFrequency billRepeatFrequency) {
+  enums.BillRepeatFrequency billRepeatFrequency,
+) {
   return billRepeatFrequency.value;
 }
 
@@ -14987,8 +15720,9 @@ enums.BillRepeatFrequency billRepeatFrequencyFromJson(
   Object? billRepeatFrequency, [
   enums.BillRepeatFrequency? defaultValue,
 ]) {
-  return enums.BillRepeatFrequency.values
-          .firstWhereOrNull((e) => e.value == billRepeatFrequency) ??
+  return enums.BillRepeatFrequency.values.firstWhereOrNull(
+        (e) => e.value == billRepeatFrequency,
+      ) ??
       defaultValue ??
       enums.BillRepeatFrequency.swaggerGeneratedUnknown;
 }
@@ -15000,18 +15734,21 @@ enums.BillRepeatFrequency? billRepeatFrequencyNullableFromJson(
   if (billRepeatFrequency == null) {
     return null;
   }
-  return enums.BillRepeatFrequency.values
-          .firstWhereOrNull((e) => e.value == billRepeatFrequency) ??
+  return enums.BillRepeatFrequency.values.firstWhereOrNull(
+        (e) => e.value == billRepeatFrequency,
+      ) ??
       defaultValue;
 }
 
 String billRepeatFrequencyExplodedListToJson(
-    List<enums.BillRepeatFrequency>? billRepeatFrequency) {
+  List<enums.BillRepeatFrequency>? billRepeatFrequency,
+) {
   return billRepeatFrequency?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> billRepeatFrequencyListToJson(
-    List<enums.BillRepeatFrequency>? billRepeatFrequency) {
+  List<enums.BillRepeatFrequency>? billRepeatFrequency,
+) {
   if (billRepeatFrequency == null) {
     return [];
   }
@@ -15046,12 +15783,14 @@ List<enums.BillRepeatFrequency>? billRepeatFrequencyNullableListFromJson(
 }
 
 String? recurrenceRepetitionTypeNullableToJson(
-    enums.RecurrenceRepetitionType? recurrenceRepetitionType) {
+  enums.RecurrenceRepetitionType? recurrenceRepetitionType,
+) {
   return recurrenceRepetitionType?.value;
 }
 
 String? recurrenceRepetitionTypeToJson(
-    enums.RecurrenceRepetitionType recurrenceRepetitionType) {
+  enums.RecurrenceRepetitionType recurrenceRepetitionType,
+) {
   return recurrenceRepetitionType.value;
 }
 
@@ -15059,8 +15798,9 @@ enums.RecurrenceRepetitionType recurrenceRepetitionTypeFromJson(
   Object? recurrenceRepetitionType, [
   enums.RecurrenceRepetitionType? defaultValue,
 ]) {
-  return enums.RecurrenceRepetitionType.values
-          .firstWhereOrNull((e) => e.value == recurrenceRepetitionType) ??
+  return enums.RecurrenceRepetitionType.values.firstWhereOrNull(
+        (e) => e.value == recurrenceRepetitionType,
+      ) ??
       defaultValue ??
       enums.RecurrenceRepetitionType.swaggerGeneratedUnknown;
 }
@@ -15072,18 +15812,21 @@ enums.RecurrenceRepetitionType? recurrenceRepetitionTypeNullableFromJson(
   if (recurrenceRepetitionType == null) {
     return null;
   }
-  return enums.RecurrenceRepetitionType.values
-          .firstWhereOrNull((e) => e.value == recurrenceRepetitionType) ??
+  return enums.RecurrenceRepetitionType.values.firstWhereOrNull(
+        (e) => e.value == recurrenceRepetitionType,
+      ) ??
       defaultValue;
 }
 
 String recurrenceRepetitionTypeExplodedListToJson(
-    List<enums.RecurrenceRepetitionType>? recurrenceRepetitionType) {
+  List<enums.RecurrenceRepetitionType>? recurrenceRepetitionType,
+) {
   return recurrenceRepetitionType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> recurrenceRepetitionTypeListToJson(
-    List<enums.RecurrenceRepetitionType>? recurrenceRepetitionType) {
+  List<enums.RecurrenceRepetitionType>? recurrenceRepetitionType,
+) {
   if (recurrenceRepetitionType == null) {
     return [];
   }
@@ -15105,7 +15848,7 @@ List<enums.RecurrenceRepetitionType> recurrenceRepetitionTypeListFromJson(
 }
 
 List<enums.RecurrenceRepetitionType>?
-    recurrenceRepetitionTypeNullableListFromJson(
+recurrenceRepetitionTypeNullableListFromJson(
   List? recurrenceRepetitionType, [
   List<enums.RecurrenceRepetitionType>? defaultValue,
 ]) {
@@ -15119,12 +15862,14 @@ List<enums.RecurrenceRepetitionType>?
 }
 
 String? recurrenceTransactionTypeNullableToJson(
-    enums.RecurrenceTransactionType? recurrenceTransactionType) {
+  enums.RecurrenceTransactionType? recurrenceTransactionType,
+) {
   return recurrenceTransactionType?.value;
 }
 
 String? recurrenceTransactionTypeToJson(
-    enums.RecurrenceTransactionType recurrenceTransactionType) {
+  enums.RecurrenceTransactionType recurrenceTransactionType,
+) {
   return recurrenceTransactionType.value;
 }
 
@@ -15132,8 +15877,9 @@ enums.RecurrenceTransactionType recurrenceTransactionTypeFromJson(
   Object? recurrenceTransactionType, [
   enums.RecurrenceTransactionType? defaultValue,
 ]) {
-  return enums.RecurrenceTransactionType.values
-          .firstWhereOrNull((e) => e.value == recurrenceTransactionType) ??
+  return enums.RecurrenceTransactionType.values.firstWhereOrNull(
+        (e) => e.value == recurrenceTransactionType,
+      ) ??
       defaultValue ??
       enums.RecurrenceTransactionType.swaggerGeneratedUnknown;
 }
@@ -15145,18 +15891,21 @@ enums.RecurrenceTransactionType? recurrenceTransactionTypeNullableFromJson(
   if (recurrenceTransactionType == null) {
     return null;
   }
-  return enums.RecurrenceTransactionType.values
-          .firstWhereOrNull((e) => e.value == recurrenceTransactionType) ??
+  return enums.RecurrenceTransactionType.values.firstWhereOrNull(
+        (e) => e.value == recurrenceTransactionType,
+      ) ??
       defaultValue;
 }
 
 String recurrenceTransactionTypeExplodedListToJson(
-    List<enums.RecurrenceTransactionType>? recurrenceTransactionType) {
+  List<enums.RecurrenceTransactionType>? recurrenceTransactionType,
+) {
   return recurrenceTransactionType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> recurrenceTransactionTypeListToJson(
-    List<enums.RecurrenceTransactionType>? recurrenceTransactionType) {
+  List<enums.RecurrenceTransactionType>? recurrenceTransactionType,
+) {
   if (recurrenceTransactionType == null) {
     return [];
   }
@@ -15178,7 +15927,7 @@ List<enums.RecurrenceTransactionType> recurrenceTransactionTypeListFromJson(
 }
 
 List<enums.RecurrenceTransactionType>?
-    recurrenceTransactionTypeNullableListFromJson(
+recurrenceTransactionTypeNullableListFromJson(
   List? recurrenceTransactionType, [
   List<enums.RecurrenceTransactionType>? defaultValue,
 ]) {
@@ -15192,7 +15941,8 @@ List<enums.RecurrenceTransactionType>?
 }
 
 String? ruleActionKeywordNullableToJson(
-    enums.RuleActionKeyword? ruleActionKeyword) {
+  enums.RuleActionKeyword? ruleActionKeyword,
+) {
   return ruleActionKeyword?.value;
 }
 
@@ -15204,8 +15954,9 @@ enums.RuleActionKeyword ruleActionKeywordFromJson(
   Object? ruleActionKeyword, [
   enums.RuleActionKeyword? defaultValue,
 ]) {
-  return enums.RuleActionKeyword.values
-          .firstWhereOrNull((e) => e.value == ruleActionKeyword) ??
+  return enums.RuleActionKeyword.values.firstWhereOrNull(
+        (e) => e.value == ruleActionKeyword,
+      ) ??
       defaultValue ??
       enums.RuleActionKeyword.swaggerGeneratedUnknown;
 }
@@ -15217,18 +15968,21 @@ enums.RuleActionKeyword? ruleActionKeywordNullableFromJson(
   if (ruleActionKeyword == null) {
     return null;
   }
-  return enums.RuleActionKeyword.values
-          .firstWhereOrNull((e) => e.value == ruleActionKeyword) ??
+  return enums.RuleActionKeyword.values.firstWhereOrNull(
+        (e) => e.value == ruleActionKeyword,
+      ) ??
       defaultValue;
 }
 
 String ruleActionKeywordExplodedListToJson(
-    List<enums.RuleActionKeyword>? ruleActionKeyword) {
+  List<enums.RuleActionKeyword>? ruleActionKeyword,
+) {
   return ruleActionKeyword?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> ruleActionKeywordListToJson(
-    List<enums.RuleActionKeyword>? ruleActionKeyword) {
+  List<enums.RuleActionKeyword>? ruleActionKeyword,
+) {
   if (ruleActionKeyword == null) {
     return [];
   }
@@ -15263,7 +16017,8 @@ List<enums.RuleActionKeyword>? ruleActionKeywordNullableListFromJson(
 }
 
 String? ruleTriggerKeywordNullableToJson(
-    enums.RuleTriggerKeyword? ruleTriggerKeyword) {
+  enums.RuleTriggerKeyword? ruleTriggerKeyword,
+) {
   return ruleTriggerKeyword?.value;
 }
 
@@ -15275,8 +16030,9 @@ enums.RuleTriggerKeyword ruleTriggerKeywordFromJson(
   Object? ruleTriggerKeyword, [
   enums.RuleTriggerKeyword? defaultValue,
 ]) {
-  return enums.RuleTriggerKeyword.values
-          .firstWhereOrNull((e) => e.value == ruleTriggerKeyword) ??
+  return enums.RuleTriggerKeyword.values.firstWhereOrNull(
+        (e) => e.value == ruleTriggerKeyword,
+      ) ??
       defaultValue ??
       enums.RuleTriggerKeyword.swaggerGeneratedUnknown;
 }
@@ -15288,18 +16044,21 @@ enums.RuleTriggerKeyword? ruleTriggerKeywordNullableFromJson(
   if (ruleTriggerKeyword == null) {
     return null;
   }
-  return enums.RuleTriggerKeyword.values
-          .firstWhereOrNull((e) => e.value == ruleTriggerKeyword) ??
+  return enums.RuleTriggerKeyword.values.firstWhereOrNull(
+        (e) => e.value == ruleTriggerKeyword,
+      ) ??
       defaultValue;
 }
 
 String ruleTriggerKeywordExplodedListToJson(
-    List<enums.RuleTriggerKeyword>? ruleTriggerKeyword) {
+  List<enums.RuleTriggerKeyword>? ruleTriggerKeyword,
+) {
   return ruleTriggerKeyword?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> ruleTriggerKeywordListToJson(
-    List<enums.RuleTriggerKeyword>? ruleTriggerKeyword) {
+  List<enums.RuleTriggerKeyword>? ruleTriggerKeyword,
+) {
   if (ruleTriggerKeyword == null) {
     return [];
   }
@@ -15345,8 +16104,9 @@ enums.RuleTriggerType ruleTriggerTypeFromJson(
   Object? ruleTriggerType, [
   enums.RuleTriggerType? defaultValue,
 ]) {
-  return enums.RuleTriggerType.values
-          .firstWhereOrNull((e) => e.value == ruleTriggerType) ??
+  return enums.RuleTriggerType.values.firstWhereOrNull(
+        (e) => e.value == ruleTriggerType,
+      ) ??
       defaultValue ??
       enums.RuleTriggerType.swaggerGeneratedUnknown;
 }
@@ -15358,18 +16118,21 @@ enums.RuleTriggerType? ruleTriggerTypeNullableFromJson(
   if (ruleTriggerType == null) {
     return null;
   }
-  return enums.RuleTriggerType.values
-          .firstWhereOrNull((e) => e.value == ruleTriggerType) ??
+  return enums.RuleTriggerType.values.firstWhereOrNull(
+        (e) => e.value == ruleTriggerType,
+      ) ??
       defaultValue;
 }
 
 String ruleTriggerTypeExplodedListToJson(
-    List<enums.RuleTriggerType>? ruleTriggerType) {
+  List<enums.RuleTriggerType>? ruleTriggerType,
+) {
   return ruleTriggerType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> ruleTriggerTypeListToJson(
-    List<enums.RuleTriggerType>? ruleTriggerType) {
+  List<enums.RuleTriggerType>? ruleTriggerType,
+) {
   if (ruleTriggerType == null) {
     return [];
   }
@@ -15404,12 +16167,14 @@ List<enums.RuleTriggerType>? ruleTriggerTypeNullableListFromJson(
 }
 
 String? userBlockedCodePropertyNullableToJson(
-    enums.UserBlockedCodeProperty? userBlockedCodeProperty) {
+  enums.UserBlockedCodeProperty? userBlockedCodeProperty,
+) {
   return userBlockedCodeProperty?.value;
 }
 
 String? userBlockedCodePropertyToJson(
-    enums.UserBlockedCodeProperty userBlockedCodeProperty) {
+  enums.UserBlockedCodeProperty userBlockedCodeProperty,
+) {
   return userBlockedCodeProperty.value;
 }
 
@@ -15417,8 +16182,9 @@ enums.UserBlockedCodeProperty userBlockedCodePropertyFromJson(
   Object? userBlockedCodeProperty, [
   enums.UserBlockedCodeProperty? defaultValue,
 ]) {
-  return enums.UserBlockedCodeProperty.values
-          .firstWhereOrNull((e) => e.value == userBlockedCodeProperty) ??
+  return enums.UserBlockedCodeProperty.values.firstWhereOrNull(
+        (e) => e.value == userBlockedCodeProperty,
+      ) ??
       defaultValue ??
       enums.UserBlockedCodeProperty.swaggerGeneratedUnknown;
 }
@@ -15430,18 +16196,21 @@ enums.UserBlockedCodeProperty? userBlockedCodePropertyNullableFromJson(
   if (userBlockedCodeProperty == null) {
     return null;
   }
-  return enums.UserBlockedCodeProperty.values
-          .firstWhereOrNull((e) => e.value == userBlockedCodeProperty) ??
+  return enums.UserBlockedCodeProperty.values.firstWhereOrNull(
+        (e) => e.value == userBlockedCodeProperty,
+      ) ??
       defaultValue;
 }
 
 String userBlockedCodePropertyExplodedListToJson(
-    List<enums.UserBlockedCodeProperty>? userBlockedCodeProperty) {
+  List<enums.UserBlockedCodeProperty>? userBlockedCodeProperty,
+) {
   return userBlockedCodeProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> userBlockedCodePropertyListToJson(
-    List<enums.UserBlockedCodeProperty>? userBlockedCodeProperty) {
+  List<enums.UserBlockedCodeProperty>? userBlockedCodeProperty,
+) {
   if (userBlockedCodeProperty == null) {
     return [];
   }
@@ -15463,7 +16232,7 @@ List<enums.UserBlockedCodeProperty> userBlockedCodePropertyListFromJson(
 }
 
 List<enums.UserBlockedCodeProperty>?
-    userBlockedCodePropertyNullableListFromJson(
+userBlockedCodePropertyNullableListFromJson(
   List? userBlockedCodeProperty, [
   List<enums.UserBlockedCodeProperty>? defaultValue,
 ]) {
@@ -15477,7 +16246,8 @@ List<enums.UserBlockedCodeProperty>?
 }
 
 String? userRolePropertyNullableToJson(
-    enums.UserRoleProperty? userRoleProperty) {
+  enums.UserRoleProperty? userRoleProperty,
+) {
   return userRoleProperty?.value;
 }
 
@@ -15489,8 +16259,9 @@ enums.UserRoleProperty userRolePropertyFromJson(
   Object? userRoleProperty, [
   enums.UserRoleProperty? defaultValue,
 ]) {
-  return enums.UserRoleProperty.values
-          .firstWhereOrNull((e) => e.value == userRoleProperty) ??
+  return enums.UserRoleProperty.values.firstWhereOrNull(
+        (e) => e.value == userRoleProperty,
+      ) ??
       defaultValue ??
       enums.UserRoleProperty.swaggerGeneratedUnknown;
 }
@@ -15502,18 +16273,21 @@ enums.UserRoleProperty? userRolePropertyNullableFromJson(
   if (userRoleProperty == null) {
     return null;
   }
-  return enums.UserRoleProperty.values
-          .firstWhereOrNull((e) => e.value == userRoleProperty) ??
+  return enums.UserRoleProperty.values.firstWhereOrNull(
+        (e) => e.value == userRoleProperty,
+      ) ??
       defaultValue;
 }
 
 String userRolePropertyExplodedListToJson(
-    List<enums.UserRoleProperty>? userRoleProperty) {
+  List<enums.UserRoleProperty>? userRoleProperty,
+) {
   return userRoleProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> userRolePropertyListToJson(
-    List<enums.UserRoleProperty>? userRoleProperty) {
+  List<enums.UserRoleProperty>? userRoleProperty,
+) {
   if (userRoleProperty == null) {
     return [];
   }
@@ -15559,8 +16333,9 @@ enums.WebhookDelivery webhookDeliveryFromJson(
   Object? webhookDelivery, [
   enums.WebhookDelivery? defaultValue,
 ]) {
-  return enums.WebhookDelivery.values
-          .firstWhereOrNull((e) => e.value == webhookDelivery) ??
+  return enums.WebhookDelivery.values.firstWhereOrNull(
+        (e) => e.value == webhookDelivery,
+      ) ??
       defaultValue ??
       enums.WebhookDelivery.swaggerGeneratedUnknown;
 }
@@ -15572,18 +16347,21 @@ enums.WebhookDelivery? webhookDeliveryNullableFromJson(
   if (webhookDelivery == null) {
     return null;
   }
-  return enums.WebhookDelivery.values
-          .firstWhereOrNull((e) => e.value == webhookDelivery) ??
+  return enums.WebhookDelivery.values.firstWhereOrNull(
+        (e) => e.value == webhookDelivery,
+      ) ??
       defaultValue;
 }
 
 String webhookDeliveryExplodedListToJson(
-    List<enums.WebhookDelivery>? webhookDelivery) {
+  List<enums.WebhookDelivery>? webhookDelivery,
+) {
   return webhookDelivery?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> webhookDeliveryListToJson(
-    List<enums.WebhookDelivery>? webhookDelivery) {
+  List<enums.WebhookDelivery>? webhookDelivery,
+) {
   if (webhookDelivery == null) {
     return [];
   }
@@ -15629,8 +16407,9 @@ enums.WebhookResponse webhookResponseFromJson(
   Object? webhookResponse, [
   enums.WebhookResponse? defaultValue,
 ]) {
-  return enums.WebhookResponse.values
-          .firstWhereOrNull((e) => e.value == webhookResponse) ??
+  return enums.WebhookResponse.values.firstWhereOrNull(
+        (e) => e.value == webhookResponse,
+      ) ??
       defaultValue ??
       enums.WebhookResponse.swaggerGeneratedUnknown;
 }
@@ -15642,18 +16421,21 @@ enums.WebhookResponse? webhookResponseNullableFromJson(
   if (webhookResponse == null) {
     return null;
   }
-  return enums.WebhookResponse.values
-          .firstWhereOrNull((e) => e.value == webhookResponse) ??
+  return enums.WebhookResponse.values.firstWhereOrNull(
+        (e) => e.value == webhookResponse,
+      ) ??
       defaultValue;
 }
 
 String webhookResponseExplodedListToJson(
-    List<enums.WebhookResponse>? webhookResponse) {
+  List<enums.WebhookResponse>? webhookResponse,
+) {
   return webhookResponse?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> webhookResponseListToJson(
-    List<enums.WebhookResponse>? webhookResponse) {
+  List<enums.WebhookResponse>? webhookResponse,
+) {
   if (webhookResponse == null) {
     return [];
   }
@@ -15699,8 +16481,9 @@ enums.WebhookTrigger webhookTriggerFromJson(
   Object? webhookTrigger, [
   enums.WebhookTrigger? defaultValue,
 ]) {
-  return enums.WebhookTrigger.values
-          .firstWhereOrNull((e) => e.value == webhookTrigger) ??
+  return enums.WebhookTrigger.values.firstWhereOrNull(
+        (e) => e.value == webhookTrigger,
+      ) ??
       defaultValue ??
       enums.WebhookTrigger.swaggerGeneratedUnknown;
 }
@@ -15712,18 +16495,21 @@ enums.WebhookTrigger? webhookTriggerNullableFromJson(
   if (webhookTrigger == null) {
     return null;
   }
-  return enums.WebhookTrigger.values
-          .firstWhereOrNull((e) => e.value == webhookTrigger) ??
+  return enums.WebhookTrigger.values.firstWhereOrNull(
+        (e) => e.value == webhookTrigger,
+      ) ??
       defaultValue;
 }
 
 String webhookTriggerExplodedListToJson(
-    List<enums.WebhookTrigger>? webhookTrigger) {
+  List<enums.WebhookTrigger>? webhookTrigger,
+) {
   return webhookTrigger?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> webhookTriggerListToJson(
-    List<enums.WebhookTrigger>? webhookTrigger) {
+  List<enums.WebhookTrigger>? webhookTrigger,
+) {
   if (webhookTrigger == null) {
     return [];
   }
@@ -15758,7 +16544,8 @@ List<enums.WebhookTrigger>? webhookTriggerNullableListFromJson(
 }
 
 String? accountTypeFilterNullableToJson(
-    enums.AccountTypeFilter? accountTypeFilter) {
+  enums.AccountTypeFilter? accountTypeFilter,
+) {
   return accountTypeFilter?.value;
 }
 
@@ -15770,8 +16557,9 @@ enums.AccountTypeFilter accountTypeFilterFromJson(
   Object? accountTypeFilter, [
   enums.AccountTypeFilter? defaultValue,
 ]) {
-  return enums.AccountTypeFilter.values
-          .firstWhereOrNull((e) => e.value == accountTypeFilter) ??
+  return enums.AccountTypeFilter.values.firstWhereOrNull(
+        (e) => e.value == accountTypeFilter,
+      ) ??
       defaultValue ??
       enums.AccountTypeFilter.swaggerGeneratedUnknown;
 }
@@ -15783,18 +16571,21 @@ enums.AccountTypeFilter? accountTypeFilterNullableFromJson(
   if (accountTypeFilter == null) {
     return null;
   }
-  return enums.AccountTypeFilter.values
-          .firstWhereOrNull((e) => e.value == accountTypeFilter) ??
+  return enums.AccountTypeFilter.values.firstWhereOrNull(
+        (e) => e.value == accountTypeFilter,
+      ) ??
       defaultValue;
 }
 
 String accountTypeFilterExplodedListToJson(
-    List<enums.AccountTypeFilter>? accountTypeFilter) {
+  List<enums.AccountTypeFilter>? accountTypeFilter,
+) {
   return accountTypeFilter?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> accountTypeFilterListToJson(
-    List<enums.AccountTypeFilter>? accountTypeFilter) {
+  List<enums.AccountTypeFilter>? accountTypeFilter,
+) {
   if (accountTypeFilter == null) {
     return [];
   }
@@ -15829,12 +16620,14 @@ List<enums.AccountTypeFilter>? accountTypeFilterNullableListFromJson(
 }
 
 String? transactionTypeFilterNullableToJson(
-    enums.TransactionTypeFilter? transactionTypeFilter) {
+  enums.TransactionTypeFilter? transactionTypeFilter,
+) {
   return transactionTypeFilter?.value;
 }
 
 String? transactionTypeFilterToJson(
-    enums.TransactionTypeFilter transactionTypeFilter) {
+  enums.TransactionTypeFilter transactionTypeFilter,
+) {
   return transactionTypeFilter.value;
 }
 
@@ -15842,8 +16635,9 @@ enums.TransactionTypeFilter transactionTypeFilterFromJson(
   Object? transactionTypeFilter, [
   enums.TransactionTypeFilter? defaultValue,
 ]) {
-  return enums.TransactionTypeFilter.values
-          .firstWhereOrNull((e) => e.value == transactionTypeFilter) ??
+  return enums.TransactionTypeFilter.values.firstWhereOrNull(
+        (e) => e.value == transactionTypeFilter,
+      ) ??
       defaultValue ??
       enums.TransactionTypeFilter.swaggerGeneratedUnknown;
 }
@@ -15855,18 +16649,21 @@ enums.TransactionTypeFilter? transactionTypeFilterNullableFromJson(
   if (transactionTypeFilter == null) {
     return null;
   }
-  return enums.TransactionTypeFilter.values
-          .firstWhereOrNull((e) => e.value == transactionTypeFilter) ??
+  return enums.TransactionTypeFilter.values.firstWhereOrNull(
+        (e) => e.value == transactionTypeFilter,
+      ) ??
       defaultValue;
 }
 
 String transactionTypeFilterExplodedListToJson(
-    List<enums.TransactionTypeFilter>? transactionTypeFilter) {
+  List<enums.TransactionTypeFilter>? transactionTypeFilter,
+) {
   return transactionTypeFilter?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> transactionTypeFilterListToJson(
-    List<enums.TransactionTypeFilter>? transactionTypeFilter) {
+  List<enums.TransactionTypeFilter>? transactionTypeFilter,
+) {
   if (transactionTypeFilter == null) {
     return [];
   }
@@ -15901,12 +16698,14 @@ List<enums.TransactionTypeFilter>? transactionTypeFilterNullableListFromJson(
 }
 
 String? accountRolePropertyNullableToJson(
-    enums.AccountRoleProperty? accountRoleProperty) {
+  enums.AccountRoleProperty? accountRoleProperty,
+) {
   return accountRoleProperty?.value;
 }
 
 String? accountRolePropertyToJson(
-    enums.AccountRoleProperty accountRoleProperty) {
+  enums.AccountRoleProperty accountRoleProperty,
+) {
   return accountRoleProperty.value;
 }
 
@@ -15914,8 +16713,9 @@ enums.AccountRoleProperty accountRolePropertyFromJson(
   Object? accountRoleProperty, [
   enums.AccountRoleProperty? defaultValue,
 ]) {
-  return enums.AccountRoleProperty.values
-          .firstWhereOrNull((e) => e.value == accountRoleProperty) ??
+  return enums.AccountRoleProperty.values.firstWhereOrNull(
+        (e) => e.value == accountRoleProperty,
+      ) ??
       defaultValue ??
       enums.AccountRoleProperty.swaggerGeneratedUnknown;
 }
@@ -15927,18 +16727,21 @@ enums.AccountRoleProperty? accountRolePropertyNullableFromJson(
   if (accountRoleProperty == null) {
     return null;
   }
-  return enums.AccountRoleProperty.values
-          .firstWhereOrNull((e) => e.value == accountRoleProperty) ??
+  return enums.AccountRoleProperty.values.firstWhereOrNull(
+        (e) => e.value == accountRoleProperty,
+      ) ??
       defaultValue;
 }
 
 String accountRolePropertyExplodedListToJson(
-    List<enums.AccountRoleProperty>? accountRoleProperty) {
+  List<enums.AccountRoleProperty>? accountRoleProperty,
+) {
   return accountRoleProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> accountRolePropertyListToJson(
-    List<enums.AccountRoleProperty>? accountRoleProperty) {
+  List<enums.AccountRoleProperty>? accountRoleProperty,
+) {
   if (accountRoleProperty == null) {
     return [];
   }
@@ -15973,12 +16776,14 @@ List<enums.AccountRoleProperty>? accountRolePropertyNullableListFromJson(
 }
 
 String? accountTypePropertyNullableToJson(
-    enums.AccountTypeProperty? accountTypeProperty) {
+  enums.AccountTypeProperty? accountTypeProperty,
+) {
   return accountTypeProperty?.value;
 }
 
 String? accountTypePropertyToJson(
-    enums.AccountTypeProperty accountTypeProperty) {
+  enums.AccountTypeProperty accountTypeProperty,
+) {
   return accountTypeProperty.value;
 }
 
@@ -15986,8 +16791,9 @@ enums.AccountTypeProperty accountTypePropertyFromJson(
   Object? accountTypeProperty, [
   enums.AccountTypeProperty? defaultValue,
 ]) {
-  return enums.AccountTypeProperty.values
-          .firstWhereOrNull((e) => e.value == accountTypeProperty) ??
+  return enums.AccountTypeProperty.values.firstWhereOrNull(
+        (e) => e.value == accountTypeProperty,
+      ) ??
       defaultValue ??
       enums.AccountTypeProperty.swaggerGeneratedUnknown;
 }
@@ -15999,18 +16805,21 @@ enums.AccountTypeProperty? accountTypePropertyNullableFromJson(
   if (accountTypeProperty == null) {
     return null;
   }
-  return enums.AccountTypeProperty.values
-          .firstWhereOrNull((e) => e.value == accountTypeProperty) ??
+  return enums.AccountTypeProperty.values.firstWhereOrNull(
+        (e) => e.value == accountTypeProperty,
+      ) ??
       defaultValue;
 }
 
 String accountTypePropertyExplodedListToJson(
-    List<enums.AccountTypeProperty>? accountTypeProperty) {
+  List<enums.AccountTypeProperty>? accountTypeProperty,
+) {
   return accountTypeProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> accountTypePropertyListToJson(
-    List<enums.AccountTypeProperty>? accountTypeProperty) {
+  List<enums.AccountTypeProperty>? accountTypeProperty,
+) {
   if (accountTypeProperty == null) {
     return [];
   }
@@ -16045,12 +16854,14 @@ List<enums.AccountTypeProperty>? accountTypePropertyNullableListFromJson(
 }
 
 String? creditCardTypePropertyNullableToJson(
-    enums.CreditCardTypeProperty? creditCardTypeProperty) {
+  enums.CreditCardTypeProperty? creditCardTypeProperty,
+) {
   return creditCardTypeProperty?.value;
 }
 
 String? creditCardTypePropertyToJson(
-    enums.CreditCardTypeProperty creditCardTypeProperty) {
+  enums.CreditCardTypeProperty creditCardTypeProperty,
+) {
   return creditCardTypeProperty.value;
 }
 
@@ -16058,8 +16869,9 @@ enums.CreditCardTypeProperty creditCardTypePropertyFromJson(
   Object? creditCardTypeProperty, [
   enums.CreditCardTypeProperty? defaultValue,
 ]) {
-  return enums.CreditCardTypeProperty.values
-          .firstWhereOrNull((e) => e.value == creditCardTypeProperty) ??
+  return enums.CreditCardTypeProperty.values.firstWhereOrNull(
+        (e) => e.value == creditCardTypeProperty,
+      ) ??
       defaultValue ??
       enums.CreditCardTypeProperty.swaggerGeneratedUnknown;
 }
@@ -16071,18 +16883,21 @@ enums.CreditCardTypeProperty? creditCardTypePropertyNullableFromJson(
   if (creditCardTypeProperty == null) {
     return null;
   }
-  return enums.CreditCardTypeProperty.values
-          .firstWhereOrNull((e) => e.value == creditCardTypeProperty) ??
+  return enums.CreditCardTypeProperty.values.firstWhereOrNull(
+        (e) => e.value == creditCardTypeProperty,
+      ) ??
       defaultValue;
 }
 
 String creditCardTypePropertyExplodedListToJson(
-    List<enums.CreditCardTypeProperty>? creditCardTypeProperty) {
+  List<enums.CreditCardTypeProperty>? creditCardTypeProperty,
+) {
   return creditCardTypeProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> creditCardTypePropertyListToJson(
-    List<enums.CreditCardTypeProperty>? creditCardTypeProperty) {
+  List<enums.CreditCardTypeProperty>? creditCardTypeProperty,
+) {
   if (creditCardTypeProperty == null) {
     return [];
   }
@@ -16117,12 +16932,14 @@ List<enums.CreditCardTypeProperty>? creditCardTypePropertyNullableListFromJson(
 }
 
 String? interestPeriodPropertyNullableToJson(
-    enums.InterestPeriodProperty? interestPeriodProperty) {
+  enums.InterestPeriodProperty? interestPeriodProperty,
+) {
   return interestPeriodProperty?.value;
 }
 
 String? interestPeriodPropertyToJson(
-    enums.InterestPeriodProperty interestPeriodProperty) {
+  enums.InterestPeriodProperty interestPeriodProperty,
+) {
   return interestPeriodProperty.value;
 }
 
@@ -16130,8 +16947,9 @@ enums.InterestPeriodProperty interestPeriodPropertyFromJson(
   Object? interestPeriodProperty, [
   enums.InterestPeriodProperty? defaultValue,
 ]) {
-  return enums.InterestPeriodProperty.values
-          .firstWhereOrNull((e) => e.value == interestPeriodProperty) ??
+  return enums.InterestPeriodProperty.values.firstWhereOrNull(
+        (e) => e.value == interestPeriodProperty,
+      ) ??
       defaultValue ??
       enums.InterestPeriodProperty.swaggerGeneratedUnknown;
 }
@@ -16143,18 +16961,21 @@ enums.InterestPeriodProperty? interestPeriodPropertyNullableFromJson(
   if (interestPeriodProperty == null) {
     return null;
   }
-  return enums.InterestPeriodProperty.values
-          .firstWhereOrNull((e) => e.value == interestPeriodProperty) ??
+  return enums.InterestPeriodProperty.values.firstWhereOrNull(
+        (e) => e.value == interestPeriodProperty,
+      ) ??
       defaultValue;
 }
 
 String interestPeriodPropertyExplodedListToJson(
-    List<enums.InterestPeriodProperty>? interestPeriodProperty) {
+  List<enums.InterestPeriodProperty>? interestPeriodProperty,
+) {
   return interestPeriodProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> interestPeriodPropertyListToJson(
-    List<enums.InterestPeriodProperty>? interestPeriodProperty) {
+  List<enums.InterestPeriodProperty>? interestPeriodProperty,
+) {
   if (interestPeriodProperty == null) {
     return [];
   }
@@ -16189,12 +17010,14 @@ List<enums.InterestPeriodProperty>? interestPeriodPropertyNullableListFromJson(
 }
 
 String? liabilityDirectionPropertyNullableToJson(
-    enums.LiabilityDirectionProperty? liabilityDirectionProperty) {
+  enums.LiabilityDirectionProperty? liabilityDirectionProperty,
+) {
   return liabilityDirectionProperty?.value;
 }
 
 String? liabilityDirectionPropertyToJson(
-    enums.LiabilityDirectionProperty liabilityDirectionProperty) {
+  enums.LiabilityDirectionProperty liabilityDirectionProperty,
+) {
   return liabilityDirectionProperty.value;
 }
 
@@ -16202,8 +17025,9 @@ enums.LiabilityDirectionProperty liabilityDirectionPropertyFromJson(
   Object? liabilityDirectionProperty, [
   enums.LiabilityDirectionProperty? defaultValue,
 ]) {
-  return enums.LiabilityDirectionProperty.values
-          .firstWhereOrNull((e) => e.value == liabilityDirectionProperty) ??
+  return enums.LiabilityDirectionProperty.values.firstWhereOrNull(
+        (e) => e.value == liabilityDirectionProperty,
+      ) ??
       defaultValue ??
       enums.LiabilityDirectionProperty.swaggerGeneratedUnknown;
 }
@@ -16215,18 +17039,21 @@ enums.LiabilityDirectionProperty? liabilityDirectionPropertyNullableFromJson(
   if (liabilityDirectionProperty == null) {
     return null;
   }
-  return enums.LiabilityDirectionProperty.values
-          .firstWhereOrNull((e) => e.value == liabilityDirectionProperty) ??
+  return enums.LiabilityDirectionProperty.values.firstWhereOrNull(
+        (e) => e.value == liabilityDirectionProperty,
+      ) ??
       defaultValue;
 }
 
 String liabilityDirectionPropertyExplodedListToJson(
-    List<enums.LiabilityDirectionProperty>? liabilityDirectionProperty) {
+  List<enums.LiabilityDirectionProperty>? liabilityDirectionProperty,
+) {
   return liabilityDirectionProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> liabilityDirectionPropertyListToJson(
-    List<enums.LiabilityDirectionProperty>? liabilityDirectionProperty) {
+  List<enums.LiabilityDirectionProperty>? liabilityDirectionProperty,
+) {
   if (liabilityDirectionProperty == null) {
     return [];
   }
@@ -16248,7 +17075,7 @@ List<enums.LiabilityDirectionProperty> liabilityDirectionPropertyListFromJson(
 }
 
 List<enums.LiabilityDirectionProperty>?
-    liabilityDirectionPropertyNullableListFromJson(
+liabilityDirectionPropertyNullableListFromJson(
   List? liabilityDirectionProperty, [
   List<enums.LiabilityDirectionProperty>? defaultValue,
 ]) {
@@ -16262,12 +17089,14 @@ List<enums.LiabilityDirectionProperty>?
 }
 
 String? liabilityTypePropertyNullableToJson(
-    enums.LiabilityTypeProperty? liabilityTypeProperty) {
+  enums.LiabilityTypeProperty? liabilityTypeProperty,
+) {
   return liabilityTypeProperty?.value;
 }
 
 String? liabilityTypePropertyToJson(
-    enums.LiabilityTypeProperty liabilityTypeProperty) {
+  enums.LiabilityTypeProperty liabilityTypeProperty,
+) {
   return liabilityTypeProperty.value;
 }
 
@@ -16275,8 +17104,9 @@ enums.LiabilityTypeProperty liabilityTypePropertyFromJson(
   Object? liabilityTypeProperty, [
   enums.LiabilityTypeProperty? defaultValue,
 ]) {
-  return enums.LiabilityTypeProperty.values
-          .firstWhereOrNull((e) => e.value == liabilityTypeProperty) ??
+  return enums.LiabilityTypeProperty.values.firstWhereOrNull(
+        (e) => e.value == liabilityTypeProperty,
+      ) ??
       defaultValue ??
       enums.LiabilityTypeProperty.swaggerGeneratedUnknown;
 }
@@ -16288,18 +17118,21 @@ enums.LiabilityTypeProperty? liabilityTypePropertyNullableFromJson(
   if (liabilityTypeProperty == null) {
     return null;
   }
-  return enums.LiabilityTypeProperty.values
-          .firstWhereOrNull((e) => e.value == liabilityTypeProperty) ??
+  return enums.LiabilityTypeProperty.values.firstWhereOrNull(
+        (e) => e.value == liabilityTypeProperty,
+      ) ??
       defaultValue;
 }
 
 String liabilityTypePropertyExplodedListToJson(
-    List<enums.LiabilityTypeProperty>? liabilityTypeProperty) {
+  List<enums.LiabilityTypeProperty>? liabilityTypeProperty,
+) {
   return liabilityTypeProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> liabilityTypePropertyListToJson(
-    List<enums.LiabilityTypeProperty>? liabilityTypeProperty) {
+  List<enums.LiabilityTypeProperty>? liabilityTypeProperty,
+) {
   if (liabilityTypeProperty == null) {
     return [];
   }
@@ -16334,12 +17167,14 @@ List<enums.LiabilityTypeProperty>? liabilityTypePropertyNullableListFromJson(
 }
 
 String? shortAccountTypePropertyNullableToJson(
-    enums.ShortAccountTypeProperty? shortAccountTypeProperty) {
+  enums.ShortAccountTypeProperty? shortAccountTypeProperty,
+) {
   return shortAccountTypeProperty?.value;
 }
 
 String? shortAccountTypePropertyToJson(
-    enums.ShortAccountTypeProperty shortAccountTypeProperty) {
+  enums.ShortAccountTypeProperty shortAccountTypeProperty,
+) {
   return shortAccountTypeProperty.value;
 }
 
@@ -16347,8 +17182,9 @@ enums.ShortAccountTypeProperty shortAccountTypePropertyFromJson(
   Object? shortAccountTypeProperty, [
   enums.ShortAccountTypeProperty? defaultValue,
 ]) {
-  return enums.ShortAccountTypeProperty.values
-          .firstWhereOrNull((e) => e.value == shortAccountTypeProperty) ??
+  return enums.ShortAccountTypeProperty.values.firstWhereOrNull(
+        (e) => e.value == shortAccountTypeProperty,
+      ) ??
       defaultValue ??
       enums.ShortAccountTypeProperty.swaggerGeneratedUnknown;
 }
@@ -16360,18 +17196,21 @@ enums.ShortAccountTypeProperty? shortAccountTypePropertyNullableFromJson(
   if (shortAccountTypeProperty == null) {
     return null;
   }
-  return enums.ShortAccountTypeProperty.values
-          .firstWhereOrNull((e) => e.value == shortAccountTypeProperty) ??
+  return enums.ShortAccountTypeProperty.values.firstWhereOrNull(
+        (e) => e.value == shortAccountTypeProperty,
+      ) ??
       defaultValue;
 }
 
 String shortAccountTypePropertyExplodedListToJson(
-    List<enums.ShortAccountTypeProperty>? shortAccountTypeProperty) {
+  List<enums.ShortAccountTypeProperty>? shortAccountTypeProperty,
+) {
   return shortAccountTypeProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> shortAccountTypePropertyListToJson(
-    List<enums.ShortAccountTypeProperty>? shortAccountTypeProperty) {
+  List<enums.ShortAccountTypeProperty>? shortAccountTypeProperty,
+) {
   if (shortAccountTypeProperty == null) {
     return [];
   }
@@ -16393,7 +17232,7 @@ List<enums.ShortAccountTypeProperty> shortAccountTypePropertyListFromJson(
 }
 
 List<enums.ShortAccountTypeProperty>?
-    shortAccountTypePropertyNullableListFromJson(
+shortAccountTypePropertyNullableListFromJson(
   List? shortAccountTypeProperty, [
   List<enums.ShortAccountTypeProperty>? defaultValue,
 ]) {
@@ -16407,12 +17246,14 @@ List<enums.ShortAccountTypeProperty>?
 }
 
 String? transactionTypePropertyNullableToJson(
-    enums.TransactionTypeProperty? transactionTypeProperty) {
+  enums.TransactionTypeProperty? transactionTypeProperty,
+) {
   return transactionTypeProperty?.value;
 }
 
 String? transactionTypePropertyToJson(
-    enums.TransactionTypeProperty transactionTypeProperty) {
+  enums.TransactionTypeProperty transactionTypeProperty,
+) {
   return transactionTypeProperty.value;
 }
 
@@ -16420,8 +17261,9 @@ enums.TransactionTypeProperty transactionTypePropertyFromJson(
   Object? transactionTypeProperty, [
   enums.TransactionTypeProperty? defaultValue,
 ]) {
-  return enums.TransactionTypeProperty.values
-          .firstWhereOrNull((e) => e.value == transactionTypeProperty) ??
+  return enums.TransactionTypeProperty.values.firstWhereOrNull(
+        (e) => e.value == transactionTypeProperty,
+      ) ??
       defaultValue ??
       enums.TransactionTypeProperty.swaggerGeneratedUnknown;
 }
@@ -16433,18 +17275,21 @@ enums.TransactionTypeProperty? transactionTypePropertyNullableFromJson(
   if (transactionTypeProperty == null) {
     return null;
   }
-  return enums.TransactionTypeProperty.values
-          .firstWhereOrNull((e) => e.value == transactionTypeProperty) ??
+  return enums.TransactionTypeProperty.values.firstWhereOrNull(
+        (e) => e.value == transactionTypeProperty,
+      ) ??
       defaultValue;
 }
 
 String transactionTypePropertyExplodedListToJson(
-    List<enums.TransactionTypeProperty>? transactionTypeProperty) {
+  List<enums.TransactionTypeProperty>? transactionTypeProperty,
+) {
   return transactionTypeProperty?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> transactionTypePropertyListToJson(
-    List<enums.TransactionTypeProperty>? transactionTypeProperty) {
+  List<enums.TransactionTypeProperty>? transactionTypeProperty,
+) {
   if (transactionTypeProperty == null) {
     return [];
   }
@@ -16466,7 +17311,7 @@ List<enums.TransactionTypeProperty> transactionTypePropertyListFromJson(
 }
 
 List<enums.TransactionTypeProperty>?
-    transactionTypePropertyNullableListFromJson(
+transactionTypePropertyNullableListFromJson(
   List? transactionTypeProperty, [
   List<enums.TransactionTypeProperty>? defaultValue,
 ]) {

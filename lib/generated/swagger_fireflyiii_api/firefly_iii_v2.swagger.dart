@@ -39,13 +39,14 @@ abstract class FireflyIiiV2 extends ChopperService {
     }
 
     final newClient = ChopperClient(
-        services: [_$FireflyIiiV2()],
-        converter: converter ?? $JsonSerializableConverter(),
-        interceptors: interceptors ?? [],
-        client: httpClient,
-        authenticator: authenticator,
-        errorConverter: errorConverter,
-        baseUrl: baseUrl ?? Uri.parse('http://'));
+      services: [_$FireflyIiiV2()],
+      converter: converter ?? $JsonSerializableConverter(),
+      interceptors: interceptors ?? [],
+      client: httpClient,
+      authenticator: authenticator,
+      errorConverter: errorConverter,
+      baseUrl: baseUrl ?? Uri.parse('http://'),
+    );
     return _$FireflyIiiV2(newClient);
   }
 
@@ -56,7 +57,7 @@ abstract class FireflyIiiV2 extends ChopperService {
   ///@param date If the account is an asset account or a liability, the autocomplete will also return the balance of the account on this date.
   ///@param types Optional filter on the account type(s) used in the autocomplete.
   Future<chopper.Response<AutocompleteAccountV2Array>>
-      v2AutocompleteAccountsGet({
+  v2AutocompleteAccountsGet({
     String? xTraceId,
     String? query,
     int? limit,
@@ -64,14 +65,17 @@ abstract class FireflyIiiV2 extends ChopperService {
     List<enums.AccountTypeFilter>? types,
   }) {
     generatedMapping.putIfAbsent(
-        AutocompleteAccountV2, () => AutocompleteAccountV2.fromJsonFactory);
+      AutocompleteAccountV2,
+      () => AutocompleteAccountV2.fromJsonFactory,
+    );
 
     return _v2AutocompleteAccountsGet(
-        xTraceId: xTraceId?.toString(),
-        query: query,
-        limit: limit,
-        date: date,
-        types: accountTypeFilterListToJson(types));
+      xTraceId: xTraceId?.toString(),
+      query: query,
+      limit: limit,
+      date: date,
+      types: accountTypeFilterListToJson(types),
+    );
   }
 
   ///Returns all accounts of the user returned in a basic auto-complete array.
@@ -82,7 +86,7 @@ abstract class FireflyIiiV2 extends ChopperService {
   ///@param types Optional filter on the account type(s) used in the autocomplete.
   @Get(path: '/v2/autocomplete/accounts')
   Future<chopper.Response<AutocompleteAccountV2Array>>
-      _v2AutocompleteAccountsGet({
+  _v2AutocompleteAccountsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
@@ -95,16 +99,21 @@ abstract class FireflyIiiV2 extends ChopperService {
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
   Future<chopper.Response<AutocompleteTDArray>>
-      v2AutocompleteTransactionDescriptionsGet({
+  v2AutocompleteTransactionDescriptionsGet({
     String? xTraceId,
     String? query,
     int? limit,
   }) {
     generatedMapping.putIfAbsent(
-        AutocompleteTD, () => AutocompleteTD.fromJsonFactory);
+      AutocompleteTD,
+      () => AutocompleteTD.fromJsonFactory,
+    );
 
     return _v2AutocompleteTransactionDescriptionsGet(
-        xTraceId: xTraceId?.toString(), query: query, limit: limit);
+      xTraceId: xTraceId?.toString(),
+      query: query,
+      limit: limit,
+    );
   }
 
   ///Returns all transactions, complemented with their ID, of the user returned in a basic auto-complete array.
@@ -113,7 +122,7 @@ abstract class FireflyIiiV2 extends ChopperService {
   ///@param limit The number of items returned.
   @Get(path: '/v2/autocomplete/transaction-descriptions')
   Future<chopper.Response<AutocompleteTDArray>>
-      _v2AutocompleteTransactionDescriptionsGet({
+  _v2AutocompleteTransactionDescriptionsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
@@ -133,14 +142,17 @@ abstract class FireflyIiiV2 extends ChopperService {
     List<int>? accounts,
   }) {
     generatedMapping.putIfAbsent(
-        ChartDataSetV2, () => ChartDataSetV2.fromJsonFactory);
+      ChartDataSetV2,
+      () => ChartDataSetV2.fromJsonFactory,
+    );
 
     return _v2ChartAccountDashboardGet(
-        xTraceId: xTraceId?.toString(),
-        start: start,
-        end: end,
-        preselected: preselected?.value?.toString(),
-        accounts: accounts);
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+      preselected: preselected?.value?.toString(),
+      accounts: accounts,
+    );
   }
 
   ///Dashboard chart with asset account balance information.
@@ -172,14 +184,17 @@ abstract class FireflyIiiV2 extends ChopperService {
     required enums.PeriodProperty? period,
   }) {
     generatedMapping.putIfAbsent(
-        ChartDataSetV2, () => ChartDataSetV2.fromJsonFactory);
+      ChartDataSetV2,
+      () => ChartDataSetV2.fromJsonFactory,
+    );
 
     return _v2ChartBalanceBalanceGet(
-        xTraceId: xTraceId?.toString(),
-        start: start,
-        end: end,
-        accounts: accounts,
-        period: period?.value?.toString());
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+      accounts: accounts,
+      period: period?.value?.toString(),
+    );
   }
 
   ///A chart that contains spent/earned amounts
@@ -207,10 +222,15 @@ abstract class FireflyIiiV2 extends ChopperService {
     required String? end,
   }) {
     generatedMapping.putIfAbsent(
-        ChartDataSetV2, () => ChartDataSetV2.fromJsonFactory);
+      ChartDataSetV2,
+      () => ChartDataSetV2.fromJsonFactory,
+    );
 
     return _v2ChartBudgetDashboardGet(
-        xTraceId: xTraceId?.toString(), start: start, end: end);
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+    );
   }
 
   ///Dashboard chart with budget information.
@@ -234,10 +254,15 @@ abstract class FireflyIiiV2 extends ChopperService {
     required String? end,
   }) {
     generatedMapping.putIfAbsent(
-        ChartDataSetV2, () => ChartDataSetV2.fromJsonFactory);
+      ChartDataSetV2,
+      () => ChartDataSetV2.fromJsonFactory,
+    );
 
     return _v2ChartCategoryDashboardGet(
-        xTraceId: xTraceId?.toString(), start: start, end: end);
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+    );
   }
 
   ///Dashboard chart with budget information.
@@ -261,7 +286,9 @@ abstract class FireflyIiiV2 extends ChopperService {
     required String? id,
   }) {
     generatedMapping.putIfAbsent(
-        AccountV2Single, () => AccountV2Single.fromJsonFactory);
+      AccountV2Single,
+      () => AccountV2Single.fromJsonFactory,
+    );
 
     return _v2AccountsIdGet(xTraceId: xTraceId?.toString(), date: date, id: id);
   }
@@ -295,16 +322,19 @@ abstract class FireflyIiiV2 extends ChopperService {
     enums.TransactionTypeFilter? type,
   }) {
     generatedMapping.putIfAbsent(
-        TransactionV2Array, () => TransactionV2Array.fromJsonFactory);
+      TransactionV2Array,
+      () => TransactionV2Array.fromJsonFactory,
+    );
 
     return _v2AccountsIdTransactionsGet(
-        xTraceId: xTraceId?.toString(),
-        page: page,
-        limit: limit,
-        start: start,
-        end: end,
-        id: id,
-        type: type?.value?.toString());
+      xTraceId: xTraceId?.toString(),
+      page: page,
+      limit: limit,
+      start: start,
+      end: end,
+      id: id,
+      type: type?.value?.toString(),
+    );
   }
 
   ///List all transactions related to the account.
@@ -336,10 +366,15 @@ abstract class FireflyIiiV2 extends ChopperService {
     int? page,
   }) {
     generatedMapping.putIfAbsent(
-        BudgetV2Array, () => BudgetV2Array.fromJsonFactory);
+      BudgetV2Array,
+      () => BudgetV2Array.fromJsonFactory,
+    );
 
     return _v2BudgetsGet(
-        xTraceId: xTraceId?.toString(), limit: limit, page: page);
+      xTraceId: xTraceId?.toString(),
+      limit: limit,
+      page: page,
+    );
   }
 
   ///List all budgets.
@@ -365,10 +400,16 @@ abstract class FireflyIiiV2 extends ChopperService {
     required String? id,
   }) {
     generatedMapping.putIfAbsent(
-        BudgetLimitV2Array, () => BudgetLimitV2Array.fromJsonFactory);
+      BudgetLimitV2Array,
+      () => BudgetLimitV2Array.fromJsonFactory,
+    );
 
     return _v2BudgetsIdLimitsGet(
-        xTraceId: xTraceId?.toString(), start: start, end: end, id: id);
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+      id: id,
+    );
   }
 
   ///Get all limits for a budget.
@@ -396,10 +437,16 @@ abstract class FireflyIiiV2 extends ChopperService {
     required String? id,
   }) {
     generatedMapping.putIfAbsent(
-        TransactionSum, () => TransactionSum.fromJsonFactory);
+      TransactionSum,
+      () => TransactionSum.fromJsonFactory,
+    );
 
     return _v2BudgetsIdBudgetedGet(
-        xTraceId: xTraceId?.toString(), start: start, end: end, id: id);
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+      id: id,
+    );
   }
 
   ///Returns the budgeted amount for the given budget in the given period.
@@ -427,10 +474,16 @@ abstract class FireflyIiiV2 extends ChopperService {
     required String? id,
   }) {
     generatedMapping.putIfAbsent(
-        TransactionSum, () => TransactionSum.fromJsonFactory);
+      TransactionSum,
+      () => TransactionSum.fromJsonFactory,
+    );
 
     return _v2BudgetsIdSpentGet(
-        xTraceId: xTraceId?.toString(), start: start, end: end, id: id);
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+      id: id,
+    );
   }
 
   ///Returns the spent amount for the given budget in the given period.
@@ -456,10 +509,15 @@ abstract class FireflyIiiV2 extends ChopperService {
     required String? end,
   }) {
     generatedMapping.putIfAbsent(
-        TransactionSum, () => TransactionSum.fromJsonFactory);
+      TransactionSum,
+      () => TransactionSum.fromJsonFactory,
+    );
 
     return _v2BudgetsSumBudgetedGet(
-        xTraceId: xTraceId?.toString(), start: start, end: end);
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+    );
   }
 
   ///Returns the budgeted amount for all budgets in the given period.
@@ -483,10 +541,15 @@ abstract class FireflyIiiV2 extends ChopperService {
     required String? end,
   }) {
     generatedMapping.putIfAbsent(
-        TransactionSum, () => TransactionSum.fromJsonFactory);
+      TransactionSum,
+      () => TransactionSum.fromJsonFactory,
+    );
 
     return _v2BudgetsSumSpentGet(
-        xTraceId: xTraceId?.toString(), start: start, end: end);
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+    );
   }
 
   ///Returns the spent amount for all budgets in the given period.
@@ -510,10 +573,15 @@ abstract class FireflyIiiV2 extends ChopperService {
     int? page,
   }) {
     generatedMapping.putIfAbsent(
-        CurrencyV2Array, () => CurrencyV2Array.fromJsonFactory);
+      CurrencyV2Array,
+      () => CurrencyV2Array.fromJsonFactory,
+    );
 
     return _v2CurrenciesGet(
-        xTraceId: xTraceId?.toString(), limit: limit, page: page);
+      xTraceId: xTraceId?.toString(),
+      limit: limit,
+      page: page,
+    );
   }
 
   ///List all currencies.
@@ -537,10 +605,15 @@ abstract class FireflyIiiV2 extends ChopperService {
     int? page,
   }) {
     generatedMapping.putIfAbsent(
-        PiggyBankV2Array, () => PiggyBankV2Array.fromJsonFactory);
+      PiggyBankV2Array,
+      () => PiggyBankV2Array.fromJsonFactory,
+    );
 
     return _v2PiggyBanksGet(
-        xTraceId: xTraceId?.toString(), limit: limit, page: page);
+      xTraceId: xTraceId?.toString(),
+      limit: limit,
+      page: page,
+    );
   }
 
   ///List all piggy banks.
@@ -562,7 +635,9 @@ abstract class FireflyIiiV2 extends ChopperService {
     required String? name,
   }) {
     generatedMapping.putIfAbsent(
-        PreferenceSingle, () => PreferenceSingle.fromJsonFactory);
+      PreferenceSingle,
+      () => PreferenceSingle.fromJsonFactory,
+    );
 
     return _v2PreferencesNameGet(xTraceId: xTraceId?.toString(), name: name);
   }
@@ -586,10 +661,15 @@ abstract class FireflyIiiV2 extends ChopperService {
     int? page,
   }) {
     generatedMapping.putIfAbsent(
-        SubscriptionArray, () => SubscriptionArray.fromJsonFactory);
+      SubscriptionArray,
+      () => SubscriptionArray.fromJsonFactory,
+    );
 
     return _v2SubscriptionsGet(
-        xTraceId: xTraceId?.toString(), limit: limit, page: page);
+      xTraceId: xTraceId?.toString(),
+      limit: limit,
+      page: page,
+    );
   }
 
   ///List all subscriptions.
@@ -615,10 +695,16 @@ abstract class FireflyIiiV2 extends ChopperService {
     required String? id,
   }) {
     generatedMapping.putIfAbsent(
-        SubscriptionSingle, () => SubscriptionSingle.fromJsonFactory);
+      SubscriptionSingle,
+      () => SubscriptionSingle.fromJsonFactory,
+    );
 
     return _v2SubscriptionsIdGet(
-        xTraceId: xTraceId?.toString(), start: start, end: end, id: id);
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+      id: id,
+    );
   }
 
   ///Get single subscription.
@@ -644,10 +730,15 @@ abstract class FireflyIiiV2 extends ChopperService {
     required String? end,
   }) {
     generatedMapping.putIfAbsent(
-        TransactionSum, () => TransactionSum.fromJsonFactory);
+      TransactionSum,
+      () => TransactionSum.fromJsonFactory,
+    );
 
     return _v2SubscriptionsSumPaidGet(
-        xTraceId: xTraceId?.toString(), start: start, end: end);
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+    );
   }
 
   ///Returns the sum of the bills already paid in the period indicated.
@@ -671,10 +762,15 @@ abstract class FireflyIiiV2 extends ChopperService {
     required String? end,
   }) {
     generatedMapping.putIfAbsent(
-        TransactionSum, () => TransactionSum.fromJsonFactory);
+      TransactionSum,
+      () => TransactionSum.fromJsonFactory,
+    );
 
     return _v2SubscriptionsSumUnpaidGet(
-        xTraceId: xTraceId?.toString(), start: start, end: end);
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+    );
   }
 
   ///Returns the sum of the subscriptions not yet paid in the period indicated.
@@ -702,14 +798,17 @@ abstract class FireflyIiiV2 extends ChopperService {
     String? end,
   }) {
     generatedMapping.putIfAbsent(
-        TransactionV2Array, () => TransactionV2Array.fromJsonFactory);
+      TransactionV2Array,
+      () => TransactionV2Array.fromJsonFactory,
+    );
 
     return _v2TransactionsGet(
-        xTraceId: xTraceId?.toString(),
-        limit: limit,
-        page: page,
-        start: start,
-        end: end);
+      xTraceId: xTraceId?.toString(),
+      limit: limit,
+      page: page,
+      start: start,
+      end: end,
+    );
   }
 
   ///List all transactions.
@@ -734,17 +833,16 @@ abstract class FireflyIiiV2 extends ChopperService {
     required TransactionV2Store? body,
   }) {
     generatedMapping.putIfAbsent(
-        TransactionV2Single, () => TransactionV2Single.fromJsonFactory);
+      TransactionV2Single,
+      () => TransactionV2Single.fromJsonFactory,
+    );
 
     return _v2TransactionsPost(xTraceId: xTraceId?.toString(), body: body);
   }
 
   ///Store a new transaction
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(
-    path: '/v2/transactions',
-    optionalBody: true,
-  )
+  @Post(path: '/v2/transactions', optionalBody: true)
   Future<chopper.Response<TransactionV2Single>> _v2TransactionsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required TransactionV2Store? body,
@@ -758,7 +856,9 @@ abstract class FireflyIiiV2 extends ChopperService {
     required String? date,
   }) {
     generatedMapping.putIfAbsent(
-        NetWorthArray, () => NetWorthArray.fromJsonFactory);
+      NetWorthArray,
+      () => NetWorthArray.fromJsonFactory,
+    );
 
     return _v2NetWorthGet(xTraceId: xTraceId?.toString(), date: date);
   }
@@ -782,10 +882,15 @@ abstract class FireflyIiiV2 extends ChopperService {
     required String? end,
   }) {
     generatedMapping.putIfAbsent(
-        BasicSummaryV2, () => BasicSummaryV2.fromJsonFactory);
+      BasicSummaryV2,
+      () => BasicSummaryV2.fromJsonFactory,
+    );
 
     return _v2SummaryBasicGet(
-        xTraceId: xTraceId?.toString(), start: start, end: end);
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+    );
   }
 
   ///Returns basic sums of the users data.
@@ -847,7 +952,8 @@ class $CustomJsonDecoder {
 class $JsonSerializableConverter extends chopper.JsonConverter {
   @override
   FutureOr<chopper.Response<ResultType>> convertResponse<ResultType, Item>(
-      chopper.Response response) async {
+    chopper.Response response,
+  ) async {
     if (response.bodyString.isEmpty) {
       // In rare cases, when let's say 204 (no content) is returned -
       // we cannot decode the missing json with the result type specified
@@ -860,13 +966,16 @@ class $JsonSerializableConverter extends chopper.JsonConverter {
 
     if (ResultType == DateTime) {
       return response.copyWith(
-          body: DateTime.parse((response.body as String).replaceAll('"', ''))
-              as ResultType);
+        body:
+            DateTime.parse((response.body as String).replaceAll('"', ''))
+                as ResultType,
+      );
     }
 
     final jsonRes = await super.convertResponse(response);
     return jsonRes.copyWith<ResultType>(
-        body: $jsonDecoder.decode<Item>(jsonRes.body) as ResultType);
+      body: $jsonDecoder.decode<Item>(jsonRes.body) as ResultType,
+    );
   }
 }
 

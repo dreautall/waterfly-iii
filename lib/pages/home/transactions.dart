@@ -3,17 +3,15 @@ import 'dart:async';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:waterflyiii/animations.dart';
 import 'package:version/version.dart';
-
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
+import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
@@ -24,10 +22,9 @@ import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 
 class HomeTransactions extends StatefulWidget {
-  const HomeTransactions({super.key, this.accountId, this.category});
+  const HomeTransactions({super.key, this.filters});
 
-  final String? accountId;
-  final CategoryRead? category;
+  final TransactionFilters? filters;
 
   @override
   State<HomeTransactions> createState() => _HomeTransactionsState();
@@ -39,11 +36,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   final int _numberOfPostsPerRequest = 50;
 
-  final PagingController<int, TransactionRead> _pagingController =
-      PagingController<int, TransactionRead>(
-    firstPageKey: 1,
-    invisibleItemsThreshold: 20,
-  );
+  late PagingState<int, TransactionRead> _pagingState;
 
   DateTime? _lastDate;
   List<int> _rowsWithDate = <int>[];
@@ -58,124 +51,156 @@ class _HomeTransactionsState extends State<HomeTransactions>
     super.initState();
 
     _tzHandler = context.read<FireflyService>().tzHandler;
-    _pagingController
-        .addPageRequestListener((int pageKey) => _fetchPage(pageKey));
+    _pagingState = PagingState<int, TransactionRead>();
     _tagsHidden.value = context.read<SettingsProvider>().hideTags;
 
     // Only add filter button when in own tab
-    if (widget.accountId == null && widget.category == null) {
+    if (widget.filters == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        context.read<PageActions>().set(
-          widget.key!,
-          <Widget>[
-            ValueListenableBuilder<bool>(
-              valueListenable: _tagsHidden,
-              builder: (BuildContext context, bool value, _) => IconButton(
-                icon: const Icon(Icons.bookmarks_outlined),
-                selectedIcon: Icon(
-                  Icons.bookmarks,
-                  color: Theme.of(context).colorScheme.primary,
+        context.read<PageActions>().set(widget.key!, <Widget>[
+          ValueListenableBuilder<bool>(
+            valueListenable: _tagsHidden,
+            builder:
+                (BuildContext context, bool value, _) => IconButton(
+                  icon: const Icon(Icons.bookmarks_outlined),
+                  selectedIcon: Icon(
+                    Icons.bookmarks,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  isSelected: !value,
+                  tooltip: S.of(context).homeTransactionsSettingsShowTags,
+                  onPressed: () async {
+                    final SettingsProvider settings =
+                        context.read<SettingsProvider>();
+                    settings.hideTags = !settings.hideTags;
+                    _tagsHidden.value = settings.hideTags;
+                  },
                 ),
-                isSelected: !value,
-                tooltip: S.of(context).homeTransactionsSettingsShowTags,
-                onPressed: () async {
-                  final SettingsProvider settings =
-                      context.read<SettingsProvider>();
-                  settings.hideTags = !settings.hideTags;
-                  _tagsHidden.value = settings.hideTags;
-                },
-              ),
-            ),
-            ChangeNotifierProvider<TransactionFilters>.value(
-              value: _filters,
-              builder: (BuildContext context, _) => IconButton(
-                icon: const Icon(Icons.filter_alt_outlined),
-                selectedIcon: Icon(
-                  Icons.filter_alt,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                isSelected: context.watch<TransactionFilters>().hasFilters,
-                tooltip: S.of(context).homeTransactionsActionFilter,
-                onPressed: () async {
-                  TransactionFilters oldFilters = _filters.copyWith();
-                  final SettingsProvider settings =
-                      context.read<SettingsProvider>();
-                  final bool oldShowFutureTXs = settings.showFutureTXs;
-                  bool? ok = await showDialog<bool>(
-                    context: context,
-                    builder: (BuildContext context) => FilterDialog(
-                      // passed by reference -> auto updated
-                      filters: _filters,
-                    ),
-                  );
-                  if (ok == null || !ok) {
-                    if (settings.showFutureTXs != oldShowFutureTXs) {
-                      settings.showFutureTXs = oldShowFutureTXs;
-                      _pagingController.refresh();
-                    }
-                    _filters.account = oldFilters.account;
-                    _filters.budget = oldFilters.budget;
-                    _filters.category = oldFilters.category;
-                    _filters.currency = oldFilters.currency;
-                    _filters.text = oldFilters.text;
-                    _filters.bill = oldFilters.bill;
-                    _filters.tags = oldFilters.tags;
+          ),
+          ChangeNotifierProvider<TransactionFilters>.value(
+            value: _filters,
+            builder:
+                (BuildContext context, _) => IconButton(
+                  icon: const Icon(Icons.filter_alt_outlined),
+                  selectedIcon: Icon(
+                    Icons.filter_alt,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  isSelected: context.watch<TransactionFilters>().hasFilters,
+                  tooltip: S.of(context).homeTransactionsActionFilter,
+                  onPressed: () async {
+                    TransactionFilters oldFilters = _filters.copyWith();
+                    final SettingsProvider settings =
+                        context.read<SettingsProvider>();
+                    final bool oldShowFutureTXs = settings.showFutureTXs;
+                    bool? ok = await showDialog<bool>(
+                      context: context,
+                      builder:
+                          (BuildContext context) => FilterDialog(
+                            // passed by reference -> auto updated
+                            filters: _filters,
+                          ),
+                    );
+                    if (ok == null || !ok) {
+                      if (settings.showFutureTXs != oldShowFutureTXs) {
+                        settings.showFutureTXs = oldShowFutureTXs;
+                        setState(() {
+                          _pagingState = _pagingState.reset();
+                        });
+                      }
+                      _filters.account = oldFilters.account;
+                      _filters.budget = oldFilters.budget;
+                      _filters.category = oldFilters.category;
+                      _filters.currency = oldFilters.currency;
+                      _filters.text = oldFilters.text;
+                      _filters.bill = oldFilters.bill;
+                      _filters.tags = oldFilters.tags;
 
-                    return;
-                  }
-                  if (oldFilters == _filters &&
-                      settings.showFutureTXs == oldShowFutureTXs) {
-                    return;
-                  }
-                  _filters.updateFilters();
-                  _rowsWithDate = <int>[];
-                  _lastDate = null;
-                  _pagingController.refresh();
-                },
-              ),
-            ),
-          ],
-        );
+                      return;
+                    }
+                    if (oldFilters == _filters &&
+                        settings.showFutureTXs == oldShowFutureTXs) {
+                      return;
+                    }
+                    _filters.updateFilters();
+                    _rowsWithDate = <int>[];
+                    _lastDate = null;
+                    setState(() {
+                      _pagingState = _pagingState.reset();
+                    });
+                  },
+                ),
+          ),
+        ]);
       });
     }
 
     _stock = context.read<FireflyService>().transStock!;
 
-    _stock.addListener(() => _pagingController.refresh());
+    _stock.addListener(notifRefresh);
   }
 
   @override
   void dispose() {
     _stock.removeListener(notifRefresh);
-    _pagingController.dispose();
 
     super.dispose();
   }
 
   void notifRefresh() {
-    _pagingController.refresh();
+    setState(() {
+      _pagingState = _pagingState.reset();
+    });
   }
 
-  Future<void> _fetchPage(int pageKey) async {
-    final TransStock? stock = context.read<FireflyService>().transStock;
+  void _fetchPage() async {
+    if (_pagingState.isLoading) return;
 
+    final TransStock? stock = context.read<FireflyService>().transStock;
     if (stock == null) {
-      // Throw error
-      return;
+      throw Exception("Stock not available");
     }
+
+    setState(() {
+      _pagingState = _pagingState.copyWith(isLoading: true, error: null);
+    });
 
     try {
       late List<TransactionRead> transactionList;
 
-      // simply add a search filter for category id
-      // logic later already detects categoryId == -1 (= no category)
-      // there is no /api/v1/categories call for "no category" anyways
-      if (widget.category != null) {
-        _filters.category = widget.category;
+      final int pageKey = (_pagingState.keys?.last ?? 0) + 1;
+      log.finest(
+        "Getting page $pageKey (${_pagingState.pages?.length} pages loaded)",
+      );
+
+      if (widget.filters != null) {
+        _filters.account = widget.filters!.account;
+        _filters.text = widget.filters!.text;
+        _filters.currency = widget.filters!.currency;
+        _filters.category = widget.filters!.category;
+        _filters.budget = widget.filters!.budget;
+        _filters.bill = widget.filters!.bill;
+        _filters.tags = widget.filters!.tags;
         _filters.updateFilters();
       }
 
-      if (_filters.hasFilters) {
+      // Faster than searching for an account, and also has cache (stock) behind
+      // This search should never have additional filters!
+      if (widget.filters?.account != null) {
+        transactionList = await stock.getAccount(
+          id: _filters.account!.id,
+          page: pageKey,
+          limit: _numberOfPostsPerRequest,
+          end:
+              context.read<SettingsProvider>().showFutureTXs
+                  ? null
+                  : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
+          start:
+              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
+                  ? null
+                  : "1900-01-01",
+        );
+      } else if (_filters.hasFilters) {
         String query = _filters.text ?? "";
         if (_filters.account != null) {
           query = "account_id:${_filters.account!.id} $query";
@@ -210,32 +235,19 @@ class _HomeTransactionsState extends State<HomeTransactions>
             query = "tag_is:\"$tag\" $query";
           }
         }
-        query = "date_before:today $query ";
+        if (!context.read<SettingsProvider>().showFutureTXs) {
+          query = "date_before:today $query ";
+        }
         log.fine(() => "Search query: $query");
-        transactionList = await stock.getSearch(
-          query: query,
-          page: pageKey,
-        );
-      } else if (widget.accountId != null || _filters.account != null) {
-        transactionList = await stock.getAccount(
-          id: widget.accountId ?? _filters.account!.id,
-          page: pageKey,
-          limit: _numberOfPostsPerRequest,
-          end: context.read<SettingsProvider>().showFutureTXs
-              ? null
-              : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
-          start:
-              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
-                  ? null
-                  : "1900-01-01",
-        );
+        transactionList = await stock.getSearch(query: query, page: pageKey);
       } else {
         transactionList = await stock.get(
           page: pageKey,
           limit: _numberOfPostsPerRequest,
-          end: context.read<SettingsProvider>().showFutureTXs
-              ? null
-              : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
+          end:
+              context.read<SettingsProvider>().showFutureTXs
+                  ? null
+                  : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
           start:
               (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
                   ? null
@@ -243,24 +255,29 @@ class _HomeTransactionsState extends State<HomeTransactions>
         );
       }
 
+      final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
+
       if (mounted) {
-        // check if it is the last page
-        // adds spacing for the FAB button to not overlap.
-        if (transactionList.length < _numberOfPostsPerRequest) {
-          transactionList.add(const TransactionRead(
-            type: "WF3_DUMMY_SPACING_ELEMENT",
-            id: "WF3_DUMMY_SPACING_ELEMENT",
-            attributes: Transaction(transactions: <TransactionSplit>[]),
-            links: ObjectLink(),
-          ));
-          _pagingController.appendLastPage(transactionList);
-        } else {
-          _pagingController.appendPage(transactionList, pageKey + 1);
-        }
+        setState(() {
+          _pagingState = _pagingState.copyWith(
+            pages: <List<TransactionRead>>[
+              ...?_pagingState.pages,
+              transactionList,
+            ],
+            keys: <int>[...?_pagingState.keys, pageKey],
+            hasNextPage: !isLastPage,
+            isLoading: false,
+            error: null,
+          );
+        });
       }
     } catch (e, stackTrace) {
-      log.severe("_fetchPage($pageKey)", e, stackTrace);
-      _pagingController.error = e;
+      log.severe("_fetchPage()", e, stackTrace);
+      if (mounted) {
+        setState(() {
+          _pagingState = _pagingState.copyWith(error: e, isLoading: false);
+        });
+      }
     }
   }
 
@@ -273,21 +290,27 @@ class _HomeTransactionsState extends State<HomeTransactions>
     super.build(context);
 
     return RefreshIndicator(
-      onRefresh: () => Future<void>.sync(() {
-        _rowsWithDate = <int>[];
-        _lastDate = null;
-        context.read<FireflyService>().transStock!.clear();
-        return _pagingController.refresh();
-      }),
+      onRefresh:
+          () => Future<void>.sync(() {
+            _rowsWithDate = <int>[];
+            _lastDate = null;
+            context.read<FireflyService>().transStock!.clear();
+            setState(() {
+              _pagingState = _pagingState.reset();
+            });
+          }),
       child: PagedListView<int, TransactionRead>(
-        pagingController: _pagingController,
+        state: _pagingState,
+        fetchNextPage: _fetchPage,
         builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
           animateTransitions: true,
           transitionDuration: animDurationStandard,
+          invisibleItemsThreshold: 10,
           itemBuilder: transactionRowBuilder,
+          noMoreItemsIndicatorBuilder: (_) => const SizedBox(height: 68),
         ),
-        //itemExtent: 80,
       ),
+      //itemExtent: 80,
     );
   }
 
@@ -296,10 +319,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
     TransactionRead item,
     int index,
   ) {
-    if (item.type == "WF3_DUMMY_SPACING_ELEMENT" &&
-        item.id == "WF3_DUMMY_SPACING_ELEMENT") {
-      return const SizedBox(height: 68);
-    }
     List<TransactionSplit> transactions = item.attributes.transactions;
     if (transactions.isEmpty) {
       return Text(S.of(context).homeTransactionsEmpty);
@@ -338,12 +357,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
       }
       amount += double.parse(trans.amount);
       if (trans.foreignAmount?.isNotEmpty ?? false) {
-        final double amount = double.parse(trans.foreignAmount!);
+        final double foreignAmount = double.parse(trans.foreignAmount!);
         final String foreignSymbol =
             trans.foreignCurrencySymbol ?? trans.foreignCurrencyCode ?? "";
-        if (amount != 0 && foreignSymbol.isNotEmpty) {
+        if (foreignAmount != 0 && foreignSymbol.isNotEmpty) {
           foreignAmounts[foreignSymbol] =
-              foreignAmounts[foreignSymbol] ?? 0 + amount;
+              (foreignAmounts[foreignSymbol] ?? 0) + foreignAmount;
           foreignCurrencies[foreignSymbol] = CurrencyRead(
             id: trans.foreignCurrencyId ?? "0",
             type: "currencies",
@@ -381,14 +400,16 @@ class _HomeTransactionsState extends State<HomeTransactions>
     // Subtitle
     List<InlineSpan> subtitle = <InlineSpan>[];
     if (hasAttachments) {
-      subtitle.add(const WidgetSpan(
-        baseline: TextBaseline.ideographic,
-        alignment: PlaceholderAlignment.middle,
-        child: Padding(
-          padding: EdgeInsets.only(right: 2),
-          child: Icon(Icons.attachment),
+      subtitle.add(
+        const WidgetSpan(
+          baseline: TextBaseline.ideographic,
+          alignment: PlaceholderAlignment.middle,
+          child: Padding(
+            padding: EdgeInsets.only(right: 2),
+            child: Icon(Icons.attachment),
+          ),
         ),
-      ));
+      );
     }
     if (transactions.first.type == TransactionTypeProperty.transfer) {
       subtitle.add(
@@ -405,18 +426,23 @@ class _HomeTransactionsState extends State<HomeTransactions>
         ),
       );
     }
-    subtitle.add(TextSpan(
-      text: (transactions.first.type == TransactionTypeProperty.withdrawal ||
-              transactions.first.type == TransactionTypeProperty.transfer)
-          ? destinationName
-          : sourceName,
-    ));
+    subtitle.add(
+      TextSpan(
+        text:
+            (transactions.first.type == TransactionTypeProperty.withdrawal ||
+                    transactions.first.type == TransactionTypeProperty.transfer)
+                ? destinationName
+                : sourceName,
+      ),
+    );
     subtitle.add(const TextSpan(text: "\n"));
     if (category.isNotEmpty) {
-      subtitle.add(TextSpan(
-        text: category,
-        style: const TextStyle(fontStyle: FontStyle.italic),
-      ));
+      subtitle.add(
+        TextSpan(
+          text: category,
+          style: const TextStyle(fontStyle: FontStyle.italic),
+        ),
+      );
     }
     if (notes.isNotEmpty) {
       subtitle.add(
@@ -448,8 +474,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
     }
 
     Widget transactionWidget = OpenContainer(
-      openBuilder: (BuildContext context, Function closedContainer) =>
-          TransactionPage(transaction: item),
+      openBuilder:
+          (BuildContext context, Function closedContainer) =>
+              TransactionPage(transaction: item),
       openColor: Theme.of(context).cardColor,
       closedColor: Theme.of(context).cardColor,
       closedShape: const RoundedRectangleBorder(
@@ -459,198 +486,203 @@ class _HomeTransactionsState extends State<HomeTransactions>
         ),
       ),
       closedElevation: 0,
-      closedBuilder: (BuildContext context, Function openContainer) =>
-          GestureDetector(
-        onLongPressStart: (LongPressStartDetails details) async {
-          final Size screenSize = MediaQuery.of(context).size;
-          final Offset offset = details.globalPosition;
-          HapticFeedback.vibrate();
-          final Function? func = await showMenu<Function>(
-            context: context,
-            position: RelativeRect.fromLTRB(
-              offset.dx,
-              offset.dy,
-              screenSize.width - offset.dx,
-              screenSize.height - offset.dy,
-            ),
-            items: <PopupMenuEntry<Function>>[
-              PopupMenuItem<Function>(
-                value: () async {
-                  bool? ok = await Navigator.push(
-                    context,
-                    MaterialPageRoute<bool>(
-                      builder: (BuildContext context) => TransactionPage(
-                        transaction: item,
-                        clone: true,
-                      ),
+      closedBuilder:
+          (BuildContext context, Function openContainer) => GestureDetector(
+            onLongPressStart: (LongPressStartDetails details) async {
+              final Size screenSize = MediaQuery.of(context).size;
+              final Offset offset = details.globalPosition;
+              HapticFeedback.vibrate();
+              final Function? func = await showMenu<Function>(
+                context: context,
+                position: RelativeRect.fromLTRB(
+                  offset.dx,
+                  offset.dy,
+                  screenSize.width - offset.dx,
+                  screenSize.height - offset.dy,
+                ),
+                items: <PopupMenuEntry<Function>>[
+                  PopupMenuItem<Function>(
+                    value: () async {
+                      bool? ok = await Navigator.push(
+                        context,
+                        MaterialPageRoute<bool>(
+                          builder:
+                              (BuildContext context) => TransactionPage(
+                                transaction: item,
+                                clone: true,
+                              ),
+                        ),
+                      );
+                      if (ok ?? false) {
+                        _rowsWithDate = <int>[];
+                        _lastDate = null;
+                        if (context.mounted) {
+                          context.read<FireflyService>().transStock!.clear();
+                        }
+                      }
+                      setState(() {
+                        _pagingState = _pagingState.reset();
+                      });
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.copy),
+                        const SizedBox(width: 12),
+                        Text(S.of(context).transactionDuplicate),
+                      ],
                     ),
-                  );
-                  if (ok ?? false) {
-                    _rowsWithDate = <int>[];
-                    _lastDate = null;
-                    if (context.mounted) {
-                      context.read<FireflyService>().transStock!.clear();
-                    }
-                  }
-                  _pagingController.refresh();
-                },
-                child: Row(
-                  children: <Widget>[
-                    const Icon(Icons.copy),
-                    const SizedBox(width: 12),
-                    Text(S.of(context).transactionDuplicate),
-                  ],
-                ),
-              ),
-              const PopupMenuDivider(),
-              PopupMenuItem<Function>(
-                value: () async {
-                  final FireflyIii api = context.read<FireflyService>().api;
-                  bool? ok = await showDialog<bool>(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        const DeletionConfirmDialog(),
-                  );
-                  if (!(ok ?? false)) {
-                    return;
-                  }
+                  ),
+                  const PopupMenuDivider(),
+                  PopupMenuItem<Function>(
+                    value: () async {
+                      final FireflyIii api = context.read<FireflyService>().api;
+                      bool? ok = await showDialog<bool>(
+                        context: context,
+                        builder:
+                            (BuildContext context) =>
+                                const DeletionConfirmDialog(),
+                      );
+                      if (!(ok ?? false)) {
+                        return;
+                      }
 
-                  await api.v1TransactionsIdDelete(
-                    id: item.id,
-                  );
-                  _rowsWithDate = <int>[];
-                  _lastDate = null;
-                  if (context.mounted) {
-                    context.read<FireflyService>().transStock!.clear();
-                  }
-                  _pagingController.refresh();
-                },
-                child: Row(
-                  children: <Widget>[
-                    const Icon(Icons.delete),
-                    const SizedBox(width: 12),
-                    Text(MaterialLocalizations.of(context).deleteButtonTooltip),
-                  ],
-                ),
+                      await api.v1TransactionsIdDelete(id: item.id);
+                      _rowsWithDate = <int>[];
+                      _lastDate = null;
+                      if (context.mounted) {
+                        context.read<FireflyService>().transStock!.clear();
+                      }
+                      setState(() {
+                        _pagingState = _pagingState.reset();
+                      });
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.delete),
+                        const SizedBox(width: 12),
+                        Text(
+                          MaterialLocalizations.of(context).deleteButtonTooltip,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+                clipBehavior: Clip.hardEdge,
+              );
+              if (func == null) {
+                return;
+              }
+              func();
+            },
+            child: ListTile(
+              leading: CircleAvatar(
+                foregroundColor: Colors.white,
+                backgroundColor: transactions.first.type.color,
+                child: Icon(transactions.first.type.icon),
               ),
-            ],
-            clipBehavior: Clip.hardEdge,
-          );
-          if (func == null) {
-            return;
-          }
-          func();
-        },
-        child: ListTile(
-          leading: CircleAvatar(
-            foregroundColor: Colors.white,
-            backgroundColor: transactions.first.type.color,
-            child: Icon(transactions.first.type.icon),
-          ),
-          title: Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              RichText(
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  children: subtitle,
-                ),
-              ),
-              if (!context.watch<SettingsProvider>().hideTags &&
-                  tags.isNotEmpty) ...<Widget>[
-                Wrap(
-                  children: tags
-                      .map(
-                        (String tag) => Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                const Icon(
-                                  Icons.label_outline,
-                                  size: 16,
-                                ),
-                                const SizedBox(width: 5),
-                                Flexible(
-                                  child: RichText(
-                                    overflow: TextOverflow.fade,
-                                    text: TextSpan(
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                      text: tag,
+              title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  RichText(
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      children: subtitle,
+                    ),
+                  ),
+                  if (!context.watch<SettingsProvider>().hideTags &&
+                      tags.isNotEmpty) ...<Widget>[
+                    Wrap(
+                      children:
+                          tags
+                              .map(
+                                (String tag) => Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(6.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        const Icon(
+                                          Icons.label_outline,
+                                          size: 16,
+                                        ),
+                                        const SizedBox(width: 5),
+                                        Flexible(
+                                          child: RichText(
+                                            overflow: TextOverflow.fade,
+                                            text: TextSpan(
+                                              style:
+                                                  Theme.of(
+                                                    context,
+                                                  ).textTheme.bodyMedium,
+                                              text: tag,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                )
-              ]
-            ],
-          ),
-          isThreeLine: true,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              bottomLeft: Radius.circular(16),
-            ),
-          ),
-          trailing: RichText(
-            textAlign: TextAlign.end,
-            maxLines: 2,
-            text: TextSpan(
-              style: Theme.of(context).textTheme.bodyMedium,
-              children: <InlineSpan>[
-                if (foreignText.isNotEmpty)
-                  TextSpan(
-                    text: foreignText,
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Colors.blue,
-                        ),
-                  ),
-                TextSpan(
-                  text: currency.fmt(amount),
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: transactions.first.type.color,
-                    fontFeatures: const <FontFeature>[
-                      FontFeature.tabularFigures()
-                    ],
-                  ),
-                ),
-                const TextSpan(text: "\n"),
-                if (reconciled)
-                  const WidgetSpan(
-                    baseline: TextBaseline.ideographic,
-                    alignment: PlaceholderAlignment.middle,
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 2),
-                      child: Icon(Icons.check),
+                              )
+                              .toList(),
                     ),
-                  ),
-                TextSpan(
-                  text: (transactions.first.type ==
-                          TransactionTypeProperty.deposit)
-                      ? destinationName
-                      : sourceName,
+                  ],
+                ],
+              ),
+              isThreeLine: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  bottomLeft: Radius.circular(16),
                 ),
-              ],
+              ),
+              trailing: RichText(
+                textAlign: TextAlign.end,
+                maxLines: 2,
+                text: TextSpan(
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  children: <InlineSpan>[
+                    if (foreignText.isNotEmpty)
+                      TextSpan(
+                        text: foreignText,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodySmall!.copyWith(color: Colors.blue),
+                      ),
+                    TextSpan(
+                      text: currency.fmt(amount),
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: transactions.first.type.color,
+                        fontFeatures: const <FontFeature>[
+                          FontFeature.tabularFigures(),
+                        ],
+                      ),
+                    ),
+                    const TextSpan(text: "\n"),
+                    if (reconciled)
+                      const WidgetSpan(
+                        baseline: TextBaseline.ideographic,
+                        alignment: PlaceholderAlignment.middle,
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 2),
+                          child: Icon(Icons.check),
+                        ),
+                      ),
+                    TextSpan(
+                      text:
+                          (transactions.first.type ==
+                                  TransactionTypeProperty.deposit)
+                              ? destinationName
+                              : sourceName,
+                    ),
+                  ],
+                ),
+              ),
+              onTap: () => openContainer(),
             ),
           ),
-          onTap: () => openContainer(),
-        ),
-      ),
       onClosed: (bool? refresh) {
         if (refresh ?? false == true) {
           _rowsWithDate = <int>[];
@@ -659,7 +691,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
             context.read<FireflyService>().transStock!.clear();
           }
         }
-        _pagingController.refresh();
+        setState(() {
+          _pagingState = _pagingState.reset();
+        });
       },
     );
 

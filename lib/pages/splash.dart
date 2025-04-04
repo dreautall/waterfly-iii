@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_actions/quick_actions.dart';
-
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
+import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/widgets/logo.dart';
 
 final Logger log = Logger("Pages.Splash");
@@ -35,13 +34,18 @@ class _SplashPageState extends State<SplashPage> {
         log.finer(() => "SplashPage->_login() from storage");
         success = await context.read<FireflyService>().signInFromStorage();
       } else {
-        log.finer(() =>
-            "SplashPage->_login() with credentials: $host, apiKey ${apiKey.isEmpty ? "unset" : "set"}");
+        log.finer(
+          () =>
+              "SplashPage->_login() with credentials: $host, apiKey ${apiKey.isEmpty ? "unset" : "set"}",
+        );
         success = await context.read<FireflyService>().signIn(host, apiKey);
       }
     } catch (e, stackTrace) {
       log.warning(
-          "_login got exception, assigning to _loginError", e, stackTrace);
+        "_login got exception, assigning to _loginError",
+        e,
+        stackTrace,
+      );
       setState(() {
         _loginError = e;
       });
@@ -77,8 +81,9 @@ class _SplashPageState extends State<SplashPage> {
 
     Widget page;
 
-    _loginError ??=
-        context.select((FireflyService f) => f.storageSignInException);
+    _loginError ??= context.select(
+      (FireflyService f) => f.storageSignInException,
+    );
 
     if (_loginError == null) {
       log.finer(() => "_loginError null --> show spinner");
@@ -86,15 +91,13 @@ class _SplashPageState extends State<SplashPage> {
         alignment: const Alignment(0, 0),
         child: const CircularProgressIndicator(),
       );
-      const QuickActions().setShortcutItems(
-        <ShortcutItem>[
-          ShortcutItem(
-            type: "action_transaction_add",
-            localizedTitle: S.of(context).transactionTitleAdd,
-            icon: "action_icon_add",
-          ),
-        ],
-      );
+      const QuickActions().setShortcutItems(<ShortcutItem>[
+        ShortcutItem(
+          type: "action_transaction_add",
+          localizedTitle: S.of(context).transactionTitleAdd,
+          icon: "action_icon_add",
+        ),
+      ]);
     } else {
       log.finer(() => "_loginError available --> show error");
       String errorDetails =
@@ -172,10 +175,12 @@ class _SplashPageState extends State<SplashPage> {
                       context.read<FireflyService>().signOut();
                     }
                   },
-                  child: Navigator.canPop(context)
-                      ? Text(
-                          MaterialLocalizations.of(context).backButtonTooltip)
-                      : Text(S.of(context).formButtonResetLogin),
+                  child:
+                      Navigator.canPop(context)
+                          ? Text(
+                            MaterialLocalizations.of(context).backButtonTooltip,
+                          )
+                          : Text(S.of(context).formButtonResetLogin),
                 ),
                 FilledButton(
                   onPressed: () {
@@ -187,7 +192,7 @@ class _SplashPageState extends State<SplashPage> {
                   child: Text(S.of(context).formButtonTryAgain),
                 ),
               ],
-            )
+            ),
           ],
         ),
       );
@@ -205,9 +210,7 @@ class _SplashPageState extends State<SplashPage> {
                   const SizedBox(height: 20),
                   const AppLogo(),
                   const SizedBox(height: 20),
-                  AnimatedHeight(
-                    child: page,
-                  ),
+                  AnimatedHeight(child: page),
                 ],
               ),
             ],

@@ -43,8 +43,9 @@ final class _$FireflyIii extends FireflyIii {
       parameters: $params,
       headers: $headers,
     );
-    return client
-        .send<List<AutocompleteAccount>, AutocompleteAccount>($request);
+    return client.send<List<AutocompleteAccount>, AutocompleteAccount>(
+      $request,
+    );
   }
 
   @override
@@ -116,8 +117,9 @@ final class _$FireflyIii extends FireflyIii {
       parameters: $params,
       headers: $headers,
     );
-    return client
-        .send<List<AutocompleteCategory>, AutocompleteCategory>($request);
+    return client.send<List<AutocompleteCategory>, AutocompleteCategory>(
+      $request,
+    );
   }
 
   @override
@@ -141,13 +143,14 @@ final class _$FireflyIii extends FireflyIii {
       parameters: $params,
       headers: $headers,
     );
-    return client
-        .send<List<AutocompleteCurrency>, AutocompleteCurrency>($request);
+    return client.send<List<AutocompleteCurrency>, AutocompleteCurrency>(
+      $request,
+    );
   }
 
   @override
   Future<Response<List<AutocompleteCurrencyCode>>>
-      _v1AutocompleteCurrenciesWithCodeGet({
+  _v1AutocompleteCurrenciesWithCodeGet({
     String? xTraceId,
     String? query,
     int? limit,
@@ -167,13 +170,15 @@ final class _$FireflyIii extends FireflyIii {
       parameters: $params,
       headers: $headers,
     );
-    return client.send<List<AutocompleteCurrencyCode>,
-        AutocompleteCurrencyCode>($request);
+    return client
+        .send<List<AutocompleteCurrencyCode>, AutocompleteCurrencyCode>(
+          $request,
+        );
   }
 
   @override
   Future<Response<List<AutocompleteObjectGroup>>>
-      _v1AutocompleteObjectGroupsGet({
+  _v1AutocompleteObjectGroupsGet({
     String? xTraceId,
     String? query,
     int? limit,
@@ -193,8 +198,9 @@ final class _$FireflyIii extends FireflyIii {
       parameters: $params,
       headers: $headers,
     );
-    return client
-        .send<List<AutocompleteObjectGroup>, AutocompleteObjectGroup>($request);
+    return client.send<List<AutocompleteObjectGroup>, AutocompleteObjectGroup>(
+      $request,
+    );
   }
 
   @override
@@ -223,7 +229,7 @@ final class _$FireflyIii extends FireflyIii {
 
   @override
   Future<Response<List<AutocompletePiggyBalance>>>
-      _v1AutocompletePiggyBanksWithBalanceGet({
+  _v1AutocompletePiggyBanksWithBalanceGet({
     String? xTraceId,
     String? query,
     int? limit,
@@ -243,8 +249,10 @@ final class _$FireflyIii extends FireflyIii {
       parameters: $params,
       headers: $headers,
     );
-    return client.send<List<AutocompletePiggyBalance>,
-        AutocompletePiggyBalance>($request);
+    return client
+        .send<List<AutocompletePiggyBalance>, AutocompletePiggyBalance>(
+          $request,
+        );
   }
 
   @override
@@ -268,8 +276,9 @@ final class _$FireflyIii extends FireflyIii {
       parameters: $params,
       headers: $headers,
     );
-    return client
-        .send<List<AutocompleteRecurrence>, AutocompleteRecurrence>($request);
+    return client.send<List<AutocompleteRecurrence>, AutocompleteRecurrence>(
+      $request,
+    );
   }
 
   @override
@@ -293,8 +302,9 @@ final class _$FireflyIii extends FireflyIii {
       parameters: $params,
       headers: $headers,
     );
-    return client
-        .send<List<AutocompleteRuleGroup>, AutocompleteRuleGroup>($request);
+    return client.send<List<AutocompleteRuleGroup>, AutocompleteRuleGroup>(
+      $request,
+    );
   }
 
   @override
@@ -347,7 +357,7 @@ final class _$FireflyIii extends FireflyIii {
 
   @override
   Future<Response<List<AutocompleteTransactionType>>>
-      _v1AutocompleteTransactionTypesGet({
+  _v1AutocompleteTransactionTypesGet({
     String? xTraceId,
     String? query,
     int? limit,
@@ -367,13 +377,15 @@ final class _$FireflyIii extends FireflyIii {
       parameters: $params,
       headers: $headers,
     );
-    return client.send<List<AutocompleteTransactionType>,
-        AutocompleteTransactionType>($request);
+    return client
+        .send<List<AutocompleteTransactionType>, AutocompleteTransactionType>(
+          $request,
+        );
   }
 
   @override
   Future<Response<List<AutocompleteTransaction>>>
-      _v1AutocompleteTransactionsGet({
+  _v1AutocompleteTransactionsGet({
     String? xTraceId,
     String? query,
     int? limit,
@@ -393,13 +405,14 @@ final class _$FireflyIii extends FireflyIii {
       parameters: $params,
       headers: $headers,
     );
-    return client
-        .send<List<AutocompleteTransaction>, AutocompleteTransaction>($request);
+    return client.send<List<AutocompleteTransaction>, AutocompleteTransaction>(
+      $request,
+    );
   }
 
   @override
   Future<Response<List<AutocompleteTransactionID>>>
-      _v1AutocompleteTransactionsWithIdGet({
+  _v1AutocompleteTransactionsWithIdGet({
     String? xTraceId,
     String? query,
     int? limit,
@@ -419,8 +432,10 @@ final class _$FireflyIii extends FireflyIii {
       parameters: $params,
       headers: $headers,
     );
-    return client.send<List<AutocompleteTransactionID>,
-        AutocompleteTransactionID>($request);
+    return client
+        .send<List<AutocompleteTransactionID>, AutocompleteTransactionID>(
+          $request,
+        );
   }
 
   @override
@@ -817,8 +832,9 @@ final class _$FireflyIii extends FireflyIii {
       parameters: $params,
       headers: $headers,
     );
-    return client
-        .send<List<InsightTransferEntry>, InsightTransferEntry>($request);
+    return client.send<List<InsightTransferEntry>, InsightTransferEntry>(
+      $request,
+    );
   }
 
   @override
@@ -1901,8 +1917,9 @@ final class _$FireflyIii extends FireflyIii {
     required String? limitId,
     String? type,
   }) {
-    final Uri $url =
-        Uri.parse('/v1/budgets/${id}/limits/${limitId}/transactions');
+    final Uri $url = Uri.parse(
+      '/v1/budgets/${id}/limits/${limitId}/transactions',
+    );
     final Map<String, dynamic> $params = <String, dynamic>{
       'limit': limit,
       'page': page,
@@ -2432,8 +2449,9 @@ final class _$FireflyIii extends FireflyIii {
       parameters: $params,
       headers: $headers,
     );
-    return client
-        .send<CurrencyExchangeRateArray, CurrencyExchangeRateArray>($request);
+    return client.send<CurrencyExchangeRateArray, CurrencyExchangeRateArray>(
+      $request,
+    );
   }
 
   @override
@@ -2458,8 +2476,9 @@ final class _$FireflyIii extends FireflyIii {
       parameters: $params,
       headers: $headers,
     );
-    return client
-        .send<CurrencyExchangeRateSingle, CurrencyExchangeRateSingle>($request);
+    return client.send<CurrencyExchangeRateSingle, CurrencyExchangeRateSingle>(
+      $request,
+    );
   }
 
   @override
@@ -2498,8 +2517,9 @@ final class _$FireflyIii extends FireflyIii {
       body: $body,
       headers: $headers,
     );
-    return client
-        .send<CurrencyExchangeRateSingle, CurrencyExchangeRateSingle>($request);
+    return client.send<CurrencyExchangeRateSingle, CurrencyExchangeRateSingle>(
+      $request,
+    );
   }
 
   @override
@@ -2525,8 +2545,9 @@ final class _$FireflyIii extends FireflyIii {
       parameters: $params,
       headers: $headers,
     );
-    return client
-        .send<CurrencyExchangeRateArray, CurrencyExchangeRateArray>($request);
+    return client.send<CurrencyExchangeRateArray, CurrencyExchangeRateArray>(
+      $request,
+    );
   }
 
   @override
@@ -4477,8 +4498,9 @@ final class _$FireflyIii extends FireflyIii {
   }
 
   @override
-  Future<Response<List<Configuration>>> _v1ConfigurationGet(
-      {String? xTraceId}) {
+  Future<Response<List<Configuration>>> _v1ConfigurationGet({
+    String? xTraceId,
+  }) {
     final Uri $url = Uri.parse('/v1/configuration');
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
@@ -4798,15 +4820,16 @@ final class _$FireflyIii extends FireflyIii {
 
   @override
   Future<Response<WebhookAttemptArray>>
-      _v1WebhooksIdMessagesMessageIdAttemptsGet({
+  _v1WebhooksIdMessagesMessageIdAttemptsGet({
     String? xTraceId,
     int? limit,
     int? page,
     required String? id,
     required int? messageId,
   }) {
-    final Uri $url =
-        Uri.parse('/v1/webhooks/${id}/messages/${messageId}/attempts');
+    final Uri $url = Uri.parse(
+      '/v1/webhooks/${id}/messages/${messageId}/attempts',
+    );
     final Map<String, dynamic> $params = <String, dynamic>{
       'limit': limit,
       'page': page,
@@ -4826,14 +4849,15 @@ final class _$FireflyIii extends FireflyIii {
 
   @override
   Future<Response<WebhookAttemptSingle>>
-      _v1WebhooksIdMessagesMessageIdAttemptsAttemptIdGet({
+  _v1WebhooksIdMessagesMessageIdAttemptsAttemptIdGet({
     String? xTraceId,
     required String? id,
     required int? messageId,
     required int? attemptId,
   }) {
     final Uri $url = Uri.parse(
-        '/v1/webhooks/${id}/messages/${messageId}/attempts/${attemptId}');
+      '/v1/webhooks/${id}/messages/${messageId}/attempts/${attemptId}',
+    );
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -4848,14 +4872,15 @@ final class _$FireflyIii extends FireflyIii {
 
   @override
   Future<Response<dynamic>>
-      _v1WebhooksIdMessagesMessageIdAttemptsAttemptIdDelete({
+  _v1WebhooksIdMessagesMessageIdAttemptsAttemptIdDelete({
     String? xTraceId,
     required String? id,
     required int? messageId,
     required int? attemptId,
   }) {
     final Uri $url = Uri.parse(
-        '/v1/webhooks/${id}/messages/${messageId}/attempts/${attemptId}');
+      '/v1/webhooks/${id}/messages/${messageId}/attempts/${attemptId}',
+    );
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -4892,8 +4917,9 @@ final class _$FireflyIii extends FireflyIii {
     required String? id,
     required String? transactionId,
   }) {
-    final Uri $url =
-        Uri.parse('/v1/webhooks/${id}/trigger-transaction/${transactionId}');
+    final Uri $url = Uri.parse(
+      '/v1/webhooks/${id}/trigger-transaction/${transactionId}',
+    );
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };

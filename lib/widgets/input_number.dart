@@ -42,9 +42,7 @@ class NumberInput extends StatelessWidget {
         FilteringTextInputFormatter.allow(RegExp(_getRegexString())),
         TextInputFormatter.withFunction(
           (TextEditingValue oldValue, TextEditingValue newValue) =>
-              newValue.copyWith(
-            text: newValue.text.replaceAll(',', '.'),
-          ),
+              newValue.copyWith(text: newValue.text.replaceAll(',', '.')),
         ),
       ],
       decoration: InputDecoration(
@@ -56,15 +54,15 @@ class NumberInput extends StatelessWidget {
         prefixText: prefixText,
         filled: disabled,
       ),
-      style: disabled
-          ? style?.copyWith(
-              color: Theme.of(context).disabledColor,
-            )
-          : style,
+      style:
+          disabled
+              ? style?.copyWith(color: Theme.of(context).disabledColor)
+              : style,
     );
   }
 
-  String _getRegexString() => (decimals > 0)
-      ? r'^[0-9]+[,.]{0,1}[0-9]{0,' + decimals.toString() + r'}'
-      : r'[0-9]';
+  String _getRegexString() =>
+      (decimals > 0)
+          ? r'^[0-9]+[,.]{0,1}[0-9]{0,' + decimals.toString() + r'}'
+          : r'[0-9]';
 }

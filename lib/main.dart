@@ -2,6 +2,7 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:logging/logging.dart';
@@ -11,7 +12,6 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:waterflyiii/app.dart';
 
 void main() async {
-  Intl.defaultLocale = await findSystemLocale();
   Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
   Logger.root.onRecord.listen((LogRecord record) {
     developer.log(
@@ -26,5 +26,7 @@ void main() async {
     );
   });
   tz.initializeTimeZones();
+  Intl.defaultLocale = await findSystemLocale();
+  await initializeDateFormatting();
   return runApp(const WaterflyApp());
 }

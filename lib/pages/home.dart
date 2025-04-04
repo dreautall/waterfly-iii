@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-
+import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/pages/home/balance.dart';
 import 'package:waterflyiii/pages/home/main.dart';
 import 'package:waterflyiii/pages/home/piggybank.dart';
@@ -69,6 +68,8 @@ class HomePageState extends State<HomePage>
       // Call once to set fab/page actions
       _handleTabChange();
     });
+
+    _actions.addListener(() => _handleTabChange());
   }
 
   @override
@@ -84,8 +85,9 @@ class HomePageState extends State<HomePage>
       log.finer(() => "_handleTabChange(${_tabController.index})");
       context.read<NavPageElements>().fab =
           (_tabController.index < 2) ? _newTransactionFab : null;
-      context.read<NavPageElements>().appBarActions =
-          _actions.get(tabPages[_tabController.index].key ?? const Key(''));
+      context.read<NavPageElements>().appBarActions = _actions.get(
+        tabPages[_tabController.index].key ?? const Key(''),
+      );
     }
   }
 
@@ -103,10 +105,7 @@ class HomePageState extends State<HomePage>
     log.finest(() => "build(tab: ${_tabController.index})");
     return ChangeNotifierProvider<PageActions>.value(
       value: _actions,
-      child: TabBarView(
-        controller: _tabController,
-        children: tabPages,
-      ),
+      child: TabBarView(controller: _tabController, children: tabPages),
     );
   }
 }

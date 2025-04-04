@@ -1,17 +1,15 @@
+import 'package:community_charts_flutter/community_charts_flutter.dart'
+    as charts;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
-import 'package:community_charts_flutter/community_charts_flutter.dart'
-    as charts;
-
+import 'package:timezone/timezone.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
-import 'package:waterflyiii/widgets/charts.dart';
-
 import 'package:waterflyiii/timezonehandler.dart';
+import 'package:waterflyiii/widgets/charts.dart';
 
 class LastDaysChart extends StatelessWidget {
   const LastDaysChart({
@@ -26,9 +24,10 @@ class LastDaysChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
-    // Use noon due to dailylight saving time
-    final DateTime now =
-        tzHandler.sNow().setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
+    // Use noon due to daylight saving time
+    final TZDateTime now = tzHandler.sNow().setTimeOfDay(
+      const TimeOfDay(hour: 12, minute: 0),
+    );
     final List<DateTime> lastDays = <DateTime>[];
     for (int i = 0; i < 7; i++) {
       lastDays.add(
@@ -69,23 +68,28 @@ class LastDaysChart extends StatelessWidget {
           domainFn: (LabelAmountChart entry, _) => entry.label,
           measureFn: (LabelAmountChart entry, _) => entry.amount.abs(),
           data: chartData,
-          colorFn: (LabelAmountChart entry, _) => (entry.amount > 0)
-              ? charts.MaterialPalette.green.shadeDefault
-              : charts.MaterialPalette.red.shadeDefault,
-          labelAccessorFn: (LabelAmountChart entry, _) => showCurrency
-              ? defaultCurrency.fmt(
-                  entry.amount.abs(),
-                  decimalDigits: 0,
-                )
-              // Use compact number formatting for numbers over 10.000
-              : entry.amount.abs() >= 100000
-                  ? NumberFormat.compact().format(entry.amount.abs())
-                  : entry.amount.abs().toStringAsFixed(0),
-          outsideLabelStyleAccessorFn: (_, __) => charts.TextStyleSpec(
-            color: charts.ColorUtil.fromDartColor(
-              Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-          ),
+          colorFn:
+              (LabelAmountChart entry, _) =>
+                  (entry.amount > 0)
+                      ? charts.MaterialPalette.green.shadeDefault
+                      : charts.MaterialPalette.red.shadeDefault,
+          labelAccessorFn:
+              (LabelAmountChart entry, _) =>
+                  showCurrency
+                      ? defaultCurrency.fmt(
+                        entry.amount.abs(),
+                        decimalDigits: 0,
+                      )
+                      // Use compact number formatting for numbers over 10.000
+                      : entry.amount.abs() >= 100000
+                      ? NumberFormat.compact().format(entry.amount.abs())
+                      : entry.amount.abs().toStringAsFixed(0),
+          outsideLabelStyleAccessorFn:
+              (_, _) => charts.TextStyleSpec(
+                color: charts.ColorUtil.fromDartColor(
+                  Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ),
         ),
       ],
       animate: true,

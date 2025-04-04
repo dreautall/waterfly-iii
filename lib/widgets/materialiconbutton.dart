@@ -31,12 +31,9 @@ class MaterialIconButton extends StatelessWidget {
       style: IconButton.styleFrom(
         foregroundColor: foregroundColor ?? colors.onPrimary,
         backgroundColor: backgroundColor ?? colors.primary,
-        disabledBackgroundColor: colors.onSurface.withAlpha(31),
-        // was: 0.12
-        hoverColor: colors.onPrimary.withAlpha(20),
-        // was: 0.08
-        focusColor: colors.onPrimary.withAlpha(31),
-        // was: 0.12
+        disabledBackgroundColor: colors.onSurface.withAlpha(31), // was: 0.12
+        hoverColor: colors.onPrimary.withAlpha(20), // was: 0.08
+        focusColor: colors.onPrimary.withAlpha(31), // was: 0.12
         highlightColor: colors.onPrimary.withAlpha(31), // was: 0.12
       ),
       iconSize: iconSize,

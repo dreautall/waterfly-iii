@@ -13,10 +13,7 @@ class ErrorIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     log.finest(() => "build(isError: $_isError)");
     return _isError
-        ? Icon(
-            Icons.error,
-            color: Theme.of(context).colorScheme.error,
-          )
+        ? Icon(Icons.error, color: Theme.of(context).colorScheme.error)
         : const Icon(null);
   }
 }

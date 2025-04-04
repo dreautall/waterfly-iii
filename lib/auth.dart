@@ -13,12 +13,12 @@ import 'package:chopper/chopper.dart'
         applyHeaders;
 import 'package:cronet_http/cronet_http.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:version/version.dart';
+import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/stock.dart';
@@ -74,7 +74,7 @@ class AuthErrorVersionInvalid extends AuthError {
 
 class AuthErrorVersionTooLow extends AuthError {
   const AuthErrorVersionTooLow(this.requiredVersion)
-      : super("Firefly API version too low");
+    : super("Firefly API version too low");
 
   final Version requiredVersion;
 }
@@ -87,15 +87,13 @@ class AuthErrorStatusCode extends AuthError {
 
 class AuthErrorNoInstance extends AuthError {
   const AuthErrorNoInstance(this.host)
-      : super("Not a valid Firefly III instance");
+    : super("Not a valid Firefly III instance");
 
   final String host;
 }
 
-http.Client get httpClient => CronetClient.fromCronetEngine(
-      CronetEngine.build(),
-      closeEngine: false,
-    );
+http.Client get httpClient =>
+    CronetClient.fromCronetEngine(CronetEngine.build(), closeEngine: false);
 
 class APIRequestInterceptor implements Interceptor {
   APIRequestInterceptor(this.headerFunc);
@@ -104,12 +102,19 @@ class APIRequestInterceptor implements Interceptor {
 
   @override
   FutureOr<Response<BodyType>> intercept<BodyType>(
-      Chain<BodyType> chain) async {
-    log.finest(() => "API query to ${chain.request.url}");
-    final Request request =
-        applyHeaders(chain.request, headerFunc(), override: true);
-    request.followRedirects = false;
-    request.maxRedirects = 0;
+    Chain<BodyType> chain,
+  ) async {
+    log.finest(() => "API query ${chain.request.method} ${chain.request.url}");
+    if (chain.request.body != null) {
+      log.finest(() => "Query Body: ${chain.request.body}");
+    }
+    final Request request = applyHeaders(
+      chain.request,
+      headerFunc(),
+      override: true,
+    );
+    request.followRedirects = true;
+    request.maxRedirects = 5;
     return chain.proceed(request);
   }
 }
@@ -166,20 +171,23 @@ class AuthUser {
       throw AuthErrorHost(host);
     }
 
-    Uri aboutUri = uri.replace(pathSegments: <String>[
-      ...uri.pathSegments,
-      "api",
-      "v1",
-      "about",
-    ]);
+    Uri aboutUri = uri.replace(
+      pathSegments: <String>[...uri.pathSegments, "api", "v1", "about"],
+    );
 
     try {
       final http.Request request = http.Request(HttpMethod.Get, aboutUri);
       request.headers[HttpHeaders.authorizationHeader] = "Bearer $apiKey";
-      request.followRedirects = false;
+      // See #497, redirect is a bad way to check for (un)successful login.
+      request.followRedirects = true;
+      request.maxRedirects = 5;
       final http.StreamedResponse response = await client.send(request);
 
-      if (response.isRedirect) {
+      // If we get an html page, it's most likely the login page, and auth failed
+      if (response.headers[HttpHeaders.contentTypeHeader]?.startsWith(
+            "text/html",
+          ) ??
+          true) {
         throw const AuthErrorApiKey();
       }
       if (response.statusCode != 200) {
@@ -220,7 +228,7 @@ class FireflyService with ChangeNotifier {
   FireflyIii get api {
     if (_currentUser?.api == null) {
       signOut();
-      throw Exception("API unavailable");
+      throw Exception("FireflyService.api: API unavailable");
     }
     return _currentUser!.api;
   }
@@ -228,7 +236,7 @@ class FireflyService with ChangeNotifier {
   FireflyIiiV2 get apiV2 {
     if (_currentUser?.apiV2 == null) {
       signOut();
-      throw Exception("API unavailable");
+      throw Exception("FireflyService.apiV2: API unavailable");
     }
     return _currentUser!.apiV2;
   }
@@ -237,10 +245,7 @@ class FireflyService with ChangeNotifier {
   late TimeZoneHandler tzHandler;
 
   final FlutterSecureStorage storage = const FlutterSecureStorage(
-    aOptions: AndroidOptions(
-      encryptedSharedPreferences: true,
-      resetOnError: true,
-    ),
+    aOptions: AndroidOptions(resetOnError: true),
   );
 
   final Logger log = Logger("Auth.FireflyService");
@@ -255,7 +260,8 @@ class FireflyService with ChangeNotifier {
     String? apiKey = await storage.read(key: 'api_key');
 
     log.config(
-        "storage: $apiHost, apiKey ${apiKey?.isEmpty ?? true ? "unset" : "set"}");
+      "storage: $apiHost, apiKey ${apiKey?.isEmpty ?? true ? "unset" : "set"}",
+    );
 
     if (apiHost == null || apiKey == null) {
       return false;
@@ -293,6 +299,9 @@ class FireflyService with ChangeNotifier {
     _currentUser = await AuthUser.create(host, apiKey);
     if (_currentUser == null || !hasApi) return false;
 
+    Response<CurrencySingle> currencyInfo = await api.v1CurrenciesDefaultGet();
+    defaultCurrency = currencyInfo.body!.data;
+
     Response<SystemInfo> about = await api.v1AboutGet();
     try {
       String apiVersionStr = about.body?.data?.apiVersion ?? "";
@@ -308,22 +317,16 @@ class FireflyService with ChangeNotifier {
       throw AuthErrorVersionTooLow(minApiVersion);
     }
 
-    late Response<CurrencySingle> currencyInfo;
-    if (apiVersion! >= Version(6, 2, 0)) {
-      currencyInfo = await api.v1CurrenciesNativeGet();
-    } else {
-      currencyInfo = await api.v1CurrenciesDefaultGet();
-    }
-    defaultCurrency = currencyInfo.body!.data;
-
     // Manual API query as the Swagger type doesn't resolve in Flutter :(
     final http.Client client = httpClient;
-    Uri tzUri = user!.host.replace(pathSegments: <String>[
-      ...user!.host.pathSegments,
-      "v1",
-      "configuration",
-      ConfigValueFilter.appTimezone.value!
-    ]);
+    Uri tzUri = user!.host.replace(
+      pathSegments: <String>[
+        ...user!.host.pathSegments,
+        "v1",
+        "configuration",
+        ConfigValueFilter.appTimezone.value!,
+      ],
+    );
     try {
       final http.Response response = await client.get(
         tzUri,
@@ -357,8 +360,6 @@ void apiThrowErrorIfEmpty(Response<dynamic> response, BuildContext? context) {
       S.of(context!).errorAPIInvalidResponse(response.error?.toString() ?? ""),
     );
   } else {
-    throw Exception(
-      "[nocontext] Invalid API response: ${response.error}",
-    );
+    throw Exception("[nocontext] Invalid API response: ${response.error}");
   }
 }

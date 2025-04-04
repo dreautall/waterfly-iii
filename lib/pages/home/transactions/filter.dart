@@ -1,13 +1,11 @@
 import 'dart:async';
 
+import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-
-import 'package:chopper/chopper.dart' show Response;
-
 import 'package:waterflyiii/auth.dart';
+import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/transaction/tags.dart';
 import 'package:waterflyiii/settings.dart';
@@ -37,7 +35,8 @@ class TransactionFilters with ChangeNotifier {
   bool get hasFilters => _hasFilters;
 
   void updateFilters() {
-    _hasFilters = account != null ||
+    _hasFilters =
+        account != null ||
         text != null ||
         currency != null ||
         category != null ||
@@ -56,16 +55,15 @@ class TransactionFilters with ChangeNotifier {
     BudgetRead? budget,
     BillRead? bill,
     Tags? tags,
-  }) =>
-      TransactionFilters(
-        account: account ?? this.account,
-        text: text ?? this.text,
-        currency: currency ?? this.currency,
-        category: category ?? this.category,
-        budget: budget ?? this.budget,
-        bill: bill ?? this.bill,
-        tags: tags ?? this.tags,
-      );
+  }) => TransactionFilters(
+    account: account ?? this.account,
+    text: text ?? this.text,
+    currency: currency ?? this.currency,
+    category: category ?? this.category,
+    budget: budget ?? this.budget,
+    bill: bill ?? this.bill,
+    tags: tags ?? this.tags,
+  );
 
   void reset() {
     account = null;
@@ -95,35 +93,30 @@ class FilterData {
 }
 
 class FilterDialog extends StatelessWidget {
-  const FilterDialog({
-    super.key,
-    required this.filters,
-  });
+  const FilterDialog({super.key, required this.filters});
 
   final TransactionFilters filters;
 
   Future<FilterData> _getData(BuildContext context) async {
     final FireflyIii api = context.read<FireflyService>().api;
 
-    // Accounts
-    final Response<AccountArray> respAccounts =
-        await api.v1AccountsGet(type: AccountTypeFilter.assetAccount);
+    final (
+      Response<AccountArray> respAccounts,
+      Response<CurrencyArray> respCurrencies,
+      Response<CategoryArray> respCats,
+      Response<BudgetArray> respBudgets,
+      Response<BillArray> respBills,
+    ) = await (
+          api.v1AccountsGet(type: AccountTypeFilter.assetAccount),
+          api.v1CurrenciesGet(),
+          api.v1CategoriesGet(),
+          api.v1BudgetsGet(),
+          api.v1BillsGet(),
+        ).wait;
     apiThrowErrorIfEmpty(respAccounts, context.mounted ? context : null);
-
-    // Currencies
-    final Response<CurrencyArray> respCurrencies = await api.v1CurrenciesGet();
     apiThrowErrorIfEmpty(respCurrencies, context.mounted ? context : null);
-
-    // Categories
-    final Response<CategoryArray> respCats = await api.v1CategoriesGet();
     apiThrowErrorIfEmpty(respCats, context.mounted ? context : null);
-
-    // Budgets
-    final Response<BudgetArray> respBudgets = await api.v1BudgetsGet();
     apiThrowErrorIfEmpty(respBudgets, context.mounted ? context : null);
-
-    // Bills
-    final Response<BillArray> respBills = await api.v1BillsGet();
     apiThrowErrorIfEmpty(respBills, context.mounted ? context : null);
 
     return FilterData(
@@ -175,8 +168,10 @@ class FilterDialog extends StatelessWidget {
           children: <Widget>[
             FutureBuilder<FilterData>(
               future: _getData(context),
-              builder:
-                  (BuildContext context, AsyncSnapshot<FilterData> snapshot) {
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<FilterData> snapshot,
+              ) {
                 if (snapshot.hasData && snapshot.data != null) {
                   List<Widget> child = <Widget>[];
                   final double inputWidth =
@@ -188,12 +183,15 @@ class FilterDialog extends StatelessWidget {
                       width: inputWidth,
                       child: CheckboxListTile(
                         value: context.watch<SettingsProvider>().showFutureTXs,
-                        onChanged: (bool? value) => context
-                            .read<SettingsProvider>()
-                            .showFutureTXs = value ?? false,
-                        title: Text(S
-                            .of(context)
-                            .homeTransactionsDialogFilterFutureTransactions),
+                        onChanged:
+                            (bool? value) =>
+                                context.read<SettingsProvider>().showFutureTXs =
+                                    value ?? false,
+                        title: Text(
+                          S
+                              .of(context)
+                              .homeTransactionsDialogFilterFutureTransactions,
+                        ),
                       ),
                     ),
                   );
@@ -224,16 +222,17 @@ class FilterDialog extends StatelessWidget {
                   child.add(const SizedBox(height: 12));
 
                   // Account Select
-                  final List<DropdownMenuEntry<AccountRead>> accountOptions =
-                      <DropdownMenuEntry<AccountRead>>[
+                  final List<DropdownMenuEntry<AccountRead>>
+                  accountOptions = <DropdownMenuEntry<AccountRead>>[
                     DropdownMenuEntry<AccountRead>(
                       value: AccountRead(
                         id: "0",
                         type: "dummy",
                         attributes: Account(
-                          name: S
-                              .of(context)
-                              .homeTransactionsDialogFilterAccountsAll,
+                          name:
+                              S
+                                  .of(context)
+                                  .homeTransactionsDialogFilterAccountsAll,
                           type:
                               ShortAccountTypeProperty.swaggerGeneratedUnknown,
                         ),
@@ -244,10 +243,12 @@ class FilterDialog extends StatelessWidget {
                   ];
                   AccountRead? currentAccount = accountOptions.first.value;
                   for (AccountRead e in snapshot.data!.accounts) {
-                    accountOptions.add(DropdownMenuEntry<AccountRead>(
-                      value: e,
-                      label: e.attributes.name,
-                    ));
+                    accountOptions.add(
+                      DropdownMenuEntry<AccountRead>(
+                        value: e,
+                        label: e.attributes.name,
+                      ),
+                    );
                     if (filters.account?.id == e.id) {
                       currentAccount = e;
                     }
@@ -271,31 +272,35 @@ class FilterDialog extends StatelessWidget {
                   child.add(const SizedBox(height: 12));
 
                   // Currency Select
-                  final List<DropdownMenuEntry<CurrencyRead>> currencyOptions =
-                      <DropdownMenuEntry<CurrencyRead>>[
+                  final List<DropdownMenuEntry<CurrencyRead>>
+                  currencyOptions = <DropdownMenuEntry<CurrencyRead>>[
                     DropdownMenuEntry<CurrencyRead>(
                       value: CurrencyRead(
                         id: "0",
                         type: "dummy",
                         attributes: Currency(
-                          name: S
-                              .of(context)
-                              .homeTransactionsDialogFilterCurrenciesAll,
+                          name:
+                              S
+                                  .of(context)
+                                  .homeTransactionsDialogFilterCurrenciesAll,
                           code: "",
                           symbol: "",
                         ),
                       ),
-                      label: S
-                          .of(context)
-                          .homeTransactionsDialogFilterCurrenciesAll,
+                      label:
+                          S
+                              .of(context)
+                              .homeTransactionsDialogFilterCurrenciesAll,
                     ),
                   ];
                   CurrencyRead? currentCurrency = currencyOptions.first.value;
                   for (CurrencyRead e in snapshot.data!.currencies) {
-                    currencyOptions.add(DropdownMenuEntry<CurrencyRead>(
-                      value: e,
-                      label: e.attributes.name,
-                    ));
+                    currencyOptions.add(
+                      DropdownMenuEntry<CurrencyRead>(
+                        value: e,
+                        label: e.attributes.name,
+                      ),
+                    );
                     if (filters.currency?.id == e.id) {
                       currentCurrency = e;
                     }
@@ -319,35 +324,39 @@ class FilterDialog extends StatelessWidget {
                   child.add(const SizedBox(height: 12));
 
                   // Category Select
-                  final List<DropdownMenuEntry<CategoryRead>> categoryOptions =
-                      <DropdownMenuEntry<CategoryRead>>[
+                  final List<DropdownMenuEntry<CategoryRead>>
+                  categoryOptions = <DropdownMenuEntry<CategoryRead>>[
                     DropdownMenuEntry<CategoryRead>(
                       value: CategoryRead(
                         id: "0",
                         type: "dummy",
                         attributes: Category(
-                          name: S
-                              .of(context)
-                              .homeTransactionsDialogFilterCategoriesAll,
+                          name:
+                              S
+                                  .of(context)
+                                  .homeTransactionsDialogFilterCategoriesAll,
                         ),
                       ),
-                      label: S
-                          .of(context)
-                          .homeTransactionsDialogFilterCategoriesAll,
+                      label:
+                          S
+                              .of(context)
+                              .homeTransactionsDialogFilterCategoriesAll,
                     ),
                     DropdownMenuEntry<CategoryRead>(
                       value: CategoryRead(
                         id: "-1",
                         type: "dummy",
                         attributes: Category(
-                          name: S
-                              .of(context)
-                              .homeTransactionsDialogFilterCategoryUnset,
+                          name:
+                              S
+                                  .of(context)
+                                  .homeTransactionsDialogFilterCategoryUnset,
                         ),
                       ),
-                      label: S
-                          .of(context)
-                          .homeTransactionsDialogFilterCategoryUnset,
+                      label:
+                          S
+                              .of(context)
+                              .homeTransactionsDialogFilterCategoryUnset,
                     ),
                   ];
                   CategoryRead? currentCategory = categoryOptions.first.value;
@@ -355,10 +364,12 @@ class FilterDialog extends StatelessWidget {
                     currentCategory = categoryOptions.last.value;
                   }
                   for (CategoryRead e in snapshot.data!.categories) {
-                    categoryOptions.add(DropdownMenuEntry<CategoryRead>(
-                      value: e,
-                      label: e.attributes.name,
-                    ));
+                    categoryOptions.add(
+                      DropdownMenuEntry<CategoryRead>(
+                        value: e,
+                        label: e.attributes.name,
+                      ),
+                    );
                     if (filters.category?.id == e.id) {
                       currentCategory = e;
                     }
@@ -382,16 +393,17 @@ class FilterDialog extends StatelessWidget {
                   child.add(const SizedBox(height: 12));
 
                   // Budget Select
-                  final List<DropdownMenuEntry<BudgetRead>> budgetOptions =
-                      <DropdownMenuEntry<BudgetRead>>[
+                  final List<DropdownMenuEntry<BudgetRead>>
+                  budgetOptions = <DropdownMenuEntry<BudgetRead>>[
                     DropdownMenuEntry<BudgetRead>(
                       value: BudgetRead(
                         id: "0",
                         type: "dummy",
                         attributes: Budget(
-                          name: S
-                              .of(context)
-                              .homeTransactionsDialogFilterBudgetsAll,
+                          name:
+                              S
+                                  .of(context)
+                                  .homeTransactionsDialogFilterBudgetsAll,
                         ),
                       ),
                       label:
@@ -402,9 +414,10 @@ class FilterDialog extends StatelessWidget {
                         id: "-1",
                         type: "dummy",
                         attributes: Budget(
-                          name: S
-                              .of(context)
-                              .homeTransactionsDialogFilterBudgetUnset,
+                          name:
+                              S
+                                  .of(context)
+                                  .homeTransactionsDialogFilterBudgetUnset,
                         ),
                       ),
                       label:
@@ -416,10 +429,12 @@ class FilterDialog extends StatelessWidget {
                     currentBudget = budgetOptions.last.value;
                   }
                   for (BudgetRead e in snapshot.data!.budgets) {
-                    budgetOptions.add(DropdownMenuEntry<BudgetRead>(
-                      value: e,
-                      label: e.attributes.name,
-                    ));
+                    budgetOptions.add(
+                      DropdownMenuEntry<BudgetRead>(
+                        value: e,
+                        label: e.attributes.name,
+                      ),
+                    );
                     if (filters.budget?.id == e.id) {
                       currentBudget = e;
                     }
@@ -443,8 +458,8 @@ class FilterDialog extends StatelessWidget {
                   child.add(const SizedBox(height: 12));
 
                   // Bill Select
-                  final List<DropdownMenuEntry<BillRead>> billOptions =
-                      <DropdownMenuEntry<BillRead>>[
+                  final List<DropdownMenuEntry<BillRead>>
+                  billOptions = <DropdownMenuEntry<BillRead>>[
                     DropdownMenuEntry<BillRead>(
                       value: BillRead(
                         id: "0",
@@ -455,9 +470,10 @@ class FilterDialog extends StatelessWidget {
                           date: DateTime.now(),
                           repeatFreq:
                               BillRepeatFrequency.swaggerGeneratedUnknown,
-                          name: S
-                              .of(context)
-                              .homeTransactionsDialogFilterBillsAll,
+                          name:
+                              S
+                                  .of(context)
+                                  .homeTransactionsDialogFilterBillsAll,
                         ),
                       ),
                       label: S.of(context).homeTransactionsDialogFilterBillsAll,
@@ -472,9 +488,10 @@ class FilterDialog extends StatelessWidget {
                           date: DateTime.now(),
                           repeatFreq:
                               BillRepeatFrequency.swaggerGeneratedUnknown,
-                          name: S
-                              .of(context)
-                              .homeTransactionsDialogFilterBillUnset,
+                          name:
+                              S
+                                  .of(context)
+                                  .homeTransactionsDialogFilterBillUnset,
                         ),
                       ),
                       label:
@@ -486,10 +503,12 @@ class FilterDialog extends StatelessWidget {
                     currentBill = billOptions.last.value;
                   }
                   for (BillRead e in snapshot.data!.bills) {
-                    billOptions.add(DropdownMenuEntry<BillRead>(
-                      value: e,
-                      label: e.attributes.name,
-                    ));
+                    billOptions.add(
+                      DropdownMenuEntry<BillRead>(
+                        value: e,
+                        label: e.attributes.name,
+                      ),
+                    );
                     if (filters.bill?.id == e.id) {
                       currentBill = e;
                     }
@@ -533,14 +552,15 @@ class FilterDialog extends StatelessWidget {
                     ),
                   );
                 } else if (snapshot.hasError) {
-                  log.severe("error getting filter data", snapshot.error,
-                      snapshot.stackTrace);
+                  log.severe(
+                    "error getting filter data",
+                    snapshot.error,
+                    snapshot.stackTrace,
+                  );
                   Navigator.pop(context);
                   return const SizedBox.shrink();
                 } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return const Center(child: CircularProgressIndicator());
                 }
               },
             ),

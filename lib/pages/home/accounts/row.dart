@@ -1,26 +1,24 @@
 import 'dart:convert';
 
 import 'package:animations/animations.dart';
+import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-
-import 'package:chopper/chopper.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
+import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
+import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/widgets/fabs.dart';
 
 Widget accountRowBuilder(
   BuildContext context,
   AccountRead account,
   int index,
-  PagingController<int, AccountRead> pagingController,
+  void Function() pagingResetFunc,
 ) {
   String name = account.attributes.name;
   late double currentAmount;
@@ -44,7 +42,8 @@ Widget accountRowBuilder(
   late String subtitle;
   switch (account.attributes.type) {
     case ShortAccountTypeProperty.asset:
-      subtitle = account.attributes.accountRole?.friendlyName(context) ??
+      subtitle =
+          account.attributes.accountRole?.friendlyName(context) ??
           S.of(context).generalUnknown;
       if (account.attributes.iban != null) {
         subtitle += "\nIBAN: ${account.attributes.iban!}";
@@ -93,11 +92,10 @@ Widget accountRowBuilder(
       if (account.attributes.interest != null &&
           account.attributes.interestPeriod != null) {
         subtitle += "; ";
-        subtitle += S.of(context).accountsLiabilitiesInterest(
-              double.tryParse(
-                    account.attributes.interest!,
-                  ) ??
-                  0,
+        subtitle += S
+            .of(context)
+            .accountsLiabilitiesInterest(
+              double.tryParse(account.attributes.interest!) ?? 0,
               account.attributes.interestPeriod!.value?.replaceAll('-', '') ??
                   "",
             );
@@ -106,12 +104,15 @@ Widget accountRowBuilder(
     default:
       subtitle = S.of(context).generalUnknown;
   }
+  if (subtitle == S.of(context).generalUnknown) {
+    return const SizedBox.shrink();
+  }
   return OpenContainer(
-    openBuilder: (BuildContext context, Function closedContainer) =>
-        AccountTXpage(
-      account: account,
-      nameUpdateFunc: (_) => pagingController.refresh(),
-    ),
+    openBuilder:
+        (BuildContext context, Function closedContainer) => AccountTXpage(
+          account: account,
+          nameUpdateFunc: (_) => pagingResetFunc(),
+        ),
     openColor: Theme.of(context).cardColor,
     closedColor: Theme.of(context).cardColor,
     closedShape: const RoundedRectangleBorder(
@@ -121,55 +122,58 @@ Widget accountRowBuilder(
       ),
     ),
     closedElevation: 0,
-    closedBuilder: (BuildContext context, Function openContainer) => ListTile(
-      title: Text(
-        name,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-      subtitle: Text(
-        subtitle,
-        maxLines: account.attributes.type == ShortAccountTypeProperty.asset ||
-                account.attributes.type == ShortAccountTypeProperty.liabilities
-            ? 2
-            : 1,
-      ),
-      isThreeLine: account.attributes.type == ShortAccountTypeProperty.asset ||
-          account.attributes.type == ShortAccountTypeProperty.liabilities,
-      trailing: RichText(
-        textAlign: TextAlign.end,
-        maxLines: 2,
-        text: TextSpan(
-          style: Theme.of(context).textTheme.bodyMedium,
-          children: <InlineSpan>[
-            TextSpan(
-              text: currency.fmt(currentAmount),
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: (currentAmount < 0) ? Colors.red : Colors.green,
-                fontWeight: FontWeight.bold,
-                fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
-              ),
+    closedBuilder:
+        (BuildContext context, Function openContainer) => ListTile(
+          title: Text(name, maxLines: 1, overflow: TextOverflow.ellipsis),
+          subtitle: Text(
+            subtitle,
+            maxLines:
+                account.attributes.type == ShortAccountTypeProperty.asset ||
+                        account.attributes.type ==
+                            ShortAccountTypeProperty.liabilities
+                    ? 2
+                    : 1,
+          ),
+          isThreeLine:
+              account.attributes.type == ShortAccountTypeProperty.asset ||
+              account.attributes.type == ShortAccountTypeProperty.liabilities,
+          trailing: RichText(
+            textAlign: TextAlign.end,
+            maxLines: 2,
+            text: TextSpan(
+              style: Theme.of(context).textTheme.bodyMedium,
+              children: <InlineSpan>[
+                TextSpan(
+                  text: currency.fmt(currentAmount),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: (currentAmount < 0) ? Colors.red : Colors.green,
+                    fontWeight: FontWeight.bold,
+                    fontFeatures: const <FontFeature>[
+                      FontFeature.tabularFigures(),
+                    ],
+                  ),
+                ),
+                const TextSpan(text: "\n"),
+                TextSpan(
+                  text:
+                      account.attributes.currentBalanceDate != null
+                          ? DateFormat.yMd().add_Hms().format(
+                            account.attributes.currentBalanceDate!.toLocal(),
+                          )
+                          : S.of(context).generalNever,
+                ),
+              ],
             ),
-            const TextSpan(text: "\n"),
-            TextSpan(
-              text: account.attributes.currentBalanceDate != null
-                  ? DateFormat.yMd()
-                      .add_Hms()
-                      .format(account.attributes.currentBalanceDate!.toLocal())
-                  : S.of(context).generalNever,
+          ),
+          enabled: account.attributes.active ?? true,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              bottomLeft: Radius.circular(16),
             ),
-          ],
+          ),
+          onTap: () => openContainer(),
         ),
-      ),
-      enabled: account.attributes.active ?? true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          bottomLeft: Radius.circular(16),
-        ),
-      ),
-      onTap: () => openContainer(),
-    ),
   );
 }
 
@@ -203,10 +207,7 @@ class _AccountTXpageState extends State<AccountTXpage> {
 
     _name = widget.account.attributes.name;
     _titleWidget = Text(_name);
-    _editIcon = IconButton(
-      icon: Icon(Icons.edit),
-      onPressed: showTextfield,
-    );
+    _editIcon = IconButton(icon: Icon(Icons.edit), onPressed: showTextfield);
   }
 
   @override
@@ -254,7 +255,8 @@ class _AccountTXpageState extends State<AccountTXpage> {
             ValidationErrorResponse valError = ValidationErrorResponse.fromJson(
               json.decode(response.error.toString()),
             );
-            error = valError.message ??
+            error =
+                valError.message ??
                 // ignore: use_build_context_synchronously
                 (context.mounted
                     // ignore: use_build_context_synchronously
@@ -262,16 +264,16 @@ class _AccountTXpageState extends State<AccountTXpage> {
                     : "[nocontext] Unknown error.");
           } catch (_) {
             // ignore: use_build_context_synchronously
-            error = context.mounted
-                // ignore: use_build_context_synchronously
-                ? S.of(context).errorUnknown
-                : "[nocontext] Unknown error.";
+            error =
+                context.mounted
+                    // ignore: use_build_context_synchronously
+                    ? S.of(context).errorUnknown
+                    : "[nocontext] Unknown error.";
           }
 
-          msg.showSnackBar(SnackBar(
-            content: Text(error),
-            behavior: SnackBarBehavior.floating,
-          ));
+          msg.showSnackBar(
+            SnackBar(content: Text(error), behavior: SnackBarBehavior.floating),
+          );
           return;
         }
 
@@ -285,30 +287,24 @@ class _AccountTXpageState extends State<AccountTXpage> {
     log.finest(() => "switching back to text field");
     setState(() {
       _titleWidget = Text(_name);
-      _editIcon = IconButton(
-        icon: Icon(Icons.edit),
-        onPressed: showTextfield,
-      );
+      _editIcon = IconButton(icon: Icon(Icons.edit), onPressed: showTextfield);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: _titleWidget,
-        actions: <Widget>[
-          _editIcon,
-        ],
-      ),
+      appBar: AppBar(title: _titleWidget, actions: <Widget>[_editIcon]),
       floatingActionButton:
           widget.account.attributes.type == ShortAccountTypeProperty.asset
               ? NewTransactionFab(
-                  context: context,
-                  accountId: widget.account.id,
-                )
+                context: context,
+                accountId: widget.account.id,
+              )
               : null,
-      body: HomeTransactions(accountId: widget.account.id),
+      body: HomeTransactions(
+        filters: TransactionFilters(account: widget.account),
+      ),
     );
   }
 }

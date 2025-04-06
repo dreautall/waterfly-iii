@@ -153,6 +153,8 @@ class SettingsProvider with ChangeNotifier {
   bool _loaded = false;
   bool get loaded => _loaded;
 
+  bool _loading = false;
+
   List<String> _notificationApps = <String>[];
   List<String> get notificationApps => _notificationApps;
 
@@ -261,6 +263,12 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<void> loadSettings() async {
+    if (_loading) {
+      log.config("already loading prefs, skipping this call");
+      return;
+    }
+    _loading = true;
+
     SharedPreferencesAsync prefs = SharedPreferencesAsync();
     log.config("reading prefs");
 
@@ -337,10 +345,23 @@ class SettingsProvider with ChangeNotifier {
         DashboardCards.values.firstWhere((DashboardCards e) => e.name == s),
       );
     }
-    if (_dashboardOrder.isEmpty ||
-        DashboardCards.values.length != _dashboardOrder.length) {
+
+    // Always filter out dupes.
+    _dashboardOrder = dashboardOrder.toSet().toList();
+
+    if (dashboardOrder.isEmpty ||
+        DashboardCards.values.length < dashboardOrder.length) {
+      // No order saved or too many items --> use default order
       _dashboardOrder = List<DashboardCards>.from(DashboardCards.values);
+    } else if (DashboardCards.values.length > dashboardOrder.length) {
+      // Too few items, maybe a new card was added. Add missing items.
+      for (DashboardCards s in DashboardCards.values) {
+        if (!dashboardOrder.contains(s)) {
+          _dashboardOrder.add(s);
+        }
+      }
     }
+
     final List<String> dashboardHiddenStr =
         await prefs.getStringList(settingsDashboardHidden) ?? <String>[];
     for (String s in dashboardHiddenStr) {
@@ -349,7 +370,7 @@ class SettingsProvider with ChangeNotifier {
       );
     }
 
-    _loaded = true;
+    _loaded = _loading = true;
     log.finest(() => "notify SettingsProvider->loadSettings()");
     notifyListeners();
   }

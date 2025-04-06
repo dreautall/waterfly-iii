@@ -154,6 +154,7 @@ class _BillDetailsState extends State<BillDetails> {
               ),
             ),
           ),
+          const SizedBox(height: 16),
           Expanded(
             /*child: RawScrollbar(
               radius: const Radius.circular(12),
@@ -217,8 +218,7 @@ class _BillDetailsState extends State<BillDetails> {
         return openContainerWidget!;
       },
       openColor: Theme.of(context).cardColor,
-      closedColor:
-          Theme.of(context).dialogTheme.backgroundColor ?? Colors.white,
+      closedColor: Theme.of(context).cardColor,
       closedShape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),

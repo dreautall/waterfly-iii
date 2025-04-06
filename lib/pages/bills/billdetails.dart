@@ -190,27 +190,32 @@ class _BillDetailsState extends State<BillDetails> {
         _tzHandler
             .sTime(transaction.attributes.transactions.first.date)
             .toLocal();
+    Widget? openContainerWidget;
 
     return OpenContainer(
-      openBuilder:
-          (BuildContext context, Function closedContainer) =>
-              FutureBuilder<TransactionRead>(
-                future: _fetchFullTx(transaction.id),
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<TransactionRead> snapshot,
-                ) {
-                  if (snapshot.connectionState == ConnectionState.done &&
-                      snapshot.hasData &&
-                      snapshot.data != null) {
-                    return TransactionPage(transaction: snapshot.data);
-                  }
-                  if (snapshot.hasError) {
-                    Navigator.of(context).pop();
-                  }
-                  return const Center(child: CircularProgressIndicator());
-                },
-              ),
+      openBuilder: (BuildContext context, Function closedContainer) {
+        if (openContainerWidget != null) {
+          return openContainerWidget!;
+        }
+        openContainerWidget = FutureBuilder<TransactionRead>(
+          future: _fetchFullTx(transaction.id),
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<TransactionRead> snapshot,
+          ) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData &&
+                snapshot.data != null) {
+              return TransactionPage(transaction: snapshot.data);
+            }
+            if (snapshot.hasError) {
+              Navigator.of(context).pop();
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
+        );
+        return openContainerWidget!;
+      },
       openColor: Theme.of(context).cardColor,
       closedColor:
           Theme.of(context).dialogTheme.backgroundColor ?? Colors.white,

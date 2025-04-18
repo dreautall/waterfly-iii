@@ -94,18 +94,14 @@ class _WaterflyAppState extends State<WaterflyApp> {
                 ) ??
                 false)) {
           log.finest(() => "App resuming, last opened: $_lcLastOpen");
-          setState(() {
-            _lcLastOpen = null;
-            _authed = false;
-          });
+          _lcLastOpen = null;
+          _authed = false;
 
           auth().then((bool authed) {
             log.finest(() => "done authing, $authed");
             if (authed) {
-              setState(() {
-                log.finest(() => "authentication succeeded");
-                _authed = true;
-              });
+              log.finest(() => "authentication succeeded");
+              _authed = true;
             } else {
               log.shout(() => "authentication failed");
               _lcLastOpen = DateTime.now().subtract(
@@ -226,8 +222,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
                   auth().then((bool authed) {
                     log.finest(() => "done authing, $authed");
                     if (authed) {
+                      log.finest(() => "authentication succeeded");
                       setState(() {
-                        log.finest(() => "authentication succeeded");
                         _authed = true;
                       });
                     } else {

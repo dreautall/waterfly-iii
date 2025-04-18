@@ -1,6 +1,6 @@
 Waterfly III jest nieoficjalną aplikacją dla Twojej własnej instancji Firefly III, darmowego i otwarto źródłowego menedżera finansów.
 
-Ta aplikacja wymaga samodzielnej instancji Firefly III na Twoim serwerze, odwiedź https://www.firefly-iii.org/ aby uzyskać więcej informacji o oprogramowaniu. To tylko aplikacja towarzysząca i nie może działać samodzielnie!
+Ta aplikacja wymaga samodzielnej instancji Firefly III na Twoim serwerze, odwiedź https://www.firefly-iii.org/, aby uzyskać więcej informacji o oprogramowaniu. To tylko aplikacja towarzysząca i nie może działać samodzielnie!
 
 Funkcje:
 
@@ -8,7 +8,7 @@ Funkcje:
 - Lista transakcji z filtrami
 - Dodaj i edytuj transakcje z auto uzupełnianiem, w tym załączniki, dzielone transakcje i wsparcie dla wielu walut
 - Wsparcie Skarbonek (zobacz i dodaj pieniądze)
-- Usługa nasłuchiwania powiadomień w celu łatwego tworzenia nowych transakcji na podstawie przychodzących powiadomień (np.
+- Usługa nasłuchiwania powiadomień w celu łatwego tworzenia nowych transakcji na podstawie przychodzących powiadomień (np. z Google Pay lub Twojej aplikacji bankowej)
 - Całkowicie open source: https://github.com/dreautall/waterfly-iii
 - Brak reklam lub trackerów
 

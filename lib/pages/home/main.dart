@@ -1165,19 +1165,31 @@ class BudgetList extends StatelessWidget {
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             final List<Widget> widgets = <Widget>[];
-            final DateTime now = tzHandler.sNow().setTimeOfDay(
-              const TimeOfDay(hour: 12, minute: 0),
-            );
-            final DateTime lastDayInMonth = tzHandler.sTime(
-              now.copyWith(month: now.month + 1, day: 0),
-            );
-            final double passedDays = now.day / lastDayInMonth.day;
+            final int tsNow = tzHandler.sNow().millisecondsSinceEpoch;
+
             for (BudgetLimitRead budget in snapshot.data!) {
               final List<Widget> stackWidgets = <Widget>[];
               final double spent =
                   (double.tryParse(budget.attributes.spent ?? "0") ?? 0).abs();
               final double available =
                   double.tryParse(budget.attributes.amount) ?? 0;
+
+              final int tsStart =
+                  tzHandler
+                      .sTime(budget.attributes.start)
+                      .millisecondsSinceEpoch;
+              final int tsEnd =
+                  tzHandler.sTime(budget.attributes.end).millisecondsSinceEpoch;
+              late double passedDays;
+              if (tsEnd == tsStart) {
+                passedDays = 2; // Hides the bar
+              } else {
+                passedDays = (tsNow - tsStart) / (tsEnd - tsStart);
+                if (passedDays > 1) {
+                  passedDays = 2; // Hides the bar
+                }
+              }
+
               Budget? budgetInfo = budgetInfos[budget.attributes.budgetId];
               if (budgetInfo == null || available == 0) {
                 continue;

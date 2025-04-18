@@ -1,0 +1,26 @@
+This release brings quite a few new features. Most noticeably, the Transaction screen has been revamped completely to make the transaction easier to input and to make from/to clearer - it now behaves more than the Firefly III webinterface.
+
+Full Changelog:
+
+- Feature: New transaction screen
+- Feature: Allow to modify main dashboard (order & visibility of cards)
+- Features for Notification Listener:
+  - Option to not add note for notification-added transactions
+  - Option to add transaction from notification without asking
+- Feature: Show used budget in relation to time in month
+- Feature: Only show transactions for current month in Category view
+- Feature: FAQ page
+- Change: Bills are now called subscriptions to be in line with Firefly III.
+- Fix: Display error on transaction screen for split transactions with foreign currency
+- Fix: Login save issues
+- Fix: Display Issue on Bills page
+- Fix: Support Firefly III v6.2.0
+  - Piggybank feature requires Firefly III v6.2.2 to work due to a bug in Firefly III.
+  - The new native currency feature has not been tested at all.
+  - Firefly III v6.2.7 has a bug that makes the transaction list unusable. Please update to Firefly III v6.2.8.
+- Fixes for Notification Listener:
+  - Service now properly starts when enabling it
+  - Parsing for some special edge-cases
+- Fix: Proper way to detect auth failure, allows running Firefly III behind a redirect page
+- Dependency updates (especially settings handler)
+- Flutter version upgrade

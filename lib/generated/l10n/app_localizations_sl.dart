@@ -320,7 +320,7 @@ class SSl extends S {
   String get generalDefault => 'privzeto';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'Ciljni račun';
 
   @override
   String get generalDismiss => 'Opusti';
@@ -353,7 +353,7 @@ class SSl extends S {
   String get generalReset => 'Ponastavi';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'Izvorni račun';
 
   @override
   String get generalSpent => 'Porabljeno';
@@ -454,7 +454,7 @@ class SSl extends S {
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'Prilagodi nadzorno ploščo';
 
   @override
   String homePiggyLinked(String account) {
@@ -815,11 +815,10 @@ class SSl extends S {
   String get transactionErrorInvalidBudget => 'Neveljaven proračun';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts => 'Najprej izpolni račune.';
 
   @override
-  String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+  String get transactionErrorNoAssetAccount => 'Izberi račun sredstev.';
 
   @override
   String get transactionErrorTitle => 'Prosim navedite naslov.';
@@ -853,11 +852,11 @@ class SSl extends S {
 
   @override
   String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+      'Spremeni razdeljeni ciljni račun';
 
   @override
   String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+      'Spremeni izvirni račun razdeljenega vira';
 
   @override
   String get transactionSplitChangeTarget => 'Spremeni ciljni račun razdelitve';

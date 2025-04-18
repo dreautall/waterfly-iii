@@ -85,7 +85,11 @@ class TransStock with ChangeNotifier {
 
   FutureOr<List<String>> _onAPIValue(Response<TransactionArray> response) {
     if (!response.isSuccessful || response.body == null) {
-      throw Exception(response.error ?? "empty body");
+      if (response.error != null && response.error.toString().isNotEmpty) {
+        throw Exception("_onAPIValue() call not successful: ${response.error}");
+      } else {
+        throw Exception("_onAPIValue() call not successful: empty body/error");
+      }
     }
     for (TransactionRead element in response.body!.data) {
       _singleSoT.write(element.id, element);
@@ -257,28 +261,28 @@ class CatStock {
             .v1InsightIncomeCategoryGet(start: startDate, end: endDate);
         if (!respIncomeCat.isSuccessful || respIncomeCat.body == null) {
           throw Exception(
-            "[stock] Invalid API response: ${respIncomeCat.error}",
+            "[stock] Invalid v1InsightIncomeCategoryGet response: ${respIncomeCat.error}",
           );
         }
         final Response<InsightTotal> respIncomeNoCat = await api
             .v1InsightIncomeNoCategoryGet(start: startDate, end: endDate);
         if (!respIncomeNoCat.isSuccessful || respIncomeNoCat.body == null) {
           throw Exception(
-            "[stock] Invalid API response: ${respIncomeNoCat.error}",
+            "[stock] Invalid v1InsightIncomeNoCategoryGet response: ${respIncomeNoCat.error}",
           );
         }
         final Response<InsightGroup> respExpenseCat = await api
             .v1InsightExpenseCategoryGet(start: startDate, end: endDate);
         if (!respExpenseCat.isSuccessful || respExpenseCat.body == null) {
           throw Exception(
-            "[stock] Invalid API response: ${respExpenseCat.error}",
+            "[stock] Invalid v1InsightExpenseCategoryGet response: ${respExpenseCat.error}",
           );
         }
         final Response<InsightTotal> respExpenseNoCat = await api
             .v1InsightExpenseNoCategoryGet(start: startDate, end: endDate);
         if (!respExpenseNoCat.isSuccessful || respExpenseNoCat.body == null) {
           throw Exception(
-            "[stock] Invalid API response: ${respExpenseNoCat.error}",
+            "[stock] Invalid v1InsightExpenseNoCategoryGet response: ${respExpenseNoCat.error}",
           );
         }
 

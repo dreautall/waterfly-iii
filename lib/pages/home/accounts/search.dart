@@ -36,6 +36,13 @@ class _AccountSearchState extends State<AccountSearch> {
 
   final Logger log = Logger("Pages.Accounts.Search");
 
+  @override
+  void initState() {
+    super.initState();
+
+    currentFilter = widget.type;
+  }
+
   Future<void> _fetchPage() async {
     if (_pagingState.isLoading) return;
 
@@ -168,7 +175,10 @@ class _AccountSearchState extends State<AccountSearch> {
                     : null,
           ),
           autofocus: true,
-          onChanged: (_) => setState(() {}),
+          onChanged:
+              (_) => setState(() {
+                _searched = false;
+              }),
           onSubmitted:
               (_) => setState(() {
                 if (!_searched) {

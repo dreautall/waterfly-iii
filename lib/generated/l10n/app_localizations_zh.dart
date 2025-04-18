@@ -317,7 +317,7 @@ class SZh extends S {
   String get generalDefault => '默认';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => '目标账户';
 
   @override
   String get generalDismiss => '放弃';
@@ -350,7 +350,7 @@ class SZh extends S {
   String get generalReset => '重置';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => '源账户';
 
   @override
   String get generalSpent => '支出';
@@ -450,7 +450,7 @@ class SZh extends S {
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => '自定义面板';
 
   @override
   String homePiggyLinked(String account) {
@@ -634,10 +634,10 @@ class SZh extends S {
   String get settingsDialogThemeTitle => '选择主题';
 
   @override
-  String get settingsFAQ => 'FAQ';
+  String get settingsFAQ => '常见问答（FAQ）';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp => '在浏览器内打开。仅支持英文。';
 
   @override
   String get settingsLanguage => '切换语言';
@@ -668,14 +668,14 @@ class SZh extends S {
       '在您接收手机通知以添加应用程序到此列表的交易中。 如果应用程序仍未显示, 请向app@vogt.pw报告。';
 
   @override
-  String get settingsNLAutoAdd => 'Create transaction without interaction';
+  String get settingsNLAutoAdd => '创建无互动的交易';
 
   @override
   String get settingsNLDescription =>
       '此服务允许您从传入推送通知中获取交易细节。 此外，您可以选择一个交易应该分配给的默认账户 - 如果没有设置值。 它试图从通知中提取一个帐户。';
 
   @override
-  String get settingsNLEmptyNote => 'Keep note field empty';
+  String get settingsNLEmptyNote => '不填写备注';
 
   @override
   String get settingsNLPermissionGrant => '轻触来授予权限。';
@@ -796,11 +796,10 @@ class SZh extends S {
   String get transactionErrorInvalidBudget => '无效的预算';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts => '请先填写账户。';
 
   @override
-  String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+  String get transactionErrorNoAssetAccount => '请选择一个资产账户。';
 
   @override
   String get transactionErrorTitle => '请输入标题';
@@ -833,12 +832,10 @@ class SZh extends S {
   String get transactionSplitChangeCurrency => '更改基本货币';
 
   @override
-  String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+  String get transactionSplitChangeDestinationAccount => '更改拆分目的账户';
 
   @override
-  String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+  String get transactionSplitChangeSourceAccount => '更改拆分源账户';
 
   @override
   String get transactionSplitChangeTarget => '更改拆分目标账户';

@@ -68,8 +68,6 @@ class _TransactionPageState extends State<TransactionPage>
   final FocusNode _titleFocusNode = FocusNode();
   String? _ownAccountId;
   late tz.TZDateTime _date;
-  final TextEditingController _dateTextController = TextEditingController();
-  final TextEditingController _timeTextController = TextEditingController();
   CurrencyRead? _localCurrency;
   bool _reconciled = false;
   bool _initiallyReconciled = false;
@@ -376,8 +374,6 @@ class _TransactionPageState extends State<TransactionPage>
               _tzHandler
                   .notificationTXTime(widget.notification!.date)
                   .toLocal();
-          _dateTextController.text = DateFormat.yMMMd().format(_date);
-          _timeTextController.text = DateFormat.Hm().format(_date);
 
           // Title & Note
           final NotificationAppSettings appSettings = await settings
@@ -507,10 +503,10 @@ class _TransactionPageState extends State<TransactionPage>
       _hasAttachments = false;
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    /*WidgetsBinding.instance.addPostFrameCallback((_) {
       _dateTextController.text = DateFormat.yMMMd().format(_date);
       _timeTextController.text = DateFormat.Hm().format(_date);
-    });
+    });*/
   }
 
   @override
@@ -521,8 +517,6 @@ class _TransactionPageState extends State<TransactionPage>
     _sourceAccountFocusNode.dispose();
     _destinationAccountTextController.dispose();
     _destinationAccountFocusNode.dispose();
-    _dateTextController.dispose();
-    _timeTextController.dispose();
     _localAmountTextController.dispose();
 
     for (TextEditingController t in _sourceAccountTextControllers) {
@@ -933,8 +927,6 @@ class _TransactionPageState extends State<TransactionPage>
                                 _destinationAccountTextController.text;
                           }
 
-                          debugPrint(destinationName);
-
                           final TransactionSplitUpdate
                           txSs = TransactionSplitUpdate(
                             amount: _localAmounts[i].toString(),
@@ -989,12 +981,18 @@ class _TransactionPageState extends State<TransactionPage>
                           transactions: txS,
                         );
                         // Delete old splits
-                        for (String id in _deletedSplitIDs) {
-                          if (id.isEmpty) {
-                            continue;
-                          }
-                          log.fine(() => "deleting split $id");
-                          await api.v1TransactionJournalsIdDelete(id: id);
+                        final List<Future<Response<dynamic>>> futures =
+                            _deletedSplitIDs
+                                .where((String id) => id.isNotEmpty)
+                                .map((String id) {
+                                  log.fine(() => "deleting split $id");
+                                  return api.v1TransactionJournalsIdDelete(
+                                    id: id,
+                                  );
+                                })
+                                .toList();
+                        if (futures.isNotEmpty) {
+                          await Future.wait(futures);
                         }
                         resp = await api.v1TransactionsIdPut(
                           id: id,
@@ -1248,43 +1246,26 @@ class _TransactionPageState extends State<TransactionPage>
             focusNode: _titleFocusNode,
           ),
           const SizedBox(width: 12),
-          badges.Badge(
-            badgeContent: Text(
-              _attachments?.length.toString() ?? "..",
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-            ),
-            showBadge: _hasAttachments,
-            badgeStyle: badges.BadgeStyle(
-              badgeColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-            ),
-            badgeAnimation: const badges.BadgeAnimation.scale(
-              animationDuration: animDurationEmphasized,
-              curve: animCurveEmphasized,
-            ),
-            child: MaterialIconButton(
-              icon: Icons.attach_file,
-              tooltip: S.of(context).transactionAttachments,
-              onPressed: () async {
-                List<AttachmentRead> dialogAttachments =
-                    _attachments ?? <AttachmentRead>[];
-                await showDialog<List<AttachmentRead>>(
-                  context: context,
-                  builder:
-                      (BuildContext context) => AttachmentDialog(
-                        attachments: dialogAttachments,
-                        transactionId: _transactionJournalIDs.firstWhereOrNull(
-                          (String? element) => element != null,
-                        ),
+          AttachmentButton(
+            attachments: _attachments,
+            onPressed: () async {
+              List<AttachmentRead> dialogAttachments =
+                  _attachments ?? <AttachmentRead>[];
+              await showDialog<List<AttachmentRead>>(
+                context: context,
+                builder:
+                    (BuildContext context) => AttachmentDialog(
+                      attachments: dialogAttachments,
+                      transactionId: _transactionJournalIDs.firstWhereOrNull(
+                        (String? element) => element != null,
                       ),
-                );
-                setState(() {
-                  _attachments = dialogAttachments;
-                  _hasAttachments = _attachments?.isNotEmpty ?? false;
-                });
-              },
-            ),
+                    ),
+              );
+              setState(() {
+                _attachments = dialogAttachments;
+                _hasAttachments = _attachments?.isNotEmpty ?? false;
+              });
+            },
           ),
         ],
       ),
@@ -1326,66 +1307,13 @@ class _TransactionPageState extends State<TransactionPage>
               ),
             ),
             vDivider,
-            IntrinsicWidth(
-              child: TextFormField(
-                controller: _dateTextController,
-                decoration: const InputDecoration(
-                  //prefixIcon: Icon(Icons.calendar_month),
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: _date,
-                    locale: Locale(
-                      Intl.defaultLocale!.split("_").first,
-                      Intl.defaultLocale!.split("_").last,
-                    ),
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2101),
-                  );
-
-                  if (pickedDate == null) {
-                    return;
-                  }
-
-                  setState(() {
-                    _date = tz.TZDateTime.from(
-                      _date.copyWith(
-                        year: pickedDate.year,
-                        month: pickedDate.month,
-                        day: pickedDate.day,
-                      ),
-                      _date.location,
-                    );
-                    _dateTextController.text = DateFormat.yMMMd().format(_date);
-                  });
-                },
-              ),
-            ),
-            vDivider,
-            IntrinsicWidth(
-              child: TextFormField(
-                controller: _timeTextController,
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-                readOnly: true,
-                onTap: () async {
-                  TimeOfDay? pickedTime = await showTimePicker(
-                    context: context,
-                    initialTime: _date.getTimeOfDay(),
-                  );
-
-                  if (pickedTime == null) {
-                    return;
-                  }
-
-                  setState(() {
-                    _date = _date.setTimeOfDay(pickedTime);
-                    _timeTextController.text = DateFormat.Hm().format(_date);
-                  });
-                },
-              ),
+            DateTimePicker(
+              initialDateTime: _date,
+              onDateTimeChanged: (tz.TZDateTime newDateTime) {
+                setState(() {
+                  _date = newDateTime;
+                });
+              },
             ),
           ],
         ),
@@ -1417,7 +1345,8 @@ class _TransactionPageState extends State<TransactionPage>
                   onChanged: (_) {
                     // Reset own account & account type when changed
                     if (_sourceAccountType ==
-                        AccountTypeProperty.assetAccount) {
+                            AccountTypeProperty.assetAccount ||
+                        _sourceAccountType == AccountTypeProperty.debt) {
                       _ownAccountId = null;
                     }
                     _sourceAccountType =
@@ -1438,7 +1367,8 @@ class _TransactionPageState extends State<TransactionPage>
                           "selected source account ${option.name}, type ${_sourceAccountType.toString()} (${option.type})",
                     );
                     if (_sourceAccountType ==
-                        AccountTypeProperty.assetAccount) {
+                            AccountTypeProperty.assetAccount ||
+                        _sourceAccountType == AccountTypeProperty.debt) {
                       _ownAccountId = option.id;
                     }
                     checkTXType();
@@ -1511,7 +1441,8 @@ class _TransactionPageState extends State<TransactionPage>
 
                       // Reset own account & account type when changed
                       if (_destinationAccountType ==
-                          AccountTypeProperty.assetAccount) {
+                              AccountTypeProperty.assetAccount ||
+                          _destinationAccountType == AccountTypeProperty.debt) {
                         _ownAccountId = null;
                       }
                       _destinationAccountType =
@@ -1534,7 +1465,8 @@ class _TransactionPageState extends State<TransactionPage>
                                     AccountTypeProperty.swaggerGeneratedUnknown,
                           );
                       if (_destinationAccountType ==
-                          AccountTypeProperty.assetAccount) {
+                              AccountTypeProperty.assetAccount ||
+                          _destinationAccountType == AccountTypeProperty.debt) {
                         _ownAccountId = option.id;
                       }
                       log.finer(
@@ -1648,10 +1580,14 @@ class _TransactionPageState extends State<TransactionPage>
     // 2. set account is destination & assetAccount & source account is NOT an
     //    asset account
     // 3. either source or destination account are still unset, so first to set
-    if ((isSource && _sourceAccountType == AccountTypeProperty.assetAccount) ||
+    if ((isSource &&
+            (_sourceAccountType == AccountTypeProperty.assetAccount ||
+                _sourceAccountType == AccountTypeProperty.debt)) ||
         (!isSource &&
-            _destinationAccountType == AccountTypeProperty.assetAccount &&
-            _sourceAccountType != AccountTypeProperty.assetAccount) ||
+            (_destinationAccountType == AccountTypeProperty.assetAccount ||
+                _destinationAccountType == AccountTypeProperty.debt) &&
+            (_sourceAccountType != AccountTypeProperty.assetAccount &&
+                _sourceAccountType != AccountTypeProperty.debt)) ||
         (_sourceAccountType == AccountTypeProperty.swaggerGeneratedUnknown ||
             _destinationAccountType ==
                 AccountTypeProperty.swaggerGeneratedUnknown)) {
@@ -1673,8 +1609,10 @@ class _TransactionPageState extends State<TransactionPage>
     // set foreign currency if account is destination & asset account and source
     // account is also asset account (transfer from one currency to other)
     if ((!isSource &&
-            _destinationAccountType == AccountTypeProperty.assetAccount &&
-            _sourceAccountType == AccountTypeProperty.assetAccount) &&
+            (_destinationAccountType == AccountTypeProperty.assetAccount ||
+                _destinationAccountType == AccountTypeProperty.debt) &&
+            (_sourceAccountType == AccountTypeProperty.assetAccount ||
+                _destinationAccountType == AccountTypeProperty.debt)) &&
         _localCurrency?.id != option.currencyId) {
       // Only when destination & source account have different currency
       if (!_foreignCurrencies.every(
@@ -1709,10 +1647,10 @@ class _TransactionPageState extends State<TransactionPage>
     );
     /* WATERFLY CUSTOM - NOT FIREFLY BEHAVIOR!
      * To ease UX, two assumptions:
-     * 1. If only source is entered & it's an asset account, it'll be a
-     *    withdrawal
-     * 2. If only destination is entered & it's an asset account, it'll be a
-     *    deposit
+     * 1. If only source is entered & it's an asset/liability account, it'll be
+     *    a withdrawal
+     * 2. If only destination is entered & it's an asset/liability account,
+     *    it'll be a deposit
      *
      * As _ownAccountId will be set for both of these scenarios, the other one
      * would potentially be created by FF3 when saving. The actual webinterface
@@ -1722,13 +1660,15 @@ class _TransactionPageState extends State<TransactionPage>
      */
 
     if (txType == TransactionTypeProperty.swaggerGeneratedUnknown &&
-        _sourceAccountType == AccountTypeProperty.assetAccount &&
+        (_sourceAccountType == AccountTypeProperty.assetAccount ||
+            _sourceAccountType == AccountTypeProperty.debt) &&
         _destinationAccountType ==
             AccountTypeProperty.swaggerGeneratedUnknown) {
       txType = TransactionTypeProperty.withdrawal;
     } else if (txType == TransactionTypeProperty.swaggerGeneratedUnknown &&
         _sourceAccountType == AccountTypeProperty.swaggerGeneratedUnknown &&
-        _destinationAccountType == AccountTypeProperty.assetAccount) {
+        (_destinationAccountType == AccountTypeProperty.assetAccount ||
+            _destinationAccountType == AccountTypeProperty.debt)) {
       txType = TransactionTypeProperty.deposit;
     }
 
@@ -1901,7 +1841,6 @@ class _TransactionPageState extends State<TransactionPage>
                                       TextEditingValue textEditingValue,
                                     ) async {
                                       try {
-                                        debugPrint("building options");
                                         final FireflyIii api =
                                             context.read<FireflyService>().api;
                                         fetchOp = CancelableOperation<
@@ -2293,17 +2232,45 @@ TransactionSplitUpdate txFilterSameFields(
        'destination_id', 'destination_name', 'destination_number', 'destination_iban',
      ];
        */
-  return txU.copyWith(
-    amount: tx.amount == txU.amount ? null : txU.amount,
-    foreignAmount:
-        tx.foreignAmount == txU.foreignAmount ? null : txU.foreignAmount,
+  final String? amount =
+      (txU.amount == null ||
+              double.parse(tx.amount) == double.parse(txU.amount!))
+          ? null
+          : txU.amount;
+  String? foreignAmount;
+  if (txU.foreignAmount != null) {
+    if (tx.foreignAmount == null) {
+      foreignAmount = txU.foreignAmount;
+    } else if (double.parse(tx.foreignAmount!) ==
+        double.parse(txU.foreignAmount!)) {
+      foreignAmount = null;
+    } else {
+      foreignAmount = txU.foreignAmount;
+    }
+  }
+
+  // Undo "HAX" from above if not needed (foreign currency was zero, is zero)
+  if (tx.foreignCurrencyId == null &&
+      txU.foreignCurrencyId == null &&
+      foreignAmount == "0") {
+    foreignAmount = null;
+  }
+
+  return txU.copyWithWrapped(
+    amount: Wrapped<String?>.value(amount),
+    foreignAmount: Wrapped<String?>.value(foreignAmount),
     foreignCurrencyId:
         tx.foreignCurrencyId == txU.foreignCurrencyId
-            ? null
-            : txU.foreignCurrencyId,
-    sourceName: tx.sourceName == txU.sourceName ? null : txU.sourceName,
+            ? Wrapped<String?>.value(null)
+            : Wrapped<String?>.value(txU.foreignCurrencyId),
+    sourceName:
+        tx.sourceName == txU.sourceName
+            ? Wrapped<String?>.value(null)
+            : Wrapped<String?>.value(txU.sourceName),
     destinationName:
-        tx.destinationName == txU.destinationName ? null : txU.destinationName,
+        tx.destinationName == txU.destinationName
+            ? Wrapped<String?>.value(null)
+            : Wrapped<String?>.value(txU.destinationName),
   );
 }
 
@@ -2593,6 +2560,178 @@ class _TransactionBudgetState extends State<TransactionBudget> {
                 return const Iterable<AutocompleteBudget>.empty();
               }
             },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class AttachmentButton extends StatefulWidget {
+  final List<AttachmentRead>? attachments;
+  final Future<void> Function() onPressed;
+
+  const AttachmentButton({
+    super.key,
+    required this.attachments,
+    required this.onPressed,
+  });
+
+  @override
+  State<AttachmentButton> createState() => _AttachmentButtonState();
+}
+
+class _AttachmentButtonState extends State<AttachmentButton> {
+  late bool _hasAttachments;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _hasAttachments = widget.attachments?.isNotEmpty ?? false;
+  }
+
+  @override
+  void didUpdateWidget(covariant AttachmentButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    _hasAttachments = widget.attachments?.isNotEmpty ?? false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return badges.Badge(
+      badgeContent: Text(
+        widget.attachments?.length.toString() ?? "..",
+        style: Theme.of(context).textTheme.labelMedium!.copyWith(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
+      ),
+      showBadge: _hasAttachments,
+      badgeStyle: badges.BadgeStyle(
+        badgeColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+      ),
+      badgeAnimation: const badges.BadgeAnimation.scale(
+        animationDuration: animDurationEmphasized,
+        curve: animCurveEmphasized,
+      ),
+      child: MaterialIconButton(
+        icon: Icons.attach_file,
+        tooltip: S.of(context).transactionAttachments,
+        onPressed: widget.onPressed,
+      ),
+    );
+  }
+}
+
+class DateTimePicker extends StatefulWidget {
+  const DateTimePicker({
+    super.key,
+    required this.initialDateTime,
+    required this.onDateTimeChanged,
+  });
+
+  final tz.TZDateTime initialDateTime;
+  final ValueChanged<tz.TZDateTime> onDateTimeChanged;
+
+  @override
+  State<DateTimePicker> createState() => _DateTimePickerState();
+}
+
+class _DateTimePickerState extends State<DateTimePicker> {
+  late tz.TZDateTime _selectedDateTime;
+  late TextEditingController _dateTextController;
+  late TextEditingController _timeTextController;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDateTime = widget.initialDateTime;
+    _dateTextController = TextEditingController(
+      text: DateFormat.yMMMd().format(_selectedDateTime),
+    );
+    _timeTextController = TextEditingController(
+      text: DateFormat.Hm().format(_selectedDateTime),
+    );
+  }
+
+  @override
+  void dispose() {
+    _dateTextController.dispose();
+    _timeTextController.dispose();
+
+    super.dispose();
+  }
+
+  Future<void> _pickDate() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDateTime,
+      locale: Locale(
+        Intl.defaultLocale!.split('_').first,
+        Intl.defaultLocale!.split('_').last,
+      ),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate == null) {
+      return;
+    }
+
+    setState(() {
+      _selectedDateTime = tz.TZDateTime.from(
+        _selectedDateTime.copyWith(
+          year: pickedDate.year,
+          month: pickedDate.month,
+          day: pickedDate.day,
+        ),
+        _selectedDateTime.location,
+      );
+      _dateTextController.text = DateFormat.yMMMd().format(_selectedDateTime);
+      widget.onDateTimeChanged(_selectedDateTime);
+    });
+  }
+
+  Future<void> _pickTime() async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: _selectedDateTime.getTimeOfDay(),
+    );
+
+    if (pickedTime == null) {
+      return;
+    }
+
+    setState(() {
+      _selectedDateTime = _selectedDateTime.setTimeOfDay(pickedTime);
+      _timeTextController.text = DateFormat.Hm().format(_selectedDateTime);
+      widget.onDateTimeChanged(_selectedDateTime);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        IntrinsicWidth(
+          child: TextFormField(
+            controller: _dateTextController,
+            decoration: const InputDecoration(
+              //prefixIcon: Icon(Icons.calendar_month),
+              border: OutlineInputBorder(),
+            ),
+            readOnly: true,
+            onTap: _pickDate,
+          ),
+        ),
+        const SizedBox(width: 16),
+        IntrinsicWidth(
+          child: TextFormField(
+            controller: _timeTextController,
+            decoration: const InputDecoration(border: OutlineInputBorder()),
+            readOnly: true,
+            onTap: _pickTime,
           ),
         ),
       ],

@@ -56,30 +56,30 @@ class SPl extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'Tygodniowo',
+      'monthly': 'Miesięcznie',
+      'quarterly': 'Kwartalnie',
+      'halfyear': 'Półrocznie',
+      'yearly': 'Rocznie',
+      'other': 'Nieznany',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', pomiń $skip',
       zero: '',
     );
-    return 'Subscription matches transactions between $minValue and $maxvalue. Repeats $_temp0$_temp1.';
+    return 'Subskrypcja odpowiada transakcjom pomiędzy $minValue, a $maxvalue. Powtarza się $_temp0$_temp1';
   }
 
   @override
-  String get billsChangeLayoutTooltip => 'Change layout';
+  String get billsChangeLayoutTooltip => 'Zmień układ';
 
   @override
-  String get billsChangeSortOrderTooltip => 'Change sort order';
+  String get billsChangeSortOrderTooltip => 'Zmień kolejność sortowania';
 
   @override
-  String get billsErrorLoading => 'Error loading subscriptions.';
+  String get billsErrorLoading => 'Błąd podczas ładowania subskrypcji.';
 
   @override
   String billsExactAmountAndFrequency(
@@ -88,20 +88,20 @@ class SPl extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'Tygodniowo',
+      'monthly': 'Miesięcznie',
+      'quarterly': 'Kwartalnie',
+      'halfyear': 'Półrocznie',
+      'yearly': 'Rocznie',
+      'other': 'Nieznany',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', pomiń $skip',
       zero: '',
     );
-    return 'Subscription matches transactions of $value. Repeats $_temp0$_temp1.';
+    return 'Subskrypcja odpowiada transakcjom z $value. Powtarza się $_temp0$_temp1';
   }
 
   @override
@@ -109,18 +109,18 @@ class SPl extends S {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Expected $dateString';
+    return 'Oczekiwany $dateString';
   }
 
   @override
   String billsFrequency(String frequency) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Tygodniowo',
+      'monthly': 'miesięcznie',
+      'quarterly': 'Kwartalnie',
+      'halfyear': 'Półrocznie',
+      'yearly': 'rocznie',
+      'other': 'Nieznany',
     });
     return '$_temp0';
   }
@@ -128,113 +128,113 @@ class SPl extends S {
   @override
   String billsFrequencySkip(String frequency, num skip) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Tygodniowo',
+      'monthly': 'Miesięcznie',
+      'quarterly': 'Kwartalnie',
+      'halfyear': 'Półrocznie',
+      'yearly': 'Rocznie',
+      'other': 'Nieznany',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', pomiń $skip',
       zero: '',
     );
     return '$_temp0$_temp1';
   }
 
   @override
-  String get billsInactive => 'Inactive';
+  String get billsInactive => 'Nieaktywny';
 
   @override
-  String get billsIsActive => 'Subscription is active';
+  String get billsIsActive => 'Subskrypcja aktywna';
 
   @override
   String get billsLayoutGroupSubtitle =>
-      'Subscriptions displayed in their assigned groups.';
+      'Subskrypcje wyświetlane w przypisanych im grupach.';
 
   @override
-  String get billsLayoutGroupTitle => 'Group';
+  String get billsLayoutGroupTitle => 'Grupa';
 
   @override
   String get billsLayoutListSubtitle =>
-      'Subscriptions displayed in a list sorted by certain criteria.';
+      'Subskrypcje wyświetlane na liście posortowanej według określonych kryteriów.';
 
   @override
-  String get billsLayoutListTitle => 'List';
+  String get billsLayoutListTitle => 'Lista';
 
   @override
-  String get billsListEmpty => 'The list is currently empty.';
+  String get billsListEmpty => 'Lista jest obecnie pusta.';
 
   @override
-  String get billsNextExpectedMatch => 'Next expected match';
+  String get billsNextExpectedMatch => 'Następne oczekiwane dopasowanie';
 
   @override
-  String get billsNotActive => 'Subscription is inactive';
+  String get billsNotActive => 'Subskrypcja nieaktywna';
 
   @override
-  String get billsNotExpected => 'Not expected this period';
+  String get billsNotExpected => 'Nie oczekiwany w tym okresie';
 
   @override
-  String get billsNoTransactions => 'No transactions found.';
+  String get billsNoTransactions => 'Nie znaleziono transakcji.';
 
   @override
   String billsPaidOn(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Paid $dateString';
+    return 'Zapłacone $dateString';
   }
 
   @override
-  String get billsSortAlphabetical => 'Alphabetical';
+  String get billsSortAlphabetical => 'Alfabetycznie';
 
   @override
-  String get billsSortByTimePeriod => 'By time period';
+  String get billsSortByTimePeriod => 'Według okresu';
 
   @override
-  String get billsSortFrequency => 'Frequency';
+  String get billsSortFrequency => 'Częstotliwość';
 
   @override
-  String get billsSortName => 'Name';
+  String get billsSortName => 'Nazwa';
 
   @override
-  String get billsUngrouped => 'Ungrouped';
+  String get billsUngrouped => 'Niezgrupowane';
 
   @override
   String get categoryDeleteConfirm =>
-      'Are you sure you want to delete this category? The transactions will not be deleted, but will not have a category anymore.';
+      'Czy na pewno chcesz usunąć tę kategorię? Transakcje nie zostaną usunięte, ale nie będą już posiadały kategorii.';
 
   @override
-  String get categoryErrorLoading => 'Error loading categories.';
+  String get categoryErrorLoading => 'Błąd podczas ładowania kategorii.';
 
   @override
-  String get categoryFormLabelIncludeInSum => 'Include in monthly sum';
+  String get categoryFormLabelIncludeInSum => 'Uwzględnij w sumie miesięcznej';
 
   @override
-  String get categoryFormLabelName => 'Category Name';
+  String get categoryFormLabelName => 'Nazwa Kategorii';
 
   @override
-  String get categoryMonthNext => 'Next Month';
+  String get categoryMonthNext => 'Następny Miesiąc';
 
   @override
-  String get categoryMonthPrev => 'Previous Month';
+  String get categoryMonthPrev => 'Poprzedni Miesiąc';
 
   @override
-  String get categorySumExcluded => 'excluded';
+  String get categorySumExcluded => 'wykluczone';
 
   @override
-  String get categoryTitleAdd => 'Add Category';
+  String get categoryTitleAdd => 'Dodaj Kategorię';
 
   @override
-  String get categoryTitleDelete => 'Delete Category';
+  String get categoryTitleDelete => 'Usuń kategorię';
 
   @override
-  String get categoryTitleEdit => 'Edit Category';
+  String get categoryTitleEdit => 'Edytuj Kategorię';
 
   @override
-  String get catNone => '<no category>';
+  String get catNone => '<Bez kategorii><no category>';
 
   @override
   String get catOther => 'Inne';
@@ -291,7 +291,7 @@ class SPl extends S {
   String get generalAccount => 'Konto';
 
   @override
-  String get generalAssets => 'Assets';
+  String get generalAssets => 'Aktywa';
 
   @override
   String get generalBalance => 'Saldo';
@@ -301,7 +301,7 @@ class SPl extends S {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Balance on $dateString';
+    return 'Saldo na $dateString';
   }
 
   @override
@@ -320,13 +320,13 @@ class SPl extends S {
   String get generalDefault => 'domyślnie';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'Konto docelowe';
 
   @override
   String get generalDismiss => 'Anuluj';
 
   @override
-  String get generalEarned => 'Earned';
+  String get generalEarned => 'Zarobiono';
 
   @override
   String get generalError => 'Błąd';
@@ -338,7 +338,7 @@ class SPl extends S {
   String get generalIncome => 'Przychód';
 
   @override
-  String get generalLiabilities => 'Liabilities';
+  String get generalLiabilities => 'Zobowiązania';
 
   @override
   String get generalMultiple => 'wiele';
@@ -353,10 +353,10 @@ class SPl extends S {
   String get generalReset => 'Resetuj';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'Konto źródłowe';
 
   @override
-  String get generalSpent => 'Spent';
+  String get generalSpent => 'Wydano';
 
   @override
   String get generalSum => 'Suma';
@@ -370,18 +370,18 @@ class SPl extends S {
   @override
   String homeMainBillsInterval(String period) {
     String _temp0 = intl.Intl.selectLogic(period, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-year',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'tydzień',
+      'monthly': 'miesiąc',
+      'quarterly': 'kwartał',
+      'halfyear': 'pół roku',
+      'yearly': 'rok',
+      'other': 'nieznany',
     });
-    return ' ($_temp0)';
+    return '$_temp0';
   }
 
   @override
-  String get homeMainBillsTitle => 'Subscriptions for the next week';
+  String get homeMainBillsTitle => 'Subskrypcje w następnym tygodniu';
 
   @override
   String homeMainBudgetInterval(DateTime from, DateTime to, String period) {
@@ -400,7 +400,7 @@ class SPl extends S {
     final intl.DateFormat toDateFormat = intl.DateFormat.MMMd(localeName);
     final String toString = toDateFormat.format(to);
 
-    return ' ($fromString to $toString)';
+    return ' ($fromString do $toString)';
   }
 
   @override
@@ -429,10 +429,10 @@ class SPl extends S {
   String get homeMainChartDailyTitle => 'Podsumowanie dnia';
 
   @override
-  String get homeMainChartNetEarningsTitle => 'Net Earnings';
+  String get homeMainChartNetEarningsTitle => 'Przychody netto';
 
   @override
-  String get homeMainChartNetWorthTitle => 'Net Worth';
+  String get homeMainChartNetWorthTitle => 'Wartość netto';
 
   @override
   String get homePiggyAdjustDialogTitle => 'Wrzuć/Wyjmij Pieniądze';
@@ -454,7 +454,7 @@ class SPl extends S {
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'Dostosuj pulpit';
 
   @override
   String homePiggyLinked(String account) {
@@ -528,7 +528,7 @@ class SPl extends S {
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
-      'Show future transactions';
+      'Pokaż przyszłe transakcje';
 
   @override
   String get homeTransactionsDialogFilterSearch => 'Szukana fraza';
@@ -546,7 +546,7 @@ class SPl extends S {
 
   @override
   String get homeTransactionsSettingsShowTags =>
-      'Show tags in transaction list';
+      'Pokaż tagi na liście transakcji';
 
   @override
   String get liabilityDirectionCredit => 'Zadłużenie wobec mnie';
@@ -584,10 +584,10 @@ class SPl extends S {
   String get navigationAccounts => 'Konta';
 
   @override
-  String get navigationBills => 'Subscriptions';
+  String get navigationBills => 'Subskrypcje';
 
   @override
-  String get navigationCategories => 'Categories';
+  String get navigationCategories => 'Kategorie';
 
   @override
   String get navigationMain => 'Panel główny';
@@ -596,7 +596,7 @@ class SPl extends S {
   String get navigationSettings => 'Ustawienia';
 
   @override
-  String get no => 'No';
+  String get no => 'Nie';
 
   @override
   String numPercent(double num) {
@@ -649,7 +649,8 @@ class SPl extends S {
   String get settingsFAQ => 'FAQ';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'Otwórz w przeglądarce. Dostępne tylko w języku angielskim.';
 
   @override
   String get settingsLanguage => 'Język';
@@ -683,14 +684,14 @@ class SPl extends S {
       'Wykonaj transakcje, w których otrzymujesz powiadomienia telefoniczne, aby dodać aplikacje do tej listy. Jeśli aplikacja nadal się nie pojawia, zgłoś to do app@vogt.pw.';
 
   @override
-  String get settingsNLAutoAdd => 'Create transaction without interaction';
+  String get settingsNLAutoAdd => 'Utwórz transakcję bez interakcji';
 
   @override
   String get settingsNLDescription =>
       'Ta usługa pozwala na pobranie szczegółów transakcji z przychodzących powiadomień. Dodatkowo możesz wybrać domyślne konto, do którego transakcja powinna być przypisana — jeśli wartość nie jest ustawiona, spróbuje dopisać konto z powiadomienia.';
 
   @override
-  String get settingsNLEmptyNote => 'Keep note field empty';
+  String get settingsNLEmptyNote => 'Pozostaw pole notatki puste';
 
   @override
   String get settingsNLPermissionGrant => 'Dotknij, aby udzielić uprawnień.';
@@ -707,7 +708,7 @@ class SPl extends S {
 
   @override
   String get settingsNLPrefillTXTitle =>
-      'Prefill transaction title with notification title';
+      'Uzupełnij tytuł transakcji tytułem powiadomienia';
 
   @override
   String get settingsNLServiceChecking => 'Sprawdzam stan…';
@@ -746,11 +747,11 @@ class SPl extends S {
   }
 
   @override
-  String get settingsUseServerTimezone => 'Use server timezone';
+  String get settingsUseServerTimezone => 'Użyj strefy czasowej serwera';
 
   @override
   String get settingsUseServerTimezoneHelp =>
-      'Show all times in the server timezone. This mimics the behavior of the webinterface.';
+      'Pokaż wszystkie czasy w strefie czasowej serwera. To naśladuje zachowanie interfejsu web.';
 
   @override
   String get settingsVersion => 'Wersja Aplikacji';
@@ -817,11 +818,10 @@ class SPl extends S {
   String get transactionErrorInvalidBudget => 'Błędny budżet';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts => 'Proszę najpierw wypełnić konta.';
 
   @override
-  String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+  String get transactionErrorNoAssetAccount => 'Proszę wybrać konto aktywów.';
 
   @override
   String get transactionErrorTitle => 'Proszę podać tytuł.';
@@ -854,12 +854,10 @@ class SPl extends S {
   String get transactionSplitChangeCurrency => 'Zmień walutę podziału';
 
   @override
-  String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+  String get transactionSplitChangeDestinationAccount => 'Zmień konto docelowe';
 
   @override
-  String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+  String get transactionSplitChangeSourceAccount => 'Zmień konto źródłowe';
 
   @override
   String get transactionSplitChangeTarget => 'Zmień docelowe konto dzielenia';

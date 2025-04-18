@@ -51,7 +51,7 @@
             }
         }
     },
-    "billsAmountAndFrequency": "Rechnung passt zu Transaktionen zwischen {minValue} und {maxvalue}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
+    "billsAmountAndFrequency": "Abonnement passt zu Transaktionen zwischen {minValue} und {maxvalue}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
     "@billsAmountAndFrequency": {
         "description": "Subscription match for min and max amounts, and frequency",
         "placeholders": {
@@ -81,11 +81,11 @@
     "@billsChangeSortOrderTooltip": {
         "description": "Text for sort order change button tooltip"
     },
-    "billsErrorLoading": "Fehler beim Laden der Rechnungen.",
+    "billsErrorLoading": "Fehler beim Laden der Abonnements.",
     "@billsErrorLoading": {
         "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
     },
-    "billsExactAmountAndFrequency": "Rechnung passt zu Transaktionen mit {value}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
+    "billsExactAmountAndFrequency": "Abonnement passt zu Transaktionen mit {value}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
     "@billsExactAmountAndFrequency": {
         "description": "Subscription match for exact amount and frequency",
         "placeholders": {
@@ -142,11 +142,11 @@
     "@billsInactive": {
         "description": "Text: when the subscription is inactive"
     },
-    "billsIsActive": "Rechnung ist aktiv",
+    "billsIsActive": "Abonnement ist aktiv",
     "@billsIsActive": {
         "description": "Text: the subscription is active"
     },
-    "billsLayoutGroupSubtitle": "Rechnungen werden in ihrer Gruppe angezeigt.",
+    "billsLayoutGroupSubtitle": "Abonnements werden in ihrer Gruppe angezeigt.",
     "@billsLayoutGroupSubtitle": {
         "description": "Subtitle text for group layout option"
     },
@@ -154,7 +154,7 @@
     "@billsLayoutGroupTitle": {
         "description": "Title text for group layout option"
     },
-    "billsLayoutListSubtitle": "Rechnungen werden sortiert in einer Liste angezeigt.",
+    "billsLayoutListSubtitle": "Abonnements werden sortiert in einer Liste angezeigt.",
     "@billsLayoutListSubtitle": {
         "description": "Subtitle text for list layout option"
     },
@@ -170,7 +170,7 @@
     "@billsNextExpectedMatch": {
         "description": "Text: next expected match for subscription"
     },
-    "billsNotActive": "Rechnung ist inaktiv",
+    "billsNotActive": "Abonnement ist inaktiv",
     "@billsNotActive": {
         "description": "Text: the subscription is inactive"
     },
@@ -357,7 +357,7 @@
             }
         }
     },
-    "generalBill": "Rechnung",
+    "generalBill": "Abonnement",
     "@generalBill": {
         "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
@@ -451,7 +451,7 @@
             }
         }
     },
-    "homeMainBillsTitle": "Rechnungen in der nächsten Woche",
+    "homeMainBillsTitle": "Abonnements für die nächste Woche",
     "@homeMainBillsTitle": {
         "description": "Title: Subscriptions for the next week"
     },
@@ -639,11 +639,11 @@
     "@homeTransactionsDialogFilterAccountsAll": {
         "description": "Don't filter for a specific account (default entry)"
     },
-    "homeTransactionsDialogFilterBillsAll": "<Alle Rechnungen>",
+    "homeTransactionsDialogFilterBillsAll": "<Alle Abonnements>",
     "@homeTransactionsDialogFilterBillsAll": {
         "description": "Don't filter for a specific subscription (default entry)"
     },
-    "homeTransactionsDialogFilterBillUnset": "<Ohne Rechnung>",
+    "homeTransactionsDialogFilterBillUnset": "<Ohne Abonnement>",
     "@homeTransactionsDialogFilterBillUnset": {
         "description": "Filter for unset subscription"
     },
@@ -741,7 +741,7 @@
     "@navigationAccounts": {
         "description": "Navigation Label: Accounts Page"
     },
-    "navigationBills": "Rechnungen",
+    "navigationBills": "Abonnements",
     "@navigationBills": {
         "description": "Navigation Label: Subscriptions"
     },
@@ -1001,11 +1001,11 @@
     "@transactionDialogAttachmentsTitle": {
         "description": "Dialog Title: Attachments Dialog"
     },
-    "transactionDialogBillNoBill": "Ohne Rechnung",
+    "transactionDialogBillNoBill": "Kein Abonnement",
     "@transactionDialogBillNoBill": {
         "description": "Button Label: no subscription to be used"
     },
-    "transactionDialogBillTitle": "Mit Rechnung verknüpfen",
+    "transactionDialogBillTitle": "Mit Abonnement verknüpfen",
     "@transactionDialogBillTitle": {
         "description": "Dialog Title: Link Subscription to transaction"
     },

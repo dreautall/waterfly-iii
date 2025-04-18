@@ -1,1 +1,1 @@
-Nieoficjalna aplikacja dla Firefly III, menedżera finansów osobistych.
+Nieoficjalna aplikacja dla Firefly III, osobistego menedżera finansów.

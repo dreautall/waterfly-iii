@@ -51,6 +51,212 @@
             }
         }
     },
+    "billsAmountAndFrequency": "Subskrypcja odpowiada transakcjom pomiędzy {minValue}, a {maxvalue}. Powtarza się {frequency, select, weekly{Tygodniowo} monthly{Miesięcznie} quarterly{Kwartalnie} halfyear{Półrocznie} yearly{Rocznie} other{Nieznany}}{skip, plural, =0{} other{, pomiń {skip}}}",
+    "@billsAmountAndFrequency": {
+        "description": "Subscription match for min and max amounts, and frequency",
+        "placeholders": {
+            "minValue": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "maxvalue": {
+                "type": "String",
+                "example": "$60.50"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsChangeLayoutTooltip": "Zmień układ",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "Zmień kolejność sortowania",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsErrorLoading": "Błąd podczas ładowania subskrypcji.",
+    "@billsErrorLoading": {
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
+    },
+    "billsExactAmountAndFrequency": "Subskrypcja odpowiada transakcjom z {value}. Powtarza się {frequency, select, weekly{Tygodniowo} monthly{Miesięcznie} quarterly{Kwartalnie} halfyear{Półrocznie} yearly{Rocznie} other{Nieznany}}{skip, plural, =0{} other{, pomiń {skip}}}",
+    "@billsExactAmountAndFrequency": {
+        "description": "Subscription match for exact amount and frequency",
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsExpectedOn": "Oczekiwany {date}",
+    "@billsExpectedOn": {
+        "description": "Describes what date the subscription is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsFrequency": "{frequency, select, weekly{Tygodniowo} monthly{miesięcznie} quarterly{Kwartalnie} halfyear{Półrocznie} yearly{rocznie} other{Nieznany}}",
+    "@billsFrequency": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsFrequencySkip": "{frequency, select, weekly{Tygodniowo} monthly{Miesięcznie} quarterly{Kwartalnie} halfyear{Półrocznie} yearly{Rocznie} other{Nieznany}}{skip, plural, =0{} other{, pomiń {skip}}}",
+    "@billsFrequencySkip": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsInactive": "Nieaktywny",
+    "@billsInactive": {
+        "description": "Text: when the subscription is inactive"
+    },
+    "billsIsActive": "Subskrypcja aktywna",
+    "@billsIsActive": {
+        "description": "Text: the subscription is active"
+    },
+    "billsLayoutGroupSubtitle": "Subskrypcje wyświetlane w przypisanych im grupach.",
+    "@billsLayoutGroupSubtitle": {
+        "description": "Subtitle text for group layout option"
+    },
+    "billsLayoutGroupTitle": "Grupa",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListSubtitle": "Subskrypcje wyświetlane na liście posortowanej według określonych kryteriów.",
+    "@billsLayoutListSubtitle": {
+        "description": "Subtitle text for list layout option"
+    },
+    "billsLayoutListTitle": "Lista",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "Lista jest obecnie pusta.",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "Następne oczekiwane dopasowanie",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for subscription"
+    },
+    "billsNotActive": "Subskrypcja nieaktywna",
+    "@billsNotActive": {
+        "description": "Text: the subscription is inactive"
+    },
+    "billsNotExpected": "Nie oczekiwany w tym okresie",
+    "@billsNotExpected": {
+        "description": "Describes that the subscription is not expected this period"
+    },
+    "billsNoTransactions": "Nie znaleziono transakcji.",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the subscription"
+    },
+    "billsPaidOn": "Zapłacone {date}",
+    "@billsPaidOn": {
+        "description": "Describes what date the subscription was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "Alfabetycznie",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "Według okresu",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "Częstotliwość",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "Nazwa",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "Niezgrupowane",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped subscriptions"
+    },
+    "categoryDeleteConfirm": "Czy na pewno chcesz usunąć tę kategorię? Transakcje nie zostaną usunięte, ale nie będą już posiadały kategorii.",
+    "@categoryDeleteConfirm": {
+        "description": "Confirmation text to delete category"
+    },
+    "categoryErrorLoading": "Błąd podczas ładowania kategorii.",
+    "@categoryErrorLoading": {
+        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+    },
+    "categoryFormLabelIncludeInSum": "Uwzględnij w sumie miesięcznej",
+    "@categoryFormLabelIncludeInSum": {
+        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+    },
+    "categoryFormLabelName": "Nazwa Kategorii",
+    "@categoryFormLabelName": {
+        "description": "Category Add/Edit Form: Label for name field"
+    },
+    "categoryMonthNext": "Następny Miesiąc",
+    "@categoryMonthNext": {
+        "description": "Button title to view overview for next month"
+    },
+    "categoryMonthPrev": "Poprzedni Miesiąc",
+    "@categoryMonthPrev": {
+        "description": "Button title to view overview for previous month"
+    },
+    "categorySumExcluded": "wykluczone",
+    "@categorySumExcluded": {
+        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+    },
+    "categoryTitleAdd": "Dodaj Kategorię",
+    "@categoryTitleAdd": {
+        "description": "Title for Dialog: Add Category"
+    },
+    "categoryTitleDelete": "Usuń kategorię",
+    "@categoryTitleDelete": {
+        "description": "Title for Dialog: Delete Category"
+    },
+    "categoryTitleEdit": "Edytuj Kategorię",
+    "@categoryTitleEdit": {
+        "description": "Title for Dialog: Edit Category"
+    },
+    "catNone": "<Bez kategorii><no category>",
+    "@catNone": {
+        "description": "Placeholder when no category has been set."
+    },
     "catOther": "Inne",
     "@catOther": {
         "description": "Category description for summary category 'Other'"
@@ -133,13 +339,27 @@
     "@generalAccount": {
         "description": "Asset/Debt (Bank) Account"
     },
+    "generalAssets": "Aktywa",
+    "@generalAssets": {
+        "description": "(Monetary) Assets"
+    },
     "generalBalance": "Saldo",
     "@generalBalance": {
         "description": "(Account) Balance"
     },
+    "generalBalanceOn": "Saldo na {date}",
+    "@generalBalanceOn": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMd",
+                "example": "2023-05-13"
+            }
+        }
+    },
     "generalBill": "Rachunek",
     "@generalBill": {
-        "description": "Bill"
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
     "generalBudget": "Budżet",
     "@generalBudget": {
@@ -157,9 +377,17 @@
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
     },
+    "generalDestinationAccount": "Konto docelowe",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
+    },
     "generalDismiss": "Anuluj",
     "@generalDismiss": {
         "description": "Dismiss window/dialog without action"
+    },
+    "generalEarned": "Zarobiono",
+    "@generalEarned": {
+        "description": "(Amount) Earned"
     },
     "generalError": "Błąd",
     "@generalError": {
@@ -172,6 +400,10 @@
     "generalIncome": "Przychód",
     "@generalIncome": {
         "description": "(Account) Info"
+    },
+    "generalLiabilities": "Zobowiązania",
+    "@generalLiabilities": {
+        "description": "Firefly Translation String: liabilities"
     },
     "generalMultiple": "wiele",
     "@generalMultiple": {
@@ -189,6 +421,14 @@
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
     },
+    "generalSourceAccount": "Konto źródłowe",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
+    "generalSpent": "Wydano",
+    "@generalSpent": {
+        "description": "(Amount) Spent"
+    },
     "generalSum": "Suma",
     "@generalSum": {
         "description": "(Mathematical) Sum"
@@ -200,6 +440,20 @@
     "generalUnknown": "Nieznany",
     "@generalUnknown": {
         "description": "Something is unknown."
+    },
+    "homeMainBillsInterval": "{period, select, weekly{tydzień} monthly{miesiąc} quarterly{kwartał} halfyear{pół roku} yearly{rok} other{nieznany}}",
+    "@homeMainBillsInterval": {
+        "description": "subscription interval type",
+        "placeholders": {
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBillsTitle": "Subskrypcje w następnym tygodniu",
+    "@homeMainBillsTitle": {
+        "description": "Title: Subscriptions for the next week"
     },
     "homeMainBudgetInterval": " ({from} do {to}, {period})",
     "@homeMainBudgetInterval": {
@@ -218,6 +472,22 @@
             "period": {
                 "type": "String",
                 "example": "weekly"
+            }
+        }
+    },
+    "homeMainBudgetIntervalSingle": " ({from} do {to})",
+    "@homeMainBudgetIntervalSingle": {
+        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
             }
         }
     },
@@ -259,6 +529,14 @@
     "@homeMainChartDailyTitle": {
         "description": "Chart Label: Daily Summary"
     },
+    "homeMainChartNetEarningsTitle": "Przychody netto",
+    "@homeMainChartNetEarningsTitle": {
+        "description": "Chart Label: Net Earnings"
+    },
+    "homeMainChartNetWorthTitle": "Wartość netto",
+    "@homeMainChartNetWorthTitle": {
+        "description": "Chart Label: Net Worth"
+    },
     "homePiggyAdjustDialogTitle": "Wrzuć/Wyjmij Pieniądze",
     "@homePiggyAdjustDialogTitle": {
         "description": "Title of the dialog where money can be added/removed to a piggy bank."
@@ -284,6 +562,10 @@
                 "example": "March 12, 2023"
             }
         }
+    },
+    "homeMainDialogSettingsTitle": "Dostosuj pulpit",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
     },
     "homePiggyLinked": "Powiązane z {account}",
     "@homePiggyLinked": {
@@ -359,11 +641,11 @@
     },
     "homeTransactionsDialogFilterBillsAll": "<Wszystkie rachunki>",
     "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
+        "description": "Don't filter for a specific subscription (default entry)"
     },
     "homeTransactionsDialogFilterBillUnset": "<Brak wybranego rachunku>",
     "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
+        "description": "Filter for unset subscription"
     },
     "homeTransactionsDialogFilterBudgetsAll": "<Wszystkie budżety>",
     "@homeTransactionsDialogFilterBudgetsAll": {
@@ -384,6 +666,10 @@
     "homeTransactionsDialogFilterCurrenciesAll": "<Wszystkie waluty>",
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterFutureTransactions": "Pokaż przyszłe transakcje",
+    "@homeTransactionsDialogFilterFutureTransactions": {
+        "description": "Setting to show future transactions"
     },
     "homeTransactionsDialogFilterSearch": "Szukana fraza",
     "@homeTransactionsDialogFilterSearch": {
@@ -406,6 +692,10 @@
                 "example": "2"
             }
         }
+    },
+    "homeTransactionsSettingsShowTags": "Pokaż tagi na liście transakcji",
+    "@homeTransactionsSettingsShowTags": {
+        "description": "Setting label to show tags in transactioon list."
     },
     "liabilityDirectionCredit": "Zadłużenie wobec mnie",
     "@liabilityDirectionCredit": {
@@ -451,6 +741,14 @@
     "@navigationAccounts": {
         "description": "Navigation Label: Accounts Page"
     },
+    "navigationBills": "Subskrypcje",
+    "@navigationBills": {
+        "description": "Navigation Label: Subscriptions"
+    },
+    "navigationCategories": "Kategorie",
+    "@navigationCategories": {
+        "description": "Navigation Label: Categories"
+    },
     "navigationMain": "Panel główny",
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
@@ -458,6 +756,10 @@
     "navigationSettings": "Ustawienia",
     "@navigationSettings": {
         "description": "Navigation Label: Settings"
+    },
+    "no": "Nie",
+    "@no": {
+        "description": "The word no"
     },
     "numPercent": "{num}",
     "@numPercent": {
@@ -516,6 +818,14 @@
     "@settingsDialogThemeTitle": {
         "description": "Dialog title: Select theme"
     },
+    "settingsFAQ": "FAQ",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
+    "settingsFAQHelp": "Otwórz w przeglądarce. Dostępne tylko w języku angielskim.",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
+    },
     "settingsLanguage": "Język",
     "@settingsLanguage": {
         "description": "Currently selected language"
@@ -552,9 +862,17 @@
     "@settingsNLAppAddInfo": {
         "description": "Help text when no more app is available to add."
     },
+    "settingsNLAutoAdd": "Utwórz transakcję bez interakcji",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
     "settingsNLDescription": "Ta usługa pozwala na pobranie szczegółów transakcji z przychodzących powiadomień. Dodatkowo możesz wybrać domyślne konto, do którego transakcja powinna być przypisana — jeśli wartość nie jest ustawiona, spróbuje dopisać konto z powiadomienia.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "Pozostaw pole notatki puste",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
     "settingsNLPermissionGrant": "Dotknij, aby udzielić uprawnień.",
     "@settingsNLPermissionGrant": {
@@ -571,6 +889,10 @@
     "settingsNLPermissionRemoveHelp": "Aby wyłączyć tę usługę, kliknij w aplikację i usuń uprawnienia na następnym ekranie.",
     "@settingsNLPermissionRemoveHelp": {
         "description": "Dialog text giving hint how to remove the permission."
+    },
+    "settingsNLPrefillTXTitle": "Uzupełnij tytuł transakcji tytułem powiadomienia",
+    "@settingsNLPrefillTXTitle": {
+        "description": "Setting pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "Sprawdzam stan…",
     "@settingsNLServiceChecking": {
@@ -620,6 +942,14 @@
                 "example": "ThemeMode.dark"
             }
         }
+    },
+    "settingsUseServerTimezone": "Użyj strefy czasowej serwera",
+    "@settingsUseServerTimezone": {
+        "description": "Setting label to use server timezone."
+    },
+    "settingsUseServerTimezoneHelp": "Pokaż wszystkie czasy w strefie czasowej serwera. To naśladuje zachowanie interfejsu web.",
+    "@settingsUseServerTimezoneHelp": {
+        "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
     },
     "settingsVersion": "Wersja Aplikacji",
     "@settingsVersion": {
@@ -673,11 +1003,11 @@
     },
     "transactionDialogBillNoBill": "Brak rachunku",
     "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
+        "description": "Button Label: no subscription to be used"
     },
     "transactionDialogBillTitle": "Połącz z rachunkiem",
     "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
+        "description": "Dialog Title: Link Subscription to transaction"
     },
     "transactionDialogCurrencyTitle": "Wybierz walutę",
     "@transactionDialogCurrencyTitle": {
@@ -706,6 +1036,14 @@
     "transactionErrorInvalidBudget": "Błędny budżet",
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Proszę najpierw wypełnić konta.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Proszę wybrać konto aktywów.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
     },
     "transactionErrorTitle": "Proszę podać tytuł.",
     "@transactionErrorTitle": {
@@ -746,6 +1084,14 @@
     "transactionSplitChangeCurrency": "Zmień walutę podziału",
     "@transactionSplitChangeCurrency": {
         "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Zmień konto docelowe",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Zmień konto źródłowe",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
     },
     "transactionSplitChangeTarget": "Zmień docelowe konto dzielenia",
     "@transactionSplitChangeTarget": {

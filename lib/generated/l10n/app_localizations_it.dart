@@ -69,7 +69,7 @@ class SIt extends S {
       other: ', rimandata il $skip',
       zero: '',
     );
-    return 'La bolletta comprende le transazioni con importo tra $minValue e $maxvalue. Si ripete con frequenza $_temp0$_temp1.';
+    return 'Il pagamento ricorrente comprende le transazioni con importo tra $minValue e $maxvalue. Si ripete con frequenza $_temp0$_temp1.';
   }
 
   @override
@@ -79,7 +79,7 @@ class SIt extends S {
   String get billsChangeSortOrderTooltip => 'Modifica ordinamento';
 
   @override
-  String get billsErrorLoading => 'Errore nel caricamento delle bollette.';
+  String get billsErrorLoading => 'Errore caricando i pagamenti ricorrenti.';
 
   @override
   String billsExactAmountAndFrequency(
@@ -101,7 +101,7 @@ class SIt extends S {
       other: ', rimandata il $skip',
       zero: '',
     );
-    return 'La bolletta comprende transazioni di valore $value. Si ripete con frequenza $_temp0$_temp1.';
+    return 'Il pagamento ricorrente comprende transazioni di valore $value. Si ripete con frequenza $_temp0$_temp1.';
   }
 
   @override
@@ -148,18 +148,18 @@ class SIt extends S {
   String get billsInactive => 'Non attiva';
 
   @override
-  String get billsIsActive => 'Bolletta attiva';
+  String get billsIsActive => 'Il pagamento ricorrente è attivo';
 
   @override
   String get billsLayoutGroupSubtitle =>
-      'Bollette visualizzate nei gruppi assegnati.';
+      'Pagamenti ricorrenti visualizzati nei gruppi assegnati.';
 
   @override
   String get billsLayoutGroupTitle => 'Gruppo';
 
   @override
   String get billsLayoutListSubtitle =>
-      'Bollette visualizzate in un elenco ordinate in base a determinati criteri.';
+      'Pagamenti ricorrenti visualizzati in un elenco ordinate in base a determinati criteri.';
 
   @override
   String get billsLayoutListTitle => 'Elenco';
@@ -171,7 +171,7 @@ class SIt extends S {
   String get billsNextExpectedMatch => 'Prossima';
 
   @override
-  String get billsNotActive => 'La bolletta non è attiva';
+  String get billsNotActive => 'Il pagamento ricorrente è inattivo';
 
   @override
   String get billsNotExpected => 'Non prevista in questo periodo';
@@ -580,7 +580,7 @@ class SIt extends S {
   String get navigationAccounts => 'Conti';
 
   @override
-  String get navigationBills => 'Bollette';
+  String get navigationBills => 'Pagamenti ricorrenti';
 
   @override
   String get navigationCategories => 'Categorie';

@@ -136,6 +136,7 @@ class SettingsPageState extends State<SettingsPage>
           ),
           onChanged: (bool value) async {
             final S l10n = S.of(context);
+            final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
             if (value == true) {
               final LocalAuthentication auth = LocalAuthentication();
               final bool canAuth =
@@ -146,10 +147,22 @@ class SettingsPageState extends State<SettingsPage>
                 return;
               }
               log.finest("trying authentication");
-              final bool authed = await auth.authenticate(
-                localizedReason:
-                    l10n.settingsLockscreenInitial, // :TODO: translate
-              );
+              late bool authed;
+              try {
+                authed = await auth.authenticate(
+                  localizedReason: l10n.settingsLockscreenInitial,
+                );
+              } catch (e, stackTrace) {
+                log.severe("auth failed", e, stackTrace);
+                msg.showSnackBar(
+                  SnackBar(
+                    content: Text(l10n.errorUnknown),
+                    behavior: SnackBarBehavior.floating,
+                  ),
+                );
+                return;
+              }
+
               if (!authed) {
                 log.warning("authentication was cancelled");
                 return;
@@ -222,7 +235,7 @@ class SettingsPageState extends State<SettingsPage>
             if (await canLaunchUrl(uri)) {
               await launchUrl(uri);
             } else {
-              throw "Could not open URL";
+              throw Exception("Could not open URL");
             }
           },
         ),

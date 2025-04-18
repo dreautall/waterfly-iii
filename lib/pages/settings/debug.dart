@@ -24,10 +24,6 @@ class DebugDialog extends StatelessWidget {
           value: context.select((SettingsProvider s) => s.debug),
           onChanged: (bool value) async {
             context.read<SettingsProvider>().debug = value;
-            PackageInfo appInfo = await PackageInfo.fromPlatform();
-            log.info(
-              "Enabling debug logs, app ${appInfo.appName}, ${appInfo.version}+${appInfo.buildNumber}",
-            );
           },
           title: Text(S.of(context).settingsDialogDebugTitle),
           secondary: const Icon(Icons.bug_report),

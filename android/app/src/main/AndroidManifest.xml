@@ -279,6 +279,7 @@
         <package android:name="org.westpac.bank"/>
         <package android:name="pe.com.interbank.mobilebanking"/>
         <package android:name="pe.com.scotiabank.blpm.android.client"/>
+        <package android:name="pl.ing.mojeing"/>
         <package android:name="pl.mbank"/>
         <package android:name="ro.ing.mobile.banking.android.activity"/>
         <package android:name="ru.abr"/>

@@ -90,6 +90,7 @@
         <package android:name="by.belinvestbank"/>
         <package android:name="ca.tangerine.clients.banking.app"/>
         <package android:name="capitec.acuity.mobile.prod"/>
+        <package android:name="ch.bekb.twint"/>
         <package android:name="ch.cembra.cmf"/>
         <package android:name="cl.android"/>
         <package android:name="cl.bancochile.mi_banco"/>
@@ -217,6 +218,7 @@
         <package android:name="com.sinopac.DaCard"/>
         <package android:name="com.sinopac.DaCard"/>
         <package android:name="com.sionpac.app.SinoPac"/>
+        <package android:name="com.sixgroup.debixplus"/>
         <package android:name="com.softteco.bsbank"/>
         <package android:name="com.starlingbank.android"/>
         <package android:name="com.taxis99"/>

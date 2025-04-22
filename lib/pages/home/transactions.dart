@@ -45,20 +45,29 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   final TransactionFilters _filters = TransactionFilters();
   final ValueNotifier<bool> _tagsHidden = ValueNotifier<bool>(false);
-  final Map<String, double> _runningBalancesByTransactionId = <String, double>{};
+  final Map<String, double> _runningBalancesByTransactionId =
+      <String, double>{};
   double? _lastCalculatedBalance;
-  AccountRead? _balanceAccount;  // Only exist because _filters.account might not be up to date
+
+  // Only exist because _filters.account might not be up to date
+  AccountRead? _balanceAccount;
 
   double _parseBalance(String? balance) {
     return double.tryParse(balance ?? "0") ?? 0.0;
   }
 
   bool _isRevenueOrExpense(ShortAccountTypeProperty? type) {
-    return type == ShortAccountTypeProperty.revenue || type == ShortAccountTypeProperty.expense;
+    return type == ShortAccountTypeProperty.revenue ||
+        type == ShortAccountTypeProperty.expense;
   }
 
-  double _updateBalance(double balance, double amount, TransactionTypeProperty? type) {
-    if (type == TransactionTypeProperty.withdrawal || type == TransactionTypeProperty.transfer) {
+  double _updateBalance(
+    double balance,
+    double amount,
+    TransactionTypeProperty? type,
+  ) {
+    if (type == TransactionTypeProperty.withdrawal ||
+        type == TransactionTypeProperty.transfer) {
       return balance + amount;
     } else {
       return balance - amount;
@@ -211,12 +220,14 @@ class _HomeTransactionsState extends State<HomeTransactions>
           id: _filters.account!.id,
           page: pageKey,
           limit: _numberOfPostsPerRequest,
-          end: context.read<SettingsProvider>().showFutureTXs
-              ? null
-              : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
-          start: (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
-              ? null
-              : "1900-01-01",
+          end:
+              context.read<SettingsProvider>().showFutureTXs
+                  ? null
+                  : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
+          start:
+              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
+                  ? null
+                  : "1900-01-01",
         );
       } else if (_filters.hasFilters) {
         String query = _filters.text ?? "";
@@ -227,19 +238,22 @@ class _HomeTransactionsState extends State<HomeTransactions>
           query = "currency_is:${_filters.currency!.attributes.code} $query";
         }
         if (_filters.category != null) {
-          query = (_filters.category!.id == "-1")
-              ? "has_no_category:true $query"
-              : "category_is:\"${_filters.category!.attributes.name}\" $query";
+          query =
+              (_filters.category!.id == "-1")
+                  ? "has_no_category:true $query"
+                  : "category_is:\"${_filters.category!.attributes.name}\" $query";
         }
         if (_filters.budget != null) {
-          query = (_filters.budget!.id == "-1")
-              ? "has_no_budget:true $query"
-              : "budget_is:\"${_filters.budget!.attributes.name}\" $query";
+          query =
+              (_filters.budget!.id == "-1")
+                  ? "has_no_budget:true $query"
+                  : "budget_is:\"${_filters.budget!.attributes.name}\" $query";
         }
         if (_filters.bill != null) {
-          query = (_filters.bill!.id == "-1")
-              ? "has_no_bill:true $query"
-              : "bill_is:\"${_filters.bill!.attributes.name}\" $query";
+          query =
+              (_filters.bill!.id == "-1")
+                  ? "has_no_bill:true $query"
+                  : "bill_is:\"${_filters.bill!.attributes.name}\" $query";
         }
         if (_filters.tags != null) {
           for (String tag in _filters.tags!.tags) {
@@ -255,29 +269,34 @@ class _HomeTransactionsState extends State<HomeTransactions>
         transactionList = await stock.get(
           page: pageKey,
           limit: _numberOfPostsPerRequest,
-          end: context.read<SettingsProvider>().showFutureTXs
-              ? null
-              : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
-          start: (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
-              ? null
-              : "1900-01-01",
+          end:
+              context.read<SettingsProvider>().showFutureTXs
+                  ? null
+                  : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
+          start:
+              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
+                  ? null
+                  : "1900-01-01",
         );
       }
 
-      if(_filters.account != null)
-      {
+      if (_filters.account != null) {
         AccountRead account = _balanceAccount ?? _filters.account!;
         // Attempt to retrieve the opening balance
-        double balance = _lastCalculatedBalance ?? _parseBalance(account.attributes.currentBalance);
+        double balance =
+            _lastCalculatedBalance ??
+            _parseBalance(account.attributes.currentBalance);
         // If the account is a revenue/expense account, we need to invert the balance
-        if(_lastCalculatedBalance == null && _isRevenueOrExpense(account.attributes.type)) {
+        if (_lastCalculatedBalance == null &&
+            _isRevenueOrExpense(account.attributes.type)) {
           balance *= -1;
         }
         for (TransactionRead item in transactionList) {
           // Attempt to retrieve the transaction total amount
           final TransactionSplit tx = item.attributes.transactions.first;
           final double amount = double.tryParse(tx.amount) ?? 0.0;
-          if (amount == 0.0) {  // Should never be the case
+          // Should never be the case
+          if (amount == 0.0) {
             continue;
           }
           _runningBalancesByTransactionId[item.id] = balance;
@@ -338,7 +357,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
           transitionDuration: animDurationStandard,
           invisibleItemsThreshold: 10,
           itemBuilder: (BuildContext context, TransactionRead item, int index) {
-            final double currentBalance = _runningBalancesByTransactionId[item.id] ?? 0.0;
+            final double currentBalance =
+                _runningBalancesByTransactionId[item.id] ?? 0.0;
             return transactionRowBuilder(context, item, index, currentBalance);
           },
           noMoreItemsIndicatorBuilder: (_) => const SizedBox(height: 68),
@@ -352,7 +372,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     BuildContext context,
     TransactionRead item,
     int index,
-    double balance
+    double balance,
   ) {
     List<TransactionSplit> transactions = item.attributes.transactions;
     if (transactions.isEmpty) {
@@ -676,7 +696,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
               ),
               trailing: RichText(
                 textAlign: TextAlign.end,
-                maxLines: _filters.account != null ? 3 : 2, // Only display balance line if view is filtered by account
+                // Only display balance line if view is filtered by account
+                maxLines: _filters.account != null ? 3 : 2,
                 text: TextSpan(
                   style: Theme.of(context).textTheme.bodyMedium,
                   children: <InlineSpan>[
@@ -714,7 +735,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
                               : sourceName,
                     ),
                     TextSpan(
-                      text: _filters.account != null ? "\n${currency.fmt(balance)}" : '',
+                      text:
+                          _filters.account != null
+                              ? "\n${currency.fmt(balance)}"
+                              : '',
                     ),
                   ],
                 ),
@@ -723,18 +747,24 @@ class _HomeTransactionsState extends State<HomeTransactions>
             ),
           ),
       onClosed: (bool? refresh) async {
-        if(_filters.account != null)
-        {
+        if (_filters.account != null) {
           // Reset last balance calculated as we are not sure if the transaction was modified
           FireflyIii api = context.read<FireflyService>().api;
           // Retrieve the account to get the current balance - this is not optimal, probably needs to be optimized
-          final Response<AccountSingle> respAccount = await api.v1AccountsIdGet(id: _filters.account!.id);
+          final Response<AccountSingle> respAccount = await api.v1AccountsIdGet(
+            id: _filters.account!.id,
+          );
           apiThrowErrorIfEmpty(respAccount, mounted ? context : null);
           final AccountRead account = _balanceAccount = respAccount.body!.data;
-          _lastCalculatedBalance = _parseBalance(account.attributes.currentBalance);
+          _lastCalculatedBalance = _parseBalance(
+            account.attributes.currentBalance,
+          );
           // If the account is a revenue/expense account, we need to invert the balance
-          if(_isRevenueOrExpense(account.attributes.type)) {
-            _lastCalculatedBalance = _lastCalculatedBalance != null ? _lastCalculatedBalance! * -1 : 0;
+          if (_isRevenueOrExpense(account.attributes.type)) {
+            _lastCalculatedBalance =
+                _lastCalculatedBalance != null
+                    ? _lastCalculatedBalance! * -1
+                    : 0;
           }
         }
         if (refresh ?? false == true) {

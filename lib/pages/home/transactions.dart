@@ -49,13 +49,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
       <String, double>{};
   double? _lastCalculatedBalance;
 
-  // Only exist because _filters.account might not be up to date
-  AccountRead? _balanceAccount;
-
-  double _parseBalance(String? balance) {
-    return double.tryParse(balance ?? "0") ?? 0.0;
-  }
-
   bool _isRevenueOrExpense(ShortAccountTypeProperty? type) {
     return type == ShortAccountTypeProperty.revenue ||
         type == ShortAccountTypeProperty.expense;
@@ -77,7 +70,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
   @override
   void initState() {
     super.initState();
-    _lastCalculatedBalance = null;
     _tzHandler = context.read<FireflyService>().tzHandler;
     _pagingState = PagingState<int, TransactionRead>();
     _tagsHidden.value = context.read<SettingsProvider>().hideTags;
@@ -176,8 +168,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
   }
 
   void notifRefresh() {
-    _lastCalculatedBalance = null;
     setState(() {
+      _lastCalculatedBalance = null;
       _pagingState = _pagingState.reset();
     });
   }
@@ -281,11 +273,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
       }
 
       if (_filters.account != null) {
-        AccountRead account = _balanceAccount ?? _filters.account!;
+        AccountRead account = _filters.account!;
         // Attempt to retrieve the opening balance
         double balance =
             _lastCalculatedBalance ??
-            _parseBalance(account.attributes.currentBalance);
+            double.tryParse(account.attributes.currentBalance!) ?? 0.0;
         // If the account is a revenue/expense account, we need to invert the balance
         if (_lastCalculatedBalance == null &&
             _isRevenueOrExpense(account.attributes.type)) {
@@ -356,11 +348,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           animateTransitions: true,
           transitionDuration: animDurationStandard,
           invisibleItemsThreshold: 10,
-          itemBuilder: (BuildContext context, TransactionRead item, int index) {
-            final double currentBalance =
-                _runningBalancesByTransactionId[item.id] ?? 0.0;
-            return transactionRowBuilder(context, item, index, currentBalance);
-          },
+          itemBuilder: transactionRowBuilder,
           noMoreItemsIndicatorBuilder: (_) => const SizedBox(height: 68),
         ),
       ),
@@ -371,8 +359,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
   Widget transactionRowBuilder(
     BuildContext context,
     TransactionRead item,
-    int index,
-    double balance,
+    int index
   ) {
     List<TransactionSplit> transactions = item.attributes.transactions;
     if (transactions.isEmpty) {
@@ -630,22 +617,33 @@ class _HomeTransactionsState extends State<HomeTransactions>
               func();
             },
             child: ListTile(
-              visualDensity: VisualDensity(vertical: 1, horizontal: -4),
               leading: CircleAvatar(
                 foregroundColor: Colors.white,
                 backgroundColor: transactions.first.type.color,
                 child: Icon(transactions.first.type.icon),
               ),
-              title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
-              subtitle: Column(
+              title: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+              subtitle: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  RichText(
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    text: TextSpan(
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      children: subtitle,
+                  Expanded(
+                    child: RichText(
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      text: TextSpan(
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        children: subtitle,
+                      ),
                     ),
                   ),
                   if (!context.watch<SettingsProvider>().hideTags &&
@@ -694,71 +692,64 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   bottomLeft: Radius.circular(16),
                 ),
               ),
-              trailing: RichText(
-                textAlign: TextAlign.end,
-                // Only display balance line if view is filtered by account
-                maxLines: _filters.account != null ? 3 : 2,
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  children: <InlineSpan>[
+              trailing: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxWidth: 100,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
                     if (foreignText.isNotEmpty)
-                      TextSpan(
-                        text: foreignText,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodySmall!.copyWith(color: Colors.blue),
+                      Text(
+                        foreignText,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(color: Colors.blue),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    TextSpan(
-                      text: currency.fmt(amount),
+                    Text(
+                      currency.fmt(amount),
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: transactions.first.type.color,
-                        fontFeatures: const <FontFeature>[
-                          FontFeature.tabularFigures(),
-                        ],
-                      ),
+                            color: transactions.first.type.color,
+                            fontFeatures: const <FontFeature>[
+                              FontFeature.tabularFigures(),
+                            ],
+                          ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    const TextSpan(text: "\n"),
                     if (reconciled)
-                      const WidgetSpan(
-                        baseline: TextBaseline.ideographic,
-                        alignment: PlaceholderAlignment.middle,
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 2),
-                          child: Icon(Icons.check),
-                        ),
+                      const Icon(
+                        Icons.check,
+                        size: 16,
                       ),
-                    TextSpan(
-                      text:
-                          (transactions.first.type ==
-                                  TransactionTypeProperty.deposit)
-                              ? destinationName
-                              : sourceName,
-                    ),
-                    TextSpan(
-                      text:
-                          _filters.account != null
-                              ? "\n${currency.fmt(balance)}"
-                              : '',
-                    ),
+                    if (_filters.account != null)
+                      Text(
+                        currency.fmt(_runningBalancesByTransactionId[item.id] ?? 0.0),
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                   ],
                 ),
               ),
-              onTap: () => openContainer(),
             ),
           ),
       onClosed: (bool? refresh) async {
+
         if (_filters.account != null) {
-          // Reset last balance calculated as we are not sure if the transaction was modified
+          // Reset last balance calculated
           FireflyIii api = context.read<FireflyService>().api;
-          // Retrieve the account to get the current balance - this is not optimal, probably needs to be optimized
+          // Retrieve the account to get the current balance
           final Response<AccountSingle> respAccount = await api.v1AccountsIdGet(
             id: _filters.account!.id,
           );
           apiThrowErrorIfEmpty(respAccount, mounted ? context : null);
-          final AccountRead account = _balanceAccount = respAccount.body!.data;
-          _lastCalculatedBalance = _parseBalance(
-            account.attributes.currentBalance,
-          );
+          final AccountRead account = respAccount.body!.data;
+          _lastCalculatedBalance = double.tryParse(account.attributes.currentBalance!) ?? 0.0;
           // If the account is a revenue/expense account, we need to invert the balance
           if (_isRevenueOrExpense(account.attributes.type)) {
             _lastCalculatedBalance =
@@ -767,6 +758,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     : 0;
           }
         }
+
         if (refresh ?? false == true) {
           _rowsWithDate = <int>[];
           _lastDate = null;

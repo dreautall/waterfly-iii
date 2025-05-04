@@ -435,6 +435,9 @@ class SRu extends S {
   String get homeMainChartNetWorthTitle => 'Общая средства';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Сохранить/потратить деньги';
 
   @override

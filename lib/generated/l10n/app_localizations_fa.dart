@@ -431,6 +431,9 @@ class SFa extends S {
   String get homeMainChartNetWorthTitle => 'ارزش خالص\n';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'پس انداز/خرج پول\n';
 
   @override

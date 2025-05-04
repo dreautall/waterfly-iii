@@ -438,6 +438,9 @@ class SFr extends S {
   String get homeMainChartNetWorthTitle => 'Avoir net';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Économiser/Dépenser de l\'argent';
 
   @override

@@ -142,6 +142,7 @@ class DashboardCard extends StatelessWidget {
     chartTitle = switch (card) {
       DashboardCards.dailyavg => S.of(context).homeMainChartDailyAvg,
       DashboardCards.categories => S.of(context).homeMainChartCategoriesTitle,
+      DashboardCards.tags => S.of(context).homeMainChartTagsTitle,
       DashboardCards.accounts => S.of(context).homeMainChartAccountsTitle,
       DashboardCards.netearnings => S.of(context).homeMainChartNetEarningsTitle,
       DashboardCards.networth => S.of(context).homeMainChartNetWorthTitle,

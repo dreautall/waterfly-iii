@@ -435,6 +435,9 @@ class SEs extends S {
   String get homeMainChartNetWorthTitle => 'Valor neto';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Ahorrar/Gastar dinero';
 
   @override

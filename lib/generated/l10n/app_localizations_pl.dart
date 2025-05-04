@@ -435,6 +435,9 @@ class SPl extends S {
   String get homeMainChartNetWorthTitle => 'Wartość netto';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Wrzuć/Wyjmij Pieniądze';
 
   @override

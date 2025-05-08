@@ -191,6 +191,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           id: _filters.account!.id,
           page: pageKey,
           limit: _numberOfPostsPerRequest,
+          type: TransactionTypeFilter.all,
           end:
               context.read<SettingsProvider>().showFutureTXs
                   ? null
@@ -239,11 +240,16 @@ class _HomeTransactionsState extends State<HomeTransactions>
           query = "date_before:today $query ";
         }
         log.fine(() => "Search query: $query");
-        transactionList = await stock.getSearch(query: query, page: pageKey);
+        transactionList = await stock.getSearch(
+          query: query,
+          page: pageKey,
+          limit: _numberOfPostsPerRequest,
+        );
       } else {
         transactionList = await stock.get(
           page: pageKey,
           limit: _numberOfPostsPerRequest,
+          type: TransactionTypeFilter.all,
           end:
               context.read<SettingsProvider>().showFutureTXs
                   ? null
@@ -654,7 +660,14 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     TextSpan(
                       text: currency.fmt(amount),
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: transactions.first.type.color,
+                        color:
+                            transactions.first.type !=
+                                    TransactionTypeProperty.reconciliation
+                                ? transactions.first.type.color
+                                : (transactions.first.sourceType ==
+                                    AccountTypeProperty.reconciliationAccount)
+                                ? Colors.green
+                                : Colors.red,
                         fontFeatures: const <FontFeature>[
                           FontFeature.tabularFigures(),
                         ],
@@ -671,11 +684,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
                         ),
                       ),
                     TextSpan(
-                      text:
-                          (transactions.first.type ==
-                                  TransactionTypeProperty.deposit)
-                              ? destinationName
-                              : sourceName,
+                      text: switch (transactions.first.type) {
+                        TransactionTypeProperty.deposit => destinationName,
+                        TransactionTypeProperty.openingBalance => "",
+                        TransactionTypeProperty.reconciliation => "",
+                        _ => sourceName,
+                      },
                     ),
                   ],
                 ),

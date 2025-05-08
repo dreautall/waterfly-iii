@@ -191,6 +191,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           id: _filters.account!.id,
           page: pageKey,
           limit: _numberOfPostsPerRequest,
+          type: TransactionTypeFilter.all,
           end:
               context.read<SettingsProvider>().showFutureTXs
                   ? null
@@ -239,11 +240,16 @@ class _HomeTransactionsState extends State<HomeTransactions>
           query = "date_before:today $query ";
         }
         log.fine(() => "Search query: $query");
-        transactionList = await stock.getSearch(query: query, page: pageKey);
+        transactionList = await stock.getSearch(
+          query: query,
+          page: pageKey,
+          limit: _numberOfPostsPerRequest,
+        );
       } else {
         transactionList = await stock.get(
           page: pageKey,
           limit: _numberOfPostsPerRequest,
+          type: TransactionTypeFilter.all,
           end:
               context.read<SettingsProvider>().showFutureTXs
                   ? null

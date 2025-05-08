@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart' show Response;
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stock/stock.dart';
@@ -223,7 +224,9 @@ class _getOptions {
       page = json['page'],
       start = json['start'],
       end = json['end'],
-      type = json['type'],
+      type = enums.TransactionTypeFilter.values.firstWhereOrNull(
+        (enums.TransactionTypeFilter e) => e.name == json['type'],
+      ),
       id = json['id'],
       limit = json['limit'],
       query = json['query'];
@@ -233,7 +236,7 @@ class _getOptions {
     'page': page,
     'start': start,
     'end': end,
-    'type': type,
+    'type': type?.name,
     'id': id,
     'limit': limit,
     'query': query,

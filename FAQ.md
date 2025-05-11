@@ -1,6 +1,6 @@
 # FAQ
 
-## App Functionality
+## Base Functionality
 
 **Q: How can I copy an existing transaction? (Alternatively: Use a transaction template)**
 
@@ -18,6 +18,34 @@ your CA will be trusted by the app. However, due to technical limitations, I can
 bypass certificate validation" option (or something similar). You can find a more technical
 answer [here](https://github.com/dreautall/waterfly-iii/issues/77#issuecomment-2143724258)
 and [here](https://github.com/dreautall/waterfly-iii/issues/418#issuecomment-2237184561).
+
+
+**Q: How do I report bugs?**
+
+A: If you encounter a bug, please help me fix it by providing a detailed report:
+
+1. **Enable debug logs:** Go to the Settings page and click on the version number. This will show an
+   option to enable debug logs.
+2. **Reproduce the bug:** Perform the actions that cause the bug to occur.
+3. **Send the log:** Go back to the Settings page and send the log. This will open your email app
+   with my email address pre-filled and the log attached (it's a simple text file).
+
+* **Alternative: GitHub issue**: You can also create
+  a [new GitHub issue](https://github.com/dreautall/waterfly-iii/issues/new) and upload the log
+  there. The log may contain sensitive information. If you upload the log to GitHub, please make
+  sure to remove or redact any sensitive data before sharing it.
+
+
+**Q: How do I request new features?**
+
+A: I welcome your suggestions for new features! Either open
+a [new GitHub issue](https://github.com/dreautall/waterfly-iii/issues/new) or send me a mail. You
+can find the mail on
+the [Play Store page](https://play.google.com/store/apps/details?id=com.dreautall.waterflyiii).
+
+
+
+## Notification Listener
 
 **Q: How does the notification listener service work?**
 
@@ -49,28 +77,9 @@ still doesn't show up, there are a couple of reasons why:
       Android-suggested replies.
 
 
-**Q: How do I report bugs?**
+**Q: The app selects the wrong currency!**
 
-A: If you encounter a bug, please help me fix it by providing a detailed report:
-
-1. **Enable debug logs:** Go to the Settings page and click on the version number. This will show an
-   option to enable debug logs.
-2. **Reproduce the bug:** Perform the actions that cause the bug to occur.
-3. **Send the log:** Go back to the Settings page and send the log. This will open your email app
-   with my email address pre-filled and the log attached (it's a simple text file).
-
-* **Alternative: GitHub issue**: You can also create
-  a [new GitHub issue](https://github.com/dreautall/waterfly-iii/issues/new) and upload the log
-  there. The log may contain sensitive information. If you upload the log to GitHub, please make
-  sure to remove or redact any sensitive data before sharing it.
-
-
-**Q: How do I request new features?**
-
-A: I welcome your suggestions for new features! Either open
-a [new GitHub issue](https://github.com/dreautall/waterfly-iii/issues/new) or send me a mail. You
-can find the mail on
-the [Play Store page](https://play.google.com/store/apps/details?id=com.dreautall.waterflyiii).
+A: Most of the time, the issue is from currencies that also use the `$` (Dollar) sign, for example Austrian Dollar (`A$`). The app checks the notification for an exact match of the currency, so a transaction with "You paid $ 12.34" gets matched to the (US-)Dollar. To fix this, you can change the currency settings in Firefly III, for example make the sign of the US-Dollar to `US$`, and change Austrian Dollar from `A$` to just `$`. This way, notifications with just `$` will get matched to Austrian Dollar.
 
 
 

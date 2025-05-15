@@ -323,10 +323,10 @@ packages:
     dependency: "direct main"
     description:
       name: file_picker
-      sha256: dd51fd20fdc45e073529c102376d54deba3e120603fe711c848ce44575b838e6
+      sha256: "77f8e81d22d2a07d0dee2c62e1dda71dc1da73bf43bb2d45af09727406167964"
       url: "https://pub.dev"
     source: hosted
-    version: "10.1.8"
+    version: "10.1.9"
   file_selector_linux:
     dependency: transitive
     description:
@@ -1270,18 +1270,18 @@ packages:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_charts
-      sha256: "388fdda00b4f9f45d5227992e496d0d463a713454c87ba8382e69eb3f47e6842"
+      sha256: fcc55153260c2845f270018d7eceb990a02dd9b3f9377d825ae4fdce9a900b8c
       url: "https://pub.dev"
     source: hosted
-    version: "29.1.41"
+    version: "29.2.4"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: "4fb16cf25fa56f787f3991bbdea6241512a81cdbfad4255452f3fd01b7d5fb25"
+      sha256: "32649080c81f8699386988e27ea37b51f9c468f1e3a78a26f0540b665c762327"
       url: "https://pub.dev"
     source: hosted
-    version: "29.1.41"
+    version: "29.2.4"
   term_glyph:
     dependency: transitive
     description:
@@ -1494,10 +1494,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: dc6ecaa00a7c708e5b4d10ee7bec8c270e9276dfcab1783f57e9962d7884305f
+      sha256: "329edf97fdd893e0f1e3b9e88d6a0e627128cc17cc316a8d67fda8f1451178ba"
       url: "https://pub.dev"
     source: hosted
-    version: "5.12.0"
+    version: "5.13.0"
   xdg_directories:
     dependency: transitive
     description:

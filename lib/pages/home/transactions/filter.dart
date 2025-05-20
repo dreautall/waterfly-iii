@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:waterflyiii/auth.dart';
@@ -21,6 +22,7 @@ class TransactionFilters with ChangeNotifier {
     this.budget,
     this.bill,
     this.tags,
+    this.startDate,
   });
 
   AccountRead? account;
@@ -30,6 +32,7 @@ class TransactionFilters with ChangeNotifier {
   BudgetRead? budget;
   BillRead? bill;
   Tags? tags = Tags();
+  DateTime? startDate;
 
   bool _hasFilters = false;
   bool get hasFilters => _hasFilters;
@@ -42,7 +45,8 @@ class TransactionFilters with ChangeNotifier {
         category != null ||
         budget != null ||
         bill != null ||
-        (tags?.tags.isNotEmpty ?? false);
+        (tags?.tags.isNotEmpty ?? false) ||
+        startDate != null;
     log.finest(() => "notify TransactionFilters, filters? $hasFilters");
     notifyListeners();
   }
@@ -55,6 +59,7 @@ class TransactionFilters with ChangeNotifier {
     BudgetRead? budget,
     BillRead? bill,
     Tags? tags,
+    DateTime? startDate,
   }) => TransactionFilters(
     account: account ?? this.account,
     text: text ?? this.text,
@@ -63,6 +68,7 @@ class TransactionFilters with ChangeNotifier {
     budget: budget ?? this.budget,
     bill: bill ?? this.bill,
     tags: tags ?? this.tags,
+    startDate: startDate ?? this.startDate,
   );
 
   void reset() {
@@ -73,6 +79,7 @@ class TransactionFilters with ChangeNotifier {
     budget = null;
     bill = null;
     tags = Tags();
+    startDate = null;
   }
 }
 
@@ -192,6 +199,46 @@ class FilterDialog extends StatelessWidget {
                               .of(context)
                               .homeTransactionsDialogFilterFutureTransactions,
                         ),
+                      ),
+                    ),
+                  );
+                  child.add(const SizedBox(height: 12));
+
+                  // Date
+                  final TextEditingController startDateTextController =
+                      TextEditingController();
+                  if (filters.startDate != null) {
+                    startDateTextController.text = DateFormat.yMMMd().format(
+                      filters.startDate!,
+                    );
+                  }
+                  child.add(
+                    SizedBox(
+                      width: inputWidth,
+                      child: TextFormField(
+                        controller: startDateTextController,
+                        decoration: InputDecoration(
+                          filled: false,
+                          border: const OutlineInputBorder(),
+                          labelText: "Start Date",
+                          prefixIcon: const Icon(Icons.calendar_month),
+                        ),
+                        readOnly: true,
+                        onTap: () async {
+                          final DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime.now(),
+                            initialDate: filters.startDate,
+                          );
+                          filters.startDate = pickedDate;
+                          if (pickedDate != null) {
+                            startDateTextController.text = DateFormat.yMMMd()
+                                .format(filters.startDate!);
+                          } else {
+                            startDateTextController.text = '';
+                          }
+                        },
                       ),
                     ),
                   );

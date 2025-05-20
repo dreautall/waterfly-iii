@@ -115,6 +115,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                       _filters.text = oldFilters.text;
                       _filters.bill = oldFilters.bill;
                       _filters.tags = oldFilters.tags;
+                      _filters.startDate = oldFilters.startDate;
 
                       return;
                     }
@@ -181,6 +182,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
         _filters.budget = widget.filters!.budget;
         _filters.bill = widget.filters!.bill;
         _filters.tags = widget.filters!.tags;
+        _filters.startDate = widget.filters!.startDate;
         _filters.updateFilters();
       }
 
@@ -236,8 +238,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
             query = "tag_is:\"$tag\" $query";
           }
         }
+        if (_filters.startDate != null) {
+          query =
+              "date_after:${DateFormat('yyyy-MM-dd', 'en_US').format(_filters.startDate!)} $query";
+        }
         if (!context.read<SettingsProvider>().showFutureTXs) {
-          query = "date_before:today $query ";
+          query = "date_before:today $query";
         }
         log.fine(() => "Search query: $query");
         transactionList = await stock.getSearch(

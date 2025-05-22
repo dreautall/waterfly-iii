@@ -218,6 +218,7 @@
         <package android:name="com.sixgroup.debixplus"/>
         <package android:name="com.softteco.bsbank"/>
         <package android:name="com.starlingbank.android"/>
+        <package android:name="com.s_payment.mobiles_bezahlen"/>
         <package android:name="com.taxis99"/>
         <package android:name="com.tpaay.bigpay"/>
         <package android:name="com.transferwise.android"/>

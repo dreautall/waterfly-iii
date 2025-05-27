@@ -1,5 +1,5 @@
 {
-    "@@locale": "zh",
+    "@@locale": "zh-CN",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "现金",
     "@accountRoleAssetCashWallet": {
@@ -536,6 +536,10 @@
     "homeMainChartNetWorthTitle": "净值",
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
+    },
+    "homeMainChartTagsTitle": "",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
     },
     "homePiggyAdjustDialogTitle": "存钱/花钱",
     "@homePiggyAdjustDialogTitle": {

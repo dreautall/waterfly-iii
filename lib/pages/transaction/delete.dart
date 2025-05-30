@@ -6,7 +6,7 @@ class DeletionConfirmDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return AlertDialog.adaptive(
       icon: const Icon(Icons.delete),
       title: Text(S.of(context).transactionTitleDelete),
       clipBehavior: Clip.hardEdge,

@@ -11,6 +11,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/home/accounts/row.dart';
 import 'package:waterflyiii/pages/home/accounts/search.dart';
 import 'package:waterflyiii/pages/navigation.dart';
+import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
 
 final Logger log = Logger("Pages.Accounts");
 
@@ -187,7 +188,7 @@ class _AccountDetailsState extends State<AccountDetails>
     super.build(context);
     log.fine(() => "build()");
 
-    return RefreshIndicator(
+    return RefreshIndicator.adaptive(
       onRefresh:
           () => Future<void>.sync(
             () => setState(() {
@@ -197,10 +198,7 @@ class _AccountDetailsState extends State<AccountDetails>
       child: PagedListView<int, AccountRead>(
         state: _pagingState,
         fetchNextPage: _fetchPage,
-        builderDelegate: PagedChildBuilderDelegate<AccountRead>(
-          animateTransitions: true,
-          transitionDuration: animDurationStandard,
-          invisibleItemsThreshold: 10,
+        builderDelegate: customPagedChildBuilderDelegate<AccountRead>(
           itemBuilder:
               (BuildContext context, AccountRead item, int index) =>
                   accountRowBuilder(

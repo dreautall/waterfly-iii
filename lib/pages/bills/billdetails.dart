@@ -13,6 +13,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/bills/billchart.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/timezonehandler.dart';
+import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
 
 class BillDetails extends StatefulWidget {
   const BillDetails({super.key, required this.bill});
@@ -167,9 +168,7 @@ class _BillDetailsState extends State<BillDetails> {
               state: _pagingState,
               fetchNextPage: _fetchPage,
               physics: const ClampingScrollPhysics(),
-              builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
-                animateTransitions: true,
-                transitionDuration: animDurationStandard,
+              builderDelegate: customPagedChildBuilderDelegate<TransactionRead>(
                 invisibleItemsThreshold: 20,
                 itemBuilder: _transactionRowBuilder,
                 noItemsFoundIndicatorBuilder: _emptyListBuilder,
@@ -212,7 +211,7 @@ class _BillDetailsState extends State<BillDetails> {
             if (snapshot.hasError) {
               Navigator.of(context).pop();
             }
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator.adaptive());
           },
         );
         return openContainerWidget!;

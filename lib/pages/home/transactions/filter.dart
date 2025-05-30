@@ -135,7 +135,7 @@ class FilterDialog extends StatelessWidget {
     log.finest(() => "build()");
     final bool oldShowFutureTXs =
         context.read<SettingsProvider>().showFutureTXs;
-    return AlertDialog(
+    return AlertDialog.adaptive(
       icon: const Icon(Icons.tune),
       title: Text(S.of(context).homeTransactionsDialogFilterTitle),
       clipBehavior: Clip.hardEdge,
@@ -181,7 +181,7 @@ class FilterDialog extends StatelessWidget {
                   child.add(
                     SizedBox(
                       width: inputWidth,
-                      child: CheckboxListTile(
+                      child: CheckboxListTile.adaptive(
                         value: context.watch<SettingsProvider>().showFutureTXs,
                         onChanged:
                             (bool? value) =>
@@ -560,7 +560,9 @@ class FilterDialog extends StatelessWidget {
                   Navigator.pop(context);
                   return const SizedBox.shrink();
                 } else {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  );
                 }
               },
             ),

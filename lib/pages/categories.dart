@@ -124,7 +124,7 @@ class _CategoriesPageState extends State<CategoriesPage>
       future: stock.get(stockDate),
       builder: (BuildContext context, AsyncSnapshot<CategoryArray> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator.adaptive());
         }
         if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
           log.severe(
@@ -259,7 +259,7 @@ class _CategoriesPageState extends State<CategoriesPage>
             child: SumLine(totalSpent: totalSpent, totalEarned: totalEarned),
           ),
         );
-        return RefreshIndicator(
+        return RefreshIndicator.adaptive(
           onRefresh:
               () => Future<void>(() async {
                 await stock.reset();

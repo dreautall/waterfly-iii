@@ -20,7 +20,7 @@ class DebugDialog extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
           child: Text(S.of(context).settingsDialogDebugInfo),
         ),
-        SwitchListTile(
+        SwitchListTile.adaptive(
           value: context.select((SettingsProvider s) => s.debug),
           onChanged: (bool value) async {
             context.read<SettingsProvider>().debug = value;
@@ -37,7 +37,7 @@ class DebugDialog extends StatelessWidget {
             final bool? ok = await showDialog<bool>(
               context: context,
               builder:
-                  (BuildContext context) => AlertDialog(
+                  (BuildContext context) => AlertDialog.adaptive(
                     icon: const Icon(Icons.mail),
                     title: Text(S.of(context).settingsDialogDebugSendButton),
                     clipBehavior: Clip.hardEdge,

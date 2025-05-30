@@ -263,7 +263,7 @@ class LogoutConfirmDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return AlertDialog.adaptive(
       icon: const Icon(Icons.logout),
       title: Text(S.of(context).formButtonLogout),
       clipBehavior: Clip.hardEdge,

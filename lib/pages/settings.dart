@@ -104,7 +104,7 @@ class SettingsPageState extends State<SettingsPage>
             );
           },
         ),
-        SwitchListTile(
+        SwitchListTile.adaptive(
           title: Text(S.of(context).settingsUseServerTimezone),
           subtitle: Text(S.of(context).settingsUseServerTimezoneHelp),
           value: context.select((SettingsProvider s) => s.useServerTime),
@@ -123,7 +123,7 @@ class SettingsPageState extends State<SettingsPage>
           },
         ),
         const Divider(),
-        SwitchListTile(
+        SwitchListTile.adaptive(
           title: Text(S.of(context).settingsLockscreen),
           subtitle: Text(S.of(context).settingsLockscreenHelp),
           value: context.select((SettingsProvider s) => s.lock),
@@ -274,7 +274,7 @@ class LanguageDialog extends StatelessWidget {
       title: Text(S.of(context).settingsDialogLanguageTitle),
       children: <Widget>[
         ...S.supportedLocales.map(
-          (Locale locale) => RadioListTile<String>(
+          (Locale locale) => RadioListTile<String>.adaptive(
             value: locale.languageCode,
             title: Text(locale.toLanguageTag()),
             groupValue: S.of(context).localeName,
@@ -300,7 +300,7 @@ class ThemeDialog extends StatelessWidget {
       title: Text(S.of(context).settingsDialogThemeTitle),
       children: <Widget>[
         dynamicColorAvailable
-            ? SwitchListTile(
+            ? SwitchListTile.adaptive(
               title: Text(S.of(context).settingsThemeDynamicColors),
               value: context.select((SettingsProvider s) => s.dynamicColors),
               isThreeLine: false,
@@ -308,7 +308,7 @@ class ThemeDialog extends StatelessWidget {
             )
             : const SizedBox.shrink(),
         ...ThemeMode.values.map(
-          (ThemeMode theme) => RadioListTile<ThemeMode>(
+          (ThemeMode theme) => RadioListTile<ThemeMode>.adaptive(
             value: theme,
             title: Text(
               S

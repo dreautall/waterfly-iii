@@ -93,6 +93,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     final SettingsProvider settings =
                         context.read<SettingsProvider>();
                     final bool oldShowFutureTXs = settings.showFutureTXs;
+                    final TransactionDateFilter oldTransactionDateFilter =
+                        settings.transactionDateFilter;
                     bool? ok = await showDialog<bool>(
                       context: context,
                       builder:
@@ -108,6 +110,15 @@ class _HomeTransactionsState extends State<HomeTransactions>
                           _pagingState = _pagingState.reset();
                         });
                       }
+                      if (settings.transactionDateFilter !=
+                          oldTransactionDateFilter) {
+                        settings.setTransactionDateFilter(
+                          oldTransactionDateFilter,
+                        );
+                        setState(() {
+                          _pagingState = _pagingState.reset();
+                        });
+                      }
                       _filters.account = oldFilters.account;
                       _filters.budget = oldFilters.budget;
                       _filters.category = oldFilters.category;
@@ -115,12 +126,13 @@ class _HomeTransactionsState extends State<HomeTransactions>
                       _filters.text = oldFilters.text;
                       _filters.bill = oldFilters.bill;
                       _filters.tags = oldFilters.tags;
-                      _filters.startDate = oldFilters.startDate;
 
                       return;
                     }
                     if (oldFilters == _filters &&
-                        settings.showFutureTXs == oldShowFutureTXs) {
+                        settings.showFutureTXs == oldShowFutureTXs &&
+                        settings.transactionDateFilter ==
+                            oldTransactionDateFilter) {
                       return;
                     }
                     _filters.updateFilters();
@@ -182,10 +194,30 @@ class _HomeTransactionsState extends State<HomeTransactions>
         _filters.budget = widget.filters!.budget;
         _filters.bill = widget.filters!.bill;
         _filters.tags = widget.filters!.tags;
-        _filters.startDate = widget.filters!.startDate;
         _filters.updateFilters();
       }
 
+      // Get start date
+      late DateTime? startDate;
+      final DateTime now = _tzHandler.sNow().clearTime();
+      switch (context.read<SettingsProvider>().transactionDateFilter) {
+        case TransactionDateFilter.currentMonth:
+          startDate = now.copyWith(day: 1);
+          break;
+        case TransactionDateFilter.currentYear:
+          startDate = now.copyWith(month: 1, day: 1);
+          break;
+        case TransactionDateFilter.last30Days:
+          startDate = now.subtract(const Duration(days: 30));
+          break;
+        case TransactionDateFilter.lastYear:
+          startDate = now.copyWith(year: now.year - 1);
+          break;
+        default:
+          startDate = null;
+          break;
+      }
+      debugPrint("!!! startDate: $startDate");
       // Faster than searching for an account, and also has cache (stock) behind
       // This search should never have additional filters!
       if (widget.filters?.account != null) {
@@ -197,9 +229,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
           end:
               context.read<SettingsProvider>().showFutureTXs
                   ? null
-                  : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
+                  : DateFormat('yyyy-MM-dd', 'en_US').format(now),
           start:
-              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
+              startDate != null
+                  ? DateFormat('yyyy-MM-dd', 'en_US').format(startDate)
+                  : (context.read<FireflyService>().apiVersion! >=
+                      Version(2, 0, 9))
                   ? null
                   : "1900-01-01",
         );
@@ -238,9 +273,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
             query = "tag_is:\"$tag\" $query";
           }
         }
-        if (_filters.startDate != null) {
+        if (startDate != null) {
           query =
-              "date_after:${DateFormat('yyyy-MM-dd', 'en_US').format(_filters.startDate!)} $query";
+              "date_after:${DateFormat('yyyy-MM-dd', 'en_US').format(startDate)} $query";
         }
         if (!context.read<SettingsProvider>().showFutureTXs) {
           query = "date_before:today $query";
@@ -259,9 +294,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
           end:
               context.read<SettingsProvider>().showFutureTXs
                   ? null
-                  : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
+                  : DateFormat('yyyy-MM-dd', 'en_US').format(now),
           start:
-              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
+              startDate != null
+                  ? DateFormat('yyyy-MM-dd', 'en_US').format(startDate)
+                  : (context.read<FireflyService>().apiVersion! >=
+                      Version(2, 0, 9))
                   ? null
                   : "1900-01-01",
         );

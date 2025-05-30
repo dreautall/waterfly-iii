@@ -37,7 +37,7 @@ class LastDaysChart extends StatelessWidget {
       );
     }
     bool showCurrency = true;
-    CurrencyRead defaultCurrency =
+    final CurrencyRead defaultCurrency =
         context.read<FireflyService>().defaultCurrency;
 
     final List<LabelAmountChart> chartData = <LabelAmountChart>[];
@@ -46,10 +46,10 @@ class LastDaysChart extends StatelessWidget {
       if (!expenses.containsKey(e) || !incomes.containsKey(e)) {
         continue;
       }
-      double expense = expenses[e]!;
-      double income = incomes[e]!;
+      final double expense = expenses[e]!;
+      final double income = incomes[e]!;
 
-      double diff = income + expense;
+      final double diff = income + expense;
 
       // Don't show currency when numbers are too big, see #29
       if (showCurrency && diff.abs() >= 1000) {

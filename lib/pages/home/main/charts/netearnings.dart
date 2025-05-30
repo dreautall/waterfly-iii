@@ -144,7 +144,7 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
       if ((cat.name?.isEmpty ?? true) || cat.differenceFloat == 0) {
         continue;
       }
-      double income = chartData.remove(cat.name) ?? 0;
+      final double income = chartData.remove(cat.name) ?? 0;
       chartData[cat.name!] = cat.differenceFloat! + income;
     }
 

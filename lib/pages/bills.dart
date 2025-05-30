@@ -116,7 +116,7 @@ class _BillsPageState extends State<BillsPage>
   }
 
   Widget _listBuilder(Map<String, List<BillRead>> groupedBills) {
-    List<BillRead> billList =
+    final List<BillRead> billList =
         groupedBills.values.expand((List<BillRead> x) => x).toList();
 
     switch (_billsSort) {
@@ -286,8 +286,8 @@ class _BillsPageState extends State<BillsPage>
   }
 
   String _getAverageBillAmount(BillRead item) {
-    double min = double.tryParse(item.attributes.amountMin) ?? 0;
-    double max = double.tryParse(item.attributes.amountMax) ?? 0;
+    final double min = double.tryParse(item.attributes.amountMin) ?? 0;
+    final double max = double.tryParse(item.attributes.amountMax) ?? 0;
 
     final CurrencyRead currency = CurrencyRead(
       id: "0",
@@ -494,7 +494,7 @@ class _BillsPageState extends State<BillsPage>
     final DateTime start = DateTime.now().copyWith(day: 1);
     // End date set to first day of upcoming month (period)
     final DateTime end = start.copyWith(month: start.month + 1);
-    List<BillRead> bills = <BillRead>[];
+    final List<BillRead> bills = <BillRead>[];
     late Response<BillArray> response;
     int pageNumber = 0;
 
@@ -515,10 +515,10 @@ class _BillsPageState extends State<BillsPage>
       (BillRead a, BillRead b) => (a.attributes.objectGroupOrder ?? 0)
           .compareTo(b.attributes.objectGroupOrder ?? 0),
     );
-    Map<String, List<BillRead>> billsMap = <String, List<BillRead>>{};
+    final Map<String, List<BillRead>> billsMap = <String, List<BillRead>>{};
 
     for (BillRead bill in bills) {
-      String key =
+      final String key =
           bill.attributes.objectGroupTitle ??
           (mounted ? S.of(context).billsUngrouped : "");
       if (!billsMap.containsKey(key)) {

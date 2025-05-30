@@ -72,7 +72,7 @@ class _HomeMainState extends State<HomeMain>
           icon: const Icon(Icons.dashboard_customize_outlined),
           tooltip: S.of(context).homeMainDialogSettingsTitle,
           onPressed: () async {
-            bool? ok = await showDialog<bool>(
+            final bool? ok = await showDialog<bool>(
               context: context,
               builder: (BuildContext context) => const DashboardDialog(),
             );
@@ -347,7 +347,7 @@ class _HomeMainState extends State<HomeMain>
     apiThrowErrorIfEmpty(respIncomeData, mounted ? context : null);
     apiThrowErrorIfEmpty(respExpenseData, mounted ? context : null);
 
-    Map<String, double> incomes = <String, double>{};
+    final Map<String, double> incomes = <String, double>{};
     for (InsightGroupEntry entry
         in respIncomeData.body ?? <InsightGroupEntry>[]) {
       if (entry.id?.isEmpty ?? true) {
@@ -403,8 +403,8 @@ class _HomeMainState extends State<HomeMain>
     }
 
     respBudgets.body!.data.sort((BudgetLimitRead a, BudgetLimitRead b) {
-      Budget? budgetA = budgetInfos[a.attributes.budgetId];
-      Budget? budgetB = budgetInfos[b.attributes.budgetId];
+      final Budget? budgetA = budgetInfos[a.attributes.budgetId];
+      final Budget? budgetB = budgetInfos[b.attributes.budgetId];
 
       if (budgetA == null && budgetB != null) {
         return -1;
@@ -413,7 +413,9 @@ class _HomeMainState extends State<HomeMain>
       } else if (budgetA == null && budgetB == null) {
         return 0;
       }
-      int compare = (budgetA!.order ?? -1).compareTo(budgetB!.order ?? -1);
+      final int compare = (budgetA!.order ?? -1).compareTo(
+        budgetB!.order ?? -1,
+      );
       if (compare != 0) {
         return compare;
       }
@@ -598,7 +600,7 @@ class _HomeMainState extends State<HomeMain>
     super.build(context);
     log.finest(() => "build()");
 
-    CurrencyRead defaultCurrency =
+    final CurrencyRead defaultCurrency =
         context.read<FireflyService>().defaultCurrency;
 
     final List<DashboardCards> cards = List<DashboardCards>.from(
@@ -879,7 +881,7 @@ class _HomeMainState extends State<HomeMain>
                                     lastMonthsExpense[e.key]!.differenceFloat ??
                                     0;
                               }
-                              double sum = income + expense;
+                              final double sum = income + expense;
                               return Align(
                                 alignment: Alignment.centerRight,
                                 child: Text(
@@ -1039,7 +1041,7 @@ class _HomeMainState extends State<HomeMain>
                                   final double assets = e.value;
                                   final double liabilities =
                                       lastMonthsLiabilities[e.key] ?? 0;
-                                  double sum = assets + liabilities;
+                                  final double sum = assets + liabilities;
                                   return Align(
                                     alignment: Alignment.centerRight,
                                     child: Text(
@@ -1219,7 +1221,8 @@ class BudgetList extends StatelessWidget {
                 }
               }
 
-              Budget? budgetInfo = budgetInfos[budget.attributes.budgetId];
+              final Budget? budgetInfo =
+                  budgetInfos[budget.attributes.budgetId];
               if (budgetInfo == null || available == 0) {
                 continue;
               }
@@ -1512,7 +1515,7 @@ class ChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Logger log = Logger("Pages.Home.Main.ChartCard");
-    List<Widget> summaryWidgets = <Widget>[];
+    final List<Widget> summaryWidgets = <Widget>[];
 
     return AnimatedHeight(
       child: Padding(

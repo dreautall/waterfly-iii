@@ -15,7 +15,7 @@ class CurrencyDialog extends StatelessWidget {
     final Response<CurrencyArray> response = await api.v1CurrenciesGet();
     apiThrowErrorIfEmpty(response, context.mounted ? context : null);
 
-    List<CurrencyRead> currencies = response.body!.data;
+    final List<CurrencyRead> currencies = response.body!.data;
     currencies.sort((CurrencyRead a, CurrencyRead b) {
       if (a.id == context.read<FireflyService>().defaultCurrency.id) {
         return -1;
@@ -43,7 +43,7 @@ class CurrencyDialog extends StatelessWidget {
             AsyncSnapshot<List<CurrencyRead>> snapshot,
           ) {
             if (snapshot.hasData) {
-              List<Widget> child = <Widget>[];
+              final List<Widget> child = <Widget>[];
               for (CurrencyRead currency in snapshot.data!) {
                 child.add(
                   CurrencyDialogOption(

@@ -187,7 +187,7 @@ class _BillDetailsState extends State<BillDetails> {
     TransactionRead transaction,
     int index,
   ) {
-    DateTime date =
+    final DateTime date =
         _tzHandler
             .sTime(transaction.attributes.transactions.first.date)
             .toLocal();
@@ -337,14 +337,12 @@ class _BillDetailsState extends State<BillDetails> {
         "Getting page $pageKey (${_pagingState.pages?.length} items loaded so far)",
       );
 
-      Response<TransactionArray> response = await api.v1BillsIdTransactionsGet(
-        id: widget.bill.id,
-        page: pageKey,
-      );
+      final Response<TransactionArray> response = await api
+          .v1BillsIdTransactionsGet(id: widget.bill.id, page: pageKey);
       apiThrowErrorIfEmpty(response, mounted ? context : null);
 
       _billChartKey.currentState!.doneLoading();
-      List<TransactionRead> transactions = response.body!.data;
+      final List<TransactionRead> transactions = response.body!.data;
       _billChartKey.currentState!.addTransactions(transactions);
 
       final bool isLastPage =
@@ -378,7 +376,7 @@ class _BillDetailsState extends State<BillDetails> {
   Future<TransactionRead> _fetchFullTx(String id) async {
     final FireflyIii api = context.read<FireflyService>().api;
 
-    Response<TransactionSingle> response = await api.v1TransactionsIdGet(
+    final Response<TransactionSingle> response = await api.v1TransactionsIdGet(
       id: id,
     );
     apiThrowErrorIfEmpty(response, mounted ? context : null);

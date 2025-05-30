@@ -221,7 +221,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                   child: GestureDetector(
                     onTap: () async {
                       final FireflyService ff = context.read<FireflyService>();
-                      bool? ok = await showDialog<bool>(
+                      final bool? ok = await showDialog<bool>(
                         context: context,
                         builder:
                             (BuildContext context) =>

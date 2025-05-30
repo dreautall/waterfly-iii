@@ -644,7 +644,10 @@ TransactionTypeProperty accountsToTransaction(
   AccountTypeProperty source,
   AccountTypeProperty destination,
 ) {
-  Map<AccountTypeProperty, Map<AccountTypeProperty, TransactionTypeProperty>>
+  final Map<
+    AccountTypeProperty,
+    Map<AccountTypeProperty, TransactionTypeProperty>
+  >
   map = <
     AccountTypeProperty,
     Map<AccountTypeProperty, TransactionTypeProperty>

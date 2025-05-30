@@ -217,7 +217,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           startDate = null;
           break;
       }
-      debugPrint("!!! startDate: $startDate");
+
       // Faster than searching for an account, and also has cache (stock) behind
       // This search should never have additional filters!
       if (widget.filters?.account != null) {

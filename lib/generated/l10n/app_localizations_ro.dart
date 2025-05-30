@@ -317,6 +317,21 @@ class SRo extends S {
   String get generalCurrency => 'Valută';
 
   @override
+  String get generalDateRangeCurrentMonth => 'Current Month';
+
+  @override
+  String get generalDateRangeLast30Days => 'Last 30 days';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Current Year';
+
+  @override
+  String get generalDateRangeLastYear => 'Last year';
+
+  @override
+  String get generalDateRangeAll => 'All';
+
+  @override
   String get generalDefault => 'implicit';
 
   @override
@@ -523,6 +538,9 @@ class SRo extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Toate valutele>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Date Range';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>

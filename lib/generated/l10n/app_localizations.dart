@@ -548,6 +548,36 @@ abstract class S {
   /// **'Currency'**
   String get generalCurrency;
 
+  /// Date Range: Current Month
+  ///
+  /// In en, this message translates to:
+  /// **'Current Month'**
+  String get generalDateRangeCurrentMonth;
+
+  /// Date Range: Last 30 days
+  ///
+  /// In en, this message translates to:
+  /// **'Last 30 days'**
+  String get generalDateRangeLast30Days;
+
+  /// Date Range: Current Year
+  ///
+  /// In en, this message translates to:
+  /// **'Current Year'**
+  String get generalDateRangeCurrentYear;
+
+  /// Date Range: Last year
+  ///
+  /// In en, this message translates to:
+  /// **'Last year'**
+  String get generalDateRangeLastYear;
+
+  /// Date Range: All
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get generalDateRangeAll;
+
   /// Indicates that something is the default choice
   ///
   /// In en, this message translates to:
@@ -865,6 +895,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'<All Currencies>'**
   String get homeTransactionsDialogFilterCurrenciesAll;
+
+  /// Label for the date range dropdown (all, last year, last month, last 30 days etc)
+  ///
+  /// In en, this message translates to:
+  /// **'Date Range'**
+  String get homeTransactionsDialogFilterDateRange;
 
   /// Setting to show future transactions
   ///

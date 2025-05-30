@@ -19,6 +19,7 @@ import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/splash.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/settings.dart';
+import 'package:waterflyiii/widgets/logo.dart';
 
 final Logger log = Logger("App");
 
@@ -97,11 +98,23 @@ class _WaterflyAppState extends State<WaterflyApp> {
           _lcLastOpen = null;
           _authed = false;
 
+          bool canPush = navigatorKey.currentState != null;
+          if (canPush) {
+            navigatorKey.currentState?.push(
+              MaterialPageRoute<Widget>(
+                builder: (BuildContext context) => const AppLogo(),
+              ),
+            );
+          }
+
           auth().then((bool authed) {
             log.finest(() => "done authing, $authed");
             if (authed) {
               log.finest(() => "authentication succeeded");
               _authed = true;
+              if (canPush) {
+                navigatorKey.currentState?.pop();
+              }
             } else {
               log.shout(() => "authentication failed");
               _lcLastOpen = DateTime.now().subtract(
@@ -109,6 +122,9 @@ class _WaterflyAppState extends State<WaterflyApp> {
               );
               // close app
               SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+              if (canPush) {
+                navigatorKey.currentState?.pop();
+              }
             }
           });
         }

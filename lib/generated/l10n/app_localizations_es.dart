@@ -320,7 +320,7 @@ class SEs extends S {
   String get generalDefault => 'por defecto';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'Cuenta de Destino';
 
   @override
   String get generalDismiss => 'Descartar';
@@ -353,7 +353,7 @@ class SEs extends S {
   String get generalReset => 'Restablecer';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'Cuenta de Origen';
 
   @override
   String get generalSpent => 'Gastado';
@@ -435,7 +435,7 @@ class SEs extends S {
   String get homeMainChartNetWorthTitle => 'Valor neto';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle => 'Resumen de etiquetas del mes actual';
 
   @override
   String get homePiggyAdjustDialogTitle => 'Ahorrar/Gastar dinero';
@@ -457,7 +457,7 @@ class SEs extends S {
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'Personalizar el panel';
 
   @override
   String homePiggyLinked(String account) {
@@ -651,7 +651,8 @@ class SEs extends S {
   String get settingsFAQ => 'FAQ';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'Se abre en el navegador. Sólo disponible en inglés.';
 
   @override
   String get settingsLanguage => 'Idioma';
@@ -820,11 +821,12 @@ class SEs extends S {
   String get transactionErrorInvalidBudget => 'Presupuesto inválido';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts =>
+      'Por favor, primero rellene las cuentas.';
 
   @override
   String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+      'Por favor, seleccione una cuenta de activo.';
 
   @override
   String get transactionErrorTitle => 'Por favor, proporcione un título.';
@@ -858,11 +860,11 @@ class SEs extends S {
 
   @override
   String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+      'Cambiar cuenta de destino dividida';
 
   @override
   String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+      'Cambiar cuenta de origen dividida';
 
   @override
   String get transactionSplitChangeTarget =>

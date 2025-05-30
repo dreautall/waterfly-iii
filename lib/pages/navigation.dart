@@ -170,15 +170,29 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                 if (screenIndex == index) {
                   return;
                 }
-                context.read<NavPageElements>().appBarActions = null;
-                context.read<NavPageElements>().appBarBottom = null;
-                context.read<NavPageElements>().fab = null;
-                context.read<NavPageElements>().appBarTitle = Text(
-                  navDestinations[index].label,
-                );
-                setState(() {
-                  screenIndex = index;
-                });
+                if (navDestinations[index].pageHandler is SettingsPage) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder:
+                          (BuildContext context) => Scaffold(
+                            appBar: AppBar(
+                              title: Text(navDestinations[index].label),
+                            ),
+                            body: const SettingsPage(),
+                          ),
+                    ),
+                  );
+                } else {
+                  context.read<NavPageElements>().appBarActions = null;
+                  context.read<NavPageElements>().appBarBottom = null;
+                  context.read<NavPageElements>().fab = null;
+                  context.read<NavPageElements>().appBarTitle = Text(
+                    navDestinations[index].label,
+                  );
+                  setState(() {
+                    screenIndex = index;
+                  });
+                }
               },
               children: <Widget>[
                 Padding(

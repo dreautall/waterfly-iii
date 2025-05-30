@@ -28,7 +28,7 @@ Widget accountRowBuilder(
     currentAmount =
         double.tryParse(account.attributes.currentBalance ?? "") ?? 0;
   }
-  final CurrencyRead currency = CurrencyRead(
+  CurrencyRead currency = CurrencyRead(
     id: account.attributes.currencyId ?? "0",
     type: "currencies",
     attributes: Currency(
@@ -38,6 +38,9 @@ Widget accountRowBuilder(
       decimalPlaces: account.attributes.currencyDecimalPlaces,
     ),
   );
+  if (currency.id == "0") {
+    currency = context.read<FireflyService>().defaultCurrency;
+  }
 
   late String subtitle;
   switch (account.attributes.type) {
@@ -107,6 +110,7 @@ Widget accountRowBuilder(
   if (subtitle == S.of(context).generalUnknown) {
     return const SizedBox.shrink();
   }
+
   return OpenContainer(
     openBuilder:
         (BuildContext context, Function closedContainer) => AccountTXpage(

@@ -431,7 +431,7 @@ class SZh extends S {
   String get homeMainChartNetWorthTitle => '净值';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle => '';
 
   @override
   String get homePiggyAdjustDialogTitle => '存钱/花钱';

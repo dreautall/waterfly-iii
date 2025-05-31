@@ -883,19 +883,14 @@ class _TransactionPageState extends State<TransactionPage>
                         // Make the dialog un-closable
                         barrierDismissible: false,
                         builder: (BuildContext context) {
-                          // Disable back button
-                          return WillPopScope(
-                            onWillPop: () async => false,
-                            child: AlertDialog(
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  CircularProgressIndicator(),
-                                  SizedBox(height: 16),
-                                  // Probably needs to be localized
-                                  Text("Saving..."),
-                                ],
-                              ),
+                          return const AlertDialog(
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                CircularProgressIndicator(),
+                                SizedBox(height: 16),
+                                Text('Saving...'),
+                              ],
                             ),
                           );
                         },

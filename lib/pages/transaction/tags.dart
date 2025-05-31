@@ -75,6 +75,7 @@ class _TransactionTagsState extends State<TransactionTags> {
                 border: const OutlineInputBorder(),
                 labelText: S.of(context).transactionFormLabelTags,
                 icon: const Icon(Icons.bookmarks),
+                filled: !widget.interactable,
                 prefixIcon:
                     widget.tagsController.tags.isNotEmpty
                         ? Padding(

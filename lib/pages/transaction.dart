@@ -2426,6 +2426,7 @@ class TransactionNote extends StatelessWidget {
               border: const OutlineInputBorder(),
               labelText: S.of(context).transactionFormLabelNotes,
               icon: const Icon(Icons.description),
+              filled: _savingInProgress,
             ),
           ),
         ),
@@ -2768,9 +2769,10 @@ class _DateTimePickerState extends State<DateTimePicker> {
           child: TextFormField(
             enabled: !_savingInProgress,
             controller: _dateTextController,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               //prefixIcon: Icon(Icons.calendar_month),
               border: OutlineInputBorder(),
+              filled: _savingInProgress,
             ),
             readOnly: true,
             onTap: _pickDate,
@@ -2781,7 +2783,10 @@ class _DateTimePickerState extends State<DateTimePicker> {
           child: TextFormField(
             enabled: !_savingInProgress,
             controller: _timeTextController,
-            decoration: const InputDecoration(border: OutlineInputBorder()),
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              filled: _savingInProgress,
+            ),
             readOnly: true,
             onTap: _pickTime,
           ),

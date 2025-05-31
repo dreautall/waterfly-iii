@@ -41,11 +41,14 @@ class TransactionTags extends StatefulWidget {
     required this.textController,
     required this.tagsController,
     this.enableAdd = true,
+    this.interactable = true,
   });
 
   final TextEditingController textController;
   final Tags tagsController;
   final bool enableAdd;
+
+  final bool interactable;
 
   @override
   State<TransactionTags> createState() => _TransactionTagsState();
@@ -63,6 +66,7 @@ class _TransactionTagsState extends State<TransactionTags> {
         Expanded(
           child: AnimatedHeight(
             child: TextFormField(
+              enabled: widget.interactable,
               controller: widget.textController,
               maxLines: null,
               readOnly: true,

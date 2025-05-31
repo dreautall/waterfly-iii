@@ -36,6 +36,8 @@ import 'package:waterflyiii/widgets/materialiconbutton.dart';
 
 final Logger log = Logger("Pages.Transaction");
 
+bool _savingInProgress = false;
+
 class TransactionPage extends StatefulWidget {
   const TransactionPage({
     super.key,
@@ -136,8 +138,6 @@ class _TransactionPageState extends State<TransactionPage>
   final List<AnimationController> _cardsAnimationController =
       <AnimationController>[];
   final List<Animation<double>> _cardsAnimation = <Animation<double>>[];
-
-  bool _saving = false;
 
   @override
   void initState() {
@@ -864,7 +864,7 @@ class _TransactionPageState extends State<TransactionPage>
           ],
           FilledButton(
             onPressed:
-                _saving
+                _savingInProgress
                     ? null
                     : () async {
                       final ScaffoldMessengerState msg = ScaffoldMessenger.of(
@@ -904,7 +904,7 @@ class _TransactionPageState extends State<TransactionPage>
                       }
                       // Do stuff
                       setState(() {
-                        _saving = true;
+                        _savingInProgress = true;
                       });
                       late Response<TransactionSingle> resp;
 
@@ -1087,9 +1087,6 @@ class _TransactionPageState extends State<TransactionPage>
                             behavior: SnackBarBehavior.floating,
                           ),
                         );
-                        setState(() {
-                          _saving = false;
-                        });
                         return;
                       }
 
@@ -1178,6 +1175,9 @@ class _TransactionPageState extends State<TransactionPage>
                           }
                         }
                       }
+
+                      // Done saving
+                      setState(() => _savingInProgress = false);
 
                       if (nav.canPop()) {
                         // Popping true means that the TX list will be refreshed.
@@ -1300,7 +1300,10 @@ class _TransactionPageState extends State<TransactionPage>
                 decimals: _localCurrency?.attributes.decimalPlaces ?? 2,
                 //style: Theme.of(context).textTheme.headlineLarge,
                 controller: _localAmountTextController,
-                disabled: _split || (_reconciled && _initiallyReconciled),
+                disabled:
+                    _savingInProgress ||
+                    _split ||
+                    (_reconciled && _initiallyReconciled),
                 onChanged:
                     (String string) =>
                         _localAmounts[0] = double.tryParse(string) ?? 0,
@@ -1410,6 +1413,7 @@ class _TransactionPageState extends State<TransactionPage>
                     }
                   },
                   disabled:
+                      _savingInProgress ||
                       (_reconciled && _initiallyReconciled) ||
                       _sourceAccountTextController.text ==
                           "<${S.of(context).generalMultiple}>",
@@ -1514,6 +1518,7 @@ class _TransactionPageState extends State<TransactionPage>
                       }
                     },
                     disabled:
+                        _savingInProgress ||
                         (_reconciled && _initiallyReconciled) ||
                         _destinationAccountTextController.text ==
                             "<${S.of(context).generalMultiple}>",
@@ -1539,7 +1544,10 @@ class _TransactionPageState extends State<TransactionPage>
                         : const SizedBox(),
               ),
               icon: Icon(_transactionType.verticalIcon),
-              backgroundColor: _transactionType.color,
+              backgroundColor:
+                  _savingInProgress
+                      ? Theme.of(context).colorScheme.surfaceVariant
+                      : _transactionType.color,
             ),
           ),
         ],
@@ -1560,10 +1568,12 @@ class _TransactionPageState extends State<TransactionPage>
     childs.add(
       FilledButton.icon(
         onPressed:
-            () =>
-                _reconciled && _initiallyReconciled
-                    ? null
-                    : splitTransactionAdd(),
+            _savingInProgress
+                ? null
+                : () =>
+                    _reconciled && _initiallyReconciled
+                        ? null
+                        : splitTransactionAdd(),
         label: Text(S.of(context).transactionSplitAdd),
         icon: const Icon(Icons.call_split),
       ),
@@ -1745,6 +1755,7 @@ class _TransactionPageState extends State<TransactionPage>
                               children: <Widget>[
                                 Expanded(
                                   child: AutoCompleteText<AutocompleteAccount>(
+                                    disabled: _savingInProgress,
                                     labelText:
                                         S.of(context).generalSourceAccount,
                                     labelIcon: Icons.arrow_back,
@@ -1824,6 +1835,7 @@ class _TransactionPageState extends State<TransactionPage>
                               children: <Widget>[
                                 Expanded(
                                   child: AutoCompleteText<AutocompleteAccount>(
+                                    disabled: _savingInProgress,
                                     labelText:
                                         S.of(context).generalDestinationAccount,
                                     labelIcon: Icons.arrow_forward,
@@ -1958,6 +1970,7 @@ class _TransactionPageState extends State<TransactionPage>
                                       splitTransactionCalculateAmount();
                                     },
                                     disabled:
+                                        _savingInProgress ||
                                         _reconciled && _initiallyReconciled,
                                   ),
                                 ),
@@ -1999,6 +2012,7 @@ class _TransactionPageState extends State<TransactionPage>
                                       splitTransactionCalculateAmount();
                                     },
                                     disabled:
+                                        _savingInProgress ||
                                         _reconciled && _initiallyReconciled,
                                   ),
                                 ),
@@ -2014,6 +2028,7 @@ class _TransactionPageState extends State<TransactionPage>
                   ),
                   // Tags (always)
                   TransactionTags(
+                    interactable: !_savingInProgress,
                     textController: _tagsTextControllers[i],
                     tagsController: _tags[i],
                   ),
@@ -2044,10 +2059,12 @@ class _TransactionPageState extends State<TransactionPage>
                           isSelected: _reconciled,
                           selectedIcon: const Icon(Icons.done),
                           onPressed:
-                              () => setState(() {
-                                _reconciled = !_reconciled;
-                                _initiallyReconciled = false;
-                              }),
+                              _savingInProgress
+                                  ? null
+                                  : () => setState(() {
+                                    _reconciled = !_reconciled;
+                                    _initiallyReconciled = false;
+                                  }),
                           tooltip: S.of(context).generalReconcile,
                         ),
                         hDivider,
@@ -2057,28 +2074,34 @@ class _TransactionPageState extends State<TransactionPage>
                         icon: const Icon(Icons.calendar_today),
                         isSelected: _bills[i] != null,
                         selectedIcon: const Icon(Icons.event_available),
-                        onPressed: () async {
-                          BillRead? newBill = await showDialog<BillRead>(
-                            context: context,
-                            barrierDismissible: false,
-                            builder:
-                                (BuildContext context) =>
-                                    BillDialog(currentBill: _bills[i]),
-                          );
-                          // Back button returns "null"
-                          if (newBill == null) {
-                            return;
-                          }
-                          // Delete bill returns id "0"
-                          if (newBill.id.isEmpty || newBill.id == "0") {
-                            newBill = null;
-                          }
-                          if (newBill != _bills[i]) {
-                            setState(() {
-                              _bills[i] = newBill;
-                            });
-                          }
-                        },
+                        onPressed:
+                            _savingInProgress
+                                ? null
+                                : () async {
+                                  BillRead? newBill =
+                                      await showDialog<BillRead>(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder:
+                                            (BuildContext context) =>
+                                                BillDialog(
+                                                  currentBill: _bills[i],
+                                                ),
+                                      );
+                                  // Back button returns "null"
+                                  if (newBill == null) {
+                                    return;
+                                  }
+                                  // Delete bill returns id "0"
+                                  if (newBill.id.isEmpty || newBill.id == "0") {
+                                    newBill = null;
+                                  }
+                                  if (newBill != _bills[i]) {
+                                    setState(() {
+                                      _bills[i] = newBill;
+                                    });
+                                  }
+                                },
                         tooltip: S.of(context).transactionDialogBillTitle,
                       ),
                       hDivider,
@@ -2087,7 +2110,9 @@ class _TransactionPageState extends State<TransactionPage>
                         icon: const Icon(Icons.currency_exchange),
                         isSelected: _foreignCurrencies[i] != null,
                         onPressed:
-                            !(_reconciled && _initiallyReconciled)
+                            _savingInProgress
+                                ? null
+                                : !(_reconciled && _initiallyReconciled)
                                 ? () async {
                                   CurrencyRead? newCurrency =
                                       await showDialog<CurrencyRead>(
@@ -2134,7 +2159,9 @@ class _TransactionPageState extends State<TransactionPage>
                           IconButton(
                             icon: const Icon(Icons.add_business),
                             onPressed:
-                                _split &&
+                                _savingInProgress
+                                    ? null
+                                    : _split &&
                                         !_showSourceAccountSelection &&
                                         _transactionType ==
                                             TransactionTypeProperty.deposit &&
@@ -2167,7 +2194,9 @@ class _TransactionPageState extends State<TransactionPage>
                           IconButton(
                             icon: const Icon(Icons.add_business),
                             onPressed:
-                                _split &&
+                                _savingInProgress
+                                    ? null
+                                    : _split &&
                                         !_showDestinationAccountSelection &&
                                         _transactionType ==
                                             TransactionTypeProperty
@@ -2198,7 +2227,10 @@ class _TransactionPageState extends State<TransactionPage>
                         IconButton(
                           icon: const Icon(Icons.delete),
                           onPressed:
-                              _split && !(_reconciled && _initiallyReconciled)
+                              _savingInProgress
+                                  ? null
+                                  : _split &&
+                                      !(_reconciled && _initiallyReconciled)
                                   ? () {
                                     log.fine(() => "marking $i for deletion");
                                     _cardsAnimationController[i].reverse();
@@ -2284,20 +2316,24 @@ class TransactionDeleteButton extends StatelessWidget {
     return IconButton(
       icon: const Icon(Icons.delete),
       tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
-      onPressed: () async {
-        final FireflyIii api = context.read<FireflyService>().api;
-        final NavigatorState nav = Navigator.of(context);
-        bool? ok = await showDialog<bool>(
-          context: context,
-          builder: (BuildContext context) => const DeletionConfirmDialog(),
-        );
-        if (!(ok ?? false)) {
-          return;
-        }
+      onPressed:
+          _savingInProgress
+              ? null
+              : () async {
+                final FireflyIii api = context.read<FireflyService>().api;
+                final NavigatorState nav = Navigator.of(context);
+                bool? ok = await showDialog<bool>(
+                  context: context,
+                  builder:
+                      (BuildContext context) => const DeletionConfirmDialog(),
+                );
+                if (!(ok ?? false)) {
+                  return;
+                }
 
-        await api.v1TransactionsIdDelete(id: transactionId);
-        nav.pop(true);
-      },
+                await api.v1TransactionsIdDelete(id: transactionId);
+                nav.pop(true);
+              },
     );
   }
 }
@@ -2321,6 +2357,7 @@ class TransactionTitle extends StatelessWidget {
     log.finest(() => "build()");
     return Expanded(
       child: AutoCompleteText<String>(
+        disabled: _savingInProgress,
         labelText: S.of(context).transactionFormLabelTitle,
         labelIcon: Icons.receipt_long,
         textController: textController,
@@ -2372,6 +2409,7 @@ class TransactionNote extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: TextFormField(
+            enabled: !_savingInProgress,
             controller: textController,
             maxLines: null,
             decoration: InputDecoration(
@@ -2407,6 +2445,7 @@ class TransactionCategory extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: AutoCompleteText<String>(
+            disabled: _savingInProgress,
             labelText: S.of(context).generalCategory,
             labelIcon: Icons.assignment,
             textController: textController,
@@ -2517,6 +2556,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
       children: <Widget>[
         Expanded(
           child: AutoCompleteText<AutocompleteBudget>(
+            disabled: _savingInProgress,
             labelText: S.of(context).generalBudget,
             labelIcon: Icons.payments,
             textController: widget.textController,
@@ -2618,7 +2658,7 @@ class _AttachmentButtonState extends State<AttachmentButton> {
       child: MaterialIconButton(
         icon: Icons.attach_file,
         tooltip: S.of(context).transactionAttachments,
-        onPressed: widget.onPressed,
+        onPressed: _savingInProgress ? null : widget.onPressed,
       ),
     );
   }
@@ -2716,6 +2756,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
       children: <Widget>[
         IntrinsicWidth(
           child: TextFormField(
+            enabled: !_savingInProgress,
             controller: _dateTextController,
             decoration: const InputDecoration(
               //prefixIcon: Icon(Icons.calendar_month),
@@ -2728,6 +2769,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
         const SizedBox(width: 16),
         IntrinsicWidth(
           child: TextFormField(
+            enabled: !_savingInProgress,
             controller: _timeTextController,
             decoration: const InputDecoration(border: OutlineInputBorder()),
             readOnly: true,

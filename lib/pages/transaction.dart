@@ -1209,7 +1209,14 @@ class _TransactionPageState extends State<TransactionPage>
                         );
                       }
                     },
-            child: Text(MaterialLocalizations.of(context).saveButtonLabel),
+            child:
+                _savingInProgress
+                    ? SizedBox(
+                      width: 25,
+                      height: 25,
+                      child: CircularProgressIndicator(strokeWidth: 3),
+                    )
+                    : Text(MaterialLocalizations.of(context).saveButtonLabel),
           ),
           const SizedBox(width: 16),
         ],

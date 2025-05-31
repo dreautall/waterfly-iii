@@ -877,25 +877,6 @@ class _TransactionPageState extends State<TransactionPage>
                       final TransStock? stock =
                           context.read<FireflyService>().transStock;
 
-                      // Show "saving" popup
-                      showDialog(
-                        context: context,
-                        // Make the dialog un-closable
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return const AlertDialog(
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                CircularProgressIndicator(),
-                                SizedBox(height: 16),
-                                Text('Saving...'),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-
                       // Sanity checks
                       String? error;
 
@@ -913,8 +894,6 @@ class _TransactionPageState extends State<TransactionPage>
                         error = S.of(context).transactionErrorNoAccounts;
                       }
                       if (error != null) {
-                        // Dismiss "saving" popup if there was an error
-                        nav.pop();
                         msg.showSnackBar(
                           SnackBar(
                             content: Text(error),
@@ -1102,8 +1081,6 @@ class _TransactionPageState extends State<TransactionPage>
                                   : "[nocontext] Unknown error.";
                         }
 
-                        // Dismiss "saving" popup if there was an error
-                        nav.pop();
                         msg.showSnackBar(
                           SnackBar(
                             content: Text(error),
@@ -1202,8 +1179,6 @@ class _TransactionPageState extends State<TransactionPage>
                         }
                       }
 
-                      // After successful save, dismiss the "saving" popup
-                      nav.pop();
                       if (nav.canPop()) {
                         // Popping true means that the TX list will be refreshed.
                         // This should only happen if:

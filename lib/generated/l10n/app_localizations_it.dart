@@ -642,6 +642,9 @@ class SIt extends S {
   String get settingsDialogLanguageTitle => 'Seleziona Lingua';
 
   @override
+  String get settingsDialogLocaleFormatTitle => 'Select locale format';
+
+  @override
   String get settingsDialogThemeTitle => 'Seleziona Tema';
 
   @override
@@ -652,6 +655,9 @@ class SIt extends S {
 
   @override
   String get settingsLanguage => 'Lingua';
+
+  @override
+  String get settingsLocaleFormat => 'Locale format';
 
   @override
   String get settingsLockscreen => 'Schermata di blocco';
@@ -885,4 +891,31 @@ class SIt extends S {
 
   @override
   String get transactionTypeWithdrawal => 'Prelievo';
+
+  @override
+  String get localeFormatDateHelpText => 'Select date';
+
+  @override
+  String get localeFormatTimeHelpText => 'Select time';
+
+  @override
+  String get localeFormatCancelText => 'Cancel';
+
+  @override
+  String get localeFormatConfirmText => 'OK';
+
+  @override
+  String get localeFormatBarrierLabel => 'Dismiss';
+
+  @override
+  String get localeFormatErrorFormatText => 'Invalid format.';
+
+  @override
+  String get localeFormatErrorInvalidText => 'Out of range.';
+
+  @override
+  String get localeFormatHourLabelText => 'Hour';
+
+  @override
+  String get localeFormatMinuteLabelText => 'Minute';
 }

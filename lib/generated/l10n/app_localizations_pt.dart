@@ -641,6 +641,9 @@ class SPt extends S {
   String get settingsDialogLanguageTitle => 'Selecionar Idioma';
 
   @override
+  String get settingsDialogLocaleFormatTitle => 'Select locale format';
+
+  @override
   String get settingsDialogThemeTitle => 'Selecionar Tema';
 
   @override
@@ -651,6 +654,9 @@ class SPt extends S {
 
   @override
   String get settingsLanguage => 'Idioma';
+
+  @override
+  String get settingsLocaleFormat => 'Locale format';
 
   @override
   String get settingsLockscreen => 'Tela de bloqueio';
@@ -881,4 +887,31 @@ class SPt extends S {
 
   @override
   String get transactionTypeWithdrawal => 'Retirada';
+
+  @override
+  String get localeFormatDateHelpText => 'Select date';
+
+  @override
+  String get localeFormatTimeHelpText => 'Select time';
+
+  @override
+  String get localeFormatCancelText => 'Cancel';
+
+  @override
+  String get localeFormatConfirmText => 'OK';
+
+  @override
+  String get localeFormatBarrierLabel => 'Dismiss';
+
+  @override
+  String get localeFormatErrorFormatText => 'Invalid format.';
+
+  @override
+  String get localeFormatErrorInvalidText => 'Out of range.';
+
+  @override
+  String get localeFormatHourLabelText => 'Hour';
+
+  @override
+  String get localeFormatMinuteLabelText => 'Minute';
 }

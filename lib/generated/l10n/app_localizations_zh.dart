@@ -634,6 +634,9 @@ class SZh extends S {
   String get settingsDialogLanguageTitle => '选择语言';
 
   @override
+  String get settingsDialogLocaleFormatTitle => 'Select locale format';
+
+  @override
   String get settingsDialogThemeTitle => '选择主题';
 
   @override
@@ -644,6 +647,9 @@ class SZh extends S {
 
   @override
   String get settingsLanguage => '切换语言';
+
+  @override
+  String get settingsLocaleFormat => 'Locale format';
 
   @override
   String get settingsLockscreen => '锁屏选项';
@@ -863,4 +869,31 @@ class SZh extends S {
 
   @override
   String get transactionTypeWithdrawal => '取款';
+
+  @override
+  String get localeFormatDateHelpText => 'Select date';
+
+  @override
+  String get localeFormatTimeHelpText => 'Select time';
+
+  @override
+  String get localeFormatCancelText => 'Cancel';
+
+  @override
+  String get localeFormatConfirmText => 'OK';
+
+  @override
+  String get localeFormatBarrierLabel => 'Dismiss';
+
+  @override
+  String get localeFormatErrorFormatText => 'Invalid format.';
+
+  @override
+  String get localeFormatErrorInvalidText => 'Out of range.';
+
+  @override
+  String get localeFormatHourLabelText => 'Hour';
+
+  @override
+  String get localeFormatMinuteLabelText => 'Minute';
 }

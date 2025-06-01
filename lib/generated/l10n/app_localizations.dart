@@ -1046,6 +1046,12 @@ abstract class S {
   /// **'Select Language'**
   String get settingsDialogLanguageTitle;
 
+  /// Dialog title: Select locale format
+  ///
+  /// In en, this message translates to:
+  /// **'Select locale format'**
+  String get settingsDialogLocaleFormatTitle;
+
   /// Dialog title: Select theme
   ///
   /// In en, this message translates to:
@@ -1069,6 +1075,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Language'**
   String get settingsLanguage;
+
+  /// Currently selected locale format for dates and numbers
+  ///
+  /// In en, this message translates to:
+  /// **'Locale format'**
+  String get settingsLocaleFormat;
 
   /// Setting if a lockscreen is shown (authentication is required on startup)
   ///
@@ -1477,6 +1489,60 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Withdrawal'**
   String get transactionTypeWithdrawal;
+
+  /// Date picker title
+  ///
+  /// In en, this message translates to:
+  /// **'Select date'**
+  String get localeFormatDateHelpText;
+
+  /// Time picker title
+  ///
+  /// In en, this message translates to:
+  /// **'Select time'**
+  String get localeFormatTimeHelpText;
+
+  /// Date/Time picker cancel button
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get localeFormatCancelText;
+
+  /// Date/Time picker confirm button
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get localeFormatConfirmText;
+
+  /// Read out by accessibility tools (TalkBack or VoiceOver) to indicate that a tap dismisses the barrier.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get localeFormatBarrierLabel;
+
+  /// Error message used when the input text isn't in a proper date format.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid format.'**
+  String get localeFormatErrorFormatText;
+
+  /// Error message used when the input text isn't a selectable date.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of range.'**
+  String get localeFormatErrorInvalidText;
+
+  /// Used below the hour text field of the dialog when created in [TimePickerEntryMode.input] mode
+  ///
+  /// In en, this message translates to:
+  /// **'Hour'**
+  String get localeFormatHourLabelText;
+
+  /// Used below the minute text field of the dialog when created in [TimePickerEntryMode.input] mode
+  ///
+  /// In en, this message translates to:
+  /// **'Minute'**
+  String get localeFormatMinuteLabelText;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

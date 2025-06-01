@@ -640,6 +640,9 @@ class SRu extends S {
   String get settingsDialogLanguageTitle => 'Выберите язык';
 
   @override
+  String get settingsDialogLocaleFormatTitle => 'Select locale format';
+
+  @override
   String get settingsDialogThemeTitle => 'Выберите тему';
 
   @override
@@ -650,6 +653,9 @@ class SRu extends S {
 
   @override
   String get settingsLanguage => 'Язык';
+
+  @override
+  String get settingsLocaleFormat => 'Locale format';
 
   @override
   String get settingsLockscreen => 'Экран блокировки';
@@ -882,4 +888,31 @@ class SRu extends S {
 
   @override
   String get transactionTypeWithdrawal => 'Вывод средств';
+
+  @override
+  String get localeFormatDateHelpText => 'Select date';
+
+  @override
+  String get localeFormatTimeHelpText => 'Select time';
+
+  @override
+  String get localeFormatCancelText => 'Cancel';
+
+  @override
+  String get localeFormatConfirmText => 'OK';
+
+  @override
+  String get localeFormatBarrierLabel => 'Dismiss';
+
+  @override
+  String get localeFormatErrorFormatText => 'Invalid format.';
+
+  @override
+  String get localeFormatErrorInvalidText => 'Out of range.';
+
+  @override
+  String get localeFormatHourLabelText => 'Hour';
+
+  @override
+  String get localeFormatMinuteLabelText => 'Minute';
 }

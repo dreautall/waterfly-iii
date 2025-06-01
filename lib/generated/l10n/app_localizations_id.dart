@@ -643,6 +643,9 @@ class SId extends S {
   String get settingsDialogLanguageTitle => 'Pilih Bahasa';
 
   @override
+  String get settingsDialogLocaleFormatTitle => 'Select locale format';
+
+  @override
   String get settingsDialogThemeTitle => 'Pilih Tema';
 
   @override
@@ -653,6 +656,9 @@ class SId extends S {
 
   @override
   String get settingsLanguage => 'Bahasa';
+
+  @override
+  String get settingsLocaleFormat => 'Locale format';
 
   @override
   String get settingsLockscreen => 'Layar Kunci';
@@ -884,4 +890,31 @@ class SId extends S {
 
   @override
   String get transactionTypeWithdrawal => 'Penarikan';
+
+  @override
+  String get localeFormatDateHelpText => 'Select date';
+
+  @override
+  String get localeFormatTimeHelpText => 'Select time';
+
+  @override
+  String get localeFormatCancelText => 'Cancel';
+
+  @override
+  String get localeFormatConfirmText => 'OK';
+
+  @override
+  String get localeFormatBarrierLabel => 'Dismiss';
+
+  @override
+  String get localeFormatErrorFormatText => 'Invalid format.';
+
+  @override
+  String get localeFormatErrorInvalidText => 'Out of range.';
+
+  @override
+  String get localeFormatHourLabelText => 'Hour';
+
+  @override
+  String get localeFormatMinuteLabelText => 'Minute';
 }

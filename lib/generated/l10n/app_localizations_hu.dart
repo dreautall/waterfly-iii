@@ -648,6 +648,9 @@ class SHu extends S {
   String get settingsDialogLanguageTitle => 'Nyelv Kiválasztása';
 
   @override
+  String get settingsDialogLocaleFormatTitle => 'Select locale format';
+
+  @override
   String get settingsDialogThemeTitle => 'Téma Kiválasztása';
 
   @override
@@ -659,6 +662,9 @@ class SHu extends S {
 
   @override
   String get settingsLanguage => 'Nyelv';
+
+  @override
+  String get settingsLocaleFormat => 'Locale format';
 
   @override
   String get settingsLockscreen => 'Zárképernyő';
@@ -893,4 +899,31 @@ class SHu extends S {
 
   @override
   String get transactionTypeWithdrawal => 'Költség';
+
+  @override
+  String get localeFormatDateHelpText => 'Select date';
+
+  @override
+  String get localeFormatTimeHelpText => 'Select time';
+
+  @override
+  String get localeFormatCancelText => 'Cancel';
+
+  @override
+  String get localeFormatConfirmText => 'OK';
+
+  @override
+  String get localeFormatBarrierLabel => 'Dismiss';
+
+  @override
+  String get localeFormatErrorFormatText => 'Invalid format.';
+
+  @override
+  String get localeFormatErrorInvalidText => 'Out of range.';
+
+  @override
+  String get localeFormatHourLabelText => 'Hour';
+
+  @override
+  String get localeFormatMinuteLabelText => 'Minute';
 }

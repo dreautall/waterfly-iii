@@ -647,6 +647,9 @@ class SPl extends S {
   String get settingsDialogLanguageTitle => 'Wybierz język';
 
   @override
+  String get settingsDialogLocaleFormatTitle => 'Select locale format';
+
+  @override
   String get settingsDialogThemeTitle => 'Wybierz motyw';
 
   @override
@@ -658,6 +661,9 @@ class SPl extends S {
 
   @override
   String get settingsLanguage => 'Język';
+
+  @override
+  String get settingsLocaleFormat => 'Locale format';
 
   @override
   String get settingsLockscreen => 'Ekran blokady';
@@ -886,4 +892,31 @@ class SPl extends S {
 
   @override
   String get transactionTypeWithdrawal => 'Wypłata';
+
+  @override
+  String get localeFormatDateHelpText => 'Select date';
+
+  @override
+  String get localeFormatTimeHelpText => 'Select time';
+
+  @override
+  String get localeFormatCancelText => 'Cancel';
+
+  @override
+  String get localeFormatConfirmText => 'OK';
+
+  @override
+  String get localeFormatBarrierLabel => 'Dismiss';
+
+  @override
+  String get localeFormatErrorFormatText => 'Invalid format.';
+
+  @override
+  String get localeFormatErrorInvalidText => 'Out of range.';
+
+  @override
+  String get localeFormatHourLabelText => 'Hour';
+
+  @override
+  String get localeFormatMinuteLabelText => 'Minute';
 }

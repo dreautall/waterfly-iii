@@ -640,6 +640,9 @@ class SRo extends S {
   String get settingsDialogLanguageTitle => 'Selectează limba';
 
   @override
+  String get settingsDialogLocaleFormatTitle => 'Select locale format';
+
+  @override
   String get settingsDialogThemeTitle => 'Selectează tema';
 
   @override
@@ -650,6 +653,9 @@ class SRo extends S {
 
   @override
   String get settingsLanguage => 'Limba';
+
+  @override
+  String get settingsLocaleFormat => 'Locale format';
 
   @override
   String get settingsLockscreen => 'Ecran de blocare';
@@ -884,4 +890,31 @@ class SRo extends S {
 
   @override
   String get transactionTypeWithdrawal => 'Retragere';
+
+  @override
+  String get localeFormatDateHelpText => 'Select date';
+
+  @override
+  String get localeFormatTimeHelpText => 'Select time';
+
+  @override
+  String get localeFormatCancelText => 'Cancel';
+
+  @override
+  String get localeFormatConfirmText => 'OK';
+
+  @override
+  String get localeFormatBarrierLabel => 'Dismiss';
+
+  @override
+  String get localeFormatErrorFormatText => 'Invalid format.';
+
+  @override
+  String get localeFormatErrorInvalidText => 'Out of range.';
+
+  @override
+  String get localeFormatHourLabelText => 'Hour';
+
+  @override
+  String get localeFormatMinuteLabelText => 'Minute';
 }

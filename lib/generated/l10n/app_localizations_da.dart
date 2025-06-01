@@ -639,6 +639,9 @@ class SDa extends S {
   String get settingsDialogLanguageTitle => 'Vælg sprog';
 
   @override
+  String get settingsDialogLocaleFormatTitle => 'Select locale format';
+
+  @override
   String get settingsDialogThemeTitle => 'Vælg tema';
 
   @override
@@ -649,6 +652,9 @@ class SDa extends S {
 
   @override
   String get settingsLanguage => 'Sprog';
+
+  @override
+  String get settingsLocaleFormat => 'Locale format';
 
   @override
   String get settingsLockscreen => 'Låst skærm';
@@ -879,4 +885,31 @@ class SDa extends S {
 
   @override
   String get transactionTypeWithdrawal => 'Hævning';
+
+  @override
+  String get localeFormatDateHelpText => 'Select date';
+
+  @override
+  String get localeFormatTimeHelpText => 'Select time';
+
+  @override
+  String get localeFormatCancelText => 'Cancel';
+
+  @override
+  String get localeFormatConfirmText => 'OK';
+
+  @override
+  String get localeFormatBarrierLabel => 'Dismiss';
+
+  @override
+  String get localeFormatErrorFormatText => 'Invalid format.';
+
+  @override
+  String get localeFormatErrorInvalidText => 'Out of range.';
+
+  @override
+  String get localeFormatHourLabelText => 'Hour';
+
+  @override
+  String get localeFormatMinuteLabelText => 'Minute';
 }

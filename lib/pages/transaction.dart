@@ -1523,7 +1523,7 @@ class _TransactionPageState extends State<TransactionPage>
             ),
           ),
           Positioned(
-            top: (64 + 16 + 64 - 56) / 2,
+            top: (64 + 16 + 4) / 2,
             right: 15,
             child: FloatingActionButton.extended(
               extendedIconLabelSpacing: _txTypeChipExtended ? 10 : 0,

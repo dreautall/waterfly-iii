@@ -283,7 +283,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
         // Attempt to retrieve the opening balance
         double balance =
             _lastCalculatedBalance ??
-            double.tryParse(account.attributes.currentBalance!) ?? 0.0;
+            double.tryParse(account.attributes.currentBalance!) ??
+            0.0;
         // If the account is a revenue/expense account, we need to invert the balance
         if (_lastCalculatedBalance == null &&
             _isRevenueOrExpense(account.attributes.type)) {
@@ -365,7 +366,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
   Widget transactionRowBuilder(
     BuildContext context,
     TransactionRead item,
-    int index
+    int index,
   ) {
     final List<TransactionSplit> transactions = item.attributes.transactions;
     if (transactions.isEmpty) {
@@ -629,7 +630,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                 child: Icon(transactions.first.type.icon),
               ),
               title: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  // Front part
                   Expanded(
                     child: Text(
                       title,
@@ -637,58 +640,142 @@ class _HomeTransactionsState extends State<HomeTransactions>
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                  const SizedBox(width: 8),
+                  // Trailing part
+                  RichText(
+                    textAlign: TextAlign.end,
+                    maxLines: 1,
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      children: <InlineSpan>[
+                        if (foreignText.isNotEmpty)
+                          TextSpan(
+                            text: foreignText,
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodySmall!.copyWith(
+                              color: Colors.blue,
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                        TextSpan(
+                          text: currency.fmt(amount),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleMedium!.copyWith(
+                            color:
+                                transactions.first.type !=
+                                        TransactionTypeProperty.reconciliation
+                                    ? transactions.first.type.color
+                                    : (transactions.first.sourceType ==
+                                        AccountTypeProperty
+                                            .reconciliationAccount)
+                                    ? Colors.green
+                                    : Colors.red,
+                            fontFeatures: const <FontFeature>[
+                              FontFeature.tabularFigures(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
               subtitle: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  // Front part
                   Expanded(
-                    child: RichText(
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      text: TextSpan(
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        children: subtitle,
-                      ),
-                    ),
-                  ),
-                  if (!context.watch<SettingsProvider>().hideTags &&
-                      tags.isNotEmpty) ...<Widget>[
-                    Wrap(
-                      children:
-                          tags
-                              .map(
-                                (String tag) => Card(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        const Icon(
-                                          Icons.label_outline,
-                                          size: 16,
-                                        ),
-                                        const SizedBox(width: 5),
-                                        Flexible(
-                                          child: RichText(
-                                            overflow: TextOverflow.fade,
-                                            text: TextSpan(
-                                              style:
-                                                  Theme.of(
-                                                    context,
-                                                  ).textTheme.bodyMedium,
-                                              text: tag,
-                                            ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        RichText(
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            children: subtitle,
+                          ),
+                        ),
+                        if (!context.watch<SettingsProvider>().hideTags &&
+                            tags.isNotEmpty) ...<Widget>[
+                          Wrap(
+                            children:
+                                tags
+                                    .map(
+                                      (String tag) => Card(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(6.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              const Icon(
+                                                Icons.label_outline,
+                                                size: 16,
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Flexible(
+                                                child: RichText(
+                                                  overflow: TextOverflow.fade,
+                                                  text: TextSpan(
+                                                    style:
+                                                        Theme.of(
+                                                          context,
+                                                        ).textTheme.bodyMedium,
+                                                    text: tag,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-                              .toList(),
+                                      ),
+                                    )
+                                    .toList(),
+                          ),
+                        ],
+                      ],
                     ),
-                  ],
+                  ),
+                  // Trailing part
+                  RichText(
+                    textAlign: TextAlign.end,
+                    maxLines: 1,
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      children: <InlineSpan>[
+                        if (reconciled)
+                          const WidgetSpan(
+                            baseline: TextBaseline.ideographic,
+                            alignment: PlaceholderAlignment.middle,
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 2),
+                              child: Icon(Icons.check),
+                            ),
+                          ),
+                        if (_filters.account != null)
+                          TextSpan(
+                            text: currency.fmt(
+                              _runningBalancesByTransactionId[item.id] ?? 0.0,
+                            ),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        if (_filters.account == null)
+                          TextSpan(
+                            text: switch (transactions.first.type) {
+                              TransactionTypeProperty.deposit =>
+                                destinationName,
+                              TransactionTypeProperty.openingBalance => "",
+                              TransactionTypeProperty.reconciliation => "",
+                              _ => sourceName,
+                            },
+                          ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
               isThreeLine: true,
@@ -698,60 +785,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   bottomLeft: Radius.circular(16),
                 ),
               ),
-              trailing: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxWidth: 100,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    if (foreignText.isNotEmpty)
-                      Text(
-                        foreignText,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall!
-                            .copyWith(color: Colors.blue),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    Text(
-                      currency.fmt(amount),
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: transactions.first.type !=
-                                TransactionTypeProperty.reconciliation
-                                ? transactions.first.type.color
-                                : (transactions.first.sourceType ==
-                                AccountTypeProperty.reconciliationAccount)
-                                ? Colors.green
-                                : Colors.red,
-                            fontFeatures: const <FontFeature>[
-                              FontFeature.tabularFigures(),
-                            ],
-                          ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    if (reconciled)
-                      const Icon(
-                        Icons.check,
-                        size: 16,
-                      ),
-                    if (_filters.account != null)
-                      Text(
-                        currency.fmt(_runningBalancesByTransactionId[item.id] ?? 0.0),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                  ],
-                ),
-              ),
             ),
           ),
       onClosed: (bool? refresh) async {
-
         if (_filters.account != null) {
           // Reset last balance calculated
           FireflyIii api = context.read<FireflyService>().api;
@@ -761,7 +797,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
           );
           apiThrowErrorIfEmpty(respAccount, mounted ? context : null);
           final AccountRead account = respAccount.body!.data;
-          _lastCalculatedBalance = double.tryParse(account.attributes.currentBalance!) ?? 0.0;
+          _lastCalculatedBalance =
+              double.tryParse(account.attributes.currentBalance!) ?? 0.0;
           // If the account is a revenue/expense account, we need to invert the balance
           if (_isRevenueOrExpense(account.attributes.type)) {
             _lastCalculatedBalance =

@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:logging/logging.dart';
 import 'package:material_color_utilities/material_color_utilities.dart'
@@ -41,7 +42,10 @@ class SettingsPageState extends State<SettingsPage>
       children: <Widget>[
         ListTile(
           title: Text(S.of(context).settingsLanguage),
-          subtitle: Text(S.of(context).localeName),
+          subtitle: Text(
+            LocaleNames.of(context)!.nameOf(S.of(context).localeName) ??
+                "Unknown locale",
+          ),
           leading: const CircleAvatar(child: Icon(Icons.language)),
           onTap: () {
             showDialog<Locale?>(
@@ -276,7 +280,11 @@ class LanguageDialog extends StatelessWidget {
         ...S.supportedLocales.map(
           (Locale locale) => RadioListTile<String>(
             value: locale.languageCode,
-            title: Text(locale.toLanguageTag()),
+            title: Text(
+              LocaleNamesLocalizationsDelegate.nativeLocaleNames[locale
+                      .toLanguageTag()] ??
+                  "Unknown locale",
+            ),
             groupValue: S.of(context).localeName,
             onChanged: (_) {
               Navigator.pop(context, locale);

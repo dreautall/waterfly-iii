@@ -4,6 +4,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemChannels;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_sharing_intent/flutter_sharing_intent.dart';
 import 'package:flutter_sharing_intent/model/sharing_file.dart';
 import 'package:local_auth/local_auth.dart';
@@ -298,7 +299,10 @@ class _WaterflyAppState extends State<WaterflyApp> {
                 useMaterial3: true,
               ),
               themeMode: context.select((SettingsProvider s) => s.theme),
-              localizationsDelegates: S.localizationsDelegates,
+              localizationsDelegates: [
+                ...S.localizationsDelegates,
+                LocaleNamesLocalizationsDelegate(),
+              ],
               supportedLocales: S.supportedLocales,
               locale: context.select((SettingsProvider s) => s.locale),
               navigatorKey: navigatorKey,

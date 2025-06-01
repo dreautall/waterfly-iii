@@ -173,7 +173,7 @@ class FilterDialog extends StatelessWidget {
                 AsyncSnapshot<FilterData> snapshot,
               ) {
                 if (snapshot.hasData && snapshot.data != null) {
-                  List<Widget> child = <Widget>[];
+                  final List<Widget> child = <Widget>[];
                   final double inputWidth =
                       MediaQuery.of(context).size.width - 128 - 24;
 

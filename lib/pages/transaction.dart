@@ -149,8 +149,9 @@ class _TransactionPageState extends State<TransactionPage>
 
     // opening an existing transaction, extract information
     if (widget.transaction != null) {
-      TransactionRead transaction = widget.transaction!;
-      List<TransactionSplit> transactions = transaction.attributes.transactions;
+      final TransactionRead transaction = widget.transaction!;
+      final List<TransactionSplit> transactions =
+          transaction.attributes.transactions;
 
       // Common values
       /// type
@@ -312,7 +313,7 @@ class _TransactionPageState extends State<TransactionPage>
             vsync: this,
           ),
         );
-        int i = _cardsAnimationController.length - 1;
+        final int i = _cardsAnimationController.length - 1;
         _cardsAnimationController.last.addStatusListener(
           (AnimationStatus status) => deleteCardAnimated(i)(status),
         );
@@ -597,17 +598,18 @@ class _TransactionPageState extends State<TransactionPage>
     }
 
     // this we need to dispose later
-    TextEditingController t1 = _sourceAccountTextControllers.removeAt(i);
-    FocusNode f1 = _sourceAccountFocusNodes.removeAt(i);
-    TextEditingController t2 = _destinationAccountTextControllers.removeAt(i);
-    FocusNode f2 = _destinationAccountFocusNodes.removeAt(i);
-    TextEditingController t3 = _categoryTextControllers.removeAt(i);
-    FocusNode f3 = _categoryFocusNodes.removeAt(i);
-    TextEditingController t4 = _budgetTextControllers.removeAt(i);
-    FocusNode f4 = _budgetFocusNodes.removeAt(i);
+    final TextEditingController t1 = _sourceAccountTextControllers.removeAt(i);
+    final FocusNode f1 = _sourceAccountFocusNodes.removeAt(i);
+    final TextEditingController t2 = _destinationAccountTextControllers
+        .removeAt(i);
+    final FocusNode f2 = _destinationAccountFocusNodes.removeAt(i);
+    final TextEditingController t3 = _categoryTextControllers.removeAt(i);
+    final FocusNode f3 = _categoryFocusNodes.removeAt(i);
+    final TextEditingController t4 = _budgetTextControllers.removeAt(i);
+    final FocusNode f4 = _budgetFocusNodes.removeAt(i);
     _tags.removeAt(i);
-    TextEditingController t5 = _tagsTextControllers.removeAt(i);
-    TextEditingController t6 = _noteTextControllers.removeAt(i);
+    final TextEditingController t5 = _tagsTextControllers.removeAt(i);
+    final TextEditingController t6 = _noteTextControllers.removeAt(i);
     _bills.removeAt(i);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -724,7 +726,7 @@ class _TransactionPageState extends State<TransactionPage>
         vsync: this,
       ),
     );
-    int i = _cardsAnimationController.length - 1;
+    final int i = _cardsAnimationController.length - 1;
     _cardsAnimationController.last.addStatusListener(
       (AnimationStatus status) => deleteCardAnimated(i)(status),
     );
@@ -910,8 +912,8 @@ class _TransactionPageState extends State<TransactionPage>
 
                       // Update existing transaction
                       if (!_newTX) {
-                        String id = widget.transaction!.id;
-                        List<TransactionSplitUpdate> txS =
+                        final String id = widget.transaction!.id;
+                        final List<TransactionSplitUpdate> txS =
                             <TransactionSplitUpdate>[];
                         for (int i = 0; i < _localAmounts.length; i++) {
                           late String sourceName, destinationName;
@@ -976,7 +978,7 @@ class _TransactionPageState extends State<TransactionPage>
                             txS.add(txSs);
                           }
                         }
-                        TransactionUpdate txUpdate = TransactionUpdate(
+                        final TransactionUpdate txUpdate = TransactionUpdate(
                           groupTitle: _split ? _titleTextController.text : null,
                           transactions: txS,
                         );
@@ -1000,7 +1002,7 @@ class _TransactionPageState extends State<TransactionPage>
                         );
                       } else {
                         // New transaction
-                        List<TransactionSplitStore> txS =
+                        final List<TransactionSplitStore> txS =
                             <TransactionSplitStore>[];
                         for (int i = 0; i < _localAmounts.length; i++) {
                           late String sourceName, destinationName;
@@ -1061,7 +1063,7 @@ class _TransactionPageState extends State<TransactionPage>
                       // Check if insert/update was successful
                       if (!resp.isSuccessful || resp.body == null) {
                         try {
-                          ValidationErrorResponse valError =
+                          final ValidationErrorResponse valError =
                               ValidationErrorResponse.fromJson(
                                 json.decode(resp.error.toString()),
                               );
@@ -1105,7 +1107,7 @@ class _TransactionPageState extends State<TransactionPage>
                         log.fine(
                           () => "uploading ${_attachments!.length} attachments",
                         );
-                        TransactionSplit? tx = resp
+                        final TransactionSplit? tx = resp
                             .body
                             ?.data
                             .attributes
@@ -1115,7 +1117,7 @@ class _TransactionPageState extends State<TransactionPage>
                                   e.transactionJournalId != null,
                             );
                         if (tx != null) {
-                          String txId = tx.transactionJournalId!;
+                          final String txId = tx.transactionJournalId!;
                           log.finest(() => "uploading to txId $txId");
                           for (AttachmentRead attachment in _attachments!) {
                             log.finest(
@@ -1230,7 +1232,7 @@ class _TransactionPageState extends State<TransactionPage>
     log.fine(() => "transactionDetailBuilder()");
     log.finer(() => "splits: ${_localAmounts.length}, split? $_split");
 
-    List<Widget> childs = <Widget>[];
+    final List<Widget> childs = <Widget>[];
     const Widget hDivider = SizedBox(height: 16);
     const Widget vDivider = SizedBox(width: 16);
 
@@ -1249,7 +1251,7 @@ class _TransactionPageState extends State<TransactionPage>
           AttachmentButton(
             attachments: _attachments,
             onPressed: () async {
-              List<AttachmentRead> dialogAttachments =
+              final List<AttachmentRead> dialogAttachments =
                   _attachments ?? <AttachmentRead>[];
               await showDialog<List<AttachmentRead>>(
                 context: context,
@@ -1293,7 +1295,7 @@ class _TransactionPageState extends State<TransactionPage>
                             child: Text(_localCurrency!.attributes.symbol),
                           ),
                         )
-                        : Icon(Icons.monetization_on),
+                        : const Icon(Icons.monetization_on),
                 hintText:
                     _localCurrency?.zero() ??
                     NumberFormat.currency(decimalDigits: 2).format(0),
@@ -1925,8 +1927,10 @@ class _TransactionPageState extends State<TransactionPage>
                                   child: NumberInput(
                                     icon:
                                         (_foreignCurrencies[i] != null)
-                                            ? Icon(Icons.currency_exchange)
-                                            : Icon(Icons.monetization_on),
+                                            ? const Icon(
+                                              Icons.currency_exchange,
+                                            )
+                                            : const Icon(Icons.monetization_on),
                                     controller:
                                         (_foreignCurrencies[i] != null)
                                             ? _foreignAmountTextControllers[i]
@@ -2261,15 +2265,15 @@ TransactionSplitUpdate txFilterSameFields(
     foreignAmount: Wrapped<String?>.value(foreignAmount),
     foreignCurrencyId:
         tx.foreignCurrencyId == txU.foreignCurrencyId
-            ? Wrapped<String?>.value(null)
+            ? const Wrapped<String?>.value(null)
             : Wrapped<String?>.value(txU.foreignCurrencyId),
     sourceName:
         tx.sourceName == txU.sourceName
-            ? Wrapped<String?>.value(null)
+            ? const Wrapped<String?>.value(null)
             : Wrapped<String?>.value(txU.sourceName),
     destinationName:
         tx.destinationName == txU.destinationName
-            ? Wrapped<String?>.value(null)
+            ? const Wrapped<String?>.value(null)
             : Wrapped<String?>.value(txU.destinationName),
   );
 }
@@ -2287,7 +2291,7 @@ class TransactionDeleteButton extends StatelessWidget {
       onPressed: () async {
         final FireflyIii api = context.read<FireflyService>().api;
         final NavigatorState nav = Navigator.of(context);
-        bool? ok = await showDialog<bool>(
+        final bool? ok = await showDialog<bool>(
           context: context,
           builder: (BuildContext context) => const DeletionConfirmDialog(),
         );

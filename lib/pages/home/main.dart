@@ -55,6 +55,7 @@ class _HomeMainState extends State<HomeMain>
   Map<DateTime, double> lastMonthsLiabilities = <DateTime, double>{};
   List<ChartDataSet> overviewChartData = <ChartDataSet>[];
   final List<InsightGroupEntry> catChartData = <InsightGroupEntry>[];
+  final List<InsightGroupEntry> tagChartData = <InsightGroupEntry>[];
   final Map<String, Budget> budgetInfos = <String, Budget>{};
   late TransStock _stock;
 
@@ -71,7 +72,7 @@ class _HomeMainState extends State<HomeMain>
           icon: const Icon(Icons.dashboard_customize_outlined),
           tooltip: S.of(context).homeMainDialogSettingsTitle,
           onPressed: () async {
-            bool? ok = await showDialog<bool>(
+            final bool? ok = await showDialog<bool>(
               context: context,
               builder: (BuildContext context) => const DashboardDialog(),
             );
@@ -291,7 +292,7 @@ class _HomeMainState extends State<HomeMain>
     return true;
   }
 
-  Future<bool> _fetchCategories() async {
+  Future<bool> _fetchCategories({bool tags = false}) async {
     /*if (catChartData.isNotEmpty) {
       // :DEBUG:
       return true;
@@ -302,52 +303,74 @@ class _HomeMainState extends State<HomeMain>
 
     final DateTime now = tzHandler.sNow().clearTime();
 
-    catChartData.clear();
+    tags ? tagChartData.clear() : catChartData.clear();
 
-    final (
-      Response<InsightGroup> respCatIncomeData,
-      Response<InsightGroup> respCatExpenseData,
-    ) = await (
-          api.v1InsightIncomeCategoryGet(
-            start: DateFormat(
-              'yyyy-MM-dd',
-              'en_US',
-            ).format(now.copyWith(day: 1)),
-            end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-          ),
-          api.v1InsightExpenseCategoryGet(
-            start: DateFormat(
-              'yyyy-MM-dd',
-              'en_US',
-            ).format(now.copyWith(day: 1)),
-            end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-          ),
-        ).wait;
-    apiThrowErrorIfEmpty(respCatIncomeData, mounted ? context : null);
-    apiThrowErrorIfEmpty(respCatExpenseData, mounted ? context : null);
+    late final Response<InsightGroup> respIncomeData;
+    late final Response<InsightGroup> respExpenseData;
+    if (!tags) {
+      (respIncomeData, respExpenseData) =
+          await (
+            api.v1InsightIncomeCategoryGet(
+              start: DateFormat(
+                'yyyy-MM-dd',
+                'en_US',
+              ).format(now.copyWith(day: 1)),
+              end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+            ),
+            api.v1InsightExpenseCategoryGet(
+              start: DateFormat(
+                'yyyy-MM-dd',
+                'en_US',
+              ).format(now.copyWith(day: 1)),
+              end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+            ),
+          ).wait;
+    } else {
+      (respIncomeData, respExpenseData) =
+          await (
+            api.v1InsightIncomeTagGet(
+              start: DateFormat(
+                'yyyy-MM-dd',
+                'en_US',
+              ).format(now.copyWith(day: 1)),
+              end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+            ),
+            api.v1InsightExpenseTagGet(
+              start: DateFormat(
+                'yyyy-MM-dd',
+                'en_US',
+              ).format(now.copyWith(day: 1)),
+              end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+            ),
+          ).wait;
+    }
+    apiThrowErrorIfEmpty(respIncomeData, mounted ? context : null);
+    apiThrowErrorIfEmpty(respExpenseData, mounted ? context : null);
 
-    Map<String, double> catIncomes = <String, double>{};
-    for (InsightGroupEntry cat
-        in respCatIncomeData.body ?? <InsightGroupEntry>[]) {
-      if (cat.id?.isEmpty ?? true) {
+    final Map<String, double> incomes = <String, double>{};
+    for (InsightGroupEntry entry
+        in respIncomeData.body ?? <InsightGroupEntry>[]) {
+      if (entry.id?.isEmpty ?? true) {
         continue;
       }
-      catIncomes[cat.id!] = cat.differenceFloat ?? 0;
+      incomes[entry.id!] = entry.differenceFloat ?? 0;
     }
 
-    for (InsightGroupEntry cat in respCatExpenseData.body!) {
-      if (cat.id?.isEmpty ?? true) {
+    for (InsightGroupEntry entry in respExpenseData.body!) {
+      if (entry.id?.isEmpty ?? true) {
         continue;
       }
-      double amount = cat.differenceFloat ?? 0;
-      if (catIncomes.containsKey(cat.id)) {
-        amount += catIncomes[cat.id]!;
+      double amount = entry.differenceFloat ?? 0;
+      if (incomes.containsKey(entry.id)) {
+        amount += incomes[entry.id]!;
       }
-      // Don't add "positive" categories, we want to show expenses
+      // Don't add "positive" entries, we want to show expenses
       if (amount >= 0) {
         continue;
       }
-      catChartData.add(cat.copyWith(differenceFloat: amount));
+      tags
+          ? tagChartData.add(entry.copyWith(differenceFloat: amount))
+          : catChartData.add(entry.copyWith(differenceFloat: amount));
     }
 
     return true;
@@ -380,8 +403,8 @@ class _HomeMainState extends State<HomeMain>
     }
 
     respBudgets.body!.data.sort((BudgetLimitRead a, BudgetLimitRead b) {
-      Budget? budgetA = budgetInfos[a.attributes.budgetId];
-      Budget? budgetB = budgetInfos[b.attributes.budgetId];
+      final Budget? budgetA = budgetInfos[a.attributes.budgetId];
+      final Budget? budgetB = budgetInfos[b.attributes.budgetId];
 
       if (budgetA == null && budgetB != null) {
         return -1;
@@ -390,7 +413,9 @@ class _HomeMainState extends State<HomeMain>
       } else if (budgetA == null && budgetB == null) {
         return 0;
       }
-      int compare = (budgetA!.order ?? -1).compareTo(budgetB!.order ?? -1);
+      final int compare = (budgetA!.order ?? -1).compareTo(
+        budgetB!.order ?? -1,
+      );
       if (compare != 0) {
         return compare;
       }
@@ -575,7 +600,7 @@ class _HomeMainState extends State<HomeMain>
     super.build(context);
     log.finest(() => "build()");
 
-    CurrencyRead defaultCurrency =
+    final CurrencyRead defaultCurrency =
         context.read<FireflyService>().defaultCurrency;
 
     final List<DashboardCards> cards = List<DashboardCards>.from(
@@ -643,6 +668,12 @@ class _HomeMainState extends State<HomeMain>
                 future: _fetchCategories(),
                 height: 175,
                 child: () => CategoryChart(data: catChartData),
+              ),
+              DashboardCards.tags => ChartCard(
+                title: S.of(context).homeMainChartTagsTitle,
+                future: _fetchCategories(tags: true),
+                height: 175,
+                child: () => CategoryChart(data: tagChartData),
               ),
               DashboardCards.accounts => ChartCard(
                 title: S.of(context).homeMainChartAccountsTitle,
@@ -850,7 +881,7 @@ class _HomeMainState extends State<HomeMain>
                                     lastMonthsExpense[e.key]!.differenceFloat ??
                                     0;
                               }
-                              double sum = income + expense;
+                              final double sum = income + expense;
                               return Align(
                                 alignment: Alignment.centerRight,
                                 child: Text(
@@ -1010,7 +1041,7 @@ class _HomeMainState extends State<HomeMain>
                                   final double assets = e.value;
                                   final double liabilities =
                                       lastMonthsLiabilities[e.key] ?? 0;
-                                  double sum = assets + liabilities;
+                                  final double sum = assets + liabilities;
                                   return Align(
                                     alignment: Alignment.centerRight,
                                     child: Text(
@@ -1190,7 +1221,8 @@ class BudgetList extends StatelessWidget {
                 }
               }
 
-              Budget? budgetInfo = budgetInfos[budget.attributes.budgetId];
+              final Budget? budgetInfo =
+                  budgetInfos[budget.attributes.budgetId];
               if (budgetInfo == null || available == 0) {
                 continue;
               }
@@ -1483,7 +1515,7 @@ class ChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Logger log = Logger("Pages.Home.Main.ChartCard");
-    List<Widget> summaryWidgets = <Widget>[];
+    final List<Widget> summaryWidgets = <Widget>[];
 
     return AnimatedHeight(
       child: Padding(

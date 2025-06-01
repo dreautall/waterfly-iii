@@ -722,6 +722,12 @@ abstract class S {
   /// **'Net Worth'**
   String get homeMainChartNetWorthTitle;
 
+  /// Chart Label: Tags Summary
+  ///
+  /// In en, this message translates to:
+  /// **'Tag Summary for current month'**
+  String get homeMainChartTagsTitle;
+
   /// Title of the dialog where money can be added/removed to a piggy bank.
   ///
   /// In en, this message translates to:

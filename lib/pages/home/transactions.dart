@@ -109,11 +109,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   isSelected: context.watch<TransactionFilters>().hasFilters,
                   tooltip: S.of(context).homeTransactionsActionFilter,
                   onPressed: () async {
-                    TransactionFilters oldFilters = _filters.copyWith();
+                    final TransactionFilters oldFilters = _filters.copyWith();
                     final SettingsProvider settings =
                         context.read<SettingsProvider>();
                     final bool oldShowFutureTXs = settings.showFutureTXs;
-                    bool? ok = await showDialog<bool>(
+                    final bool? ok = await showDialog<bool>(
                       context: context,
                       builder:
                           (BuildContext context) => FilterDialog(
@@ -212,6 +212,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           id: _filters.account!.id,
           page: pageKey,
           limit: _numberOfPostsPerRequest,
+          type: TransactionTypeFilter.all,
           end:
               context.read<SettingsProvider>().showFutureTXs
                   ? null
@@ -256,11 +257,16 @@ class _HomeTransactionsState extends State<HomeTransactions>
           query = "date_before:today $query ";
         }
         log.fine(() => "Search query: $query");
-        transactionList = await stock.getSearch(query: query, page: pageKey);
+        transactionList = await stock.getSearch(
+          query: query,
+          page: pageKey,
+          limit: _numberOfPostsPerRequest,
+        );
       } else {
         transactionList = await stock.get(
           page: pageKey,
           limit: _numberOfPostsPerRequest,
+          type: TransactionTypeFilter.all,
           end:
               context.read<SettingsProvider>().showFutureTXs
                   ? null
@@ -361,7 +367,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     TransactionRead item,
     int index
   ) {
-    List<TransactionSplit> transactions = item.attributes.transactions;
+    final List<TransactionSplit> transactions = item.attributes.transactions;
     if (transactions.isEmpty) {
       return Text(S.of(context).homeTransactionsEmpty);
     }
@@ -440,7 +446,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       title = transactions.first.description;
     }
     // Subtitle
-    List<InlineSpan> subtitle = <InlineSpan>[];
+    final List<InlineSpan> subtitle = <InlineSpan>[];
     if (hasAttachments) {
       subtitle.add(
         const WidgetSpan(
@@ -545,7 +551,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                 items: <PopupMenuEntry<Function>>[
                   PopupMenuItem<Function>(
                     value: () async {
-                      bool? ok = await Navigator.push(
+                      final bool? ok = await Navigator.push(
                         context,
                         MaterialPageRoute<bool>(
                           builder:
@@ -578,7 +584,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   PopupMenuItem<Function>(
                     value: () async {
                       final FireflyIii api = context.read<FireflyService>().api;
-                      bool? ok = await showDialog<bool>(
+                      final bool? ok = await showDialog<bool>(
                         context: context,
                         builder:
                             (BuildContext context) =>
@@ -713,7 +719,13 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     Text(
                       currency.fmt(amount),
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: transactions.first.type.color,
+                            color: transactions.first.type !=
+                                TransactionTypeProperty.reconciliation
+                                ? transactions.first.type.color
+                                : (transactions.first.sourceType ==
+                                AccountTypeProperty.reconciliationAccount)
+                                ? Colors.green
+                                : Colors.red,
                             fontFeatures: const <FontFeature>[
                               FontFeature.tabularFigures(),
                             ],
@@ -773,7 +785,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     );
 
     // Date
-    DateTime date = _tzHandler.sTime(transactions.first.date).toLocal();
+    final DateTime date = _tzHandler.sTime(transactions.first.date).toLocal();
     // Show Date Banner when:
     // 1. _lastDate is not set (= first element)
     // 2. _lastDate has a different day than current date (= date changed) and

@@ -438,6 +438,9 @@ class SCa extends S {
   String get homeMainChartNetWorthTitle => 'Valor Net';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Estalvia/Gasta Diners';
 
   @override

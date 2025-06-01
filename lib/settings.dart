@@ -51,6 +51,7 @@ class NotificationAppSettings {
 enum DashboardCards {
   dailyavg,
   categories,
+  tags,
   accounts,
   netearnings,
   networth,
@@ -179,7 +180,7 @@ class SettingsProvider with ChangeNotifier {
 
   Future<void> migrateLegacy(SharedPreferencesAsync prefs) async {
     log.config("trying to migrate old prefs");
-    SharedPreferences oldPrefs = await SharedPreferences.getInstance();
+    final SharedPreferences oldPrefs = await SharedPreferences.getInstance();
 
     _boolSettings = SettingsBitmask(oldPrefs.getInt(settingsBitmask) ?? 0);
     if (!oldPrefs.containsKey(settingsBitmask)) {
@@ -269,7 +270,7 @@ class SettingsProvider with ChangeNotifier {
     }
     _loading = true;
 
-    SharedPreferencesAsync prefs = SharedPreferencesAsync();
+    final SharedPreferencesAsync prefs = SharedPreferencesAsync();
     log.config("reading prefs");
 
     _boolSettings = SettingsBitmask(await prefs.getInt(settingsBitmask) ?? 0);
@@ -317,19 +318,21 @@ class SettingsProvider with ChangeNotifier {
     _notificationApps =
         await prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
-    int? billsLayoutIndex = await prefs.getInt(settingBillsDefaultLayout);
+    final int? billsLayoutIndex = await prefs.getInt(settingBillsDefaultLayout);
     _billsLayout =
         billsLayoutIndex == null
             ? BillsLayout.grouped
             : BillsLayout.values[billsLayoutIndex];
 
-    int? billsSortIndex = await prefs.getInt(settingBillsDefaultSort);
+    final int? billsSortIndex = await prefs.getInt(settingBillsDefaultSort);
     _billsSort =
         billsSortIndex == null
             ? BillsSort.name
             : BillsSort.values[billsSortIndex];
 
-    int? billsSortOrderIndex = await prefs.getInt(settingBillsDefaultSortOrder);
+    final int? billsSortOrderIndex = await prefs.getInt(
+      settingBillsDefaultSortOrder,
+    );
     _billsSortOrder =
         billsSortOrderIndex == null
             ? SortingOrder.ascending
@@ -362,12 +365,18 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
-    final List<String> dashboardHiddenStr =
-        await prefs.getStringList(settingsDashboardHidden) ?? <String>[];
-    for (String s in dashboardHiddenStr) {
-      _dashboardHidden.add(
-        DashboardCards.values.firstWhere((DashboardCards e) => e.name == s),
-      );
+    final List<String>? dashboardHiddenStr = await prefs.getStringList(
+      settingsDashboardHidden,
+    );
+    if (dashboardHiddenStr == null) {
+      // Default hidden charts
+      _dashboardHidden.add(DashboardCards.tags);
+    } else {
+      for (String s in dashboardHiddenStr) {
+        _dashboardHidden.add(
+          DashboardCards.values.firstWhere((DashboardCards e) => e.name == s),
+        );
+      }
     }
 
     _loaded = _loading = true;
@@ -405,7 +414,7 @@ class SettingsProvider with ChangeNotifier {
       if (debug) {
         Logger.root.level = Level.ALL;
         _debugLogger = Logger.root.onRecord.listen(await DebugLogger().get());
-        PackageInfo appInfo = await PackageInfo.fromPlatform();
+        final PackageInfo appInfo = await PackageInfo.fromPlatform();
         log.info(
           "Enabling debug logs, app ${appInfo.appName} v${appInfo.version}+${appInfo.buildNumber}",
         );
@@ -740,7 +749,7 @@ class DebugLogger {
   }
 
   Future<void> destroy() async {
-    File file = File(await _getPath());
+    final File file = File(await _getPath());
     if (await file.exists()) {
       file.deleteSync();
     }

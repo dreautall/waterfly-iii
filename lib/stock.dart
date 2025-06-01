@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart' show Response;
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stock/stock.dart';
@@ -168,7 +169,7 @@ class TransStock with ChangeNotifier {
   }
 
   FutureOr<List<TransactionRead>> _onGetValue(List<String> list) async {
-    List<TransactionRead> result = <TransactionRead>[];
+    final List<TransactionRead> result = <TransactionRead>[];
     for (String element in list) {
       result.add(await _singleStock.get(element));
     }
@@ -183,7 +184,7 @@ class TransStock with ChangeNotifier {
   }
 
   Future<void> setTransaction(TransactionRead transaction) async {
-    TransactionRead? oldTransaction =
+    final TransactionRead? oldTransaction =
         await _singleSoT.reader(transaction.id).first;
     // if no old transaction (= new one) or date has changed, clear cache
     if (oldTransaction == null ||
@@ -223,7 +224,9 @@ class _getOptions {
       page = json['page'],
       start = json['start'],
       end = json['end'],
-      type = json['type'],
+      type = enums.TransactionTypeFilter.values.firstWhereOrNull(
+        (enums.TransactionTypeFilter e) => e.name == json['type'],
+      ),
       id = json['id'],
       limit = json['limit'],
       query = json['query'];
@@ -233,7 +236,7 @@ class _getOptions {
     'page': page,
     'start': start,
     'end': end,
-    'type': type,
+    'type': type?.name,
     'id': id,
     'limit': limit,
     'query': query,
@@ -397,7 +400,7 @@ class CatStock {
         }
 
         categories.forEach((_, CategoryRead c) {
-          CategoryWithSum cs = c.attributes as CategoryWithSum;
+          final CategoryWithSum cs = c.attributes as CategoryWithSum;
           cs.sumEarned = c.attributes.earned!.fold<double>(
             0,
             (double p, CategoryEarned e) => p += double.parse(e.sum ?? "0"),

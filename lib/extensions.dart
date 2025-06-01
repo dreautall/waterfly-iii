@@ -73,8 +73,10 @@ extension TransactionType on TransactionTypeProperty {
         return Icons.arrow_back;
       case TransactionTypeProperty.transfer:
         return Icons.swap_horiz;
-      // reconciliation
-      // openingBalance
+      case TransactionTypeProperty.reconciliation:
+        return Icons.calculate_outlined;
+      case TransactionTypeProperty.openingBalance:
+        return Icons.star_outline;
       default:
         return Icons.question_mark;
     }
@@ -642,7 +644,10 @@ TransactionTypeProperty accountsToTransaction(
   AccountTypeProperty source,
   AccountTypeProperty destination,
 ) {
-  Map<AccountTypeProperty, Map<AccountTypeProperty, TransactionTypeProperty>>
+  final Map<
+    AccountTypeProperty,
+    Map<AccountTypeProperty, TransactionTypeProperty>
+  >
   map = <
     AccountTypeProperty,
     Map<AccountTypeProperty, TransactionTypeProperty>

@@ -435,6 +435,9 @@ class SIt extends S {
   String get homeMainChartNetWorthTitle => 'Patrimonio';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Risparmia/Spendi Denaro';
 
   @override

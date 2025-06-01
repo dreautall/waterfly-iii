@@ -273,6 +273,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
             }
 
             return MaterialApp(
+              // Force entire app reload on locale change
+              key: ValueKey<Locale?>(context.select((SettingsProvider s) => s.locale)),
               title: 'Waterfly III',
               theme: ThemeData(
                 brightness: Brightness.light,

@@ -50,7 +50,9 @@ class SettingsPageState extends State<SettingsPage>
           onTap: () {
             showDialog<Locale?>(
               context: context,
-              builder: (BuildContext context) => const LanguageDialog(),
+              builder:
+                  (BuildContext context) =>
+                      const LanguageDialog(useFormatTitle: false),
             ).then((Locale? locale) async {
               if (locale == null) {
                 return;
@@ -65,6 +67,30 @@ class SettingsPageState extends State<SettingsPage>
                   ),
                 ]);
               });
+            });
+          },
+        ),
+        ListTile(
+          title: Text(S.of(context).settingsLocaleFormat),
+          subtitle: Text(
+            LocaleNames.of(context)!.nameOf(
+                  context.read<SettingsProvider>().localeFormat?.languageCode ??
+                      "",
+                ) ??
+                "Unknown locale",
+          ),
+          leading: const CircleAvatar(child: Icon(Icons.date_range)),
+          onTap: () {
+            showDialog<Locale?>(
+              context: context,
+              builder:
+                  (BuildContext context) =>
+                      const LanguageDialog(useFormatTitle: true),
+            ).then((Locale? localeFormat) async {
+              if (localeFormat == null) {
+                return;
+              }
+              await settings.setLocaleFormat(localeFormat);
             });
           },
         ),
@@ -270,12 +296,18 @@ class SettingsPageState extends State<SettingsPage>
 }
 
 class LanguageDialog extends StatelessWidget {
-  const LanguageDialog({super.key});
+  final bool useFormatTitle;
+
+  const LanguageDialog({super.key, required this.useFormatTitle});
 
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      title: Text(S.of(context).settingsDialogLanguageTitle),
+      title: Text(
+        useFormatTitle
+            ? S.of(context).settingsDialogLocaleFormatTitle
+            : S.of(context).settingsDialogLanguageTitle,
+      ),
       children: <Widget>[
         ...S.supportedLocales.map(
           (Locale locale) => RadioListTile<String>(

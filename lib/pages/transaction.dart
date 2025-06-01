@@ -2667,12 +2667,28 @@ class _DateTimePickerState extends State<DateTimePicker> {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: _selectedDateTime,
+      // This sets both locale & language for the prompt
       locale: Locale(
-        Intl.defaultLocale!.split('_').first,
-        Intl.defaultLocale!.split('_').last,
+        context.read<SettingsProvider>().localeFormat?.languageCode ??
+            Intl.defaultLocale!.split('_').first,
+        context
+                .read<SettingsProvider>()
+                .localeFormat
+                ?.languageCode
+                .toUpperCase() ??
+            Intl.defaultLocale!.split('_').last,
       ),
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
+      // Override non-format text (e.g. the "OK" button) with the main language
+      helpText: S.of(context).localeFormatDateHelpText,
+      cancelText: S.of(context).localeFormatCancelText,
+      confirmText: S.of(context).localeFormatConfirmText,
+      barrierLabel: S.of(context).localeFormatBarrierLabel,
+      errorFormatText: S.of(context).localeFormatErrorFormatText,
+      errorInvalidText: S.of(context).localeFormatErrorInvalidText,
+      // DO NOT set fieldHintText and fieldLabelText as they are also format
+      // dependent, NOT main language dependent
     );
 
     if (pickedDate == null) {
@@ -2697,6 +2713,47 @@ class _DateTimePickerState extends State<DateTimePicker> {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
       initialTime: _selectedDateTime.getTimeOfDay(),
+      builder: (BuildContext context, Widget? child) {
+        return Localizations.override(
+          context: context,
+          // This sets both locale & language for the prompt
+          locale: Locale(
+            context.read<SettingsProvider>().localeFormat?.languageCode ??
+                Intl.defaultLocale!.split('_').first,
+            context
+                    .read<SettingsProvider>()
+                    .localeFormat
+                    ?.languageCode
+                    .toUpperCase() ??
+                Intl.defaultLocale!.split('_').last,
+          ),
+          child: Builder(
+            builder: (BuildContext overrideCtx) {
+              // By default the time picker checks the system setting for 24/12h format
+              // This seems to be the only way to get the Localization.override's locale format setting
+              bool use24h =
+                  !MaterialLocalizations.of(overrideCtx)
+                      .formatTimeOfDay(TimeOfDay(hour: 13, minute: 0))
+                      .contains('PM');
+              // Text direction is picked up automatically from the Localization.override above
+              return MediaQuery(
+                data: MediaQuery.of(
+                  overrideCtx,
+                ).copyWith(alwaysUse24HourFormat: use24h),
+                child: child!,
+              );
+            },
+          ),
+        );
+      },
+      // Override non-format text (e.g. the "OK" button) with the main language
+      // This will be applied after the locale override above
+      cancelText: S.of(context).localeFormatCancelText,
+      confirmText: S.of(context).localeFormatConfirmText,
+      helpText: S.of(context).localeFormatTimeHelpText,
+      errorInvalidText: S.of(context).localeFormatErrorInvalidText,
+      hourLabelText: S.of(context).localeFormatHourLabelText,
+      minuteLabelText: S.of(context).localeFormatMinuteLabelText,
     );
 
     if (pickedTime == null) {

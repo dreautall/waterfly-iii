@@ -435,6 +435,9 @@ class SSl extends S {
   String get homeMainChartNetWorthTitle => 'Neto vrednost';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Prihranek/poraba denarja';
 
   @override

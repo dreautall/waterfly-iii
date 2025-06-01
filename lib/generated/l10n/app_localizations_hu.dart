@@ -439,6 +439,9 @@ class SHu extends S {
   String get homeMainChartNetWorthTitle => 'Nettó Érték';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Pénz megtakarítása/költése';
 
   @override

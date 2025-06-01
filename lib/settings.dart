@@ -51,6 +51,7 @@ class NotificationAppSettings {
 enum DashboardCards {
   dailyavg,
   categories,
+  tags,
   accounts,
   netearnings,
   networth,
@@ -362,12 +363,18 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
-    final List<String> dashboardHiddenStr =
-        await prefs.getStringList(settingsDashboardHidden) ?? <String>[];
-    for (String s in dashboardHiddenStr) {
-      _dashboardHidden.add(
-        DashboardCards.values.firstWhere((DashboardCards e) => e.name == s),
-      );
+    final List<String>? dashboardHiddenStr = await prefs.getStringList(
+      settingsDashboardHidden,
+    );
+    if (dashboardHiddenStr == null) {
+      // Default hidden charts
+      _dashboardHidden.add(DashboardCards.tags);
+    } else {
+      for (String s in dashboardHiddenStr) {
+        _dashboardHidden.add(
+          DashboardCards.values.firstWhere((DashboardCards e) => e.name == s),
+        );
+      }
     }
 
     _loaded = _loading = true;

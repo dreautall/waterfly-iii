@@ -53,7 +53,7 @@
     },
     "billsAmountAndFrequency": "Factura coincide con transacciones entre {minValue} y {maxvalue}. Se repite {frequency, select, weekly{semanalmente} monthly{mensualmente} quarterly{trimestralmente} halfyear{semestralmente} yearly{anualmente} other{desconocido}}{skip, plural, =0{} other{, saltarse {skip}}}.",
     "@billsAmountAndFrequency": {
-        "description": "Bill match for min and max amounts, and frequency",
+        "description": "Subscription match for min and max amounts, and frequency",
         "placeholders": {
             "minValue": {
                 "type": "String",
@@ -83,11 +83,11 @@
     },
     "billsErrorLoading": "Error al cargar facturas.",
     "@billsErrorLoading": {
-        "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
     },
     "billsExactAmountAndFrequency": "La factura coincide con las transacciones de {value}. Se repite {frequency, select, weekly{semanalmente} monthly{mensualmente} quarterly{trimestralmente} halfyear{semestralmente} yearly{anualmente} other{desconocido}}{skip, plural, =0{} other{, saltarse {skip}}}.",
     "@billsExactAmountAndFrequency": {
-        "description": "Bill match for exact amount and frequency",
+        "description": "Subscription match for exact amount and frequency",
         "placeholders": {
             "value": {
                 "type": "String",
@@ -105,7 +105,7 @@
     },
     "billsExpectedOn": "Esperado {date}",
     "@billsExpectedOn": {
-        "description": "Describes what date the bill is expected",
+        "description": "Describes what date the subscription is expected",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -116,7 +116,7 @@
     },
     "billsFrequency": "{frequency, select, weekly{Semanal} monthly{Mensual} quarterly{Trimestral} halfyear{Semestral} yearly{Anual} other{Desconocido}}",
     "@billsFrequency": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -126,7 +126,7 @@
     },
     "billsFrequencySkip": "{frequency, select, weekly{Semanal} monthly{Mensual} quarterly{Trimestral} halfyear{Semestral} yearly{Anual} other{Desconocido}}{skip, plural, =0{} other{, saltarse {skip}}}",
     "@billsFrequencySkip": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -140,11 +140,11 @@
     },
     "billsInactive": "Inactiva",
     "@billsInactive": {
-        "description": "Text: when the bill is inactive"
+        "description": "Text: when the subscription is inactive"
     },
     "billsIsActive": "La factura está activa",
     "@billsIsActive": {
-        "description": "Text: the bill is active"
+        "description": "Text: the subscription is active"
     },
     "billsLayoutGroupSubtitle": "Facturas mostradas en sus grupos asignados.",
     "@billsLayoutGroupSubtitle": {
@@ -168,23 +168,23 @@
     },
     "billsNextExpectedMatch": "Próxima coincidencia esperada",
     "@billsNextExpectedMatch": {
-        "description": "Text: next expected match for bill"
+        "description": "Text: next expected match for subscription"
     },
     "billsNotActive": "La factura está inactiva",
     "@billsNotActive": {
-        "description": "Text: the bill is inactive"
+        "description": "Text: the subscription is inactive"
     },
     "billsNotExpected": "No se esperaba este período",
     "@billsNotExpected": {
-        "description": "Describes that the bill is not expected this period"
+        "description": "Describes that the subscription is not expected this period"
     },
     "billsNoTransactions": "No se encontraron transacciones.",
     "@billsNoTransactions": {
-        "description": "Describes that there are no transactions connected to the bill"
+        "description": "Describes that there are no transactions connected to the subscription"
     },
     "billsPaidOn": "Pagado {date}",
     "@billsPaidOn": {
-        "description": "Describes what date the bill was paid",
+        "description": "Describes what date the subscription was paid",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -211,7 +211,7 @@
     },
     "billsUngrouped": "Sin agrupar",
     "@billsUngrouped": {
-        "description": "Title for ungrouped bills"
+        "description": "Title for ungrouped subscriptions"
     },
     "categoryDeleteConfirm": "¿Estás seguro de que deseas eliminar esta categoría? Las transacciones no serán eliminadas, pero ya no tendrán categoría.",
     "@categoryDeleteConfirm": {
@@ -359,7 +359,7 @@
     },
     "generalBill": "Factura",
     "@generalBill": {
-        "description": "Bill"
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
     "generalBudget": "Presupuesto",
     "@generalBudget": {
@@ -376,6 +376,10 @@
     "generalDefault": "por defecto",
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "Cuenta de Destino",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
     },
     "generalDismiss": "Descartar",
     "@generalDismiss": {
@@ -417,6 +421,10 @@
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
     },
+    "generalSourceAccount": "Cuenta de Origen",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
     "generalSpent": "Gastado",
     "@generalSpent": {
         "description": "(Amount) Spent"
@@ -435,7 +443,7 @@
     },
     "homeMainBillsInterval": " ({period, select, weekly{semanalmente} monthly{mensualmente} quarterly{trimestralmente} halfyear{semestralmente} yearly{anualmente} other{desconocido}})",
     "@homeMainBillsInterval": {
-        "description": "bill interval type",
+        "description": "subscription interval type",
         "placeholders": {
             "period": {
                 "type": "String",
@@ -445,7 +453,7 @@
     },
     "homeMainBillsTitle": "Facturas para la próxima semana",
     "@homeMainBillsTitle": {
-        "description": "Title: Bills for the next week"
+        "description": "Title: Subscriptions for the next week"
     },
     "homeMainBudgetInterval": " ({from} hasta {to}, {period})",
     "@homeMainBudgetInterval": {
@@ -529,6 +537,10 @@
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
     },
+    "homeMainChartTagsTitle": "Resumen de etiquetas del mes actual",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
     "homePiggyAdjustDialogTitle": "Ahorrar/Gastar dinero",
     "@homePiggyAdjustDialogTitle": {
         "description": "Title of the dialog where money can be added/removed to a piggy bank."
@@ -554,6 +566,10 @@
                 "example": "March 12, 2023"
             }
         }
+    },
+    "homeMainDialogSettingsTitle": "Personalizar el panel",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
     },
     "homePiggyLinked": "Vinculado a {account}",
     "@homePiggyLinked": {
@@ -629,11 +645,11 @@
     },
     "homeTransactionsDialogFilterBillsAll": "<Todas las facturas>",
     "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
+        "description": "Don't filter for a specific subscription (default entry)"
     },
     "homeTransactionsDialogFilterBillUnset": "<Factura no establecida>",
     "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
+        "description": "Filter for unset subscription"
     },
     "homeTransactionsDialogFilterBudgetsAll": "<Todos los presupuestos>",
     "@homeTransactionsDialogFilterBudgetsAll": {
@@ -731,7 +747,7 @@
     },
     "navigationBills": "Facturas",
     "@navigationBills": {
-        "description": "Navigation Label: Bills"
+        "description": "Navigation Label: Subscriptions"
     },
     "navigationCategories": "Categorías",
     "@navigationCategories": {
@@ -805,6 +821,14 @@
     "settingsDialogThemeTitle": "Seleccionar tema",
     "@settingsDialogThemeTitle": {
         "description": "Dialog title: Select theme"
+    },
+    "settingsFAQ": "FAQ",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
+    "settingsFAQHelp": "Se abre en el navegador. Sólo disponible en inglés.",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
     },
     "settingsLanguage": "Idioma",
     "@settingsLanguage": {
@@ -983,11 +1007,11 @@
     },
     "transactionDialogBillNoBill": "Sin factura",
     "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
+        "description": "Button Label: no subscription to be used"
     },
     "transactionDialogBillTitle": "Enlace a la factura",
     "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
+        "description": "Dialog Title: Link Subscription to transaction"
     },
     "transactionDialogCurrencyTitle": "Seleccionar divisa",
     "@transactionDialogCurrencyTitle": {
@@ -1016,6 +1040,14 @@
     "transactionErrorInvalidBudget": "Presupuesto inválido",
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Por favor, primero rellene las cuentas.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Por favor, seleccione una cuenta de activo.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
     },
     "transactionErrorTitle": "Por favor, proporcione un título.",
     "@transactionErrorTitle": {
@@ -1056,6 +1088,14 @@
     "transactionSplitChangeCurrency": "Cambiar moneda dividida",
     "@transactionSplitChangeCurrency": {
         "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Cambiar cuenta de destino dividida",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Cambiar cuenta de origen dividida",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
     },
     "transactionSplitChangeTarget": "Cambiar cuenta de destina dividida",
     "@transactionSplitChangeTarget": {

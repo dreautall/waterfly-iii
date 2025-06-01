@@ -435,6 +435,9 @@ class SEn extends S {
   String get homeMainChartNetWorthTitle => 'Net Worth';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Save/Spend Money';
 
   @override

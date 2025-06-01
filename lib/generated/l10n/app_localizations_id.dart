@@ -435,6 +435,9 @@ class SId extends S {
   String get homeMainChartNetWorthTitle => 'Kekayaan Bersih';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Simpan/Belanjakan Uang';
 
   @override

@@ -435,6 +435,9 @@ class SCs extends S {
   String get homeMainChartNetWorthTitle => 'Čisté jmění';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Uložit/utratit peníze';
 
   @override

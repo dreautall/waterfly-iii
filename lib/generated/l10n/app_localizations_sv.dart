@@ -435,6 +435,9 @@ class SSv extends S {
   String get homeMainChartNetWorthTitle => 'Nettoförmögenhet';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Spara/spendera pengar';
 
   @override

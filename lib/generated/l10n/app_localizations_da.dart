@@ -434,6 +434,9 @@ class SDa extends S {
   String get homeMainChartNetWorthTitle => 'Nettoværdi';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Gem/brug penge';
 
   @override

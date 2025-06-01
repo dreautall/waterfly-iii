@@ -435,6 +435,9 @@ class SDe extends S {
   String get homeMainChartNetWorthTitle => 'Nettovermögen';
 
   @override
+  String get homeMainChartTagsTitle => 'Schlagwort-Übersicht für diesen Monat';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Geld sparen/ausgeben';
 
   @override

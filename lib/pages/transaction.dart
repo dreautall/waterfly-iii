@@ -1087,6 +1087,9 @@ class _TransactionPageState extends State<TransactionPage>
                             behavior: SnackBarBehavior.floating,
                           ),
                         );
+                        setState(() {
+                          _savingInProgress = false;
+                        });
                         return;
                       }
 

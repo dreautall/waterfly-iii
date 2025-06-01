@@ -52,7 +52,7 @@ class SettingsPageState extends State<SettingsPage>
               context: context,
               builder:
                   (BuildContext context) =>
-                      const LanguageDialog(useFormatTitle: false),
+                      const LanguageDialog(localeFormatMode: false),
             ).then((Locale? locale) async {
               if (locale == null) {
                 return;
@@ -85,12 +85,13 @@ class SettingsPageState extends State<SettingsPage>
               context: context,
               builder:
                   (BuildContext context) =>
-                      const LanguageDialog(useFormatTitle: true),
+                      const LanguageDialog(localeFormatMode: true),
             ).then((Locale? localeFormat) async {
               if (localeFormat == null) {
                 return;
               }
               await settings.setLocaleFormat(localeFormat);
+              setState(() {});
             });
           },
         ),
@@ -296,15 +297,15 @@ class SettingsPageState extends State<SettingsPage>
 }
 
 class LanguageDialog extends StatelessWidget {
-  final bool useFormatTitle;
+  final bool localeFormatMode;
 
-  const LanguageDialog({super.key, required this.useFormatTitle});
+  const LanguageDialog({super.key, required this.localeFormatMode});
 
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
       title: Text(
-        useFormatTitle
+        localeFormatMode
             ? S.of(context).settingsDialogLocaleFormatTitle
             : S.of(context).settingsDialogLanguageTitle,
       ),
@@ -317,7 +318,13 @@ class LanguageDialog extends StatelessWidget {
                       .toLanguageTag()] ??
                   "Unknown locale",
             ),
-            groupValue: S.of(context).localeName,
+            groupValue:
+                localeFormatMode
+                    ? context
+                        .read<SettingsProvider>()
+                        .localeFormat
+                        ?.languageCode
+                    : S.of(context).localeName,
             onChanged: (_) {
               Navigator.pop(context, locale);
             },

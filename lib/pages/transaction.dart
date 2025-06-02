@@ -344,7 +344,13 @@ class _TransactionPageState extends State<TransactionPage>
       // New transaction
       _titleFocusNode.requestFocus();
       _transactionType = TransactionTypeProperty.swaggerGeneratedUnknown;
-      _date = _tzHandler.newTXTime().toLocal();
+
+      if (widget.notification != null) {
+        _date = _tzHandler.newTXTime().toLocal();
+      } else {
+        _date =
+            _tzHandler.notificationTXTime(widget.notification!.date).toLocal();
+      }
 
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         splitTransactionAdd();
@@ -369,12 +375,6 @@ class _TransactionPageState extends State<TransactionPage>
 
           // Fallback solution
           currency ??= defaultCurrency;
-
-          // Set date
-          _date =
-              _tzHandler
-                  .notificationTXTime(widget.notification!.date)
-                  .toLocal();
 
           // Title & Note
           final NotificationAppSettings appSettings = await settings
@@ -503,11 +503,6 @@ class _TransactionPageState extends State<TransactionPage>
       );
       _hasAttachments = false;
     }
-
-    /*WidgetsBinding.instance.addPostFrameCallback((_) {
-      _dateTextController.text = DateFormat.yMMMd().format(_date);
-      _timeTextController.text = DateFormat.Hm().format(_date);
-    });*/
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:version/version.dart';
@@ -153,6 +154,10 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final NavDestination currentPage = navDestinations[screenIndex];
     log.finest(() => "nav build(page: $screenIndex)");
+
+    final Locale locale = Localizations.localeOf(context);
+    print("Current locale from current context: ${locale.languageCode}_${locale.countryCode}");
+    print("Current locale from intl: ${Intl.defaultLocale}");
 
     return ChangeNotifierProvider<NavPageElements>(
       create: (_) => NavPageElements(Text(navDestinations[0].label)),

@@ -28,5 +28,7 @@ void main() async {
   tz.initializeTimeZones();
   Intl.defaultLocale = await findSystemLocale();
   await initializeDateFormatting();
+  // Observe locale changes (either system-wide or for waterfly only)
+  WidgetsFlutterBinding.ensureInitialized();
   return runApp(const WaterflyApp());
 }

@@ -272,6 +272,14 @@ class _WaterflyAppState extends State<WaterflyApp> {
               log.config("signedIn: $signedIn");
             }
 
+            // Observe locale changes (system-wide or only for waterfly)
+            WidgetsBinding
+                .instance
+                .platformDispatcher
+                .onLocaleChanged = () async {
+              print("System reported new locale: ${WidgetsBinding.instance.platformDispatcher.locales.first}");
+            };
+
             return MaterialApp(
               // Force entire app reload on locale change
               key: ValueKey<Locale?>(context.select((SettingsProvider s) => s.locale)),
@@ -305,7 +313,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
                 ...S.localizationsDelegates,
                 LocaleNamesLocalizationsDelegate(),
               ],
-              supportedLocales: S.supportedLocales,
+              supportedLocales: <Locale>[Locale("en", "SE")],
               locale: context.select((SettingsProvider s) => s.locale),
               navigatorKey: navigatorKey,
               home:

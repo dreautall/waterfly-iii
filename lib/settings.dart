@@ -294,17 +294,12 @@ class SettingsProvider with ChangeNotifier {
         _theme = ThemeMode.system;
     }
 
-    final String? countryCode = Intl.defaultLocale?.split("_").last;
-    final Locale locale = Locale(
-      await prefs.getString(settingLocale) ?? "unset",
-    );
-    log.config("read locale $locale");
-    if (S.supportedLocales.contains(locale)) {
-      _locale = locale;
-      Intl.defaultLocale = "${locale.languageCode}_$countryCode";
-    } else {
-      _locale = const Locale('en');
-    }
+    log.config("Locale before reading from settings: ${Intl.defaultLocale}");
+    final Locale locale = Locale("en", "SE");
+    log.config("read locale from settings: ${locale.languageCode}_${locale.countryCode}");
+    _locale = locale;
+    Intl.defaultLocale = "en_SE";
+    log.config("New default intl locale: ${Intl.defaultLocale}");
 
     if (debug) {
       log.config("setting debug");

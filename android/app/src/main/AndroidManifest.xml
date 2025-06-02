@@ -279,6 +279,7 @@
         <package android:name="pe.com.scotiabank.blpm.android.client"/>
         <package android:name="pl.ing.mojeing"/>
         <package android:name="pl.mbank"/>
+        <package android:name="pl.pkobp.iko" />
         <package android:name="ro.ing.mobile.banking.android.activity"/>
         <package android:name="ru.abr"/>
         <package android:name="ru.nspk.mirpay"/>
@@ -294,6 +295,7 @@
         <package android:name="ua.oschadbank.online"/>
         <package android:name="ua.privatbank.ap24"/>
         <package android:name="uk.co.hsbc.hsbcukmobilebanking"/>
+        <package android:name="wit.android.bcpBankingApp.millenniumPL" />
         <package android:name="za.co.fnb.connect.itt"/>
         <package android:name="za.co.nedbank"/>
     </queries>

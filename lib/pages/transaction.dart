@@ -1296,30 +1296,32 @@ class _TransactionPageState extends State<TransactionPage>
           children: <Widget>[
             SizedBox(
               width: 130,
-              child: NumberInput(
-                icon:
-                    _localCurrency != null
-                        ? SizedBox(
-                          width: 24,
-                          height: 32,
-                          child: FittedBox(
-                            child: Text(_localCurrency!.attributes.symbol),
-                          ),
-                        )
-                        : const Icon(Icons.monetization_on),
-                hintText:
-                    _localCurrency?.zero() ??
-                    NumberFormat.currency(decimalDigits: 2).format(0),
-                decimals: _localCurrency?.attributes.decimalPlaces ?? 2,
-                //style: Theme.of(context).textTheme.headlineLarge,
-                controller: _localAmountTextController,
-                disabled:
-                    _savingInProgress ||
-                    _split ||
-                    (_reconciled && _initiallyReconciled),
-                onChanged:
-                    (String string) =>
-                        _localAmounts[0] = double.tryParse(string) ?? 0,
+              child: Center(
+                child: NumberInput(
+                  icon:
+                      _localCurrency != null
+                          ? SizedBox(
+                            width: 24,
+                            height: 32,
+                            child: FittedBox(
+                              child: Text(_localCurrency!.attributes.symbol),
+                            ),
+                          )
+                          : const Icon(Icons.monetization_on),
+                  hintText:
+                      _localCurrency?.zero() ??
+                      NumberFormat.currency(decimalDigits: 2).format(0),
+                  decimals: _localCurrency?.attributes.decimalPlaces ?? 2,
+                  //style: Theme.of(context).textTheme.headlineLarge,
+                  controller: _localAmountTextController,
+                  disabled:
+                      _savingInProgress ||
+                      _split ||
+                      (_reconciled && _initiallyReconciled),
+                  onChanged:
+                      (String string) =>
+                          _localAmounts[0] = double.tryParse(string) ?? 0,
+                ),
               ),
             ),
             vDivider,

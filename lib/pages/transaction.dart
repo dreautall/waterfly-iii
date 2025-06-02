@@ -1216,7 +1216,7 @@ class _TransactionPageState extends State<TransactionPage>
                     },
             child:
                 _savingInProgress
-                    ? SizedBox(
+                    ? const SizedBox(
                       width: 25,
                       height: 25,
                       child: CircularProgressIndicator(strokeWidth: 3),
@@ -2778,7 +2778,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
             controller: _dateTextController,
             decoration: InputDecoration(
               //prefixIcon: Icon(Icons.calendar_month),
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
               filled: _savingInProgress,
             ),
             readOnly: true,
@@ -2791,7 +2791,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
             enabled: !_savingInProgress,
             controller: _timeTextController,
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
               filled: _savingInProgress,
             ),
             readOnly: true,

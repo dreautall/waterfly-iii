@@ -323,7 +323,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       }
 
       if (_filters.account != null) {
-        AccountRead account = _filters.account!;
+        final AccountRead account = _filters.account!;
         // Attempt to retrieve the opening balance
         double balance =
             _lastCalculatedBalance ??
@@ -834,7 +834,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       onClosed: (bool? refresh) async {
         if (_filters.account != null) {
           // Reset last balance calculated
-          FireflyIii api = context.read<FireflyService>().api;
+          final FireflyIii api = context.read<FireflyService>().api;
           // Retrieve the account to get the current balance
           final Response<AccountSingle> respAccount = await api.v1AccountsIdGet(
             id: _filters.account!.id,

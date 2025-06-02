@@ -1290,38 +1290,38 @@ class _TransactionPageState extends State<TransactionPage>
     // Amount, Date & Time
     childs.add(
       // Date/Time select might overflow, so we need to be able to scroll horizontally.
-      SizedBox(
-        height:
-            64, // 64 is measured height from layout inspector of a normal row.
-        child: ListView(
-          scrollDirection: Axis.horizontal,
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
           children: <Widget>[
             SizedBox(
               width: 130,
-              child: NumberInput(
-                icon:
-                    _localCurrency != null
-                        ? SizedBox(
-                          width: 24,
-                          height: 32,
-                          child: FittedBox(
-                            child: Text(_localCurrency!.attributes.symbol),
-                          ),
-                        )
-                        : const Icon(Icons.monetization_on),
-                hintText:
-                    _localCurrency?.zero() ??
-                    NumberFormat.currency(decimalDigits: 2).format(0),
-                decimals: _localCurrency?.attributes.decimalPlaces ?? 2,
-                //style: Theme.of(context).textTheme.headlineLarge,
-                controller: _localAmountTextController,
-                disabled:
-                    _savingInProgress ||
-                    _split ||
-                    (_reconciled && _initiallyReconciled),
-                onChanged:
-                    (String string) =>
-                        _localAmounts[0] = double.tryParse(string) ?? 0,
+              child: Center(
+                child: NumberInput(
+                  icon:
+                      _localCurrency != null
+                          ? SizedBox(
+                            width: 24,
+                            height: 32,
+                            child: FittedBox(
+                              child: Text(_localCurrency!.attributes.symbol),
+                            ),
+                          )
+                          : const Icon(Icons.monetization_on),
+                  hintText:
+                      _localCurrency?.zero() ??
+                      NumberFormat.currency(decimalDigits: 2).format(0),
+                  decimals: _localCurrency?.attributes.decimalPlaces ?? 2,
+                  //style: Theme.of(context).textTheme.headlineLarge,
+                  controller: _localAmountTextController,
+                  disabled:
+                      _savingInProgress ||
+                      _split ||
+                      (_reconciled && _initiallyReconciled),
+                  onChanged:
+                      (String string) =>
+                          _localAmounts[0] = double.tryParse(string) ?? 0,
+                ),
               ),
             ),
             vDivider,
@@ -1346,7 +1346,7 @@ class _TransactionPageState extends State<TransactionPage>
           const SizedBox(height: 64 + 16 + 64), // Padding for Stack
           Row(
             children: <Widget>[
-              const Icon(Icons.arrow_back),
+              const Icon(Icons.logout),
               vDivider,
               Expanded(
                 child: AutoCompleteText<AutocompleteAccount>(
@@ -1441,7 +1441,7 @@ class _TransactionPageState extends State<TransactionPage>
             top: 64 + 16,
             child: Row(
               children: <Widget>[
-                const Icon(Icons.arrow_forward),
+                const Icon(Icons.login),
                 vDivider,
                 Expanded(
                   child: AutoCompleteText<AutocompleteAccount>(
@@ -1543,7 +1543,7 @@ class _TransactionPageState extends State<TransactionPage>
             ),
           ),
           Positioned(
-            top: (64 + 16 + 64 - 56) / 2,
+            top: (64 + 16 + 4) / 2,
             right: 15,
             child: FloatingActionButton.extended(
               extendedIconLabelSpacing: _txTypeChipExtended ? 10 : 0,
@@ -1773,7 +1773,7 @@ class _TransactionPageState extends State<TransactionPage>
                                     disabled: _savingInProgress,
                                     labelText:
                                         S.of(context).generalSourceAccount,
-                                    labelIcon: Icons.arrow_back,
+                                    labelIcon: Icons.logout,
                                     textController:
                                         _sourceAccountTextControllers[i],
                                     focusNode: _sourceAccountFocusNodes[i],
@@ -1853,7 +1853,7 @@ class _TransactionPageState extends State<TransactionPage>
                                     disabled: _savingInProgress,
                                     labelText:
                                         S.of(context).generalDestinationAccount,
-                                    labelIcon: Icons.arrow_forward,
+                                    labelIcon: Icons.login,
                                     textController:
                                         _destinationAccountTextControllers[i],
                                     focusNode: _destinationAccountFocusNodes[i],

@@ -169,7 +169,7 @@ class TransStock with ChangeNotifier {
   }
 
   FutureOr<List<TransactionRead>> _onGetValue(List<String> list) async {
-    List<TransactionRead> result = <TransactionRead>[];
+    final List<TransactionRead> result = <TransactionRead>[];
     for (String element in list) {
       result.add(await _singleStock.get(element));
     }
@@ -184,7 +184,7 @@ class TransStock with ChangeNotifier {
   }
 
   Future<void> setTransaction(TransactionRead transaction) async {
-    TransactionRead? oldTransaction =
+    final TransactionRead? oldTransaction =
         await _singleSoT.reader(transaction.id).first;
     // if no old transaction (= new one) or date has changed, clear cache
     if (oldTransaction == null ||
@@ -400,7 +400,7 @@ class CatStock {
         }
 
         categories.forEach((_, CategoryRead c) {
-          CategoryWithSum cs = c.attributes as CategoryWithSum;
+          final CategoryWithSum cs = c.attributes as CategoryWithSum;
           cs.sumEarned = c.attributes.earned!.fold<double>(
             0,
             (double p, CategoryEarned e) => p += double.parse(e.sum ?? "0"),

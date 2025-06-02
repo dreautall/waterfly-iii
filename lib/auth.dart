@@ -171,7 +171,7 @@ class AuthUser {
       throw AuthErrorHost(host);
     }
 
-    Uri aboutUri = uri.replace(
+    final Uri aboutUri = uri.replace(
       pathSegments: <String>[...uri.pathSegments, "api", "v1", "about"],
     );
 
@@ -256,8 +256,8 @@ class FireflyService with ChangeNotifier {
 
   Future<bool> signInFromStorage() async {
     _storageSignInException = null;
-    String? apiHost = await storage.read(key: 'api_host');
-    String? apiKey = await storage.read(key: 'api_key');
+    final String? apiHost = await storage.read(key: 'api_host');
+    final String? apiKey = await storage.read(key: 'api_key');
 
     log.config(
       "storage: $apiHost, apiKey ${apiKey?.isEmpty ?? true ? "unset" : "set"}",
@@ -283,7 +283,7 @@ class FireflyService with ChangeNotifier {
     _signedIn = false;
     _storageSignInException = null;
     await storage.deleteAll();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
 
     log.finest(() => "notify FireflyService->signOut");
@@ -299,10 +299,11 @@ class FireflyService with ChangeNotifier {
     _currentUser = await AuthUser.create(host, apiKey);
     if (_currentUser == null || !hasApi) return false;
 
-    Response<CurrencySingle> currencyInfo = await api.v1CurrenciesDefaultGet();
+    final Response<CurrencySingle> currencyInfo =
+        await api.v1CurrenciesDefaultGet();
     defaultCurrency = currencyInfo.body!.data;
 
-    Response<SystemInfo> about = await api.v1AboutGet();
+    final Response<SystemInfo> about = await api.v1AboutGet();
     try {
       String apiVersionStr = about.body?.data?.apiVersion ?? "";
       if (apiVersionStr.startsWith("develop/")) {
@@ -319,7 +320,7 @@ class FireflyService with ChangeNotifier {
 
     // Manual API query as the Swagger type doesn't resolve in Flutter :(
     final http.Client client = httpClient;
-    Uri tzUri = user!.host.replace(
+    final Uri tzUri = user!.host.replace(
       pathSegments: <String>[
         ...user!.host.pathSegments,
         "v1",

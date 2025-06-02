@@ -137,7 +137,7 @@ void nlCallback() async {
         currency ??= localCurrency;
 
         // Set date
-        DateTime date =
+        final DateTime date =
             ffService.tzHandler
                 .notificationTXTime(
                   DateTime.tryParse(evt.postTime ?? "") ?? DateTime.now(),
@@ -182,9 +182,10 @@ void nlCallback() async {
         );
         if (!resp.isSuccessful || resp.body == null) {
           try {
-            ValidationErrorResponse valError = ValidationErrorResponse.fromJson(
-              json.decode(resp.error.toString()),
-            );
+            final ValidationErrorResponse valError =
+                ValidationErrorResponse.fromJson(
+                  json.decode(resp.error.toString()),
+                );
             throw Exception("nlCallBack PostTransaction: ${valError.message}");
           } catch (_) {
             throw Exception("nlCallBack PostTransaction: unknown");
@@ -288,7 +289,7 @@ Future<(CurrencyRead?, double)> parseNotificationText(
     if (validMatch != null) {
       // extract currency
       String currencyStr = validMatch.namedGroup("preCurrency") ?? "";
-      String currencyStrAlt = validMatch.namedGroup("postCurrency") ?? "";
+      final String currencyStrAlt = validMatch.namedGroup("postCurrency") ?? "";
       if (currencyStr.isEmpty) {
         currencyStr = currencyStrAlt;
       }

@@ -88,7 +88,7 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
             onPressed: () async {
               final FireflyIii api = context.read<FireflyService>().api;
 
-              bool? ok = await showDialog(
+              final bool? ok = await showDialog(
                 context: context,
                 builder:
                     (BuildContext context) => const DeletionConfirmDialog(),
@@ -137,7 +137,7 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
             if (!resp.isSuccessful || resp.body == null) {
               late String error;
               try {
-                ValidationErrorResponse valError =
+                final ValidationErrorResponse valError =
                     ValidationErrorResponse.fromJson(
                       json.decode(resp.error.toString()),
                     );

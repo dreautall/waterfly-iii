@@ -161,7 +161,7 @@ class DashboardCard extends StatelessWidget {
           minTileHeight: 88,
           leading: IconButton(
             icon: const Icon(Icons.visibility),
-            selectedIcon: Icon(Icons.visibility_off_outlined),
+            selectedIcon: const Icon(Icons.visibility_off_outlined),
             isSelected: hidden,
             onPressed:
                 () async =>

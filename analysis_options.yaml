@@ -32,6 +32,8 @@ linter:
     unnecessary_null_aware_operator_on_extension_on_nullable: true
     unnecessary_null_checks: true
     use_if_null_to_convert_nulls_to_bools: true
+    prefer_const_constructors: true
+    prefer_final_locals: true
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

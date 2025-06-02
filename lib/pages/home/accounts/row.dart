@@ -20,7 +20,7 @@ Widget accountRowBuilder(
   int index,
   void Function() pagingResetFunc,
 ) {
-  String name = account.attributes.name;
+  final String name = account.attributes.name;
   late double currentAmount;
   if (account.attributes.type == ShortAccountTypeProperty.liability) {
     currentAmount = double.tryParse(account.attributes.currentDebt ?? "") ?? 0;
@@ -211,7 +211,10 @@ class _AccountTXpageState extends State<AccountTXpage> {
 
     _name = widget.account.attributes.name;
     _titleWidget = Text(_name);
-    _editIcon = IconButton(icon: Icon(Icons.edit), onPressed: showTextfield);
+    _editIcon = IconButton(
+      icon: const Icon(Icons.edit),
+      onPressed: showTextfield,
+    );
   }
 
   @override
@@ -232,7 +235,7 @@ class _AccountTXpageState extends State<AccountTXpage> {
         onEditingComplete: submitTextfield,
       );
       _editIcon = IconButton(
-        icon: Icon(Icons.check),
+        icon: const Icon(Icons.check),
         onPressed: submitTextfield,
       );
 
@@ -256,9 +259,10 @@ class _AccountTXpageState extends State<AccountTXpage> {
           log.severe("Error while submitting new name to API");
           String error;
           try {
-            ValidationErrorResponse valError = ValidationErrorResponse.fromJson(
-              json.decode(response.error.toString()),
-            );
+            final ValidationErrorResponse valError =
+                ValidationErrorResponse.fromJson(
+                  json.decode(response.error.toString()),
+                );
             error =
                 valError.message ??
                 // ignore: use_build_context_synchronously
@@ -291,7 +295,10 @@ class _AccountTXpageState extends State<AccountTXpage> {
     log.finest(() => "switching back to text field");
     setState(() {
       _titleWidget = Text(_name);
-      _editIcon = IconButton(icon: Icon(Icons.edit), onPressed: showTextfield);
+      _editIcon = IconButton(
+        icon: const Icon(Icons.edit),
+        onPressed: showTextfield,
+      );
     });
   }
 

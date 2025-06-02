@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
   bool _hostValid(String value) {
     if (!UriScheme.valid(value)) return false;
 
-    Uri? uri = Uri.tryParse(value);
+    final Uri? uri = Uri.tryParse(value);
     if (uri == null || uri.host.isEmpty) return false;
 
     return true;
@@ -134,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                           _uriScheme == newSelection.first) {
                         return;
                       }
-                      String currentUrl = _hostTextController.text;
+                      final String currentUrl = _hostTextController.text;
                       String oldScheme, newScheme;
                       if (UriScheme.isHttp(newSelection.first)) {
                         oldScheme = UriScheme.https;
@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                         TextPosition(offset: _hostTextController.text.length),
                       );
 
-                      bool error =
+                      final bool error =
                           _hostTextController.text.isNotEmpty &&
                           !_hostValid(_hostTextController.text);
                       setState(() {
@@ -196,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                           });
                         }
 
-                        bool error =
+                        final bool error =
                             value.isNotEmpty &&
                             (!UriScheme.valid(value) || !_hostValid(value));
                         if (error != _hostErrorIcon.isError ||
@@ -212,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       autovalidateMode: AutovalidateMode.disabled,
                       validator: (String? value) {
-                        String? error =
+                        final String? error =
                             value == null || value.isEmpty
                                 ? S.of(context).errorFieldRequired
                                 : !_hostValid(value)
@@ -250,7 +250,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       autovalidateMode: AutovalidateMode.disabled,
                       validator: (String? value) {
-                        String? error =
+                        final String? error =
                             value == null || value.isEmpty
                                 ? S.of(context).errorFieldRequired
                                 : null;

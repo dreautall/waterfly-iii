@@ -1328,7 +1328,7 @@ class _TransactionPageState extends State<TransactionPage>
           const SizedBox(height: 64 + 16 + 64), // Padding for Stack
           Row(
             children: <Widget>[
-              const Icon(Icons.arrow_back),
+              const Icon(Icons.logout),
               vDivider,
               Expanded(
                 child: AutoCompleteText<AutocompleteAccount>(
@@ -1422,7 +1422,7 @@ class _TransactionPageState extends State<TransactionPage>
             top: 64 + 16,
             child: Row(
               children: <Widget>[
-                const Icon(Icons.arrow_forward),
+                const Icon(Icons.login),
                 vDivider,
                 Expanded(
                   child: AutoCompleteText<AutocompleteAccount>(
@@ -1747,7 +1747,7 @@ class _TransactionPageState extends State<TransactionPage>
                                   child: AutoCompleteText<AutocompleteAccount>(
                                     labelText:
                                         S.of(context).generalSourceAccount,
-                                    labelIcon: Icons.arrow_back,
+                                    labelIcon: Icons.logout,
                                     textController:
                                         _sourceAccountTextControllers[i],
                                     focusNode: _sourceAccountFocusNodes[i],
@@ -1826,7 +1826,7 @@ class _TransactionPageState extends State<TransactionPage>
                                   child: AutoCompleteText<AutocompleteAccount>(
                                     labelText:
                                         S.of(context).generalDestinationAccount,
-                                    labelIcon: Icons.arrow_forward,
+                                    labelIcon: Icons.login,
                                     textController:
                                         _destinationAccountTextControllers[i],
                                     focusNode: _destinationAccountFocusNodes[i],

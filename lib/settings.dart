@@ -115,7 +115,6 @@ class SettingsProvider with ChangeNotifier {
   static const String settingsBitmask = "BOOLBITMASK";
   static const String settingDebug = "DEBUG";
   static const String settingLocale = "LOCALE";
-  static const String settingLocaleFormat = "LOCALE_FORMAT";
   static const String settingLock = "LOCK";
   static const String settingShowFutureTXs = "SHOWFUTURETXS";
   static const String settingNLKnownApps = "NL_KNOWNAPPS";
@@ -135,68 +134,48 @@ class SettingsProvider with ChangeNotifier {
   static const String settingsDashboardHidden = "DASHBOARD_HIDDEN";
 
   bool get debug => _loaded ? _boolSettings[BoolSettings.debug] : false;
-
   bool get lock => _loaded ? _boolSettings[BoolSettings.lock] : false;
-
   bool get showFutureTXs =>
       _loaded ? _boolSettings[BoolSettings.showFutureTXs] : false;
-
   bool get dynamicColors =>
       _loaded ? _boolSettings[BoolSettings.dynamicColors] : false;
-
   bool get useServerTime =>
       _loaded ? _boolSettings[BoolSettings.useServerTime] : true;
-
   bool get hideTags => _loaded ? _boolSettings[BoolSettings.hideTags] : false;
 
   ThemeMode _theme = ThemeMode.system;
-
   ThemeMode get theme => _theme;
 
   Locale? _locale;
-
   Locale? get locale => _locale;
-
-  Locale? _localeFormat;
-
-  Locale? get localeFormat => _localeFormat;
 
   StreamSubscription<LogRecord>? _debugLogger;
 
   bool _loaded = false;
-
   bool get loaded => _loaded;
 
   bool _loading = false;
 
   List<String> _notificationApps = <String>[];
-
   List<String> get notificationApps => _notificationApps;
 
   BillsLayout _billsLayout = BillsLayout.grouped;
-
   BillsLayout get billsLayout => _billsLayout;
   BillsSort _billsSort = BillsSort.name;
-
   BillsSort get billsSort => _billsSort;
   SortingOrder _billsSortOrder = SortingOrder.ascending;
-
   SortingOrder get billsSortOrder => _billsSortOrder;
 
   List<String> _categoriesSumExcluded = <String>[];
-
   List<String> get categoriesSumExcluded => _categoriesSumExcluded;
 
   List<DashboardCards> _dashboardOrder = <DashboardCards>[];
-
   List<DashboardCards> get dashboardOrder => _dashboardOrder;
 
   final List<DashboardCards> _dashboardHidden = <DashboardCards>[];
-
   List<DashboardCards> get dashboardHidden => _dashboardHidden;
 
   late SettingsBitmask _boolSettings;
-
   SettingsBitmask get boolSettings => _boolSettings;
 
   Future<void> migrateLegacy(SharedPreferencesAsync prefs) async {
@@ -327,19 +306,6 @@ class SettingsProvider with ChangeNotifier {
       _locale = const Locale('en');
     }
 
-    // Fallback to using the main language locale
-    final Locale localeFormat = Locale(
-      await prefs.getString(settingLocaleFormat) ??
-          await prefs.getString(settingLocale) ??
-          "unset",
-    );
-    log.config("read format locale $localeFormat");
-    if (S.supportedLocales.contains(localeFormat)) {
-      _localeFormat = localeFormat;
-    } else {
-      _localeFormat = const Locale('en');
-    }
-
     if (debug) {
       log.config("setting debug");
       Logger.root.level = Level.ALL;
@@ -459,16 +425,12 @@ class SettingsProvider with ChangeNotifier {
   }
 
   set lock(bool enabled) => _setBool(BoolSettings.lock, enabled);
-
   set showFutureTXs(bool enabled) =>
       _setBool(BoolSettings.showFutureTXs, enabled);
-
   set dynamicColors(bool enabled) =>
       _setBool(BoolSettings.dynamicColors, enabled);
-
   set useServerTime(bool enabled) =>
       _setBool(BoolSettings.useServerTime, enabled);
-
   set hideTags(bool enabled) => _setBool(BoolSettings.hideTags, enabled);
 
   Future<void> setTheme(ThemeMode theme) async {
@@ -512,20 +474,6 @@ class SettingsProvider with ChangeNotifier {
 
     log.finest(() => "notify SettingsProvider->setLocale()");
     notifyListeners();
-  }
-
-  Future<void> setLocaleFormat(Locale localeFormat) async {
-    if (!S.supportedLocales.contains(localeFormat)) {
-      return;
-    }
-
-    _localeFormat = Locale(localeFormat.languageCode);
-    await SharedPreferencesAsync().setString(
-      settingLocaleFormat,
-      localeFormat.languageCode,
-    );
-
-    log.finest(() => "notify SettingsProvider->setLocaleFormat()");
   }
 
   Future<void> notificationAddKnownApp(String packageName) async {

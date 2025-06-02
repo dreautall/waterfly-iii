@@ -314,6 +314,21 @@ class SZh extends S {
   String get generalCurrency => '货币';
 
   @override
+  String get generalDateRangeCurrentMonth => 'Current Month';
+
+  @override
+  String get generalDateRangeLast30Days => 'Last 30 days';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Current Year';
+
+  @override
+  String get generalDateRangeLastYear => 'Last year';
+
+  @override
+  String get generalDateRangeAll => 'All';
+
+  @override
   String get generalDefault => '默认';
 
   @override
@@ -431,6 +446,9 @@ class SZh extends S {
   String get homeMainChartNetWorthTitle => '净值';
 
   @override
+  String get homeMainChartTagsTitle => '';
+
+  @override
   String get homePiggyAdjustDialogTitle => '存钱/花钱';
 
   @override
@@ -516,6 +534,9 @@ class SZh extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<全部货币>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Date Range';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions => '显示未来交易';

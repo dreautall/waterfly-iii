@@ -317,6 +317,21 @@ class SSl extends S {
   String get generalCurrency => 'Valuta';
 
   @override
+  String get generalDateRangeCurrentMonth => 'Current Month';
+
+  @override
+  String get generalDateRangeLast30Days => 'Last 30 days';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Current Year';
+
+  @override
+  String get generalDateRangeLastYear => 'Last year';
+
+  @override
+  String get generalDateRangeAll => 'All';
+
+  @override
   String get generalDefault => 'privzeto';
 
   @override
@@ -435,6 +450,9 @@ class SSl extends S {
   String get homeMainChartNetWorthTitle => 'Neto vrednost';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Prihranek/poraba denarja';
 
   @override
@@ -523,6 +541,9 @@ class SSl extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Vse valute>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Date Range';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>

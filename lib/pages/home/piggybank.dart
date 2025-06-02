@@ -422,12 +422,13 @@ class _PiggyDetailsState extends State<PiggyDetails> {
             ),
             FilledButton(
               onPressed: () async {
-                PiggyBankSingle? newPiggy = await showDialog<PiggyBankSingle>(
-                  context: context,
-                  builder:
-                      (BuildContext context) =>
-                          PiggyAdjustBalance(piggy: currentPiggy),
-                );
+                final PiggyBankSingle? newPiggy =
+                    await showDialog<PiggyBankSingle>(
+                      context: context,
+                      builder:
+                          (BuildContext context) =>
+                              PiggyAdjustBalance(piggy: currentPiggy),
+                    );
                 if (newPiggy == null) {
                   return;
                 }
@@ -574,7 +575,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                 if (!resp.isSuccessful || resp.body == null) {
                   late String error;
                   try {
-                    ValidationErrorResponse valError =
+                    final ValidationErrorResponse valError =
                         ValidationErrorResponse.fromJson(
                           json.decode(resp.error.toString()),
                         );

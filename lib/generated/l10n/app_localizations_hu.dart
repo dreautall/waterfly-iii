@@ -317,6 +317,21 @@ class SHu extends S {
   String get generalCurrency => 'Pénznem';
 
   @override
+  String get generalDateRangeCurrentMonth => 'Current Month';
+
+  @override
+  String get generalDateRangeLast30Days => 'Last 30 days';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Current Year';
+
+  @override
+  String get generalDateRangeLastYear => 'Last year';
+
+  @override
+  String get generalDateRangeAll => 'All';
+
+  @override
   String get generalDefault => 'alapértelmezett';
 
   @override
@@ -439,6 +454,9 @@ class SHu extends S {
   String get homeMainChartNetWorthTitle => 'Nettó Érték';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Pénz megtakarítása/költése';
 
   @override
@@ -528,6 +546,9 @@ class SHu extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Összes Pénznem>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Date Range';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>

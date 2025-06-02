@@ -135,6 +135,9 @@ class FilterDialog extends StatelessWidget {
     log.finest(() => "build()");
     final bool oldShowFutureTXs =
         context.read<SettingsProvider>().showFutureTXs;
+    final TransactionDateFilter oldTransactionDateFilter =
+        context.read<SettingsProvider>().transactionDateFilter;
+
     return AlertDialog(
       icon: const Icon(Icons.tune),
       title: Text(S.of(context).homeTransactionsDialogFilterTitle),
@@ -143,7 +146,11 @@ class FilterDialog extends StatelessWidget {
         TextButton(
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
           onPressed: () {
+            // Revert on cancel
             context.read<SettingsProvider>().showFutureTXs = oldShowFutureTXs;
+            context.read<SettingsProvider>().setTransactionDateFilter(
+              oldTransactionDateFilter,
+            );
             Navigator.of(context).pop();
           },
         ),
@@ -151,7 +158,11 @@ class FilterDialog extends StatelessWidget {
           child: Text(S.of(context).generalReset),
           onPressed: () {
             filters.reset();
+            // Reset to defaults
             context.read<SettingsProvider>().showFutureTXs = false;
+            context.read<SettingsProvider>().setTransactionDateFilter(
+              TransactionDateFilter.all,
+            );
             Navigator.of(context).pop(true);
           },
         ),
@@ -173,7 +184,7 @@ class FilterDialog extends StatelessWidget {
                 AsyncSnapshot<FilterData> snapshot,
               ) {
                 if (snapshot.hasData && snapshot.data != null) {
-                  List<Widget> child = <Widget>[];
+                  final List<Widget> child = <Widget>[];
                   final double inputWidth =
                       MediaQuery.of(context).size.width - 128 - 24;
 
@@ -193,6 +204,39 @@ class FilterDialog extends StatelessWidget {
                               .homeTransactionsDialogFilterFutureTransactions,
                         ),
                       ),
+                    ),
+                  );
+                  child.add(const SizedBox(height: 12));
+
+                  // Transaction Date Filter Dropdown
+                  child.add(
+                    DropdownMenu<TransactionDateFilter>(
+                      initialSelection:
+                          context
+                              .read<SettingsProvider>()
+                              .transactionDateFilter,
+                      leadingIcon: const Icon(Icons.date_range),
+                      label: Text(
+                        S.of(context).homeTransactionsDialogFilterDateRange,
+                      ),
+                      dropdownMenuEntries:
+                          TransactionDateFilter.values
+                              .map(
+                                (TransactionDateFilter filter) =>
+                                    DropdownMenuEntry<TransactionDateFilter>(
+                                      value: filter,
+                                      label: _getFilterName(context, filter),
+                                    ),
+                              )
+                              .toList(),
+                      onSelected: (TransactionDateFilter? newValue) {
+                        if (newValue != null) {
+                          context
+                              .read<SettingsProvider>()
+                              .setTransactionDateFilter(newValue);
+                        }
+                      },
+                      width: inputWidth,
                     ),
                   );
                   child.add(const SizedBox(height: 12));
@@ -568,5 +612,20 @@ class FilterDialog extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getFilterName(BuildContext context, TransactionDateFilter filter) {
+    switch (filter) {
+      case TransactionDateFilter.currentMonth:
+        return S.of(context).generalDateRangeCurrentMonth;
+      case TransactionDateFilter.last30Days:
+        return S.of(context).generalDateRangeLast30Days;
+      case TransactionDateFilter.currentYear:
+        return S.of(context).generalDateRangeCurrentYear;
+      case TransactionDateFilter.lastYear:
+        return S.of(context).generalDateRangeLastYear;
+      case TransactionDateFilter.all:
+        return S.of(context).generalDateRangeAll;
+    }
   }
 }

@@ -320,6 +320,21 @@ class SCa extends S {
   String get generalCurrency => 'Moneda';
 
   @override
+  String get generalDateRangeCurrentMonth => 'Current Month';
+
+  @override
+  String get generalDateRangeLast30Days => 'Last 30 days';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Current Year';
+
+  @override
+  String get generalDateRangeLastYear => 'Last year';
+
+  @override
+  String get generalDateRangeAll => 'All';
+
+  @override
   String get generalDefault => 'per defecte';
 
   @override
@@ -438,6 +453,9 @@ class SCa extends S {
   String get homeMainChartNetWorthTitle => 'Valor Net';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Estalvia/Gasta Diners';
 
   @override
@@ -528,6 +546,9 @@ class SCa extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Totes les Monedes>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Date Range';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>

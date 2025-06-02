@@ -317,6 +317,21 @@ class SId extends S {
   String get generalCurrency => 'Mata Uang';
 
   @override
+  String get generalDateRangeCurrentMonth => 'Current Month';
+
+  @override
+  String get generalDateRangeLast30Days => 'Last 30 days';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Current Year';
+
+  @override
+  String get generalDateRangeLastYear => 'Last year';
+
+  @override
+  String get generalDateRangeAll => 'All';
+
+  @override
   String get generalDefault => 'bawaan';
 
   @override
@@ -435,6 +450,9 @@ class SId extends S {
   String get homeMainChartNetWorthTitle => 'Kekayaan Bersih';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Simpan/Belanjakan Uang';
 
   @override
@@ -523,6 +541,9 @@ class SId extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Semua Mata Uang>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Date Range';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>

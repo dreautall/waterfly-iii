@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:animations/animations.dart';
+import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -35,7 +36,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
   final Logger log = Logger("Pages.Home.Transaction");
 
   final int _numberOfPostsPerRequest = 50;
-
   late PagingState<int, TransactionRead> _pagingState;
 
   DateTime? _lastDate;
@@ -45,11 +45,31 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   final TransactionFilters _filters = TransactionFilters();
   final ValueNotifier<bool> _tagsHidden = ValueNotifier<bool>(false);
+  final Map<String, double> _runningBalancesByTransactionId =
+      <String, double>{};
+  double? _lastCalculatedBalance;
+
+  bool _isRevenueOrExpense(ShortAccountTypeProperty? type) {
+    return type == ShortAccountTypeProperty.revenue ||
+        type == ShortAccountTypeProperty.expense;
+  }
+
+  double _updateBalance(
+    double balance,
+    double amount,
+    TransactionTypeProperty? type,
+  ) {
+    if (type == TransactionTypeProperty.withdrawal ||
+        type == TransactionTypeProperty.transfer) {
+      return balance + amount;
+    } else {
+      return balance - amount;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-
     _tzHandler = context.read<FireflyService>().tzHandler;
     _pagingState = PagingState<int, TransactionRead>();
     _tagsHidden.value = context.read<SettingsProvider>().hideTags;
@@ -89,11 +109,13 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   isSelected: context.watch<TransactionFilters>().hasFilters,
                   tooltip: S.of(context).homeTransactionsActionFilter,
                   onPressed: () async {
-                    TransactionFilters oldFilters = _filters.copyWith();
+                    final TransactionFilters oldFilters = _filters.copyWith();
                     final SettingsProvider settings =
                         context.read<SettingsProvider>();
                     final bool oldShowFutureTXs = settings.showFutureTXs;
-                    bool? ok = await showDialog<bool>(
+                    final TransactionDateFilter oldTransactionDateFilter =
+                        settings.transactionDateFilter;
+                    final bool? ok = await showDialog<bool>(
                       context: context,
                       builder:
                           (BuildContext context) => FilterDialog(
@@ -104,6 +126,15 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     if (ok == null || !ok) {
                       if (settings.showFutureTXs != oldShowFutureTXs) {
                         settings.showFutureTXs = oldShowFutureTXs;
+                        setState(() {
+                          _pagingState = _pagingState.reset();
+                        });
+                      }
+                      if (settings.transactionDateFilter !=
+                          oldTransactionDateFilter) {
+                        settings.setTransactionDateFilter(
+                          oldTransactionDateFilter,
+                        );
                         setState(() {
                           _pagingState = _pagingState.reset();
                         });
@@ -119,7 +150,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                       return;
                     }
                     if (oldFilters == _filters &&
-                        settings.showFutureTXs == oldShowFutureTXs) {
+                        settings.showFutureTXs == oldShowFutureTXs &&
+                        settings.transactionDateFilter ==
+                            oldTransactionDateFilter) {
                       return;
                     }
                     _filters.updateFilters();
@@ -149,6 +182,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   void notifRefresh() {
     setState(() {
+      _lastCalculatedBalance = null;
       _pagingState = _pagingState.reset();
     });
   }
@@ -184,6 +218,27 @@ class _HomeTransactionsState extends State<HomeTransactions>
         _filters.updateFilters();
       }
 
+      // Get start date
+      late DateTime? startDate;
+      final DateTime now = _tzHandler.sNow().clearTime();
+      switch (context.read<SettingsProvider>().transactionDateFilter) {
+        case TransactionDateFilter.currentMonth:
+          startDate = now.copyWith(day: 1);
+          break;
+        case TransactionDateFilter.currentYear:
+          startDate = now.copyWith(month: 1, day: 1);
+          break;
+        case TransactionDateFilter.last30Days:
+          startDate = now.subtract(const Duration(days: 30));
+          break;
+        case TransactionDateFilter.lastYear:
+          startDate = now.copyWith(year: now.year - 1);
+          break;
+        default:
+          startDate = null;
+          break;
+      }
+
       // Faster than searching for an account, and also has cache (stock) behind
       // This search should never have additional filters!
       if (widget.filters?.account != null) {
@@ -191,12 +246,16 @@ class _HomeTransactionsState extends State<HomeTransactions>
           id: _filters.account!.id,
           page: pageKey,
           limit: _numberOfPostsPerRequest,
+          type: TransactionTypeFilter.all,
           end:
               context.read<SettingsProvider>().showFutureTXs
                   ? null
-                  : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
+                  : DateFormat('yyyy-MM-dd', 'en_US').format(now),
           start:
-              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
+              startDate != null
+                  ? DateFormat('yyyy-MM-dd', 'en_US').format(startDate)
+                  : (context.read<FireflyService>().apiVersion! >=
+                      Version(2, 0, 9))
                   ? null
                   : "1900-01-01",
         );
@@ -209,50 +268,84 @@ class _HomeTransactionsState extends State<HomeTransactions>
           query = "currency_is:${_filters.currency!.attributes.code} $query";
         }
         if (_filters.category != null) {
-          if (_filters.category!.id == "-1") {
-            query = "has_no_category:true $query";
-          } else {
-            query =
-                "category_is:\"${_filters.category!.attributes.name}\" $query";
-          }
+          query =
+              (_filters.category!.id == "-1")
+                  ? "has_no_category:true $query"
+                  : "category_is:\"${_filters.category!.attributes.name}\" $query";
         }
         if (_filters.budget != null) {
-          if (_filters.budget!.id == "-1") {
-            query = "has_no_budget:true $query";
-          } else {
-            query = "budget_is:\"${_filters.budget!.attributes.name}\" $query";
-          }
+          query =
+              (_filters.budget!.id == "-1")
+                  ? "has_no_budget:true $query"
+                  : "budget_is:\"${_filters.budget!.attributes.name}\" $query";
         }
         if (_filters.bill != null) {
-          if (_filters.bill!.id == "-1") {
-            query = "has_no_bill:true $query";
-          } else {
-            query = "bill_is:\"${_filters.bill!.attributes.name}\" $query";
-          }
+          query =
+              (_filters.bill!.id == "-1")
+                  ? "has_no_bill:true $query"
+                  : "bill_is:\"${_filters.bill!.attributes.name}\" $query";
         }
         if (_filters.tags != null) {
           for (String tag in _filters.tags!.tags) {
             query = "tag_is:\"$tag\" $query";
           }
         }
+        if (startDate != null) {
+          query =
+              "date_after:${DateFormat('yyyy-MM-dd', 'en_US').format(startDate)} $query";
+        }
         if (!context.read<SettingsProvider>().showFutureTXs) {
-          query = "date_before:today $query ";
+          query = "date_before:today $query";
         }
         log.fine(() => "Search query: $query");
-        transactionList = await stock.getSearch(query: query, page: pageKey);
+        transactionList = await stock.getSearch(
+          query: query,
+          page: pageKey,
+          limit: _numberOfPostsPerRequest,
+        );
       } else {
         transactionList = await stock.get(
           page: pageKey,
           limit: _numberOfPostsPerRequest,
+          type: TransactionTypeFilter.all,
           end:
               context.read<SettingsProvider>().showFutureTXs
                   ? null
-                  : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
+                  : DateFormat('yyyy-MM-dd', 'en_US').format(now),
           start:
-              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
+              startDate != null
+                  ? DateFormat('yyyy-MM-dd', 'en_US').format(startDate)
+                  : (context.read<FireflyService>().apiVersion! >=
+                      Version(2, 0, 9))
                   ? null
                   : "1900-01-01",
         );
+      }
+
+      if (_filters.account != null) {
+        AccountRead account = _filters.account!;
+        // Attempt to retrieve the opening balance
+        double balance =
+            _lastCalculatedBalance ??
+            double.tryParse(account.attributes.currentBalance!) ??
+            0.0;
+        // If the account is a revenue/expense account, we need to invert the balance
+        if (_lastCalculatedBalance == null &&
+            _isRevenueOrExpense(account.attributes.type)) {
+          balance *= -1;
+        }
+        for (TransactionRead item in transactionList) {
+          // Attempt to retrieve the transaction total amount
+          final TransactionSplit tx = item.attributes.transactions.first;
+          final double amount = double.tryParse(tx.amount) ?? 0.0;
+          // Should never be the case
+          if (amount == 0.0) {
+            continue;
+          }
+          _runningBalancesByTransactionId[item.id] = balance;
+          balance = _updateBalance(balance, amount, tx.type);
+          _lastCalculatedBalance = balance;
+        }
       }
 
       final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
@@ -319,7 +412,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     TransactionRead item,
     int index,
   ) {
-    List<TransactionSplit> transactions = item.attributes.transactions;
+    final List<TransactionSplit> transactions = item.attributes.transactions;
     if (transactions.isEmpty) {
       return Text(S.of(context).homeTransactionsEmpty);
     }
@@ -398,7 +491,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       title = transactions.first.description;
     }
     // Subtitle
-    List<InlineSpan> subtitle = <InlineSpan>[];
+    final List<InlineSpan> subtitle = <InlineSpan>[];
     if (hasAttachments) {
       subtitle.add(
         const WidgetSpan(
@@ -503,7 +596,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                 items: <PopupMenuEntry<Function>>[
                   PopupMenuItem<Function>(
                     value: () async {
-                      bool? ok = await Navigator.push(
+                      final bool? ok = await Navigator.push(
                         context,
                         MaterialPageRoute<bool>(
                           builder:
@@ -536,7 +629,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   PopupMenuItem<Function>(
                     value: () async {
                       final FireflyIii api = context.read<FireflyService>().api;
-                      bool? ok = await showDialog<bool>(
+                      final bool? ok = await showDialog<bool>(
                         context: context,
                         builder:
                             (BuildContext context) =>
@@ -580,55 +673,153 @@ class _HomeTransactionsState extends State<HomeTransactions>
                 backgroundColor: transactions.first.type.color,
                 child: Icon(transactions.first.type.icon),
               ),
-              title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
-              subtitle: Column(
+              title: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  RichText(
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    text: TextSpan(
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      children: subtitle,
+                  // Front part
+                  Expanded(
+                    child: Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  if (!context.watch<SettingsProvider>().hideTags &&
-                      tags.isNotEmpty) ...<Widget>[
-                    Wrap(
-                      children:
-                          tags
-                              .map(
-                                (String tag) => Card(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        const Icon(
-                                          Icons.label_outline,
-                                          size: 16,
-                                        ),
-                                        const SizedBox(width: 5),
-                                        Flexible(
-                                          child: RichText(
-                                            overflow: TextOverflow.fade,
-                                            text: TextSpan(
-                                              style:
-                                                  Theme.of(
-                                                    context,
-                                                  ).textTheme.bodyMedium,
-                                              text: tag,
-                                            ),
+                  const SizedBox(width: 8),
+                  // Trailing part
+                  RichText(
+                    textAlign: TextAlign.end,
+                    maxLines: 1,
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      children: <InlineSpan>[
+                        if (foreignText.isNotEmpty)
+                          TextSpan(
+                            text: foreignText,
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodySmall!.copyWith(
+                              color: Colors.blue,
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                        TextSpan(
+                          text: currency.fmt(amount),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleMedium!.copyWith(
+                            color:
+                                transactions.first.type !=
+                                        TransactionTypeProperty.reconciliation
+                                    ? transactions.first.type.color
+                                    : (transactions.first.sourceType ==
+                                        AccountTypeProperty
+                                            .reconciliationAccount)
+                                    ? Colors.green
+                                    : Colors.red,
+                            fontFeatures: const <FontFeature>[
+                              FontFeature.tabularFigures(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              subtitle: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  // Front part
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        RichText(
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            children: subtitle,
+                          ),
+                        ),
+                        if (!context.watch<SettingsProvider>().hideTags &&
+                            tags.isNotEmpty) ...<Widget>[
+                          Wrap(
+                            children:
+                                tags
+                                    .map(
+                                      (String tag) => Card(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(6.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              const Icon(
+                                                Icons.label_outline,
+                                                size: 16,
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Flexible(
+                                                child: RichText(
+                                                  overflow: TextOverflow.fade,
+                                                  text: TextSpan(
+                                                    style:
+                                                        Theme.of(
+                                                          context,
+                                                        ).textTheme.bodyMedium,
+                                                    text: tag,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-                              .toList(),
+                                      ),
+                                    )
+                                    .toList(),
+                          ),
+                        ],
+                      ],
                     ),
-                  ],
+                  ),
+                  // Trailing part
+                  RichText(
+                    textAlign: TextAlign.end,
+                    maxLines: 1,
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      children: <InlineSpan>[
+                        if (reconciled)
+                          const WidgetSpan(
+                            baseline: TextBaseline.ideographic,
+                            alignment: PlaceholderAlignment.middle,
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 2),
+                              child: Icon(Icons.check),
+                            ),
+                          ),
+                        if (_filters.account != null)
+                          TextSpan(
+                            text: currency.fmt(
+                              _runningBalancesByTransactionId[item.id] ?? 0.0,
+                            ),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        if (_filters.account == null)
+                          TextSpan(
+                            text: switch (transactions.first.type) {
+                              TransactionTypeProperty.deposit =>
+                                destinationName,
+                              TransactionTypeProperty.openingBalance => "",
+                              TransactionTypeProperty.reconciliation => "",
+                              _ => sourceName,
+                            },
+                          ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
               isThreeLine: true,
@@ -638,52 +829,29 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   bottomLeft: Radius.circular(16),
                 ),
               ),
-              trailing: RichText(
-                textAlign: TextAlign.end,
-                maxLines: 2,
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  children: <InlineSpan>[
-                    if (foreignText.isNotEmpty)
-                      TextSpan(
-                        text: foreignText,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodySmall!.copyWith(color: Colors.blue),
-                      ),
-                    TextSpan(
-                      text: currency.fmt(amount),
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: transactions.first.type.color,
-                        fontFeatures: const <FontFeature>[
-                          FontFeature.tabularFigures(),
-                        ],
-                      ),
-                    ),
-                    const TextSpan(text: "\n"),
-                    if (reconciled)
-                      const WidgetSpan(
-                        baseline: TextBaseline.ideographic,
-                        alignment: PlaceholderAlignment.middle,
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 2),
-                          child: Icon(Icons.check),
-                        ),
-                      ),
-                    TextSpan(
-                      text:
-                          (transactions.first.type ==
-                                  TransactionTypeProperty.deposit)
-                              ? destinationName
-                              : sourceName,
-                    ),
-                  ],
-                ),
-              ),
-              onTap: () => openContainer(),
             ),
           ),
-      onClosed: (bool? refresh) {
+      onClosed: (bool? refresh) async {
+        if (_filters.account != null) {
+          // Reset last balance calculated
+          FireflyIii api = context.read<FireflyService>().api;
+          // Retrieve the account to get the current balance
+          final Response<AccountSingle> respAccount = await api.v1AccountsIdGet(
+            id: _filters.account!.id,
+          );
+          apiThrowErrorIfEmpty(respAccount, mounted ? context : null);
+          final AccountRead account = respAccount.body!.data;
+          _lastCalculatedBalance =
+              double.tryParse(account.attributes.currentBalance!) ?? 0.0;
+          // If the account is a revenue/expense account, we need to invert the balance
+          if (_isRevenueOrExpense(account.attributes.type)) {
+            _lastCalculatedBalance =
+                _lastCalculatedBalance != null
+                    ? _lastCalculatedBalance! * -1
+                    : 0;
+          }
+        }
+
         if (refresh ?? false == true) {
           _rowsWithDate = <int>[];
           _lastDate = null;
@@ -698,7 +866,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     );
 
     // Date
-    DateTime date = _tzHandler.sTime(transactions.first.date).toLocal();
+    final DateTime date = _tzHandler.sTime(transactions.first.date).toLocal();
     // Show Date Banner when:
     // 1. _lastDate is not set (= first element)
     // 2. _lastDate has a different day than current date (= date changed) and

@@ -317,6 +317,21 @@ class SCs extends S {
   String get generalCurrency => 'Měna';
 
   @override
+  String get generalDateRangeCurrentMonth => 'Current Month';
+
+  @override
+  String get generalDateRangeLast30Days => 'Last 30 days';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Current Year';
+
+  @override
+  String get generalDateRangeLastYear => 'Last year';
+
+  @override
+  String get generalDateRangeAll => 'All';
+
+  @override
   String get generalDefault => 'výchozí';
 
   @override
@@ -435,6 +450,9 @@ class SCs extends S {
   String get homeMainChartNetWorthTitle => 'Čisté jmění';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Uložit/utratit peníze';
 
   @override
@@ -524,6 +542,9 @@ class SCs extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Všechny měny>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Date Range';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>

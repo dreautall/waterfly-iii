@@ -314,6 +314,21 @@ class SFa extends S {
   String get generalCurrency => 'واحدپول';
 
   @override
+  String get generalDateRangeCurrentMonth => 'Current Month';
+
+  @override
+  String get generalDateRangeLast30Days => 'Last 30 days';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Current Year';
+
+  @override
+  String get generalDateRangeLastYear => 'Last year';
+
+  @override
+  String get generalDateRangeAll => 'All';
+
+  @override
   String get generalDefault => 'پیش فرض';
 
   @override
@@ -520,6 +535,9 @@ class SFa extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<همه ارزها>\n';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Date Range';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>

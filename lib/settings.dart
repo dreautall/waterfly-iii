@@ -68,6 +68,14 @@ enum BoolSettings {
   hideTags,
 }
 
+enum TransactionDateFilter {
+  currentMonth,
+  last30Days,
+  currentYear,
+  lastYear,
+  all,
+}
+
 class SettingsBitmask {
   int _value;
 
@@ -132,6 +140,7 @@ class SettingsProvider with ChangeNotifier {
   static const String settingsCategoriesSumExcluded = "CAT_SUMEXCLUDED";
   static const String settingsDashboardOrder = "DASHBOARD_ORDER";
   static const String settingsDashboardHidden = "DASHBOARD_HIDDEN";
+  static const String settingTransactionDateFilter = "TX_DATE_FILTER";
 
   bool get debug => _loaded ? _boolSettings[BoolSettings.debug] : false;
   bool get lock => _loaded ? _boolSettings[BoolSettings.lock] : false;
@@ -177,6 +186,10 @@ class SettingsProvider with ChangeNotifier {
 
   late SettingsBitmask _boolSettings;
   SettingsBitmask get boolSettings => _boolSettings;
+
+  TransactionDateFilter _transactionDateFilter = TransactionDateFilter.all;
+
+  TransactionDateFilter get transactionDateFilter => _transactionDateFilter;
 
   Future<void> migrateLegacy(SharedPreferencesAsync prefs) async {
     log.config("trying to migrate old prefs");
@@ -378,6 +391,13 @@ class SettingsProvider with ChangeNotifier {
         );
       }
     }
+
+    // Load new transaction date filter setting
+    int? txDateFilterIndex = await prefs.getInt(settingTransactionDateFilter);
+    _transactionDateFilter =
+        txDateFilterIndex == null
+            ? TransactionDateFilter.all
+            : TransactionDateFilter.values[txDateFilterIndex];
 
     _loaded = _loading = true;
     log.finest(() => "notify SettingsProvider->loadSettings()");
@@ -713,6 +733,21 @@ class SettingsProvider with ChangeNotifier {
     );
 
     log.finest(() => "notify SettingsProvider->dashboardShowCard()");
+    notifyListeners();
+  }
+
+  Future<void> setTransactionDateFilter(TransactionDateFilter filter) async {
+    if (filter == _transactionDateFilter) {
+      return;
+    }
+
+    _transactionDateFilter = filter;
+    await SharedPreferencesAsync().setInt(
+      settingTransactionDateFilter,
+      filter.index,
+    );
+
+    log.finest(() => "notify SettingsProvider->setTransactionDateFilter()");
     notifyListeners();
   }
 }

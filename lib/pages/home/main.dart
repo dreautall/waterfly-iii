@@ -93,10 +93,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastDays() async {
-    /*if (lastDaysExpense.isNotEmpty) {
-      // :DEBUG:
+    if (lastDaysExpense.isNotEmpty && lastDaysIncome.isNotEmpty) {
       return true;
-    }*/
+    }
 
     final FireflyIii api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
@@ -105,9 +104,6 @@ class _HomeMainState extends State<HomeMain>
     final TZDateTime now = tzHandler.sNow().setTimeOfDay(
       const TimeOfDay(hour: 12, minute: 0),
     );
-
-    lastDaysExpense.clear();
-    lastDaysIncome.clear();
 
     // With a new API the number of API calls is reduced from 14 to 2
     // There was a fixed bug with Firefly v6.1.23, use it only afterwards!
@@ -193,10 +189,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchOverviewChart() async {
-    /*if (overviewChartData.isNotEmpty) {
-      // :DEBUG:
+    if (overviewChartData.isNotEmpty) {
       return true;
-    }*/
+    }
 
     final FireflyIii api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
@@ -219,10 +214,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchLastMonths() async {
-    /*if (lastMonthsExpense.isNotEmpty) {
-      // :DEBUG:
+    if (lastMonthsExpense.isNotEmpty && lastMonthsIncome.isNotEmpty) {
       return true;
-    }*/
+    }
 
     final FireflyIii api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
@@ -233,8 +227,6 @@ class _HomeMainState extends State<HomeMain>
       lastMonths.add(DateTime(now.year, now.month - i, (i == 0) ? now.day : 1));
     }
 
-    lastMonthsExpense.clear();
-    lastMonthsIncome.clear();
     for (DateTime e in lastMonths) {
       late DateTime start;
       late DateTime end;
@@ -293,17 +285,15 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchCategories({bool tags = false}) async {
-    /*if (catChartData.isNotEmpty) {
-      // :DEBUG:
+    if ((tags && tagChartData.isNotEmpty) ||
+        (!tags && catChartData.isNotEmpty)) {
       return true;
-    }*/
+    }
 
     final FireflyIii api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
     final DateTime now = tzHandler.sNow().clearTime();
-
-    tags ? tagChartData.clear() : catChartData.clear();
 
     late final Response<InsightGroup> respIncomeData;
     late final Response<InsightGroup> respExpenseData;
@@ -451,10 +441,9 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<bool> _fetchBalance() async {
-    /*if (lastMonthsEarned.isNotEmpty) {
-      // :DEBUG:
+    if (lastMonthsEarned.isNotEmpty) {
       return true;
-    }*/
+    }
 
     final FireflyIii api = context.read<FireflyService>().api;
     final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
@@ -475,11 +464,6 @@ class _HomeMainState extends State<HomeMain>
       minute: 0,
       second: 0,
     );
-
-    lastMonthsEarned.clear();
-    lastMonthsSpent.clear();
-    lastMonthsAssets.clear();
-    lastMonthsLiabilities.clear();
 
     final (
       Response<AccountArray> respAssetAccounts,
@@ -589,7 +573,19 @@ class _HomeMainState extends State<HomeMain>
   }
 
   Future<void> _refreshStats() async {
-    setState(() {});
+    setState(() {
+      lastDaysExpense.clear();
+      lastDaysIncome.clear();
+      overviewChartData.clear();
+      lastMonthsExpense.clear();
+      lastMonthsIncome.clear();
+      tagChartData.clear();
+      catChartData.clear();
+      lastMonthsEarned.clear();
+      lastMonthsSpent.clear();
+      lastMonthsAssets.clear();
+      lastMonthsLiabilities.clear();
+    });
   }
 
   @override

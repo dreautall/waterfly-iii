@@ -346,10 +346,10 @@ class _TransactionPageState extends State<TransactionPage>
       _transactionType = TransactionTypeProperty.swaggerGeneratedUnknown;
 
       if (widget.notification != null) {
-        _date = _tzHandler.newTXTime().toLocal();
-      } else {
         _date =
             _tzHandler.notificationTXTime(widget.notification!.date).toLocal();
+      } else {
+        _date = _tzHandler.newTXTime().toLocal();
       }
 
       WidgetsBinding.instance.addPostFrameCallback((_) async {

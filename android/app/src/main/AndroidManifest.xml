@@ -163,6 +163,7 @@
         <package android:name="com.hrc.eb.mobile.android.hibismobiledh"/>
         <package android:name="com.idamob.tinkoff.android"/>
         <package android:name="com.ie.capitalone.uk"/>
+        <package android:name="com.ifs.banking.fiid4794"/>
         <package android:name="com.illimity.mobile.rtl"/>
         <package android:name="com.imaginecurve.curve.prd"/>
         <package android:name="com.ing.asia.mobile"/>
@@ -202,6 +203,7 @@
         <package android:name="com.rewire.app"/>
         <package android:name="com.ripley.banco.peru"/>
         <package android:name="com.samsung.android.email.provider"/>
+        <package android:name="com.samsung.android.messaging"/>
         <package android:name="com.samsung.android.samsungpay.gear"/>
         <package android:name="com.samsung.android.spay"/>
         <package android:name="com.santander.app"/>

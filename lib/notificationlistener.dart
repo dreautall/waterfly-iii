@@ -217,10 +217,12 @@ void nlCallback() async {
     }
 
     if (showNotification) {
+      // :TODO: l10n
       FlutterLocalNotificationsPlugin().show(
         DateTime.now().millisecondsSinceEpoch ~/ 1000,
         "Create Transaction?",
-        "Click to create a transaction based on the notification ${evt.title}",
+        // :TODO: once we l10n this, a better switch can be implemented...
+        "Click to create a transaction based on the notification ${evt.title ?? evt.packageName ?? ""}",
         const NotificationDetails(
           android: AndroidNotificationDetails(
             'extract_transaction',

@@ -57,7 +57,7 @@ dependencies:
     git:
       url: https://github.com/postflow/open_file_plus.git
       ref: main
-  cronet_http: ^1.3.0
+  cronet_http: ^1.4.0
 
 dev_dependencies:
   flutter_lints: ^6.0.0

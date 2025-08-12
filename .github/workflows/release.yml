@@ -22,7 +22,7 @@ jobs:
     needs: [check]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       # Call setup_env action to setup workspace
       - uses: ./.github/actions/setup_env

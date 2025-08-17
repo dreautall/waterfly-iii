@@ -459,7 +459,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           foreignCurrencies[foreignSymbol] = CurrencyRead(
             id: trans.foreignCurrencyId ?? "0",
             type: "currencies",
-            attributes: Currency(
+            attributes: CurrencyProperties(
               code: trans.foreignCurrencyCode ?? "",
               name: "",
               symbol: trans.foreignCurrencySymbol ?? "",
@@ -550,7 +550,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     final CurrencyRead currency = CurrencyRead(
       id: transactions.first.currencyId ?? "0",
       type: "currencies",
-      attributes: Currency(
+      attributes: CurrencyProperties(
         code: transactions.first.currencyCode ?? "",
         name: transactions.first.currencyName ?? "",
         symbol: transactions.first.currencySymbol ?? "",

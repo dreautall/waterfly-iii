@@ -322,7 +322,7 @@ class FilterDialog extends StatelessWidget {
                       value: CurrencyRead(
                         id: "0",
                         type: "dummy",
-                        attributes: Currency(
+                        attributes: CurrencyProperties(
                           name:
                               S
                                   .of(context)

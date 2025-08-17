@@ -292,7 +292,7 @@ class _BillsPageState extends State<BillsPage>
     final CurrencyRead currency = CurrencyRead(
       id: "0",
       type: "currencies",
-      attributes: Currency(
+      attributes: CurrencyProperties(
         code: item.attributes.currencyCode ?? "",
         name: "",
         symbol: item.attributes.currencySymbol ?? "",

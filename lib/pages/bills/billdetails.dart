@@ -41,7 +41,7 @@ class _BillDetailsState extends State<BillDetails> {
     _currency = CurrencyRead(
       id: "0",
       type: "currencies",
-      attributes: Currency(
+      attributes: CurrencyProperties(
         code: widget.bill.attributes.currencyCode ?? "",
         name: "",
         symbol: widget.bill.attributes.currencySymbol ?? "",

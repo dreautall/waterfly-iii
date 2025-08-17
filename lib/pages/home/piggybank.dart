@@ -122,7 +122,7 @@ class _HomePiggybankState extends State<HomePiggybank>
             final CurrencyRead currency = CurrencyRead(
               id: piggy.attributes.currencyId ?? "0",
               type: "currencies",
-              attributes: Currency(
+              attributes: CurrencyProperties(
                 code: piggy.attributes.currencyCode ?? "",
                 name: "",
                 symbol: piggy.attributes.currencySymbol ?? "",
@@ -326,7 +326,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
     final CurrencyRead currency = CurrencyRead(
       id: currentPiggy.attributes.currencyId ?? "0",
       type: "currencies",
-      attributes: Currency(
+      attributes: CurrencyProperties(
         code: currentPiggy.attributes.currencyCode ?? "",
         name: "",
         symbol: currentPiggy.attributes.currencySymbol ?? "",
@@ -473,7 +473,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
     currency = CurrencyRead(
       id: widget.piggy.attributes.currencyId ?? "0",
       type: "currencies",
-      attributes: Currency(
+      attributes: CurrencyProperties(
         code: widget.piggy.attributes.currencyCode ?? "",
         name: "",
         symbol: widget.piggy.attributes.currencySymbol ?? "",

@@ -67,7 +67,7 @@ class _HomeBalanceState extends State<HomeBalance>
                   final CurrencyRead currency = CurrencyRead(
                     id: account.attributes.currencyId ?? "",
                     type: "currencies",
-                    attributes: Currency(
+                    attributes: CurrencyProperties(
                       code: account.attributes.currencyCode ?? "",
                       name: "",
                       symbol: account.attributes.currencySymbol ?? "",

@@ -694,7 +694,7 @@ class _HomeMainState extends State<HomeMain>
                           final CurrencyRead currency = CurrencyRead(
                             id: e.currencyId ?? "0",
                             type: "currencies",
-                            attributes: Currency(
+                            attributes: CurrencyProperties(
                               code: e.currencyCode ?? "",
                               name: "",
                               symbol: e.currencySymbol ?? "",
@@ -1209,7 +1209,7 @@ class BudgetList extends StatelessWidget {
               final CurrencyRead currency = CurrencyRead(
                 id: budget.attributes.currencyId ?? "0",
                 type: "currencies",
-                attributes: Currency(
+                attributes: CurrencyProperties(
                   code: budget.attributes.currencyCode ?? "",
                   name: budget.attributes.currencyName ?? "",
                   symbol: budget.attributes.currencySymbol ?? "",
@@ -1398,7 +1398,7 @@ class BillList extends StatelessWidget {
               final CurrencyRead currency = CurrencyRead(
                 id: bill.attributes.currencyId ?? "0",
                 type: "currencies",
-                attributes: Currency(
+                attributes: CurrencyProperties(
                   code: bill.attributes.currencyCode ?? "",
                   name: "",
                   symbol: bill.attributes.currencySymbol ?? "",

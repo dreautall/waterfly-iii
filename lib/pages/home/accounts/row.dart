@@ -31,7 +31,7 @@ Widget accountRowBuilder(
   CurrencyRead currency = CurrencyRead(
     id: account.attributes.currencyId ?? "0",
     type: "currencies",
-    attributes: Currency(
+    attributes: CurrencyProperties(
       code: account.attributes.currencyCode ?? "",
       name: "",
       symbol: account.attributes.currencySymbol ?? "",

@@ -1178,10 +1178,17 @@ class BudgetList extends StatelessWidget {
 
             for (BudgetLimitRead budget in snapshot.data!) {
               final List<Widget> stackWidgets = <Widget>[];
-              final double spent =
-                  (double.tryParse(budget.attributes.spent!.first.sum ?? "") ??
-                          0)
-                      .abs();
+              late double spent;
+              if (budget.attributes.spent?.isNotEmpty ?? false) {
+                spent =
+                    (double.tryParse(
+                              budget.attributes.spent!.first.sum ?? "",
+                            ) ??
+                            0)
+                        .abs();
+              } else {
+                spent = 0;
+              }
               final double available =
                   double.tryParse(budget.attributes.amount ?? "") ?? 0;
 

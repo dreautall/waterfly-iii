@@ -16,10 +16,6 @@ import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii_v2.enums.swagger.dart'
-    as api_v2_enums;
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii_v2.swagger.dart'
-    as api_v2;
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/main/charts/category.dart';
 import 'package:waterflyiii/pages/home/main/charts/lastdays.dart';
@@ -100,7 +96,7 @@ class _HomeMainState extends State<HomeMain>
     final FireflyIii api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
-    // Use noon due to dailylight saving time
+    // Use noon due to daylight saving time
     final TZDateTime now = tzHandler.sNow().setTimeOfDay(
       const TimeOfDay(hour: 12, minute: 0),
     );
@@ -108,29 +104,19 @@ class _HomeMainState extends State<HomeMain>
     // With a new API the number of API calls is reduced from 14 to 2
     // There was a fixed bug with Firefly v6.1.23, use it only afterwards!
     if (context.read<FireflyService>().apiVersion! >= Version(6, 1, 23)) {
-      final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
-
       final List<int> accounts = <int>[];
-      final Response<AccountArray> respAccounts = await api.v1AccountsGet(
-        type: AccountTypeFilter.asset,
-      );
-      respAccounts.body?.data.forEach(
-        (AccountRead element) => accounts.add(int.parse(element.id)),
-      );
 
-      final Response<List<api_v2.ChartDataSetV2>> respBalanceData = await apiV2
-          .v2ChartBalanceBalanceGet(
+      final Response<List<ChartDataSet>> respBalanceData = await api
+          .v1ChartBalanceBalanceGet(
             start: DateFormat(
               'yyyy-MM-dd',
               'en_US',
             ).format(now.copyWith(day: now.day - 6)),
             end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-            accounts: accounts,
-            period: api_v2.PeriodProperty.value_1d,
           );
       apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
 
-      for (api_v2.ChartDataSetV2 e in respBalanceData.body!) {
+      for (ChartDataSet e in respBalanceData.body!) {
         final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
         entries.forEach((String dateStr, dynamic valueStr) {
           final DateTime date = tzHandler
@@ -446,7 +432,6 @@ class _HomeMainState extends State<HomeMain>
     }
 
     final FireflyIii api = context.read<FireflyService>().api;
-    final FireflyIiiV2 apiV2 = context.read<FireflyService>().apiV2;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
     final DateTime now = tzHandler.sNow().clearTime();
@@ -468,14 +453,13 @@ class _HomeMainState extends State<HomeMain>
     final (
       Response<AccountArray> respAssetAccounts,
       Response<AccountArray> respLiabilityAccounts,
-      Response<List<api_v2.ChartDataSetV2>> respBalanceData,
+      Response<List<ChartDataSet>> respBalanceData,
     ) = await (
           api.v1AccountsGet(type: AccountTypeFilter.asset),
           api.v1AccountsGet(type: AccountTypeFilter.liabilities),
-          apiV2.v2ChartAccountDashboardGet(
+          api.v1ChartAccountOverviewGet(
             start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
             end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
-            preselected: api_v2_enums.PreselectedAccountProperty.assets,
           ),
         ).wait;
     apiThrowErrorIfEmpty(respAssetAccounts, mounted ? context : null);
@@ -490,7 +474,7 @@ class _HomeMainState extends State<HomeMain>
       for (AccountRead e in respLiabilityAccounts.body!.data)
         e.attributes.name: e.attributes.includeNetWorth ?? true,
     });
-    for (api_v2.ChartDataSetV2 e in respBalanceData.body!) {
+    for (ChartDataSet e in respBalanceData.body!) {
       if (includeInNetWorth.containsKey(e.label) &&
           includeInNetWorth[e.label] != true) {
         continue;

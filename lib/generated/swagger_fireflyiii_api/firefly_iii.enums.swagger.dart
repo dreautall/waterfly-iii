@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:collection/collection.dart';
 
 enum DataDestroyObject {
   @JsonValue(null)
@@ -142,7 +143,7 @@ enum ExportFileFilter {
   const ExportFileFilter(this.value);
 }
 
-enum CurrencyUpdateDefault {
+enum CurrencyUpdatePrimary {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
 
@@ -151,12 +152,13 @@ enum CurrencyUpdateDefault {
 
   final String? value;
 
-  const CurrencyUpdateDefault(this.value);
+  const CurrencyUpdatePrimary(this.value);
 }
 
 enum UserGroupReadRole {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
+
   @JsonValue('owner')
   owner('owner'),
   @JsonValue('ro')
@@ -554,6 +556,7 @@ enum WebhookTrigger {
 enum AccountTypeFilter {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
+
   @JsonValue('all')
   all('all'),
   @JsonValue('asset')
@@ -605,6 +608,7 @@ enum AccountTypeFilter {
 enum TransactionTypeFilter {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
+
   @JsonValue('all')
   all('all'),
   @JsonValue('withdrawal')
@@ -693,6 +697,28 @@ enum AccountTypeProperty {
   final String? value;
 
   const AccountTypeProperty(this.value);
+}
+
+enum ChartDatasetPeriodProperty {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('1D')
+  value_1d('1D'),
+  @JsonValue('1W')
+  value_1w('1W'),
+  @JsonValue('1M')
+  value_1m('1M'),
+  @JsonValue('3M')
+  value_3m('3M'),
+  @JsonValue('1Y')
+  value_1y('1Y'),
+  @JsonValue('custom')
+  custom('custom');
+
+  final String? value;
+
+  const ChartDatasetPeriodProperty(this.value);
 }
 
 enum CreditCardTypeProperty {

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:animations/animations.dart';
-import 'package:chopper/chopper.dart';
+import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';

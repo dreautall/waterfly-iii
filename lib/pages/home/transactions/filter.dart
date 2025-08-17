@@ -272,7 +272,7 @@ class FilterDialog extends StatelessWidget {
                       value: AccountRead(
                         id: "0",
                         type: "dummy",
-                        attributes: Account(
+                        attributes: AccountProperties(
                           name:
                               S
                                   .of(context)
@@ -374,7 +374,7 @@ class FilterDialog extends StatelessWidget {
                       value: CategoryRead(
                         id: "0",
                         type: "dummy",
-                        attributes: Category(
+                        attributes: CategoryProperties(
                           name:
                               S
                                   .of(context)
@@ -390,7 +390,7 @@ class FilterDialog extends StatelessWidget {
                       value: CategoryRead(
                         id: "-1",
                         type: "dummy",
-                        attributes: Category(
+                        attributes: CategoryProperties(
                           name:
                               S
                                   .of(context)
@@ -443,7 +443,7 @@ class FilterDialog extends StatelessWidget {
                       value: BudgetRead(
                         id: "0",
                         type: "dummy",
-                        attributes: Budget(
+                        attributes: BudgetProperties(
                           name:
                               S
                                   .of(context)
@@ -457,7 +457,7 @@ class FilterDialog extends StatelessWidget {
                       value: BudgetRead(
                         id: "-1",
                         type: "dummy",
-                        attributes: Budget(
+                        attributes: BudgetProperties(
                           name:
                               S
                                   .of(context)
@@ -508,7 +508,7 @@ class FilterDialog extends StatelessWidget {
                       value: BillRead(
                         id: "0",
                         type: "dummy",
-                        attributes: Bill(
+                        attributes: BillProperties(
                           amountMax: "0",
                           amountMin: "0",
                           date: DateTime.now(),
@@ -526,7 +526,7 @@ class FilterDialog extends StatelessWidget {
                       value: BillRead(
                         id: "-1",
                         type: "dummy",
-                        attributes: Bill(
+                        attributes: BillProperties(
                           amountMax: "0",
                           amountMin: "0",
                           date: DateTime.now(),
@@ -550,7 +550,7 @@ class FilterDialog extends StatelessWidget {
                     billOptions.add(
                       DropdownMenuEntry<BillRead>(
                         value: e,
-                        label: e.attributes.name,
+                        label: e.attributes.name!,
                       ),
                     );
                     if (filters.bill?.id == e.id) {

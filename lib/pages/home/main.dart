@@ -14,7 +14,6 @@ import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/main/charts/category.dart';
@@ -52,7 +51,8 @@ class _HomeMainState extends State<HomeMain>
   List<ChartDataSet> overviewChartData = <ChartDataSet>[];
   final List<InsightGroupEntry> catChartData = <InsightGroupEntry>[];
   final List<InsightGroupEntry> tagChartData = <InsightGroupEntry>[];
-  final Map<String, Budget> budgetInfos = <String, Budget>{};
+  final Map<String, BudgetProperties> budgetInfos =
+      <String, BudgetProperties>{};
   late TransStock _stock;
 
   @override
@@ -104,8 +104,6 @@ class _HomeMainState extends State<HomeMain>
     // With a new API the number of API calls is reduced from 14 to 2
     // There was a fixed bug with Firefly v6.1.23, use it only afterwards!
     if (context.read<FireflyService>().apiVersion! >= Version(6, 1, 23)) {
-      final List<int> accounts = <int>[];
-
       final Response<List<ChartDataSet>> respBalanceData = await api
           .v1ChartBalanceBalanceGet(
             start: DateFormat(
@@ -379,8 +377,8 @@ class _HomeMainState extends State<HomeMain>
     }
 
     respBudgets.body!.data.sort((BudgetLimitRead a, BudgetLimitRead b) {
-      final Budget? budgetA = budgetInfos[a.attributes.budgetId];
-      final Budget? budgetB = budgetInfos[b.attributes.budgetId];
+      final BudgetProperties? budgetA = budgetInfos[a.attributes.budgetId];
+      final BudgetProperties? budgetB = budgetInfos[b.attributes.budgetId];
 
       if (budgetA == null && budgetB != null) {
         return -1;
@@ -395,7 +393,7 @@ class _HomeMainState extends State<HomeMain>
       if (compare != 0) {
         return compare;
       }
-      return a.attributes.start.compareTo(b.attributes.start);
+      return a.attributes.start!.compareTo(b.attributes.start!);
     });
 
     return respBudgets.body!.data;
@@ -1163,7 +1161,7 @@ class BudgetList extends StatelessWidget {
     required this.snapshot,
   });
 
-  final Map<String, Budget> budgetInfos;
+  final Map<String, BudgetProperties> budgetInfos;
   final AsyncSnapshot<List<BudgetLimitRead>> snapshot;
 
   @override
@@ -1181,16 +1179,20 @@ class BudgetList extends StatelessWidget {
             for (BudgetLimitRead budget in snapshot.data!) {
               final List<Widget> stackWidgets = <Widget>[];
               final double spent =
-                  (double.tryParse(budget.attributes.spent ?? "0") ?? 0).abs();
+                  (double.tryParse(budget.attributes.spent!.first.sum ?? "") ??
+                          0)
+                      .abs();
               final double available =
-                  double.tryParse(budget.attributes.amount) ?? 0;
+                  double.tryParse(budget.attributes.amount ?? "") ?? 0;
 
               final int tsStart =
                   tzHandler
-                      .sTime(budget.attributes.start)
+                      .sTime(budget.attributes.start!)
                       .millisecondsSinceEpoch;
               final int tsEnd =
-                  tzHandler.sTime(budget.attributes.end).millisecondsSinceEpoch;
+                  tzHandler
+                      .sTime(budget.attributes.end!)
+                      .millisecondsSinceEpoch;
               late double passedDays;
               if (tsEnd == tsStart) {
                 passedDays = 2; // Hides the bar
@@ -1201,7 +1203,7 @@ class BudgetList extends StatelessWidget {
                 }
               }
 
-              final Budget? budgetInfo =
+              final BudgetProperties? budgetInfo =
                   budgetInfos[budget.attributes.budgetId];
               if (budgetInfo == null || available == 0) {
                 continue;
@@ -1243,10 +1245,10 @@ class BudgetList extends StatelessWidget {
                                     .of(context)
                                     .homeMainBudgetInterval(
                                       tzHandler
-                                          .sTime(budget.attributes.start)
+                                          .sTime(budget.attributes.start!)
                                           .toLocal(),
                                       tzHandler
-                                          .sTime(budget.attributes.end)
+                                          .sTime(budget.attributes.end!)
                                           .toLocal(),
                                       budget.attributes.period!,
                                     )
@@ -1254,10 +1256,10 @@ class BudgetList extends StatelessWidget {
                                     .of(context)
                                     .homeMainBudgetIntervalSingle(
                                       tzHandler
-                                          .sTime(budget.attributes.start)
+                                          .sTime(budget.attributes.start!)
                                           .toLocal(),
                                       tzHandler
-                                          .sTime(budget.attributes.end)
+                                          .sTime(budget.attributes.end!)
                                           .toLocal(),
                                     ),
                         style: Theme.of(context).textTheme.bodyMedium,
@@ -1429,10 +1431,10 @@ class BillList extends StatelessWidget {
                         children: <InlineSpan>[
                           TextSpan(
                             text:
-                                bill.attributes.name.length > 30
-                                    ? bill.attributes.name.replaceRange(
+                                bill.attributes.name!.length > 30
+                                    ? bill.attributes.name!.replaceRange(
                                       30,
-                                      bill.attributes.name.length,
+                                      bill.attributes.name!.length,
                                       "…",
                                     )
                                     : bill.attributes.name,
@@ -1442,7 +1444,7 @@ class BillList extends StatelessWidget {
                             text: S
                                 .of(context)
                                 .homeMainBillsInterval(
-                                  bill.attributes.repeatFreq.value ?? "",
+                                  bill.attributes.repeatFreq!.value ?? "",
                                 ),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),

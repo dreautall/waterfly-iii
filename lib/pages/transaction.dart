@@ -225,7 +225,7 @@ class _TransactionPageState extends State<TransactionPage>
             BillRead(
               type: "bill",
               id: trans.billId ?? "",
-              attributes: Bill(
+              attributes: BillProperties(
                 name: trans.billName ?? "",
                 amountMin: "",
                 amountMax: "",
@@ -477,7 +477,7 @@ class _TransactionPageState extends State<TransactionPage>
               AttachmentRead(
                 type: "attachments",
                 id: _attachments!.length.toString(),
-                attributes: Attachment(
+                attributes: AttachmentProperties(
                   attachableType: AttachableType.transactionjournal,
                   attachableId: "FAKE",
                   filename: xfile.name,
@@ -1122,7 +1122,7 @@ class _TransactionPageState extends State<TransactionPage>
                             final Response<AttachmentSingle> respAttachment =
                                 await api.v1AttachmentsPost(
                                   body: AttachmentStore(
-                                    filename: attachment.attributes.filename,
+                                    filename: attachment.attributes.filename!,
                                     attachableType:
                                         AttachableType.transactionjournal,
                                     attachableId: txId,

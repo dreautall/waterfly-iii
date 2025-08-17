@@ -124,20 +124,20 @@ class _BillsPageState extends State<BillsPage>
         billList.sort(
           (BillRead a, BillRead b) =>
               _billsSortOrder == SortingOrder.ascending
-                  ? a.attributes.name.compareTo(b.attributes.name)
-                  : b.attributes.name.compareTo(a.attributes.name),
+                  ? a.attributes.name!.compareTo(b.attributes.name!)
+                  : b.attributes.name!.compareTo(a.attributes.name!),
         );
       case BillsSort.frequency:
         billList.sort(
           (BillRead a, BillRead b) =>
               _billsSortOrder == SortingOrder.ascending
                   ? Enum.compareByIndex(
-                    a.attributes.repeatFreq,
-                    b.attributes.repeatFreq,
+                    a.attributes.repeatFreq!,
+                    b.attributes.repeatFreq!,
                   )
                   : Enum.compareByIndex(
-                    b.attributes.repeatFreq,
-                    a.attributes.repeatFreq,
+                    b.attributes.repeatFreq!,
+                    a.attributes.repeatFreq!,
                   ),
         );
     }
@@ -221,7 +221,7 @@ class _BillsPageState extends State<BillsPage>
           (BuildContext context, Function openContainer) => ListTile(
             leading: const CircleAvatar(child: Icon(Icons.receipt_outlined)),
             title: Text(
-              bill.attributes.name,
+              bill.attributes.name!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -286,8 +286,8 @@ class _BillsPageState extends State<BillsPage>
   }
 
   String _getAverageBillAmount(BillRead item) {
-    final double min = double.tryParse(item.attributes.amountMin) ?? 0;
-    final double max = double.tryParse(item.attributes.amountMax) ?? 0;
+    final double min = double.tryParse(item.attributes.amountMin ?? "0") ?? 0;
+    final double max = double.tryParse(item.attributes.amountMax ?? "0") ?? 0;
 
     final CurrencyRead currency = CurrencyRead(
       id: "0",

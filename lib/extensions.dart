@@ -729,10 +729,10 @@ TransactionTypeProperty accountsToTransaction(
       TransactionTypeProperty.swaggerGeneratedUnknown;
 }
 
-extension BillAmountAvg on Bill {
+extension BillAmountAvg on BillProperties {
   double avgAmount() {
-    final double amountMax = (double.tryParse(this.amountMax) ?? 0).abs();
-    final double amountMin = (double.tryParse(this.amountMin) ?? 0).abs();
+    final double amountMax = (double.tryParse(this.amountMax!) ?? 0).abs();
+    final double amountMin = (double.tryParse(this.amountMin!) ?? 0).abs();
     if (amountMax == 0) {
       return amountMin;
     }
@@ -745,7 +745,7 @@ extension BillAmountAvg on Bill {
   }
 }
 
-class CategoryWithSum extends Category {
+class CategoryWithSum extends CategoryProperties {
   CategoryWithSum({
     super.createdAt,
     super.updatedAt,

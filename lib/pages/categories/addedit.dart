@@ -118,7 +118,7 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
             late Response<CategorySingle> resp;
             if (widget.category == null) {
               resp = await context.read<FireflyService>().api.v1CategoriesPost(
-                body: Category(
+                body: CategoryStore(
                   name: titleController.text,
                   notes: notesController.text,
                 ),

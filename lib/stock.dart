@@ -304,13 +304,13 @@ class CatStock {
               type: "categories",
               attributes: CategoryWithSum(
                 name: cat.name!,
-                spent: <CategorySpent>[],
-                earned: <CategoryEarned>[],
+                spent: <ArrayEntryWithCurrencyAndSum>[],
+                earned: <ArrayEntryWithCurrencyAndSum>[],
               ),
             );
           }
           categories[cat.id!]!.attributes.earned!.add(
-            CategoryEarned(
+            ArrayEntryWithCurrencyAndSum(
               currencyId: cat.currencyId,
               currencyCode: cat.currencyCode,
               currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
@@ -333,13 +333,13 @@ class CatStock {
               type: "categories",
               attributes: CategoryWithSum(
                 name: cat.name!,
-                spent: <CategorySpent>[],
-                earned: <CategoryEarned>[],
+                spent: <ArrayEntryWithCurrencyAndSum>[],
+                earned: <ArrayEntryWithCurrencyAndSum>[],
               ),
             );
           }
           categories[cat.id!]!.attributes.spent!.add(
-            CategorySpent(
+            ArrayEntryWithCurrencyAndSum(
               currencyId: cat.currencyId,
               currencyCode: cat.currencyCode,
               currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
@@ -358,13 +358,13 @@ class CatStock {
               type: "no-category",
               attributes: CategoryWithSum(
                 name: "L10NNONE",
-                spent: <CategorySpent>[],
-                earned: <CategoryEarned>[],
+                spent: <ArrayEntryWithCurrencyAndSum>[],
+                earned: <ArrayEntryWithCurrencyAndSum>[],
               ),
             );
           }
           categories["-1"]!.attributes.earned!.add(
-            CategoryEarned(
+            ArrayEntryWithCurrencyAndSum(
               currencyId: cat.currencyId,
               currencyCode: cat.currencyCode,
               currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
@@ -383,13 +383,13 @@ class CatStock {
               type: "no-category",
               attributes: CategoryWithSum(
                 name: "L10NNONE",
-                spent: <CategorySpent>[],
-                earned: <CategoryEarned>[],
+                spent: <ArrayEntryWithCurrencyAndSum>[],
+                earned: <ArrayEntryWithCurrencyAndSum>[],
               ),
             );
           }
           categories["-1"]!.attributes.spent!.add(
-            CategorySpent(
+            ArrayEntryWithCurrencyAndSum(
               currencyId: cat.currencyId,
               currencyCode: cat.currencyCode,
               currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
@@ -403,11 +403,13 @@ class CatStock {
           final CategoryWithSum cs = c.attributes as CategoryWithSum;
           cs.sumEarned = c.attributes.earned!.fold<double>(
             0,
-            (double p, CategoryEarned e) => p += double.parse(e.sum ?? "0"),
+            (double p, ArrayEntryWithCurrencyAndSum e) =>
+                p += double.parse(e.sum ?? "0"),
           );
           cs.sumSpent = c.attributes.spent!.fold<double>(
             0,
-            (double p, CategorySpent e) => p += double.parse(e.sum ?? "0"),
+            (double p, ArrayEntryWithCurrencyAndSum e) =>
+                p += double.parse(e.sum ?? "0"),
           );
         });
 

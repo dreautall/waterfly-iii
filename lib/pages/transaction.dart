@@ -185,7 +185,7 @@ class _TransactionPageState extends State<TransactionPage>
       _localCurrency = CurrencyRead(
         type: "currencies",
         id: transactions.first.currencyId!,
-        attributes: Currency(
+        attributes: CurrencyProperties(
           code: transactions.first.currencyCode!,
           name: transactions.first.currencyName!,
           symbol: transactions.first.currencySymbol!,
@@ -225,7 +225,7 @@ class _TransactionPageState extends State<TransactionPage>
             BillRead(
               type: "bill",
               id: trans.billId ?? "",
-              attributes: Bill(
+              attributes: BillProperties(
                 name: trans.billName ?? "",
                 amountMin: "",
                 amountMax: "",
@@ -285,7 +285,7 @@ class _TransactionPageState extends State<TransactionPage>
             CurrencyRead(
               type: "currencies",
               id: trans.foreignCurrencyId!,
-              attributes: Currency(
+              attributes: CurrencyProperties(
                 code: trans.foreignCurrencyCode!,
                 name: "", // empty
                 symbol: trans.foreignCurrencySymbol!,
@@ -344,7 +344,13 @@ class _TransactionPageState extends State<TransactionPage>
       // New transaction
       _titleFocusNode.requestFocus();
       _transactionType = TransactionTypeProperty.swaggerGeneratedUnknown;
-      _date = _tzHandler.newTXTime().toLocal();
+
+      if (widget.notification != null) {
+        _date =
+            _tzHandler.notificationTXTime(widget.notification!.date).toLocal();
+      } else {
+        _date = _tzHandler.newTXTime().toLocal();
+      }
 
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         splitTransactionAdd();
@@ -369,12 +375,6 @@ class _TransactionPageState extends State<TransactionPage>
 
           // Fallback solution
           currency ??= defaultCurrency;
-
-          // Set date
-          _date =
-              _tzHandler
-                  .notificationTXTime(widget.notification!.date)
-                  .toLocal();
 
           // Title & Note
           final NotificationAppSettings appSettings = await settings
@@ -414,7 +414,7 @@ class _TransactionPageState extends State<TransactionPage>
                 _localCurrency = CurrencyRead(
                   type: "currencies",
                   id: acc.attributes.currencyId!,
-                  attributes: Currency(
+                  attributes: CurrencyProperties(
                     code: acc.attributes.currencyCode!,
                     name: "",
                     symbol: acc.attributes.currencySymbol!,
@@ -477,7 +477,7 @@ class _TransactionPageState extends State<TransactionPage>
               AttachmentRead(
                 type: "attachments",
                 id: _attachments!.length.toString(),
-                attributes: Attachment(
+                attributes: AttachmentProperties(
                   attachableType: AttachableType.transactionjournal,
                   attachableId: "FAKE",
                   filename: xfile.name,
@@ -503,11 +503,6 @@ class _TransactionPageState extends State<TransactionPage>
       );
       _hasAttachments = false;
     }
-
-    /*WidgetsBinding.instance.addPostFrameCallback((_) {
-      _dateTextController.text = DateFormat.yMMMd().format(_date);
-      _timeTextController.text = DateFormat.Hm().format(_date);
-    });*/
   }
 
   @override
@@ -1127,7 +1122,7 @@ class _TransactionPageState extends State<TransactionPage>
                             final Response<AttachmentSingle> respAttachment =
                                 await api.v1AttachmentsPost(
                                   body: AttachmentStore(
-                                    filename: attachment.attributes.filename,
+                                    filename: attachment.attributes.filename!,
                                     attachableType:
                                         AttachableType.transactionjournal,
                                     attachableId: txId,
@@ -1216,7 +1211,7 @@ class _TransactionPageState extends State<TransactionPage>
                     },
             child:
                 _savingInProgress
-                    ? SizedBox(
+                    ? const SizedBox(
                       width: 25,
                       height: 25,
                       child: CircularProgressIndicator(strokeWidth: 3),
@@ -1621,7 +1616,7 @@ class _TransactionPageState extends State<TransactionPage>
           _localCurrency = CurrencyRead(
             type: "currencies",
             id: option.currencyId.toString(),
-            attributes: Currency(
+            attributes: CurrencyProperties(
               code: option.currencyCode,
               name: option.currencyName,
               symbol: option.currencySymbol,
@@ -1650,7 +1645,7 @@ class _TransactionPageState extends State<TransactionPage>
             CurrencyRead(
               type: "currencies",
               id: option.currencyId,
-              attributes: Currency(
+              attributes: CurrencyProperties(
                 code: option.currencyCode,
                 name: option.currencyName,
                 symbol: option.currencySymbol,
@@ -2778,7 +2773,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
             controller: _dateTextController,
             decoration: InputDecoration(
               //prefixIcon: Icon(Icons.calendar_month),
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
               filled: _savingInProgress,
             ),
             readOnly: true,
@@ -2791,7 +2786,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
             enabled: !_savingInProgress,
             controller: _timeTextController,
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
               filled: _savingInProgress,
             ),
             readOnly: true,

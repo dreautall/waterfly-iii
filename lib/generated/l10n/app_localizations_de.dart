@@ -317,19 +317,19 @@ class SDe extends S {
   String get generalCurrency => 'Währung';
 
   @override
-  String get generalDateRangeCurrentMonth => 'Current Month';
+  String get generalDateRangeCurrentMonth => 'Aktueller Monat';
 
   @override
-  String get generalDateRangeLast30Days => 'Last 30 days';
+  String get generalDateRangeLast30Days => 'Letzte 30 Tage';
 
   @override
-  String get generalDateRangeCurrentYear => 'Current Year';
+  String get generalDateRangeCurrentYear => 'Aktuelles Jahr';
 
   @override
-  String get generalDateRangeLastYear => 'Last year';
+  String get generalDateRangeLastYear => 'Vergangenes Jahr';
 
   @override
-  String get generalDateRangeAll => 'All';
+  String get generalDateRangeAll => 'Alle';
 
   @override
   String get generalDefault => 'Standard';
@@ -540,7 +540,7 @@ class SDe extends S {
   String get homeTransactionsDialogFilterCurrenciesAll => '<Alle Währungen>';
 
   @override
-  String get homeTransactionsDialogFilterDateRange => 'Date Range';
+  String get homeTransactionsDialogFilterDateRange => 'Zeitraum';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>

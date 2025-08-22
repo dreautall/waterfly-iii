@@ -317,19 +317,19 @@ class SPl extends S {
   String get generalCurrency => 'Waluta';
 
   @override
-  String get generalDateRangeCurrentMonth => 'Current Month';
+  String get generalDateRangeCurrentMonth => 'Bieżący miesiąc';
 
   @override
-  String get generalDateRangeLast30Days => 'Last 30 days';
+  String get generalDateRangeLast30Days => 'Ostatnie 30 dni';
 
   @override
-  String get generalDateRangeCurrentYear => 'Current Year';
+  String get generalDateRangeCurrentYear => 'Bieżący rok';
 
   @override
-  String get generalDateRangeLastYear => 'Last year';
+  String get generalDateRangeLastYear => 'Poprzedni rok';
 
   @override
-  String get generalDateRangeAll => 'All';
+  String get generalDateRangeAll => 'Wszystko';
 
   @override
   String get generalDefault => 'domyślnie';
@@ -546,7 +546,7 @@ class SPl extends S {
   String get homeTransactionsDialogFilterCurrenciesAll => '<Wszystkie waluty>';
 
   @override
-  String get homeTransactionsDialogFilterDateRange => 'Date Range';
+  String get homeTransactionsDialogFilterDateRange => 'Zakres dat';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>

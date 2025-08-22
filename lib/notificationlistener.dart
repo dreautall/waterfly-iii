@@ -217,10 +217,12 @@ void nlCallback() async {
     }
 
     if (showNotification) {
+      // :TODO: l10n
       FlutterLocalNotificationsPlugin().show(
         DateTime.now().millisecondsSinceEpoch ~/ 1000,
         "Create Transaction?",
-        "Click to create a transaction based on the notification ${evt.title}",
+        // :TODO: once we l10n this, a better switch can be implemented...
+        "Click to create a transaction based on the notification ${evt.title ?? evt.packageName ?? ""}",
         const NotificationDetails(
           android: AndroidNotificationDetails(
             'extract_transaction',
@@ -278,82 +280,88 @@ Future<(CurrencyRead?, double)> parseNotificationText(
   // Try to extract some money
   final Iterable<RegExpMatch> matches = rFindMoney.allMatches(notificationBody);
   if (matches.isNotEmpty) {
-    RegExpMatch? validMatch;
-    for (RegExpMatch match in matches) {
-      if ((match.namedGroup("postCurrency")?.isNotEmpty ?? false) ||
-          (match.namedGroup("preCurrency")?.isNotEmpty ?? false)) {
-        validMatch = match;
-        break;
-      }
-    }
-    if (validMatch != null) {
-      // extract currency
-      String currencyStr = validMatch.namedGroup("preCurrency") ?? "";
-      final String currencyStrAlt = validMatch.namedGroup("postCurrency") ?? "";
-      if (currencyStr.isEmpty) {
-        currencyStr = currencyStrAlt;
-      }
-      if (currencyStr.isEmpty) {
-        log.warning("no currency found");
-      }
-      if (localCurrency.attributes.code == currencyStr ||
-          localCurrency.attributes.symbol == currencyStr ||
-          localCurrency.attributes.code == currencyStrAlt ||
-          localCurrency.attributes.symbol == currencyStrAlt) {
-      } else {
-        final Response<CurrencyArray> response = await api.v1CurrenciesGet();
-        if (!response.isSuccessful || response.body == null) {
-          log.warning("api currency fetch failed");
+    for (RegExpMatch validMatch in matches) {
+      if ((validMatch.namedGroup("postCurrency")?.isNotEmpty ?? false) ||
+          (validMatch.namedGroup("preCurrency")?.isNotEmpty ?? false)) {
+        // extract currency
+        String currencyStr = validMatch.namedGroup("preCurrency") ?? "";
+        final String currencyStrAlt =
+            validMatch.namedGroup("postCurrency") ?? "";
+        if (currencyStr.isEmpty) {
+          currencyStr = currencyStrAlt;
+        }
+        if (currencyStr.isEmpty) {
+          log.warning("no currency found");
+        }
+        if (localCurrency.attributes.code == currencyStr ||
+            localCurrency.attributes.symbol == currencyStr ||
+            localCurrency.attributes.code == currencyStrAlt ||
+            localCurrency.attributes.symbol == currencyStrAlt) {
+          // On purpose: do nothing, the code calling this function should
+          // default to localCurrency anyways.
         } else {
-          for (CurrencyRead cur in response.body!.data) {
-            if (cur.attributes.code == currencyStr ||
-                cur.attributes.symbol == currencyStr ||
-                cur.attributes.code == currencyStrAlt ||
-                cur.attributes.symbol == currencyStrAlt) {
-              currency = cur;
-              break;
+          final Response<CurrencyArray> response = await api.v1CurrenciesGet();
+          if (!response.isSuccessful || response.body == null) {
+            log.warning("api currency fetch failed");
+          } else {
+            for (CurrencyRead cur in response.body!.data) {
+              if (cur.attributes.code == currencyStr ||
+                  cur.attributes.symbol == currencyStr ||
+                  cur.attributes.code == currencyStrAlt ||
+                  cur.attributes.symbol == currencyStrAlt) {
+                currency = cur;
+                break;
+              }
             }
           }
         }
+        if (currency == null) {
+          log.warning("no currency matched");
+        }
+        // extract amount
+        // Check if string has a decimal separator
+        final String amountStr = (validMatch.namedGroup("amount") ?? "")
+            .replaceAll(RegExp(r"\s+"), "");
+        final int decimalSepPos =
+            amountStr.length >= 3 &&
+                    (amountStr[amountStr.length - 3] == "." ||
+                        amountStr[amountStr.length - 3] == ",")
+                ? amountStr.length - 3
+                : amountStr.length - 2;
+        final String decimalSep =
+            amountStr.length >= decimalSepPos && decimalSepPos > 0
+                ? amountStr[decimalSepPos]
+                : "";
+        if (decimalSep == "," || decimalSep == ".") {
+          final double wholes =
+              double.tryParse(
+                amountStr
+                    .substring(0, decimalSepPos)
+                    .replaceAll(",", "")
+                    .replaceAll(".", ""),
+              ) ??
+              0;
+          final String decStr = amountStr
+              .substring(decimalSepPos + 1)
+              .replaceAll(",", "")
+              .replaceAll(".", "");
+          final double dec = double.tryParse(decStr) ?? 0;
+          amount = decStr.length == 1 ? wholes + dec / 10 : wholes + dec / 100;
+        } else {
+          amount =
+              double.tryParse(
+                amountStr.replaceAll(",", "").replaceAll(".", ""),
+              ) ??
+              0;
+        }
+
+        // Only break if currency matched --> is best match (with currency!)
+        // otherwise, might be better to continue to next match...
+        if (currency != null) {
+          log.finest(() => "best match found, breaking");
+          break;
+        }
       }
-      // extract amount
-      // Check if string has a decimal separator
-      final String amountStr = (validMatch.namedGroup("amount") ?? "")
-          .replaceAll(RegExp(r"\s+"), "");
-      final int decimalSepPos =
-          amountStr.length >= 3 &&
-                  (amountStr[amountStr.length - 3] == "." ||
-                      amountStr[amountStr.length - 3] == ",")
-              ? amountStr.length - 3
-              : amountStr.length - 2;
-      final String decimalSep =
-          amountStr.length >= decimalSepPos && decimalSepPos > 0
-              ? amountStr[decimalSepPos]
-              : "";
-      if (decimalSep == "," || decimalSep == ".") {
-        final double wholes =
-            double.tryParse(
-              amountStr
-                  .substring(0, decimalSepPos)
-                  .replaceAll(",", "")
-                  .replaceAll(".", ""),
-            ) ??
-            0;
-        final String decStr = amountStr
-            .substring(decimalSepPos + 1)
-            .replaceAll(",", "")
-            .replaceAll(".", "");
-        final double dec = double.tryParse(decStr) ?? 0;
-        amount = decStr.length == 1 ? wholes + dec / 10 : wholes + dec / 100;
-      } else {
-        amount =
-            double.tryParse(
-              amountStr.replaceAll(",", "").replaceAll(".", ""),
-            ) ??
-            0;
-      }
-    } else {
-      log.info("no currency was found");
     }
   } else {
     log.warning("regex did not match");

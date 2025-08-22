@@ -105,7 +105,7 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
         CurrencyRead(
           id: e.currencyId ?? "0",
           type: "currencies",
-          attributes: Currency(
+          attributes: CurrencyProperties(
             code: e.currencyCode ?? "",
             name: "",
             symbol: e.currencySymbol ?? "",

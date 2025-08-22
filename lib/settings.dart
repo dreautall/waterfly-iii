@@ -393,7 +393,9 @@ class SettingsProvider with ChangeNotifier {
     }
 
     // Load new transaction date filter setting
-    int? txDateFilterIndex = await prefs.getInt(settingTransactionDateFilter);
+    final int? txDateFilterIndex = await prefs.getInt(
+      settingTransactionDateFilter,
+    );
     _transactionDateFilter =
         txDateFilterIndex == null
             ? TransactionDateFilter.all

@@ -323,7 +323,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       }
 
       if (_filters.account != null) {
-        AccountRead account = _filters.account!;
+        final AccountRead account = _filters.account!;
         // Attempt to retrieve the opening balance
         double balance =
             _lastCalculatedBalance ??
@@ -459,7 +459,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           foreignCurrencies[foreignSymbol] = CurrencyRead(
             id: trans.foreignCurrencyId ?? "0",
             type: "currencies",
-            attributes: Currency(
+            attributes: CurrencyProperties(
               code: trans.foreignCurrencyCode ?? "",
               name: "",
               symbol: trans.foreignCurrencySymbol ?? "",
@@ -550,7 +550,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     final CurrencyRead currency = CurrencyRead(
       id: transactions.first.currencyId ?? "0",
       type: "currencies",
-      attributes: Currency(
+      attributes: CurrencyProperties(
         code: transactions.first.currencyCode ?? "",
         name: transactions.first.currencyName ?? "",
         symbol: transactions.first.currencySymbol ?? "",
@@ -834,7 +834,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       onClosed: (bool? refresh) async {
         if (_filters.account != null) {
           // Reset last balance calculated
-          FireflyIii api = context.read<FireflyService>().api;
+          final FireflyIii api = context.read<FireflyService>().api;
           // Retrieve the account to get the current balance
           final Response<AccountSingle> respAccount = await api.v1AccountsIdGet(
             id: _filters.account!.id,

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:animations/animations.dart';
-import 'package:chopper/chopper.dart';
+import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
@@ -23,7 +23,7 @@ Widget accountRowBuilder(
   final String name = account.attributes.name;
   late double currentAmount;
   if (account.attributes.type == ShortAccountTypeProperty.liability) {
-    currentAmount = double.tryParse(account.attributes.currentDebt ?? "") ?? 0;
+    currentAmount = double.tryParse(account.attributes.debtAmount ?? "") ?? 0;
   } else {
     currentAmount =
         double.tryParse(account.attributes.currentBalance ?? "") ?? 0;
@@ -31,7 +31,7 @@ Widget accountRowBuilder(
   CurrencyRead currency = CurrencyRead(
     id: account.attributes.currencyId ?? "0",
     type: "currencies",
-    attributes: Currency(
+    attributes: CurrencyProperties(
       code: account.attributes.currencyCode ?? "",
       name: "",
       symbol: account.attributes.currencySymbol ?? "",

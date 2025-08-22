@@ -311,7 +311,7 @@ class _AppCardState extends State<AppCard> {
             value: AccountRead(
               id: "0",
               type: "dummy",
-              attributes: Account(
+              attributes: AccountProperties(
                 name: S.of(context).settingsNLAppAccountDynamic,
                 type: ShortAccountTypeProperty.swaggerGeneratedUnknown,
               ),

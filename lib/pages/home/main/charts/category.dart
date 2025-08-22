@@ -99,7 +99,9 @@ class CategoryChart extends StatelessWidget {
                             category: CategoryRead(
                               id: category.id!,
                               type: "filter-category",
-                              attributes: Category(name: category.name!),
+                              attributes: CategoryProperties(
+                                name: category.name!,
+                              ),
                             ),
                           ),
                         ),

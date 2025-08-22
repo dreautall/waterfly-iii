@@ -41,7 +41,7 @@ class _BillDetailsState extends State<BillDetails> {
     _currency = CurrencyRead(
       id: "0",
       type: "currencies",
-      attributes: Currency(
+      attributes: CurrencyProperties(
         code: widget.bill.attributes.currencyCode ?? "",
         name: "",
         symbol: widget.bill.attributes.currencySymbol ?? "",
@@ -57,7 +57,7 @@ class _BillDetailsState extends State<BillDetails> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.bill.attributes.name),
+        title: Text(widget.bill.attributes.name!),
         elevation: 1,
         scrolledUnderElevation: 1,
         backgroundColor: Theme.of(context).colorScheme.surface,
@@ -89,7 +89,8 @@ class _BillDetailsState extends State<BillDetails> {
                                   .billsExactAmountAndFrequency(
                                     _currency.fmt(
                                       double.tryParse(
-                                            widget.bill.attributes.amountMin,
+                                            widget.bill.attributes.amountMin ??
+                                                "0",
                                           ) ??
                                           0,
                                     ),
@@ -104,13 +105,15 @@ class _BillDetailsState extends State<BillDetails> {
                                   .billsAmountAndFrequency(
                                     _currency.fmt(
                                       double.tryParse(
-                                            widget.bill.attributes.amountMin,
+                                            widget.bill.attributes.amountMin ??
+                                                "0",
                                           ) ??
                                           0,
                                     ),
                                     _currency.fmt(
                                       double.tryParse(
-                                            widget.bill.attributes.amountMax,
+                                            widget.bill.attributes.amountMax ??
+                                                "0",
                                           ) ??
                                           0,
                                     ),

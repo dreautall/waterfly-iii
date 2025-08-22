@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:chopper/chopper.dart' show Response;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -122,7 +120,7 @@ class _HomePiggybankState extends State<HomePiggybank>
             final CurrencyRead currency = CurrencyRead(
               id: piggy.attributes.currencyId ?? "0",
               type: "currencies",
-              attributes: Currency(
+              attributes: CurrencyProperties(
                 code: piggy.attributes.currencyCode ?? "",
                 name: "",
                 symbol: piggy.attributes.currencySymbol ?? "",
@@ -150,10 +148,10 @@ class _HomePiggybankState extends State<HomePiggybank>
                       .homePiggyLinked(S.of(context).generalMultiple);
                 }
               } else {
-                if (piggy.attributes.accountName != null) {
+                if (piggy.attributes.accounts?.isNotEmpty ?? false) {
                   subtitle = S
                       .of(context)
-                      .homePiggyLinked(piggy.attributes.accountName!);
+                      .homePiggyLinked(piggy.attributes.accounts!.join(", "));
                 }
               }
             }
@@ -326,7 +324,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
     final CurrencyRead currency = CurrencyRead(
       id: currentPiggy.attributes.currencyId ?? "0",
       type: "currencies",
-      attributes: Currency(
+      attributes: CurrencyProperties(
         code: currentPiggy.attributes.currencyCode ?? "",
         name: "",
         symbol: currentPiggy.attributes.currencySymbol ?? "",
@@ -473,7 +471,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
     currency = CurrencyRead(
       id: widget.piggy.attributes.currencyId ?? "0",
       type: "currencies",
-      attributes: Currency(
+      attributes: CurrencyProperties(
         code: widget.piggy.attributes.currencyCode ?? "",
         name: "",
         symbol: widget.piggy.attributes.currencySymbol ?? "",
@@ -545,6 +543,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
               },
               child: Text(MaterialLocalizations.of(context).closeButtonLabel),
             ),
+            /* :TODO: update with piggy banks able to be from different accounts
             FilledButton(
               onPressed: () async {
                 final FireflyIii api = context.read<FireflyService>().api;
@@ -617,7 +616,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                 nav.pop(resp.body);
               },
               child: Text(MaterialLocalizations.of(context).saveButtonLabel),
-            ),
+            ),*/
             const SizedBox(width: 12),
           ],
         ),

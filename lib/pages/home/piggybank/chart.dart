@@ -34,7 +34,7 @@ class _PiggyChartState extends State<PiggyChart> {
     currency = CurrencyRead(
       id: widget.piggy.attributes.currencyId ?? "0",
       type: "currencies",
-      attributes: Currency(
+      attributes: CurrencyProperties(
         code: widget.piggy.attributes.currencyCode ?? "",
         name: "",
         symbol: widget.piggy.attributes.currencySymbol ?? "",

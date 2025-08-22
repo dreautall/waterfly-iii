@@ -185,7 +185,7 @@ class _TransactionPageState extends State<TransactionPage>
       _localCurrency = CurrencyRead(
         type: "currencies",
         id: transactions.first.currencyId!,
-        attributes: Currency(
+        attributes: CurrencyProperties(
           code: transactions.first.currencyCode!,
           name: transactions.first.currencyName!,
           symbol: transactions.first.currencySymbol!,
@@ -225,7 +225,7 @@ class _TransactionPageState extends State<TransactionPage>
             BillRead(
               type: "bill",
               id: trans.billId ?? "",
-              attributes: Bill(
+              attributes: BillProperties(
                 name: trans.billName ?? "",
                 amountMin: "",
                 amountMax: "",
@@ -285,7 +285,7 @@ class _TransactionPageState extends State<TransactionPage>
             CurrencyRead(
               type: "currencies",
               id: trans.foreignCurrencyId!,
-              attributes: Currency(
+              attributes: CurrencyProperties(
                 code: trans.foreignCurrencyCode!,
                 name: "", // empty
                 symbol: trans.foreignCurrencySymbol!,
@@ -414,7 +414,7 @@ class _TransactionPageState extends State<TransactionPage>
                 _localCurrency = CurrencyRead(
                   type: "currencies",
                   id: acc.attributes.currencyId!,
-                  attributes: Currency(
+                  attributes: CurrencyProperties(
                     code: acc.attributes.currencyCode!,
                     name: "",
                     symbol: acc.attributes.currencySymbol!,
@@ -477,7 +477,7 @@ class _TransactionPageState extends State<TransactionPage>
               AttachmentRead(
                 type: "attachments",
                 id: _attachments!.length.toString(),
-                attributes: Attachment(
+                attributes: AttachmentProperties(
                   attachableType: AttachableType.transactionjournal,
                   attachableId: "FAKE",
                   filename: xfile.name,
@@ -1122,7 +1122,7 @@ class _TransactionPageState extends State<TransactionPage>
                             final Response<AttachmentSingle> respAttachment =
                                 await api.v1AttachmentsPost(
                                   body: AttachmentStore(
-                                    filename: attachment.attributes.filename,
+                                    filename: attachment.attributes.filename!,
                                     attachableType:
                                         AttachableType.transactionjournal,
                                     attachableId: txId,
@@ -1616,7 +1616,7 @@ class _TransactionPageState extends State<TransactionPage>
           _localCurrency = CurrencyRead(
             type: "currencies",
             id: option.currencyId.toString(),
-            attributes: Currency(
+            attributes: CurrencyProperties(
               code: option.currencyCode,
               name: option.currencyName,
               symbol: option.currencySymbol,
@@ -1645,7 +1645,7 @@ class _TransactionPageState extends State<TransactionPage>
             CurrencyRead(
               type: "currencies",
               id: option.currencyId,
-              attributes: Currency(
+              attributes: CurrencyProperties(
                 code: option.currencyCode,
                 name: option.currencyName,
                 symbol: option.currencySymbol,

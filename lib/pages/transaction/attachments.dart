@@ -297,7 +297,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     final AttachmentRead newAttachment = AttachmentRead(
       type: "attachments",
       id: widget.attachments.length.toString(),
-      attributes: Attachment(
+      attributes: AttachmentProperties(
         attachableType: AttachableType.transactionjournal,
         attachableId: "FAKE",
         filename: file.name,
@@ -344,7 +344,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                     : () async => downloadAttachment(context, attachment, i),
           ),
           title: Text(
-            attachment.attributes.title ?? attachment.attributes.filename,
+            attachment.attributes.title ?? attachment.attributes.filename!,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

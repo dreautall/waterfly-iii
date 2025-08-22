@@ -289,6 +289,7 @@
         <package android:name="ru.sberbankmobile"/>
         <package android:name="ru.vtb24.mobilebanking.android"/>
         <package android:name="si.delavskahranilnica.dhdenarnik"/>
+        <package android:name="sk.fio.sb2" />
         <package android:name="tw.com.hncb.sny"/>
         <package android:name="ua.alfabank.mobile.android"/>
         <package android:name="ua.aval.dbo.client.android"/>

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-import 'package:version/version.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -133,28 +132,26 @@ class _HomePiggybankState extends State<HomePiggybank>
               return const SizedBox.shrink();
             }
             String subtitle = "";
-            if (context.read<FireflyService>().apiVersion! >=
-                Version(6, 2, 0)) {
+            if (piggy.attributes.accounts?.isNotEmpty ?? false) {
+              if (piggy.attributes.accounts!.length == 1 &&
+                  (piggy.attributes.accounts!.first.name?.isNotEmpty ??
+                      false)) {
+                subtitle = S
+                    .of(context)
+                    .homePiggyLinked(piggy.attributes.accounts!.first.name!);
+              } else if (piggy.attributes.accounts!.length > 1) {
+                subtitle = S
+                    .of(context)
+                    .homePiggyLinked(S.of(context).generalMultiple);
+              }
+            } else {
               if (piggy.attributes.accounts?.isNotEmpty ?? false) {
-                if (piggy.attributes.accounts!.length == 1 &&
-                    (piggy.attributes.accounts!.first.name?.isNotEmpty ??
-                        false)) {
-                  subtitle = S
-                      .of(context)
-                      .homePiggyLinked(piggy.attributes.accounts!.first.name!);
-                } else if (piggy.attributes.accounts!.length > 1) {
-                  subtitle = S
-                      .of(context)
-                      .homePiggyLinked(S.of(context).generalMultiple);
-                }
-              } else {
-                if (piggy.attributes.accounts?.isNotEmpty ?? false) {
-                  subtitle = S
-                      .of(context)
-                      .homePiggyLinked(piggy.attributes.accounts!.join(", "));
-                }
+                subtitle = S
+                    .of(context)
+                    .homePiggyLinked(piggy.attributes.accounts!.join(", "));
               }
             }
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[

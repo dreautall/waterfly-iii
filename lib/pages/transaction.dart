@@ -14,7 +14,6 @@ import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
-import 'package:version/version.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -332,10 +331,7 @@ class _TransactionPageState extends State<TransactionPage>
         splitTransactionCheckAccounts();
       });
 
-      // Firefly v6.0.30 (API v2.0.11) and up:
-      // API will no longer accept changes to amount and account fields for reconciled transactions
-      if (_reconciled &&
-          context.read<FireflyService>().apiVersion! >= Version(2, 0, 11)) {
+      if (_reconciled) {
         _initiallyReconciled = true;
       }
 
@@ -2061,26 +2057,20 @@ class _TransactionPageState extends State<TransactionPage>
                   child: Column(
                     children: <Widget>[
                       // Reconciled Button
-                      // Reconcile is broken before API V2.0.6
-                      // ref https://github.com/dreautall/waterfly-iii/issues/56
-                      // ref https://github.com/firefly-iii/firefly-iii/issues/7845
-                      if (context.read<FireflyService>().apiVersion! >=
-                          Version(2, 0, 6)) ...<Widget>[
-                        IconButton(
-                          icon: const Icon(Icons.done_outline),
-                          isSelected: _reconciled,
-                          selectedIcon: const Icon(Icons.done),
-                          onPressed:
-                              _savingInProgress
-                                  ? null
-                                  : () => setState(() {
-                                    _reconciled = !_reconciled;
-                                    _initiallyReconciled = false;
-                                  }),
-                          tooltip: S.of(context).generalReconcile,
-                        ),
-                        hDivider,
-                      ],
+                      IconButton(
+                        icon: const Icon(Icons.done_outline),
+                        isSelected: _reconciled,
+                        selectedIcon: const Icon(Icons.done),
+                        onPressed:
+                            _savingInProgress
+                                ? null
+                                : () => setState(() {
+                                  _reconciled = !_reconciled;
+                                  _initiallyReconciled = false;
+                                }),
+                        tooltip: S.of(context).generalReconcile,
+                      ),
+                      hDivider,
                       // Bills Button
                       IconButton(
                         icon: const Icon(Icons.calendar_today),

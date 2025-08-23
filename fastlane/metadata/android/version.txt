@@ -1,2 +1,2 @@
-versionName=1.1.3
-versionCode=495
+versionName=1.1.4
+versionCode=499

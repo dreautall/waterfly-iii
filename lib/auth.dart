@@ -24,7 +24,7 @@ import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 
 final Logger log = Logger("Auth");
-final Version minApiVersion = Version(6, 3, 1);
+final Version minApiVersion = Version(6, 3, 2);
 
 class APITZReply {
   APITZReply(this.data);

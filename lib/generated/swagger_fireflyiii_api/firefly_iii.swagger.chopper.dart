@@ -31,7 +31,7 @@ final class _$FireflyIii extends FireflyIii {
       'query': query,
       'limit': limit,
       'date': date,
-      'types': types,
+      'types': types?.join(","), // WF3 fix
     };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
@@ -472,6 +472,7 @@ final class _$FireflyIii extends FireflyIii {
     final Map<String, dynamic> $params = <String, dynamic>{
       'start': start,
       'end': end,
+      'period': '1D',
     };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,

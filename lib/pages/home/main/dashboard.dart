@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-import 'package:version/version.dart';
-import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/settings.dart';
 
@@ -32,16 +30,6 @@ class _DashboardDialogState extends State<DashboardDialog> {
 
     // Remove dupes, that would throw errors later!
     cards = cards.toSet().toList();
-
-    // Remove bills if the server is too old
-    if (context.read<FireflyService>().apiVersion! < Version(2, 0, 12)) {
-      cards.remove(DashboardCards.bills);
-    }
-
-    // :TODO: currently there is a bug in the APIv2 call, disabled this for now..
-    if (context.read<FireflyService>().apiVersion! < Version(99, 0, 7)) {
-      cards.remove(DashboardCards.networth);
-    }
   }
 
   @override

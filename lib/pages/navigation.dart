@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-import 'package:version/version.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
@@ -130,14 +129,6 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
         const Icon(Icons.settings),
       ),
     ];
-
-    // Bills page not working below Firefly 6.1.0 (API Version 2.0.12)
-    // https://github.com/firefly-iii/firefly-iii/issues/8106
-    if (context.read<FireflyService>().apiVersion! < Version(2, 0, 12)) {
-      navDestinations.removeWhere(
-        (NavDestination e) => e.label == S.of(context).navigationBills,
-      );
-    }
 
     _tabController = TabController(vsync: this, length: navDestinations.length);
   }

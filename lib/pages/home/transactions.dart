@@ -8,7 +8,6 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-import 'package:version/version.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -254,10 +253,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           start:
               startDate != null
                   ? DateFormat('yyyy-MM-dd', 'en_US').format(startDate)
-                  : (context.read<FireflyService>().apiVersion! >=
-                      Version(2, 0, 9))
-                  ? null
-                  : "1900-01-01",
+                  : null,
         );
       } else if (_filters.hasFilters) {
         String query = _filters.text ?? "";
@@ -315,10 +311,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           start:
               startDate != null
                   ? DateFormat('yyyy-MM-dd', 'en_US').format(startDate)
-                  : (context.read<FireflyService>().apiVersion! >=
-                      Version(2, 0, 9))
-                  ? null
-                  : "1900-01-01",
+                  : null,
         );
       }
 

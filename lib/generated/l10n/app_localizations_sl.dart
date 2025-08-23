@@ -317,19 +317,19 @@ class SSl extends S {
   String get generalCurrency => 'Valuta';
 
   @override
-  String get generalDateRangeCurrentMonth => 'Current Month';
+  String get generalDateRangeCurrentMonth => 'Trenutni mesec';
 
   @override
-  String get generalDateRangeLast30Days => 'Last 30 days';
+  String get generalDateRangeLast30Days => 'Zadnjih 30 dni';
 
   @override
-  String get generalDateRangeCurrentYear => 'Current Year';
+  String get generalDateRangeCurrentYear => 'Trenutno leto';
 
   @override
-  String get generalDateRangeLastYear => 'Last year';
+  String get generalDateRangeLastYear => 'Prejšnje leto';
 
   @override
-  String get generalDateRangeAll => 'All';
+  String get generalDateRangeAll => 'Vse';
 
   @override
   String get generalDefault => 'privzeto';
@@ -450,7 +450,7 @@ class SSl extends S {
   String get homeMainChartNetWorthTitle => 'Neto vrednost';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle => 'Povzetek oznak za trenutni mesec';
 
   @override
   String get homePiggyAdjustDialogTitle => 'Prihranek/poraba denarja';
@@ -543,7 +543,7 @@ class SSl extends S {
   String get homeTransactionsDialogFilterCurrenciesAll => '<Vse valute>';
 
   @override
-  String get homeTransactionsDialogFilterDateRange => 'Date Range';
+  String get homeTransactionsDialogFilterDateRange => 'Časovno območje';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -895,7 +895,7 @@ class SSl extends S {
   String get transactionTitleEdit => 'Uredi transakcijo';
 
   @override
-  String get transactionTypeDeposit => 'Polog';
+  String get transactionTypeDeposit => 'Priliv';
 
   @override
   String get transactionTypeTransfer => 'Prenos';

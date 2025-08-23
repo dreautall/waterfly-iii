@@ -499,6 +499,9 @@ class SCa extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Saved so far:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'Quantitat objectiu: $amount';
   }

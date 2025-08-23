@@ -497,6 +497,9 @@ class SCs extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Saved so far:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'Cílová částka: $amount';
   }

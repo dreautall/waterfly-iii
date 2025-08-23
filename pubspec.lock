@@ -1036,10 +1036,10 @@ packages:
     dependency: transitive
     description:
       name: qs_dart
-      sha256: e06837d7be34139219c5b16ceb181f8094b4ba8d48503b311086463b56d16c15
+      sha256: aa1b2fffd8acdfe2b1d0d1e6f5349db51e861e2f04b047e49fa4d62d5e3a163b
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.1"
+    version: "1.5.2"
   quick_actions:
     dependency: "direct main"
     description:

@@ -310,6 +310,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
 
   @override
   Widget build(BuildContext context) {
+    log.finest(() => "build()");
     final double currentAmount =
         double.tryParse(currentPiggy.attributes.currentAmount ?? "") ?? 0;
     final double targetAmount =
@@ -329,7 +330,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
       ),
     );
     final bool hasMultipleAccounts =
-        (widget.piggy.attributes.accounts?.length ?? 1) > 1;
+        (currentPiggy.attributes.accounts?.length ?? 1) > 1;
 
     String infoText = "";
 
@@ -343,11 +344,10 @@ class _PiggyDetailsState extends State<PiggyDetails> {
     } else {
       infoText += S.of(context).homePiggySavedMultiple;
       infoText += "\n";
-      widget.piggy.attributes.accounts!.forEach(
-        (PiggyBankAccountRead e) =>
-            infoText +=
-                "• ${e.name}: ${currency.fmt(double.tryParse(e.currentAmount ?? "") ?? 0)}\n",
-      );
+      for (PiggyBankAccountRead e in currentPiggy.attributes.accounts!) {
+        infoText +=
+            "• ${e.name}: ${currency.fmt(double.tryParse(e.currentAmount ?? "") ?? 0)}\n";
+      }
     }
     if (leftAmount != 0) {
       infoText += S.of(context).homePiggyRemaining(currency.fmt(leftAmount));
@@ -471,6 +471,8 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
   late double currentAmount;
   late CurrencyRead currency;
   late bool hasMultipleAccounts;
+  late List<DropdownMenuEntry<String>> allAccountNames;
+  String? selectedAccount;
 
   @override
   void initState() {
@@ -489,6 +491,12 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
         decimalPlaces: widget.piggy.attributes.currencyDecimalPlaces,
       ),
     );
+    allAccountNames = widget.piggy.attributes.accounts!
+        .map(
+          (PiggyBankAccountRead e) =>
+              DropdownMenuEntry<String>(value: e.accountId!, label: e.name!),
+        )
+        .toList(growable: false);
   }
 
   @override
@@ -514,13 +522,23 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
               if (hasMultipleAccounts) ...<Widget>[
                 Text(S.of(context).homePiggySavedMultiple),
                 ...widget.piggy.attributes.accounts!.map(
-                  (e) => Text(
+                  (PiggyBankAccountRead e) => Text(
                     "• ${e.name}: ${currency.fmt(double.tryParse(e.currentAmount ?? "") ?? 0)}",
                   ),
                 ),
               ],
-
               const SizedBox(height: 16),
+              if (hasMultipleAccounts) ...<Widget>[
+                const SizedBox(height: 16),
+                DropdownMenu<String>(
+                  dropdownMenuEntries: allAccountNames,
+                  label: Text(S.of(context).generalAccount),
+                  leadingIcon: const Icon(Icons.account_balance_outlined),
+                  onSelected: (String? e) => selectedAccount = e,
+                  width: MediaQuery.of(context).size.width - 128 - 24,
+                ),
+                const SizedBox(height: 16),
+              ],
               Row(
                 children: <Widget>[
                   MaterialIconButton(
@@ -578,12 +596,15 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                 if (_transactionType == TransactionTypeProperty.withdrawal) {
                   amount *= -1;
                 }
-                final double totalAmount = currentAmount + amount;
 
                 // Account handling
+                if (selectedAccount == null) {
+                  nav.pop();
+                }
                 final List<PiggyBankAccountUpdate> accounts =
                     <PiggyBankAccountUpdate>[];
                 if (!hasMultipleAccounts) {
+                  final double totalAmount = currentAmount + amount;
                   accounts.add(
                     PiggyBankAccountUpdate(
                       accountId:
@@ -595,7 +616,23 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                     () =>
                         "New piggy bank total = $totalAmount out of $currentAmount + $amount",
                   );
-                } else {}
+                } else {
+                  for (PiggyBankAccountRead e
+                      in widget.piggy.attributes.accounts!) {
+                    accounts.add(
+                      PiggyBankAccountUpdate(
+                        accountId: e.accountId,
+                        currentAmount:
+                            selectedAccount == e.accountId
+                                ? ((double.tryParse(e.currentAmount ?? "") ??
+                                            0) +
+                                        amount)
+                                    .toString()
+                                : e.currentAmount,
+                      ),
+                    );
+                  }
+                }
 
                 final Response<PiggyBankSingle> resp = await api
                     .v1PiggyBanksIdPut(

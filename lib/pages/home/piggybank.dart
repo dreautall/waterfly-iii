@@ -142,13 +142,11 @@ class _HomePiggybankState extends State<HomePiggybank>
               } else if (piggy.attributes.accounts!.length > 1) {
                 subtitle = S
                     .of(context)
-                    .homePiggyLinked(S.of(context).generalMultiple);
-              }
-            } else {
-              if (piggy.attributes.accounts?.isNotEmpty ?? false) {
-                subtitle = S
-                    .of(context)
-                    .homePiggyLinked(piggy.attributes.accounts!.join(", "));
+                    .homePiggyLinked(
+                      piggy.attributes.accounts!
+                          .map((PiggyBankAccountRead e) => e.name ?? "")
+                          .join(", "),
+                    );
               }
             }
 

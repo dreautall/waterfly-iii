@@ -101,72 +101,31 @@ class _HomeMainState extends State<HomeMain>
       const TimeOfDay(hour: 12, minute: 0),
     );
 
-    // With a new API the number of API calls is reduced from 14 to 2
-    // There was a fixed bug with Firefly v6.1.23, use it only afterwards!
-    if (context.read<FireflyService>().apiVersion! >= Version(6, 1, 23)) {
-      final Response<List<ChartDataSet>> respBalanceData = await api
-          .v1ChartBalanceBalanceGet(
-            start: DateFormat(
-              'yyyy-MM-dd',
-              'en_US',
-            ).format(now.copyWith(day: now.day - 6)),
-            end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-          );
-      apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
-
-      for (ChartDataSet e in respBalanceData.body!) {
-        final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
-        entries.forEach((String dateStr, dynamic valueStr) {
-          final DateTime date = tzHandler
-              .sTime(DateTime.parse(dateStr))
-              .toLocal()
-              .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
-          final double value = double.tryParse(valueStr) ?? 0;
-          if (e.label == "earned") {
-            lastDaysIncome[date] = (lastDaysIncome[date] ?? 0) + value;
-          } else if (e.label == "spent") {
-            lastDaysExpense[date] = (lastDaysExpense[date] ?? 0) + value;
-          }
-        });
-      }
-    } else {
-      // Old Method (before API v2.0.6 (Firefly III v6.0.20))
-      final List<TZDateTime> lastDays = <TZDateTime>[];
-      for (int i = 0; i < 7; i++) {
-        lastDays.add(
-          now
-              .subtract(Duration(days: i))
-              .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0)),
+    final Response<List<ChartDataSet>> respBalanceData = await api
+        .v1ChartBalanceBalanceGet(
+          start: DateFormat(
+            'yyyy-MM-dd',
+            'en_US',
+          ).format(now.copyWith(day: now.day - 6)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
         );
-      }
+    apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
 
-      for (TZDateTime e in lastDays) {
-        final (
-          Response<InsightTotal> respInsightExpense,
-          Response<InsightTotal> respInsightIncome,
-        ) = await (
-              api.v1InsightExpenseTotalGet(
-                start: DateFormat('yyyy-MM-dd', 'en_US').format(e),
-                end: DateFormat('yyyy-MM-dd', 'en_US').format(e),
-              ),
-              api.v1InsightIncomeTotalGet(
-                start: DateFormat('yyyy-MM-dd', 'en_US').format(e),
-                end: DateFormat('yyyy-MM-dd', 'en_US').format(e),
-              ),
-            ).wait;
-        apiThrowErrorIfEmpty(respInsightExpense, mounted ? context : null);
-        apiThrowErrorIfEmpty(respInsightIncome, mounted ? context : null);
+    for (ChartDataSet e in respBalanceData.body!) {
+      final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
+      entries.forEach((String dateStr, dynamic valueStr) {
+        final DateTime date = tzHandler
+            .sTime(DateTime.parse(dateStr))
+            .toLocal()
+            .setTimeOfDay(const TimeOfDay(hour: 12, minute: 0));
 
-        lastDaysExpense[e] =
-            (respInsightExpense.body?.isNotEmpty ?? false)
-                ? respInsightExpense.body?.first.differenceFloat ?? 0
-                : 0;
-
-        lastDaysIncome[e] =
-            (respInsightIncome.body?.isNotEmpty ?? false)
-                ? respInsightIncome.body?.first.differenceFloat ?? 0
-                : 0;
-      }
+        final double value = double.tryParse(valueStr) ?? 0;
+        if (e.label == "earned") {
+          lastDaysIncome[date] = (lastDaysIncome[date] ?? 0) + value;
+        } else if (e.label == "spent") {
+          lastDaysExpense[date] = (lastDaysExpense[date] ?? 0) + value;
+        }
+      });
     }
 
     return true;

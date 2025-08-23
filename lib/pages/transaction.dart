@@ -457,6 +457,7 @@ class _TransactionPageState extends State<TransactionPage>
               _sourceAccountTextController.text = acc.attributes.name;
               _sourceAccountType = AccountTypeProperty.assetAccount;
               _ownAccountId = acc.id;
+              checkTXType();
               break;
             }
           }

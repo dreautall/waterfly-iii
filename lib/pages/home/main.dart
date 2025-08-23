@@ -9,7 +9,6 @@ import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart';
-import 'package:version/version.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -417,6 +416,7 @@ class _HomeMainState extends State<HomeMain>
           api.v1ChartAccountOverviewGet(
             start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
             end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
+            //preselected: 'assets' :TODO: with new FF3 version!
           ),
         ).wait;
     apiThrowErrorIfEmpty(respAssetAccounts, mounted ? context : null);
@@ -543,10 +543,7 @@ class _HomeMainState extends State<HomeMain>
     final List<DashboardCards> cards = List<DashboardCards>.from(
       context.watch<SettingsProvider>().dashboardOrder,
     );
-    // :TODO: test again with v1 api calls!
-    if (context.read<FireflyService>().apiVersion! < Version(99, 0, 7)) {
-      cards.remove(DashboardCards.networth);
-    }
+
     final List<DashboardCards> hidden =
         context.watch<SettingsProvider>().dashboardHidden;
     for (DashboardCards e in hidden) {

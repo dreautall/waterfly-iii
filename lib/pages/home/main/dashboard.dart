@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-import 'package:version/version.dart';
-import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/settings.dart';
 
@@ -32,11 +30,6 @@ class _DashboardDialogState extends State<DashboardDialog> {
 
     // Remove dupes, that would throw errors later!
     cards = cards.toSet().toList();
-
-    // :TODO: test again with v1 api calls!
-    if (context.read<FireflyService>().apiVersion! < Version(99, 0, 7)) {
-      cards.remove(DashboardCards.networth);
-    }
   }
 
   @override

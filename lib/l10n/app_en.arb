@@ -629,6 +629,10 @@
             }
         }
     },
+    "homePiggySavedMultiple": "Saved so far:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "Target amount: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",

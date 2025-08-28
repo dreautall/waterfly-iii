@@ -79,6 +79,9 @@ class SEn extends S {
   String get billsChangeSortOrderTooltip => 'Change sort order';
 
   @override
+  String get billsSettingsTooltip => 'Settings';
+
+  @override
   String get billsErrorLoading => 'Error loading subscriptions.';
 
   @override
@@ -201,6 +204,20 @@ class SEn extends S {
 
   @override
   String get billsUngrouped => 'Ungrouped';
+
+  @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
 
   @override
   String get categoryDeleteConfirm =>

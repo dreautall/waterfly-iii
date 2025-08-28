@@ -79,6 +79,9 @@ class SFa extends S {
   String get billsChangeSortOrderTooltip => 'تغییر ترتیب مرتب‌سازی\n';
 
   @override
+  String get billsSettingsTooltip => 'Settings';
+
+  @override
   String get billsErrorLoading => 'خطا در بارگیری صورتحساب.\n';
 
   @override
@@ -198,6 +201,20 @@ class SFa extends S {
 
   @override
   String get billsUngrouped => 'گروه‌بندی نشده';
+
+  @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
 
   @override
   String get categoryDeleteConfirm =>

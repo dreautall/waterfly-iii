@@ -137,6 +137,8 @@ class SettingsProvider with ChangeNotifier {
   static const String settingBillsDefaultLayout = "BILLSDEFAULTLAYOUT";
   static const String settingBillsDefaultSort = "BILLSDEFAULTSORT";
   static const String settingBillsDefaultSortOrder = "BILLSDEFAULTSORTORDER";
+  static const String settingBillsShowOnlyActive = "BILLSSHOWONLYACTIVE";
+  static const String settingBillsShowOnlyExpected = "BILLSSHOWONLYEXPECTED";
   static const String settingsCategoriesSumExcluded = "CAT_SUMEXCLUDED";
   static const String settingsDashboardOrder = "DASHBOARD_ORDER";
   static const String settingsDashboardHidden = "DASHBOARD_HIDDEN";
@@ -174,6 +176,10 @@ class SettingsProvider with ChangeNotifier {
   BillsSort get billsSort => _billsSort;
   SortingOrder _billsSortOrder = SortingOrder.ascending;
   SortingOrder get billsSortOrder => _billsSortOrder;
+  bool _billsShowOnlyActive = true;
+  bool get billsShowOnlyActive => _billsShowOnlyActive;
+  bool _billsShowOnlyExpected = false;
+  bool get billsShowOnlyExpected => _billsShowOnlyExpected;
 
   List<String> _categoriesSumExcluded = <String>[];
   List<String> get categoriesSumExcluded => _categoriesSumExcluded;
@@ -244,6 +250,20 @@ class SettingsProvider with ChangeNotifier {
     );
     if (billsSortOrderIndex != null) {
       await prefs.setInt(settingBillsDefaultSortOrder, billsSortOrderIndex);
+    }
+
+    final bool? billsInactiveVisibility = oldPrefs.getBool(
+        settingBillsShowOnlyActive,
+    );
+    if (billsInactiveVisibility != null) {
+      await prefs.setBool(settingBillsShowOnlyActive, billsInactiveVisibility);
+    }
+
+    final bool? billsShowOnlyExpected = oldPrefs.getBool(
+      settingBillsShowOnlyExpected,
+    );
+    if (billsShowOnlyExpected != null) {
+      await prefs.setBool(settingBillsShowOnlyExpected, billsShowOnlyExpected);
     }
 
     final List<String>? categoriesSumExcluded = oldPrefs.getStringList(
@@ -350,6 +370,13 @@ class SettingsProvider with ChangeNotifier {
         billsSortOrderIndex == null
             ? SortingOrder.ascending
             : SortingOrder.values[billsSortOrderIndex];
+
+    _billsShowOnlyActive = await prefs.getBool(
+        settingBillsShowOnlyActive
+    ) ?? false;
+    _billsShowOnlyExpected = await prefs.getBool(
+        settingBillsShowOnlyExpected
+    ) ?? false;
 
     _categoriesSumExcluded =
         await prefs.getStringList(settingsCategoriesSumExcluded) ?? <String>[];
@@ -648,6 +675,34 @@ class SettingsProvider with ChangeNotifier {
     );
 
     log.finest(() => "notify SettingsProvider->billsSortOrder()");
+    notifyListeners();
+  }
+
+  Future<void> setBillsShowOnlyActive(bool visibility) async {
+    if (visibility == _billsShowOnlyActive) {
+      return;
+    }
+
+    _billsShowOnlyActive = visibility;
+    await SharedPreferencesAsync().setBool(
+        settingBillsShowOnlyActive,
+        visibility);
+
+    log.finest(() => "notify SettingsProvider->billsShowOnlyActive()");
+    notifyListeners();
+  }
+
+  Future<void> setBillsShowOnlyExpected(bool showOnlyExpected) async {
+    if (showOnlyExpected == _billsShowOnlyExpected) {
+      return;
+    }
+
+    _billsShowOnlyExpected = showOnlyExpected;
+    await SharedPreferencesAsync().setBool(
+      settingBillsShowOnlyExpected,
+      showOnlyExpected);
+
+    log.finest(() => "notify SettingsProvider->billsShowOnlyExpected()");
     notifyListeners();
   }
 

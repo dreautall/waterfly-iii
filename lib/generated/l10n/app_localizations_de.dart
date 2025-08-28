@@ -79,6 +79,9 @@ class SDe extends S {
   String get billsChangeSortOrderTooltip => 'Sortierung ändern';
 
   @override
+  String get billsSettingsTooltip => 'Settings';
+
+  @override
   String get billsErrorLoading => 'Fehler beim Laden der Abonnements.';
 
   @override
@@ -201,6 +204,20 @@ class SDe extends S {
 
   @override
   String get billsUngrouped => 'Keine Gruppe';
+
+  @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
 
   @override
   String get categoryDeleteConfirm =>

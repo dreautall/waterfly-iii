@@ -79,6 +79,9 @@ class SSl extends S {
   String get billsChangeSortOrderTooltip => 'Spremeni vrstni red';
 
   @override
+  String get billsSettingsTooltip => 'Settings';
+
+  @override
   String get billsErrorLoading => 'Napaka pri nalaganju transakcij.';
 
   @override
@@ -201,6 +204,20 @@ class SSl extends S {
 
   @override
   String get billsUngrouped => 'Nezdruženo';
+
+  @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
 
   @override
   String get categoryDeleteConfirm =>

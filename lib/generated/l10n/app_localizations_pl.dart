@@ -79,6 +79,9 @@ class SPl extends S {
   String get billsChangeSortOrderTooltip => 'Zmień kolejność sortowania';
 
   @override
+  String get billsSettingsTooltip => 'Settings';
+
+  @override
   String get billsErrorLoading => 'Błąd podczas ładowania subskrypcji.';
 
   @override
@@ -201,6 +204,20 @@ class SPl extends S {
 
   @override
   String get billsUngrouped => 'Niezgrupowane';
+
+  @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
 
   @override
   String get categoryDeleteConfirm =>

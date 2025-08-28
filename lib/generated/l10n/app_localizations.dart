@@ -212,6 +212,12 @@ abstract class S {
   /// **'Change sort order'**
   String get billsChangeSortOrderTooltip;
 
+  /// Text for settings button tooltip
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get billsSettingsTooltip;
+
   /// Generic error message when subscriptions can't be loaded (shouldn't occur)
   ///
   /// In en, this message translates to:
@@ -343,6 +349,30 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Ungrouped'**
   String get billsUngrouped;
+
+  /// Text for show only active subscriptions settings item
+  ///
+  /// In en, this message translates to:
+  /// **'Show only active'**
+  String get billsSettingsShowOnlyActive;
+
+  /// Text for show only active subscriptions settings item description
+  ///
+  /// In en, this message translates to:
+  /// **'Shows only active subscriptions.'**
+  String get billsSettingsShowOnlyActiveDesc;
+
+  /// Text for show only expected subscriptions settings item
+  ///
+  /// In en, this message translates to:
+  /// **'Show only expected'**
+  String get billsSettingsShowOnlyExpected;
+
+  /// Text for show only expected subscriptions settings item description
+  ///
+  /// In en, this message translates to:
+  /// **'Shows only those subscriptions that are expected (or paid) this month.'**
+  String get billsSettingsShowOnlyExpectedDesc;
 
   /// Confirmation text to delete category
   ///

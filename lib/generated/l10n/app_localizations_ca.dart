@@ -80,6 +80,9 @@ class SCa extends S {
   String get billsChangeSortOrderTooltip => 'Canvia l\'ordenació';
 
   @override
+  String get billsSettingsTooltip => 'Settings';
+
+  @override
   String get billsErrorLoading => 'Error carregant les factures.';
 
   @override
@@ -204,6 +207,20 @@ class SCa extends S {
 
   @override
   String get billsUngrouped => 'Sense grup';
+
+  @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
 
   @override
   String get categoryDeleteConfirm =>

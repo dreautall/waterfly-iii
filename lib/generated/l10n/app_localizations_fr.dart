@@ -80,6 +80,9 @@ class SFr extends S {
   String get billsChangeSortOrderTooltip => 'Changer l\'ordre de tri';
 
   @override
+  String get billsSettingsTooltip => 'Settings';
+
+  @override
   String get billsErrorLoading => 'Erreur lors du chargement des factures.';
 
   @override
@@ -204,6 +207,20 @@ class SFr extends S {
 
   @override
   String get billsUngrouped => 'Sans groupe';
+
+  @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
 
   @override
   String get categoryDeleteConfirm =>

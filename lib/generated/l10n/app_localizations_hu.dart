@@ -79,6 +79,9 @@ class SHu extends S {
   String get billsChangeSortOrderTooltip => 'Rendezési sorrend módosítása';
 
   @override
+  String get billsSettingsTooltip => 'Settings';
+
+  @override
   String get billsErrorLoading => 'Hiba a számla betöltése során.';
 
   @override
@@ -201,6 +204,20 @@ class SHu extends S {
 
   @override
   String get billsUngrouped => 'Csoportosítatlan';
+
+  @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
 
   @override
   String get categoryDeleteConfirm =>

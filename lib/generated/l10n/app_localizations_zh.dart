@@ -79,6 +79,9 @@ class SZh extends S {
   String get billsChangeSortOrderTooltip => '更改排序顺序';
 
   @override
+  String get billsSettingsTooltip => 'Settings';
+
+  @override
   String get billsErrorLoading => '加载账单时出错。';
 
   @override
@@ -199,6 +202,20 @@ class SZh extends S {
 
   @override
   String get billsUngrouped => '未分组的';
+
+  @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
 
   @override
   String get categoryDeleteConfirm => '您确定要删除这个分类吗？与该分类关联的账单不会被删除，但该分类将彻底删除。';

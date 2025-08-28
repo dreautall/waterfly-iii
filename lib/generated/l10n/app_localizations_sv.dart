@@ -79,6 +79,9 @@ class SSv extends S {
   String get billsChangeSortOrderTooltip => 'Ändra sorteringsordning';
 
   @override
+  String get billsSettingsTooltip => 'Settings';
+
+  @override
   String get billsErrorLoading => 'Fel vid laddning av räkningar.';
 
   @override
@@ -201,6 +204,20 @@ class SSv extends S {
 
   @override
   String get billsUngrouped => 'Ogrupperad';
+
+  @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
 
   @override
   String get categoryDeleteConfirm =>

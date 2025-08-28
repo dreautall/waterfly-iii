@@ -5934,7 +5934,7 @@ class BillProperties {
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   @JsonKey(name: 'object_group_id', includeIfNull: false)
-  final String? objectGroupId;
+  final int? objectGroupId;
   @JsonKey(name: 'object_group_order', includeIfNull: false)
   final int? objectGroupOrder;
   @JsonKey(name: 'object_group_title', includeIfNull: false)
@@ -5983,7 +5983,7 @@ extension $BillPropertiesExtension on BillProperties {
     bool? active,
     int? order,
     String? notes,
-    String? objectGroupId,
+    int? objectGroupId,
     int? objectGroupOrder,
     String? objectGroupTitle,
     List<BillProperties$PaidDates$Item>? paidDates,
@@ -6064,7 +6064,7 @@ extension $BillPropertiesExtension on BillProperties {
     Wrapped<bool?>? active,
     Wrapped<int?>? order,
     Wrapped<String?>? notes,
-    Wrapped<String?>? objectGroupId,
+    Wrapped<int?>? objectGroupId,
     Wrapped<int?>? objectGroupOrder,
     Wrapped<String?>? objectGroupTitle,
     Wrapped<List<BillProperties$PaidDates$Item>?>? paidDates,

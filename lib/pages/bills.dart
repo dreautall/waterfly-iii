@@ -46,6 +46,16 @@ class _BillsPageState extends State<BillsPage>
     _settings.setBillsSortOrder(value);
   }
 
+  bool get _showOnlyActiveBills => _settings.billsShowOnlyActive;
+  set _showOnlyActiveBills(bool visibility) {
+    _settings.setBillsShowOnlyActive(visibility);
+  }
+
+  bool get _showOnlyExpectedBills => _settings.billsShowOnlyExpected;
+  set _showOnlyExpectedBills(bool showOnlyExpected) {
+    _settings.setBillsShowOnlyExpected(showOnlyExpected);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -60,6 +70,11 @@ class _BillsPageState extends State<BillsPage>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<NavPageElements>().appBarActions = <Widget>[
+        IconButton(
+          icon: const Icon(Icons.settings),
+          tooltip: S.of(context).billsSettingsTooltip,
+          onPressed: _showSettingsDialog,
+        ),
         if (_billsLayout == BillsLayout.list)
           IconButton(
             icon: const Icon(Icons.sort),
@@ -346,81 +361,82 @@ class _BillsPageState extends State<BillsPage>
 
   void _showLayoutPickerDialog() => showModalBottomSheet<void>(
     context: context,
-    builder:
-        (BuildContext context) => SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              const SizedBox(height: 16),
-              ListTile(
-                leading:
-                    _billsLayout == BillsLayout.grouped
-                        ? const Icon(Icons.view_agenda)
-                        : const Icon(Icons.view_agenda_outlined),
-                title: Text(
-                  S.of(context).billsLayoutGroupTitle,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-                ),
-                subtitle: Text(
-                  S.of(context).billsLayoutGroupSubtitle,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                ),
-                trailing:
-                    _billsLayout == BillsLayout.grouped
-                        ? const Icon(Icons.check)
-                        : const SizedBox.shrink(),
-                onTap:
-                    () => setState(() {
-                      _billsLayout = BillsLayout.grouped;
-                      Navigator.pop(context);
-                    }),
+    builder: (BuildContext context) => SafeArea(
+      child: SingleChildScrollView(
+        child: ListBody(
+          children: <Widget>[
+            const SizedBox(height: 8),
+            ListTile(
+              leading:
+              _billsLayout == BillsLayout.grouped
+                  ? const Icon(Icons.view_agenda)
+                  : const Icon(Icons.view_agenda_outlined),
+              title: Text(
+                S.of(context).billsLayoutGroupTitle,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
               ),
-              const Divider(indent: 16, endIndent: 16),
-              ListTile(
-                leading:
-                    _billsLayout == BillsLayout.list
-                        ? const Icon(Icons.table_rows)
-                        : const Icon(Icons.table_rows_outlined),
-                title: Text(
-                  S.of(context).billsLayoutListTitle,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+              subtitle: Text(
+                S.of(context).billsLayoutGroupSubtitle,
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
-                subtitle: Text(
-                  S.of(context).billsLayoutListSubtitle,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                ),
-                trailing:
-                    _billsLayout == BillsLayout.list
-                        ? const Icon(Icons.check)
-                        : const SizedBox.shrink(),
-                onTap:
-                    () => setState(() {
-                      _billsLayout = BillsLayout.list;
-                      _billsSort = BillsSort.name;
-                      _billsSortOrder = SortingOrder.ascending;
-                      Navigator.pop(context);
-                    }),
               ),
-              const SizedBox(height: 24),
-            ],
-          ),
+              trailing:
+              _billsLayout == BillsLayout.grouped
+                  ? const Icon(Icons.check)
+                  : const SizedBox.shrink(),
+              onTap:
+                  () => setState(() {
+                _billsLayout = BillsLayout.grouped;
+                Navigator.pop(context);
+              }),
+            ),
+            const Divider(indent: 8, endIndent: 8),
+            ListTile(
+              leading:
+              _billsLayout == BillsLayout.list
+                  ? const Icon(Icons.table_rows)
+                  : const Icon(Icons.table_rows_outlined),
+              title: Text(
+                S.of(context).billsLayoutListTitle,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                S.of(context).billsLayoutListSubtitle,
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+              trailing:
+              _billsLayout == BillsLayout.list
+                  ? const Icon(Icons.check)
+                  : const SizedBox.shrink(),
+              onTap:
+                  () => setState(() {
+                _billsLayout = BillsLayout.list;
+                _billsSort = BillsSort.name;
+                _billsSortOrder = SortingOrder.ascending;
+                Navigator.pop(context);
+              }),
+            ),
+            const SizedBox(height: 8),
+          ],
         ),
+      ),
+    ),
   );
 
   void _showSortOrderPickerDialog() => showModalBottomSheet<void>(
     context: context,
-    builder: (BuildContext context) {
-      return SingleChildScrollView(
+    builder: (BuildContext context) => SafeArea(
+      child: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             ListTile(
               leading: const Icon(Icons.sort),
               title: Text(
@@ -436,14 +452,14 @@ class _BillsPageState extends State<BillsPage>
                 ),
               ),
               trailing:
-                  _billsSort == BillsSort.name
-                      ? _billsSortOrder == SortingOrder.ascending
-                          ? const Icon(Icons.north)
-                          : const Icon(Icons.south)
-                      : const SizedBox.shrink(),
+              _billsSort == BillsSort.name
+                  ? _billsSortOrder == SortingOrder.ascending
+                  ? const Icon(Icons.north)
+                  : const Icon(Icons.south)
+                  : const SizedBox.shrink(),
               onTap: () => _onSortSelected(BillsSort.name),
             ),
-            const Divider(indent: 16, endIndent: 16),
+            const Divider(indent: 8, endIndent: 8),
             ListTile(
               leading: const Icon(Icons.sort),
               title: Text(
@@ -459,19 +475,84 @@ class _BillsPageState extends State<BillsPage>
                 ),
               ),
               trailing:
-                  _billsSort == BillsSort.frequency
-                      ? _billsSortOrder == SortingOrder.ascending
-                          ? const Icon(Icons.north)
-                          : const Icon(Icons.south)
-                      : const SizedBox.shrink(),
+              _billsSort == BillsSort.frequency
+                  ? _billsSortOrder == SortingOrder.ascending
+                  ? const Icon(Icons.north)
+                  : const Icon(Icons.south)
+                  : const SizedBox.shrink(),
               onTap: () => _onSortSelected(BillsSort.frequency),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 8),
           ],
         ),
-      );
-    },
+      ),
+    )
   );
+
+  void _showSettingsDialog() => showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) => SafeArea(
+        child: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              const SizedBox(height: 8),
+              ListTile(
+                leading: const Icon(Icons.visibility),
+                title: Text(
+                  S.of(context).billsSettingsShowOnlyActive,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  S.of(context).billsSettingsShowOnlyActiveDesc,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                ),
+                trailing: Switch(
+                  value: _showOnlyActiveBills,
+                  onChanged: _onShowOnlyActiveBillsToggled),
+              ),
+              const Divider(indent: 8, endIndent: 8),
+              ListTile(
+                leading: const Icon(Icons.visibility),
+                title: Text(
+                  S.of(context).billsSettingsShowOnlyExpected,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  S.of(context).billsSettingsShowOnlyExpectedDesc,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                ),
+                trailing: Switch(
+                    value: _showOnlyExpectedBills,
+                    onChanged: _onShowOnlyExpectedBillsToggled),
+              ),
+              const SizedBox(height: 8),
+            ],
+          ),
+        ),
+      ),
+  );
+
+  void _onShowOnlyActiveBillsToggled(bool value) {
+    setState(() {
+      _showOnlyActiveBills = value;
+    });
+    Navigator.pop(context);
+  }
+
+  void _onShowOnlyExpectedBillsToggled(bool value) {
+    setState(() {
+      _showOnlyExpectedBills = value;
+    });
+    Navigator.pop(context);
+  }
 
   void _onSortSelected(BillsSort newSort) {
     setState(() {
@@ -518,9 +599,23 @@ class _BillsPageState extends State<BillsPage>
     final Map<String, List<BillRead>> billsMap = <String, List<BillRead>>{};
 
     for (BillRead bill in bills) {
+      if (_showOnlyActiveBills && !(bill.attributes.active ?? true)) {
+        // Do not show the bill if it is inactive and the user elected to hide
+        // inactive bills
+        continue;
+      }
+
+      if (_showOnlyExpectedBills && bill.attributes.nextExpectedMatch == null) {
+        // Do not show the bill if it is not expected this cycle and the user
+        // elected to hide all those bills that are not expected
+        continue;
+      }
+
       final String key =
           bill.attributes.objectGroupTitle ??
-          (mounted ? S.of(context).billsUngrouped : "");
+              (mounted ? S
+                  .of(context)
+                  .billsUngrouped : "");
       if (!billsMap.containsKey(key)) {
         billsMap[key] = <BillRead>[];
       }

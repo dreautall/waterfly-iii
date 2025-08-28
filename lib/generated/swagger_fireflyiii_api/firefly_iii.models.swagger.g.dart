@@ -1914,7 +1914,7 @@ BillProperties _$BillPropertiesFromJson(Map<String, dynamic> json) =>
       active: json['active'] as bool?,
       order: (json['order'] as num?)?.toInt(),
       notes: json['notes'] as String?,
-      objectGroupId: json['object_group_id'] as int?,
+      objectGroupId: json['object_group_id']?.toString(),
       objectGroupOrder: (json['object_group_order'] as num?)?.toInt(),
       objectGroupTitle: json['object_group_title'] as String?,
       paidDates:

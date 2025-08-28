@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:logging/logging.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';
+import 'package:timezone/browser.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:waterflyiii/app.dart';
 import 'package:waterflyiii/auth.dart';
@@ -133,8 +134,6 @@ void nlCallback() async {
           evt.text!,
           localCurrency,
         );
-        // Fallback solution
-        currency ??= localCurrency;
 
         // Set date
         final DateTime date =
@@ -301,7 +300,7 @@ Future<(CurrencyRead?, double)> parseNotificationText(
         // Check if there was any currency information after the numeric value
         if (currencyStr.isEmpty) {
           // No currency information, log a warning and do nothing
-          log.warning("no currency found");
+          log.warning("no currency information found");
         }
         else {
           // Check if the currency information matches the local currency
@@ -309,7 +308,7 @@ Future<(CurrencyRead?, double)> parseNotificationText(
               localCurrency.attributes.symbol == currencyStr ||
               localCurrency.attributes.code == currencyStrAlt ||
               localCurrency.attributes.symbol == currencyStrAlt) {
-            // No need to update currency
+            currency = localCurrency;
             matchesCurrencySymbol = true;
           }
           else {
@@ -383,12 +382,8 @@ Future<(CurrencyRead?, double)> parseNotificationText(
               0;
         }
 
-        // Only break if currency matched --> is best match (with currency!)
-        // otherwise, might be better to continue to next match...
-        if (currency != null) {
-          log.finest(() => "best match found, breaking");
-          break;
-        }
+        // We have found a match, we may stop with processing the matches
+        break;
       }
     }
   } else {

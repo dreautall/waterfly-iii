@@ -492,6 +492,9 @@ class SZh extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Saved so far:';
+
+  @override
   String homePiggyTarget(String amount) {
     return '收费金额: $amount%';
   }

@@ -273,16 +273,16 @@ class LanguageDialog extends StatelessWidget {
     return SimpleDialog(
       title: Text(S.of(context).settingsDialogLanguageTitle),
       children: <Widget>[
-        RadioGroup<String>(
-          groupValue: S.of(context).localeName,
-          onChanged: (String? locale) {
+        RadioGroup<Locale>(
+          groupValue: Locale(S.of(context).localeName),
+          onChanged: (Locale? locale) {
             Navigator.pop(context, locale);
           },
           child: Column(
             children: <Widget>[
               ...S.supportedLocales.map(
-                (Locale locale) => RadioListTile<String>(
-                  value: locale.languageCode,
+                (Locale locale) => RadioListTile<Locale>(
+                  value: locale,
                   title: Text(locale.toLanguageTag()),
                 ),
               ),

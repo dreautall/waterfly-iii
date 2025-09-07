@@ -629,6 +629,10 @@
             }
         }
     },
+    "homePiggySavedMultiple": "Bereits gespart:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "Sparziel: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",

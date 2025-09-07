@@ -496,7 +496,7 @@ class SDe extends S {
   }
 
   @override
-  String get homePiggySavedMultiple => 'Saved so far:';
+  String get homePiggySavedMultiple => 'Bereits gespart:';
 
   @override
   String homePiggyTarget(String amount) {

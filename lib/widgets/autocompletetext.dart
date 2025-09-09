@@ -7,7 +7,7 @@ import 'package:waterflyiii/widgets/erroricon.dart';
 
 final Logger log = Logger("Widgets.AutoCompleteText");
 
-class AutoCompleteText<T extends Object> extends StatelessWidget {
+class AutoCompleteText<T extends Object> extends StatefulWidget {
   const AutoCompleteText({
     super.key,
     required this.textController,
@@ -37,19 +37,47 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
   final String? errorText;
   final bool errorIconOnly;
 
+  static String defaultStringForOption(dynamic option) {
+    return option.toString();
+  }
+
+  @override
+  State<AutoCompleteText<T>> createState() => _AutoCompleteTextState<T>();
+}
+
+class _AutoCompleteTextState<T extends Object> extends State<AutoCompleteText<T>>
+{
+  @override
+  void initState() {
+    super.initState();
+
+    widget.textController.addListener(_handleTextChanges);
+  }
+
+  void _handleTextChanges() {
+    setState(()
+    {
+      if (widget.textController.text.isEmpty &&
+          widget.onChanged != null)
+      {
+        widget.onChanged!("");
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    log.finest(() => "build(labelText: $labelText)");
+    log.finest(() => "build(labelText: $widget.labelText)");
     return LayoutBuilder(
       builder:
           (
             BuildContext context,
             BoxConstraints constraints,
           ) => RawAutocomplete<T>(
-            textEditingController: textController,
-            focusNode: focusNode,
-            onSelected: onSelected,
-            displayStringForOption: displayStringForOption,
+            textEditingController: widget.textController,
+            focusNode: widget.focusNode,
+            onSelected: widget.onSelected,
+            displayStringForOption: widget.displayStringForOption,
             fieldViewBuilder:
                 (
                   BuildContext context,
@@ -59,29 +87,41 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
                 ) => TextFormField(
                   controller: textEditingController,
                   focusNode: focusNode,
-                  onChanged: onChanged,
-                  readOnly: disabled,
-                  enabled: !disabled,
+                  onChanged: (e) => setState(() {
+                    if (widget.onChanged != null) {
+                      widget.onChanged!(e);
+                    }
+                  }),
+                  readOnly: widget.disabled,
+                  enabled: !widget.disabled,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    labelText: labelText,
-                    icon: (labelIcon != null) ? Icon(labelIcon) : null,
-                    filled: disabled,
+                    labelText: widget.labelText,
+                    icon: (widget.labelIcon != null) ? Icon(widget.labelIcon) : null,
+                    filled: widget.disabled,
                     suffixIcon:
-                        errorText != null && errorIconOnly
+                        widget.errorText != null && widget.errorIconOnly
                             ? const ErrorIcon(true)
-                            : null,
-                    errorText: errorText,
+                            : textEditingController.text.isNotEmpty
+                              ? IconButton(
+                                  onPressed: () => setState(() {
+                                    textEditingController.clear();
+                                    focusNode.requestFocus();
+                                  }),
+                                  icon: const Icon(Icons.clear),
+                                )
+                              : null,
+                    errorText: widget.errorText,
                     errorStyle:
-                        errorIconOnly ? const TextStyle(fontSize: 0) : null,
+                        widget.errorIconOnly ? const TextStyle(fontSize: 0) : null,
                   ),
                   enableSuggestions: true,
                   style:
-                      disabled
-                          ? style?.copyWith(
+                      widget.disabled
+                          ? widget.style?.copyWith(
                             color: Theme.of(context).disabledColor,
                           )
-                          : style,
+                          : widget.style,
                   onTapOutside: (_) {
                     final BuildContext? ctx =
                         FocusManager.instance.primaryFocus?.context;
@@ -100,7 +140,7 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
                 ) => Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: EdgeInsets.only(left: labelIcon == null ? 0 : 40),
+                    padding: EdgeInsets.only(left: widget.labelIcon == null ? 0 : 40),
                     child: Material(
                       elevation: 4.0,
                       child: ConstrainedBox(
@@ -108,7 +148,7 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
                           maxHeight: 200,
                           maxWidth:
                               constraints.biggest.width -
-                              (labelIcon == null ? 0 : 40),
+                              (widget.labelIcon == null ? 0 : 40),
                         ),
                         child: ListView.builder(
                           padding: EdgeInsets.zero,
@@ -140,7 +180,7 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
                                             ? Theme.of(context).focusColor
                                             : null,
                                     padding: const EdgeInsets.all(16.0),
-                                    child: Text(displayStringForOption(option)),
+                                    child: Text(widget.displayStringForOption(option)),
                                   );
                                 },
                               ),
@@ -151,12 +191,8 @@ class AutoCompleteText<T extends Object> extends StatelessWidget {
                     ),
                   ),
                 ),
-            optionsBuilder: optionsBuilder,
+            optionsBuilder: widget.optionsBuilder,
           ),
     );
-  }
-
-  static String defaultStringForOption(dynamic option) {
-    return option.toString();
   }
 }

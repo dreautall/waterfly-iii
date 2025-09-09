@@ -133,8 +133,6 @@ void nlCallback() async {
           evt.text!,
           localCurrency,
         );
-        // Fallback solution
-        currency ??= localCurrency;
 
         // Set date
         final DateTime date =
@@ -277,61 +275,89 @@ Future<(CurrencyRead?, double)> parseNotificationText(
 ) async {
   CurrencyRead? currency;
   double amount = 0;
-  // Try to extract some money
+
+  // Try to extract substrings that may (or may not) relate to spending amount
   final Iterable<RegExpMatch> matches = rFindMoney.allMatches(notificationBody);
+
   if (matches.isNotEmpty) {
     for (RegExpMatch validMatch in matches) {
+      bool matchesCurrencySymbol = false;
+
       if ((validMatch.namedGroup("postCurrency")?.isNotEmpty ?? false) ||
           (validMatch.namedGroup("preCurrency")?.isNotEmpty ?? false)) {
-        // extract currency
+
+        // Try to find currency symbol right before or after the numeric value
         String currencyStr = validMatch.namedGroup("preCurrency") ?? "";
         final String currencyStrAlt =
             validMatch.namedGroup("postCurrency") ?? "";
+
+        // Check if there was any currency symbol before the numeric value
         if (currencyStr.isEmpty) {
           currencyStr = currencyStrAlt;
         }
+
+        // Check if there was any currency information after the numeric value
         if (currencyStr.isEmpty) {
-          log.warning("no currency found");
+          // No currency information, log a warning and do nothing
+          log.warning("no currency information found");
         }
-        if (localCurrency.attributes.code == currencyStr ||
-            localCurrency.attributes.symbol == currencyStr ||
-            localCurrency.attributes.code == currencyStrAlt ||
-            localCurrency.attributes.symbol == currencyStrAlt) {
-          // On purpose: do nothing, the code calling this function should
-          // default to localCurrency anyways.
-        } else {
-          final Response<CurrencyArray> response = await api.v1CurrenciesGet();
-          if (!response.isSuccessful || response.body == null) {
-            log.warning("api currency fetch failed");
-          } else {
-            for (CurrencyRead cur in response.body!.data) {
-              if (cur.attributes.code == currencyStr ||
-                  cur.attributes.symbol == currencyStr ||
-                  cur.attributes.code == currencyStrAlt ||
-                  cur.attributes.symbol == currencyStrAlt) {
-                currency = cur;
-                break;
+        else {
+          // Check if the currency information matches the local currency
+          if (localCurrency.attributes.code == currencyStr ||
+              localCurrency.attributes.symbol == currencyStr ||
+              localCurrency.attributes.code == currencyStrAlt ||
+              localCurrency.attributes.symbol == currencyStrAlt) {
+            currency = localCurrency;
+            matchesCurrencySymbol = true;
+          }
+          else {
+            // Query FF for other currencies then check if the currency
+            // information matches any of those
+            final Response<CurrencyArray> response = await api
+                .v1CurrenciesGet();
+
+            if (!response.isSuccessful || response.body == null) {
+              log.warning("api currency fetch failed");
+            }
+            else {
+              for (CurrencyRead cur in response.body!.data) {
+                if (cur.attributes.code == currencyStr ||
+                    cur.attributes.symbol == currencyStr ||
+                    cur.attributes.code == currencyStrAlt ||
+                    cur.attributes.symbol == currencyStrAlt) {
+                  currency = cur;
+                  matchesCurrencySymbol = true;
+                  break;
+                }
               }
             }
           }
         }
-        if (currency == null) {
+
+        if (!matchesCurrencySymbol || currency == null) {
+          // The match did not contain any expected currency information, so
+          // skip processing it
           log.warning("no currency matched");
+          continue;
         }
+
         // extract amount
         // Check if string has a decimal separator
         final String amountStr = (validMatch.namedGroup("amount") ?? "")
             .replaceAll(RegExp(r"\s+"), "");
+
         final int decimalSepPos =
             amountStr.length >= 3 &&
                     (amountStr[amountStr.length - 3] == "." ||
                         amountStr[amountStr.length - 3] == ",")
                 ? amountStr.length - 3
                 : amountStr.length - 2;
+
         final String decimalSep =
             amountStr.length >= decimalSepPos && decimalSepPos > 0
                 ? amountStr[decimalSepPos]
                 : "";
+
         if (decimalSep == "," || decimalSep == ".") {
           final double wholes =
               double.tryParse(
@@ -355,12 +381,8 @@ Future<(CurrencyRead?, double)> parseNotificationText(
               0;
         }
 
-        // Only break if currency matched --> is best match (with currency!)
-        // otherwise, might be better to continue to next match...
-        if (currency != null) {
-          log.finest(() => "best match found, breaking");
-          break;
-        }
+        // We have found a match, we may stop with processing the matches
+        break;
       }
     }
   } else {

@@ -836,6 +836,12 @@ abstract class S {
   /// **'Saved so far: {amount}'**
   String homePiggySaved(String amount);
 
+  /// Title for a list of multiple accounts with the amount of money saved so far
+  ///
+  /// In en, this message translates to:
+  /// **'Saved so far:'**
+  String get homePiggySavedMultiple;
+
   /// How much money should be saved
   ///
   /// In en, this message translates to:

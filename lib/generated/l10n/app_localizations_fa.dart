@@ -506,6 +506,9 @@ class SFa extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Saved so far:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'مقدار هدف: $amount\n';
   }

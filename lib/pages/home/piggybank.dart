@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:chopper/chopper.dart' show Response;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -142,13 +144,11 @@ class _HomePiggybankState extends State<HomePiggybank>
               } else if (piggy.attributes.accounts!.length > 1) {
                 subtitle = S
                     .of(context)
-                    .homePiggyLinked(S.of(context).generalMultiple);
-              }
-            } else {
-              if (piggy.attributes.accounts?.isNotEmpty ?? false) {
-                subtitle = S
-                    .of(context)
-                    .homePiggyLinked(piggy.attributes.accounts!.join(", "));
+                    .homePiggyLinked(
+                      piggy.attributes.accounts!
+                          .map((PiggyBankAccountRead e) => e.name ?? "")
+                          .join(", "),
+                    );
               }
             }
 
@@ -310,6 +310,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
 
   @override
   Widget build(BuildContext context) {
+    log.finest(() => "build()");
     final double currentAmount =
         double.tryParse(currentPiggy.attributes.currentAmount ?? "") ?? 0;
     final double targetAmount =
@@ -328,6 +329,8 @@ class _PiggyDetailsState extends State<PiggyDetails> {
         decimalPlaces: currentPiggy.attributes.currencyDecimalPlaces,
       ),
     );
+    final bool hasMultipleAccounts =
+        (currentPiggy.attributes.accounts?.length ?? 1) > 1;
 
     String infoText = "";
 
@@ -335,8 +338,17 @@ class _PiggyDetailsState extends State<PiggyDetails> {
       infoText += S.of(context).homePiggyTarget(currency.fmt(targetAmount));
       infoText += "\n";
     }
-    infoText += S.of(context).homePiggySaved(currency.fmt(currentAmount));
-    infoText += "\n";
+    if (!hasMultipleAccounts) {
+      infoText += S.of(context).homePiggySaved(currency.fmt(currentAmount));
+      infoText += "\n";
+    } else {
+      infoText += S.of(context).homePiggySavedMultiple;
+      infoText += "\n";
+      for (PiggyBankAccountRead e in currentPiggy.attributes.accounts!) {
+        infoText +=
+            "• ${e.name}: ${currency.fmt(double.tryParse(e.currentAmount ?? "") ?? 0)}\n";
+      }
+    }
     if (leftAmount != 0) {
       infoText += S.of(context).homePiggyRemaining(currency.fmt(leftAmount));
       infoText += "\n";
@@ -458,6 +470,9 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
 
   late double currentAmount;
   late CurrencyRead currency;
+  late bool hasMultipleAccounts;
+  late List<DropdownMenuEntry<String>> allAccountNames;
+  String? selectedAccount;
 
   @override
   void initState() {
@@ -465,6 +480,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
 
     currentAmount =
         double.tryParse(widget.piggy.attributes.currentAmount ?? "") ?? 0;
+    hasMultipleAccounts = (widget.piggy.attributes.accounts?.length ?? 1) > 1;
     currency = CurrencyRead(
       id: widget.piggy.attributes.currencyId ?? "0",
       type: "currencies",
@@ -475,6 +491,12 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
         decimalPlaces: widget.piggy.attributes.currencyDecimalPlaces,
       ),
     );
+    allAccountNames = widget.piggy.attributes.accounts!
+        .map(
+          (PiggyBankAccountRead e) =>
+              DropdownMenuEntry<String>(value: e.accountId!, label: e.name!),
+        )
+        .toList(growable: false);
   }
 
   @override
@@ -495,8 +517,28 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(S.of(context).homePiggySaved(currency.fmt(currentAmount))),
+              if (!hasMultipleAccounts)
+                Text(S.of(context).homePiggySaved(currency.fmt(currentAmount))),
+              if (hasMultipleAccounts) ...<Widget>[
+                Text(S.of(context).homePiggySavedMultiple),
+                ...widget.piggy.attributes.accounts!.map(
+                  (PiggyBankAccountRead e) => Text(
+                    "• ${e.name}: ${currency.fmt(double.tryParse(e.currentAmount ?? "") ?? 0)}",
+                  ),
+                ),
+              ],
               const SizedBox(height: 16),
+              if (hasMultipleAccounts) ...<Widget>[
+                const SizedBox(height: 16),
+                DropdownMenu<String>(
+                  dropdownMenuEntries: allAccountNames,
+                  label: Text(S.of(context).generalAccount),
+                  leadingIcon: const Icon(Icons.account_balance_outlined),
+                  onSelected: (String? e) => selectedAccount = e,
+                  width: MediaQuery.of(context).size.width - 128 - 24,
+                ),
+                const SizedBox(height: 16),
+              ],
               Row(
                 children: <Widget>[
                   MaterialIconButton(
@@ -540,12 +582,12 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
               },
               child: Text(MaterialLocalizations.of(context).closeButtonLabel),
             ),
-            /* :TODO: update with piggy banks able to be from different accounts
             FilledButton(
               onPressed: () async {
                 final FireflyIii api = context.read<FireflyService>().api;
                 final NavigatorState nav = Navigator.of(context);
 
+                // Amount handling
                 double amount =
                     double.tryParse(_amountTextController.text) ?? 0;
                 if (amount == 0) {
@@ -554,19 +596,48 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                 if (_transactionType == TransactionTypeProperty.withdrawal) {
                   amount *= -1;
                 }
-                final double totalAmount = currentAmount + amount;
-                log.finest(
-                  () =>
-                      "New piggy bank total = $totalAmount out of $currentAmount + $amount",
-                );
+
+                // Account handling
+                if (selectedAccount == null) {
+                  nav.pop();
+                }
+                final List<PiggyBankAccountUpdate> accounts =
+                    <PiggyBankAccountUpdate>[];
+                if (!hasMultipleAccounts) {
+                  final double totalAmount = currentAmount + amount;
+                  accounts.add(
+                    PiggyBankAccountUpdate(
+                      accountId:
+                          widget.piggy.attributes.accounts!.first.accountId,
+                      currentAmount: totalAmount.toString(),
+                    ),
+                  );
+                  log.finest(
+                    () =>
+                        "New piggy bank total = $totalAmount out of $currentAmount + $amount",
+                  );
+                } else {
+                  for (PiggyBankAccountRead e
+                      in widget.piggy.attributes.accounts!) {
+                    accounts.add(
+                      PiggyBankAccountUpdate(
+                        accountId: e.accountId,
+                        currentAmount:
+                            selectedAccount == e.accountId
+                                ? ((double.tryParse(e.currentAmount ?? "") ??
+                                            0) +
+                                        amount)
+                                    .toString()
+                                : e.currentAmount,
+                      ),
+                    );
+                  }
+                }
+
                 final Response<PiggyBankSingle> resp = await api
                     .v1PiggyBanksIdPut(
                       id: widget.piggy.id,
-                      body: PiggyBankUpdate(
-                        currentAmount: totalAmount.toStringAsFixed(
-                          currency.attributes.decimalPlaces ?? 2,
-                        ),
-                      ),
+                      body: PiggyBankUpdate(accounts: accounts),
                     );
                 if (!resp.isSuccessful || resp.body == null) {
                   late String error;
@@ -613,7 +684,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                 nav.pop(resp.body);
               },
               child: Text(MaterialLocalizations.of(context).saveButtonLabel),
-            ),*/
+            ),
             const SizedBox(width: 12),
           ],
         ),

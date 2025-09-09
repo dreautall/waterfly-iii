@@ -331,19 +331,19 @@ class SIt extends S {
   String get generalCurrency => 'Valuta';
 
   @override
-  String get generalDateRangeCurrentMonth => 'Current Month';
+  String get generalDateRangeCurrentMonth => 'Mese Corrente';
 
   @override
-  String get generalDateRangeLast30Days => 'Last 30 days';
+  String get generalDateRangeLast30Days => 'Ultimi 30 giorni';
 
   @override
-  String get generalDateRangeCurrentYear => 'Current Year';
+  String get generalDateRangeCurrentYear => 'Anno Corrente';
 
   @override
-  String get generalDateRangeLastYear => 'Last year';
+  String get generalDateRangeLastYear => 'Anno Precedente';
 
   @override
-  String get generalDateRangeAll => 'All';
+  String get generalDateRangeAll => 'Tutto';
 
   @override
   String get generalDefault => 'predefinito';
@@ -464,7 +464,8 @@ class SIt extends S {
   String get homeMainChartNetWorthTitle => 'Patrimonio';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle =>
+      'Riepilogo etichette per il mese corrente';
 
   @override
   String get homePiggyAdjustDialogTitle => 'Risparmia/Spendi Denaro';
@@ -509,6 +510,9 @@ class SIt extends S {
   String homePiggySaved(String amount) {
     return 'Risparmiato finora: $amount';
   }
+
+  @override
+  String get homePiggySavedMultiple => 'Risparmiato finora:';
 
   @override
   String homePiggyTarget(String amount) {
@@ -556,7 +560,7 @@ class SIt extends S {
   String get homeTransactionsDialogFilterCurrenciesAll => '<Tutte le valute>';
 
   @override
-  String get homeTransactionsDialogFilterDateRange => 'Date Range';
+  String get homeTransactionsDialogFilterDateRange => 'Periodo';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>

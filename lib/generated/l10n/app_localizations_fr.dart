@@ -206,6 +206,20 @@ class SFr extends S {
   String get billsUngrouped => 'Sans groupe';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Êtes-vous sûr de vouloir supprimer cette catégorie ? Les transactions ne seront pas supprimées, mais n\'auront plus de catégorie.';
 
@@ -619,7 +633,7 @@ class SFr extends S {
   String get navigationMain => 'Tableau de bord';
 
   @override
-  String get navigationSettings => 'Options';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Non';

@@ -48,12 +48,12 @@ class _BillsPageState extends State<BillsPage>
 
   bool get _showOnlyActiveBills => _settings.billsShowOnlyActive;
   set _showOnlyActiveBills(bool visibility) {
-    _settings.setBillsShowOnlyActive(visibility);
+    _settings.billsShowOnlyActive = visibility;
   }
 
   bool get _showOnlyExpectedBills => _settings.billsShowOnlyExpected;
   set _showOnlyExpectedBills(bool showOnlyExpected) {
-    _settings.setBillsShowOnlyExpected(showOnlyExpected);
+    _settings.billsShowOnlyExpected = showOnlyExpected;
   }
 
   @override

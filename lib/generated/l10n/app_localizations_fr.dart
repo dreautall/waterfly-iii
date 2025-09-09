@@ -80,9 +80,6 @@ class SFr extends S {
   String get billsChangeSortOrderTooltip => 'Changer l\'ordre de tri';
 
   @override
-  String get billsSettingsTooltip => 'Settings';
-
-  @override
   String get billsErrorLoading => 'Erreur lors du chargement des factures.';
 
   @override
@@ -633,7 +630,7 @@ class SFr extends S {
   String get navigationMain => 'Tableau de bord';
 
   @override
-  String get navigationSettings => 'Options';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Non';

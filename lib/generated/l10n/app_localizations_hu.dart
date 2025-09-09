@@ -79,9 +79,6 @@ class SHu extends S {
   String get billsChangeSortOrderTooltip => 'Rendezési sorrend módosítása';
 
   @override
-  String get billsSettingsTooltip => 'Settings';
-
-  @override
   String get billsErrorLoading => 'Hiba a számla betöltése során.';
 
   @override
@@ -633,7 +630,7 @@ class SHu extends S {
   String get navigationMain => 'Főoldal';
 
   @override
-  String get navigationSettings => 'Beállítások';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Nem';

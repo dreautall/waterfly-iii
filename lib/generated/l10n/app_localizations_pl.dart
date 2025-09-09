@@ -79,9 +79,6 @@ class SPl extends S {
   String get billsChangeSortOrderTooltip => 'Zmień kolejność sortowania';
 
   @override
-  String get billsSettingsTooltip => 'Settings';
-
-  @override
   String get billsErrorLoading => 'Błąd podczas ładowania subskrypcji.';
 
   @override
@@ -632,7 +629,7 @@ class SPl extends S {
   String get navigationMain => 'Panel główny';
 
   @override
-  String get navigationSettings => 'Ustawienia';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Nie';

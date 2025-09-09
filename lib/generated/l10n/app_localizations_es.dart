@@ -79,9 +79,6 @@ class SEs extends S {
   String get billsChangeSortOrderTooltip => 'Cambiar orden de clasificación';
 
   @override
-  String get billsSettingsTooltip => 'Settings';
-
-  @override
   String get billsErrorLoading => 'Error al cargar facturas.';
 
   @override
@@ -630,7 +627,7 @@ class SEs extends S {
   String get navigationMain => 'Panel principal';
 
   @override
-  String get navigationSettings => 'Ajustes';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

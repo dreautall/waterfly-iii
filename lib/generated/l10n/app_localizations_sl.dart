@@ -79,9 +79,6 @@ class SSl extends S {
   String get billsChangeSortOrderTooltip => 'Spremeni vrstni red';
 
   @override
-  String get billsSettingsTooltip => 'Settings';
-
-  @override
   String get billsErrorLoading => 'Napaka pri nalaganju transakcij.';
 
   @override
@@ -628,7 +625,7 @@ class SSl extends S {
   String get navigationMain => 'Glavna nadzorna plošča';
 
   @override
-  String get navigationSettings => 'Nastavitve';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Ne';

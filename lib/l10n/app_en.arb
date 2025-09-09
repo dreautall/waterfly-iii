@@ -81,10 +81,6 @@
     "@billsChangeSortOrderTooltip": {
         "description": "Text for sort order change button tooltip"
     },
-    "billsSettingsTooltip": "Settings",
-    "@billsSettingsTooltip": {
-        "description": "Text for settings button tooltip"
-    },
     "billsErrorLoading": "Error loading subscriptions.",
     "@billsErrorLoading": {
         "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
@@ -801,9 +797,9 @@
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "Settings",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "Settings",
+    "@generalSettings": {
+        "description": "Label: Settings"
     },
     "no": "No",
     "@no": {

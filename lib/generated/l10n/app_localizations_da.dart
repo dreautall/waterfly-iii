@@ -79,9 +79,6 @@ class SDa extends S {
   String get billsChangeSortOrderTooltip => 'Change sort order';
 
   @override
-  String get billsSettingsTooltip => 'Settings';
-
-  @override
   String get billsErrorLoading => 'Error loading subscriptions.';
 
   @override
@@ -624,7 +621,7 @@ class SDa extends S {
   String get navigationMain => 'Hoveddashboard';
 
   @override
-  String get navigationSettings => 'Indstillinger';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

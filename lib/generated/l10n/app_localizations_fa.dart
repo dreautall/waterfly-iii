@@ -79,9 +79,6 @@ class SFa extends S {
   String get billsChangeSortOrderTooltip => 'تغییر ترتیب مرتب‌سازی\n';
 
   @override
-  String get billsSettingsTooltip => 'Settings';
-
-  @override
   String get billsErrorLoading => 'خطا در بارگیری صورتحساب.\n';
 
   @override
@@ -622,7 +619,7 @@ class SFa extends S {
   String get navigationMain => 'داشبورد اصلی\n';
 
   @override
-  String get navigationSettings => 'تنظیمات';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'نه';

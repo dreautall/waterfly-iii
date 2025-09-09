@@ -79,9 +79,6 @@ class SRu extends S {
   String get billsChangeSortOrderTooltip => 'Change sort order';
 
   @override
-  String get billsSettingsTooltip => 'Settings';
-
-  @override
   String get billsErrorLoading => 'Error loading subscriptions.';
 
   @override
@@ -625,7 +622,7 @@ class SRu extends S {
   String get navigationMain => 'Главное табло';
 
   @override
-  String get navigationSettings => 'Настройки';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

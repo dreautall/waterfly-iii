@@ -212,12 +212,6 @@ abstract class S {
   /// **'Change sort order'**
   String get billsChangeSortOrderTooltip;
 
-  /// Text for settings button tooltip
-  ///
-  /// In en, this message translates to:
-  /// **'Settings'**
-  String get billsSettingsTooltip;
-
   /// Generic error message when subscriptions can't be loaded (shouldn't occur)
   ///
   /// In en, this message translates to:
@@ -1052,11 +1046,11 @@ abstract class S {
   /// **'Main Dashboard'**
   String get navigationMain;
 
-  /// Navigation Label: Settings
+  /// Label: Settings
   ///
   /// In en, this message translates to:
   /// **'Settings'**
-  String get navigationSettings;
+  String get generalSettings;
 
   /// The word no
   ///

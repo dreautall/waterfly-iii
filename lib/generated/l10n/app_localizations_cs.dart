@@ -79,9 +79,6 @@ class SCs extends S {
   String get billsChangeSortOrderTooltip => 'Change sort order';
 
   @override
-  String get billsSettingsTooltip => 'Settings';
-
-  @override
   String get billsErrorLoading => 'Error loading subscriptions.';
 
   @override
@@ -629,7 +626,7 @@ class SCs extends S {
   String get navigationMain => 'Přehled';
 
   @override
-  String get navigationSettings => 'Nastavení';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

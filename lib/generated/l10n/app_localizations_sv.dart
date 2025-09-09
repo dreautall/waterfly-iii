@@ -79,9 +79,6 @@ class SSv extends S {
   String get billsChangeSortOrderTooltip => 'Ändra sorteringsordning';
 
   @override
-  String get billsSettingsTooltip => 'Settings';
-
-  @override
   String get billsErrorLoading => 'Fel vid laddning av räkningar.';
 
   @override
@@ -625,7 +622,7 @@ class SSv extends S {
   String get navigationMain => 'Kontrollpanel';
 
   @override
-  String get navigationSettings => 'Inställningar';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Nej';

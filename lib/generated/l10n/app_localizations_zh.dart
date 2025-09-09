@@ -79,9 +79,6 @@ class SZh extends S {
   String get billsChangeSortOrderTooltip => '更改排序顺序';
 
   @override
-  String get billsSettingsTooltip => 'Settings';
-
-  @override
   String get billsErrorLoading => '加载账单时出错。';
 
   @override
@@ -619,7 +616,7 @@ class SZh extends S {
   String get navigationMain => '主仪表盘';
 
   @override
-  String get navigationSettings => '设置';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => '取消';

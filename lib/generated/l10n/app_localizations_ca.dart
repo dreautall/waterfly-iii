@@ -80,9 +80,6 @@ class SCa extends S {
   String get billsChangeSortOrderTooltip => 'Canvia l\'ordenació';
 
   @override
-  String get billsSettingsTooltip => 'Settings';
-
-  @override
   String get billsErrorLoading => 'Error carregant les factures.';
 
   @override
@@ -633,7 +630,7 @@ class SCa extends S {
   String get navigationMain => 'Tauler de control Principal';
 
   @override
-  String get navigationSettings => 'Configuració';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

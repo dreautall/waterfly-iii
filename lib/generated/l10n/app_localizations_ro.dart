@@ -79,9 +79,6 @@ class SRo extends S {
   String get billsChangeSortOrderTooltip => 'Change sort order';
 
   @override
-  String get billsSettingsTooltip => 'Settings';
-
-  @override
   String get billsErrorLoading => 'Error loading subscriptions.';
 
   @override
@@ -625,7 +622,7 @@ class SRo extends S {
   String get navigationMain => 'Panou principal';
 
   @override
-  String get navigationSettings => 'Setări';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

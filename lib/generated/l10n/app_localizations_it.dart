@@ -79,9 +79,6 @@ class SIt extends S {
   String get billsChangeSortOrderTooltip => 'Modifica ordinamento';
 
   @override
-  String get billsSettingsTooltip => 'Settings';
-
-  @override
   String get billsErrorLoading => 'Errore caricando i pagamenti ricorrenti.';
 
   @override
@@ -627,7 +624,7 @@ class SIt extends S {
   String get navigationMain => 'Dashboard principale';
 
   @override
-  String get navigationSettings => 'Impostazioni';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

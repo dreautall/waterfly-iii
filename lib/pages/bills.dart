@@ -72,7 +72,7 @@ class _BillsPageState extends State<BillsPage>
       context.read<NavPageElements>().appBarActions = <Widget>[
         IconButton(
           icon: const Icon(Icons.settings),
-          tooltip: S.of(context).billsSettingsTooltip,
+          tooltip: S.of(context).generalSettings,
           onPressed: _showSettingsDialog,
         ),
         if (_billsLayout == BillsLayout.list)

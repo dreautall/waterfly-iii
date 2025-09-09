@@ -79,9 +79,6 @@ class SDe extends S {
   String get billsChangeSortOrderTooltip => 'Sortierung ändern';
 
   @override
-  String get billsSettingsTooltip => 'Settings';
-
-  @override
   String get billsErrorLoading => 'Fehler beim Laden der Abonnements.';
 
   @override
@@ -625,7 +622,7 @@ class SDe extends S {
   String get navigationMain => 'Übersicht';
 
   @override
-  String get navigationSettings => 'Einstellungen';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Nein';

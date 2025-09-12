@@ -425,7 +425,7 @@ class _HomeMainState extends State<HomeMain>
           api.v1ChartAccountOverviewGet(
             start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
             end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
-            //preselected: 'assets' :TODO: with new FF3 version!
+            preselected: V1ChartAccountOverviewGetPreselected.assets,
           ),
         ).wait;
     apiThrowErrorIfEmpty(respAssetAccounts, mounted ? context : null);

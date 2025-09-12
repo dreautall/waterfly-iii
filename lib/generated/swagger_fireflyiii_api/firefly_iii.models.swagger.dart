@@ -18667,6 +18667,174 @@ transactionTypePropertyNullableListFromJson(
       .toList();
 }
 
+String? v1ChartAccountOverviewGetPeriodNullableToJson(
+  enums.V1ChartAccountOverviewGetPeriod? v1ChartAccountOverviewGetPeriod,
+) {
+  return v1ChartAccountOverviewGetPeriod?.value;
+}
+
+String? v1ChartAccountOverviewGetPeriodToJson(
+  enums.V1ChartAccountOverviewGetPeriod v1ChartAccountOverviewGetPeriod,
+) {
+  return v1ChartAccountOverviewGetPeriod.value;
+}
+
+enums.V1ChartAccountOverviewGetPeriod v1ChartAccountOverviewGetPeriodFromJson(
+  Object? v1ChartAccountOverviewGetPeriod, [
+  enums.V1ChartAccountOverviewGetPeriod? defaultValue,
+]) {
+  return enums.V1ChartAccountOverviewGetPeriod.values.firstWhereOrNull(
+        (e) => e.value == v1ChartAccountOverviewGetPeriod,
+      ) ??
+      defaultValue ??
+      enums.V1ChartAccountOverviewGetPeriod.swaggerGeneratedUnknown;
+}
+
+enums.V1ChartAccountOverviewGetPeriod?
+v1ChartAccountOverviewGetPeriodNullableFromJson(
+  Object? v1ChartAccountOverviewGetPeriod, [
+  enums.V1ChartAccountOverviewGetPeriod? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPeriod == null) {
+    return null;
+  }
+  return enums.V1ChartAccountOverviewGetPeriod.values.firstWhereOrNull(
+        (e) => e.value == v1ChartAccountOverviewGetPeriod,
+      ) ??
+      defaultValue;
+}
+
+String v1ChartAccountOverviewGetPeriodExplodedListToJson(
+  List<enums.V1ChartAccountOverviewGetPeriod>? v1ChartAccountOverviewGetPeriod,
+) {
+  return v1ChartAccountOverviewGetPeriod?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> v1ChartAccountOverviewGetPeriodListToJson(
+  List<enums.V1ChartAccountOverviewGetPeriod>? v1ChartAccountOverviewGetPeriod,
+) {
+  if (v1ChartAccountOverviewGetPeriod == null) {
+    return [];
+  }
+
+  return v1ChartAccountOverviewGetPeriod.map((e) => e.value!).toList();
+}
+
+List<enums.V1ChartAccountOverviewGetPeriod>
+v1ChartAccountOverviewGetPeriodListFromJson(
+  List? v1ChartAccountOverviewGetPeriod, [
+  List<enums.V1ChartAccountOverviewGetPeriod>? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPeriod == null) {
+    return defaultValue ?? [];
+  }
+
+  return v1ChartAccountOverviewGetPeriod
+      .map((e) => v1ChartAccountOverviewGetPeriodFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.V1ChartAccountOverviewGetPeriod>?
+v1ChartAccountOverviewGetPeriodNullableListFromJson(
+  List? v1ChartAccountOverviewGetPeriod, [
+  List<enums.V1ChartAccountOverviewGetPeriod>? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPeriod == null) {
+    return defaultValue;
+  }
+
+  return v1ChartAccountOverviewGetPeriod
+      .map((e) => v1ChartAccountOverviewGetPeriodFromJson(e.toString()))
+      .toList();
+}
+
+String? v1ChartAccountOverviewGetPreselectedNullableToJson(
+  enums.V1ChartAccountOverviewGetPreselected?
+  v1ChartAccountOverviewGetPreselected,
+) {
+  return v1ChartAccountOverviewGetPreselected?.value;
+}
+
+String? v1ChartAccountOverviewGetPreselectedToJson(
+  enums.V1ChartAccountOverviewGetPreselected
+  v1ChartAccountOverviewGetPreselected,
+) {
+  return v1ChartAccountOverviewGetPreselected.value;
+}
+
+enums.V1ChartAccountOverviewGetPreselected
+v1ChartAccountOverviewGetPreselectedFromJson(
+  Object? v1ChartAccountOverviewGetPreselected, [
+  enums.V1ChartAccountOverviewGetPreselected? defaultValue,
+]) {
+  return enums.V1ChartAccountOverviewGetPreselected.values.firstWhereOrNull(
+        (e) => e.value == v1ChartAccountOverviewGetPreselected,
+      ) ??
+      defaultValue ??
+      enums.V1ChartAccountOverviewGetPreselected.swaggerGeneratedUnknown;
+}
+
+enums.V1ChartAccountOverviewGetPreselected?
+v1ChartAccountOverviewGetPreselectedNullableFromJson(
+  Object? v1ChartAccountOverviewGetPreselected, [
+  enums.V1ChartAccountOverviewGetPreselected? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPreselected == null) {
+    return null;
+  }
+  return enums.V1ChartAccountOverviewGetPreselected.values.firstWhereOrNull(
+        (e) => e.value == v1ChartAccountOverviewGetPreselected,
+      ) ??
+      defaultValue;
+}
+
+String v1ChartAccountOverviewGetPreselectedExplodedListToJson(
+  List<enums.V1ChartAccountOverviewGetPreselected>?
+  v1ChartAccountOverviewGetPreselected,
+) {
+  return v1ChartAccountOverviewGetPreselected?.map((e) => e.value!).join(',') ??
+      '';
+}
+
+List<String> v1ChartAccountOverviewGetPreselectedListToJson(
+  List<enums.V1ChartAccountOverviewGetPreselected>?
+  v1ChartAccountOverviewGetPreselected,
+) {
+  if (v1ChartAccountOverviewGetPreselected == null) {
+    return [];
+  }
+
+  return v1ChartAccountOverviewGetPreselected.map((e) => e.value!).toList();
+}
+
+List<enums.V1ChartAccountOverviewGetPreselected>
+v1ChartAccountOverviewGetPreselectedListFromJson(
+  List? v1ChartAccountOverviewGetPreselected, [
+  List<enums.V1ChartAccountOverviewGetPreselected>? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPreselected == null) {
+    return defaultValue ?? [];
+  }
+
+  return v1ChartAccountOverviewGetPreselected
+      .map((e) => v1ChartAccountOverviewGetPreselectedFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.V1ChartAccountOverviewGetPreselected>?
+v1ChartAccountOverviewGetPreselectedNullableListFromJson(
+  List? v1ChartAccountOverviewGetPreselected, [
+  List<enums.V1ChartAccountOverviewGetPreselected>? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPreselected == null) {
+    return defaultValue;
+  }
+
+  return v1ChartAccountOverviewGetPreselected
+      .map((e) => v1ChartAccountOverviewGetPreselectedFromJson(e.toString()))
+      .toList();
+}
+
 String? v1ChartBalanceBalanceGetPeriodNullableToJson(
   enums.V1ChartBalanceBalanceGetPeriod? v1ChartBalanceBalanceGetPeriod,
 ) {

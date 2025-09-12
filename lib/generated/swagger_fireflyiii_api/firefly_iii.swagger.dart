@@ -608,10 +608,14 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
+  ///@param period Optional period to group the data by. If not provided, it will default to '1M' or whatever is deemed relevant for the range provided.  If you want to know which periods are available, see the enums or get the configuration value: `GET /api/v1/configuration/firefly.valid_view_ranges`
+  ///@param preselected Optional set of preselected accounts to limit the chart to. This may be easier than submitting all asset accounts manually, for example. If you want to know which selection are available, see the enums here or get the configuration value: `GET /api/v1/configuration/firefly.preselected_accounts`  - `empty`: do not do a pre-selection - `all`: select all asset and all liability accounts - `assets`: select all asset accounts - `liabilities`: select all liability accounts  If no accounts are found, the user's "frontpage accounts" preference will be used. If that is empty, all asset accounts will be used.
   Future<chopper.Response<ChartLine>> v1ChartAccountOverviewGet({
     String? xTraceId,
     required String? start,
     required String? end,
+    enums.V1ChartAccountOverviewGetPeriod? period,
+    enums.V1ChartAccountOverviewGetPreselected? preselected,
   }) {
     generatedMapping.putIfAbsent(
       ChartDataSet,
@@ -622,6 +626,8 @@ abstract class FireflyIii extends ChopperService {
       xTraceId: xTraceId?.toString(),
       start: start,
       end: end,
+      period: period?.value?.toString(),
+      preselected: preselected?.value?.toString(),
     );
   }
 
@@ -629,11 +635,15 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
+  ///@param period Optional period to group the data by. If not provided, it will default to '1M' or whatever is deemed relevant for the range provided.  If you want to know which periods are available, see the enums or get the configuration value: `GET /api/v1/configuration/firefly.valid_view_ranges`
+  ///@param preselected Optional set of preselected accounts to limit the chart to. This may be easier than submitting all asset accounts manually, for example. If you want to know which selection are available, see the enums here or get the configuration value: `GET /api/v1/configuration/firefly.preselected_accounts`  - `empty`: do not do a pre-selection - `all`: select all asset and all liability accounts - `assets`: select all asset accounts - `liabilities`: select all liability accounts  If no accounts are found, the user's "frontpage accounts" preference will be used. If that is empty, all asset accounts will be used.
   @GET(path: '/v1/chart/account/overview')
   Future<chopper.Response<ChartLine>> _v1ChartAccountOverviewGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
+    @Query('period') String? period,
+    @Query('preselected') String? preselected,
   });
 
   ///Dashboard chart with balance information.

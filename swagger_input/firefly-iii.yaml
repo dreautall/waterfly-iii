@@ -13,9 +13,9 @@ info:
     <br><br>
     To learn more about the idiosyncrasies of this API, please read about the API in the [Firefly III API documentation](https://docs.firefly-iii.org/references/firefly-iii/api/).
     <br><br>
-    <small>This file was last generated on 2025-09-08 @ 11:43:57 (Europe/Amsterdam)</small>
+    <small>This file was last generated on 2025-09-12 @ 20:43:17 (Europe/Amsterdam)</small>
 
-  version: "v6.4.0-dev"
+  version: "develop"
   contact:
     name: James Cole
     email: james@firefly-iii.org
@@ -1424,6 +1424,44 @@ paths:
             type: string
             format: date
 
+        - in: query
+          name: period
+          description: |
+            Optional period to group the data by. If not provided, it will default to '1M' or whatever is deemed relevant for the range provided.
+            
+            If you want to know which periods are available, see the enums or get the configuration value: `GET /api/v1/configuration/firefly.valid_view_ranges`
+          required: false
+          schema:
+            type: string
+            enum:
+              - 1D
+              - 1W
+              - 1M
+              - 3M
+              - 6M
+              - 1Y
+            example: 1M
+        - in: query
+          name: preselected
+          description: |
+            Optional set of preselected accounts to limit the chart to. This may be easier than submitting all asset accounts manually, for example.
+            If you want to know which selection are available, see the enums here or get the configuration value: `GET /api/v1/configuration/firefly.preselected_accounts`
+            
+            - `empty`: do not do a pre-selection
+            - `all`: select all asset and all liability accounts
+            - `assets`: select all asset accounts
+            - `liabilities`: select all liability accounts
+            
+            If no accounts are found, the user's "frontpage accounts" preference will be used. If that is empty, all asset accounts will be used.
+          required: false
+          schema:
+            type: string
+            enum:
+              - empty
+              - all
+              - assets
+              - liabilities
+            example: all
       responses:
         "401":
           description: Unauthenticated
@@ -2498,7 +2536,7 @@ paths:
             type: string
             format: uuid
             example: 40c71bbb-c676-4f24-83cf-cc725d7d7a00
-  
+
   /v1/insight/expense/expense:
     get:
       summary: Insight into expenses, grouped by expense account.
@@ -5575,7 +5613,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationErrorResponse'
-  
+
   /v1/attachments/{id}:
     get:
       summary: Get a single attachment.
@@ -5831,7 +5869,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/attachments/{id}/upload:
     post:
       summary: Upload an attachment.
@@ -6449,7 +6487,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationErrorResponse'
-  
+
   /v1/bills/{id}:
     get:
       summary: Get a single bill.
@@ -6658,7 +6696,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/budgets/{id}/limits/{limitId}/transactions:
     get:
       summary: List all transactions by a budget limit ID.
@@ -6749,7 +6787,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/budgets/{id}/limits:
     get:
       operationId: listBudgetLimitByBudget
@@ -6904,7 +6942,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/budgets/{id}/limits/{limitId}:
     get:
       summary: Get single budget limit.
@@ -7116,7 +7154,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/budget-limits:
     get:
       operationId: listBudgetLimit
@@ -7188,7 +7226,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/budgets/{id}/transactions:
     get:
       summary: All transactions to a budget.
@@ -7290,7 +7328,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/budgets/{id}/attachments:
     get:
       summary: Lists all attachments of a budget.
@@ -7375,7 +7413,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/budgets/transactions-without-budget:
     get:
       summary: All transactions without a budget.
@@ -7471,7 +7509,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/budgets:
     get:
       summary: List all budgets.
@@ -7629,7 +7667,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/budgets/{id}:
     get:
       summary: Get a single budget.
@@ -7838,7 +7876,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/categories/{id}/transactions:
     get:
       summary: List all transactions in a category.
@@ -7940,7 +7978,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/categories/{id}/attachments:
     get:
       summary: Lists all attachments.
@@ -8019,7 +8057,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/categories:
     get:
       summary: List all categories.
@@ -8159,7 +8197,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/categories/{id}:
     get:
       summary: Get a single category.
@@ -8368,7 +8406,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/exchange-rates:
     get:
       summary: List all exchange rates that Firefly III knows.
@@ -8508,7 +8546,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/exchange-rates/{id}:
     get:
       summary: List a single specific exchange rate.
@@ -8711,8 +8749,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BadRequestResponse'
-  
-  
+
+
   /v1/exchange-rates/{from}/{to}:
     get:
       summary: List all exchange rates from/to the mentioned currencies.
@@ -8859,7 +8897,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/exchange-rates/{from}/{to}/{date}:
     get:
       summary: List the exchange rate for the from and to-currency on the requested date.
@@ -9104,7 +9142,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BadRequestResponse'
-  
+
   /v1/exchange-rates/by-date/{date}:
     post:
       summary: Store new currency exchange rates under this date
@@ -9178,7 +9216,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/exchange-rates/by-currencies/{from}/{to}:
     post:
       summary: Store new currency exchange rates under this from/to pair.
@@ -9259,7 +9297,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/link-types/{id}/transactions:
     get:
       tags:
@@ -9362,7 +9400,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/link-types:
     get:
       tags:
@@ -9697,7 +9735,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/transaction-links:
     get:
       tags:
@@ -10032,7 +10070,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/object-groups/{id}/piggy-banks:
     get:
       tags:
@@ -10112,7 +10150,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/object-groups/{id}/bills:
     get:
       summary: List all bills with this object group.
@@ -10190,7 +10228,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/object-groups:
     get:
       summary: List all object groups.
@@ -10261,7 +10299,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/object-groups/{id}:
     get:
       summary: Get a single object group.
@@ -10452,7 +10490,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/piggy-banks/{id}/events:
     get:
       summary: List all events linked to a piggy bank.
@@ -10531,7 +10569,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/piggy-banks/{id}/attachments:
     get:
       summary: Lists all attachments.
@@ -10610,7 +10648,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/piggy-banks:
     get:
       summary: List all piggy banks.
@@ -10751,7 +10789,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/piggy-banks/{id}:
     get:
       summary: Get a single piggy bank.
@@ -10942,7 +10980,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/recurrences/{id}/transactions:
     get:
       summary: List all transactions created by a recurring transaction.
@@ -11045,7 +11083,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/recurrences:
     get:
       summary: List all recurring transactions.
@@ -11185,7 +11223,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/recurrences/{id}:
     get:
       summary: Get a single recurring transaction.
@@ -11376,7 +11414,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/recurrences/{id}/trigger:
     post:
       summary: Trigger the creation of a transaction for a specific recurring transaction
@@ -11447,7 +11485,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/rule-groups/{id}/rules:
     get:
       summary: List rules in this rule group.
@@ -11526,7 +11564,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/rule-groups/{id}/test:
     get:
       summary: Test which transactions would be hit by the rule group. No changes will be made.
@@ -11648,7 +11686,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/rule-groups/{id}/trigger:
     post:
       summary: Fire the rule group on your transactions.
@@ -11734,7 +11772,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/rule-groups:
     get:
       summary: List all rule groups.
@@ -11874,7 +11912,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/rule-groups/{id}:
     get:
       summary: Get a single rule group.
@@ -12065,7 +12103,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/rules/{id}/test:
     get:
       summary: Test which transactions would be hit by the rule. No changes will be made.
@@ -12155,7 +12193,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/rules/{id}/trigger:
     post:
       summary: Fire the rule on your transactions.
@@ -12241,7 +12279,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/rules:
     get:
       summary: List all rules.
@@ -12381,7 +12419,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/rules/{id}:
     get:
       summary: Get a single rule.
@@ -12572,7 +12610,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/tags/{tag}/attachments:
     get:
       summary: Lists all attachments.
@@ -12652,7 +12690,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/tags/{tag}/transactions:
     get:
       summary: "List all transactions with this tag."
@@ -12755,7 +12793,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/tags:
     get:
       summary: List all tags.
@@ -12896,7 +12934,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/tags/{tag}:
     get:
       summary: Get a single tag.
@@ -13108,7 +13146,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/currencies/{code}/accounts:
     get:
       summary: List all accounts with this currency.
@@ -13201,7 +13239,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/currencies/{code}/available-budgets:
     get:
       summary: List all available budgets with this currency.
@@ -13281,7 +13319,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/currencies/{code}/bills:
     get:
       summary: List all bills with this currency.
@@ -13361,7 +13399,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/currencies/{code}/budget-limits:
     get:
       summary: List all budget limits with this currency
@@ -13456,7 +13494,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/currencies/{code}/recurrences:
     get:
       summary: List all recurring transactions with this currency.
@@ -13535,7 +13573,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/currencies/{code}/rules:
     get:
       summary: List all rules with this currency.
@@ -13614,7 +13652,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/currencies/{code}/transactions:
     get:
       summary: List all transactions with this currency.
@@ -13717,7 +13755,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/currencies:
     get:
       summary: List all currencies.
@@ -13857,7 +13895,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/currencies/{code}/enable:
     post:
       summary: Enable a single currency.
@@ -13918,7 +13956,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/currencies/{code}/disable:
     post:
       summary: Disable a currency.
@@ -13984,7 +14022,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/currencies/{code}/primary:
     post:
       summary: Make currency primary currency.
@@ -14045,7 +14083,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/currencies/{code}:
     get:
       summary: Get a single currency.
@@ -14239,7 +14277,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/currencies/primary:
     get:
       summary: Get the primary currency of the current administration.
@@ -14292,7 +14330,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/transaction-journals/{id}/links:
     get:
       summary: Lists all the transaction links for an individual journal (individual split).
@@ -14371,7 +14409,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/transaction-journals/{id}:
     get:
       summary: Get a single transaction, based on one of the underlying transaction journals (transaction splits).
@@ -14486,7 +14524,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/transactions/{id}/attachments:
     get:
       summary: Lists all attachments.
@@ -14565,7 +14603,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/transactions/{id}/piggy-bank-events:
     get:
       summary: Lists all piggy bank events.
@@ -14644,7 +14682,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/transactions:
     get:
       summary: |
@@ -14809,7 +14847,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/transactions/{id}:
     get:
       summary: Get a single transaction.
@@ -15000,7 +15038,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/user-groups:
     get:
       summary: |
@@ -15072,7 +15110,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/user-groups/{id}:
     get:
       tags:
@@ -15300,7 +15338,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/search/transactions:
     get:
       summary: Search for transactions
@@ -15382,7 +15420,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/summary/basic:
     get:
       tags:
@@ -15460,7 +15498,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/about:
     get:
       tags:
@@ -15849,7 +15887,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/users:
     get:
       summary: List all users.
@@ -15990,7 +16028,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationErrorResponse'
-  
+
   /v1/users/{id}:
     get:
       summary: Get a single user.
@@ -16181,7 +16219,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/preferences:
     get:
       summary: List all users preferences.
@@ -16459,7 +16497,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/webhooks/{id}/messages:
     get:
       summary: Get all the messages of a single webhook.
@@ -16519,7 +16557,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/webhooks/{id}/messages/{messageId}:
     get:
       summary: Get a single message from a webhook.
@@ -16648,7 +16686,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/webhooks/{id}/messages/{messageId}/attempts:
     get:
       summary: Get all the failed attempts of a single webhook message.
@@ -16734,7 +16772,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/webhooks/{id}/messages/{messageId}/attempts/{attemptId}:
     get:
       summary: Get a single failed attempt from a single webhook message.
@@ -16877,7 +16915,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/webhooks/{id}/submit:
     post:
       summary: Submit messages for a webhook.
@@ -16928,7 +16966,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/webhooks/{id}/trigger-transaction/{transactionId}:
     post:
       summary: Trigger webhook for a given transaction.
@@ -16984,7 +17022,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/webhooks:
     get:
       summary: List all webhooks.
@@ -17125,7 +17163,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalExceptionResponse'
-  
+
   /v1/webhooks/{id}:
     get:
       summary: Get a single webhook.

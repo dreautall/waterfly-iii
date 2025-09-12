@@ -467,11 +467,15 @@ final class _$FireflyIii extends FireflyIii {
     String? xTraceId,
     required String? start,
     required String? end,
+    String? period,
+    String? preselected,
   }) {
     final Uri $url = Uri.parse('/v1/chart/account/overview');
     final Map<String, dynamic> $params = <String, dynamic>{
       'start': start,
       'end': end,
+      'period': period,
+      'preselected': preselected,
     };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,

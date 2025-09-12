@@ -851,6 +851,46 @@ enum TransactionTypeProperty {
   const TransactionTypeProperty(this.value);
 }
 
+enum V1ChartAccountOverviewGetPeriod {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('1D')
+  value_1d('1D'),
+  @JsonValue('1W')
+  value_1w('1W'),
+  @JsonValue('1M')
+  value_1m('1M'),
+  @JsonValue('3M')
+  value_3m('3M'),
+  @JsonValue('6M')
+  value_6m('6M'),
+  @JsonValue('1Y')
+  value_1y('1Y');
+
+  final String? value;
+
+  const V1ChartAccountOverviewGetPeriod(this.value);
+}
+
+enum V1ChartAccountOverviewGetPreselected {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('empty')
+  empty('empty'),
+  @JsonValue('all')
+  all('all'),
+  @JsonValue('assets')
+  assets('assets'),
+  @JsonValue('liabilities')
+  liabilities('liabilities');
+
+  final String? value;
+
+  const V1ChartAccountOverviewGetPreselected(this.value);
+}
+
 enum V1ChartBalanceBalanceGetPeriod {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),

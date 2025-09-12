@@ -87,11 +87,7 @@ class _AutoCompleteTextState<T extends Object> extends State<AutoCompleteText<T>
                 ) => TextFormField(
                   controller: textEditingController,
                   focusNode: focusNode,
-                  onChanged: (e) => setState(() {
-                    if (widget.onChanged != null) {
-                      widget.onChanged!(e);
-                    }
-                  }),
+                  onChanged: widget.onChanged,
                   readOnly: widget.disabled,
                   enabled: !widget.disabled,
                   decoration: InputDecoration(

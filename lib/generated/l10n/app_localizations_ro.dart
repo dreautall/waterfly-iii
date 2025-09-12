@@ -203,6 +203,20 @@ class SRo extends S {
   String get billsUngrouped => 'Ungrouped';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Are you sure you want to delete this category? The transactions will not be deleted, but will not have a category anymore.';
 
@@ -611,7 +625,7 @@ class SRo extends S {
   String get navigationMain => 'Panou principal';
 
   @override
-  String get navigationSettings => 'Setări';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

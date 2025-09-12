@@ -203,6 +203,20 @@ class SRu extends S {
   String get billsUngrouped => 'Ungrouped';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Вы уверены, что хотите удалить категорию? Транзакции, входящие в нее, удалены не будут, они просто останутся без категории.';
 
@@ -611,7 +625,7 @@ class SRu extends S {
   String get navigationMain => 'Главное табло';
 
   @override
-  String get navigationSettings => 'Настройки';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

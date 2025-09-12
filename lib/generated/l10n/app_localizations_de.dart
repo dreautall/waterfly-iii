@@ -203,6 +203,20 @@ class SDe extends S {
   String get billsUngrouped => 'Keine Gruppe';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Möchtest du diese Kategorie wirklich löschen? Die Transaktionen werden nicht gelöscht, werden aber keine Kategorie mehr haben.';
 
@@ -611,7 +625,7 @@ class SDe extends S {
   String get navigationMain => 'Übersicht';
 
   @override
-  String get navigationSettings => 'Einstellungen';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Nein';

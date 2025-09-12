@@ -447,6 +447,7 @@ AutocompleteAccount _$AutocompleteAccountFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       name: json['name'] as String,
       nameWithBalance: json['name_with_balance'] as String,
+      active: json['active'] as bool?,
       type: json['type'] as String,
       currencyId: json['currency_id'] as String,
       currencyName: json['currency_name'] as String,
@@ -467,6 +468,7 @@ Map<String, dynamic> _$AutocompleteAccountToJson(
   'id': instance.id,
   'name': instance.name,
   'name_with_balance': instance.nameWithBalance,
+  if (instance.active case final value?) 'active': value,
   'type': instance.type,
   'currency_id': instance.currencyId,
   'currency_name': instance.currencyName,
@@ -500,10 +502,18 @@ Map<String, dynamic> _$AutocompleteBillToJson(AutocompleteBill instance) =>
     };
 
 AutocompleteBudget _$AutocompleteBudgetFromJson(Map<String, dynamic> json) =>
-    AutocompleteBudget(id: json['id'] as String, name: json['name'] as String);
+    AutocompleteBudget(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      active: json['active'] as bool?,
+    );
 
 Map<String, dynamic> _$AutocompleteBudgetToJson(AutocompleteBudget instance) =>
-    <String, dynamic>{'id': instance.id, 'name': instance.name};
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      if (instance.active case final value?) 'active': value,
+    };
 
 AutocompleteCategory _$AutocompleteCategoryFromJson(
   Map<String, dynamic> json,
@@ -635,6 +645,7 @@ AutocompleteRecurrence _$AutocompleteRecurrenceFromJson(
   id: json['id'] as String,
   name: json['name'] as String,
   description: json['description'] as String?,
+  active: json['active'] as bool?,
 );
 
 Map<String, dynamic> _$AutocompleteRecurrenceToJson(
@@ -643,6 +654,7 @@ Map<String, dynamic> _$AutocompleteRecurrenceToJson(
   'id': instance.id,
   'name': instance.name,
   if (instance.description case final value?) 'description': value,
+  if (instance.active case final value?) 'active': value,
 };
 
 AutocompleteRule _$AutocompleteRuleFromJson(Map<String, dynamic> json) =>
@@ -650,6 +662,7 @@ AutocompleteRule _$AutocompleteRuleFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       name: json['name'] as String,
       description: json['description'] as String?,
+      active: json['active'] as bool?,
     );
 
 Map<String, dynamic> _$AutocompleteRuleToJson(AutocompleteRule instance) =>
@@ -657,6 +670,7 @@ Map<String, dynamic> _$AutocompleteRuleToJson(AutocompleteRule instance) =>
       'id': instance.id,
       'name': instance.name,
       if (instance.description case final value?) 'description': value,
+      if (instance.active case final value?) 'active': value,
     };
 
 AutocompleteRuleGroup _$AutocompleteRuleGroupFromJson(
@@ -665,6 +679,7 @@ AutocompleteRuleGroup _$AutocompleteRuleGroupFromJson(
   id: json['id'] as String,
   name: json['name'] as String,
   description: json['description'] as String?,
+  active: json['active'] as bool?,
 );
 
 Map<String, dynamic> _$AutocompleteRuleGroupToJson(
@@ -673,6 +688,7 @@ Map<String, dynamic> _$AutocompleteRuleGroupToJson(
   'id': instance.id,
   'name': instance.name,
   if (instance.description case final value?) 'description': value,
+  if (instance.active case final value?) 'active': value,
 };
 
 AutocompleteTag _$AutocompleteTagFromJson(Map<String, dynamic> json) =>
@@ -1264,7 +1280,9 @@ Map<String, dynamic> _$WebhookMessageSingleToJson(
 WebhookRead _$WebhookReadFromJson(Map<String, dynamic> json) => WebhookRead(
   type: json['type'] as String,
   id: json['id'] as String,
-  attributes: Webhook.fromJson(json['attributes'] as Map<String, dynamic>),
+  attributes: WebhookProperties.fromJson(
+    json['attributes'] as Map<String, dynamic>,
+  ),
   links: ObjectLink.fromJson(json['links'] as Map<String, dynamic>),
 );
 
@@ -1316,6 +1334,8 @@ AccountProperties _$AccountPropertiesFromJson(Map<String, dynamic> json) =>
           (json['primary_currency_decimal_places'] as num?)?.toInt(),
       currentBalance: json['current_balance'] as String?,
       pcCurrentBalance: json['pc_current_balance'] as String?,
+      balanceDifference: json['balance_difference'] as String?,
+      pcBalanceDifference: json['pc_balance_difference'] as String?,
       openingBalance: json['opening_balance'] as String?,
       pcOpeningBalance: json['pc_opening_balance'] as String?,
       virtualBalance: json['virtual_balance'] as String?,
@@ -1398,6 +1418,9 @@ Map<String, dynamic> _$AccountPropertiesToJson(
     'primary_currency_decimal_places': value,
   if (instance.currentBalance case final value?) 'current_balance': value,
   if (instance.pcCurrentBalance case final value?) 'pc_current_balance': value,
+  if (instance.balanceDifference case final value?) 'balance_difference': value,
+  if (instance.pcBalanceDifference case final value?)
+    'pc_balance_difference': value,
   if (instance.openingBalance case final value?) 'opening_balance': value,
   if (instance.pcOpeningBalance case final value?) 'pc_opening_balance': value,
   if (instance.virtualBalance case final value?) 'virtual_balance': value,
@@ -1914,7 +1937,7 @@ BillProperties _$BillPropertiesFromJson(Map<String, dynamic> json) =>
       active: json['active'] as bool?,
       order: (json['order'] as num?)?.toInt(),
       notes: json['notes'] as String?,
-      objectGroupId: json['object_group_id'] as String?,
+      objectGroupId: json['object_group_id']?.toString(),
       objectGroupOrder: (json['object_group_order'] as num?)?.toInt(),
       objectGroupTitle: json['object_group_title'] as String?,
       paidDates:
@@ -2997,10 +3020,7 @@ PiggyBankStore _$PiggyBankStoreFromJson(Map<String, dynamic> json) =>
           [],
       targetAmount: json['target_amount'] as String?,
       currentAmount: json['current_amount'] as String?,
-      startDate:
-          json['start_date'] == null
-              ? null
-              : DateTime.parse(json['start_date'] as String),
+      startDate: DateTime.parse(json['start_date'] as String),
       targetDate:
           json['target_date'] == null
               ? null
@@ -4859,7 +4879,9 @@ Map<String, dynamic> _$UserGroupUpdateToJson(UserGroupUpdate instance) =>
         'primary_currency_code': value,
     };
 
-Webhook _$WebhookFromJson(Map<String, dynamic> json) => Webhook(
+WebhookProperties _$WebhookPropertiesFromJson(
+  Map<String, dynamic> json,
+) => WebhookProperties(
   createdAt:
       json['created_at'] == null
           ? null
@@ -4871,35 +4893,39 @@ Webhook _$WebhookFromJson(Map<String, dynamic> json) => Webhook(
   active: json['active'] as bool?,
   title: json['title'] as String,
   secret: json['secret'] as String?,
-  trigger: webhookTriggerFromJson(json['trigger']),
-  response: webhookResponseFromJson(json['response']),
-  delivery: webhookDeliveryFromJson(json['delivery']),
+  triggers:
+      (json['triggers'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  responses:
+      (json['responses'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  deliveries:
+      (json['deliveries'] as List<dynamic>?)?.map((e) => e as String).toList(),
   url: json['url'] as String,
 );
 
-Map<String, dynamic> _$WebhookToJson(Webhook instance) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
-  if (instance.active case final value?) 'active': value,
-  'title': instance.title,
-  if (instance.secret case final value?) 'secret': value,
-  if (webhookTriggerToJson(instance.trigger) case final value?)
-    'trigger': value,
-  if (webhookResponseToJson(instance.response) case final value?)
-    'response': value,
-  if (webhookDeliveryToJson(instance.delivery) case final value?)
-    'delivery': value,
-  'url': instance.url,
-};
+Map<String, dynamic> _$WebhookPropertiesToJson(WebhookProperties instance) =>
+    <String, dynamic>{
+      if (instance.createdAt?.toIso8601String() case final value?)
+        'created_at': value,
+      if (instance.updatedAt?.toIso8601String() case final value?)
+        'updated_at': value,
+      if (instance.active case final value?) 'active': value,
+      'title': instance.title,
+      if (instance.secret case final value?) 'secret': value,
+      if (instance.triggers case final value?) 'triggers': value,
+      if (instance.responses case final value?) 'responses': value,
+      if (instance.deliveries case final value?) 'deliveries': value,
+      'url': instance.url,
+    };
 
 WebhookStore _$WebhookStoreFromJson(Map<String, dynamic> json) => WebhookStore(
   active: json['active'] as bool?,
   title: json['title'] as String,
-  trigger: webhookTriggerFromJson(json['trigger']),
-  response: webhookResponseFromJson(json['response']),
-  delivery: webhookDeliveryFromJson(json['delivery']),
+  triggers:
+      (json['triggers'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  responses:
+      (json['responses'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  deliveries:
+      (json['deliveries'] as List<dynamic>?)?.map((e) => e as String).toList(),
   url: json['url'] as String,
 );
 
@@ -4907,37 +4933,35 @@ Map<String, dynamic> _$WebhookStoreToJson(WebhookStore instance) =>
     <String, dynamic>{
       if (instance.active case final value?) 'active': value,
       'title': instance.title,
-      if (webhookTriggerToJson(instance.trigger) case final value?)
-        'trigger': value,
-      if (webhookResponseToJson(instance.response) case final value?)
-        'response': value,
-      if (webhookDeliveryToJson(instance.delivery) case final value?)
-        'delivery': value,
+      if (instance.triggers case final value?) 'triggers': value,
+      if (instance.responses case final value?) 'responses': value,
+      if (instance.deliveries case final value?) 'deliveries': value,
       'url': instance.url,
     };
 
-WebhookUpdate _$WebhookUpdateFromJson(Map<String, dynamic> json) =>
-    WebhookUpdate(
-      active: json['active'] as bool?,
-      title: json['title'] as String?,
-      secret: json['secret'] as String?,
-      trigger: webhookTriggerNullableFromJson(json['trigger']),
-      response: webhookResponseNullableFromJson(json['response']),
-      delivery: webhookDeliveryNullableFromJson(json['delivery']),
-      url: json['url'] as String?,
-    );
+WebhookUpdate _$WebhookUpdateFromJson(
+  Map<String, dynamic> json,
+) => WebhookUpdate(
+  active: json['active'] as bool?,
+  title: json['title'] as String?,
+  secret: json['secret'] as String?,
+  triggers:
+      (json['triggers'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  responses:
+      (json['responses'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  deliveries:
+      (json['deliveries'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  url: json['url'] as String?,
+);
 
 Map<String, dynamic> _$WebhookUpdateToJson(WebhookUpdate instance) =>
     <String, dynamic>{
       if (instance.active case final value?) 'active': value,
       if (instance.title case final value?) 'title': value,
       if (instance.secret case final value?) 'secret': value,
-      if (webhookTriggerNullableToJson(instance.trigger) case final value?)
-        'trigger': value,
-      if (webhookResponseNullableToJson(instance.response) case final value?)
-        'response': value,
-      if (webhookDeliveryNullableToJson(instance.delivery) case final value?)
-        'delivery': value,
+      if (instance.triggers case final value?) 'triggers': value,
+      if (instance.responses case final value?) 'responses': value,
+      if (instance.deliveries case final value?) 'deliveries': value,
       if (instance.url case final value?) 'url': value,
     };
 

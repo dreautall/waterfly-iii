@@ -44,27 +44,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   final TransactionFilters _filters = TransactionFilters();
   final ValueNotifier<bool> _tagsHidden = ValueNotifier<bool>(false);
-  final Map<String, double> _runningBalancesByTransactionId =
-      <String, double>{};
-  double? _lastCalculatedBalance;
-
-  bool _isRevenueOrExpense(ShortAccountTypeProperty? type) {
-    return type == ShortAccountTypeProperty.revenue ||
-        type == ShortAccountTypeProperty.expense;
-  }
-
-  double _updateBalance(
-    double balance,
-    double amount,
-    TransactionTypeProperty? type,
-  ) {
-    if (type == TransactionTypeProperty.withdrawal ||
-        type == TransactionTypeProperty.transfer) {
-      return balance + amount;
-    } else {
-      return balance - amount;
-    }
-  }
 
   @override
   void initState() {
@@ -181,7 +160,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   void notifRefresh() {
     setState(() {
-      _lastCalculatedBalance = null;
       _pagingState = _pagingState.reset();
     });
   }
@@ -313,32 +291,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   ? DateFormat('yyyy-MM-dd', 'en_US').format(startDate)
                   : null,
         );
-      }
-
-      if (_filters.account != null) {
-        final AccountRead account = _filters.account!;
-        // Attempt to retrieve the opening balance
-        double balance =
-            _lastCalculatedBalance ??
-            double.tryParse(account.attributes.currentBalance!) ??
-            0.0;
-        // If the account is a revenue/expense account, we need to invert the balance
-        if (_lastCalculatedBalance == null &&
-            _isRevenueOrExpense(account.attributes.type)) {
-          balance *= -1;
-        }
-        for (TransactionRead item in transactionList) {
-          // Attempt to retrieve the transaction total amount
-          final TransactionSplit tx = item.attributes.transactions.first;
-          final double amount = double.tryParse(tx.amount) ?? 0.0;
-          // Should never be the case
-          if (amount == 0.0) {
-            continue;
-          }
-          _runningBalancesByTransactionId[item.id] = balance;
-          balance = _updateBalance(balance, amount, tx.type);
-          _lastCalculatedBalance = balance;
-        }
       }
 
       final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
@@ -793,11 +745,17 @@ class _HomeTransactionsState extends State<HomeTransactions>
                               child: Icon(Icons.check),
                             ),
                           ),
-                        if (_filters.account != null)
+                        if (_filters.account != null &&
+                            item
+                                    .attributes
+                                    .transactions
+                                    .first
+                                    .sourceBalanceAfter !=
+                                null)
                           TextSpan(
-                            text: currency.fmt(
-                              _runningBalancesByTransactionId[item.id] ?? 0.0,
-                            ),
+                            text:
+                                '${item.attributes.transactions.first.primaryCurrencySymbol}'
+                                '${double.parse(item.attributes.transactions.first.destinationId == _filters.account?.id ? item.attributes.transactions.first.destinationBalanceAfter! : item.attributes.transactions.first.sourceBalanceAfter!).toStringAsFixed(2)}',
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         if (_filters.account == null)
@@ -833,16 +791,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
             id: _filters.account!.id,
           );
           apiThrowErrorIfEmpty(respAccount, mounted ? context : null);
-          final AccountRead account = respAccount.body!.data;
-          _lastCalculatedBalance =
-              double.tryParse(account.attributes.currentBalance!) ?? 0.0;
-          // If the account is a revenue/expense account, we need to invert the balance
-          if (_isRevenueOrExpense(account.attributes.type)) {
-            _lastCalculatedBalance =
-                _lastCalculatedBalance != null
-                    ? _lastCalculatedBalance! * -1
-                    : 0;
-          }
         }
 
         if (refresh ?? false == true) {

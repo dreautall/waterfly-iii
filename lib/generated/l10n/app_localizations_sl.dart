@@ -203,6 +203,20 @@ class SSl extends S {
   String get billsUngrouped => 'Nezdruženo';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Ali ste prepričani, da želite izbrisati to kategorijo? Transakcije ne bodo izbrisane, vendar ne bodo imele več kategorije.';
 
@@ -614,7 +628,7 @@ class SSl extends S {
   String get navigationMain => 'Glavna nadzorna plošča';
 
   @override
-  String get navigationSettings => 'Nastavitve';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Ne';

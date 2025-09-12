@@ -344,6 +344,30 @@ abstract class S {
   /// **'Ungrouped'**
   String get billsUngrouped;
 
+  /// Text for show only active subscriptions settings item
+  ///
+  /// In en, this message translates to:
+  /// **'Show only active'**
+  String get billsSettingsShowOnlyActive;
+
+  /// Text for show only active subscriptions settings item description
+  ///
+  /// In en, this message translates to:
+  /// **'Shows only active subscriptions.'**
+  String get billsSettingsShowOnlyActiveDesc;
+
+  /// Text for show only expected subscriptions settings item
+  ///
+  /// In en, this message translates to:
+  /// **'Show only expected'**
+  String get billsSettingsShowOnlyExpected;
+
+  /// Text for show only expected subscriptions settings item description
+  ///
+  /// In en, this message translates to:
+  /// **'Shows only those subscriptions that are expected (or paid) this month.'**
+  String get billsSettingsShowOnlyExpectedDesc;
+
   /// Confirmation text to delete category
   ///
   /// In en, this message translates to:
@@ -1028,11 +1052,11 @@ abstract class S {
   /// **'Main Dashboard'**
   String get navigationMain;
 
-  /// Navigation Label: Settings
+  /// Label: Settings
   ///
   /// In en, this message translates to:
   /// **'Settings'**
-  String get navigationSettings;
+  String get generalSettings;
 
   /// The word no
   ///

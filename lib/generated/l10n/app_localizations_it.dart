@@ -203,6 +203,20 @@ class SIt extends S {
   String get billsUngrouped => 'Non raggruppate';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Sei sicuro di voler eliminare questa categoria? Le transazioni non saranno eliminate, ma non avranno più una categoria.';
 
@@ -614,7 +628,7 @@ class SIt extends S {
   String get navigationMain => 'Dashboard principale';
 
   @override
-  String get navigationSettings => 'Impostazioni';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

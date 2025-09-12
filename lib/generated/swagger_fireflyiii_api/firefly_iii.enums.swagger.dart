@@ -159,8 +159,6 @@ enum UserGroupReadRole {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
 
-  @JsonValue('owner')
-  owner('owner'),
   @JsonValue('ro')
   ro('ro'),
   @JsonValue('mng_trx')
@@ -202,11 +200,69 @@ enum UserGroupReadRole {
   @JsonValue('full')
   full('full'),
   @JsonValue('owner')
-  $owner('owner');
+  owner('owner');
 
   final String? value;
 
   const UserGroupReadRole(this.value);
+}
+
+enum WebhookDelivery {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('JSON')
+  json('JSON');
+
+  final String? value;
+
+  const WebhookDelivery(this.value);
+}
+
+enum WebhookResponse {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('TRANSACTIONS')
+  transactions('TRANSACTIONS'),
+  @JsonValue('ACCOUNTS')
+  accounts('ACCOUNTS'),
+  @JsonValue('BUDGET')
+  budget('BUDGET'),
+  @JsonValue('RELEVANT')
+  relevant('RELEVANT'),
+  @JsonValue('NONE')
+  none('NONE');
+
+  final String? value;
+
+  const WebhookResponse(this.value);
+}
+
+enum WebhookTrigger {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('ANY')
+  any('ANY'),
+  @JsonValue('STORE_TRANSACTION')
+  storeTransaction('STORE_TRANSACTION'),
+  @JsonValue('UPDATE_TRANSACTION')
+  updateTransaction('UPDATE_TRANSACTION'),
+  @JsonValue('DESTROY_TRANSACTION')
+  destroyTransaction('DESTROY_TRANSACTION'),
+  @JsonValue('STORE_BUDGET')
+  storeBudget('STORE_BUDGET'),
+  @JsonValue('UPDATE_BUDGET')
+  updateBudget('UPDATE_BUDGET'),
+  @JsonValue('DESTROY_BUDGET')
+  destroyBudget('DESTROY_BUDGET'),
+  @JsonValue('STORE_UPDATE_BUDGET_LIMIT')
+  storeUpdateBudgetLimit('STORE_UPDATE_BUDGET_LIMIT');
+
+  final String? value;
+
+  const WebhookTrigger(this.value);
 }
 
 enum AttachableType {
@@ -509,50 +565,6 @@ enum UserRoleProperty {
   const UserRoleProperty(this.value);
 }
 
-enum WebhookDelivery {
-  @JsonValue(null)
-  swaggerGeneratedUnknown(null),
-
-  @JsonValue('JSON')
-  json('JSON');
-
-  final String? value;
-
-  const WebhookDelivery(this.value);
-}
-
-enum WebhookResponse {
-  @JsonValue(null)
-  swaggerGeneratedUnknown(null),
-
-  @JsonValue('TRANSACTIONS')
-  transactions('TRANSACTIONS'),
-  @JsonValue('ACCOUNTS')
-  accounts('ACCOUNTS'),
-  @JsonValue('NONE')
-  none('NONE');
-
-  final String? value;
-
-  const WebhookResponse(this.value);
-}
-
-enum WebhookTrigger {
-  @JsonValue(null)
-  swaggerGeneratedUnknown(null),
-
-  @JsonValue('STORE_TRANSACTION')
-  storeTransaction('STORE_TRANSACTION'),
-  @JsonValue('UPDATE_TRANSACTION')
-  updateTransaction('UPDATE_TRANSACTION'),
-  @JsonValue('DESTROY_TRANSACTION')
-  destroyTransaction('DESTROY_TRANSACTION');
-
-  final String? value;
-
-  const WebhookTrigger(this.value);
-}
-
 enum AccountTypeFilter {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
@@ -837,4 +849,44 @@ enum TransactionTypeProperty {
   final String? value;
 
   const TransactionTypeProperty(this.value);
+}
+
+enum V1ChartBalanceBalanceGetPeriod {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('1D')
+  value_1d('1D'),
+  @JsonValue('1W')
+  value_1w('1W'),
+  @JsonValue('1M')
+  value_1m('1M'),
+  @JsonValue('3M')
+  value_3m('3M'),
+  @JsonValue('6M')
+  value_6m('6M'),
+  @JsonValue('1Y')
+  value_1y('1Y');
+
+  final String? value;
+
+  const V1ChartBalanceBalanceGetPeriod(this.value);
+}
+
+enum V1ChartBalanceBalanceGetPreselected {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('empty')
+  empty('empty'),
+  @JsonValue('all')
+  all('all'),
+  @JsonValue('assets')
+  assets('assets'),
+  @JsonValue('liabilities')
+  liabilities('liabilities');
+
+  final String? value;
+
+  const V1ChartBalanceBalanceGetPreselected(this.value);
 }

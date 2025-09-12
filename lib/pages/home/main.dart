@@ -107,6 +107,7 @@ class _HomeMainState extends State<HomeMain>
             'en_US',
           ).format(now.copyWith(day: now.day - 6)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+          period: V1ChartBalanceBalanceGetPeriod.value_1d,
         );
     apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
 

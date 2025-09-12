@@ -332,6 +332,30 @@ final class _$FireflyIii extends FireflyIii {
   }
 
   @override
+  Future<Response<List<AutocompleteBill>>> _v1AutocompleteSubscriptionsGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    final Uri $url = Uri.parse('/v1/autocomplete/subscriptions');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'query': query,
+      'limit': limit,
+    };
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+      headers: $headers,
+    );
+    return client.send<List<AutocompleteBill>, AutocompleteBill>($request);
+  }
+
+  @override
   Future<Response<List<AutocompleteTag>>> _v1AutocompleteTagsGet({
     String? xTraceId,
     String? query,
@@ -467,12 +491,17 @@ final class _$FireflyIii extends FireflyIii {
     String? xTraceId,
     required String? start,
     required String? end,
+    String? period,
+    String? preselected,
+    List<int>? accounts,
   }) {
     final Uri $url = Uri.parse('/v1/chart/balance/balance');
     final Map<String, dynamic> $params = <String, dynamic>{
       'start': start,
       'end': end,
-      'period': '1D',
+      'period': period,
+      'preselected': preselected,
+      'accounts[]': accounts,
     };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
@@ -1506,6 +1535,8 @@ final class _$FireflyIii extends FireflyIii {
     String? xTraceId,
     int? limit,
     int? page,
+    String? start,
+    String? end,
     String? date,
     String? type,
   }) {
@@ -1513,6 +1544,8 @@ final class _$FireflyIii extends FireflyIii {
     final Map<String, dynamic> $params = <String, dynamic>{
       'limit': limit,
       'page': page,
+      'start': start,
+      'end': end,
       'date': date,
       'type': type,
     };
@@ -1552,11 +1585,17 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<AccountSingle>> _v1AccountsIdGet({
     String? xTraceId,
+    String? start,
+    String? end,
     required String? id,
     String? date,
   }) {
     final Uri $url = Uri.parse('/v1/accounts/${id}');
-    final Map<String, dynamic> $params = <String, dynamic>{'date': date};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'start': start,
+      'end': end,
+      'date': date,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -3433,6 +3472,27 @@ final class _$FireflyIii extends FireflyIii {
       headers: $headers,
     );
     return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<TransactionArray>> _v1RecurrencesIdTriggerPost({
+    String? xTraceId,
+    required String? id,
+    required String? date,
+  }) {
+    final Uri $url = Uri.parse('/v1/recurrences/${id}/trigger');
+    final Map<String, dynamic> $params = <String, dynamic>{'date': date};
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+      headers: $headers,
+    );
+    return client.send<TransactionArray, TransactionArray>($request);
   }
 
   @override

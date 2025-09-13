@@ -203,18 +203,18 @@ class SDe extends S {
   String get billsUngrouped => 'Keine Gruppe';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'Nur aktive anzeigen';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'Zeigt nur aktive Abonnements an.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'Nur erwartete anzeigen';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'Zeigt nur Abonnements an, die diesen Monat erwartet werden (oder bereits bezahlt worden sind).';
 
   @override
   String get categoryDeleteConfirm =>
@@ -625,7 +625,7 @@ class SDe extends S {
   String get navigationMain => 'Übersicht';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => 'Einstellungen';
 
   @override
   String get no => 'Nein';

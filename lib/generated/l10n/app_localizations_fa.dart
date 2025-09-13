@@ -200,6 +200,20 @@ class SFa extends S {
   String get billsUngrouped => 'گروه‌بندی نشده';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'آیا مطمئن هستید که می‌خواهید این دسته را حذف کنید؟ تراکنش ها حذف نمی شوند، اما دیگر دسته بندی نخواهند داشت.\n';
 
@@ -492,6 +506,9 @@ class SFa extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Saved so far:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'مقدار هدف: $amount\n';
   }
@@ -605,7 +622,7 @@ class SFa extends S {
   String get navigationMain => 'داشبورد اصلی\n';
 
   @override
-  String get navigationSettings => 'تنظیمات';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'نه';

@@ -1202,6 +1202,7 @@ class AutocompleteAccount {
     required this.id,
     required this.name,
     required this.nameWithBalance,
+    this.active,
     required this.type,
     required this.currencyId,
     required this.currencyName,
@@ -1227,6 +1228,8 @@ class AutocompleteAccount {
   final String name;
   @JsonKey(name: 'name_with_balance', includeIfNull: false)
   final String nameWithBalance;
+  @JsonKey(name: 'active', includeIfNull: false)
+  final bool? active;
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'currency_id', includeIfNull: false)
@@ -1260,6 +1263,7 @@ extension $AutocompleteAccountExtension on AutocompleteAccount {
     String? id,
     String? name,
     String? nameWithBalance,
+    bool? active,
     String? type,
     String? currencyId,
     String? currencyName,
@@ -1276,6 +1280,7 @@ extension $AutocompleteAccountExtension on AutocompleteAccount {
       id: id ?? this.id,
       name: name ?? this.name,
       nameWithBalance: nameWithBalance ?? this.nameWithBalance,
+      active: active ?? this.active,
       type: type ?? this.type,
       currencyId: currencyId ?? this.currencyId,
       currencyName: currencyName ?? this.currencyName,
@@ -1297,6 +1302,7 @@ extension $AutocompleteAccountExtension on AutocompleteAccount {
     Wrapped<String>? id,
     Wrapped<String>? name,
     Wrapped<String>? nameWithBalance,
+    Wrapped<bool?>? active,
     Wrapped<String>? type,
     Wrapped<String>? currencyId,
     Wrapped<String>? currencyName,
@@ -1315,6 +1321,7 @@ extension $AutocompleteAccountExtension on AutocompleteAccount {
       nameWithBalance: (nameWithBalance != null
           ? nameWithBalance.value
           : this.nameWithBalance),
+      active: (active != null ? active.value : this.active),
       type: (type != null ? type.value : this.type),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
       currencyName: (currencyName != null
@@ -1394,7 +1401,7 @@ extension $AutocompleteBillExtension on AutocompleteBill {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteBudget {
-  const AutocompleteBudget({required this.id, required this.name});
+  const AutocompleteBudget({required this.id, required this.name, this.active});
 
   factory AutocompleteBudget.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteBudgetFromJson(json);
@@ -1406,6 +1413,8 @@ class AutocompleteBudget {
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
+  @JsonKey(name: 'active', includeIfNull: false)
+  final bool? active;
   static const fromJsonFactory = _$AutocompleteBudgetFromJson;
 
   @override
@@ -1413,17 +1422,23 @@ class AutocompleteBudget {
 }
 
 extension $AutocompleteBudgetExtension on AutocompleteBudget {
-  AutocompleteBudget copyWith({String? id, String? name}) {
-    return AutocompleteBudget(id: id ?? this.id, name: name ?? this.name);
+  AutocompleteBudget copyWith({String? id, String? name, bool? active}) {
+    return AutocompleteBudget(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      active: active ?? this.active,
+    );
   }
 
   AutocompleteBudget copyWithWrapped({
     Wrapped<String>? id,
     Wrapped<String>? name,
+    Wrapped<bool?>? active,
   }) {
     return AutocompleteBudget(
       id: (id != null ? id.value : this.id),
       name: (name != null ? name.value : this.name),
+      active: (active != null ? active.value : this.active),
     );
   }
 }
@@ -1868,6 +1883,7 @@ class AutocompleteRecurrence {
     required this.id,
     required this.name,
     this.description,
+    this.active,
   });
 
   factory AutocompleteRecurrence.fromJson(Map<String, dynamic> json) =>
@@ -1882,6 +1898,8 @@ class AutocompleteRecurrence {
   final String name;
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
+  @JsonKey(name: 'active', includeIfNull: false)
+  final bool? active;
   static const fromJsonFactory = _$AutocompleteRecurrenceFromJson;
 
   @override
@@ -1893,11 +1911,13 @@ extension $AutocompleteRecurrenceExtension on AutocompleteRecurrence {
     String? id,
     String? name,
     String? description,
+    bool? active,
   }) {
     return AutocompleteRecurrence(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
+      active: active ?? this.active,
     );
   }
 
@@ -1905,11 +1925,13 @@ extension $AutocompleteRecurrenceExtension on AutocompleteRecurrence {
     Wrapped<String>? id,
     Wrapped<String>? name,
     Wrapped<String?>? description,
+    Wrapped<bool?>? active,
   }) {
     return AutocompleteRecurrence(
       id: (id != null ? id.value : this.id),
       name: (name != null ? name.value : this.name),
       description: (description != null ? description.value : this.description),
+      active: (active != null ? active.value : this.active),
     );
   }
 }
@@ -1920,6 +1942,7 @@ class AutocompleteRule {
     required this.id,
     required this.name,
     this.description,
+    this.active,
   });
 
   factory AutocompleteRule.fromJson(Map<String, dynamic> json) =>
@@ -1934,6 +1957,8 @@ class AutocompleteRule {
   final String name;
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
+  @JsonKey(name: 'active', includeIfNull: false)
+  final bool? active;
   static const fromJsonFactory = _$AutocompleteRuleFromJson;
 
   @override
@@ -1941,11 +1966,17 @@ class AutocompleteRule {
 }
 
 extension $AutocompleteRuleExtension on AutocompleteRule {
-  AutocompleteRule copyWith({String? id, String? name, String? description}) {
+  AutocompleteRule copyWith({
+    String? id,
+    String? name,
+    String? description,
+    bool? active,
+  }) {
     return AutocompleteRule(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
+      active: active ?? this.active,
     );
   }
 
@@ -1953,11 +1984,13 @@ extension $AutocompleteRuleExtension on AutocompleteRule {
     Wrapped<String>? id,
     Wrapped<String>? name,
     Wrapped<String?>? description,
+    Wrapped<bool?>? active,
   }) {
     return AutocompleteRule(
       id: (id != null ? id.value : this.id),
       name: (name != null ? name.value : this.name),
       description: (description != null ? description.value : this.description),
+      active: (active != null ? active.value : this.active),
     );
   }
 }
@@ -1968,6 +2001,7 @@ class AutocompleteRuleGroup {
     required this.id,
     required this.name,
     this.description,
+    this.active,
   });
 
   factory AutocompleteRuleGroup.fromJson(Map<String, dynamic> json) =>
@@ -1982,6 +2016,8 @@ class AutocompleteRuleGroup {
   final String name;
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
+  @JsonKey(name: 'active', includeIfNull: false)
+  final bool? active;
   static const fromJsonFactory = _$AutocompleteRuleGroupFromJson;
 
   @override
@@ -1993,11 +2029,13 @@ extension $AutocompleteRuleGroupExtension on AutocompleteRuleGroup {
     String? id,
     String? name,
     String? description,
+    bool? active,
   }) {
     return AutocompleteRuleGroup(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
+      active: active ?? this.active,
     );
   }
 
@@ -2005,11 +2043,13 @@ extension $AutocompleteRuleGroupExtension on AutocompleteRuleGroup {
     Wrapped<String>? id,
     Wrapped<String>? name,
     Wrapped<String?>? description,
+    Wrapped<bool?>? active,
   }) {
     return AutocompleteRuleGroup(
       id: (id != null ? id.value : this.id),
       name: (name != null ? name.value : this.name),
       description: (description != null ? description.value : this.description),
+      active: (active != null ? active.value : this.active),
     );
   }
 }
@@ -4045,7 +4085,7 @@ class WebhookRead {
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'attributes', includeIfNull: false)
-  final Webhook attributes;
+  final WebhookProperties attributes;
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$WebhookReadFromJson;
@@ -4058,7 +4098,7 @@ extension $WebhookReadExtension on WebhookRead {
   WebhookRead copyWith({
     String? type,
     String? id,
-    Webhook? attributes,
+    WebhookProperties? attributes,
     ObjectLink? links,
   }) {
     return WebhookRead(
@@ -4072,7 +4112,7 @@ extension $WebhookReadExtension on WebhookRead {
   WebhookRead copyWithWrapped({
     Wrapped<String>? type,
     Wrapped<String>? id,
-    Wrapped<Webhook>? attributes,
+    Wrapped<WebhookProperties>? attributes,
     Wrapped<ObjectLink>? links,
   }) {
     return WebhookRead(
@@ -4138,6 +4178,8 @@ class AccountProperties {
     this.primaryCurrencyDecimalPlaces,
     this.currentBalance,
     this.pcCurrentBalance,
+    this.balanceDifference,
+    this.pcBalanceDifference,
     this.openingBalance,
     this.pcOpeningBalance,
     this.virtualBalance,
@@ -4225,6 +4267,10 @@ class AccountProperties {
   final String? currentBalance;
   @JsonKey(name: 'pc_current_balance', includeIfNull: false)
   final String? pcCurrentBalance;
+  @JsonKey(name: 'balance_difference', includeIfNull: false)
+  final String? balanceDifference;
+  @JsonKey(name: 'pc_balance_difference', includeIfNull: false)
+  final String? pcBalanceDifference;
   @JsonKey(name: 'opening_balance', includeIfNull: false)
   final String? openingBalance;
   @JsonKey(name: 'pc_opening_balance', includeIfNull: false)
@@ -4322,6 +4368,8 @@ extension $AccountPropertiesExtension on AccountProperties {
     int? primaryCurrencyDecimalPlaces,
     String? currentBalance,
     String? pcCurrentBalance,
+    String? balanceDifference,
+    String? pcBalanceDifference,
     String? openingBalance,
     String? pcOpeningBalance,
     String? virtualBalance,
@@ -4374,6 +4422,8 @@ extension $AccountPropertiesExtension on AccountProperties {
           primaryCurrencyDecimalPlaces ?? this.primaryCurrencyDecimalPlaces,
       currentBalance: currentBalance ?? this.currentBalance,
       pcCurrentBalance: pcCurrentBalance ?? this.pcCurrentBalance,
+      balanceDifference: balanceDifference ?? this.balanceDifference,
+      pcBalanceDifference: pcBalanceDifference ?? this.pcBalanceDifference,
       openingBalance: openingBalance ?? this.openingBalance,
       pcOpeningBalance: pcOpeningBalance ?? this.pcOpeningBalance,
       virtualBalance: virtualBalance ?? this.virtualBalance,
@@ -4424,6 +4474,8 @@ extension $AccountPropertiesExtension on AccountProperties {
     Wrapped<int?>? primaryCurrencyDecimalPlaces,
     Wrapped<String?>? currentBalance,
     Wrapped<String?>? pcCurrentBalance,
+    Wrapped<String?>? balanceDifference,
+    Wrapped<String?>? pcBalanceDifference,
     Wrapped<String?>? openingBalance,
     Wrapped<String?>? pcOpeningBalance,
     Wrapped<String?>? virtualBalance,
@@ -4502,6 +4554,12 @@ extension $AccountPropertiesExtension on AccountProperties {
       pcCurrentBalance: (pcCurrentBalance != null
           ? pcCurrentBalance.value
           : this.pcCurrentBalance),
+      balanceDifference: (balanceDifference != null
+          ? balanceDifference.value
+          : this.balanceDifference),
+      pcBalanceDifference: (pcBalanceDifference != null
+          ? pcBalanceDifference.value
+          : this.pcBalanceDifference),
       openingBalance: (openingBalance != null
           ? openingBalance.value
           : this.openingBalance),
@@ -9032,7 +9090,7 @@ class PiggyBankStore {
     this.accounts,
     this.targetAmount,
     this.currentAmount,
-    this.startDate,
+    required this.startDate,
     this.targetDate,
     this.order,
     this.active,
@@ -9060,7 +9118,7 @@ class PiggyBankStore {
   @JsonKey(name: 'current_amount', includeIfNull: false)
   final String? currentAmount;
   @JsonKey(name: 'start_date', includeIfNull: false, toJson: _dateToJson)
-  final DateTime? startDate;
+  final DateTime startDate;
   @JsonKey(name: 'target_date', includeIfNull: false, toJson: _dateToJson)
   final DateTime? targetDate;
   @JsonKey(name: 'order', includeIfNull: false)
@@ -9113,7 +9171,7 @@ extension $PiggyBankStoreExtension on PiggyBankStore {
     Wrapped<List<PiggyBankAccountStore>?>? accounts,
     Wrapped<String?>? targetAmount,
     Wrapped<String?>? currentAmount,
-    Wrapped<DateTime?>? startDate,
+    Wrapped<DateTime>? startDate,
     Wrapped<DateTime?>? targetDate,
     Wrapped<int?>? order,
     Wrapped<bool?>? active,
@@ -14664,25 +14722,27 @@ extension $UserGroupUpdateExtension on UserGroupUpdate {
   }
 }
 
+typedef WebhookDeliveryArray = List<String>;
+
 @JsonSerializable(explicitToJson: true)
-class Webhook {
-  const Webhook({
+class WebhookProperties {
+  const WebhookProperties({
     this.createdAt,
     this.updatedAt,
     this.active,
     required this.title,
     this.secret,
-    required this.trigger,
-    required this.response,
-    required this.delivery,
+    this.triggers,
+    this.responses,
+    this.deliveries,
     required this.url,
   });
 
-  factory Webhook.fromJson(Map<String, dynamic> json) =>
-      _$WebhookFromJson(json);
+  factory WebhookProperties.fromJson(Map<String, dynamic> json) =>
+      _$WebhookPropertiesFromJson(json);
 
-  static const toJsonFactory = _$WebhookToJson;
-  Map<String, dynamic> toJson() => _$WebhookToJson(this);
+  static const toJsonFactory = _$WebhookPropertiesToJson;
+  Map<String, dynamic> toJson() => _$WebhookPropertiesToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -14694,93 +14754,80 @@ class Webhook {
   final String title;
   @JsonKey(name: 'secret', includeIfNull: false)
   final String? secret;
-  @JsonKey(
-    name: 'trigger',
-    includeIfNull: false,
-    toJson: webhookTriggerToJson,
-    fromJson: webhookTriggerFromJson,
-  )
-  final enums.WebhookTrigger trigger;
-  @JsonKey(
-    name: 'response',
-    includeIfNull: false,
-    toJson: webhookResponseToJson,
-    fromJson: webhookResponseFromJson,
-  )
-  final enums.WebhookResponse response;
-  @JsonKey(
-    name: 'delivery',
-    includeIfNull: false,
-    toJson: webhookDeliveryToJson,
-    fromJson: webhookDeliveryFromJson,
-  )
-  final enums.WebhookDelivery delivery;
+  @JsonKey(name: 'triggers', includeIfNull: false)
+  final List<String>? triggers;
+  @JsonKey(name: 'responses', includeIfNull: false)
+  final List<String>? responses;
+  @JsonKey(name: 'deliveries', includeIfNull: false)
+  final List<String>? deliveries;
   @JsonKey(name: 'url', includeIfNull: false)
   final String url;
-  static const fromJsonFactory = _$WebhookFromJson;
+  static const fromJsonFactory = _$WebhookPropertiesFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $WebhookExtension on Webhook {
-  Webhook copyWith({
+extension $WebhookPropertiesExtension on WebhookProperties {
+  WebhookProperties copyWith({
     DateTime? createdAt,
     DateTime? updatedAt,
     bool? active,
     String? title,
     String? secret,
-    enums.WebhookTrigger? trigger,
-    enums.WebhookResponse? response,
-    enums.WebhookDelivery? delivery,
+    List<String>? triggers,
+    List<String>? responses,
+    List<String>? deliveries,
     String? url,
   }) {
-    return Webhook(
+    return WebhookProperties(
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       active: active ?? this.active,
       title: title ?? this.title,
       secret: secret ?? this.secret,
-      trigger: trigger ?? this.trigger,
-      response: response ?? this.response,
-      delivery: delivery ?? this.delivery,
+      triggers: triggers ?? this.triggers,
+      responses: responses ?? this.responses,
+      deliveries: deliveries ?? this.deliveries,
       url: url ?? this.url,
     );
   }
 
-  Webhook copyWithWrapped({
+  WebhookProperties copyWithWrapped({
     Wrapped<DateTime?>? createdAt,
     Wrapped<DateTime?>? updatedAt,
     Wrapped<bool?>? active,
     Wrapped<String>? title,
     Wrapped<String?>? secret,
-    Wrapped<enums.WebhookTrigger>? trigger,
-    Wrapped<enums.WebhookResponse>? response,
-    Wrapped<enums.WebhookDelivery>? delivery,
+    Wrapped<List<String>?>? triggers,
+    Wrapped<List<String>?>? responses,
+    Wrapped<List<String>?>? deliveries,
     Wrapped<String>? url,
   }) {
-    return Webhook(
+    return WebhookProperties(
       createdAt: (createdAt != null ? createdAt.value : this.createdAt),
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
       active: (active != null ? active.value : this.active),
       title: (title != null ? title.value : this.title),
       secret: (secret != null ? secret.value : this.secret),
-      trigger: (trigger != null ? trigger.value : this.trigger),
-      response: (response != null ? response.value : this.response),
-      delivery: (delivery != null ? delivery.value : this.delivery),
+      triggers: (triggers != null ? triggers.value : this.triggers),
+      responses: (responses != null ? responses.value : this.responses),
+      deliveries: (deliveries != null ? deliveries.value : this.deliveries),
       url: (url != null ? url.value : this.url),
     );
   }
 }
+
+typedef WebhookResponseArray = List<String>;
 
 @JsonSerializable(explicitToJson: true)
 class WebhookStore {
   const WebhookStore({
     this.active,
     required this.title,
-    required this.trigger,
-    required this.response,
-    required this.delivery,
+    this.triggers,
+    this.responses,
+    this.deliveries,
     required this.url,
   });
 
@@ -14794,27 +14841,12 @@ class WebhookStore {
   final bool? active;
   @JsonKey(name: 'title', includeIfNull: false)
   final String title;
-  @JsonKey(
-    name: 'trigger',
-    includeIfNull: false,
-    toJson: webhookTriggerToJson,
-    fromJson: webhookTriggerFromJson,
-  )
-  final enums.WebhookTrigger trigger;
-  @JsonKey(
-    name: 'response',
-    includeIfNull: false,
-    toJson: webhookResponseToJson,
-    fromJson: webhookResponseFromJson,
-  )
-  final enums.WebhookResponse response;
-  @JsonKey(
-    name: 'delivery',
-    includeIfNull: false,
-    toJson: webhookDeliveryToJson,
-    fromJson: webhookDeliveryFromJson,
-  )
-  final enums.WebhookDelivery delivery;
+  @JsonKey(name: 'triggers', includeIfNull: false)
+  final List<String>? triggers;
+  @JsonKey(name: 'responses', includeIfNull: false)
+  final List<String>? responses;
+  @JsonKey(name: 'deliveries', includeIfNull: false)
+  final List<String>? deliveries;
   @JsonKey(name: 'url', includeIfNull: false)
   final String url;
   static const fromJsonFactory = _$WebhookStoreFromJson;
@@ -14827,17 +14859,17 @@ extension $WebhookStoreExtension on WebhookStore {
   WebhookStore copyWith({
     bool? active,
     String? title,
-    enums.WebhookTrigger? trigger,
-    enums.WebhookResponse? response,
-    enums.WebhookDelivery? delivery,
+    List<String>? triggers,
+    List<String>? responses,
+    List<String>? deliveries,
     String? url,
   }) {
     return WebhookStore(
       active: active ?? this.active,
       title: title ?? this.title,
-      trigger: trigger ?? this.trigger,
-      response: response ?? this.response,
-      delivery: delivery ?? this.delivery,
+      triggers: triggers ?? this.triggers,
+      responses: responses ?? this.responses,
+      deliveries: deliveries ?? this.deliveries,
       url: url ?? this.url,
     );
   }
@@ -14845,21 +14877,23 @@ extension $WebhookStoreExtension on WebhookStore {
   WebhookStore copyWithWrapped({
     Wrapped<bool?>? active,
     Wrapped<String>? title,
-    Wrapped<enums.WebhookTrigger>? trigger,
-    Wrapped<enums.WebhookResponse>? response,
-    Wrapped<enums.WebhookDelivery>? delivery,
+    Wrapped<List<String>?>? triggers,
+    Wrapped<List<String>?>? responses,
+    Wrapped<List<String>?>? deliveries,
     Wrapped<String>? url,
   }) {
     return WebhookStore(
       active: (active != null ? active.value : this.active),
       title: (title != null ? title.value : this.title),
-      trigger: (trigger != null ? trigger.value : this.trigger),
-      response: (response != null ? response.value : this.response),
-      delivery: (delivery != null ? delivery.value : this.delivery),
+      triggers: (triggers != null ? triggers.value : this.triggers),
+      responses: (responses != null ? responses.value : this.responses),
+      deliveries: (deliveries != null ? deliveries.value : this.deliveries),
       url: (url != null ? url.value : this.url),
     );
   }
 }
+
+typedef WebhookTriggerArray = List<String>;
 
 @JsonSerializable(explicitToJson: true)
 class WebhookUpdate {
@@ -14867,9 +14901,9 @@ class WebhookUpdate {
     this.active,
     this.title,
     this.secret,
-    this.trigger,
-    this.response,
-    this.delivery,
+    this.triggers,
+    this.responses,
+    this.deliveries,
     this.url,
   });
 
@@ -14885,27 +14919,12 @@ class WebhookUpdate {
   final String? title;
   @JsonKey(name: 'secret', includeIfNull: false)
   final String? secret;
-  @JsonKey(
-    name: 'trigger',
-    includeIfNull: false,
-    toJson: webhookTriggerNullableToJson,
-    fromJson: webhookTriggerNullableFromJson,
-  )
-  final enums.WebhookTrigger? trigger;
-  @JsonKey(
-    name: 'response',
-    includeIfNull: false,
-    toJson: webhookResponseNullableToJson,
-    fromJson: webhookResponseNullableFromJson,
-  )
-  final enums.WebhookResponse? response;
-  @JsonKey(
-    name: 'delivery',
-    includeIfNull: false,
-    toJson: webhookDeliveryNullableToJson,
-    fromJson: webhookDeliveryNullableFromJson,
-  )
-  final enums.WebhookDelivery? delivery;
+  @JsonKey(name: 'triggers', includeIfNull: false)
+  final List<String>? triggers;
+  @JsonKey(name: 'responses', includeIfNull: false)
+  final List<String>? responses;
+  @JsonKey(name: 'deliveries', includeIfNull: false)
+  final List<String>? deliveries;
   @JsonKey(name: 'url', includeIfNull: false)
   final String? url;
   static const fromJsonFactory = _$WebhookUpdateFromJson;
@@ -14919,18 +14938,18 @@ extension $WebhookUpdateExtension on WebhookUpdate {
     bool? active,
     String? title,
     String? secret,
-    enums.WebhookTrigger? trigger,
-    enums.WebhookResponse? response,
-    enums.WebhookDelivery? delivery,
+    List<String>? triggers,
+    List<String>? responses,
+    List<String>? deliveries,
     String? url,
   }) {
     return WebhookUpdate(
       active: active ?? this.active,
       title: title ?? this.title,
       secret: secret ?? this.secret,
-      trigger: trigger ?? this.trigger,
-      response: response ?? this.response,
-      delivery: delivery ?? this.delivery,
+      triggers: triggers ?? this.triggers,
+      responses: responses ?? this.responses,
+      deliveries: deliveries ?? this.deliveries,
       url: url ?? this.url,
     );
   }
@@ -14939,18 +14958,18 @@ extension $WebhookUpdateExtension on WebhookUpdate {
     Wrapped<bool?>? active,
     Wrapped<String?>? title,
     Wrapped<String?>? secret,
-    Wrapped<enums.WebhookTrigger?>? trigger,
-    Wrapped<enums.WebhookResponse?>? response,
-    Wrapped<enums.WebhookDelivery?>? delivery,
+    Wrapped<List<String>?>? triggers,
+    Wrapped<List<String>?>? responses,
+    Wrapped<List<String>?>? deliveries,
     Wrapped<String?>? url,
   }) {
     return WebhookUpdate(
       active: (active != null ? active.value : this.active),
       title: (title != null ? title.value : this.title),
       secret: (secret != null ? secret.value : this.secret),
-      trigger: (trigger != null ? trigger.value : this.trigger),
-      response: (response != null ? response.value : this.response),
-      delivery: (delivery != null ? delivery.value : this.delivery),
+      triggers: (triggers != null ? triggers.value : this.triggers),
+      responses: (responses != null ? responses.value : this.responses),
+      deliveries: (deliveries != null ? deliveries.value : this.deliveries),
       url: (url != null ? url.value : this.url),
     );
   }
@@ -16725,6 +16744,228 @@ List<enums.UserGroupReadRole>? userGroupReadRoleNullableListFromJson(
       .toList();
 }
 
+String? webhookDeliveryNullableToJson(enums.WebhookDelivery? webhookDelivery) {
+  return webhookDelivery?.value;
+}
+
+String? webhookDeliveryToJson(enums.WebhookDelivery webhookDelivery) {
+  return webhookDelivery.value;
+}
+
+enums.WebhookDelivery webhookDeliveryFromJson(
+  Object? webhookDelivery, [
+  enums.WebhookDelivery? defaultValue,
+]) {
+  return enums.WebhookDelivery.values.firstWhereOrNull(
+        (e) => e.value == webhookDelivery,
+      ) ??
+      defaultValue ??
+      enums.WebhookDelivery.swaggerGeneratedUnknown;
+}
+
+enums.WebhookDelivery? webhookDeliveryNullableFromJson(
+  Object? webhookDelivery, [
+  enums.WebhookDelivery? defaultValue,
+]) {
+  if (webhookDelivery == null) {
+    return null;
+  }
+  return enums.WebhookDelivery.values.firstWhereOrNull(
+        (e) => e.value == webhookDelivery,
+      ) ??
+      defaultValue;
+}
+
+String webhookDeliveryExplodedListToJson(
+  List<enums.WebhookDelivery>? webhookDelivery,
+) {
+  return webhookDelivery?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> webhookDeliveryListToJson(
+  List<enums.WebhookDelivery>? webhookDelivery,
+) {
+  if (webhookDelivery == null) {
+    return [];
+  }
+
+  return webhookDelivery.map((e) => e.value!).toList();
+}
+
+List<enums.WebhookDelivery> webhookDeliveryListFromJson(
+  List? webhookDelivery, [
+  List<enums.WebhookDelivery>? defaultValue,
+]) {
+  if (webhookDelivery == null) {
+    return defaultValue ?? [];
+  }
+
+  return webhookDelivery
+      .map((e) => webhookDeliveryFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.WebhookDelivery>? webhookDeliveryNullableListFromJson(
+  List? webhookDelivery, [
+  List<enums.WebhookDelivery>? defaultValue,
+]) {
+  if (webhookDelivery == null) {
+    return defaultValue;
+  }
+
+  return webhookDelivery
+      .map((e) => webhookDeliveryFromJson(e.toString()))
+      .toList();
+}
+
+String? webhookResponseNullableToJson(enums.WebhookResponse? webhookResponse) {
+  return webhookResponse?.value;
+}
+
+String? webhookResponseToJson(enums.WebhookResponse webhookResponse) {
+  return webhookResponse.value;
+}
+
+enums.WebhookResponse webhookResponseFromJson(
+  Object? webhookResponse, [
+  enums.WebhookResponse? defaultValue,
+]) {
+  return enums.WebhookResponse.values.firstWhereOrNull(
+        (e) => e.value == webhookResponse,
+      ) ??
+      defaultValue ??
+      enums.WebhookResponse.swaggerGeneratedUnknown;
+}
+
+enums.WebhookResponse? webhookResponseNullableFromJson(
+  Object? webhookResponse, [
+  enums.WebhookResponse? defaultValue,
+]) {
+  if (webhookResponse == null) {
+    return null;
+  }
+  return enums.WebhookResponse.values.firstWhereOrNull(
+        (e) => e.value == webhookResponse,
+      ) ??
+      defaultValue;
+}
+
+String webhookResponseExplodedListToJson(
+  List<enums.WebhookResponse>? webhookResponse,
+) {
+  return webhookResponse?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> webhookResponseListToJson(
+  List<enums.WebhookResponse>? webhookResponse,
+) {
+  if (webhookResponse == null) {
+    return [];
+  }
+
+  return webhookResponse.map((e) => e.value!).toList();
+}
+
+List<enums.WebhookResponse> webhookResponseListFromJson(
+  List? webhookResponse, [
+  List<enums.WebhookResponse>? defaultValue,
+]) {
+  if (webhookResponse == null) {
+    return defaultValue ?? [];
+  }
+
+  return webhookResponse
+      .map((e) => webhookResponseFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.WebhookResponse>? webhookResponseNullableListFromJson(
+  List? webhookResponse, [
+  List<enums.WebhookResponse>? defaultValue,
+]) {
+  if (webhookResponse == null) {
+    return defaultValue;
+  }
+
+  return webhookResponse
+      .map((e) => webhookResponseFromJson(e.toString()))
+      .toList();
+}
+
+String? webhookTriggerNullableToJson(enums.WebhookTrigger? webhookTrigger) {
+  return webhookTrigger?.value;
+}
+
+String? webhookTriggerToJson(enums.WebhookTrigger webhookTrigger) {
+  return webhookTrigger.value;
+}
+
+enums.WebhookTrigger webhookTriggerFromJson(
+  Object? webhookTrigger, [
+  enums.WebhookTrigger? defaultValue,
+]) {
+  return enums.WebhookTrigger.values.firstWhereOrNull(
+        (e) => e.value == webhookTrigger,
+      ) ??
+      defaultValue ??
+      enums.WebhookTrigger.swaggerGeneratedUnknown;
+}
+
+enums.WebhookTrigger? webhookTriggerNullableFromJson(
+  Object? webhookTrigger, [
+  enums.WebhookTrigger? defaultValue,
+]) {
+  if (webhookTrigger == null) {
+    return null;
+  }
+  return enums.WebhookTrigger.values.firstWhereOrNull(
+        (e) => e.value == webhookTrigger,
+      ) ??
+      defaultValue;
+}
+
+String webhookTriggerExplodedListToJson(
+  List<enums.WebhookTrigger>? webhookTrigger,
+) {
+  return webhookTrigger?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> webhookTriggerListToJson(
+  List<enums.WebhookTrigger>? webhookTrigger,
+) {
+  if (webhookTrigger == null) {
+    return [];
+  }
+
+  return webhookTrigger.map((e) => e.value!).toList();
+}
+
+List<enums.WebhookTrigger> webhookTriggerListFromJson(
+  List? webhookTrigger, [
+  List<enums.WebhookTrigger>? defaultValue,
+]) {
+  if (webhookTrigger == null) {
+    return defaultValue ?? [];
+  }
+
+  return webhookTrigger
+      .map((e) => webhookTriggerFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.WebhookTrigger>? webhookTriggerNullableListFromJson(
+  List? webhookTrigger, [
+  List<enums.WebhookTrigger>? defaultValue,
+]) {
+  if (webhookTrigger == null) {
+    return defaultValue;
+  }
+
+  return webhookTrigger
+      .map((e) => webhookTriggerFromJson(e.toString()))
+      .toList();
+}
+
 String? attachableTypeNullableToJson(enums.AttachableType? attachableType) {
   return attachableType?.value;
 }
@@ -17563,228 +17804,6 @@ List<enums.UserRoleProperty>? userRolePropertyNullableListFromJson(
 
   return userRoleProperty
       .map((e) => userRolePropertyFromJson(e.toString()))
-      .toList();
-}
-
-String? webhookDeliveryNullableToJson(enums.WebhookDelivery? webhookDelivery) {
-  return webhookDelivery?.value;
-}
-
-String? webhookDeliveryToJson(enums.WebhookDelivery webhookDelivery) {
-  return webhookDelivery.value;
-}
-
-enums.WebhookDelivery webhookDeliveryFromJson(
-  Object? webhookDelivery, [
-  enums.WebhookDelivery? defaultValue,
-]) {
-  return enums.WebhookDelivery.values.firstWhereOrNull(
-        (e) => e.value == webhookDelivery,
-      ) ??
-      defaultValue ??
-      enums.WebhookDelivery.swaggerGeneratedUnknown;
-}
-
-enums.WebhookDelivery? webhookDeliveryNullableFromJson(
-  Object? webhookDelivery, [
-  enums.WebhookDelivery? defaultValue,
-]) {
-  if (webhookDelivery == null) {
-    return null;
-  }
-  return enums.WebhookDelivery.values.firstWhereOrNull(
-        (e) => e.value == webhookDelivery,
-      ) ??
-      defaultValue;
-}
-
-String webhookDeliveryExplodedListToJson(
-  List<enums.WebhookDelivery>? webhookDelivery,
-) {
-  return webhookDelivery?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> webhookDeliveryListToJson(
-  List<enums.WebhookDelivery>? webhookDelivery,
-) {
-  if (webhookDelivery == null) {
-    return [];
-  }
-
-  return webhookDelivery.map((e) => e.value!).toList();
-}
-
-List<enums.WebhookDelivery> webhookDeliveryListFromJson(
-  List? webhookDelivery, [
-  List<enums.WebhookDelivery>? defaultValue,
-]) {
-  if (webhookDelivery == null) {
-    return defaultValue ?? [];
-  }
-
-  return webhookDelivery
-      .map((e) => webhookDeliveryFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.WebhookDelivery>? webhookDeliveryNullableListFromJson(
-  List? webhookDelivery, [
-  List<enums.WebhookDelivery>? defaultValue,
-]) {
-  if (webhookDelivery == null) {
-    return defaultValue;
-  }
-
-  return webhookDelivery
-      .map((e) => webhookDeliveryFromJson(e.toString()))
-      .toList();
-}
-
-String? webhookResponseNullableToJson(enums.WebhookResponse? webhookResponse) {
-  return webhookResponse?.value;
-}
-
-String? webhookResponseToJson(enums.WebhookResponse webhookResponse) {
-  return webhookResponse.value;
-}
-
-enums.WebhookResponse webhookResponseFromJson(
-  Object? webhookResponse, [
-  enums.WebhookResponse? defaultValue,
-]) {
-  return enums.WebhookResponse.values.firstWhereOrNull(
-        (e) => e.value == webhookResponse,
-      ) ??
-      defaultValue ??
-      enums.WebhookResponse.swaggerGeneratedUnknown;
-}
-
-enums.WebhookResponse? webhookResponseNullableFromJson(
-  Object? webhookResponse, [
-  enums.WebhookResponse? defaultValue,
-]) {
-  if (webhookResponse == null) {
-    return null;
-  }
-  return enums.WebhookResponse.values.firstWhereOrNull(
-        (e) => e.value == webhookResponse,
-      ) ??
-      defaultValue;
-}
-
-String webhookResponseExplodedListToJson(
-  List<enums.WebhookResponse>? webhookResponse,
-) {
-  return webhookResponse?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> webhookResponseListToJson(
-  List<enums.WebhookResponse>? webhookResponse,
-) {
-  if (webhookResponse == null) {
-    return [];
-  }
-
-  return webhookResponse.map((e) => e.value!).toList();
-}
-
-List<enums.WebhookResponse> webhookResponseListFromJson(
-  List? webhookResponse, [
-  List<enums.WebhookResponse>? defaultValue,
-]) {
-  if (webhookResponse == null) {
-    return defaultValue ?? [];
-  }
-
-  return webhookResponse
-      .map((e) => webhookResponseFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.WebhookResponse>? webhookResponseNullableListFromJson(
-  List? webhookResponse, [
-  List<enums.WebhookResponse>? defaultValue,
-]) {
-  if (webhookResponse == null) {
-    return defaultValue;
-  }
-
-  return webhookResponse
-      .map((e) => webhookResponseFromJson(e.toString()))
-      .toList();
-}
-
-String? webhookTriggerNullableToJson(enums.WebhookTrigger? webhookTrigger) {
-  return webhookTrigger?.value;
-}
-
-String? webhookTriggerToJson(enums.WebhookTrigger webhookTrigger) {
-  return webhookTrigger.value;
-}
-
-enums.WebhookTrigger webhookTriggerFromJson(
-  Object? webhookTrigger, [
-  enums.WebhookTrigger? defaultValue,
-]) {
-  return enums.WebhookTrigger.values.firstWhereOrNull(
-        (e) => e.value == webhookTrigger,
-      ) ??
-      defaultValue ??
-      enums.WebhookTrigger.swaggerGeneratedUnknown;
-}
-
-enums.WebhookTrigger? webhookTriggerNullableFromJson(
-  Object? webhookTrigger, [
-  enums.WebhookTrigger? defaultValue,
-]) {
-  if (webhookTrigger == null) {
-    return null;
-  }
-  return enums.WebhookTrigger.values.firstWhereOrNull(
-        (e) => e.value == webhookTrigger,
-      ) ??
-      defaultValue;
-}
-
-String webhookTriggerExplodedListToJson(
-  List<enums.WebhookTrigger>? webhookTrigger,
-) {
-  return webhookTrigger?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> webhookTriggerListToJson(
-  List<enums.WebhookTrigger>? webhookTrigger,
-) {
-  if (webhookTrigger == null) {
-    return [];
-  }
-
-  return webhookTrigger.map((e) => e.value!).toList();
-}
-
-List<enums.WebhookTrigger> webhookTriggerListFromJson(
-  List? webhookTrigger, [
-  List<enums.WebhookTrigger>? defaultValue,
-]) {
-  if (webhookTrigger == null) {
-    return defaultValue ?? [];
-  }
-
-  return webhookTrigger
-      .map((e) => webhookTriggerFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.WebhookTrigger>? webhookTriggerNullableListFromJson(
-  List? webhookTrigger, [
-  List<enums.WebhookTrigger>? defaultValue,
-]) {
-  if (webhookTrigger == null) {
-    return defaultValue;
-  }
-
-  return webhookTrigger
-      .map((e) => webhookTriggerFromJson(e.toString()))
       .toList();
 }
 
@@ -18645,6 +18664,341 @@ transactionTypePropertyNullableListFromJson(
 
   return transactionTypeProperty
       .map((e) => transactionTypePropertyFromJson(e.toString()))
+      .toList();
+}
+
+String? v1ChartAccountOverviewGetPeriodNullableToJson(
+  enums.V1ChartAccountOverviewGetPeriod? v1ChartAccountOverviewGetPeriod,
+) {
+  return v1ChartAccountOverviewGetPeriod?.value;
+}
+
+String? v1ChartAccountOverviewGetPeriodToJson(
+  enums.V1ChartAccountOverviewGetPeriod v1ChartAccountOverviewGetPeriod,
+) {
+  return v1ChartAccountOverviewGetPeriod.value;
+}
+
+enums.V1ChartAccountOverviewGetPeriod v1ChartAccountOverviewGetPeriodFromJson(
+  Object? v1ChartAccountOverviewGetPeriod, [
+  enums.V1ChartAccountOverviewGetPeriod? defaultValue,
+]) {
+  return enums.V1ChartAccountOverviewGetPeriod.values.firstWhereOrNull(
+        (e) => e.value == v1ChartAccountOverviewGetPeriod,
+      ) ??
+      defaultValue ??
+      enums.V1ChartAccountOverviewGetPeriod.swaggerGeneratedUnknown;
+}
+
+enums.V1ChartAccountOverviewGetPeriod?
+v1ChartAccountOverviewGetPeriodNullableFromJson(
+  Object? v1ChartAccountOverviewGetPeriod, [
+  enums.V1ChartAccountOverviewGetPeriod? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPeriod == null) {
+    return null;
+  }
+  return enums.V1ChartAccountOverviewGetPeriod.values.firstWhereOrNull(
+        (e) => e.value == v1ChartAccountOverviewGetPeriod,
+      ) ??
+      defaultValue;
+}
+
+String v1ChartAccountOverviewGetPeriodExplodedListToJson(
+  List<enums.V1ChartAccountOverviewGetPeriod>? v1ChartAccountOverviewGetPeriod,
+) {
+  return v1ChartAccountOverviewGetPeriod?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> v1ChartAccountOverviewGetPeriodListToJson(
+  List<enums.V1ChartAccountOverviewGetPeriod>? v1ChartAccountOverviewGetPeriod,
+) {
+  if (v1ChartAccountOverviewGetPeriod == null) {
+    return [];
+  }
+
+  return v1ChartAccountOverviewGetPeriod.map((e) => e.value!).toList();
+}
+
+List<enums.V1ChartAccountOverviewGetPeriod>
+v1ChartAccountOverviewGetPeriodListFromJson(
+  List? v1ChartAccountOverviewGetPeriod, [
+  List<enums.V1ChartAccountOverviewGetPeriod>? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPeriod == null) {
+    return defaultValue ?? [];
+  }
+
+  return v1ChartAccountOverviewGetPeriod
+      .map((e) => v1ChartAccountOverviewGetPeriodFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.V1ChartAccountOverviewGetPeriod>?
+v1ChartAccountOverviewGetPeriodNullableListFromJson(
+  List? v1ChartAccountOverviewGetPeriod, [
+  List<enums.V1ChartAccountOverviewGetPeriod>? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPeriod == null) {
+    return defaultValue;
+  }
+
+  return v1ChartAccountOverviewGetPeriod
+      .map((e) => v1ChartAccountOverviewGetPeriodFromJson(e.toString()))
+      .toList();
+}
+
+String? v1ChartAccountOverviewGetPreselectedNullableToJson(
+  enums.V1ChartAccountOverviewGetPreselected?
+  v1ChartAccountOverviewGetPreselected,
+) {
+  return v1ChartAccountOverviewGetPreselected?.value;
+}
+
+String? v1ChartAccountOverviewGetPreselectedToJson(
+  enums.V1ChartAccountOverviewGetPreselected
+  v1ChartAccountOverviewGetPreselected,
+) {
+  return v1ChartAccountOverviewGetPreselected.value;
+}
+
+enums.V1ChartAccountOverviewGetPreselected
+v1ChartAccountOverviewGetPreselectedFromJson(
+  Object? v1ChartAccountOverviewGetPreselected, [
+  enums.V1ChartAccountOverviewGetPreselected? defaultValue,
+]) {
+  return enums.V1ChartAccountOverviewGetPreselected.values.firstWhereOrNull(
+        (e) => e.value == v1ChartAccountOverviewGetPreselected,
+      ) ??
+      defaultValue ??
+      enums.V1ChartAccountOverviewGetPreselected.swaggerGeneratedUnknown;
+}
+
+enums.V1ChartAccountOverviewGetPreselected?
+v1ChartAccountOverviewGetPreselectedNullableFromJson(
+  Object? v1ChartAccountOverviewGetPreselected, [
+  enums.V1ChartAccountOverviewGetPreselected? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPreselected == null) {
+    return null;
+  }
+  return enums.V1ChartAccountOverviewGetPreselected.values.firstWhereOrNull(
+        (e) => e.value == v1ChartAccountOverviewGetPreselected,
+      ) ??
+      defaultValue;
+}
+
+String v1ChartAccountOverviewGetPreselectedExplodedListToJson(
+  List<enums.V1ChartAccountOverviewGetPreselected>?
+  v1ChartAccountOverviewGetPreselected,
+) {
+  return v1ChartAccountOverviewGetPreselected?.map((e) => e.value!).join(',') ??
+      '';
+}
+
+List<String> v1ChartAccountOverviewGetPreselectedListToJson(
+  List<enums.V1ChartAccountOverviewGetPreselected>?
+  v1ChartAccountOverviewGetPreselected,
+) {
+  if (v1ChartAccountOverviewGetPreselected == null) {
+    return [];
+  }
+
+  return v1ChartAccountOverviewGetPreselected.map((e) => e.value!).toList();
+}
+
+List<enums.V1ChartAccountOverviewGetPreselected>
+v1ChartAccountOverviewGetPreselectedListFromJson(
+  List? v1ChartAccountOverviewGetPreselected, [
+  List<enums.V1ChartAccountOverviewGetPreselected>? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPreselected == null) {
+    return defaultValue ?? [];
+  }
+
+  return v1ChartAccountOverviewGetPreselected
+      .map((e) => v1ChartAccountOverviewGetPreselectedFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.V1ChartAccountOverviewGetPreselected>?
+v1ChartAccountOverviewGetPreselectedNullableListFromJson(
+  List? v1ChartAccountOverviewGetPreselected, [
+  List<enums.V1ChartAccountOverviewGetPreselected>? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPreselected == null) {
+    return defaultValue;
+  }
+
+  return v1ChartAccountOverviewGetPreselected
+      .map((e) => v1ChartAccountOverviewGetPreselectedFromJson(e.toString()))
+      .toList();
+}
+
+String? v1ChartBalanceBalanceGetPeriodNullableToJson(
+  enums.V1ChartBalanceBalanceGetPeriod? v1ChartBalanceBalanceGetPeriod,
+) {
+  return v1ChartBalanceBalanceGetPeriod?.value;
+}
+
+String? v1ChartBalanceBalanceGetPeriodToJson(
+  enums.V1ChartBalanceBalanceGetPeriod v1ChartBalanceBalanceGetPeriod,
+) {
+  return v1ChartBalanceBalanceGetPeriod.value;
+}
+
+enums.V1ChartBalanceBalanceGetPeriod v1ChartBalanceBalanceGetPeriodFromJson(
+  Object? v1ChartBalanceBalanceGetPeriod, [
+  enums.V1ChartBalanceBalanceGetPeriod? defaultValue,
+]) {
+  return enums.V1ChartBalanceBalanceGetPeriod.values.firstWhereOrNull(
+        (e) => e.value == v1ChartBalanceBalanceGetPeriod,
+      ) ??
+      defaultValue ??
+      enums.V1ChartBalanceBalanceGetPeriod.swaggerGeneratedUnknown;
+}
+
+enums.V1ChartBalanceBalanceGetPeriod?
+v1ChartBalanceBalanceGetPeriodNullableFromJson(
+  Object? v1ChartBalanceBalanceGetPeriod, [
+  enums.V1ChartBalanceBalanceGetPeriod? defaultValue,
+]) {
+  if (v1ChartBalanceBalanceGetPeriod == null) {
+    return null;
+  }
+  return enums.V1ChartBalanceBalanceGetPeriod.values.firstWhereOrNull(
+        (e) => e.value == v1ChartBalanceBalanceGetPeriod,
+      ) ??
+      defaultValue;
+}
+
+String v1ChartBalanceBalanceGetPeriodExplodedListToJson(
+  List<enums.V1ChartBalanceBalanceGetPeriod>? v1ChartBalanceBalanceGetPeriod,
+) {
+  return v1ChartBalanceBalanceGetPeriod?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> v1ChartBalanceBalanceGetPeriodListToJson(
+  List<enums.V1ChartBalanceBalanceGetPeriod>? v1ChartBalanceBalanceGetPeriod,
+) {
+  if (v1ChartBalanceBalanceGetPeriod == null) {
+    return [];
+  }
+
+  return v1ChartBalanceBalanceGetPeriod.map((e) => e.value!).toList();
+}
+
+List<enums.V1ChartBalanceBalanceGetPeriod>
+v1ChartBalanceBalanceGetPeriodListFromJson(
+  List? v1ChartBalanceBalanceGetPeriod, [
+  List<enums.V1ChartBalanceBalanceGetPeriod>? defaultValue,
+]) {
+  if (v1ChartBalanceBalanceGetPeriod == null) {
+    return defaultValue ?? [];
+  }
+
+  return v1ChartBalanceBalanceGetPeriod
+      .map((e) => v1ChartBalanceBalanceGetPeriodFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.V1ChartBalanceBalanceGetPeriod>?
+v1ChartBalanceBalanceGetPeriodNullableListFromJson(
+  List? v1ChartBalanceBalanceGetPeriod, [
+  List<enums.V1ChartBalanceBalanceGetPeriod>? defaultValue,
+]) {
+  if (v1ChartBalanceBalanceGetPeriod == null) {
+    return defaultValue;
+  }
+
+  return v1ChartBalanceBalanceGetPeriod
+      .map((e) => v1ChartBalanceBalanceGetPeriodFromJson(e.toString()))
+      .toList();
+}
+
+String? v1ChartBalanceBalanceGetPreselectedNullableToJson(
+  enums.V1ChartBalanceBalanceGetPreselected?
+  v1ChartBalanceBalanceGetPreselected,
+) {
+  return v1ChartBalanceBalanceGetPreselected?.value;
+}
+
+String? v1ChartBalanceBalanceGetPreselectedToJson(
+  enums.V1ChartBalanceBalanceGetPreselected v1ChartBalanceBalanceGetPreselected,
+) {
+  return v1ChartBalanceBalanceGetPreselected.value;
+}
+
+enums.V1ChartBalanceBalanceGetPreselected
+v1ChartBalanceBalanceGetPreselectedFromJson(
+  Object? v1ChartBalanceBalanceGetPreselected, [
+  enums.V1ChartBalanceBalanceGetPreselected? defaultValue,
+]) {
+  return enums.V1ChartBalanceBalanceGetPreselected.values.firstWhereOrNull(
+        (e) => e.value == v1ChartBalanceBalanceGetPreselected,
+      ) ??
+      defaultValue ??
+      enums.V1ChartBalanceBalanceGetPreselected.swaggerGeneratedUnknown;
+}
+
+enums.V1ChartBalanceBalanceGetPreselected?
+v1ChartBalanceBalanceGetPreselectedNullableFromJson(
+  Object? v1ChartBalanceBalanceGetPreselected, [
+  enums.V1ChartBalanceBalanceGetPreselected? defaultValue,
+]) {
+  if (v1ChartBalanceBalanceGetPreselected == null) {
+    return null;
+  }
+  return enums.V1ChartBalanceBalanceGetPreselected.values.firstWhereOrNull(
+        (e) => e.value == v1ChartBalanceBalanceGetPreselected,
+      ) ??
+      defaultValue;
+}
+
+String v1ChartBalanceBalanceGetPreselectedExplodedListToJson(
+  List<enums.V1ChartBalanceBalanceGetPreselected>?
+  v1ChartBalanceBalanceGetPreselected,
+) {
+  return v1ChartBalanceBalanceGetPreselected?.map((e) => e.value!).join(',') ??
+      '';
+}
+
+List<String> v1ChartBalanceBalanceGetPreselectedListToJson(
+  List<enums.V1ChartBalanceBalanceGetPreselected>?
+  v1ChartBalanceBalanceGetPreselected,
+) {
+  if (v1ChartBalanceBalanceGetPreselected == null) {
+    return [];
+  }
+
+  return v1ChartBalanceBalanceGetPreselected.map((e) => e.value!).toList();
+}
+
+List<enums.V1ChartBalanceBalanceGetPreselected>
+v1ChartBalanceBalanceGetPreselectedListFromJson(
+  List? v1ChartBalanceBalanceGetPreselected, [
+  List<enums.V1ChartBalanceBalanceGetPreselected>? defaultValue,
+]) {
+  if (v1ChartBalanceBalanceGetPreselected == null) {
+    return defaultValue ?? [];
+  }
+
+  return v1ChartBalanceBalanceGetPreselected
+      .map((e) => v1ChartBalanceBalanceGetPreselectedFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.V1ChartBalanceBalanceGetPreselected>?
+v1ChartBalanceBalanceGetPreselectedNullableListFromJson(
+  List? v1ChartBalanceBalanceGetPreselected, [
+  List<enums.V1ChartBalanceBalanceGetPreselected>? defaultValue,
+]) {
+  if (v1ChartBalanceBalanceGetPreselected == null) {
+    return defaultValue;
+  }
+
+  return v1ChartBalanceBalanceGetPreselected
+      .map((e) => v1ChartBalanceBalanceGetPreselectedFromJson(e.toString()))
       .toList();
 }
 

@@ -206,6 +206,20 @@ class SCa extends S {
   String get billsUngrouped => 'Sense grup';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'N\'estàs segur que vols esborrar aquesta categoria? Les transaccions no s\'esborraran, però ja no tindran cap categoria assignada.';
 
@@ -499,6 +513,9 @@ class SCa extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Saved so far:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'Quantitat objectiu: $amount';
   }
@@ -616,7 +633,7 @@ class SCa extends S {
   String get navigationMain => 'Tauler de control Principal';
 
   @override
-  String get navigationSettings => 'Configuració';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

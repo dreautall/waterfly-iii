@@ -203,6 +203,20 @@ class SEs extends S {
   String get billsUngrouped => 'Sin agrupar';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       '¿Estás seguro de que deseas eliminar esta categoría? Las transacciones no serán eliminadas, pero ya no tendrán categoría.';
 
@@ -496,6 +510,9 @@ class SEs extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Saved so far:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'Objetivo de ahorro: $amount';
   }
@@ -613,7 +630,7 @@ class SEs extends S {
   String get navigationMain => 'Panel principal';
 
   @override
-  String get navigationSettings => 'Ajustes';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

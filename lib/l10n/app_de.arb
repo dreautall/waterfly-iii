@@ -213,6 +213,22 @@
     "@billsUngrouped": {
         "description": "Title for ungrouped subscriptions"
     },
+    "billsSettingsShowOnlyActive": "Nur aktive anzeigen",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Zeigt nur aktive Abonnements an.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Nur erwartete anzeigen",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Zeigt nur Abonnements an, die diesen Monat erwartet werden (oder bereits bezahlt worden sind).",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
     "categoryDeleteConfirm": "Möchtest du diese Kategorie wirklich löschen? Die Transaktionen werden nicht gelöscht, werden aber keine Kategorie mehr haben.",
     "@categoryDeleteConfirm": {
         "description": "Confirmation text to delete category"
@@ -629,6 +645,10 @@
             }
         }
     },
+    "homePiggySavedMultiple": "Bereits gespart:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "Sparziel: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
@@ -781,9 +801,9 @@
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "Einstellungen",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "Einstellungen",
+    "@generalSettings": {
+        "description": "Label: Settings"
     },
     "no": "Nein",
     "@no": {

@@ -203,6 +203,20 @@ class SSv extends S {
   String get billsUngrouped => 'Ogrupperad';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Är du säker på att du vill ta bort denna kategori? Transaktionerna kommer inte att tas bort, men kommer inte att ha en kategori längre.';
 
@@ -496,6 +510,9 @@ class SSv extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Saved so far:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'Målbelopp: $amount';
   }
@@ -608,7 +625,7 @@ class SSv extends S {
   String get navigationMain => 'Kontrollpanel';
 
   @override
-  String get navigationSettings => 'Inställningar';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Nej';

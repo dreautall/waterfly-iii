@@ -203,6 +203,20 @@ class SDa extends S {
   String get billsUngrouped => 'Ungrouped';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Er du sikker på, at du vil slette denne kategori? Transaktionerne vil ikke blive slettet, men vil ikke længere have en kategori.';
 
@@ -495,6 +509,9 @@ class SDa extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Saved so far:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'Målbeløb: $amount';
   }
@@ -607,7 +624,7 @@ class SDa extends S {
   String get navigationMain => 'Hoveddashboard';
 
   @override
-  String get navigationSettings => 'Indstillinger';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

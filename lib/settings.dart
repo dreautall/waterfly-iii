@@ -66,6 +66,8 @@ enum BoolSettings {
   dynamicColors,
   useServerTime,
   hideTags,
+  billsShowOnlyActive,
+  billsShowOnlyExpected,
 }
 
 enum TransactionDateFilter {
@@ -151,6 +153,10 @@ class SettingsProvider with ChangeNotifier {
   bool get useServerTime =>
       _loaded ? _boolSettings[BoolSettings.useServerTime] : true;
   bool get hideTags => _loaded ? _boolSettings[BoolSettings.hideTags] : false;
+  bool get billsShowOnlyActive =>
+      _loaded ? _boolSettings[BoolSettings.billsShowOnlyActive] : false;
+  bool get billsShowOnlyExpected =>
+      _loaded ? _boolSettings[BoolSettings.billsShowOnlyExpected] : false;
 
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get theme => _theme;
@@ -209,6 +215,8 @@ class SettingsProvider with ChangeNotifier {
       _boolSettings[BoolSettings.useServerTime] =
           oldPrefs.getBool(settingUseServerTime) ?? true;
       _boolSettings[BoolSettings.hideTags] = false;
+      _boolSettings[BoolSettings.billsShowOnlyActive] = false;
+      _boolSettings[BoolSettings.billsShowOnlyExpected] = false;
     }
     await prefs.setInt(settingsBitmask, _boolSettings.value);
 
@@ -456,6 +464,10 @@ class SettingsProvider with ChangeNotifier {
   set useServerTime(bool enabled) =>
       _setBool(BoolSettings.useServerTime, enabled);
   set hideTags(bool enabled) => _setBool(BoolSettings.hideTags, enabled);
+  set billsShowOnlyActive(bool enabled) =>
+      _setBool(BoolSettings.billsShowOnlyActive, enabled);
+  set billsShowOnlyExpected(bool enabled) =>
+      _setBool(BoolSettings.billsShowOnlyExpected, enabled);
 
   Future<void> setTheme(ThemeMode theme) async {
     _theme = theme;

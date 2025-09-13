@@ -203,6 +203,20 @@ class SEn extends S {
   String get billsUngrouped => 'Ungrouped';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Are you sure you want to delete this category? The transactions will not be deleted, but will not have a category anymore.';
 
@@ -496,6 +510,9 @@ class SEn extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Saved so far:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'Target amount: $amount';
   }
@@ -608,7 +625,7 @@ class SEn extends S {
   String get navigationMain => 'Main Dashboard';
 
   @override
-  String get navigationSettings => 'Settings';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

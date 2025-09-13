@@ -203,6 +203,20 @@ class SDe extends S {
   String get billsUngrouped => 'Keine Gruppe';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Nur aktive anzeigen';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Zeigt nur aktive Abonnements an.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Nur erwartete anzeigen';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Zeigt nur Abonnements an, die diesen Monat erwartet werden (oder bereits bezahlt worden sind).';
+
+  @override
   String get categoryDeleteConfirm =>
       'Möchtest du diese Kategorie wirklich löschen? Die Transaktionen werden nicht gelöscht, werden aber keine Kategorie mehr haben.';
 
@@ -496,6 +510,9 @@ class SDe extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Bereits gespart:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'Sparziel: $amount';
   }
@@ -608,7 +625,7 @@ class SDe extends S {
   String get navigationMain => 'Übersicht';
 
   @override
-  String get navigationSettings => 'Einstellungen';
+  String get generalSettings => 'Einstellungen';
 
   @override
   String get no => 'Nein';

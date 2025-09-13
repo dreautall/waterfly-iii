@@ -457,6 +457,7 @@ class _TransactionPageState extends State<TransactionPage>
               _sourceAccountTextController.text = acc.attributes.name;
               _sourceAccountType = AccountTypeProperty.assetAccount;
               _ownAccountId = acc.id;
+              checkTXType();
               break;
             }
           }
@@ -1012,7 +1013,11 @@ class _TransactionPageState extends State<TransactionPage>
                           txS.add(
                             TransactionSplitStore(
                               type: _transactionType,
-                              date: _date,
+                              date: _date.copyWith(
+                                second: 0,
+                                millisecond: 0,
+                                microsecond: 0,
+                              ),
                               amount: _localAmounts[i].toString(),
                               description:
                                   _split

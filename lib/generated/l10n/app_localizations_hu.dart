@@ -203,6 +203,20 @@ class SHu extends S {
   String get billsUngrouped => 'Csoportosítatlan';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Biztosan törli ezt a kategóriát? A tranzakciók nem kerülnek törlésre, ugyanakkor nem lesznek kategóriához rendelve.';
 
@@ -501,6 +515,9 @@ class SHu extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Saved so far:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'Célösszeg: $amount';
   }
@@ -616,7 +633,7 @@ class SHu extends S {
   String get navigationMain => 'Főoldal';
 
   @override
-  String get navigationSettings => 'Beállítások';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Nem';

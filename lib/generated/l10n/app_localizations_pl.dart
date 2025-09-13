@@ -203,6 +203,20 @@ class SPl extends S {
   String get billsUngrouped => 'Niezgrupowane';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Czy na pewno chcesz usunąć tę kategorię? Transakcje nie zostaną usunięte, ale nie będą już posiadały kategorii.';
 
@@ -498,6 +512,9 @@ class SPl extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Saved so far:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'Docelowa kwota: $amount';
   }
@@ -615,7 +632,7 @@ class SPl extends S {
   String get navigationMain => 'Panel główny';
 
   @override
-  String get navigationSettings => 'Ustawienia';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Nie';

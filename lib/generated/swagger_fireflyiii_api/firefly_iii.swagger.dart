@@ -440,6 +440,40 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
   });
 
+  ///Returns all subscriptions of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  Future<chopper.Response<AutocompleteBillArray>>
+  v1AutocompleteSubscriptionsGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(
+      AutocompleteBill,
+      () => AutocompleteBill.fromJsonFactory,
+    );
+
+    return _v1AutocompleteSubscriptionsGet(
+      xTraceId: xTraceId?.toString(),
+      query: query,
+      limit: limit,
+    );
+  }
+
+  ///Returns all subscriptions of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  @GET(path: '/v1/autocomplete/subscriptions')
+  Future<chopper.Response<AutocompleteBillArray>>
+  _v1AutocompleteSubscriptionsGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('query') String? query,
+    @Query('limit') int? limit,
+  });
+
   ///Returns all tags of the user returned in a basic auto-complete array.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
@@ -574,10 +608,14 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
+  ///@param period Optional period to group the data by. If not provided, it will default to '1M' or whatever is deemed relevant for the range provided.  If you want to know which periods are available, see the enums or get the configuration value: `GET /api/v1/configuration/firefly.valid_view_ranges`
+  ///@param preselected Optional set of preselected accounts to limit the chart to. This may be easier than submitting all asset accounts manually, for example. If you want to know which selection are available, see the enums here or get the configuration value: `GET /api/v1/configuration/firefly.preselected_accounts`  - `empty`: do not do a pre-selection - `all`: select all asset and all liability accounts - `assets`: select all asset accounts - `liabilities`: select all liability accounts  If no accounts are found, the user's "frontpage accounts" preference will be used. If that is empty, all asset accounts will be used.
   Future<chopper.Response<ChartLine>> v1ChartAccountOverviewGet({
     String? xTraceId,
     required String? start,
     required String? end,
+    enums.V1ChartAccountOverviewGetPeriod? period,
+    enums.V1ChartAccountOverviewGetPreselected? preselected,
   }) {
     generatedMapping.putIfAbsent(
       ChartDataSet,
@@ -588,6 +626,8 @@ abstract class FireflyIii extends ChopperService {
       xTraceId: xTraceId?.toString(),
       start: start,
       end: end,
+      period: period?.value?.toString(),
+      preselected: preselected?.value?.toString(),
     );
   }
 
@@ -595,21 +635,31 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
+  ///@param period Optional period to group the data by. If not provided, it will default to '1M' or whatever is deemed relevant for the range provided.  If you want to know which periods are available, see the enums or get the configuration value: `GET /api/v1/configuration/firefly.valid_view_ranges`
+  ///@param preselected Optional set of preselected accounts to limit the chart to. This may be easier than submitting all asset accounts manually, for example. If you want to know which selection are available, see the enums here or get the configuration value: `GET /api/v1/configuration/firefly.preselected_accounts`  - `empty`: do not do a pre-selection - `all`: select all asset and all liability accounts - `assets`: select all asset accounts - `liabilities`: select all liability accounts  If no accounts are found, the user's "frontpage accounts" preference will be used. If that is empty, all asset accounts will be used.
   @GET(path: '/v1/chart/account/overview')
   Future<chopper.Response<ChartLine>> _v1ChartAccountOverviewGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
+    @Query('period') String? period,
+    @Query('preselected') String? preselected,
   });
 
   ///Dashboard chart with balance information.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
+  ///@param period Optional period to group the data by. If not provided, it will default to '1M' or whatever is deemed relevant for the range provided.  If you want to know which periods are available, see the enums or get the configuration value: `GET /api/v1/configuration/firefly.valid_view_ranges`
+  ///@param preselected Optional set of preselected accounts to limit the chart to. This may be easier than submitting all asset accounts manually, for example. If you want to know which selection are available, see the enums here or get the configuration value: `GET /api/v1/configuration/firefly.preselected_accounts`  - `empty`: do not do a pre-selection - `all`: select all asset and all liability accounts - `assets`: select all asset accounts - `liabilities`: select all liability accounts  If no accounts are found, the user's "frontpage accounts" preference will be used. If that is empty, all asset accounts will be used.
+  ///@param accounts[] Limit the chart to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.  This list of accounts will be OVERRULED by the `preselected` parameter.
   Future<chopper.Response<ChartLine>> v1ChartBalanceBalanceGet({
     String? xTraceId,
     required String? start,
     required String? end,
+    enums.V1ChartBalanceBalanceGetPeriod? period,
+    enums.V1ChartBalanceBalanceGetPreselected? preselected,
+    List<int>? accounts,
   }) {
     generatedMapping.putIfAbsent(
       ChartDataSet,
@@ -620,6 +670,9 @@ abstract class FireflyIii extends ChopperService {
       xTraceId: xTraceId?.toString(),
       start: start,
       end: end,
+      period: period?.value?.toString(),
+      preselected: preselected?.value?.toString(),
+      accounts: accounts,
     );
   }
 
@@ -627,11 +680,17 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
+  ///@param period Optional period to group the data by. If not provided, it will default to '1M' or whatever is deemed relevant for the range provided.  If you want to know which periods are available, see the enums or get the configuration value: `GET /api/v1/configuration/firefly.valid_view_ranges`
+  ///@param preselected Optional set of preselected accounts to limit the chart to. This may be easier than submitting all asset accounts manually, for example. If you want to know which selection are available, see the enums here or get the configuration value: `GET /api/v1/configuration/firefly.preselected_accounts`  - `empty`: do not do a pre-selection - `all`: select all asset and all liability accounts - `assets`: select all asset accounts - `liabilities`: select all liability accounts  If no accounts are found, the user's "frontpage accounts" preference will be used. If that is empty, all asset accounts will be used.
+  ///@param accounts[] Limit the chart to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.  This list of accounts will be OVERRULED by the `preselected` parameter.
   @GET(path: '/v1/chart/balance/balance')
   Future<chopper.Response<ChartLine>> _v1ChartBalanceBalanceGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
+    @Query('period') String? period,
+    @Query('preselected') String? preselected,
+    @Query('accounts[]') List<int>? accounts,
   });
 
   ///Dashboard chart with budget information.
@@ -2026,12 +2085,16 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
+  ///@param start A date formatted YYYY-MM-DD. May be omitted.
+  ///@param end A date formatted YYYY-MM-DD. Must be after "start". Can not be the same as "start". May be omitted.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
   ///@param type Optional filter on the account type(s) returned
   Future<chopper.Response<AccountArray>> v1AccountsGet({
     String? xTraceId,
     int? limit,
     int? page,
+    String? start,
+    String? end,
     String? date,
     enums.AccountTypeFilter? type,
   }) {
@@ -2044,6 +2107,8 @@ abstract class FireflyIii extends ChopperService {
       xTraceId: xTraceId?.toString(),
       limit: limit,
       page: page,
+      start: start,
+      end: end,
       date: date,
       type: type?.value?.toString(),
     );
@@ -2053,6 +2118,8 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
+  ///@param start A date formatted YYYY-MM-DD. May be omitted.
+  ///@param end A date formatted YYYY-MM-DD. Must be after "start". Can not be the same as "start". May be omitted.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
   ///@param type Optional filter on the account type(s) returned
   @GET(path: '/v1/accounts')
@@ -2060,6 +2127,8 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @Query('start') String? start,
+    @Query('end') String? end,
     @Query('date') String? date,
     @Query('type') String? type,
   });
@@ -2088,10 +2157,14 @@ abstract class FireflyIii extends ChopperService {
 
   ///Get single account.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD. May be omitted.
+  ///@param end A date formatted YYYY-MM-DD. Must be after "start". Can not be the same as "start". May be omitted.
   ///@param id The ID of the account.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
   Future<chopper.Response<AccountSingle>> v1AccountsIdGet({
     String? xTraceId,
+    String? start,
+    String? end,
     required String? id,
     String? date,
   }) {
@@ -2100,16 +2173,26 @@ abstract class FireflyIii extends ChopperService {
       () => AccountSingle.fromJsonFactory,
     );
 
-    return _v1AccountsIdGet(xTraceId: xTraceId?.toString(), id: id, date: date);
+    return _v1AccountsIdGet(
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+      id: id,
+      date: date,
+    );
   }
 
   ///Get single account.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD. May be omitted.
+  ///@param end A date formatted YYYY-MM-DD. Must be after "start". Can not be the same as "start". May be omitted.
   ///@param id The ID of the account.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
   @GET(path: '/v1/accounts/{id}')
   Future<chopper.Response<AccountSingle>> _v1AccountsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') String? start,
+    @Query('end') String? end,
     @Path('id') required String? id,
     @Query('date') String? date,
   });
@@ -4655,6 +4738,38 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1RecurrencesIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+  });
+
+  ///Trigger the creation of a transaction for a specific recurring transaction
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the recurring transaction.
+  ///@param date A date formatted YYYY-MM-DD. This is the date for which you want the recurrence to fire. You can take the date from the list of occurrences in the recurring transaction.
+  Future<chopper.Response<TransactionArray>> v1RecurrencesIdTriggerPost({
+    String? xTraceId,
+    required String? id,
+    required String? date,
+  }) {
+    generatedMapping.putIfAbsent(
+      TransactionArray,
+      () => TransactionArray.fromJsonFactory,
+    );
+
+    return _v1RecurrencesIdTriggerPost(
+      xTraceId: xTraceId?.toString(),
+      id: id,
+      date: date,
+    );
+  }
+
+  ///Trigger the creation of a transaction for a specific recurring transaction
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the recurring transaction.
+  ///@param date A date formatted YYYY-MM-DD. This is the date for which you want the recurrence to fire. You can take the date from the list of occurrences in the recurring transaction.
+  @POST(path: '/v1/recurrences/{id}/trigger', optionalBody: true)
+  Future<chopper.Response<TransactionArray>> _v1RecurrencesIdTriggerPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('date') required String? date,
   });
 
   ///List rules in this rule group.

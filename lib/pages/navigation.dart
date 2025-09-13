@@ -123,7 +123,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
         const Icon(Icons.receipt),
       ),
       NavDestination(
-        S.of(context).navigationSettings,
+        S.of(context).generalSettings,
         const SettingsPage(),
         const Icon(Icons.settings_outlined),
         const Icon(Icons.settings),

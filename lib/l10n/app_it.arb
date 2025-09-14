@@ -373,6 +373,26 @@
     "@generalCurrency": {
         "description": "(Money) Currency"
     },
+    "generalDateRangeCurrentMonth": "Mese Corrente",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Ultimi 30 giorni",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Anno Corrente",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Anno Precedente",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Tutto",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
     "generalDefault": "predefinito",
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
@@ -537,6 +557,10 @@
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
     },
+    "homeMainChartTagsTitle": "Riepilogo etichette per il mese corrente",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
     "homePiggyAdjustDialogTitle": "Risparmia/Spendi Denaro",
     "@homePiggyAdjustDialogTitle": {
         "description": "Title of the dialog where money can be added/removed to a piggy bank."
@@ -605,6 +629,10 @@
             }
         }
     },
+    "homePiggySavedMultiple": "Risparmiato finora:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "Importo obiettivo: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
@@ -666,6 +694,10 @@
     "homeTransactionsDialogFilterCurrenciesAll": "<Tutte le valute>",
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "Periodo",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
     },
     "homeTransactionsDialogFilterFutureTransactions": "Mostra transazioni future",
     "@homeTransactionsDialogFilterFutureTransactions": {

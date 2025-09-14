@@ -41,11 +41,14 @@ class TransactionTags extends StatefulWidget {
     required this.textController,
     required this.tagsController,
     this.enableAdd = true,
+    this.interactable = true,
   });
 
   final TextEditingController textController;
   final Tags tagsController;
   final bool enableAdd;
+
+  final bool interactable;
 
   @override
   State<TransactionTags> createState() => _TransactionTagsState();
@@ -57,12 +60,13 @@ class _TransactionTagsState extends State<TransactionTags> {
   @override
   Widget build(BuildContext context) {
     log.finest(() => "build()");
-    FocusNode disabledFocus = AlwaysDisabledFocusNode();
+    final FocusNode disabledFocus = AlwaysDisabledFocusNode();
     return Row(
       children: <Widget>[
         Expanded(
           child: AnimatedHeight(
             child: TextFormField(
+              enabled: widget.interactable,
               controller: widget.textController,
               maxLines: null,
               readOnly: true,
@@ -71,6 +75,7 @@ class _TransactionTagsState extends State<TransactionTags> {
                 border: const OutlineInputBorder(),
                 labelText: S.of(context).transactionFormLabelTags,
                 icon: const Icon(Icons.bookmarks),
+                filled: !widget.interactable,
                 prefixIcon:
                     widget.tagsController.tags.isNotEmpty
                         ? Padding(
@@ -103,7 +108,7 @@ class _TransactionTagsState extends State<TransactionTags> {
                         : null,
               ),
               onTap: () async {
-                List<String>? tags = await showDialog<List<String>>(
+                final List<String>? tags = await showDialog<List<String>>(
                   context: context,
                   builder:
                       (BuildContext context) => TagDialog(
@@ -164,7 +169,7 @@ class _TagDialogState extends State<TagDialog> {
 
   Future<List<String>>? _getTags() async {
     final FireflyIii api = context.read<FireflyService>().api;
-    List<String> tags = <String>[];
+    final List<String> tags = <String>[];
     late Response<TagArray> response;
     int pageNumber = 0;
 
@@ -231,7 +236,7 @@ class _TagDialogState extends State<TagDialog> {
         future: _getTags(),
         builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
           if (snapshot.hasData) {
-            List<String> allTags =
+            final List<String> allTags =
                 <String>{...snapshot.data!, ..._newSelectedTags}.toList();
             bool showAddTag = true;
 
@@ -253,7 +258,7 @@ class _TagDialogState extends State<TagDialog> {
                     return a.toLowerCase().compareTo(b.toLowerCase());
                   }
                 });
-                List<Widget> child = <Widget>[
+                final List<Widget> child = <Widget>[
                   TextField(
                     controller: _newTagTextController,
                     onChanged: (String value) {

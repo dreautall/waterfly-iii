@@ -1202,12 +1202,18 @@ class AutocompleteAccount {
     required this.id,
     required this.name,
     required this.nameWithBalance,
+    this.active,
     required this.type,
     required this.currencyId,
     required this.currencyName,
     required this.currencyCode,
     required this.currencySymbol,
     required this.currencyDecimalPlaces,
+    this.accountCurrencyId,
+    this.accountCurrencyName,
+    this.accountCurrencyCode,
+    this.accountCurrencySymbol,
+    this.accountCurrencyDecimalPlaces,
   });
 
   factory AutocompleteAccount.fromJson(Map<String, dynamic> json) =>
@@ -1222,6 +1228,8 @@ class AutocompleteAccount {
   final String name;
   @JsonKey(name: 'name_with_balance', includeIfNull: false)
   final String nameWithBalance;
+  @JsonKey(name: 'active', includeIfNull: false)
+  final bool? active;
   @JsonKey(name: 'type', includeIfNull: false)
   final String type;
   @JsonKey(name: 'currency_id', includeIfNull: false)
@@ -1234,6 +1242,16 @@ class AutocompleteAccount {
   final String currencySymbol;
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int currencyDecimalPlaces;
+  @JsonKey(name: 'account_currency_id', includeIfNull: false)
+  final String? accountCurrencyId;
+  @JsonKey(name: 'account_currency_name', includeIfNull: false)
+  final String? accountCurrencyName;
+  @JsonKey(name: 'account_currency_code', includeIfNull: false)
+  final String? accountCurrencyCode;
+  @JsonKey(name: 'account_currency_symbol', includeIfNull: false)
+  final String? accountCurrencySymbol;
+  @JsonKey(name: 'account_currency_decimal_places', includeIfNull: false)
+  final int? accountCurrencyDecimalPlaces;
   static const fromJsonFactory = _$AutocompleteAccountFromJson;
 
   @override
@@ -1245,17 +1263,24 @@ extension $AutocompleteAccountExtension on AutocompleteAccount {
     String? id,
     String? name,
     String? nameWithBalance,
+    bool? active,
     String? type,
     String? currencyId,
     String? currencyName,
     String? currencyCode,
     String? currencySymbol,
     int? currencyDecimalPlaces,
+    String? accountCurrencyId,
+    String? accountCurrencyName,
+    String? accountCurrencyCode,
+    String? accountCurrencySymbol,
+    int? accountCurrencyDecimalPlaces,
   }) {
     return AutocompleteAccount(
       id: id ?? this.id,
       name: name ?? this.name,
       nameWithBalance: nameWithBalance ?? this.nameWithBalance,
+      active: active ?? this.active,
       type: type ?? this.type,
       currencyId: currencyId ?? this.currencyId,
       currencyName: currencyName ?? this.currencyName,
@@ -1263,6 +1288,13 @@ extension $AutocompleteAccountExtension on AutocompleteAccount {
       currencySymbol: currencySymbol ?? this.currencySymbol,
       currencyDecimalPlaces:
           currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      accountCurrencyId: accountCurrencyId ?? this.accountCurrencyId,
+      accountCurrencyName: accountCurrencyName ?? this.accountCurrencyName,
+      accountCurrencyCode: accountCurrencyCode ?? this.accountCurrencyCode,
+      accountCurrencySymbol:
+          accountCurrencySymbol ?? this.accountCurrencySymbol,
+      accountCurrencyDecimalPlaces:
+          accountCurrencyDecimalPlaces ?? this.accountCurrencyDecimalPlaces,
     );
   }
 
@@ -1270,32 +1302,55 @@ extension $AutocompleteAccountExtension on AutocompleteAccount {
     Wrapped<String>? id,
     Wrapped<String>? name,
     Wrapped<String>? nameWithBalance,
+    Wrapped<bool?>? active,
     Wrapped<String>? type,
     Wrapped<String>? currencyId,
     Wrapped<String>? currencyName,
     Wrapped<String>? currencyCode,
     Wrapped<String>? currencySymbol,
     Wrapped<int>? currencyDecimalPlaces,
+    Wrapped<String?>? accountCurrencyId,
+    Wrapped<String?>? accountCurrencyName,
+    Wrapped<String?>? accountCurrencyCode,
+    Wrapped<String?>? accountCurrencySymbol,
+    Wrapped<int?>? accountCurrencyDecimalPlaces,
   }) {
     return AutocompleteAccount(
       id: (id != null ? id.value : this.id),
       name: (name != null ? name.value : this.name),
-      nameWithBalance:
-          (nameWithBalance != null
-              ? nameWithBalance.value
-              : this.nameWithBalance),
+      nameWithBalance: (nameWithBalance != null
+          ? nameWithBalance.value
+          : this.nameWithBalance),
+      active: (active != null ? active.value : this.active),
       type: (type != null ? type.value : this.type),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyName:
-          (currencyName != null ? currencyName.value : this.currencyName),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
+      currencyName: (currencyName != null
+          ? currencyName.value
+          : this.currencyName),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      accountCurrencyId: (accountCurrencyId != null
+          ? accountCurrencyId.value
+          : this.accountCurrencyId),
+      accountCurrencyName: (accountCurrencyName != null
+          ? accountCurrencyName.value
+          : this.accountCurrencyName),
+      accountCurrencyCode: (accountCurrencyCode != null
+          ? accountCurrencyCode.value
+          : this.accountCurrencyCode),
+      accountCurrencySymbol: (accountCurrencySymbol != null
+          ? accountCurrencySymbol.value
+          : this.accountCurrencySymbol),
+      accountCurrencyDecimalPlaces: (accountCurrencyDecimalPlaces != null
+          ? accountCurrencyDecimalPlaces.value
+          : this.accountCurrencyDecimalPlaces),
     );
   }
 }
@@ -1346,7 +1401,7 @@ extension $AutocompleteBillExtension on AutocompleteBill {
 
 @JsonSerializable(explicitToJson: true)
 class AutocompleteBudget {
-  const AutocompleteBudget({required this.id, required this.name});
+  const AutocompleteBudget({required this.id, required this.name, this.active});
 
   factory AutocompleteBudget.fromJson(Map<String, dynamic> json) =>
       _$AutocompleteBudgetFromJson(json);
@@ -1358,6 +1413,8 @@ class AutocompleteBudget {
   final String id;
   @JsonKey(name: 'name', includeIfNull: false)
   final String name;
+  @JsonKey(name: 'active', includeIfNull: false)
+  final bool? active;
   static const fromJsonFactory = _$AutocompleteBudgetFromJson;
 
   @override
@@ -1365,17 +1422,23 @@ class AutocompleteBudget {
 }
 
 extension $AutocompleteBudgetExtension on AutocompleteBudget {
-  AutocompleteBudget copyWith({String? id, String? name}) {
-    return AutocompleteBudget(id: id ?? this.id, name: name ?? this.name);
+  AutocompleteBudget copyWith({String? id, String? name, bool? active}) {
+    return AutocompleteBudget(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      active: active ?? this.active,
+    );
   }
 
   AutocompleteBudget copyWithWrapped({
     Wrapped<String>? id,
     Wrapped<String>? name,
+    Wrapped<bool?>? active,
   }) {
     return AutocompleteBudget(
       id: (id != null ? id.value : this.id),
       name: (name != null ? name.value : this.name),
+      active: (active != null ? active.value : this.active),
     );
   }
 }
@@ -1477,8 +1540,9 @@ extension $AutocompleteCurrencyExtension on AutocompleteCurrency {
       name: (name != null ? name.value : this.name),
       code: (code != null ? code.value : this.code),
       symbol: (symbol != null ? symbol.value : this.symbol),
-      decimalPlaces:
-          (decimalPlaces != null ? decimalPlaces.value : this.decimalPlaces),
+      decimalPlaces: (decimalPlaces != null
+          ? decimalPlaces.value
+          : this.decimalPlaces),
     );
   }
 }
@@ -1544,8 +1608,9 @@ extension $AutocompleteCurrencyCodeExtension on AutocompleteCurrencyCode {
       name: (name != null ? name.value : this.name),
       code: (code != null ? code.value : this.code),
       symbol: (symbol != null ? symbol.value : this.symbol),
-      decimalPlaces:
-          (decimalPlaces != null ? decimalPlaces.value : this.decimalPlaces),
+      decimalPlaces: (decimalPlaces != null
+          ? decimalPlaces.value
+          : this.decimalPlaces),
     );
   }
 }
@@ -1683,22 +1748,24 @@ extension $AutocompletePiggyExtension on AutocompletePiggy {
       id: (id != null ? id.value : this.id),
       name: (name != null ? name.value : this.name),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyName:
-          (currencyName != null ? currencyName.value : this.currencyName),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
-      objectGroupId:
-          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-      objectGroupTitle:
-          (objectGroupTitle != null
-              ? objectGroupTitle.value
-              : this.objectGroupTitle),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyName: (currencyName != null
+          ? currencyName.value
+          : this.currencyName),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      objectGroupId: (objectGroupId != null
+          ? objectGroupId.value
+          : this.objectGroupId),
+      objectGroupTitle: (objectGroupTitle != null
+          ? objectGroupTitle.value
+          : this.objectGroupTitle),
     );
   }
 }
@@ -1787,25 +1854,25 @@ extension $AutocompletePiggyBalanceExtension on AutocompletePiggyBalance {
     return AutocompletePiggyBalance(
       id: (id != null ? id.value : this.id),
       name: (name != null ? name.value : this.name),
-      nameWithBalance:
-          (nameWithBalance != null
-              ? nameWithBalance.value
-              : this.nameWithBalance),
+      nameWithBalance: (nameWithBalance != null
+          ? nameWithBalance.value
+          : this.nameWithBalance),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
-      objectGroupId:
-          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-      objectGroupTitle:
-          (objectGroupTitle != null
-              ? objectGroupTitle.value
-              : this.objectGroupTitle),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      objectGroupId: (objectGroupId != null
+          ? objectGroupId.value
+          : this.objectGroupId),
+      objectGroupTitle: (objectGroupTitle != null
+          ? objectGroupTitle.value
+          : this.objectGroupTitle),
     );
   }
 }
@@ -1816,6 +1883,7 @@ class AutocompleteRecurrence {
     required this.id,
     required this.name,
     this.description,
+    this.active,
   });
 
   factory AutocompleteRecurrence.fromJson(Map<String, dynamic> json) =>
@@ -1830,6 +1898,8 @@ class AutocompleteRecurrence {
   final String name;
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
+  @JsonKey(name: 'active', includeIfNull: false)
+  final bool? active;
   static const fromJsonFactory = _$AutocompleteRecurrenceFromJson;
 
   @override
@@ -1841,11 +1911,13 @@ extension $AutocompleteRecurrenceExtension on AutocompleteRecurrence {
     String? id,
     String? name,
     String? description,
+    bool? active,
   }) {
     return AutocompleteRecurrence(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
+      active: active ?? this.active,
     );
   }
 
@@ -1853,11 +1925,13 @@ extension $AutocompleteRecurrenceExtension on AutocompleteRecurrence {
     Wrapped<String>? id,
     Wrapped<String>? name,
     Wrapped<String?>? description,
+    Wrapped<bool?>? active,
   }) {
     return AutocompleteRecurrence(
       id: (id != null ? id.value : this.id),
       name: (name != null ? name.value : this.name),
       description: (description != null ? description.value : this.description),
+      active: (active != null ? active.value : this.active),
     );
   }
 }
@@ -1868,6 +1942,7 @@ class AutocompleteRule {
     required this.id,
     required this.name,
     this.description,
+    this.active,
   });
 
   factory AutocompleteRule.fromJson(Map<String, dynamic> json) =>
@@ -1882,6 +1957,8 @@ class AutocompleteRule {
   final String name;
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
+  @JsonKey(name: 'active', includeIfNull: false)
+  final bool? active;
   static const fromJsonFactory = _$AutocompleteRuleFromJson;
 
   @override
@@ -1889,11 +1966,17 @@ class AutocompleteRule {
 }
 
 extension $AutocompleteRuleExtension on AutocompleteRule {
-  AutocompleteRule copyWith({String? id, String? name, String? description}) {
+  AutocompleteRule copyWith({
+    String? id,
+    String? name,
+    String? description,
+    bool? active,
+  }) {
     return AutocompleteRule(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
+      active: active ?? this.active,
     );
   }
 
@@ -1901,11 +1984,13 @@ extension $AutocompleteRuleExtension on AutocompleteRule {
     Wrapped<String>? id,
     Wrapped<String>? name,
     Wrapped<String?>? description,
+    Wrapped<bool?>? active,
   }) {
     return AutocompleteRule(
       id: (id != null ? id.value : this.id),
       name: (name != null ? name.value : this.name),
       description: (description != null ? description.value : this.description),
+      active: (active != null ? active.value : this.active),
     );
   }
 }
@@ -1916,6 +2001,7 @@ class AutocompleteRuleGroup {
     required this.id,
     required this.name,
     this.description,
+    this.active,
   });
 
   factory AutocompleteRuleGroup.fromJson(Map<String, dynamic> json) =>
@@ -1930,6 +2016,8 @@ class AutocompleteRuleGroup {
   final String name;
   @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
+  @JsonKey(name: 'active', includeIfNull: false)
+  final bool? active;
   static const fromJsonFactory = _$AutocompleteRuleGroupFromJson;
 
   @override
@@ -1941,11 +2029,13 @@ extension $AutocompleteRuleGroupExtension on AutocompleteRuleGroup {
     String? id,
     String? name,
     String? description,
+    bool? active,
   }) {
     return AutocompleteRuleGroup(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
+      active: active ?? this.active,
     );
   }
 
@@ -1953,11 +2043,13 @@ extension $AutocompleteRuleGroupExtension on AutocompleteRuleGroup {
     Wrapped<String>? id,
     Wrapped<String>? name,
     Wrapped<String?>? description,
+    Wrapped<bool?>? active,
   }) {
     return AutocompleteRuleGroup(
       id: (id != null ? id.value : this.id),
       name: (name != null ? name.value : this.name),
       description: (description != null ? description.value : this.description),
+      active: (active != null ? active.value : this.active),
     );
   }
 }
@@ -2062,10 +2154,9 @@ extension $AutocompleteTransactionExtension on AutocompleteTransaction {
   }) {
     return AutocompleteTransaction(
       id: (id != null ? id.value : this.id),
-      transactionGroupId:
-          (transactionGroupId != null
-              ? transactionGroupId.value
-              : this.transactionGroupId),
+      transactionGroupId: (transactionGroupId != null
+          ? transactionGroupId.value
+          : this.transactionGroupId),
       name: (name != null ? name.value : this.name),
       description: (description != null ? description.value : this.description),
     );
@@ -2124,10 +2215,9 @@ extension $AutocompleteTransactionIDExtension on AutocompleteTransactionID {
   }) {
     return AutocompleteTransactionID(
       id: (id != null ? id.value : this.id),
-      transactionGroupId:
-          (transactionGroupId != null
-              ? transactionGroupId.value
-              : this.transactionGroupId),
+      transactionGroupId: (transactionGroupId != null
+          ? transactionGroupId.value
+          : this.transactionGroupId),
       name: (name != null ? name.value : this.name),
       description: (description != null ? description.value : this.description),
     );
@@ -2219,14 +2309,23 @@ class ChartDataSet {
   const ChartDataSet({
     this.label,
     this.currencyId,
+    this.currencyName,
     this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
+    this.primaryCurrencyId,
+    this.primaryCurrencyName,
+    this.primaryCurrencyCode,
+    this.primaryCurrencySymbol,
+    this.primaryCurrencyDecimalPlaces,
+    this.date,
     this.startDate,
     this.endDate,
     this.type,
+    this.period,
     this.yAxisID,
     this.entries,
+    this.pcEntries,
   });
 
   factory ChartDataSet.fromJson(Map<String, dynamic> json) =>
@@ -2239,22 +2338,45 @@ class ChartDataSet {
   final String? label;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
+  @JsonKey(name: 'currency_name', includeIfNull: false)
+  final String? currencyName;
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'currency_symbol', includeIfNull: false)
   final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
+  @JsonKey(name: 'primary_currency_id', includeIfNull: false)
+  final String? primaryCurrencyId;
+  @JsonKey(name: 'primary_currency_name', includeIfNull: false)
+  final String? primaryCurrencyName;
+  @JsonKey(name: 'primary_currency_code', includeIfNull: false)
+  final String? primaryCurrencyCode;
+  @JsonKey(name: 'primary_currency_symbol', includeIfNull: false)
+  final String? primaryCurrencySymbol;
+  @JsonKey(name: 'primary_currency_decimal_places', includeIfNull: false)
+  final int? primaryCurrencyDecimalPlaces;
+  @JsonKey(name: 'date', includeIfNull: false)
+  final DateTime? date;
   @JsonKey(name: 'start_date', includeIfNull: false)
   final DateTime? startDate;
   @JsonKey(name: 'end_date', includeIfNull: false)
   final DateTime? endDate;
   @JsonKey(name: 'type', includeIfNull: false)
   final String? type;
+  @JsonKey(
+    name: 'period',
+    includeIfNull: false,
+    toJson: chartDatasetPeriodPropertyNullableToJson,
+    fromJson: chartDatasetPeriodPropertyNullableFromJson,
+  )
+  final enums.ChartDatasetPeriodProperty? period;
   @JsonKey(name: 'yAxisID', includeIfNull: false)
   final int? yAxisID;
   @JsonKey(name: 'entries', includeIfNull: false)
   final Object? entries;
+  @JsonKey(name: 'pc_entries', includeIfNull: false)
+  final Object? pcEntries;
   static const fromJsonFactory = _$ChartDataSetFromJson;
 
   @override
@@ -2265,58 +2387,109 @@ extension $ChartDataSetExtension on ChartDataSet {
   ChartDataSet copyWith({
     String? label,
     String? currencyId,
+    String? currencyName,
     String? currencyCode,
     String? currencySymbol,
     int? currencyDecimalPlaces,
+    String? primaryCurrencyId,
+    String? primaryCurrencyName,
+    String? primaryCurrencyCode,
+    String? primaryCurrencySymbol,
+    int? primaryCurrencyDecimalPlaces,
+    DateTime? date,
     DateTime? startDate,
     DateTime? endDate,
     String? type,
+    enums.ChartDatasetPeriodProperty? period,
     int? yAxisID,
     Object? entries,
+    Object? pcEntries,
   }) {
     return ChartDataSet(
       label: label ?? this.label,
       currencyId: currencyId ?? this.currencyId,
+      currencyName: currencyName ?? this.currencyName,
       currencyCode: currencyCode ?? this.currencyCode,
       currencySymbol: currencySymbol ?? this.currencySymbol,
       currencyDecimalPlaces:
           currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      primaryCurrencyId: primaryCurrencyId ?? this.primaryCurrencyId,
+      primaryCurrencyName: primaryCurrencyName ?? this.primaryCurrencyName,
+      primaryCurrencyCode: primaryCurrencyCode ?? this.primaryCurrencyCode,
+      primaryCurrencySymbol:
+          primaryCurrencySymbol ?? this.primaryCurrencySymbol,
+      primaryCurrencyDecimalPlaces:
+          primaryCurrencyDecimalPlaces ?? this.primaryCurrencyDecimalPlaces,
+      date: date ?? this.date,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
       type: type ?? this.type,
+      period: period ?? this.period,
       yAxisID: yAxisID ?? this.yAxisID,
       entries: entries ?? this.entries,
+      pcEntries: pcEntries ?? this.pcEntries,
     );
   }
 
   ChartDataSet copyWithWrapped({
     Wrapped<String?>? label,
     Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyName,
     Wrapped<String?>? currencyCode,
     Wrapped<String?>? currencySymbol,
     Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? primaryCurrencyId,
+    Wrapped<String?>? primaryCurrencyName,
+    Wrapped<String?>? primaryCurrencyCode,
+    Wrapped<String?>? primaryCurrencySymbol,
+    Wrapped<int?>? primaryCurrencyDecimalPlaces,
+    Wrapped<DateTime?>? date,
     Wrapped<DateTime?>? startDate,
     Wrapped<DateTime?>? endDate,
     Wrapped<String?>? type,
+    Wrapped<enums.ChartDatasetPeriodProperty?>? period,
     Wrapped<int?>? yAxisID,
     Wrapped<Object?>? entries,
+    Wrapped<Object?>? pcEntries,
   }) {
     return ChartDataSet(
       label: (label != null ? label.value : this.label),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
+      currencyName: (currencyName != null
+          ? currencyName.value
+          : this.currencyName),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      primaryCurrencyId: (primaryCurrencyId != null
+          ? primaryCurrencyId.value
+          : this.primaryCurrencyId),
+      primaryCurrencyName: (primaryCurrencyName != null
+          ? primaryCurrencyName.value
+          : this.primaryCurrencyName),
+      primaryCurrencyCode: (primaryCurrencyCode != null
+          ? primaryCurrencyCode.value
+          : this.primaryCurrencyCode),
+      primaryCurrencySymbol: (primaryCurrencySymbol != null
+          ? primaryCurrencySymbol.value
+          : this.primaryCurrencySymbol),
+      primaryCurrencyDecimalPlaces: (primaryCurrencyDecimalPlaces != null
+          ? primaryCurrencyDecimalPlaces.value
+          : this.primaryCurrencyDecimalPlaces),
+      date: (date != null ? date.value : this.date),
       startDate: (startDate != null ? startDate.value : this.startDate),
       endDate: (endDate != null ? endDate.value : this.endDate),
       type: (type != null ? type.value : this.type),
+      period: (period != null ? period.value : this.period),
       yAxisID: (yAxisID != null ? yAxisID.value : this.yAxisID),
       entries: (entries != null ? entries.value : this.entries),
+      pcEntries: (pcEntries != null ? pcEntries.value : this.pcEntries),
     );
   }
 }
@@ -2391,13 +2564,13 @@ extension $InsightGroupEntryExtension on InsightGroupEntry {
       id: (id != null ? id.value : this.id),
       name: (name != null ? name.value : this.name),
       difference: (difference != null ? difference.value : this.difference),
-      differenceFloat:
-          (differenceFloat != null
-              ? differenceFloat.value
-              : this.differenceFloat),
+      differenceFloat: (differenceFloat != null
+          ? differenceFloat.value
+          : this.differenceFloat),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
     );
   }
 }
@@ -2456,13 +2629,13 @@ extension $InsightTotalEntryExtension on InsightTotalEntry {
   }) {
     return InsightTotalEntry(
       difference: (difference != null ? difference.value : this.difference),
-      differenceFloat:
-          (differenceFloat != null
-              ? differenceFloat.value
-              : this.differenceFloat),
+      differenceFloat: (differenceFloat != null
+          ? differenceFloat.value
+          : this.differenceFloat),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
     );
   }
 }
@@ -2559,493 +2732,18 @@ extension $InsightTransferEntryExtension on InsightTransferEntry {
       id: (id != null ? id.value : this.id),
       name: (name != null ? name.value : this.name),
       difference: (difference != null ? difference.value : this.difference),
-      differenceFloat:
-          (differenceFloat != null
-              ? differenceFloat.value
-              : this.differenceFloat),
+      differenceFloat: (differenceFloat != null
+          ? differenceFloat.value
+          : this.differenceFloat),
       $in: ($in != null ? $in.value : this.$in),
       inFloat: (inFloat != null ? inFloat.value : this.inFloat),
       out: (out != null ? out.value : this.out),
       outFloat: (outFloat != null ? outFloat.value : this.outFloat),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
     );
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class AccountRead {
-  const AccountRead({
-    required this.type,
-    required this.id,
-    required this.attributes,
-  });
-
-  factory AccountRead.fromJson(Map<String, dynamic> json) =>
-      _$AccountReadFromJson(json);
-
-  static const toJsonFactory = _$AccountReadToJson;
-  Map<String, dynamic> toJson() => _$AccountReadToJson(this);
-
-  @JsonKey(name: 'type', includeIfNull: false)
-  final String type;
-  @JsonKey(name: 'id', includeIfNull: false)
-  final String id;
-  @JsonKey(name: 'attributes', includeIfNull: false)
-  final Account attributes;
-  static const fromJsonFactory = _$AccountReadFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $AccountReadExtension on AccountRead {
-  AccountRead copyWith({String? type, String? id, Account? attributes}) {
-    return AccountRead(
-      type: type ?? this.type,
-      id: id ?? this.id,
-      attributes: attributes ?? this.attributes,
-    );
-  }
-
-  AccountRead copyWithWrapped({
-    Wrapped<String>? type,
-    Wrapped<String>? id,
-    Wrapped<Account>? attributes,
-  }) {
-    return AccountRead(
-      type: (type != null ? type.value : this.type),
-      id: (id != null ? id.value : this.id),
-      attributes: (attributes != null ? attributes.value : this.attributes),
-    );
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class AccountSingle {
-  const AccountSingle({required this.data});
-
-  factory AccountSingle.fromJson(Map<String, dynamic> json) =>
-      _$AccountSingleFromJson(json);
-
-  static const toJsonFactory = _$AccountSingleToJson;
-  Map<String, dynamic> toJson() => _$AccountSingleToJson(this);
-
-  @JsonKey(name: 'data', includeIfNull: false)
-  final AccountRead data;
-  static const fromJsonFactory = _$AccountSingleFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $AccountSingleExtension on AccountSingle {
-  AccountSingle copyWith({AccountRead? data}) {
-    return AccountSingle(data: data ?? this.data);
-  }
-
-  AccountSingle copyWithWrapped({Wrapped<AccountRead>? data}) {
-    return AccountSingle(data: (data != null ? data.value : this.data));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class AttachmentRead {
-  const AttachmentRead({
-    required this.type,
-    required this.id,
-    required this.attributes,
-    required this.links,
-  });
-
-  factory AttachmentRead.fromJson(Map<String, dynamic> json) =>
-      _$AttachmentReadFromJson(json);
-
-  static const toJsonFactory = _$AttachmentReadToJson;
-  Map<String, dynamic> toJson() => _$AttachmentReadToJson(this);
-
-  @JsonKey(name: 'type', includeIfNull: false)
-  final String type;
-  @JsonKey(name: 'id', includeIfNull: false)
-  final String id;
-  @JsonKey(name: 'attributes', includeIfNull: false)
-  final Attachment attributes;
-  @JsonKey(name: 'links', includeIfNull: false)
-  final ObjectLink links;
-  static const fromJsonFactory = _$AttachmentReadFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $AttachmentReadExtension on AttachmentRead {
-  AttachmentRead copyWith({
-    String? type,
-    String? id,
-    Attachment? attributes,
-    ObjectLink? links,
-  }) {
-    return AttachmentRead(
-      type: type ?? this.type,
-      id: id ?? this.id,
-      attributes: attributes ?? this.attributes,
-      links: links ?? this.links,
-    );
-  }
-
-  AttachmentRead copyWithWrapped({
-    Wrapped<String>? type,
-    Wrapped<String>? id,
-    Wrapped<Attachment>? attributes,
-    Wrapped<ObjectLink>? links,
-  }) {
-    return AttachmentRead(
-      type: (type != null ? type.value : this.type),
-      id: (id != null ? id.value : this.id),
-      attributes: (attributes != null ? attributes.value : this.attributes),
-      links: (links != null ? links.value : this.links),
-    );
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class AttachmentSingle {
-  const AttachmentSingle({required this.data});
-
-  factory AttachmentSingle.fromJson(Map<String, dynamic> json) =>
-      _$AttachmentSingleFromJson(json);
-
-  static const toJsonFactory = _$AttachmentSingleToJson;
-  Map<String, dynamic> toJson() => _$AttachmentSingleToJson(this);
-
-  @JsonKey(name: 'data', includeIfNull: false)
-  final AttachmentRead data;
-  static const fromJsonFactory = _$AttachmentSingleFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $AttachmentSingleExtension on AttachmentSingle {
-  AttachmentSingle copyWith({AttachmentRead? data}) {
-    return AttachmentSingle(data: data ?? this.data);
-  }
-
-  AttachmentSingle copyWithWrapped({Wrapped<AttachmentRead>? data}) {
-    return AttachmentSingle(data: (data != null ? data.value : this.data));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class AvailableBudgetRead {
-  const AvailableBudgetRead({
-    required this.type,
-    required this.id,
-    required this.attributes,
-  });
-
-  factory AvailableBudgetRead.fromJson(Map<String, dynamic> json) =>
-      _$AvailableBudgetReadFromJson(json);
-
-  static const toJsonFactory = _$AvailableBudgetReadToJson;
-  Map<String, dynamic> toJson() => _$AvailableBudgetReadToJson(this);
-
-  @JsonKey(name: 'type', includeIfNull: false)
-  final String type;
-  @JsonKey(name: 'id', includeIfNull: false)
-  final String id;
-  @JsonKey(name: 'attributes', includeIfNull: false)
-  final AvailableBudget attributes;
-  static const fromJsonFactory = _$AvailableBudgetReadFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $AvailableBudgetReadExtension on AvailableBudgetRead {
-  AvailableBudgetRead copyWith({
-    String? type,
-    String? id,
-    AvailableBudget? attributes,
-  }) {
-    return AvailableBudgetRead(
-      type: type ?? this.type,
-      id: id ?? this.id,
-      attributes: attributes ?? this.attributes,
-    );
-  }
-
-  AvailableBudgetRead copyWithWrapped({
-    Wrapped<String>? type,
-    Wrapped<String>? id,
-    Wrapped<AvailableBudget>? attributes,
-  }) {
-    return AvailableBudgetRead(
-      type: (type != null ? type.value : this.type),
-      id: (id != null ? id.value : this.id),
-      attributes: (attributes != null ? attributes.value : this.attributes),
-    );
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class AvailableBudgetSingle {
-  const AvailableBudgetSingle({required this.data});
-
-  factory AvailableBudgetSingle.fromJson(Map<String, dynamic> json) =>
-      _$AvailableBudgetSingleFromJson(json);
-
-  static const toJsonFactory = _$AvailableBudgetSingleToJson;
-  Map<String, dynamic> toJson() => _$AvailableBudgetSingleToJson(this);
-
-  @JsonKey(name: 'data', includeIfNull: false)
-  final AvailableBudgetRead data;
-  static const fromJsonFactory = _$AvailableBudgetSingleFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $AvailableBudgetSingleExtension on AvailableBudgetSingle {
-  AvailableBudgetSingle copyWith({AvailableBudgetRead? data}) {
-    return AvailableBudgetSingle(data: data ?? this.data);
-  }
-
-  AvailableBudgetSingle copyWithWrapped({Wrapped<AvailableBudgetRead>? data}) {
-    return AvailableBudgetSingle(data: (data != null ? data.value : this.data));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class BillRead {
-  const BillRead({
-    required this.type,
-    required this.id,
-    required this.attributes,
-  });
-
-  factory BillRead.fromJson(Map<String, dynamic> json) =>
-      _$BillReadFromJson(json);
-
-  static const toJsonFactory = _$BillReadToJson;
-  Map<String, dynamic> toJson() => _$BillReadToJson(this);
-
-  @JsonKey(name: 'type', includeIfNull: false)
-  final String type;
-  @JsonKey(name: 'id', includeIfNull: false)
-  final String id;
-  @JsonKey(name: 'attributes', includeIfNull: false)
-  final Bill attributes;
-  static const fromJsonFactory = _$BillReadFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $BillReadExtension on BillRead {
-  BillRead copyWith({String? type, String? id, Bill? attributes}) {
-    return BillRead(
-      type: type ?? this.type,
-      id: id ?? this.id,
-      attributes: attributes ?? this.attributes,
-    );
-  }
-
-  BillRead copyWithWrapped({
-    Wrapped<String>? type,
-    Wrapped<String>? id,
-    Wrapped<Bill>? attributes,
-  }) {
-    return BillRead(
-      type: (type != null ? type.value : this.type),
-      id: (id != null ? id.value : this.id),
-      attributes: (attributes != null ? attributes.value : this.attributes),
-    );
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class BillSingle {
-  const BillSingle({required this.data});
-
-  factory BillSingle.fromJson(Map<String, dynamic> json) =>
-      _$BillSingleFromJson(json);
-
-  static const toJsonFactory = _$BillSingleToJson;
-  Map<String, dynamic> toJson() => _$BillSingleToJson(this);
-
-  @JsonKey(name: 'data', includeIfNull: false)
-  final BillRead data;
-  static const fromJsonFactory = _$BillSingleFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $BillSingleExtension on BillSingle {
-  BillSingle copyWith({BillRead? data}) {
-    return BillSingle(data: data ?? this.data);
-  }
-
-  BillSingle copyWithWrapped({Wrapped<BillRead>? data}) {
-    return BillSingle(data: (data != null ? data.value : this.data));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class BudgetLimitRead {
-  const BudgetLimitRead({
-    required this.type,
-    required this.id,
-    required this.attributes,
-  });
-
-  factory BudgetLimitRead.fromJson(Map<String, dynamic> json) =>
-      _$BudgetLimitReadFromJson(json);
-
-  static const toJsonFactory = _$BudgetLimitReadToJson;
-  Map<String, dynamic> toJson() => _$BudgetLimitReadToJson(this);
-
-  @JsonKey(name: 'type', includeIfNull: false)
-  final String type;
-  @JsonKey(name: 'id', includeIfNull: false)
-  final String id;
-  @JsonKey(name: 'attributes', includeIfNull: false)
-  final BudgetLimit attributes;
-  static const fromJsonFactory = _$BudgetLimitReadFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $BudgetLimitReadExtension on BudgetLimitRead {
-  BudgetLimitRead copyWith({
-    String? type,
-    String? id,
-    BudgetLimit? attributes,
-  }) {
-    return BudgetLimitRead(
-      type: type ?? this.type,
-      id: id ?? this.id,
-      attributes: attributes ?? this.attributes,
-    );
-  }
-
-  BudgetLimitRead copyWithWrapped({
-    Wrapped<String>? type,
-    Wrapped<String>? id,
-    Wrapped<BudgetLimit>? attributes,
-  }) {
-    return BudgetLimitRead(
-      type: (type != null ? type.value : this.type),
-      id: (id != null ? id.value : this.id),
-      attributes: (attributes != null ? attributes.value : this.attributes),
-    );
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class BudgetLimitSingle {
-  const BudgetLimitSingle({required this.data});
-
-  factory BudgetLimitSingle.fromJson(Map<String, dynamic> json) =>
-      _$BudgetLimitSingleFromJson(json);
-
-  static const toJsonFactory = _$BudgetLimitSingleToJson;
-  Map<String, dynamic> toJson() => _$BudgetLimitSingleToJson(this);
-
-  @JsonKey(name: 'data', includeIfNull: false)
-  final BudgetLimitRead data;
-  static const fromJsonFactory = _$BudgetLimitSingleFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $BudgetLimitSingleExtension on BudgetLimitSingle {
-  BudgetLimitSingle copyWith({BudgetLimitRead? data}) {
-    return BudgetLimitSingle(data: data ?? this.data);
-  }
-
-  BudgetLimitSingle copyWithWrapped({Wrapped<BudgetLimitRead>? data}) {
-    return BudgetLimitSingle(data: (data != null ? data.value : this.data));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class BudgetRead {
-  const BudgetRead({
-    required this.type,
-    required this.id,
-    required this.attributes,
-  });
-
-  factory BudgetRead.fromJson(Map<String, dynamic> json) =>
-      _$BudgetReadFromJson(json);
-
-  static const toJsonFactory = _$BudgetReadToJson;
-  Map<String, dynamic> toJson() => _$BudgetReadToJson(this);
-
-  @JsonKey(name: 'type', includeIfNull: false)
-  final String type;
-  @JsonKey(name: 'id', includeIfNull: false)
-  final String id;
-  @JsonKey(name: 'attributes', includeIfNull: false)
-  final Budget attributes;
-  static const fromJsonFactory = _$BudgetReadFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $BudgetReadExtension on BudgetRead {
-  BudgetRead copyWith({String? type, String? id, Budget? attributes}) {
-    return BudgetRead(
-      type: type ?? this.type,
-      id: id ?? this.id,
-      attributes: attributes ?? this.attributes,
-    );
-  }
-
-  BudgetRead copyWithWrapped({
-    Wrapped<String>? type,
-    Wrapped<String>? id,
-    Wrapped<Budget>? attributes,
-  }) {
-    return BudgetRead(
-      type: (type != null ? type.value : this.type),
-      id: (id != null ? id.value : this.id),
-      attributes: (attributes != null ? attributes.value : this.attributes),
-    );
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class BudgetSingle {
-  const BudgetSingle({required this.data});
-
-  factory BudgetSingle.fromJson(Map<String, dynamic> json) =>
-      _$BudgetSingleFromJson(json);
-
-  static const toJsonFactory = _$BudgetSingleToJson;
-  Map<String, dynamic> toJson() => _$BudgetSingleToJson(this);
-
-  @JsonKey(name: 'data', includeIfNull: false)
-  final BudgetRead data;
-  static const fromJsonFactory = _$BudgetSingleFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $BudgetSingleExtension on BudgetSingle {
-  BudgetSingle copyWith({BudgetRead? data}) {
-    return BudgetSingle(data: data ?? this.data);
-  }
-
-  BudgetSingle copyWithWrapped({Wrapped<BudgetRead>? data}) {
-    return BudgetSingle(data: (data != null ? data.value : this.data));
   }
 }
 
@@ -3068,7 +2766,7 @@ class CategoryRead {
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'attributes', includeIfNull: false)
-  final Category attributes;
+  final CategoryProperties attributes;
   static const fromJsonFactory = _$CategoryReadFromJson;
 
   @override
@@ -3076,7 +2774,11 @@ class CategoryRead {
 }
 
 extension $CategoryReadExtension on CategoryRead {
-  CategoryRead copyWith({String? type, String? id, Category? attributes}) {
+  CategoryRead copyWith({
+    String? type,
+    String? id,
+    CategoryProperties? attributes,
+  }) {
     return CategoryRead(
       type: type ?? this.type,
       id: id ?? this.id,
@@ -3087,7 +2789,7 @@ extension $CategoryReadExtension on CategoryRead {
   CategoryRead copyWithWrapped({
     Wrapped<String>? type,
     Wrapped<String>? id,
-    Wrapped<Category>? attributes,
+    Wrapped<CategoryProperties>? attributes,
   }) {
     return CategoryRead(
       type: (type != null ? type.value : this.type),
@@ -3172,7 +2874,7 @@ class CurrencyRead {
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'attributes', includeIfNull: false)
-  final Currency attributes;
+  final CurrencyProperties attributes;
   static const fromJsonFactory = _$CurrencyReadFromJson;
 
   @override
@@ -3180,7 +2882,11 @@ class CurrencyRead {
 }
 
 extension $CurrencyReadExtension on CurrencyRead {
-  CurrencyRead copyWith({String? type, String? id, Currency? attributes}) {
+  CurrencyRead copyWith({
+    String? type,
+    String? id,
+    CurrencyProperties? attributes,
+  }) {
     return CurrencyRead(
       type: type ?? this.type,
       id: id ?? this.id,
@@ -3191,7 +2897,7 @@ extension $CurrencyReadExtension on CurrencyRead {
   CurrencyRead copyWithWrapped({
     Wrapped<String>? type,
     Wrapped<String>? id,
-    Wrapped<Currency>? attributes,
+    Wrapped<CurrencyProperties>? attributes,
   }) {
     return CurrencyRead(
       type: (type != null ? type.value : this.type),
@@ -3416,7 +3122,7 @@ class PiggyBankEventRead {
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'attributes', includeIfNull: false)
-  final PiggyBankEvent attributes;
+  final PiggyBankEventProperties attributes;
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$PiggyBankEventReadFromJson;
@@ -3429,7 +3135,7 @@ extension $PiggyBankEventReadExtension on PiggyBankEventRead {
   PiggyBankEventRead copyWith({
     String? type,
     String? id,
-    PiggyBankEvent? attributes,
+    PiggyBankEventProperties? attributes,
     ObjectLink? links,
   }) {
     return PiggyBankEventRead(
@@ -3443,7 +3149,7 @@ extension $PiggyBankEventReadExtension on PiggyBankEventRead {
   PiggyBankEventRead copyWithWrapped({
     Wrapped<String>? type,
     Wrapped<String>? id,
-    Wrapped<PiggyBankEvent>? attributes,
+    Wrapped<PiggyBankEventProperties>? attributes,
     Wrapped<ObjectLink>? links,
   }) {
     return PiggyBankEventRead(
@@ -3475,7 +3181,7 @@ class PiggyBankRead {
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'attributes', includeIfNull: false)
-  final PiggyBank attributes;
+  final PiggyBankProperties attributes;
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$PiggyBankReadFromJson;
@@ -3488,7 +3194,7 @@ extension $PiggyBankReadExtension on PiggyBankRead {
   PiggyBankRead copyWith({
     String? type,
     String? id,
-    PiggyBank? attributes,
+    PiggyBankProperties? attributes,
     ObjectLink? links,
   }) {
     return PiggyBankRead(
@@ -3502,7 +3208,7 @@ extension $PiggyBankReadExtension on PiggyBankRead {
   PiggyBankRead copyWithWrapped({
     Wrapped<String>? type,
     Wrapped<String>? id,
-    Wrapped<PiggyBank>? attributes,
+    Wrapped<PiggyBankProperties>? attributes,
     Wrapped<ObjectLink>? links,
   }) {
     return PiggyBankRead(
@@ -3638,7 +3344,7 @@ class RecurrenceRead {
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'attributes', includeIfNull: false)
-  final Recurrence attributes;
+  final RecurrenceProperties attributes;
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$RecurrenceReadFromJson;
@@ -3651,7 +3357,7 @@ extension $RecurrenceReadExtension on RecurrenceRead {
   RecurrenceRead copyWith({
     String? type,
     String? id,
-    Recurrence? attributes,
+    RecurrenceProperties? attributes,
     ObjectLink? links,
   }) {
     return RecurrenceRead(
@@ -3665,7 +3371,7 @@ extension $RecurrenceReadExtension on RecurrenceRead {
   RecurrenceRead copyWithWrapped({
     Wrapped<String>? type,
     Wrapped<String>? id,
-    Wrapped<Recurrence>? attributes,
+    Wrapped<RecurrenceProperties>? attributes,
     Wrapped<ObjectLink>? links,
   }) {
     return RecurrenceRead(
@@ -4379,7 +4085,7 @@ class WebhookRead {
   @JsonKey(name: 'id', includeIfNull: false)
   final String id;
   @JsonKey(name: 'attributes', includeIfNull: false)
-  final Webhook attributes;
+  final WebhookProperties attributes;
   @JsonKey(name: 'links', includeIfNull: false)
   final ObjectLink links;
   static const fromJsonFactory = _$WebhookReadFromJson;
@@ -4392,7 +4098,7 @@ extension $WebhookReadExtension on WebhookRead {
   WebhookRead copyWith({
     String? type,
     String? id,
-    Webhook? attributes,
+    WebhookProperties? attributes,
     ObjectLink? links,
   }) {
     return WebhookRead(
@@ -4406,7 +4112,7 @@ extension $WebhookReadExtension on WebhookRead {
   WebhookRead copyWithWrapped({
     Wrapped<String>? type,
     Wrapped<String>? id,
-    Wrapped<Webhook>? attributes,
+    Wrapped<WebhookProperties>? attributes,
     Wrapped<ObjectLink>? links,
   }) {
     return WebhookRead(
@@ -4447,8 +4153,8 @@ extension $WebhookSingleExtension on WebhookSingle {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Account {
-  const Account({
+class AccountProperties {
+  const AccountProperties({
     this.createdAt,
     this.updatedAt,
     this.active,
@@ -4456,16 +4162,30 @@ class Account {
     required this.name,
     required this.type,
     this.accountRole,
+    this.objectGroupId,
+    this.objectGroupOrder,
+    this.objectGroupTitle,
+    this.objectHasCurrencySetting,
     this.currencyId,
+    this.currencyName,
     this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
-    this.nativeCurrencyId,
-    this.nativeCurrencyCode,
-    this.nativeCurrencySymbol,
-    this.nativeCurrencyDecimalPlaces,
+    this.primaryCurrencyId,
+    this.primaryCurrencyName,
+    this.primaryCurrencyCode,
+    this.primaryCurrencySymbol,
+    this.primaryCurrencyDecimalPlaces,
     this.currentBalance,
-    this.nativeCurrentBalance,
+    this.pcCurrentBalance,
+    this.balanceDifference,
+    this.pcBalanceDifference,
+    this.openingBalance,
+    this.pcOpeningBalance,
+    this.virtualBalance,
+    this.pcVirtualBalance,
+    this.debtAmount,
+    this.pcDebtAmount,
     this.currentBalanceDate,
     this.notes,
     this.monthlyPaymentDate,
@@ -4473,27 +4193,23 @@ class Account {
     this.accountNumber,
     this.iban,
     this.bic,
-    this.virtualBalance,
-    this.nativeVirtualBalance,
-    this.openingBalance,
-    this.nativeOpeningBalance,
     this.openingBalanceDate,
     this.liabilityType,
     this.liabilityDirection,
     this.interest,
     this.interestPeriod,
-    this.currentDebt,
     this.includeNetWorth,
     this.longitude,
     this.latitude,
     this.zoomLevel,
+    this.lastActivity,
   });
 
-  factory Account.fromJson(Map<String, dynamic> json) =>
-      _$AccountFromJson(json);
+  factory AccountProperties.fromJson(Map<String, dynamic> json) =>
+      _$AccountPropertiesFromJson(json);
 
-  static const toJsonFactory = _$AccountToJson;
-  Map<String, dynamic> toJson() => _$AccountToJson(this);
+  static const toJsonFactory = _$AccountPropertiesToJson;
+  Map<String, dynamic> toJson() => _$AccountPropertiesToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -4519,26 +4235,54 @@ class Account {
     fromJson: accountRolePropertyNullableFromJson,
   )
   final enums.AccountRoleProperty? accountRole;
+  @JsonKey(name: 'object_group_id', includeIfNull: false)
+  final String? objectGroupId;
+  @JsonKey(name: 'object_group_order', includeIfNull: false)
+  final int? objectGroupOrder;
+  @JsonKey(name: 'object_group_title', includeIfNull: false)
+  final String? objectGroupTitle;
+  @JsonKey(name: 'object_has_currency_setting', includeIfNull: false)
+  final bool? objectHasCurrencySetting;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
+  @JsonKey(name: 'currency_name', includeIfNull: false)
+  final String? currencyName;
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'currency_symbol', includeIfNull: false)
   final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
-  @JsonKey(name: 'native_currency_id', includeIfNull: false)
-  final String? nativeCurrencyId;
-  @JsonKey(name: 'native_currency_code', includeIfNull: false)
-  final String? nativeCurrencyCode;
-  @JsonKey(name: 'native_currency_symbol', includeIfNull: false)
-  final String? nativeCurrencySymbol;
-  @JsonKey(name: 'native_currency_decimal_places', includeIfNull: false)
-  final int? nativeCurrencyDecimalPlaces;
+  @JsonKey(name: 'primary_currency_id', includeIfNull: false)
+  final String? primaryCurrencyId;
+  @JsonKey(name: 'primary_currency_name', includeIfNull: false)
+  final String? primaryCurrencyName;
+  @JsonKey(name: 'primary_currency_code', includeIfNull: false)
+  final String? primaryCurrencyCode;
+  @JsonKey(name: 'primary_currency_symbol', includeIfNull: false)
+  final String? primaryCurrencySymbol;
+  @JsonKey(name: 'primary_currency_decimal_places', includeIfNull: false)
+  final int? primaryCurrencyDecimalPlaces;
   @JsonKey(name: 'current_balance', includeIfNull: false)
   final String? currentBalance;
-  @JsonKey(name: 'native_current_balance', includeIfNull: false)
-  final String? nativeCurrentBalance;
+  @JsonKey(name: 'pc_current_balance', includeIfNull: false)
+  final String? pcCurrentBalance;
+  @JsonKey(name: 'balance_difference', includeIfNull: false)
+  final String? balanceDifference;
+  @JsonKey(name: 'pc_balance_difference', includeIfNull: false)
+  final String? pcBalanceDifference;
+  @JsonKey(name: 'opening_balance', includeIfNull: false)
+  final String? openingBalance;
+  @JsonKey(name: 'pc_opening_balance', includeIfNull: false)
+  final String? pcOpeningBalance;
+  @JsonKey(name: 'virtual_balance', includeIfNull: false)
+  final String? virtualBalance;
+  @JsonKey(name: 'pc_virtual_balance', includeIfNull: false)
+  final String? pcVirtualBalance;
+  @JsonKey(name: 'debt_amount', includeIfNull: false)
+  final String? debtAmount;
+  @JsonKey(name: 'pc_debt_amount', includeIfNull: false)
+  final String? pcDebtAmount;
   @JsonKey(name: 'current_balance_date', includeIfNull: false)
   final DateTime? currentBalanceDate;
   @JsonKey(name: 'notes', includeIfNull: false)
@@ -4558,14 +4302,6 @@ class Account {
   final String? iban;
   @JsonKey(name: 'bic', includeIfNull: false)
   final String? bic;
-  @JsonKey(name: 'virtual_balance', includeIfNull: false)
-  final String? virtualBalance;
-  @JsonKey(name: 'native_virtual_balance', includeIfNull: false)
-  final String? nativeVirtualBalance;
-  @JsonKey(name: 'opening_balance', includeIfNull: false)
-  final String? openingBalance;
-  @JsonKey(name: 'native_opening_balance', includeIfNull: false)
-  final String? nativeOpeningBalance;
   @JsonKey(name: 'opening_balance_date', includeIfNull: false)
   final DateTime? openingBalanceDate;
   @JsonKey(
@@ -4591,8 +4327,6 @@ class Account {
     fromJson: interestPeriodPropertyNullableFromJson,
   )
   final enums.InterestPeriodProperty? interestPeriod;
-  @JsonKey(name: 'current_debt', includeIfNull: false)
-  final String? currentDebt;
   @JsonKey(name: 'include_net_worth', includeIfNull: false, defaultValue: true)
   final bool? includeNetWorth;
   @JsonKey(name: 'longitude', includeIfNull: false)
@@ -4601,14 +4335,16 @@ class Account {
   final double? latitude;
   @JsonKey(name: 'zoom_level', includeIfNull: false)
   final int? zoomLevel;
-  static const fromJsonFactory = _$AccountFromJson;
+  @JsonKey(name: 'last_activity', includeIfNull: false)
+  final DateTime? lastActivity;
+  static const fromJsonFactory = _$AccountPropertiesFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $AccountExtension on Account {
-  Account copyWith({
+extension $AccountPropertiesExtension on AccountProperties {
+  AccountProperties copyWith({
     DateTime? createdAt,
     DateTime? updatedAt,
     bool? active,
@@ -4616,16 +4352,30 @@ extension $AccountExtension on Account {
     String? name,
     enums.ShortAccountTypeProperty? type,
     enums.AccountRoleProperty? accountRole,
+    String? objectGroupId,
+    int? objectGroupOrder,
+    String? objectGroupTitle,
+    bool? objectHasCurrencySetting,
     String? currencyId,
+    String? currencyName,
     String? currencyCode,
     String? currencySymbol,
     int? currencyDecimalPlaces,
-    String? nativeCurrencyId,
-    String? nativeCurrencyCode,
-    String? nativeCurrencySymbol,
-    int? nativeCurrencyDecimalPlaces,
+    String? primaryCurrencyId,
+    String? primaryCurrencyName,
+    String? primaryCurrencyCode,
+    String? primaryCurrencySymbol,
+    int? primaryCurrencyDecimalPlaces,
     String? currentBalance,
-    String? nativeCurrentBalance,
+    String? pcCurrentBalance,
+    String? balanceDifference,
+    String? pcBalanceDifference,
+    String? openingBalance,
+    String? pcOpeningBalance,
+    String? virtualBalance,
+    String? pcVirtualBalance,
+    String? debtAmount,
+    String? pcDebtAmount,
     DateTime? currentBalanceDate,
     String? notes,
     DateTime? monthlyPaymentDate,
@@ -4633,22 +4383,18 @@ extension $AccountExtension on Account {
     String? accountNumber,
     String? iban,
     String? bic,
-    String? virtualBalance,
-    String? nativeVirtualBalance,
-    String? openingBalance,
-    String? nativeOpeningBalance,
     DateTime? openingBalanceDate,
     enums.LiabilityTypeProperty? liabilityType,
     enums.LiabilityDirectionProperty? liabilityDirection,
     String? interest,
     enums.InterestPeriodProperty? interestPeriod,
-    String? currentDebt,
     bool? includeNetWorth,
     double? longitude,
     double? latitude,
     int? zoomLevel,
+    DateTime? lastActivity,
   }) {
-    return Account(
+    return AccountProperties(
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       active: active ?? this.active,
@@ -4656,18 +4402,34 @@ extension $AccountExtension on Account {
       name: name ?? this.name,
       type: type ?? this.type,
       accountRole: accountRole ?? this.accountRole,
+      objectGroupId: objectGroupId ?? this.objectGroupId,
+      objectGroupOrder: objectGroupOrder ?? this.objectGroupOrder,
+      objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle,
+      objectHasCurrencySetting:
+          objectHasCurrencySetting ?? this.objectHasCurrencySetting,
       currencyId: currencyId ?? this.currencyId,
+      currencyName: currencyName ?? this.currencyName,
       currencyCode: currencyCode ?? this.currencyCode,
       currencySymbol: currencySymbol ?? this.currencySymbol,
       currencyDecimalPlaces:
           currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
-      nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
-      nativeCurrencyDecimalPlaces:
-          nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
+      primaryCurrencyId: primaryCurrencyId ?? this.primaryCurrencyId,
+      primaryCurrencyName: primaryCurrencyName ?? this.primaryCurrencyName,
+      primaryCurrencyCode: primaryCurrencyCode ?? this.primaryCurrencyCode,
+      primaryCurrencySymbol:
+          primaryCurrencySymbol ?? this.primaryCurrencySymbol,
+      primaryCurrencyDecimalPlaces:
+          primaryCurrencyDecimalPlaces ?? this.primaryCurrencyDecimalPlaces,
       currentBalance: currentBalance ?? this.currentBalance,
-      nativeCurrentBalance: nativeCurrentBalance ?? this.nativeCurrentBalance,
+      pcCurrentBalance: pcCurrentBalance ?? this.pcCurrentBalance,
+      balanceDifference: balanceDifference ?? this.balanceDifference,
+      pcBalanceDifference: pcBalanceDifference ?? this.pcBalanceDifference,
+      openingBalance: openingBalance ?? this.openingBalance,
+      pcOpeningBalance: pcOpeningBalance ?? this.pcOpeningBalance,
+      virtualBalance: virtualBalance ?? this.virtualBalance,
+      pcVirtualBalance: pcVirtualBalance ?? this.pcVirtualBalance,
+      debtAmount: debtAmount ?? this.debtAmount,
+      pcDebtAmount: pcDebtAmount ?? this.pcDebtAmount,
       currentBalanceDate: currentBalanceDate ?? this.currentBalanceDate,
       notes: notes ?? this.notes,
       monthlyPaymentDate: monthlyPaymentDate ?? this.monthlyPaymentDate,
@@ -4675,24 +4437,20 @@ extension $AccountExtension on Account {
       accountNumber: accountNumber ?? this.accountNumber,
       iban: iban ?? this.iban,
       bic: bic ?? this.bic,
-      virtualBalance: virtualBalance ?? this.virtualBalance,
-      nativeVirtualBalance: nativeVirtualBalance ?? this.nativeVirtualBalance,
-      openingBalance: openingBalance ?? this.openingBalance,
-      nativeOpeningBalance: nativeOpeningBalance ?? this.nativeOpeningBalance,
       openingBalanceDate: openingBalanceDate ?? this.openingBalanceDate,
       liabilityType: liabilityType ?? this.liabilityType,
       liabilityDirection: liabilityDirection ?? this.liabilityDirection,
       interest: interest ?? this.interest,
       interestPeriod: interestPeriod ?? this.interestPeriod,
-      currentDebt: currentDebt ?? this.currentDebt,
       includeNetWorth: includeNetWorth ?? this.includeNetWorth,
       longitude: longitude ?? this.longitude,
       latitude: latitude ?? this.latitude,
       zoomLevel: zoomLevel ?? this.zoomLevel,
+      lastActivity: lastActivity ?? this.lastActivity,
     );
   }
 
-  Account copyWithWrapped({
+  AccountProperties copyWithWrapped({
     Wrapped<DateTime?>? createdAt,
     Wrapped<DateTime?>? updatedAt,
     Wrapped<bool?>? active,
@@ -4700,16 +4458,30 @@ extension $AccountExtension on Account {
     Wrapped<String>? name,
     Wrapped<enums.ShortAccountTypeProperty>? type,
     Wrapped<enums.AccountRoleProperty?>? accountRole,
+    Wrapped<String?>? objectGroupId,
+    Wrapped<int?>? objectGroupOrder,
+    Wrapped<String?>? objectGroupTitle,
+    Wrapped<bool?>? objectHasCurrencySetting,
     Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyName,
     Wrapped<String?>? currencyCode,
     Wrapped<String?>? currencySymbol,
     Wrapped<int?>? currencyDecimalPlaces,
-    Wrapped<String?>? nativeCurrencyId,
-    Wrapped<String?>? nativeCurrencyCode,
-    Wrapped<String?>? nativeCurrencySymbol,
-    Wrapped<int?>? nativeCurrencyDecimalPlaces,
+    Wrapped<String?>? primaryCurrencyId,
+    Wrapped<String?>? primaryCurrencyName,
+    Wrapped<String?>? primaryCurrencyCode,
+    Wrapped<String?>? primaryCurrencySymbol,
+    Wrapped<int?>? primaryCurrencyDecimalPlaces,
     Wrapped<String?>? currentBalance,
-    Wrapped<String?>? nativeCurrentBalance,
+    Wrapped<String?>? pcCurrentBalance,
+    Wrapped<String?>? balanceDifference,
+    Wrapped<String?>? pcBalanceDifference,
+    Wrapped<String?>? openingBalance,
+    Wrapped<String?>? pcOpeningBalance,
+    Wrapped<String?>? virtualBalance,
+    Wrapped<String?>? pcVirtualBalance,
+    Wrapped<String?>? debtAmount,
+    Wrapped<String?>? pcDebtAmount,
     Wrapped<DateTime?>? currentBalanceDate,
     Wrapped<String?>? notes,
     Wrapped<DateTime?>? monthlyPaymentDate,
@@ -4717,22 +4489,18 @@ extension $AccountExtension on Account {
     Wrapped<String?>? accountNumber,
     Wrapped<String?>? iban,
     Wrapped<String?>? bic,
-    Wrapped<String?>? virtualBalance,
-    Wrapped<String?>? nativeVirtualBalance,
-    Wrapped<String?>? openingBalance,
-    Wrapped<String?>? nativeOpeningBalance,
     Wrapped<DateTime?>? openingBalanceDate,
     Wrapped<enums.LiabilityTypeProperty?>? liabilityType,
     Wrapped<enums.LiabilityDirectionProperty?>? liabilityDirection,
     Wrapped<String?>? interest,
     Wrapped<enums.InterestPeriodProperty?>? interestPeriod,
-    Wrapped<String?>? currentDebt,
     Wrapped<bool?>? includeNetWorth,
     Wrapped<double?>? longitude,
     Wrapped<double?>? latitude,
     Wrapped<int?>? zoomLevel,
+    Wrapped<DateTime?>? lastActivity,
   }) {
-    return Account(
+    return AccountProperties(
       createdAt: (createdAt != null ? createdAt.value : this.createdAt),
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
       active: (active != null ? active.value : this.active),
@@ -4740,86 +4508,192 @@ extension $AccountExtension on Account {
       name: (name != null ? name.value : this.name),
       type: (type != null ? type.value : this.type),
       accountRole: (accountRole != null ? accountRole.value : this.accountRole),
+      objectGroupId: (objectGroupId != null
+          ? objectGroupId.value
+          : this.objectGroupId),
+      objectGroupOrder: (objectGroupOrder != null
+          ? objectGroupOrder.value
+          : this.objectGroupOrder),
+      objectGroupTitle: (objectGroupTitle != null
+          ? objectGroupTitle.value
+          : this.objectGroupTitle),
+      objectHasCurrencySetting: (objectHasCurrencySetting != null
+          ? objectHasCurrencySetting.value
+          : this.objectHasCurrencySetting),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
-      nativeCurrencyId:
-          (nativeCurrencyId != null
-              ? nativeCurrencyId.value
-              : this.nativeCurrencyId),
-      nativeCurrencyCode:
-          (nativeCurrencyCode != null
-              ? nativeCurrencyCode.value
-              : this.nativeCurrencyCode),
-      nativeCurrencySymbol:
-          (nativeCurrencySymbol != null
-              ? nativeCurrencySymbol.value
-              : this.nativeCurrencySymbol),
-      nativeCurrencyDecimalPlaces:
-          (nativeCurrencyDecimalPlaces != null
-              ? nativeCurrencyDecimalPlaces.value
-              : this.nativeCurrencyDecimalPlaces),
-      currentBalance:
-          (currentBalance != null ? currentBalance.value : this.currentBalance),
-      nativeCurrentBalance:
-          (nativeCurrentBalance != null
-              ? nativeCurrentBalance.value
-              : this.nativeCurrentBalance),
-      currentBalanceDate:
-          (currentBalanceDate != null
-              ? currentBalanceDate.value
-              : this.currentBalanceDate),
+      currencyName: (currencyName != null
+          ? currencyName.value
+          : this.currencyName),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      primaryCurrencyId: (primaryCurrencyId != null
+          ? primaryCurrencyId.value
+          : this.primaryCurrencyId),
+      primaryCurrencyName: (primaryCurrencyName != null
+          ? primaryCurrencyName.value
+          : this.primaryCurrencyName),
+      primaryCurrencyCode: (primaryCurrencyCode != null
+          ? primaryCurrencyCode.value
+          : this.primaryCurrencyCode),
+      primaryCurrencySymbol: (primaryCurrencySymbol != null
+          ? primaryCurrencySymbol.value
+          : this.primaryCurrencySymbol),
+      primaryCurrencyDecimalPlaces: (primaryCurrencyDecimalPlaces != null
+          ? primaryCurrencyDecimalPlaces.value
+          : this.primaryCurrencyDecimalPlaces),
+      currentBalance: (currentBalance != null
+          ? currentBalance.value
+          : this.currentBalance),
+      pcCurrentBalance: (pcCurrentBalance != null
+          ? pcCurrentBalance.value
+          : this.pcCurrentBalance),
+      balanceDifference: (balanceDifference != null
+          ? balanceDifference.value
+          : this.balanceDifference),
+      pcBalanceDifference: (pcBalanceDifference != null
+          ? pcBalanceDifference.value
+          : this.pcBalanceDifference),
+      openingBalance: (openingBalance != null
+          ? openingBalance.value
+          : this.openingBalance),
+      pcOpeningBalance: (pcOpeningBalance != null
+          ? pcOpeningBalance.value
+          : this.pcOpeningBalance),
+      virtualBalance: (virtualBalance != null
+          ? virtualBalance.value
+          : this.virtualBalance),
+      pcVirtualBalance: (pcVirtualBalance != null
+          ? pcVirtualBalance.value
+          : this.pcVirtualBalance),
+      debtAmount: (debtAmount != null ? debtAmount.value : this.debtAmount),
+      pcDebtAmount: (pcDebtAmount != null
+          ? pcDebtAmount.value
+          : this.pcDebtAmount),
+      currentBalanceDate: (currentBalanceDate != null
+          ? currentBalanceDate.value
+          : this.currentBalanceDate),
       notes: (notes != null ? notes.value : this.notes),
-      monthlyPaymentDate:
-          (monthlyPaymentDate != null
-              ? monthlyPaymentDate.value
-              : this.monthlyPaymentDate),
-      creditCardType:
-          (creditCardType != null ? creditCardType.value : this.creditCardType),
-      accountNumber:
-          (accountNumber != null ? accountNumber.value : this.accountNumber),
+      monthlyPaymentDate: (monthlyPaymentDate != null
+          ? monthlyPaymentDate.value
+          : this.monthlyPaymentDate),
+      creditCardType: (creditCardType != null
+          ? creditCardType.value
+          : this.creditCardType),
+      accountNumber: (accountNumber != null
+          ? accountNumber.value
+          : this.accountNumber),
       iban: (iban != null ? iban.value : this.iban),
       bic: (bic != null ? bic.value : this.bic),
-      virtualBalance:
-          (virtualBalance != null ? virtualBalance.value : this.virtualBalance),
-      nativeVirtualBalance:
-          (nativeVirtualBalance != null
-              ? nativeVirtualBalance.value
-              : this.nativeVirtualBalance),
-      openingBalance:
-          (openingBalance != null ? openingBalance.value : this.openingBalance),
-      nativeOpeningBalance:
-          (nativeOpeningBalance != null
-              ? nativeOpeningBalance.value
-              : this.nativeOpeningBalance),
-      openingBalanceDate:
-          (openingBalanceDate != null
-              ? openingBalanceDate.value
-              : this.openingBalanceDate),
-      liabilityType:
-          (liabilityType != null ? liabilityType.value : this.liabilityType),
-      liabilityDirection:
-          (liabilityDirection != null
-              ? liabilityDirection.value
-              : this.liabilityDirection),
+      openingBalanceDate: (openingBalanceDate != null
+          ? openingBalanceDate.value
+          : this.openingBalanceDate),
+      liabilityType: (liabilityType != null
+          ? liabilityType.value
+          : this.liabilityType),
+      liabilityDirection: (liabilityDirection != null
+          ? liabilityDirection.value
+          : this.liabilityDirection),
       interest: (interest != null ? interest.value : this.interest),
-      interestPeriod:
-          (interestPeriod != null ? interestPeriod.value : this.interestPeriod),
-      currentDebt: (currentDebt != null ? currentDebt.value : this.currentDebt),
-      includeNetWorth:
-          (includeNetWorth != null
-              ? includeNetWorth.value
-              : this.includeNetWorth),
+      interestPeriod: (interestPeriod != null
+          ? interestPeriod.value
+          : this.interestPeriod),
+      includeNetWorth: (includeNetWorth != null
+          ? includeNetWorth.value
+          : this.includeNetWorth),
       longitude: (longitude != null ? longitude.value : this.longitude),
       latitude: (latitude != null ? latitude.value : this.latitude),
       zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel),
+      lastActivity: (lastActivity != null
+          ? lastActivity.value
+          : this.lastActivity),
     );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class AccountRead {
+  const AccountRead({
+    required this.type,
+    required this.id,
+    required this.attributes,
+  });
+
+  factory AccountRead.fromJson(Map<String, dynamic> json) =>
+      _$AccountReadFromJson(json);
+
+  static const toJsonFactory = _$AccountReadToJson;
+  Map<String, dynamic> toJson() => _$AccountReadToJson(this);
+
+  @JsonKey(name: 'type', includeIfNull: false)
+  final String type;
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String id;
+  @JsonKey(name: 'attributes', includeIfNull: false)
+  final AccountProperties attributes;
+  static const fromJsonFactory = _$AccountReadFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $AccountReadExtension on AccountRead {
+  AccountRead copyWith({
+    String? type,
+    String? id,
+    AccountProperties? attributes,
+  }) {
+    return AccountRead(
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
+  }
+
+  AccountRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<AccountProperties>? attributes,
+  }) {
+    return AccountRead(
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class AccountSingle {
+  const AccountSingle({required this.data});
+
+  factory AccountSingle.fromJson(Map<String, dynamic> json) =>
+      _$AccountSingleFromJson(json);
+
+  static const toJsonFactory = _$AccountSingleToJson;
+  Map<String, dynamic> toJson() => _$AccountSingleToJson(this);
+
+  @JsonKey(name: 'data', includeIfNull: false)
+  final AccountRead data;
+  static const fromJsonFactory = _$AccountSingleFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $AccountSingleExtension on AccountSingle {
+  AccountSingle copyWith({AccountRead? data}) {
+    return AccountSingle(data: data ?? this.data);
+  }
+
+  AccountSingle copyWithWrapped({Wrapped<AccountRead>? data}) {
+    return AccountSingle(data: (data != null ? data.value : this.data));
   }
 }
 
@@ -5028,41 +4902,44 @@ extension $AccountStoreExtension on AccountStore {
       type: (type != null ? type.value : this.type),
       iban: (iban != null ? iban.value : this.iban),
       bic: (bic != null ? bic.value : this.bic),
-      accountNumber:
-          (accountNumber != null ? accountNumber.value : this.accountNumber),
-      openingBalance:
-          (openingBalance != null ? openingBalance.value : this.openingBalance),
-      openingBalanceDate:
-          (openingBalanceDate != null
-              ? openingBalanceDate.value
-              : this.openingBalanceDate),
-      virtualBalance:
-          (virtualBalance != null ? virtualBalance.value : this.virtualBalance),
+      accountNumber: (accountNumber != null
+          ? accountNumber.value
+          : this.accountNumber),
+      openingBalance: (openingBalance != null
+          ? openingBalance.value
+          : this.openingBalance),
+      openingBalanceDate: (openingBalanceDate != null
+          ? openingBalanceDate.value
+          : this.openingBalanceDate),
+      virtualBalance: (virtualBalance != null
+          ? virtualBalance.value
+          : this.virtualBalance),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
       active: (active != null ? active.value : this.active),
       order: (order != null ? order.value : this.order),
-      includeNetWorth:
-          (includeNetWorth != null
-              ? includeNetWorth.value
-              : this.includeNetWorth),
+      includeNetWorth: (includeNetWorth != null
+          ? includeNetWorth.value
+          : this.includeNetWorth),
       accountRole: (accountRole != null ? accountRole.value : this.accountRole),
-      creditCardType:
-          (creditCardType != null ? creditCardType.value : this.creditCardType),
-      monthlyPaymentDate:
-          (monthlyPaymentDate != null
-              ? monthlyPaymentDate.value
-              : this.monthlyPaymentDate),
-      liabilityType:
-          (liabilityType != null ? liabilityType.value : this.liabilityType),
-      liabilityDirection:
-          (liabilityDirection != null
-              ? liabilityDirection.value
-              : this.liabilityDirection),
+      creditCardType: (creditCardType != null
+          ? creditCardType.value
+          : this.creditCardType),
+      monthlyPaymentDate: (monthlyPaymentDate != null
+          ? monthlyPaymentDate.value
+          : this.monthlyPaymentDate),
+      liabilityType: (liabilityType != null
+          ? liabilityType.value
+          : this.liabilityType),
+      liabilityDirection: (liabilityDirection != null
+          ? liabilityDirection.value
+          : this.liabilityDirection),
       interest: (interest != null ? interest.value : this.interest),
-      interestPeriod:
-          (interestPeriod != null ? interestPeriod.value : this.interestPeriod),
+      interestPeriod: (interestPeriod != null
+          ? interestPeriod.value
+          : this.interestPeriod),
       notes: (notes != null ? notes.value : this.notes),
       latitude: (latitude != null ? latitude.value : this.latitude),
       longitude: (longitude != null ? longitude.value : this.longitude),
@@ -5253,37 +5130,41 @@ extension $AccountUpdateExtension on AccountUpdate {
       name: (name != null ? name.value : this.name),
       iban: (iban != null ? iban.value : this.iban),
       bic: (bic != null ? bic.value : this.bic),
-      accountNumber:
-          (accountNumber != null ? accountNumber.value : this.accountNumber),
-      openingBalance:
-          (openingBalance != null ? openingBalance.value : this.openingBalance),
-      openingBalanceDate:
-          (openingBalanceDate != null
-              ? openingBalanceDate.value
-              : this.openingBalanceDate),
-      virtualBalance:
-          (virtualBalance != null ? virtualBalance.value : this.virtualBalance),
+      accountNumber: (accountNumber != null
+          ? accountNumber.value
+          : this.accountNumber),
+      openingBalance: (openingBalance != null
+          ? openingBalance.value
+          : this.openingBalance),
+      openingBalanceDate: (openingBalanceDate != null
+          ? openingBalanceDate.value
+          : this.openingBalanceDate),
+      virtualBalance: (virtualBalance != null
+          ? virtualBalance.value
+          : this.virtualBalance),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
       active: (active != null ? active.value : this.active),
       order: (order != null ? order.value : this.order),
-      includeNetWorth:
-          (includeNetWorth != null
-              ? includeNetWorth.value
-              : this.includeNetWorth),
+      includeNetWorth: (includeNetWorth != null
+          ? includeNetWorth.value
+          : this.includeNetWorth),
       accountRole: (accountRole != null ? accountRole.value : this.accountRole),
-      creditCardType:
-          (creditCardType != null ? creditCardType.value : this.creditCardType),
-      monthlyPaymentDate:
-          (monthlyPaymentDate != null
-              ? monthlyPaymentDate.value
-              : this.monthlyPaymentDate),
-      liabilityType:
-          (liabilityType != null ? liabilityType.value : this.liabilityType),
+      creditCardType: (creditCardType != null
+          ? creditCardType.value
+          : this.creditCardType),
+      monthlyPaymentDate: (monthlyPaymentDate != null
+          ? monthlyPaymentDate.value
+          : this.monthlyPaymentDate),
+      liabilityType: (liabilityType != null
+          ? liabilityType.value
+          : this.liabilityType),
       interest: (interest != null ? interest.value : this.interest),
-      interestPeriod:
-          (interestPeriod != null ? interestPeriod.value : this.interestPeriod),
+      interestPeriod: (interestPeriod != null
+          ? interestPeriod.value
+          : this.interestPeriod),
       notes: (notes != null ? notes.value : this.notes),
       latitude: (latitude != null ? latitude.value : this.latitude),
       longitude: (longitude != null ? longitude.value : this.longitude),
@@ -5293,15 +5174,88 @@ extension $AccountUpdateExtension on AccountUpdate {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Attachment {
-  const Attachment({
+class ArrayEntryWithCurrencyAndSum {
+  const ArrayEntryWithCurrencyAndSum({
+    this.currencyId,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyDecimalPlaces,
+    this.sum,
+  });
+
+  factory ArrayEntryWithCurrencyAndSum.fromJson(Map<String, dynamic> json) =>
+      _$ArrayEntryWithCurrencyAndSumFromJson(json);
+
+  static const toJsonFactory = _$ArrayEntryWithCurrencyAndSumToJson;
+  Map<String, dynamic> toJson() => _$ArrayEntryWithCurrencyAndSumToJson(this);
+
+  @JsonKey(name: 'currency_id', includeIfNull: false)
+  final String? currencyId;
+  @JsonKey(name: 'currency_code', includeIfNull: false)
+  final String? currencyCode;
+  @JsonKey(name: 'currency_symbol', includeIfNull: false)
+  final String? currencySymbol;
+  @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
+  final int? currencyDecimalPlaces;
+  @JsonKey(name: 'sum', includeIfNull: false)
+  final String? sum;
+  static const fromJsonFactory = _$ArrayEntryWithCurrencyAndSumFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $ArrayEntryWithCurrencyAndSumExtension
+    on ArrayEntryWithCurrencyAndSum {
+  ArrayEntryWithCurrencyAndSum copyWith({
+    String? currencyId,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    String? sum,
+  }) {
+    return ArrayEntryWithCurrencyAndSum(
+      currencyId: currencyId ?? this.currencyId,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      sum: sum ?? this.sum,
+    );
+  }
+
+  ArrayEntryWithCurrencyAndSum copyWithWrapped({
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? sum,
+  }) {
+    return ArrayEntryWithCurrencyAndSum(
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      sum: (sum != null ? sum.value : this.sum),
+    );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class AttachmentProperties {
+  const AttachmentProperties({
     this.createdAt,
     this.updatedAt,
-    required this.attachableType,
-    required this.attachableId,
-    this.md5,
+    this.attachableType,
+    this.attachableId,
     this.hash,
-    required this.filename,
+    this.filename,
     this.downloadUrl,
     this.uploadUrl,
     this.title,
@@ -5310,11 +5264,11 @@ class Attachment {
     this.size,
   });
 
-  factory Attachment.fromJson(Map<String, dynamic> json) =>
-      _$AttachmentFromJson(json);
+  factory AttachmentProperties.fromJson(Map<String, dynamic> json) =>
+      _$AttachmentPropertiesFromJson(json);
 
-  static const toJsonFactory = _$AttachmentToJson;
-  Map<String, dynamic> toJson() => _$AttachmentToJson(this);
+  static const toJsonFactory = _$AttachmentPropertiesToJson;
+  Map<String, dynamic> toJson() => _$AttachmentPropertiesToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -5323,18 +5277,16 @@ class Attachment {
   @JsonKey(
     name: 'attachable_type',
     includeIfNull: false,
-    toJson: attachableTypeToJson,
-    fromJson: attachableTypeFromJson,
+    toJson: attachableTypeNullableToJson,
+    fromJson: attachableTypeNullableFromJson,
   )
-  final enums.AttachableType attachableType;
+  final enums.AttachableType? attachableType;
   @JsonKey(name: 'attachable_id', includeIfNull: false)
-  final String attachableId;
-  @JsonKey(name: 'md5', includeIfNull: false)
-  final String? md5;
+  final String? attachableId;
   @JsonKey(name: 'hash', includeIfNull: false)
   final String? hash;
   @JsonKey(name: 'filename', includeIfNull: false)
-  final String filename;
+  final String? filename;
   @JsonKey(name: 'download_url', includeIfNull: false)
   final String? downloadUrl;
   @JsonKey(name: 'upload_url', includeIfNull: false)
@@ -5347,19 +5299,18 @@ class Attachment {
   final String? mime;
   @JsonKey(name: 'size', includeIfNull: false)
   final int? size;
-  static const fromJsonFactory = _$AttachmentFromJson;
+  static const fromJsonFactory = _$AttachmentPropertiesFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $AttachmentExtension on Attachment {
-  Attachment copyWith({
+extension $AttachmentPropertiesExtension on AttachmentProperties {
+  AttachmentProperties copyWith({
     DateTime? createdAt,
     DateTime? updatedAt,
     enums.AttachableType? attachableType,
     String? attachableId,
-    String? md5,
     String? hash,
     String? filename,
     String? downloadUrl,
@@ -5369,12 +5320,11 @@ extension $AttachmentExtension on Attachment {
     String? mime,
     int? size,
   }) {
-    return Attachment(
+    return AttachmentProperties(
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       attachableType: attachableType ?? this.attachableType,
       attachableId: attachableId ?? this.attachableId,
-      md5: md5 ?? this.md5,
       hash: hash ?? this.hash,
       filename: filename ?? this.filename,
       downloadUrl: downloadUrl ?? this.downloadUrl,
@@ -5386,14 +5336,13 @@ extension $AttachmentExtension on Attachment {
     );
   }
 
-  Attachment copyWithWrapped({
+  AttachmentProperties copyWithWrapped({
     Wrapped<DateTime?>? createdAt,
     Wrapped<DateTime?>? updatedAt,
-    Wrapped<enums.AttachableType>? attachableType,
-    Wrapped<String>? attachableId,
-    Wrapped<String?>? md5,
+    Wrapped<enums.AttachableType?>? attachableType,
+    Wrapped<String?>? attachableId,
     Wrapped<String?>? hash,
-    Wrapped<String>? filename,
+    Wrapped<String?>? filename,
     Wrapped<String?>? downloadUrl,
     Wrapped<String?>? uploadUrl,
     Wrapped<String?>? title,
@@ -5401,14 +5350,15 @@ extension $AttachmentExtension on Attachment {
     Wrapped<String?>? mime,
     Wrapped<int?>? size,
   }) {
-    return Attachment(
+    return AttachmentProperties(
       createdAt: (createdAt != null ? createdAt.value : this.createdAt),
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-      attachableType:
-          (attachableType != null ? attachableType.value : this.attachableType),
-      attachableId:
-          (attachableId != null ? attachableId.value : this.attachableId),
-      md5: (md5 != null ? md5.value : this.md5),
+      attachableType: (attachableType != null
+          ? attachableType.value
+          : this.attachableType),
+      attachableId: (attachableId != null
+          ? attachableId.value
+          : this.attachableId),
       hash: (hash != null ? hash.value : this.hash),
       filename: (filename != null ? filename.value : this.filename),
       downloadUrl: (downloadUrl != null ? downloadUrl.value : this.downloadUrl),
@@ -5418,6 +5368,93 @@ extension $AttachmentExtension on Attachment {
       mime: (mime != null ? mime.value : this.mime),
       size: (size != null ? size.value : this.size),
     );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class AttachmentRead {
+  const AttachmentRead({
+    required this.type,
+    required this.id,
+    required this.attributes,
+    required this.links,
+  });
+
+  factory AttachmentRead.fromJson(Map<String, dynamic> json) =>
+      _$AttachmentReadFromJson(json);
+
+  static const toJsonFactory = _$AttachmentReadToJson;
+  Map<String, dynamic> toJson() => _$AttachmentReadToJson(this);
+
+  @JsonKey(name: 'type', includeIfNull: false)
+  final String type;
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String id;
+  @JsonKey(name: 'attributes', includeIfNull: false)
+  final AttachmentProperties attributes;
+  @JsonKey(name: 'links', includeIfNull: false)
+  final ObjectLink links;
+  static const fromJsonFactory = _$AttachmentReadFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $AttachmentReadExtension on AttachmentRead {
+  AttachmentRead copyWith({
+    String? type,
+    String? id,
+    AttachmentProperties? attributes,
+    ObjectLink? links,
+  }) {
+    return AttachmentRead(
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+      links: links ?? this.links,
+    );
+  }
+
+  AttachmentRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<AttachmentProperties>? attributes,
+    Wrapped<ObjectLink>? links,
+  }) {
+    return AttachmentRead(
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+      links: (links != null ? links.value : this.links),
+    );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class AttachmentSingle {
+  const AttachmentSingle({required this.data});
+
+  factory AttachmentSingle.fromJson(Map<String, dynamic> json) =>
+      _$AttachmentSingleFromJson(json);
+
+  static const toJsonFactory = _$AttachmentSingleToJson;
+  Map<String, dynamic> toJson() => _$AttachmentSingleToJson(this);
+
+  @JsonKey(name: 'data', includeIfNull: false)
+  final AttachmentRead data;
+  static const fromJsonFactory = _$AttachmentSingleFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $AttachmentSingleExtension on AttachmentSingle {
+  AttachmentSingle copyWith({AttachmentRead? data}) {
+    return AttachmentSingle(data: data ?? this.data);
+  }
+
+  AttachmentSingle copyWithWrapped({Wrapped<AttachmentRead>? data}) {
+    return AttachmentSingle(data: (data != null ? data.value : this.data));
   }
 }
 
@@ -5484,10 +5521,12 @@ extension $AttachmentStoreExtension on AttachmentStore {
   }) {
     return AttachmentStore(
       filename: (filename != null ? filename.value : this.filename),
-      attachableType:
-          (attachableType != null ? attachableType.value : this.attachableType),
-      attachableId:
-          (attachableId != null ? attachableId.value : this.attachableId),
+      attachableType: (attachableType != null
+          ? attachableType.value
+          : this.attachableType),
+      attachableId: (attachableId != null
+          ? attachableId.value
+          : this.attachableId),
       title: (title != null ? title.value : this.title),
       notes: (notes != null ? notes.value : this.notes),
     );
@@ -5539,252 +5578,400 @@ extension $AttachmentUpdateExtension on AttachmentUpdate {
 }
 
 @JsonSerializable(explicitToJson: true)
-class AvailableBudget {
-  const AvailableBudget({
+class AvailableBudgetProperties {
+  const AvailableBudgetProperties({
     this.createdAt,
     this.updatedAt,
+    this.objectHasCurrencySetting,
     this.currencyId,
+    this.currencyName,
     this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
-    this.nativeCurrencyId,
-    this.nativeCurrencyCode,
-    this.nativeCurrencySymbol,
-    this.nativeCurrencyDecimalPlaces,
-    required this.amount,
-    this.nativeAmount,
-    required this.start,
-    required this.end,
+    this.primaryCurrencyId,
+    this.primaryCurrencyName,
+    this.primaryCurrencyCode,
+    this.primaryCurrencySymbol,
+    this.primaryCurrencyDecimalPlaces,
+    this.amount,
+    this.pcAmount,
+    this.start,
+    this.end,
     this.spentInBudgets,
-    this.spentOutsideBudget,
+    this.pcSpentInBudgets,
+    this.spentOutsideBudgets,
+    this.pcSpentOutsideBudgets,
   });
 
-  factory AvailableBudget.fromJson(Map<String, dynamic> json) =>
-      _$AvailableBudgetFromJson(json);
+  factory AvailableBudgetProperties.fromJson(Map<String, dynamic> json) =>
+      _$AvailableBudgetPropertiesFromJson(json);
 
-  static const toJsonFactory = _$AvailableBudgetToJson;
-  Map<String, dynamic> toJson() => _$AvailableBudgetToJson(this);
+  static const toJsonFactory = _$AvailableBudgetPropertiesToJson;
+  Map<String, dynamic> toJson() => _$AvailableBudgetPropertiesToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
   final DateTime? updatedAt;
+  @JsonKey(name: 'object_has_currency_setting', includeIfNull: false)
+  final bool? objectHasCurrencySetting;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
+  @JsonKey(name: 'currency_name', includeIfNull: false)
+  final String? currencyName;
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'currency_symbol', includeIfNull: false)
   final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
-  @JsonKey(name: 'native_currency_id', includeIfNull: false)
-  final String? nativeCurrencyId;
-  @JsonKey(name: 'native_currency_code', includeIfNull: false)
-  final String? nativeCurrencyCode;
-  @JsonKey(name: 'native_currency_symbol', includeIfNull: false)
-  final String? nativeCurrencySymbol;
-  @JsonKey(name: 'native_currency_decimal_places', includeIfNull: false)
-  final int? nativeCurrencyDecimalPlaces;
+  @JsonKey(name: 'primary_currency_id', includeIfNull: false)
+  final String? primaryCurrencyId;
+  @JsonKey(name: 'primary_currency_name', includeIfNull: false)
+  final String? primaryCurrencyName;
+  @JsonKey(name: 'primary_currency_code', includeIfNull: false)
+  final String? primaryCurrencyCode;
+  @JsonKey(name: 'primary_currency_symbol', includeIfNull: false)
+  final String? primaryCurrencySymbol;
+  @JsonKey(name: 'primary_currency_decimal_places', includeIfNull: false)
+  final int? primaryCurrencyDecimalPlaces;
   @JsonKey(name: 'amount', includeIfNull: false)
-  final String amount;
-  @JsonKey(name: 'native_amount', includeIfNull: false)
-  final String? nativeAmount;
+  final String? amount;
+  @JsonKey(name: 'pc_amount', includeIfNull: false)
+  final String? pcAmount;
   @JsonKey(name: 'start', includeIfNull: false)
-  final DateTime start;
+  final DateTime? start;
   @JsonKey(name: 'end', includeIfNull: false)
-  final DateTime end;
+  final DateTime? end;
   @JsonKey(
     name: 'spent_in_budgets',
     includeIfNull: false,
-    defaultValue: <BudgetSpent>[],
+    defaultValue: <ArrayEntryWithCurrencyAndSum>[],
   )
-  final List<BudgetSpent>? spentInBudgets;
+  final List<ArrayEntryWithCurrencyAndSum>? spentInBudgets;
   @JsonKey(
-    name: 'spent_outside_budget',
+    name: 'pc_spent_in_budgets',
     includeIfNull: false,
-    defaultValue: <BudgetSpent>[],
+    defaultValue: <ArrayEntryWithCurrencyAndSum>[],
   )
-  final List<BudgetSpent>? spentOutsideBudget;
-  static const fromJsonFactory = _$AvailableBudgetFromJson;
+  final List<ArrayEntryWithCurrencyAndSum>? pcSpentInBudgets;
+  @JsonKey(
+    name: 'spent_outside_budgets',
+    includeIfNull: false,
+    defaultValue: <ArrayEntryWithCurrencyAndSum>[],
+  )
+  final List<ArrayEntryWithCurrencyAndSum>? spentOutsideBudgets;
+  @JsonKey(
+    name: 'pc_spent_outside_budgets',
+    includeIfNull: false,
+    defaultValue: <ArrayEntryWithCurrencyAndSum>[],
+  )
+  final List<ArrayEntryWithCurrencyAndSum>? pcSpentOutsideBudgets;
+  static const fromJsonFactory = _$AvailableBudgetPropertiesFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $AvailableBudgetExtension on AvailableBudget {
-  AvailableBudget copyWith({
+extension $AvailableBudgetPropertiesExtension on AvailableBudgetProperties {
+  AvailableBudgetProperties copyWith({
     DateTime? createdAt,
     DateTime? updatedAt,
+    bool? objectHasCurrencySetting,
     String? currencyId,
+    String? currencyName,
     String? currencyCode,
     String? currencySymbol,
     int? currencyDecimalPlaces,
-    String? nativeCurrencyId,
-    String? nativeCurrencyCode,
-    String? nativeCurrencySymbol,
-    int? nativeCurrencyDecimalPlaces,
+    String? primaryCurrencyId,
+    String? primaryCurrencyName,
+    String? primaryCurrencyCode,
+    String? primaryCurrencySymbol,
+    int? primaryCurrencyDecimalPlaces,
     String? amount,
-    String? nativeAmount,
+    String? pcAmount,
     DateTime? start,
     DateTime? end,
-    List<BudgetSpent>? spentInBudgets,
-    List<BudgetSpent>? spentOutsideBudget,
+    List<ArrayEntryWithCurrencyAndSum>? spentInBudgets,
+    List<ArrayEntryWithCurrencyAndSum>? pcSpentInBudgets,
+    List<ArrayEntryWithCurrencyAndSum>? spentOutsideBudgets,
+    List<ArrayEntryWithCurrencyAndSum>? pcSpentOutsideBudgets,
   }) {
-    return AvailableBudget(
+    return AvailableBudgetProperties(
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      objectHasCurrencySetting:
+          objectHasCurrencySetting ?? this.objectHasCurrencySetting,
       currencyId: currencyId ?? this.currencyId,
+      currencyName: currencyName ?? this.currencyName,
       currencyCode: currencyCode ?? this.currencyCode,
       currencySymbol: currencySymbol ?? this.currencySymbol,
       currencyDecimalPlaces:
           currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
-      nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
-      nativeCurrencyDecimalPlaces:
-          nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
+      primaryCurrencyId: primaryCurrencyId ?? this.primaryCurrencyId,
+      primaryCurrencyName: primaryCurrencyName ?? this.primaryCurrencyName,
+      primaryCurrencyCode: primaryCurrencyCode ?? this.primaryCurrencyCode,
+      primaryCurrencySymbol:
+          primaryCurrencySymbol ?? this.primaryCurrencySymbol,
+      primaryCurrencyDecimalPlaces:
+          primaryCurrencyDecimalPlaces ?? this.primaryCurrencyDecimalPlaces,
       amount: amount ?? this.amount,
-      nativeAmount: nativeAmount ?? this.nativeAmount,
+      pcAmount: pcAmount ?? this.pcAmount,
       start: start ?? this.start,
       end: end ?? this.end,
       spentInBudgets: spentInBudgets ?? this.spentInBudgets,
-      spentOutsideBudget: spentOutsideBudget ?? this.spentOutsideBudget,
+      pcSpentInBudgets: pcSpentInBudgets ?? this.pcSpentInBudgets,
+      spentOutsideBudgets: spentOutsideBudgets ?? this.spentOutsideBudgets,
+      pcSpentOutsideBudgets:
+          pcSpentOutsideBudgets ?? this.pcSpentOutsideBudgets,
     );
   }
 
-  AvailableBudget copyWithWrapped({
+  AvailableBudgetProperties copyWithWrapped({
     Wrapped<DateTime?>? createdAt,
     Wrapped<DateTime?>? updatedAt,
+    Wrapped<bool?>? objectHasCurrencySetting,
     Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyName,
     Wrapped<String?>? currencyCode,
     Wrapped<String?>? currencySymbol,
     Wrapped<int?>? currencyDecimalPlaces,
-    Wrapped<String?>? nativeCurrencyId,
-    Wrapped<String?>? nativeCurrencyCode,
-    Wrapped<String?>? nativeCurrencySymbol,
-    Wrapped<int?>? nativeCurrencyDecimalPlaces,
-    Wrapped<String>? amount,
-    Wrapped<String?>? nativeAmount,
-    Wrapped<DateTime>? start,
-    Wrapped<DateTime>? end,
-    Wrapped<List<BudgetSpent>?>? spentInBudgets,
-    Wrapped<List<BudgetSpent>?>? spentOutsideBudget,
+    Wrapped<String?>? primaryCurrencyId,
+    Wrapped<String?>? primaryCurrencyName,
+    Wrapped<String?>? primaryCurrencyCode,
+    Wrapped<String?>? primaryCurrencySymbol,
+    Wrapped<int?>? primaryCurrencyDecimalPlaces,
+    Wrapped<String?>? amount,
+    Wrapped<String?>? pcAmount,
+    Wrapped<DateTime?>? start,
+    Wrapped<DateTime?>? end,
+    Wrapped<List<ArrayEntryWithCurrencyAndSum>?>? spentInBudgets,
+    Wrapped<List<ArrayEntryWithCurrencyAndSum>?>? pcSpentInBudgets,
+    Wrapped<List<ArrayEntryWithCurrencyAndSum>?>? spentOutsideBudgets,
+    Wrapped<List<ArrayEntryWithCurrencyAndSum>?>? pcSpentOutsideBudgets,
   }) {
-    return AvailableBudget(
+    return AvailableBudgetProperties(
       createdAt: (createdAt != null ? createdAt.value : this.createdAt),
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      objectHasCurrencySetting: (objectHasCurrencySetting != null
+          ? objectHasCurrencySetting.value
+          : this.objectHasCurrencySetting),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
-      nativeCurrencyId:
-          (nativeCurrencyId != null
-              ? nativeCurrencyId.value
-              : this.nativeCurrencyId),
-      nativeCurrencyCode:
-          (nativeCurrencyCode != null
-              ? nativeCurrencyCode.value
-              : this.nativeCurrencyCode),
-      nativeCurrencySymbol:
-          (nativeCurrencySymbol != null
-              ? nativeCurrencySymbol.value
-              : this.nativeCurrencySymbol),
-      nativeCurrencyDecimalPlaces:
-          (nativeCurrencyDecimalPlaces != null
-              ? nativeCurrencyDecimalPlaces.value
-              : this.nativeCurrencyDecimalPlaces),
+      currencyName: (currencyName != null
+          ? currencyName.value
+          : this.currencyName),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      primaryCurrencyId: (primaryCurrencyId != null
+          ? primaryCurrencyId.value
+          : this.primaryCurrencyId),
+      primaryCurrencyName: (primaryCurrencyName != null
+          ? primaryCurrencyName.value
+          : this.primaryCurrencyName),
+      primaryCurrencyCode: (primaryCurrencyCode != null
+          ? primaryCurrencyCode.value
+          : this.primaryCurrencyCode),
+      primaryCurrencySymbol: (primaryCurrencySymbol != null
+          ? primaryCurrencySymbol.value
+          : this.primaryCurrencySymbol),
+      primaryCurrencyDecimalPlaces: (primaryCurrencyDecimalPlaces != null
+          ? primaryCurrencyDecimalPlaces.value
+          : this.primaryCurrencyDecimalPlaces),
       amount: (amount != null ? amount.value : this.amount),
-      nativeAmount:
-          (nativeAmount != null ? nativeAmount.value : this.nativeAmount),
+      pcAmount: (pcAmount != null ? pcAmount.value : this.pcAmount),
       start: (start != null ? start.value : this.start),
       end: (end != null ? end.value : this.end),
-      spentInBudgets:
-          (spentInBudgets != null ? spentInBudgets.value : this.spentInBudgets),
-      spentOutsideBudget:
-          (spentOutsideBudget != null
-              ? spentOutsideBudget.value
-              : this.spentOutsideBudget),
+      spentInBudgets: (spentInBudgets != null
+          ? spentInBudgets.value
+          : this.spentInBudgets),
+      pcSpentInBudgets: (pcSpentInBudgets != null
+          ? pcSpentInBudgets.value
+          : this.pcSpentInBudgets),
+      spentOutsideBudgets: (spentOutsideBudgets != null
+          ? spentOutsideBudgets.value
+          : this.spentOutsideBudgets),
+      pcSpentOutsideBudgets: (pcSpentOutsideBudgets != null
+          ? pcSpentOutsideBudgets.value
+          : this.pcSpentOutsideBudgets),
     );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-class Bill {
-  const Bill({
+class AvailableBudgetRead {
+  const AvailableBudgetRead({
+    required this.type,
+    required this.id,
+    required this.attributes,
+  });
+
+  factory AvailableBudgetRead.fromJson(Map<String, dynamic> json) =>
+      _$AvailableBudgetReadFromJson(json);
+
+  static const toJsonFactory = _$AvailableBudgetReadToJson;
+  Map<String, dynamic> toJson() => _$AvailableBudgetReadToJson(this);
+
+  @JsonKey(name: 'type', includeIfNull: false)
+  final String type;
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String id;
+  @JsonKey(name: 'attributes', includeIfNull: false)
+  final AvailableBudgetProperties attributes;
+  static const fromJsonFactory = _$AvailableBudgetReadFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $AvailableBudgetReadExtension on AvailableBudgetRead {
+  AvailableBudgetRead copyWith({
+    String? type,
+    String? id,
+    AvailableBudgetProperties? attributes,
+  }) {
+    return AvailableBudgetRead(
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
+  }
+
+  AvailableBudgetRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<AvailableBudgetProperties>? attributes,
+  }) {
+    return AvailableBudgetRead(
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class AvailableBudgetSingle {
+  const AvailableBudgetSingle({required this.data});
+
+  factory AvailableBudgetSingle.fromJson(Map<String, dynamic> json) =>
+      _$AvailableBudgetSingleFromJson(json);
+
+  static const toJsonFactory = _$AvailableBudgetSingleToJson;
+  Map<String, dynamic> toJson() => _$AvailableBudgetSingleToJson(this);
+
+  @JsonKey(name: 'data', includeIfNull: false)
+  final AvailableBudgetRead data;
+  static const fromJsonFactory = _$AvailableBudgetSingleFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $AvailableBudgetSingleExtension on AvailableBudgetSingle {
+  AvailableBudgetSingle copyWith({AvailableBudgetRead? data}) {
+    return AvailableBudgetSingle(data: data ?? this.data);
+  }
+
+  AvailableBudgetSingle copyWithWrapped({Wrapped<AvailableBudgetRead>? data}) {
+    return AvailableBudgetSingle(data: (data != null ? data.value : this.data));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class BillProperties {
+  const BillProperties({
     this.createdAt,
     this.updatedAt,
+    this.name,
+    this.objectHasCurrencySetting,
     this.currencyId,
+    this.currencyName,
     this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
-    this.nativeCurrencyId,
-    this.nativeCurrencyCode,
-    this.nativeCurrencySymbol,
-    this.nativeCurrencyDecimalPlaces,
-    required this.name,
-    required this.amountMin,
-    required this.amountMax,
-    this.nativeAmountMin,
-    this.nativeAmountMax,
-    required this.date,
+    this.primaryCurrencyId,
+    this.primaryCurrencyName,
+    this.primaryCurrencyCode,
+    this.primaryCurrencySymbol,
+    this.primaryCurrencyDecimalPlaces,
+    this.amountMin,
+    this.pcAmountMin,
+    this.amountMax,
+    this.pcAmountMax,
+    this.amountAvg,
+    this.pcAmountAvg,
+    this.date,
     this.endDate,
     this.extensionDate,
-    required this.repeatFreq,
+    this.repeatFreq,
     this.skip,
     this.active,
     this.order,
     this.notes,
-    this.nextExpectedMatch,
-    this.nextExpectedMatchDiff,
     this.objectGroupId,
     this.objectGroupOrder,
     this.objectGroupTitle,
-    this.payDates,
     this.paidDates,
+    this.payDates,
+    this.nextExpectedMatch,
+    this.nextExpectedMatchDiff,
   });
 
-  factory Bill.fromJson(Map<String, dynamic> json) => _$BillFromJson(json);
+  factory BillProperties.fromJson(Map<String, dynamic> json) =>
+      _$BillPropertiesFromJson(json);
 
-  static const toJsonFactory = _$BillToJson;
-  Map<String, dynamic> toJson() => _$BillToJson(this);
+  static const toJsonFactory = _$BillPropertiesToJson;
+  Map<String, dynamic> toJson() => _$BillPropertiesToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
   final DateTime? updatedAt;
+  @JsonKey(name: 'name', includeIfNull: false)
+  final String? name;
+  @JsonKey(name: 'object_has_currency_setting', includeIfNull: false)
+  final bool? objectHasCurrencySetting;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
+  @JsonKey(name: 'currency_name', includeIfNull: false)
+  final String? currencyName;
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'currency_symbol', includeIfNull: false)
   final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
-  @JsonKey(name: 'native_currency_id', includeIfNull: false)
-  final String? nativeCurrencyId;
-  @JsonKey(name: 'native_currency_code', includeIfNull: false)
-  final String? nativeCurrencyCode;
-  @JsonKey(name: 'native_currency_symbol', includeIfNull: false)
-  final String? nativeCurrencySymbol;
-  @JsonKey(name: 'native_currency_decimal_places', includeIfNull: false)
-  final int? nativeCurrencyDecimalPlaces;
-  @JsonKey(name: 'name', includeIfNull: false)
-  final String name;
+  @JsonKey(name: 'primary_currency_id', includeIfNull: false)
+  final String? primaryCurrencyId;
+  @JsonKey(name: 'primary_currency_name', includeIfNull: false)
+  final String? primaryCurrencyName;
+  @JsonKey(name: 'primary_currency_code', includeIfNull: false)
+  final String? primaryCurrencyCode;
+  @JsonKey(name: 'primary_currency_symbol', includeIfNull: false)
+  final String? primaryCurrencySymbol;
+  @JsonKey(name: 'primary_currency_decimal_places', includeIfNull: false)
+  final int? primaryCurrencyDecimalPlaces;
   @JsonKey(name: 'amount_min', includeIfNull: false)
-  final String amountMin;
+  final String? amountMin;
+  @JsonKey(name: 'pc_amount_min', includeIfNull: false)
+  final String? pcAmountMin;
   @JsonKey(name: 'amount_max', includeIfNull: false)
-  final String amountMax;
-  @JsonKey(name: 'native_amount_min', includeIfNull: false)
-  final String? nativeAmountMin;
-  @JsonKey(name: 'native_amount_max', includeIfNull: false)
-  final String? nativeAmountMax;
+  final String? amountMax;
+  @JsonKey(name: 'pc_amount_max', includeIfNull: false)
+  final String? pcAmountMax;
+  @JsonKey(name: 'amount_avg', includeIfNull: false)
+  final String? amountAvg;
+  @JsonKey(name: 'pc_amount_avg', includeIfNull: false)
+  final String? pcAmountAvg;
   @JsonKey(name: 'date', includeIfNull: false)
-  final DateTime date;
+  final DateTime? date;
   @JsonKey(name: 'end_date', includeIfNull: false)
   final DateTime? endDate;
   @JsonKey(name: 'extension_date', includeIfNull: false)
@@ -5792,10 +5979,10 @@ class Bill {
   @JsonKey(
     name: 'repeat_freq',
     includeIfNull: false,
-    toJson: billRepeatFrequencyToJson,
-    fromJson: billRepeatFrequencyFromJson,
+    toJson: billRepeatFrequencyNullableToJson,
+    fromJson: billRepeatFrequencyNullableFromJson,
   )
-  final enums.BillRepeatFrequency repeatFreq;
+  final enums.BillRepeatFrequency? repeatFreq;
   @JsonKey(name: 'skip', includeIfNull: false)
   final int? skip;
   @JsonKey(name: 'active', includeIfNull: false)
@@ -5804,43 +5991,48 @@ class Bill {
   final int? order;
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
-  @JsonKey(name: 'next_expected_match', includeIfNull: false)
-  final DateTime? nextExpectedMatch;
-  @JsonKey(name: 'next_expected_match_diff', includeIfNull: false)
-  final String? nextExpectedMatchDiff;
   @JsonKey(name: 'object_group_id', includeIfNull: false)
   final String? objectGroupId;
   @JsonKey(name: 'object_group_order', includeIfNull: false)
   final int? objectGroupOrder;
   @JsonKey(name: 'object_group_title', includeIfNull: false)
   final String? objectGroupTitle;
+  @JsonKey(name: 'paid_dates', includeIfNull: false)
+  final List<BillProperties$PaidDates$Item>? paidDates;
   @JsonKey(name: 'pay_dates', includeIfNull: false, defaultValue: <DateTime>[])
   final List<DateTime>? payDates;
-  @JsonKey(name: 'paid_dates', includeIfNull: false)
-  final List<Bill$PaidDates$Item>? paidDates;
-  static const fromJsonFactory = _$BillFromJson;
+  @JsonKey(name: 'next_expected_match', includeIfNull: false)
+  final DateTime? nextExpectedMatch;
+  @JsonKey(name: 'next_expected_match_diff', includeIfNull: false)
+  final String? nextExpectedMatchDiff;
+  static const fromJsonFactory = _$BillPropertiesFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $BillExtension on Bill {
-  Bill copyWith({
+extension $BillPropertiesExtension on BillProperties {
+  BillProperties copyWith({
     DateTime? createdAt,
     DateTime? updatedAt,
+    String? name,
+    bool? objectHasCurrencySetting,
     String? currencyId,
+    String? currencyName,
     String? currencyCode,
     String? currencySymbol,
     int? currencyDecimalPlaces,
-    String? nativeCurrencyId,
-    String? nativeCurrencyCode,
-    String? nativeCurrencySymbol,
-    int? nativeCurrencyDecimalPlaces,
-    String? name,
+    String? primaryCurrencyId,
+    String? primaryCurrencyName,
+    String? primaryCurrencyCode,
+    String? primaryCurrencySymbol,
+    int? primaryCurrencyDecimalPlaces,
     String? amountMin,
+    String? pcAmountMin,
     String? amountMax,
-    String? nativeAmountMin,
-    String? nativeAmountMax,
+    String? pcAmountMax,
+    String? amountAvg,
+    String? pcAmountAvg,
     DateTime? date,
     DateTime? endDate,
     DateTime? extensionDate,
@@ -5849,32 +6041,39 @@ extension $BillExtension on Bill {
     bool? active,
     int? order,
     String? notes,
-    DateTime? nextExpectedMatch,
-    String? nextExpectedMatchDiff,
     String? objectGroupId,
     int? objectGroupOrder,
     String? objectGroupTitle,
+    List<BillProperties$PaidDates$Item>? paidDates,
     List<DateTime>? payDates,
-    List<Bill$PaidDates$Item>? paidDates,
+    DateTime? nextExpectedMatch,
+    String? nextExpectedMatchDiff,
   }) {
-    return Bill(
+    return BillProperties(
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      name: name ?? this.name,
+      objectHasCurrencySetting:
+          objectHasCurrencySetting ?? this.objectHasCurrencySetting,
       currencyId: currencyId ?? this.currencyId,
+      currencyName: currencyName ?? this.currencyName,
       currencyCode: currencyCode ?? this.currencyCode,
       currencySymbol: currencySymbol ?? this.currencySymbol,
       currencyDecimalPlaces:
           currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
-      nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
-      nativeCurrencyDecimalPlaces:
-          nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
-      name: name ?? this.name,
+      primaryCurrencyId: primaryCurrencyId ?? this.primaryCurrencyId,
+      primaryCurrencyName: primaryCurrencyName ?? this.primaryCurrencyName,
+      primaryCurrencyCode: primaryCurrencyCode ?? this.primaryCurrencyCode,
+      primaryCurrencySymbol:
+          primaryCurrencySymbol ?? this.primaryCurrencySymbol,
+      primaryCurrencyDecimalPlaces:
+          primaryCurrencyDecimalPlaces ?? this.primaryCurrencyDecimalPlaces,
       amountMin: amountMin ?? this.amountMin,
+      pcAmountMin: pcAmountMin ?? this.pcAmountMin,
       amountMax: amountMax ?? this.amountMax,
-      nativeAmountMin: nativeAmountMin ?? this.nativeAmountMin,
-      nativeAmountMax: nativeAmountMax ?? this.nativeAmountMax,
+      pcAmountMax: pcAmountMax ?? this.pcAmountMax,
+      amountAvg: amountAvg ?? this.amountAvg,
+      pcAmountAvg: pcAmountAvg ?? this.pcAmountAvg,
       date: date ?? this.date,
       endDate: endDate ?? this.endDate,
       extensionDate: extensionDate ?? this.extensionDate,
@@ -5883,118 +6082,199 @@ extension $BillExtension on Bill {
       active: active ?? this.active,
       order: order ?? this.order,
       notes: notes ?? this.notes,
-      nextExpectedMatch: nextExpectedMatch ?? this.nextExpectedMatch,
-      nextExpectedMatchDiff:
-          nextExpectedMatchDiff ?? this.nextExpectedMatchDiff,
       objectGroupId: objectGroupId ?? this.objectGroupId,
       objectGroupOrder: objectGroupOrder ?? this.objectGroupOrder,
       objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle,
-      payDates: payDates ?? this.payDates,
       paidDates: paidDates ?? this.paidDates,
+      payDates: payDates ?? this.payDates,
+      nextExpectedMatch: nextExpectedMatch ?? this.nextExpectedMatch,
+      nextExpectedMatchDiff:
+          nextExpectedMatchDiff ?? this.nextExpectedMatchDiff,
     );
   }
 
-  Bill copyWithWrapped({
+  BillProperties copyWithWrapped({
     Wrapped<DateTime?>? createdAt,
     Wrapped<DateTime?>? updatedAt,
+    Wrapped<String?>? name,
+    Wrapped<bool?>? objectHasCurrencySetting,
     Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyName,
     Wrapped<String?>? currencyCode,
     Wrapped<String?>? currencySymbol,
     Wrapped<int?>? currencyDecimalPlaces,
-    Wrapped<String?>? nativeCurrencyId,
-    Wrapped<String?>? nativeCurrencyCode,
-    Wrapped<String?>? nativeCurrencySymbol,
-    Wrapped<int?>? nativeCurrencyDecimalPlaces,
-    Wrapped<String>? name,
-    Wrapped<String>? amountMin,
-    Wrapped<String>? amountMax,
-    Wrapped<String?>? nativeAmountMin,
-    Wrapped<String?>? nativeAmountMax,
-    Wrapped<DateTime>? date,
+    Wrapped<String?>? primaryCurrencyId,
+    Wrapped<String?>? primaryCurrencyName,
+    Wrapped<String?>? primaryCurrencyCode,
+    Wrapped<String?>? primaryCurrencySymbol,
+    Wrapped<int?>? primaryCurrencyDecimalPlaces,
+    Wrapped<String?>? amountMin,
+    Wrapped<String?>? pcAmountMin,
+    Wrapped<String?>? amountMax,
+    Wrapped<String?>? pcAmountMax,
+    Wrapped<String?>? amountAvg,
+    Wrapped<String?>? pcAmountAvg,
+    Wrapped<DateTime?>? date,
     Wrapped<DateTime?>? endDate,
     Wrapped<DateTime?>? extensionDate,
-    Wrapped<enums.BillRepeatFrequency>? repeatFreq,
+    Wrapped<enums.BillRepeatFrequency?>? repeatFreq,
     Wrapped<int?>? skip,
     Wrapped<bool?>? active,
     Wrapped<int?>? order,
     Wrapped<String?>? notes,
-    Wrapped<DateTime?>? nextExpectedMatch,
-    Wrapped<String?>? nextExpectedMatchDiff,
     Wrapped<String?>? objectGroupId,
     Wrapped<int?>? objectGroupOrder,
     Wrapped<String?>? objectGroupTitle,
+    Wrapped<List<BillProperties$PaidDates$Item>?>? paidDates,
     Wrapped<List<DateTime>?>? payDates,
-    Wrapped<List<Bill$PaidDates$Item>?>? paidDates,
+    Wrapped<DateTime?>? nextExpectedMatch,
+    Wrapped<String?>? nextExpectedMatchDiff,
   }) {
-    return Bill(
+    return BillProperties(
       createdAt: (createdAt != null ? createdAt.value : this.createdAt),
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
-      nativeCurrencyId:
-          (nativeCurrencyId != null
-              ? nativeCurrencyId.value
-              : this.nativeCurrencyId),
-      nativeCurrencyCode:
-          (nativeCurrencyCode != null
-              ? nativeCurrencyCode.value
-              : this.nativeCurrencyCode),
-      nativeCurrencySymbol:
-          (nativeCurrencySymbol != null
-              ? nativeCurrencySymbol.value
-              : this.nativeCurrencySymbol),
-      nativeCurrencyDecimalPlaces:
-          (nativeCurrencyDecimalPlaces != null
-              ? nativeCurrencyDecimalPlaces.value
-              : this.nativeCurrencyDecimalPlaces),
       name: (name != null ? name.value : this.name),
+      objectHasCurrencySetting: (objectHasCurrencySetting != null
+          ? objectHasCurrencySetting.value
+          : this.objectHasCurrencySetting),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyName: (currencyName != null
+          ? currencyName.value
+          : this.currencyName),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      primaryCurrencyId: (primaryCurrencyId != null
+          ? primaryCurrencyId.value
+          : this.primaryCurrencyId),
+      primaryCurrencyName: (primaryCurrencyName != null
+          ? primaryCurrencyName.value
+          : this.primaryCurrencyName),
+      primaryCurrencyCode: (primaryCurrencyCode != null
+          ? primaryCurrencyCode.value
+          : this.primaryCurrencyCode),
+      primaryCurrencySymbol: (primaryCurrencySymbol != null
+          ? primaryCurrencySymbol.value
+          : this.primaryCurrencySymbol),
+      primaryCurrencyDecimalPlaces: (primaryCurrencyDecimalPlaces != null
+          ? primaryCurrencyDecimalPlaces.value
+          : this.primaryCurrencyDecimalPlaces),
       amountMin: (amountMin != null ? amountMin.value : this.amountMin),
+      pcAmountMin: (pcAmountMin != null ? pcAmountMin.value : this.pcAmountMin),
       amountMax: (amountMax != null ? amountMax.value : this.amountMax),
-      nativeAmountMin:
-          (nativeAmountMin != null
-              ? nativeAmountMin.value
-              : this.nativeAmountMin),
-      nativeAmountMax:
-          (nativeAmountMax != null
-              ? nativeAmountMax.value
-              : this.nativeAmountMax),
+      pcAmountMax: (pcAmountMax != null ? pcAmountMax.value : this.pcAmountMax),
+      amountAvg: (amountAvg != null ? amountAvg.value : this.amountAvg),
+      pcAmountAvg: (pcAmountAvg != null ? pcAmountAvg.value : this.pcAmountAvg),
       date: (date != null ? date.value : this.date),
       endDate: (endDate != null ? endDate.value : this.endDate),
-      extensionDate:
-          (extensionDate != null ? extensionDate.value : this.extensionDate),
+      extensionDate: (extensionDate != null
+          ? extensionDate.value
+          : this.extensionDate),
       repeatFreq: (repeatFreq != null ? repeatFreq.value : this.repeatFreq),
       skip: (skip != null ? skip.value : this.skip),
       active: (active != null ? active.value : this.active),
       order: (order != null ? order.value : this.order),
       notes: (notes != null ? notes.value : this.notes),
-      nextExpectedMatch:
-          (nextExpectedMatch != null
-              ? nextExpectedMatch.value
-              : this.nextExpectedMatch),
-      nextExpectedMatchDiff:
-          (nextExpectedMatchDiff != null
-              ? nextExpectedMatchDiff.value
-              : this.nextExpectedMatchDiff),
-      objectGroupId:
-          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-      objectGroupOrder:
-          (objectGroupOrder != null
-              ? objectGroupOrder.value
-              : this.objectGroupOrder),
-      objectGroupTitle:
-          (objectGroupTitle != null
-              ? objectGroupTitle.value
-              : this.objectGroupTitle),
-      payDates: (payDates != null ? payDates.value : this.payDates),
+      objectGroupId: (objectGroupId != null
+          ? objectGroupId.value
+          : this.objectGroupId),
+      objectGroupOrder: (objectGroupOrder != null
+          ? objectGroupOrder.value
+          : this.objectGroupOrder),
+      objectGroupTitle: (objectGroupTitle != null
+          ? objectGroupTitle.value
+          : this.objectGroupTitle),
       paidDates: (paidDates != null ? paidDates.value : this.paidDates),
+      payDates: (payDates != null ? payDates.value : this.payDates),
+      nextExpectedMatch: (nextExpectedMatch != null
+          ? nextExpectedMatch.value
+          : this.nextExpectedMatch),
+      nextExpectedMatchDiff: (nextExpectedMatchDiff != null
+          ? nextExpectedMatchDiff.value
+          : this.nextExpectedMatchDiff),
     );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class BillRead {
+  const BillRead({
+    required this.type,
+    required this.id,
+    required this.attributes,
+  });
+
+  factory BillRead.fromJson(Map<String, dynamic> json) =>
+      _$BillReadFromJson(json);
+
+  static const toJsonFactory = _$BillReadToJson;
+  Map<String, dynamic> toJson() => _$BillReadToJson(this);
+
+  @JsonKey(name: 'type', includeIfNull: false)
+  final String type;
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String id;
+  @JsonKey(name: 'attributes', includeIfNull: false)
+  final BillProperties attributes;
+  static const fromJsonFactory = _$BillReadFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $BillReadExtension on BillRead {
+  BillRead copyWith({String? type, String? id, BillProperties? attributes}) {
+    return BillRead(
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
+  }
+
+  BillRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<BillProperties>? attributes,
+  }) {
+    return BillRead(
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class BillSingle {
+  const BillSingle({required this.data});
+
+  factory BillSingle.fromJson(Map<String, dynamic> json) =>
+      _$BillSingleFromJson(json);
+
+  static const toJsonFactory = _$BillSingleToJson;
+  Map<String, dynamic> toJson() => _$BillSingleToJson(this);
+
+  @JsonKey(name: 'data', includeIfNull: false)
+  final BillRead data;
+  static const fromJsonFactory = _$BillSingleFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $BillSingleExtension on BillSingle {
+  BillSingle copyWith({BillRead? data}) {
+    return BillSingle(data: data ?? this.data);
+  }
+
+  BillSingle copyWithWrapped({Wrapped<BillRead>? data}) {
+    return BillSingle(data: (data != null ? data.value : this.data));
   }
 }
 
@@ -6115,25 +6395,27 @@ extension $BillStoreExtension on BillStore {
   }) {
     return BillStore(
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
       name: (name != null ? name.value : this.name),
       amountMin: (amountMin != null ? amountMin.value : this.amountMin),
       amountMax: (amountMax != null ? amountMax.value : this.amountMax),
       date: (date != null ? date.value : this.date),
       endDate: (endDate != null ? endDate.value : this.endDate),
-      extensionDate:
-          (extensionDate != null ? extensionDate.value : this.extensionDate),
+      extensionDate: (extensionDate != null
+          ? extensionDate.value
+          : this.extensionDate),
       repeatFreq: (repeatFreq != null ? repeatFreq.value : this.repeatFreq),
       skip: (skip != null ? skip.value : this.skip),
       active: (active != null ? active.value : this.active),
       notes: (notes != null ? notes.value : this.notes),
-      objectGroupId:
-          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-      objectGroupTitle:
-          (objectGroupTitle != null
-              ? objectGroupTitle.value
-              : this.objectGroupTitle),
+      objectGroupId: (objectGroupId != null
+          ? objectGroupId.value
+          : this.objectGroupId),
+      objectGroupTitle: (objectGroupTitle != null
+          ? objectGroupTitle.value
+          : this.objectGroupTitle),
     );
   }
 }
@@ -6255,70 +6537,80 @@ extension $BillUpdateExtension on BillUpdate {
   }) {
     return BillUpdate(
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
       name: (name != null ? name.value : this.name),
       amountMin: (amountMin != null ? amountMin.value : this.amountMin),
       amountMax: (amountMax != null ? amountMax.value : this.amountMax),
       date: (date != null ? date.value : this.date),
       endDate: (endDate != null ? endDate.value : this.endDate),
-      extensionDate:
-          (extensionDate != null ? extensionDate.value : this.extensionDate),
+      extensionDate: (extensionDate != null
+          ? extensionDate.value
+          : this.extensionDate),
       repeatFreq: (repeatFreq != null ? repeatFreq.value : this.repeatFreq),
       skip: (skip != null ? skip.value : this.skip),
       active: (active != null ? active.value : this.active),
       notes: (notes != null ? notes.value : this.notes),
-      objectGroupId:
-          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-      objectGroupTitle:
-          (objectGroupTitle != null
-              ? objectGroupTitle.value
-              : this.objectGroupTitle),
+      objectGroupId: (objectGroupId != null
+          ? objectGroupId.value
+          : this.objectGroupId),
+      objectGroupTitle: (objectGroupTitle != null
+          ? objectGroupTitle.value
+          : this.objectGroupTitle),
     );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-class Budget {
-  const Budget({
+class BudgetProperties {
+  const BudgetProperties({
     this.createdAt,
     this.updatedAt,
-    required this.name,
     this.active,
-    this.notes,
+    required this.name,
     this.order,
+    this.notes,
     this.autoBudgetType,
+    this.autoBudgetPeriod,
+    this.objectGroupId,
+    this.objectGroupOrder,
+    this.objectGroupTitle,
+    this.objectHasCurrencySetting,
     this.currencyId,
+    this.currencyName,
     this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
-    this.nativeCurrencyId,
-    this.nativeCurrencyCode,
-    this.nativeCurrencySymbol,
-    this.nativeCurrencyDecimalPlaces,
+    this.primaryCurrencyId,
+    this.primaryCurrencyName,
+    this.primaryCurrencyCode,
+    this.primaryCurrencySymbol,
+    this.primaryCurrencyDecimalPlaces,
     this.autoBudgetAmount,
-    this.nativeAutoBudgetAmount,
-    this.autoBudgetPeriod,
+    this.pcAutoBudgetAmount,
     this.spent,
+    this.pcSpent,
   });
 
-  factory Budget.fromJson(Map<String, dynamic> json) => _$BudgetFromJson(json);
+  factory BudgetProperties.fromJson(Map<String, dynamic> json) =>
+      _$BudgetPropertiesFromJson(json);
 
-  static const toJsonFactory = _$BudgetToJson;
-  Map<String, dynamic> toJson() => _$BudgetToJson(this);
+  static const toJsonFactory = _$BudgetPropertiesToJson;
+  Map<String, dynamic> toJson() => _$BudgetPropertiesToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
   final DateTime? updatedAt;
-  @JsonKey(name: 'name', includeIfNull: false)
-  final String name;
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
-  @JsonKey(name: 'notes', includeIfNull: false)
-  final String? notes;
+  @JsonKey(name: 'name', includeIfNull: false)
+  final String name;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
+  @JsonKey(name: 'notes', includeIfNull: false)
+  final String? notes;
   @JsonKey(
     name: 'auto_budget_type',
     includeIfNull: false,
@@ -6326,26 +6618,6 @@ class Budget {
     fromJson: autoBudgetTypeNullableFromJson,
   )
   final enums.AutoBudgetType? autoBudgetType;
-  @JsonKey(name: 'currency_id', includeIfNull: false)
-  final String? currencyId;
-  @JsonKey(name: 'currency_code', includeIfNull: false)
-  final String? currencyCode;
-  @JsonKey(name: 'currency_symbol', includeIfNull: false)
-  final String? currencySymbol;
-  @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
-  final int? currencyDecimalPlaces;
-  @JsonKey(name: 'native_currency_id', includeIfNull: false)
-  final String? nativeCurrencyId;
-  @JsonKey(name: 'native_currency_code', includeIfNull: false)
-  final String? nativeCurrencyCode;
-  @JsonKey(name: 'native_currency_symbol', includeIfNull: false)
-  final String? nativeCurrencySymbol;
-  @JsonKey(name: 'native_currency_decimal_places', includeIfNull: false)
-  final int? nativeCurrencyDecimalPlaces;
-  @JsonKey(name: 'auto_budget_amount', includeIfNull: false)
-  final String? autoBudgetAmount;
-  @JsonKey(name: 'native_auto_budget_amount', includeIfNull: false)
-  final String? nativeAutoBudgetAmount;
   @JsonKey(
     name: 'auto_budget_period',
     includeIfNull: false,
@@ -6353,131 +6625,289 @@ class Budget {
     fromJson: autoBudgetPeriodNullableFromJson,
   )
   final enums.AutoBudgetPeriod? autoBudgetPeriod;
-  @JsonKey(name: 'spent', includeIfNull: false, defaultValue: <BudgetSpent>[])
-  final List<BudgetSpent>? spent;
-  static const fromJsonFactory = _$BudgetFromJson;
+  @JsonKey(name: 'object_group_id', includeIfNull: false)
+  final String? objectGroupId;
+  @JsonKey(name: 'object_group_order', includeIfNull: false)
+  final int? objectGroupOrder;
+  @JsonKey(name: 'object_group_title', includeIfNull: false)
+  final String? objectGroupTitle;
+  @JsonKey(name: 'object_has_currency_setting', includeIfNull: false)
+  final bool? objectHasCurrencySetting;
+  @JsonKey(name: 'currency_id', includeIfNull: false)
+  final String? currencyId;
+  @JsonKey(name: 'currency_name', includeIfNull: false)
+  final String? currencyName;
+  @JsonKey(name: 'currency_code', includeIfNull: false)
+  final String? currencyCode;
+  @JsonKey(name: 'currency_symbol', includeIfNull: false)
+  final String? currencySymbol;
+  @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
+  final int? currencyDecimalPlaces;
+  @JsonKey(name: 'primary_currency_id', includeIfNull: false)
+  final String? primaryCurrencyId;
+  @JsonKey(name: 'primary_currency_name', includeIfNull: false)
+  final String? primaryCurrencyName;
+  @JsonKey(name: 'primary_currency_code', includeIfNull: false)
+  final String? primaryCurrencyCode;
+  @JsonKey(name: 'primary_currency_symbol', includeIfNull: false)
+  final String? primaryCurrencySymbol;
+  @JsonKey(name: 'primary_currency_decimal_places', includeIfNull: false)
+  final int? primaryCurrencyDecimalPlaces;
+  @JsonKey(name: 'auto_budget_amount', includeIfNull: false)
+  final String? autoBudgetAmount;
+  @JsonKey(name: 'pc_auto_budget_amount', includeIfNull: false)
+  final String? pcAutoBudgetAmount;
+  @JsonKey(
+    name: 'spent',
+    includeIfNull: false,
+    defaultValue: <ArrayEntryWithCurrencyAndSum>[],
+  )
+  final List<ArrayEntryWithCurrencyAndSum>? spent;
+  @JsonKey(
+    name: 'pc_spent',
+    includeIfNull: false,
+    defaultValue: <ArrayEntryWithCurrencyAndSum>[],
+  )
+  final List<ArrayEntryWithCurrencyAndSum>? pcSpent;
+  static const fromJsonFactory = _$BudgetPropertiesFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $BudgetExtension on Budget {
-  Budget copyWith({
+extension $BudgetPropertiesExtension on BudgetProperties {
+  BudgetProperties copyWith({
     DateTime? createdAt,
     DateTime? updatedAt,
-    String? name,
     bool? active,
-    String? notes,
+    String? name,
     int? order,
+    String? notes,
     enums.AutoBudgetType? autoBudgetType,
+    enums.AutoBudgetPeriod? autoBudgetPeriod,
+    String? objectGroupId,
+    int? objectGroupOrder,
+    String? objectGroupTitle,
+    bool? objectHasCurrencySetting,
     String? currencyId,
+    String? currencyName,
     String? currencyCode,
     String? currencySymbol,
     int? currencyDecimalPlaces,
-    String? nativeCurrencyId,
-    String? nativeCurrencyCode,
-    String? nativeCurrencySymbol,
-    int? nativeCurrencyDecimalPlaces,
+    String? primaryCurrencyId,
+    String? primaryCurrencyName,
+    String? primaryCurrencyCode,
+    String? primaryCurrencySymbol,
+    int? primaryCurrencyDecimalPlaces,
     String? autoBudgetAmount,
-    String? nativeAutoBudgetAmount,
-    enums.AutoBudgetPeriod? autoBudgetPeriod,
-    List<BudgetSpent>? spent,
+    String? pcAutoBudgetAmount,
+    List<ArrayEntryWithCurrencyAndSum>? spent,
+    List<ArrayEntryWithCurrencyAndSum>? pcSpent,
   }) {
-    return Budget(
+    return BudgetProperties(
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      name: name ?? this.name,
       active: active ?? this.active,
-      notes: notes ?? this.notes,
+      name: name ?? this.name,
       order: order ?? this.order,
+      notes: notes ?? this.notes,
       autoBudgetType: autoBudgetType ?? this.autoBudgetType,
+      autoBudgetPeriod: autoBudgetPeriod ?? this.autoBudgetPeriod,
+      objectGroupId: objectGroupId ?? this.objectGroupId,
+      objectGroupOrder: objectGroupOrder ?? this.objectGroupOrder,
+      objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle,
+      objectHasCurrencySetting:
+          objectHasCurrencySetting ?? this.objectHasCurrencySetting,
       currencyId: currencyId ?? this.currencyId,
+      currencyName: currencyName ?? this.currencyName,
       currencyCode: currencyCode ?? this.currencyCode,
       currencySymbol: currencySymbol ?? this.currencySymbol,
       currencyDecimalPlaces:
           currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
-      nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
-      nativeCurrencyDecimalPlaces:
-          nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
+      primaryCurrencyId: primaryCurrencyId ?? this.primaryCurrencyId,
+      primaryCurrencyName: primaryCurrencyName ?? this.primaryCurrencyName,
+      primaryCurrencyCode: primaryCurrencyCode ?? this.primaryCurrencyCode,
+      primaryCurrencySymbol:
+          primaryCurrencySymbol ?? this.primaryCurrencySymbol,
+      primaryCurrencyDecimalPlaces:
+          primaryCurrencyDecimalPlaces ?? this.primaryCurrencyDecimalPlaces,
       autoBudgetAmount: autoBudgetAmount ?? this.autoBudgetAmount,
-      nativeAutoBudgetAmount:
-          nativeAutoBudgetAmount ?? this.nativeAutoBudgetAmount,
-      autoBudgetPeriod: autoBudgetPeriod ?? this.autoBudgetPeriod,
+      pcAutoBudgetAmount: pcAutoBudgetAmount ?? this.pcAutoBudgetAmount,
       spent: spent ?? this.spent,
+      pcSpent: pcSpent ?? this.pcSpent,
     );
   }
 
-  Budget copyWithWrapped({
+  BudgetProperties copyWithWrapped({
     Wrapped<DateTime?>? createdAt,
     Wrapped<DateTime?>? updatedAt,
-    Wrapped<String>? name,
     Wrapped<bool?>? active,
-    Wrapped<String?>? notes,
+    Wrapped<String>? name,
     Wrapped<int?>? order,
+    Wrapped<String?>? notes,
     Wrapped<enums.AutoBudgetType?>? autoBudgetType,
+    Wrapped<enums.AutoBudgetPeriod?>? autoBudgetPeriod,
+    Wrapped<String?>? objectGroupId,
+    Wrapped<int?>? objectGroupOrder,
+    Wrapped<String?>? objectGroupTitle,
+    Wrapped<bool?>? objectHasCurrencySetting,
     Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyName,
     Wrapped<String?>? currencyCode,
     Wrapped<String?>? currencySymbol,
     Wrapped<int?>? currencyDecimalPlaces,
-    Wrapped<String?>? nativeCurrencyId,
-    Wrapped<String?>? nativeCurrencyCode,
-    Wrapped<String?>? nativeCurrencySymbol,
-    Wrapped<int?>? nativeCurrencyDecimalPlaces,
+    Wrapped<String?>? primaryCurrencyId,
+    Wrapped<String?>? primaryCurrencyName,
+    Wrapped<String?>? primaryCurrencyCode,
+    Wrapped<String?>? primaryCurrencySymbol,
+    Wrapped<int?>? primaryCurrencyDecimalPlaces,
     Wrapped<String?>? autoBudgetAmount,
-    Wrapped<String?>? nativeAutoBudgetAmount,
-    Wrapped<enums.AutoBudgetPeriod?>? autoBudgetPeriod,
-    Wrapped<List<BudgetSpent>?>? spent,
+    Wrapped<String?>? pcAutoBudgetAmount,
+    Wrapped<List<ArrayEntryWithCurrencyAndSum>?>? spent,
+    Wrapped<List<ArrayEntryWithCurrencyAndSum>?>? pcSpent,
   }) {
-    return Budget(
+    return BudgetProperties(
       createdAt: (createdAt != null ? createdAt.value : this.createdAt),
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-      name: (name != null ? name.value : this.name),
       active: (active != null ? active.value : this.active),
-      notes: (notes != null ? notes.value : this.notes),
+      name: (name != null ? name.value : this.name),
       order: (order != null ? order.value : this.order),
-      autoBudgetType:
-          (autoBudgetType != null ? autoBudgetType.value : this.autoBudgetType),
+      notes: (notes != null ? notes.value : this.notes),
+      autoBudgetType: (autoBudgetType != null
+          ? autoBudgetType.value
+          : this.autoBudgetType),
+      autoBudgetPeriod: (autoBudgetPeriod != null
+          ? autoBudgetPeriod.value
+          : this.autoBudgetPeriod),
+      objectGroupId: (objectGroupId != null
+          ? objectGroupId.value
+          : this.objectGroupId),
+      objectGroupOrder: (objectGroupOrder != null
+          ? objectGroupOrder.value
+          : this.objectGroupOrder),
+      objectGroupTitle: (objectGroupTitle != null
+          ? objectGroupTitle.value
+          : this.objectGroupTitle),
+      objectHasCurrencySetting: (objectHasCurrencySetting != null
+          ? objectHasCurrencySetting.value
+          : this.objectHasCurrencySetting),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
-      nativeCurrencyId:
-          (nativeCurrencyId != null
-              ? nativeCurrencyId.value
-              : this.nativeCurrencyId),
-      nativeCurrencyCode:
-          (nativeCurrencyCode != null
-              ? nativeCurrencyCode.value
-              : this.nativeCurrencyCode),
-      nativeCurrencySymbol:
-          (nativeCurrencySymbol != null
-              ? nativeCurrencySymbol.value
-              : this.nativeCurrencySymbol),
-      nativeCurrencyDecimalPlaces:
-          (nativeCurrencyDecimalPlaces != null
-              ? nativeCurrencyDecimalPlaces.value
-              : this.nativeCurrencyDecimalPlaces),
-      autoBudgetAmount:
-          (autoBudgetAmount != null
-              ? autoBudgetAmount.value
-              : this.autoBudgetAmount),
-      nativeAutoBudgetAmount:
-          (nativeAutoBudgetAmount != null
-              ? nativeAutoBudgetAmount.value
-              : this.nativeAutoBudgetAmount),
-      autoBudgetPeriod:
-          (autoBudgetPeriod != null
-              ? autoBudgetPeriod.value
-              : this.autoBudgetPeriod),
+      currencyName: (currencyName != null
+          ? currencyName.value
+          : this.currencyName),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      primaryCurrencyId: (primaryCurrencyId != null
+          ? primaryCurrencyId.value
+          : this.primaryCurrencyId),
+      primaryCurrencyName: (primaryCurrencyName != null
+          ? primaryCurrencyName.value
+          : this.primaryCurrencyName),
+      primaryCurrencyCode: (primaryCurrencyCode != null
+          ? primaryCurrencyCode.value
+          : this.primaryCurrencyCode),
+      primaryCurrencySymbol: (primaryCurrencySymbol != null
+          ? primaryCurrencySymbol.value
+          : this.primaryCurrencySymbol),
+      primaryCurrencyDecimalPlaces: (primaryCurrencyDecimalPlaces != null
+          ? primaryCurrencyDecimalPlaces.value
+          : this.primaryCurrencyDecimalPlaces),
+      autoBudgetAmount: (autoBudgetAmount != null
+          ? autoBudgetAmount.value
+          : this.autoBudgetAmount),
+      pcAutoBudgetAmount: (pcAutoBudgetAmount != null
+          ? pcAutoBudgetAmount.value
+          : this.pcAutoBudgetAmount),
       spent: (spent != null ? spent.value : this.spent),
+      pcSpent: (pcSpent != null ? pcSpent.value : this.pcSpent),
     );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class BudgetRead {
+  const BudgetRead({
+    required this.type,
+    required this.id,
+    required this.attributes,
+  });
+
+  factory BudgetRead.fromJson(Map<String, dynamic> json) =>
+      _$BudgetReadFromJson(json);
+
+  static const toJsonFactory = _$BudgetReadToJson;
+  Map<String, dynamic> toJson() => _$BudgetReadToJson(this);
+
+  @JsonKey(name: 'type', includeIfNull: false)
+  final String type;
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String id;
+  @JsonKey(name: 'attributes', includeIfNull: false)
+  final BudgetProperties attributes;
+  static const fromJsonFactory = _$BudgetReadFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $BudgetReadExtension on BudgetRead {
+  BudgetRead copyWith({
+    String? type,
+    String? id,
+    BudgetProperties? attributes,
+  }) {
+    return BudgetRead(
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
+  }
+
+  BudgetRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<BudgetProperties>? attributes,
+  }) {
+    return BudgetRead(
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class BudgetSingle {
+  const BudgetSingle({required this.data});
+
+  factory BudgetSingle.fromJson(Map<String, dynamic> json) =>
+      _$BudgetSingleFromJson(json);
+
+  static const toJsonFactory = _$BudgetSingleToJson;
+  Map<String, dynamic> toJson() => _$BudgetSingleToJson(this);
+
+  @JsonKey(name: 'data', includeIfNull: false)
+  final BudgetRead data;
+  static const fromJsonFactory = _$BudgetSingleFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $BudgetSingleExtension on BudgetSingle {
+  BudgetSingle copyWith({BudgetRead? data}) {
+    return BudgetSingle(data: data ?? this.data);
+  }
+
+  BudgetSingle copyWithWrapped({Wrapped<BudgetRead>? data}) {
+    return BudgetSingle(data: (data != null ? data.value : this.data));
   }
 }
 
@@ -6577,24 +7007,21 @@ extension $BudgetStoreExtension on BudgetStore {
       active: (active != null ? active.value : this.active),
       order: (order != null ? order.value : this.order),
       notes: (notes != null ? notes.value : this.notes),
-      autoBudgetType:
-          (autoBudgetType != null ? autoBudgetType.value : this.autoBudgetType),
-      autoBudgetCurrencyId:
-          (autoBudgetCurrencyId != null
-              ? autoBudgetCurrencyId.value
-              : this.autoBudgetCurrencyId),
-      autoBudgetCurrencyCode:
-          (autoBudgetCurrencyCode != null
-              ? autoBudgetCurrencyCode.value
-              : this.autoBudgetCurrencyCode),
-      autoBudgetAmount:
-          (autoBudgetAmount != null
-              ? autoBudgetAmount.value
-              : this.autoBudgetAmount),
-      autoBudgetPeriod:
-          (autoBudgetPeriod != null
-              ? autoBudgetPeriod.value
-              : this.autoBudgetPeriod),
+      autoBudgetType: (autoBudgetType != null
+          ? autoBudgetType.value
+          : this.autoBudgetType),
+      autoBudgetCurrencyId: (autoBudgetCurrencyId != null
+          ? autoBudgetCurrencyId.value
+          : this.autoBudgetCurrencyId),
+      autoBudgetCurrencyCode: (autoBudgetCurrencyCode != null
+          ? autoBudgetCurrencyCode.value
+          : this.autoBudgetCurrencyCode),
+      autoBudgetAmount: (autoBudgetAmount != null
+          ? autoBudgetAmount.value
+          : this.autoBudgetAmount),
+      autoBudgetPeriod: (autoBudgetPeriod != null
+          ? autoBudgetPeriod.value
+          : this.autoBudgetPeriod),
     );
   }
 }
@@ -6695,210 +7122,319 @@ extension $BudgetUpdateExtension on BudgetUpdate {
       active: (active != null ? active.value : this.active),
       order: (order != null ? order.value : this.order),
       notes: (notes != null ? notes.value : this.notes),
-      autoBudgetType:
-          (autoBudgetType != null ? autoBudgetType.value : this.autoBudgetType),
-      autoBudgetCurrencyId:
-          (autoBudgetCurrencyId != null
-              ? autoBudgetCurrencyId.value
-              : this.autoBudgetCurrencyId),
-      autoBudgetCurrencyCode:
-          (autoBudgetCurrencyCode != null
-              ? autoBudgetCurrencyCode.value
-              : this.autoBudgetCurrencyCode),
-      autoBudgetAmount:
-          (autoBudgetAmount != null
-              ? autoBudgetAmount.value
-              : this.autoBudgetAmount),
-      autoBudgetPeriod:
-          (autoBudgetPeriod != null
-              ? autoBudgetPeriod.value
-              : this.autoBudgetPeriod),
+      autoBudgetType: (autoBudgetType != null
+          ? autoBudgetType.value
+          : this.autoBudgetType),
+      autoBudgetCurrencyId: (autoBudgetCurrencyId != null
+          ? autoBudgetCurrencyId.value
+          : this.autoBudgetCurrencyId),
+      autoBudgetCurrencyCode: (autoBudgetCurrencyCode != null
+          ? autoBudgetCurrencyCode.value
+          : this.autoBudgetCurrencyCode),
+      autoBudgetAmount: (autoBudgetAmount != null
+          ? autoBudgetAmount.value
+          : this.autoBudgetAmount),
+      autoBudgetPeriod: (autoBudgetPeriod != null
+          ? autoBudgetPeriod.value
+          : this.autoBudgetPeriod),
     );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-class BudgetLimit {
-  const BudgetLimit({
+class BudgetLimitProperties {
+  const BudgetLimitProperties({
     this.createdAt,
     this.updatedAt,
-    required this.start,
-    required this.end,
+    this.start,
+    this.end,
+    this.budgetId,
+    this.objectHasCurrencySetting,
     this.currencyId,
-    this.currencyCode,
     this.currencyName,
+    this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
-    this.nativeCurrencyId,
-    this.nativeCurrencyCode,
-    this.nativeCurrencySymbol,
-    this.nativeCurrencyDecimalPlaces,
-    this.budgetId,
+    this.primaryCurrencyId,
+    this.primaryCurrencyName,
+    this.primaryCurrencyCode,
+    this.primaryCurrencySymbol,
+    this.primaryCurrencyDecimalPlaces,
+    this.amount,
+    this.pcAmount,
     this.period,
-    required this.amount,
-    this.nativeAmount,
     this.spent,
+    this.pcSpent,
     this.notes,
   });
 
-  factory BudgetLimit.fromJson(Map<String, dynamic> json) =>
-      _$BudgetLimitFromJson(json);
+  factory BudgetLimitProperties.fromJson(Map<String, dynamic> json) =>
+      _$BudgetLimitPropertiesFromJson(json);
 
-  static const toJsonFactory = _$BudgetLimitToJson;
-  Map<String, dynamic> toJson() => _$BudgetLimitToJson(this);
+  static const toJsonFactory = _$BudgetLimitPropertiesToJson;
+  Map<String, dynamic> toJson() => _$BudgetLimitPropertiesToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
   final DateTime? updatedAt;
   @JsonKey(name: 'start', includeIfNull: false)
-  final DateTime start;
+  final DateTime? start;
   @JsonKey(name: 'end', includeIfNull: false)
-  final DateTime end;
+  final DateTime? end;
+  @JsonKey(name: 'budget_id', includeIfNull: false)
+  final String? budgetId;
+  @JsonKey(name: 'object_has_currency_setting', includeIfNull: false)
+  final bool? objectHasCurrencySetting;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
-  @JsonKey(name: 'currency_code', includeIfNull: false)
-  final String? currencyCode;
   @JsonKey(name: 'currency_name', includeIfNull: false)
   final String? currencyName;
+  @JsonKey(name: 'currency_code', includeIfNull: false)
+  final String? currencyCode;
   @JsonKey(name: 'currency_symbol', includeIfNull: false)
   final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
-  @JsonKey(name: 'native_currency_id', includeIfNull: false)
-  final String? nativeCurrencyId;
-  @JsonKey(name: 'native_currency_code', includeIfNull: false)
-  final String? nativeCurrencyCode;
-  @JsonKey(name: 'native_currency_symbol', includeIfNull: false)
-  final String? nativeCurrencySymbol;
-  @JsonKey(name: 'native_currency_decimal_places', includeIfNull: false)
-  final int? nativeCurrencyDecimalPlaces;
-  @JsonKey(name: 'budget_id', includeIfNull: false)
-  final String? budgetId;
+  @JsonKey(name: 'primary_currency_id', includeIfNull: false)
+  final String? primaryCurrencyId;
+  @JsonKey(name: 'primary_currency_name', includeIfNull: false)
+  final String? primaryCurrencyName;
+  @JsonKey(name: 'primary_currency_code', includeIfNull: false)
+  final String? primaryCurrencyCode;
+  @JsonKey(name: 'primary_currency_symbol', includeIfNull: false)
+  final String? primaryCurrencySymbol;
+  @JsonKey(name: 'primary_currency_decimal_places', includeIfNull: false)
+  final int? primaryCurrencyDecimalPlaces;
+  @JsonKey(name: 'amount', includeIfNull: false)
+  final String? amount;
+  @JsonKey(name: 'pc_amount', includeIfNull: false)
+  final String? pcAmount;
   @JsonKey(name: 'period', includeIfNull: false)
   final String? period;
-  @JsonKey(name: 'amount', includeIfNull: false)
-  final String amount;
-  @JsonKey(name: 'native_amount', includeIfNull: false)
-  final String? nativeAmount;
-  @JsonKey(name: 'spent', includeIfNull: false)
-  final String? spent;
+  @JsonKey(
+    name: 'spent',
+    includeIfNull: false,
+    defaultValue: <ArrayEntryWithCurrencyAndSum>[],
+  )
+  final List<ArrayEntryWithCurrencyAndSum>? spent;
+  @JsonKey(
+    name: 'pc_spent',
+    includeIfNull: false,
+    defaultValue: <ArrayEntryWithCurrencyAndSum>[],
+  )
+  final List<ArrayEntryWithCurrencyAndSum>? pcSpent;
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
-  static const fromJsonFactory = _$BudgetLimitFromJson;
+  static const fromJsonFactory = _$BudgetLimitPropertiesFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $BudgetLimitExtension on BudgetLimit {
-  BudgetLimit copyWith({
+extension $BudgetLimitPropertiesExtension on BudgetLimitProperties {
+  BudgetLimitProperties copyWith({
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? start,
     DateTime? end,
+    String? budgetId,
+    bool? objectHasCurrencySetting,
     String? currencyId,
-    String? currencyCode,
     String? currencyName,
+    String? currencyCode,
     String? currencySymbol,
     int? currencyDecimalPlaces,
-    String? nativeCurrencyId,
-    String? nativeCurrencyCode,
-    String? nativeCurrencySymbol,
-    int? nativeCurrencyDecimalPlaces,
-    String? budgetId,
-    String? period,
+    String? primaryCurrencyId,
+    String? primaryCurrencyName,
+    String? primaryCurrencyCode,
+    String? primaryCurrencySymbol,
+    int? primaryCurrencyDecimalPlaces,
     String? amount,
-    String? nativeAmount,
-    String? spent,
+    String? pcAmount,
+    String? period,
+    List<ArrayEntryWithCurrencyAndSum>? spent,
+    List<ArrayEntryWithCurrencyAndSum>? pcSpent,
     String? notes,
   }) {
-    return BudgetLimit(
+    return BudgetLimitProperties(
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       start: start ?? this.start,
       end: end ?? this.end,
+      budgetId: budgetId ?? this.budgetId,
+      objectHasCurrencySetting:
+          objectHasCurrencySetting ?? this.objectHasCurrencySetting,
       currencyId: currencyId ?? this.currencyId,
-      currencyCode: currencyCode ?? this.currencyCode,
       currencyName: currencyName ?? this.currencyName,
+      currencyCode: currencyCode ?? this.currencyCode,
       currencySymbol: currencySymbol ?? this.currencySymbol,
       currencyDecimalPlaces:
           currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
-      nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
-      nativeCurrencyDecimalPlaces:
-          nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
-      budgetId: budgetId ?? this.budgetId,
-      period: period ?? this.period,
+      primaryCurrencyId: primaryCurrencyId ?? this.primaryCurrencyId,
+      primaryCurrencyName: primaryCurrencyName ?? this.primaryCurrencyName,
+      primaryCurrencyCode: primaryCurrencyCode ?? this.primaryCurrencyCode,
+      primaryCurrencySymbol:
+          primaryCurrencySymbol ?? this.primaryCurrencySymbol,
+      primaryCurrencyDecimalPlaces:
+          primaryCurrencyDecimalPlaces ?? this.primaryCurrencyDecimalPlaces,
       amount: amount ?? this.amount,
-      nativeAmount: nativeAmount ?? this.nativeAmount,
+      pcAmount: pcAmount ?? this.pcAmount,
+      period: period ?? this.period,
       spent: spent ?? this.spent,
+      pcSpent: pcSpent ?? this.pcSpent,
       notes: notes ?? this.notes,
     );
   }
 
-  BudgetLimit copyWithWrapped({
+  BudgetLimitProperties copyWithWrapped({
     Wrapped<DateTime?>? createdAt,
     Wrapped<DateTime?>? updatedAt,
-    Wrapped<DateTime>? start,
-    Wrapped<DateTime>? end,
+    Wrapped<DateTime?>? start,
+    Wrapped<DateTime?>? end,
+    Wrapped<String?>? budgetId,
+    Wrapped<bool?>? objectHasCurrencySetting,
     Wrapped<String?>? currencyId,
-    Wrapped<String?>? currencyCode,
     Wrapped<String?>? currencyName,
+    Wrapped<String?>? currencyCode,
     Wrapped<String?>? currencySymbol,
     Wrapped<int?>? currencyDecimalPlaces,
-    Wrapped<String?>? nativeCurrencyId,
-    Wrapped<String?>? nativeCurrencyCode,
-    Wrapped<String?>? nativeCurrencySymbol,
-    Wrapped<int?>? nativeCurrencyDecimalPlaces,
-    Wrapped<String?>? budgetId,
+    Wrapped<String?>? primaryCurrencyId,
+    Wrapped<String?>? primaryCurrencyName,
+    Wrapped<String?>? primaryCurrencyCode,
+    Wrapped<String?>? primaryCurrencySymbol,
+    Wrapped<int?>? primaryCurrencyDecimalPlaces,
+    Wrapped<String?>? amount,
+    Wrapped<String?>? pcAmount,
     Wrapped<String?>? period,
-    Wrapped<String>? amount,
-    Wrapped<String?>? nativeAmount,
-    Wrapped<String?>? spent,
+    Wrapped<List<ArrayEntryWithCurrencyAndSum>?>? spent,
+    Wrapped<List<ArrayEntryWithCurrencyAndSum>?>? pcSpent,
     Wrapped<String?>? notes,
   }) {
-    return BudgetLimit(
+    return BudgetLimitProperties(
       createdAt: (createdAt != null ? createdAt.value : this.createdAt),
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
       start: (start != null ? start.value : this.start),
       end: (end != null ? end.value : this.end),
-      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencyName:
-          (currencyName != null ? currencyName.value : this.currencyName),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
-      nativeCurrencyId:
-          (nativeCurrencyId != null
-              ? nativeCurrencyId.value
-              : this.nativeCurrencyId),
-      nativeCurrencyCode:
-          (nativeCurrencyCode != null
-              ? nativeCurrencyCode.value
-              : this.nativeCurrencyCode),
-      nativeCurrencySymbol:
-          (nativeCurrencySymbol != null
-              ? nativeCurrencySymbol.value
-              : this.nativeCurrencySymbol),
-      nativeCurrencyDecimalPlaces:
-          (nativeCurrencyDecimalPlaces != null
-              ? nativeCurrencyDecimalPlaces.value
-              : this.nativeCurrencyDecimalPlaces),
       budgetId: (budgetId != null ? budgetId.value : this.budgetId),
-      period: (period != null ? period.value : this.period),
+      objectHasCurrencySetting: (objectHasCurrencySetting != null
+          ? objectHasCurrencySetting.value
+          : this.objectHasCurrencySetting),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyName: (currencyName != null
+          ? currencyName.value
+          : this.currencyName),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      primaryCurrencyId: (primaryCurrencyId != null
+          ? primaryCurrencyId.value
+          : this.primaryCurrencyId),
+      primaryCurrencyName: (primaryCurrencyName != null
+          ? primaryCurrencyName.value
+          : this.primaryCurrencyName),
+      primaryCurrencyCode: (primaryCurrencyCode != null
+          ? primaryCurrencyCode.value
+          : this.primaryCurrencyCode),
+      primaryCurrencySymbol: (primaryCurrencySymbol != null
+          ? primaryCurrencySymbol.value
+          : this.primaryCurrencySymbol),
+      primaryCurrencyDecimalPlaces: (primaryCurrencyDecimalPlaces != null
+          ? primaryCurrencyDecimalPlaces.value
+          : this.primaryCurrencyDecimalPlaces),
       amount: (amount != null ? amount.value : this.amount),
-      nativeAmount:
-          (nativeAmount != null ? nativeAmount.value : this.nativeAmount),
+      pcAmount: (pcAmount != null ? pcAmount.value : this.pcAmount),
+      period: (period != null ? period.value : this.period),
       spent: (spent != null ? spent.value : this.spent),
+      pcSpent: (pcSpent != null ? pcSpent.value : this.pcSpent),
       notes: (notes != null ? notes.value : this.notes),
     );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class BudgetLimitRead {
+  const BudgetLimitRead({
+    required this.type,
+    required this.id,
+    required this.attributes,
+  });
+
+  factory BudgetLimitRead.fromJson(Map<String, dynamic> json) =>
+      _$BudgetLimitReadFromJson(json);
+
+  static const toJsonFactory = _$BudgetLimitReadToJson;
+  Map<String, dynamic> toJson() => _$BudgetLimitReadToJson(this);
+
+  @JsonKey(name: 'type', includeIfNull: false)
+  final String type;
+  @JsonKey(name: 'id', includeIfNull: false)
+  final String id;
+  @JsonKey(name: 'attributes', includeIfNull: false)
+  final BudgetLimitProperties attributes;
+  static const fromJsonFactory = _$BudgetLimitReadFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $BudgetLimitReadExtension on BudgetLimitRead {
+  BudgetLimitRead copyWith({
+    String? type,
+    String? id,
+    BudgetLimitProperties? attributes,
+  }) {
+    return BudgetLimitRead(
+      type: type ?? this.type,
+      id: id ?? this.id,
+      attributes: attributes ?? this.attributes,
+    );
+  }
+
+  BudgetLimitRead copyWithWrapped({
+    Wrapped<String>? type,
+    Wrapped<String>? id,
+    Wrapped<BudgetLimitProperties>? attributes,
+  }) {
+    return BudgetLimitRead(
+      type: (type != null ? type.value : this.type),
+      id: (id != null ? id.value : this.id),
+      attributes: (attributes != null ? attributes.value : this.attributes),
+    );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class BudgetLimitSingle {
+  const BudgetLimitSingle({required this.data});
+
+  factory BudgetLimitSingle.fromJson(Map<String, dynamic> json) =>
+      _$BudgetLimitSingleFromJson(json);
+
+  static const toJsonFactory = _$BudgetLimitSingleToJson;
+  Map<String, dynamic> toJson() => _$BudgetLimitSingleToJson(this);
+
+  @JsonKey(name: 'data', includeIfNull: false)
+  final BudgetLimitRead data;
+  static const fromJsonFactory = _$BudgetLimitSingleFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $BudgetLimitSingleExtension on BudgetLimitSingle {
+  BudgetLimitSingle copyWith({BudgetLimitRead? data}) {
+    return BudgetLimitSingle(data: data ?? this.data);
+  }
+
+  BudgetLimitSingle copyWithWrapped({Wrapped<BudgetLimitRead>? data}) {
+    return BudgetLimitSingle(data: (data != null ? data.value : this.data));
   }
 }
 
@@ -6978,8 +7514,9 @@ extension $BudgetLimitStoreExtension on BudgetLimitStore {
   }) {
     return BudgetLimitStore(
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
       budgetId: (budgetId != null ? budgetId.value : this.budgetId),
       start: (start != null ? start.value : this.start),
       period: (period != null ? period.value : this.period),
@@ -6991,97 +7528,233 @@ extension $BudgetLimitStoreExtension on BudgetLimitStore {
 }
 
 @JsonSerializable(explicitToJson: true)
-class BudgetSpent {
-  const BudgetSpent({
-    this.sum,
+class BudgetLimitUpdate {
+  const BudgetLimitUpdate({
+    this.createdAt,
+    this.updatedAt,
+    this.start,
+    this.end,
+    this.budgetId,
+    this.objectHasCurrencySetting,
     this.currencyId,
+    this.currencyName,
     this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
+    this.primaryCurrencyId,
+    this.primaryCurrencyName,
+    this.primaryCurrencyCode,
+    this.primaryCurrencySymbol,
+    this.primaryCurrencyDecimalPlaces,
+    this.period,
+    this.amount,
+    this.pcAmount,
+    this.spent,
+    this.notes,
   });
 
-  factory BudgetSpent.fromJson(Map<String, dynamic> json) =>
-      _$BudgetSpentFromJson(json);
+  factory BudgetLimitUpdate.fromJson(Map<String, dynamic> json) =>
+      _$BudgetLimitUpdateFromJson(json);
 
-  static const toJsonFactory = _$BudgetSpentToJson;
-  Map<String, dynamic> toJson() => _$BudgetSpentToJson(this);
+  static const toJsonFactory = _$BudgetLimitUpdateToJson;
+  Map<String, dynamic> toJson() => _$BudgetLimitUpdateToJson(this);
 
-  @JsonKey(name: 'sum', includeIfNull: false)
-  final String? sum;
+  @JsonKey(name: 'created_at', includeIfNull: false)
+  final DateTime? createdAt;
+  @JsonKey(name: 'updated_at', includeIfNull: false)
+  final DateTime? updatedAt;
+  @JsonKey(name: 'start', includeIfNull: false)
+  final DateTime? start;
+  @JsonKey(name: 'end', includeIfNull: false)
+  final DateTime? end;
+  @JsonKey(name: 'budget_id', includeIfNull: false)
+  final String? budgetId;
+  @JsonKey(name: 'object_has_currency_setting', includeIfNull: false)
+  final bool? objectHasCurrencySetting;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
+  @JsonKey(name: 'currency_name', includeIfNull: false)
+  final String? currencyName;
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'currency_symbol', includeIfNull: false)
   final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
-  static const fromJsonFactory = _$BudgetSpentFromJson;
+  @JsonKey(name: 'primary_currency_id', includeIfNull: false)
+  final String? primaryCurrencyId;
+  @JsonKey(name: 'primary_currency_name', includeIfNull: false)
+  final String? primaryCurrencyName;
+  @JsonKey(name: 'primary_currency_code', includeIfNull: false)
+  final String? primaryCurrencyCode;
+  @JsonKey(name: 'primary_currency_symbol', includeIfNull: false)
+  final String? primaryCurrencySymbol;
+  @JsonKey(name: 'primary_currency_decimal_places', includeIfNull: false)
+  final int? primaryCurrencyDecimalPlaces;
+  @JsonKey(name: 'period', includeIfNull: false)
+  final String? period;
+  @JsonKey(name: 'amount', includeIfNull: false)
+  final String? amount;
+  @JsonKey(name: 'pc_amount', includeIfNull: false)
+  final String? pcAmount;
+  @JsonKey(name: 'spent', includeIfNull: false)
+  final String? spent;
+  @JsonKey(name: 'notes', includeIfNull: false)
+  final String? notes;
+  static const fromJsonFactory = _$BudgetLimitUpdateFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $BudgetSpentExtension on BudgetSpent {
-  BudgetSpent copyWith({
-    String? sum,
+extension $BudgetLimitUpdateExtension on BudgetLimitUpdate {
+  BudgetLimitUpdate copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? start,
+    DateTime? end,
+    String? budgetId,
+    bool? objectHasCurrencySetting,
     String? currencyId,
+    String? currencyName,
     String? currencyCode,
     String? currencySymbol,
     int? currencyDecimalPlaces,
+    String? primaryCurrencyId,
+    String? primaryCurrencyName,
+    String? primaryCurrencyCode,
+    String? primaryCurrencySymbol,
+    int? primaryCurrencyDecimalPlaces,
+    String? period,
+    String? amount,
+    String? pcAmount,
+    String? spent,
+    String? notes,
   }) {
-    return BudgetSpent(
-      sum: sum ?? this.sum,
+    return BudgetLimitUpdate(
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      start: start ?? this.start,
+      end: end ?? this.end,
+      budgetId: budgetId ?? this.budgetId,
+      objectHasCurrencySetting:
+          objectHasCurrencySetting ?? this.objectHasCurrencySetting,
       currencyId: currencyId ?? this.currencyId,
+      currencyName: currencyName ?? this.currencyName,
       currencyCode: currencyCode ?? this.currencyCode,
       currencySymbol: currencySymbol ?? this.currencySymbol,
       currencyDecimalPlaces:
           currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      primaryCurrencyId: primaryCurrencyId ?? this.primaryCurrencyId,
+      primaryCurrencyName: primaryCurrencyName ?? this.primaryCurrencyName,
+      primaryCurrencyCode: primaryCurrencyCode ?? this.primaryCurrencyCode,
+      primaryCurrencySymbol:
+          primaryCurrencySymbol ?? this.primaryCurrencySymbol,
+      primaryCurrencyDecimalPlaces:
+          primaryCurrencyDecimalPlaces ?? this.primaryCurrencyDecimalPlaces,
+      period: period ?? this.period,
+      amount: amount ?? this.amount,
+      pcAmount: pcAmount ?? this.pcAmount,
+      spent: spent ?? this.spent,
+      notes: notes ?? this.notes,
     );
   }
 
-  BudgetSpent copyWithWrapped({
-    Wrapped<String?>? sum,
+  BudgetLimitUpdate copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<DateTime?>? start,
+    Wrapped<DateTime?>? end,
+    Wrapped<String?>? budgetId,
+    Wrapped<bool?>? objectHasCurrencySetting,
     Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyName,
     Wrapped<String?>? currencyCode,
     Wrapped<String?>? currencySymbol,
     Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? primaryCurrencyId,
+    Wrapped<String?>? primaryCurrencyName,
+    Wrapped<String?>? primaryCurrencyCode,
+    Wrapped<String?>? primaryCurrencySymbol,
+    Wrapped<int?>? primaryCurrencyDecimalPlaces,
+    Wrapped<String?>? period,
+    Wrapped<String?>? amount,
+    Wrapped<String?>? pcAmount,
+    Wrapped<String?>? spent,
+    Wrapped<String?>? notes,
   }) {
-    return BudgetSpent(
-      sum: (sum != null ? sum.value : this.sum),
+    return BudgetLimitUpdate(
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      start: (start != null ? start.value : this.start),
+      end: (end != null ? end.value : this.end),
+      budgetId: (budgetId != null ? budgetId.value : this.budgetId),
+      objectHasCurrencySetting: (objectHasCurrencySetting != null
+          ? objectHasCurrencySetting.value
+          : this.objectHasCurrencySetting),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
+      currencyName: (currencyName != null
+          ? currencyName.value
+          : this.currencyName),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      primaryCurrencyId: (primaryCurrencyId != null
+          ? primaryCurrencyId.value
+          : this.primaryCurrencyId),
+      primaryCurrencyName: (primaryCurrencyName != null
+          ? primaryCurrencyName.value
+          : this.primaryCurrencyName),
+      primaryCurrencyCode: (primaryCurrencyCode != null
+          ? primaryCurrencyCode.value
+          : this.primaryCurrencyCode),
+      primaryCurrencySymbol: (primaryCurrencySymbol != null
+          ? primaryCurrencySymbol.value
+          : this.primaryCurrencySymbol),
+      primaryCurrencyDecimalPlaces: (primaryCurrencyDecimalPlaces != null
+          ? primaryCurrencyDecimalPlaces.value
+          : this.primaryCurrencyDecimalPlaces),
+      period: (period != null ? period.value : this.period),
+      amount: (amount != null ? amount.value : this.amount),
+      pcAmount: (pcAmount != null ? pcAmount.value : this.pcAmount),
+      spent: (spent != null ? spent.value : this.spent),
+      notes: (notes != null ? notes.value : this.notes),
     );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-class Category {
-  const Category({
+class CategoryProperties {
+  const CategoryProperties({
     this.createdAt,
     this.updatedAt,
     required this.name,
     this.notes,
-    this.nativeCurrencyId,
-    this.nativeCurrencyCode,
-    this.nativeCurrencySymbol,
-    this.nativeCurrencyDecimalPlaces,
+    this.objectHasCurrencySetting,
+    this.primaryCurrencyId,
+    this.primaryCurrencyName,
+    this.primaryCurrencyCode,
+    this.primaryCurrencySymbol,
+    this.primaryCurrencyDecimalPlaces,
     this.spent,
+    this.pcSpent,
     this.earned,
+    this.pcEarned,
+    this.transferred,
+    this.pcTransferred,
   });
 
-  factory Category.fromJson(Map<String, dynamic> json) =>
-      _$CategoryFromJson(json);
+  factory CategoryProperties.fromJson(Map<String, dynamic> json) =>
+      _$CategoryPropertiesFromJson(json);
 
-  static const toJsonFactory = _$CategoryToJson;
-  Map<String, dynamic> toJson() => _$CategoryToJson(this);
+  static const toJsonFactory = _$CategoryPropertiesToJson;
+  Map<String, dynamic> toJson() => _$CategoryPropertiesToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -7091,91 +7764,187 @@ class Category {
   final String name;
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
-  @JsonKey(name: 'native_currency_id', includeIfNull: false)
-  final String? nativeCurrencyId;
-  @JsonKey(name: 'native_currency_code', includeIfNull: false)
-  final String? nativeCurrencyCode;
-  @JsonKey(name: 'native_currency_symbol', includeIfNull: false)
-  final String? nativeCurrencySymbol;
-  @JsonKey(name: 'native_currency_decimal_places', includeIfNull: false)
-  final int? nativeCurrencyDecimalPlaces;
-  @JsonKey(name: 'spent', includeIfNull: false, defaultValue: <CategorySpent>[])
-  final List<CategorySpent>? spent;
+  @JsonKey(name: 'object_has_currency_setting', includeIfNull: false)
+  final bool? objectHasCurrencySetting;
+  @JsonKey(name: 'primary_currency_id', includeIfNull: false)
+  final String? primaryCurrencyId;
+  @JsonKey(name: 'primary_currency_name', includeIfNull: false)
+  final String? primaryCurrencyName;
+  @JsonKey(name: 'primary_currency_code', includeIfNull: false)
+  final String? primaryCurrencyCode;
+  @JsonKey(name: 'primary_currency_symbol', includeIfNull: false)
+  final String? primaryCurrencySymbol;
+  @JsonKey(name: 'primary_currency_decimal_places', includeIfNull: false)
+  final int? primaryCurrencyDecimalPlaces;
+  @JsonKey(
+    name: 'spent',
+    includeIfNull: false,
+    defaultValue: <ArrayEntryWithCurrencyAndSum>[],
+  )
+  final List<ArrayEntryWithCurrencyAndSum>? spent;
+  @JsonKey(
+    name: 'pc_spent',
+    includeIfNull: false,
+    defaultValue: <ArrayEntryWithCurrencyAndSum>[],
+  )
+  final List<ArrayEntryWithCurrencyAndSum>? pcSpent;
   @JsonKey(
     name: 'earned',
     includeIfNull: false,
-    defaultValue: <CategoryEarned>[],
+    defaultValue: <ArrayEntryWithCurrencyAndSum>[],
   )
-  final List<CategoryEarned>? earned;
-  static const fromJsonFactory = _$CategoryFromJson;
+  final List<ArrayEntryWithCurrencyAndSum>? earned;
+  @JsonKey(
+    name: 'pc_earned',
+    includeIfNull: false,
+    defaultValue: <ArrayEntryWithCurrencyAndSum>[],
+  )
+  final List<ArrayEntryWithCurrencyAndSum>? pcEarned;
+  @JsonKey(
+    name: 'transferred',
+    includeIfNull: false,
+    defaultValue: <ArrayEntryWithCurrencyAndSum>[],
+  )
+  final List<ArrayEntryWithCurrencyAndSum>? transferred;
+  @JsonKey(
+    name: 'pc_transferred',
+    includeIfNull: false,
+    defaultValue: <ArrayEntryWithCurrencyAndSum>[],
+  )
+  final List<ArrayEntryWithCurrencyAndSum>? pcTransferred;
+  static const fromJsonFactory = _$CategoryPropertiesFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $CategoryExtension on Category {
-  Category copyWith({
+extension $CategoryPropertiesExtension on CategoryProperties {
+  CategoryProperties copyWith({
     DateTime? createdAt,
     DateTime? updatedAt,
     String? name,
     String? notes,
-    String? nativeCurrencyId,
-    String? nativeCurrencyCode,
-    String? nativeCurrencySymbol,
-    int? nativeCurrencyDecimalPlaces,
-    List<CategorySpent>? spent,
-    List<CategoryEarned>? earned,
+    bool? objectHasCurrencySetting,
+    String? primaryCurrencyId,
+    String? primaryCurrencyName,
+    String? primaryCurrencyCode,
+    String? primaryCurrencySymbol,
+    int? primaryCurrencyDecimalPlaces,
+    List<ArrayEntryWithCurrencyAndSum>? spent,
+    List<ArrayEntryWithCurrencyAndSum>? pcSpent,
+    List<ArrayEntryWithCurrencyAndSum>? earned,
+    List<ArrayEntryWithCurrencyAndSum>? pcEarned,
+    List<ArrayEntryWithCurrencyAndSum>? transferred,
+    List<ArrayEntryWithCurrencyAndSum>? pcTransferred,
   }) {
-    return Category(
+    return CategoryProperties(
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       name: name ?? this.name,
       notes: notes ?? this.notes,
-      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
-      nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
-      nativeCurrencyDecimalPlaces:
-          nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
+      objectHasCurrencySetting:
+          objectHasCurrencySetting ?? this.objectHasCurrencySetting,
+      primaryCurrencyId: primaryCurrencyId ?? this.primaryCurrencyId,
+      primaryCurrencyName: primaryCurrencyName ?? this.primaryCurrencyName,
+      primaryCurrencyCode: primaryCurrencyCode ?? this.primaryCurrencyCode,
+      primaryCurrencySymbol:
+          primaryCurrencySymbol ?? this.primaryCurrencySymbol,
+      primaryCurrencyDecimalPlaces:
+          primaryCurrencyDecimalPlaces ?? this.primaryCurrencyDecimalPlaces,
       spent: spent ?? this.spent,
+      pcSpent: pcSpent ?? this.pcSpent,
       earned: earned ?? this.earned,
+      pcEarned: pcEarned ?? this.pcEarned,
+      transferred: transferred ?? this.transferred,
+      pcTransferred: pcTransferred ?? this.pcTransferred,
     );
   }
 
-  Category copyWithWrapped({
+  CategoryProperties copyWithWrapped({
     Wrapped<DateTime?>? createdAt,
     Wrapped<DateTime?>? updatedAt,
     Wrapped<String>? name,
     Wrapped<String?>? notes,
-    Wrapped<String?>? nativeCurrencyId,
-    Wrapped<String?>? nativeCurrencyCode,
-    Wrapped<String?>? nativeCurrencySymbol,
-    Wrapped<int?>? nativeCurrencyDecimalPlaces,
-    Wrapped<List<CategorySpent>?>? spent,
-    Wrapped<List<CategoryEarned>?>? earned,
+    Wrapped<bool?>? objectHasCurrencySetting,
+    Wrapped<String?>? primaryCurrencyId,
+    Wrapped<String?>? primaryCurrencyName,
+    Wrapped<String?>? primaryCurrencyCode,
+    Wrapped<String?>? primaryCurrencySymbol,
+    Wrapped<int?>? primaryCurrencyDecimalPlaces,
+    Wrapped<List<ArrayEntryWithCurrencyAndSum>?>? spent,
+    Wrapped<List<ArrayEntryWithCurrencyAndSum>?>? pcSpent,
+    Wrapped<List<ArrayEntryWithCurrencyAndSum>?>? earned,
+    Wrapped<List<ArrayEntryWithCurrencyAndSum>?>? pcEarned,
+    Wrapped<List<ArrayEntryWithCurrencyAndSum>?>? transferred,
+    Wrapped<List<ArrayEntryWithCurrencyAndSum>?>? pcTransferred,
   }) {
-    return Category(
+    return CategoryProperties(
       createdAt: (createdAt != null ? createdAt.value : this.createdAt),
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
       name: (name != null ? name.value : this.name),
       notes: (notes != null ? notes.value : this.notes),
-      nativeCurrencyId:
-          (nativeCurrencyId != null
-              ? nativeCurrencyId.value
-              : this.nativeCurrencyId),
-      nativeCurrencyCode:
-          (nativeCurrencyCode != null
-              ? nativeCurrencyCode.value
-              : this.nativeCurrencyCode),
-      nativeCurrencySymbol:
-          (nativeCurrencySymbol != null
-              ? nativeCurrencySymbol.value
-              : this.nativeCurrencySymbol),
-      nativeCurrencyDecimalPlaces:
-          (nativeCurrencyDecimalPlaces != null
-              ? nativeCurrencyDecimalPlaces.value
-              : this.nativeCurrencyDecimalPlaces),
+      objectHasCurrencySetting: (objectHasCurrencySetting != null
+          ? objectHasCurrencySetting.value
+          : this.objectHasCurrencySetting),
+      primaryCurrencyId: (primaryCurrencyId != null
+          ? primaryCurrencyId.value
+          : this.primaryCurrencyId),
+      primaryCurrencyName: (primaryCurrencyName != null
+          ? primaryCurrencyName.value
+          : this.primaryCurrencyName),
+      primaryCurrencyCode: (primaryCurrencyCode != null
+          ? primaryCurrencyCode.value
+          : this.primaryCurrencyCode),
+      primaryCurrencySymbol: (primaryCurrencySymbol != null
+          ? primaryCurrencySymbol.value
+          : this.primaryCurrencySymbol),
+      primaryCurrencyDecimalPlaces: (primaryCurrencyDecimalPlaces != null
+          ? primaryCurrencyDecimalPlaces.value
+          : this.primaryCurrencyDecimalPlaces),
       spent: (spent != null ? spent.value : this.spent),
+      pcSpent: (pcSpent != null ? pcSpent.value : this.pcSpent),
       earned: (earned != null ? earned.value : this.earned),
+      pcEarned: (pcEarned != null ? pcEarned.value : this.pcEarned),
+      transferred: (transferred != null ? transferred.value : this.transferred),
+      pcTransferred: (pcTransferred != null
+          ? pcTransferred.value
+          : this.pcTransferred),
+    );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class CategoryStore {
+  const CategoryStore({required this.name, this.notes});
+
+  factory CategoryStore.fromJson(Map<String, dynamic> json) =>
+      _$CategoryStoreFromJson(json);
+
+  static const toJsonFactory = _$CategoryStoreToJson;
+  Map<String, dynamic> toJson() => _$CategoryStoreToJson(this);
+
+  @JsonKey(name: 'name', includeIfNull: false)
+  final String name;
+  @JsonKey(name: 'notes', includeIfNull: false)
+  final String? notes;
+  static const fromJsonFactory = _$CategoryStoreFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $CategoryStoreExtension on CategoryStore {
+  CategoryStore copyWith({String? name, String? notes}) {
+    return CategoryStore(name: name ?? this.name, notes: notes ?? this.notes);
+  }
+
+  CategoryStore copyWithWrapped({
+    Wrapped<String>? name,
+    Wrapped<String?>? notes,
+  }) {
+    return CategoryStore(
+      name: (name != null ? name.value : this.name),
+      notes: (notes != null ? notes.value : this.notes),
     );
   }
 }
@@ -7217,145 +7986,152 @@ extension $CategoryUpdateExtension on CategoryUpdate {
 }
 
 @JsonSerializable(explicitToJson: true)
-class CategoryEarned {
-  const CategoryEarned({
-    this.currencyId,
-    this.currencyCode,
-    this.currencySymbol,
-    this.currencyDecimalPlaces,
-    this.sum,
+class CurrencyExchangeProperties {
+  const CurrencyExchangeProperties({
+    this.createdAt,
+    this.updatedAt,
+    this.fromCurrencyId,
+    this.fromCurrencyName,
+    this.fromCurrencyCode,
+    this.fromCurrencySymbol,
+    this.fromCurrencyDecimalPlaces,
+    this.toCurrencyId,
+    this.toCurrencyName,
+    this.toCurrencyCode,
+    this.toCurrencySymbol,
+    this.toCurrencyDecimalPlaces,
+    this.rate,
+    this.date,
   });
 
-  factory CategoryEarned.fromJson(Map<String, dynamic> json) =>
-      _$CategoryEarnedFromJson(json);
+  factory CurrencyExchangeProperties.fromJson(Map<String, dynamic> json) =>
+      _$CurrencyExchangePropertiesFromJson(json);
 
-  static const toJsonFactory = _$CategoryEarnedToJson;
-  Map<String, dynamic> toJson() => _$CategoryEarnedToJson(this);
+  static const toJsonFactory = _$CurrencyExchangePropertiesToJson;
+  Map<String, dynamic> toJson() => _$CurrencyExchangePropertiesToJson(this);
 
-  @JsonKey(name: 'currency_id', includeIfNull: false)
-  final String? currencyId;
-  @JsonKey(name: 'currency_code', includeIfNull: false)
-  final String? currencyCode;
-  @JsonKey(name: 'currency_symbol', includeIfNull: false)
-  final String? currencySymbol;
-  @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
-  final int? currencyDecimalPlaces;
-  @JsonKey(name: 'sum', includeIfNull: false)
-  final String? sum;
-  static const fromJsonFactory = _$CategoryEarnedFromJson;
+  @JsonKey(name: 'created_at', includeIfNull: false)
+  final DateTime? createdAt;
+  @JsonKey(name: 'updated_at', includeIfNull: false)
+  final DateTime? updatedAt;
+  @JsonKey(name: 'from_currency_id', includeIfNull: false)
+  final String? fromCurrencyId;
+  @JsonKey(name: 'from_currency_name', includeIfNull: false)
+  final String? fromCurrencyName;
+  @JsonKey(name: 'from_currency_code', includeIfNull: false)
+  final String? fromCurrencyCode;
+  @JsonKey(name: 'from_currency_symbol', includeIfNull: false)
+  final String? fromCurrencySymbol;
+  @JsonKey(name: 'from_currency_decimal_places', includeIfNull: false)
+  final int? fromCurrencyDecimalPlaces;
+  @JsonKey(name: 'to_currency_id', includeIfNull: false)
+  final String? toCurrencyId;
+  @JsonKey(name: 'to_currency_name', includeIfNull: false)
+  final String? toCurrencyName;
+  @JsonKey(name: 'to_currency_code', includeIfNull: false)
+  final String? toCurrencyCode;
+  @JsonKey(name: 'to_currency_symbol', includeIfNull: false)
+  final String? toCurrencySymbol;
+  @JsonKey(name: 'to_currency_decimal_places', includeIfNull: false)
+  final int? toCurrencyDecimalPlaces;
+  @JsonKey(name: 'rate', includeIfNull: false)
+  final String? rate;
+  @JsonKey(name: 'date', includeIfNull: false)
+  final DateTime? date;
+  static const fromJsonFactory = _$CurrencyExchangePropertiesFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $CategoryEarnedExtension on CategoryEarned {
-  CategoryEarned copyWith({
-    String? currencyId,
-    String? currencyCode,
-    String? currencySymbol,
-    int? currencyDecimalPlaces,
-    String? sum,
+extension $CurrencyExchangePropertiesExtension on CurrencyExchangeProperties {
+  CurrencyExchangeProperties copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? fromCurrencyId,
+    String? fromCurrencyName,
+    String? fromCurrencyCode,
+    String? fromCurrencySymbol,
+    int? fromCurrencyDecimalPlaces,
+    String? toCurrencyId,
+    String? toCurrencyName,
+    String? toCurrencyCode,
+    String? toCurrencySymbol,
+    int? toCurrencyDecimalPlaces,
+    String? rate,
+    DateTime? date,
   }) {
-    return CategoryEarned(
-      currencyId: currencyId ?? this.currencyId,
-      currencyCode: currencyCode ?? this.currencyCode,
-      currencySymbol: currencySymbol ?? this.currencySymbol,
-      currencyDecimalPlaces:
-          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-      sum: sum ?? this.sum,
+    return CurrencyExchangeProperties(
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      fromCurrencyId: fromCurrencyId ?? this.fromCurrencyId,
+      fromCurrencyName: fromCurrencyName ?? this.fromCurrencyName,
+      fromCurrencyCode: fromCurrencyCode ?? this.fromCurrencyCode,
+      fromCurrencySymbol: fromCurrencySymbol ?? this.fromCurrencySymbol,
+      fromCurrencyDecimalPlaces:
+          fromCurrencyDecimalPlaces ?? this.fromCurrencyDecimalPlaces,
+      toCurrencyId: toCurrencyId ?? this.toCurrencyId,
+      toCurrencyName: toCurrencyName ?? this.toCurrencyName,
+      toCurrencyCode: toCurrencyCode ?? this.toCurrencyCode,
+      toCurrencySymbol: toCurrencySymbol ?? this.toCurrencySymbol,
+      toCurrencyDecimalPlaces:
+          toCurrencyDecimalPlaces ?? this.toCurrencyDecimalPlaces,
+      rate: rate ?? this.rate,
+      date: date ?? this.date,
     );
   }
 
-  CategoryEarned copyWithWrapped({
-    Wrapped<String?>? currencyId,
-    Wrapped<String?>? currencyCode,
-    Wrapped<String?>? currencySymbol,
-    Wrapped<int?>? currencyDecimalPlaces,
-    Wrapped<String?>? sum,
+  CurrencyExchangeProperties copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String?>? fromCurrencyId,
+    Wrapped<String?>? fromCurrencyName,
+    Wrapped<String?>? fromCurrencyCode,
+    Wrapped<String?>? fromCurrencySymbol,
+    Wrapped<int?>? fromCurrencyDecimalPlaces,
+    Wrapped<String?>? toCurrencyId,
+    Wrapped<String?>? toCurrencyName,
+    Wrapped<String?>? toCurrencyCode,
+    Wrapped<String?>? toCurrencySymbol,
+    Wrapped<int?>? toCurrencyDecimalPlaces,
+    Wrapped<String?>? rate,
+    Wrapped<DateTime?>? date,
   }) {
-    return CategoryEarned(
-      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
-      sum: (sum != null ? sum.value : this.sum),
-    );
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class CategorySpent {
-  const CategorySpent({
-    this.currencyId,
-    this.currencyCode,
-    this.currencySymbol,
-    this.currencyDecimalPlaces,
-    this.sum,
-  });
-
-  factory CategorySpent.fromJson(Map<String, dynamic> json) =>
-      _$CategorySpentFromJson(json);
-
-  static const toJsonFactory = _$CategorySpentToJson;
-  Map<String, dynamic> toJson() => _$CategorySpentToJson(this);
-
-  @JsonKey(name: 'currency_id', includeIfNull: false)
-  final String? currencyId;
-  @JsonKey(name: 'currency_code', includeIfNull: false)
-  final String? currencyCode;
-  @JsonKey(name: 'currency_symbol', includeIfNull: false)
-  final String? currencySymbol;
-  @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
-  final int? currencyDecimalPlaces;
-  @JsonKey(name: 'sum', includeIfNull: false)
-  final String? sum;
-  static const fromJsonFactory = _$CategorySpentFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $CategorySpentExtension on CategorySpent {
-  CategorySpent copyWith({
-    String? currencyId,
-    String? currencyCode,
-    String? currencySymbol,
-    int? currencyDecimalPlaces,
-    String? sum,
-  }) {
-    return CategorySpent(
-      currencyId: currencyId ?? this.currencyId,
-      currencyCode: currencyCode ?? this.currencyCode,
-      currencySymbol: currencySymbol ?? this.currencySymbol,
-      currencyDecimalPlaces:
-          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-      sum: sum ?? this.sum,
-    );
-  }
-
-  CategorySpent copyWithWrapped({
-    Wrapped<String?>? currencyId,
-    Wrapped<String?>? currencyCode,
-    Wrapped<String?>? currencySymbol,
-    Wrapped<int?>? currencyDecimalPlaces,
-    Wrapped<String?>? sum,
-  }) {
-    return CategorySpent(
-      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
-      sum: (sum != null ? sum.value : this.sum),
+    return CurrencyExchangeProperties(
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      fromCurrencyId: (fromCurrencyId != null
+          ? fromCurrencyId.value
+          : this.fromCurrencyId),
+      fromCurrencyName: (fromCurrencyName != null
+          ? fromCurrencyName.value
+          : this.fromCurrencyName),
+      fromCurrencyCode: (fromCurrencyCode != null
+          ? fromCurrencyCode.value
+          : this.fromCurrencyCode),
+      fromCurrencySymbol: (fromCurrencySymbol != null
+          ? fromCurrencySymbol.value
+          : this.fromCurrencySymbol),
+      fromCurrencyDecimalPlaces: (fromCurrencyDecimalPlaces != null
+          ? fromCurrencyDecimalPlaces.value
+          : this.fromCurrencyDecimalPlaces),
+      toCurrencyId: (toCurrencyId != null
+          ? toCurrencyId.value
+          : this.toCurrencyId),
+      toCurrencyName: (toCurrencyName != null
+          ? toCurrencyName.value
+          : this.toCurrencyName),
+      toCurrencyCode: (toCurrencyCode != null
+          ? toCurrencyCode.value
+          : this.toCurrencyCode),
+      toCurrencySymbol: (toCurrencySymbol != null
+          ? toCurrencySymbol.value
+          : this.toCurrencySymbol),
+      toCurrencyDecimalPlaces: (toCurrencyDecimalPlaces != null
+          ? toCurrencyDecimalPlaces.value
+          : this.toCurrencyDecimalPlaces),
+      rate: (rate != null ? rate.value : this.rate),
+      date: (date != null ? date.value : this.date),
     );
   }
 }
@@ -7363,10 +8139,10 @@ extension $CategorySpentExtension on CategorySpent {
 @JsonSerializable(explicitToJson: true)
 class CurrencyExchangeRateRead {
   const CurrencyExchangeRateRead({
-    required this.type,
-    required this.id,
-    required this.attributes,
-    required this.links,
+    this.type,
+    this.id,
+    this.attributes,
+    this.links,
   });
 
   factory CurrencyExchangeRateRead.fromJson(Map<String, dynamic> json) =>
@@ -7376,13 +8152,13 @@ class CurrencyExchangeRateRead {
   Map<String, dynamic> toJson() => _$CurrencyExchangeRateReadToJson(this);
 
   @JsonKey(name: 'type', includeIfNull: false)
-  final String type;
+  final String? type;
   @JsonKey(name: 'id', includeIfNull: false)
-  final String id;
+  final String? id;
   @JsonKey(name: 'attributes', includeIfNull: false)
-  final CurrencyExchangeRateReadAttributes attributes;
+  final CurrencyExchangeProperties? attributes;
   @JsonKey(name: 'links', includeIfNull: false)
-  final ObjectLink links;
+  final ObjectLink? links;
   static const fromJsonFactory = _$CurrencyExchangeRateReadFromJson;
 
   @override
@@ -7393,7 +8169,7 @@ extension $CurrencyExchangeRateReadExtension on CurrencyExchangeRateRead {
   CurrencyExchangeRateRead copyWith({
     String? type,
     String? id,
-    CurrencyExchangeRateReadAttributes? attributes,
+    CurrencyExchangeProperties? attributes,
     ObjectLink? links,
   }) {
     return CurrencyExchangeRateRead(
@@ -7405,154 +8181,16 @@ extension $CurrencyExchangeRateReadExtension on CurrencyExchangeRateRead {
   }
 
   CurrencyExchangeRateRead copyWithWrapped({
-    Wrapped<String>? type,
-    Wrapped<String>? id,
-    Wrapped<CurrencyExchangeRateReadAttributes>? attributes,
-    Wrapped<ObjectLink>? links,
+    Wrapped<String?>? type,
+    Wrapped<String?>? id,
+    Wrapped<CurrencyExchangeProperties?>? attributes,
+    Wrapped<ObjectLink?>? links,
   }) {
     return CurrencyExchangeRateRead(
       type: (type != null ? type.value : this.type),
       id: (id != null ? id.value : this.id),
       attributes: (attributes != null ? attributes.value : this.attributes),
       links: (links != null ? links.value : this.links),
-    );
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class CurrencyExchangeRateReadAttributes {
-  const CurrencyExchangeRateReadAttributes({
-    this.createdAt,
-    this.updatedAt,
-    this.fromCurrencyId,
-    this.fromCurrencyCode,
-    this.fromCurrencySymbol,
-    this.fromCurrencyDecimalPlaces,
-    this.toCurrencyId,
-    this.toCurrencyCode,
-    this.toCurrencySymbol,
-    this.toCurrencyDecimalPlaces,
-    this.rate,
-    this.date,
-  });
-
-  factory CurrencyExchangeRateReadAttributes.fromJson(
-    Map<String, dynamic> json,
-  ) => _$CurrencyExchangeRateReadAttributesFromJson(json);
-
-  static const toJsonFactory = _$CurrencyExchangeRateReadAttributesToJson;
-  Map<String, dynamic> toJson() =>
-      _$CurrencyExchangeRateReadAttributesToJson(this);
-
-  @JsonKey(name: 'created_at', includeIfNull: false)
-  final DateTime? createdAt;
-  @JsonKey(name: 'updated_at', includeIfNull: false)
-  final DateTime? updatedAt;
-  @JsonKey(name: 'from_currency_id', includeIfNull: false)
-  final String? fromCurrencyId;
-  @JsonKey(name: 'from_currency_code', includeIfNull: false)
-  final String? fromCurrencyCode;
-  @JsonKey(name: 'from_currency_symbol', includeIfNull: false)
-  final String? fromCurrencySymbol;
-  @JsonKey(name: 'from_currency_decimal_places', includeIfNull: false)
-  final int? fromCurrencyDecimalPlaces;
-  @JsonKey(name: 'to_currency_id', includeIfNull: false)
-  final String? toCurrencyId;
-  @JsonKey(name: 'to_currency_code', includeIfNull: false)
-  final String? toCurrencyCode;
-  @JsonKey(name: 'to_currency_symbol', includeIfNull: false)
-  final String? toCurrencySymbol;
-  @JsonKey(name: 'to_currency_decimal_places', includeIfNull: false)
-  final int? toCurrencyDecimalPlaces;
-  @JsonKey(name: 'rate', includeIfNull: false)
-  final String? rate;
-  @JsonKey(name: 'date', includeIfNull: false)
-  final DateTime? date;
-  static const fromJsonFactory = _$CurrencyExchangeRateReadAttributesFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $CurrencyExchangeRateReadAttributesExtension
-    on CurrencyExchangeRateReadAttributes {
-  CurrencyExchangeRateReadAttributes copyWith({
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    String? fromCurrencyId,
-    String? fromCurrencyCode,
-    String? fromCurrencySymbol,
-    int? fromCurrencyDecimalPlaces,
-    String? toCurrencyId,
-    String? toCurrencyCode,
-    String? toCurrencySymbol,
-    int? toCurrencyDecimalPlaces,
-    String? rate,
-    DateTime? date,
-  }) {
-    return CurrencyExchangeRateReadAttributes(
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      fromCurrencyId: fromCurrencyId ?? this.fromCurrencyId,
-      fromCurrencyCode: fromCurrencyCode ?? this.fromCurrencyCode,
-      fromCurrencySymbol: fromCurrencySymbol ?? this.fromCurrencySymbol,
-      fromCurrencyDecimalPlaces:
-          fromCurrencyDecimalPlaces ?? this.fromCurrencyDecimalPlaces,
-      toCurrencyId: toCurrencyId ?? this.toCurrencyId,
-      toCurrencyCode: toCurrencyCode ?? this.toCurrencyCode,
-      toCurrencySymbol: toCurrencySymbol ?? this.toCurrencySymbol,
-      toCurrencyDecimalPlaces:
-          toCurrencyDecimalPlaces ?? this.toCurrencyDecimalPlaces,
-      rate: rate ?? this.rate,
-      date: date ?? this.date,
-    );
-  }
-
-  CurrencyExchangeRateReadAttributes copyWithWrapped({
-    Wrapped<DateTime?>? createdAt,
-    Wrapped<DateTime?>? updatedAt,
-    Wrapped<String?>? fromCurrencyId,
-    Wrapped<String?>? fromCurrencyCode,
-    Wrapped<String?>? fromCurrencySymbol,
-    Wrapped<int?>? fromCurrencyDecimalPlaces,
-    Wrapped<String?>? toCurrencyId,
-    Wrapped<String?>? toCurrencyCode,
-    Wrapped<String?>? toCurrencySymbol,
-    Wrapped<int?>? toCurrencyDecimalPlaces,
-    Wrapped<String?>? rate,
-    Wrapped<DateTime?>? date,
-  }) {
-    return CurrencyExchangeRateReadAttributes(
-      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-      fromCurrencyId:
-          (fromCurrencyId != null ? fromCurrencyId.value : this.fromCurrencyId),
-      fromCurrencyCode:
-          (fromCurrencyCode != null
-              ? fromCurrencyCode.value
-              : this.fromCurrencyCode),
-      fromCurrencySymbol:
-          (fromCurrencySymbol != null
-              ? fromCurrencySymbol.value
-              : this.fromCurrencySymbol),
-      fromCurrencyDecimalPlaces:
-          (fromCurrencyDecimalPlaces != null
-              ? fromCurrencyDecimalPlaces.value
-              : this.fromCurrencyDecimalPlaces),
-      toCurrencyId:
-          (toCurrencyId != null ? toCurrencyId.value : this.toCurrencyId),
-      toCurrencyCode:
-          (toCurrencyCode != null ? toCurrencyCode.value : this.toCurrencyCode),
-      toCurrencySymbol:
-          (toCurrencySymbol != null
-              ? toCurrencySymbol.value
-              : this.toCurrencySymbol),
-      toCurrencyDecimalPlaces:
-          (toCurrencyDecimalPlaces != null
-              ? toCurrencyDecimalPlaces.value
-              : this.toCurrencyDecimalPlaces),
-      rate: (rate != null ? rate.value : this.rate),
-      date: (date != null ? date.value : this.date),
     );
   }
 }
@@ -7590,8 +8228,125 @@ extension $CurrencyExchangeRateSingleExtension on CurrencyExchangeRateSingle {
 }
 
 @JsonSerializable(explicitToJson: true)
+class CurrencyExchangeRateStore {
+  const CurrencyExchangeRateStore({
+    required this.from,
+    required this.to,
+    this.rate,
+  });
+
+  factory CurrencyExchangeRateStore.fromJson(Map<String, dynamic> json) =>
+      _$CurrencyExchangeRateStoreFromJson(json);
+
+  static const toJsonFactory = _$CurrencyExchangeRateStoreToJson;
+  Map<String, dynamic> toJson() => _$CurrencyExchangeRateStoreToJson(this);
+
+  @JsonKey(name: 'from', includeIfNull: false)
+  final String from;
+  @JsonKey(name: 'to', includeIfNull: false)
+  final String to;
+  @JsonKey(name: 'rate', includeIfNull: false)
+  final String? rate;
+  static const fromJsonFactory = _$CurrencyExchangeRateStoreFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $CurrencyExchangeRateStoreExtension on CurrencyExchangeRateStore {
+  CurrencyExchangeRateStore copyWith({String? from, String? to, String? rate}) {
+    return CurrencyExchangeRateStore(
+      from: from ?? this.from,
+      to: to ?? this.to,
+      rate: rate ?? this.rate,
+    );
+  }
+
+  CurrencyExchangeRateStore copyWithWrapped({
+    Wrapped<String>? from,
+    Wrapped<String>? to,
+    Wrapped<String?>? rate,
+  }) {
+    return CurrencyExchangeRateStore(
+      from: (from != null ? from.value : this.from),
+      to: (to != null ? to.value : this.to),
+      rate: (rate != null ? rate.value : this.rate),
+    );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class CurrencyExchangeRateStoreByDate {
+  const CurrencyExchangeRateStoreByDate({
+    required this.from,
+    required this.rates,
+  });
+
+  factory CurrencyExchangeRateStoreByDate.fromJson(Map<String, dynamic> json) =>
+      _$CurrencyExchangeRateStoreByDateFromJson(json);
+
+  static const toJsonFactory = _$CurrencyExchangeRateStoreByDateToJson;
+  Map<String, dynamic> toJson() =>
+      _$CurrencyExchangeRateStoreByDateToJson(this);
+
+  @JsonKey(name: 'from', includeIfNull: false)
+  final String from;
+  @JsonKey(name: 'rates', includeIfNull: false)
+  final Map<String, dynamic> rates;
+  static const fromJsonFactory = _$CurrencyExchangeRateStoreByDateFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $CurrencyExchangeRateStoreByDateExtension
+    on CurrencyExchangeRateStoreByDate {
+  CurrencyExchangeRateStoreByDate copyWith({
+    String? from,
+    Map<String, dynamic>? rates,
+  }) {
+    return CurrencyExchangeRateStoreByDate(
+      from: from ?? this.from,
+      rates: rates ?? this.rates,
+    );
+  }
+
+  CurrencyExchangeRateStoreByDate copyWithWrapped({
+    Wrapped<String>? from,
+    Wrapped<Map<String, dynamic>>? rates,
+  }) {
+    return CurrencyExchangeRateStoreByDate(
+      from: (from != null ? from.value : this.from),
+      rates: (rates != null ? rates.value : this.rates),
+    );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class CurrencyExchangeRateStoreByPair {
+  const CurrencyExchangeRateStoreByPair();
+
+  factory CurrencyExchangeRateStoreByPair.fromJson(Map<String, dynamic> json) =>
+      _$CurrencyExchangeRateStoreByPairFromJson(json);
+
+  static const toJsonFactory = _$CurrencyExchangeRateStoreByPairToJson;
+  Map<String, dynamic> toJson() =>
+      _$CurrencyExchangeRateStoreByPairToJson(this);
+
+  static const fromJsonFactory = _$CurrencyExchangeRateStoreByPairFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class CurrencyExchangeRateUpdate {
-  const CurrencyExchangeRateUpdate({required this.date, required this.rate});
+  const CurrencyExchangeRateUpdate({
+    required this.date,
+    required this.rate,
+    this.from,
+    this.to,
+  });
 
   factory CurrencyExchangeRateUpdate.fromJson(Map<String, dynamic> json) =>
       _$CurrencyExchangeRateUpdateFromJson(json);
@@ -7603,6 +8358,10 @@ class CurrencyExchangeRateUpdate {
   final DateTime date;
   @JsonKey(name: 'rate', includeIfNull: false)
   final String rate;
+  @JsonKey(name: 'from', includeIfNull: false)
+  final String? from;
+  @JsonKey(name: 'to', includeIfNull: false)
+  final String? to;
   static const fromJsonFactory = _$CurrencyExchangeRateUpdateFromJson;
 
   @override
@@ -7610,19 +8369,63 @@ class CurrencyExchangeRateUpdate {
 }
 
 extension $CurrencyExchangeRateUpdateExtension on CurrencyExchangeRateUpdate {
-  CurrencyExchangeRateUpdate copyWith({DateTime? date, String? rate}) {
+  CurrencyExchangeRateUpdate copyWith({
+    DateTime? date,
+    String? rate,
+    String? from,
+    String? to,
+  }) {
     return CurrencyExchangeRateUpdate(
       date: date ?? this.date,
       rate: rate ?? this.rate,
+      from: from ?? this.from,
+      to: to ?? this.to,
     );
   }
 
   CurrencyExchangeRateUpdate copyWithWrapped({
     Wrapped<DateTime>? date,
     Wrapped<String>? rate,
+    Wrapped<String?>? from,
+    Wrapped<String?>? to,
   }) {
     return CurrencyExchangeRateUpdate(
       date: (date != null ? date.value : this.date),
+      rate: (rate != null ? rate.value : this.rate),
+      from: (from != null ? from.value : this.from),
+      to: (to != null ? to.value : this.to),
+    );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class CurrencyExchangeRateUpdateNoDate {
+  const CurrencyExchangeRateUpdateNoDate({required this.rate});
+
+  factory CurrencyExchangeRateUpdateNoDate.fromJson(
+    Map<String, dynamic> json,
+  ) => _$CurrencyExchangeRateUpdateNoDateFromJson(json);
+
+  static const toJsonFactory = _$CurrencyExchangeRateUpdateNoDateToJson;
+  Map<String, dynamic> toJson() =>
+      _$CurrencyExchangeRateUpdateNoDateToJson(this);
+
+  @JsonKey(name: 'rate', includeIfNull: false)
+  final String rate;
+  static const fromJsonFactory = _$CurrencyExchangeRateUpdateNoDateFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $CurrencyExchangeRateUpdateNoDateExtension
+    on CurrencyExchangeRateUpdateNoDate {
+  CurrencyExchangeRateUpdateNoDate copyWith({String? rate}) {
+    return CurrencyExchangeRateUpdateNoDate(rate: rate ?? this.rate);
+  }
+
+  CurrencyExchangeRateUpdateNoDate copyWithWrapped({Wrapped<String>? rate}) {
+    return CurrencyExchangeRateUpdateNoDate(
       rate: (rate != null ? rate.value : this.rate),
     );
   }
@@ -7815,241 +8618,28 @@ extension $PageLinkExtension on PageLink {
 }
 
 @JsonSerializable(explicitToJson: true)
-class PiggyBank {
-  const PiggyBank({
-    this.createdAt,
-    this.updatedAt,
-    required this.name,
-    this.accountId,
-    this.accountName,
-    this.accounts,
-    this.currencyId,
-    this.currencyCode,
-    this.currencySymbol,
-    this.currencyDecimalPlaces,
-    this.targetAmount,
-    this.percentage,
-    this.currentAmount,
-    this.leftToSave,
-    this.savePerMonth,
-    this.startDate,
-    this.targetDate,
-    this.order,
-    this.active,
-    this.notes,
-    this.objectGroupId,
-    this.objectGroupOrder,
-    this.objectGroupTitle,
-  });
-
-  factory PiggyBank.fromJson(Map<String, dynamic> json) =>
-      _$PiggyBankFromJson(json);
-
-  static const toJsonFactory = _$PiggyBankToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankToJson(this);
-
-  @JsonKey(name: 'created_at', includeIfNull: false)
-  final DateTime? createdAt;
-  @JsonKey(name: 'updated_at', includeIfNull: false)
-  final DateTime? updatedAt;
-  @JsonKey(name: 'name', includeIfNull: false)
-  final String name;
-  @JsonKey(name: 'account_id', includeIfNull: false)
-  final String? accountId;
-  @JsonKey(name: 'account_name', includeIfNull: false)
-  final String? accountName;
-  @JsonKey(
-    name: 'accounts',
-    includeIfNull: false,
-    defaultValue: <PiggyBankAccountRead>[],
-  )
-  final List<PiggyBankAccountRead>? accounts;
-  @JsonKey(name: 'currency_id', includeIfNull: false)
-  final String? currencyId;
-  @JsonKey(name: 'currency_code', includeIfNull: false)
-  final String? currencyCode;
-  @JsonKey(name: 'currency_symbol', includeIfNull: false)
-  final String? currencySymbol;
-  @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
-  final int? currencyDecimalPlaces;
-  @JsonKey(name: 'target_amount', includeIfNull: false)
-  final String? targetAmount;
-  @JsonKey(name: 'percentage', includeIfNull: false)
-  final double? percentage;
-  @JsonKey(name: 'current_amount', includeIfNull: false)
-  final String? currentAmount;
-  @JsonKey(name: 'left_to_save', includeIfNull: false)
-  final String? leftToSave;
-  @JsonKey(name: 'save_per_month', includeIfNull: false)
-  final String? savePerMonth;
-  @JsonKey(name: 'start_date', includeIfNull: false, toJson: _dateToJson)
-  final DateTime? startDate;
-  @JsonKey(name: 'target_date', includeIfNull: false, toJson: _dateToJson)
-  final DateTime? targetDate;
-  @JsonKey(name: 'order', includeIfNull: false)
-  final int? order;
-  @JsonKey(name: 'active', includeIfNull: false)
-  final bool? active;
-  @JsonKey(name: 'notes', includeIfNull: false)
-  final String? notes;
-  @JsonKey(name: 'object_group_id', includeIfNull: false)
-  final String? objectGroupId;
-  @JsonKey(name: 'object_group_order', includeIfNull: false)
-  final int? objectGroupOrder;
-  @JsonKey(name: 'object_group_title', includeIfNull: false)
-  final String? objectGroupTitle;
-  static const fromJsonFactory = _$PiggyBankFromJson;
-
-  @override
-  String toString() => jsonEncode(this);
-}
-
-extension $PiggyBankExtension on PiggyBank {
-  PiggyBank copyWith({
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    String? name,
-    String? accountId,
-    String? accountName,
-    List<PiggyBankAccountRead>? accounts,
-    String? currencyId,
-    String? currencyCode,
-    String? currencySymbol,
-    int? currencyDecimalPlaces,
-    String? targetAmount,
-    double? percentage,
-    String? currentAmount,
-    String? leftToSave,
-    String? savePerMonth,
-    DateTime? startDate,
-    DateTime? targetDate,
-    int? order,
-    bool? active,
-    String? notes,
-    String? objectGroupId,
-    int? objectGroupOrder,
-    String? objectGroupTitle,
-  }) {
-    return PiggyBank(
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      name: name ?? this.name,
-      accountId: accountId ?? this.accountId,
-      accountName: accountName ?? this.accountName,
-      accounts: accounts ?? this.accounts,
-      currencyId: currencyId ?? this.currencyId,
-      currencyCode: currencyCode ?? this.currencyCode,
-      currencySymbol: currencySymbol ?? this.currencySymbol,
-      currencyDecimalPlaces:
-          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-      targetAmount: targetAmount ?? this.targetAmount,
-      percentage: percentage ?? this.percentage,
-      currentAmount: currentAmount ?? this.currentAmount,
-      leftToSave: leftToSave ?? this.leftToSave,
-      savePerMonth: savePerMonth ?? this.savePerMonth,
-      startDate: startDate ?? this.startDate,
-      targetDate: targetDate ?? this.targetDate,
-      order: order ?? this.order,
-      active: active ?? this.active,
-      notes: notes ?? this.notes,
-      objectGroupId: objectGroupId ?? this.objectGroupId,
-      objectGroupOrder: objectGroupOrder ?? this.objectGroupOrder,
-      objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle,
-    );
-  }
-
-  PiggyBank copyWithWrapped({
-    Wrapped<DateTime?>? createdAt,
-    Wrapped<DateTime?>? updatedAt,
-    Wrapped<String>? name,
-    Wrapped<String?>? accountId,
-    Wrapped<String?>? accountName,
-    Wrapped<List<PiggyBankAccountRead>?>? accounts,
-    Wrapped<String?>? currencyId,
-    Wrapped<String?>? currencyCode,
-    Wrapped<String?>? currencySymbol,
-    Wrapped<int?>? currencyDecimalPlaces,
-    Wrapped<String?>? targetAmount,
-    Wrapped<double?>? percentage,
-    Wrapped<String?>? currentAmount,
-    Wrapped<String?>? leftToSave,
-    Wrapped<String?>? savePerMonth,
-    Wrapped<DateTime?>? startDate,
-    Wrapped<DateTime?>? targetDate,
-    Wrapped<int?>? order,
-    Wrapped<bool?>? active,
-    Wrapped<String?>? notes,
-    Wrapped<String?>? objectGroupId,
-    Wrapped<int?>? objectGroupOrder,
-    Wrapped<String?>? objectGroupTitle,
-  }) {
-    return PiggyBank(
-      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
-      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-      name: (name != null ? name.value : this.name),
-      accountId: (accountId != null ? accountId.value : this.accountId),
-      accountName: (accountName != null ? accountName.value : this.accountName),
-      accounts: (accounts != null ? accounts.value : this.accounts),
-      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
-      targetAmount:
-          (targetAmount != null ? targetAmount.value : this.targetAmount),
-      percentage: (percentage != null ? percentage.value : this.percentage),
-      currentAmount:
-          (currentAmount != null ? currentAmount.value : this.currentAmount),
-      leftToSave: (leftToSave != null ? leftToSave.value : this.leftToSave),
-      savePerMonth:
-          (savePerMonth != null ? savePerMonth.value : this.savePerMonth),
-      startDate: (startDate != null ? startDate.value : this.startDate),
-      targetDate: (targetDate != null ? targetDate.value : this.targetDate),
-      order: (order != null ? order.value : this.order),
-      active: (active != null ? active.value : this.active),
-      notes: (notes != null ? notes.value : this.notes),
-      objectGroupId:
-          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-      objectGroupOrder:
-          (objectGroupOrder != null
-              ? objectGroupOrder.value
-              : this.objectGroupOrder),
-      objectGroupTitle:
-          (objectGroupTitle != null
-              ? objectGroupTitle.value
-              : this.objectGroupTitle),
-    );
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class PiggyBankAccountRead {
   const PiggyBankAccountRead({
-    this.id,
+    this.accountId,
     this.name,
-    required this.currentAmount,
-    required this.nativeCurrentAmount,
+    this.currentAmount,
+    this.pcCurrentAmount,
   });
 
   factory PiggyBankAccountRead.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankAccountReadFromJson(json);
 
   static const toJsonFactory = _$PiggyBankAccountReadToJson;
-
   Map<String, dynamic> toJson() => _$PiggyBankAccountReadToJson(this);
 
-  @JsonKey(name: 'id', includeIfNull: false)
-  final String? id;
+  @JsonKey(name: 'account_id', includeIfNull: false)
+  final String? accountId;
   @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
   @JsonKey(name: 'current_amount', includeIfNull: false)
-  final String currentAmount;
-  @JsonKey(name: 'native_current_amount', includeIfNull: false)
-  final String nativeCurrentAmount;
+  final String? currentAmount;
+  @JsonKey(name: 'pc_current_amount', includeIfNull: false)
+  final String? pcCurrentAmount;
   static const fromJsonFactory = _$PiggyBankAccountReadFromJson;
 
   @override
@@ -8058,34 +8648,34 @@ class PiggyBankAccountRead {
 
 extension $PiggyBankAccountReadExtension on PiggyBankAccountRead {
   PiggyBankAccountRead copyWith({
-    String? id,
+    String? accountId,
     String? name,
     String? currentAmount,
-    String? nativeCurrentAmount,
+    String? pcCurrentAmount,
   }) {
     return PiggyBankAccountRead(
-      id: id ?? this.id,
+      accountId: accountId ?? this.accountId,
       name: name ?? this.name,
       currentAmount: currentAmount ?? this.currentAmount,
-      nativeCurrentAmount: nativeCurrentAmount ?? this.nativeCurrentAmount,
+      pcCurrentAmount: pcCurrentAmount ?? this.pcCurrentAmount,
     );
   }
 
   PiggyBankAccountRead copyWithWrapped({
-    Wrapped<String?>? id,
+    Wrapped<String?>? accountId,
     Wrapped<String?>? name,
-    Wrapped<String>? currentAmount,
-    Wrapped<String>? nativeCurrentAmount,
+    Wrapped<String?>? currentAmount,
+    Wrapped<String?>? pcCurrentAmount,
   }) {
     return PiggyBankAccountRead(
-      id: (id != null ? id.value : this.id),
+      accountId: (accountId != null ? accountId.value : this.accountId),
       name: (name != null ? name.value : this.name),
-      currentAmount:
-          (currentAmount != null ? currentAmount.value : this.currentAmount),
-      nativeCurrentAmount:
-          (nativeCurrentAmount != null
-              ? nativeCurrentAmount.value
-              : this.nativeCurrentAmount),
+      currentAmount: (currentAmount != null
+          ? currentAmount.value
+          : this.currentAmount),
+      pcCurrentAmount: (pcCurrentAmount != null
+          ? pcCurrentAmount.value
+          : this.pcCurrentAmount),
     );
   }
 }
@@ -8098,7 +8688,6 @@ class PiggyBankAccountStore {
       _$PiggyBankAccountStoreFromJson(json);
 
   static const toJsonFactory = _$PiggyBankAccountStoreToJson;
-
   Map<String, dynamic> toJson() => _$PiggyBankAccountStoreToJson(this);
 
   @JsonKey(name: 'id', includeIfNull: false)
@@ -8134,25 +8723,25 @@ extension $PiggyBankAccountStoreExtension on PiggyBankAccountStore {
     return PiggyBankAccountStore(
       id: (id != null ? id.value : this.id),
       name: (name != null ? name.value : this.name),
-      currentAmount:
-          (currentAmount != null ? currentAmount.value : this.currentAmount),
+      currentAmount: (currentAmount != null
+          ? currentAmount.value
+          : this.currentAmount),
     );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class PiggyBankAccountUpdate {
-  const PiggyBankAccountUpdate({this.id, this.name, this.currentAmount});
+  const PiggyBankAccountUpdate({this.accountId, this.name, this.currentAmount});
 
   factory PiggyBankAccountUpdate.fromJson(Map<String, dynamic> json) =>
       _$PiggyBankAccountUpdateFromJson(json);
 
   static const toJsonFactory = _$PiggyBankAccountUpdateToJson;
-
   Map<String, dynamic> toJson() => _$PiggyBankAccountUpdateToJson(this);
 
-  @JsonKey(name: 'id', includeIfNull: false)
-  final String? id;
+  @JsonKey(name: 'account_id', includeIfNull: false)
+  final String? accountId;
   @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
   @JsonKey(name: 'current_amount', includeIfNull: false)
@@ -8165,27 +8754,331 @@ class PiggyBankAccountUpdate {
 
 extension $PiggyBankAccountUpdateExtension on PiggyBankAccountUpdate {
   PiggyBankAccountUpdate copyWith({
-    String? id,
+    String? accountId,
     String? name,
     String? currentAmount,
   }) {
     return PiggyBankAccountUpdate(
-      id: id ?? this.id,
+      accountId: accountId ?? this.accountId,
       name: name ?? this.name,
       currentAmount: currentAmount ?? this.currentAmount,
     );
   }
 
   PiggyBankAccountUpdate copyWithWrapped({
-    Wrapped<String?>? id,
+    Wrapped<String?>? accountId,
     Wrapped<String?>? name,
     Wrapped<String?>? currentAmount,
   }) {
     return PiggyBankAccountUpdate(
-      id: (id != null ? id.value : this.id),
+      accountId: (accountId != null ? accountId.value : this.accountId),
       name: (name != null ? name.value : this.name),
-      currentAmount:
-          (currentAmount != null ? currentAmount.value : this.currentAmount),
+      currentAmount: (currentAmount != null
+          ? currentAmount.value
+          : this.currentAmount),
+    );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class PiggyBankProperties {
+  const PiggyBankProperties({
+    this.createdAt,
+    this.updatedAt,
+    required this.name,
+    this.percentage,
+    this.startDate,
+    this.targetDate,
+    this.order,
+    this.active,
+    this.notes,
+    this.objectGroupId,
+    this.objectGroupOrder,
+    this.objectGroupTitle,
+    this.accounts,
+    this.objectHasCurrencySetting,
+    this.currencyId,
+    this.currencyName,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyDecimalPlaces,
+    this.primaryCurrencyId,
+    this.primaryCurrencyName,
+    this.primaryCurrencyCode,
+    this.primaryCurrencySymbol,
+    this.primaryCurrencyDecimalPlaces,
+    this.targetAmount,
+    this.pcTargetAmount,
+    this.currentAmount,
+    this.pcCurrentAmount,
+    this.leftToSave,
+    this.pcLeftToSave,
+    this.savePerMonth,
+    this.pcSavePerMonth,
+  });
+
+  factory PiggyBankProperties.fromJson(Map<String, dynamic> json) =>
+      _$PiggyBankPropertiesFromJson(json);
+
+  static const toJsonFactory = _$PiggyBankPropertiesToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankPropertiesToJson(this);
+
+  @JsonKey(name: 'created_at', includeIfNull: false)
+  final DateTime? createdAt;
+  @JsonKey(name: 'updated_at', includeIfNull: false)
+  final DateTime? updatedAt;
+  @JsonKey(name: 'name', includeIfNull: false)
+  final String name;
+  @JsonKey(name: 'percentage', includeIfNull: false)
+  final double? percentage;
+  @JsonKey(name: 'start_date', includeIfNull: false)
+  final DateTime? startDate;
+  @JsonKey(name: 'target_date', includeIfNull: false)
+  final DateTime? targetDate;
+  @JsonKey(name: 'order', includeIfNull: false)
+  final int? order;
+  @JsonKey(name: 'active', includeIfNull: false)
+  final bool? active;
+  @JsonKey(name: 'notes', includeIfNull: false)
+  final String? notes;
+  @JsonKey(name: 'object_group_id', includeIfNull: false)
+  final String? objectGroupId;
+  @JsonKey(name: 'object_group_order', includeIfNull: false)
+  final int? objectGroupOrder;
+  @JsonKey(name: 'object_group_title', includeIfNull: false)
+  final String? objectGroupTitle;
+  @JsonKey(
+    name: 'accounts',
+    includeIfNull: false,
+    defaultValue: <PiggyBankAccountRead>[],
+  )
+  final List<PiggyBankAccountRead>? accounts;
+  @JsonKey(name: 'object_has_currency_setting', includeIfNull: false)
+  final bool? objectHasCurrencySetting;
+  @JsonKey(name: 'currency_id', includeIfNull: false)
+  final String? currencyId;
+  @JsonKey(name: 'currency_name', includeIfNull: false)
+  final String? currencyName;
+  @JsonKey(name: 'currency_code', includeIfNull: false)
+  final String? currencyCode;
+  @JsonKey(name: 'currency_symbol', includeIfNull: false)
+  final String? currencySymbol;
+  @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
+  final int? currencyDecimalPlaces;
+  @JsonKey(name: 'primary_currency_id', includeIfNull: false)
+  final String? primaryCurrencyId;
+  @JsonKey(name: 'primary_currency_name', includeIfNull: false)
+  final String? primaryCurrencyName;
+  @JsonKey(name: 'primary_currency_code', includeIfNull: false)
+  final String? primaryCurrencyCode;
+  @JsonKey(name: 'primary_currency_symbol', includeIfNull: false)
+  final String? primaryCurrencySymbol;
+  @JsonKey(name: 'primary_currency_decimal_places', includeIfNull: false)
+  final int? primaryCurrencyDecimalPlaces;
+  @JsonKey(name: 'target_amount', includeIfNull: false)
+  final String? targetAmount;
+  @JsonKey(name: 'pc_target_amount', includeIfNull: false)
+  final String? pcTargetAmount;
+  @JsonKey(name: 'current_amount', includeIfNull: false)
+  final String? currentAmount;
+  @JsonKey(name: 'pc_current_amount', includeIfNull: false)
+  final String? pcCurrentAmount;
+  @JsonKey(name: 'left_to_save', includeIfNull: false)
+  final String? leftToSave;
+  @JsonKey(name: 'pc_left_to_save', includeIfNull: false)
+  final String? pcLeftToSave;
+  @JsonKey(name: 'save_per_month', includeIfNull: false)
+  final String? savePerMonth;
+  @JsonKey(name: 'pc_save_per_month', includeIfNull: false)
+  final String? pcSavePerMonth;
+  static const fromJsonFactory = _$PiggyBankPropertiesFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+}
+
+extension $PiggyBankPropertiesExtension on PiggyBankProperties {
+  PiggyBankProperties copyWith({
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? name,
+    double? percentage,
+    DateTime? startDate,
+    DateTime? targetDate,
+    int? order,
+    bool? active,
+    String? notes,
+    String? objectGroupId,
+    int? objectGroupOrder,
+    String? objectGroupTitle,
+    List<PiggyBankAccountRead>? accounts,
+    bool? objectHasCurrencySetting,
+    String? currencyId,
+    String? currencyName,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    String? primaryCurrencyId,
+    String? primaryCurrencyName,
+    String? primaryCurrencyCode,
+    String? primaryCurrencySymbol,
+    int? primaryCurrencyDecimalPlaces,
+    String? targetAmount,
+    String? pcTargetAmount,
+    String? currentAmount,
+    String? pcCurrentAmount,
+    String? leftToSave,
+    String? pcLeftToSave,
+    String? savePerMonth,
+    String? pcSavePerMonth,
+  }) {
+    return PiggyBankProperties(
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      name: name ?? this.name,
+      percentage: percentage ?? this.percentage,
+      startDate: startDate ?? this.startDate,
+      targetDate: targetDate ?? this.targetDate,
+      order: order ?? this.order,
+      active: active ?? this.active,
+      notes: notes ?? this.notes,
+      objectGroupId: objectGroupId ?? this.objectGroupId,
+      objectGroupOrder: objectGroupOrder ?? this.objectGroupOrder,
+      objectGroupTitle: objectGroupTitle ?? this.objectGroupTitle,
+      accounts: accounts ?? this.accounts,
+      objectHasCurrencySetting:
+          objectHasCurrencySetting ?? this.objectHasCurrencySetting,
+      currencyId: currencyId ?? this.currencyId,
+      currencyName: currencyName ?? this.currencyName,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      primaryCurrencyId: primaryCurrencyId ?? this.primaryCurrencyId,
+      primaryCurrencyName: primaryCurrencyName ?? this.primaryCurrencyName,
+      primaryCurrencyCode: primaryCurrencyCode ?? this.primaryCurrencyCode,
+      primaryCurrencySymbol:
+          primaryCurrencySymbol ?? this.primaryCurrencySymbol,
+      primaryCurrencyDecimalPlaces:
+          primaryCurrencyDecimalPlaces ?? this.primaryCurrencyDecimalPlaces,
+      targetAmount: targetAmount ?? this.targetAmount,
+      pcTargetAmount: pcTargetAmount ?? this.pcTargetAmount,
+      currentAmount: currentAmount ?? this.currentAmount,
+      pcCurrentAmount: pcCurrentAmount ?? this.pcCurrentAmount,
+      leftToSave: leftToSave ?? this.leftToSave,
+      pcLeftToSave: pcLeftToSave ?? this.pcLeftToSave,
+      savePerMonth: savePerMonth ?? this.savePerMonth,
+      pcSavePerMonth: pcSavePerMonth ?? this.pcSavePerMonth,
+    );
+  }
+
+  PiggyBankProperties copyWithWrapped({
+    Wrapped<DateTime?>? createdAt,
+    Wrapped<DateTime?>? updatedAt,
+    Wrapped<String>? name,
+    Wrapped<double?>? percentage,
+    Wrapped<DateTime?>? startDate,
+    Wrapped<DateTime?>? targetDate,
+    Wrapped<int?>? order,
+    Wrapped<bool?>? active,
+    Wrapped<String?>? notes,
+    Wrapped<String?>? objectGroupId,
+    Wrapped<int?>? objectGroupOrder,
+    Wrapped<String?>? objectGroupTitle,
+    Wrapped<List<PiggyBankAccountRead>?>? accounts,
+    Wrapped<bool?>? objectHasCurrencySetting,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyName,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? primaryCurrencyId,
+    Wrapped<String?>? primaryCurrencyName,
+    Wrapped<String?>? primaryCurrencyCode,
+    Wrapped<String?>? primaryCurrencySymbol,
+    Wrapped<int?>? primaryCurrencyDecimalPlaces,
+    Wrapped<String?>? targetAmount,
+    Wrapped<String?>? pcTargetAmount,
+    Wrapped<String?>? currentAmount,
+    Wrapped<String?>? pcCurrentAmount,
+    Wrapped<String?>? leftToSave,
+    Wrapped<String?>? pcLeftToSave,
+    Wrapped<String?>? savePerMonth,
+    Wrapped<String?>? pcSavePerMonth,
+  }) {
+    return PiggyBankProperties(
+      createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+      updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+      name: (name != null ? name.value : this.name),
+      percentage: (percentage != null ? percentage.value : this.percentage),
+      startDate: (startDate != null ? startDate.value : this.startDate),
+      targetDate: (targetDate != null ? targetDate.value : this.targetDate),
+      order: (order != null ? order.value : this.order),
+      active: (active != null ? active.value : this.active),
+      notes: (notes != null ? notes.value : this.notes),
+      objectGroupId: (objectGroupId != null
+          ? objectGroupId.value
+          : this.objectGroupId),
+      objectGroupOrder: (objectGroupOrder != null
+          ? objectGroupOrder.value
+          : this.objectGroupOrder),
+      objectGroupTitle: (objectGroupTitle != null
+          ? objectGroupTitle.value
+          : this.objectGroupTitle),
+      accounts: (accounts != null ? accounts.value : this.accounts),
+      objectHasCurrencySetting: (objectHasCurrencySetting != null
+          ? objectHasCurrencySetting.value
+          : this.objectHasCurrencySetting),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyName: (currencyName != null
+          ? currencyName.value
+          : this.currencyName),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      primaryCurrencyId: (primaryCurrencyId != null
+          ? primaryCurrencyId.value
+          : this.primaryCurrencyId),
+      primaryCurrencyName: (primaryCurrencyName != null
+          ? primaryCurrencyName.value
+          : this.primaryCurrencyName),
+      primaryCurrencyCode: (primaryCurrencyCode != null
+          ? primaryCurrencyCode.value
+          : this.primaryCurrencyCode),
+      primaryCurrencySymbol: (primaryCurrencySymbol != null
+          ? primaryCurrencySymbol.value
+          : this.primaryCurrencySymbol),
+      primaryCurrencyDecimalPlaces: (primaryCurrencyDecimalPlaces != null
+          ? primaryCurrencyDecimalPlaces.value
+          : this.primaryCurrencyDecimalPlaces),
+      targetAmount: (targetAmount != null
+          ? targetAmount.value
+          : this.targetAmount),
+      pcTargetAmount: (pcTargetAmount != null
+          ? pcTargetAmount.value
+          : this.pcTargetAmount),
+      currentAmount: (currentAmount != null
+          ? currentAmount.value
+          : this.currentAmount),
+      pcCurrentAmount: (pcCurrentAmount != null
+          ? pcCurrentAmount.value
+          : this.pcCurrentAmount),
+      leftToSave: (leftToSave != null ? leftToSave.value : this.leftToSave),
+      pcLeftToSave: (pcLeftToSave != null
+          ? pcLeftToSave.value
+          : this.pcLeftToSave),
+      savePerMonth: (savePerMonth != null
+          ? savePerMonth.value
+          : this.savePerMonth),
+      pcSavePerMonth: (pcSavePerMonth != null
+          ? pcSavePerMonth.value
+          : this.pcSavePerMonth),
     );
   }
 }
@@ -8197,7 +9090,7 @@ class PiggyBankStore {
     this.accounts,
     this.targetAmount,
     this.currentAmount,
-    this.startDate,
+    required this.startDate,
     this.targetDate,
     this.order,
     this.active,
@@ -8225,7 +9118,7 @@ class PiggyBankStore {
   @JsonKey(name: 'current_amount', includeIfNull: false)
   final String? currentAmount;
   @JsonKey(name: 'start_date', includeIfNull: false, toJson: _dateToJson)
-  final DateTime? startDate;
+  final DateTime startDate;
   @JsonKey(name: 'target_date', includeIfNull: false, toJson: _dateToJson)
   final DateTime? targetDate;
   @JsonKey(name: 'order', includeIfNull: false)
@@ -8278,7 +9171,7 @@ extension $PiggyBankStoreExtension on PiggyBankStore {
     Wrapped<List<PiggyBankAccountStore>?>? accounts,
     Wrapped<String?>? targetAmount,
     Wrapped<String?>? currentAmount,
-    Wrapped<DateTime?>? startDate,
+    Wrapped<DateTime>? startDate,
     Wrapped<DateTime?>? targetDate,
     Wrapped<int?>? order,
     Wrapped<bool?>? active,
@@ -8289,21 +9182,23 @@ extension $PiggyBankStoreExtension on PiggyBankStore {
     return PiggyBankStore(
       name: (name != null ? name.value : this.name),
       accounts: (accounts != null ? accounts.value : this.accounts),
-      targetAmount:
-          (targetAmount != null ? targetAmount.value : this.targetAmount),
-      currentAmount:
-          (currentAmount != null ? currentAmount.value : this.currentAmount),
+      targetAmount: (targetAmount != null
+          ? targetAmount.value
+          : this.targetAmount),
+      currentAmount: (currentAmount != null
+          ? currentAmount.value
+          : this.currentAmount),
       startDate: (startDate != null ? startDate.value : this.startDate),
       targetDate: (targetDate != null ? targetDate.value : this.targetDate),
       order: (order != null ? order.value : this.order),
       active: (active != null ? active.value : this.active),
       notes: (notes != null ? notes.value : this.notes),
-      objectGroupId:
-          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-      objectGroupTitle:
-          (objectGroupTitle != null
-              ? objectGroupTitle.value
-              : this.objectGroupTitle),
+      objectGroupId: (objectGroupId != null
+          ? objectGroupId.value
+          : this.objectGroupId),
+      objectGroupTitle: (objectGroupTitle != null
+          ? objectGroupTitle.value
+          : this.objectGroupTitle),
     );
   }
 }
@@ -8316,7 +9211,6 @@ class PiggyBankUpdate {
     this.currencyId,
     this.currencyCode,
     this.targetAmount,
-    this.currentAmount,
     this.startDate,
     this.targetDate,
     this.order,
@@ -8346,8 +9240,6 @@ class PiggyBankUpdate {
   final String? currencyCode;
   @JsonKey(name: 'target_amount', includeIfNull: false)
   final String? targetAmount;
-  @JsonKey(name: 'current_amount', includeIfNull: false)
-  final String? currentAmount;
   @JsonKey(name: 'start_date', includeIfNull: false, toJson: _dateToJson)
   final DateTime? startDate;
   @JsonKey(name: 'target_date', includeIfNull: false, toJson: _dateToJson)
@@ -8375,7 +9267,6 @@ extension $PiggyBankUpdateExtension on PiggyBankUpdate {
     String? currencyId,
     String? currencyCode,
     String? targetAmount,
-    String? currentAmount,
     DateTime? startDate,
     DateTime? targetDate,
     int? order,
@@ -8390,7 +9281,6 @@ extension $PiggyBankUpdateExtension on PiggyBankUpdate {
       currencyId: currencyId ?? this.currencyId,
       currencyCode: currencyCode ?? this.currencyCode,
       targetAmount: targetAmount ?? this.targetAmount,
-      currentAmount: currentAmount ?? this.currentAmount,
       startDate: startDate ?? this.startDate,
       targetDate: targetDate ?? this.targetDate,
       order: order ?? this.order,
@@ -8407,7 +9297,6 @@ extension $PiggyBankUpdateExtension on PiggyBankUpdate {
     Wrapped<String?>? currencyId,
     Wrapped<String?>? currencyCode,
     Wrapped<String?>? targetAmount,
-    Wrapped<String?>? currentAmount,
     Wrapped<DateTime?>? startDate,
     Wrapped<DateTime?>? targetDate,
     Wrapped<int?>? order,
@@ -8420,129 +9309,201 @@ extension $PiggyBankUpdateExtension on PiggyBankUpdate {
       name: (name != null ? name.value : this.name),
       accounts: (accounts != null ? accounts.value : this.accounts),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      targetAmount:
-          (targetAmount != null ? targetAmount.value : this.targetAmount),
-      currentAmount:
-          (currentAmount != null ? currentAmount.value : this.currentAmount),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      targetAmount: (targetAmount != null
+          ? targetAmount.value
+          : this.targetAmount),
       startDate: (startDate != null ? startDate.value : this.startDate),
       targetDate: (targetDate != null ? targetDate.value : this.targetDate),
       order: (order != null ? order.value : this.order),
       active: (active != null ? active.value : this.active),
       notes: (notes != null ? notes.value : this.notes),
-      objectGroupId:
-          (objectGroupId != null ? objectGroupId.value : this.objectGroupId),
-      objectGroupTitle:
-          (objectGroupTitle != null
-              ? objectGroupTitle.value
-              : this.objectGroupTitle),
+      objectGroupId: (objectGroupId != null
+          ? objectGroupId.value
+          : this.objectGroupId),
+      objectGroupTitle: (objectGroupTitle != null
+          ? objectGroupTitle.value
+          : this.objectGroupTitle),
     );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-class PiggyBankEvent {
-  const PiggyBankEvent({
+class PiggyBankEventProperties {
+  const PiggyBankEventProperties({
     this.createdAt,
     this.updatedAt,
+    this.amount,
+    this.pcAmount,
+    this.objectHasCurrencySetting,
     this.currencyId,
+    this.currencyName,
     this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
-    this.amount,
+    this.primaryCurrencyId,
+    this.primaryCurrencyName,
+    this.primaryCurrencyCode,
+    this.primaryCurrencySymbol,
+    this.primaryCurrencyDecimalPlaces,
     this.transactionJournalId,
     this.transactionGroupId,
   });
 
-  factory PiggyBankEvent.fromJson(Map<String, dynamic> json) =>
-      _$PiggyBankEventFromJson(json);
+  factory PiggyBankEventProperties.fromJson(Map<String, dynamic> json) =>
+      _$PiggyBankEventPropertiesFromJson(json);
 
-  static const toJsonFactory = _$PiggyBankEventToJson;
-  Map<String, dynamic> toJson() => _$PiggyBankEventToJson(this);
+  static const toJsonFactory = _$PiggyBankEventPropertiesToJson;
+  Map<String, dynamic> toJson() => _$PiggyBankEventPropertiesToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at', includeIfNull: false)
   final DateTime? updatedAt;
+  @JsonKey(name: 'amount', includeIfNull: false)
+  final String? amount;
+  @JsonKey(name: 'pc_amount', includeIfNull: false)
+  final String? pcAmount;
+  @JsonKey(name: 'object_has_currency_setting', includeIfNull: false)
+  final bool? objectHasCurrencySetting;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
+  @JsonKey(name: 'currency_name', includeIfNull: false)
+  final String? currencyName;
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'currency_symbol', includeIfNull: false)
   final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
-  @JsonKey(name: 'amount', includeIfNull: false)
-  final String? amount;
+  @JsonKey(name: 'primary_currency_id', includeIfNull: false)
+  final String? primaryCurrencyId;
+  @JsonKey(name: 'primary_currency_name', includeIfNull: false)
+  final String? primaryCurrencyName;
+  @JsonKey(name: 'primary_currency_code', includeIfNull: false)
+  final String? primaryCurrencyCode;
+  @JsonKey(name: 'primary_currency_symbol', includeIfNull: false)
+  final String? primaryCurrencySymbol;
+  @JsonKey(name: 'primary_currency_decimal_places', includeIfNull: false)
+  final int? primaryCurrencyDecimalPlaces;
   @JsonKey(name: 'transaction_journal_id', includeIfNull: false)
   final String? transactionJournalId;
   @JsonKey(name: 'transaction_group_id', includeIfNull: false)
   final String? transactionGroupId;
-  static const fromJsonFactory = _$PiggyBankEventFromJson;
+  static const fromJsonFactory = _$PiggyBankEventPropertiesFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $PiggyBankEventExtension on PiggyBankEvent {
-  PiggyBankEvent copyWith({
+extension $PiggyBankEventPropertiesExtension on PiggyBankEventProperties {
+  PiggyBankEventProperties copyWith({
     DateTime? createdAt,
     DateTime? updatedAt,
+    String? amount,
+    String? pcAmount,
+    bool? objectHasCurrencySetting,
     String? currencyId,
+    String? currencyName,
     String? currencyCode,
     String? currencySymbol,
     int? currencyDecimalPlaces,
-    String? amount,
+    String? primaryCurrencyId,
+    String? primaryCurrencyName,
+    String? primaryCurrencyCode,
+    String? primaryCurrencySymbol,
+    int? primaryCurrencyDecimalPlaces,
     String? transactionJournalId,
     String? transactionGroupId,
   }) {
-    return PiggyBankEvent(
+    return PiggyBankEventProperties(
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      amount: amount ?? this.amount,
+      pcAmount: pcAmount ?? this.pcAmount,
+      objectHasCurrencySetting:
+          objectHasCurrencySetting ?? this.objectHasCurrencySetting,
       currencyId: currencyId ?? this.currencyId,
+      currencyName: currencyName ?? this.currencyName,
       currencyCode: currencyCode ?? this.currencyCode,
       currencySymbol: currencySymbol ?? this.currencySymbol,
       currencyDecimalPlaces:
           currencyDecimalPlaces ?? this.currencyDecimalPlaces,
-      amount: amount ?? this.amount,
+      primaryCurrencyId: primaryCurrencyId ?? this.primaryCurrencyId,
+      primaryCurrencyName: primaryCurrencyName ?? this.primaryCurrencyName,
+      primaryCurrencyCode: primaryCurrencyCode ?? this.primaryCurrencyCode,
+      primaryCurrencySymbol:
+          primaryCurrencySymbol ?? this.primaryCurrencySymbol,
+      primaryCurrencyDecimalPlaces:
+          primaryCurrencyDecimalPlaces ?? this.primaryCurrencyDecimalPlaces,
       transactionJournalId: transactionJournalId ?? this.transactionJournalId,
       transactionGroupId: transactionGroupId ?? this.transactionGroupId,
     );
   }
 
-  PiggyBankEvent copyWithWrapped({
+  PiggyBankEventProperties copyWithWrapped({
     Wrapped<DateTime?>? createdAt,
     Wrapped<DateTime?>? updatedAt,
+    Wrapped<String?>? amount,
+    Wrapped<String?>? pcAmount,
+    Wrapped<bool?>? objectHasCurrencySetting,
     Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyName,
     Wrapped<String?>? currencyCode,
     Wrapped<String?>? currencySymbol,
     Wrapped<int?>? currencyDecimalPlaces,
-    Wrapped<String?>? amount,
+    Wrapped<String?>? primaryCurrencyId,
+    Wrapped<String?>? primaryCurrencyName,
+    Wrapped<String?>? primaryCurrencyCode,
+    Wrapped<String?>? primaryCurrencySymbol,
+    Wrapped<int?>? primaryCurrencyDecimalPlaces,
     Wrapped<String?>? transactionJournalId,
     Wrapped<String?>? transactionGroupId,
   }) {
-    return PiggyBankEvent(
+    return PiggyBankEventProperties(
       createdAt: (createdAt != null ? createdAt.value : this.createdAt),
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
       amount: (amount != null ? amount.value : this.amount),
-      transactionJournalId:
-          (transactionJournalId != null
-              ? transactionJournalId.value
-              : this.transactionJournalId),
-      transactionGroupId:
-          (transactionGroupId != null
-              ? transactionGroupId.value
-              : this.transactionGroupId),
+      pcAmount: (pcAmount != null ? pcAmount.value : this.pcAmount),
+      objectHasCurrencySetting: (objectHasCurrencySetting != null
+          ? objectHasCurrencySetting.value
+          : this.objectHasCurrencySetting),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyName: (currencyName != null
+          ? currencyName.value
+          : this.currencyName),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      primaryCurrencyId: (primaryCurrencyId != null
+          ? primaryCurrencyId.value
+          : this.primaryCurrencyId),
+      primaryCurrencyName: (primaryCurrencyName != null
+          ? primaryCurrencyName.value
+          : this.primaryCurrencyName),
+      primaryCurrencyCode: (primaryCurrencyCode != null
+          ? primaryCurrencyCode.value
+          : this.primaryCurrencyCode),
+      primaryCurrencySymbol: (primaryCurrencySymbol != null
+          ? primaryCurrencySymbol.value
+          : this.primaryCurrencySymbol),
+      primaryCurrencyDecimalPlaces: (primaryCurrencyDecimalPlaces != null
+          ? primaryCurrencyDecimalPlaces.value
+          : this.primaryCurrencyDecimalPlaces),
+      transactionJournalId: (transactionJournalId != null
+          ? transactionJournalId.value
+          : this.transactionJournalId),
+      transactionGroupId: (transactionGroupId != null
+          ? transactionGroupId.value
+          : this.transactionGroupId),
     );
   }
 }
@@ -8635,8 +9596,8 @@ extension $PreferenceUpdateExtension on PreferenceUpdate {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Recurrence {
-  const Recurrence({
+class RecurrenceProperties {
+  const RecurrenceProperties({
     this.createdAt,
     this.updatedAt,
     this.type,
@@ -8645,19 +9606,19 @@ class Recurrence {
     this.firstDate,
     this.latestDate,
     this.repeatUntil,
-    this.nrOfRepetitions,
     this.applyRules,
     this.active,
+    this.nrOfRepetitions,
     this.notes,
     this.repetitions,
     this.transactions,
   });
 
-  factory Recurrence.fromJson(Map<String, dynamic> json) =>
-      _$RecurrenceFromJson(json);
+  factory RecurrenceProperties.fromJson(Map<String, dynamic> json) =>
+      _$RecurrencePropertiesFromJson(json);
 
-  static const toJsonFactory = _$RecurrenceToJson;
-  Map<String, dynamic> toJson() => _$RecurrenceToJson(this);
+  static const toJsonFactory = _$RecurrencePropertiesToJson;
+  Map<String, dynamic> toJson() => _$RecurrencePropertiesToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -8680,12 +9641,12 @@ class Recurrence {
   final DateTime? latestDate;
   @JsonKey(name: 'repeat_until', includeIfNull: false, toJson: _dateToJson)
   final DateTime? repeatUntil;
-  @JsonKey(name: 'nr_of_repetitions', includeIfNull: false)
-  final int? nrOfRepetitions;
   @JsonKey(name: 'apply_rules', includeIfNull: false)
   final bool? applyRules;
   @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
+  @JsonKey(name: 'nr_of_repetitions', includeIfNull: false)
+  final int? nrOfRepetitions;
   @JsonKey(name: 'notes', includeIfNull: false)
   final String? notes;
   @JsonKey(
@@ -8700,14 +9661,14 @@ class Recurrence {
     defaultValue: <RecurrenceTransaction>[],
   )
   final List<RecurrenceTransaction>? transactions;
-  static const fromJsonFactory = _$RecurrenceFromJson;
+  static const fromJsonFactory = _$RecurrencePropertiesFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $RecurrenceExtension on Recurrence {
-  Recurrence copyWith({
+extension $RecurrencePropertiesExtension on RecurrenceProperties {
+  RecurrenceProperties copyWith({
     DateTime? createdAt,
     DateTime? updatedAt,
     enums.RecurrenceTransactionType? type,
@@ -8716,14 +9677,14 @@ extension $RecurrenceExtension on Recurrence {
     DateTime? firstDate,
     DateTime? latestDate,
     DateTime? repeatUntil,
-    int? nrOfRepetitions,
     bool? applyRules,
     bool? active,
+    int? nrOfRepetitions,
     String? notes,
     List<RecurrenceRepetition>? repetitions,
     List<RecurrenceTransaction>? transactions,
   }) {
-    return Recurrence(
+    return RecurrenceProperties(
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       type: type ?? this.type,
@@ -8732,16 +9693,16 @@ extension $RecurrenceExtension on Recurrence {
       firstDate: firstDate ?? this.firstDate,
       latestDate: latestDate ?? this.latestDate,
       repeatUntil: repeatUntil ?? this.repeatUntil,
-      nrOfRepetitions: nrOfRepetitions ?? this.nrOfRepetitions,
       applyRules: applyRules ?? this.applyRules,
       active: active ?? this.active,
+      nrOfRepetitions: nrOfRepetitions ?? this.nrOfRepetitions,
       notes: notes ?? this.notes,
       repetitions: repetitions ?? this.repetitions,
       transactions: transactions ?? this.transactions,
     );
   }
 
-  Recurrence copyWithWrapped({
+  RecurrenceProperties copyWithWrapped({
     Wrapped<DateTime?>? createdAt,
     Wrapped<DateTime?>? updatedAt,
     Wrapped<enums.RecurrenceTransactionType?>? type,
@@ -8750,14 +9711,14 @@ extension $RecurrenceExtension on Recurrence {
     Wrapped<DateTime?>? firstDate,
     Wrapped<DateTime?>? latestDate,
     Wrapped<DateTime?>? repeatUntil,
-    Wrapped<int?>? nrOfRepetitions,
     Wrapped<bool?>? applyRules,
     Wrapped<bool?>? active,
+    Wrapped<int?>? nrOfRepetitions,
     Wrapped<String?>? notes,
     Wrapped<List<RecurrenceRepetition>?>? repetitions,
     Wrapped<List<RecurrenceTransaction>?>? transactions,
   }) {
-    return Recurrence(
+    return RecurrenceProperties(
       createdAt: (createdAt != null ? createdAt.value : this.createdAt),
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
       type: (type != null ? type.value : this.type),
@@ -8766,16 +9727,16 @@ extension $RecurrenceExtension on Recurrence {
       firstDate: (firstDate != null ? firstDate.value : this.firstDate),
       latestDate: (latestDate != null ? latestDate.value : this.latestDate),
       repeatUntil: (repeatUntil != null ? repeatUntil.value : this.repeatUntil),
-      nrOfRepetitions:
-          (nrOfRepetitions != null
-              ? nrOfRepetitions.value
-              : this.nrOfRepetitions),
       applyRules: (applyRules != null ? applyRules.value : this.applyRules),
       active: (active != null ? active.value : this.active),
+      nrOfRepetitions: (nrOfRepetitions != null
+          ? nrOfRepetitions.value
+          : this.nrOfRepetitions),
       notes: (notes != null ? notes.value : this.notes),
       repetitions: (repetitions != null ? repetitions.value : this.repetitions),
-      transactions:
-          (transactions != null ? transactions.value : this.transactions),
+      transactions: (transactions != null
+          ? transactions.value
+          : this.transactions),
     );
   }
 }
@@ -8891,16 +9852,16 @@ extension $RecurrenceStoreExtension on RecurrenceStore {
       description: (description != null ? description.value : this.description),
       firstDate: (firstDate != null ? firstDate.value : this.firstDate),
       repeatUntil: (repeatUntil != null ? repeatUntil.value : this.repeatUntil),
-      nrOfRepetitions:
-          (nrOfRepetitions != null
-              ? nrOfRepetitions.value
-              : this.nrOfRepetitions),
+      nrOfRepetitions: (nrOfRepetitions != null
+          ? nrOfRepetitions.value
+          : this.nrOfRepetitions),
       applyRules: (applyRules != null ? applyRules.value : this.applyRules),
       active: (active != null ? active.value : this.active),
       notes: (notes != null ? notes.value : this.notes),
       repetitions: (repetitions != null ? repetitions.value : this.repetitions),
-      transactions:
-          (transactions != null ? transactions.value : this.transactions),
+      transactions: (transactions != null
+          ? transactions.value
+          : this.transactions),
     );
   }
 }
@@ -9004,16 +9965,16 @@ extension $RecurrenceUpdateExtension on RecurrenceUpdate {
       description: (description != null ? description.value : this.description),
       firstDate: (firstDate != null ? firstDate.value : this.firstDate),
       repeatUntil: (repeatUntil != null ? repeatUntil.value : this.repeatUntil),
-      nrOfRepetitions:
-          (nrOfRepetitions != null
-              ? nrOfRepetitions.value
-              : this.nrOfRepetitions),
+      nrOfRepetitions: (nrOfRepetitions != null
+          ? nrOfRepetitions.value
+          : this.nrOfRepetitions),
       applyRules: (applyRules != null ? applyRules.value : this.applyRules),
       active: (active != null ? active.value : this.active),
       notes: (notes != null ? notes.value : this.notes),
       repetitions: (repetitions != null ? repetitions.value : this.repetitions),
-      transactions:
-          (transactions != null ? transactions.value : this.transactions),
+      transactions: (transactions != null
+          ? transactions.value
+          : this.transactions),
     );
   }
 }
@@ -9254,13 +10215,23 @@ class RecurrenceTransaction {
   const RecurrenceTransaction({
     this.id,
     required this.description,
-    required this.amount,
-    this.foreignAmount,
+    this.objectHasCurrencySetting,
     this.currencyId,
+    this.currencyName,
     this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
+    this.primaryCurrencyId,
+    this.primaryCurrencyName,
+    this.primaryCurrencyCode,
+    this.primaryCurrencySymbol,
+    this.primaryCurrencyDecimalPlaces,
+    required this.amount,
+    this.pcAmount,
+    this.foreignAmount,
+    this.pcForeignAmount,
     this.foreignCurrencyId,
+    this.foreignCurrencyName,
     this.foreignCurrencyCode,
     this.foreignCurrencySymbol,
     this.foreignCurrencyDecimalPlaces,
@@ -9279,8 +10250,8 @@ class RecurrenceTransaction {
     this.tags,
     this.piggyBankId,
     this.piggyBankName,
-    this.billId,
-    this.billName,
+    this.subscriptionId,
+    this.subscriptionName,
   });
 
   factory RecurrenceTransaction.fromJson(Map<String, dynamic> json) =>
@@ -9293,20 +10264,40 @@ class RecurrenceTransaction {
   final String? id;
   @JsonKey(name: 'description', includeIfNull: false)
   final String description;
-  @JsonKey(name: 'amount', includeIfNull: false)
-  final String amount;
-  @JsonKey(name: 'foreign_amount', includeIfNull: false)
-  final String? foreignAmount;
+  @JsonKey(name: 'object_has_currency_setting', includeIfNull: false)
+  final bool? objectHasCurrencySetting;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
+  @JsonKey(name: 'currency_name', includeIfNull: false)
+  final String? currencyName;
   @JsonKey(name: 'currency_code', includeIfNull: false)
   final String? currencyCode;
   @JsonKey(name: 'currency_symbol', includeIfNull: false)
   final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
+  @JsonKey(name: 'primary_currency_id', includeIfNull: false)
+  final String? primaryCurrencyId;
+  @JsonKey(name: 'primary_currency_name', includeIfNull: false)
+  final String? primaryCurrencyName;
+  @JsonKey(name: 'primary_currency_code', includeIfNull: false)
+  final String? primaryCurrencyCode;
+  @JsonKey(name: 'primary_currency_symbol', includeIfNull: false)
+  final String? primaryCurrencySymbol;
+  @JsonKey(name: 'primary_currency_decimal_places', includeIfNull: false)
+  final int? primaryCurrencyDecimalPlaces;
+  @JsonKey(name: 'amount', includeIfNull: false)
+  final String amount;
+  @JsonKey(name: 'pc_amount', includeIfNull: false)
+  final String? pcAmount;
+  @JsonKey(name: 'foreign_amount', includeIfNull: false)
+  final String? foreignAmount;
+  @JsonKey(name: 'pc_foreign_amount', includeIfNull: false)
+  final String? pcForeignAmount;
   @JsonKey(name: 'foreign_currency_id', includeIfNull: false)
   final String? foreignCurrencyId;
+  @JsonKey(name: 'foreign_currency_name', includeIfNull: false)
+  final String? foreignCurrencyName;
   @JsonKey(name: 'foreign_currency_code', includeIfNull: false)
   final String? foreignCurrencyCode;
   @JsonKey(name: 'foreign_currency_symbol', includeIfNull: false)
@@ -9353,10 +10344,10 @@ class RecurrenceTransaction {
   final String? piggyBankId;
   @JsonKey(name: 'piggy_bank_name', includeIfNull: false)
   final String? piggyBankName;
-  @JsonKey(name: 'bill_id', includeIfNull: false)
-  final String? billId;
-  @JsonKey(name: 'bill_name', includeIfNull: false)
-  final String? billName;
+  @JsonKey(name: 'subscription_id', includeIfNull: false)
+  final String? subscriptionId;
+  @JsonKey(name: 'subscription_name', includeIfNull: false)
+  final String? subscriptionName;
   static const fromJsonFactory = _$RecurrenceTransactionFromJson;
 
   @override
@@ -9367,13 +10358,23 @@ extension $RecurrenceTransactionExtension on RecurrenceTransaction {
   RecurrenceTransaction copyWith({
     String? id,
     String? description,
-    String? amount,
-    String? foreignAmount,
+    bool? objectHasCurrencySetting,
     String? currencyId,
+    String? currencyName,
     String? currencyCode,
     String? currencySymbol,
     int? currencyDecimalPlaces,
+    String? primaryCurrencyId,
+    String? primaryCurrencyName,
+    String? primaryCurrencyCode,
+    String? primaryCurrencySymbol,
+    int? primaryCurrencyDecimalPlaces,
+    String? amount,
+    String? pcAmount,
+    String? foreignAmount,
+    String? pcForeignAmount,
     String? foreignCurrencyId,
+    String? foreignCurrencyName,
     String? foreignCurrencyCode,
     String? foreignCurrencySymbol,
     int? foreignCurrencyDecimalPlaces,
@@ -9392,20 +10393,33 @@ extension $RecurrenceTransactionExtension on RecurrenceTransaction {
     List<String>? tags,
     String? piggyBankId,
     String? piggyBankName,
-    String? billId,
-    String? billName,
+    String? subscriptionId,
+    String? subscriptionName,
   }) {
     return RecurrenceTransaction(
       id: id ?? this.id,
       description: description ?? this.description,
-      amount: amount ?? this.amount,
-      foreignAmount: foreignAmount ?? this.foreignAmount,
+      objectHasCurrencySetting:
+          objectHasCurrencySetting ?? this.objectHasCurrencySetting,
       currencyId: currencyId ?? this.currencyId,
+      currencyName: currencyName ?? this.currencyName,
       currencyCode: currencyCode ?? this.currencyCode,
       currencySymbol: currencySymbol ?? this.currencySymbol,
       currencyDecimalPlaces:
           currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      primaryCurrencyId: primaryCurrencyId ?? this.primaryCurrencyId,
+      primaryCurrencyName: primaryCurrencyName ?? this.primaryCurrencyName,
+      primaryCurrencyCode: primaryCurrencyCode ?? this.primaryCurrencyCode,
+      primaryCurrencySymbol:
+          primaryCurrencySymbol ?? this.primaryCurrencySymbol,
+      primaryCurrencyDecimalPlaces:
+          primaryCurrencyDecimalPlaces ?? this.primaryCurrencyDecimalPlaces,
+      amount: amount ?? this.amount,
+      pcAmount: pcAmount ?? this.pcAmount,
+      foreignAmount: foreignAmount ?? this.foreignAmount,
+      pcForeignAmount: pcForeignAmount ?? this.pcForeignAmount,
       foreignCurrencyId: foreignCurrencyId ?? this.foreignCurrencyId,
+      foreignCurrencyName: foreignCurrencyName ?? this.foreignCurrencyName,
       foreignCurrencyCode: foreignCurrencyCode ?? this.foreignCurrencyCode,
       foreignCurrencySymbol:
           foreignCurrencySymbol ?? this.foreignCurrencySymbol,
@@ -9426,21 +10440,31 @@ extension $RecurrenceTransactionExtension on RecurrenceTransaction {
       tags: tags ?? this.tags,
       piggyBankId: piggyBankId ?? this.piggyBankId,
       piggyBankName: piggyBankName ?? this.piggyBankName,
-      billId: billId ?? this.billId,
-      billName: billName ?? this.billName,
+      subscriptionId: subscriptionId ?? this.subscriptionId,
+      subscriptionName: subscriptionName ?? this.subscriptionName,
     );
   }
 
   RecurrenceTransaction copyWithWrapped({
     Wrapped<String?>? id,
     Wrapped<String>? description,
-    Wrapped<String>? amount,
-    Wrapped<String?>? foreignAmount,
+    Wrapped<bool?>? objectHasCurrencySetting,
     Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyName,
     Wrapped<String?>? currencyCode,
     Wrapped<String?>? currencySymbol,
     Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? primaryCurrencyId,
+    Wrapped<String?>? primaryCurrencyName,
+    Wrapped<String?>? primaryCurrencyCode,
+    Wrapped<String?>? primaryCurrencySymbol,
+    Wrapped<int?>? primaryCurrencyDecimalPlaces,
+    Wrapped<String>? amount,
+    Wrapped<String?>? pcAmount,
+    Wrapped<String?>? foreignAmount,
+    Wrapped<String?>? pcForeignAmount,
     Wrapped<String?>? foreignCurrencyId,
+    Wrapped<String?>? foreignCurrencyName,
     Wrapped<String?>? foreignCurrencyCode,
     Wrapped<String?>? foreignCurrencySymbol,
     Wrapped<int?>? foreignCurrencyDecimalPlaces,
@@ -9459,69 +10483,99 @@ extension $RecurrenceTransactionExtension on RecurrenceTransaction {
     Wrapped<List<String>?>? tags,
     Wrapped<String?>? piggyBankId,
     Wrapped<String?>? piggyBankName,
-    Wrapped<String?>? billId,
-    Wrapped<String?>? billName,
+    Wrapped<String?>? subscriptionId,
+    Wrapped<String?>? subscriptionName,
   }) {
     return RecurrenceTransaction(
       id: (id != null ? id.value : this.id),
       description: (description != null ? description.value : this.description),
-      amount: (amount != null ? amount.value : this.amount),
-      foreignAmount:
-          (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
+      objectHasCurrencySetting: (objectHasCurrencySetting != null
+          ? objectHasCurrencySetting.value
+          : this.objectHasCurrencySetting),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
-      foreignCurrencyId:
-          (foreignCurrencyId != null
-              ? foreignCurrencyId.value
-              : this.foreignCurrencyId),
-      foreignCurrencyCode:
-          (foreignCurrencyCode != null
-              ? foreignCurrencyCode.value
-              : this.foreignCurrencyCode),
-      foreignCurrencySymbol:
-          (foreignCurrencySymbol != null
-              ? foreignCurrencySymbol.value
-              : this.foreignCurrencySymbol),
-      foreignCurrencyDecimalPlaces:
-          (foreignCurrencyDecimalPlaces != null
-              ? foreignCurrencyDecimalPlaces.value
-              : this.foreignCurrencyDecimalPlaces),
+      currencyName: (currencyName != null
+          ? currencyName.value
+          : this.currencyName),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      primaryCurrencyId: (primaryCurrencyId != null
+          ? primaryCurrencyId.value
+          : this.primaryCurrencyId),
+      primaryCurrencyName: (primaryCurrencyName != null
+          ? primaryCurrencyName.value
+          : this.primaryCurrencyName),
+      primaryCurrencyCode: (primaryCurrencyCode != null
+          ? primaryCurrencyCode.value
+          : this.primaryCurrencyCode),
+      primaryCurrencySymbol: (primaryCurrencySymbol != null
+          ? primaryCurrencySymbol.value
+          : this.primaryCurrencySymbol),
+      primaryCurrencyDecimalPlaces: (primaryCurrencyDecimalPlaces != null
+          ? primaryCurrencyDecimalPlaces.value
+          : this.primaryCurrencyDecimalPlaces),
+      amount: (amount != null ? amount.value : this.amount),
+      pcAmount: (pcAmount != null ? pcAmount.value : this.pcAmount),
+      foreignAmount: (foreignAmount != null
+          ? foreignAmount.value
+          : this.foreignAmount),
+      pcForeignAmount: (pcForeignAmount != null
+          ? pcForeignAmount.value
+          : this.pcForeignAmount),
+      foreignCurrencyId: (foreignCurrencyId != null
+          ? foreignCurrencyId.value
+          : this.foreignCurrencyId),
+      foreignCurrencyName: (foreignCurrencyName != null
+          ? foreignCurrencyName.value
+          : this.foreignCurrencyName),
+      foreignCurrencyCode: (foreignCurrencyCode != null
+          ? foreignCurrencyCode.value
+          : this.foreignCurrencyCode),
+      foreignCurrencySymbol: (foreignCurrencySymbol != null
+          ? foreignCurrencySymbol.value
+          : this.foreignCurrencySymbol),
+      foreignCurrencyDecimalPlaces: (foreignCurrencyDecimalPlaces != null
+          ? foreignCurrencyDecimalPlaces.value
+          : this.foreignCurrencyDecimalPlaces),
       budgetId: (budgetId != null ? budgetId.value : this.budgetId),
       budgetName: (budgetName != null ? budgetName.value : this.budgetName),
       categoryId: (categoryId != null ? categoryId.value : this.categoryId),
-      categoryName:
-          (categoryName != null ? categoryName.value : this.categoryName),
+      categoryName: (categoryName != null
+          ? categoryName.value
+          : this.categoryName),
       sourceId: (sourceId != null ? sourceId.value : this.sourceId),
       sourceName: (sourceName != null ? sourceName.value : this.sourceName),
       sourceIban: (sourceIban != null ? sourceIban.value : this.sourceIban),
       sourceType: (sourceType != null ? sourceType.value : this.sourceType),
-      destinationId:
-          (destinationId != null ? destinationId.value : this.destinationId),
-      destinationName:
-          (destinationName != null
-              ? destinationName.value
-              : this.destinationName),
-      destinationIban:
-          (destinationIban != null
-              ? destinationIban.value
-              : this.destinationIban),
-      destinationType:
-          (destinationType != null
-              ? destinationType.value
-              : this.destinationType),
+      destinationId: (destinationId != null
+          ? destinationId.value
+          : this.destinationId),
+      destinationName: (destinationName != null
+          ? destinationName.value
+          : this.destinationName),
+      destinationIban: (destinationIban != null
+          ? destinationIban.value
+          : this.destinationIban),
+      destinationType: (destinationType != null
+          ? destinationType.value
+          : this.destinationType),
       tags: (tags != null ? tags.value : this.tags),
       piggyBankId: (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
-      piggyBankName:
-          (piggyBankName != null ? piggyBankName.value : this.piggyBankName),
-      billId: (billId != null ? billId.value : this.billId),
-      billName: (billName != null ? billName.value : this.billName),
+      piggyBankName: (piggyBankName != null
+          ? piggyBankName.value
+          : this.piggyBankName),
+      subscriptionId: (subscriptionId != null
+          ? subscriptionId.value
+          : this.subscriptionId),
+      subscriptionName: (subscriptionName != null
+          ? subscriptionName.value
+          : this.subscriptionName),
     );
   }
 }
@@ -9639,24 +10693,25 @@ extension $RecurrenceTransactionStoreExtension on RecurrenceTransactionStore {
     return RecurrenceTransactionStore(
       description: (description != null ? description.value : this.description),
       amount: (amount != null ? amount.value : this.amount),
-      foreignAmount:
-          (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
+      foreignAmount: (foreignAmount != null
+          ? foreignAmount.value
+          : this.foreignAmount),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      foreignCurrencyId:
-          (foreignCurrencyId != null
-              ? foreignCurrencyId.value
-              : this.foreignCurrencyId),
-      foreignCurrencyCode:
-          (foreignCurrencyCode != null
-              ? foreignCurrencyCode.value
-              : this.foreignCurrencyCode),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      foreignCurrencyId: (foreignCurrencyId != null
+          ? foreignCurrencyId.value
+          : this.foreignCurrencyId),
+      foreignCurrencyCode: (foreignCurrencyCode != null
+          ? foreignCurrencyCode.value
+          : this.foreignCurrencyCode),
       budgetId: (budgetId != null ? budgetId.value : this.budgetId),
       categoryId: (categoryId != null ? categoryId.value : this.categoryId),
       sourceId: (sourceId != null ? sourceId.value : this.sourceId),
-      destinationId:
-          (destinationId != null ? destinationId.value : this.destinationId),
+      destinationId: (destinationId != null
+          ? destinationId.value
+          : this.destinationId),
       tags: (tags != null ? tags.value : this.tags),
       piggyBankId: (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
       billId: (billId != null ? billId.value : this.billId),
@@ -9778,20 +10833,22 @@ extension $RecurrenceTransactionUpdateExtension on RecurrenceTransactionUpdate {
       id: (id != null ? id.value : this.id),
       description: (description != null ? description.value : this.description),
       amount: (amount != null ? amount.value : this.amount),
-      foreignAmount:
-          (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
+      foreignAmount: (foreignAmount != null
+          ? foreignAmount.value
+          : this.foreignAmount),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      foreignCurrencyId:
-          (foreignCurrencyId != null
-              ? foreignCurrencyId.value
-              : this.foreignCurrencyId),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      foreignCurrencyId: (foreignCurrencyId != null
+          ? foreignCurrencyId.value
+          : this.foreignCurrencyId),
       budgetId: (budgetId != null ? budgetId.value : this.budgetId),
       categoryId: (categoryId != null ? categoryId.value : this.categoryId),
       sourceId: (sourceId != null ? sourceId.value : this.sourceId),
-      destinationId:
-          (destinationId != null ? destinationId.value : this.destinationId),
+      destinationId: (destinationId != null
+          ? destinationId.value
+          : this.destinationId),
       tags: (tags != null ? tags.value : this.tags),
       piggyBankId: (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
       billId: (billId != null ? billId.value : this.billId),
@@ -9917,14 +10974,16 @@ extension $RuleExtension on Rule {
       title: (title != null ? title.value : this.title),
       description: (description != null ? description.value : this.description),
       ruleGroupId: (ruleGroupId != null ? ruleGroupId.value : this.ruleGroupId),
-      ruleGroupTitle:
-          (ruleGroupTitle != null ? ruleGroupTitle.value : this.ruleGroupTitle),
+      ruleGroupTitle: (ruleGroupTitle != null
+          ? ruleGroupTitle.value
+          : this.ruleGroupTitle),
       order: (order != null ? order.value : this.order),
       trigger: (trigger != null ? trigger.value : this.trigger),
       active: (active != null ? active.value : this.active),
       strict: (strict != null ? strict.value : this.strict),
-      stopProcessing:
-          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+      stopProcessing: (stopProcessing != null
+          ? stopProcessing.value
+          : this.stopProcessing),
       triggers: (triggers != null ? triggers.value : this.triggers),
       actions: (actions != null ? actions.value : this.actions),
     );
@@ -10040,14 +11099,16 @@ extension $RuleStoreExtension on RuleStore {
       title: (title != null ? title.value : this.title),
       description: (description != null ? description.value : this.description),
       ruleGroupId: (ruleGroupId != null ? ruleGroupId.value : this.ruleGroupId),
-      ruleGroupTitle:
-          (ruleGroupTitle != null ? ruleGroupTitle.value : this.ruleGroupTitle),
+      ruleGroupTitle: (ruleGroupTitle != null
+          ? ruleGroupTitle.value
+          : this.ruleGroupTitle),
       order: (order != null ? order.value : this.order),
       trigger: (trigger != null ? trigger.value : this.trigger),
       active: (active != null ? active.value : this.active),
       strict: (strict != null ? strict.value : this.strict),
-      stopProcessing:
-          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+      stopProcessing: (stopProcessing != null
+          ? stopProcessing.value
+          : this.stopProcessing),
       triggers: (triggers != null ? triggers.value : this.triggers),
       actions: (actions != null ? actions.value : this.actions),
     );
@@ -10161,8 +11222,9 @@ extension $RuleUpdateExtension on RuleUpdate {
       trigger: (trigger != null ? trigger.value : this.trigger),
       active: (active != null ? active.value : this.active),
       strict: (strict != null ? strict.value : this.strict),
-      stopProcessing:
-          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+      stopProcessing: (stopProcessing != null
+          ? stopProcessing.value
+          : this.stopProcessing),
       triggers: (triggers != null ? triggers.value : this.triggers),
       actions: (actions != null ? actions.value : this.actions),
     );
@@ -10256,8 +11318,9 @@ extension $RuleActionExtension on RuleAction {
       $value: ($value != null ? $value.value : this.$value),
       order: (order != null ? order.value : this.order),
       active: (active != null ? active.value : this.active),
-      stopProcessing:
-          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+      stopProcessing: (stopProcessing != null
+          ? stopProcessing.value
+          : this.stopProcessing),
     );
   }
 }
@@ -10328,8 +11391,9 @@ extension $RuleActionStoreExtension on RuleActionStore {
       $value: ($value != null ? $value.value : this.$value),
       order: (order != null ? order.value : this.order),
       active: (active != null ? active.value : this.active),
-      stopProcessing:
-          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+      stopProcessing: (stopProcessing != null
+          ? stopProcessing.value
+          : this.stopProcessing),
     );
   }
 }
@@ -10400,8 +11464,9 @@ extension $RuleActionUpdateExtension on RuleActionUpdate {
       $value: ($value != null ? $value.value : this.$value),
       order: (order != null ? order.value : this.order),
       active: (active != null ? active.value : this.active),
-      stopProcessing:
-          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+      stopProcessing: (stopProcessing != null
+          ? stopProcessing.value
+          : this.stopProcessing),
     );
   }
 }
@@ -10691,8 +11756,9 @@ extension $RuleTriggerExtension on RuleTrigger {
       prohibited: (prohibited != null ? prohibited.value : this.prohibited),
       order: (order != null ? order.value : this.order),
       active: (active != null ? active.value : this.active),
-      stopProcessing:
-          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+      stopProcessing: (stopProcessing != null
+          ? stopProcessing.value
+          : this.stopProcessing),
     );
   }
 }
@@ -10770,8 +11836,9 @@ extension $RuleTriggerStoreExtension on RuleTriggerStore {
       order: (order != null ? order.value : this.order),
       active: (active != null ? active.value : this.active),
       prohibited: (prohibited != null ? prohibited.value : this.prohibited),
-      stopProcessing:
-          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+      stopProcessing: (stopProcessing != null
+          ? stopProcessing.value
+          : this.stopProcessing),
     );
   }
 }
@@ -10842,8 +11909,9 @@ extension $RuleTriggerUpdateExtension on RuleTriggerUpdate {
       $value: ($value != null ? $value.value : this.$value),
       order: (order != null ? order.value : this.order),
       active: (active != null ? active.value : this.active),
-      stopProcessing:
-          (stopProcessing != null ? stopProcessing.value : this.stopProcessing),
+      stopProcessing: (stopProcessing != null
+          ? stopProcessing.value
+          : this.stopProcessing),
     );
   }
 }
@@ -11082,24 +12150,23 @@ extension $TagModelUpdateExtension on TagModelUpdate {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Currency {
-  const Currency({
+class CurrencyProperties {
+  const CurrencyProperties({
     this.createdAt,
     this.updatedAt,
     this.enabled,
-    this.$default,
-    this.native,
+    this.primary,
     required this.code,
     required this.name,
     required this.symbol,
     this.decimalPlaces,
   });
 
-  factory Currency.fromJson(Map<String, dynamic> json) =>
-      _$CurrencyFromJson(json);
+  factory CurrencyProperties.fromJson(Map<String, dynamic> json) =>
+      _$CurrencyPropertiesFromJson(json);
 
-  static const toJsonFactory = _$CurrencyToJson;
-  Map<String, dynamic> toJson() => _$CurrencyToJson(this);
+  static const toJsonFactory = _$CurrencyPropertiesToJson;
+  Map<String, dynamic> toJson() => _$CurrencyPropertiesToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -11107,10 +12174,8 @@ class Currency {
   final DateTime? updatedAt;
   @JsonKey(name: 'enabled', includeIfNull: false, defaultValue: true)
   final bool? enabled;
-  @JsonKey(name: 'default', includeIfNull: false)
-  final bool? $default;
-  @JsonKey(name: 'native', includeIfNull: false)
-  final bool? native;
+  @JsonKey(name: 'primary', includeIfNull: false)
+  final bool? primary;
   @JsonKey(name: 'code', includeIfNull: false)
   final String code;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -11119,30 +12184,28 @@ class Currency {
   final String symbol;
   @JsonKey(name: 'decimal_places', includeIfNull: false)
   final int? decimalPlaces;
-  static const fromJsonFactory = _$CurrencyFromJson;
+  static const fromJsonFactory = _$CurrencyPropertiesFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $CurrencyExtension on Currency {
-  Currency copyWith({
+extension $CurrencyPropertiesExtension on CurrencyProperties {
+  CurrencyProperties copyWith({
     DateTime? createdAt,
     DateTime? updatedAt,
     bool? enabled,
-    bool? $default,
-    bool? native,
+    bool? primary,
     String? code,
     String? name,
     String? symbol,
     int? decimalPlaces,
   }) {
-    return Currency(
+    return CurrencyProperties(
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       enabled: enabled ?? this.enabled,
-      $default: $default ?? this.$default,
-      native: native ?? this.native,
+      primary: primary ?? this.primary,
       code: code ?? this.code,
       name: name ?? this.name,
       symbol: symbol ?? this.symbol,
@@ -11150,28 +12213,27 @@ extension $CurrencyExtension on Currency {
     );
   }
 
-  Currency copyWithWrapped({
+  CurrencyProperties copyWithWrapped({
     Wrapped<DateTime?>? createdAt,
     Wrapped<DateTime?>? updatedAt,
     Wrapped<bool?>? enabled,
-    Wrapped<bool?>? $default,
-    Wrapped<bool?>? native,
+    Wrapped<bool?>? primary,
     Wrapped<String>? code,
     Wrapped<String>? name,
     Wrapped<String>? symbol,
     Wrapped<int?>? decimalPlaces,
   }) {
-    return Currency(
+    return CurrencyProperties(
       createdAt: (createdAt != null ? createdAt.value : this.createdAt),
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
       enabled: (enabled != null ? enabled.value : this.enabled),
-      $default: ($default != null ? $default.value : this.$default),
-      native: (native != null ? native.value : this.native),
+      primary: (primary != null ? primary.value : this.primary),
       code: (code != null ? code.value : this.code),
       name: (name != null ? name.value : this.name),
       symbol: (symbol != null ? symbol.value : this.symbol),
-      decimalPlaces:
-          (decimalPlaces != null ? decimalPlaces.value : this.decimalPlaces),
+      decimalPlaces: (decimalPlaces != null
+          ? decimalPlaces.value
+          : this.decimalPlaces),
     );
   }
 }
@@ -11180,7 +12242,7 @@ extension $CurrencyExtension on Currency {
 class CurrencyStore {
   const CurrencyStore({
     this.enabled,
-    this.$default,
+    this.primary,
     required this.code,
     required this.name,
     required this.symbol,
@@ -11195,8 +12257,8 @@ class CurrencyStore {
 
   @JsonKey(name: 'enabled', includeIfNull: false, defaultValue: true)
   final bool? enabled;
-  @JsonKey(name: 'default', includeIfNull: false)
-  final bool? $default;
+  @JsonKey(name: 'primary', includeIfNull: false)
+  final bool? primary;
   @JsonKey(name: 'code', includeIfNull: false)
   final String code;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -11214,7 +12276,7 @@ class CurrencyStore {
 extension $CurrencyStoreExtension on CurrencyStore {
   CurrencyStore copyWith({
     bool? enabled,
-    bool? $default,
+    bool? primary,
     String? code,
     String? name,
     String? symbol,
@@ -11222,7 +12284,7 @@ extension $CurrencyStoreExtension on CurrencyStore {
   }) {
     return CurrencyStore(
       enabled: enabled ?? this.enabled,
-      $default: $default ?? this.$default,
+      primary: primary ?? this.primary,
       code: code ?? this.code,
       name: name ?? this.name,
       symbol: symbol ?? this.symbol,
@@ -11232,7 +12294,7 @@ extension $CurrencyStoreExtension on CurrencyStore {
 
   CurrencyStore copyWithWrapped({
     Wrapped<bool?>? enabled,
-    Wrapped<bool?>? $default,
+    Wrapped<bool?>? primary,
     Wrapped<String>? code,
     Wrapped<String>? name,
     Wrapped<String>? symbol,
@@ -11240,12 +12302,13 @@ extension $CurrencyStoreExtension on CurrencyStore {
   }) {
     return CurrencyStore(
       enabled: (enabled != null ? enabled.value : this.enabled),
-      $default: ($default != null ? $default.value : this.$default),
+      primary: (primary != null ? primary.value : this.primary),
       code: (code != null ? code.value : this.code),
       name: (name != null ? name.value : this.name),
       symbol: (symbol != null ? symbol.value : this.symbol),
-      decimalPlaces:
-          (decimalPlaces != null ? decimalPlaces.value : this.decimalPlaces),
+      decimalPlaces: (decimalPlaces != null
+          ? decimalPlaces.value
+          : this.decimalPlaces),
     );
   }
 }
@@ -11254,7 +12317,7 @@ extension $CurrencyStoreExtension on CurrencyStore {
 class CurrencyUpdate {
   const CurrencyUpdate({
     this.enabled,
-    this.$default,
+    this.primary,
     this.code,
     this.name,
     this.symbol,
@@ -11269,8 +12332,8 @@ class CurrencyUpdate {
 
   @JsonKey(name: 'enabled', includeIfNull: false)
   final bool? enabled;
-  @JsonKey(name: 'default', includeIfNull: false)
-  final bool? $default;
+  @JsonKey(name: 'primary', includeIfNull: false)
+  final bool? primary;
   @JsonKey(name: 'code', includeIfNull: false)
   final String? code;
   @JsonKey(name: 'name', includeIfNull: false)
@@ -11288,7 +12351,7 @@ class CurrencyUpdate {
 extension $CurrencyUpdateExtension on CurrencyUpdate {
   CurrencyUpdate copyWith({
     bool? enabled,
-    bool? $default,
+    bool? primary,
     String? code,
     String? name,
     String? symbol,
@@ -11296,7 +12359,7 @@ extension $CurrencyUpdateExtension on CurrencyUpdate {
   }) {
     return CurrencyUpdate(
       enabled: enabled ?? this.enabled,
-      $default: $default ?? this.$default,
+      primary: primary ?? this.primary,
       code: code ?? this.code,
       name: name ?? this.name,
       symbol: symbol ?? this.symbol,
@@ -11306,7 +12369,7 @@ extension $CurrencyUpdateExtension on CurrencyUpdate {
 
   CurrencyUpdate copyWithWrapped({
     Wrapped<bool?>? enabled,
-    Wrapped<bool?>? $default,
+    Wrapped<bool?>? primary,
     Wrapped<String?>? code,
     Wrapped<String?>? name,
     Wrapped<String?>? symbol,
@@ -11314,12 +12377,13 @@ extension $CurrencyUpdateExtension on CurrencyUpdate {
   }) {
     return CurrencyUpdate(
       enabled: (enabled != null ? enabled.value : this.enabled),
-      $default: ($default != null ? $default.value : this.$default),
+      primary: (primary != null ? primary.value : this.primary),
       code: (code != null ? code.value : this.code),
       name: (name != null ? name.value : this.name),
       symbol: (symbol != null ? symbol.value : this.symbol),
-      decimalPlaces:
-          (decimalPlaces != null ? decimalPlaces.value : this.decimalPlaces),
+      decimalPlaces: (decimalPlaces != null
+          ? decimalPlaces.value
+          : this.decimalPlaces),
     );
   }
 }
@@ -11389,8 +12453,9 @@ extension $TransactionExtension on Transaction {
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
       user: (user != null ? user.value : this.user),
       groupTitle: (groupTitle != null ? groupTitle.value : this.groupTitle),
-      transactions:
-          (transactions != null ? transactions.value : this.transactions),
+      transactions: (transactions != null
+          ? transactions.value
+          : this.transactions),
     );
   }
 }
@@ -11456,16 +12521,17 @@ extension $TransactionStoreExtension on TransactionStore {
     Wrapped<List<TransactionSplitStore>>? transactions,
   }) {
     return TransactionStore(
-      errorIfDuplicateHash:
-          (errorIfDuplicateHash != null
-              ? errorIfDuplicateHash.value
-              : this.errorIfDuplicateHash),
+      errorIfDuplicateHash: (errorIfDuplicateHash != null
+          ? errorIfDuplicateHash.value
+          : this.errorIfDuplicateHash),
       applyRules: (applyRules != null ? applyRules.value : this.applyRules),
-      fireWebhooks:
-          (fireWebhooks != null ? fireWebhooks.value : this.fireWebhooks),
+      fireWebhooks: (fireWebhooks != null
+          ? fireWebhooks.value
+          : this.fireWebhooks),
       groupTitle: (groupTitle != null ? groupTitle.value : this.groupTitle),
-      transactions:
-          (transactions != null ? transactions.value : this.transactions),
+      transactions: (transactions != null
+          ? transactions.value
+          : this.transactions),
     );
   }
 }
@@ -11526,11 +12592,13 @@ extension $TransactionUpdateExtension on TransactionUpdate {
   }) {
     return TransactionUpdate(
       applyRules: (applyRules != null ? applyRules.value : this.applyRules),
-      fireWebhooks:
-          (fireWebhooks != null ? fireWebhooks.value : this.fireWebhooks),
+      fireWebhooks: (fireWebhooks != null
+          ? fireWebhooks.value
+          : this.fireWebhooks),
       groupTitle: (groupTitle != null ? groupTitle.value : this.groupTitle),
-      transactions:
-          (transactions != null ? transactions.value : this.transactions),
+      transactions: (transactions != null
+          ? transactions.value
+          : this.transactions),
     );
   }
 }
@@ -11607,8 +12675,9 @@ extension $TransactionLinkExtension on TransactionLink {
       createdAt: (createdAt != null ? createdAt.value : this.createdAt),
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
       linkTypeId: (linkTypeId != null ? linkTypeId.value : this.linkTypeId),
-      linkTypeName:
-          (linkTypeName != null ? linkTypeName.value : this.linkTypeName),
+      linkTypeName: (linkTypeName != null
+          ? linkTypeName.value
+          : this.linkTypeName),
       inwardId: (inwardId != null ? inwardId.value : this.inwardId),
       outwardId: (outwardId != null ? outwardId.value : this.outwardId),
       notes: (notes != null ? notes.value : this.notes),
@@ -11674,8 +12743,9 @@ extension $TransactionLinkStoreExtension on TransactionLinkStore {
   }) {
     return TransactionLinkStore(
       linkTypeId: (linkTypeId != null ? linkTypeId.value : this.linkTypeId),
-      linkTypeName:
-          (linkTypeName != null ? linkTypeName.value : this.linkTypeName),
+      linkTypeName: (linkTypeName != null
+          ? linkTypeName.value
+          : this.linkTypeName),
       inwardId: (inwardId != null ? inwardId.value : this.inwardId),
       outwardId: (outwardId != null ? outwardId.value : this.outwardId),
       notes: (notes != null ? notes.value : this.notes),
@@ -11741,8 +12811,9 @@ extension $TransactionLinkUpdateExtension on TransactionLinkUpdate {
   }) {
     return TransactionLinkUpdate(
       linkTypeId: (linkTypeId != null ? linkTypeId.value : this.linkTypeId),
-      linkTypeName:
-          (linkTypeName != null ? linkTypeName.value : this.linkTypeName),
+      linkTypeName: (linkTypeName != null
+          ? linkTypeName.value
+          : this.linkTypeName),
       inwardId: (inwardId != null ? inwardId.value : this.inwardId),
       outwardId: (outwardId != null ? outwardId.value : this.outwardId),
       notes: (notes != null ? notes.value : this.notes),
@@ -11861,6 +12932,7 @@ class TransactionSplit {
     required this.type,
     required this.date,
     this.order,
+    this.objectHasCurrencySetting,
     this.currencyId,
     this.currencyCode,
     this.currencySymbol,
@@ -11870,8 +12942,18 @@ class TransactionSplit {
     this.foreignCurrencyCode,
     this.foreignCurrencySymbol,
     this.foreignCurrencyDecimalPlaces,
+    this.primaryCurrencyId,
+    this.primaryCurrencyCode,
+    this.primaryCurrencySymbol,
+    this.primaryCurrencyDecimalPlaces,
     required this.amount,
+    this.pcAmount,
     this.foreignAmount,
+    this.pcForeignAmount,
+    this.sourceBalanceAfter,
+    this.pcSourceBalanceAfter,
+    this.destinationBalanceAfter,
+    this.pcDestinationBalanceAfter,
     required this.description,
     this.sourceId,
     this.sourceName,
@@ -11887,6 +12969,8 @@ class TransactionSplit {
     this.categoryName,
     this.billId,
     this.billName,
+    this.subscriptionId,
+    this.subscriptionName,
     this.reconciled,
     this.notes,
     this.tags,
@@ -11897,7 +12981,6 @@ class TransactionSplit {
     this.recurrenceId,
     this.recurrenceTotal,
     this.recurrenceCount,
-    this.bunqPaymentId,
     this.importHashV2,
     this.sepaCc,
     this.sepaCtOp,
@@ -11940,6 +13023,8 @@ class TransactionSplit {
   final DateTime date;
   @JsonKey(name: 'order', includeIfNull: false)
   final int? order;
+  @JsonKey(name: 'object_has_currency_setting', includeIfNull: false)
+  final bool? objectHasCurrencySetting;
   @JsonKey(name: 'currency_id', includeIfNull: false)
   final String? currencyId;
   @JsonKey(name: 'currency_code', includeIfNull: false)
@@ -11958,10 +13043,30 @@ class TransactionSplit {
   final String? foreignCurrencySymbol;
   @JsonKey(name: 'foreign_currency_decimal_places', includeIfNull: false)
   final int? foreignCurrencyDecimalPlaces;
+  @JsonKey(name: 'primary_currency_id', includeIfNull: false)
+  final String? primaryCurrencyId;
+  @JsonKey(name: 'primary_currency_code', includeIfNull: false)
+  final String? primaryCurrencyCode;
+  @JsonKey(name: 'primary_currency_symbol', includeIfNull: false)
+  final String? primaryCurrencySymbol;
+  @JsonKey(name: 'primary_currency_decimal_places', includeIfNull: false)
+  final int? primaryCurrencyDecimalPlaces;
   @JsonKey(name: 'amount', includeIfNull: false)
   final String amount;
+  @JsonKey(name: 'pc_amount', includeIfNull: false)
+  final String? pcAmount;
   @JsonKey(name: 'foreign_amount', includeIfNull: false)
   final String? foreignAmount;
+  @JsonKey(name: 'pc_foreign_amount', includeIfNull: false)
+  final String? pcForeignAmount;
+  @JsonKey(name: 'source_balance_after', includeIfNull: false)
+  final String? sourceBalanceAfter;
+  @JsonKey(name: 'pc_source_balance_after', includeIfNull: false)
+  final String? pcSourceBalanceAfter;
+  @JsonKey(name: 'destination_balance_after', includeIfNull: false)
+  final String? destinationBalanceAfter;
+  @JsonKey(name: 'pc_destination_balance_after', includeIfNull: false)
+  final String? pcDestinationBalanceAfter;
   @JsonKey(name: 'description', includeIfNull: false)
   final String description;
   @JsonKey(name: 'source_id', includeIfNull: false)
@@ -12002,6 +13107,10 @@ class TransactionSplit {
   final String? billId;
   @JsonKey(name: 'bill_name', includeIfNull: false)
   final String? billName;
+  @JsonKey(name: 'subscription_id', includeIfNull: false)
+  final String? subscriptionId;
+  @JsonKey(name: 'subscription_name', includeIfNull: false)
+  final String? subscriptionName;
   @JsonKey(name: 'reconciled', includeIfNull: false)
   final bool? reconciled;
   @JsonKey(name: 'notes', includeIfNull: false)
@@ -12022,8 +13131,6 @@ class TransactionSplit {
   final int? recurrenceTotal;
   @JsonKey(name: 'recurrence_count', includeIfNull: false)
   final int? recurrenceCount;
-  @JsonKey(name: 'bunq_payment_id', includeIfNull: false)
-  final String? bunqPaymentId;
   @JsonKey(name: 'import_hash_v2', includeIfNull: false)
   final String? importHashV2;
   @JsonKey(name: 'sepa_cc', includeIfNull: false)
@@ -12075,6 +13182,7 @@ extension $TransactionSplitExtension on TransactionSplit {
     enums.TransactionTypeProperty? type,
     DateTime? date,
     int? order,
+    bool? objectHasCurrencySetting,
     String? currencyId,
     String? currencyCode,
     String? currencySymbol,
@@ -12084,8 +13192,18 @@ extension $TransactionSplitExtension on TransactionSplit {
     String? foreignCurrencyCode,
     String? foreignCurrencySymbol,
     int? foreignCurrencyDecimalPlaces,
+    String? primaryCurrencyId,
+    String? primaryCurrencyCode,
+    String? primaryCurrencySymbol,
+    int? primaryCurrencyDecimalPlaces,
     String? amount,
+    String? pcAmount,
     String? foreignAmount,
+    String? pcForeignAmount,
+    String? sourceBalanceAfter,
+    String? pcSourceBalanceAfter,
+    String? destinationBalanceAfter,
+    String? pcDestinationBalanceAfter,
     String? description,
     String? sourceId,
     String? sourceName,
@@ -12101,6 +13219,8 @@ extension $TransactionSplitExtension on TransactionSplit {
     String? categoryName,
     String? billId,
     String? billName,
+    String? subscriptionId,
+    String? subscriptionName,
     bool? reconciled,
     String? notes,
     List<String>? tags,
@@ -12111,7 +13231,6 @@ extension $TransactionSplitExtension on TransactionSplit {
     String? recurrenceId,
     int? recurrenceTotal,
     int? recurrenceCount,
-    String? bunqPaymentId,
     String? importHashV2,
     String? sepaCc,
     String? sepaCtOp,
@@ -12138,6 +13257,8 @@ extension $TransactionSplitExtension on TransactionSplit {
       type: type ?? this.type,
       date: date ?? this.date,
       order: order ?? this.order,
+      objectHasCurrencySetting:
+          objectHasCurrencySetting ?? this.objectHasCurrencySetting,
       currencyId: currencyId ?? this.currencyId,
       currencyCode: currencyCode ?? this.currencyCode,
       currencySymbol: currencySymbol ?? this.currencySymbol,
@@ -12150,8 +13271,22 @@ extension $TransactionSplitExtension on TransactionSplit {
           foreignCurrencySymbol ?? this.foreignCurrencySymbol,
       foreignCurrencyDecimalPlaces:
           foreignCurrencyDecimalPlaces ?? this.foreignCurrencyDecimalPlaces,
+      primaryCurrencyId: primaryCurrencyId ?? this.primaryCurrencyId,
+      primaryCurrencyCode: primaryCurrencyCode ?? this.primaryCurrencyCode,
+      primaryCurrencySymbol:
+          primaryCurrencySymbol ?? this.primaryCurrencySymbol,
+      primaryCurrencyDecimalPlaces:
+          primaryCurrencyDecimalPlaces ?? this.primaryCurrencyDecimalPlaces,
       amount: amount ?? this.amount,
+      pcAmount: pcAmount ?? this.pcAmount,
       foreignAmount: foreignAmount ?? this.foreignAmount,
+      pcForeignAmount: pcForeignAmount ?? this.pcForeignAmount,
+      sourceBalanceAfter: sourceBalanceAfter ?? this.sourceBalanceAfter,
+      pcSourceBalanceAfter: pcSourceBalanceAfter ?? this.pcSourceBalanceAfter,
+      destinationBalanceAfter:
+          destinationBalanceAfter ?? this.destinationBalanceAfter,
+      pcDestinationBalanceAfter:
+          pcDestinationBalanceAfter ?? this.pcDestinationBalanceAfter,
       description: description ?? this.description,
       sourceId: sourceId ?? this.sourceId,
       sourceName: sourceName ?? this.sourceName,
@@ -12167,6 +13302,8 @@ extension $TransactionSplitExtension on TransactionSplit {
       categoryName: categoryName ?? this.categoryName,
       billId: billId ?? this.billId,
       billName: billName ?? this.billName,
+      subscriptionId: subscriptionId ?? this.subscriptionId,
+      subscriptionName: subscriptionName ?? this.subscriptionName,
       reconciled: reconciled ?? this.reconciled,
       notes: notes ?? this.notes,
       tags: tags ?? this.tags,
@@ -12177,7 +13314,6 @@ extension $TransactionSplitExtension on TransactionSplit {
       recurrenceId: recurrenceId ?? this.recurrenceId,
       recurrenceTotal: recurrenceTotal ?? this.recurrenceTotal,
       recurrenceCount: recurrenceCount ?? this.recurrenceCount,
-      bunqPaymentId: bunqPaymentId ?? this.bunqPaymentId,
       importHashV2: importHashV2 ?? this.importHashV2,
       sepaCc: sepaCc ?? this.sepaCc,
       sepaCtOp: sepaCtOp ?? this.sepaCtOp,
@@ -12206,6 +13342,7 @@ extension $TransactionSplitExtension on TransactionSplit {
     Wrapped<enums.TransactionTypeProperty>? type,
     Wrapped<DateTime>? date,
     Wrapped<int?>? order,
+    Wrapped<bool?>? objectHasCurrencySetting,
     Wrapped<String?>? currencyId,
     Wrapped<String?>? currencyCode,
     Wrapped<String?>? currencySymbol,
@@ -12215,8 +13352,18 @@ extension $TransactionSplitExtension on TransactionSplit {
     Wrapped<String?>? foreignCurrencyCode,
     Wrapped<String?>? foreignCurrencySymbol,
     Wrapped<int?>? foreignCurrencyDecimalPlaces,
+    Wrapped<String?>? primaryCurrencyId,
+    Wrapped<String?>? primaryCurrencyCode,
+    Wrapped<String?>? primaryCurrencySymbol,
+    Wrapped<int?>? primaryCurrencyDecimalPlaces,
     Wrapped<String>? amount,
+    Wrapped<String?>? pcAmount,
     Wrapped<String?>? foreignAmount,
+    Wrapped<String?>? pcForeignAmount,
+    Wrapped<String?>? sourceBalanceAfter,
+    Wrapped<String?>? pcSourceBalanceAfter,
+    Wrapped<String?>? destinationBalanceAfter,
+    Wrapped<String?>? pcDestinationBalanceAfter,
     Wrapped<String>? description,
     Wrapped<String?>? sourceId,
     Wrapped<String?>? sourceName,
@@ -12232,6 +13379,8 @@ extension $TransactionSplitExtension on TransactionSplit {
     Wrapped<String?>? categoryName,
     Wrapped<String?>? billId,
     Wrapped<String?>? billName,
+    Wrapped<String?>? subscriptionId,
+    Wrapped<String?>? subscriptionName,
     Wrapped<bool?>? reconciled,
     Wrapped<String?>? notes,
     Wrapped<List<String>?>? tags,
@@ -12242,7 +13391,6 @@ extension $TransactionSplitExtension on TransactionSplit {
     Wrapped<String?>? recurrenceId,
     Wrapped<int?>? recurrenceTotal,
     Wrapped<int?>? recurrenceCount,
-    Wrapped<String?>? bunqPaymentId,
     Wrapped<String?>? importHashV2,
     Wrapped<String?>? sepaCc,
     Wrapped<String?>? sepaCtOp,
@@ -12265,94 +13413,126 @@ extension $TransactionSplitExtension on TransactionSplit {
   }) {
     return TransactionSplit(
       user: (user != null ? user.value : this.user),
-      transactionJournalId:
-          (transactionJournalId != null
-              ? transactionJournalId.value
-              : this.transactionJournalId),
+      transactionJournalId: (transactionJournalId != null
+          ? transactionJournalId.value
+          : this.transactionJournalId),
       type: (type != null ? type.value : this.type),
       date: (date != null ? date.value : this.date),
       order: (order != null ? order.value : this.order),
+      objectHasCurrencySetting: (objectHasCurrencySetting != null
+          ? objectHasCurrencySetting.value
+          : this.objectHasCurrencySetting),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyName:
-          (currencyName != null ? currencyName.value : this.currencyName),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
-      foreignCurrencyId:
-          (foreignCurrencyId != null
-              ? foreignCurrencyId.value
-              : this.foreignCurrencyId),
-      foreignCurrencyCode:
-          (foreignCurrencyCode != null
-              ? foreignCurrencyCode.value
-              : this.foreignCurrencyCode),
-      foreignCurrencySymbol:
-          (foreignCurrencySymbol != null
-              ? foreignCurrencySymbol.value
-              : this.foreignCurrencySymbol),
-      foreignCurrencyDecimalPlaces:
-          (foreignCurrencyDecimalPlaces != null
-              ? foreignCurrencyDecimalPlaces.value
-              : this.foreignCurrencyDecimalPlaces),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyName: (currencyName != null
+          ? currencyName.value
+          : this.currencyName),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      foreignCurrencyId: (foreignCurrencyId != null
+          ? foreignCurrencyId.value
+          : this.foreignCurrencyId),
+      foreignCurrencyCode: (foreignCurrencyCode != null
+          ? foreignCurrencyCode.value
+          : this.foreignCurrencyCode),
+      foreignCurrencySymbol: (foreignCurrencySymbol != null
+          ? foreignCurrencySymbol.value
+          : this.foreignCurrencySymbol),
+      foreignCurrencyDecimalPlaces: (foreignCurrencyDecimalPlaces != null
+          ? foreignCurrencyDecimalPlaces.value
+          : this.foreignCurrencyDecimalPlaces),
+      primaryCurrencyId: (primaryCurrencyId != null
+          ? primaryCurrencyId.value
+          : this.primaryCurrencyId),
+      primaryCurrencyCode: (primaryCurrencyCode != null
+          ? primaryCurrencyCode.value
+          : this.primaryCurrencyCode),
+      primaryCurrencySymbol: (primaryCurrencySymbol != null
+          ? primaryCurrencySymbol.value
+          : this.primaryCurrencySymbol),
+      primaryCurrencyDecimalPlaces: (primaryCurrencyDecimalPlaces != null
+          ? primaryCurrencyDecimalPlaces.value
+          : this.primaryCurrencyDecimalPlaces),
       amount: (amount != null ? amount.value : this.amount),
-      foreignAmount:
-          (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
+      pcAmount: (pcAmount != null ? pcAmount.value : this.pcAmount),
+      foreignAmount: (foreignAmount != null
+          ? foreignAmount.value
+          : this.foreignAmount),
+      pcForeignAmount: (pcForeignAmount != null
+          ? pcForeignAmount.value
+          : this.pcForeignAmount),
+      sourceBalanceAfter: (sourceBalanceAfter != null
+          ? sourceBalanceAfter.value
+          : this.sourceBalanceAfter),
+      pcSourceBalanceAfter: (pcSourceBalanceAfter != null
+          ? pcSourceBalanceAfter.value
+          : this.pcSourceBalanceAfter),
+      destinationBalanceAfter: (destinationBalanceAfter != null
+          ? destinationBalanceAfter.value
+          : this.destinationBalanceAfter),
+      pcDestinationBalanceAfter: (pcDestinationBalanceAfter != null
+          ? pcDestinationBalanceAfter.value
+          : this.pcDestinationBalanceAfter),
       description: (description != null ? description.value : this.description),
       sourceId: (sourceId != null ? sourceId.value : this.sourceId),
       sourceName: (sourceName != null ? sourceName.value : this.sourceName),
       sourceIban: (sourceIban != null ? sourceIban.value : this.sourceIban),
       sourceType: (sourceType != null ? sourceType.value : this.sourceType),
-      destinationId:
-          (destinationId != null ? destinationId.value : this.destinationId),
-      destinationName:
-          (destinationName != null
-              ? destinationName.value
-              : this.destinationName),
-      destinationIban:
-          (destinationIban != null
-              ? destinationIban.value
-              : this.destinationIban),
-      destinationType:
-          (destinationType != null
-              ? destinationType.value
-              : this.destinationType),
+      destinationId: (destinationId != null
+          ? destinationId.value
+          : this.destinationId),
+      destinationName: (destinationName != null
+          ? destinationName.value
+          : this.destinationName),
+      destinationIban: (destinationIban != null
+          ? destinationIban.value
+          : this.destinationIban),
+      destinationType: (destinationType != null
+          ? destinationType.value
+          : this.destinationType),
       budgetId: (budgetId != null ? budgetId.value : this.budgetId),
       budgetName: (budgetName != null ? budgetName.value : this.budgetName),
       categoryId: (categoryId != null ? categoryId.value : this.categoryId),
-      categoryName:
-          (categoryName != null ? categoryName.value : this.categoryName),
+      categoryName: (categoryName != null
+          ? categoryName.value
+          : this.categoryName),
       billId: (billId != null ? billId.value : this.billId),
       billName: (billName != null ? billName.value : this.billName),
+      subscriptionId: (subscriptionId != null
+          ? subscriptionId.value
+          : this.subscriptionId),
+      subscriptionName: (subscriptionName != null
+          ? subscriptionName.value
+          : this.subscriptionName),
       reconciled: (reconciled != null ? reconciled.value : this.reconciled),
       notes: (notes != null ? notes.value : this.notes),
       tags: (tags != null ? tags.value : this.tags),
-      internalReference:
-          (internalReference != null
-              ? internalReference.value
-              : this.internalReference),
+      internalReference: (internalReference != null
+          ? internalReference.value
+          : this.internalReference),
       externalId: (externalId != null ? externalId.value : this.externalId),
       externalUrl: (externalUrl != null ? externalUrl.value : this.externalUrl),
-      originalSource:
-          (originalSource != null ? originalSource.value : this.originalSource),
-      recurrenceId:
-          (recurrenceId != null ? recurrenceId.value : this.recurrenceId),
-      recurrenceTotal:
-          (recurrenceTotal != null
-              ? recurrenceTotal.value
-              : this.recurrenceTotal),
-      recurrenceCount:
-          (recurrenceCount != null
-              ? recurrenceCount.value
-              : this.recurrenceCount),
-      bunqPaymentId:
-          (bunqPaymentId != null ? bunqPaymentId.value : this.bunqPaymentId),
-      importHashV2:
-          (importHashV2 != null ? importHashV2.value : this.importHashV2),
+      originalSource: (originalSource != null
+          ? originalSource.value
+          : this.originalSource),
+      recurrenceId: (recurrenceId != null
+          ? recurrenceId.value
+          : this.recurrenceId),
+      recurrenceTotal: (recurrenceTotal != null
+          ? recurrenceTotal.value
+          : this.recurrenceTotal),
+      recurrenceCount: (recurrenceCount != null
+          ? recurrenceCount.value
+          : this.recurrenceCount),
+      importHashV2: (importHashV2 != null
+          ? importHashV2.value
+          : this.importHashV2),
       sepaCc: (sepaCc != null ? sepaCc.value : this.sepaCc),
       sepaCtOp: (sepaCtOp != null ? sepaCtOp.value : this.sepaCtOp),
       sepaCtId: (sepaCtId != null ? sepaCtId.value : this.sepaCtId),
@@ -12361,8 +13541,9 @@ extension $TransactionSplitExtension on TransactionSplit {
       sepaEp: (sepaEp != null ? sepaEp.value : this.sepaEp),
       sepaCi: (sepaCi != null ? sepaCi.value : this.sepaCi),
       sepaBatchId: (sepaBatchId != null ? sepaBatchId.value : this.sepaBatchId),
-      interestDate:
-          (interestDate != null ? interestDate.value : this.interestDate),
+      interestDate: (interestDate != null
+          ? interestDate.value
+          : this.interestDate),
       bookDate: (bookDate != null ? bookDate.value : this.bookDate),
       processDate: (processDate != null ? processDate.value : this.processDate),
       dueDate: (dueDate != null ? dueDate.value : this.dueDate),
@@ -12371,8 +13552,9 @@ extension $TransactionSplitExtension on TransactionSplit {
       latitude: (latitude != null ? latitude.value : this.latitude),
       longitude: (longitude != null ? longitude.value : this.longitude),
       zoomLevel: (zoomLevel != null ? zoomLevel.value : this.zoomLevel),
-      hasAttachments:
-          (hasAttachments != null ? hasAttachments.value : this.hasAttachments),
+      hasAttachments: (hasAttachments != null
+          ? hasAttachments.value
+          : this.hasAttachments),
     );
   }
 }
@@ -12408,7 +13590,6 @@ class TransactionSplitStore {
     this.internalReference,
     this.externalId,
     this.externalUrl,
-    this.bunqPaymentId,
     this.sepaCc,
     this.sepaCtOp,
     this.sepaCtId,
@@ -12492,8 +13673,6 @@ class TransactionSplitStore {
   final String? externalId;
   @JsonKey(name: 'external_url', includeIfNull: false)
   final String? externalUrl;
-  @JsonKey(name: 'bunq_payment_id', includeIfNull: false)
-  final String? bunqPaymentId;
   @JsonKey(name: 'sepa_cc', includeIfNull: false)
   final String? sepaCc;
   @JsonKey(name: 'sepa_ct_op', includeIfNull: false)
@@ -12558,7 +13737,6 @@ extension $TransactionSplitStoreExtension on TransactionSplitStore {
     String? internalReference,
     String? externalId,
     String? externalUrl,
-    String? bunqPaymentId,
     String? sepaCc,
     String? sepaCtOp,
     String? sepaCtId,
@@ -12603,7 +13781,6 @@ extension $TransactionSplitStoreExtension on TransactionSplitStore {
       internalReference: internalReference ?? this.internalReference,
       externalId: externalId ?? this.externalId,
       externalUrl: externalUrl ?? this.externalUrl,
-      bunqPaymentId: bunqPaymentId ?? this.bunqPaymentId,
       sepaCc: sepaCc ?? this.sepaCc,
       sepaCtOp: sepaCtOp ?? this.sepaCtOp,
       sepaCtId: sepaCtId ?? this.sepaCtId,
@@ -12650,7 +13827,6 @@ extension $TransactionSplitStoreExtension on TransactionSplitStore {
     Wrapped<String?>? internalReference,
     Wrapped<String?>? externalId,
     Wrapped<String?>? externalUrl,
-    Wrapped<String?>? bunqPaymentId,
     Wrapped<String?>? sepaCc,
     Wrapped<String?>? sepaCtOp,
     Wrapped<String?>? sepaCtId,
@@ -12673,47 +13849,46 @@ extension $TransactionSplitStoreExtension on TransactionSplitStore {
       description: (description != null ? description.value : this.description),
       order: (order != null ? order.value : this.order),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      foreignAmount:
-          (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
-      foreignCurrencyId:
-          (foreignCurrencyId != null
-              ? foreignCurrencyId.value
-              : this.foreignCurrencyId),
-      foreignCurrencyCode:
-          (foreignCurrencyCode != null
-              ? foreignCurrencyCode.value
-              : this.foreignCurrencyCode),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      foreignAmount: (foreignAmount != null
+          ? foreignAmount.value
+          : this.foreignAmount),
+      foreignCurrencyId: (foreignCurrencyId != null
+          ? foreignCurrencyId.value
+          : this.foreignCurrencyId),
+      foreignCurrencyCode: (foreignCurrencyCode != null
+          ? foreignCurrencyCode.value
+          : this.foreignCurrencyCode),
       budgetId: (budgetId != null ? budgetId.value : this.budgetId),
       budgetName: (budgetName != null ? budgetName.value : this.budgetName),
       categoryId: (categoryId != null ? categoryId.value : this.categoryId),
-      categoryName:
-          (categoryName != null ? categoryName.value : this.categoryName),
+      categoryName: (categoryName != null
+          ? categoryName.value
+          : this.categoryName),
       sourceId: (sourceId != null ? sourceId.value : this.sourceId),
       sourceName: (sourceName != null ? sourceName.value : this.sourceName),
-      destinationId:
-          (destinationId != null ? destinationId.value : this.destinationId),
-      destinationName:
-          (destinationName != null
-              ? destinationName.value
-              : this.destinationName),
+      destinationId: (destinationId != null
+          ? destinationId.value
+          : this.destinationId),
+      destinationName: (destinationName != null
+          ? destinationName.value
+          : this.destinationName),
       reconciled: (reconciled != null ? reconciled.value : this.reconciled),
       piggyBankId: (piggyBankId != null ? piggyBankId.value : this.piggyBankId),
-      piggyBankName:
-          (piggyBankName != null ? piggyBankName.value : this.piggyBankName),
+      piggyBankName: (piggyBankName != null
+          ? piggyBankName.value
+          : this.piggyBankName),
       billId: (billId != null ? billId.value : this.billId),
       billName: (billName != null ? billName.value : this.billName),
       tags: (tags != null ? tags.value : this.tags),
       notes: (notes != null ? notes.value : this.notes),
-      internalReference:
-          (internalReference != null
-              ? internalReference.value
-              : this.internalReference),
+      internalReference: (internalReference != null
+          ? internalReference.value
+          : this.internalReference),
       externalId: (externalId != null ? externalId.value : this.externalId),
       externalUrl: (externalUrl != null ? externalUrl.value : this.externalUrl),
-      bunqPaymentId:
-          (bunqPaymentId != null ? bunqPaymentId.value : this.bunqPaymentId),
       sepaCc: (sepaCc != null ? sepaCc.value : this.sepaCc),
       sepaCtOp: (sepaCtOp != null ? sepaCtOp.value : this.sepaCtOp),
       sepaCtId: (sepaCtId != null ? sepaCtId.value : this.sepaCtId),
@@ -12722,8 +13897,9 @@ extension $TransactionSplitStoreExtension on TransactionSplitStore {
       sepaEp: (sepaEp != null ? sepaEp.value : this.sepaEp),
       sepaCi: (sepaCi != null ? sepaCi.value : this.sepaCi),
       sepaBatchId: (sepaBatchId != null ? sepaBatchId.value : this.sepaBatchId),
-      interestDate:
-          (interestDate != null ? interestDate.value : this.interestDate),
+      interestDate: (interestDate != null
+          ? interestDate.value
+          : this.interestDate),
       bookDate: (bookDate != null ? bookDate.value : this.bookDate),
       processDate: (processDate != null ? processDate.value : this.processDate),
       dueDate: (dueDate != null ? dueDate.value : this.dueDate),
@@ -12770,7 +13946,6 @@ class TransactionSplitUpdate {
     this.internalReference,
     this.externalId,
     this.externalUrl,
-    this.bunqPaymentId,
     this.sepaCc,
     this.sepaCtOp,
     this.sepaCtId,
@@ -12866,8 +14041,6 @@ class TransactionSplitUpdate {
   final String? externalId;
   @JsonKey(name: 'external_url', includeIfNull: false)
   final String? externalUrl;
-  @JsonKey(name: 'bunq_payment_id', includeIfNull: false)
-  final String? bunqPaymentId;
   @JsonKey(name: 'sepa_cc', includeIfNull: false)
   final String? sepaCc;
   @JsonKey(name: 'sepa_ct_op', includeIfNull: false)
@@ -12938,7 +14111,6 @@ extension $TransactionSplitUpdateExtension on TransactionSplitUpdate {
     String? internalReference,
     String? externalId,
     String? externalUrl,
-    String? bunqPaymentId,
     String? sepaCc,
     String? sepaCtOp,
     String? sepaCtId,
@@ -12992,7 +14164,6 @@ extension $TransactionSplitUpdateExtension on TransactionSplitUpdate {
       internalReference: internalReference ?? this.internalReference,
       externalId: externalId ?? this.externalId,
       externalUrl: externalUrl ?? this.externalUrl,
-      bunqPaymentId: bunqPaymentId ?? this.bunqPaymentId,
       sepaCc: sepaCc ?? this.sepaCc,
       sepaCtOp: sepaCtOp ?? this.sepaCtOp,
       sepaCtId: sepaCtId ?? this.sepaCtId,
@@ -13045,7 +14216,6 @@ extension $TransactionSplitUpdateExtension on TransactionSplitUpdate {
     Wrapped<String?>? internalReference,
     Wrapped<String?>? externalId,
     Wrapped<String?>? externalUrl,
-    Wrapped<String?>? bunqPaymentId,
     Wrapped<String?>? sepaCc,
     Wrapped<String?>? sepaCtOp,
     Wrapped<String?>? sepaCtId,
@@ -13062,75 +14232,70 @@ extension $TransactionSplitUpdateExtension on TransactionSplitUpdate {
     Wrapped<DateTime?>? invoiceDate,
   }) {
     return TransactionSplitUpdate(
-      transactionJournalId:
-          (transactionJournalId != null
-              ? transactionJournalId.value
-              : this.transactionJournalId),
+      transactionJournalId: (transactionJournalId != null
+          ? transactionJournalId.value
+          : this.transactionJournalId),
       type: (type != null ? type.value : this.type),
       date: (date != null ? date.value : this.date),
       amount: (amount != null ? amount.value : this.amount),
       description: (description != null ? description.value : this.description),
       order: (order != null ? order.value : this.order),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyName:
-          (currencyName != null ? currencyName.value : this.currencyName),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
-      foreignAmount:
-          (foreignAmount != null ? foreignAmount.value : this.foreignAmount),
-      foreignCurrencyId:
-          (foreignCurrencyId != null
-              ? foreignCurrencyId.value
-              : this.foreignCurrencyId),
-      foreignCurrencyCode:
-          (foreignCurrencyCode != null
-              ? foreignCurrencyCode.value
-              : this.foreignCurrencyCode),
-      foreignCurrencySymbol:
-          (foreignCurrencySymbol != null
-              ? foreignCurrencySymbol.value
-              : this.foreignCurrencySymbol),
-      foreignCurrencyDecimalPlaces:
-          (foreignCurrencyDecimalPlaces != null
-              ? foreignCurrencyDecimalPlaces.value
-              : this.foreignCurrencyDecimalPlaces),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyName: (currencyName != null
+          ? currencyName.value
+          : this.currencyName),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      foreignAmount: (foreignAmount != null
+          ? foreignAmount.value
+          : this.foreignAmount),
+      foreignCurrencyId: (foreignCurrencyId != null
+          ? foreignCurrencyId.value
+          : this.foreignCurrencyId),
+      foreignCurrencyCode: (foreignCurrencyCode != null
+          ? foreignCurrencyCode.value
+          : this.foreignCurrencyCode),
+      foreignCurrencySymbol: (foreignCurrencySymbol != null
+          ? foreignCurrencySymbol.value
+          : this.foreignCurrencySymbol),
+      foreignCurrencyDecimalPlaces: (foreignCurrencyDecimalPlaces != null
+          ? foreignCurrencyDecimalPlaces.value
+          : this.foreignCurrencyDecimalPlaces),
       budgetId: (budgetId != null ? budgetId.value : this.budgetId),
       budgetName: (budgetName != null ? budgetName.value : this.budgetName),
       categoryId: (categoryId != null ? categoryId.value : this.categoryId),
-      categoryName:
-          (categoryName != null ? categoryName.value : this.categoryName),
+      categoryName: (categoryName != null
+          ? categoryName.value
+          : this.categoryName),
       sourceId: (sourceId != null ? sourceId.value : this.sourceId),
       sourceName: (sourceName != null ? sourceName.value : this.sourceName),
       sourceIban: (sourceIban != null ? sourceIban.value : this.sourceIban),
-      destinationId:
-          (destinationId != null ? destinationId.value : this.destinationId),
-      destinationName:
-          (destinationName != null
-              ? destinationName.value
-              : this.destinationName),
-      destinationIban:
-          (destinationIban != null
-              ? destinationIban.value
-              : this.destinationIban),
+      destinationId: (destinationId != null
+          ? destinationId.value
+          : this.destinationId),
+      destinationName: (destinationName != null
+          ? destinationName.value
+          : this.destinationName),
+      destinationIban: (destinationIban != null
+          ? destinationIban.value
+          : this.destinationIban),
       reconciled: (reconciled != null ? reconciled.value : this.reconciled),
       billId: (billId != null ? billId.value : this.billId),
       billName: (billName != null ? billName.value : this.billName),
       tags: (tags != null ? tags.value : this.tags),
       notes: (notes != null ? notes.value : this.notes),
-      internalReference:
-          (internalReference != null
-              ? internalReference.value
-              : this.internalReference),
+      internalReference: (internalReference != null
+          ? internalReference.value
+          : this.internalReference),
       externalId: (externalId != null ? externalId.value : this.externalId),
       externalUrl: (externalUrl != null ? externalUrl.value : this.externalUrl),
-      bunqPaymentId:
-          (bunqPaymentId != null ? bunqPaymentId.value : this.bunqPaymentId),
       sepaCc: (sepaCc != null ? sepaCc.value : this.sepaCc),
       sepaCtOp: (sepaCtOp != null ? sepaCtOp.value : this.sepaCtOp),
       sepaCtId: (sepaCtId != null ? sepaCtId.value : this.sepaCtId),
@@ -13139,8 +14304,9 @@ extension $TransactionSplitUpdateExtension on TransactionSplitUpdate {
       sepaEp: (sepaEp != null ? sepaEp.value : this.sepaEp),
       sepaCi: (sepaCi != null ? sepaCi.value : this.sepaCi),
       sepaBatchId: (sepaBatchId != null ? sepaBatchId.value : this.sepaBatchId),
-      interestDate:
-          (interestDate != null ? interestDate.value : this.interestDate),
+      interestDate: (interestDate != null
+          ? interestDate.value
+          : this.interestDate),
       bookDate: (bookDate != null ? bookDate.value : this.bookDate),
       processDate: (processDate != null ? processDate.value : this.processDate),
       dueDate: (dueDate != null ? dueDate.value : this.dueDate),
@@ -13299,10 +14465,10 @@ class UserGroupReadAttributes {
     this.inUse,
     this.canSeeMembers,
     this.title,
-    this.nativeCurrencyId,
-    this.nativeCurrencyCode,
-    this.nativeCurrencySymbol,
-    this.nativeCurrencyDecimalPlaces,
+    this.primaryCurrencyId,
+    this.primaryCurrencyCode,
+    this.primaryCurrencySymbol,
+    this.primaryCurrencyDecimalPlaces,
     this.members,
   });
 
@@ -13322,14 +14488,14 @@ class UserGroupReadAttributes {
   final bool? canSeeMembers;
   @JsonKey(name: 'title', includeIfNull: false)
   final String? title;
-  @JsonKey(name: 'native_currency_id', includeIfNull: false)
-  final String? nativeCurrencyId;
-  @JsonKey(name: 'native_currency_code', includeIfNull: false)
-  final String? nativeCurrencyCode;
-  @JsonKey(name: 'native_currency_symbol', includeIfNull: false)
-  final String? nativeCurrencySymbol;
-  @JsonKey(name: 'native_currency_decimal_places', includeIfNull: false)
-  final int? nativeCurrencyDecimalPlaces;
+  @JsonKey(name: 'primary_currency_id', includeIfNull: false)
+  final String? primaryCurrencyId;
+  @JsonKey(name: 'primary_currency_code', includeIfNull: false)
+  final String? primaryCurrencyCode;
+  @JsonKey(name: 'primary_currency_symbol', includeIfNull: false)
+  final String? primaryCurrencySymbol;
+  @JsonKey(name: 'primary_currency_decimal_places', includeIfNull: false)
+  final int? primaryCurrencyDecimalPlaces;
   @JsonKey(
     name: 'members',
     includeIfNull: false,
@@ -13349,10 +14515,10 @@ extension $UserGroupReadAttributesExtension on UserGroupReadAttributes {
     bool? inUse,
     bool? canSeeMembers,
     String? title,
-    String? nativeCurrencyId,
-    String? nativeCurrencyCode,
-    String? nativeCurrencySymbol,
-    int? nativeCurrencyDecimalPlaces,
+    String? primaryCurrencyId,
+    String? primaryCurrencyCode,
+    String? primaryCurrencySymbol,
+    int? primaryCurrencyDecimalPlaces,
     List<UserGroupReadMembers>? members,
   }) {
     return UserGroupReadAttributes(
@@ -13361,11 +14527,12 @@ extension $UserGroupReadAttributesExtension on UserGroupReadAttributes {
       inUse: inUse ?? this.inUse,
       canSeeMembers: canSeeMembers ?? this.canSeeMembers,
       title: title ?? this.title,
-      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
-      nativeCurrencySymbol: nativeCurrencySymbol ?? this.nativeCurrencySymbol,
-      nativeCurrencyDecimalPlaces:
-          nativeCurrencyDecimalPlaces ?? this.nativeCurrencyDecimalPlaces,
+      primaryCurrencyId: primaryCurrencyId ?? this.primaryCurrencyId,
+      primaryCurrencyCode: primaryCurrencyCode ?? this.primaryCurrencyCode,
+      primaryCurrencySymbol:
+          primaryCurrencySymbol ?? this.primaryCurrencySymbol,
+      primaryCurrencyDecimalPlaces:
+          primaryCurrencyDecimalPlaces ?? this.primaryCurrencyDecimalPlaces,
       members: members ?? this.members,
     );
   }
@@ -13376,35 +14543,32 @@ extension $UserGroupReadAttributesExtension on UserGroupReadAttributes {
     Wrapped<bool?>? inUse,
     Wrapped<bool?>? canSeeMembers,
     Wrapped<String?>? title,
-    Wrapped<String?>? nativeCurrencyId,
-    Wrapped<String?>? nativeCurrencyCode,
-    Wrapped<String?>? nativeCurrencySymbol,
-    Wrapped<int?>? nativeCurrencyDecimalPlaces,
+    Wrapped<String?>? primaryCurrencyId,
+    Wrapped<String?>? primaryCurrencyCode,
+    Wrapped<String?>? primaryCurrencySymbol,
+    Wrapped<int?>? primaryCurrencyDecimalPlaces,
     Wrapped<List<UserGroupReadMembers>?>? members,
   }) {
     return UserGroupReadAttributes(
       createdAt: (createdAt != null ? createdAt.value : this.createdAt),
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
       inUse: (inUse != null ? inUse.value : this.inUse),
-      canSeeMembers:
-          (canSeeMembers != null ? canSeeMembers.value : this.canSeeMembers),
+      canSeeMembers: (canSeeMembers != null
+          ? canSeeMembers.value
+          : this.canSeeMembers),
       title: (title != null ? title.value : this.title),
-      nativeCurrencyId:
-          (nativeCurrencyId != null
-              ? nativeCurrencyId.value
-              : this.nativeCurrencyId),
-      nativeCurrencyCode:
-          (nativeCurrencyCode != null
-              ? nativeCurrencyCode.value
-              : this.nativeCurrencyCode),
-      nativeCurrencySymbol:
-          (nativeCurrencySymbol != null
-              ? nativeCurrencySymbol.value
-              : this.nativeCurrencySymbol),
-      nativeCurrencyDecimalPlaces:
-          (nativeCurrencyDecimalPlaces != null
-              ? nativeCurrencyDecimalPlaces.value
-              : this.nativeCurrencyDecimalPlaces),
+      primaryCurrencyId: (primaryCurrencyId != null
+          ? primaryCurrencyId.value
+          : this.primaryCurrencyId),
+      primaryCurrencyCode: (primaryCurrencyCode != null
+          ? primaryCurrencyCode.value
+          : this.primaryCurrencyCode),
+      primaryCurrencySymbol: (primaryCurrencySymbol != null
+          ? primaryCurrencySymbol.value
+          : this.primaryCurrencySymbol),
+      primaryCurrencyDecimalPlaces: (primaryCurrencyDecimalPlaces != null
+          ? primaryCurrencyDecimalPlaces.value
+          : this.primaryCurrencyDecimalPlaces),
       members: (members != null ? members.value : this.members),
     );
   }
@@ -13506,8 +14670,8 @@ extension $UserGroupSingleExtension on UserGroupSingle {
 class UserGroupUpdate {
   const UserGroupUpdate({
     required this.title,
-    this.nativeCurrencyId,
-    this.nativeCurrencyCode,
+    this.primaryCurrencyId,
+    this.primaryCurrencyCode,
   });
 
   factory UserGroupUpdate.fromJson(Map<String, dynamic> json) =>
@@ -13518,10 +14682,10 @@ class UserGroupUpdate {
 
   @JsonKey(name: 'title', includeIfNull: false)
   final String title;
-  @JsonKey(name: 'native_currency_id', includeIfNull: false)
-  final String? nativeCurrencyId;
-  @JsonKey(name: 'native_currency_code', includeIfNull: false)
-  final String? nativeCurrencyCode;
+  @JsonKey(name: 'primary_currency_id', includeIfNull: false)
+  final String? primaryCurrencyId;
+  @JsonKey(name: 'primary_currency_code', includeIfNull: false)
+  final String? primaryCurrencyCode;
   static const fromJsonFactory = _$UserGroupUpdateFromJson;
 
   @override
@@ -13531,54 +14695,54 @@ class UserGroupUpdate {
 extension $UserGroupUpdateExtension on UserGroupUpdate {
   UserGroupUpdate copyWith({
     String? title,
-    String? nativeCurrencyId,
-    String? nativeCurrencyCode,
+    String? primaryCurrencyId,
+    String? primaryCurrencyCode,
   }) {
     return UserGroupUpdate(
       title: title ?? this.title,
-      nativeCurrencyId: nativeCurrencyId ?? this.nativeCurrencyId,
-      nativeCurrencyCode: nativeCurrencyCode ?? this.nativeCurrencyCode,
+      primaryCurrencyId: primaryCurrencyId ?? this.primaryCurrencyId,
+      primaryCurrencyCode: primaryCurrencyCode ?? this.primaryCurrencyCode,
     );
   }
 
   UserGroupUpdate copyWithWrapped({
     Wrapped<String>? title,
-    Wrapped<String?>? nativeCurrencyId,
-    Wrapped<String?>? nativeCurrencyCode,
+    Wrapped<String?>? primaryCurrencyId,
+    Wrapped<String?>? primaryCurrencyCode,
   }) {
     return UserGroupUpdate(
       title: (title != null ? title.value : this.title),
-      nativeCurrencyId:
-          (nativeCurrencyId != null
-              ? nativeCurrencyId.value
-              : this.nativeCurrencyId),
-      nativeCurrencyCode:
-          (nativeCurrencyCode != null
-              ? nativeCurrencyCode.value
-              : this.nativeCurrencyCode),
+      primaryCurrencyId: (primaryCurrencyId != null
+          ? primaryCurrencyId.value
+          : this.primaryCurrencyId),
+      primaryCurrencyCode: (primaryCurrencyCode != null
+          ? primaryCurrencyCode.value
+          : this.primaryCurrencyCode),
     );
   }
 }
 
+typedef WebhookDeliveryArray = List<String>;
+
 @JsonSerializable(explicitToJson: true)
-class Webhook {
-  const Webhook({
+class WebhookProperties {
+  const WebhookProperties({
     this.createdAt,
     this.updatedAt,
     this.active,
     required this.title,
     this.secret,
-    required this.trigger,
-    required this.response,
-    required this.delivery,
+    this.triggers,
+    this.responses,
+    this.deliveries,
     required this.url,
   });
 
-  factory Webhook.fromJson(Map<String, dynamic> json) =>
-      _$WebhookFromJson(json);
+  factory WebhookProperties.fromJson(Map<String, dynamic> json) =>
+      _$WebhookPropertiesFromJson(json);
 
-  static const toJsonFactory = _$WebhookToJson;
-  Map<String, dynamic> toJson() => _$WebhookToJson(this);
+  static const toJsonFactory = _$WebhookPropertiesToJson;
+  Map<String, dynamic> toJson() => _$WebhookPropertiesToJson(this);
 
   @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
@@ -13590,93 +14754,80 @@ class Webhook {
   final String title;
   @JsonKey(name: 'secret', includeIfNull: false)
   final String? secret;
-  @JsonKey(
-    name: 'trigger',
-    includeIfNull: false,
-    toJson: webhookTriggerToJson,
-    fromJson: webhookTriggerFromJson,
-  )
-  final enums.WebhookTrigger trigger;
-  @JsonKey(
-    name: 'response',
-    includeIfNull: false,
-    toJson: webhookResponseToJson,
-    fromJson: webhookResponseFromJson,
-  )
-  final enums.WebhookResponse response;
-  @JsonKey(
-    name: 'delivery',
-    includeIfNull: false,
-    toJson: webhookDeliveryToJson,
-    fromJson: webhookDeliveryFromJson,
-  )
-  final enums.WebhookDelivery delivery;
+  @JsonKey(name: 'triggers', includeIfNull: false)
+  final List<String>? triggers;
+  @JsonKey(name: 'responses', includeIfNull: false)
+  final List<String>? responses;
+  @JsonKey(name: 'deliveries', includeIfNull: false)
+  final List<String>? deliveries;
   @JsonKey(name: 'url', includeIfNull: false)
   final String url;
-  static const fromJsonFactory = _$WebhookFromJson;
+  static const fromJsonFactory = _$WebhookPropertiesFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $WebhookExtension on Webhook {
-  Webhook copyWith({
+extension $WebhookPropertiesExtension on WebhookProperties {
+  WebhookProperties copyWith({
     DateTime? createdAt,
     DateTime? updatedAt,
     bool? active,
     String? title,
     String? secret,
-    enums.WebhookTrigger? trigger,
-    enums.WebhookResponse? response,
-    enums.WebhookDelivery? delivery,
+    List<String>? triggers,
+    List<String>? responses,
+    List<String>? deliveries,
     String? url,
   }) {
-    return Webhook(
+    return WebhookProperties(
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       active: active ?? this.active,
       title: title ?? this.title,
       secret: secret ?? this.secret,
-      trigger: trigger ?? this.trigger,
-      response: response ?? this.response,
-      delivery: delivery ?? this.delivery,
+      triggers: triggers ?? this.triggers,
+      responses: responses ?? this.responses,
+      deliveries: deliveries ?? this.deliveries,
       url: url ?? this.url,
     );
   }
 
-  Webhook copyWithWrapped({
+  WebhookProperties copyWithWrapped({
     Wrapped<DateTime?>? createdAt,
     Wrapped<DateTime?>? updatedAt,
     Wrapped<bool?>? active,
     Wrapped<String>? title,
     Wrapped<String?>? secret,
-    Wrapped<enums.WebhookTrigger>? trigger,
-    Wrapped<enums.WebhookResponse>? response,
-    Wrapped<enums.WebhookDelivery>? delivery,
+    Wrapped<List<String>?>? triggers,
+    Wrapped<List<String>?>? responses,
+    Wrapped<List<String>?>? deliveries,
     Wrapped<String>? url,
   }) {
-    return Webhook(
+    return WebhookProperties(
       createdAt: (createdAt != null ? createdAt.value : this.createdAt),
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
       active: (active != null ? active.value : this.active),
       title: (title != null ? title.value : this.title),
       secret: (secret != null ? secret.value : this.secret),
-      trigger: (trigger != null ? trigger.value : this.trigger),
-      response: (response != null ? response.value : this.response),
-      delivery: (delivery != null ? delivery.value : this.delivery),
+      triggers: (triggers != null ? triggers.value : this.triggers),
+      responses: (responses != null ? responses.value : this.responses),
+      deliveries: (deliveries != null ? deliveries.value : this.deliveries),
       url: (url != null ? url.value : this.url),
     );
   }
 }
+
+typedef WebhookResponseArray = List<String>;
 
 @JsonSerializable(explicitToJson: true)
 class WebhookStore {
   const WebhookStore({
     this.active,
     required this.title,
-    required this.trigger,
-    required this.response,
-    required this.delivery,
+    this.triggers,
+    this.responses,
+    this.deliveries,
     required this.url,
   });
 
@@ -13690,27 +14841,12 @@ class WebhookStore {
   final bool? active;
   @JsonKey(name: 'title', includeIfNull: false)
   final String title;
-  @JsonKey(
-    name: 'trigger',
-    includeIfNull: false,
-    toJson: webhookTriggerToJson,
-    fromJson: webhookTriggerFromJson,
-  )
-  final enums.WebhookTrigger trigger;
-  @JsonKey(
-    name: 'response',
-    includeIfNull: false,
-    toJson: webhookResponseToJson,
-    fromJson: webhookResponseFromJson,
-  )
-  final enums.WebhookResponse response;
-  @JsonKey(
-    name: 'delivery',
-    includeIfNull: false,
-    toJson: webhookDeliveryToJson,
-    fromJson: webhookDeliveryFromJson,
-  )
-  final enums.WebhookDelivery delivery;
+  @JsonKey(name: 'triggers', includeIfNull: false)
+  final List<String>? triggers;
+  @JsonKey(name: 'responses', includeIfNull: false)
+  final List<String>? responses;
+  @JsonKey(name: 'deliveries', includeIfNull: false)
+  final List<String>? deliveries;
   @JsonKey(name: 'url', includeIfNull: false)
   final String url;
   static const fromJsonFactory = _$WebhookStoreFromJson;
@@ -13723,17 +14859,17 @@ extension $WebhookStoreExtension on WebhookStore {
   WebhookStore copyWith({
     bool? active,
     String? title,
-    enums.WebhookTrigger? trigger,
-    enums.WebhookResponse? response,
-    enums.WebhookDelivery? delivery,
+    List<String>? triggers,
+    List<String>? responses,
+    List<String>? deliveries,
     String? url,
   }) {
     return WebhookStore(
       active: active ?? this.active,
       title: title ?? this.title,
-      trigger: trigger ?? this.trigger,
-      response: response ?? this.response,
-      delivery: delivery ?? this.delivery,
+      triggers: triggers ?? this.triggers,
+      responses: responses ?? this.responses,
+      deliveries: deliveries ?? this.deliveries,
       url: url ?? this.url,
     );
   }
@@ -13741,21 +14877,23 @@ extension $WebhookStoreExtension on WebhookStore {
   WebhookStore copyWithWrapped({
     Wrapped<bool?>? active,
     Wrapped<String>? title,
-    Wrapped<enums.WebhookTrigger>? trigger,
-    Wrapped<enums.WebhookResponse>? response,
-    Wrapped<enums.WebhookDelivery>? delivery,
+    Wrapped<List<String>?>? triggers,
+    Wrapped<List<String>?>? responses,
+    Wrapped<List<String>?>? deliveries,
     Wrapped<String>? url,
   }) {
     return WebhookStore(
       active: (active != null ? active.value : this.active),
       title: (title != null ? title.value : this.title),
-      trigger: (trigger != null ? trigger.value : this.trigger),
-      response: (response != null ? response.value : this.response),
-      delivery: (delivery != null ? delivery.value : this.delivery),
+      triggers: (triggers != null ? triggers.value : this.triggers),
+      responses: (responses != null ? responses.value : this.responses),
+      deliveries: (deliveries != null ? deliveries.value : this.deliveries),
       url: (url != null ? url.value : this.url),
     );
   }
 }
+
+typedef WebhookTriggerArray = List<String>;
 
 @JsonSerializable(explicitToJson: true)
 class WebhookUpdate {
@@ -13763,9 +14901,9 @@ class WebhookUpdate {
     this.active,
     this.title,
     this.secret,
-    this.trigger,
-    this.response,
-    this.delivery,
+    this.triggers,
+    this.responses,
+    this.deliveries,
     this.url,
   });
 
@@ -13781,27 +14919,12 @@ class WebhookUpdate {
   final String? title;
   @JsonKey(name: 'secret', includeIfNull: false)
   final String? secret;
-  @JsonKey(
-    name: 'trigger',
-    includeIfNull: false,
-    toJson: webhookTriggerNullableToJson,
-    fromJson: webhookTriggerNullableFromJson,
-  )
-  final enums.WebhookTrigger? trigger;
-  @JsonKey(
-    name: 'response',
-    includeIfNull: false,
-    toJson: webhookResponseNullableToJson,
-    fromJson: webhookResponseNullableFromJson,
-  )
-  final enums.WebhookResponse? response;
-  @JsonKey(
-    name: 'delivery',
-    includeIfNull: false,
-    toJson: webhookDeliveryNullableToJson,
-    fromJson: webhookDeliveryNullableFromJson,
-  )
-  final enums.WebhookDelivery? delivery;
+  @JsonKey(name: 'triggers', includeIfNull: false)
+  final List<String>? triggers;
+  @JsonKey(name: 'responses', includeIfNull: false)
+  final List<String>? responses;
+  @JsonKey(name: 'deliveries', includeIfNull: false)
+  final List<String>? deliveries;
   @JsonKey(name: 'url', includeIfNull: false)
   final String? url;
   static const fromJsonFactory = _$WebhookUpdateFromJson;
@@ -13815,18 +14938,18 @@ extension $WebhookUpdateExtension on WebhookUpdate {
     bool? active,
     String? title,
     String? secret,
-    enums.WebhookTrigger? trigger,
-    enums.WebhookResponse? response,
-    enums.WebhookDelivery? delivery,
+    List<String>? triggers,
+    List<String>? responses,
+    List<String>? deliveries,
     String? url,
   }) {
     return WebhookUpdate(
       active: active ?? this.active,
       title: title ?? this.title,
       secret: secret ?? this.secret,
-      trigger: trigger ?? this.trigger,
-      response: response ?? this.response,
-      delivery: delivery ?? this.delivery,
+      triggers: triggers ?? this.triggers,
+      responses: responses ?? this.responses,
+      deliveries: deliveries ?? this.deliveries,
       url: url ?? this.url,
     );
   }
@@ -13835,18 +14958,18 @@ extension $WebhookUpdateExtension on WebhookUpdate {
     Wrapped<bool?>? active,
     Wrapped<String?>? title,
     Wrapped<String?>? secret,
-    Wrapped<enums.WebhookTrigger?>? trigger,
-    Wrapped<enums.WebhookResponse?>? response,
-    Wrapped<enums.WebhookDelivery?>? delivery,
+    Wrapped<List<String>?>? triggers,
+    Wrapped<List<String>?>? responses,
+    Wrapped<List<String>?>? deliveries,
     Wrapped<String?>? url,
   }) {
     return WebhookUpdate(
       active: (active != null ? active.value : this.active),
       title: (title != null ? title.value : this.title),
       secret: (secret != null ? secret.value : this.secret),
-      trigger: (trigger != null ? trigger.value : this.trigger),
-      response: (response != null ? response.value : this.response),
-      delivery: (delivery != null ? delivery.value : this.delivery),
+      triggers: (triggers != null ? triggers.value : this.triggers),
+      responses: (responses != null ? responses.value : this.responses),
+      deliveries: (deliveries != null ? deliveries.value : this.deliveries),
       url: (url != null ? url.value : this.url),
     );
   }
@@ -13917,10 +15040,9 @@ extension $WebhookAttemptExtension on WebhookAttempt {
     return WebhookAttempt(
       createdAt: (createdAt != null ? createdAt.value : this.createdAt),
       updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-      webhookMessageId:
-          (webhookMessageId != null
-              ? webhookMessageId.value
-              : this.webhookMessageId),
+      webhookMessageId: (webhookMessageId != null
+          ? webhookMessageId.value
+          : this.webhookMessageId),
       statusCode: (statusCode != null ? statusCode.value : this.statusCode),
       logs: (logs != null ? logs.value : this.logs),
       response: (response != null ? response.value : this.response),
@@ -14050,6 +15172,7 @@ class BasicSummaryEntry {
     this.currencyCode,
     this.currencySymbol,
     this.currencyDecimalPlaces,
+    this.noAvailableBudgets,
     this.valueParsed,
     this.localIcon,
     this.subTitle,
@@ -14075,6 +15198,8 @@ class BasicSummaryEntry {
   final String? currencySymbol;
   @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
   final int? currencyDecimalPlaces;
+  @JsonKey(name: 'no_available_budgets', includeIfNull: false)
+  final bool? noAvailableBudgets;
   @JsonKey(name: 'value_parsed', includeIfNull: false)
   final String? valueParsed;
   @JsonKey(name: 'local_icon', includeIfNull: false)
@@ -14096,6 +15221,7 @@ extension $BasicSummaryEntryExtension on BasicSummaryEntry {
     String? currencyCode,
     String? currencySymbol,
     int? currencyDecimalPlaces,
+    bool? noAvailableBudgets,
     String? valueParsed,
     String? localIcon,
     String? subTitle,
@@ -14109,6 +15235,7 @@ extension $BasicSummaryEntryExtension on BasicSummaryEntry {
       currencySymbol: currencySymbol ?? this.currencySymbol,
       currencyDecimalPlaces:
           currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      noAvailableBudgets: noAvailableBudgets ?? this.noAvailableBudgets,
       valueParsed: valueParsed ?? this.valueParsed,
       localIcon: localIcon ?? this.localIcon,
       subTitle: subTitle ?? this.subTitle,
@@ -14123,6 +15250,7 @@ extension $BasicSummaryEntryExtension on BasicSummaryEntry {
     Wrapped<String?>? currencyCode,
     Wrapped<String?>? currencySymbol,
     Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<bool?>? noAvailableBudgets,
     Wrapped<String?>? valueParsed,
     Wrapped<String?>? localIcon,
     Wrapped<String?>? subTitle,
@@ -14130,17 +15258,22 @@ extension $BasicSummaryEntryExtension on BasicSummaryEntry {
     return BasicSummaryEntry(
       key: (key != null ? key.value : this.key),
       title: (title != null ? title.value : this.title),
-      monetaryValue:
-          (monetaryValue != null ? monetaryValue.value : this.monetaryValue),
+      monetaryValue: (monetaryValue != null
+          ? monetaryValue.value
+          : this.monetaryValue),
       currencyId: (currencyId != null ? currencyId.value : this.currencyId),
-      currencyCode:
-          (currencyCode != null ? currencyCode.value : this.currencyCode),
-      currencySymbol:
-          (currencySymbol != null ? currencySymbol.value : this.currencySymbol),
-      currencyDecimalPlaces:
-          (currencyDecimalPlaces != null
-              ? currencyDecimalPlaces.value
-              : this.currencyDecimalPlaces),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      noAvailableBudgets: (noAvailableBudgets != null
+          ? noAvailableBudgets.value
+          : this.noAvailableBudgets),
       valueParsed: (valueParsed != null ? valueParsed.value : this.valueParsed),
       localIcon: (localIcon != null ? localIcon.value : this.localIcon),
       subTitle: (subTitle != null ? subTitle.value : this.subTitle),
@@ -14281,10 +15414,9 @@ extension $CronResultExtension on CronResult {
     Wrapped<CronResultRow?>? telemetry,
   }) {
     return CronResult(
-      recurringTransactions:
-          (recurringTransactions != null
-              ? recurringTransactions.value
-              : this.recurringTransactions),
+      recurringTransactions: (recurringTransactions != null
+          ? recurringTransactions.value
+          : this.recurringTransactions),
       autoBudgets: (autoBudgets != null ? autoBudgets.value : this.autoBudgets),
       telemetry: (telemetry != null ? telemetry.value : this.telemetry),
     );
@@ -14343,8 +15475,9 @@ extension $CronResultRowExtension on CronResultRow {
   }) {
     return CronResultRow(
       jobFired: (jobFired != null ? jobFired.value : this.jobFired),
-      jobSucceeded:
-          (jobSucceeded != null ? jobSucceeded.value : this.jobSucceeded),
+      jobSucceeded: (jobSucceeded != null
+          ? jobSucceeded.value
+          : this.jobSucceeded),
       jobErrored: (jobErrored != null ? jobErrored.value : this.jobErrored),
       message: (message != null ? message.value : this.message),
     );
@@ -14635,18 +15768,33 @@ extension $ValidationErrorResponseExtension on ValidationErrorResponse {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Bill$PaidDates$Item {
-  const Bill$PaidDates$Item({
+class BillProperties$PaidDates$Item {
+  const BillProperties$PaidDates$Item({
     this.transactionGroupId,
     this.transactionJournalId,
     this.date,
+    this.subscriptionId,
+    this.currencyId,
+    this.currencyName,
+    this.currencyCode,
+    this.currencySymbol,
+    this.currencyDecimalPlaces,
+    this.primaryCurrencyId,
+    this.primaryCurrencyName,
+    this.primaryCurrencyCode,
+    this.primaryCurrencySymbol,
+    this.primaryCurrencyDecimalPlaces,
+    this.amount,
+    this.pcAmount,
+    this.foreignAmount,
+    this.pcForeignAmount,
   });
 
-  factory Bill$PaidDates$Item.fromJson(Map<String, dynamic> json) =>
-      _$Bill$PaidDates$ItemFromJson(json);
+  factory BillProperties$PaidDates$Item.fromJson(Map<String, dynamic> json) =>
+      _$BillProperties$PaidDates$ItemFromJson(json);
 
-  static const toJsonFactory = _$Bill$PaidDates$ItemToJson;
-  Map<String, dynamic> toJson() => _$Bill$PaidDates$ItemToJson(this);
+  static const toJsonFactory = _$BillProperties$PaidDates$ItemToJson;
+  Map<String, dynamic> toJson() => _$BillProperties$PaidDates$ItemToJson(this);
 
   @JsonKey(name: 'transaction_group_id', includeIfNull: false)
   final String? transactionGroupId;
@@ -14654,40 +15802,156 @@ class Bill$PaidDates$Item {
   final String? transactionJournalId;
   @JsonKey(name: 'date', includeIfNull: false)
   final DateTime? date;
-  static const fromJsonFactory = _$Bill$PaidDates$ItemFromJson;
+  @JsonKey(name: 'subscription_id', includeIfNull: false)
+  final String? subscriptionId;
+  @JsonKey(name: 'currency_id', includeIfNull: false)
+  final String? currencyId;
+  @JsonKey(name: 'currency_name', includeIfNull: false)
+  final String? currencyName;
+  @JsonKey(name: 'currency_code', includeIfNull: false)
+  final String? currencyCode;
+  @JsonKey(name: 'currency_symbol', includeIfNull: false)
+  final String? currencySymbol;
+  @JsonKey(name: 'currency_decimal_places', includeIfNull: false)
+  final int? currencyDecimalPlaces;
+  @JsonKey(name: 'primary_currency_id', includeIfNull: false)
+  final String? primaryCurrencyId;
+  @JsonKey(name: 'primary_currency_name', includeIfNull: false)
+  final String? primaryCurrencyName;
+  @JsonKey(name: 'primary_currency_code', includeIfNull: false)
+  final String? primaryCurrencyCode;
+  @JsonKey(name: 'primary_currency_symbol', includeIfNull: false)
+  final String? primaryCurrencySymbol;
+  @JsonKey(name: 'primary_currency_decimal_places', includeIfNull: false)
+  final int? primaryCurrencyDecimalPlaces;
+  @JsonKey(name: 'amount', includeIfNull: false)
+  final String? amount;
+  @JsonKey(name: 'pc_amount', includeIfNull: false)
+  final String? pcAmount;
+  @JsonKey(name: 'foreign_amount', includeIfNull: false)
+  final String? foreignAmount;
+  @JsonKey(name: 'pc_foreign_amount', includeIfNull: false)
+  final String? pcForeignAmount;
+  static const fromJsonFactory = _$BillProperties$PaidDates$ItemFromJson;
 
   @override
   String toString() => jsonEncode(this);
 }
 
-extension $Bill$PaidDates$ItemExtension on Bill$PaidDates$Item {
-  Bill$PaidDates$Item copyWith({
+extension $BillProperties$PaidDates$ItemExtension
+    on BillProperties$PaidDates$Item {
+  BillProperties$PaidDates$Item copyWith({
     String? transactionGroupId,
     String? transactionJournalId,
     DateTime? date,
+    String? subscriptionId,
+    String? currencyId,
+    String? currencyName,
+    String? currencyCode,
+    String? currencySymbol,
+    int? currencyDecimalPlaces,
+    String? primaryCurrencyId,
+    String? primaryCurrencyName,
+    String? primaryCurrencyCode,
+    String? primaryCurrencySymbol,
+    int? primaryCurrencyDecimalPlaces,
+    String? amount,
+    String? pcAmount,
+    String? foreignAmount,
+    String? pcForeignAmount,
   }) {
-    return Bill$PaidDates$Item(
+    return BillProperties$PaidDates$Item(
       transactionGroupId: transactionGroupId ?? this.transactionGroupId,
       transactionJournalId: transactionJournalId ?? this.transactionJournalId,
       date: date ?? this.date,
+      subscriptionId: subscriptionId ?? this.subscriptionId,
+      currencyId: currencyId ?? this.currencyId,
+      currencyName: currencyName ?? this.currencyName,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      currencyDecimalPlaces:
+          currencyDecimalPlaces ?? this.currencyDecimalPlaces,
+      primaryCurrencyId: primaryCurrencyId ?? this.primaryCurrencyId,
+      primaryCurrencyName: primaryCurrencyName ?? this.primaryCurrencyName,
+      primaryCurrencyCode: primaryCurrencyCode ?? this.primaryCurrencyCode,
+      primaryCurrencySymbol:
+          primaryCurrencySymbol ?? this.primaryCurrencySymbol,
+      primaryCurrencyDecimalPlaces:
+          primaryCurrencyDecimalPlaces ?? this.primaryCurrencyDecimalPlaces,
+      amount: amount ?? this.amount,
+      pcAmount: pcAmount ?? this.pcAmount,
+      foreignAmount: foreignAmount ?? this.foreignAmount,
+      pcForeignAmount: pcForeignAmount ?? this.pcForeignAmount,
     );
   }
 
-  Bill$PaidDates$Item copyWithWrapped({
+  BillProperties$PaidDates$Item copyWithWrapped({
     Wrapped<String?>? transactionGroupId,
     Wrapped<String?>? transactionJournalId,
     Wrapped<DateTime?>? date,
+    Wrapped<String?>? subscriptionId,
+    Wrapped<String?>? currencyId,
+    Wrapped<String?>? currencyName,
+    Wrapped<String?>? currencyCode,
+    Wrapped<String?>? currencySymbol,
+    Wrapped<int?>? currencyDecimalPlaces,
+    Wrapped<String?>? primaryCurrencyId,
+    Wrapped<String?>? primaryCurrencyName,
+    Wrapped<String?>? primaryCurrencyCode,
+    Wrapped<String?>? primaryCurrencySymbol,
+    Wrapped<int?>? primaryCurrencyDecimalPlaces,
+    Wrapped<String?>? amount,
+    Wrapped<String?>? pcAmount,
+    Wrapped<String?>? foreignAmount,
+    Wrapped<String?>? pcForeignAmount,
   }) {
-    return Bill$PaidDates$Item(
-      transactionGroupId:
-          (transactionGroupId != null
-              ? transactionGroupId.value
-              : this.transactionGroupId),
-      transactionJournalId:
-          (transactionJournalId != null
-              ? transactionJournalId.value
-              : this.transactionJournalId),
+    return BillProperties$PaidDates$Item(
+      transactionGroupId: (transactionGroupId != null
+          ? transactionGroupId.value
+          : this.transactionGroupId),
+      transactionJournalId: (transactionJournalId != null
+          ? transactionJournalId.value
+          : this.transactionJournalId),
       date: (date != null ? date.value : this.date),
+      subscriptionId: (subscriptionId != null
+          ? subscriptionId.value
+          : this.subscriptionId),
+      currencyId: (currencyId != null ? currencyId.value : this.currencyId),
+      currencyName: (currencyName != null
+          ? currencyName.value
+          : this.currencyName),
+      currencyCode: (currencyCode != null
+          ? currencyCode.value
+          : this.currencyCode),
+      currencySymbol: (currencySymbol != null
+          ? currencySymbol.value
+          : this.currencySymbol),
+      currencyDecimalPlaces: (currencyDecimalPlaces != null
+          ? currencyDecimalPlaces.value
+          : this.currencyDecimalPlaces),
+      primaryCurrencyId: (primaryCurrencyId != null
+          ? primaryCurrencyId.value
+          : this.primaryCurrencyId),
+      primaryCurrencyName: (primaryCurrencyName != null
+          ? primaryCurrencyName.value
+          : this.primaryCurrencyName),
+      primaryCurrencyCode: (primaryCurrencyCode != null
+          ? primaryCurrencyCode.value
+          : this.primaryCurrencyCode),
+      primaryCurrencySymbol: (primaryCurrencySymbol != null
+          ? primaryCurrencySymbol.value
+          : this.primaryCurrencySymbol),
+      primaryCurrencyDecimalPlaces: (primaryCurrencyDecimalPlaces != null
+          ? primaryCurrencyDecimalPlaces.value
+          : this.primaryCurrencyDecimalPlaces),
+      amount: (amount != null ? amount.value : this.amount),
+      pcAmount: (pcAmount != null ? pcAmount.value : this.pcAmount),
+      foreignAmount: (foreignAmount != null
+          ? foreignAmount.value
+          : this.foreignAmount),
+      pcForeignAmount: (pcForeignAmount != null
+          ? pcForeignAmount.value
+          : this.pcForeignAmount),
     );
   }
 }
@@ -15326,81 +16590,81 @@ List<enums.ExportFileFilter>? exportFileFilterNullableListFromJson(
       .toList();
 }
 
-String? currencyUpdateDefaultNullableToJson(
-  enums.CurrencyUpdateDefault? currencyUpdateDefault,
+String? currencyUpdatePrimaryNullableToJson(
+  enums.CurrencyUpdatePrimary? currencyUpdatePrimary,
 ) {
-  return currencyUpdateDefault?.value;
+  return currencyUpdatePrimary?.value;
 }
 
-String? currencyUpdateDefaultToJson(
-  enums.CurrencyUpdateDefault currencyUpdateDefault,
+String? currencyUpdatePrimaryToJson(
+  enums.CurrencyUpdatePrimary currencyUpdatePrimary,
 ) {
-  return currencyUpdateDefault.value;
+  return currencyUpdatePrimary.value;
 }
 
-enums.CurrencyUpdateDefault currencyUpdateDefaultFromJson(
-  Object? currencyUpdateDefault, [
-  enums.CurrencyUpdateDefault? defaultValue,
+enums.CurrencyUpdatePrimary currencyUpdatePrimaryFromJson(
+  Object? currencyUpdatePrimary, [
+  enums.CurrencyUpdatePrimary? defaultValue,
 ]) {
-  return enums.CurrencyUpdateDefault.values.firstWhereOrNull(
-        (e) => e.value == currencyUpdateDefault,
+  return enums.CurrencyUpdatePrimary.values.firstWhereOrNull(
+        (e) => e.value == currencyUpdatePrimary,
       ) ??
       defaultValue ??
-      enums.CurrencyUpdateDefault.swaggerGeneratedUnknown;
+      enums.CurrencyUpdatePrimary.swaggerGeneratedUnknown;
 }
 
-enums.CurrencyUpdateDefault? currencyUpdateDefaultNullableFromJson(
-  Object? currencyUpdateDefault, [
-  enums.CurrencyUpdateDefault? defaultValue,
+enums.CurrencyUpdatePrimary? currencyUpdatePrimaryNullableFromJson(
+  Object? currencyUpdatePrimary, [
+  enums.CurrencyUpdatePrimary? defaultValue,
 ]) {
-  if (currencyUpdateDefault == null) {
+  if (currencyUpdatePrimary == null) {
     return null;
   }
-  return enums.CurrencyUpdateDefault.values.firstWhereOrNull(
-        (e) => e.value == currencyUpdateDefault,
+  return enums.CurrencyUpdatePrimary.values.firstWhereOrNull(
+        (e) => e.value == currencyUpdatePrimary,
       ) ??
       defaultValue;
 }
 
-String currencyUpdateDefaultExplodedListToJson(
-  List<enums.CurrencyUpdateDefault>? currencyUpdateDefault,
+String currencyUpdatePrimaryExplodedListToJson(
+  List<enums.CurrencyUpdatePrimary>? currencyUpdatePrimary,
 ) {
-  return currencyUpdateDefault?.map((e) => e.value!).join(',') ?? '';
+  return currencyUpdatePrimary?.map((e) => e.value!).join(',') ?? '';
 }
 
-List<String> currencyUpdateDefaultListToJson(
-  List<enums.CurrencyUpdateDefault>? currencyUpdateDefault,
+List<String> currencyUpdatePrimaryListToJson(
+  List<enums.CurrencyUpdatePrimary>? currencyUpdatePrimary,
 ) {
-  if (currencyUpdateDefault == null) {
+  if (currencyUpdatePrimary == null) {
     return [];
   }
 
-  return currencyUpdateDefault.map((e) => e.value!).toList();
+  return currencyUpdatePrimary.map((e) => e.value!).toList();
 }
 
-List<enums.CurrencyUpdateDefault> currencyUpdateDefaultListFromJson(
-  List? currencyUpdateDefault, [
-  List<enums.CurrencyUpdateDefault>? defaultValue,
+List<enums.CurrencyUpdatePrimary> currencyUpdatePrimaryListFromJson(
+  List? currencyUpdatePrimary, [
+  List<enums.CurrencyUpdatePrimary>? defaultValue,
 ]) {
-  if (currencyUpdateDefault == null) {
+  if (currencyUpdatePrimary == null) {
     return defaultValue ?? [];
   }
 
-  return currencyUpdateDefault
-      .map((e) => currencyUpdateDefaultFromJson(e.toString()))
+  return currencyUpdatePrimary
+      .map((e) => currencyUpdatePrimaryFromJson(e.toString()))
       .toList();
 }
 
-List<enums.CurrencyUpdateDefault>? currencyUpdateDefaultNullableListFromJson(
-  List? currencyUpdateDefault, [
-  List<enums.CurrencyUpdateDefault>? defaultValue,
+List<enums.CurrencyUpdatePrimary>? currencyUpdatePrimaryNullableListFromJson(
+  List? currencyUpdatePrimary, [
+  List<enums.CurrencyUpdatePrimary>? defaultValue,
 ]) {
-  if (currencyUpdateDefault == null) {
+  if (currencyUpdatePrimary == null) {
     return defaultValue;
   }
 
-  return currencyUpdateDefault
-      .map((e) => currencyUpdateDefaultFromJson(e.toString()))
+  return currencyUpdatePrimary
+      .map((e) => currencyUpdatePrimaryFromJson(e.toString()))
       .toList();
 }
 
@@ -15477,6 +16741,228 @@ List<enums.UserGroupReadRole>? userGroupReadRoleNullableListFromJson(
 
   return userGroupReadRole
       .map((e) => userGroupReadRoleFromJson(e.toString()))
+      .toList();
+}
+
+String? webhookDeliveryNullableToJson(enums.WebhookDelivery? webhookDelivery) {
+  return webhookDelivery?.value;
+}
+
+String? webhookDeliveryToJson(enums.WebhookDelivery webhookDelivery) {
+  return webhookDelivery.value;
+}
+
+enums.WebhookDelivery webhookDeliveryFromJson(
+  Object? webhookDelivery, [
+  enums.WebhookDelivery? defaultValue,
+]) {
+  return enums.WebhookDelivery.values.firstWhereOrNull(
+        (e) => e.value == webhookDelivery,
+      ) ??
+      defaultValue ??
+      enums.WebhookDelivery.swaggerGeneratedUnknown;
+}
+
+enums.WebhookDelivery? webhookDeliveryNullableFromJson(
+  Object? webhookDelivery, [
+  enums.WebhookDelivery? defaultValue,
+]) {
+  if (webhookDelivery == null) {
+    return null;
+  }
+  return enums.WebhookDelivery.values.firstWhereOrNull(
+        (e) => e.value == webhookDelivery,
+      ) ??
+      defaultValue;
+}
+
+String webhookDeliveryExplodedListToJson(
+  List<enums.WebhookDelivery>? webhookDelivery,
+) {
+  return webhookDelivery?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> webhookDeliveryListToJson(
+  List<enums.WebhookDelivery>? webhookDelivery,
+) {
+  if (webhookDelivery == null) {
+    return [];
+  }
+
+  return webhookDelivery.map((e) => e.value!).toList();
+}
+
+List<enums.WebhookDelivery> webhookDeliveryListFromJson(
+  List? webhookDelivery, [
+  List<enums.WebhookDelivery>? defaultValue,
+]) {
+  if (webhookDelivery == null) {
+    return defaultValue ?? [];
+  }
+
+  return webhookDelivery
+      .map((e) => webhookDeliveryFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.WebhookDelivery>? webhookDeliveryNullableListFromJson(
+  List? webhookDelivery, [
+  List<enums.WebhookDelivery>? defaultValue,
+]) {
+  if (webhookDelivery == null) {
+    return defaultValue;
+  }
+
+  return webhookDelivery
+      .map((e) => webhookDeliveryFromJson(e.toString()))
+      .toList();
+}
+
+String? webhookResponseNullableToJson(enums.WebhookResponse? webhookResponse) {
+  return webhookResponse?.value;
+}
+
+String? webhookResponseToJson(enums.WebhookResponse webhookResponse) {
+  return webhookResponse.value;
+}
+
+enums.WebhookResponse webhookResponseFromJson(
+  Object? webhookResponse, [
+  enums.WebhookResponse? defaultValue,
+]) {
+  return enums.WebhookResponse.values.firstWhereOrNull(
+        (e) => e.value == webhookResponse,
+      ) ??
+      defaultValue ??
+      enums.WebhookResponse.swaggerGeneratedUnknown;
+}
+
+enums.WebhookResponse? webhookResponseNullableFromJson(
+  Object? webhookResponse, [
+  enums.WebhookResponse? defaultValue,
+]) {
+  if (webhookResponse == null) {
+    return null;
+  }
+  return enums.WebhookResponse.values.firstWhereOrNull(
+        (e) => e.value == webhookResponse,
+      ) ??
+      defaultValue;
+}
+
+String webhookResponseExplodedListToJson(
+  List<enums.WebhookResponse>? webhookResponse,
+) {
+  return webhookResponse?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> webhookResponseListToJson(
+  List<enums.WebhookResponse>? webhookResponse,
+) {
+  if (webhookResponse == null) {
+    return [];
+  }
+
+  return webhookResponse.map((e) => e.value!).toList();
+}
+
+List<enums.WebhookResponse> webhookResponseListFromJson(
+  List? webhookResponse, [
+  List<enums.WebhookResponse>? defaultValue,
+]) {
+  if (webhookResponse == null) {
+    return defaultValue ?? [];
+  }
+
+  return webhookResponse
+      .map((e) => webhookResponseFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.WebhookResponse>? webhookResponseNullableListFromJson(
+  List? webhookResponse, [
+  List<enums.WebhookResponse>? defaultValue,
+]) {
+  if (webhookResponse == null) {
+    return defaultValue;
+  }
+
+  return webhookResponse
+      .map((e) => webhookResponseFromJson(e.toString()))
+      .toList();
+}
+
+String? webhookTriggerNullableToJson(enums.WebhookTrigger? webhookTrigger) {
+  return webhookTrigger?.value;
+}
+
+String? webhookTriggerToJson(enums.WebhookTrigger webhookTrigger) {
+  return webhookTrigger.value;
+}
+
+enums.WebhookTrigger webhookTriggerFromJson(
+  Object? webhookTrigger, [
+  enums.WebhookTrigger? defaultValue,
+]) {
+  return enums.WebhookTrigger.values.firstWhereOrNull(
+        (e) => e.value == webhookTrigger,
+      ) ??
+      defaultValue ??
+      enums.WebhookTrigger.swaggerGeneratedUnknown;
+}
+
+enums.WebhookTrigger? webhookTriggerNullableFromJson(
+  Object? webhookTrigger, [
+  enums.WebhookTrigger? defaultValue,
+]) {
+  if (webhookTrigger == null) {
+    return null;
+  }
+  return enums.WebhookTrigger.values.firstWhereOrNull(
+        (e) => e.value == webhookTrigger,
+      ) ??
+      defaultValue;
+}
+
+String webhookTriggerExplodedListToJson(
+  List<enums.WebhookTrigger>? webhookTrigger,
+) {
+  return webhookTrigger?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> webhookTriggerListToJson(
+  List<enums.WebhookTrigger>? webhookTrigger,
+) {
+  if (webhookTrigger == null) {
+    return [];
+  }
+
+  return webhookTrigger.map((e) => e.value!).toList();
+}
+
+List<enums.WebhookTrigger> webhookTriggerListFromJson(
+  List? webhookTrigger, [
+  List<enums.WebhookTrigger>? defaultValue,
+]) {
+  if (webhookTrigger == null) {
+    return defaultValue ?? [];
+  }
+
+  return webhookTrigger
+      .map((e) => webhookTriggerFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.WebhookTrigger>? webhookTriggerNullableListFromJson(
+  List? webhookTrigger, [
+  List<enums.WebhookTrigger>? defaultValue,
+]) {
+  if (webhookTrigger == null) {
+    return defaultValue;
+  }
+
+  return webhookTrigger
+      .map((e) => webhookTriggerFromJson(e.toString()))
       .toList();
 }
 
@@ -16321,228 +17807,6 @@ List<enums.UserRoleProperty>? userRolePropertyNullableListFromJson(
       .toList();
 }
 
-String? webhookDeliveryNullableToJson(enums.WebhookDelivery? webhookDelivery) {
-  return webhookDelivery?.value;
-}
-
-String? webhookDeliveryToJson(enums.WebhookDelivery webhookDelivery) {
-  return webhookDelivery.value;
-}
-
-enums.WebhookDelivery webhookDeliveryFromJson(
-  Object? webhookDelivery, [
-  enums.WebhookDelivery? defaultValue,
-]) {
-  return enums.WebhookDelivery.values.firstWhereOrNull(
-        (e) => e.value == webhookDelivery,
-      ) ??
-      defaultValue ??
-      enums.WebhookDelivery.swaggerGeneratedUnknown;
-}
-
-enums.WebhookDelivery? webhookDeliveryNullableFromJson(
-  Object? webhookDelivery, [
-  enums.WebhookDelivery? defaultValue,
-]) {
-  if (webhookDelivery == null) {
-    return null;
-  }
-  return enums.WebhookDelivery.values.firstWhereOrNull(
-        (e) => e.value == webhookDelivery,
-      ) ??
-      defaultValue;
-}
-
-String webhookDeliveryExplodedListToJson(
-  List<enums.WebhookDelivery>? webhookDelivery,
-) {
-  return webhookDelivery?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> webhookDeliveryListToJson(
-  List<enums.WebhookDelivery>? webhookDelivery,
-) {
-  if (webhookDelivery == null) {
-    return [];
-  }
-
-  return webhookDelivery.map((e) => e.value!).toList();
-}
-
-List<enums.WebhookDelivery> webhookDeliveryListFromJson(
-  List? webhookDelivery, [
-  List<enums.WebhookDelivery>? defaultValue,
-]) {
-  if (webhookDelivery == null) {
-    return defaultValue ?? [];
-  }
-
-  return webhookDelivery
-      .map((e) => webhookDeliveryFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.WebhookDelivery>? webhookDeliveryNullableListFromJson(
-  List? webhookDelivery, [
-  List<enums.WebhookDelivery>? defaultValue,
-]) {
-  if (webhookDelivery == null) {
-    return defaultValue;
-  }
-
-  return webhookDelivery
-      .map((e) => webhookDeliveryFromJson(e.toString()))
-      .toList();
-}
-
-String? webhookResponseNullableToJson(enums.WebhookResponse? webhookResponse) {
-  return webhookResponse?.value;
-}
-
-String? webhookResponseToJson(enums.WebhookResponse webhookResponse) {
-  return webhookResponse.value;
-}
-
-enums.WebhookResponse webhookResponseFromJson(
-  Object? webhookResponse, [
-  enums.WebhookResponse? defaultValue,
-]) {
-  return enums.WebhookResponse.values.firstWhereOrNull(
-        (e) => e.value == webhookResponse,
-      ) ??
-      defaultValue ??
-      enums.WebhookResponse.swaggerGeneratedUnknown;
-}
-
-enums.WebhookResponse? webhookResponseNullableFromJson(
-  Object? webhookResponse, [
-  enums.WebhookResponse? defaultValue,
-]) {
-  if (webhookResponse == null) {
-    return null;
-  }
-  return enums.WebhookResponse.values.firstWhereOrNull(
-        (e) => e.value == webhookResponse,
-      ) ??
-      defaultValue;
-}
-
-String webhookResponseExplodedListToJson(
-  List<enums.WebhookResponse>? webhookResponse,
-) {
-  return webhookResponse?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> webhookResponseListToJson(
-  List<enums.WebhookResponse>? webhookResponse,
-) {
-  if (webhookResponse == null) {
-    return [];
-  }
-
-  return webhookResponse.map((e) => e.value!).toList();
-}
-
-List<enums.WebhookResponse> webhookResponseListFromJson(
-  List? webhookResponse, [
-  List<enums.WebhookResponse>? defaultValue,
-]) {
-  if (webhookResponse == null) {
-    return defaultValue ?? [];
-  }
-
-  return webhookResponse
-      .map((e) => webhookResponseFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.WebhookResponse>? webhookResponseNullableListFromJson(
-  List? webhookResponse, [
-  List<enums.WebhookResponse>? defaultValue,
-]) {
-  if (webhookResponse == null) {
-    return defaultValue;
-  }
-
-  return webhookResponse
-      .map((e) => webhookResponseFromJson(e.toString()))
-      .toList();
-}
-
-String? webhookTriggerNullableToJson(enums.WebhookTrigger? webhookTrigger) {
-  return webhookTrigger?.value;
-}
-
-String? webhookTriggerToJson(enums.WebhookTrigger webhookTrigger) {
-  return webhookTrigger.value;
-}
-
-enums.WebhookTrigger webhookTriggerFromJson(
-  Object? webhookTrigger, [
-  enums.WebhookTrigger? defaultValue,
-]) {
-  return enums.WebhookTrigger.values.firstWhereOrNull(
-        (e) => e.value == webhookTrigger,
-      ) ??
-      defaultValue ??
-      enums.WebhookTrigger.swaggerGeneratedUnknown;
-}
-
-enums.WebhookTrigger? webhookTriggerNullableFromJson(
-  Object? webhookTrigger, [
-  enums.WebhookTrigger? defaultValue,
-]) {
-  if (webhookTrigger == null) {
-    return null;
-  }
-  return enums.WebhookTrigger.values.firstWhereOrNull(
-        (e) => e.value == webhookTrigger,
-      ) ??
-      defaultValue;
-}
-
-String webhookTriggerExplodedListToJson(
-  List<enums.WebhookTrigger>? webhookTrigger,
-) {
-  return webhookTrigger?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> webhookTriggerListToJson(
-  List<enums.WebhookTrigger>? webhookTrigger,
-) {
-  if (webhookTrigger == null) {
-    return [];
-  }
-
-  return webhookTrigger.map((e) => e.value!).toList();
-}
-
-List<enums.WebhookTrigger> webhookTriggerListFromJson(
-  List? webhookTrigger, [
-  List<enums.WebhookTrigger>? defaultValue,
-]) {
-  if (webhookTrigger == null) {
-    return defaultValue ?? [];
-  }
-
-  return webhookTrigger
-      .map((e) => webhookTriggerFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.WebhookTrigger>? webhookTriggerNullableListFromJson(
-  List? webhookTrigger, [
-  List<enums.WebhookTrigger>? defaultValue,
-]) {
-  if (webhookTrigger == null) {
-    return defaultValue;
-  }
-
-  return webhookTrigger
-      .map((e) => webhookTriggerFromJson(e.toString()))
-      .toList();
-}
-
 String? accountTypeFilterNullableToJson(
   enums.AccountTypeFilter? accountTypeFilter,
 ) {
@@ -16850,6 +18114,85 @@ List<enums.AccountTypeProperty>? accountTypePropertyNullableListFromJson(
 
   return accountTypeProperty
       .map((e) => accountTypePropertyFromJson(e.toString()))
+      .toList();
+}
+
+String? chartDatasetPeriodPropertyNullableToJson(
+  enums.ChartDatasetPeriodProperty? chartDatasetPeriodProperty,
+) {
+  return chartDatasetPeriodProperty?.value;
+}
+
+String? chartDatasetPeriodPropertyToJson(
+  enums.ChartDatasetPeriodProperty chartDatasetPeriodProperty,
+) {
+  return chartDatasetPeriodProperty.value;
+}
+
+enums.ChartDatasetPeriodProperty chartDatasetPeriodPropertyFromJson(
+  Object? chartDatasetPeriodProperty, [
+  enums.ChartDatasetPeriodProperty? defaultValue,
+]) {
+  return enums.ChartDatasetPeriodProperty.values.firstWhereOrNull(
+        (e) => e.value == chartDatasetPeriodProperty,
+      ) ??
+      defaultValue ??
+      enums.ChartDatasetPeriodProperty.swaggerGeneratedUnknown;
+}
+
+enums.ChartDatasetPeriodProperty? chartDatasetPeriodPropertyNullableFromJson(
+  Object? chartDatasetPeriodProperty, [
+  enums.ChartDatasetPeriodProperty? defaultValue,
+]) {
+  if (chartDatasetPeriodProperty == null) {
+    return null;
+  }
+  return enums.ChartDatasetPeriodProperty.values.firstWhereOrNull(
+        (e) => e.value == chartDatasetPeriodProperty,
+      ) ??
+      defaultValue;
+}
+
+String chartDatasetPeriodPropertyExplodedListToJson(
+  List<enums.ChartDatasetPeriodProperty>? chartDatasetPeriodProperty,
+) {
+  return chartDatasetPeriodProperty?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> chartDatasetPeriodPropertyListToJson(
+  List<enums.ChartDatasetPeriodProperty>? chartDatasetPeriodProperty,
+) {
+  if (chartDatasetPeriodProperty == null) {
+    return [];
+  }
+
+  return chartDatasetPeriodProperty.map((e) => e.value!).toList();
+}
+
+List<enums.ChartDatasetPeriodProperty> chartDatasetPeriodPropertyListFromJson(
+  List? chartDatasetPeriodProperty, [
+  List<enums.ChartDatasetPeriodProperty>? defaultValue,
+]) {
+  if (chartDatasetPeriodProperty == null) {
+    return defaultValue ?? [];
+  }
+
+  return chartDatasetPeriodProperty
+      .map((e) => chartDatasetPeriodPropertyFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.ChartDatasetPeriodProperty>?
+chartDatasetPeriodPropertyNullableListFromJson(
+  List? chartDatasetPeriodProperty, [
+  List<enums.ChartDatasetPeriodProperty>? defaultValue,
+]) {
+  if (chartDatasetPeriodProperty == null) {
+    return defaultValue;
+  }
+
+  return chartDatasetPeriodProperty
+      .map((e) => chartDatasetPeriodPropertyFromJson(e.toString()))
       .toList();
 }
 
@@ -17321,6 +18664,341 @@ transactionTypePropertyNullableListFromJson(
 
   return transactionTypeProperty
       .map((e) => transactionTypePropertyFromJson(e.toString()))
+      .toList();
+}
+
+String? v1ChartAccountOverviewGetPeriodNullableToJson(
+  enums.V1ChartAccountOverviewGetPeriod? v1ChartAccountOverviewGetPeriod,
+) {
+  return v1ChartAccountOverviewGetPeriod?.value;
+}
+
+String? v1ChartAccountOverviewGetPeriodToJson(
+  enums.V1ChartAccountOverviewGetPeriod v1ChartAccountOverviewGetPeriod,
+) {
+  return v1ChartAccountOverviewGetPeriod.value;
+}
+
+enums.V1ChartAccountOverviewGetPeriod v1ChartAccountOverviewGetPeriodFromJson(
+  Object? v1ChartAccountOverviewGetPeriod, [
+  enums.V1ChartAccountOverviewGetPeriod? defaultValue,
+]) {
+  return enums.V1ChartAccountOverviewGetPeriod.values.firstWhereOrNull(
+        (e) => e.value == v1ChartAccountOverviewGetPeriod,
+      ) ??
+      defaultValue ??
+      enums.V1ChartAccountOverviewGetPeriod.swaggerGeneratedUnknown;
+}
+
+enums.V1ChartAccountOverviewGetPeriod?
+v1ChartAccountOverviewGetPeriodNullableFromJson(
+  Object? v1ChartAccountOverviewGetPeriod, [
+  enums.V1ChartAccountOverviewGetPeriod? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPeriod == null) {
+    return null;
+  }
+  return enums.V1ChartAccountOverviewGetPeriod.values.firstWhereOrNull(
+        (e) => e.value == v1ChartAccountOverviewGetPeriod,
+      ) ??
+      defaultValue;
+}
+
+String v1ChartAccountOverviewGetPeriodExplodedListToJson(
+  List<enums.V1ChartAccountOverviewGetPeriod>? v1ChartAccountOverviewGetPeriod,
+) {
+  return v1ChartAccountOverviewGetPeriod?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> v1ChartAccountOverviewGetPeriodListToJson(
+  List<enums.V1ChartAccountOverviewGetPeriod>? v1ChartAccountOverviewGetPeriod,
+) {
+  if (v1ChartAccountOverviewGetPeriod == null) {
+    return [];
+  }
+
+  return v1ChartAccountOverviewGetPeriod.map((e) => e.value!).toList();
+}
+
+List<enums.V1ChartAccountOverviewGetPeriod>
+v1ChartAccountOverviewGetPeriodListFromJson(
+  List? v1ChartAccountOverviewGetPeriod, [
+  List<enums.V1ChartAccountOverviewGetPeriod>? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPeriod == null) {
+    return defaultValue ?? [];
+  }
+
+  return v1ChartAccountOverviewGetPeriod
+      .map((e) => v1ChartAccountOverviewGetPeriodFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.V1ChartAccountOverviewGetPeriod>?
+v1ChartAccountOverviewGetPeriodNullableListFromJson(
+  List? v1ChartAccountOverviewGetPeriod, [
+  List<enums.V1ChartAccountOverviewGetPeriod>? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPeriod == null) {
+    return defaultValue;
+  }
+
+  return v1ChartAccountOverviewGetPeriod
+      .map((e) => v1ChartAccountOverviewGetPeriodFromJson(e.toString()))
+      .toList();
+}
+
+String? v1ChartAccountOverviewGetPreselectedNullableToJson(
+  enums.V1ChartAccountOverviewGetPreselected?
+  v1ChartAccountOverviewGetPreselected,
+) {
+  return v1ChartAccountOverviewGetPreselected?.value;
+}
+
+String? v1ChartAccountOverviewGetPreselectedToJson(
+  enums.V1ChartAccountOverviewGetPreselected
+  v1ChartAccountOverviewGetPreselected,
+) {
+  return v1ChartAccountOverviewGetPreselected.value;
+}
+
+enums.V1ChartAccountOverviewGetPreselected
+v1ChartAccountOverviewGetPreselectedFromJson(
+  Object? v1ChartAccountOverviewGetPreselected, [
+  enums.V1ChartAccountOverviewGetPreselected? defaultValue,
+]) {
+  return enums.V1ChartAccountOverviewGetPreselected.values.firstWhereOrNull(
+        (e) => e.value == v1ChartAccountOverviewGetPreselected,
+      ) ??
+      defaultValue ??
+      enums.V1ChartAccountOverviewGetPreselected.swaggerGeneratedUnknown;
+}
+
+enums.V1ChartAccountOverviewGetPreselected?
+v1ChartAccountOverviewGetPreselectedNullableFromJson(
+  Object? v1ChartAccountOverviewGetPreselected, [
+  enums.V1ChartAccountOverviewGetPreselected? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPreselected == null) {
+    return null;
+  }
+  return enums.V1ChartAccountOverviewGetPreselected.values.firstWhereOrNull(
+        (e) => e.value == v1ChartAccountOverviewGetPreselected,
+      ) ??
+      defaultValue;
+}
+
+String v1ChartAccountOverviewGetPreselectedExplodedListToJson(
+  List<enums.V1ChartAccountOverviewGetPreselected>?
+  v1ChartAccountOverviewGetPreselected,
+) {
+  return v1ChartAccountOverviewGetPreselected?.map((e) => e.value!).join(',') ??
+      '';
+}
+
+List<String> v1ChartAccountOverviewGetPreselectedListToJson(
+  List<enums.V1ChartAccountOverviewGetPreselected>?
+  v1ChartAccountOverviewGetPreselected,
+) {
+  if (v1ChartAccountOverviewGetPreselected == null) {
+    return [];
+  }
+
+  return v1ChartAccountOverviewGetPreselected.map((e) => e.value!).toList();
+}
+
+List<enums.V1ChartAccountOverviewGetPreselected>
+v1ChartAccountOverviewGetPreselectedListFromJson(
+  List? v1ChartAccountOverviewGetPreselected, [
+  List<enums.V1ChartAccountOverviewGetPreselected>? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPreselected == null) {
+    return defaultValue ?? [];
+  }
+
+  return v1ChartAccountOverviewGetPreselected
+      .map((e) => v1ChartAccountOverviewGetPreselectedFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.V1ChartAccountOverviewGetPreselected>?
+v1ChartAccountOverviewGetPreselectedNullableListFromJson(
+  List? v1ChartAccountOverviewGetPreselected, [
+  List<enums.V1ChartAccountOverviewGetPreselected>? defaultValue,
+]) {
+  if (v1ChartAccountOverviewGetPreselected == null) {
+    return defaultValue;
+  }
+
+  return v1ChartAccountOverviewGetPreselected
+      .map((e) => v1ChartAccountOverviewGetPreselectedFromJson(e.toString()))
+      .toList();
+}
+
+String? v1ChartBalanceBalanceGetPeriodNullableToJson(
+  enums.V1ChartBalanceBalanceGetPeriod? v1ChartBalanceBalanceGetPeriod,
+) {
+  return v1ChartBalanceBalanceGetPeriod?.value;
+}
+
+String? v1ChartBalanceBalanceGetPeriodToJson(
+  enums.V1ChartBalanceBalanceGetPeriod v1ChartBalanceBalanceGetPeriod,
+) {
+  return v1ChartBalanceBalanceGetPeriod.value;
+}
+
+enums.V1ChartBalanceBalanceGetPeriod v1ChartBalanceBalanceGetPeriodFromJson(
+  Object? v1ChartBalanceBalanceGetPeriod, [
+  enums.V1ChartBalanceBalanceGetPeriod? defaultValue,
+]) {
+  return enums.V1ChartBalanceBalanceGetPeriod.values.firstWhereOrNull(
+        (e) => e.value == v1ChartBalanceBalanceGetPeriod,
+      ) ??
+      defaultValue ??
+      enums.V1ChartBalanceBalanceGetPeriod.swaggerGeneratedUnknown;
+}
+
+enums.V1ChartBalanceBalanceGetPeriod?
+v1ChartBalanceBalanceGetPeriodNullableFromJson(
+  Object? v1ChartBalanceBalanceGetPeriod, [
+  enums.V1ChartBalanceBalanceGetPeriod? defaultValue,
+]) {
+  if (v1ChartBalanceBalanceGetPeriod == null) {
+    return null;
+  }
+  return enums.V1ChartBalanceBalanceGetPeriod.values.firstWhereOrNull(
+        (e) => e.value == v1ChartBalanceBalanceGetPeriod,
+      ) ??
+      defaultValue;
+}
+
+String v1ChartBalanceBalanceGetPeriodExplodedListToJson(
+  List<enums.V1ChartBalanceBalanceGetPeriod>? v1ChartBalanceBalanceGetPeriod,
+) {
+  return v1ChartBalanceBalanceGetPeriod?.map((e) => e.value!).join(',') ?? '';
+}
+
+List<String> v1ChartBalanceBalanceGetPeriodListToJson(
+  List<enums.V1ChartBalanceBalanceGetPeriod>? v1ChartBalanceBalanceGetPeriod,
+) {
+  if (v1ChartBalanceBalanceGetPeriod == null) {
+    return [];
+  }
+
+  return v1ChartBalanceBalanceGetPeriod.map((e) => e.value!).toList();
+}
+
+List<enums.V1ChartBalanceBalanceGetPeriod>
+v1ChartBalanceBalanceGetPeriodListFromJson(
+  List? v1ChartBalanceBalanceGetPeriod, [
+  List<enums.V1ChartBalanceBalanceGetPeriod>? defaultValue,
+]) {
+  if (v1ChartBalanceBalanceGetPeriod == null) {
+    return defaultValue ?? [];
+  }
+
+  return v1ChartBalanceBalanceGetPeriod
+      .map((e) => v1ChartBalanceBalanceGetPeriodFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.V1ChartBalanceBalanceGetPeriod>?
+v1ChartBalanceBalanceGetPeriodNullableListFromJson(
+  List? v1ChartBalanceBalanceGetPeriod, [
+  List<enums.V1ChartBalanceBalanceGetPeriod>? defaultValue,
+]) {
+  if (v1ChartBalanceBalanceGetPeriod == null) {
+    return defaultValue;
+  }
+
+  return v1ChartBalanceBalanceGetPeriod
+      .map((e) => v1ChartBalanceBalanceGetPeriodFromJson(e.toString()))
+      .toList();
+}
+
+String? v1ChartBalanceBalanceGetPreselectedNullableToJson(
+  enums.V1ChartBalanceBalanceGetPreselected?
+  v1ChartBalanceBalanceGetPreselected,
+) {
+  return v1ChartBalanceBalanceGetPreselected?.value;
+}
+
+String? v1ChartBalanceBalanceGetPreselectedToJson(
+  enums.V1ChartBalanceBalanceGetPreselected v1ChartBalanceBalanceGetPreselected,
+) {
+  return v1ChartBalanceBalanceGetPreselected.value;
+}
+
+enums.V1ChartBalanceBalanceGetPreselected
+v1ChartBalanceBalanceGetPreselectedFromJson(
+  Object? v1ChartBalanceBalanceGetPreselected, [
+  enums.V1ChartBalanceBalanceGetPreselected? defaultValue,
+]) {
+  return enums.V1ChartBalanceBalanceGetPreselected.values.firstWhereOrNull(
+        (e) => e.value == v1ChartBalanceBalanceGetPreselected,
+      ) ??
+      defaultValue ??
+      enums.V1ChartBalanceBalanceGetPreselected.swaggerGeneratedUnknown;
+}
+
+enums.V1ChartBalanceBalanceGetPreselected?
+v1ChartBalanceBalanceGetPreselectedNullableFromJson(
+  Object? v1ChartBalanceBalanceGetPreselected, [
+  enums.V1ChartBalanceBalanceGetPreselected? defaultValue,
+]) {
+  if (v1ChartBalanceBalanceGetPreselected == null) {
+    return null;
+  }
+  return enums.V1ChartBalanceBalanceGetPreselected.values.firstWhereOrNull(
+        (e) => e.value == v1ChartBalanceBalanceGetPreselected,
+      ) ??
+      defaultValue;
+}
+
+String v1ChartBalanceBalanceGetPreselectedExplodedListToJson(
+  List<enums.V1ChartBalanceBalanceGetPreselected>?
+  v1ChartBalanceBalanceGetPreselected,
+) {
+  return v1ChartBalanceBalanceGetPreselected?.map((e) => e.value!).join(',') ??
+      '';
+}
+
+List<String> v1ChartBalanceBalanceGetPreselectedListToJson(
+  List<enums.V1ChartBalanceBalanceGetPreselected>?
+  v1ChartBalanceBalanceGetPreselected,
+) {
+  if (v1ChartBalanceBalanceGetPreselected == null) {
+    return [];
+  }
+
+  return v1ChartBalanceBalanceGetPreselected.map((e) => e.value!).toList();
+}
+
+List<enums.V1ChartBalanceBalanceGetPreselected>
+v1ChartBalanceBalanceGetPreselectedListFromJson(
+  List? v1ChartBalanceBalanceGetPreselected, [
+  List<enums.V1ChartBalanceBalanceGetPreselected>? defaultValue,
+]) {
+  if (v1ChartBalanceBalanceGetPreselected == null) {
+    return defaultValue ?? [];
+  }
+
+  return v1ChartBalanceBalanceGetPreselected
+      .map((e) => v1ChartBalanceBalanceGetPreselectedFromJson(e.toString()))
+      .toList();
+}
+
+List<enums.V1ChartBalanceBalanceGetPreselected>?
+v1ChartBalanceBalanceGetPreselectedNullableListFromJson(
+  List? v1ChartBalanceBalanceGetPreselected, [
+  List<enums.V1ChartBalanceBalanceGetPreselected>? defaultValue,
+]) {
+  if (v1ChartBalanceBalanceGetPreselected == null) {
+    return defaultValue;
+  }
+
+  return v1ChartBalanceBalanceGetPreselected
+      .map((e) => v1ChartBalanceBalanceGetPreselectedFromJson(e.toString()))
       .toList();
 }
 

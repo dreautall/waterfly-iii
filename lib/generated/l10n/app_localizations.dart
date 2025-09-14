@@ -344,6 +344,30 @@ abstract class S {
   /// **'Ungrouped'**
   String get billsUngrouped;
 
+  /// Text for show only active subscriptions settings item
+  ///
+  /// In en, this message translates to:
+  /// **'Show only active'**
+  String get billsSettingsShowOnlyActive;
+
+  /// Text for show only active subscriptions settings item description
+  ///
+  /// In en, this message translates to:
+  /// **'Shows only active subscriptions.'**
+  String get billsSettingsShowOnlyActiveDesc;
+
+  /// Text for show only expected subscriptions settings item
+  ///
+  /// In en, this message translates to:
+  /// **'Show only expected'**
+  String get billsSettingsShowOnlyExpected;
+
+  /// Text for show only expected subscriptions settings item description
+  ///
+  /// In en, this message translates to:
+  /// **'Shows only those subscriptions that are expected (or paid) this month.'**
+  String get billsSettingsShowOnlyExpectedDesc;
+
   /// Confirmation text to delete category
   ///
   /// In en, this message translates to:
@@ -548,6 +572,36 @@ abstract class S {
   /// **'Currency'**
   String get generalCurrency;
 
+  /// Date Range: Current Month
+  ///
+  /// In en, this message translates to:
+  /// **'Current Month'**
+  String get generalDateRangeCurrentMonth;
+
+  /// Date Range: Last 30 days
+  ///
+  /// In en, this message translates to:
+  /// **'Last 30 days'**
+  String get generalDateRangeLast30Days;
+
+  /// Date Range: Current Year
+  ///
+  /// In en, this message translates to:
+  /// **'Current Year'**
+  String get generalDateRangeCurrentYear;
+
+  /// Date Range: Last year
+  ///
+  /// In en, this message translates to:
+  /// **'Last year'**
+  String get generalDateRangeLastYear;
+
+  /// Date Range: All
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get generalDateRangeAll;
+
   /// Indicates that something is the default choice
   ///
   /// In en, this message translates to:
@@ -722,6 +776,12 @@ abstract class S {
   /// **'Net Worth'**
   String get homeMainChartNetWorthTitle;
 
+  /// Chart Label: Tags Summary
+  ///
+  /// In en, this message translates to:
+  /// **'Tag Summary for current month'**
+  String get homeMainChartTagsTitle;
+
   /// Title of the dialog where money can be added/removed to a piggy bank.
   ///
   /// In en, this message translates to:
@@ -775,6 +835,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Saved so far: {amount}'**
   String homePiggySaved(String amount);
+
+  /// Title for a list of multiple accounts with the amount of money saved so far
+  ///
+  /// In en, this message translates to:
+  /// **'Saved so far:'**
+  String get homePiggySavedMultiple;
 
   /// How much money should be saved
   ///
@@ -859,6 +925,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'<All Currencies>'**
   String get homeTransactionsDialogFilterCurrenciesAll;
+
+  /// Label for the date range dropdown (all, last year, last month, last 30 days etc)
+  ///
+  /// In en, this message translates to:
+  /// **'Date Range'**
+  String get homeTransactionsDialogFilterDateRange;
 
   /// Setting to show future transactions
   ///
@@ -980,11 +1052,11 @@ abstract class S {
   /// **'Dashboard'**
   String get navigationMain;
 
-  /// Navigation Label: Settings
+  /// Label: Settings
   ///
   /// In en, this message translates to:
   /// **'Settings'**
-  String get navigationSettings;
+  String get generalSettings;
 
   /// The word no
   ///

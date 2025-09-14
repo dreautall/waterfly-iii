@@ -203,6 +203,20 @@ class SSl extends S {
   String get billsUngrouped => 'Nezdruženo';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Ali ste prepričani, da želite izbrisati to kategorijo? Transakcije ne bodo izbrisane, vendar ne bodo imele več kategorije.';
 
@@ -315,6 +329,21 @@ class SSl extends S {
 
   @override
   String get generalCurrency => 'Valuta';
+
+  @override
+  String get generalDateRangeCurrentMonth => 'Trenutni mesec';
+
+  @override
+  String get generalDateRangeLast30Days => 'Zadnjih 30 dni';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Trenutno leto';
+
+  @override
+  String get generalDateRangeLastYear => 'Prejšnje leto';
+
+  @override
+  String get generalDateRangeAll => 'Vse';
 
   @override
   String get generalDefault => 'privzeto';
@@ -435,6 +464,9 @@ class SSl extends S {
   String get homeMainChartNetWorthTitle => 'Neto vrednost';
 
   @override
+  String get homeMainChartTagsTitle => 'Povzetek oznak za trenutni mesec';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Prihranek/poraba denarja';
 
   @override
@@ -477,6 +509,9 @@ class SSl extends S {
   String homePiggySaved(String amount) {
     return 'Privarčevano do sedaj: $amount';
   }
+
+  @override
+  String get homePiggySavedMultiple => 'Saved so far:';
 
   @override
   String homePiggyTarget(String amount) {
@@ -523,6 +558,9 @@ class SSl extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Vse valute>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Časovno območje';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -590,7 +628,7 @@ class SSl extends S {
   String get navigationMain => 'Glavna nadzorna plošča';
 
   @override
-  String get navigationSettings => 'Nastavitve';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Ne';
@@ -874,7 +912,7 @@ class SSl extends S {
   String get transactionTitleEdit => 'Uredi transakcijo';
 
   @override
-  String get transactionTypeDeposit => 'Polog';
+  String get transactionTypeDeposit => 'Priliv';
 
   @override
   String get transactionTypeTransfer => 'Prenos';

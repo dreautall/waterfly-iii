@@ -203,6 +203,20 @@ class SIt extends S {
   String get billsUngrouped => 'Non raggruppate';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Sei sicuro di voler eliminare questa categoria? Le transazioni non saranno eliminate, ma non avranno più una categoria.';
 
@@ -315,6 +329,21 @@ class SIt extends S {
 
   @override
   String get generalCurrency => 'Valuta';
+
+  @override
+  String get generalDateRangeCurrentMonth => 'Mese Corrente';
+
+  @override
+  String get generalDateRangeLast30Days => 'Ultimi 30 giorni';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Anno Corrente';
+
+  @override
+  String get generalDateRangeLastYear => 'Anno Precedente';
+
+  @override
+  String get generalDateRangeAll => 'Tutto';
 
   @override
   String get generalDefault => 'predefinito';
@@ -435,6 +464,10 @@ class SIt extends S {
   String get homeMainChartNetWorthTitle => 'Patrimonio';
 
   @override
+  String get homeMainChartTagsTitle =>
+      'Riepilogo etichette per il mese corrente';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Risparmia/Spendi Denaro';
 
   @override
@@ -477,6 +510,9 @@ class SIt extends S {
   String homePiggySaved(String amount) {
     return 'Risparmiato finora: $amount';
   }
+
+  @override
+  String get homePiggySavedMultiple => 'Risparmiato finora:';
 
   @override
   String homePiggyTarget(String amount) {
@@ -522,6 +558,9 @@ class SIt extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Tutte le valute>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Periodo';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -589,7 +628,7 @@ class SIt extends S {
   String get navigationMain => 'Dashboard principale';
 
   @override
-  String get navigationSettings => 'Impostazioni';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

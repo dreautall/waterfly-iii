@@ -130,7 +130,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     int i,
   ) async {
     final FireflyIii api = context.read<FireflyService>().api;
-    bool? ok = await showDialog<bool>(
+    final bool? ok = await showDialog<bool>(
       context: context,
       builder:
           (BuildContext context) => const AttachmentDeletionConfirmDialog(),
@@ -167,9 +167,10 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     if (!respAttachment.isSuccessful || respAttachment.body == null) {
       late String error;
       try {
-        ValidationErrorResponse valError = ValidationErrorResponse.fromJson(
-          json.decode(respAttachment.error.toString()),
-        );
+        final ValidationErrorResponse valError =
+            ValidationErrorResponse.fromJson(
+              json.decode(respAttachment.error.toString()),
+            );
         error = valError.message ?? l10n.errorUnknown;
       } catch (_) {
         error = l10n.errorUnknown;
@@ -183,7 +184,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       return;
     }
     AttachmentRead newAttachment = respAttachment.body!.data;
-    int newAttachmentIndex =
+    final int newAttachmentIndex =
         widget.attachments.length; // Will be added later, no -1 needed.
     final int total = file.size;
     newAttachment = newAttachment.copyWith(
@@ -236,7 +237,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     late String error;
     try {
       final String respString = await resp.stream.bytesToString();
-      ValidationErrorResponse valError = ValidationErrorResponse.fromJson(
+      final ValidationErrorResponse valError = ValidationErrorResponse.fromJson(
         json.decode(respString),
       );
       error = valError.message ?? l10n.errorUnknown;
@@ -279,7 +280,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
   }
 
   void fakeDeleteAttachment(BuildContext context, int i) async {
-    bool? ok = await showDialog<bool>(
+    final bool? ok = await showDialog<bool>(
       context: context,
       builder:
           (BuildContext context) => const AttachmentDeletionConfirmDialog(),
@@ -296,7 +297,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     final AttachmentRead newAttachment = AttachmentRead(
       type: "attachments",
       id: widget.attachments.length.toString(),
-      attributes: Attachment(
+      attributes: AttachmentProperties(
         attachableType: AttachableType.transactionjournal,
         attachableId: "FAKE",
         filename: file.name,
@@ -313,11 +314,11 @@ class _AttachmentDialogState extends State<AttachmentDialog>
   @override
   Widget build(BuildContext context) {
     log.finest(() => "build(transactionId: ${widget.transactionId})");
-    List<Widget> childs = <Widget>[];
+    final List<Widget> childs = <Widget>[];
     for (int i = 0; i < widget.attachments.length; i++) {
-      AttachmentRead attachment = widget.attachments[i];
+      final AttachmentRead attachment = widget.attachments[i];
       String subtitle = "";
-      DateTime? modDate =
+      final DateTime? modDate =
           attachment.attributes.updatedAt ?? attachment.attributes.createdAt;
       if (modDate != null) {
         subtitle = DateFormat.yMd().add_Hms().format(modDate.toLocal());
@@ -343,7 +344,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
                     : () async => downloadAttachment(context, attachment, i),
           ),
           title: Text(
-            attachment.attributes.title ?? attachment.attributes.filename,
+            attachment.attributes.title ?? attachment.attributes.filename!,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -421,7 +422,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
           ),
           FilledButton(
             onPressed: () async {
-              FilePickerResult? file = await FilePicker.platform.pickFiles();
+              final FilePickerResult? file =
+                  await FilePicker.platform.pickFiles();
               if (file == null || file.files.first.path == null) {
                 return;
               }

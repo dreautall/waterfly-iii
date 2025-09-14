@@ -14,7 +14,6 @@ import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
-import 'package:version/version.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -36,6 +35,8 @@ import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
 
 final Logger log = Logger("Pages.Transaction");
+
+bool _savingInProgress = false;
 
 class TransactionPage extends StatefulWidget {
   const TransactionPage({
@@ -140,8 +141,6 @@ class _TransactionPageState extends State<TransactionPage>
       <AnimationController>[];
   final List<Animation<double>> _cardsAnimation = <Animation<double>>[];
 
-  bool _saving = false;
-
   @override
   void initState() {
     super.initState();
@@ -152,8 +151,9 @@ class _TransactionPageState extends State<TransactionPage>
 
     // opening an existing transaction, extract information
     if (widget.transaction != null) {
-      TransactionRead transaction = widget.transaction!;
-      List<TransactionSplit> transactions = transaction.attributes.transactions;
+      final TransactionRead transaction = widget.transaction!;
+      final List<TransactionSplit> transactions =
+          transaction.attributes.transactions;
 
       // Common values
       /// type
@@ -187,7 +187,7 @@ class _TransactionPageState extends State<TransactionPage>
       _localCurrency = CurrencyRead(
         type: "currencies",
         id: transactions.first.currencyId!,
-        attributes: Currency(
+        attributes: CurrencyProperties(
           code: transactions.first.currencyCode!,
           name: transactions.first.currencyName!,
           symbol: transactions.first.currencySymbol!,
@@ -227,7 +227,7 @@ class _TransactionPageState extends State<TransactionPage>
             BillRead(
               type: "bill",
               id: trans.billId ?? "",
-              attributes: Bill(
+              attributes: BillProperties(
                 name: trans.billName ?? "",
                 amountMin: "",
                 amountMax: "",
@@ -287,7 +287,7 @@ class _TransactionPageState extends State<TransactionPage>
             CurrencyRead(
               type: "currencies",
               id: trans.foreignCurrencyId!,
-              attributes: Currency(
+              attributes: CurrencyProperties(
                 code: trans.foreignCurrencyCode!,
                 name: "", // empty
                 symbol: trans.foreignCurrencySymbol!,
@@ -315,7 +315,7 @@ class _TransactionPageState extends State<TransactionPage>
             vsync: this,
           ),
         );
-        int i = _cardsAnimationController.length - 1;
+        final int i = _cardsAnimationController.length - 1;
         _cardsAnimationController.last.addStatusListener(
           (AnimationStatus status) => deleteCardAnimated(i)(status),
         );
@@ -334,10 +334,7 @@ class _TransactionPageState extends State<TransactionPage>
         splitTransactionCheckAccounts();
       });
 
-      // Firefly v6.0.30 (API v2.0.11) and up:
-      // API will no longer accept changes to amount and account fields for reconciled transactions
-      if (_reconciled &&
-          context.read<FireflyService>().apiVersion! >= Version(2, 0, 11)) {
+      if (_reconciled) {
         _initiallyReconciled = true;
       }
 
@@ -346,7 +343,13 @@ class _TransactionPageState extends State<TransactionPage>
       // New transaction
       _titleFocusNode.requestFocus();
       _transactionType = TransactionTypeProperty.swaggerGeneratedUnknown;
-      _date = _tzHandler.newTXTime().toLocal();
+
+      if (widget.notification != null) {
+        _date =
+            _tzHandler.notificationTXTime(widget.notification!.date).toLocal();
+      } else {
+        _date = _tzHandler.newTXTime().toLocal();
+      }
 
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         splitTransactionAdd();
@@ -418,7 +421,7 @@ class _TransactionPageState extends State<TransactionPage>
                 _localCurrency = CurrencyRead(
                   type: "currencies",
                   id: acc.attributes.currencyId!,
-                  attributes: Currency(
+                  attributes: CurrencyProperties(
                     code: acc.attributes.currencyCode!,
                     name: "",
                     symbol: acc.attributes.currencySymbol!,
@@ -465,6 +468,7 @@ class _TransactionPageState extends State<TransactionPage>
               _sourceAccountTextController.text = acc.attributes.name;
               _sourceAccountType = AccountTypeProperty.assetAccount;
               _ownAccountId = acc.id;
+              checkTXType();
               break;
             }
           }
@@ -481,7 +485,7 @@ class _TransactionPageState extends State<TransactionPage>
               AttachmentRead(
                 type: "attachments",
                 id: _attachments!.length.toString(),
-                attributes: Attachment(
+                attributes: AttachmentProperties(
                   attachableType: AttachableType.transactionjournal,
                   attachableId: "FAKE",
                   filename: xfile.name,
@@ -604,17 +608,18 @@ class _TransactionPageState extends State<TransactionPage>
     }
 
     // this we need to dispose later
-    TextEditingController t1 = _sourceAccountTextControllers.removeAt(i);
-    FocusNode f1 = _sourceAccountFocusNodes.removeAt(i);
-    TextEditingController t2 = _destinationAccountTextControllers.removeAt(i);
-    FocusNode f2 = _destinationAccountFocusNodes.removeAt(i);
-    TextEditingController t3 = _categoryTextControllers.removeAt(i);
-    FocusNode f3 = _categoryFocusNodes.removeAt(i);
-    TextEditingController t4 = _budgetTextControllers.removeAt(i);
-    FocusNode f4 = _budgetFocusNodes.removeAt(i);
+    final TextEditingController t1 = _sourceAccountTextControllers.removeAt(i);
+    final FocusNode f1 = _sourceAccountFocusNodes.removeAt(i);
+    final TextEditingController t2 = _destinationAccountTextControllers
+        .removeAt(i);
+    final FocusNode f2 = _destinationAccountFocusNodes.removeAt(i);
+    final TextEditingController t3 = _categoryTextControllers.removeAt(i);
+    final FocusNode f3 = _categoryFocusNodes.removeAt(i);
+    final TextEditingController t4 = _budgetTextControllers.removeAt(i);
+    final FocusNode f4 = _budgetFocusNodes.removeAt(i);
     _tags.removeAt(i);
-    TextEditingController t5 = _tagsTextControllers.removeAt(i);
-    TextEditingController t6 = _noteTextControllers.removeAt(i);
+    final TextEditingController t5 = _tagsTextControllers.removeAt(i);
+    final TextEditingController t6 = _noteTextControllers.removeAt(i);
     _bills.removeAt(i);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -731,7 +736,7 @@ class _TransactionPageState extends State<TransactionPage>
         vsync: this,
       ),
     );
-    int i = _cardsAnimationController.length - 1;
+    final int i = _cardsAnimationController.length - 1;
     _cardsAnimationController.last.addStatusListener(
       (AnimationStatus status) => deleteCardAnimated(i)(status),
     );
@@ -864,7 +869,7 @@ class _TransactionPageState extends State<TransactionPage>
       ],
       FilledButton(
         onPressed:
-            _saving
+            _savingInProgress
                 ? null
                 : () async {
                   final ScaffoldMessengerState msg = ScaffoldMessenger.of(
@@ -903,14 +908,14 @@ class _TransactionPageState extends State<TransactionPage>
                   }
                   // Do stuff
                   setState(() {
-                    _saving = true;
+                    _savingInProgress = true;
                   });
                   late Response<TransactionSingle> resp;
 
                   // Update existing transaction
                   if (!_newTX) {
-                    String id = widget.transaction!.id;
-                    List<TransactionSplitUpdate> txS =
+                    final String id = widget.transaction!.id;
+                    final List<TransactionSplitUpdate> txS =
                         <TransactionSplitUpdate>[];
                     for (int i = 0; i < _localAmounts.length; i++) {
                       late String sourceName, destinationName;
@@ -925,8 +930,6 @@ class _TransactionPageState extends State<TransactionPage>
                         destinationName =
                             _destinationAccountTextController.text;
                       }
-
-                      debugPrint(destinationName);
 
                       final TransactionSplitUpdate
                       txSs = TransactionSplitUpdate(
@@ -977,7 +980,7 @@ class _TransactionPageState extends State<TransactionPage>
                         txS.add(txSs);
                       }
                     }
-                    TransactionUpdate txUpdate = TransactionUpdate(
+                    final TransactionUpdate txUpdate = TransactionUpdate(
                       groupTitle: _split ? _titleTextController.text : null,
                       transactions: txS,
                     );
@@ -999,7 +1002,8 @@ class _TransactionPageState extends State<TransactionPage>
                     );
                   } else {
                     // New transaction
-                    List<TransactionSplitStore> txS = <TransactionSplitStore>[];
+                    final List<TransactionSplitStore> txS =
+                        <TransactionSplitStore>[];
                     for (int i = 0; i < _localAmounts.length; i++) {
                       late String sourceName, destinationName;
 
@@ -1017,7 +1021,11 @@ class _TransactionPageState extends State<TransactionPage>
                       txS.add(
                         TransactionSplitStore(
                           type: _transactionType,
-                          date: _date,
+                          date: _date.copyWith(
+                            second: 0,
+                            millisecond: 0,
+                            microsecond: 0,
+                          ),
                           amount: _localAmounts[i].toString(),
                           description:
                               _split
@@ -1059,7 +1067,7 @@ class _TransactionPageState extends State<TransactionPage>
                   // Check if insert/update was successful
                   if (!resp.isSuccessful || resp.body == null) {
                     try {
-                      ValidationErrorResponse valError =
+                      final ValidationErrorResponse valError =
                           ValidationErrorResponse.fromJson(
                             json.decode(resp.error.toString()),
                           );
@@ -1086,7 +1094,7 @@ class _TransactionPageState extends State<TransactionPage>
                       ),
                     );
                     setState(() {
-                      _saving = false;
+                      _savingInProgress = false;
                     });
                     return;
                   }
@@ -1103,7 +1111,7 @@ class _TransactionPageState extends State<TransactionPage>
                     log.fine(
                       () => "uploading ${_attachments!.length} attachments",
                     );
-                    TransactionSplit? tx = resp
+                    final TransactionSplit? tx = resp
                         .body
                         ?.data
                         .attributes
@@ -1113,7 +1121,7 @@ class _TransactionPageState extends State<TransactionPage>
                               e.transactionJournalId != null,
                         );
                     if (tx != null) {
-                      String txId = tx.transactionJournalId!;
+                      final String txId = tx.transactionJournalId!;
                       log.finest(() => "uploading to txId $txId");
                       for (AttachmentRead attachment in _attachments!) {
                         log.finest(
@@ -1123,7 +1131,7 @@ class _TransactionPageState extends State<TransactionPage>
                         final Response<AttachmentSingle> respAttachment =
                             await api.v1AttachmentsPost(
                               body: AttachmentStore(
-                                filename: attachment.attributes.filename,
+                                filename: attachment.attributes.filename!,
                                 attachableType:
                                     AttachableType.transactionjournal,
                                 attachableId: txId,
@@ -1175,6 +1183,9 @@ class _TransactionPageState extends State<TransactionPage>
                     }
                   }
 
+                  // Done saving
+                  setState(() => _savingInProgress = false);
+
                   if (nav.canPop()) {
                     // Popping true means that the TX list will be refreshed.
                     // This should only happen if:
@@ -1203,17 +1214,27 @@ class _TransactionPageState extends State<TransactionPage>
                     );
                   }
                 },
-        child: Text(MaterialLocalizations.of(context).saveButtonLabel),
+        child:
+            _savingInProgress
+                ? const SizedBox(
+                  width: 25,
+                  height: 25,
+                  child: CircularProgressIndicator(strokeWidth: 3),
+                )
+                : Text(MaterialLocalizations.of(context).saveButtonLabel),
       ),
       const SizedBox(width: 16),
     ];
-    final Widget body = Form(
-      key: _formKey,
-      child: ListView(
-        shrinkWrap: true,
-        cacheExtent: 10000,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        children: _transactionDetailBuilder(context),
+    final Widget body = PopScope(
+      canPop: !_savingInProgress,
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          shrinkWrap: true,
+          cacheExtent: 10000,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          children: _transactionDetailBuilder(context),
+        ),
       ),
     );
     if (context.read<LayoutProvider>().currentSize >= ScreenSize.expanded &&
@@ -1240,7 +1261,7 @@ class _TransactionPageState extends State<TransactionPage>
     log.fine(() => "transactionDetailBuilder()");
     log.finer(() => "splits: ${_localAmounts.length}, split? $_split");
 
-    List<Widget> childs = <Widget>[];
+    final List<Widget> childs = <Widget>[];
     const Widget hDivider = SizedBox(height: 16);
     const Widget vDivider = SizedBox(width: 16);
 
@@ -1275,7 +1296,7 @@ class _TransactionPageState extends State<TransactionPage>
               icon: Icons.attach_file,
               tooltip: S.of(context).transactionAttachments,
               onPressed: () async {
-                List<AttachmentRead> dialogAttachments =
+                final List<AttachmentRead> dialogAttachments =
                     _attachments ?? <AttachmentRead>[];
                 await showDialog<List<AttachmentRead>>(
                   context: context,
@@ -1302,35 +1323,38 @@ class _TransactionPageState extends State<TransactionPage>
     // Amount, Date & Time
     childs.add(
       // Date/Time select might overflow, so we need to be able to scroll horizontally.
-      SizedBox(
-        height:
-            64, // 64 is measured height from layout inspector of a normal row.
-        child: ListView(
-          scrollDirection: Axis.horizontal,
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
           children: <Widget>[
             SizedBox(
               width: 130,
-              child: NumberInput(
-                icon:
-                    _localCurrency != null
-                        ? SizedBox(
-                          width: 24,
-                          height: 32,
-                          child: FittedBox(
-                            child: Text(_localCurrency!.attributes.symbol),
-                          ),
-                        )
-                        : Icon(Icons.monetization_on),
-                hintText:
-                    _localCurrency?.zero() ??
-                    NumberFormat.currency(decimalDigits: 2).format(0),
-                decimals: _localCurrency?.attributes.decimalPlaces ?? 2,
-                //style: Theme.of(context).textTheme.headlineLarge,
-                controller: _localAmountTextController,
-                disabled: _split || (_reconciled && _initiallyReconciled),
-                onChanged:
-                    (String string) =>
-                        _localAmounts[0] = double.tryParse(string) ?? 0,
+              child: Center(
+                child: NumberInput(
+                  icon:
+                      _localCurrency != null
+                          ? SizedBox(
+                            width: 24,
+                            height: 32,
+                            child: FittedBox(
+                              child: Text(_localCurrency!.attributes.symbol),
+                            ),
+                          )
+                          : const Icon(Icons.monetization_on),
+                  hintText:
+                      _localCurrency?.zero() ??
+                      NumberFormat.currency(decimalDigits: 2).format(0),
+                  decimals: _localCurrency?.attributes.decimalPlaces ?? 2,
+                  //style: Theme.of(context).textTheme.headlineLarge,
+                  controller: _localAmountTextController,
+                  disabled:
+                      _savingInProgress ||
+                      _split ||
+                      (_reconciled && _initiallyReconciled),
+                  onChanged:
+                      (String string) =>
+                          _localAmounts[0] = double.tryParse(string) ?? 0,
+                ),
               ),
             ),
             vDivider,
@@ -1343,7 +1367,7 @@ class _TransactionPageState extends State<TransactionPage>
                 ),
                 readOnly: true,
                 onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
+                  final DateTime? pickedDate = await showDatePicker(
                     context: context,
                     initialDate: _date,
                     locale: Locale(
@@ -1379,7 +1403,7 @@ class _TransactionPageState extends State<TransactionPage>
                 decoration: const InputDecoration(border: OutlineInputBorder()),
                 readOnly: true,
                 onTap: () async {
-                  TimeOfDay? pickedTime = await showTimePicker(
+                  final TimeOfDay? pickedTime = await showTimePicker(
                     context: context,
                     initialTime: _date.getTimeOfDay(),
                   );
@@ -1408,7 +1432,7 @@ class _TransactionPageState extends State<TransactionPage>
           const SizedBox(height: 64 + 16 + 64), // Padding for Stack
           Row(
             children: <Widget>[
-              const Icon(Icons.arrow_back),
+              const Icon(Icons.logout),
               vDivider,
               Expanded(
                 child: AutoCompleteText<AutocompleteAccount>(
@@ -1488,6 +1512,7 @@ class _TransactionPageState extends State<TransactionPage>
                     }
                   },
                   disabled:
+                      _savingInProgress ||
                       (_reconciled && _initiallyReconciled) ||
                       _sourceAccountTextController.text ==
                           "<${S.of(context).generalMultiple}>",
@@ -1500,7 +1525,7 @@ class _TransactionPageState extends State<TransactionPage>
             top: 64 + 16,
             child: Row(
               children: <Widget>[
-                const Icon(Icons.arrow_forward),
+                const Icon(Icons.login),
                 vDivider,
                 Expanded(
                   child: AutoCompleteText<AutocompleteAccount>(
@@ -1590,6 +1615,7 @@ class _TransactionPageState extends State<TransactionPage>
                       }
                     },
                     disabled:
+                        _savingInProgress ||
                         (_reconciled && _initiallyReconciled) ||
                         _destinationAccountTextController.text ==
                             "<${S.of(context).generalMultiple}>",
@@ -1599,7 +1625,7 @@ class _TransactionPageState extends State<TransactionPage>
             ),
           ),
           Positioned(
-            top: (64 + 16 + 64 - 56) / 2,
+            top: (64 + 16 + 4) / 2,
             right: 15,
             child: FloatingActionButton.extended(
               extendedIconLabelSpacing: _txTypeChipExtended ? 10 : 0,
@@ -1615,7 +1641,10 @@ class _TransactionPageState extends State<TransactionPage>
                         : const SizedBox(),
               ),
               icon: Icon(_transactionType.verticalIcon),
-              backgroundColor: _transactionType.color,
+              backgroundColor:
+                  _savingInProgress
+                      ? Theme.of(context).colorScheme.surfaceContainerHighest
+                      : _transactionType.color,
             ),
           ),
         ],
@@ -1636,10 +1665,12 @@ class _TransactionPageState extends State<TransactionPage>
     childs.add(
       FilledButton.icon(
         onPressed:
-            () =>
-                _reconciled && _initiallyReconciled
-                    ? null
-                    : splitTransactionAdd(),
+            _savingInProgress
+                ? null
+                : () =>
+                    _reconciled && _initiallyReconciled
+                        ? null
+                        : splitTransactionAdd(),
         label: Text(S.of(context).transactionSplitAdd),
         icon: const Icon(Icons.call_split),
       ),
@@ -1668,7 +1699,7 @@ class _TransactionPageState extends State<TransactionPage>
           _localCurrency = CurrencyRead(
             type: "currencies",
             id: option.currencyId.toString(),
-            attributes: Currency(
+            attributes: CurrencyProperties(
               code: option.currencyCode,
               name: option.currencyName,
               symbol: option.currencySymbol,
@@ -1695,7 +1726,7 @@ class _TransactionPageState extends State<TransactionPage>
             CurrencyRead(
               type: "currencies",
               id: option.currencyId,
-              attributes: Currency(
+              attributes: CurrencyProperties(
                 code: option.currencyCode,
                 name: option.currencyName,
                 symbol: option.currencySymbol,
@@ -1813,9 +1844,10 @@ class _TransactionPageState extends State<TransactionPage>
                               children: <Widget>[
                                 Expanded(
                                   child: AutoCompleteText<AutocompleteAccount>(
+                                    disabled: _savingInProgress,
                                     labelText:
                                         S.of(context).generalSourceAccount,
-                                    labelIcon: Icons.arrow_back,
+                                    labelIcon: Icons.logout,
                                     textController:
                                         _sourceAccountTextControllers[i],
                                     focusNode: _sourceAccountFocusNodes[i],
@@ -1892,9 +1924,10 @@ class _TransactionPageState extends State<TransactionPage>
                               children: <Widget>[
                                 Expanded(
                                   child: AutoCompleteText<AutocompleteAccount>(
+                                    disabled: _savingInProgress,
                                     labelText:
                                         S.of(context).generalDestinationAccount,
-                                    labelIcon: Icons.arrow_forward,
+                                    labelIcon: Icons.login,
                                     textController:
                                         _destinationAccountTextControllers[i],
                                     focusNode: _destinationAccountFocusNodes[i],
@@ -1909,7 +1942,6 @@ class _TransactionPageState extends State<TransactionPage>
                                       TextEditingValue textEditingValue,
                                     ) async {
                                       try {
-                                        debugPrint("building options");
                                         final FireflyIii api =
                                             context.read<FireflyService>().api;
                                         fetchOp = CancelableOperation<
@@ -1994,8 +2026,10 @@ class _TransactionPageState extends State<TransactionPage>
                                   child: NumberInput(
                                     icon:
                                         (_foreignCurrencies[i] != null)
-                                            ? Icon(Icons.currency_exchange)
-                                            : Icon(Icons.monetization_on),
+                                            ? const Icon(
+                                              Icons.currency_exchange,
+                                            )
+                                            : const Icon(Icons.monetization_on),
                                     controller:
                                         (_foreignCurrencies[i] != null)
                                             ? _foreignAmountTextControllers[i]
@@ -2027,6 +2061,7 @@ class _TransactionPageState extends State<TransactionPage>
                                       splitTransactionCalculateAmount();
                                     },
                                     disabled:
+                                        _savingInProgress ||
                                         _reconciled && _initiallyReconciled,
                                   ),
                                 ),
@@ -2068,6 +2103,7 @@ class _TransactionPageState extends State<TransactionPage>
                                       splitTransactionCalculateAmount();
                                     },
                                     disabled:
+                                        _savingInProgress ||
                                         _reconciled && _initiallyReconciled,
                                   ),
                                 ),
@@ -2083,6 +2119,7 @@ class _TransactionPageState extends State<TransactionPage>
                   ),
                   // Tags (always)
                   TransactionTags(
+                    interactable: !_savingInProgress,
                     textController: _tagsTextControllers[i],
                     tagsController: _tags[i],
                   ),
@@ -2103,51 +2140,53 @@ class _TransactionPageState extends State<TransactionPage>
                   child: Column(
                     children: <Widget>[
                       // Reconciled Button
-                      // Reconcile is broken before API V2.0.6
-                      // ref https://github.com/dreautall/waterfly-iii/issues/56
-                      // ref https://github.com/firefly-iii/firefly-iii/issues/7845
-                      if (context.read<FireflyService>().apiVersion! >=
-                          Version(2, 0, 6)) ...<Widget>[
-                        IconButton(
-                          icon: const Icon(Icons.done_outline),
-                          isSelected: _reconciled,
-                          selectedIcon: const Icon(Icons.done),
-                          onPressed:
-                              () => setState(() {
-                                _reconciled = !_reconciled;
-                                _initiallyReconciled = false;
-                              }),
-                          tooltip: S.of(context).generalReconcile,
-                        ),
-                        hDivider,
-                      ],
+                      IconButton(
+                        icon: const Icon(Icons.done_outline),
+                        isSelected: _reconciled,
+                        selectedIcon: const Icon(Icons.done),
+                        onPressed:
+                            _savingInProgress
+                                ? null
+                                : () => setState(() {
+                                  _reconciled = !_reconciled;
+                                  _initiallyReconciled = false;
+                                }),
+                        tooltip: S.of(context).generalReconcile,
+                      ),
+                      hDivider,
                       // Bills Button
                       IconButton(
                         icon: const Icon(Icons.calendar_today),
                         isSelected: _bills[i] != null,
                         selectedIcon: const Icon(Icons.event_available),
-                        onPressed: () async {
-                          BillRead? newBill = await showDialog<BillRead>(
-                            context: context,
-                            barrierDismissible: false,
-                            builder:
-                                (BuildContext context) =>
-                                    BillDialog(currentBill: _bills[i]),
-                          );
-                          // Back button returns "null"
-                          if (newBill == null) {
-                            return;
-                          }
-                          // Delete bill returns id "0"
-                          if (newBill.id.isEmpty || newBill.id == "0") {
-                            newBill = null;
-                          }
-                          if (newBill != _bills[i]) {
-                            setState(() {
-                              _bills[i] = newBill;
-                            });
-                          }
-                        },
+                        onPressed:
+                            _savingInProgress
+                                ? null
+                                : () async {
+                                  BillRead? newBill =
+                                      await showDialog<BillRead>(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder:
+                                            (BuildContext context) =>
+                                                BillDialog(
+                                                  currentBill: _bills[i],
+                                                ),
+                                      );
+                                  // Back button returns "null"
+                                  if (newBill == null) {
+                                    return;
+                                  }
+                                  // Delete bill returns id "0"
+                                  if (newBill.id.isEmpty || newBill.id == "0") {
+                                    newBill = null;
+                                  }
+                                  if (newBill != _bills[i]) {
+                                    setState(() {
+                                      _bills[i] = newBill;
+                                    });
+                                  }
+                                },
                         tooltip: S.of(context).transactionDialogBillTitle,
                       ),
                       hDivider,
@@ -2156,7 +2195,9 @@ class _TransactionPageState extends State<TransactionPage>
                         icon: const Icon(Icons.currency_exchange),
                         isSelected: _foreignCurrencies[i] != null,
                         onPressed:
-                            !(_reconciled && _initiallyReconciled)
+                            _savingInProgress
+                                ? null
+                                : !(_reconciled && _initiallyReconciled)
                                 ? () async {
                                   CurrencyRead? newCurrency =
                                       await showDialog<CurrencyRead>(
@@ -2203,7 +2244,9 @@ class _TransactionPageState extends State<TransactionPage>
                           IconButton(
                             icon: const Icon(Icons.add_business),
                             onPressed:
-                                _split &&
+                                _savingInProgress
+                                    ? null
+                                    : _split &&
                                         !_showSourceAccountSelection &&
                                         _transactionType ==
                                             TransactionTypeProperty.deposit &&
@@ -2236,7 +2279,9 @@ class _TransactionPageState extends State<TransactionPage>
                           IconButton(
                             icon: const Icon(Icons.add_business),
                             onPressed:
-                                _split &&
+                                _savingInProgress
+                                    ? null
+                                    : _split &&
                                         !_showDestinationAccountSelection &&
                                         _transactionType ==
                                             TransactionTypeProperty
@@ -2267,7 +2312,10 @@ class _TransactionPageState extends State<TransactionPage>
                         IconButton(
                           icon: const Icon(Icons.delete),
                           onPressed:
-                              _split && !(_reconciled && _initiallyReconciled)
+                              _savingInProgress
+                                  ? null
+                                  : _split &&
+                                      !(_reconciled && _initiallyReconciled)
                                   ? () {
                                     log.fine(() => "marking $i for deletion");
                                     _cardsAnimationController[i].reverse();
@@ -2325,20 +2373,24 @@ class TransactionDeleteButton extends StatelessWidget {
     return IconButton(
       icon: const Icon(Icons.delete),
       tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
-      onPressed: () async {
-        final FireflyIii api = context.read<FireflyService>().api;
-        final NavigatorState nav = Navigator.of(context);
-        bool? ok = await showDialog<bool>(
-          context: context,
-          builder: (BuildContext context) => const DeletionConfirmDialog(),
-        );
-        if (!(ok ?? false)) {
-          return;
-        }
+      onPressed:
+          _savingInProgress
+              ? null
+              : () async {
+                final FireflyIii api = context.read<FireflyService>().api;
+                final NavigatorState nav = Navigator.of(context);
+                final bool? ok = await showDialog<bool>(
+                  context: context,
+                  builder:
+                      (BuildContext context) => const DeletionConfirmDialog(),
+                );
+                if (!(ok ?? false)) {
+                  return;
+                }
 
-        await api.v1TransactionsIdDelete(id: transactionId);
-        nav.pop(true);
-      },
+                await api.v1TransactionsIdDelete(id: transactionId);
+                nav.pop(true);
+              },
     );
   }
 }
@@ -2362,6 +2414,7 @@ class TransactionTitle extends StatelessWidget {
     log.finest(() => "build()");
     return Expanded(
       child: AutoCompleteText<String>(
+        disabled: _savingInProgress,
         labelText: S.of(context).transactionFormLabelTitle,
         labelIcon: Icons.receipt_long,
         textController: textController,
@@ -2413,12 +2466,14 @@ class TransactionNote extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: TextFormField(
+            enabled: !_savingInProgress,
             controller: textController,
             maxLines: null,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
               labelText: S.of(context).transactionFormLabelNotes,
               icon: const Icon(Icons.description),
+              filled: _savingInProgress,
             ),
           ),
         ),
@@ -2448,6 +2503,7 @@ class TransactionCategory extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: AutoCompleteText<String>(
+            disabled: _savingInProgress,
             labelText: S.of(context).generalCategory,
             labelIcon: Icons.assignment,
             textController: textController,
@@ -2558,6 +2614,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
       children: <Widget>[
         Expanded(
           child: AutoCompleteText<AutocompleteBudget>(
+            disabled: _savingInProgress,
             labelText: S.of(context).generalBudget,
             labelIcon: Icons.payments,
             textController: widget.textController,
@@ -2601,6 +2658,184 @@ class _TransactionBudgetState extends State<TransactionBudget> {
                 return const Iterable<AutocompleteBudget>.empty();
               }
             },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class AttachmentButton extends StatefulWidget {
+  final List<AttachmentRead>? attachments;
+  final Future<void> Function() onPressed;
+
+  const AttachmentButton({
+    super.key,
+    required this.attachments,
+    required this.onPressed,
+  });
+
+  @override
+  State<AttachmentButton> createState() => _AttachmentButtonState();
+}
+
+class _AttachmentButtonState extends State<AttachmentButton> {
+  late bool _hasAttachments;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _hasAttachments = widget.attachments?.isNotEmpty ?? false;
+  }
+
+  @override
+  void didUpdateWidget(covariant AttachmentButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    _hasAttachments = widget.attachments?.isNotEmpty ?? false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return badges.Badge(
+      badgeContent: Text(
+        widget.attachments?.length.toString() ?? "..",
+        style: Theme.of(context).textTheme.labelMedium!.copyWith(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
+      ),
+      showBadge: _hasAttachments,
+      badgeStyle: badges.BadgeStyle(
+        badgeColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+      ),
+      badgeAnimation: const badges.BadgeAnimation.scale(
+        animationDuration: animDurationEmphasized,
+        curve: animCurveEmphasized,
+      ),
+      child: MaterialIconButton(
+        icon: Icons.attach_file,
+        tooltip: S.of(context).transactionAttachments,
+        onPressed: _savingInProgress ? null : widget.onPressed,
+      ),
+    );
+  }
+}
+
+class DateTimePicker extends StatefulWidget {
+  const DateTimePicker({
+    super.key,
+    required this.initialDateTime,
+    required this.onDateTimeChanged,
+  });
+
+  final tz.TZDateTime initialDateTime;
+  final ValueChanged<tz.TZDateTime> onDateTimeChanged;
+
+  @override
+  State<DateTimePicker> createState() => _DateTimePickerState();
+}
+
+class _DateTimePickerState extends State<DateTimePicker> {
+  late tz.TZDateTime _selectedDateTime;
+  late TextEditingController _dateTextController;
+  late TextEditingController _timeTextController;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDateTime = widget.initialDateTime;
+    _dateTextController = TextEditingController(
+      text: DateFormat.yMMMd().format(_selectedDateTime),
+    );
+    _timeTextController = TextEditingController(
+      text: DateFormat.Hm().format(_selectedDateTime),
+    );
+  }
+
+  @override
+  void dispose() {
+    _dateTextController.dispose();
+    _timeTextController.dispose();
+
+    super.dispose();
+  }
+
+  Future<void> _pickDate() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDateTime,
+      locale: Locale(
+        Intl.defaultLocale!.split('_').first,
+        Intl.defaultLocale!.split('_').last,
+      ),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate == null) {
+      return;
+    }
+
+    setState(() {
+      _selectedDateTime = tz.TZDateTime.from(
+        _selectedDateTime.copyWith(
+          year: pickedDate.year,
+          month: pickedDate.month,
+          day: pickedDate.day,
+        ),
+        _selectedDateTime.location,
+      );
+      _dateTextController.text = DateFormat.yMMMd().format(_selectedDateTime);
+      widget.onDateTimeChanged(_selectedDateTime);
+    });
+  }
+
+  Future<void> _pickTime() async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: _selectedDateTime.getTimeOfDay(),
+    );
+
+    if (pickedTime == null) {
+      return;
+    }
+
+    setState(() {
+      _selectedDateTime = _selectedDateTime.setTimeOfDay(pickedTime);
+      _timeTextController.text = DateFormat.Hm().format(_selectedDateTime);
+      widget.onDateTimeChanged(_selectedDateTime);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        IntrinsicWidth(
+          child: TextFormField(
+            enabled: !_savingInProgress,
+            controller: _dateTextController,
+            decoration: InputDecoration(
+              //prefixIcon: Icon(Icons.calendar_month),
+              border: const OutlineInputBorder(),
+              filled: _savingInProgress,
+            ),
+            readOnly: true,
+            onTap: _pickDate,
+          ),
+        ),
+        const SizedBox(width: 16),
+        IntrinsicWidth(
+          child: TextFormField(
+            enabled: !_savingInProgress,
+            controller: _timeTextController,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              filled: _savingInProgress,
+            ),
+            readOnly: true,
+            onTap: _pickTime,
           ),
         ),
       ],

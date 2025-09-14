@@ -203,6 +203,20 @@ class SEn extends S {
   String get billsUngrouped => 'Ungrouped';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Are you sure you want to delete this category? The transactions will not be deleted, but will not have a category anymore.';
 
@@ -315,6 +329,21 @@ class SEn extends S {
 
   @override
   String get generalCurrency => 'Currency';
+
+  @override
+  String get generalDateRangeCurrentMonth => 'Current Month';
+
+  @override
+  String get generalDateRangeLast30Days => 'Last 30 days';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Current Year';
+
+  @override
+  String get generalDateRangeLastYear => 'Last year';
+
+  @override
+  String get generalDateRangeAll => 'All';
 
   @override
   String get generalDefault => 'default';
@@ -435,6 +464,9 @@ class SEn extends S {
   String get homeMainChartNetWorthTitle => 'Net Worth';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Save/Spend Money';
 
   @override
@@ -476,6 +508,9 @@ class SEn extends S {
   String homePiggySaved(String amount) {
     return 'Saved so far: $amount';
   }
+
+  @override
+  String get homePiggySavedMultiple => 'Saved so far:';
 
   @override
   String homePiggyTarget(String amount) {
@@ -520,6 +555,9 @@ class SEn extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<All Currencies>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Date Range';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -587,7 +625,7 @@ class SEn extends S {
   String get navigationMain => 'Dashboard';
 
   @override
-  String get navigationSettings => 'Settings';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

@@ -203,6 +203,20 @@ class SPl extends S {
   String get billsUngrouped => 'Niezgrupowane';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Czy na pewno chcesz usunąć tę kategorię? Transakcje nie zostaną usunięte, ale nie będą już posiadały kategorii.';
 
@@ -315,6 +329,21 @@ class SPl extends S {
 
   @override
   String get generalCurrency => 'Waluta';
+
+  @override
+  String get generalDateRangeCurrentMonth => 'Bieżący miesiąc';
+
+  @override
+  String get generalDateRangeLast30Days => 'Ostatnie 30 dni';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Bieżący rok';
+
+  @override
+  String get generalDateRangeLastYear => 'Poprzedni rok';
+
+  @override
+  String get generalDateRangeAll => 'Wszystko';
 
   @override
   String get generalDefault => 'domyślnie';
@@ -435,6 +464,10 @@ class SPl extends S {
   String get homeMainChartNetWorthTitle => 'Wartość netto';
 
   @override
+  String get homeMainChartTagsTitle =>
+      'Podsumowanie tagów dla bieżącego miesiąca';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Wrzuć/Wyjmij Pieniądze';
 
   @override
@@ -477,6 +510,9 @@ class SPl extends S {
   String homePiggySaved(String amount) {
     return 'Zaoszczędzono dotychczas: $amount';
   }
+
+  @override
+  String get homePiggySavedMultiple => 'Saved so far:';
 
   @override
   String homePiggyTarget(String amount) {
@@ -525,6 +561,9 @@ class SPl extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Wszystkie waluty>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Zakres dat';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -593,7 +632,7 @@ class SPl extends S {
   String get navigationMain => 'Panel główny';
 
   @override
-  String get navigationSettings => 'Ustawienia';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Nie';

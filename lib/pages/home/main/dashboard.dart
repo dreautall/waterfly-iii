@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-import 'package:version/version.dart';
-import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/settings.dart';
 
@@ -32,16 +30,6 @@ class _DashboardDialogState extends State<DashboardDialog> {
 
     // Remove dupes, that would throw errors later!
     cards = cards.toSet().toList();
-
-    // Remove bills if the server is too old
-    if (context.read<FireflyService>().apiVersion! < Version(2, 0, 12)) {
-      cards.remove(DashboardCards.bills);
-    }
-
-    // :TODO: currently there is a bug in the APIv2 call, disabled this for now..
-    if (context.read<FireflyService>().apiVersion! < Version(99, 0, 7)) {
-      cards.remove(DashboardCards.networth);
-    }
   }
 
   @override
@@ -142,6 +130,7 @@ class DashboardCard extends StatelessWidget {
     chartTitle = switch (card) {
       DashboardCards.dailyavg => S.of(context).homeMainChartDailyAvg,
       DashboardCards.categories => S.of(context).homeMainChartCategoriesTitle,
+      DashboardCards.tags => S.of(context).homeMainChartTagsTitle,
       DashboardCards.accounts => S.of(context).homeMainChartAccountsTitle,
       DashboardCards.netearnings => S.of(context).homeMainChartNetEarningsTitle,
       DashboardCards.networth => S.of(context).homeMainChartNetWorthTitle,
@@ -160,7 +149,7 @@ class DashboardCard extends StatelessWidget {
           minTileHeight: 88,
           leading: IconButton(
             icon: const Icon(Icons.visibility),
-            selectedIcon: Icon(Icons.visibility_off_outlined),
+            selectedIcon: const Icon(Icons.visibility_off_outlined),
             isSelected: hidden,
             onPressed:
                 () async =>

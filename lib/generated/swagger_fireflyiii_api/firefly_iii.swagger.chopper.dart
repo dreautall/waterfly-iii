@@ -31,7 +31,7 @@ final class _$FireflyIii extends FireflyIii {
       'query': query,
       'limit': limit,
       'date': date,
-      'types': types?.join(","),
+      'types': types?.join(","), // WF3 fix
     };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
@@ -332,6 +332,30 @@ final class _$FireflyIii extends FireflyIii {
   }
 
   @override
+  Future<Response<List<AutocompleteBill>>> _v1AutocompleteSubscriptionsGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    final Uri $url = Uri.parse('/v1/autocomplete/subscriptions');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'query': query,
+      'limit': limit,
+    };
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+      headers: $headers,
+    );
+    return client.send<List<AutocompleteBill>, AutocompleteBill>($request);
+  }
+
+  @override
   Future<Response<List<AutocompleteTag>>> _v1AutocompleteTagsGet({
     String? xTraceId,
     String? query,
@@ -443,8 +467,90 @@ final class _$FireflyIii extends FireflyIii {
     String? xTraceId,
     required String? start,
     required String? end,
+    String? period,
+    String? preselected,
   }) {
     final Uri $url = Uri.parse('/v1/chart/account/overview');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'start': start,
+      'end': end,
+      'period': period,
+      'preselected': preselected,
+    };
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+      headers: $headers,
+    );
+    return client.send<List<ChartDataSet>, ChartDataSet>($request);
+  }
+
+  @override
+  Future<Response<List<ChartDataSet>>> _v1ChartBalanceBalanceGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    String? period,
+    String? preselected,
+    List<int>? accounts,
+  }) {
+    final Uri $url = Uri.parse('/v1/chart/balance/balance');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'start': start,
+      'end': end,
+      'period': period,
+      'preselected': preselected,
+      'accounts[]': accounts,
+    };
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+      headers: $headers,
+    );
+    return client.send<List<ChartDataSet>, ChartDataSet>($request);
+  }
+
+  @override
+  Future<Response<List<ChartDataSet>>> _v1ChartBudgetOverviewGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+  }) {
+    final Uri $url = Uri.parse('/v1/chart/budget/overview');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'start': start,
+      'end': end,
+    };
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+      headers: $headers,
+    );
+    return client.send<List<ChartDataSet>, ChartDataSet>($request);
+  }
+
+  @override
+  Future<Response<List<ChartDataSet>>> _v1ChartCategoryOverviewGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+  }) {
+    final Uri $url = Uri.parse('/v1/chart/category/overview');
     final Map<String, dynamic> $params = <String, dynamic>{
       'start': start,
       'end': end,
@@ -1433,6 +1539,8 @@ final class _$FireflyIii extends FireflyIii {
     String? xTraceId,
     int? limit,
     int? page,
+    String? start,
+    String? end,
     String? date,
     String? type,
   }) {
@@ -1440,6 +1548,8 @@ final class _$FireflyIii extends FireflyIii {
     final Map<String, dynamic> $params = <String, dynamic>{
       'limit': limit,
       'page': page,
+      'start': start,
+      'end': end,
       'date': date,
       'type': type,
     };
@@ -1479,11 +1589,17 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<AccountSingle>> _v1AccountsIdGet({
     String? xTraceId,
+    String? start,
+    String? end,
     required String? id,
     String? date,
   }) {
     final Uri $url = Uri.parse('/v1/accounts/${id}');
-    final Map<String, dynamic> $params = <String, dynamic>{'date': date};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'start': start,
+      'end': end,
+      'date': date,
+    };
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -2008,7 +2124,7 @@ final class _$FireflyIii extends FireflyIii {
     String? xTraceId,
     required String? id,
     required String? limitId,
-    required BudgetLimit? body,
+    required BudgetLimitUpdate? body,
   }) {
     final Uri $url = Uri.parse('/v1/budgets/${id}/limits/${limitId}');
     final Map<String, String> $headers = {
@@ -2347,7 +2463,7 @@ final class _$FireflyIii extends FireflyIii {
   @override
   Future<Response<CategorySingle>> _v1CategoriesPost({
     String? xTraceId,
-    required Category? body,
+    required CategoryStore? body,
   }) {
     final Uri $url = Uri.parse('/v1/categories');
     final Map<String, String> $headers = {
@@ -2455,6 +2571,28 @@ final class _$FireflyIii extends FireflyIii {
   }
 
   @override
+  Future<Response<CurrencyExchangeRateSingle>> _v1ExchangeRatesPost({
+    String? xTraceId,
+    required CurrencyExchangeRateStore? body,
+  }) {
+    final Uri $url = Uri.parse('/v1/exchange-rates');
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+      headers: $headers,
+    );
+    return client.send<CurrencyExchangeRateSingle, CurrencyExchangeRateSingle>(
+      $request,
+    );
+  }
+
+  @override
   Future<Response<CurrencyExchangeRateSingle>> _v1ExchangeRatesIdGet({
     String? xTraceId,
     int? limit,
@@ -2523,14 +2661,14 @@ final class _$FireflyIii extends FireflyIii {
   }
 
   @override
-  Future<Response<CurrencyExchangeRateArray>> _v1ExchangeRatesRatesFromToGet({
+  Future<Response<CurrencyExchangeRateArray>> _v1ExchangeRatesFromToGet({
     String? xTraceId,
     int? limit,
     int? page,
     required String? from,
     required String? to,
   }) {
-    final Uri $url = Uri.parse('/v1/exchange-rates/rates/${from}/${to}');
+    final Uri $url = Uri.parse('/v1/exchange-rates/${from}/${to}');
     final Map<String, dynamic> $params = <String, dynamic>{
       'limit': limit,
       'page': page,
@@ -2551,14 +2689,12 @@ final class _$FireflyIii extends FireflyIii {
   }
 
   @override
-  Future<Response<dynamic>> _v1ExchangeRatesRatesFromToDelete({
+  Future<Response<dynamic>> _v1ExchangeRatesFromToDelete({
     String? xTraceId,
     required String? from,
     required String? to,
-    String? date,
   }) {
-    final Uri $url = Uri.parse('/v1/exchange-rates/rates/${from}/${to}');
-    final Map<String, dynamic> $params = <String, dynamic>{'date': date};
+    final Uri $url = Uri.parse('/v1/exchange-rates/${from}/${to}');
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -2566,10 +2702,133 @@ final class _$FireflyIii extends FireflyIii {
       'DELETE',
       $url,
       client.baseUrl,
-      parameters: $params,
       headers: $headers,
     );
     return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<CurrencyExchangeRateArray>> _v1ExchangeRatesFromToDateGet({
+    String? xTraceId,
+    int? limit,
+    int? page,
+    required String? from,
+    required String? to,
+    required String? date,
+  }) {
+    final Uri $url = Uri.parse('/v1/exchange-rates/${from}/${to}/${date}');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'page': page,
+    };
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+      headers: $headers,
+    );
+    return client.send<CurrencyExchangeRateArray, CurrencyExchangeRateArray>(
+      $request,
+    );
+  }
+
+  @override
+  Future<Response<dynamic>> _v1ExchangeRatesFromToDateDelete({
+    String? xTraceId,
+    required String? from,
+    required String? to,
+    required String? date,
+  }) {
+    final Uri $url = Uri.parse('/v1/exchange-rates/${from}/${to}/${date}');
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+      headers: $headers,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<CurrencyExchangeRateSingle>> _v1ExchangeRatesFromToDatePut({
+    String? xTraceId,
+    required String? from,
+    required String? to,
+    required String? date,
+    required CurrencyExchangeRateUpdateNoDate? body,
+  }) {
+    final Uri $url = Uri.parse('/v1/exchange-rates/${from}/${to}/${date}');
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+      headers: $headers,
+    );
+    return client.send<CurrencyExchangeRateSingle, CurrencyExchangeRateSingle>(
+      $request,
+    );
+  }
+
+  @override
+  Future<Response<CurrencyExchangeRateArray>> _v1ExchangeRatesByDateDatePost({
+    String? xTraceId,
+    required String? date,
+    required CurrencyExchangeRateStoreByDate? body,
+  }) {
+    final Uri $url = Uri.parse('/v1/exchange-rates/by-date/${date}');
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+      headers: $headers,
+    );
+    return client.send<CurrencyExchangeRateArray, CurrencyExchangeRateArray>(
+      $request,
+    );
+  }
+
+  @override
+  Future<Response<CurrencyExchangeRateArray>>
+  _v1ExchangeRatesByCurrenciesFromToPost({
+    String? xTraceId,
+    required String? from,
+    required String? to,
+    required CurrencyExchangeRateStoreByPair? body,
+  }) {
+    final Uri $url = Uri.parse(
+      '/v1/exchange-rates/by-currencies/${from}/${to}',
+    );
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+      headers: $headers,
+    );
+    return client.send<CurrencyExchangeRateArray, CurrencyExchangeRateArray>(
+      $request,
+    );
   }
 
   @override
@@ -3217,6 +3476,27 @@ final class _$FireflyIii extends FireflyIii {
       headers: $headers,
     );
     return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<TransactionArray>> _v1RecurrencesIdTriggerPost({
+    String? xTraceId,
+    required String? id,
+    required String? date,
+  }) {
+    final Uri $url = Uri.parse('/v1/recurrences/${id}/trigger');
+    final Map<String, dynamic> $params = <String, dynamic>{'date': date};
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+      headers: $headers,
+    );
+    return client.send<TransactionArray, TransactionArray>($request);
   }
 
   @override
@@ -3996,11 +4276,11 @@ final class _$FireflyIii extends FireflyIii {
   }
 
   @override
-  Future<Response<CurrencySingle>> _v1CurrenciesCodeDefaultPost({
+  Future<Response<CurrencySingle>> _v1CurrenciesCodePrimaryPost({
     String? xTraceId,
     required String? code,
   }) {
-    final Uri $url = Uri.parse('/v1/currencies/${code}/default');
+    final Uri $url = Uri.parse('/v1/currencies/${code}/primary');
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };
@@ -4075,23 +4355,8 @@ final class _$FireflyIii extends FireflyIii {
   }
 
   @override
-  Future<Response<CurrencySingle>> _v1CurrenciesDefaultGet({String? xTraceId}) {
-    final Uri $url = Uri.parse('/v1/currencies/default');
-    final Map<String, String> $headers = {
-      if (xTraceId != null) 'X-Trace-Id': xTraceId,
-    };
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-      headers: $headers,
-    );
-    return client.send<CurrencySingle, CurrencySingle>($request);
-  }
-
-  @override
-  Future<Response<CurrencySingle>> _v1CurrenciesNativeGet({String? xTraceId}) {
-    final Uri $url = Uri.parse('/v1/currencies/native');
+  Future<Response<CurrencySingle>> _v1CurrenciesPrimaryGet({String? xTraceId}) {
+    final Uri $url = Uri.parse('/v1/currencies/primary');
     final Map<String, String> $headers = {
       if (xTraceId != null) 'X-Trace-Id': xTraceId,
     };

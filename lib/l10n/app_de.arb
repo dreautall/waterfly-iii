@@ -213,6 +213,22 @@
     "@billsUngrouped": {
         "description": "Title for ungrouped subscriptions"
     },
+    "billsSettingsShowOnlyActive": "Nur aktive anzeigen",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Zeigt nur aktive Abonnements an.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Nur erwartete anzeigen",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Zeigt nur Abonnements an, die diesen Monat erwartet werden (oder bereits bezahlt worden sind).",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
     "categoryDeleteConfirm": "Möchtest du diese Kategorie wirklich löschen? Die Transaktionen werden nicht gelöscht, werden aber keine Kategorie mehr haben.",
     "@categoryDeleteConfirm": {
         "description": "Confirmation text to delete category"
@@ -372,6 +388,26 @@
     "generalCurrency": "Währung",
     "@generalCurrency": {
         "description": "(Money) Currency"
+    },
+    "generalDateRangeCurrentMonth": "Aktueller Monat",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Letzte 30 Tage",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Aktuelles Jahr",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Vergangenes Jahr",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Alle",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
     },
     "generalDefault": "Standard",
     "@generalDefault": {
@@ -537,6 +573,10 @@
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
     },
+    "homeMainChartTagsTitle": "Schlagwort-Übersicht für diesen Monat",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
     "homePiggyAdjustDialogTitle": "Geld sparen/ausgeben",
     "@homePiggyAdjustDialogTitle": {
         "description": "Title of the dialog where money can be added/removed to a piggy bank."
@@ -605,6 +645,10 @@
             }
         }
     },
+    "homePiggySavedMultiple": "Bereits gespart:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "Sparziel: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
@@ -666,6 +710,10 @@
     "homeTransactionsDialogFilterCurrenciesAll": "<Alle Währungen>",
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "Zeitraum",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
     },
     "homeTransactionsDialogFilterFutureTransactions": "Zeige zukünftige Transaktionen",
     "@homeTransactionsDialogFilterFutureTransactions": {
@@ -753,9 +801,9 @@
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "Einstellungen",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "Einstellungen",
+    "@generalSettings": {
+        "description": "Label: Settings"
     },
     "no": "Nein",
     "@no": {

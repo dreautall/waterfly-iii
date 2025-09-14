@@ -206,6 +206,20 @@ class SFr extends S {
   String get billsUngrouped => 'Sans groupe';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Êtes-vous sûr de vouloir supprimer cette catégorie ? Les transactions ne seront pas supprimées, mais n\'auront plus de catégorie.';
 
@@ -318,6 +332,21 @@ class SFr extends S {
 
   @override
   String get generalCurrency => 'Devise';
+
+  @override
+  String get generalDateRangeCurrentMonth => 'Current Month';
+
+  @override
+  String get generalDateRangeLast30Days => 'Last 30 days';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Current Year';
+
+  @override
+  String get generalDateRangeLastYear => 'Last year';
+
+  @override
+  String get generalDateRangeAll => 'All';
 
   @override
   String get generalDefault => 'par défaut';
@@ -438,6 +467,9 @@ class SFr extends S {
   String get homeMainChartNetWorthTitle => 'Avoir net';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Économiser/Dépenser de l\'argent';
 
   @override
@@ -480,6 +512,9 @@ class SFr extends S {
   String homePiggySaved(String amount) {
     return 'Économisé jusqu\'à présent : $amount';
   }
+
+  @override
+  String get homePiggySavedMultiple => 'Saved so far:';
 
   @override
   String homePiggyTarget(String amount) {
@@ -527,6 +562,9 @@ class SFr extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Toutes le devises>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Date Range';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -595,7 +633,7 @@ class SFr extends S {
   String get navigationMain => 'Tableau de bord';
 
   @override
-  String get navigationSettings => 'Options';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Non';

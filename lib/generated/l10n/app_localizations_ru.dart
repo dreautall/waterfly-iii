@@ -203,6 +203,20 @@ class SRu extends S {
   String get billsUngrouped => 'Ungrouped';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Вы уверены, что хотите удалить категорию? Транзакции, входящие в нее, удалены не будут, они просто останутся без категории.';
 
@@ -315,6 +329,21 @@ class SRu extends S {
 
   @override
   String get generalCurrency => 'Валюта';
+
+  @override
+  String get generalDateRangeCurrentMonth => 'Current Month';
+
+  @override
+  String get generalDateRangeLast30Days => 'Last 30 days';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Current Year';
+
+  @override
+  String get generalDateRangeLastYear => 'Last year';
+
+  @override
+  String get generalDateRangeAll => 'All';
 
   @override
   String get generalDefault => 'по умолчанию';
@@ -435,6 +464,9 @@ class SRu extends S {
   String get homeMainChartNetWorthTitle => 'Общая средства';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Сохранить/потратить деньги';
 
   @override
@@ -476,6 +508,9 @@ class SRu extends S {
   String homePiggySaved(String amount) {
     return 'Накоплено: $amount';
   }
+
+  @override
+  String get homePiggySavedMultiple => 'Saved so far:';
 
   @override
   String homePiggyTarget(String amount) {
@@ -520,6 +555,9 @@ class SRu extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<All Currencies>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Date Range';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -587,7 +625,7 @@ class SRu extends S {
   String get navigationMain => 'Главное табло';
 
   @override
-  String get navigationSettings => 'Настройки';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

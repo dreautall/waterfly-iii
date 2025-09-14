@@ -373,6 +373,26 @@
     "@generalCurrency": {
         "description": "(Money) Currency"
     },
+    "generalDateRangeCurrentMonth": "Trenutni mesec",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Zadnjih 30 dni",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Trenutno leto",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Prejšnje leto",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Vse",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
     "generalDefault": "privzeto",
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
@@ -537,6 +557,10 @@
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
     },
+    "homeMainChartTagsTitle": "Povzetek oznak za trenutni mesec",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
     "homePiggyAdjustDialogTitle": "Prihranek/poraba denarja",
     "@homePiggyAdjustDialogTitle": {
         "description": "Title of the dialog where money can be added/removed to a piggy bank."
@@ -666,6 +690,10 @@
     "homeTransactionsDialogFilterCurrenciesAll": "<Vse valute>",
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "Časovno območje",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
     },
     "homeTransactionsDialogFilterFutureTransactions": "Prikaži bodoče transakcije",
     "@homeTransactionsDialogFilterFutureTransactions": {
@@ -1113,7 +1141,7 @@
     "@transactionTitleEdit": {
         "description": "Title: Edit existing transaction"
     },
-    "transactionTypeDeposit": "Polog",
+    "transactionTypeDeposit": "Priliv",
     "@transactionTypeDeposit": {
         "description": "Deposit transaction type"
     },

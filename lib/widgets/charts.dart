@@ -85,22 +85,22 @@ class TextSymbolRenderer extends charts.CircleSymbolRenderer {
       strokeWidthPx: strokeWidthPx,
     );
 
-    charts_style.TextStyle textStyle = charts_style.TextStyle();
+    final charts_style.TextStyle textStyle = charts_style.TextStyle();
     textStyle.color = charts.ColorUtil.fromDartColor(
       Theme.of(context).colorScheme.onSurfaceVariant,
     );
     textStyle.fontSize =
         Theme.of(context).textTheme.labelSmall?.fontSize?.toInt() ?? 12;
 
-    charts_text.TextElement textElement = charts_text.TextElement(
+    final charts_text.TextElement textElement = charts_text.TextElement(
       printFunc(),
       style: textStyle,
     );
-    double width = textElement.measurement.horizontalSliceWidth;
-    double height = textElement.measurement.verticalSliceWidth;
+    final double width = textElement.measurement.horizontalSliceWidth;
+    final double height = textElement.measurement.verticalSliceWidth;
 
-    double centerX = bounds.left + bounds.width / 2;
-    double centerY =
+    final double centerX = bounds.left + bounds.width / 2;
+    final double centerY =
         bounds.top +
         bounds.height / 2 -
         marginBottom -

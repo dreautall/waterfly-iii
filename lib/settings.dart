@@ -51,6 +51,7 @@ class NotificationAppSettings {
 enum DashboardCards {
   dailyavg,
   categories,
+  tags,
   accounts,
   netearnings,
   networth,
@@ -65,6 +66,16 @@ enum BoolSettings {
   dynamicColors,
   useServerTime,
   hideTags,
+  billsShowOnlyActive,
+  billsShowOnlyExpected,
+}
+
+enum TransactionDateFilter {
+  currentMonth,
+  last30Days,
+  currentYear,
+  lastYear,
+  all,
 }
 
 class SettingsBitmask {
@@ -131,6 +142,7 @@ class SettingsProvider with ChangeNotifier {
   static const String settingsCategoriesSumExcluded = "CAT_SUMEXCLUDED";
   static const String settingsDashboardOrder = "DASHBOARD_ORDER";
   static const String settingsDashboardHidden = "DASHBOARD_HIDDEN";
+  static const String settingTransactionDateFilter = "TX_DATE_FILTER";
 
   bool get debug => _loaded ? _boolSettings[BoolSettings.debug] : false;
   bool get lock => _loaded ? _boolSettings[BoolSettings.lock] : false;
@@ -141,6 +153,10 @@ class SettingsProvider with ChangeNotifier {
   bool get useServerTime =>
       _loaded ? _boolSettings[BoolSettings.useServerTime] : true;
   bool get hideTags => _loaded ? _boolSettings[BoolSettings.hideTags] : false;
+  bool get billsShowOnlyActive =>
+      _loaded ? _boolSettings[BoolSettings.billsShowOnlyActive] : false;
+  bool get billsShowOnlyExpected =>
+      _loaded ? _boolSettings[BoolSettings.billsShowOnlyExpected] : false;
 
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get theme => _theme;
@@ -177,9 +193,13 @@ class SettingsProvider with ChangeNotifier {
   late SettingsBitmask _boolSettings;
   SettingsBitmask get boolSettings => _boolSettings;
 
+  TransactionDateFilter _transactionDateFilter = TransactionDateFilter.all;
+
+  TransactionDateFilter get transactionDateFilter => _transactionDateFilter;
+
   Future<void> migrateLegacy(SharedPreferencesAsync prefs) async {
     log.config("trying to migrate old prefs");
-    SharedPreferences oldPrefs = await SharedPreferences.getInstance();
+    final SharedPreferences oldPrefs = await SharedPreferences.getInstance();
 
     _boolSettings = SettingsBitmask(oldPrefs.getInt(settingsBitmask) ?? 0);
     if (!oldPrefs.containsKey(settingsBitmask)) {
@@ -195,6 +215,8 @@ class SettingsProvider with ChangeNotifier {
       _boolSettings[BoolSettings.useServerTime] =
           oldPrefs.getBool(settingUseServerTime) ?? true;
       _boolSettings[BoolSettings.hideTags] = false;
+      _boolSettings[BoolSettings.billsShowOnlyActive] = false;
+      _boolSettings[BoolSettings.billsShowOnlyExpected] = false;
     }
     await prefs.setInt(settingsBitmask, _boolSettings.value);
 
@@ -269,7 +291,7 @@ class SettingsProvider with ChangeNotifier {
     }
     _loading = true;
 
-    SharedPreferencesAsync prefs = SharedPreferencesAsync();
+    final SharedPreferencesAsync prefs = SharedPreferencesAsync();
     log.config("reading prefs");
 
     _boolSettings = SettingsBitmask(await prefs.getInt(settingsBitmask) ?? 0);
@@ -317,19 +339,21 @@ class SettingsProvider with ChangeNotifier {
     _notificationApps =
         await prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
-    int? billsLayoutIndex = await prefs.getInt(settingBillsDefaultLayout);
+    final int? billsLayoutIndex = await prefs.getInt(settingBillsDefaultLayout);
     _billsLayout =
         billsLayoutIndex == null
             ? BillsLayout.grouped
             : BillsLayout.values[billsLayoutIndex];
 
-    int? billsSortIndex = await prefs.getInt(settingBillsDefaultSort);
+    final int? billsSortIndex = await prefs.getInt(settingBillsDefaultSort);
     _billsSort =
         billsSortIndex == null
             ? BillsSort.name
             : BillsSort.values[billsSortIndex];
 
-    int? billsSortOrderIndex = await prefs.getInt(settingBillsDefaultSortOrder);
+    final int? billsSortOrderIndex = await prefs.getInt(
+      settingBillsDefaultSortOrder,
+    );
     _billsSortOrder =
         billsSortOrderIndex == null
             ? SortingOrder.ascending
@@ -362,13 +386,28 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
-    final List<String> dashboardHiddenStr =
-        await prefs.getStringList(settingsDashboardHidden) ?? <String>[];
-    for (String s in dashboardHiddenStr) {
-      _dashboardHidden.add(
-        DashboardCards.values.firstWhere((DashboardCards e) => e.name == s),
-      );
+    final List<String>? dashboardHiddenStr = await prefs.getStringList(
+      settingsDashboardHidden,
+    );
+    if (dashboardHiddenStr == null) {
+      // Default hidden charts
+      _dashboardHidden.add(DashboardCards.tags);
+    } else {
+      for (String s in dashboardHiddenStr) {
+        _dashboardHidden.add(
+          DashboardCards.values.firstWhere((DashboardCards e) => e.name == s),
+        );
+      }
     }
+
+    // Load new transaction date filter setting
+    final int? txDateFilterIndex = await prefs.getInt(
+      settingTransactionDateFilter,
+    );
+    _transactionDateFilter =
+        txDateFilterIndex == null
+            ? TransactionDateFilter.all
+            : TransactionDateFilter.values[txDateFilterIndex];
 
     _loaded = _loading = true;
     log.finest(() => "notify SettingsProvider->loadSettings()");
@@ -405,7 +444,7 @@ class SettingsProvider with ChangeNotifier {
       if (debug) {
         Logger.root.level = Level.ALL;
         _debugLogger = Logger.root.onRecord.listen(await DebugLogger().get());
-        PackageInfo appInfo = await PackageInfo.fromPlatform();
+        final PackageInfo appInfo = await PackageInfo.fromPlatform();
         log.info(
           "Enabling debug logs, app ${appInfo.appName} v${appInfo.version}+${appInfo.buildNumber}",
         );
@@ -425,6 +464,10 @@ class SettingsProvider with ChangeNotifier {
   set useServerTime(bool enabled) =>
       _setBool(BoolSettings.useServerTime, enabled);
   set hideTags(bool enabled) => _setBool(BoolSettings.hideTags, enabled);
+  set billsShowOnlyActive(bool enabled) =>
+      _setBool(BoolSettings.billsShowOnlyActive, enabled);
+  set billsShowOnlyExpected(bool enabled) =>
+      _setBool(BoolSettings.billsShowOnlyExpected, enabled);
 
   Future<void> setTheme(ThemeMode theme) async {
     _theme = theme;
@@ -706,6 +749,21 @@ class SettingsProvider with ChangeNotifier {
     log.finest(() => "notify SettingsProvider->dashboardShowCard()");
     notifyListeners();
   }
+
+  Future<void> setTransactionDateFilter(TransactionDateFilter filter) async {
+    if (filter == _transactionDateFilter) {
+      return;
+    }
+
+    _transactionDateFilter = filter;
+    await SharedPreferencesAsync().setInt(
+      settingTransactionDateFilter,
+      filter.index,
+    );
+
+    log.finest(() => "notify SettingsProvider->setTransactionDateFilter()");
+    notifyListeners();
+  }
 }
 
 class DebugLogger {
@@ -740,7 +798,7 @@ class DebugLogger {
   }
 
   Future<void> destroy() async {
-    File file = File(await _getPath());
+    final File file = File(await _getPath());
     if (await file.exists()) {
       file.deleteSync();
     }

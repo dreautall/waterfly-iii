@@ -201,6 +201,20 @@ class SZh extends S {
   String get billsUngrouped => '未分组的';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm => '您确定要删除这个分类吗？与该分类关联的账单不会被删除，但该分类将彻底删除。';
 
   @override
@@ -312,6 +326,21 @@ class SZh extends S {
 
   @override
   String get generalCurrency => '货币';
+
+  @override
+  String get generalDateRangeCurrentMonth => 'Current Month';
+
+  @override
+  String get generalDateRangeLast30Days => 'Last 30 days';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Current Year';
+
+  @override
+  String get generalDateRangeLastYear => 'Last year';
+
+  @override
+  String get generalDateRangeAll => 'All';
 
   @override
   String get generalDefault => '默认';
@@ -431,6 +460,9 @@ class SZh extends S {
   String get homeMainChartNetWorthTitle => '净值';
 
   @override
+  String get homeMainChartTagsTitle => '';
+
+  @override
   String get homePiggyAdjustDialogTitle => '存钱/花钱';
 
   @override
@@ -472,6 +504,9 @@ class SZh extends S {
   String homePiggySaved(String amount) {
     return '到目前为止已保存: $amount';
   }
+
+  @override
+  String get homePiggySavedMultiple => 'Saved so far:';
 
   @override
   String homePiggyTarget(String amount) {
@@ -516,6 +551,9 @@ class SZh extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<全部货币>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Date Range';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions => '显示未来交易';
@@ -581,7 +619,7 @@ class SZh extends S {
   String get navigationMain => '主仪表盘';
 
   @override
-  String get navigationSettings => '设置';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => '取消';

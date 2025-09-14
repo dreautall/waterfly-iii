@@ -203,6 +203,20 @@ class SSv extends S {
   String get billsUngrouped => 'Ogrupperad';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Är du säker på att du vill ta bort denna kategori? Transaktionerna kommer inte att tas bort, men kommer inte att ha en kategori längre.';
 
@@ -315,6 +329,21 @@ class SSv extends S {
 
   @override
   String get generalCurrency => 'Valuta';
+
+  @override
+  String get generalDateRangeCurrentMonth => 'Current Month';
+
+  @override
+  String get generalDateRangeLast30Days => 'Last 30 days';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Current Year';
+
+  @override
+  String get generalDateRangeLastYear => 'Last year';
+
+  @override
+  String get generalDateRangeAll => 'All';
 
   @override
   String get generalDefault => 'förvald';
@@ -435,6 +464,9 @@ class SSv extends S {
   String get homeMainChartNetWorthTitle => 'Nettoförmögenhet';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Spara/spendera pengar';
 
   @override
@@ -476,6 +508,9 @@ class SSv extends S {
   String homePiggySaved(String amount) {
     return 'Sparat hittills: $amount';
   }
+
+  @override
+  String get homePiggySavedMultiple => 'Saved so far:';
 
   @override
   String homePiggyTarget(String amount) {
@@ -520,6 +555,9 @@ class SSv extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Alla valutor>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Date Range';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -587,7 +625,7 @@ class SSv extends S {
   String get navigationMain => 'Kontrollpanel';
 
   @override
-  String get navigationSettings => 'Inställningar';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'Nej';

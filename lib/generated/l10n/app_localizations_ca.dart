@@ -206,6 +206,20 @@ class SCa extends S {
   String get billsUngrouped => 'Sense grup';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'N\'estàs segur que vols esborrar aquesta categoria? Les transaccions no s\'esborraran, però ja no tindran cap categoria assignada.';
 
@@ -318,6 +332,21 @@ class SCa extends S {
 
   @override
   String get generalCurrency => 'Moneda';
+
+  @override
+  String get generalDateRangeCurrentMonth => 'Current Month';
+
+  @override
+  String get generalDateRangeLast30Days => 'Last 30 days';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Current Year';
+
+  @override
+  String get generalDateRangeLastYear => 'Last year';
+
+  @override
+  String get generalDateRangeAll => 'All';
 
   @override
   String get generalDefault => 'per defecte';
@@ -438,6 +467,9 @@ class SCa extends S {
   String get homeMainChartNetWorthTitle => 'Valor Net';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'Estalvia/Gasta Diners';
 
   @override
@@ -479,6 +511,9 @@ class SCa extends S {
   String homePiggySaved(String amount) {
     return 'Has estalviat: $amount';
   }
+
+  @override
+  String get homePiggySavedMultiple => 'Saved so far:';
 
   @override
   String homePiggyTarget(String amount) {
@@ -528,6 +563,9 @@ class SCa extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Totes les Monedes>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Date Range';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -595,7 +633,7 @@ class SCa extends S {
   String get navigationMain => 'Tauler de control Principal';
 
   @override
-  String get navigationSettings => 'Configuració';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'No';

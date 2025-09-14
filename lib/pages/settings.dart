@@ -273,14 +273,20 @@ class LanguageDialog extends StatelessWidget {
     return SimpleDialog(
       title: Text(S.of(context).settingsDialogLanguageTitle),
       children: <Widget>[
-        ...S.supportedLocales.map(
-          (Locale locale) => RadioListTile<String>(
-            value: locale.languageCode,
-            title: Text(locale.toLanguageTag()),
-            groupValue: S.of(context).localeName,
-            onChanged: (_) {
-              Navigator.pop(context, locale);
-            },
+        RadioGroup<Locale>(
+          groupValue: Locale(S.of(context).localeName),
+          onChanged: (Locale? locale) {
+            Navigator.pop(context, locale);
+          },
+          child: Column(
+            children: <Widget>[
+              ...S.supportedLocales.map(
+                (Locale locale) => RadioListTile<Locale>(
+                  value: locale,
+                  title: Text(locale.toLanguageTag()),
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -307,18 +313,24 @@ class ThemeDialog extends StatelessWidget {
               onChanged: (bool value) => settings.dynamicColors = value,
             )
             : const SizedBox.shrink(),
-        ...ThemeMode.values.map(
-          (ThemeMode theme) => RadioListTile<ThemeMode>(
-            value: theme,
-            title: Text(
-              S
-                  .of(context)
-                  .settingsThemeValue(theme.toString().split('.').last),
-            ),
-            groupValue: settings.theme,
-            onChanged: (_) {
-              Navigator.pop(context, theme);
-            },
+        RadioGroup<ThemeMode>(
+          groupValue: settings.theme,
+          onChanged: (ThemeMode? theme) {
+            Navigator.pop(context, theme);
+          },
+          child: Column(
+            children: <Widget>[
+              ...ThemeMode.values.map(
+                (ThemeMode theme) => RadioListTile<ThemeMode>(
+                  value: theme,
+                  title: Text(
+                    S
+                        .of(context)
+                        .settingsThemeValue(theme.toString().split('.').last),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],

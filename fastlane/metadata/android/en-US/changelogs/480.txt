@@ -1,0 +1,9 @@
+- **⚠️ Due to a dependency update, the login details will be deleted with this version. Please issue a new personal access token and use it to log back in - no other settings will be lost! ⚠️**
+- New: Date filter for Transaction list (Last Month, Last Year etc.)
+- New: Dashboard Chart Tag Summary (hidden by default)
+- New: Transaction list for single account shows current balance, thank you @Arkarr
+- Improved: Back from Settings now goes back to previous screen instead of exiting the app
+- Improved: Better "Saving" state for transaction page, thank you @Aegeontis
+- Improved: Support for additional banking apps
+- Bugfixes
+- Version updates of dependencies, flutter etc.

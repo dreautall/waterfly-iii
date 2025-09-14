@@ -200,6 +200,20 @@ class SFa extends S {
   String get billsUngrouped => 'گروه‌بندی نشده';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Show only active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Shows only active subscriptions.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Show only expected';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Shows only those subscriptions that are expected (or paid) this month.';
+
+  @override
   String get categoryDeleteConfirm =>
       'آیا مطمئن هستید که می‌خواهید این دسته را حذف کنید؟ تراکنش ها حذف نمی شوند، اما دیگر دسته بندی نخواهند داشت.\n';
 
@@ -312,6 +326,21 @@ class SFa extends S {
 
   @override
   String get generalCurrency => 'واحدپول';
+
+  @override
+  String get generalDateRangeCurrentMonth => 'Current Month';
+
+  @override
+  String get generalDateRangeLast30Days => 'Last 30 days';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Current Year';
+
+  @override
+  String get generalDateRangeLastYear => 'Last year';
+
+  @override
+  String get generalDateRangeAll => 'All';
 
   @override
   String get generalDefault => 'پیش فرض';
@@ -431,6 +460,9 @@ class SFa extends S {
   String get homeMainChartNetWorthTitle => 'ارزش خالص\n';
 
   @override
+  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+
+  @override
   String get homePiggyAdjustDialogTitle => 'پس انداز/خرج پول\n';
 
   @override
@@ -472,6 +504,9 @@ class SFa extends S {
   String homePiggySaved(String amount) {
     return 'ذخیره شده تا کنون: $amount\n';
   }
+
+  @override
+  String get homePiggySavedMultiple => 'Saved so far:';
 
   @override
   String homePiggyTarget(String amount) {
@@ -517,6 +552,9 @@ class SFa extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<همه ارزها>\n';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Date Range';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -584,7 +622,7 @@ class SFa extends S {
   String get navigationMain => 'داشبورد اصلی\n';
 
   @override
-  String get navigationSettings => 'تنظیمات';
+  String get generalSettings => 'Settings';
 
   @override
   String get no => 'نه';

@@ -49,7 +49,7 @@ class NotificationListenerStatus {
 }
 
 final RegExp rFindMoney = RegExp(
-  r'(?:^|\s)(?<preCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})\s*(?<amount>\d[.,\s\d]+(?:[.,]\d+)?)\s*(?<postCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})(?:$|\s)',
+  r'(?:^|\s)(?<preCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})\s*(?<amount>\d[.,\s\d]+(?:[.,]\d+)?)\s*(?<postCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})(?:$|\s|\.|,)',
 );
 
 Future<NotificationListenerStatus> nlStatus() async {
@@ -280,44 +280,66 @@ Future<(CurrencyRead?, double)> parseNotificationText(
   final Iterable<RegExpMatch> matches = rFindMoney.allMatches(notificationBody);
 
   if (matches.isNotEmpty) {
+    final List<CurrencyRead> currencies = (await api.v1CurrenciesGet()).body!.data;
+    currencies.add(localCurrency);
 
-    final Response<CurrencyArray> response = await api.v1CurrenciesGet();
+    int bestMatchIndex = -1;
 
-    RegExpMatch? bestMatch = matches.elementAt(0);
+    for (int i = 0; i < matches.length; ++i) {
+      final RegExpMatch match = matches.elementAt(i);
 
-    for (RegExpMatch match in matches) {
-      if (match.namedGroup("preCurrency")?.isNotEmpty ?? false ||
-          match.namedGroup("postCurrency")!.isNotEmpty) {
+      final bool hasPre = match.namedGroup("preCurrency")?.isNotEmpty ?? false;
+      final bool hasPost = match.namedGroup("postCurrency")!.isNotEmpty;
+
+      if (hasPre || hasPost) {
         final String preCurrency = match.namedGroup("preCurrency")!;
         final String postCurrency = match.namedGroup("postCurrency")!;
 
-        if (localCurrency.attributes.code == preCurrency ||
-            localCurrency.attributes.symbol == preCurrency ||
-            localCurrency.attributes.code == postCurrency ||
-            localCurrency.attributes.symbol == postCurrency){
-            bestMatch = match;
-            currency = localCurrency;
+        // If we haven't found any good match (meaning a match with some valid
+        // pre or post currency) then we should regard the current one as the
+        // best one so far
+        if (bestMatchIndex == -1) {
+          bestMatchIndex = i;
         }
-        else {
-          for (CurrencyRead apiCurrency in response.body!.data) {
-            if (apiCurrency.attributes.code == preCurrency ||
-                apiCurrency.attributes.symbol == preCurrency ||
-                apiCurrency.attributes.code == postCurrency ||
-                apiCurrency.attributes.symbol == postCurrency){
-              bestMatch = match;
-              currency = apiCurrency;
-              break;
-            }
+
+        for (CurrencyRead apiCurrency in currencies) {
+          if (apiCurrency.attributes.code == preCurrency ||
+              apiCurrency.attributes.symbol == preCurrency ||
+              apiCurrency.attributes.code == postCurrency ||
+              apiCurrency.attributes.symbol == postCurrency) {
+            bestMatchIndex = i;
+            currency = apiCurrency;
+            break;
           }
         }
       }
     }
 
-    if (bestMatch != null) {
-      final String amountStr = (bestMatch.namedGroup("amount") ?? "")
-          .replaceAll(RegExp(r"\s+"), "");
+    if (bestMatchIndex != -1) {
+      final RegExpMatch bestMatch = matches.elementAt(bestMatchIndex);
 
-      amount = double.tryParse(amountStr.replaceAll(",", "."))!;
+      String amountStr = (bestMatch.namedGroup("amount") ?? "").replaceAll(
+        RegExp(r"\s+"),
+        "",
+      );
+
+      if (amountStr.isNotEmpty) {
+        // Find the first non-digit character at the end of the string
+        String separator = amountStr[0];
+        for (int i = amountStr.length - 1; i >= 0; i--) {
+          separator = amountStr[i];
+          if (!RegExp(r'\d').hasMatch(separator)) {
+            break;
+          }
+        }
+
+        // Strip all non-digit characters that are not decimal separators
+        if (separator == "." || separator == ",") {
+          amountStr = amountStr.replaceAll(RegExp('[^0-9$separator]'), '');
+        }
+
+        amount = double.tryParse(amountStr.replaceAll(",", "."))!;
+      }
     }
   }
 

@@ -195,6 +195,7 @@ class _HomePiggybankState extends State<HomePiggybank>
           () => Future<void>.sync(
             () => setState(() {
               _pagingState = _pagingState.reset();
+              _fetchAccountStatus();
             }),
           ),
       child: Column(

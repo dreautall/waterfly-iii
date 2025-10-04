@@ -197,14 +197,18 @@ class _HomePiggybankState extends State<HomePiggybank>
               _pagingState = _pagingState.reset();
             }),
           ),
-      child: PagedListView<int, PiggyBankRead>(
-        state: _pagingState,
-        fetchNextPage: _fetchPage,
-        builderDelegate: PagedChildBuilderDelegate<PiggyBankRead>(
-          animateTransitions: true,
-          transitionDuration: animDurationStandard,
-          invisibleItemsThreshold: 10,
-          itemBuilder: (BuildContext context, PiggyBankRead piggy, int index) {
+      child: Column(
+        children: <Widget>[
+          // Piggy Banks List
+          Expanded(
+            child: PagedListView<int, PiggyBankRead>(
+              state: _pagingState,
+              fetchNextPage: _fetchPage,
+              builderDelegate: PagedChildBuilderDelegate<PiggyBankRead>(
+                animateTransitions: true,
+                transitionDuration: animDurationStandard,
+                invisibleItemsThreshold: 10,
+                itemBuilder: (BuildContext context, PiggyBankRead piggy, int index) {
             Widget? groupHeader;
             final int groupId =
                 (int.tryParse(piggy.attributes.objectGroupId ?? "") ?? 0);
@@ -370,6 +374,66 @@ class _HomePiggybankState extends State<HomePiggybank>
                   ],
                 ),
               ),
+              ),
+            ),
+          ),
+          // Account Status Section at the end
+          if (_accountStatusData.isNotEmpty) ...<Widget>[
+            const Divider(height: 1),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+              child: Text(
+                S.of(context).homePiggyAvailableAmounts,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
+            ..._accountStatusData.map((AccountStatusData statusData) => 
+              _buildAccountStatusItem(context, statusData)
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAccountStatusItem(BuildContext context, AccountStatusData statusData) {
+    return ListTile(
+      title: Text(statusData.account.attributes.name),
+      subtitle: Text(
+        "Total: ${statusData.currency.fmt(statusData.accountBalance)}",
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+      // shape: const RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.only(
+      //     topLeft: Radius.circular(16),
+      //     bottomLeft: Radius.circular(16),
+      //   ),
+      // ),
+      isThreeLine: false,
+      trailing: RichText(
+        textAlign: TextAlign.end,
+        maxLines: 2,
+        text: TextSpan(
+          style: Theme.of(context).textTheme.bodyMedium,
+          children: <InlineSpan>[
+            // Available balance (main info in green)
+            TextSpan(
+              text: statusData.currency.fmt(statusData.availableBalance),
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: (statusData.availableBalance < 0) ? Colors.red : Colors.green,
+                fontWeight: FontWeight.bold,
+                fontFeatures: const <FontFeature>[
+                  FontFeature.tabularFigures(),
+                ],
+              ),
+            ),
+            const TextSpan(text: "\n"),
+            TextSpan(
+              text: S.of(context).homePiggyInPiggyBanks(
+                statusData.currency.fmt(statusData.totalInPiggyBanks),
+              ),
+            ),
+          ],
         ),
       ),
     );

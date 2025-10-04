@@ -45,6 +45,95 @@ class _HomePiggybankState extends State<HomePiggybank>
   final int _numberOfItemsPerRequest = 100;
   PagingState<int, PiggyBankRead> _pagingState =
       PagingState<int, PiggyBankRead>();
+  
+  List<AccountStatusData> _accountStatusData = <AccountStatusData>[];
+  bool _isLoadingAccountStatus = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAccountStatus();
+  }
+
+  Future<void> _fetchAccountStatus() async {
+    if (_isLoadingAccountStatus) return;
+
+    setState(() {
+      _isLoadingAccountStatus = true;
+    });
+
+    try {
+      final FireflyIii api = context.read<FireflyService>().api;
+      
+      // Get all asset accounts
+      final Response<AccountArray> respAccounts = await api.v1AccountsGet(
+        type: AccountTypeFilter.asset,
+        limit: 1000, // Get all accounts
+      );
+      apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
+
+      final List<AccountRead> accounts = respAccounts.body!.data;
+      final List<AccountStatusData> statusData = <AccountStatusData>[];
+
+      for (final AccountRead account in accounts) {
+        if (!(account.attributes.active ?? false)) continue;
+
+        // Get piggy banks for this account
+        final Response<PiggyBankArray> respPiggyBanks = await api.v1AccountsIdPiggyBanksGet(
+          id: account.id,
+        );
+        
+        if (respPiggyBanks.isSuccessful && respPiggyBanks.body != null) {
+          final List<PiggyBankRead> piggyBanks = respPiggyBanks.body!.data;
+          
+          if (piggyBanks.isNotEmpty) {
+            double totalInPiggyBanks = 0;
+            for (final PiggyBankRead piggy in piggyBanks) {
+              if (piggy.attributes.active ?? false) {
+                totalInPiggyBanks += double.tryParse(piggy.attributes.currentAmount ?? "") ?? 0;
+              }
+            }
+
+            final double accountBalance = double.tryParse(account.attributes.currentBalance ?? "") ?? 0;
+            final double availableBalance = accountBalance - totalInPiggyBanks;
+
+            final CurrencyRead currency = CurrencyRead(
+              id: account.attributes.currencyId ?? "0",
+              type: "currencies",
+              attributes: CurrencyProperties(
+                code: account.attributes.currencyCode ?? "",
+                name: "",
+                symbol: account.attributes.currencySymbol ?? "",
+                decimalPlaces: account.attributes.currencyDecimalPlaces,
+              ),
+            );
+
+            statusData.add(AccountStatusData(
+              account: account,
+              currency: currency,
+              accountBalance: accountBalance,
+              totalInPiggyBanks: totalInPiggyBanks,
+              availableBalance: availableBalance,
+            ));
+          }
+        }
+      }
+
+      if (mounted) {
+        setState(() {
+          _accountStatusData = statusData;
+          _isLoadingAccountStatus = false;
+        });
+      }
+    } catch (e, stackTrace) {
+      log.severe("_fetchAccountStatus()", e, stackTrace);
+      if (mounted) {
+        setState(() {
+          _isLoadingAccountStatus = false;
+        });
+      }
+    }
+  }
 
   Future<void> _fetchPage() async {
     if (_pagingState.isLoading) return;

@@ -203,18 +203,18 @@ class SSl extends S {
   String get billsUngrouped => 'Nezdruženo';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'Prikaži samo aktivne';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'Prikazuje samo aktivne naročnine.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'Prikaži samo pričakovano';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'Prikazuje samo tiste naročnine, ki so pričakovane (ali plačane) ta mesec.';
 
   @override
   String get categoryDeleteConfirm =>
@@ -511,7 +511,7 @@ class SSl extends S {
   }
 
   @override
-  String get homePiggySavedMultiple => 'Saved so far:';
+  String get homePiggySavedMultiple => 'Privarčevano do sedaj:';
 
   @override
   String homePiggyTarget(String amount) {
@@ -628,7 +628,7 @@ class SSl extends S {
   String get navigationMain => 'Glavna nadzorna plošča';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => 'Nastavitve';
 
   @override
   String get no => 'Ne';

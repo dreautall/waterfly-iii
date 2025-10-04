@@ -15,6 +15,22 @@ import 'package:waterflyiii/pages/home/piggybank/chart.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
 
+class AccountStatusData {
+  const AccountStatusData({
+    required this.account,
+    required this.currency,
+    required this.accountBalance,
+    required this.totalInPiggyBanks,
+    required this.availableBalance,
+  });
+
+  final AccountRead account;
+  final CurrencyRead currency;
+  final double accountBalance;
+  final double totalInPiggyBanks;
+  final double availableBalance;
+}
+
 class HomePiggybank extends StatefulWidget {
   const HomePiggybank({super.key});
 

@@ -213,6 +213,22 @@
     "@billsUngrouped": {
         "description": "Title for ungrouped subscriptions"
     },
+    "billsSettingsShowOnlyActive": "Prikaži samo aktivne",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Prikazuje samo aktivne naročnine.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Prikaži samo pričakovano",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Prikazuje samo tiste naročnine, ki so pričakovane (ali plačane) ta mesec.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
     "categoryDeleteConfirm": "Ali ste prepričani, da želite izbrisati to kategorijo? Transakcije ne bodo izbrisane, vendar ne bodo imele več kategorije.",
     "@categoryDeleteConfirm": {
         "description": "Confirmation text to delete category"
@@ -629,6 +645,10 @@
             }
         }
     },
+    "homePiggySavedMultiple": "Privarčevano do sedaj:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "Ciljni znesek: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
@@ -781,9 +801,9 @@
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "Nastavitve",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "Nastavitve",
+    "@generalSettings": {
+        "description": "Label: Settings"
     },
     "no": "Ne",
     "@no": {

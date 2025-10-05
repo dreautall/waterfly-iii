@@ -453,10 +453,7 @@ class _HomePiggybankState extends State<HomePiggybank>
       ) {
     return ListTile(
       title: Text(statusData.account.attributes.name),
-      subtitle: Text(
-        "Total: ${statusData.currency.fmt(statusData.accountBalance)}",
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
+      subtitle: Text("Total: ${statusData.currency.fmt(statusData.accountBalance)}"),
       isThreeLine: false,
       trailing: RichText(
         textAlign: TextAlign.end,

@@ -11,10 +11,10 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/piggybank/chart.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
-import 'package:waterflyiii/pages/navigation.dart';
 
 class AccountStatusData {
   const AccountStatusData({
@@ -54,6 +54,17 @@ class _HomePiggybankState extends State<HomePiggybank>
   void initState() {
     super.initState();
     _fetchAccountStatus();
+    // Add top-right action to open Available Amounts bottom sheet
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<PageActions>().set(widget.key!, <Widget>[
+        IconButton(
+          icon: const Icon(Icons.account_balance_wallet_outlined),
+          tooltip: S.of(context).homePiggyAvailableAmounts,
+          onPressed:  _showAvailableAmountsSheet,
+        ),
+      ]);
+    });
+
   }
 
   Future<void> _fetchAccountStatus() async {
@@ -188,22 +199,6 @@ class _HomePiggybankState extends State<HomePiggybank>
   Widget build(BuildContext context) {
     super.build(context);
     log.finest(() => "build()");
-
-   // Add top-right action to open Available Amounts bottom sheet
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      if (_accountStatusData.isEmpty) {
-        context.read<NavPageElements>().appBarActions = <Widget>[];
-        return;
-      }
-      context.read<NavPageElements>().appBarActions = <Widget>[
-        IconButton(
-          icon: const Icon(Icons.account_balance_wallet_outlined),
-          tooltip: S.of(context).homePiggyAvailableAmounts,
-          onPressed: () => _showAvailableAmountsSheet(context),
-        ),
-      ];
-    });
 
     int lastGroupId = -1;
 
@@ -400,7 +395,7 @@ class _HomePiggybankState extends State<HomePiggybank>
     );
   }
 
-  void _showAvailableAmountsSheet(BuildContext context) {
+  void _showAvailableAmountsSheet() {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,

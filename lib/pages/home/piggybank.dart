@@ -77,58 +77,88 @@ class _HomePiggybankState extends State<HomePiggybank>
     try {
       final FireflyIii api = context.read<FireflyService>().api;
 
-      // Get all asset accounts
-      final Response<AccountArray> respAccounts = await api.v1AccountsGet(
-        type: AccountTypeFilter.asset,
-        limit: 1000, // Get all accounts
-      );
-      apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
-
-      final List<AccountRead> accounts = respAccounts.body!.data;
-      final List<AccountStatusData> statusData = <AccountStatusData>[];
-
-      for (final AccountRead account in accounts) {
-        if (!(account.attributes.active ?? false)) continue;
-
-        // Get piggy banks for this account
-        final Response<PiggyBankArray> respPiggyBanks = await api.v1AccountsIdPiggyBanksGet(
-          id: account.id,
+      // 1) Fetch ALL piggy banks across pages and aggregate totals per account
+      final Map<String, double> accountIdToPiggyTotal = <String, double>{};
+      int piggyPage = 0;
+      Response<PiggyBankArray>? respPiggies;
+      do {
+        piggyPage += 1;
+        respPiggies = await api.v1PiggyBanksGet(
+          page: piggyPage,
+          limit: _numberOfItemsPerRequest,
         );
+        apiThrowErrorIfEmpty(respPiggies, mounted ? context : null);
 
-        if (respPiggyBanks.isSuccessful && respPiggyBanks.body != null) {
-          final List<PiggyBankRead> piggyBanks = respPiggyBanks.body!.data;
-
-          if (piggyBanks.isNotEmpty) {
-            double totalInPiggyBanks = 0;
-            for (final PiggyBankRead piggy in piggyBanks) {
-              if (piggy.attributes.active ?? false) {
-                totalInPiggyBanks += double.tryParse(piggy.attributes.currentAmount ?? "") ?? 0;
-              }
-            }
-
-            final double accountBalance = double.tryParse(account.attributes.currentBalance ?? "") ?? 0;
-            final double availableBalance = accountBalance - totalInPiggyBanks;
-
-            final CurrencyRead currency = CurrencyRead(
-              id: account.attributes.currencyId ?? "0",
-              type: "currencies",
-              attributes: CurrencyProperties(
-                code: account.attributes.currencyCode ?? "",
-                name: "",
-                symbol: account.attributes.currencySymbol ?? "",
-                decimalPlaces: account.attributes.currencyDecimalPlaces,
-              ),
+        for (final PiggyBankRead piggy in respPiggies.body!.data) {
+          if (!(piggy.attributes.active ?? false)) continue;
+          if (piggy.attributes.accounts == null) continue;
+          for (final PiggyBankAccountRead acc in piggy.attributes.accounts!) {
+            if ((acc.accountId ?? '').isEmpty) continue;
+            final double amt = double.tryParse(acc.currentAmount ?? "") ?? 0;
+            accountIdToPiggyTotal.update(
+              acc.accountId!,
+              (double prev) => prev + amt,
+              ifAbsent: () => amt,
             );
-
-            statusData.add(AccountStatusData(
-              account: account,
-              currency: currency,
-              accountBalance: accountBalance,
-              totalInPiggyBanks: totalInPiggyBanks,
-              availableBalance: availableBalance,
-            ));
           }
         }
+      } while ((respPiggies.body!.meta.pagination?.currentPage ?? 1) <
+          (respPiggies.body!.meta.pagination?.totalPages ?? 1));
+
+      if (accountIdToPiggyTotal.isEmpty) {
+        if (mounted) {
+          setState(() {
+            _accountStatusData = <AccountStatusData>[];
+            _isLoadingAccountStatus = false;
+          });
+        }
+        return;
+      }
+
+      // 2) Fetch ONLY the accounts referenced by piggy banks
+      final Map<String, AccountRead> accountIdToAccount = <String, AccountRead>{};
+      for (final String accountId in accountIdToPiggyTotal.keys) {
+        final Response<AccountSingle> respAcc = await api.v1AccountsIdGet(
+          id: accountId,
+        );
+        apiThrowErrorIfEmpty(respAcc, mounted ? context : null);
+        accountIdToAccount[accountId] = respAcc.body!.data;
+      }
+
+      // 3) Build status data for these accounts
+      final List<AccountStatusData> statusData = <AccountStatusData>[];
+      for (final MapEntry<String, double> entry in accountIdToPiggyTotal.entries) {
+        final AccountRead? account = accountIdToAccount[entry.key];
+        if (account == null) continue;
+
+        final double accountBalance =
+            double.tryParse(account.attributes.currentBalance ?? "") ?? 0;
+        final double totalInPiggyBanks = entry.value;
+        final double availableBalance = accountBalance - totalInPiggyBanks;
+
+        CurrencyRead currency = CurrencyRead(
+          id: account.attributes.currencyId ?? "0",
+          type: "currencies",
+          attributes: CurrencyProperties(
+            code: account.attributes.currencyCode ?? "",
+            name: "",
+            symbol: account.attributes.currencySymbol ?? "",
+            decimalPlaces: account.attributes.currencyDecimalPlaces,
+          ),
+        );
+        if (currency.id == "0") {
+          currency = context.read<FireflyService>().defaultCurrency;
+        }
+
+        statusData.add(
+          AccountStatusData(
+            account: account,
+            currency: currency,
+            accountBalance: accountBalance,
+            totalInPiggyBanks: totalInPiggyBanks,
+            availableBalance: availableBalance,
+          ),
+        );
       }
 
       if (mounted) {

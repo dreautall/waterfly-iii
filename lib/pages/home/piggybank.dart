@@ -14,6 +14,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/home/piggybank/chart.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
+import 'package:waterflyiii/pages/navigation.dart';
 
 class AccountStatusData {
   const AccountStatusData({
@@ -187,6 +188,22 @@ class _HomePiggybankState extends State<HomePiggybank>
   Widget build(BuildContext context) {
     super.build(context);
     log.finest(() => "build()");
+
+   // Add top-right action to open Available Amounts bottom sheet
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      if (_accountStatusData.isEmpty) {
+        context.read<NavPageElements>().appBarActions = <Widget>[];
+        return;
+      }
+      context.read<NavPageElements>().appBarActions = <Widget>[
+        IconButton(
+          icon: const Icon(Icons.account_balance_wallet_outlined),
+          tooltip: S.of(context).homePiggyAvailableAmounts,
+          onPressed: () => _showAvailableAmountsSheet(context),
+        ),
+      ];
+    });
 
     int lastGroupId = -1;
 
@@ -378,18 +395,6 @@ class _HomePiggybankState extends State<HomePiggybank>
               ),
             ),
           ),
-          // Account Status Section trigger at the end
-          if (_accountStatusData.isNotEmpty) ...<Widget>[
-            const Divider(height: 1),
-            ListTile(
-              title: Text(
-                S.of(context).homePiggyAvailableAmounts,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              trailing: const Icon(Icons.keyboard_arrow_up),
-              onTap: () => _showAvailableAmountsSheet(context),
-            ),
-          ],
         ],
       ),
     );

@@ -404,32 +404,30 @@ class _HomePiggybankState extends State<HomePiggybank>
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      showDragHandle: true,
+      // showDragHandle: true,
       builder: (BuildContext context) => SafeArea(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.3,
-          child: Column(
-            children: <Widget>[
-              ListTile(
-                title: Text(
-                  S.of(context).homePiggyAvailableAmounts,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.bold),
-                ),
-              ),
-              const Divider(indent: 8, endIndent: 8),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _accountStatusData.length,
-                  itemBuilder: (BuildContext _, int i) => _accountStatusRow(
-                    context,
-                    _accountStatusData[i],
+        child: ConstrainedBox(
+          constraints:
+              BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.3),
+          child: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                ListTile(
+                  title: Text(
+                    S.of(context).homePiggyAvailableAmounts,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
-              ),
-            ],
+                const Divider(indent: 8, endIndent: 8),
+                ..._accountStatusData.map(
+                  (AccountStatusData e) => _accountStatusRow(context, e),
+                ),
+                const SizedBox(height: 8),
+              ],
+            ),
           ),
         ),
       ),

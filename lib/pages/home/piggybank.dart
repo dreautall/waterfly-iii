@@ -401,30 +401,31 @@ class _HomePiggybankState extends State<HomePiggybank>
       isScrollControlled: true,
       showDragHandle: true,
       builder: (BuildContext context) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ListTile(
-              title: Text(
-                S.of(context).homePiggyAvailableAmounts,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(fontWeight: FontWeight.bold),
-              ),
-            ),
-            const Divider(indent: 8, endIndent: 8),
-            Flexible(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: _accountStatusData.length,
-                itemBuilder: (BuildContext _, int i) => _accountStatusRow(
-                  context,
-                  _accountStatusData[i],
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.3,
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                title: Text(
+                  S.of(context).homePiggyAvailableAmounts,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
-            ),
-          ],
+              const Divider(indent: 8, endIndent: 8),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _accountStatusData.length,
+                  itemBuilder: (BuildContext _, int i) => _accountStatusRow(
+                    context,
+                    _accountStatusData[i],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

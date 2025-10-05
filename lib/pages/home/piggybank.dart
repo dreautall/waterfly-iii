@@ -115,21 +115,15 @@ class _HomePiggybankState extends State<HomePiggybank>
         return;
       }
 
-      // 2) Fetch ONLY the accounts referenced by piggy banks
-      final Map<String, AccountRead> accountIdToAccount = <String, AccountRead>{};
-      for (final String accountId in accountIdToPiggyTotal.keys) {
+      // 2) Build status data only for the accounts referenced by the piggy banks
+      final List<AccountStatusData> statusData = <AccountStatusData>[];
+      for (final MapEntry<String, double> entry in accountIdToPiggyTotal.entries) {
+        final String accountId = entry.key;
         final Response<AccountSingle> respAcc = await api.v1AccountsIdGet(
           id: accountId,
         );
         apiThrowErrorIfEmpty(respAcc, mounted ? context : null);
-        accountIdToAccount[accountId] = respAcc.body!.data;
-      }
-
-      // 3) Build status data for these accounts
-      final List<AccountStatusData> statusData = <AccountStatusData>[];
-      for (final MapEntry<String, double> entry in accountIdToPiggyTotal.entries) {
-        final AccountRead? account = accountIdToAccount[entry.key];
-        if (account == null) continue;
+        final AccountRead account = respAcc.body!.data;
 
         final double accountBalance =
             double.tryParse(account.attributes.currentBalance ?? "") ?? 0;

@@ -408,26 +408,30 @@ class _HomePiggybankState extends State<HomePiggybank>
       builder: (BuildContext context) => SafeArea(
         child: ConstrainedBox(
           constraints:
-              BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.3),
-          child: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                ListTile(
-                  title: Text(
-                    S.of(context).homePiggyAvailableAmounts,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(fontWeight: FontWeight.bold),
-                  ),
+              BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.33),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const SizedBox(height: 8),
+              ListTile(
+                title: Text(
+                  S.of(context).homePiggyAvailableAmounts,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
                 ),
-                const Divider(indent: 8, endIndent: 8),
-                ..._accountStatusData.map(
-                  (AccountStatusData e) => _accountStatusRow(context, e),
+              ),
+              const Divider(indent: 8, endIndent: 8),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _accountStatusData.length,
+                  itemBuilder: (BuildContext _, int i) =>
+                      _accountStatusRow(context, _accountStatusData[i]),
                 ),
-                const SizedBox(height: 8),
-              ],
-            ),
+              ),
+              const SizedBox(height: 8),
+            ],
           ),
         ),
       ),

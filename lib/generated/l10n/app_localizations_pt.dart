@@ -518,6 +518,22 @@ class SPt extends S {
   }
 
   @override
+  String get homePiggyAccountStatus => 'Account Status';
+
+  @override
+  String get homePiggyAvailableAmounts => 'Available Amounts';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return 'Available: $amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return 'In piggy banks: $amount';
+  }
+
+  @override
   String get homeTabLabelBalance => 'Balanço Financeiro';
 
   @override

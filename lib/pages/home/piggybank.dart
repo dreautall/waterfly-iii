@@ -423,13 +423,27 @@ class _HomePiggybankState extends State<HomePiggybank>
                 ),
               ),
               const Divider(indent: 8, endIndent: 8),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _accountStatusData.length,
-                  itemBuilder: (BuildContext _, int i) =>
-                      _accountStatusRow(context, _accountStatusData[i]),
+              if (_isLoadingAccountStatus)
+                const Expanded(
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              else if (_accountStatusData.isEmpty)
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      S.of(context).homePiggyNoAccounts,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                )
+              else
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _accountStatusData.length,
+                    itemBuilder: (BuildContext _, int i) =>
+                        _accountStatusRow(context, _accountStatusData[i]),
+                  ),
                 ),
-              ),
               const SizedBox(height: 8),
             ],
           ),

@@ -76,6 +76,7 @@ class _HomePiggybankState extends State<HomePiggybank>
 
     try {
       final FireflyIii api = context.read<FireflyService>().api;
+      final CurrencyRead defaultCurrency = context.read<FireflyService>().defaultCurrency;
 
       // 1) Fetch ALL piggy banks across pages and aggregate totals per account
       final Map<String, double> accountIdToPiggyTotal = <String, double>{};
@@ -141,7 +142,7 @@ class _HomePiggybankState extends State<HomePiggybank>
           ),
         );
         if (currency.id == "0") {
-          currency = context.read<FireflyService>().defaultCurrency;
+          currency = defaultCurrency;
         }
 
         statusData.add(

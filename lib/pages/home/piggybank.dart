@@ -291,8 +291,8 @@ class _HomePiggybankState extends State<HomePiggybank>
                           end: Alignment.topCenter,
                           stops: <double>[
                             0,
-                            (piggy.attributes.percentage ?? 100) / 100,
-                            (piggy.attributes.percentage ?? 100) / 100,
+                            (piggy.attributes.percentage ?? 0) / 100,
+                            (piggy.attributes.percentage ?? 0) / 100,
                           ],
                           colors: <Color>[
                             Theme.of(context).colorScheme.primaryContainer,

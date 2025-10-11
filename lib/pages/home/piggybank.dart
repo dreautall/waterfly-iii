@@ -427,7 +427,7 @@ class _HomePiggybankState extends State<HomePiggybank>
       builder: (BuildContext context) => SafeArea(
         child: ConstrainedBox(
           constraints:
-              BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.33),
+              BoxConstraints(maxHeight: MediaQuery.of(context).size.height / 3),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[

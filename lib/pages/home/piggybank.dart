@@ -235,186 +235,180 @@ class _HomePiggybankState extends State<HomePiggybank>
           _fetchAccountStatus();
         }),
       ),
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: PagedListView<int, PiggyBankRead>(
-              state: _pagingState,
-              fetchNextPage: _fetchPage,
-              builderDelegate: PagedChildBuilderDelegate<PiggyBankRead>(
-                animateTransitions: true,
-                transitionDuration: animDurationStandard,
-                invisibleItemsThreshold: 10,
-                itemBuilder: (BuildContext context, PiggyBankRead piggy, int index) {
-                  Widget? groupHeader;
-                  final int groupId =
-                  (int.tryParse(piggy.attributes.objectGroupId ?? "") ?? 0);
-                  if (groupId != lastGroupId &&
-                      groupId != 0 &&
-                      (piggy.attributes.objectGroupTitle ?? "").isNotEmpty) {
-                    lastGroupId = groupId;
-                    groupHeader = Padding(
-                      padding: const EdgeInsets.only(top: 16, left: 16),
-                      child: Text(
-                        piggy.attributes.objectGroupTitle ?? "(no title)",
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.labelLarge,
-                      ),
-                    );
-                  }
-                  final double currentAmount =
-                      double.tryParse(piggy.attributes.currentAmount ?? "") ?? 0;
-                  final CurrencyRead currency = CurrencyRead(
-                    id: piggy.attributes.currencyId ?? "0",
-                    type: "currencies",
-                    attributes: CurrencyProperties(
-                      code: piggy.attributes.currencyCode ?? "",
-                      name: "",
-                      symbol: piggy.attributes.currencySymbol ?? "",
-                      decimalPlaces: piggy.attributes.currencyDecimalPlaces,
-                    ),
-                  );
-                  final double targetAmount =
-                      double.tryParse(piggy.attributes.targetAmount ?? "") ?? 0;
-                  if (!(piggy.attributes.active ?? false)) {
-                    return const SizedBox.shrink();
-                  }
-                  String subtitle = "";
-                  if (piggy.attributes.accounts?.isNotEmpty ?? false) {
-                    if (piggy.attributes.accounts!.length == 1 &&
-                        (piggy.attributes.accounts!.first.name?.isNotEmpty ??
-                            false)) {
-                      subtitle = S
-                          .of(context)
-                          .homePiggyLinked(piggy.attributes.accounts!.first.name!);
-                    } else if (piggy.attributes.accounts!.length > 1) {
-                      subtitle = S
-                          .of(context)
-                          .homePiggyLinked(
-                        piggy.attributes.accounts!
-                            .map((PiggyBankAccountRead e) => e.name ?? "")
-                            .join(", "),
-                      );
-                    }
-                  }
+      child: PagedListView<int, PiggyBankRead>(
+        state: _pagingState,
+        fetchNextPage: _fetchPage,
+        builderDelegate: PagedChildBuilderDelegate<PiggyBankRead>(
+          animateTransitions: true,
+          transitionDuration: animDurationStandard,
+          invisibleItemsThreshold: 10,
+          itemBuilder: (BuildContext context, PiggyBankRead piggy, int index) {
+            Widget? groupHeader;
+            final int groupId =
+            (int.tryParse(piggy.attributes.objectGroupId ?? "") ?? 0);
+            if (groupId != lastGroupId &&
+                groupId != 0 &&
+                (piggy.attributes.objectGroupTitle ?? "").isNotEmpty) {
+              lastGroupId = groupId;
+              groupHeader = Padding(
+                padding: const EdgeInsets.only(top: 16, left: 16),
+                child: Text(
+                  piggy.attributes.objectGroupTitle ?? "(no title)",
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+              );
+            }
+            final double currentAmount =
+                double.tryParse(piggy.attributes.currentAmount ?? "") ?? 0;
+            final CurrencyRead currency = CurrencyRead(
+              id: piggy.attributes.currencyId ?? "0",
+              type: "currencies",
+              attributes: CurrencyProperties(
+                code: piggy.attributes.currencyCode ?? "",
+                name: "",
+                symbol: piggy.attributes.currencySymbol ?? "",
+                decimalPlaces: piggy.attributes.currencyDecimalPlaces,
+              ),
+            );
+            final double targetAmount =
+                double.tryParse(piggy.attributes.targetAmount ?? "") ?? 0;
+            if (!(piggy.attributes.active ?? false)) {
+              return const SizedBox.shrink();
+            }
+            String subtitle = "";
+            if (piggy.attributes.accounts?.isNotEmpty ?? false) {
+              if (piggy.attributes.accounts!.length == 1 &&
+                  (piggy.attributes.accounts!.first.name?.isNotEmpty ??
+                      false)) {
+                subtitle = S
+                    .of(context)
+                    .homePiggyLinked(piggy.attributes.accounts!.first.name!);
+              } else if (piggy.attributes.accounts!.length > 1) {
+                subtitle = S
+                    .of(context)
+                    .homePiggyLinked(
+                  piggy.attributes.accounts!
+                      .map((PiggyBankAccountRead e) => e.name ?? "")
+                      .join(", "),
+                );
+              }
+            }
 
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      groupHeader ?? const SizedBox.shrink(),
-                      ListTile(
-                        title: Text(piggy.attributes.name),
-                        subtitle: Text(subtitle),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(16),
-                            bottomLeft: Radius.circular(16),
-                          ),
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                groupHeader ?? const SizedBox.shrink(),
+                ListTile(
+                  title: Text(piggy.attributes.name),
+                  subtitle: Text(subtitle),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      bottomLeft: Radius.circular(16),
+                    ),
+                  ),
+                  isThreeLine: false,
+                  leading: CircleAvatar(
+                    child: Container(
+                      constraints: const BoxConstraints(
+                        minHeight: 40,
+                        maxHeight: 40,
+                        minWidth: 40,
+                        maxWidth: 40,
+                      ),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          stops: <double>[
+                            0,
+                            (piggy.attributes.percentage ?? 100) / 100,
+                            (piggy.attributes.percentage ?? 100) / 100,
+                          ],
+                          colors: <Color>[
+                            Theme.of(context).colorScheme.primaryContainer,
+                            Theme.of(context).colorScheme.primaryContainer,
+                            Theme.of(
+                              context,
+                            ).colorScheme.surfaceContainerHighest,
+                          ],
                         ),
-                        isThreeLine: false,
-                        leading: CircleAvatar(
-                          child: Container(
-                            constraints: const BoxConstraints(
-                              minHeight: 40,
-                              maxHeight: 40,
-                              minWidth: 40,
-                              maxWidth: 40,
-                            ),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: LinearGradient(
-                                begin: Alignment.bottomCenter,
-                                end: Alignment.topCenter,
-                                stops: <double>[
-                                  0,
-                                  (piggy.attributes.percentage ?? 100) / 100,
-                                  (piggy.attributes.percentage ?? 100) / 100,
-                                ],
-                                colors: <Color>[
-                                  Theme.of(context).colorScheme.primaryContainer,
-                                  Theme.of(context).colorScheme.primaryContainer,
-                                  Theme.of(
-                                    context,
-                                  ).colorScheme.surfaceContainerHighest,
-                                ],
-                              ),
-                            ),
-                            child: const Icon(Icons.savings_outlined),
-                          ),
-                        ),
-                        trailing: RichText(
-                          textAlign: TextAlign.end,
-                          maxLines: 2,
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.bodyMedium,
-                            children: <InlineSpan>[
-                              TextSpan(
-                                text: currency.fmt(currentAmount),
-                                style: Theme.of(
-                                  context,
-                                ).textTheme.titleMedium!.copyWith(
-                                  color:
-                                  (currentAmount < 0) ? Colors.red : Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                  fontFeatures: const <FontFeature>[
-                                    FontFeature.tabularFigures(),
-                                  ],
-                                ),
-                              ),
-                              targetAmount != 0
-                                  ? const TextSpan(text: "\n")
-                                  : const TextSpan(),
-                              targetAmount != 0
-                                  ? TextSpan(
-                                text: S
-                                    .of(context)
-                                    .numPercentOf(
-                                  (piggy.attributes.percentage ?? 0) / 100,
-                                  currency.fmt(targetAmount),
-                                ),
-                              )
-                                  : const TextSpan(),
+                      ),
+                      child: const Icon(Icons.savings_outlined),
+                    ),
+                  ),
+                  trailing: RichText(
+                    textAlign: TextAlign.end,
+                    maxLines: 2,
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      children: <InlineSpan>[
+                        TextSpan(
+                          text: currency.fmt(currentAmount),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleMedium!.copyWith(
+                            color:
+                            (currentAmount < 0) ? Colors.red : Colors.green,
+                            fontWeight: FontWeight.bold,
+                            fontFeatures: const <FontFeature>[
+                              FontFeature.tabularFigures(),
                             ],
                           ),
                         ),
-                        onTap: () {
-                          showDialog<void>(
-                            context: context,
-                            builder:
-                                (BuildContext context) => PiggyDetails(piggy: piggy),
-                          ).then((_) => setState(() {}));
-                        },
-                      ),
-                      piggy.attributes.percentage != null
-                          ? LinearProgressIndicator(
-                        value: piggy.attributes.percentage! / 100,
-                      )
-                          : const Divider(height: 0),
-                    ],
-                  );
-                },
-                noItemsFoundIndicatorBuilder:
-                    (BuildContext context) => Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        S.of(context).homePiggyNoAccounts,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const Icon(Icons.savings_outlined, size: 200),
-                      Text(
-                        S.of(context).homePiggyNoAccountsSubtitle,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ],
+                        targetAmount != 0
+                            ? const TextSpan(text: "\n")
+                            : const TextSpan(),
+                        targetAmount != 0
+                            ? TextSpan(
+                          text: S
+                              .of(context)
+                              .numPercentOf(
+                            (piggy.attributes.percentage ?? 0) / 100,
+                            currency.fmt(targetAmount),
+                          ),
+                        )
+                            : const TextSpan(),
+                      ],
+                    ),
                   ),
+                  onTap: () {
+                    showDialog<void>(
+                      context: context,
+                      builder:
+                          (BuildContext context) => PiggyDetails(piggy: piggy),
+                    ).then((_) => setState(() {}));
+                  },
                 ),
-              ),
+                piggy.attributes.percentage != null
+                    ? LinearProgressIndicator(
+                  value: piggy.attributes.percentage! / 100,
+                )
+                    : const Divider(height: 0),
+              ],
+            );
+          },
+          noItemsFoundIndicatorBuilder:
+              (BuildContext context) => Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  S.of(context).homePiggyNoAccounts,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const Icon(Icons.savings_outlined, size: 200),
+                Text(
+                  S.of(context).homePiggyNoAccountsSubtitle,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

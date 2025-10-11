@@ -53,7 +53,6 @@ class _HomePiggybankState extends State<HomePiggybank>
   @override
   void initState() {
     super.initState();
-    _fetchAccountStatus();
     // Add top-right action to open Available Amounts bottom sheet
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<PageActions>().set(widget.key!, <Widget>[
@@ -67,45 +66,59 @@ class _HomePiggybankState extends State<HomePiggybank>
 
   }
 
-  Future<void> _fetchAccountStatus() async {
-    if (_isLoadingAccountStatus) return;
-
-    setState(() {
-      _isLoadingAccountStatus = true;
-    });
+  Future<void> _fetchPage() async {
+    if (_pagingState.isLoading) return;
 
     try {
       final FireflyIii api = context.read<FireflyService>().api;
       final CurrencyRead defaultCurrency = context.read<FireflyService>().defaultCurrency;
 
+      final int pageKey = (_pagingState.keys?.last ?? 0) + 1;
+      log.finest(
+        "Getting page $pageKey (${_pagingState.pages?.length} pages loaded)",
+      );
+
+      final Response<PiggyBankArray> respPiggies = await api.v1PiggyBanksGet(
+        page: pageKey,
+        limit: _numberOfItemsPerRequest,
+      );
+      apiThrowErrorIfEmpty(respPiggies, mounted ? context : null);
+
+      final List<PiggyBankRead> piggyList = respPiggies.body!.data;
+      piggyList.sortByCompare(
+            (PiggyBankRead element) => element.attributes.objectGroupOrder,
+            (int? a, int? b) => (a ?? 0).compareTo(b ?? 0),
+      );
+      final bool isLastPage = piggyList.length < _numberOfItemsPerRequest;
+
+      if (mounted) {
+        setState(() {
+          _pagingState = _pagingState.copyWith(
+            pages: <List<PiggyBankRead>>[...?_pagingState.pages, piggyList],
+            keys: <int>[...?_pagingState.keys, pageKey],
+            hasNextPage: !isLastPage,
+            isLoading: false,
+            error: null,
+          );
+        });
+      }
+
+      // Account Status populating
       // 1) Fetch ALL piggy banks across pages and aggregate totals per account
       final Map<String, double> accountIdToPiggyTotal = <String, double>{};
-      int piggyPage = 0;
-      Response<PiggyBankArray>? respPiggies;
-      do {
-        piggyPage += 1;
-        respPiggies = await api.v1PiggyBanksGet(
-          page: piggyPage,
-          limit: _numberOfItemsPerRequest,
-        );
-        apiThrowErrorIfEmpty(respPiggies, mounted ? context : null);
-
-        for (final PiggyBankRead piggy in respPiggies.body!.data) {
-          if (!(piggy.attributes.active ?? false)) continue;
-          if (piggy.attributes.accounts == null) continue;
-          for (final PiggyBankAccountRead acc in piggy.attributes.accounts!) {
-            if ((acc.accountId ?? '').isEmpty) continue;
-            final double amt = double.tryParse(acc.currentAmount ?? "") ?? 0;
-            accountIdToPiggyTotal.update(
-              acc.accountId!,
-              (double prev) => prev + amt,
-              ifAbsent: () => amt,
-            );
-          }
+      for (final PiggyBankRead piggy in piggyList) {
+        if (!(piggy.attributes.active ?? false)) continue;
+        if (piggy.attributes.accounts == null) continue;
+        for (final PiggyBankAccountRead acc in piggy.attributes.accounts!) {
+          if ((acc.accountId ?? '').isEmpty) continue;
+          final double amt = double.tryParse(acc.currentAmount ?? "") ?? 0;
+          accountIdToPiggyTotal.update(
+            acc.accountId!,
+                (double prev) => prev + amt,
+            ifAbsent: () => amt,
+          );
         }
-      } while ((respPiggies.body!.meta.pagination?.currentPage ?? 1) <
-          (respPiggies.body!.meta.pagination?.totalPages ?? 1));
-
+      }
       if (accountIdToPiggyTotal.isEmpty) {
         if (mounted) {
           setState(() {
@@ -163,51 +176,6 @@ class _HomePiggybankState extends State<HomePiggybank>
         });
       }
     } catch (e, stackTrace) {
-      log.severe("_fetchAccountStatus()", e, stackTrace);
-      if (mounted) {
-        setState(() {
-          _isLoadingAccountStatus = false;
-        });
-      }
-    }
-  }
-
-  Future<void> _fetchPage() async {
-    if (_pagingState.isLoading) return;
-
-    try {
-      final FireflyIii api = context.read<FireflyService>().api;
-
-      final int pageKey = (_pagingState.keys?.last ?? 0) + 1;
-      log.finest(
-        "Getting page $pageKey (${_pagingState.pages?.length} pages loaded)",
-      );
-
-      final Response<PiggyBankArray> respAccounts = await api.v1PiggyBanksGet(
-        page: pageKey,
-        limit: _numberOfItemsPerRequest,
-      );
-      apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
-
-      final List<PiggyBankRead> piggyList = respAccounts.body!.data;
-      piggyList.sortByCompare(
-            (PiggyBankRead element) => element.attributes.objectGroupOrder,
-            (int? a, int? b) => (a ?? 0).compareTo(b ?? 0),
-      );
-      final bool isLastPage = piggyList.length < _numberOfItemsPerRequest;
-
-      if (mounted) {
-        setState(() {
-          _pagingState = _pagingState.copyWith(
-            pages: <List<PiggyBankRead>>[...?_pagingState.pages, piggyList],
-            keys: <int>[...?_pagingState.keys, pageKey],
-            hasNextPage: !isLastPage,
-            isLoading: false,
-            error: null,
-          );
-        });
-      }
-    } catch (e, stackTrace) {
       log.severe("_fetchPage()", e, stackTrace);
       if (mounted) {
         setState(() {
@@ -232,7 +200,6 @@ class _HomePiggybankState extends State<HomePiggybank>
           () => Future<void>.sync(
             () => setState(() {
           _pagingState = _pagingState.reset();
-          _fetchAccountStatus();
         }),
       ),
       child: PagedListView<int, PiggyBankRead>(

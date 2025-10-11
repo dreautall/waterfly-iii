@@ -237,7 +237,6 @@ class _HomePiggybankState extends State<HomePiggybank>
       ),
       child: Column(
         children: <Widget>[
-          // Piggy Banks List
           Expanded(
             child: PagedListView<int, PiggyBankRead>(
               state: _pagingState,

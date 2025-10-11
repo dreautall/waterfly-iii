@@ -443,11 +443,11 @@ class _HomePiggybankState extends State<HomePiggybank>
               ),
               const Divider(indent: 8, endIndent: 8),
               if (_isLoadingAccountStatus)
-                const Expanded(
+                const Flexible(
                   child: Center(child: CircularProgressIndicator()),
                 )
               else if (_accountStatusData.isEmpty)
-                Expanded(
+                Flexible(
                   child: Center(
                     child: Text(
                       S.of(context).homePiggyNoAccounts,
@@ -456,8 +456,9 @@ class _HomePiggybankState extends State<HomePiggybank>
                   ),
                 )
               else
-                Expanded(
+                Flexible(
                   child: ListView.builder(
+                    shrinkWrap: true,
                     itemCount: _accountStatusData.length,
                     itemBuilder: (BuildContext _, int i) =>
                         _accountStatusRow(context, _accountStatusData[i]),

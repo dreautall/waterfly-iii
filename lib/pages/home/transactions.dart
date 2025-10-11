@@ -435,65 +435,111 @@ class _HomeTransactionsState extends State<HomeTransactions>
               child: Column(
                 children: <Widget>[
                   const Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        S.of(context).transactionTypeDeposit,
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                  Table(
+                    //border: TableBorder.all(), // :DEBUG:
+                    columnWidths: const <int, TableColumnWidth>{
+                      0: FlexColumnWidth(),
+                      1: FlexColumnWidth(),
+                      2: FlexColumnWidth(),
+                    },
+                    children: <TableRow>[
+                      TableRow(
+                        children: <Widget>[
+                          Text(
+                            S.of(context).transactionTypeDeposit,
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            S.of(context).transactionTypeWithdrawal,
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            S.of(context).transactionTypeTransfer,
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
-                      Text(
-                        S.of(context).transactionTypeWithdrawal,
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+
+                      TableRow(
+                        children: <Widget>[
+                          Text(
+                            defaultCurrency.fmt(_txSum.deposits),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.copyWith(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            defaultCurrency.fmt(_txSum.withdrawals),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.copyWith(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            defaultCurrency.fmt(_txSum.transfers),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.copyWith(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        S.of(context).transactionTypeTransfer,
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      const TableRow(
+                        children: <Widget>[
+                          SizedBox(height: 8),
+                          SizedBox.shrink(),
+                          SizedBox.shrink(),
+                        ],
+                      ),
+                      TableRow(
+                        children: <Widget>[
+                          const SizedBox.shrink(),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              "${S.of(context).generalSum}:  ",
+                              style: Theme.of(context).textTheme.bodyLarge!
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Text(
+                            defaultCurrency.fmt(_txSum.total),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyLarge!.copyWith(
+                              color:
+                                  _txSum.total < 0 ? Colors.red : Colors.green,
+                              fontWeight: FontWeight.bold,
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        defaultCurrency.fmt(_txSum.deposits),
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold,
-                          fontFeatures: const <FontFeature>[
-                            FontFeature.tabularFigures(),
-                          ],
-                        ),
-                      ),
-                      Text(
-                        defaultCurrency.fmt(_txSum.withdrawals),
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
-                          fontFeatures: const <FontFeature>[
-                            FontFeature.tabularFigures(),
-                          ],
-                        ),
-                      ),
-                      Text(
-                        defaultCurrency.fmt(_txSum.transfers),
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                          fontFeatures: const <FontFeature>[
-                            FontFeature.tabularFigures(),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 68),
+                  // Padding for FAB
+                  const SizedBox(height: 76),
                 ],
               ),
             );

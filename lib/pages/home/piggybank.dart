@@ -48,7 +48,6 @@ class _HomePiggybankState extends State<HomePiggybank>
   PagingState<int, PiggyBankRead>();
 
   List<AccountStatusData> _accountStatusData = <AccountStatusData>[];
-  bool _isLoadingAccountStatus = false;
 
   @override
   void initState() {
@@ -123,7 +122,6 @@ class _HomePiggybankState extends State<HomePiggybank>
         if (mounted) {
           setState(() {
             _accountStatusData = <AccountStatusData>[];
-            _isLoadingAccountStatus = false;
           });
         }
         return;
@@ -172,7 +170,6 @@ class _HomePiggybankState extends State<HomePiggybank>
       if (mounted) {
         setState(() {
           _accountStatusData = statusData;
-          _isLoadingAccountStatus = false;
         });
       }
     } catch (e, stackTrace) {
@@ -403,11 +400,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                 ),
               ),
               const Divider(indent: 8, endIndent: 8),
-              if (_isLoadingAccountStatus)
-                const Flexible(
-                  child: Center(child: CircularProgressIndicator()),
-                )
-              else if (_accountStatusData.isEmpty)
+              if (_accountStatusData.isEmpty)
                 Flexible(
                   child: Center(
                     child: Text(

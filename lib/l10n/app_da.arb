@@ -1,898 +1,243 @@
 {
-    "@@locale": "da",
-    "@@x-reference": true,
-    "accountRoleAssetCashWallet": "Kontantstegnebog",
-    "@accountRoleAssetCashWallet": {
-        "description": "Firefly Translation String: account_role_cashWalletAsset"
-    },
-    "accountRoleAssetCC": "Kreditkort",
-    "@accountRoleAssetCC": {
-        "description": "Firefly Translation String: account_role_ccAsset"
-    },
-    "accountRoleAssetDefault": "Standard aktivkonto",
-    "@accountRoleAssetDefault": {
-        "description": "Firefly Translation String: account_role_defaultAsset"
-    },
-    "accountRoleAssetSavings": "Opsparingskonto",
-    "@accountRoleAssetSavings": {
-        "description": "Firefly Translation String: account_role_savingAsset"
-    },
-    "accountRoleAssetShared": "Delt aktivkonto",
-    "@accountRoleAssetShared": {
-        "description": "Firefly Translation String: account_role_sharedAsset"
-    },
-    "accountsLabelAsset": "Aktivkonti",
-    "@accountsLabelAsset": {
-        "description": "Firefly Translation String: asset_accounts"
-    },
-    "accountsLabelExpense": "Udgiftskonti",
-    "@accountsLabelExpense": {
-        "description": "Firefly Translation String: expense_accounts"
-    },
-    "accountsLabelLiabilities": "Gældsforpligtelser",
-    "@accountsLabelLiabilities": {
-        "description": "Firefly Translation String: liabilities_accounts"
-    },
-    "accountsLabelRevenue": "Indtægtskonti",
-    "@accountsLabelRevenue": {
-        "description": "Firefly Translation String: revenue_accounts"
-    },
-    "accountsLiabilitiesInterest": "{interest}% renter per {period, select, weekly{uge} monthly{måned} quarterly{kvartal} halfyear{halvår} yearly{år} other{ukendt}}",
-    "@accountsLiabilitiesInterest": {
-        "description": "Interest in a certain period",
-        "placeholders": {
-            "interest": {
-                "type": "double",
-                "example": "1.2"
-            },
-            "period": {
-                "type": "String",
-                "example": "yearly"
-            }
-        }
-    },
-    "categoryDeleteConfirm": "Er du sikker på, at du vil slette denne kategori? Transaktionerne vil ikke blive slettet, men vil ikke længere have en kategori.",
-    "@categoryDeleteConfirm": {
-        "description": "Confirmation text to delete category"
-    },
-    "categoryErrorLoading": "Fejl ved indlæsning af kategorier.",
-    "@categoryErrorLoading": {
-        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
-    },
-    "categoryTitleAdd": "Tilføj kategori",
-    "@categoryTitleAdd": {
-        "description": "Title for Dialog: Add Category"
-    },
-    "categoryMonthNext": "Næste måned",
-    "@categoryMonthNext": {
-        "description": "Button title to view overview for next month"
-    },
-    "categoryMonthPrev": "Sidste måned",
-    "@categoryMonthPrev": {
-        "description": "Button title to view overview for previous month"
-    },
-    "categoryTitleDelete": "Slet kategori",
-    "@categoryTitleDelete": {
-        "description": "Title for Dialog: Delete Category"
-    },
-    "categoryTitleEdit": "Redigér kategori",
-    "@categoryTitleEdit": {
-        "description": "Title for Dialog: Edit Category"
-    },
-    "catOther": "Andet",
-    "@catOther": {
-        "description": "Category description for summary category 'Other'"
-    },
-    "catNone": "<no category>",
-    "@catNone": {
-        "description": "Placeholder when no category has been set."
-    },
-    "errorAPIInvalidResponse": "Ugyldigt svar fra API: {message}",
-    "@errorAPIInvalidResponse": {
-        "description": "Invalid API response error",
-        "placeholders": {
-            "message": {
-                "type": "String",
-                "example": "API could not be reached."
-            }
-        }
-    },
-    "errorAPIUnavailable": "API utilgængelig",
-    "@errorAPIUnavailable": {
-        "description": "Error thrown when API is unavailable."
-    },
-    "errorFieldRequired": "Dette felt er påkrævet.",
-    "@errorFieldRequired": {
-        "description": "Error: Required field was left empty."
-    },
-    "errorInvalidURL": "Ugyldig URL",
-    "@errorInvalidURL": {
-        "description": "Error: URL is invalid"
-    },
-    "errorMinAPIVersion": "Minimum Firefly API-version v{requiredVersion} påkrævet. Opgradér venligst.",
-    "@errorMinAPIVersion": {
-        "description": "Error: Required API version not met.",
-        "placeholders": {
-            "requiredVersion": {
-                "type": "String",
-                "example": "2.0.0"
-            }
-        }
-    },
-    "errorStatusCode": "Statuskode: {code}",
-    "@errorStatusCode": {
-        "description": "HTTP status code information on error",
-        "placeholders": {
-            "code": {
-                "type": "int",
-                "example": "500"
-            }
-        }
-    },
-    "errorUnknown": "Ukendt fejl.",
-    "@errorUnknown": {
-        "description": "Error without further information occurred."
-    },
-    "formButtonHelp": "Hjælp",
-    "@formButtonHelp": {
-        "description": "Button Label: Help"
-    },
-    "formButtonLogin": "Log ind",
-    "@formButtonLogin": {
-        "description": "Button Label: Login"
-    },
-    "formButtonLogout": "Log ud",
-    "@formButtonLogout": {
-        "description": "Button Label: Logout"
-    },
-    "formButtonRemove": "Fjern",
-    "@formButtonRemove": {
-        "description": "Button Label: Remove"
-    },
-    "formButtonResetLogin": "Nulstil login",
-    "@formButtonResetLogin": {
-        "description": "Button Label: Reset login form (when error is shown)"
-    },
-    "formButtonTransactionAdd": "Tilføj transaktion",
-    "@formButtonTransactionAdd": {
-        "description": "Button Label: Add Transaction"
-    },
-    "formButtonTryAgain": "Prøv igen",
-    "@formButtonTryAgain": {
-        "description": "Button Label: Try that thing again (login etc)"
-    },
-    "generalAccount": "Konto",
-    "@generalAccount": {
-        "description": "Asset/Debt (Bank) Account"
-    },
-    "generalAssets": "Aktiver",
-    "@generalAssets": {
-        "description": "(Monetary) Assets"
-    },
-    "generalBalance": "Saldo",
-    "@generalBalance": {
-        "description": "(Account) Balance"
-    },
-    "generalBalanceOn": "Saldo på {date}",
-    "@generalBalanceOn": {
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMd",
-                "example": "2023-05-13"
-            }
-        }
-    },
-    "generalBill": "Regning",
-    "@generalBill": {
-        "description": "Bill"
-    },
-    "generalBudget": "Budget",
-    "@generalBudget": {
-        "description": "(Monetary) Budget"
-    },
-    "generalCategory": "Kategori",
-    "@generalCategory": {
-        "description": "Category (of transaction etc.)."
-    },
-    "generalCurrency": "Valuta",
-    "@generalCurrency": {
-        "description": "(Money) Currency"
-    },
-    "generalDefault": "standard",
-    "@generalDefault": {
-        "description": "Indicates that something is the default choice"
-    },
-    "generalDismiss": "Afvis",
-    "@generalDismiss": {
-        "description": "Dismiss window/dialog without action"
-    },
-    "generalEarned": "Optjent",
-    "@generalEarned": {
-        "description": "(Amount) Earned"
-    },
-    "generalError": "Fejl",
-    "@generalError": {
-        "description": "Error (title in dialogs etc.)"
-    },
-    "generalExpenses": "Udgifter",
-    "@generalExpenses": {
-        "description": "(Account) Expenses"
-    },
-    "generalIncome": "Indtægter",
-    "@generalIncome": {
-        "description": "(Account) Info"
-    },
-    "generalLiabilities": "Gældsforpligtelser",
-    "@generalLiabilities": {
-        "description": "Firefly Translation String: liabilities"
-    },
-    "generalMultiple": "flere",
-    "@generalMultiple": {
-        "description": "Multiples of a single thing (e.g. source accounts) are existing"
-    },
-    "generalNever": "aldrig",
-    "@generalNever": {
-        "description": "Has never happened, no update etc."
-    },
-    "generalReconcile": "Afstemt",
-    "@generalReconcile": {
-        "description": "Booking has been confirmed/reconciled"
-    },
-    "generalReset": "Nulstil",
-    "@generalReset": {
-        "description": "Reset something (i.e. set filters)"
-    },
-    "generalSpent": "Brugt",
-    "@generalSpent": {
-        "description": "(Amount) Spent"
-    },
-    "generalSum": "I alt",
-    "@generalSum": {
-        "description": "(Mathematical) Sum"
-    },
-    "generalTarget": "Mål",
-    "@generalTarget": {
-        "description": "Target value (i.e. a sum to save)"
-    },
-    "generalUnknown": "Ukendt",
-    "@generalUnknown": {
-        "description": "Something is unknown."
-    },
-    "homeMainBillsInterval": "({period, select, weekly{ugentligt} monthly{månedligt} quarterly{kvartalsvis} halfyear{halvårligt} yearly{årligt} other{ukendt}})",
-    "@homeMainBillsInterval": {
-        "description": "bill interval type",
-        "placeholders": {
-            "period": {
-                "type": "String",
-                "example": "weekly"
-            }
-        }
-    },
-    "homeMainBillsTitle": "Regninger for næste uge",
-    "@homeMainBillsTitle": {
-        "description": "Title: Bills for the next week"
-    },
-    "homeMainBudgetInterval": "({from} til {to}, {period})",
-    "@homeMainBudgetInterval": {
-        "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
-        "placeholders": {
-            "from": {
-                "type": "DateTime",
-                "format": "MMMd",
-                "example": "May 13"
-            },
-            "to": {
-                "type": "DateTime",
-                "format": "MMMd",
-                "example": "May 17"
-            },
-            "period": {
-                "type": "String",
-                "example": "weekly"
-            }
-        }
-    },
-    "homeMainBudgetIntervalSingle": "({from} til {to})",
-    "@homeMainBudgetIntervalSingle": {
-        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
-        "placeholders": {
-            "from": {
-                "type": "DateTime",
-                "format": "MMMd",
-                "example": "May 13"
-            },
-            "to": {
-                "type": "DateTime",
-                "format": "MMMd",
-                "example": "May 17"
-            }
-        }
-    },
-    "homeMainBudgetSum": "{current}{status, select, over{over} other{tilbage af}} {available}",
-    "@homeMainBudgetSum": {
-        "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
-        "placeholders": {
-            "current": {
-                "type": "String",
-                "example": "12.34€"
-            },
-            "status": {
-                "type": "String",
-                "example": "left from"
-            },
-            "available": {
-                "type": "String",
-                "example": "12.34€"
-            }
-        }
-    },
-    "homeMainBudgetTitle": "Budgetter for denne måned",
-    "@homeMainBudgetTitle": {
-        "description": "Title: Budgets for current month"
-    },
-    "homeMainChartAccountsTitle": "Kontooversigt",
-    "@homeMainChartAccountsTitle": {
-        "description": "Chart Label: Account Summary"
-    },
-    "homeMainChartCategoriesTitle": "Kategorioversigt for denne måned",
-    "@homeMainChartCategoriesTitle": {
-        "description": "Chart Label: Category Summary"
-    },
-    "homeMainChartDailyAvg": "7 dages-gennemsnit",
-    "@homeMainChartDailyAvg": {
-        "description": "Text for last week average spent"
-    },
-    "homeMainChartDailyTitle": "Dagsoversigt",
-    "@homeMainChartDailyTitle": {
-        "description": "Chart Label: Daily Summary"
-    },
-    "homeMainChartNetEarningsTitle": "Nettoindtjening",
-    "@homeMainChartNetEarningsTitle": {
-        "description": "Chart Label: Net Earnings"
-    },
-    "homeMainChartNetWorthTitle": "Nettoværdi",
-    "@homeMainChartNetWorthTitle": {
-        "description": "Chart Label: Net Worth"
-    },
-    "homePiggyAdjustDialogTitle": "Gem/brug penge",
-    "@homePiggyAdjustDialogTitle": {
-        "description": "Title of the dialog where money can be added/removed to a piggy bank."
-    },
-    "homePiggyDateStart": "Startdato: {date}",
-    "@homePiggyDateStart": {
-        "description": "Start of the piggy bank",
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMMMMd",
-                "example": "March 12, 2023"
-            }
-        }
-    },
-    "homePiggyDateTarget": "Måldato: {date}",
-    "@homePiggyDateTarget": {
-        "description": "Set target date of the piggy bank (when saving should be finished)",
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMMMMd",
-                "example": "March 12, 2023"
-            }
-        }
-    },
-    "homePiggyLinked": "Knyttet til {account}",
-    "@homePiggyLinked": {
-        "description": "Piggy bank is linked to asset account {account}.",
-        "placeholders": {
-            "account": {
-                "type": "String",
-                "example": "Awesome Bank Account"
-            }
-        }
-    },
-    "homePiggyNoAccounts": "Ingen sparegris er sat op.",
-    "@homePiggyNoAccounts": {
-        "description": "Information that no piggy banks are existing"
-    },
-    "homePiggyNoAccountsSubtitle": "Opret nogle i webgrænsefladen!",
-    "@homePiggyNoAccountsSubtitle": {
-        "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
-    },
-    "homePiggyRemaining": "Mangler at spare: {amount}",
-    "@homePiggyRemaining": {
-        "description": "How much money is left to save",
-        "placeholders": {
-            "amount": {
-                "type": "String",
-                "example": "€12.34"
-            }
-        }
-    },
-    "homePiggySaved": "Gemt indtil videre: {amount}",
-    "@homePiggySaved": {
-        "description": "How much money already was saved",
-        "placeholders": {
-            "amount": {
-                "type": "String",
-                "example": "€12.34"
-            }
-        }
-    },
-    "homePiggyTarget": "Målbeløb: {amount}",
-    "@homePiggyTarget": {
-        "description": "How much money should be saved",
-        "placeholders": {
-            "amount": {
-                "type": "String",
-                "example": "€12.34"
-            }
-        }
-    },
-    "homeTabLabelBalance": "Balance",
-    "@homeTabLabelBalance": {
-        "description": "Tab Label: Balance Sheet page"
-    },
-    "homeTabLabelMain": "Primær",
-    "@homeTabLabelMain": {
-        "description": "Tab Label: Start page (\"main\")"
-    },
-    "homeTabLabelPiggybanks": "Sparegrise",
-    "@homeTabLabelPiggybanks": {
-        "description": "Tab Label: Piggy Banks page"
-    },
-    "homeTabLabelTransactions": "Transaktioner",
-    "@homeTabLabelTransactions": {
-        "description": "Tab Label: Transactions page"
-    },
-    "homeTransactionsActionFilter": "Filterliste",
-    "@homeTransactionsActionFilter": {
-        "description": "Action Button Label: Filter list."
-    },
-    "homeTransactionsDialogFilterAccountsAll": "<All Accounts>",
-    "@homeTransactionsDialogFilterAccountsAll": {
-        "description": "Don't filter for a specific account (default entry)"
-    },
-    "homeTransactionsDialogFilterBillsAll": "<All Bills>",
-    "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
-    },
-    "homeTransactionsDialogFilterBillUnset": "<No Bill set>",
-    "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
-    },
-    "homeTransactionsDialogFilterBudgetsAll": "<All Budgets>",
-    "@homeTransactionsDialogFilterBudgetsAll": {
-        "description": "Don't filter for a specific budget (default entry)"
-    },
-    "homeTransactionsDialogFilterBudgetUnset": "<No Budget set>",
-    "@homeTransactionsDialogFilterBudgetUnset": {
-        "description": "Filter for unset budgets"
-    },
-    "homeTransactionsDialogFilterCategoriesAll": "<All Categories>",
-    "@homeTransactionsDialogFilterCategoriesAll": {
-        "description": "Don't filter for a specific category (default entry)"
-    },
-    "homeTransactionsDialogFilterCategoryUnset": "<No Category set>",
-    "@homeTransactionsDialogFilterCategoryUnset": {
-        "description": "Filter for unset categories"
-    },
-    "homeTransactionsDialogFilterCurrenciesAll": "<All Currencies>",
-    "@homeTransactionsDialogFilterCurrenciesAll": {
-        "description": "Don't filter for a specific currency (default entry)"
-    },
-    "homeTransactionsDialogFilterFutureTransactions": "Vis fremtidige transaktioner",
-    "@homeTransactionsDialogFilterFutureTransactions": {
-        "description": "Setting to show future transactions"
-    },
-    "homeTransactionsDialogFilterSearch": "Søgeord",
-    "@homeTransactionsDialogFilterSearch": {
-        "description": "Search term for filter"
-    },
-    "homeTransactionsDialogFilterTitle": "Vælg filtre",
-    "@homeTransactionsDialogFilterTitle": {
-        "description": "Title of Filter Dialog"
-    },
-    "homeTransactionsEmpty": "Ingen transaktion fundet.",
-    "@homeTransactionsEmpty": {
-        "description": "Message when no transactions are found."
-    },
-    "homeTransactionsMultipleCategories": "{num} kategorier",
-    "@homeTransactionsMultipleCategories": {
-        "description": "$num categories for the transaction.",
-        "placeholders": {
-            "num": {
-                "type": "int",
-                "example": "2"
-            }
-        }
-    },
-    "liabilityDirectionCredit": "Jeg er skyldt denne gæld",
-    "@liabilityDirectionCredit": {
-        "description": "Firefly Translation String: liability_direction_credit"
-    },
-    "liabilityDirectionDebit": "Jeg skylder denne gæld",
-    "@liabilityDirectionDebit": {
-        "description": "Firefly Translation String: liability_direction_debit"
-    },
-    "liabilityTypeDebt": "Gæld",
-    "@liabilityTypeDebt": {
-        "description": "Firefly Translation String: account_type_debt"
-    },
-    "liabilityTypeLoan": "Lån",
-    "@liabilityTypeLoan": {
-        "description": "Firefly Translation String: account_type_loan"
-    },
-    "liabilityTypeMortgage": "Boliglån",
-    "@liabilityTypeMortgage": {
-        "description": "Firefly Translation String: account_type_mortgage"
-    },
-    "loginAbout": "For at bruge Waterfly III produktivt har du brug for din egen server med en Firefly III-instans eller Firefly II-add-on til Home Assistant.\n\nIndtast venligst det fulde URL samt en personlig adgangstoken (Indstillinger -> Profil -> OAuth -> Personlig adgangstoken) nedenfor.",
-    "@loginAbout": {
-        "description": "Login screen welcome description"
-    },
-    "loginFormLabelAPIKey": "Gyldig API-nøgle",
-    "@loginFormLabelAPIKey": {
-        "description": "Login Form: Label for API Key field"
-    },
-    "loginFormLabelHost": "Værts-URL",
-    "@loginFormLabelHost": {
-        "description": "Login Form: Label for Host field"
-    },
-    "loginWelcome": "Velkommen til Waterfly III",
-    "@loginWelcome": {
-        "description": "Login screen welcome banner"
-    },
-    "logoutConfirmation": "Er du sikker på, at du vil logge ud?",
-    "@logoutConfirmation": {
-        "description": "Get user confirmation if he really wants to log out"
-    },
-    "navigationAccounts": "Konti",
-    "@navigationAccounts": {
-        "description": "Navigation Label: Accounts Page"
-    },
-    "navigationCategories": "Kategorier",
-    "@navigationCategories": {
-        "description": "Navigation Label: Categories"
-    },
-    "navigationMain": "Hoveddashboard",
-    "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
-    },
-    "navigationSettings": "Indstillinger",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
-    },
-    "numPercent": "{num}",
-    "@numPercent": {
-        "description": "Number formatted as percentage",
-        "placeholders": {
-            "num": {
-                "type": "double",
-                "format": "decimalPercentPattern",
-                "optionalParameters": {
-                    "decimalDigits": 0
-                }
-            }
-        }
-    },
-    "numPercentOf": "{perc} af {of}",
-    "@numPercentOf": {
-        "description": "Number formatted as percentage, with total amount provided",
-        "placeholders": {
-            "perc": {
-                "type": "double",
-                "format": "decimalPercentPattern",
-                "optionalParameters": {
-                    "decimalDigits": 0
-                }
-            },
-            "of": {
-                "type": "String"
-            }
-        }
-    },
-    "settingsDialogDebugInfo": "Du kan aktivere og sende fejfindingslogs her. Disse har en dårlig indvirkning på ydeevnen, så du skal venligst ikke aktivere dem, medmindre du rådes til at gøre det. Deaktivering af logning vil slette den gemte log.",
-    "@settingsDialogDebugInfo": {
-        "description": "Information about debug logs and their impact."
-    },
-    "settingsDialogDebugMailCreate": "Opret mail",
-    "@settingsDialogDebugMailCreate": {
-        "description": "Button to confirm mail creation after privacy disclaimer is shown."
-    },
-    "settingsDialogDebugMailDisclaimer": "ADVARSEL: En mailkladde åbnes med logfilen vedhæftet (i tekstformat). Logfilerne kan indeholdet følsomme oplysninger, såsom værtsnavnet på din Firefly instans (selvom jeg forsøger at undgå logning af eventuelle hemmeligheder, såsom api-nøgle). Læs venligst loggen grundigt og censurér alle oplysninger, du ikke ønsker at dele og/eller ikke er relevante for det problem, du ønsker at rapportere.",
-    "@settingsDialogDebugMailDisclaimer": {
-        "description": "Privacy disclaimer shown before sending logs"
-    },
-    "settingsDialogDebugSendButton": "Send logfiler via e-mail",
-    "@settingsDialogDebugSendButton": {
-        "description": "Button to send logs via E-Mail"
-    },
-    "settingsDialogDebugTitle": "Fejlfindingslogs",
-    "@settingsDialogDebugTitle": {
-        "description": "Dialog title: Debug Logs"
-    },
-    "settingsDialogLanguageTitle": "Vælg sprog",
-    "@settingsDialogLanguageTitle": {
-        "description": "Dialog title: Select Language"
-    },
-    "settingsDialogThemeTitle": "Vælg tema",
-    "@settingsDialogThemeTitle": {
-        "description": "Dialog title: Select theme"
-    },
-    "settingsLanguage": "Sprog",
-    "@settingsLanguage": {
-        "description": "Currently selected language"
-    },
-    "settingsLockscreen": "Låst skærm",
-    "@settingsLockscreen": {
-        "description": "Setting if a lockscreen is shown (authentication is required on startup)"
-    },
-    "settingsLockscreenHelp": "Kræv godkendelse ved opstart af app",
-    "@settingsLockscreenHelp": {
-        "description": "Description for lockscreen setting"
-    },
-    "settingsLockscreenInitial": "Godkend venligst for at aktivere skærmlåsning.",
-    "@settingsLockscreenInitial": {
-        "description": "Prompt to authenticate once to set up the lockscreen"
-    },
-    "settingsNLAppAccount": "Standard konto",
-    "@settingsNLAppAccount": {
-        "description": "Default account which will be used for the transaction."
-    },
-    "settingsNLAppAccountDynamic": "<Dynamic>",
-    "@settingsNLAppAccountDynamic": {
-        "description": "Account will be selected dynamically by the content of the notification."
-    },
-    "settingsNLAppAdd": "Tilføj app",
-    "@settingsNLAppAdd": {
-        "description": "Button title to add a new app."
-    },
-    "settingsNLAppAddHelp": "Klik for at tilføje en app til at lytte til. Kun kvalificerede apps vil dukke op på listen.",
-    "@settingsNLAppAddHelp": {
-        "description": "Help text below adding the new app button."
-    },
-    "settingsNLAppAddInfo": "Foretag nogle transaktioner, hvor du modtager telefonmeddelelser for at tilføje apps til denne liste. Hvis appen stadig ikke dukker op, bedes du rapportere den til app@vogt.pw.",
-    "@settingsNLAppAddInfo": {
-        "description": "Help text when no more app is available to add."
-    },
-    "settingsNLDescription": "Denne tjeneste giver dig mulighed for at hente transaktionsoplysninger fra indgående push-notifikationer. Derudover kan du vælge en standardkonto, som transaktionen skal tildeles til - hvis ingen værdi er angivet, vil den prøve at udtrække en konto fra notifikationen.",
-    "@settingsNLDescription": {
-        "description": "Description text for the notification listener service."
-    },
-    "settingsNLPermissionGrant": "Tryk for at give tilladelse.",
-    "@settingsNLPermissionGrant": {
-        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
-    },
-    "settingsNLPermissionNotGranted": "Tilladelse ikke givet.",
-    "@settingsNLPermissionNotGranted": {
-        "description": "A requested permission was not granted."
-    },
-    "settingsNLPermissionRemove": "Fjern tilladelse?",
-    "@settingsNLPermissionRemove": {
-        "description": "Dialog title asking if permission should be removed."
-    },
-    "settingsNLPermissionRemoveHelp": "Klik på appen for at deaktivere denne tjeneste og fjern tilladelserne på den næste skærm.",
-    "@settingsNLPermissionRemoveHelp": {
-        "description": "Dialog text giving hint how to remove the permission."
-    },
-    "settingsNLPrefillTXTitle": "Forudfyld transaktionstitel med nofikationstitel",
-    "@settingsNLPrefillTXTitle": {
-        "description": "First line for setting to use pre-fill transaction title with notification title."
-    },
-    "settingsNLServiceChecking": "Tjekker status…",
-    "@settingsNLServiceChecking": {
-        "description": "Checking the status of the background service"
-    },
-    "settingsNLServiceCheckingError": "Fejl under kontrol af status: {error}",
-    "@settingsNLServiceCheckingError": {
-        "description": "An error occurred while checking the service status",
-        "placeholders": {
-            "error": {
-                "type": "String",
-                "description": "Error details",
-                "example": "Timeout"
-            }
-        }
-    },
-    "settingsNLServiceRunning": "Tjenesten kører.",
-    "@settingsNLServiceRunning": {
-        "description": "A background service is running normally."
-    },
-    "settingsNLServiceStatus": "Tjenestestatus",
-    "@settingsNLServiceStatus": {
-        "description": "Status of a background service."
-    },
-    "settingsNLServiceStopped": "Tjenesten er stoppet.",
-    "@settingsNLServiceStopped": {
-        "description": "A background service is stopped."
-    },
-    "settingsNotificationListener": "Notifikationslytter-service",
-    "@settingsNotificationListener": {
-        "description": "Setting for the notification listener service."
-    },
-    "settingsTheme": "App tema",
-    "@settingsTheme": {
-        "description": "App theme (dark or light)"
-    },
-    "settingsThemeDynamicColors": "Dynamisk farve",
-    "@settingsThemeDynamicColors": {
-        "description": "Material You Dynamic Colors feature"
-    },
-    "settingsThemeValue": "{theme, select,dark{Mørk tilstand} light{Lys tilstand} other{Systemstandard}}",
-    "@settingsThemeValue": {
-        "description": "Currently selected theme (either dark, light or system)",
-        "placeholders": {
-            "theme": {
-                "type": "String",
-                "example": "ThemeMode.dark"
-            }
-        }
-    },
-    "settingsUseServerTimezone": "Brug serverens tidszone",
-    "@settingsUseServerTimezone": {
-        "description": "Setting label to use server timezone."
-    },
-    "settingsUseServerTimezoneHelp": "Vis alle gange i serverens tidszone. Dette efterligner webgrænsefladens opførsel.",
-    "@settingsUseServerTimezoneHelp": {
-        "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
-    },
-    "settingsVersion": "Appversion",
-    "@settingsVersion": {
-        "description": "Current App Version"
-    },
-    "settingsVersionChecking": "tjekker…",
-    "@settingsVersionChecking": {
-        "description": "Shown while checking for app version"
-    },
-    "transactionAttachments": "Bilag",
-    "@transactionAttachments": {
-        "description": "Button Label: Attachments"
-    },
-    "transactionDeleteConfirm": "Er du sikker på, at du vil slette denne transaktion?",
-    "@transactionDeleteConfirm": {
-        "description": "Confirmation text to delete transaction"
-    },
-    "transactionDialogAttachmentsDelete": "Slet bilag",
-    "@transactionDialogAttachmentsDelete": {
-        "description": "Button Label: Delete Attachment"
-    },
-    "transactionDialogAttachmentsDeleteConfirm": "Er du sikker på, at du vil slette dette bilag?",
-    "@transactionDialogAttachmentsDeleteConfirm": {
-        "description": "Confirmation text to delete attachment"
-    },
-    "transactionDialogAttachmentsErrorDownload": "Kunne ikke downloade fil.",
-    "@transactionDialogAttachmentsErrorDownload": {
-        "description": "Snackbar Text: File download failed."
-    },
-    "transactionDialogAttachmentsErrorOpen": "Kunne ikke åbne fil: {error}",
-    "@transactionDialogAttachmentsErrorOpen": {
-        "description": "Snackbar Text: File could not be opened, with reason.",
-        "placeholders": {
-            "error": {
-                "type": "String"
-            }
-        }
-    },
-    "transactionDialogAttachmentsErrorUpload": "Kunne ikke uploade fil: {error}",
-    "@transactionDialogAttachmentsErrorUpload": {
-        "description": "Snackbar Text: File could not be uploaded, with reason.",
-        "placeholders": {
-            "error": {
-                "type": "String"
-            }
-        }
-    },
-    "transactionDialogAttachmentsTitle": "Bilag",
-    "@transactionDialogAttachmentsTitle": {
-        "description": "Dialog Title: Attachments Dialog"
-    },
-    "transactionDialogBillNoBill": "Ingen regning",
-    "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
-    },
-    "transactionDialogBillTitle": "Link til regning",
-    "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
-    },
-    "transactionDialogCurrencyTitle": "Vælg valuta",
-    "@transactionDialogCurrencyTitle": {
-        "description": "Dialog Title: Currency Selection"
-    },
-    "transactionDialogTagsAdd": "Tilføj etiket",
-    "@transactionDialogTagsAdd": {
-        "description": "Button Label: Add Tag"
-    },
-    "transactionDialogTagsHint": "Søg/Tilføj Tag",
-    "@transactionDialogTagsHint": {
-        "description": "Hint Text for search tag field"
-    },
-    "transactionDialogTagsTitle": "Vælg etiketter",
-    "@transactionDialogTagsTitle": {
-        "description": "Dialog Title: Select Tags"
-    },
-    "transactionDuplicate": "Duplikér",
-    "@transactionDuplicate": {
-        "description": "Menu Label: Duplicate item"
-    },
-    "transactionErrorInvalidAccount": "Ugyldig konto",
-    "@transactionErrorInvalidAccount": {
-        "description": "Transaction Save Error: Invalid account"
-    },
-    "transactionErrorInvalidBudget": "Ugyldigt Budget",
-    "@transactionErrorInvalidBudget": {
-        "description": "Transaction Save Error: Invalid budget"
-    },
-    "transactionErrorTitle": "Angiv venligst en titel.",
-    "@transactionErrorTitle": {
-        "description": "Transaction Save Error: No title provided"
-    },
-    "transactionFormLabelAccountDestination": "Destinationskonto",
-    "@transactionFormLabelAccountDestination": {
-        "description": "Transaction Form: Label for destination account for transfer transaction"
-    },
-    "transactionFormLabelAccountForeign": "Fremmed konto",
-    "@transactionFormLabelAccountForeign": {
-        "description": "Transaction Form: Label for foreign (other) account"
-    },
-    "transactionFormLabelAccountOwn": "Egen konto",
-    "@transactionFormLabelAccountOwn": {
-        "description": "Transaction Form: Label for own account"
-    },
-    "transactionFormLabelAccountSource": "Fra konto",
-    "@transactionFormLabelAccountSource": {
-        "description": "Transaction Form: Label for source account for transfer transaction"
-    },
-    "transactionFormLabelNotes": "Noter",
-    "@transactionFormLabelNotes": {
-        "description": "Transaction Form: Label for notes field"
-    },
-    "transactionFormLabelTags": "Etiketter",
-    "@transactionFormLabelTags": {
-        "description": "Transaction Form: Label for tags field"
-    },
-    "transactionFormLabelTitle": "Transaktionstitel",
-    "@transactionFormLabelTitle": {
-        "description": "Transaction Form: Label for title field"
-    },
-    "transactionSplitAdd": "Tilføj delt transaktion",
-    "@transactionSplitAdd": {
-        "description": "Button Label: Add a split"
-    },
-    "transactionSplitChangeCurrency": "Ændr delt valuta",
-    "@transactionSplitChangeCurrency": {
-        "description": "Hint Text: Change currency for a single split"
-    },
-    "transactionSplitChangeTarget": "Ændr delt målkonto",
-    "@transactionSplitChangeTarget": {
-        "description": "Hint Text: Change target account for single split"
-    },
-    "transactionSplitDelete": "Slet split",
-    "@transactionSplitDelete": {
-        "description": "Hint Text: Delete single split"
-    },
-    "transactionTitleAdd": "Tilføj transaktion",
-    "@transactionTitleAdd": {
-        "description": "Title: Add a new transaction"
-    },
-    "transactionTitleDelete": "Slet transaktion",
-    "@transactionTitleDelete": {
-        "description": "Title: Delete existing transaction"
-    },
-    "transactionTitleEdit": "Redigér transaktion",
-    "@transactionTitleEdit": {
-        "description": "Title: Edit existing transaction"
-    },
-    "transactionTypeDeposit": "Indbetal",
-    "@transactionTypeDeposit": {
-        "description": "Deposit transaction type"
-    },
-    "transactionTypeTransfer": "Overfør",
-    "@transactionTypeTransfer": {
-        "description": "Transfer transaction type"
-    },
-    "transactionTypeWithdrawal": "Hævning",
-    "@transactionTypeWithdrawal": {
-        "description": "Withdrawal transaction type"
-    }
+  "@@locale": "da",
+  "@@x-reference": true,
+  "accountRoleAssetCashWallet": "Kontantstegnebog",
+  "accountRoleAssetCC": "Kreditkort",
+  "accountRoleAssetDefault": "Standard aktivkonto",
+  "accountRoleAssetSavings": "Opsparingskonto",
+  "accountRoleAssetShared": "Delt aktivkonto",
+  "accountsLabelAsset": "Aktivkonti",
+  "accountsLabelExpense": "Udgiftskonti",
+  "accountsLabelLiabilities": "Gældsforpligtelser",
+  "accountsLabelRevenue": "Indtægtskonti",
+  "accountsLiabilitiesInterest": "{interest}% renter per {period, select, weekly{uge} monthly{måned} quarterly{kvartal} halfyear{halvår} yearly{år} other{ukendt}}",
+  "billsAmountAndFrequency": "Abonnement matcher transaktioner mellem {minValue} og {maxvalue}. Gentages {frequency, select, weekly{ugentligt} monthly{månedligt} quarterly{kvartalsvis} halfyear{halvårligt} yearly{årligt} other{ukendt}}{skip, plural, =0{} other{, springer over {skip}}}.",
+  "billsChangeLayoutTooltip": "Skift layout",
+  "billsChangeSortOrderTooltip": "Skift sorteringsrækkefølge",
+  "billsErrorLoading": "Fejl ved indlæsning af abonnementer.",
+  "billsExactAmountAndFrequency": "Abonnement matcher transaktioner af {value}. Gentages {frequency, select, weekly{ugentligt} monthly{månedligt} quarterly{kvartalsvis} halfyear{halvårligt} yearly{årligt} other{ukendt}}{skip, plural, =0{} other{, springer over {skip}}}.",
+  "billsExpectedOn": "Forventet {date}",
+  "billsFrequency": "{frequency, select, weekly{Ugentlig} monthly{Månedlig} quarterly{Kvartalsvis} halfyear{Halvårlig} yearly{Årlig} other{Ukendt}}",
+  "billsFrequencySkip": "{frequency, select, weekly{Ugentlig} monthly{Månedlig} quarterly{Kvartalsvis} halfyear{Halvårlig} yearly{Årlig} other{Ukendt}}{skip, plural, =0{} other{, springer over {skip}}}",
+  "billsInactive": "Inaktiv",
+  "billsIsActive": "Abonnementet er aktivt",
+  "billsLayoutGroupSubtitle": "Abonnementer vises i deres tildelte grupper.",
+  "billsLayoutGroupTitle": "Gruppe",
+  "billsLayoutListSubtitle": "Abonnementer vises på en liste sorteret efter bestemte kriterier.",
+  "billsLayoutListTitle": "Liste",
+  "billsListEmpty": "Listen er i øjeblikket tom.",
+  "billsNextExpectedMatch": "Næste forventede match",
+  "billsNotActive": "Abonnementet er inaktivt",
+  "billsNotExpected": "Ikke forventet i denne periode",
+  "billsNoTransactions": "Ingen transaktioner fundet.",
+  "billsPaidOn": "Betalt {date}",
+  "billsSortAlphabetical": "Alfabetisk",
+  "billsSortByTimePeriod": "Efter tidsperiode",
+  "billsSortFrequency": "Frekvens",
+  "billsSortName": "Navn",
+  "billsUngrouped": "Ugrupperede",
+  "billsSettingsShowOnlyActive": "Vis kun aktive",
+  "billsSettingsShowOnlyActiveDesc": "Viser kun aktive abonnementer.",
+  "billsSettingsShowOnlyExpected": "Vis kun forventede",
+  "billsSettingsShowOnlyExpectedDesc": "Viser kun de abonnementer, der forventes (eller er betalt) denne måned.",
+  "categoryDeleteConfirm": "Er du sikker på, at du vil slette denne kategori? Transaktionerne vil ikke blive slettet, men vil ikke længere have en kategori.",
+  "categoryErrorLoading": "Fejl ved indlæsning af kategorier.",
+  "categoryFormLabelIncludeInSum": "Medregn i månedlig sum",
+  "categoryFormLabelName": "Kategorinavn",
+  "categoryMonthNext": "Næste måned",
+  "categoryMonthPrev": "Sidste måned",
+  "categorySumExcluded": "udelukket",
+  "categoryTitleAdd": "Tilføj kategori",
+  "categoryTitleDelete": "Slet kategori",
+  "categoryTitleEdit": "Redigér kategori",
+  "catNone": "<no category>",
+  "catOther": "Andet",
+  "errorAPIInvalidResponse": "Ugyldigt svar fra API: {message}",
+  "errorAPIUnavailable": "API utilgængelig",
+  "errorFieldRequired": "Dette felt er påkrævet.",
+  "errorInvalidURL": "Ugyldig URL",
+  "errorMinAPIVersion": "Minimum Firefly API-version v{requiredVersion} påkrævet. Opgradér venligst.",
+  "errorStatusCode": "Statuskode: {code}",
+  "errorUnknown": "Ukendt fejl.",
+  "formButtonHelp": "Hjælp",
+  "formButtonLogin": "Log ind",
+  "formButtonLogout": "Log ud",
+  "formButtonRemove": "Fjern",
+  "formButtonResetLogin": "Nulstil login",
+  "formButtonTransactionAdd": "Tilføj transaktion",
+  "formButtonTryAgain": "Prøv igen",
+  "generalAccount": "Konto",
+  "generalAssets": "Aktiver",
+  "generalBalance": "Saldo",
+  "generalBalanceOn": "Saldo på {date}",
+  "generalBill": "Regning",
+  "generalBudget": "Budget",
+  "generalCategory": "Kategori",
+  "generalCurrency": "Valuta",
+  "generalDateRangeCurrentMonth": "Nuværende måned",
+  "generalDateRangeLast30Days": "Sidste 30 dage",
+  "generalDateRangeCurrentYear": "Nuværende år",
+  "generalDateRangeLastYear": "Sidste år",
+  "generalDateRangeAll": "Alle",
+  "generalDefault": "standard",
+  "generalDestinationAccount": "Destinationskonto",
+  "generalDismiss": "Afvis",
+  "generalEarned": "Optjent",
+  "generalError": "Fejl",
+  "generalExpenses": "Udgifter",
+  "generalIncome": "Indtægter",
+  "generalLiabilities": "Gældsforpligtelser",
+  "generalMultiple": "flere",
+  "generalNever": "aldrig",
+  "generalReconcile": "Afstemt",
+  "generalReset": "Nulstil",
+  "generalSourceAccount": "Kildekonto",
+  "generalSpent": "Brugt",
+  "generalSum": "I alt",
+  "generalTarget": "Mål",
+  "generalUnknown": "Ukendt",
+  "homeMainBillsInterval": "({period, select, weekly{ugentligt} monthly{månedligt} quarterly{kvartalsvis} halfyear{halvårligt} yearly{årligt} other{ukendt}})",
+  "homeMainBillsTitle": "Regninger for næste uge",
+  "homeMainBudgetInterval": "({from} til {to}, {period})",
+  "homeMainBudgetIntervalSingle": "({from} til {to})",
+  "homeMainBudgetSum": "{current}{status, select, over{over} other{tilbage af}} {available}",
+  "homeMainBudgetTitle": "Budgetter for denne måned",
+  "homeMainChartAccountsTitle": "Kontooversigt",
+  "homeMainChartCategoriesTitle": "Kategorioversigt for denne måned",
+  "homeMainChartDailyAvg": "7 dages-gennemsnit",
+  "homeMainChartDailyTitle": "Dagsoversigt",
+  "homeMainChartNetEarningsTitle": "Nettoindtjening",
+  "homeMainChartNetWorthTitle": "Nettoværdi",
+  "homeMainChartTagsTitle": "Tag-oversigt for nuværende måned",
+  "homePiggyAdjustDialogTitle": "Gem/brug penge",
+  "homePiggyDateStart": "Startdato: {date}",
+  "homePiggyDateTarget": "Måldato: {date}",
+  "homeMainDialogSettingsTitle": "Tilpas Dashboard",
+  "homePiggyLinked": "Knyttet til {account}",
+  "homePiggyNoAccounts": "Ingen sparegris er sat op.",
+  "homePiggyNoAccountsSubtitle": "Opret nogle i webgrænsefladen!",
+  "homePiggyRemaining": "Mangler at spare: {amount}",
+  "homePiggySaved": "Gemt indtil videre: {amount}",
+  "homePiggySavedMultiple": "Opsparet indtil videre:",
+  "homePiggyTarget": "Målbeløb: {amount}",
+  "homePiggyAccountStatus": "Kontostatus",
+  "homePiggyAvailableAmounts": "Tilgængelige beløb",
+  "homePiggyAvailable": "Tilgængelig: {amount}",
+  "homePiggyInPiggyBanks": "I sparegrise: {amount}",
+  "homeTabLabelBalance": "Balance",
+  "homeTabLabelMain": "Primær",
+  "homeTabLabelPiggybanks": "Sparegrise",
+  "homeTabLabelTransactions": "Transaktioner",
+  "homeTransactionsActionFilter": "Filterliste",
+  "homeTransactionsDialogFilterAccountsAll": "<All Accounts>",
+  "homeTransactionsDialogFilterBillsAll": "<All Bills>",
+  "homeTransactionsDialogFilterBillUnset": "<No Bill set>",
+  "homeTransactionsDialogFilterBudgetsAll": "<All Budgets>",
+  "homeTransactionsDialogFilterBudgetUnset": "<No Budget set>",
+  "homeTransactionsDialogFilterCategoriesAll": "<All Categories>",
+  "homeTransactionsDialogFilterCategoryUnset": "<No Category set>",
+  "homeTransactionsDialogFilterCurrenciesAll": "<All Currencies>",
+  "homeTransactionsDialogFilterDateRange": "Datointerval",
+  "homeTransactionsDialogFilterFutureTransactions": "Vis fremtidige transaktioner",
+  "homeTransactionsDialogFilterSearch": "Søgeord",
+  "homeTransactionsDialogFilterTitle": "Vælg filtre",
+  "homeTransactionsEmpty": "Ingen transaktion fundet.",
+  "homeTransactionsMultipleCategories": "{num} kategorier",
+  "homeTransactionsSettingsShowTags": "Vis tags på transaktionslisten",
+  "liabilityDirectionCredit": "Jeg er skyldt denne gæld",
+  "liabilityDirectionDebit": "Jeg skylder denne gæld",
+  "liabilityTypeDebt": "Gæld",
+  "liabilityTypeLoan": "Lån",
+  "liabilityTypeMortgage": "Boliglån",
+  "loginAbout": "For at bruge Waterfly III produktivt har du brug for din egen server med en Firefly III-instans eller Firefly II-add-on til Home Assistant.\n\nIndtast venligst det fulde URL samt en personlig adgangstoken (Indstillinger -> Profil -> OAuth -> Personlig adgangstoken) nedenfor.",
+  "loginFormLabelAPIKey": "Gyldig API-nøgle",
+  "loginFormLabelHost": "Værts-URL",
+  "loginWelcome": "Velkommen til Waterfly III",
+  "logoutConfirmation": "Er du sikker på, at du vil logge ud?",
+  "navigationAccounts": "Konti",
+  "navigationBills": "Abonnementer",
+  "navigationCategories": "Kategorier",
+  "navigationMain": "Hoveddashboard",
+  "generalSettings": "Indstillinger",
+  "no": "Nej",
+  "numPercent": "{num}",
+  "numPercentOf": "{perc} af {of}",
+  "settingsDialogDebugInfo": "Du kan aktivere og sende fejfindingslogs her. Disse har en dårlig indvirkning på ydeevnen, så du skal venligst ikke aktivere dem, medmindre du rådes til at gøre det. Deaktivering af logning vil slette den gemte log.",
+  "settingsDialogDebugMailCreate": "Opret mail",
+  "settingsDialogDebugMailDisclaimer": "ADVARSEL: En mailkladde åbnes med logfilen vedhæftet (i tekstformat). Logfilerne kan indeholdet følsomme oplysninger, såsom værtsnavnet på din Firefly instans (selvom jeg forsøger at undgå logning af eventuelle hemmeligheder, såsom api-nøgle). Læs venligst loggen grundigt og censurér alle oplysninger, du ikke ønsker at dele og/eller ikke er relevante for det problem, du ønsker at rapportere.",
+  "settingsDialogDebugSendButton": "Send logfiler via e-mail",
+  "settingsDialogDebugTitle": "Fejlfindingslogs",
+  "settingsDialogLanguageTitle": "Vælg sprog",
+  "settingsDialogThemeTitle": "Vælg tema",
+  "settingsFAQ": "Ofte stillede spørgsmål",
+  "settingsFAQHelp": "Åbnes i browseren. Kun tilgængelig på engelsk.",
+  "settingsLanguage": "Sprog",
+  "settingsLockscreen": "Låst skærm",
+  "settingsLockscreenHelp": "Kræv godkendelse ved opstart af app",
+  "settingsLockscreenInitial": "Godkend venligst for at aktivere skærmlåsning.",
+  "settingsNLAppAccount": "Standard konto",
+  "settingsNLAppAccountDynamic": "<Dynamic>",
+  "settingsNLAppAdd": "Tilføj app",
+  "settingsNLAppAddHelp": "Klik for at tilføje en app til at lytte til. Kun kvalificerede apps vil dukke op på listen.",
+  "settingsNLAppAddInfo": "Foretag nogle transaktioner, hvor du modtager telefonmeddelelser for at tilføje apps til denne liste. Hvis appen stadig ikke dukker op, bedes du rapportere den til app@vogt.pw.",
+  "settingsNLAutoAdd": "Opret transaktion uden interaktion",
+  "settingsNLDescription": "Denne tjeneste giver dig mulighed for at hente transaktionsoplysninger fra indgående push-notifikationer. Derudover kan du vælge en standardkonto, som transaktionen skal tildeles til - hvis ingen værdi er angivet, vil den prøve at udtrække en konto fra notifikationen.",
+  "settingsNLEmptyNote": "Lad notatfeltet være tomt",
+  "settingsNLPermissionGrant": "Tryk for at give tilladelse.",
+  "settingsNLPermissionNotGranted": "Tilladelse ikke givet.",
+  "settingsNLPermissionRemove": "Fjern tilladelse?",
+  "settingsNLPermissionRemoveHelp": "Klik på appen for at deaktivere denne tjeneste og fjern tilladelserne på den næste skærm.",
+  "settingsNLPrefillTXTitle": "Forudfyld transaktionstitel med nofikationstitel",
+  "settingsNLServiceChecking": "Tjekker status…",
+  "settingsNLServiceCheckingError": "Fejl under kontrol af status: {error}",
+  "settingsNLServiceRunning": "Tjenesten kører.",
+  "settingsNLServiceStatus": "Tjenestestatus",
+  "settingsNLServiceStopped": "Tjenesten er stoppet.",
+  "settingsNotificationListener": "Notifikationslytter-service",
+  "settingsTheme": "App tema",
+  "settingsThemeDynamicColors": "Dynamisk farve",
+  "settingsThemeValue": "{theme, select,dark{Mørk tilstand} light{Lys tilstand} other{Systemstandard}}",
+  "settingsUseServerTimezone": "Brug serverens tidszone",
+  "settingsUseServerTimezoneHelp": "Vis alle gange i serverens tidszone. Dette efterligner webgrænsefladens opførsel.",
+  "settingsVersion": "Appversion",
+  "settingsVersionChecking": "tjekker…",
+  "transactionAttachments": "Bilag",
+  "transactionDeleteConfirm": "Er du sikker på, at du vil slette denne transaktion?",
+  "transactionDialogAttachmentsDelete": "Slet bilag",
+  "transactionDialogAttachmentsDeleteConfirm": "Er du sikker på, at du vil slette dette bilag?",
+  "transactionDialogAttachmentsErrorDownload": "Kunne ikke downloade fil.",
+  "transactionDialogAttachmentsErrorOpen": "Kunne ikke åbne fil: {error}",
+  "transactionDialogAttachmentsErrorUpload": "Kunne ikke uploade fil: {error}",
+  "transactionDialogAttachmentsTitle": "Bilag",
+  "transactionDialogBillNoBill": "Ingen regning",
+  "transactionDialogBillTitle": "Link til regning",
+  "transactionDialogCurrencyTitle": "Vælg valuta",
+  "transactionDialogTagsAdd": "Tilføj etiket",
+  "transactionDialogTagsHint": "Søg/Tilføj Tag",
+  "transactionDialogTagsTitle": "Vælg etiketter",
+  "transactionDuplicate": "Duplikér",
+  "transactionErrorInvalidAccount": "Ugyldig konto",
+  "transactionErrorInvalidBudget": "Ugyldigt Budget",
+  "transactionErrorNoAccounts": "Udfyld venligst konti først.",
+  "transactionErrorNoAssetAccount": "Vælg venligst en aktivkonto.",
+  "transactionErrorTitle": "Angiv venligst en titel.",
+  "transactionFormLabelAccountDestination": "Destinationskonto",
+  "transactionFormLabelAccountForeign": "Fremmed konto",
+  "transactionFormLabelAccountOwn": "Egen konto",
+  "transactionFormLabelAccountSource": "Fra konto",
+  "transactionFormLabelNotes": "Noter",
+  "transactionFormLabelTags": "Etiketter",
+  "transactionFormLabelTitle": "Transaktionstitel",
+  "transactionSplitAdd": "Tilføj delt transaktion",
+  "transactionSplitChangeCurrency": "Ændr delt valuta",
+  "transactionSplitChangeDestinationAccount": "Skift destinationkonto for opdeling",
+  "transactionSplitChangeSourceAccount": "Skift kildekonto for opdeling",
+  "transactionSplitChangeTarget": "Ændr delt målkonto",
+  "transactionSplitDelete": "Slet split",
+  "transactionTitleAdd": "Tilføj transaktion",
+  "transactionTitleDelete": "Slet transaktion",
+  "transactionTitleEdit": "Redigér transaktion",
+  "transactionTypeDeposit": "Indbetal",
+  "transactionTypeTransfer": "Overfør",
+  "transactionTypeWithdrawal": "Hævning"
 }

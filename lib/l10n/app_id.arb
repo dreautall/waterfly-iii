@@ -1,808 +1,243 @@
 {
-    "@@locale": "id",
-    "@@x-reference": true,
-    "accountRoleAssetCashWallet": "Dompet Kas",
-    "@accountRoleAssetCashWallet": {
-        "description": "Firefly Translation String: account_role_cashWalletAsset"
-    },
-    "accountRoleAssetCC": "Kartu kredit",
-    "@accountRoleAssetCC": {
-        "description": "Firefly Translation String: account_role_ccAsset"
-    },
-    "accountRoleAssetDefault": "Akun aset standar",
-    "@accountRoleAssetDefault": {
-        "description": "Firefly Translation String: account_role_defaultAsset"
-    },
-    "accountRoleAssetSavings": "Akun tabungan",
-    "@accountRoleAssetSavings": {
-        "description": "Firefly Translation String: account_role_savingAsset"
-    },
-    "accountRoleAssetShared": "Akun aset bersama",
-    "@accountRoleAssetShared": {
-        "description": "Firefly Translation String: account_role_sharedAsset"
-    },
-    "accountsLabelAsset": "Akun Aset",
-    "@accountsLabelAsset": {
-        "description": "Firefly Translation String: asset_accounts"
-    },
-    "accountsLabelExpense": "Akun Pengeluaran",
-    "@accountsLabelExpense": {
-        "description": "Firefly Translation String: expense_accounts"
-    },
-    "accountsLabelLiabilities": "Kewajiban",
-    "@accountsLabelLiabilities": {
-        "description": "Firefly Translation String: liabilities_accounts"
-    },
-    "accountsLabelRevenue": "Akun Pendapatan",
-    "@accountsLabelRevenue": {
-        "description": "Firefly Translation String: revenue_accounts"
-    },
-    "accountsLiabilitiesInterest": "{interest}% bunga per {period, select, weekly{minggu} monthly{bulan} quarterly{perempat} halfyear{setengah-tahun} yearly{tahun} other{tidak-diketahui}}",
-    "@accountsLiabilitiesInterest": {
-        "description": "Interest in a certain period",
-        "placeholders": {
-            "interest": {
-                "type": "double",
-                "example": "1.2"
-            },
-            "period": {
-                "type": "String",
-                "example": "yearly"
-            }
-        }
-    },
-    "catOther": "Lainnya",
-    "@catOther": {
-        "description": "Category description for summary category 'Other'"
-    },
-    "errorAPIInvalidResponse": "Respons dari API tidak Valid: {message}",
-    "@errorAPIInvalidResponse": {
-        "description": "Invalid API response error",
-        "placeholders": {
-            "message": {
-                "type": "String",
-                "example": "API could not be reached."
-            }
-        }
-    },
-    "errorAPIUnavailable": "API tidak tersedia",
-    "@errorAPIUnavailable": {
-        "description": "Error thrown when API is unavailable."
-    },
-    "errorFieldRequired": "Kolom ini diperlukan.",
-    "@errorFieldRequired": {
-        "description": "Error: Required field was left empty."
-    },
-    "errorInvalidURL": "URL tidak Valid",
-    "@errorInvalidURL": {
-        "description": "Error: URL is invalid"
-    },
-    "errorMinAPIVersion": "Versi Firefly API Minimum v{requiredVersion} diperlukan. Mohon tingkatkan.",
-    "@errorMinAPIVersion": {
-        "description": "Error: Required API version not met.",
-        "placeholders": {
-            "requiredVersion": {
-                "type": "String",
-                "example": "2.0.0"
-            }
-        }
-    },
-    "errorStatusCode": "Kode Status: {code}",
-    "@errorStatusCode": {
-        "description": "HTTP status code information on error",
-        "placeholders": {
-            "code": {
-                "type": "int",
-                "example": "500"
-            }
-        }
-    },
-    "errorUnknown": "Kesalahan tidak diketahui.",
-    "@errorUnknown": {
-        "description": "Error without further information occurred."
-    },
-    "formButtonHelp": "Bantuan",
-    "@formButtonHelp": {
-        "description": "Button Label: Help"
-    },
-    "formButtonLogin": "Masuk",
-    "@formButtonLogin": {
-        "description": "Button Label: Login"
-    },
-    "formButtonLogout": "Keluar",
-    "@formButtonLogout": {
-        "description": "Button Label: Logout"
-    },
-    "formButtonRemove": "Hapus",
-    "@formButtonRemove": {
-        "description": "Button Label: Remove"
-    },
-    "formButtonResetLogin": "Setel ulang masuk",
-    "@formButtonResetLogin": {
-        "description": "Button Label: Reset login form (when error is shown)"
-    },
-    "formButtonTransactionAdd": "Tambah Transaksi",
-    "@formButtonTransactionAdd": {
-        "description": "Button Label: Add Transaction"
-    },
-    "formButtonTryAgain": "Coba lagi",
-    "@formButtonTryAgain": {
-        "description": "Button Label: Try that thing again (login etc)"
-    },
-    "generalAccount": "Akun",
-    "@generalAccount": {
-        "description": "Asset/Debt (Bank) Account"
-    },
-    "generalAssets": "Aset",
-    "@generalAssets": {
-        "description": "(Monetary) Assets"
-    },
-    "generalBalance": "Saldo",
-    "@generalBalance": {
-        "description": "(Account) Balance"
-    },
-    "generalBalanceOn": "Saldo pada tanggal {date}",
-    "@generalBalanceOn": {
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMd",
-                "example": "2023-05-13"
-            }
-        }
-    },
-    "generalBill": "Tagihan",
-    "@generalBill": {
-        "description": "Bill"
-    },
-    "generalBudget": "Anggaran",
-    "@generalBudget": {
-        "description": "(Monetary) Budget"
-    },
-    "generalCategory": "Kategori",
-    "@generalCategory": {
-        "description": "Category (of transaction etc.)."
-    },
-    "generalCurrency": "Mata Uang",
-    "@generalCurrency": {
-        "description": "(Money) Currency"
-    },
-    "generalDefault": "bawaan",
-    "@generalDefault": {
-        "description": "Indicates that something is the default choice"
-    },
-    "generalDismiss": "Tutup",
-    "@generalDismiss": {
-        "description": "Dismiss window/dialog without action"
-    },
-    "generalError": "Kesalahan",
-    "@generalError": {
-        "description": "Error (title in dialogs etc.)"
-    },
-    "generalExpenses": "Pengeluaran",
-    "@generalExpenses": {
-        "description": "(Account) Expenses"
-    },
-    "generalIncome": "Pendapatan",
-    "@generalIncome": {
-        "description": "(Account) Info"
-    },
-    "generalLiabilities": "Kewajiban",
-    "@generalLiabilities": {
-        "description": "Firefly Translation String: liabilities"
-    },
-    "generalMultiple": "beberapa",
-    "@generalMultiple": {
-        "description": "Multiples of a single thing (e.g. source accounts) are existing"
-    },
-    "generalNever": "tidak pernah",
-    "@generalNever": {
-        "description": "Has never happened, no update etc."
-    },
-    "generalReconcile": "Terekonsiliasi",
-    "@generalReconcile": {
-        "description": "Booking has been confirmed/reconciled"
-    },
-    "generalReset": "Setel ulang",
-    "@generalReset": {
-        "description": "Reset something (i.e. set filters)"
-    },
-    "generalSum": "Jumlah",
-    "@generalSum": {
-        "description": "(Mathematical) Sum"
-    },
-    "generalTarget": "Target",
-    "@generalTarget": {
-        "description": "Target value (i.e. a sum to save)"
-    },
-    "generalUnknown": "Tidak Diketahui",
-    "@generalUnknown": {
-        "description": "Something is unknown."
-    },
-    "homeMainBudgetInterval": " ({from} ke {to}, {period})",
-    "@homeMainBudgetInterval": {
-        "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
-        "placeholders": {
-            "from": {
-                "type": "DateTime",
-                "format": "MMMd",
-                "example": "May 13"
-            },
-            "to": {
-                "type": "DateTime",
-                "format": "MMMd",
-                "example": "May 17"
-            },
-            "period": {
-                "type": "String",
-                "example": "weekly"
-            }
-        }
-    },
-    "homeMainBudgetSum": "{current}{status, select, over{di atas} other{sisa dari}}{available}",
-    "@homeMainBudgetSum": {
-        "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
-        "placeholders": {
-            "current": {
-                "type": "String",
-                "example": "12.34€"
-            },
-            "status": {
-                "type": "String",
-                "example": "left from"
-            },
-            "available": {
-                "type": "String",
-                "example": "12.34€"
-            }
-        }
-    },
-    "homeMainBudgetTitle": "Anggaran bulan berjalan",
-    "@homeMainBudgetTitle": {
-        "description": "Title: Budgets for current month"
-    },
-    "homeMainChartAccountsTitle": "Ringkasan Akun",
-    "@homeMainChartAccountsTitle": {
-        "description": "Chart Label: Account Summary"
-    },
-    "homeMainChartCategoriesTitle": "Ringkasan Kategori bulan berjalan",
-    "@homeMainChartCategoriesTitle": {
-        "description": "Chart Label: Category Summary"
-    },
-    "homeMainChartDailyAvg": "Rata-rata 7 hari",
-    "@homeMainChartDailyAvg": {
-        "description": "Text for last week average spent"
-    },
-    "homeMainChartDailyTitle": "Ringkasan Harian",
-    "@homeMainChartDailyTitle": {
-        "description": "Chart Label: Daily Summary"
-    },
-    "homeMainChartNetEarningsTitle": "Pendapatan Bersih",
-    "@homeMainChartNetEarningsTitle": {
-        "description": "Chart Label: Net Earnings"
-    },
-    "homeMainChartNetWorthTitle": "Kekayaan Bersih",
-    "@homeMainChartNetWorthTitle": {
-        "description": "Chart Label: Net Worth"
-    },
-    "homePiggyAdjustDialogTitle": "Simpan/Belanjakan Uang",
-    "@homePiggyAdjustDialogTitle": {
-        "description": "Title of the dialog where money can be added/removed to a piggy bank."
-    },
-    "homePiggyDateStart": "Tanggal mulai: {date}",
-    "@homePiggyDateStart": {
-        "description": "Start of the piggy bank",
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMMMMd",
-                "example": "March 12, 2023"
-            }
-        }
-    },
-    "homePiggyDateTarget": "Tanggal target: {date}",
-    "@homePiggyDateTarget": {
-        "description": "Set target date of the piggy bank (when saving should be finished)",
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMMMMd",
-                "example": "March 12, 2023"
-            }
-        }
-    },
-    "homePiggyLinked": "Tautkan ke {account}",
-    "@homePiggyLinked": {
-        "description": "Piggy bank is linked to asset account {account}.",
-        "placeholders": {
-            "account": {
-                "type": "String",
-                "example": "Awesome Bank Account"
-            }
-        }
-    },
-    "homePiggyNoAccounts": "Tidak ada celengan yang tersiapkan.",
-    "@homePiggyNoAccounts": {
-        "description": "Information that no piggy banks are existing"
-    },
-    "homePiggyNoAccountsSubtitle": "Buat beberapa pada antarmuka web!",
-    "@homePiggyNoAccountsSubtitle": {
-        "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
-    },
-    "homePiggyRemaining": "Tersisa untuk ditabung: {amount}",
-    "@homePiggyRemaining": {
-        "description": "How much money is left to save",
-        "placeholders": {
-            "amount": {
-                "type": "String",
-                "example": "€12.34"
-            }
-        }
-    },
-    "homePiggySaved": "Tertabung sejauh ini: {amount}",
-    "@homePiggySaved": {
-        "description": "How much money already was saved",
-        "placeholders": {
-            "amount": {
-                "type": "String",
-                "example": "€12.34"
-            }
-        }
-    },
-    "homePiggyTarget": "Jumlah target: {amount}",
-    "@homePiggyTarget": {
-        "description": "How much money should be saved",
-        "placeholders": {
-            "amount": {
-                "type": "String",
-                "example": "€12.34"
-            }
-        }
-    },
-    "homeTabLabelBalance": "Neraca Keuangan",
-    "@homeTabLabelBalance": {
-        "description": "Tab Label: Balance Sheet page"
-    },
-    "homeTabLabelMain": "Utama",
-    "@homeTabLabelMain": {
-        "description": "Tab Label: Start page (\"main\")"
-    },
-    "homeTabLabelPiggybanks": "Celengan",
-    "@homeTabLabelPiggybanks": {
-        "description": "Tab Label: Piggy Banks page"
-    },
-    "homeTabLabelTransactions": "Transaksi",
-    "@homeTabLabelTransactions": {
-        "description": "Tab Label: Transactions page"
-    },
-    "homeTransactionsActionFilter": "Filter Daftar",
-    "@homeTransactionsActionFilter": {
-        "description": "Action Button Label: Filter list."
-    },
-    "homeTransactionsDialogFilterAccountsAll": "<Semua Akun>",
-    "@homeTransactionsDialogFilterAccountsAll": {
-        "description": "Don't filter for a specific account (default entry)"
-    },
-    "homeTransactionsDialogFilterBillsAll": "<Semua Tagihan>",
-    "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
-    },
-    "homeTransactionsDialogFilterBillUnset": "<Tidak ada Tagihan tersetel>",
-    "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
-    },
-    "homeTransactionsDialogFilterBudgetsAll": "<Semua Anggaran>",
-    "@homeTransactionsDialogFilterBudgetsAll": {
-        "description": "Don't filter for a specific budget (default entry)"
-    },
-    "homeTransactionsDialogFilterBudgetUnset": "<Tidak ada Anggaran tersetel>",
-    "@homeTransactionsDialogFilterBudgetUnset": {
-        "description": "Filter for unset budgets"
-    },
-    "homeTransactionsDialogFilterCategoriesAll": "<Semua Kategori>",
-    "@homeTransactionsDialogFilterCategoriesAll": {
-        "description": "Don't filter for a specific category (default entry)"
-    },
-    "homeTransactionsDialogFilterCategoryUnset": "<Tidak ada Kategori tersetel>",
-    "@homeTransactionsDialogFilterCategoryUnset": {
-        "description": "Filter for unset categories"
-    },
-    "homeTransactionsDialogFilterCurrenciesAll": "<Semua Mata Uang>",
-    "@homeTransactionsDialogFilterCurrenciesAll": {
-        "description": "Don't filter for a specific currency (default entry)"
-    },
-    "homeTransactionsDialogFilterSearch": "Istilah Pencarian",
-    "@homeTransactionsDialogFilterSearch": {
-        "description": "Search term for filter"
-    },
-    "homeTransactionsDialogFilterTitle": "Pilih filter",
-    "@homeTransactionsDialogFilterTitle": {
-        "description": "Title of Filter Dialog"
-    },
-    "homeTransactionsEmpty": "Transaksi tidak ditemukan.",
-    "@homeTransactionsEmpty": {
-        "description": "Message when no transactions are found."
-    },
-    "homeTransactionsMultipleCategories": "{num} kategori",
-    "@homeTransactionsMultipleCategories": {
-        "description": "$num categories for the transaction.",
-        "placeholders": {
-            "num": {
-                "type": "int",
-                "example": "2"
-            }
-        }
-    },
-    "liabilityDirectionCredit": "Saya pemberi hutang ini",
-    "@liabilityDirectionCredit": {
-        "description": "Firefly Translation String: liability_direction_credit"
-    },
-    "liabilityDirectionDebit": "Saya berhutang hutang ini",
-    "@liabilityDirectionDebit": {
-        "description": "Firefly Translation String: liability_direction_debit"
-    },
-    "liabilityTypeDebt": "Hutang",
-    "@liabilityTypeDebt": {
-        "description": "Firefly Translation String: account_type_debt"
-    },
-    "liabilityTypeLoan": "Pinjaman",
-    "@liabilityTypeLoan": {
-        "description": "Firefly Translation String: account_type_loan"
-    },
-    "liabilityTypeMortgage": "Hipotek",
-    "@liabilityTypeMortgage": {
-        "description": "Firefly Translation String: account_type_mortgage"
-    },
-    "loginAbout": "Untuk menggunakan Waterfly III secara produktif anda memerlukan server sendiri dengan instansi Firefly III atau tambahan Firefly III untuk Home Assistant.\n\nSilahkan masukkan URL penuh serta token akses pribadi (Pengaturan -> Profil -> OAuth -> Token Akses Pribadi) di bawah.",
-    "@loginAbout": {
-        "description": "Login screen welcome description"
-    },
-    "loginFormLabelAPIKey": "Kunci API Valid",
-    "@loginFormLabelAPIKey": {
-        "description": "Login Form: Label for API Key field"
-    },
-    "loginFormLabelHost": "URL Host",
-    "@loginFormLabelHost": {
-        "description": "Login Form: Label for Host field"
-    },
-    "loginWelcome": "Selamat Datang di Waterfly III",
-    "@loginWelcome": {
-        "description": "Login screen welcome banner"
-    },
-    "logoutConfirmation": "Yakin ingin keluar?",
-    "@logoutConfirmation": {
-        "description": "Get user confirmation if he really wants to log out"
-    },
-    "navigationAccounts": "Akun",
-    "@navigationAccounts": {
-        "description": "Navigation Label: Accounts Page"
-    },
-    "navigationMain": "Dasbor Utama",
-    "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
-    },
-    "navigationSettings": "Pengaturan",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
-    },
-    "numPercent": "{num}",
-    "@numPercent": {
-        "description": "Number formatted as percentage",
-        "placeholders": {
-            "num": {
-                "type": "double",
-                "format": "decimalPercentPattern",
-                "optionalParameters": {
-                    "decimalDigits": 0
-                }
-            }
-        }
-    },
-    "numPercentOf": "{perc} dari {of}",
-    "@numPercentOf": {
-        "description": "Number formatted as percentage, with total amount provided",
-        "placeholders": {
-            "perc": {
-                "type": "double",
-                "format": "decimalPercentPattern",
-                "optionalParameters": {
-                    "decimalDigits": 0
-                }
-            },
-            "of": {
-                "type": "String"
-            }
-        }
-    },
-    "settingsDialogDebugInfo": "Anda dapat mengaktifkan & mengirim log debug di sini. Akan berdampak buruk pada kinerja, mohon jangan diaktifkan kecuali anda disarankan. Menonaktifkan logging akan menghapus log yang tersimpan.",
-    "@settingsDialogDebugInfo": {
-        "description": "Information about debug logs and their impact."
-    },
-    "settingsDialogDebugMailCreate": "Buat Surat",
-    "@settingsDialogDebugMailCreate": {
-        "description": "Button to confirm mail creation after privacy disclaimer is shown."
-    },
-    "settingsDialogDebugMailDisclaimer": "PERHATIAN: Draf surat akan terbuka dengan file log terlampir (dalam format teks). Log mungkin berisi informasi sensitif, seperti nama host instansi Firefly anda (walaupun saya mencoba menghindari pencatatan rahasia apapun, seperti kunci API). Harap baca log dengan cermat dan sensor informasi yang tidak ingin anda bagikan dan/atau tidak relevan dengan masalah yang ingin dilaporkan.\n\nMohon jangan mengirimkan log tanpa persetujuan awal via email/GitHub. Saya akan menghapus semua log yang dikirimkan tanpa konteks untuk alasan privasi. Jangan unggah log tanpa sensor ke GitHub atau manapun.",
-    "@settingsDialogDebugMailDisclaimer": {
-        "description": "Privacy disclaimer shown before sending logs"
-    },
-    "settingsDialogDebugSendButton": "Kirim Log via Surat",
-    "@settingsDialogDebugSendButton": {
-        "description": "Button to send logs via E-Mail"
-    },
-    "settingsDialogDebugTitle": "Log Debug",
-    "@settingsDialogDebugTitle": {
-        "description": "Dialog title: Debug Logs"
-    },
-    "settingsDialogLanguageTitle": "Pilih Bahasa",
-    "@settingsDialogLanguageTitle": {
-        "description": "Dialog title: Select Language"
-    },
-    "settingsDialogThemeTitle": "Pilih Tema",
-    "@settingsDialogThemeTitle": {
-        "description": "Dialog title: Select theme"
-    },
-    "settingsLanguage": "Bahasa",
-    "@settingsLanguage": {
-        "description": "Currently selected language"
-    },
-    "settingsLockscreen": "Layar Kunci",
-    "@settingsLockscreen": {
-        "description": "Setting if a lockscreen is shown (authentication is required on startup)"
-    },
-    "settingsLockscreenHelp": "Memerlukan autentikasi saat memulai aplikasi",
-    "@settingsLockscreenHelp": {
-        "description": "Description for lockscreen setting"
-    },
-    "settingsLockscreenInitial": "Mohon autentikasi untuk mengaktifkan layar kunci.",
-    "@settingsLockscreenInitial": {
-        "description": "Prompt to authenticate once to set up the lockscreen"
-    },
-    "settingsNLAppAccount": "Akun Bawaan",
-    "@settingsNLAppAccount": {
-        "description": "Default account which will be used for the transaction."
-    },
-    "settingsNLAppAccountDynamic": "<Dinamik>",
-    "@settingsNLAppAccountDynamic": {
-        "description": "Account will be selected dynamically by the content of the notification."
-    },
-    "settingsNLAppAdd": "Tambahkan Aplikasi",
-    "@settingsNLAppAdd": {
-        "description": "Button title to add a new app."
-    },
-    "settingsNLAppAddHelp": "Klik untuk menambahkan aplikasi untuk didengarkan. Hanya aplikasi memenuhi syarat yang akan ditampilkan di daftar.",
-    "@settingsNLAppAddHelp": {
-        "description": "Help text below adding the new app button."
-    },
-    "settingsNLAppAddInfo": "Jadikan beberapa transaksi dimana anda menerima notifikasi untuk menambahkan aplikasi ke daftar ini. Jika aplikasi tidak muncul, silahkan laporkan ke app@vogt.pw.",
-    "@settingsNLAppAddInfo": {
-        "description": "Help text when no more app is available to add."
-    },
-    "settingsNLDescription": "Layanan ini memungkinkan anda untuk mengambil detail transaksi dari notifikasi push yang masuk. Selain itu, anda dapat memilih akun bawaan dimana transaksi harus ditugaskan kepada - jika tidak ada nilai yang ditetapkan, akan mencoba untuk mengekstrak akun dari notifikasi.",
-    "@settingsNLDescription": {
-        "description": "Description text for the notification listener service."
-    },
-    "settingsNLPermissionGrant": "Ketuk untuk memberikan izin.",
-    "@settingsNLPermissionGrant": {
-        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
-    },
-    "settingsNLPermissionNotGranted": "Izin tidak diberikan.",
-    "@settingsNLPermissionNotGranted": {
-        "description": "A requested permission was not granted."
-    },
-    "settingsNLPermissionRemove": "Hapus izin?",
-    "@settingsNLPermissionRemove": {
-        "description": "Dialog title asking if permission should be removed."
-    },
-    "settingsNLPermissionRemoveHelp": "Untuk menonaktifkan layanan ini, klik pada aplikasi dan hapus izin di layar berikutnya.",
-    "@settingsNLPermissionRemoveHelp": {
-        "description": "Dialog text giving hint how to remove the permission."
-    },
-    "settingsNLServiceChecking": "Memeriksa status…",
-    "@settingsNLServiceChecking": {
-        "description": "Checking the status of the background service"
-    },
-    "settingsNLServiceCheckingError": "Kesalahan saat memeriksa status: {error}",
-    "@settingsNLServiceCheckingError": {
-        "description": "An error occurred while checking the service status",
-        "placeholders": {
-            "error": {
-                "type": "String",
-                "description": "Error details",
-                "example": "Timeout"
-            }
-        }
-    },
-    "settingsNLServiceRunning": "Layanan sedang berjalan.",
-    "@settingsNLServiceRunning": {
-        "description": "A background service is running normally."
-    },
-    "settingsNLServiceStatus": "Status Layanan",
-    "@settingsNLServiceStatus": {
-        "description": "Status of a background service."
-    },
-    "settingsNLServiceStopped": "Layanan diberhentikan.",
-    "@settingsNLServiceStopped": {
-        "description": "A background service is stopped."
-    },
-    "settingsNotificationListener": "Layanan Pendengar Notifikasi",
-    "@settingsNotificationListener": {
-        "description": "Setting for the notification listener service."
-    },
-    "settingsTheme": "Tema Aplikasi",
-    "@settingsTheme": {
-        "description": "App theme (dark or light)"
-    },
-    "settingsThemeDynamicColors": "Warna Dinamis",
-    "@settingsThemeDynamicColors": {
-        "description": "Material You Dynamic Colors feature"
-    },
-    "settingsThemeValue": "{theme, select, dark{Mode Gelap} light{Mode Terang} other{Bawaan Sistem}}",
-    "@settingsThemeValue": {
-        "description": "Currently selected theme (either dark, light or system)",
-        "placeholders": {
-            "theme": {
-                "type": "String",
-                "example": "ThemeMode.dark"
-            }
-        }
-    },
-    "settingsVersion": "Versi Aplikasi",
-    "@settingsVersion": {
-        "description": "Current App Version"
-    },
-    "settingsVersionChecking": "memeriksa…",
-    "@settingsVersionChecking": {
-        "description": "Shown while checking for app version"
-    },
-    "transactionAttachments": "Lampiran",
-    "@transactionAttachments": {
-        "description": "Button Label: Attachments"
-    },
-    "transactionDeleteConfirm": "Yakin ingin menghapus transaksi ini?",
-    "@transactionDeleteConfirm": {
-        "description": "Confirmation text to delete transaction"
-    },
-    "transactionDialogAttachmentsDelete": "Hapus Lampiran",
-    "@transactionDialogAttachmentsDelete": {
-        "description": "Button Label: Delete Attachment"
-    },
-    "transactionDialogAttachmentsDeleteConfirm": "Yakin ingin menghapus lampiran ini?",
-    "@transactionDialogAttachmentsDeleteConfirm": {
-        "description": "Confirmation text to delete attachment"
-    },
-    "transactionDialogAttachmentsErrorDownload": "Tidak dapat mengunduh file.",
-    "@transactionDialogAttachmentsErrorDownload": {
-        "description": "Snackbar Text: File download failed."
-    },
-    "transactionDialogAttachmentsErrorOpen": "Tidak dapat membuka file: {error}",
-    "@transactionDialogAttachmentsErrorOpen": {
-        "description": "Snackbar Text: File could not be opened, with reason.",
-        "placeholders": {
-            "error": {
-                "type": "String"
-            }
-        }
-    },
-    "transactionDialogAttachmentsErrorUpload": "Tidak dapat mengunggah file: {error}",
-    "@transactionDialogAttachmentsErrorUpload": {
-        "description": "Snackbar Text: File could not be uploaded, with reason.",
-        "placeholders": {
-            "error": {
-                "type": "String"
-            }
-        }
-    },
-    "transactionDialogAttachmentsTitle": "Lampiran",
-    "@transactionDialogAttachmentsTitle": {
-        "description": "Dialog Title: Attachments Dialog"
-    },
-    "transactionDialogBillNoBill": "Tidak ada tagihan",
-    "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
-    },
-    "transactionDialogBillTitle": "Tautkan ke Tagihan",
-    "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
-    },
-    "transactionDialogCurrencyTitle": "Pilih mata uang",
-    "@transactionDialogCurrencyTitle": {
-        "description": "Dialog Title: Currency Selection"
-    },
-    "transactionDialogTagsAdd": "Tambahkan Label",
-    "@transactionDialogTagsAdd": {
-        "description": "Button Label: Add Tag"
-    },
-    "transactionDialogTagsHint": "Cari/Tambahkan Label",
-    "@transactionDialogTagsHint": {
-        "description": "Hint Text for search tag field"
-    },
-    "transactionDialogTagsTitle": "Pilih label",
-    "@transactionDialogTagsTitle": {
-        "description": "Dialog Title: Select Tags"
-    },
-    "transactionDuplicate": "Duplikat",
-    "@transactionDuplicate": {
-        "description": "Menu Label: Duplicate item"
-    },
-    "transactionErrorInvalidAccount": "Akun tidak Valid",
-    "@transactionErrorInvalidAccount": {
-        "description": "Transaction Save Error: Invalid account"
-    },
-    "transactionErrorInvalidBudget": "Anggaran tidak Valid",
-    "@transactionErrorInvalidBudget": {
-        "description": "Transaction Save Error: Invalid budget"
-    },
-    "transactionErrorTitle": "Harap berikan judul.",
-    "@transactionErrorTitle": {
-        "description": "Transaction Save Error: No title provided"
-    },
-    "transactionFormLabelAccountDestination": "Akun tujuan",
-    "@transactionFormLabelAccountDestination": {
-        "description": "Transaction Form: Label for destination account for transfer transaction"
-    },
-    "transactionFormLabelAccountForeign": "Akun asing",
-    "@transactionFormLabelAccountForeign": {
-        "description": "Transaction Form: Label for foreign (other) account"
-    },
-    "transactionFormLabelAccountOwn": "Akun sendiri",
-    "@transactionFormLabelAccountOwn": {
-        "description": "Transaction Form: Label for own account"
-    },
-    "transactionFormLabelAccountSource": "Akun asal",
-    "@transactionFormLabelAccountSource": {
-        "description": "Transaction Form: Label for source account for transfer transaction"
-    },
-    "transactionFormLabelNotes": "Catatan",
-    "@transactionFormLabelNotes": {
-        "description": "Transaction Form: Label for notes field"
-    },
-    "transactionFormLabelTags": "Label",
-    "@transactionFormLabelTags": {
-        "description": "Transaction Form: Label for tags field"
-    },
-    "transactionFormLabelTitle": "Judul Transaksi",
-    "@transactionFormLabelTitle": {
-        "description": "Transaction Form: Label for title field"
-    },
-    "transactionSplitAdd": "Tambah transaksi terpisah",
-    "@transactionSplitAdd": {
-        "description": "Button Label: Add a split"
-    },
-    "transactionSplitChangeCurrency": "Ubah Mata Uang Terpisah",
-    "@transactionSplitChangeCurrency": {
-        "description": "Hint Text: Change currency for a single split"
-    },
-    "transactionSplitChangeTarget": "Ubah Akun Target Transaksi Terpisah",
-    "@transactionSplitChangeTarget": {
-        "description": "Hint Text: Change target account for single split"
-    },
-    "transactionSplitDelete": "Hapus transaksi terpisah",
-    "@transactionSplitDelete": {
-        "description": "Hint Text: Delete single split"
-    },
-    "transactionTitleAdd": "Tambah Transaksi",
-    "@transactionTitleAdd": {
-        "description": "Title: Add a new transaction"
-    },
-    "transactionTitleDelete": "Hapus Transaksi",
-    "@transactionTitleDelete": {
-        "description": "Title: Delete existing transaction"
-    },
-    "transactionTitleEdit": "Ubah Transaksi",
-    "@transactionTitleEdit": {
-        "description": "Title: Edit existing transaction"
-    },
-    "transactionTypeDeposit": "Setoran",
-    "@transactionTypeDeposit": {
-        "description": "Deposit transaction type"
-    },
-    "transactionTypeTransfer": "Transfer",
-    "@transactionTypeTransfer": {
-        "description": "Transfer transaction type"
-    },
-    "transactionTypeWithdrawal": "Penarikan",
-    "@transactionTypeWithdrawal": {
-        "description": "Withdrawal transaction type"
-    }
+  "@@locale": "id",
+  "@@x-reference": true,
+  "accountRoleAssetCashWallet": "Dompet Kas",
+  "accountRoleAssetCC": "Kartu kredit",
+  "accountRoleAssetDefault": "Akun aset standar",
+  "accountRoleAssetSavings": "Akun tabungan",
+  "accountRoleAssetShared": "Akun aset bersama",
+  "accountsLabelAsset": "Akun Aset",
+  "accountsLabelExpense": "Akun Pengeluaran",
+  "accountsLabelLiabilities": "Kewajiban",
+  "accountsLabelRevenue": "Akun Pendapatan",
+  "accountsLiabilitiesInterest": "{interest}% bunga per {period, select, weekly{minggu} monthly{bulan} quarterly{perempat} halfyear{setengah-tahun} yearly{tahun} other{tidak-diketahui}}",
+  "billsAmountAndFrequency": "Langganan cocok dengan transaksi antara {minValue} dan {maxvalue}. Berulang {frequency, select, weekly{mingguan} monthly{bulanan} quarterly{triwulanan} halfyear{setengah tahunan} yearly{tahunan} other{tidak diketahui}}{skip, plural, other{, melewati {skip}}}.",
+  "billsChangeLayoutTooltip": "Ubah tata letak",
+  "billsChangeSortOrderTooltip": "Ubah urutan penyortiran",
+  "billsErrorLoading": "Terjadi kesalahan saat memuat langganan.",
+  "billsExactAmountAndFrequency": "Langganan cocok dengan transaksi sebesar {value}. Berulang {frequency, select, weekly{mingguan} monthly{bulanan} quarterly{triwulanan} halfyear{setengah tahunan} yearly{tahunan} other{tidak diketahui}}{skip, plural, other{, melewati {skip}}}.",
+  "billsExpectedOn": "Diharapkan {date}",
+  "billsFrequency": "{frequency, select, weekly{Mingguan} monthly{Bulanan} quarterly{Triwulanan} halfyear{Setengah tahunan} yearly{Tahunan} other{Tidak diketahui}}",
+  "billsFrequencySkip": "{frequency, select, weekly{Mingguan} monthly{Bulanan} quarterly{Triwulanan} halfyear{Setengah tahunan} yearly{Tahunan} other{Tidak diketahui}}{skip, plural, other{, melewati {skip}}}",
+  "billsInactive": "Tidak aktif",
+  "billsIsActive": "Langganan aktif",
+  "billsLayoutGroupSubtitle": "Langganan ditampilkan dalam grup yang telah ditetapkan.",
+  "billsLayoutGroupTitle": "Grup",
+  "billsLayoutListSubtitle": "Langganan ditampilkan dalam daftar yang diurutkan berdasarkan kriteria tertentu.",
+  "billsLayoutListTitle": "Daftar",
+  "billsListEmpty": "Daftar saat ini kosong.",
+  "billsNextExpectedMatch": "Kecocokan yang diharapkan berikutnya",
+  "billsNotActive": "Langganan tidak aktif",
+  "billsNotExpected": "Tidak diharapkan dalam periode ini",
+  "billsNoTransactions": "Tidak ada transaksi ditemukan.",
+  "billsPaidOn": "Dibayar {date}",
+  "billsSortAlphabetical": "Menurut Abjad",
+  "billsSortByTimePeriod": "Berdasarkan periode waktu",
+  "billsSortFrequency": "Frekuensi",
+  "billsSortName": "Nama",
+  "billsUngrouped": "Tidak Terkelompok",
+  "billsSettingsShowOnlyActive": "Tampilkan yang aktif saja",
+  "billsSettingsShowOnlyActiveDesc": "Menampilkan langganan yang aktif saja.",
+  "billsSettingsShowOnlyExpected": "Tampilkan yang diharapkan saja",
+  "billsSettingsShowOnlyExpectedDesc": "Menampilkan langganan yang diharapkan (atau dibayar) bulan ini saja.",
+  "categoryDeleteConfirm": "Apakah Anda yakin ingin menghapus kategori ini? Transaksi tidak akan dihapus, tetapi tidak akan memiliki kategori lagi.",
+  "categoryErrorLoading": "Gagal memuat kategori.",
+  "categoryFormLabelIncludeInSum": "Sertakan dalam jumlah bulanan",
+  "categoryFormLabelName": "Nama Kategori",
+  "categoryMonthNext": "Bulan Berikutnya",
+  "categoryMonthPrev": "Bulan Sebelumnya",
+  "categorySumExcluded": "dikecualikan",
+  "categoryTitleAdd": "Tambah Kategori",
+  "categoryTitleDelete": "Hapus Kategori",
+  "categoryTitleEdit": "Edit Kategori",
+  "catNone": "<tanpa kategori>",
+  "catOther": "Lainnya",
+  "errorAPIInvalidResponse": "Respons dari API tidak Valid: {message}",
+  "errorAPIUnavailable": "API tidak tersedia",
+  "errorFieldRequired": "Kolom ini diperlukan.",
+  "errorInvalidURL": "URL tidak Valid",
+  "errorMinAPIVersion": "Versi Firefly API Minimum v{requiredVersion} diperlukan. Mohon tingkatkan.",
+  "errorStatusCode": "Kode Status: {code}",
+  "errorUnknown": "Kesalahan tidak diketahui.",
+  "formButtonHelp": "Bantuan",
+  "formButtonLogin": "Masuk",
+  "formButtonLogout": "Keluar",
+  "formButtonRemove": "Hapus",
+  "formButtonResetLogin": "Setel ulang masuk",
+  "formButtonTransactionAdd": "Tambah Transaksi",
+  "formButtonTryAgain": "Coba lagi",
+  "generalAccount": "Akun",
+  "generalAssets": "Aset",
+  "generalBalance": "Saldo",
+  "generalBalanceOn": "Saldo pada tanggal {date}",
+  "generalBill": "Tagihan",
+  "generalBudget": "Anggaran",
+  "generalCategory": "Kategori",
+  "generalCurrency": "Mata Uang",
+  "generalDateRangeCurrentMonth": "Bulan Ini",
+  "generalDateRangeLast30Days": "30 hari terakhir",
+  "generalDateRangeCurrentYear": "Tahun Ini",
+  "generalDateRangeLastYear": "Tahun lalu",
+  "generalDateRangeAll": "Semua",
+  "generalDefault": "bawaan",
+  "generalDestinationAccount": "Akun Tujuan",
+  "generalDismiss": "Tutup",
+  "generalEarned": "Didapatkan",
+  "generalError": "Kesalahan",
+  "generalExpenses": "Pengeluaran",
+  "generalIncome": "Pendapatan",
+  "generalLiabilities": "Kewajiban",
+  "generalMultiple": "beberapa",
+  "generalNever": "tidak pernah",
+  "generalReconcile": "Terekonsiliasi",
+  "generalReset": "Setel ulang",
+  "generalSourceAccount": "Akun Sumber",
+  "generalSpent": "Dihabiskan",
+  "generalSum": "Jumlah",
+  "generalTarget": "Target",
+  "generalUnknown": "Tidak Diketahui",
+  "homeMainBillsInterval": " ({period, select, weekly{mingguan} monthly{bulanan} quarterly{triwulanan} halfyear{setengah tahunan} yearly{tahunan} other{tidak diketahui}})",
+  "homeMainBillsTitle": "Langganan untuk minggu depan",
+  "homeMainBudgetInterval": " ({from} ke {to}, {period})",
+  "homeMainBudgetIntervalSingle": " ({from} sampai {to})",
+  "homeMainBudgetSum": "{current}{status, select, over{di atas} other{sisa dari}}{available}",
+  "homeMainBudgetTitle": "Anggaran bulan berjalan",
+  "homeMainChartAccountsTitle": "Ringkasan Akun",
+  "homeMainChartCategoriesTitle": "Ringkasan Kategori bulan berjalan",
+  "homeMainChartDailyAvg": "Rata-rata 7 hari",
+  "homeMainChartDailyTitle": "Ringkasan Harian",
+  "homeMainChartNetEarningsTitle": "Pendapatan Bersih",
+  "homeMainChartNetWorthTitle": "Kekayaan Bersih",
+  "homeMainChartTagsTitle": "Ringkasan Tag untuk bulan ini",
+  "homePiggyAdjustDialogTitle": "Simpan/Belanjakan Uang",
+  "homePiggyDateStart": "Tanggal mulai: {date}",
+  "homePiggyDateTarget": "Tanggal target: {date}",
+  "homeMainDialogSettingsTitle": "Sesuaikan Dasbor",
+  "homePiggyLinked": "Tautkan ke {account}",
+  "homePiggyNoAccounts": "Tidak ada celengan yang tersiapkan.",
+  "homePiggyNoAccountsSubtitle": "Buat beberapa pada antarmuka web!",
+  "homePiggyRemaining": "Tersisa untuk ditabung: {amount}",
+  "homePiggySaved": "Tertabung sejauh ini: {amount}",
+  "homePiggySavedMultiple": "Tersimpan sejauh ini:",
+  "homePiggyTarget": "Jumlah target: {amount}",
+  "homePiggyAccountStatus": "Status Akun",
+  "homePiggyAvailableAmounts": "Jumlah Tersedia",
+  "homePiggyAvailable": "Tersedia: {amount}",
+  "homePiggyInPiggyBanks": "Di celengan: {amount}",
+  "homeTabLabelBalance": "Neraca Keuangan",
+  "homeTabLabelMain": "Utama",
+  "homeTabLabelPiggybanks": "Celengan",
+  "homeTabLabelTransactions": "Transaksi",
+  "homeTransactionsActionFilter": "Filter Daftar",
+  "homeTransactionsDialogFilterAccountsAll": "<Semua Akun>",
+  "homeTransactionsDialogFilterBillsAll": "<Semua Tagihan>",
+  "homeTransactionsDialogFilterBillUnset": "<Tidak ada Tagihan tersetel>",
+  "homeTransactionsDialogFilterBudgetsAll": "<Semua Anggaran>",
+  "homeTransactionsDialogFilterBudgetUnset": "<Tidak ada Anggaran tersetel>",
+  "homeTransactionsDialogFilterCategoriesAll": "<Semua Kategori>",
+  "homeTransactionsDialogFilterCategoryUnset": "<Tidak ada Kategori tersetel>",
+  "homeTransactionsDialogFilterCurrenciesAll": "<Semua Mata Uang>",
+  "homeTransactionsDialogFilterDateRange": "Rentang Tanggal",
+  "homeTransactionsDialogFilterFutureTransactions": "Tampilkan transaksi mendatang",
+  "homeTransactionsDialogFilterSearch": "Istilah Pencarian",
+  "homeTransactionsDialogFilterTitle": "Pilih filter",
+  "homeTransactionsEmpty": "Transaksi tidak ditemukan.",
+  "homeTransactionsMultipleCategories": "{num} kategori",
+  "homeTransactionsSettingsShowTags": "Tampilkan tag di daftar transaksi",
+  "liabilityDirectionCredit": "Saya pemberi hutang ini",
+  "liabilityDirectionDebit": "Saya berhutang hutang ini",
+  "liabilityTypeDebt": "Hutang",
+  "liabilityTypeLoan": "Pinjaman",
+  "liabilityTypeMortgage": "Hipotek",
+  "loginAbout": "Untuk menggunakan Waterfly III secara produktif anda memerlukan server sendiri dengan instansi Firefly III atau tambahan Firefly III untuk Home Assistant.\n\nSilahkan masukkan URL penuh serta token akses pribadi (Pengaturan -> Profil -> OAuth -> Token Akses Pribadi) di bawah.",
+  "loginFormLabelAPIKey": "Kunci API Valid",
+  "loginFormLabelHost": "URL Host",
+  "loginWelcome": "Selamat Datang di Waterfly III",
+  "logoutConfirmation": "Yakin ingin keluar?",
+  "navigationAccounts": "Akun",
+  "navigationBills": "Langganan",
+  "navigationCategories": "Kategori",
+  "navigationMain": "Dasbor Utama",
+  "generalSettings": "Pengaturan",
+  "no": "Tidak",
+  "numPercent": "{num}",
+  "numPercentOf": "{perc} dari {of}",
+  "settingsDialogDebugInfo": "Anda dapat mengaktifkan & mengirim log debug di sini. Akan berdampak buruk pada kinerja, mohon jangan diaktifkan kecuali anda disarankan. Menonaktifkan logging akan menghapus log yang tersimpan.",
+  "settingsDialogDebugMailCreate": "Buat Surat",
+  "settingsDialogDebugMailDisclaimer": "PERHATIAN: Draf surat akan terbuka dengan file log terlampir (dalam format teks). Log mungkin berisi informasi sensitif, seperti nama host instansi Firefly anda (walaupun saya mencoba menghindari pencatatan rahasia apapun, seperti kunci API). Harap baca log dengan cermat dan sensor informasi yang tidak ingin anda bagikan dan/atau tidak relevan dengan masalah yang ingin dilaporkan.\n\nMohon jangan mengirimkan log tanpa persetujuan awal via email/GitHub. Saya akan menghapus semua log yang dikirimkan tanpa konteks untuk alasan privasi. Jangan unggah log tanpa sensor ke GitHub atau manapun.",
+  "settingsDialogDebugSendButton": "Kirim Log via Surat",
+  "settingsDialogDebugTitle": "Log Debug",
+  "settingsDialogLanguageTitle": "Pilih Bahasa",
+  "settingsDialogThemeTitle": "Pilih Tema",
+  "settingsFAQ": "FAQ",
+  "settingsFAQHelp": "Dibuka di Peramban. Hanya tersedia dalam Bahasa Inggris.",
+  "settingsLanguage": "Bahasa",
+  "settingsLockscreen": "Layar Kunci",
+  "settingsLockscreenHelp": "Memerlukan autentikasi saat memulai aplikasi",
+  "settingsLockscreenInitial": "Mohon autentikasi untuk mengaktifkan layar kunci.",
+  "settingsNLAppAccount": "Akun Bawaan",
+  "settingsNLAppAccountDynamic": "<Dinamik>",
+  "settingsNLAppAdd": "Tambahkan Aplikasi",
+  "settingsNLAppAddHelp": "Klik untuk menambahkan aplikasi untuk didengarkan. Hanya aplikasi memenuhi syarat yang akan ditampilkan di daftar.",
+  "settingsNLAppAddInfo": "Jadikan beberapa transaksi dimana anda menerima notifikasi untuk menambahkan aplikasi ke daftar ini. Jika aplikasi tidak muncul, silahkan laporkan ke app@vogt.pw.",
+  "settingsNLAutoAdd": "Buat transaksi tanpa interaksi",
+  "settingsNLDescription": "Layanan ini memungkinkan anda untuk mengambil detail transaksi dari notifikasi push yang masuk. Selain itu, anda dapat memilih akun bawaan dimana transaksi harus ditugaskan kepada - jika tidak ada nilai yang ditetapkan, akan mencoba untuk mengekstrak akun dari notifikasi.",
+  "settingsNLEmptyNote": "Biarkan kolom catatan kosong",
+  "settingsNLPermissionGrant": "Ketuk untuk memberikan izin.",
+  "settingsNLPermissionNotGranted": "Izin tidak diberikan.",
+  "settingsNLPermissionRemove": "Hapus izin?",
+  "settingsNLPermissionRemoveHelp": "Untuk menonaktifkan layanan ini, klik pada aplikasi dan hapus izin di layar berikutnya.",
+  "settingsNLPrefillTXTitle": "Isi otomatis judul transaksi dengan judul notifikasi",
+  "settingsNLServiceChecking": "Memeriksa status…",
+  "settingsNLServiceCheckingError": "Kesalahan saat memeriksa status: {error}",
+  "settingsNLServiceRunning": "Layanan sedang berjalan.",
+  "settingsNLServiceStatus": "Status Layanan",
+  "settingsNLServiceStopped": "Layanan diberhentikan.",
+  "settingsNotificationListener": "Layanan Pendengar Notifikasi",
+  "settingsTheme": "Tema Aplikasi",
+  "settingsThemeDynamicColors": "Warna Dinamis",
+  "settingsThemeValue": "{theme, select, dark{Mode Gelap} light{Mode Terang} other{Bawaan Sistem}}",
+  "settingsUseServerTimezone": "Gunakan zona waktu server",
+  "settingsUseServerTimezoneHelp": "Tampilkan semua waktu dalam zona waktu server. Ini meniru perilaku antarmuka web.",
+  "settingsVersion": "Versi Aplikasi",
+  "settingsVersionChecking": "memeriksa…",
+  "transactionAttachments": "Lampiran",
+  "transactionDeleteConfirm": "Yakin ingin menghapus transaksi ini?",
+  "transactionDialogAttachmentsDelete": "Hapus Lampiran",
+  "transactionDialogAttachmentsDeleteConfirm": "Yakin ingin menghapus lampiran ini?",
+  "transactionDialogAttachmentsErrorDownload": "Tidak dapat mengunduh file.",
+  "transactionDialogAttachmentsErrorOpen": "Tidak dapat membuka file: {error}",
+  "transactionDialogAttachmentsErrorUpload": "Tidak dapat mengunggah file: {error}",
+  "transactionDialogAttachmentsTitle": "Lampiran",
+  "transactionDialogBillNoBill": "Tidak ada tagihan",
+  "transactionDialogBillTitle": "Tautkan ke Tagihan",
+  "transactionDialogCurrencyTitle": "Pilih mata uang",
+  "transactionDialogTagsAdd": "Tambahkan Label",
+  "transactionDialogTagsHint": "Cari/Tambahkan Label",
+  "transactionDialogTagsTitle": "Pilih label",
+  "transactionDuplicate": "Duplikat",
+  "transactionErrorInvalidAccount": "Akun tidak Valid",
+  "transactionErrorInvalidBudget": "Anggaran tidak Valid",
+  "transactionErrorNoAccounts": "Harap isi akun terlebih dahulu.",
+  "transactionErrorNoAssetAccount": "Harap pilih akun aset.",
+  "transactionErrorTitle": "Harap berikan judul.",
+  "transactionFormLabelAccountDestination": "Akun tujuan",
+  "transactionFormLabelAccountForeign": "Akun asing",
+  "transactionFormLabelAccountOwn": "Akun sendiri",
+  "transactionFormLabelAccountSource": "Akun asal",
+  "transactionFormLabelNotes": "Catatan",
+  "transactionFormLabelTags": "Label",
+  "transactionFormLabelTitle": "Judul Transaksi",
+  "transactionSplitAdd": "Tambah transaksi terpisah",
+  "transactionSplitChangeCurrency": "Ubah Mata Uang Terpisah",
+  "transactionSplitChangeDestinationAccount": "Ubah Akun Tujuan Pembagian",
+  "transactionSplitChangeSourceAccount": "Ubah Akun Sumber Pembagian",
+  "transactionSplitChangeTarget": "Ubah Akun Target Transaksi Terpisah",
+  "transactionSplitDelete": "Hapus transaksi terpisah",
+  "transactionTitleAdd": "Tambah Transaksi",
+  "transactionTitleDelete": "Hapus Transaksi",
+  "transactionTitleEdit": "Ubah Transaksi",
+  "transactionTypeDeposit": "Setoran",
+  "transactionTypeTransfer": "Transfer",
+  "transactionTypeWithdrawal": "Penarikan"
 }

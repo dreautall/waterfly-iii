@@ -1,1100 +1,243 @@
 {
-    "@@locale": "hu",
-    "@@x-reference": true,
-    "accountRoleAssetCashWallet": "Készpénz",
-    "@accountRoleAssetCashWallet": {
-        "description": "Firefly Translation String: account_role_cashWalletAsset"
-    },
-    "accountRoleAssetCC": "Hitelkártya",
-    "@accountRoleAssetCC": {
-        "description": "Firefly Translation String: account_role_ccAsset"
-    },
-    "accountRoleAssetDefault": "Alapértelmezett vagyon számla",
-    "@accountRoleAssetDefault": {
-        "description": "Firefly Translation String: account_role_defaultAsset"
-    },
-    "accountRoleAssetSavings": "Megtakarítási számla",
-    "@accountRoleAssetSavings": {
-        "description": "Firefly Translation String: account_role_savingAsset"
-    },
-    "accountRoleAssetShared": "Megosztott vagyon számla",
-    "@accountRoleAssetShared": {
-        "description": "Firefly Translation String: account_role_sharedAsset"
-    },
-    "accountsLabelAsset": "Eszközszámlák",
-    "@accountsLabelAsset": {
-        "description": "Firefly Translation String: asset_accounts"
-    },
-    "accountsLabelExpense": "Költségszámlák",
-    "@accountsLabelExpense": {
-        "description": "Firefly Translation String: expense_accounts"
-    },
-    "accountsLabelLiabilities": "Kötelezettségek",
-    "@accountsLabelLiabilities": {
-        "description": "Firefly Translation String: liabilities_accounts"
-    },
-    "accountsLabelRevenue": "Bevételi Számlák",
-    "@accountsLabelRevenue": {
-        "description": "Firefly Translation String: revenue_accounts"
-    },
-    "accountsLiabilitiesInterest": "{interest}% kamat per {period, select, weekly{hét} monthly{hónap} quarterly{negyedév} halfyear{félév} yearly{év} other{ismeretlen}}",
-    "@accountsLiabilitiesInterest": {
-        "description": "Interest in a certain period",
-        "placeholders": {
-            "interest": {
-                "type": "double",
-                "example": "1.2"
-            },
-            "period": {
-                "type": "String",
-                "example": "yearly"
-            }
-        }
-    },
-    "billsAmountAndFrequency": "A számla {minValue} és {maxvalue} közötti értékű tranzakcióknak felel meg. {frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}} ismétlődésű{skip, plural, =0{} other{, {skip} ismétlést átugorva}}.",
-    "@billsAmountAndFrequency": {
-        "description": "Bill match for min and max amounts, and frequency",
-        "placeholders": {
-            "minValue": {
-                "type": "String",
-                "example": "$50.12"
-            },
-            "maxvalue": {
-                "type": "String",
-                "example": "$60.50"
-            },
-            "frequency": {
-                "type": "String",
-                "example": "yearly"
-            },
-            "skip": {
-                "type": "num",
-                "example": "1"
-            }
-        }
-    },
-    "billsChangeLayoutTooltip": "Elrendezés módosítása",
-    "@billsChangeLayoutTooltip": {
-        "description": "Text for layout change button tooltip"
-    },
-    "billsChangeSortOrderTooltip": "Rendezési sorrend módosítása",
-    "@billsChangeSortOrderTooltip": {
-        "description": "Text for sort order change button tooltip"
-    },
-    "billsErrorLoading": "Hiba a számla betöltése során.",
-    "@billsErrorLoading": {
-        "description": "Generic error message when bills can't be loaded (shouldn't occur)"
-    },
-    "billsExactAmountAndFrequency": "A számla {value} értékű tranzakcióknak felel meg. {frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}} ismétlődésű{skip, plural, =0{} other{, {skip} ismétlést átugorva}}.",
-    "@billsExactAmountAndFrequency": {
-        "description": "Bill match for exact amount and frequency",
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "$50.12"
-            },
-            "frequency": {
-                "type": "String",
-                "example": "yearly"
-            },
-            "skip": {
-                "type": "num",
-                "example": "1"
-            }
-        }
-    },
-    "billsExpectedOn": "Várható dátum {date}",
-    "@billsExpectedOn": {
-        "description": "Describes what date the bill is expected",
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMMMMd",
-                "example": "January 5, 2024"
-            }
-        }
-    },
-    "billsFrequency": "{frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}}",
-    "@billsFrequency": {
-        "description": "Bill frequency",
-        "placeholders": {
-            "frequency": {
-                "type": "String",
-                "example": "yearly"
-            }
-        }
-    },
-    "billsFrequencySkip": "{frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}} ismétlődésű{skip, plural, =0{} other{, {skip} ismétlést átugorva}}",
-    "@billsFrequencySkip": {
-        "description": "Bill frequency",
-        "placeholders": {
-            "frequency": {
-                "type": "String",
-                "example": "yearly"
-            },
-            "skip": {
-                "type": "num",
-                "example": "1"
-            }
-        }
-    },
-    "billsInactive": "Inaktív",
-    "@billsInactive": {
-        "description": "Text: when the bill is inactive"
-    },
-    "billsIsActive": "Aktív számla",
-    "@billsIsActive": {
-        "description": "Text: the bill is active"
-    },
-    "billsLayoutGroupSubtitle": "Számlák megjelenítése a hozzájuk rendelt csoportokban.",
-    "@billsLayoutGroupSubtitle": {
-        "description": "Subtitle text for group layout option"
-    },
-    "billsLayoutGroupTitle": "Csoport",
-    "@billsLayoutGroupTitle": {
-        "description": "Title text for group layout option"
-    },
-    "billsLayoutListSubtitle": "Számlák megjelenítése egy listában bizonyos kritériumok szerint rendezve.",
-    "@billsLayoutListSubtitle": {
-        "description": "Subtitle text for list layout option"
-    },
-    "billsLayoutListTitle": "Lista",
-    "@billsLayoutListTitle": {
-        "description": "Title text for list layout option"
-    },
-    "billsListEmpty": "A lista jelenleg üres.",
-    "@billsListEmpty": {
-        "description": "Describes that the list is empty"
-    },
-    "billsNextExpectedMatch": "Következő várható egyezés",
-    "@billsNextExpectedMatch": {
-        "description": "Text: next expected match for bill"
-    },
-    "billsNotActive": "Inaktív számla",
-    "@billsNotActive": {
-        "description": "Text: the bill is inactive"
-    },
-    "billsNotExpected": "Nem várható ebben az időszakban",
-    "@billsNotExpected": {
-        "description": "Describes that the bill is not expected this period"
-    },
-    "billsNoTransactions": "Nem található tranzakció.",
-    "@billsNoTransactions": {
-        "description": "Describes that there are no transactions connected to the bill"
-    },
-    "billsPaidOn": "Kifizetés dátuma {date}",
-    "@billsPaidOn": {
-        "description": "Describes what date the bill was paid",
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMMMMd",
-                "example": "January 5, 2024"
-            }
-        }
-    },
-    "billsSortAlphabetical": "Betűrendi",
-    "@billsSortAlphabetical": {
-        "description": "Text for alphabetical sort types"
-    },
-    "billsSortByTimePeriod": "Időszak szerint",
-    "@billsSortByTimePeriod": {
-        "description": "Text for frequency sort type"
-    },
-    "billsSortFrequency": "Gyakoriság",
-    "@billsSortFrequency": {
-        "description": "Text for sort by frequency"
-    },
-    "billsSortName": "Név",
-    "@billsSortName": {
-        "description": "Text for sort by name"
-    },
-    "billsUngrouped": "Csoportosítatlan",
-    "@billsUngrouped": {
-        "description": "Title for ungrouped bills"
-    },
-    "categoryDeleteConfirm": "Biztosan törli ezt a kategóriát? A tranzakciók nem kerülnek törlésre, ugyanakkor nem lesznek kategóriához rendelve.",
-    "@categoryDeleteConfirm": {
-        "description": "Confirmation text to delete category"
-    },
-    "categoryErrorLoading": "Hiba a kategóriák betöltése során.",
-    "@categoryErrorLoading": {
-        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
-    },
-    "categoryFormLabelIncludeInSum": "Beleszámítani a havi összegbe",
-    "@categoryFormLabelIncludeInSum": {
-        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
-    },
-    "categoryFormLabelName": "Kategória neve",
-    "@categoryFormLabelName": {
-        "description": "Category Add/Edit Form: Label for name field"
-    },
-    "categoryMonthNext": "Következő hónap",
-    "@categoryMonthNext": {
-        "description": "Button title to view overview for next month"
-    },
-    "categoryMonthPrev": "Előző hónap",
-    "@categoryMonthPrev": {
-        "description": "Button title to view overview for previous month"
-    },
-    "categorySumExcluded": "nem számított",
-    "@categorySumExcluded": {
-        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
-    },
-    "categoryTitleAdd": "Kategória hozzáadása",
-    "@categoryTitleAdd": {
-        "description": "Title for Dialog: Add Category"
-    },
-    "categoryTitleDelete": "Kategória törlése",
-    "@categoryTitleDelete": {
-        "description": "Title for Dialog: Delete Category"
-    },
-    "categoryTitleEdit": "Kategória szerkesztése",
-    "@categoryTitleEdit": {
-        "description": "Title for Dialog: Edit Category"
-    },
-    "catNone": "<nincs kategória>",
-    "@catNone": {
-        "description": "Placeholder when no category has been set."
-    },
-    "catOther": "Egyéb",
-    "@catOther": {
-        "description": "Category description for summary category 'Other'"
-    },
-    "errorAPIInvalidResponse": "Érvénytelen válasz az API-tól: {message}",
-    "@errorAPIInvalidResponse": {
-        "description": "Invalid API response error",
-        "placeholders": {
-            "message": {
-                "type": "String",
-                "example": "API could not be reached."
-            }
-        }
-    },
-    "errorAPIUnavailable": "API nem érhető el",
-    "@errorAPIUnavailable": {
-        "description": "Error thrown when API is unavailable."
-    },
-    "errorFieldRequired": "A mező kitöltése kötelező.",
-    "@errorFieldRequired": {
-        "description": "Error: Required field was left empty."
-    },
-    "errorInvalidURL": "Érvénytelen URL",
-    "@errorInvalidURL": {
-        "description": "Error: URL is invalid"
-    },
-    "errorMinAPIVersion": "Minimális támogatott Firefly API-verzió: v{requiredVersion}. Kérjük, frissítsen.",
-    "@errorMinAPIVersion": {
-        "description": "Error: Required API version not met.",
-        "placeholders": {
-            "requiredVersion": {
-                "type": "String",
-                "example": "2.0.0"
-            }
-        }
-    },
-    "errorStatusCode": "Státusz kód: {code}",
-    "@errorStatusCode": {
-        "description": "HTTP status code information on error",
-        "placeholders": {
-            "code": {
-                "type": "int",
-                "example": "500"
-            }
-        }
-    },
-    "errorUnknown": "Ismeretlen hiba.",
-    "@errorUnknown": {
-        "description": "Error without further information occurred."
-    },
-    "formButtonHelp": "Súgó",
-    "@formButtonHelp": {
-        "description": "Button Label: Help"
-    },
-    "formButtonLogin": "Bejelentkezés",
-    "@formButtonLogin": {
-        "description": "Button Label: Login"
-    },
-    "formButtonLogout": "Kijelentkezés",
-    "@formButtonLogout": {
-        "description": "Button Label: Logout"
-    },
-    "formButtonRemove": "Eltávolítás",
-    "@formButtonRemove": {
-        "description": "Button Label: Remove"
-    },
-    "formButtonResetLogin": "A bejelentkezés visszaállítása",
-    "@formButtonResetLogin": {
-        "description": "Button Label: Reset login form (when error is shown)"
-    },
-    "formButtonTransactionAdd": "Tranzakció Hozzáadása",
-    "@formButtonTransactionAdd": {
-        "description": "Button Label: Add Transaction"
-    },
-    "formButtonTryAgain": "Próbálja újra",
-    "@formButtonTryAgain": {
-        "description": "Button Label: Try that thing again (login etc)"
-    },
-    "generalAccount": "Számla",
-    "@generalAccount": {
-        "description": "Asset/Debt (Bank) Account"
-    },
-    "generalAssets": "Vagyonok",
-    "@generalAssets": {
-        "description": "(Monetary) Assets"
-    },
-    "generalBalance": "Egyenleg",
-    "@generalBalance": {
-        "description": "(Account) Balance"
-    },
-    "generalBalanceOn": "Egyenleg ekkor: {date}",
-    "@generalBalanceOn": {
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMd",
-                "example": "2023-05-13"
-            }
-        }
-    },
-    "generalBill": "Számla",
-    "@generalBill": {
-        "description": "Bill"
-    },
-    "generalBudget": "Költségkeret",
-    "@generalBudget": {
-        "description": "(Monetary) Budget"
-    },
-    "generalCategory": "Kategória",
-    "@generalCategory": {
-        "description": "Category (of transaction etc.)."
-    },
-    "generalCurrency": "Pénznem",
-    "@generalCurrency": {
-        "description": "(Money) Currency"
-    },
-    "generalDefault": "alapértelmezett",
-    "@generalDefault": {
-        "description": "Indicates that something is the default choice"
-    },
-    "generalDismiss": "Elvetés",
-    "@generalDismiss": {
-        "description": "Dismiss window/dialog without action"
-    },
-    "generalEarned": "Megkeresett",
-    "@generalEarned": {
-        "description": "(Amount) Earned"
-    },
-    "generalError": "Hiba",
-    "@generalError": {
-        "description": "Error (title in dialogs etc.)"
-    },
-    "generalExpenses": "Kiadások",
-    "@generalExpenses": {
-        "description": "(Account) Expenses"
-    },
-    "generalIncome": "Bevétel",
-    "@generalIncome": {
-        "description": "(Account) Info"
-    },
-    "generalLiabilities": "Kötelezettségek",
-    "@generalLiabilities": {
-        "description": "Firefly Translation String: liabilities"
-    },
-    "generalMultiple": "több",
-    "@generalMultiple": {
-        "description": "Multiples of a single thing (e.g. source accounts) are existing"
-    },
-    "generalNever": "soha",
-    "@generalNever": {
-        "description": "Has never happened, no update etc."
-    },
-    "generalReconcile": "Egyeztetve",
-    "@generalReconcile": {
-        "description": "Booking has been confirmed/reconciled"
-    },
-    "generalReset": "Visszaállítás",
-    "@generalReset": {
-        "description": "Reset something (i.e. set filters)"
-    },
-    "generalSpent": "Elköltött",
-    "@generalSpent": {
-        "description": "(Amount) Spent"
-    },
-    "generalSum": "Összesen",
-    "@generalSum": {
-        "description": "(Mathematical) Sum"
-    },
-    "generalTarget": "Cél",
-    "@generalTarget": {
-        "description": "Target value (i.e. a sum to save)"
-    },
-    "generalUnknown": "Ismeretlen",
-    "@generalUnknown": {
-        "description": "Something is unknown."
-    },
-    "homeMainBillsInterval": " ({period, select, weekly{heti} monthly{havi} quarterly{negyedéves} halfyear{féléves} yearly{éves} other{ismeretlen}})",
-    "@homeMainBillsInterval": {
-        "description": "bill interval type",
-        "placeholders": {
-            "period": {
-                "type": "String",
-                "example": "weekly"
-            }
-        }
-    },
-    "homeMainBillsTitle": "Számlák a következő hétre",
-    "@homeMainBillsTitle": {
-        "description": "Title: Bills for the next week"
-    },
-    "homeMainBudgetInterval": " (Ettől: {from} eddig: {to}, {period})",
-    "@homeMainBudgetInterval": {
-        "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
-        "placeholders": {
-            "from": {
-                "type": "DateTime",
-                "format": "MMMd",
-                "example": "May 13"
-            },
-            "to": {
-                "type": "DateTime",
-                "format": "MMMd",
-                "example": "May 17"
-            },
-            "period": {
-                "type": "String",
-                "example": "weekly"
-            }
-        }
-    },
-    "homeMainBudgetIntervalSingle": " (Ettől: {from} eddig: {to})",
-    "@homeMainBudgetIntervalSingle": {
-        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
-        "placeholders": {
-            "from": {
-                "type": "DateTime",
-                "format": "MMMd",
-                "example": "May 13"
-            },
-            "to": {
-                "type": "DateTime",
-                "format": "MMMd",
-                "example": "May 17"
-            }
-        }
-    },
-    "homeMainBudgetSum": "{current} {status, select, over{többletköltség a} other{maradt a}} {available} {status, select, over{limithez képest} other{limitből}}",
-    "@homeMainBudgetSum": {
-        "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
-        "placeholders": {
-            "current": {
-                "type": "String",
-                "example": "12.34€"
-            },
-            "status": {
-                "type": "String",
-                "example": "left from"
-            },
-            "available": {
-                "type": "String",
-                "example": "12.34€"
-            }
-        }
-    },
-    "homeMainBudgetTitle": "Költségkeretek erre a hónapra",
-    "@homeMainBudgetTitle": {
-        "description": "Title: Budgets for current month"
-    },
-    "homeMainChartAccountsTitle": "Számla Áttekintése",
-    "@homeMainChartAccountsTitle": {
-        "description": "Chart Label: Account Summary"
-    },
-    "homeMainChartCategoriesTitle": "Kategória összefoglaló az aktuális hónapra",
-    "@homeMainChartCategoriesTitle": {
-        "description": "Chart Label: Category Summary"
-    },
-    "homeMainChartDailyAvg": "7 napi átlag",
-    "@homeMainChartDailyAvg": {
-        "description": "Text for last week average spent"
-    },
-    "homeMainChartDailyTitle": "Napi Összefoglaló",
-    "@homeMainChartDailyTitle": {
-        "description": "Chart Label: Daily Summary"
-    },
-    "homeMainChartNetEarningsTitle": "Nettó Kereset",
-    "@homeMainChartNetEarningsTitle": {
-        "description": "Chart Label: Net Earnings"
-    },
-    "homeMainChartNetWorthTitle": "Nettó Érték",
-    "@homeMainChartNetWorthTitle": {
-        "description": "Chart Label: Net Worth"
-    },
-    "homePiggyAdjustDialogTitle": "Pénz megtakarítása/költése",
-    "@homePiggyAdjustDialogTitle": {
-        "description": "Title of the dialog where money can be added/removed to a piggy bank."
-    },
-    "homePiggyDateStart": "Kezdés dátuma: {date}",
-    "@homePiggyDateStart": {
-        "description": "Start of the piggy bank",
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMMMMd",
-                "example": "March 12, 2023"
-            }
-        }
-    },
-    "homePiggyDateTarget": "Céldátum: {date}",
-    "@homePiggyDateTarget": {
-        "description": "Set target date of the piggy bank (when saving should be finished)",
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMMMMd",
-                "example": "March 12, 2023"
-            }
-        }
-    },
-    "homePiggyLinked": "Összekapcsolva a következővel: {account}",
-    "@homePiggyLinked": {
-        "description": "Piggy bank is linked to asset account {account}.",
-        "placeholders": {
-            "account": {
-                "type": "String",
-                "example": "Awesome Bank Account"
-            }
-        }
-    },
-    "homePiggyNoAccounts": "Még nincsenek malacperselyek.",
-    "@homePiggyNoAccounts": {
-        "description": "Information that no piggy banks are existing"
-    },
-    "homePiggyNoAccountsSubtitle": "Hozzon létre néhányat a webes felületen!",
-    "@homePiggyNoAccountsSubtitle": {
-        "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
-    },
-    "homePiggyRemaining": "Megtakarításra váró összeg: {amount}",
-    "@homePiggyRemaining": {
-        "description": "How much money is left to save",
-        "placeholders": {
-            "amount": {
-                "type": "String",
-                "example": "€12.34"
-            }
-        }
-    },
-    "homePiggySaved": "Eddig megtakarított összeg: {amount}",
-    "@homePiggySaved": {
-        "description": "How much money already was saved",
-        "placeholders": {
-            "amount": {
-                "type": "String",
-                "example": "€12.34"
-            }
-        }
-    },
-    "homePiggyTarget": "Célösszeg: {amount}",
-    "@homePiggyTarget": {
-        "description": "How much money should be saved",
-        "placeholders": {
-            "amount": {
-                "type": "String",
-                "example": "€12.34"
-            }
-        }
-    },
-    "homeTabLabelBalance": "Mérleg",
-    "@homeTabLabelBalance": {
-        "description": "Tab Label: Balance Sheet page"
-    },
-    "homeTabLabelMain": "Kezdőlap",
-    "@homeTabLabelMain": {
-        "description": "Tab Label: Start page (\"main\")"
-    },
-    "homeTabLabelPiggybanks": "Malacperselyek",
-    "@homeTabLabelPiggybanks": {
-        "description": "Tab Label: Piggy Banks page"
-    },
-    "homeTabLabelTransactions": "Tranzakciók",
-    "@homeTabLabelTransactions": {
-        "description": "Tab Label: Transactions page"
-    },
-    "homeTransactionsActionFilter": "Szűrő lista",
-    "@homeTransactionsActionFilter": {
-        "description": "Action Button Label: Filter list."
-    },
-    "homeTransactionsDialogFilterAccountsAll": "<Összes Számla>",
-    "@homeTransactionsDialogFilterAccountsAll": {
-        "description": "Don't filter for a specific account (default entry)"
-    },
-    "homeTransactionsDialogFilterBillsAll": "<Összes Számla>",
-    "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
-    },
-    "homeTransactionsDialogFilterBillUnset": "<Nincs Számla Kiválasztva>",
-    "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
-    },
-    "homeTransactionsDialogFilterBudgetsAll": "<Összes Költségkeret>",
-    "@homeTransactionsDialogFilterBudgetsAll": {
-        "description": "Don't filter for a specific budget (default entry)"
-    },
-    "homeTransactionsDialogFilterBudgetUnset": "<Nincs Költségkeret Kiválasztva>",
-    "@homeTransactionsDialogFilterBudgetUnset": {
-        "description": "Filter for unset budgets"
-    },
-    "homeTransactionsDialogFilterCategoriesAll": "<Összes Kategória>",
-    "@homeTransactionsDialogFilterCategoriesAll": {
-        "description": "Don't filter for a specific category (default entry)"
-    },
-    "homeTransactionsDialogFilterCategoryUnset": "<Nincs Kategória Kiválasztva>",
-    "@homeTransactionsDialogFilterCategoryUnset": {
-        "description": "Filter for unset categories"
-    },
-    "homeTransactionsDialogFilterCurrenciesAll": "<Összes Pénznem>",
-    "@homeTransactionsDialogFilterCurrenciesAll": {
-        "description": "Don't filter for a specific currency (default entry)"
-    },
-    "homeTransactionsDialogFilterFutureTransactions": "Jövőbeli tranzakciók megjelenítése",
-    "@homeTransactionsDialogFilterFutureTransactions": {
-        "description": "Setting to show future transactions"
-    },
-    "homeTransactionsDialogFilterSearch": "Keresési Kifejezés",
-    "@homeTransactionsDialogFilterSearch": {
-        "description": "Search term for filter"
-    },
-    "homeTransactionsDialogFilterTitle": "Szűrők kiválasztása",
-    "@homeTransactionsDialogFilterTitle": {
-        "description": "Title of Filter Dialog"
-    },
-    "homeTransactionsEmpty": "Nem található tranzakció.",
-    "@homeTransactionsEmpty": {
-        "description": "Message when no transactions are found."
-    },
-    "homeTransactionsMultipleCategories": "{num} kategória",
-    "@homeTransactionsMultipleCategories": {
-        "description": "$num categories for the transaction.",
-        "placeholders": {
-            "num": {
-                "type": "int",
-                "example": "2"
-            }
-        }
-    },
-    "homeTransactionsSettingsShowTags": "Címkék megjelenítése a tranzakciós listában",
-    "@homeTransactionsSettingsShowTags": {
-        "description": "Setting label to show tags in transactioon list."
-    },
-    "liabilityDirectionCredit": "Tartoznak nekem ezzel az adóssággal",
-    "@liabilityDirectionCredit": {
-        "description": "Firefly Translation String: liability_direction_credit"
-    },
-    "liabilityDirectionDebit": "Tartozom ezzel az adóssággal",
-    "@liabilityDirectionDebit": {
-        "description": "Firefly Translation String: liability_direction_debit"
-    },
-    "liabilityTypeDebt": "Adósság",
-    "@liabilityTypeDebt": {
-        "description": "Firefly Translation String: account_type_debt"
-    },
-    "liabilityTypeLoan": "Kölcsön",
-    "@liabilityTypeLoan": {
-        "description": "Firefly Translation String: account_type_loan"
-    },
-    "liabilityTypeMortgage": "Jelzálog",
-    "@liabilityTypeMortgage": {
-        "description": "Firefly Translation String: account_type_mortgage"
-    },
-    "loginAbout": "A Waterfly III hatékony használatához saját szerveren futtatott Firefly III-ra vagy Firefly III kiegészítővel ellátott Home Assistant-re van szükség.\n\nKérjük, adja meg alább a teljes URL-t, valamint egy személyes hozzáférési tokent (Beállítások -> Profil -> OAuth -> Személyes hozzáférési tokenek).",
-    "@loginAbout": {
-        "description": "Login screen welcome description"
-    },
-    "loginFormLabelAPIKey": "Érvényes API kulcs",
-    "@loginFormLabelAPIKey": {
-        "description": "Login Form: Label for API Key field"
-    },
-    "loginFormLabelHost": "Szerver URL",
-    "@loginFormLabelHost": {
-        "description": "Login Form: Label for Host field"
-    },
-    "loginWelcome": "Üdvözöljük a Waterfly III-ban",
-    "@loginWelcome": {
-        "description": "Login screen welcome banner"
-    },
-    "logoutConfirmation": "Biztos, hogy ki szeretne jelentkezni?",
-    "@logoutConfirmation": {
-        "description": "Get user confirmation if he really wants to log out"
-    },
-    "navigationAccounts": "Fiókok",
-    "@navigationAccounts": {
-        "description": "Navigation Label: Accounts Page"
-    },
-    "navigationBills": "Számlák",
-    "@navigationBills": {
-        "description": "Navigation Label: Bills"
-    },
-    "navigationCategories": "Kategóriák",
-    "@navigationCategories": {
-        "description": "Navigation Label: Categories"
-    },
-    "navigationMain": "Főoldal",
-    "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
-    },
-    "navigationSettings": "Beállítások",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
-    },
-    "no": "Nem",
-    "@no": {
-        "description": "The word no"
-    },
-    "numPercent": "{num}",
-    "@numPercent": {
-        "description": "Number formatted as percentage",
-        "placeholders": {
-            "num": {
-                "type": "double",
-                "format": "decimalPercentPattern",
-                "optionalParameters": {
-                    "decimalDigits": 0
-                }
-            }
-        }
-    },
-    "numPercentOf": "{of} {perc}-a",
-    "@numPercentOf": {
-        "description": "Number formatted as percentage, with total amount provided",
-        "placeholders": {
-            "perc": {
-                "type": "double",
-                "format": "decimalPercentPattern",
-                "optionalParameters": {
-                    "decimalDigits": 0
-                }
-            },
-            "of": {
-                "type": "String"
-            }
-        }
-    },
-    "settingsDialogDebugInfo": "Itt engedélyezheti és küldheti el a hibakeresési naplókat. A naplók gyűjtése rossz hatással van a teljesítményre, ezért kérjük, ne engedélyezze őket, hacsak nem kapott erre javaslatot. A naplózás letiltása törli a tárolt naplót.",
-    "@settingsDialogDebugInfo": {
-        "description": "Information about debug logs and their impact."
-    },
-    "settingsDialogDebugMailCreate": "Levél Létrehozása",
-    "@settingsDialogDebugMailCreate": {
-        "description": "Button to confirm mail creation after privacy disclaimer is shown."
-    },
-    "settingsDialogDebugMailDisclaimer": "FIGYELMEZTETÉS: Egy levél piszkozat fog megnyílni a csatolt naplófájllal (szöveg formátumban). A naplók érzékeny információkat tartalmazhatnak, például a Firefly-példány gazdagépnevét (bár igyekszem elkerülni a titkok, például az API-kulcs naplózását). Kérjük, figyelmesen olvassa el a naplót, és cenzúrázzon minden olyan információt, amelyet nem szeretne megosztani, és/vagy nem kapcsolódik a jelenteni kívánt problémához.\n\nKérjük, ne küldjön naplókat előzetes egyeztetés nélkül e-mailben/GitHubon keresztül. Adatvédelmi okokból törlöm a kontextus nélkül küldött naplókat. Soha ne töltse fel a naplót cenzúrázatlanul a GitHub-ra vagy máshová.",
-    "@settingsDialogDebugMailDisclaimer": {
-        "description": "Privacy disclaimer shown before sending logs"
-    },
-    "settingsDialogDebugSendButton": "Naplók küldése e-mailben",
-    "@settingsDialogDebugSendButton": {
-        "description": "Button to send logs via E-Mail"
-    },
-    "settingsDialogDebugTitle": "Hibakeresési Naplók",
-    "@settingsDialogDebugTitle": {
-        "description": "Dialog title: Debug Logs"
-    },
-    "settingsDialogLanguageTitle": "Nyelv Kiválasztása",
-    "@settingsDialogLanguageTitle": {
-        "description": "Dialog title: Select Language"
-    },
-    "settingsDialogThemeTitle": "Téma Kiválasztása",
-    "@settingsDialogThemeTitle": {
-        "description": "Dialog title: Select theme"
-    },
-    "settingsFAQ": "GYIK",
-    "@settingsFAQ": {
-        "description": "FAQ title"
-    },
-    "settingsFAQHelp": "Megnyitás böngészőben. Csak angol nyelven elérhető.",
-    "@settingsFAQHelp": {
-        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
-    },
-    "settingsLanguage": "Nyelv",
-    "@settingsLanguage": {
-        "description": "Currently selected language"
-    },
-    "settingsLockscreen": "Zárképernyő",
-    "@settingsLockscreen": {
-        "description": "Setting if a lockscreen is shown (authentication is required on startup)"
-    },
-    "settingsLockscreenHelp": "Hitelesítés szükséges az alkalmazás indításakor",
-    "@settingsLockscreenHelp": {
-        "description": "Description for lockscreen setting"
-    },
-    "settingsLockscreenInitial": "A lezárási képernyő engedélyezéséhez hitelesítsen.",
-    "@settingsLockscreenInitial": {
-        "description": "Prompt to authenticate once to set up the lockscreen"
-    },
-    "settingsNLAppAccount": "Alapértelmezett Számla",
-    "@settingsNLAppAccount": {
-        "description": "Default account which will be used for the transaction."
-    },
-    "settingsNLAppAccountDynamic": "<Dinamikus>",
-    "@settingsNLAppAccountDynamic": {
-        "description": "Account will be selected dynamically by the content of the notification."
-    },
-    "settingsNLAppAdd": "Alkalmazás Hozzáadása",
-    "@settingsNLAppAdd": {
-        "description": "Button title to add a new app."
-    },
-    "settingsNLAppAddHelp": "Kattintson a figyelni kívánt alkalmazás hozzáadásához. Csak az erre jogosult alkalmazások jelennek meg a listában.",
-    "@settingsNLAppAddHelp": {
-        "description": "Help text below adding the new app button."
-    },
-    "settingsNLAppAddInfo": "Egy alkalmazás ezen listához adásához indítson olyan tranzakciókat amelyek telefonértesítéseket generálnak. Ha az alkalmazás továbbra sem jelenik meg, kérjük, jelentse az app@vogt.pw email címre írva.",
-    "@settingsNLAppAddInfo": {
-        "description": "Help text when no more app is available to add."
-    },
-    "settingsNLAutoAdd": "Tranzakció létrehozása felhasználói beavatkozás nélkül",
-    "@settingsNLAutoAdd": {
-        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
-    },
-    "settingsNLDescription": "Ez a szolgáltatás lehetővé teszi a tranzakció részleteinek lekérését a bejövő értesítésekből. Továbbá kiválaszthat egy alapértelmezett számlát, amelyhez a tranzakciót hozzá kívánja rendelni - amennyiben ez nincs beállítva, akkor a szolgáltatás az értesítés szövegéből kisérli meg annak kinyerését.",
-    "@settingsNLDescription": {
-        "description": "Description text for the notification listener service."
-    },
-    "settingsNLEmptyNote": "A \"Jegyzetek\" mező maradjon üres",
-    "@settingsNLEmptyNote": {
-        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
-    },
-    "settingsNLPermissionGrant": "Koppintson az engedélyezéshez.",
-    "@settingsNLPermissionGrant": {
-        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
-    },
-    "settingsNLPermissionNotGranted": "Hozzáférés megtagadva.",
-    "@settingsNLPermissionNotGranted": {
-        "description": "A requested permission was not granted."
-    },
-    "settingsNLPermissionRemove": "Eltávolítja a jogosultságot?",
-    "@settingsNLPermissionRemove": {
-        "description": "Dialog title asking if permission should be removed."
-    },
-    "settingsNLPermissionRemoveHelp": "A szolgáltatás letiltásához kattintson az alkalmazásra, majd távolítsa el az engedélyeket a következő képernyőn.",
-    "@settingsNLPermissionRemoveHelp": {
-        "description": "Dialog text giving hint how to remove the permission."
-    },
-    "settingsNLPrefillTXTitle": "A tranzakció leírásának előzetes kitöltése az értesítés címével",
-    "@settingsNLPrefillTXTitle": {
-        "description": "Setting pre-fill transaction title with notification title."
-    },
-    "settingsNLServiceChecking": "Állapot ellenőrzése…",
-    "@settingsNLServiceChecking": {
-        "description": "Checking the status of the background service"
-    },
-    "settingsNLServiceCheckingError": "Hibaellenőrzés állapota: {error}",
-    "@settingsNLServiceCheckingError": {
-        "description": "An error occurred while checking the service status",
-        "placeholders": {
-            "error": {
-                "type": "String",
-                "description": "Error details",
-                "example": "Timeout"
-            }
-        }
-    },
-    "settingsNLServiceRunning": "A szolgáltatás fut.",
-    "@settingsNLServiceRunning": {
-        "description": "A background service is running normally."
-    },
-    "settingsNLServiceStatus": "Szolgáltatás Állapota",
-    "@settingsNLServiceStatus": {
-        "description": "Status of a background service."
-    },
-    "settingsNLServiceStopped": "A szolgáltatás leállt.",
-    "@settingsNLServiceStopped": {
-        "description": "A background service is stopped."
-    },
-    "settingsNotificationListener": "Értesítés Figyelő Szolgáltatás",
-    "@settingsNotificationListener": {
-        "description": "Setting for the notification listener service."
-    },
-    "settingsTheme": "Alkalmazás Téma",
-    "@settingsTheme": {
-        "description": "App theme (dark or light)"
-    },
-    "settingsThemeDynamicColors": "Dinamikus Színek",
-    "@settingsThemeDynamicColors": {
-        "description": "Material You Dynamic Colors feature"
-    },
-    "settingsThemeValue": "{theme, select, dark{Sötét} light{Világos} other{Alapértelmezett}}}",
-    "@settingsThemeValue": {
-        "description": "Currently selected theme (either dark, light or system)",
-        "placeholders": {
-            "theme": {
-                "type": "String",
-                "example": "ThemeMode.dark"
-            }
-        }
-    },
-    "settingsUseServerTimezone": "Használja a szerver időzónáját",
-    "@settingsUseServerTimezone": {
-        "description": "Setting label to use server timezone."
-    },
-    "settingsUseServerTimezoneHelp": "Minden időpont megjelenítése a szerver időzónájában. Ez a webes felület viselkedését utánozza.",
-    "@settingsUseServerTimezoneHelp": {
-        "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
-    },
-    "settingsVersion": "Alkalmazás Verzió",
-    "@settingsVersion": {
-        "description": "Current App Version"
-    },
-    "settingsVersionChecking": "ellenőrzés…",
-    "@settingsVersionChecking": {
-        "description": "Shown while checking for app version"
-    },
-    "transactionAttachments": "Mellékletek",
-    "@transactionAttachments": {
-        "description": "Button Label: Attachments"
-    },
-    "transactionDeleteConfirm": "Biztos benne, hogy törölni szeretné ezt a tranzakciót?",
-    "@transactionDeleteConfirm": {
-        "description": "Confirmation text to delete transaction"
-    },
-    "transactionDialogAttachmentsDelete": "Melléklet Törlése",
-    "@transactionDialogAttachmentsDelete": {
-        "description": "Button Label: Delete Attachment"
-    },
-    "transactionDialogAttachmentsDeleteConfirm": "Biztos benne, hogy törölni szeretné ezt a mellékletet?",
-    "@transactionDialogAttachmentsDeleteConfirm": {
-        "description": "Confirmation text to delete attachment"
-    },
-    "transactionDialogAttachmentsErrorDownload": "Nem sikerült letölteni a fájlt.",
-    "@transactionDialogAttachmentsErrorDownload": {
-        "description": "Snackbar Text: File download failed."
-    },
-    "transactionDialogAttachmentsErrorOpen": "Nem sikerült megnyitni a fájlt: {error}",
-    "@transactionDialogAttachmentsErrorOpen": {
-        "description": "Snackbar Text: File could not be opened, with reason.",
-        "placeholders": {
-            "error": {
-                "type": "String"
-            }
-        }
-    },
-    "transactionDialogAttachmentsErrorUpload": "Nem sikerült feltölteni a fájlt: {error}",
-    "@transactionDialogAttachmentsErrorUpload": {
-        "description": "Snackbar Text: File could not be uploaded, with reason.",
-        "placeholders": {
-            "error": {
-                "type": "String"
-            }
-        }
-    },
-    "transactionDialogAttachmentsTitle": "Mellékletek",
-    "@transactionDialogAttachmentsTitle": {
-        "description": "Dialog Title: Attachments Dialog"
-    },
-    "transactionDialogBillNoBill": "Nincs számla",
-    "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
-    },
-    "transactionDialogBillTitle": "Számlához Rendelés",
-    "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
-    },
-    "transactionDialogCurrencyTitle": "Pénznem kiválasztása",
-    "@transactionDialogCurrencyTitle": {
-        "description": "Dialog Title: Currency Selection"
-    },
-    "transactionDialogTagsAdd": "Címke hozzáadása",
-    "@transactionDialogTagsAdd": {
-        "description": "Button Label: Add Tag"
-    },
-    "transactionDialogTagsHint": "Címke keresése/hozzáadása",
-    "@transactionDialogTagsHint": {
-        "description": "Hint Text for search tag field"
-    },
-    "transactionDialogTagsTitle": "Címke kiválasztása",
-    "@transactionDialogTagsTitle": {
-        "description": "Dialog Title: Select Tags"
-    },
-    "transactionDuplicate": "Duplikálás",
-    "@transactionDuplicate": {
-        "description": "Menu Label: Duplicate item"
-    },
-    "transactionErrorInvalidAccount": "Érvénytelen Számla",
-    "@transactionErrorInvalidAccount": {
-        "description": "Transaction Save Error: Invalid account"
-    },
-    "transactionErrorInvalidBudget": "Érvénytelen Költségkeret",
-    "@transactionErrorInvalidBudget": {
-        "description": "Transaction Save Error: Invalid budget"
-    },
-    "transactionErrorTitle": "Kérjük, adjon meg egy leírást.",
-    "@transactionErrorTitle": {
-        "description": "Transaction Save Error: No title provided"
-    },
-    "transactionFormLabelAccountDestination": "Célszámla",
-    "@transactionFormLabelAccountDestination": {
-        "description": "Transaction Form: Label for destination account for transfer transaction"
-    },
-    "transactionFormLabelAccountForeign": "Külföldi számla",
-    "@transactionFormLabelAccountForeign": {
-        "description": "Transaction Form: Label for foreign (other) account"
-    },
-    "transactionFormLabelAccountOwn": "Saját számla",
-    "@transactionFormLabelAccountOwn": {
-        "description": "Transaction Form: Label for own account"
-    },
-    "transactionFormLabelAccountSource": "Forrás számla",
-    "@transactionFormLabelAccountSource": {
-        "description": "Transaction Form: Label for source account for transfer transaction"
-    },
-    "transactionFormLabelNotes": "Jegyzetek",
-    "@transactionFormLabelNotes": {
-        "description": "Transaction Form: Label for notes field"
-    },
-    "transactionFormLabelTags": "Címkék",
-    "@transactionFormLabelTags": {
-        "description": "Transaction Form: Label for tags field"
-    },
-    "transactionFormLabelTitle": "Tranzakció Leírása",
-    "@transactionFormLabelTitle": {
-        "description": "Transaction Form: Label for title field"
-    },
-    "transactionSplitAdd": "Osztott tranzakció hozzáadása",
-    "@transactionSplitAdd": {
-        "description": "Button Label: Add a split"
-    },
-    "transactionSplitChangeCurrency": "Felosztás Pénznemének Megváltoztatása",
-    "@transactionSplitChangeCurrency": {
-        "description": "Hint Text: Change currency for a single split"
-    },
-    "transactionSplitChangeTarget": "Felosztás Célszámlájának Megváltoztatása",
-    "@transactionSplitChangeTarget": {
-        "description": "Hint Text: Change target account for single split"
-    },
-    "transactionSplitDelete": "Felosztás törlése",
-    "@transactionSplitDelete": {
-        "description": "Hint Text: Delete single split"
-    },
-    "transactionTitleAdd": "Tranzakció Hozzáadása",
-    "@transactionTitleAdd": {
-        "description": "Title: Add a new transaction"
-    },
-    "transactionTitleDelete": "Tranzakció Törlése",
-    "@transactionTitleDelete": {
-        "description": "Title: Delete existing transaction"
-    },
-    "transactionTitleEdit": "Tranzakció Szerkesztése",
-    "@transactionTitleEdit": {
-        "description": "Title: Edit existing transaction"
-    },
-    "transactionTypeDeposit": "Bevétel",
-    "@transactionTypeDeposit": {
-        "description": "Deposit transaction type"
-    },
-    "transactionTypeTransfer": "Átvezetés",
-    "@transactionTypeTransfer": {
-        "description": "Transfer transaction type"
-    },
-    "transactionTypeWithdrawal": "Költség",
-    "@transactionTypeWithdrawal": {
-        "description": "Withdrawal transaction type"
-    }
+  "@@locale": "hu",
+  "@@x-reference": true,
+  "accountRoleAssetCashWallet": "Készpénz",
+  "accountRoleAssetCC": "Hitelkártya",
+  "accountRoleAssetDefault": "Alapértelmezett vagyon számla",
+  "accountRoleAssetSavings": "Megtakarítási számla",
+  "accountRoleAssetShared": "Megosztott vagyon számla",
+  "accountsLabelAsset": "Eszközszámlák",
+  "accountsLabelExpense": "Költségszámlák",
+  "accountsLabelLiabilities": "Kötelezettségek",
+  "accountsLabelRevenue": "Bevételi Számlák",
+  "accountsLiabilitiesInterest": "{interest}% kamat per {period, select, weekly{hét} monthly{hónap} quarterly{negyedév} halfyear{félév} yearly{év} other{ismeretlen}}",
+  "billsAmountAndFrequency": "A számla {minValue} és {maxvalue} közötti értékű tranzakcióknak felel meg. {frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}} ismétlődésű{skip, plural, =0{} other{, {skip} ismétlést átugorva}}.",
+  "billsChangeLayoutTooltip": "Elrendezés módosítása",
+  "billsChangeSortOrderTooltip": "Rendezési sorrend módosítása",
+  "billsErrorLoading": "Hiba a számla betöltése során.",
+  "billsExactAmountAndFrequency": "A számla {value} értékű tranzakcióknak felel meg. {frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}} ismétlődésű{skip, plural, =0{} other{, {skip} ismétlést átugorva}}.",
+  "billsExpectedOn": "Várható dátum {date}",
+  "billsFrequency": "{frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}}",
+  "billsFrequencySkip": "{frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}} ismétlődésű{skip, plural, =0{} other{, {skip} ismétlést átugorva}}",
+  "billsInactive": "Inaktív",
+  "billsIsActive": "Aktív számla",
+  "billsLayoutGroupSubtitle": "Számlák megjelenítése a hozzájuk rendelt csoportokban.",
+  "billsLayoutGroupTitle": "Csoport",
+  "billsLayoutListSubtitle": "Számlák megjelenítése egy listában bizonyos kritériumok szerint rendezve.",
+  "billsLayoutListTitle": "Lista",
+  "billsListEmpty": "A lista jelenleg üres.",
+  "billsNextExpectedMatch": "Következő várható egyezés",
+  "billsNotActive": "Inaktív számla",
+  "billsNotExpected": "Nem várható ebben az időszakban",
+  "billsNoTransactions": "Nem található tranzakció.",
+  "billsPaidOn": "Kifizetés dátuma {date}",
+  "billsSortAlphabetical": "Betűrendi",
+  "billsSortByTimePeriod": "Időszak szerint",
+  "billsSortFrequency": "Gyakoriság",
+  "billsSortName": "Név",
+  "billsUngrouped": "Csoportosítatlan",
+  "billsSettingsShowOnlyActive": "Csak az aktívak",
+  "billsSettingsShowOnlyActiveDesc": "Csak az aktív előfizetéseket mutatja.",
+  "billsSettingsShowOnlyExpected": "Csak a várhatók",
+  "billsSettingsShowOnlyExpectedDesc": "Csak azokat az előfizetéseket mutatja, amelyek várhatóak (vagy kifizetésre kerültek) ebben a hónapban.",
+  "categoryDeleteConfirm": "Biztosan törli ezt a kategóriát? A tranzakciók nem kerülnek törlésre, ugyanakkor nem lesznek kategóriához rendelve.",
+  "categoryErrorLoading": "Hiba a kategóriák betöltése során.",
+  "categoryFormLabelIncludeInSum": "Beleszámítani a havi összegbe",
+  "categoryFormLabelName": "Kategória neve",
+  "categoryMonthNext": "Következő hónap",
+  "categoryMonthPrev": "Előző hónap",
+  "categorySumExcluded": "nem számított",
+  "categoryTitleAdd": "Kategória hozzáadása",
+  "categoryTitleDelete": "Kategória törlése",
+  "categoryTitleEdit": "Kategória szerkesztése",
+  "catNone": "<nincs kategória>",
+  "catOther": "Egyéb",
+  "errorAPIInvalidResponse": "Érvénytelen válasz az API-tól: {message}",
+  "errorAPIUnavailable": "API nem érhető el",
+  "errorFieldRequired": "A mező kitöltése kötelező.",
+  "errorInvalidURL": "Érvénytelen URL",
+  "errorMinAPIVersion": "Minimális támogatott Firefly API-verzió: v{requiredVersion}. Kérjük, frissítsen.",
+  "errorStatusCode": "Státusz kód: {code}",
+  "errorUnknown": "Ismeretlen hiba.",
+  "formButtonHelp": "Súgó",
+  "formButtonLogin": "Bejelentkezés",
+  "formButtonLogout": "Kijelentkezés",
+  "formButtonRemove": "Eltávolítás",
+  "formButtonResetLogin": "A bejelentkezés visszaállítása",
+  "formButtonTransactionAdd": "Tranzakció Hozzáadása",
+  "formButtonTryAgain": "Próbálja újra",
+  "generalAccount": "Számla",
+  "generalAssets": "Vagyonok",
+  "generalBalance": "Egyenleg",
+  "generalBalanceOn": "Egyenleg ekkor: {date}",
+  "generalBill": "Számla",
+  "generalBudget": "Költségkeret",
+  "generalCategory": "Kategória",
+  "generalCurrency": "Pénznem",
+  "generalDateRangeCurrentMonth": "Aktuális hónap",
+  "generalDateRangeLast30Days": "Utolsó 30 nap",
+  "generalDateRangeCurrentYear": "Aktuális év",
+  "generalDateRangeLastYear": "Előző év",
+  "generalDateRangeAll": "Összes",
+  "generalDefault": "alapértelmezett",
+  "generalDestinationAccount": "Célszámla",
+  "generalDismiss": "Elvetés",
+  "generalEarned": "Megkeresett",
+  "generalError": "Hiba",
+  "generalExpenses": "Kiadások",
+  "generalIncome": "Bevétel",
+  "generalLiabilities": "Kötelezettségek",
+  "generalMultiple": "több",
+  "generalNever": "soha",
+  "generalReconcile": "Egyeztetve",
+  "generalReset": "Visszaállítás",
+  "generalSourceAccount": "Forrásszámla",
+  "generalSpent": "Elköltött",
+  "generalSum": "Összesen",
+  "generalTarget": "Cél",
+  "generalUnknown": "Ismeretlen",
+  "homeMainBillsInterval": " ({period, select, weekly{heti} monthly{havi} quarterly{negyedéves} halfyear{féléves} yearly{éves} other{ismeretlen}})",
+  "homeMainBillsTitle": "Számlák a következő hétre",
+  "homeMainBudgetInterval": " (Ettől: {from} eddig: {to}, {period})",
+  "homeMainBudgetIntervalSingle": " (Ettől: {from} eddig: {to})",
+  "homeMainBudgetSum": "{current} {status, select, over{többletköltség a} other{maradt a}} {available} {status, select, over{limithez képest} other{limitből}}",
+  "homeMainBudgetTitle": "Költségkeretek erre a hónapra",
+  "homeMainChartAccountsTitle": "Számla Áttekintése",
+  "homeMainChartCategoriesTitle": "Kategória összefoglaló az aktuális hónapra",
+  "homeMainChartDailyAvg": "7 napi átlag",
+  "homeMainChartDailyTitle": "Napi Összefoglaló",
+  "homeMainChartNetEarningsTitle": "Nettó Kereset",
+  "homeMainChartNetWorthTitle": "Nettó Érték",
+  "homeMainChartTagsTitle": "Címke összefoglaló az aktuális hónapra",
+  "homePiggyAdjustDialogTitle": "Pénz megtakarítása/költése",
+  "homePiggyDateStart": "Kezdés dátuma: {date}",
+  "homePiggyDateTarget": "Céldátum: {date}",
+  "homeMainDialogSettingsTitle": "Műszerfal testreszabása",
+  "homePiggyLinked": "Összekapcsolva a következővel: {account}",
+  "homePiggyNoAccounts": "Még nincsenek malacperselyek.",
+  "homePiggyNoAccountsSubtitle": "Hozzon létre néhányat a webes felületen!",
+  "homePiggyRemaining": "Megtakarításra váró összeg: {amount}",
+  "homePiggySaved": "Eddig megtakarított összeg: {amount}",
+  "homePiggySavedMultiple": "Eddig megtakarítva:",
+  "homePiggyTarget": "Célösszeg: {amount}",
+  "homePiggyAccountStatus": "Számla állapota",
+  "homePiggyAvailableAmounts": "Rendelkezésre álló összegek",
+  "homePiggyAvailable": "Rendelkezésre álló: {amount}",
+  "homePiggyInPiggyBanks": "Perselyekben: {amount}",
+  "homeTabLabelBalance": "Mérleg",
+  "homeTabLabelMain": "Kezdőlap",
+  "homeTabLabelPiggybanks": "Malacperselyek",
+  "homeTabLabelTransactions": "Tranzakciók",
+  "homeTransactionsActionFilter": "Szűrő lista",
+  "homeTransactionsDialogFilterAccountsAll": "<Összes Számla>",
+  "homeTransactionsDialogFilterBillsAll": "<Összes Számla>",
+  "homeTransactionsDialogFilterBillUnset": "<Nincs Számla Kiválasztva>",
+  "homeTransactionsDialogFilterBudgetsAll": "<Összes Költségkeret>",
+  "homeTransactionsDialogFilterBudgetUnset": "<Nincs Költségkeret Kiválasztva>",
+  "homeTransactionsDialogFilterCategoriesAll": "<Összes Kategória>",
+  "homeTransactionsDialogFilterCategoryUnset": "<Nincs Kategória Kiválasztva>",
+  "homeTransactionsDialogFilterCurrenciesAll": "<Összes Pénznem>",
+  "homeTransactionsDialogFilterDateRange": "Dátumtartomány",
+  "homeTransactionsDialogFilterFutureTransactions": "Jövőbeli tranzakciók megjelenítése",
+  "homeTransactionsDialogFilterSearch": "Keresési Kifejezés",
+  "homeTransactionsDialogFilterTitle": "Szűrők kiválasztása",
+  "homeTransactionsEmpty": "Nem található tranzakció.",
+  "homeTransactionsMultipleCategories": "{num} kategória",
+  "homeTransactionsSettingsShowTags": "Címkék megjelenítése a tranzakciós listában",
+  "liabilityDirectionCredit": "Tartoznak nekem ezzel az adóssággal",
+  "liabilityDirectionDebit": "Tartozom ezzel az adóssággal",
+  "liabilityTypeDebt": "Adósság",
+  "liabilityTypeLoan": "Kölcsön",
+  "liabilityTypeMortgage": "Jelzálog",
+  "loginAbout": "A Waterfly III hatékony használatához saját szerveren futtatott Firefly III-ra vagy Firefly III kiegészítővel ellátott Home Assistant-re van szükség.\n\nKérjük, adja meg alább a teljes URL-t, valamint egy személyes hozzáférési tokent (Beállítások -> Profil -> OAuth -> Személyes hozzáférési tokenek).",
+  "loginFormLabelAPIKey": "Érvényes API kulcs",
+  "loginFormLabelHost": "Szerver URL",
+  "loginWelcome": "Üdvözöljük a Waterfly III-ban",
+  "logoutConfirmation": "Biztos, hogy ki szeretne jelentkezni?",
+  "navigationAccounts": "Fiókok",
+  "navigationBills": "Számlák",
+  "navigationCategories": "Kategóriák",
+  "navigationMain": "Főoldal",
+  "generalSettings": "Beállítások",
+  "no": "Nem",
+  "numPercent": "{num}",
+  "numPercentOf": "{of} {perc}-a",
+  "settingsDialogDebugInfo": "Itt engedélyezheti és küldheti el a hibakeresési naplókat. A naplók gyűjtése rossz hatással van a teljesítményre, ezért kérjük, ne engedélyezze őket, hacsak nem kapott erre javaslatot. A naplózás letiltása törli a tárolt naplót.",
+  "settingsDialogDebugMailCreate": "Levél Létrehozása",
+  "settingsDialogDebugMailDisclaimer": "FIGYELMEZTETÉS: Egy levél piszkozat fog megnyílni a csatolt naplófájllal (szöveg formátumban). A naplók érzékeny információkat tartalmazhatnak, például a Firefly-példány gazdagépnevét (bár igyekszem elkerülni a titkok, például az API-kulcs naplózását). Kérjük, figyelmesen olvassa el a naplót, és cenzúrázzon minden olyan információt, amelyet nem szeretne megosztani, és/vagy nem kapcsolódik a jelenteni kívánt problémához.\n\nKérjük, ne küldjön naplókat előzetes egyeztetés nélkül e-mailben/GitHubon keresztül. Adatvédelmi okokból törlöm a kontextus nélkül küldött naplókat. Soha ne töltse fel a naplót cenzúrázatlanul a GitHub-ra vagy máshová.",
+  "settingsDialogDebugSendButton": "Naplók küldése e-mailben",
+  "settingsDialogDebugTitle": "Hibakeresési Naplók",
+  "settingsDialogLanguageTitle": "Nyelv Kiválasztása",
+  "settingsDialogThemeTitle": "Téma Kiválasztása",
+  "settingsFAQ": "GYIK",
+  "settingsFAQHelp": "Megnyitás böngészőben. Csak angol nyelven elérhető.",
+  "settingsLanguage": "Nyelv",
+  "settingsLockscreen": "Zárképernyő",
+  "settingsLockscreenHelp": "Hitelesítés szükséges az alkalmazás indításakor",
+  "settingsLockscreenInitial": "A lezárási képernyő engedélyezéséhez hitelesítsen.",
+  "settingsNLAppAccount": "Alapértelmezett Számla",
+  "settingsNLAppAccountDynamic": "<Dinamikus>",
+  "settingsNLAppAdd": "Alkalmazás Hozzáadása",
+  "settingsNLAppAddHelp": "Kattintson a figyelni kívánt alkalmazás hozzáadásához. Csak az erre jogosult alkalmazások jelennek meg a listában.",
+  "settingsNLAppAddInfo": "Egy alkalmazás ezen listához adásához indítson olyan tranzakciókat amelyek telefonértesítéseket generálnak. Ha az alkalmazás továbbra sem jelenik meg, kérjük, jelentse az app@vogt.pw email címre írva.",
+  "settingsNLAutoAdd": "Tranzakció létrehozása felhasználói beavatkozás nélkül",
+  "settingsNLDescription": "Ez a szolgáltatás lehetővé teszi a tranzakció részleteinek lekérését a bejövő értesítésekből. Továbbá kiválaszthat egy alapértelmezett számlát, amelyhez a tranzakciót hozzá kívánja rendelni - amennyiben ez nincs beállítva, akkor a szolgáltatás az értesítés szövegéből kisérli meg annak kinyerését.",
+  "settingsNLEmptyNote": "A \"Jegyzetek\" mező maradjon üres",
+  "settingsNLPermissionGrant": "Koppintson az engedélyezéshez.",
+  "settingsNLPermissionNotGranted": "Hozzáférés megtagadva.",
+  "settingsNLPermissionRemove": "Eltávolítja a jogosultságot?",
+  "settingsNLPermissionRemoveHelp": "A szolgáltatás letiltásához kattintson az alkalmazásra, majd távolítsa el az engedélyeket a következő képernyőn.",
+  "settingsNLPrefillTXTitle": "A tranzakció leírásának előzetes kitöltése az értesítés címével",
+  "settingsNLServiceChecking": "Állapot ellenőrzése…",
+  "settingsNLServiceCheckingError": "Hibaellenőrzés állapota: {error}",
+  "settingsNLServiceRunning": "A szolgáltatás fut.",
+  "settingsNLServiceStatus": "Szolgáltatás Állapota",
+  "settingsNLServiceStopped": "A szolgáltatás leállt.",
+  "settingsNotificationListener": "Értesítés Figyelő Szolgáltatás",
+  "settingsTheme": "Alkalmazás Téma",
+  "settingsThemeDynamicColors": "Dinamikus Színek",
+  "settingsThemeValue": "{theme, select, dark{Sötét} light{Világos} other{Alapértelmezett}}}",
+  "settingsUseServerTimezone": "Használja a szerver időzónáját",
+  "settingsUseServerTimezoneHelp": "Minden időpont megjelenítése a szerver időzónájában. Ez a webes felület viselkedését utánozza.",
+  "settingsVersion": "Alkalmazás Verzió",
+  "settingsVersionChecking": "ellenőrzés…",
+  "transactionAttachments": "Mellékletek",
+  "transactionDeleteConfirm": "Biztos benne, hogy törölni szeretné ezt a tranzakciót?",
+  "transactionDialogAttachmentsDelete": "Melléklet Törlése",
+  "transactionDialogAttachmentsDeleteConfirm": "Biztos benne, hogy törölni szeretné ezt a mellékletet?",
+  "transactionDialogAttachmentsErrorDownload": "Nem sikerült letölteni a fájlt.",
+  "transactionDialogAttachmentsErrorOpen": "Nem sikerült megnyitni a fájlt: {error}",
+  "transactionDialogAttachmentsErrorUpload": "Nem sikerült feltölteni a fájlt: {error}",
+  "transactionDialogAttachmentsTitle": "Mellékletek",
+  "transactionDialogBillNoBill": "Nincs számla",
+  "transactionDialogBillTitle": "Számlához Rendelés",
+  "transactionDialogCurrencyTitle": "Pénznem kiválasztása",
+  "transactionDialogTagsAdd": "Címke hozzáadása",
+  "transactionDialogTagsHint": "Címke keresése/hozzáadása",
+  "transactionDialogTagsTitle": "Címke kiválasztása",
+  "transactionDuplicate": "Duplikálás",
+  "transactionErrorInvalidAccount": "Érvénytelen Számla",
+  "transactionErrorInvalidBudget": "Érvénytelen Költségkeret",
+  "transactionErrorNoAccounts": "Kérjük, először töltse ki a számlákat.",
+  "transactionErrorNoAssetAccount": "Kérjük, válasszon ki egy eszközzámlát.",
+  "transactionErrorTitle": "Kérjük, adjon meg egy leírást.",
+  "transactionFormLabelAccountDestination": "Célszámla",
+  "transactionFormLabelAccountForeign": "Külföldi számla",
+  "transactionFormLabelAccountOwn": "Saját számla",
+  "transactionFormLabelAccountSource": "Forrás számla",
+  "transactionFormLabelNotes": "Jegyzetek",
+  "transactionFormLabelTags": "Címkék",
+  "transactionFormLabelTitle": "Tranzakció Leírása",
+  "transactionSplitAdd": "Osztott tranzakció hozzáadása",
+  "transactionSplitChangeCurrency": "Felosztás Pénznemének Megváltoztatása",
+  "transactionSplitChangeDestinationAccount": "Részletes felosztás célszámlájának módosítása",
+  "transactionSplitChangeSourceAccount": "Részletes felosztás forrásszámlájának módosítása",
+  "transactionSplitChangeTarget": "Felosztás Célszámlájának Megváltoztatása",
+  "transactionSplitDelete": "Felosztás törlése",
+  "transactionTitleAdd": "Tranzakció Hozzáadása",
+  "transactionTitleDelete": "Tranzakció Törlése",
+  "transactionTitleEdit": "Tranzakció Szerkesztése",
+  "transactionTypeDeposit": "Bevétel",
+  "transactionTypeTransfer": "Átvezetés",
+  "transactionTypeWithdrawal": "Költség"
 }

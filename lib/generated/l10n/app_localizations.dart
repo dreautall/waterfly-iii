@@ -848,6 +848,30 @@ abstract class S {
   /// **'Target amount: {amount}'**
   String homePiggyTarget(String amount);
 
+  /// Title for the account status section showing balances and piggy bank totals
+  ///
+  /// In en, this message translates to:
+  /// **'Account Status'**
+  String get homePiggyAccountStatus;
+
+  /// Title for the available amounts section showing money not in piggy banks
+  ///
+  /// In en, this message translates to:
+  /// **'Available Amounts'**
+  String get homePiggyAvailableAmounts;
+
+  /// Available balance after subtracting piggy bank amounts
+  ///
+  /// In en, this message translates to:
+  /// **'Available: {amount}'**
+  String homePiggyAvailable(String amount);
+
+  /// Amount currently in piggy banks for this account
+  ///
+  /// In en, this message translates to:
+  /// **'In piggy banks: {amount}'**
+  String homePiggyInPiggyBanks(String amount);
+
   /// Tab Label: Balance Sheet page
   ///
   /// In en, this message translates to:

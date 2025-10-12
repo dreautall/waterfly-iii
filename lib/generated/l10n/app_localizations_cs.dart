@@ -56,30 +56,30 @@ class SCs extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'týdně',
+      'monthly': 'měsíčně',
+      'quarterly': 'čtvrtletně',
+      'halfyear': 'pololetně',
+      'yearly': 'ročně',
+      'other': 'neznámé',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', přeskočí $skip',
       zero: '',
     );
-    return 'Subscription matches transactions between $minValue and $maxvalue. Repeats $_temp0$_temp1.';
+    return 'Předplatné odpovídá transakcím mezi $minValue a $maxvalue. Opakuje se $_temp0$_temp1.';
   }
 
   @override
-  String get billsChangeLayoutTooltip => 'Change layout';
+  String get billsChangeLayoutTooltip => 'Změnit rozložení';
 
   @override
-  String get billsChangeSortOrderTooltip => 'Change sort order';
+  String get billsChangeSortOrderTooltip => 'Změnit pořadí řazení';
 
   @override
-  String get billsErrorLoading => 'Error loading subscriptions.';
+  String get billsErrorLoading => 'Chyba při načítání předplatných.';
 
   @override
   String billsExactAmountAndFrequency(
@@ -88,20 +88,20 @@ class SCs extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'týdně',
+      'monthly': 'měsíčně',
+      'quarterly': 'čtvrtletně',
+      'halfyear': 'pololetně',
+      'yearly': 'ročně',
+      'other': 'neznámé',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', přeskočí $skip',
       zero: '',
     );
-    return 'Subscription matches transactions of $value. Repeats $_temp0$_temp1.';
+    return 'Předplatné odpovídá transakcím v hodnotě $value. Opakuje se $_temp0$_temp1.';
   }
 
   @override
@@ -109,18 +109,18 @@ class SCs extends S {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Expected $dateString';
+    return 'Očekáváno $dateString';
   }
 
   @override
   String billsFrequency(String frequency) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Týdně',
+      'monthly': 'Měsíčně',
+      'quarterly': 'Čtvrtletně',
+      'halfyear': 'Pololetně',
+      'yearly': 'Ročně',
+      'other': 'Neznámé',
     });
     return '$_temp0';
   }
@@ -128,127 +128,127 @@ class SCs extends S {
   @override
   String billsFrequencySkip(String frequency, num skip) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Týdně',
+      'monthly': 'Měsíčně',
+      'quarterly': 'Čtvrtletně',
+      'halfyear': 'Pololetně',
+      'yearly': 'Ročně',
+      'other': 'Neznámé',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', přeskočí $skip',
       zero: '',
     );
     return '$_temp0$_temp1';
   }
 
   @override
-  String get billsInactive => 'Inactive';
+  String get billsInactive => 'Neaktivní';
 
   @override
-  String get billsIsActive => 'Subscription is active';
+  String get billsIsActive => 'Předplatné je aktivní';
 
   @override
   String get billsLayoutGroupSubtitle =>
-      'Subscriptions displayed in their assigned groups.';
+      'Předplatná zobrazená v přiřazených skupinách.';
 
   @override
-  String get billsLayoutGroupTitle => 'Group';
+  String get billsLayoutGroupTitle => 'Skupina';
 
   @override
   String get billsLayoutListSubtitle =>
-      'Subscriptions displayed in a list sorted by certain criteria.';
+      'Předplatná zobrazená v seznamu seřazeném podle určitých kritérií.';
 
   @override
-  String get billsLayoutListTitle => 'List';
+  String get billsLayoutListTitle => 'Seznam';
 
   @override
-  String get billsListEmpty => 'The list is currently empty.';
+  String get billsListEmpty => 'Seznam je aktuálně prázdný.';
 
   @override
-  String get billsNextExpectedMatch => 'Next expected match';
+  String get billsNextExpectedMatch => 'Další očekávaná shoda';
 
   @override
-  String get billsNotActive => 'Subscription is inactive';
+  String get billsNotActive => 'Předplatné je neaktivní';
 
   @override
-  String get billsNotExpected => 'Not expected this period';
+  String get billsNotExpected => 'V tomto období neočekáváno';
 
   @override
-  String get billsNoTransactions => 'No transactions found.';
+  String get billsNoTransactions => 'Nebyly nalezeny žádné transakce.';
 
   @override
   String billsPaidOn(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Paid $dateString';
+    return 'Zaplaceno $dateString';
   }
 
   @override
-  String get billsSortAlphabetical => 'Alphabetical';
+  String get billsSortAlphabetical => 'Abecedně';
 
   @override
-  String get billsSortByTimePeriod => 'By time period';
+  String get billsSortByTimePeriod => 'Podle časového období';
 
   @override
-  String get billsSortFrequency => 'Frequency';
+  String get billsSortFrequency => 'Frekvence';
 
   @override
-  String get billsSortName => 'Name';
+  String get billsSortName => 'Název';
 
   @override
-  String get billsUngrouped => 'Ungrouped';
+  String get billsUngrouped => 'Neseskupené';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'Zobrazit pouze aktivní';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'Zobrazuje pouze aktivní předplatná.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'Zobrazit pouze očekávané';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'Zobrazuje pouze ta předplatná, která jsou očekávána (nebo zaplacena) tento měsíc.';
 
   @override
   String get categoryDeleteConfirm =>
-      'Are you sure you want to delete this category? The transactions will not be deleted, but will not have a category anymore.';
+      'Opravdu chcete smazat tuto kategorii? Transakce nebudou smazány, ale již nebudou mít přiřazenou kategorii.';
 
   @override
-  String get categoryErrorLoading => 'Error loading categories.';
+  String get categoryErrorLoading => 'Chyba při načítání kategorií.';
 
   @override
-  String get categoryFormLabelIncludeInSum => 'Include in monthly sum';
+  String get categoryFormLabelIncludeInSum => 'Zahrnout do měsíčního součtu';
 
   @override
-  String get categoryFormLabelName => 'Category Name';
+  String get categoryFormLabelName => 'Název kategorie';
 
   @override
-  String get categoryMonthNext => 'Next Month';
+  String get categoryMonthNext => 'Příští měsíc';
 
   @override
-  String get categoryMonthPrev => 'Previous Month';
+  String get categoryMonthPrev => 'Předchozí měsíc';
 
   @override
-  String get categorySumExcluded => 'excluded';
+  String get categorySumExcluded => 'vyloučeno';
 
   @override
-  String get categoryTitleAdd => 'Add Category';
+  String get categoryTitleAdd => 'Přidat kategorii';
 
   @override
-  String get categoryTitleDelete => 'Delete Category';
+  String get categoryTitleDelete => 'Smazat kategorii';
 
   @override
-  String get categoryTitleEdit => 'Edit Category';
+  String get categoryTitleEdit => 'Upravit kategorii';
 
   @override
-  String get catNone => '<no category>';
+  String get catNone => '<bez kategorie>';
 
   @override
   String get catOther => 'Ostatní';
@@ -331,31 +331,31 @@ class SCs extends S {
   String get generalCurrency => 'Měna';
 
   @override
-  String get generalDateRangeCurrentMonth => 'Current Month';
+  String get generalDateRangeCurrentMonth => 'Aktuální měsíc';
 
   @override
-  String get generalDateRangeLast30Days => 'Last 30 days';
+  String get generalDateRangeLast30Days => 'Posledních 30 dní';
 
   @override
-  String get generalDateRangeCurrentYear => 'Current Year';
+  String get generalDateRangeCurrentYear => 'Aktuální rok';
 
   @override
-  String get generalDateRangeLastYear => 'Last year';
+  String get generalDateRangeLastYear => 'Minulý rok';
 
   @override
-  String get generalDateRangeAll => 'All';
+  String get generalDateRangeAll => 'Vše';
 
   @override
   String get generalDefault => 'výchozí';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'Cílový účet';
 
   @override
   String get generalDismiss => 'Zrušit';
 
   @override
-  String get generalEarned => 'Earned';
+  String get generalEarned => 'Získané';
 
   @override
   String get generalError => 'Chyba';
@@ -382,10 +382,10 @@ class SCs extends S {
   String get generalReset => 'Resetovat';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'Zdrojový účet';
 
   @override
-  String get generalSpent => 'Spent';
+  String get generalSpent => 'Utracené';
 
   @override
   String get generalSum => 'Součet';
@@ -464,7 +464,7 @@ class SCs extends S {
   String get homeMainChartNetWorthTitle => 'Čisté jmění';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle => 'Souhrn štítků za aktuální měsíc';
 
   @override
   String get homePiggyAdjustDialogTitle => 'Uložit/utratit peníze';
@@ -486,7 +486,7 @@ class SCs extends S {
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'Přizpůsobit nástěnku';
 
   @override
   String homePiggyLinked(String account) {
@@ -511,11 +511,27 @@ class SCs extends S {
   }
 
   @override
-  String get homePiggySavedMultiple => 'Saved so far:';
+  String get homePiggySavedMultiple => 'Dosud ušetřeno:';
 
   @override
   String homePiggyTarget(String amount) {
     return 'Cílová částka: $amount';
+  }
+
+  @override
+  String get homePiggyAccountStatus => 'Stav účtu';
+
+  @override
+  String get homePiggyAvailableAmounts => 'Dostupné částky';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return 'K dispozici: $amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return 'V prasátkách: $amount';
   }
 
   @override
@@ -561,7 +577,7 @@ class SCs extends S {
   String get homeTransactionsDialogFilterCurrenciesAll => '<Všechny měny>';
 
   @override
-  String get homeTransactionsDialogFilterDateRange => 'Date Range';
+  String get homeTransactionsDialogFilterDateRange => 'Rozsah dat';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -583,7 +599,7 @@ class SCs extends S {
 
   @override
   String get homeTransactionsSettingsShowTags =>
-      'Show tags in transaction list';
+      'Zobrazit štítky v seznamu transakcí';
 
   @override
   String get liabilityDirectionCredit => 'Je mi dlužen tento dluh';
@@ -620,19 +636,19 @@ class SCs extends S {
   String get navigationAccounts => 'Účty';
 
   @override
-  String get navigationBills => 'Subscriptions';
+  String get navigationBills => 'Předplatné';
 
   @override
-  String get navigationCategories => 'Categories';
+  String get navigationCategories => 'Kategorie';
 
   @override
   String get navigationMain => 'Přehled';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => 'Nastavení';
 
   @override
-  String get no => 'No';
+  String get no => 'Ne';
 
   @override
   String numPercent(double num) {
@@ -682,10 +698,11 @@ class SCs extends S {
   String get settingsDialogThemeTitle => 'Vyberte motiv';
 
   @override
-  String get settingsFAQ => 'FAQ';
+  String get settingsFAQ => 'Často kladené dotazy';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'Otevře se v prohlížeči. Dostupné pouze v angličtině.';
 
   @override
   String get settingsLanguage => 'Jazyk';
@@ -719,14 +736,14 @@ class SCs extends S {
       'Proveďte transakce při kterých dostáváte notifikaci v telefonu pro přidání aplikací do tohoto seznamu. Pokud se přesto aplikace nezobrazí, prosíme nahlašte to na app@vogt.pw.';
 
   @override
-  String get settingsNLAutoAdd => 'Create transaction without interaction';
+  String get settingsNLAutoAdd => 'Vytvořit transakci bez interakce';
 
   @override
   String get settingsNLDescription =>
       'Tato služba umožňuje načíst detaily transakce z příchozích push notifikací. Kromě toho si můžete vybrat výchozí účet, ke kterému by měla být transakce přiřazena - pokud není nastavena žádná hodnota, služba se snaží získat účet z textu notifikace.';
 
   @override
-  String get settingsNLEmptyNote => 'Keep note field empty';
+  String get settingsNLEmptyNote => 'Ponechat pole poznámky prázdné';
 
   @override
   String get settingsNLPermissionGrant => 'Klepnutím udělte oprávnění.';
@@ -853,11 +870,11 @@ class SCs extends S {
   String get transactionErrorInvalidBudget => 'Neplatný rozpočet';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts => 'Prosím, nejprve vyplňte účty.';
 
   @override
   String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+      'Prosím, vyberte majetkový účet.';
 
   @override
   String get transactionErrorTitle => 'Zadejte prosím název.';
@@ -891,11 +908,11 @@ class SCs extends S {
 
   @override
   String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+      'Změnit cílový účet rozdělené transakce';
 
   @override
   String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+      'Změnit zdrojový účet rozdělené transakce';
 
   @override
   String get transactionSplitChangeTarget => 'Změnit cílový účet rozdělení';

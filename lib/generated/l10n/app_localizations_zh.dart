@@ -201,18 +201,16 @@ class SZh extends S {
   String get billsUngrouped => '未分组的';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => '仅显示活跃';
 
   @override
-  String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+  String get billsSettingsShowOnlyActiveDesc => '仅显示活跃的订阅。';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => '仅显示预期';
 
   @override
-  String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+  String get billsSettingsShowOnlyExpectedDesc => '仅显示本月预期（或已支付）的订阅。';
 
   @override
   String get categoryDeleteConfirm => '您确定要删除这个分类吗？与该分类关联的账单不会被删除，但该分类将彻底删除。';
@@ -328,19 +326,19 @@ class SZh extends S {
   String get generalCurrency => '货币';
 
   @override
-  String get generalDateRangeCurrentMonth => 'Current Month';
+  String get generalDateRangeCurrentMonth => '本月';
 
   @override
-  String get generalDateRangeLast30Days => 'Last 30 days';
+  String get generalDateRangeLast30Days => '最近 30 天';
 
   @override
-  String get generalDateRangeCurrentYear => 'Current Year';
+  String get generalDateRangeCurrentYear => '本年度';
 
   @override
-  String get generalDateRangeLastYear => 'Last year';
+  String get generalDateRangeLastYear => '去年';
 
   @override
-  String get generalDateRangeAll => 'All';
+  String get generalDateRangeAll => '所有';
 
   @override
   String get generalDefault => '默认';
@@ -460,7 +458,7 @@ class SZh extends S {
   String get homeMainChartNetWorthTitle => '净值';
 
   @override
-  String get homeMainChartTagsTitle => '';
+  String get homeMainChartTagsTitle => '本月标签摘要';
 
   @override
   String get homePiggyAdjustDialogTitle => '存钱/花钱';
@@ -506,11 +504,27 @@ class SZh extends S {
   }
 
   @override
-  String get homePiggySavedMultiple => 'Saved so far:';
+  String get homePiggySavedMultiple => '已储蓄金额：';
 
   @override
   String homePiggyTarget(String amount) {
     return '收费金额: $amount%';
+  }
+
+  @override
+  String get homePiggyAccountStatus => '账户状态';
+
+  @override
+  String get homePiggyAvailableAmounts => '可用金额';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return '可用余额：$amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return '在储蓄罐中：$amount';
   }
 
   @override
@@ -553,7 +567,7 @@ class SZh extends S {
   String get homeTransactionsDialogFilterCurrenciesAll => '<全部货币>';
 
   @override
-  String get homeTransactionsDialogFilterDateRange => 'Date Range';
+  String get homeTransactionsDialogFilterDateRange => '日期范围';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions => '显示未来交易';
@@ -619,7 +633,7 @@ class SZh extends S {
   String get navigationMain => '主仪表盘';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => '设置';
 
   @override
   String get no => '取消';

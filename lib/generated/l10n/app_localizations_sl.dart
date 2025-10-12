@@ -519,6 +519,22 @@ class SSl extends S {
   }
 
   @override
+  String get homePiggyAccountStatus => 'Status računa';
+
+  @override
+  String get homePiggyAvailableAmounts => 'Razpoložljivi zneski';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return 'Razpoložljivo: $amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return 'V hranilnikih: $amount';
+  }
+
+  @override
   String get homeTabLabelBalance => 'Bilanca stanja';
 
   @override

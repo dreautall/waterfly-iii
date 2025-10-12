@@ -518,6 +518,22 @@ class SDe extends S {
   }
 
   @override
+  String get homePiggyAccountStatus => 'Kontostatus';
+
+  @override
+  String get homePiggyAvailableAmounts => 'Verfügbare Beträge';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return 'Verfügbar: $amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return 'In Sparschweinen: $amount';
+  }
+
+  @override
   String get homeTabLabelBalance => 'Kontostände';
 
   @override

@@ -56,30 +56,29 @@ class SId extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'mingguan',
+      'monthly': 'bulanan',
+      'quarterly': 'triwulanan',
+      'halfyear': 'setengah tahunan',
+      'yearly': 'tahunan',
+      'other': 'tidak diketahui',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
-      zero: '',
+      other: ', melewati $skip',
     );
-    return 'Subscription matches transactions between $minValue and $maxvalue. Repeats $_temp0$_temp1.';
+    return 'Langganan cocok dengan transaksi antara $minValue dan $maxvalue. Berulang $_temp0$_temp1.';
   }
 
   @override
-  String get billsChangeLayoutTooltip => 'Change layout';
+  String get billsChangeLayoutTooltip => 'Ubah tata letak';
 
   @override
-  String get billsChangeSortOrderTooltip => 'Change sort order';
+  String get billsChangeSortOrderTooltip => 'Ubah urutan penyortiran';
 
   @override
-  String get billsErrorLoading => 'Error loading subscriptions.';
+  String get billsErrorLoading => 'Terjadi kesalahan saat memuat langganan.';
 
   @override
   String billsExactAmountAndFrequency(
@@ -88,20 +87,19 @@ class SId extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'mingguan',
+      'monthly': 'bulanan',
+      'quarterly': 'triwulanan',
+      'halfyear': 'setengah tahunan',
+      'yearly': 'tahunan',
+      'other': 'tidak diketahui',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
-      zero: '',
+      other: ', melewati $skip',
     );
-    return 'Subscription matches transactions of $value. Repeats $_temp0$_temp1.';
+    return 'Langganan cocok dengan transaksi sebesar $value. Berulang $_temp0$_temp1.';
   }
 
   @override
@@ -109,18 +107,18 @@ class SId extends S {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Expected $dateString';
+    return 'Diharapkan $dateString';
   }
 
   @override
   String billsFrequency(String frequency) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Mingguan',
+      'monthly': 'Bulanan',
+      'quarterly': 'Triwulanan',
+      'halfyear': 'Setengah tahunan',
+      'yearly': 'Tahunan',
+      'other': 'Tidak diketahui',
     });
     return '$_temp0';
   }
@@ -128,127 +126,126 @@ class SId extends S {
   @override
   String billsFrequencySkip(String frequency, num skip) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Mingguan',
+      'monthly': 'Bulanan',
+      'quarterly': 'Triwulanan',
+      'halfyear': 'Setengah tahunan',
+      'yearly': 'Tahunan',
+      'other': 'Tidak diketahui',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
-      zero: '',
+      other: ', melewati $skip',
     );
     return '$_temp0$_temp1';
   }
 
   @override
-  String get billsInactive => 'Inactive';
+  String get billsInactive => 'Tidak aktif';
 
   @override
-  String get billsIsActive => 'Subscription is active';
+  String get billsIsActive => 'Langganan aktif';
 
   @override
   String get billsLayoutGroupSubtitle =>
-      'Subscriptions displayed in their assigned groups.';
+      'Langganan ditampilkan dalam grup yang telah ditetapkan.';
 
   @override
-  String get billsLayoutGroupTitle => 'Group';
+  String get billsLayoutGroupTitle => 'Grup';
 
   @override
   String get billsLayoutListSubtitle =>
-      'Subscriptions displayed in a list sorted by certain criteria.';
+      'Langganan ditampilkan dalam daftar yang diurutkan berdasarkan kriteria tertentu.';
 
   @override
-  String get billsLayoutListTitle => 'List';
+  String get billsLayoutListTitle => 'Daftar';
 
   @override
-  String get billsListEmpty => 'The list is currently empty.';
+  String get billsListEmpty => 'Daftar saat ini kosong.';
 
   @override
-  String get billsNextExpectedMatch => 'Next expected match';
+  String get billsNextExpectedMatch => 'Kecocokan yang diharapkan berikutnya';
 
   @override
-  String get billsNotActive => 'Subscription is inactive';
+  String get billsNotActive => 'Langganan tidak aktif';
 
   @override
-  String get billsNotExpected => 'Not expected this period';
+  String get billsNotExpected => 'Tidak diharapkan dalam periode ini';
 
   @override
-  String get billsNoTransactions => 'No transactions found.';
+  String get billsNoTransactions => 'Tidak ada transaksi ditemukan.';
 
   @override
   String billsPaidOn(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Paid $dateString';
+    return 'Dibayar $dateString';
   }
 
   @override
-  String get billsSortAlphabetical => 'Alphabetical';
+  String get billsSortAlphabetical => 'Menurut Abjad';
 
   @override
-  String get billsSortByTimePeriod => 'By time period';
+  String get billsSortByTimePeriod => 'Berdasarkan periode waktu';
 
   @override
-  String get billsSortFrequency => 'Frequency';
+  String get billsSortFrequency => 'Frekuensi';
 
   @override
-  String get billsSortName => 'Name';
+  String get billsSortName => 'Nama';
 
   @override
-  String get billsUngrouped => 'Ungrouped';
+  String get billsUngrouped => 'Tidak Terkelompok';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'Tampilkan yang aktif saja';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'Menampilkan langganan yang aktif saja.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'Tampilkan yang diharapkan saja';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'Menampilkan langganan yang diharapkan (atau dibayar) bulan ini saja.';
 
   @override
   String get categoryDeleteConfirm =>
-      'Are you sure you want to delete this category? The transactions will not be deleted, but will not have a category anymore.';
+      'Apakah Anda yakin ingin menghapus kategori ini? Transaksi tidak akan dihapus, tetapi tidak akan memiliki kategori lagi.';
 
   @override
-  String get categoryErrorLoading => 'Error loading categories.';
+  String get categoryErrorLoading => 'Gagal memuat kategori.';
 
   @override
-  String get categoryFormLabelIncludeInSum => 'Include in monthly sum';
+  String get categoryFormLabelIncludeInSum => 'Sertakan dalam jumlah bulanan';
 
   @override
-  String get categoryFormLabelName => 'Category Name';
+  String get categoryFormLabelName => 'Nama Kategori';
 
   @override
-  String get categoryMonthNext => 'Next Month';
+  String get categoryMonthNext => 'Bulan Berikutnya';
 
   @override
-  String get categoryMonthPrev => 'Previous Month';
+  String get categoryMonthPrev => 'Bulan Sebelumnya';
 
   @override
-  String get categorySumExcluded => 'excluded';
+  String get categorySumExcluded => 'dikecualikan';
 
   @override
-  String get categoryTitleAdd => 'Add Category';
+  String get categoryTitleAdd => 'Tambah Kategori';
 
   @override
-  String get categoryTitleDelete => 'Delete Category';
+  String get categoryTitleDelete => 'Hapus Kategori';
 
   @override
-  String get categoryTitleEdit => 'Edit Category';
+  String get categoryTitleEdit => 'Edit Kategori';
 
   @override
-  String get catNone => '<no category>';
+  String get catNone => '<tanpa kategori>';
 
   @override
   String get catOther => 'Lainnya';
@@ -331,31 +328,31 @@ class SId extends S {
   String get generalCurrency => 'Mata Uang';
 
   @override
-  String get generalDateRangeCurrentMonth => 'Current Month';
+  String get generalDateRangeCurrentMonth => 'Bulan Ini';
 
   @override
-  String get generalDateRangeLast30Days => 'Last 30 days';
+  String get generalDateRangeLast30Days => '30 hari terakhir';
 
   @override
-  String get generalDateRangeCurrentYear => 'Current Year';
+  String get generalDateRangeCurrentYear => 'Tahun Ini';
 
   @override
-  String get generalDateRangeLastYear => 'Last year';
+  String get generalDateRangeLastYear => 'Tahun lalu';
 
   @override
-  String get generalDateRangeAll => 'All';
+  String get generalDateRangeAll => 'Semua';
 
   @override
   String get generalDefault => 'bawaan';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'Akun Tujuan';
 
   @override
   String get generalDismiss => 'Tutup';
 
   @override
-  String get generalEarned => 'Earned';
+  String get generalEarned => 'Didapatkan';
 
   @override
   String get generalError => 'Kesalahan';
@@ -382,10 +379,10 @@ class SId extends S {
   String get generalReset => 'Setel ulang';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'Akun Sumber';
 
   @override
-  String get generalSpent => 'Spent';
+  String get generalSpent => 'Dihabiskan';
 
   @override
   String get generalSum => 'Jumlah';
@@ -399,18 +396,18 @@ class SId extends S {
   @override
   String homeMainBillsInterval(String period) {
     String _temp0 = intl.Intl.selectLogic(period, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-year',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'mingguan',
+      'monthly': 'bulanan',
+      'quarterly': 'triwulanan',
+      'halfyear': 'setengah tahunan',
+      'yearly': 'tahunan',
+      'other': 'tidak diketahui',
     });
     return ' ($_temp0)';
   }
 
   @override
-  String get homeMainBillsTitle => 'Subscriptions for the next week';
+  String get homeMainBillsTitle => 'Langganan untuk minggu depan';
 
   @override
   String homeMainBudgetInterval(DateTime from, DateTime to, String period) {
@@ -429,7 +426,7 @@ class SId extends S {
     final intl.DateFormat toDateFormat = intl.DateFormat.MMMd(localeName);
     final String toString = toDateFormat.format(to);
 
-    return ' ($fromString to $toString)';
+    return ' ($fromString sampai $toString)';
   }
 
   @override
@@ -464,7 +461,7 @@ class SId extends S {
   String get homeMainChartNetWorthTitle => 'Kekayaan Bersih';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle => 'Ringkasan Tag untuk bulan ini';
 
   @override
   String get homePiggyAdjustDialogTitle => 'Simpan/Belanjakan Uang';
@@ -486,7 +483,7 @@ class SId extends S {
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'Sesuaikan Dasbor';
 
   @override
   String homePiggyLinked(String account) {
@@ -510,11 +507,27 @@ class SId extends S {
   }
 
   @override
-  String get homePiggySavedMultiple => 'Saved so far:';
+  String get homePiggySavedMultiple => 'Tersimpan sejauh ini:';
 
   @override
   String homePiggyTarget(String amount) {
     return 'Jumlah target: $amount';
+  }
+
+  @override
+  String get homePiggyAccountStatus => 'Status Akun';
+
+  @override
+  String get homePiggyAvailableAmounts => 'Jumlah Tersedia';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return 'Tersedia: $amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return 'Di celengan: $amount';
   }
 
   @override
@@ -560,11 +573,11 @@ class SId extends S {
   String get homeTransactionsDialogFilterCurrenciesAll => '<Semua Mata Uang>';
 
   @override
-  String get homeTransactionsDialogFilterDateRange => 'Date Range';
+  String get homeTransactionsDialogFilterDateRange => 'Rentang Tanggal';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
-      'Show future transactions';
+      'Tampilkan transaksi mendatang';
 
   @override
   String get homeTransactionsDialogFilterSearch => 'Istilah Pencarian';
@@ -582,7 +595,7 @@ class SId extends S {
 
   @override
   String get homeTransactionsSettingsShowTags =>
-      'Show tags in transaction list';
+      'Tampilkan tag di daftar transaksi';
 
   @override
   String get liabilityDirectionCredit => 'Saya pemberi hutang ini';
@@ -619,19 +632,19 @@ class SId extends S {
   String get navigationAccounts => 'Akun';
 
   @override
-  String get navigationBills => 'Subscriptions';
+  String get navigationBills => 'Langganan';
 
   @override
-  String get navigationCategories => 'Categories';
+  String get navigationCategories => 'Kategori';
 
   @override
   String get navigationMain => 'Dasbor Utama';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => 'Pengaturan';
 
   @override
-  String get no => 'No';
+  String get no => 'Tidak';
 
   @override
   String numPercent(double num) {
@@ -684,7 +697,8 @@ class SId extends S {
   String get settingsFAQ => 'FAQ';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'Dibuka di Peramban. Hanya tersedia dalam Bahasa Inggris.';
 
   @override
   String get settingsLanguage => 'Bahasa';
@@ -718,14 +732,14 @@ class SId extends S {
       'Jadikan beberapa transaksi dimana anda menerima notifikasi untuk menambahkan aplikasi ke daftar ini. Jika aplikasi tidak muncul, silahkan laporkan ke app@vogt.pw.';
 
   @override
-  String get settingsNLAutoAdd => 'Create transaction without interaction';
+  String get settingsNLAutoAdd => 'Buat transaksi tanpa interaksi';
 
   @override
   String get settingsNLDescription =>
       'Layanan ini memungkinkan anda untuk mengambil detail transaksi dari notifikasi push yang masuk. Selain itu, anda dapat memilih akun bawaan dimana transaksi harus ditugaskan kepada - jika tidak ada nilai yang ditetapkan, akan mencoba untuk mengekstrak akun dari notifikasi.';
 
   @override
-  String get settingsNLEmptyNote => 'Keep note field empty';
+  String get settingsNLEmptyNote => 'Biarkan kolom catatan kosong';
 
   @override
   String get settingsNLPermissionGrant => 'Ketuk untuk memberikan izin.';
@@ -742,7 +756,7 @@ class SId extends S {
 
   @override
   String get settingsNLPrefillTXTitle =>
-      'Prefill transaction title with notification title';
+      'Isi otomatis judul transaksi dengan judul notifikasi';
 
   @override
   String get settingsNLServiceChecking => 'Memeriksa status…';
@@ -781,11 +795,11 @@ class SId extends S {
   }
 
   @override
-  String get settingsUseServerTimezone => 'Use server timezone';
+  String get settingsUseServerTimezone => 'Gunakan zona waktu server';
 
   @override
   String get settingsUseServerTimezoneHelp =>
-      'Show all times in the server timezone. This mimics the behavior of the webinterface.';
+      'Tampilkan semua waktu dalam zona waktu server. Ini meniru perilaku antarmuka web.';
 
   @override
   String get settingsVersion => 'Versi Aplikasi';
@@ -851,11 +865,10 @@ class SId extends S {
   String get transactionErrorInvalidBudget => 'Anggaran tidak Valid';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts => 'Harap isi akun terlebih dahulu.';
 
   @override
-  String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+  String get transactionErrorNoAssetAccount => 'Harap pilih akun aset.';
 
   @override
   String get transactionErrorTitle => 'Harap berikan judul.';
@@ -889,11 +902,11 @@ class SId extends S {
 
   @override
   String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+      'Ubah Akun Tujuan Pembagian';
 
   @override
   String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+      'Ubah Akun Sumber Pembagian';
 
   @override
   String get transactionSplitChangeTarget =>

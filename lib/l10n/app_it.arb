@@ -361,7 +361,7 @@
     "@generalBill": {
         "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
-    "generalBudget": "Bilancio",
+    "generalBudget": "Budget",
     "@generalBudget": {
         "description": "(Monetary) Budget"
     },

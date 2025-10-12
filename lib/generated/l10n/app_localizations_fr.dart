@@ -858,6 +858,12 @@ class SFr extends S {
   String get transactionDialogCurrencyTitle => 'Sélectionnez la devise';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+
+  @override
   String get transactionDialogTagsAdd => 'Ajouter une étiquette';
 
   @override

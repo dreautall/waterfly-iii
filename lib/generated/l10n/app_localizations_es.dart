@@ -854,6 +854,12 @@ class SEs extends S {
   String get transactionDialogCurrencyTitle => 'Seleccionar divisa';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+
+  @override
   String get transactionDialogTagsAdd => 'Añadir etiqueta';
 
   @override

@@ -850,6 +850,12 @@ class SRo extends S {
   String get transactionDialogCurrencyTitle => 'Selectează valuta';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+
+  @override
   String get transactionDialogTagsAdd => 'Adaugă etichetă';
 
   @override

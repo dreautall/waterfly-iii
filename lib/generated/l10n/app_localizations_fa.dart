@@ -843,6 +843,12 @@ class SFa extends S {
   String get transactionDialogCurrencyTitle => 'واحد پول را انتخاب کنید\n';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+
+  @override
   String get transactionDialogTagsAdd => 'افزودن برچسب';
 
   @override

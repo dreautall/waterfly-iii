@@ -1400,6 +1400,18 @@ abstract class S {
   /// **'Select currency'**
   String get transactionDialogCurrencyTitle;
 
+  /// Button Label: no piggy bank to be used
+  ///
+  /// In en, this message translates to:
+  /// **'No Piggy Bank'**
+  String get transactionDialogPiggyNoPiggy;
+
+  /// Dialog Title: Link transaction to piggy bank
+  ///
+  /// In en, this message translates to:
+  /// **'Link to Piggy Bank'**
+  String get transactionDialogPiggyTitle;
+
   /// Button Label: Add Tag
   ///
   /// In en, this message translates to:

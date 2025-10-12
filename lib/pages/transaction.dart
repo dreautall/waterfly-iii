@@ -25,6 +25,7 @@ import 'package:waterflyiii/pages/transaction/attachments.dart';
 import 'package:waterflyiii/pages/transaction/bill.dart';
 import 'package:waterflyiii/pages/transaction/currencies.dart';
 import 'package:waterflyiii/pages/transaction/delete.dart';
+import 'package:waterflyiii/pages/transaction/piggy.dart';
 import 'package:waterflyiii/pages/transaction/tags.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
@@ -100,6 +101,7 @@ class _TransactionPageState extends State<TransactionPage>
   final List<TextEditingController> _noteTextControllers =
       <TextEditingController>[];
   final List<BillRead?> _bills = <BillRead?>[];
+  final List<PiggyBankRead?> _piggy = <PiggyBankRead?>[];
 
   // Individual for split transactions
   final List<TextEditingController> _titleTextControllers =
@@ -603,6 +605,7 @@ class _TransactionPageState extends State<TransactionPage>
     final TextEditingController t5 = _tagsTextControllers.removeAt(i);
     final TextEditingController t6 = _noteTextControllers.removeAt(i);
     _bills.removeAt(i);
+    _piggy.removeAt(i);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       t1.dispose();
@@ -699,6 +702,7 @@ class _TransactionPageState extends State<TransactionPage>
     _tagsTextControllers.add(TextEditingController());
     _noteTextControllers.add(TextEditingController());
     _bills.add(null);
+    _piggy.add(null);
 
     _titleTextControllers.add(TextEditingController());
     _titleFocusNodes.add(FocusNode());
@@ -1024,6 +1028,7 @@ class _TransactionPageState extends State<TransactionPage>
                                       ? _titleTextControllers[i].text
                                       : _titleTextController.text,
                               billId: _bills[i]?.id ?? "0",
+                              piggyBankId: int.tryParse(_piggy[i]?.id ?? "0"),
                               budgetName:
                                   (_transactionType ==
                                           TransactionTypeProperty.withdrawal)
@@ -2248,6 +2253,47 @@ class _TransactionPageState extends State<TransactionPage>
                                   ? S.of(context).transactionSplitDelete
                                   : null,
                         ),
+                        // Piggy Bank Button
+                        // Only on new TX (similar to Firefly webinterface)
+                        if (_newTX) ...<Widget>[
+                          hDivider,
+
+                          IconButton(
+                            icon: const Icon(Icons.savings_outlined),
+                            isSelected: _piggy[i] != null,
+                            selectedIcon: const Icon(Icons.savings),
+                            onPressed:
+                                _savingInProgress
+                                    ? null
+                                    : () async {
+                                      PiggyBankRead? newPiggy =
+                                          await showDialog<PiggyBankRead>(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder:
+                                                (BuildContext context) =>
+                                                    PiggyDialog(
+                                                      currentPiggy: _piggy[i],
+                                                    ),
+                                          );
+                                      // Back button returns "null"
+                                      if (newPiggy == null) {
+                                        return;
+                                      }
+                                      // Delete piggy returns id "0"
+                                      if (newPiggy.id.isEmpty ||
+                                          newPiggy.id == "0") {
+                                        newPiggy = null;
+                                      }
+                                      if (newPiggy != _piggy[i]) {
+                                        setState(() {
+                                          _piggy[i] = newPiggy;
+                                        });
+                                      }
+                                    },
+                            tooltip: S.of(context).transactionDialogPiggyTitle,
+                          ),
+                        ],
                       ],
                     ],
                   ),

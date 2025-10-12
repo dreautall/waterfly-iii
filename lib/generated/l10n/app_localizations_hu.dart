@@ -857,6 +857,12 @@ class SHu extends S {
   String get transactionDialogCurrencyTitle => 'Pénznem kiválasztása';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+
+  @override
   String get transactionDialogTagsAdd => 'Címke hozzáadása';
 
   @override

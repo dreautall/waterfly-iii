@@ -11,9 +11,26 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/piggybank/chart.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
+
+class AccountStatusData {
+  const AccountStatusData({
+    required this.account,
+    required this.currency,
+    required this.accountBalance,
+    required this.totalInPiggyBanks,
+    required this.availableBalance,
+  });
+
+  final AccountRead account;
+  final CurrencyRead currency;
+  final double accountBalance;
+  final double totalInPiggyBanks;
+  final double availableBalance;
+}
 
 class HomePiggybank extends StatefulWidget {
   const HomePiggybank({super.key});
@@ -28,29 +45,48 @@ class _HomePiggybankState extends State<HomePiggybank>
 
   final int _numberOfItemsPerRequest = 100;
   PagingState<int, PiggyBankRead> _pagingState =
-      PagingState<int, PiggyBankRead>();
+  PagingState<int, PiggyBankRead>();
+
+  List<AccountStatusData> _accountStatusData = <AccountStatusData>[];
+
+  @override
+  void initState() {
+    super.initState();
+    // Add top-right action to open Available Amounts bottom sheet
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<PageActions>().set(widget.key!, <Widget>[
+        IconButton(
+          icon: const Icon(Icons.account_balance_wallet_outlined),
+          tooltip: S.of(context).homePiggyAvailableAmounts,
+          onPressed:  _showAvailableAmountsSheet,
+        ),
+      ]);
+    });
+
+  }
 
   Future<void> _fetchPage() async {
     if (_pagingState.isLoading) return;
 
     try {
       final FireflyIii api = context.read<FireflyService>().api;
+      final CurrencyRead defaultCurrency = context.read<FireflyService>().defaultCurrency;
 
       final int pageKey = (_pagingState.keys?.last ?? 0) + 1;
       log.finest(
         "Getting page $pageKey (${_pagingState.pages?.length} pages loaded)",
       );
 
-      final Response<PiggyBankArray> respAccounts = await api.v1PiggyBanksGet(
+      final Response<PiggyBankArray> respPiggies = await api.v1PiggyBanksGet(
         page: pageKey,
         limit: _numberOfItemsPerRequest,
       );
-      apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
+      apiThrowErrorIfEmpty(respPiggies, mounted ? context : null);
 
-      final List<PiggyBankRead> piggyList = respAccounts.body!.data;
+      final List<PiggyBankRead> piggyList = respPiggies.body!.data;
       piggyList.sortByCompare(
-        (PiggyBankRead element) => element.attributes.objectGroupOrder,
-        (int? a, int? b) => (a ?? 0).compareTo(b ?? 0),
+            (PiggyBankRead element) => element.attributes.objectGroupOrder,
+            (int? a, int? b) => (a ?? 0).compareTo(b ?? 0),
       );
       final bool isLastPage = piggyList.length < _numberOfItemsPerRequest;
 
@@ -63,6 +99,77 @@ class _HomePiggybankState extends State<HomePiggybank>
             isLoading: false,
             error: null,
           );
+        });
+      }
+
+      // Account Status populating
+      // 1) Fetch ALL piggy banks across pages and aggregate totals per account
+      final Map<String, double> accountIdToPiggyTotal = <String, double>{};
+      for (final PiggyBankRead piggy in piggyList) {
+        if (!(piggy.attributes.active ?? false)) continue;
+        if (piggy.attributes.accounts == null) continue;
+        for (final PiggyBankAccountRead acc in piggy.attributes.accounts!) {
+          if ((acc.accountId ?? '').isEmpty) continue;
+          final double amt = double.tryParse(acc.currentAmount ?? "") ?? 0;
+          accountIdToPiggyTotal.update(
+            acc.accountId!,
+                (double prev) => prev + amt,
+            ifAbsent: () => amt,
+          );
+        }
+      }
+      if (accountIdToPiggyTotal.isEmpty) {
+        if (mounted) {
+          setState(() {
+            _accountStatusData = <AccountStatusData>[];
+          });
+        }
+        return;
+      }
+
+      // 2) Build status data only for the accounts referenced by the piggy banks
+      final List<AccountStatusData> statusData = <AccountStatusData>[];
+      for (final MapEntry<String, double> entry in accountIdToPiggyTotal.entries) {
+        final String accountId = entry.key;
+        final Response<AccountSingle> respAcc = await api.v1AccountsIdGet(
+          id: accountId,
+        );
+        apiThrowErrorIfEmpty(respAcc, mounted ? context : null);
+        final AccountRead account = respAcc.body!.data;
+
+        final double accountBalance =
+            double.tryParse(account.attributes.currentBalance ?? "") ?? 0;
+        final double totalInPiggyBanks = entry.value;
+        final double availableBalance = accountBalance - totalInPiggyBanks;
+
+        CurrencyRead currency = CurrencyRead(
+          id: account.attributes.currencyId ?? "0",
+          type: "currencies",
+          attributes: CurrencyProperties(
+            code: account.attributes.currencyCode ?? "",
+            name: "",
+            symbol: account.attributes.currencySymbol ?? "",
+            decimalPlaces: account.attributes.currencyDecimalPlaces,
+          ),
+        );
+        if (currency.id == "0") {
+          currency = defaultCurrency;
+        }
+
+        statusData.add(
+          AccountStatusData(
+            account: account,
+            currency: currency,
+            accountBalance: accountBalance,
+            totalInPiggyBanks: totalInPiggyBanks,
+            availableBalance: availableBalance,
+          ),
+        );
+      }
+
+      if (mounted) {
+        setState(() {
+          _accountStatusData = statusData;
         });
       }
     } catch (e, stackTrace) {
@@ -89,9 +196,9 @@ class _HomePiggybankState extends State<HomePiggybank>
       onRefresh:
           () => Future<void>.sync(
             () => setState(() {
-              _pagingState = _pagingState.reset();
-            }),
-          ),
+          _pagingState = _pagingState.reset();
+        }),
+      ),
       child: PagedListView<int, PiggyBankRead>(
         state: _pagingState,
         fetchNextPage: _fetchPage,
@@ -102,7 +209,7 @@ class _HomePiggybankState extends State<HomePiggybank>
           itemBuilder: (BuildContext context, PiggyBankRead piggy, int index) {
             Widget? groupHeader;
             final int groupId =
-                (int.tryParse(piggy.attributes.objectGroupId ?? "") ?? 0);
+            (int.tryParse(piggy.attributes.objectGroupId ?? "") ?? 0);
             if (groupId != lastGroupId &&
                 groupId != 0 &&
                 (piggy.attributes.objectGroupTitle ?? "").isNotEmpty) {
@@ -145,10 +252,10 @@ class _HomePiggybankState extends State<HomePiggybank>
                 subtitle = S
                     .of(context)
                     .homePiggyLinked(
-                      piggy.attributes.accounts!
-                          .map((PiggyBankAccountRead e) => e.name ?? "")
-                          .join(", "),
-                    );
+                  piggy.attributes.accounts!
+                      .map((PiggyBankAccountRead e) => e.name ?? "")
+                      .join(", "),
+                );
               }
             }
 
@@ -181,8 +288,8 @@ class _HomePiggybankState extends State<HomePiggybank>
                           end: Alignment.topCenter,
                           stops: <double>[
                             0,
-                            (piggy.attributes.percentage ?? 100) / 100,
-                            (piggy.attributes.percentage ?? 100) / 100,
+                            (piggy.attributes.percentage ?? 0) / 100,
+                            (piggy.attributes.percentage ?? 0) / 100,
                           ],
                           colors: <Color>[
                             Theme.of(context).colorScheme.primaryContainer,
@@ -208,7 +315,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                             context,
                           ).textTheme.titleMedium!.copyWith(
                             color:
-                                (currentAmount < 0) ? Colors.red : Colors.green,
+                            (currentAmount < 0) ? Colors.red : Colors.green,
                             fontWeight: FontWeight.bold,
                             fontFeatures: const <FontFeature>[
                               FontFeature.tabularFigures(),
@@ -220,13 +327,13 @@ class _HomePiggybankState extends State<HomePiggybank>
                             : const TextSpan(),
                         targetAmount != 0
                             ? TextSpan(
-                              text: S
-                                  .of(context)
-                                  .numPercentOf(
-                                    (piggy.attributes.percentage ?? 0) / 100,
-                                    currency.fmt(targetAmount),
-                                  ),
-                            )
+                          text: S
+                              .of(context)
+                              .numPercentOf(
+                            (piggy.attributes.percentage ?? 0) / 100,
+                            currency.fmt(targetAmount),
+                          ),
+                        )
                             : const TextSpan(),
                       ],
                     ),
@@ -241,30 +348,119 @@ class _HomePiggybankState extends State<HomePiggybank>
                 ),
                 piggy.attributes.percentage != null
                     ? LinearProgressIndicator(
-                      value: piggy.attributes.percentage! / 100,
-                    )
+                  value: piggy.attributes.percentage! / 100,
+                )
                     : const Divider(height: 0),
               ],
             );
           },
           noItemsFoundIndicatorBuilder:
               (BuildContext context) => Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      S.of(context).homePiggyNoAccounts,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const Icon(Icons.savings_outlined, size: 200),
-                    Text(
-                      S.of(context).homePiggyNoAccountsSubtitle,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  S.of(context).homePiggyNoAccounts,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const Icon(Icons.savings_outlined, size: 200),
+                Text(
+                  S.of(context).homePiggyNoAccountsSubtitle,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showAvailableAmountsSheet() {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      // showDragHandle: true,
+      builder: (BuildContext context) => SafeArea(
+        child: ConstrainedBox(
+          constraints:
+              BoxConstraints(maxHeight: MediaQuery.of(context).size.height / 3),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const SizedBox(height: 8),
+              ListTile(
+                title: Text(
+                  S.of(context).homePiggyAvailableAmounts,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
+              const Divider(indent: 8, endIndent: 8),
+              if (_accountStatusData.isEmpty)
+                Flexible(
+                  child: Center(
+                    child: Text(
+                      S.of(context).homePiggyNoAccounts,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                )
+              else
+                Flexible(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: _accountStatusData.length,
+                    itemBuilder: (BuildContext _, int i) =>
+                        _accountStatusRow(context, _accountStatusData[i]),
+                  ),
+                ),
+              const SizedBox(height: 8),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _accountStatusRow(
+      BuildContext context,
+      AccountStatusData statusData,
+      ) {
+    return ListTile(
+      title: Text(statusData.account.attributes.name),
+      subtitle: Text("Total: ${statusData.currency.fmt(statusData.accountBalance)}"),
+      isThreeLine: false,
+      trailing: RichText(
+        textAlign: TextAlign.end,
+        maxLines: 2,
+        text: TextSpan(
+          style: Theme.of(context).textTheme.bodyMedium,
+          children: <InlineSpan>[
+            TextSpan(
+              text: statusData.currency.fmt(statusData.availableBalance),
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: (statusData.availableBalance < 0)
+                    ? Colors.red
+                    : Colors.green,
+                fontWeight: FontWeight.bold,
+                fontFeatures: const <FontFeature>[
+                  FontFeature.tabularFigures(),
+                ],
+              ),
+            ),
+            const TextSpan(text: "\n"),
+            TextSpan(
+              text: S
+                  .of(context)
+                  .homePiggyInPiggyBanks(
+                statusData.currency.fmt(statusData.totalInPiggyBanks),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -294,8 +490,8 @@ class _PiggyDetailsState extends State<PiggyDetails> {
     apiThrowErrorIfEmpty(response, mounted ? context : null);
 
     return response.body!.data.sortedBy<DateTime>(
-      (PiggyBankEventRead e) =>
-          e.attributes.createdAt ?? e.attributes.updatedAt ?? DateTime.now(),
+          (PiggyBankEventRead e) =>
+      e.attributes.createdAt ?? e.attributes.updatedAt ?? DateTime.now(),
     );
   }
 
@@ -346,7 +542,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
       infoText += "\n";
       for (PiggyBankAccountRead e in currentPiggy.attributes.accounts!) {
         infoText +=
-            "• ${e.name}: ${currency.fmt(double.tryParse(e.currentAmount ?? "") ?? 0)}\n";
+        "• ${e.name}: ${currency.fmt(double.tryParse(e.currentAmount ?? "") ?? 0)}\n";
       }
     }
     if (leftAmount != 0) {
@@ -368,8 +564,8 @@ class _PiggyDetailsState extends State<PiggyDetails> {
       children: <Widget>[
         currentPiggy.attributes.percentage != null
             ? LinearProgressIndicator(
-              value: currentPiggy.attributes.percentage! / 100,
-            )
+          value: currentPiggy.attributes.percentage! / 100,
+        )
             : const Divider(height: 0),
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
@@ -379,9 +575,9 @@ class _PiggyDetailsState extends State<PiggyDetails> {
           child: FutureBuilder<List<PiggyBankEventRead>>(
             future: _fetchChart(),
             builder: (
-              BuildContext context,
-              AsyncSnapshot<List<PiggyBankEventRead>> snapshot,
-            ) {
+                BuildContext context,
+                AsyncSnapshot<List<PiggyBankEventRead>> snapshot,
+                ) {
               if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.hasData) {
                 if (snapshot.data!.isEmpty) {
@@ -430,12 +626,12 @@ class _PiggyDetailsState extends State<PiggyDetails> {
             FilledButton(
               onPressed: () async {
                 final PiggyBankSingle? newPiggy =
-                    await showDialog<PiggyBankSingle>(
-                      context: context,
-                      builder:
-                          (BuildContext context) =>
-                              PiggyAdjustBalance(piggy: currentPiggy),
-                    );
+                await showDialog<PiggyBankSingle>(
+                  context: context,
+                  builder:
+                      (BuildContext context) =>
+                      PiggyAdjustBalance(piggy: currentPiggy),
+                );
                 if (newPiggy == null) {
                   return;
                 }
@@ -494,8 +690,8 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
     allAccountNames = widget.piggy.attributes.accounts!
         .map(
           (PiggyBankAccountRead e) =>
-              DropdownMenuEntry<String>(value: e.accountId!, label: e.name!),
-        )
+          DropdownMenuEntry<String>(value: e.accountId!, label: e.name!),
+    )
         .toList(growable: false);
   }
 
@@ -522,7 +718,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
               if (hasMultipleAccounts) ...<Widget>[
                 Text(S.of(context).homePiggySavedMultiple),
                 ...widget.piggy.attributes.accounts!.map(
-                  (PiggyBankAccountRead e) => Text(
+                      (PiggyBankAccountRead e) => Text(
                     "• ${e.name}: ${currency.fmt(double.tryParse(e.currentAmount ?? "") ?? 0)}",
                   ),
                 ),
@@ -602,33 +798,33 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                   nav.pop();
                 }
                 final List<PiggyBankAccountUpdate> accounts =
-                    <PiggyBankAccountUpdate>[];
+                <PiggyBankAccountUpdate>[];
                 if (!hasMultipleAccounts) {
                   final double totalAmount = currentAmount + amount;
                   accounts.add(
                     PiggyBankAccountUpdate(
                       accountId:
-                          widget.piggy.attributes.accounts!.first.accountId,
+                      widget.piggy.attributes.accounts!.first.accountId,
                       currentAmount: totalAmount.toString(),
                     ),
                   );
                   log.finest(
-                    () =>
-                        "New piggy bank total = $totalAmount out of $currentAmount + $amount",
+                        () =>
+                    "New piggy bank total = $totalAmount out of $currentAmount + $amount",
                   );
                 } else {
                   for (PiggyBankAccountRead e
-                      in widget.piggy.attributes.accounts!) {
+                  in widget.piggy.attributes.accounts!) {
                     accounts.add(
                       PiggyBankAccountUpdate(
                         accountId: e.accountId,
                         currentAmount:
-                            selectedAccount == e.accountId
-                                ? ((double.tryParse(e.currentAmount ?? "") ??
-                                            0) +
-                                        amount)
-                                    .toString()
-                                : e.currentAmount,
+                        selectedAccount == e.accountId
+                            ? ((double.tryParse(e.currentAmount ?? "") ??
+                            0) +
+                            amount)
+                            .toString()
+                            : e.currentAmount,
                       ),
                     );
                   }
@@ -636,16 +832,16 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
 
                 final Response<PiggyBankSingle> resp = await api
                     .v1PiggyBanksIdPut(
-                      id: widget.piggy.id,
-                      body: PiggyBankUpdate(accounts: accounts),
-                    );
+                  id: widget.piggy.id,
+                  body: PiggyBankUpdate(accounts: accounts),
+                );
                 if (!resp.isSuccessful || resp.body == null) {
                   late String error;
                   try {
                     final ValidationErrorResponse valError =
-                        ValidationErrorResponse.fromJson(
-                          json.decode(resp.error.toString()),
-                        );
+                    ValidationErrorResponse.fromJson(
+                      json.decode(resp.error.toString()),
+                    );
                     if (context.mounted) {
                       error = valError.message ?? S.of(context).errorUnknown;
                     } else {
@@ -664,19 +860,19 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                       context: context,
                       builder:
                           (BuildContext context) => AlertDialog(
-                            icon: const Icon(Icons.error),
-                            title: Text(S.of(context).generalError),
-                            clipBehavior: Clip.hardEdge,
-                            actions: <Widget>[
-                              FilledButton(
-                                child: Text(S.of(context).generalDismiss),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                            content: Text(error),
+                        icon: const Icon(Icons.error),
+                        title: Text(S.of(context).generalError),
+                        clipBehavior: Clip.hardEdge,
+                        actions: <Widget>[
+                          FilledButton(
+                            child: Text(S.of(context).generalDismiss),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
                           ),
+                        ],
+                        content: Text(error),
+                      ),
                     );
                   }
                   return;

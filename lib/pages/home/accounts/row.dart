@@ -160,9 +160,9 @@ Widget accountRowBuilder(
                 const TextSpan(text: "\n"),
                 TextSpan(
                   text:
-                      account.attributes.currentBalanceDate != null
+                      account.attributes.lastActivity != null
                           ? DateFormat.yMd().add_Hms().format(
-                            account.attributes.currentBalanceDate!.toLocal(),
+                            account.attributes.lastActivity!.toLocal(),
                           )
                           : S.of(context).generalNever,
                 ),

@@ -518,19 +518,19 @@ class SDe extends S {
   }
 
   @override
-  String get homePiggyAccountStatus => 'Account Status';
+  String get homePiggyAccountStatus => 'Kontostatus';
 
   @override
-  String get homePiggyAvailableAmounts => 'Available Amounts';
+  String get homePiggyAvailableAmounts => 'Verfügbare Beträge';
 
   @override
   String homePiggyAvailable(String amount) {
-    return 'Available: $amount';
+    return 'Verfügbar: $amount';
   }
 
   @override
   String homePiggyInPiggyBanks(String amount) {
-    return 'In piggy banks: $amount';
+    return 'In Sparschweinen: $amount';
   }
 
   @override

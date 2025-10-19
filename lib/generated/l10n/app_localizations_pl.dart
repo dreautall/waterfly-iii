@@ -203,18 +203,18 @@ class SPl extends S {
   String get billsUngrouped => 'Niezgrupowane';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'Pokaż tylko aktywne';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'Pokazuje tylko aktywne subskrypcje.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'Pokaż tylko oczekiwane';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'Pokazuje tylko te subskrypcje, które są oczekiwane (lub opłacone) w tym miesiącu.';
 
   @override
   String get categoryDeleteConfirm =>
@@ -512,7 +512,7 @@ class SPl extends S {
   }
 
   @override
-  String get homePiggySavedMultiple => 'Saved so far:';
+  String get homePiggySavedMultiple => 'Zaoszczędzono do tej pory:';
 
   @override
   String homePiggyTarget(String amount) {
@@ -520,19 +520,19 @@ class SPl extends S {
   }
 
   @override
-  String get homePiggyAccountStatus => 'Account Status';
+  String get homePiggyAccountStatus => 'Status konta';
 
   @override
-  String get homePiggyAvailableAmounts => 'Available Amounts';
+  String get homePiggyAvailableAmounts => 'Dostępne kwoty';
 
   @override
   String homePiggyAvailable(String amount) {
-    return 'Available: $amount';
+    return 'Dostępne: $amount';
   }
 
   @override
   String homePiggyInPiggyBanks(String amount) {
-    return 'In piggy banks: $amount';
+    return 'W skarbonkach: $amount';
   }
 
   @override
@@ -648,7 +648,7 @@ class SPl extends S {
   String get navigationMain => 'Panel główny';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => 'Ustawienia';
 
   @override
   String get no => 'Nie';

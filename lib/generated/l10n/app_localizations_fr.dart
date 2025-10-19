@@ -206,18 +206,18 @@ class SFr extends S {
   String get billsUngrouped => 'Sans groupe';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'Afficher seulement les actifs';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'Affiche uniquement les abonnements actifs.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'Afficher seulement les prévus';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'Affiche uniquement les abonnements prévus (ou payés) ce mois-ci.';
 
   @override
   String get categoryDeleteConfirm =>
@@ -334,25 +334,25 @@ class SFr extends S {
   String get generalCurrency => 'Devise';
 
   @override
-  String get generalDateRangeCurrentMonth => 'Current Month';
+  String get generalDateRangeCurrentMonth => 'Mois actuel';
 
   @override
-  String get generalDateRangeLast30Days => 'Last 30 days';
+  String get generalDateRangeLast30Days => '30 derniers jours';
 
   @override
-  String get generalDateRangeCurrentYear => 'Current Year';
+  String get generalDateRangeCurrentYear => 'Année actuelle';
 
   @override
-  String get generalDateRangeLastYear => 'Last year';
+  String get generalDateRangeLastYear => 'Année dernière';
 
   @override
-  String get generalDateRangeAll => 'All';
+  String get generalDateRangeAll => 'Tout';
 
   @override
   String get generalDefault => 'par défaut';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'Compte de destination';
 
   @override
   String get generalDismiss => 'Annuler';
@@ -385,7 +385,7 @@ class SFr extends S {
   String get generalReset => 'Réinitialiser';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'Compte source';
 
   @override
   String get generalSpent => 'Dépensé';
@@ -467,7 +467,8 @@ class SFr extends S {
   String get homeMainChartNetWorthTitle => 'Avoir net';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle =>
+      'Résumé des étiquettes pour le mois actuel';
 
   @override
   String get homePiggyAdjustDialogTitle => 'Économiser/Dépenser de l\'argent';
@@ -489,7 +490,7 @@ class SFr extends S {
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'Personnaliser le tableau de bord';
 
   @override
   String homePiggyLinked(String account) {
@@ -514,7 +515,7 @@ class SFr extends S {
   }
 
   @override
-  String get homePiggySavedMultiple => 'Saved so far:';
+  String get homePiggySavedMultiple => 'Économisé jusqu\'à présent :';
 
   @override
   String homePiggyTarget(String amount) {
@@ -522,19 +523,19 @@ class SFr extends S {
   }
 
   @override
-  String get homePiggyAccountStatus => 'Account Status';
+  String get homePiggyAccountStatus => 'Statut du compte';
 
   @override
-  String get homePiggyAvailableAmounts => 'Available Amounts';
+  String get homePiggyAvailableAmounts => 'Montants disponibles';
 
   @override
   String homePiggyAvailable(String amount) {
-    return 'Available: $amount';
+    return 'Disponible : $amount';
   }
 
   @override
   String homePiggyInPiggyBanks(String amount) {
-    return 'In piggy banks: $amount';
+    return 'Dans les tirelires : $amount';
   }
 
   @override
@@ -580,7 +581,7 @@ class SFr extends S {
   String get homeTransactionsDialogFilterCurrenciesAll => '<Toutes le devises>';
 
   @override
-  String get homeTransactionsDialogFilterDateRange => 'Date Range';
+  String get homeTransactionsDialogFilterDateRange => 'Plage de dates';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -649,7 +650,7 @@ class SFr extends S {
   String get navigationMain => 'Tableau de bord';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => 'Paramètres';
 
   @override
   String get no => 'Non';
@@ -705,7 +706,8 @@ class SFr extends S {
   String get settingsFAQ => 'FAQ';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'S\'ouvre dans le navigateur. Disponible uniquement en anglais.';
 
   @override
   String get settingsLanguage => 'Langage';
@@ -882,11 +884,12 @@ class SFr extends S {
   String get transactionErrorInvalidBudget => 'Budget non valide';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts =>
+      'Veuillez d\'abord renseigner les comptes.';
 
   @override
   String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+      'Veuillez sélectionner un compte d\'actif.';
 
   @override
   String get transactionErrorTitle => 'Veuillez indiquer un titre.';
@@ -920,11 +923,11 @@ class SFr extends S {
 
   @override
   String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+      'Modifier le compte de destination du split';
 
   @override
   String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+      'Modifier le compte source du split';
 
   @override
   String get transactionSplitChangeTarget => 'Changer de compte cible';

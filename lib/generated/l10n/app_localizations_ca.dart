@@ -206,18 +206,18 @@ class SCa extends S {
   String get billsUngrouped => 'Sense grup';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'Mostra només actius';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'Mostra només les subscripcions actives.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'Mostra només esperats';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'Mostra només les subscripcions que s\'esperen (o s\'han pagat) aquest mes.';
 
   @override
   String get categoryDeleteConfirm =>
@@ -334,25 +334,25 @@ class SCa extends S {
   String get generalCurrency => 'Moneda';
 
   @override
-  String get generalDateRangeCurrentMonth => 'Current Month';
+  String get generalDateRangeCurrentMonth => 'Mes actual';
 
   @override
-  String get generalDateRangeLast30Days => 'Last 30 days';
+  String get generalDateRangeLast30Days => 'Últims 30 dies';
 
   @override
-  String get generalDateRangeCurrentYear => 'Current Year';
+  String get generalDateRangeCurrentYear => 'Any actual';
 
   @override
-  String get generalDateRangeLastYear => 'Last year';
+  String get generalDateRangeLastYear => 'Any passat';
 
   @override
-  String get generalDateRangeAll => 'All';
+  String get generalDateRangeAll => 'Tots';
 
   @override
   String get generalDefault => 'per defecte';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'Compte de destí';
 
   @override
   String get generalDismiss => 'Ignora';
@@ -385,7 +385,7 @@ class SCa extends S {
   String get generalReset => 'Restableix';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'Compte d\'origen';
 
   @override
   String get generalSpent => 'Gastat';
@@ -467,7 +467,7 @@ class SCa extends S {
   String get homeMainChartNetWorthTitle => 'Valor Net';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle => 'Resum d\'etiquetes del mes actual';
 
   @override
   String get homePiggyAdjustDialogTitle => 'Estalvia/Gasta Diners';
@@ -489,7 +489,7 @@ class SCa extends S {
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'Personalitza el tauler';
 
   @override
   String homePiggyLinked(String account) {
@@ -513,7 +513,7 @@ class SCa extends S {
   }
 
   @override
-  String get homePiggySavedMultiple => 'Saved so far:';
+  String get homePiggySavedMultiple => 'Estalviat fins ara:';
 
   @override
   String homePiggyTarget(String amount) {
@@ -521,19 +521,19 @@ class SCa extends S {
   }
 
   @override
-  String get homePiggyAccountStatus => 'Account Status';
+  String get homePiggyAccountStatus => 'Estat del compte';
 
   @override
-  String get homePiggyAvailableAmounts => 'Available Amounts';
+  String get homePiggyAvailableAmounts => 'Quantitats disponibles';
 
   @override
   String homePiggyAvailable(String amount) {
-    return 'Available: $amount';
+    return 'Disponible: $amount';
   }
 
   @override
   String homePiggyInPiggyBanks(String amount) {
-    return 'In piggy banks: $amount';
+    return 'En guardioles: $amount';
   }
 
   @override
@@ -581,7 +581,7 @@ class SCa extends S {
   String get homeTransactionsDialogFilterCurrenciesAll => '<Totes les Monedes>';
 
   @override
-  String get homeTransactionsDialogFilterDateRange => 'Date Range';
+  String get homeTransactionsDialogFilterDateRange => 'Interval de dates';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -649,7 +649,7 @@ class SCa extends S {
   String get navigationMain => 'Tauler de control Principal';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => 'Configuració';
 
   @override
   String get no => 'No';
@@ -703,10 +703,11 @@ class SCa extends S {
   String get settingsDialogThemeTitle => 'Selecciona un Tema';
 
   @override
-  String get settingsFAQ => 'FAQ';
+  String get settingsFAQ => 'Preguntes Freqüents';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'S\'obre al navegador. Només disponible en anglès.';
 
   @override
   String get settingsLanguage => 'Idioma';
@@ -740,14 +741,14 @@ class SCa extends S {
       'Fes algunes transaccions de les aplicacions on rebis notificacions per afegir-les a la llista. Si encara no es mostren, per favor informa app@vogt.pw.';
 
   @override
-  String get settingsNLAutoAdd => 'Create transaction without interaction';
+  String get settingsNLAutoAdd => 'Crea una transacció sense interacció';
 
   @override
   String get settingsNLDescription =>
       'Aquest servei et permet obtenir detalls de transaccions a partir de notificacions. Addicionalment, pots seleccionar un compte per defecte al qual assignar les transaccions - si no s\'estableix cap valor, s\'intenta extreure el compte de la notificació.';
 
   @override
-  String get settingsNLEmptyNote => 'Keep note field empty';
+  String get settingsNLEmptyNote => 'Mantén el camp de nota buit';
 
   @override
   String get settingsNLPermissionGrant => 'Toca per a donar permís.';
@@ -882,11 +883,12 @@ class SCa extends S {
   String get transactionErrorInvalidBudget => 'Pressupost Invàlid';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts =>
+      'Si us plau, omple els comptes primer.';
 
   @override
   String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+      'Si us plau, selecciona un compte d\'actiu.';
 
   @override
   String get transactionErrorTitle => 'Per favor, introdueix un títol.';
@@ -920,11 +922,11 @@ class SCa extends S {
 
   @override
   String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+      'Canvia el compte de destinació de la divisió';
 
   @override
   String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+      'Canvia el compte d\'origen de la divisió';
 
   @override
   String get transactionSplitChangeTarget =>

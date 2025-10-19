@@ -203,18 +203,18 @@ class SSv extends S {
   String get billsUngrouped => 'Ogrupperad';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'Visa endast aktiva';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'Visar endast aktiva prenumerationer.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'Visa endast förväntade';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'Visar endast de prenumerationer som är förväntade (eller betalda) denna månad.';
 
   @override
   String get categoryDeleteConfirm =>
@@ -331,25 +331,25 @@ class SSv extends S {
   String get generalCurrency => 'Valuta';
 
   @override
-  String get generalDateRangeCurrentMonth => 'Current Month';
+  String get generalDateRangeCurrentMonth => 'Aktuell månad';
 
   @override
-  String get generalDateRangeLast30Days => 'Last 30 days';
+  String get generalDateRangeLast30Days => 'Senaste 30 dagarna';
 
   @override
-  String get generalDateRangeCurrentYear => 'Current Year';
+  String get generalDateRangeCurrentYear => 'Aktuellt år';
 
   @override
-  String get generalDateRangeLastYear => 'Last year';
+  String get generalDateRangeLastYear => 'Förra året';
 
   @override
-  String get generalDateRangeAll => 'All';
+  String get generalDateRangeAll => 'Alla';
 
   @override
   String get generalDefault => 'förvald';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'Målkonto';
 
   @override
   String get generalDismiss => 'Stäng';
@@ -382,7 +382,7 @@ class SSv extends S {
   String get generalReset => 'Återställ';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'Källkonto';
 
   @override
   String get generalSpent => 'Spenderat';
@@ -464,7 +464,7 @@ class SSv extends S {
   String get homeMainChartNetWorthTitle => 'Nettoförmögenhet';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle => 'Taggsammanfattning för aktuell månad';
 
   @override
   String get homePiggyAdjustDialogTitle => 'Spara/spendera pengar';
@@ -486,7 +486,7 @@ class SSv extends S {
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'Anpassa kontrollpanelen';
 
   @override
   String homePiggyLinked(String account) {
@@ -510,7 +510,7 @@ class SSv extends S {
   }
 
   @override
-  String get homePiggySavedMultiple => 'Saved so far:';
+  String get homePiggySavedMultiple => 'Hittills sparat:';
 
   @override
   String homePiggyTarget(String amount) {
@@ -518,19 +518,19 @@ class SSv extends S {
   }
 
   @override
-  String get homePiggyAccountStatus => 'Account Status';
+  String get homePiggyAccountStatus => 'Kontostatus';
 
   @override
-  String get homePiggyAvailableAmounts => 'Available Amounts';
+  String get homePiggyAvailableAmounts => 'Tillgängliga belopp';
 
   @override
   String homePiggyAvailable(String amount) {
-    return 'Available: $amount';
+    return 'Tillgängligt: $amount';
   }
 
   @override
   String homePiggyInPiggyBanks(String amount) {
-    return 'In piggy banks: $amount';
+    return 'I spargrisar: $amount';
   }
 
   @override
@@ -573,7 +573,7 @@ class SSv extends S {
   String get homeTransactionsDialogFilterCurrenciesAll => '<Alla valutor>';
 
   @override
-  String get homeTransactionsDialogFilterDateRange => 'Date Range';
+  String get homeTransactionsDialogFilterDateRange => 'Datumintervall';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -595,7 +595,7 @@ class SSv extends S {
 
   @override
   String get homeTransactionsSettingsShowTags =>
-      'Show tags in transaction list';
+      'Visa taggar i transaktionslista';
 
   @override
   String get liabilityDirectionCredit => 'Jag är skyldig denna skuld';
@@ -641,7 +641,7 @@ class SSv extends S {
   String get navigationMain => 'Kontrollpanel';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => 'Inställningar';
 
   @override
   String get no => 'Nej';
@@ -694,10 +694,11 @@ class SSv extends S {
   String get settingsDialogThemeTitle => 'Välj tema';
 
   @override
-  String get settingsFAQ => 'FAQ';
+  String get settingsFAQ => 'Vanliga frågor';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'Öppnas i webbläsaren. Endast tillgänglig på engelska.';
 
   @override
   String get settingsLanguage => 'Språk';
@@ -730,14 +731,14 @@ class SSv extends S {
       'Gör några transaktioner där du får telefonaviseringar för att lägga till appar i den här listan. Om appen fortfarande inte dyker upp, vänligen rapportera det till app@vogt.pw.';
 
   @override
-  String get settingsNLAutoAdd => 'Create transaction without interaction';
+  String get settingsNLAutoAdd => 'Skapa transaktion utan interaktion';
 
   @override
   String get settingsNLDescription =>
       'Den här tjänsten låter dig hämta transaktionsdetaljer från inkommande pushnotifikationer. Du kan även välja ett förvalt konto som transaktionen ska göras på - om inget värde ges försöker den extrahera kontot från notifikationen.';
 
   @override
-  String get settingsNLEmptyNote => 'Keep note field empty';
+  String get settingsNLEmptyNote => 'Håll anteckningsfältet tomt';
 
   @override
   String get settingsNLPermissionGrant => 'Tryck för att bevilja tillstånd.';
@@ -870,11 +871,11 @@ class SSv extends S {
   String get transactionErrorInvalidBudget => 'Ogiltig budget';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts => 'Fyll i kontona först.';
 
   @override
   String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+      'Vänligen välj ett tillgångskonto.';
 
   @override
   String get transactionErrorTitle => 'Vänligen ange en titel.';
@@ -908,11 +909,11 @@ class SSv extends S {
 
   @override
   String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+      'Ändra mottagarkonto för delad transaktion';
 
   @override
   String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+      'Ändra avsändarkonto för delad transaktion';
 
   @override
   String get transactionSplitChangeTarget => 'Ändra delat målkonto';

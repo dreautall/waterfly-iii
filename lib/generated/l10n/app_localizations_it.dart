@@ -203,18 +203,18 @@ class SIt extends S {
   String get billsUngrouped => 'Non raggruppate';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'Mostra solo attivi';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'Mostra solo gli abbonamenti attivi.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'Mostra solo previsti';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'Mostra solo gli abbonamenti previsti (o pagati) questo mese.';
 
   @override
   String get categoryDeleteConfirm =>
@@ -520,19 +520,19 @@ class SIt extends S {
   }
 
   @override
-  String get homePiggyAccountStatus => 'Account Status';
+  String get homePiggyAccountStatus => 'Stato conto';
 
   @override
-  String get homePiggyAvailableAmounts => 'Available Amounts';
+  String get homePiggyAvailableAmounts => 'Importi disponibili';
 
   @override
   String homePiggyAvailable(String amount) {
-    return 'Available: $amount';
+    return 'Disponibile: $amount';
   }
 
   @override
   String homePiggyInPiggyBanks(String amount) {
-    return 'In piggy banks: $amount';
+    return 'Nei salvadanai: $amount';
   }
 
   @override
@@ -644,7 +644,7 @@ class SIt extends S {
   String get navigationMain => 'Dashboard principale';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => 'Impostazioni';
 
   @override
   String get no => 'No';

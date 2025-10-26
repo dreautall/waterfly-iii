@@ -102,10 +102,10 @@ packages:
     dependency: transitive
     description:
       name: build_daemon
-      sha256: "8e928697a82be082206edb0b9c99c5a4ad6bc31c9e9b8b2f291ae65cd4a25daa"
+      sha256: "409002f1adeea601018715d613115cfaf0e31f512cb80ae4534c79867ae2363d"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.4"
+    version: "4.1.0"
   build_resolvers:
     dependency: transitive
     description:
@@ -674,10 +674,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_platform_interface
-      sha256: "9f143b0dba3e459553209e20cc425c9801af48e6dfa4f01a0fcf927be3f41665"
+      sha256: "567e056716333a1647c64bb6bd873cff7622233a5c3f694be28a583d4715690c"
       url: "https://pub.dev"
     source: hosted
-    version: "2.11.0"
+    version: "2.11.1"
   image_picker_windows:
     dependency: transitive
     description:
@@ -1305,18 +1305,18 @@ packages:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_charts
-      sha256: cbf1b59ea49c617e6de5032fc1be922814d71a829b0c101220502d5f7af636e9
+      sha256: "6b4911db95b7a4ecd7161d75df74a14b95831bfd6311f2cdd415dca4e180b084"
       url: "https://pub.dev"
     source: hosted
-    version: "31.2.2"
+    version: "31.2.3"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: adcd41bc5c4de1e7aa831fe3f2ca2d22465de29f166a9de685133b70d21e4541
+      sha256: d03c43f577cdbe020d1632bece00cbf8bec4a7d0ab123923b69141b5fec35420
       url: "https://pub.dev"
     source: hosted
-    version: "31.2.2"
+    version: "31.2.3"
   term_glyph:
     dependency: transitive
     description:

@@ -1,6 +1,6 @@
 Waterfly III is een onofficiële app voor uw eigen installatie van Firefly III, een gratis en open source financieel inzicht in uw financiën.
 
-Voor deze app is een zelfgehoste Firefly III-instantie op uw eigen server vereist. Het is slechts een begeleidende app en kan niet zelfstandig worden uitgevoerd!
+Voor deze app is een zelfgehoste Firefly III-instantie op uw eigen server vereist. Ga naar https://www.firefly-iii.org/ voor meer informatie over de software. Het is slechts een begeleidende app en kan niet zelfstandig worden uitgevoerd!
 
 Kenmerken:
 

@@ -1089,6 +1089,14 @@
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
     },
+    "transactionDialogPiggyNoPiggy": "Geen spaarpot",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Koppelen aan spaarpot",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
+    },
     "transactionDialogTagsAdd": "Label toevoegen",
     "@transactionDialogTagsAdd": {
         "description": "Button Label: Add Tag"

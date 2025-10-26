@@ -16,6 +16,7 @@ import 'app_localizations_fr.dart';
 import 'app_localizations_hu.dart';
 import 'app_localizations_id.dart';
 import 'app_localizations_it.dart';
+import 'app_localizations_nl.dart';
 import 'app_localizations_pl.dart';
 import 'app_localizations_pt.dart';
 import 'app_localizations_ro.dart';
@@ -120,6 +121,7 @@ abstract class S {
     Locale('hu'),
     Locale('id'),
     Locale('it'),
+    Locale('nl'),
     Locale('pl'),
     Locale('pt'),
     Locale('ro'),
@@ -1602,6 +1604,7 @@ class _SDelegate extends LocalizationsDelegate<S> {
     'hu',
     'id',
     'it',
+    'nl',
     'pl',
     'pt',
     'ro',
@@ -1640,6 +1643,8 @@ S lookupS(Locale locale) {
       return SId();
     case 'it':
       return SIt();
+    case 'nl':
+      return SNl();
     case 'pl':
       return SPl();
     case 'pt':

@@ -109,7 +109,7 @@ class SDe extends S {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Voraussichtlich $dateString';
+    return 'Voraussichtliches $dateString';
   }
 
   @override
@@ -233,7 +233,7 @@ class SDe extends S {
   String get categoryMonthNext => 'Nächster Monat';
 
   @override
-  String get categoryMonthPrev => 'Voriger Monat';
+  String get categoryMonthPrev => 'Letzter Monat';
 
   @override
   String get categorySumExcluded => 'ausgenommen';
@@ -521,7 +521,7 @@ class SDe extends S {
   String get homePiggyAccountStatus => 'Kontostatus';
 
   @override
-  String get homePiggyAvailableAmounts => 'Verfügbare Beträge';
+  String get homePiggyAvailableAmounts => 'Verfügbarer Betrag';
 
   @override
   String homePiggyAvailable(String amount) {

@@ -2162,136 +2162,137 @@ class _TransactionPageState extends State<TransactionPage>
                                 ? S.of(context).transactionSplitChangeCurrency
                                 : null,
                       ),
-                      hDivider,
-                      // (Split) Source Account Button (for deposits)
-                      if (_split) ...<Widget>[
-                        if (!_showSourceAccountSelection &&
-                            _transactionType ==
-                                TransactionTypeProperty.deposit) ...<Widget>[
-                          IconButton(
-                            icon: const Icon(Icons.add_business),
-                            onPressed:
-                                _savingInProgress
-                                    ? null
-                                    : _split &&
-                                        !_showSourceAccountSelection &&
-                                        _transactionType ==
-                                            TransactionTypeProperty.deposit &&
-                                        !(_reconciled && _initiallyReconciled)
-                                    ? () {
-                                      log.fine(
-                                        () =>
-                                            "adding separate source account for $i",
-                                      );
-                                      _sourceAccountTextControllers[i].text =
-                                          "";
-                                      setState(() {
-                                        _showSourceAccountSelection = true;
-                                      });
-                                    }
-                                    : null,
-                            tooltip:
-                                (_split)
-                                    ? S
-                                        .of(context)
-                                        .transactionSplitChangeSourceAccount
-                                    : null,
-                          ),
-                          hDivider,
-                        ],
-                        // (Split) Destination Account Button (for withdrawals)
-                        if (!_showDestinationAccountSelection &&
-                            _transactionType ==
-                                TransactionTypeProperty.withdrawal) ...<Widget>[
-                          IconButton(
-                            icon: const Icon(Icons.add_business),
-                            onPressed:
-                                _savingInProgress
-                                    ? null
-                                    : _split &&
-                                        !_showDestinationAccountSelection &&
-                                        _transactionType ==
-                                            TransactionTypeProperty
-                                                .withdrawal &&
-                                        !(_reconciled && _initiallyReconciled)
-                                    ? () {
-                                      log.fine(
-                                        () =>
-                                            "adding separate destination account for $i",
-                                      );
-                                      _destinationAccountTextControllers[i]
-                                          .text = "";
-                                      setState(() {
-                                        _showDestinationAccountSelection = true;
-                                      });
-                                    }
-                                    : null,
-                            tooltip:
-                                (_split)
-                                    ? S
-                                        .of(context)
-                                        .transactionSplitChangeDestinationAccount
-                                    : null,
-                          ),
-                          hDivider,
-                        ],
-                        // Delete Split Button
+                      // Piggy Bank Button
+                      // Only on new TX (similar to Firefly webinterface)
+                      if (_newTX) ...<Widget>[
+                        hDivider,
                         IconButton(
-                          icon: const Icon(Icons.delete),
+                          icon: const Icon(Icons.savings_outlined),
+                          isSelected: _piggy[i] != null,
+                          selectedIcon: const Icon(Icons.savings),
                           onPressed:
                               _savingInProgress
                                   ? null
-                                  : _split &&
-                                      !(_reconciled && _initiallyReconciled)
-                                  ? () {
-                                    log.fine(() => "marking $i for deletion");
-                                    _cardsAnimationController[i].reverse();
-                                  }
-                                  : null,
-                          tooltip:
-                              (_split)
-                                  ? S.of(context).transactionSplitDelete
-                                  : null,
+                                  : () async {
+                                    PiggyBankRead? newPiggy =
+                                        await showDialog<PiggyBankRead>(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder:
+                                              (BuildContext context) =>
+                                                  PiggyDialog(
+                                                    currentPiggy: _piggy[i],
+                                                  ),
+                                        );
+                                    // Back button returns "null"
+                                    if (newPiggy == null) {
+                                      return;
+                                    }
+                                    // Delete piggy returns id "0"
+                                    if (newPiggy.id.isEmpty ||
+                                        newPiggy.id == "0") {
+                                      newPiggy = null;
+                                    }
+                                    if (newPiggy != _piggy[i]) {
+                                      setState(() {
+                                        _piggy[i] = newPiggy;
+                                      });
+                                    }
+                                  },
+                          tooltip: S.of(context).transactionDialogPiggyTitle,
                         ),
-                        // Piggy Bank Button
-                        // Only on new TX (similar to Firefly webinterface)
-                        if (_newTX) ...<Widget>[
-                          hDivider,
-
+                        hDivider,
+                        // (Split) Source Account Button (for deposits)
+                        if (_split) ...<Widget>[
+                          if (!_showSourceAccountSelection &&
+                              _transactionType ==
+                                  TransactionTypeProperty.deposit) ...<Widget>[
+                            IconButton(
+                              icon: const Icon(Icons.add_business),
+                              onPressed:
+                                  _savingInProgress
+                                      ? null
+                                      : _split &&
+                                          !_showSourceAccountSelection &&
+                                          _transactionType ==
+                                              TransactionTypeProperty.deposit &&
+                                          !(_reconciled && _initiallyReconciled)
+                                      ? () {
+                                        log.fine(
+                                          () =>
+                                              "adding separate source account for $i",
+                                        );
+                                        _sourceAccountTextControllers[i].text =
+                                            "";
+                                        setState(() {
+                                          _showSourceAccountSelection = true;
+                                        });
+                                      }
+                                      : null,
+                              tooltip:
+                                  (_split)
+                                      ? S
+                                          .of(context)
+                                          .transactionSplitChangeSourceAccount
+                                      : null,
+                            ),
+                            hDivider,
+                          ],
+                          // (Split) Destination Account Button (for withdrawals)
+                          if (!_showDestinationAccountSelection &&
+                              _transactionType ==
+                                  TransactionTypeProperty
+                                      .withdrawal) ...<Widget>[
+                            IconButton(
+                              icon: const Icon(Icons.add_business),
+                              onPressed:
+                                  _savingInProgress
+                                      ? null
+                                      : _split &&
+                                          !_showDestinationAccountSelection &&
+                                          _transactionType ==
+                                              TransactionTypeProperty
+                                                  .withdrawal &&
+                                          !(_reconciled && _initiallyReconciled)
+                                      ? () {
+                                        log.fine(
+                                          () =>
+                                              "adding separate destination account for $i",
+                                        );
+                                        _destinationAccountTextControllers[i]
+                                            .text = "";
+                                        setState(() {
+                                          _showDestinationAccountSelection =
+                                              true;
+                                        });
+                                      }
+                                      : null,
+                              tooltip:
+                                  (_split)
+                                      ? S
+                                          .of(context)
+                                          .transactionSplitChangeDestinationAccount
+                                      : null,
+                            ),
+                            hDivider,
+                          ],
+                          // Delete Split Button
                           IconButton(
-                            icon: const Icon(Icons.savings_outlined),
-                            isSelected: _piggy[i] != null,
-                            selectedIcon: const Icon(Icons.savings),
+                            icon: const Icon(Icons.delete),
                             onPressed:
                                 _savingInProgress
                                     ? null
-                                    : () async {
-                                      PiggyBankRead? newPiggy =
-                                          await showDialog<PiggyBankRead>(
-                                            context: context,
-                                            barrierDismissible: false,
-                                            builder:
-                                                (BuildContext context) =>
-                                                    PiggyDialog(
-                                                      currentPiggy: _piggy[i],
-                                                    ),
-                                          );
-                                      // Back button returns "null"
-                                      if (newPiggy == null) {
-                                        return;
-                                      }
-                                      // Delete piggy returns id "0"
-                                      if (newPiggy.id.isEmpty ||
-                                          newPiggy.id == "0") {
-                                        newPiggy = null;
-                                      }
-                                      if (newPiggy != _piggy[i]) {
-                                        setState(() {
-                                          _piggy[i] = newPiggy;
-                                        });
-                                      }
-                                    },
-                            tooltip: S.of(context).transactionDialogPiggyTitle,
+                                    : _split &&
+                                        !(_reconciled && _initiallyReconciled)
+                                    ? () {
+                                      log.fine(() => "marking $i for deletion");
+                                      _cardsAnimationController[i].reverse();
+                                    }
+                                    : null,
+                            tooltip:
+                                (_split)
+                                    ? S.of(context).transactionSplitDelete
+                                    : null,
                           ),
                         ],
                       ],

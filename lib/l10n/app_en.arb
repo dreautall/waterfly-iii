@@ -1089,6 +1089,14 @@
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
     },
+    "transactionDialogPiggyNoPiggy": "No Piggy Bank",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Link to Piggy Bank",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
+    },
     "transactionDialogTagsAdd": "Add Tag",
     "@transactionDialogTagsAdd": {
         "description": "Button Label: Add Tag"

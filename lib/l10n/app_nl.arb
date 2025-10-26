@@ -1,43 +1,43 @@
 {
-    "@@locale": "de",
+    "@@locale": "nl",
     "@@x-reference": true,
-    "accountRoleAssetCashWallet": "Geldbörse",
+    "accountRoleAssetCashWallet": "Cash Wallet",
     "@accountRoleAssetCashWallet": {
         "description": "Firefly Translation String: account_role_cashWalletAsset"
     },
-    "accountRoleAssetCC": "Kreditkarte",
+    "accountRoleAssetCC": "Kredietkaart",
     "@accountRoleAssetCC": {
         "description": "Firefly Translation String: account_role_ccAsset"
     },
-    "accountRoleAssetDefault": "Standard-Bestandskonto",
+    "accountRoleAssetDefault": "Standaard activarekening",
     "@accountRoleAssetDefault": {
         "description": "Firefly Translation String: account_role_defaultAsset"
     },
-    "accountRoleAssetSavings": "Sparkonto",
+    "accountRoleAssetSavings": "Spaarrekening",
     "@accountRoleAssetSavings": {
         "description": "Firefly Translation String: account_role_savingAsset"
     },
-    "accountRoleAssetShared": "Gemeinsames Bestandskonto",
+    "accountRoleAssetShared": "Gedeelde activarekening",
     "@accountRoleAssetShared": {
         "description": "Firefly Translation String: account_role_sharedAsset"
     },
-    "accountsLabelAsset": "Bestandskonten",
+    "accountsLabelAsset": "Betaalrekeningen",
     "@accountsLabelAsset": {
         "description": "Firefly Translation String: asset_accounts"
     },
-    "accountsLabelExpense": "Ausgabekonten",
+    "accountsLabelExpense": "Kostenrekeningen",
     "@accountsLabelExpense": {
         "description": "Firefly Translation String: expense_accounts"
     },
-    "accountsLabelLiabilities": "Verbindlichkeiten",
+    "accountsLabelLiabilities": "Schulden",
     "@accountsLabelLiabilities": {
         "description": "Firefly Translation String: liabilities_accounts"
     },
-    "accountsLabelRevenue": "Einnahmekonten",
+    "accountsLabelRevenue": "Omzetrekeningen",
     "@accountsLabelRevenue": {
         "description": "Firefly Translation String: revenue_accounts"
     },
-    "accountsLiabilitiesInterest": "{interest}% Zinsen pro {period, select, weekly{Woche} monthly{Monat} quarterly{Quartal} halfyear{halbes Jahr} yearly{Jahr} other{Unbekannt}}",
+    "accountsLiabilitiesInterest": "{interest}% rente per {period, select, weekly{wekelijks} monthly{maandelijks} quarterly{kwartaal} halfyear{halfjaarlijks} yearly{jaarlijks} other{onbekend}}",
     "@accountsLiabilitiesInterest": {
         "description": "Interest in a certain period",
         "placeholders": {
@@ -51,7 +51,7 @@
             }
         }
     },
-    "billsAmountAndFrequency": "Abonnement passt zu Transaktionen zwischen {minValue} und {maxvalue}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
+    "billsAmountAndFrequency": "Abonnementen komen overeen met transacties tussen {minValue} en {maxvalue}. Herhalingen {frequency, select, weekly{wekelijks} monthly{maandelijks} quarterly{per kwartaal} halfyear{halfjaarlijks} yearly{jaarlijks} other{onbekend}}{skip, plural, =0{} other{, slaat over {skip}}}.",
     "@billsAmountAndFrequency": {
         "description": "Subscription match for min and max amounts, and frequency",
         "placeholders": {
@@ -73,19 +73,19 @@
             }
         }
     },
-    "billsChangeLayoutTooltip": "Layout ändern",
+    "billsChangeLayoutTooltip": "Lay-out wijzigen",
     "@billsChangeLayoutTooltip": {
         "description": "Text for layout change button tooltip"
     },
-    "billsChangeSortOrderTooltip": "Sortierung ändern",
+    "billsChangeSortOrderTooltip": "Sorteervolgorde wijzigen",
     "@billsChangeSortOrderTooltip": {
         "description": "Text for sort order change button tooltip"
     },
-    "billsErrorLoading": "Fehler beim Laden der Abonnements.",
+    "billsErrorLoading": "Fout bij het laden van abonnementen.",
     "@billsErrorLoading": {
         "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
     },
-    "billsExactAmountAndFrequency": "Abonnement passt zu Transaktionen mit {value}. Wiederholt sich {frequency, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}.",
+    "billsExactAmountAndFrequency": "Abonnement komt overeen met transacties van {value}. Herhaald {frequency, select, weekly{wekelijks} monthly{maandelijks} quarterly{per kwartaal} halfyear{halfjaarlijks} yearly{jaarlijks} other{onbekend}}{skip, plural, =0{} other{, slaat over {skip}}}.",
     "@billsExactAmountAndFrequency": {
         "description": "Subscription match for exact amount and frequency",
         "placeholders": {
@@ -103,7 +103,7 @@
             }
         }
     },
-    "billsExpectedOn": "Voraussichtliches {date}",
+    "billsExpectedOn": "Verwacht {date}",
     "@billsExpectedOn": {
         "description": "Describes what date the subscription is expected",
         "placeholders": {
@@ -114,7 +114,7 @@
             }
         }
     },
-    "billsFrequency": "{frequency, select, weekly{Wöchentlich} monthly{Monatlich} quarterly{Vierteljährlich} halfyear{Halbjährlich} yearly{Jährlich} other{Unbekannt}}",
+    "billsFrequency": "{frequency, select, weekly{wekelijks} monthly{maandelijks} quarterly{per kwartaal} halfyear{halfjaarlijks} yearly{jaarlijks} other{onbekend}}",
     "@billsFrequency": {
         "description": "Subscription frequency",
         "placeholders": {
@@ -124,7 +124,7 @@
             }
         }
     },
-    "billsFrequencySkip": "{frequency, select, weekly{Wöchentlich} monthly{Monatlich} quarterly{Vierteljährlich} halfyear{Halbjährlich} yearly{Jährlich} other{Unbekannt}}{skip, plural, =0{} other{, überspringt {skip}}}",
+    "billsFrequencySkip": "{frequency, select, weekly{wekelijks} monthly{maandelijks} quarterly{per kwartaal} halfyear{halfjaarlijks} yearly{jaarlijks} other{onbekend}}{skip, plural, =0{} other{, slaat over {skip}}}",
     "@billsFrequencySkip": {
         "description": "Subscription frequency",
         "placeholders": {
@@ -138,51 +138,51 @@
             }
         }
     },
-    "billsInactive": "Inaktiv",
+    "billsInactive": "Inactief",
     "@billsInactive": {
         "description": "Text: when the subscription is inactive"
     },
-    "billsIsActive": "Abonnement ist aktiv",
+    "billsIsActive": "Abonnement is actief",
     "@billsIsActive": {
         "description": "Text: the subscription is active"
     },
-    "billsLayoutGroupSubtitle": "Abonnements werden in ihrer Gruppe angezeigt.",
+    "billsLayoutGroupSubtitle": "Abonnementen weergegeven in hun toegewezen groepen.",
     "@billsLayoutGroupSubtitle": {
         "description": "Subtitle text for group layout option"
     },
-    "billsLayoutGroupTitle": "Gruppe",
+    "billsLayoutGroupTitle": "Groep",
     "@billsLayoutGroupTitle": {
         "description": "Title text for group layout option"
     },
-    "billsLayoutListSubtitle": "Abonnements werden sortiert in einer Liste angezeigt.",
+    "billsLayoutListSubtitle": "Abonnementen weergegeven in hun toegewezen groepen.",
     "@billsLayoutListSubtitle": {
         "description": "Subtitle text for list layout option"
     },
-    "billsLayoutListTitle": "Liste",
+    "billsLayoutListTitle": "Lijst",
     "@billsLayoutListTitle": {
         "description": "Title text for list layout option"
     },
-    "billsListEmpty": "Diese Liste ist momentan leer.",
+    "billsListEmpty": "De lijst is momenteel leeg.",
     "@billsListEmpty": {
         "description": "Describes that the list is empty"
     },
-    "billsNextExpectedMatch": "Nächste erwartete Übereinstimmung",
+    "billsNextExpectedMatch": "Volgende verwachte match",
     "@billsNextExpectedMatch": {
         "description": "Text: next expected match for subscription"
     },
-    "billsNotActive": "Abonnement ist inaktiv",
+    "billsNotActive": "Abonnement is inactief",
     "@billsNotActive": {
         "description": "Text: the subscription is inactive"
     },
-    "billsNotExpected": "In diesem Zeitraum nicht erwartet",
+    "billsNotExpected": "Niet verwacht in deze periode",
     "@billsNotExpected": {
         "description": "Describes that the subscription is not expected this period"
     },
-    "billsNoTransactions": "Keine Transaktionen gefunden.",
+    "billsNoTransactions": "Geen transacties gevonden.",
     "@billsNoTransactions": {
         "description": "Describes that there are no transactions connected to the subscription"
     },
-    "billsPaidOn": "Bezahlt am {date}",
+    "billsPaidOn": "Betaald {date}",
     "@billsPaidOn": {
         "description": "Describes what date the subscription was paid",
         "placeholders": {
@@ -193,83 +193,83 @@
             }
         }
     },
-    "billsSortAlphabetical": "Alphabetisch",
+    "billsSortAlphabetical": "Alfabetisch",
     "@billsSortAlphabetical": {
         "description": "Text for alphabetical sort types"
     },
-    "billsSortByTimePeriod": "Nach Zeitraum",
+    "billsSortByTimePeriod": "Per periode",
     "@billsSortByTimePeriod": {
         "description": "Text for frequency sort type"
     },
-    "billsSortFrequency": "Häufigkeit",
+    "billsSortFrequency": "Frequentie",
     "@billsSortFrequency": {
         "description": "Text for sort by frequency"
     },
-    "billsSortName": "Name",
+    "billsSortName": "Naam",
     "@billsSortName": {
         "description": "Text for sort by name"
     },
-    "billsUngrouped": "Keine Gruppe",
+    "billsUngrouped": "Niet gegroepeerd",
     "@billsUngrouped": {
         "description": "Title for ungrouped subscriptions"
     },
-    "billsSettingsShowOnlyActive": "Nur aktive anzeigen",
+    "billsSettingsShowOnlyActive": "Alleen actieve weergeven",
     "@billsSettingsShowOnlyActive": {
         "description": "Text for show only active subscriptions settings item"
     },
-    "billsSettingsShowOnlyActiveDesc": "Zeigt nur aktive Abonnements an.",
+    "billsSettingsShowOnlyActiveDesc": "Toont alleen actieve abonnementen.",
     "@billsSettingsShowOnlyActiveDesc": {
         "description": "Text for show only active subscriptions settings item description"
     },
-    "billsSettingsShowOnlyExpected": "Nur erwartete anzeigen",
+    "billsSettingsShowOnlyExpected": "Alleen verwachte weergeven",
     "@billsSettingsShowOnlyExpected": {
         "description": "Text for show only expected subscriptions settings item"
     },
-    "billsSettingsShowOnlyExpectedDesc": "Zeigt nur Abonnements an, die diesen Monat erwartet werden (oder bereits bezahlt worden sind).",
+    "billsSettingsShowOnlyExpectedDesc": "Toont alleen de abonnementen die deze maand worden verwacht (of betaald).",
     "@billsSettingsShowOnlyExpectedDesc": {
         "description": "Text for show only expected subscriptions settings item description"
     },
-    "categoryDeleteConfirm": "Möchtest du diese Kategorie wirklich löschen? Die Transaktionen werden nicht gelöscht, werden aber keine Kategorie mehr haben.",
+    "categoryDeleteConfirm": "Weet u zeker dat u deze categorie wilt verwijderen? De transacties worden niet verwijderd, maar hebben geen categorie meer.",
     "@categoryDeleteConfirm": {
         "description": "Confirmation text to delete category"
     },
-    "categoryErrorLoading": "Fehler beim Laden der Kategorien.",
+    "categoryErrorLoading": "Fout bij het laden van categorieën.",
     "@categoryErrorLoading": {
         "description": "Generic error message when categories can't be loaded (shouldn't occur)"
     },
-    "categoryFormLabelIncludeInSum": "In Monatssumme einbeziehen",
+    "categoryFormLabelIncludeInSum": "Opnemen in maandelijkse som",
     "@categoryFormLabelIncludeInSum": {
         "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
     },
-    "categoryFormLabelName": "Kategoriename",
+    "categoryFormLabelName": "Categorie naam",
     "@categoryFormLabelName": {
         "description": "Category Add/Edit Form: Label for name field"
     },
-    "categoryMonthNext": "Nächster Monat",
+    "categoryMonthNext": "Volgende maand",
     "@categoryMonthNext": {
         "description": "Button title to view overview for next month"
     },
-    "categoryMonthPrev": "Letzter Monat",
+    "categoryMonthPrev": "Vorige maand",
     "@categoryMonthPrev": {
         "description": "Button title to view overview for previous month"
     },
-    "categorySumExcluded": "ausgenommen",
+    "categorySumExcluded": "Uitgesloten",
     "@categorySumExcluded": {
         "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
     },
-    "categoryTitleAdd": "Kategorie hinzufügen",
+    "categoryTitleAdd": "Categorie toevoegen",
     "@categoryTitleAdd": {
         "description": "Title for Dialog: Add Category"
     },
-    "categoryTitleDelete": "Kategorie löschen",
+    "categoryTitleDelete": "Categorie verwijderen",
     "@categoryTitleDelete": {
         "description": "Title for Dialog: Delete Category"
     },
-    "categoryTitleEdit": "Kategorie bearbeiten",
+    "categoryTitleEdit": "Categorie bewerken",
     "@categoryTitleEdit": {
         "description": "Title for Dialog: Edit Category"
     },
-    "catNone": "<keine Kategorie>",
+    "catNone": "<geen categorie>",
     "@catNone": {
         "description": "Placeholder when no category has been set."
     },
@@ -277,7 +277,7 @@
     "@catOther": {
         "description": "Category description for summary category 'Other'"
     },
-    "errorAPIInvalidResponse": "Ungültige API-Antwort: {message}",
+    "errorAPIInvalidResponse": "Categorie Naam Ongeldige reactie van API: {message}",
     "@errorAPIInvalidResponse": {
         "description": "Invalid API response error",
         "placeholders": {
@@ -287,19 +287,19 @@
             }
         }
     },
-    "errorAPIUnavailable": "API nicht verfügbar",
+    "errorAPIUnavailable": "API niet beschikbaar",
     "@errorAPIUnavailable": {
         "description": "Error thrown when API is unavailable."
     },
-    "errorFieldRequired": "Dies ist ein Pflichtfeld.",
+    "errorFieldRequired": "Dit veld is verplicht.",
     "@errorFieldRequired": {
         "description": "Error: Required field was left empty."
     },
-    "errorInvalidURL": "Ungültige URL",
+    "errorInvalidURL": "Ongeldige URL",
     "@errorInvalidURL": {
         "description": "Error: URL is invalid"
     },
-    "errorMinAPIVersion": "Mindestens Firefly API-Version v{requiredVersion} benötigt. Bitte updaten.",
+    "errorMinAPIVersion": "Minimale Firefly API versie v{requiredVersion} vereist. Upgrade aub.",
     "@errorMinAPIVersion": {
         "description": "Error: Required API version not met.",
         "placeholders": {
@@ -309,7 +309,7 @@
             }
         }
     },
-    "errorStatusCode": "Status-Code: {code}",
+    "errorStatusCode": "Statuscode: {code}",
     "@errorStatusCode": {
         "description": "HTTP status code information on error",
         "placeholders": {
@@ -319,51 +319,51 @@
             }
         }
     },
-    "errorUnknown": "Unbekannter Fehler.",
+    "errorUnknown": "Onbekende fout.",
     "@errorUnknown": {
         "description": "Error without further information occurred."
     },
-    "formButtonHelp": "Hilfe",
+    "formButtonHelp": "Hulp",
     "@formButtonHelp": {
         "description": "Button Label: Help"
     },
-    "formButtonLogin": "Login",
+    "formButtonLogin": "Aanmelden",
     "@formButtonLogin": {
         "description": "Button Label: Login"
     },
-    "formButtonLogout": "Logout",
+    "formButtonLogout": "Afmelden",
     "@formButtonLogout": {
         "description": "Button Label: Logout"
     },
-    "formButtonRemove": "Entfernen",
+    "formButtonRemove": "Verwijderen",
     "@formButtonRemove": {
         "description": "Button Label: Remove"
     },
-    "formButtonResetLogin": "Login zurücksetzen",
+    "formButtonResetLogin": "Login opnieuw instellen",
     "@formButtonResetLogin": {
         "description": "Button Label: Reset login form (when error is shown)"
     },
-    "formButtonTransactionAdd": "Transaktion hinzufügen",
+    "formButtonTransactionAdd": "Transactie toevoegen",
     "@formButtonTransactionAdd": {
         "description": "Button Label: Add Transaction"
     },
-    "formButtonTryAgain": "Nochmals versuchen",
+    "formButtonTryAgain": "Probeer het opnieuw",
     "@formButtonTryAgain": {
         "description": "Button Label: Try that thing again (login etc)"
     },
-    "generalAccount": "Konten",
+    "generalAccount": "Rekening",
     "@generalAccount": {
         "description": "Asset/Debt (Bank) Account"
     },
-    "generalAssets": "Vermögen",
+    "generalAssets": "Activa",
     "@generalAssets": {
         "description": "(Monetary) Assets"
     },
-    "generalBalance": "Kontostand",
+    "generalBalance": "Saldo",
     "@generalBalance": {
         "description": "(Account) Balance"
     },
-    "generalBalanceOn": "Kontostand am {date}",
+    "generalBalanceOn": "Saldo op {date}",
     "@generalBalanceOn": {
         "placeholders": {
             "date": {
@@ -381,27 +381,27 @@
     "@generalBudget": {
         "description": "(Monetary) Budget"
     },
-    "generalCategory": "Kategorie",
+    "generalCategory": "Categorie",
     "@generalCategory": {
         "description": "Category (of transaction etc.)."
     },
-    "generalCurrency": "Währung",
+    "generalCurrency": "Valuta",
     "@generalCurrency": {
         "description": "(Money) Currency"
     },
-    "generalDateRangeCurrentMonth": "Aktueller Monat",
+    "generalDateRangeCurrentMonth": "Huidige maand",
     "@generalDateRangeCurrentMonth": {
         "description": "Date Range: Current Month"
     },
-    "generalDateRangeLast30Days": "Letzte 30 Tage",
+    "generalDateRangeLast30Days": "Afgelopen 30 dagen",
     "@generalDateRangeLast30Days": {
         "description": "Date Range: Last 30 days"
     },
-    "generalDateRangeCurrentYear": "Aktuelles Jahr",
+    "generalDateRangeCurrentYear": "Huidig Jaar",
     "@generalDateRangeCurrentYear": {
         "description": "Date Range: Current Year"
     },
-    "generalDateRangeLastYear": "Vergangenes Jahr",
+    "generalDateRangeLastYear": "Afgelopen jaar",
     "@generalDateRangeLastYear": {
         "description": "Date Range: Last year"
     },
@@ -409,75 +409,75 @@
     "@generalDateRangeAll": {
         "description": "Date Range: All"
     },
-    "generalDefault": "Standard",
+    "generalDefault": "standaard",
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
     },
-    "generalDestinationAccount": "Zielkonto",
+    "generalDestinationAccount": "Doelrekening",
     "@generalDestinationAccount": {
         "description": "Destination Account (for transaction)"
     },
-    "generalDismiss": "Verwerfen",
+    "generalDismiss": "Negeren",
     "@generalDismiss": {
         "description": "Dismiss window/dialog without action"
     },
-    "generalEarned": "Verdient",
+    "generalEarned": "Verdiend",
     "@generalEarned": {
         "description": "(Amount) Earned"
     },
-    "generalError": "Fehler",
+    "generalError": "Fout",
     "@generalError": {
         "description": "Error (title in dialogs etc.)"
     },
-    "generalExpenses": "Ausgaben",
+    "generalExpenses": "Uitgaven",
     "@generalExpenses": {
         "description": "(Account) Expenses"
     },
-    "generalIncome": "Einnahmen",
+    "generalIncome": "Inkomen",
     "@generalIncome": {
         "description": "(Account) Info"
     },
-    "generalLiabilities": "Verbindlichkeiten",
+    "generalLiabilities": "Schulden",
     "@generalLiabilities": {
         "description": "Firefly Translation String: liabilities"
     },
-    "generalMultiple": "mehrere",
+    "generalMultiple": "meerdere",
     "@generalMultiple": {
         "description": "Multiples of a single thing (e.g. source accounts) are existing"
     },
-    "generalNever": "nie",
+    "generalNever": "nooit",
     "@generalNever": {
         "description": "Has never happened, no update etc."
     },
-    "generalReconcile": "Abgeglichen",
+    "generalReconcile": "Bevestigd",
     "@generalReconcile": {
         "description": "Booking has been confirmed/reconciled"
     },
-    "generalReset": "Zurücksetzen",
+    "generalReset": "Herstellen",
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
     },
-    "generalSourceAccount": "Quellkonto",
+    "generalSourceAccount": "Bronrekening",
     "@generalSourceAccount": {
         "description": "Source Account (of transaction)"
     },
-    "generalSpent": "Ausgegeben",
+    "generalSpent": "Uitgegeven",
     "@generalSpent": {
         "description": "(Amount) Spent"
     },
-    "generalSum": "Summe",
+    "generalSum": "Som",
     "@generalSum": {
         "description": "(Mathematical) Sum"
     },
-    "generalTarget": "Ziel",
+    "generalTarget": "Doel",
     "@generalTarget": {
         "description": "Target value (i.e. a sum to save)"
     },
-    "generalUnknown": "Unbekannt",
+    "generalUnknown": "Onbekend",
     "@generalUnknown": {
         "description": "Something is unknown."
     },
-    "homeMainBillsInterval": " ({period, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}})",
+    "homeMainBillsInterval": "{period, select, weekly{wekelijks} monthly{maandelijks} quarterly{per kwartaal} halfyear{halfjaarlijks} yearly{jaarlijks} other{onbekend}}",
     "@homeMainBillsInterval": {
         "description": "subscription interval type",
         "placeholders": {
@@ -487,11 +487,11 @@
             }
         }
     },
-    "homeMainBillsTitle": "Abonnements für die nächste Woche",
+    "homeMainBillsTitle": "Abonnementen voor de volgende week",
     "@homeMainBillsTitle": {
         "description": "Title: Subscriptions for the next week"
     },
-    "homeMainBudgetInterval": " ({from} bis {to}, {period})",
+    "homeMainBudgetInterval": " ({from} tot {to}, {period})",
     "@homeMainBudgetInterval": {
         "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
         "placeholders": {
@@ -511,7 +511,7 @@
             }
         }
     },
-    "homeMainBudgetIntervalSingle": " ({from} bis {to})",
+    "homeMainBudgetIntervalSingle": " ({from} tot {to})",
     "@homeMainBudgetIntervalSingle": {
         "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
         "placeholders": {
@@ -527,7 +527,7 @@
             }
         }
     },
-    "homeMainBudgetSum": "{current} {status, select, over{über} other{bis}} {available}",
+    "homeMainBudgetSum": "{current}{status, select,over{over} other{over van}} {available}",
     "@homeMainBudgetSum": {
         "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
         "placeholders": {
@@ -545,43 +545,43 @@
             }
         }
     },
-    "homeMainBudgetTitle": "Budgets für diesen Monat",
+    "homeMainBudgetTitle": "Budgetten voor deze maand",
     "@homeMainBudgetTitle": {
         "description": "Title: Budgets for current month"
     },
-    "homeMainChartAccountsTitle": "Konten-Übersicht",
+    "homeMainChartAccountsTitle": "Accountoverzicht",
     "@homeMainChartAccountsTitle": {
         "description": "Chart Label: Account Summary"
     },
-    "homeMainChartCategoriesTitle": "Kategorie-Übersicht für diesen Monat",
+    "homeMainChartCategoriesTitle": "Categorie samenvatting voor huidige maand",
     "@homeMainChartCategoriesTitle": {
         "description": "Chart Label: Category Summary"
     },
-    "homeMainChartDailyAvg": "7-Tage-Durchschnitt",
+    "homeMainChartDailyAvg": "Gemiddelde van 7 dagen",
     "@homeMainChartDailyAvg": {
         "description": "Text for last week average spent"
     },
-    "homeMainChartDailyTitle": "Tägliche Zusammenfassung",
+    "homeMainChartDailyTitle": "Dagelijks overzicht",
     "@homeMainChartDailyTitle": {
         "description": "Chart Label: Daily Summary"
     },
-    "homeMainChartNetEarningsTitle": "Überschuss",
+    "homeMainChartNetEarningsTitle": "Netto inkomen",
     "@homeMainChartNetEarningsTitle": {
         "description": "Chart Label: Net Earnings"
     },
-    "homeMainChartNetWorthTitle": "Nettovermögen",
+    "homeMainChartNetWorthTitle": "Nettowaarde",
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
     },
-    "homeMainChartTagsTitle": "Schlagwort-Übersicht für diesen Monat",
+    "homeMainChartTagsTitle": "Tag samenvatting voor huidige maand",
     "@homeMainChartTagsTitle": {
         "description": "Chart Label: Tags Summary"
     },
-    "homePiggyAdjustDialogTitle": "Geld sparen/ausgeben",
+    "homePiggyAdjustDialogTitle": "Gespaard/uitgeven geld",
     "@homePiggyAdjustDialogTitle": {
         "description": "Title of the dialog where money can be added/removed to a piggy bank."
     },
-    "homePiggyDateStart": "Startdatum: {date}",
+    "homePiggyDateStart": "Begindatum: {date}",
     "@homePiggyDateStart": {
         "description": "Start of the piggy bank",
         "placeholders": {
@@ -592,7 +592,7 @@
             }
         }
     },
-    "homePiggyDateTarget": "Zieldatum: {date}",
+    "homePiggyDateTarget": "Doeldatum: {date}",
     "@homePiggyDateTarget": {
         "description": "Set target date of the piggy bank (when saving should be finished)",
         "placeholders": {
@@ -603,11 +603,11 @@
             }
         }
     },
-    "homeMainDialogSettingsTitle": "Übersicht anpassen",
+    "homeMainDialogSettingsTitle": "Dashboard aanpassen",
     "@homeMainDialogSettingsTitle": {
         "description": "Dialog title for dashboard settings (card order & visibility)"
     },
-    "homePiggyLinked": "Verknüpft mit {account}",
+    "homePiggyLinked": "Gekoppeld aan {account}",
     "@homePiggyLinked": {
         "description": "Piggy bank is linked to asset account {account}.",
         "placeholders": {
@@ -617,15 +617,15 @@
             }
         }
     },
-    "homePiggyNoAccounts": "Keine Sparschweine vorhanden.",
+    "homePiggyNoAccounts": "Geen spaarpotjes opgezet.",
     "@homePiggyNoAccounts": {
         "description": "Information that no piggy banks are existing"
     },
-    "homePiggyNoAccountsSubtitle": "Erstelle welche im Webinterface!",
+    "homePiggyNoAccountsSubtitle": "Maak wat aan in het webinterface!",
     "@homePiggyNoAccountsSubtitle": {
         "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
     },
-    "homePiggyRemaining": "Noch zu sparen: {amount}",
+    "homePiggyRemaining": "Nog te sparen: {amount}",
     "@homePiggyRemaining": {
         "description": "How much money is left to save",
         "placeholders": {
@@ -635,7 +635,7 @@
             }
         }
     },
-    "homePiggySaved": "Bereits gespart: {amount}",
+    "homePiggySaved": "Tot nu toe gespaard: {amount}",
     "@homePiggySaved": {
         "description": "How much money already was saved",
         "placeholders": {
@@ -645,11 +645,11 @@
             }
         }
     },
-    "homePiggySavedMultiple": "Bereits gespart:",
+    "homePiggySavedMultiple": "Tot nu toe gespaard:",
     "@homePiggySavedMultiple": {
         "description": "Title for a list of multiple accounts with the amount of money saved so far"
     },
-    "homePiggyTarget": "Sparziel: {amount}",
+    "homePiggyTarget": "Doelbedrag: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
         "placeholders": {
@@ -659,15 +659,15 @@
             }
         }
     },
-    "homePiggyAccountStatus": "Kontostatus",
+    "homePiggyAccountStatus": "Rekeningstatus",
     "@homePiggyAccountStatus": {
         "description": "Title for the account status section showing balances and piggy bank totals"
     },
-    "homePiggyAvailableAmounts": "Verfügbarer Betrag",
+    "homePiggyAvailableAmounts": "Beschikbaar bedrag",
     "@homePiggyAvailableAmounts": {
         "description": "Title for the available amounts section showing money not in piggy banks"
     },
-    "homePiggyAvailable": "Verfügbar: {amount}",
+    "homePiggyAvailable": "Beschikbaar: {amount}",
     "@homePiggyAvailable": {
         "description": "Available balance after subtracting piggy bank amounts",
         "placeholders": {
@@ -677,7 +677,7 @@
             }
         }
     },
-    "homePiggyInPiggyBanks": "In Sparschweinen: {amount}",
+    "homePiggyInPiggyBanks": "In spaarpotjes: {amount}",
     "@homePiggyInPiggyBanks": {
         "description": "Amount currently in piggy banks for this account",
         "placeholders": {
@@ -687,35 +687,35 @@
             }
         }
     },
-    "homeTabLabelBalance": "Kontostände",
+    "homeTabLabelBalance": "Balans",
     "@homeTabLabelBalance": {
         "description": "Tab Label: Balance Sheet page"
     },
-    "homeTabLabelMain": "Übersicht",
+    "homeTabLabelMain": "Hoofd",
     "@homeTabLabelMain": {
         "description": "Tab Label: Start page (\"main\")"
     },
-    "homeTabLabelPiggybanks": "Sparschweine",
+    "homeTabLabelPiggybanks": "Spaarpotjes",
     "@homeTabLabelPiggybanks": {
         "description": "Tab Label: Piggy Banks page"
     },
-    "homeTabLabelTransactions": "Transaktionen",
+    "homeTabLabelTransactions": "Transacties",
     "@homeTabLabelTransactions": {
         "description": "Tab Label: Transactions page"
     },
-    "homeTransactionsActionFilter": "Liste filtern",
+    "homeTransactionsActionFilter": "Filter lijst",
     "@homeTransactionsActionFilter": {
         "description": "Action Button Label: Filter list."
     },
-    "homeTransactionsDialogFilterAccountsAll": "<Alle Konten>",
+    "homeTransactionsDialogFilterAccountsAll": "<Alle Rekeningen>",
     "@homeTransactionsDialogFilterAccountsAll": {
         "description": "Don't filter for a specific account (default entry)"
     },
-    "homeTransactionsDialogFilterBillsAll": "<Alle Abonnements>",
+    "homeTransactionsDialogFilterBillsAll": "<Alle Abonnementen>",
     "@homeTransactionsDialogFilterBillsAll": {
         "description": "Don't filter for a specific subscription (default entry)"
     },
-    "homeTransactionsDialogFilterBillUnset": "<Ohne Abonnement>",
+    "homeTransactionsDialogFilterBillUnset": "<Geen abonnement ingesteld>",
     "@homeTransactionsDialogFilterBillUnset": {
         "description": "Filter for unset subscription"
     },
@@ -723,43 +723,43 @@
     "@homeTransactionsDialogFilterBudgetsAll": {
         "description": "Don't filter for a specific budget (default entry)"
     },
-    "homeTransactionsDialogFilterBudgetUnset": "<Ohne Budget>",
+    "homeTransactionsDialogFilterBudgetUnset": "<Geen budget ingesteld>",
     "@homeTransactionsDialogFilterBudgetUnset": {
         "description": "Filter for unset budgets"
     },
-    "homeTransactionsDialogFilterCategoriesAll": "<Alle Kategorien>",
+    "homeTransactionsDialogFilterCategoriesAll": "<Alle categorieën>",
     "@homeTransactionsDialogFilterCategoriesAll": {
         "description": "Don't filter for a specific category (default entry)"
     },
-    "homeTransactionsDialogFilterCategoryUnset": "<Ohne Kategorie>",
+    "homeTransactionsDialogFilterCategoryUnset": "<Geen categorie ingesteld>",
     "@homeTransactionsDialogFilterCategoryUnset": {
         "description": "Filter for unset categories"
     },
-    "homeTransactionsDialogFilterCurrenciesAll": "<Alle Währungen>",
+    "homeTransactionsDialogFilterCurrenciesAll": "<Alle Valuta>",
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
     },
-    "homeTransactionsDialogFilterDateRange": "Zeitraum",
+    "homeTransactionsDialogFilterDateRange": "Datum bereik",
     "@homeTransactionsDialogFilterDateRange": {
         "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
     },
-    "homeTransactionsDialogFilterFutureTransactions": "Zeige zukünftige Transaktionen",
+    "homeTransactionsDialogFilterFutureTransactions": "Toon toekomstige transacties",
     "@homeTransactionsDialogFilterFutureTransactions": {
         "description": "Setting to show future transactions"
     },
-    "homeTransactionsDialogFilterSearch": "Suchbegriff",
+    "homeTransactionsDialogFilterSearch": "Zoekterm",
     "@homeTransactionsDialogFilterSearch": {
         "description": "Search term for filter"
     },
-    "homeTransactionsDialogFilterTitle": "Filter auswählen",
+    "homeTransactionsDialogFilterTitle": "Filters kiezen",
     "@homeTransactionsDialogFilterTitle": {
         "description": "Title of Filter Dialog"
     },
-    "homeTransactionsEmpty": "Keine Transaktionen gefunden.",
+    "homeTransactionsEmpty": "Geen transacties gevonden.",
     "@homeTransactionsEmpty": {
         "description": "Message when no transactions are found."
     },
-    "homeTransactionsMultipleCategories": "{num} Kategorien",
+    "homeTransactionsMultipleCategories": "{num} categorieën",
     "@homeTransactionsMultipleCategories": {
         "description": "$num categories for the transaction.",
         "placeholders": {
@@ -769,71 +769,71 @@
             }
         }
     },
-    "homeTransactionsSettingsShowTags": "Schlagwörter in der Transaktionsliste anzeigen",
+    "homeTransactionsSettingsShowTags": "Toon tags in transactielijst",
     "@homeTransactionsSettingsShowTags": {
         "description": "Setting label to show tags in transactioon list."
     },
-    "liabilityDirectionCredit": "Mir wird dies geschuldet",
+    "liabilityDirectionCredit": "Ik heb deze schuld te goed.",
     "@liabilityDirectionCredit": {
         "description": "Firefly Translation String: liability_direction_credit"
     },
-    "liabilityDirectionDebit": "Ich schulde dies jemandem",
+    "liabilityDirectionDebit": "Ik ben deze schuld verschuldigd",
     "@liabilityDirectionDebit": {
         "description": "Firefly Translation String: liability_direction_debit"
     },
-    "liabilityTypeDebt": "Schulden",
+    "liabilityTypeDebt": "Schuld",
     "@liabilityTypeDebt": {
         "description": "Firefly Translation String: account_type_debt"
     },
-    "liabilityTypeLoan": "Darlehen",
+    "liabilityTypeLoan": "Lening",
     "@liabilityTypeLoan": {
         "description": "Firefly Translation String: account_type_loan"
     },
-    "liabilityTypeMortgage": "Hypothek",
+    "liabilityTypeMortgage": "Hypotheek",
     "@liabilityTypeMortgage": {
         "description": "Firefly Translation String: account_type_mortgage"
     },
-    "loginAbout": "Um Waterfly III nutzen zu können, wird ein eigener Server mit Firefly III oder das Firefly III Add-on für Home Assistant benötigt.\n\nBitte gebe den kompletten Link und den persönlichen Zugangs-Token (Einstellungen → Profil → OAuth → Persönliche Zugangs-Tokens) ein.",
+    "loginAbout": "Om Waterfly III productief te gebruiken, heb je je eigen server nodig met een Firefly III-installatie of de Firefly III-add-on voor Home Assistant.\n\nVoer de volledige URL en ook een persoonlijke toegangstoken in (Instellingen -> Profiel -> OAuth -> Persoonlijke Toegang) hieronder in.",
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
-    "loginFormLabelAPIKey": "Gültiger API-Schlüssel",
+    "loginFormLabelAPIKey": "Geldige API-sleutel",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
     },
-    "loginFormLabelHost": "Server URL",
+    "loginFormLabelHost": "Host-URL",
     "@loginFormLabelHost": {
         "description": "Login Form: Label for Host field"
     },
-    "loginWelcome": "Willkommen zu Waterfly III",
+    "loginWelcome": "Welkom bij Waterfly III",
     "@loginWelcome": {
         "description": "Login screen welcome banner"
     },
-    "logoutConfirmation": "Wirklich ausloggen?",
+    "logoutConfirmation": "Weet u zeker dat u zich wilt afmelden?",
     "@logoutConfirmation": {
         "description": "Get user confirmation if he really wants to log out"
     },
-    "navigationAccounts": "Konten",
+    "navigationAccounts": "Rekeningen",
     "@navigationAccounts": {
         "description": "Navigation Label: Accounts Page"
     },
-    "navigationBills": "Abonnements",
+    "navigationBills": "Abonnementen",
     "@navigationBills": {
         "description": "Navigation Label: Subscriptions"
     },
-    "navigationCategories": "Kategorien",
+    "navigationCategories": "Categorieën",
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
-    "navigationMain": "Übersicht",
+    "navigationMain": "Hoofd Dashboard",
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "generalSettings": "Einstellungen",
+    "generalSettings": "Instellingen",
     "@generalSettings": {
         "description": "Label: Settings"
     },
-    "no": "Nein",
+    "no": "Nee",
     "@no": {
         "description": "The word no"
     },
@@ -850,7 +850,7 @@
             }
         }
     },
-    "numPercentOf": "{perc} von {of}",
+    "numPercentOf": "{perc} van {of}",
     "@numPercentOf": {
         "description": "Number formatted as percentage, with total amount provided",
         "placeholders": {
@@ -866,115 +866,115 @@
             }
         }
     },
-    "settingsDialogDebugInfo": "Hier kann die Fehlerprotokollierung aktiviert werden. Die Protokollierung hat einen negativen Einfluss auf die App-Performance, deshalb aktiviere sie bitte nur nach Absprache. Beim Deaktivieren werden die gespeicherten Protokolle gelöscht.",
+    "settingsDialogDebugInfo": "U kunt debug logs hier inschakelen en versturen. Deze hebben een slechte invloed op de prestaties, dus schakel ze alstublieft niet in tenzij u aangeraden hebt. Logboekregistratie uitschakelen zal het opgeslagen logboek verwijderen.",
     "@settingsDialogDebugInfo": {
         "description": "Information about debug logs and their impact."
     },
-    "settingsDialogDebugMailCreate": "E-Mail erstellen",
+    "settingsDialogDebugMailCreate": "Maak e-mail",
     "@settingsDialogDebugMailCreate": {
         "description": "Button to confirm mail creation after privacy disclaimer is shown."
     },
-    "settingsDialogDebugMailDisclaimer": "ACHTUNG: Ein E-Mail Entwurf wird mit angehängtem Fehlerprotokoll erstellt. Das Fehlerprotokoll kann sensitive Informationen wie zum Beispiel die URL deiner Firefly-Instanz enthalten (auch wenn ich versuche geheime Informationen wie den API-Schlüssel nicht zu protokollieren). Bitte lese vor dem Senden der Mail das Protokoll durch und zensiere alle Informationen, die du nicht teilen möchtest.\n\nBitte sende keine Fehlerprotokolle ohne vorherige Absprache mit mir via Mail/GitHub. Ich werde alle ohne Kontext eingesendete Protokolle aus Datenschutzgründen löschen. Lade die Protokolle nie auf GitHub oder anderswo hoch.",
+    "settingsDialogDebugMailDisclaimer": "WAARSCHUWING: Een concept voor e-mail opent met het bijgevoegde logbestand (in tekstformaat). De logs kunnen gevoelige informatie bevatten, zoals de hostnaam van je Firefly (hoewel ik probeer te vermijden om geheimen te loggen, zoals de api sleutel). Lees het logboek zorgvuldig door en censureert alle informatie die je niet wilt delen en/of niet relevant is voor het probleem dat je wilt melden.\n\nGelieve geen logs te versturen zonder voorafgaande toestemming via mail/GitHub om dit te doen. Ik zal alle logs verwijderen die zijn verzonden vanwege privacyredenen. Upload de log nooit ongecensureerd naar GitHub of elders.",
     "@settingsDialogDebugMailDisclaimer": {
         "description": "Privacy disclaimer shown before sending logs"
     },
-    "settingsDialogDebugSendButton": "Protokoll via Mail schicken",
+    "settingsDialogDebugSendButton": "Logs versturen via e-mail",
     "@settingsDialogDebugSendButton": {
         "description": "Button to send logs via E-Mail"
     },
-    "settingsDialogDebugTitle": "Fehlerprotokolle",
+    "settingsDialogDebugTitle": "Logs voor Foutoplossing",
     "@settingsDialogDebugTitle": {
         "description": "Dialog title: Debug Logs"
     },
-    "settingsDialogLanguageTitle": "Sprache auswählen",
+    "settingsDialogLanguageTitle": "Taal selecteren",
     "@settingsDialogLanguageTitle": {
         "description": "Dialog title: Select Language"
     },
-    "settingsDialogThemeTitle": "Erscheinungsbild auswählen",
+    "settingsDialogThemeTitle": "Selecteer een thema",
     "@settingsDialogThemeTitle": {
         "description": "Dialog title: Select theme"
     },
-    "settingsFAQ": "FAQ",
+    "settingsFAQ": "Veelgestelde vragen (FAQ)",
     "@settingsFAQ": {
         "description": "FAQ title"
     },
-    "settingsFAQHelp": "Öffnet im Browser. Nur auf Englisch verfügbar.",
+    "settingsFAQHelp": "Opent in browser. Alleen beschikbaar in het Engels.",
     "@settingsFAQHelp": {
         "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
     },
-    "settingsLanguage": "Sprache",
+    "settingsLanguage": "Taal",
     "@settingsLanguage": {
         "description": "Currently selected language"
     },
-    "settingsLockscreen": "App-Sperre",
+    "settingsLockscreen": "Vergrendelscherm",
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
     },
-    "settingsLockscreenHelp": "Authentifizierung beim Start der App erzwingen",
+    "settingsLockscreenHelp": "Authenticatie vereist bij opstarten van de app",
     "@settingsLockscreenHelp": {
         "description": "Description for lockscreen setting"
     },
-    "settingsLockscreenInitial": "Bitte authentifiziere dich, um die App-Sperre zu aktivieren.",
+    "settingsLockscreenInitial": "Authenticeer a.u.b. om het vergrendelscherm in te schakelen.",
     "@settingsLockscreenInitial": {
         "description": "Prompt to authenticate once to set up the lockscreen"
     },
-    "settingsNLAppAccount": "Standard-Konto",
+    "settingsNLAppAccount": "Standaard account",
     "@settingsNLAppAccount": {
         "description": "Default account which will be used for the transaction."
     },
-    "settingsNLAppAccountDynamic": "<Dynamisch>",
+    "settingsNLAppAccountDynamic": "<Dynamic>",
     "@settingsNLAppAccountDynamic": {
         "description": "Account will be selected dynamically by the content of the notification."
     },
-    "settingsNLAppAdd": "App hinzufügen",
+    "settingsNLAppAdd": "App toevoegen",
     "@settingsNLAppAdd": {
         "description": "Button title to add a new app."
     },
-    "settingsNLAppAddHelp": "Füge eine neue App hinzu. Nur qualifizierte Apps werden gelistet.",
+    "settingsNLAppAddHelp": "Klik om een app toe te voegen om naar te luisteren. Alleen geschikte apps worden weergegeven in de lijst.",
     "@settingsNLAppAddHelp": {
         "description": "Help text below adding the new app button."
     },
-    "settingsNLAppAddInfo": "Führe eine Zahlung durch, bei der die gewünschte Benachrichtigung erscheint, um eine App zu dieser Liste hinzuzufügen. Wenn die App trotzdem nicht erscheint, bitte melde dies an app@vogt.pw.",
+    "settingsNLAppAddInfo": "Maak enkele transacties waar je telefoonmeldingen ontvangt om apps toe te voegen aan deze lijst. Als de app nog steeds niet verschijnt, rapporteer deze dan aan app@vogt.pw.",
     "@settingsNLAppAddInfo": {
         "description": "Help text when no more app is available to add."
     },
-    "settingsNLAutoAdd": "Transaktion ohne Nachfragen erstellen",
+    "settingsNLAutoAdd": "Transactie zonder interactie maken",
     "@settingsNLAutoAdd": {
         "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
     },
-    "settingsNLDescription": "Dieser Dienst erlaubt dir, Transaktionen aus Benachrichtigungen zu erstellen. Außerdem kannst du das Standard-Konto auswählen, zu dem die Transaktion zugeordnet wird - ansonsten wird dynamisch versucht, ein Konto zu ermitteln.",
+    "settingsNLDescription": "Deze service stelt u in staat om transactiegegevens op te halen van inkomende push-meldingen. Daarnaast kunt u een standaard account selecteren waaraan de transactie moet worden toegewezen - als er geen waarde is ingesteld. het probeert een account uit de melding te halen.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
     },
-    "settingsNLEmptyNote": "Notizfeld leer lassen",
+    "settingsNLEmptyNote": "Houd notitie veld leeg",
     "@settingsNLEmptyNote": {
         "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
-    "settingsNLPermissionGrant": "Klicke, um die Berechtigung zu erteilen.",
+    "settingsNLPermissionGrant": "Klik hier om toestemming te geven.",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
     },
-    "settingsNLPermissionNotGranted": "Berechtigung nicht erteilt.",
+    "settingsNLPermissionNotGranted": "Toestemming niet verleend.",
     "@settingsNLPermissionNotGranted": {
         "description": "A requested permission was not granted."
     },
-    "settingsNLPermissionRemove": "Berechtigung löschen?",
+    "settingsNLPermissionRemove": "Verwijder toestemming?",
     "@settingsNLPermissionRemove": {
         "description": "Dialog title asking if permission should be removed."
     },
-    "settingsNLPermissionRemoveHelp": "Um den Dienst zu deaktivieren, klicke auf die App und entferne die Berechtigungen im nächsten Bildschirm.",
+    "settingsNLPermissionRemoveHelp": "Om deze service uit te schakelen, klik op de app en verwijder de machtigingen op het volgende scherm.",
     "@settingsNLPermissionRemoveHelp": {
         "description": "Dialog text giving hint how to remove the permission."
     },
-    "settingsNLPrefillTXTitle": "Transaktionstitel mit Benachrichtigungstitel befüllen",
+    "settingsNLPrefillTXTitle": "Transactietitel vooraf invullen met meldingstitel",
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
     },
-    "settingsNLServiceChecking": "Status wird geprüft…",
+    "settingsNLServiceChecking": "Status controleren…",
     "@settingsNLServiceChecking": {
         "description": "Checking the status of the background service"
     },
-    "settingsNLServiceCheckingError": "Fehler beim Status prüfen: {error}",
+    "settingsNLServiceCheckingError": "Fout bij controleren status: {error}",
     "@settingsNLServiceCheckingError": {
         "description": "An error occurred while checking the service status",
         "placeholders": {
@@ -985,31 +985,31 @@
             }
         }
     },
-    "settingsNLServiceRunning": "Dienst läuft.",
+    "settingsNLServiceRunning": "De service wordt uitgevoerd",
     "@settingsNLServiceRunning": {
         "description": "A background service is running normally."
     },
-    "settingsNLServiceStatus": "Dienst-Status",
+    "settingsNLServiceStatus": "Service Status",
     "@settingsNLServiceStatus": {
         "description": "Status of a background service."
     },
-    "settingsNLServiceStopped": "Dienst ist gestoppt.",
+    "settingsNLServiceStopped": "Service is gestopt.",
     "@settingsNLServiceStopped": {
         "description": "A background service is stopped."
     },
-    "settingsNotificationListener": "Dienst zum Auslesen von Benachrichtigungen",
+    "settingsNotificationListener": "Notificatie Luister Service",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
     },
-    "settingsTheme": "Erscheinungsbild",
+    "settingsTheme": "Applicatie thema",
     "@settingsTheme": {
         "description": "App theme (dark or light)"
     },
-    "settingsThemeDynamicColors": "Dyn. Farben",
+    "settingsThemeDynamicColors": "Dynamische kleuren",
     "@settingsThemeDynamicColors": {
         "description": "Material You Dynamic Colors feature"
     },
-    "settingsThemeValue": "{theme, select, dark{Dunkel} light{Hell} other{Systemeinstellung}}",
+    "settingsThemeValue": "{theme, select, dark{Donkere modus} light{Licht Modus} other{Systeem standaard}}",
     "@settingsThemeValue": {
         "description": "Currently selected theme (either dark, light or system)",
         "placeholders": {
@@ -1019,43 +1019,43 @@
             }
         }
     },
-    "settingsUseServerTimezone": "Server-Zeitzone benutzen",
+    "settingsUseServerTimezone": "Gebruik server tijdzone",
     "@settingsUseServerTimezone": {
         "description": "Setting label to use server timezone."
     },
-    "settingsUseServerTimezoneHelp": "Zeigt alle Zeiten in der Server-Zeitzone an. Dies entspricht dem Verhalten des Webinterfaces.",
+    "settingsUseServerTimezoneHelp": "Laat alle tijden zien in de server tijdzone. Dit geeft het gedrag van de webinterface weer.",
     "@settingsUseServerTimezoneHelp": {
         "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
     },
-    "settingsVersion": "App-Version",
+    "settingsVersion": "App versie",
     "@settingsVersion": {
         "description": "Current App Version"
     },
-    "settingsVersionChecking": "Überprüfe…",
+    "settingsVersionChecking": "controleren...",
     "@settingsVersionChecking": {
         "description": "Shown while checking for app version"
     },
-    "transactionAttachments": "Anhänge",
+    "transactionAttachments": "Bijlagen",
     "@transactionAttachments": {
         "description": "Button Label: Attachments"
     },
-    "transactionDeleteConfirm": "Soll diese Transaktion wirklich gelöscht werden?",
+    "transactionDeleteConfirm": "Weet u zeker dat u deze transactie wil verwijderen?",
     "@transactionDeleteConfirm": {
         "description": "Confirmation text to delete transaction"
     },
-    "transactionDialogAttachmentsDelete": "Anhang löschen",
+    "transactionDialogAttachmentsDelete": "Bijlage verwijderen",
     "@transactionDialogAttachmentsDelete": {
         "description": "Button Label: Delete Attachment"
     },
-    "transactionDialogAttachmentsDeleteConfirm": "Soll dieser Anhang wirklich gelöscht werden?",
+    "transactionDialogAttachmentsDeleteConfirm": "Weet je zeker dat je deze bijlage wilt verwijderen?",
     "@transactionDialogAttachmentsDeleteConfirm": {
         "description": "Confirmation text to delete attachment"
     },
-    "transactionDialogAttachmentsErrorDownload": "Datei konnte nicht geladen werden.",
+    "transactionDialogAttachmentsErrorDownload": "Kan het bestand niet downloaden.",
     "@transactionDialogAttachmentsErrorDownload": {
         "description": "Snackbar Text: File download failed."
     },
-    "transactionDialogAttachmentsErrorOpen": "Datei konnte nicht geöffnet werden: {error}",
+    "transactionDialogAttachmentsErrorOpen": "Kan het bestand niet openen: {error}",
     "@transactionDialogAttachmentsErrorOpen": {
         "description": "Snackbar Text: File could not be opened, with reason.",
         "placeholders": {
@@ -1064,7 +1064,7 @@
             }
         }
     },
-    "transactionDialogAttachmentsErrorUpload": "Datei konnte nicht hochgeladen werden: {error}",
+    "transactionDialogAttachmentsErrorUpload": "Kan bestand niet uploaden: {error}",
     "@transactionDialogAttachmentsErrorUpload": {
         "description": "Snackbar Text: File could not be uploaded, with reason.",
         "placeholders": {
@@ -1073,131 +1073,131 @@
             }
         }
     },
-    "transactionDialogAttachmentsTitle": "Anhänge",
+    "transactionDialogAttachmentsTitle": "Bijlagen",
     "@transactionDialogAttachmentsTitle": {
         "description": "Dialog Title: Attachments Dialog"
     },
-    "transactionDialogBillNoBill": "Kein Abonnement",
+    "transactionDialogBillNoBill": "Geen abonnement",
     "@transactionDialogBillNoBill": {
         "description": "Button Label: no subscription to be used"
     },
-    "transactionDialogBillTitle": "Mit Abonnement verknüpfen",
+    "transactionDialogBillTitle": "Link naar abonnement",
     "@transactionDialogBillTitle": {
         "description": "Dialog Title: Link Subscription to transaction"
     },
-    "transactionDialogCurrencyTitle": "Währung auswählen",
+    "transactionDialogCurrencyTitle": "Selecteer valuta",
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
     },
-    "transactionDialogTagsAdd": "Schlagwort hinzufügen",
+    "transactionDialogTagsAdd": "Label toevoegen",
     "@transactionDialogTagsAdd": {
         "description": "Button Label: Add Tag"
     },
-    "transactionDialogTagsHint": "Schlagwort suchen/hinzufügen",
+    "transactionDialogTagsHint": "Labels zoeken/toevoegen",
     "@transactionDialogTagsHint": {
         "description": "Hint Text for search tag field"
     },
-    "transactionDialogTagsTitle": "Schlagwörter auswählen",
+    "transactionDialogTagsTitle": "Selecteer labels",
     "@transactionDialogTagsTitle": {
         "description": "Dialog Title: Select Tags"
     },
-    "transactionDuplicate": "Duplizieren",
+    "transactionDuplicate": "Dupliceer",
     "@transactionDuplicate": {
         "description": "Menu Label: Duplicate item"
     },
-    "transactionErrorInvalidAccount": "Ungültiges Konto",
+    "transactionErrorInvalidAccount": "Ongeldige rekening",
     "@transactionErrorInvalidAccount": {
         "description": "Transaction Save Error: Invalid account"
     },
-    "transactionErrorInvalidBudget": "Ungültiges Budget",
+    "transactionErrorInvalidBudget": "Ongeldig budget",
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
     },
-    "transactionErrorNoAccounts": "Bitte tragen Sie zuerst die Konten ein.",
+    "transactionErrorNoAccounts": "Vul eerst de rekeningen in.",
     "@transactionErrorNoAccounts": {
         "description": "Transaction Save Error: No accounts have been entered"
     },
-    "transactionErrorNoAssetAccount": "Bitte ein Bestandskonto auswählen.",
+    "transactionErrorNoAssetAccount": "Selecteer een betaalrekening.",
     "@transactionErrorNoAssetAccount": {
         "description": "Transaction Save Error: No account is an asset (own) account"
     },
-    "transactionErrorTitle": "Bitte gebe einen Titel an.",
+    "transactionErrorTitle": "Voer een titel in.",
     "@transactionErrorTitle": {
         "description": "Transaction Save Error: No title provided"
     },
-    "transactionFormLabelAccountDestination": "Ziel-Konto",
+    "transactionFormLabelAccountDestination": "Doelrekening",
     "@transactionFormLabelAccountDestination": {
         "description": "Transaction Form: Label for destination account for transfer transaction"
     },
-    "transactionFormLabelAccountForeign": "Fremdes Konto",
+    "transactionFormLabelAccountForeign": "Vreemde rekeningen",
     "@transactionFormLabelAccountForeign": {
         "description": "Transaction Form: Label for foreign (other) account"
     },
-    "transactionFormLabelAccountOwn": "Eigenes Konto",
+    "transactionFormLabelAccountOwn": "Eigen Account",
     "@transactionFormLabelAccountOwn": {
         "description": "Transaction Form: Label for own account"
     },
-    "transactionFormLabelAccountSource": "Quell-Konto",
+    "transactionFormLabelAccountSource": "Bron account",
     "@transactionFormLabelAccountSource": {
         "description": "Transaction Form: Label for source account for transfer transaction"
     },
-    "transactionFormLabelNotes": "Notizen",
+    "transactionFormLabelNotes": "Notitie",
     "@transactionFormLabelNotes": {
         "description": "Transaction Form: Label for notes field"
     },
-    "transactionFormLabelTags": "Schlagwörter",
+    "transactionFormLabelTags": "Tags",
     "@transactionFormLabelTags": {
         "description": "Transaction Form: Label for tags field"
     },
-    "transactionFormLabelTitle": "Titel der Transaktion",
+    "transactionFormLabelTitle": "Transactie naam",
     "@transactionFormLabelTitle": {
         "description": "Transaction Form: Label for title field"
     },
-    "transactionSplitAdd": "Aufteilung hinzufügen",
+    "transactionSplitAdd": "Afsplitsing transactie toevoegen",
     "@transactionSplitAdd": {
         "description": "Button Label: Add a split"
     },
-    "transactionSplitChangeCurrency": "Währung der Aufteilung ändern",
+    "transactionSplitChangeCurrency": "Verander Split Valuta",
     "@transactionSplitChangeCurrency": {
         "description": "Hint Text: Change currency for a single split"
     },
-    "transactionSplitChangeDestinationAccount": "Zielkonto der Aufteilung ändern",
+    "transactionSplitChangeDestinationAccount": "Verander Split-Doelaccount",
     "@transactionSplitChangeDestinationAccount": {
         "description": "Hint Text: Change destination account for a single split"
     },
-    "transactionSplitChangeSourceAccount": "Quellkonto der Aufteilung ändern",
+    "transactionSplitChangeSourceAccount": "Wijzig Split-Bron Account",
     "@transactionSplitChangeSourceAccount": {
         "description": "Hint Text: Change source account for a single split"
     },
-    "transactionSplitChangeTarget": "Zielkonto der Aufteilung ändern",
+    "transactionSplitChangeTarget": "Verander Split-doelaccount",
     "@transactionSplitChangeTarget": {
         "description": "Hint Text: Change target account for single split"
     },
-    "transactionSplitDelete": "Aufteilung löschen",
+    "transactionSplitDelete": "Afsplitsing verwijderen",
     "@transactionSplitDelete": {
         "description": "Hint Text: Delete single split"
     },
-    "transactionTitleAdd": "Transaktion hinzufügen",
+    "transactionTitleAdd": "Transactie toevoegen",
     "@transactionTitleAdd": {
         "description": "Title: Add a new transaction"
     },
-    "transactionTitleDelete": "Transaktion löschen",
+    "transactionTitleDelete": "Verwijder Transactie",
     "@transactionTitleDelete": {
         "description": "Title: Delete existing transaction"
     },
-    "transactionTitleEdit": "Transaktion bearbeiten",
+    "transactionTitleEdit": "Bewerk Transactie",
     "@transactionTitleEdit": {
         "description": "Title: Edit existing transaction"
     },
-    "transactionTypeDeposit": "Einnahme",
+    "transactionTypeDeposit": "Storten",
     "@transactionTypeDeposit": {
         "description": "Deposit transaction type"
     },
-    "transactionTypeTransfer": "Umbuchung",
+    "transactionTypeTransfer": "Transactie",
     "@transactionTypeTransfer": {
         "description": "Transfer transaction type"
     },
-    "transactionTypeWithdrawal": "Ausgabe",
+    "transactionTypeWithdrawal": "Opname",
     "@transactionTypeWithdrawal": {
         "description": "Withdrawal transaction type"
     }

@@ -1,0 +1,17 @@
+Waterfly III is een onofficiële app voor uw eigen installatie van Firefly III, een gratis en open source financieel inzicht in uw financiën.
+
+Voor deze app is een zelfgehoste Firefly III-instantie op uw eigen server vereist. Ga naar https://www.firefly-iii.org/ voor meer informatie over de software. Het is slechts een begeleidende app en kan niet zelfstandig worden uitgevoerd!
+
+Kenmerken:
+
+- Dashboard met grafieken en budgetoverzicht
+- Transactielijst met filters
+Transacties toevoegen en bewerken met automatische aanvulling, inclusief bijlagen, gesplitste transacties en ondersteuning voor meerdere valuta's
+- Spaarpot ondersteuning (geld bekijken en toevoegen)
+- Notification Listener Service om eenvoudig nieuwe transacties aan te maken op basis van binnenkomende meldingen (bijvoorbeeld van Google Pay of uw bankapp)
+Volledig open source: https://github.com/dreautall/waterfly-iii
+Geen advertenties of trackers
+
+Bijdrage:
+
+Als je een fout tegenkomt of een functie mist, kun je feedback geven in de Play Store, of stuur mij een e-mail of open een issue op GitHub.

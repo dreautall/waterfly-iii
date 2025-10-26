@@ -1,243 +1,1212 @@
 {
-  "@@locale": "ca",
-  "@@x-reference": true,
-  "accountRoleAssetCashWallet": "Cartera d'Efectiu",
-  "accountRoleAssetCC": "Targeta de crèdit",
-  "accountRoleAssetDefault": "Compte d'actius per defecte",
-  "accountRoleAssetSavings": "Compte d'estalvis",
-  "accountRoleAssetShared": "Compte d'actius compartit",
-  "accountsLabelAsset": "Comptes d'Actius",
-  "accountsLabelExpense": "Comptes de Despeses",
-  "accountsLabelLiabilities": "Passius",
-  "accountsLabelRevenue": "Comptes d'Ingressos",
-  "accountsLiabilitiesInterest": "{interest}% d'interès per {period, select, weekly{setmana} monthly{mes} quarterly{quadrimestre} halfyear{mig any} yearly{any} other{desconegut}}",
-  "billsAmountAndFrequency": "Factures de transaccions entre {minValue} i {maxvalue}. Es repeteixen {frequency, select, weekly{setmanalment} monthly{mensualment} quarterly{quadrimestralment} halfyear{bianualment} yearly{anualment} other{en altres freqüències}}{skip, plural, one {}=0{} other{, salta a partir de {skip}}}.",
-  "billsChangeLayoutTooltip": "Canvia la disposició",
-  "billsChangeSortOrderTooltip": "Canvia l'ordenació",
-  "billsErrorLoading": "Error carregant les factures.",
-  "billsExactAmountAndFrequency": "Factures de transaccions {value}. Es repeteixen {frequency, select, weekly{setmanalment} monthly{mensualment} quarterly{quadrimestralment} halfyear{bianualment} yearly{anualment} other{en altres freqüències}}{skip, plural, one {}=0{} other{, salta a partir de {skip}}}.",
-  "billsExpectedOn": "Data estimada {date}",
-  "billsFrequency": "{frequency, select, weekly{Setmanal} monthly{Mensual} quarterly{Quadrimestral} halfyear{Bianual} yearly{Anual} other{Altres}}",
-  "billsFrequencySkip": "{frequency, select, weekly{Setmanal} monthly{Mensual} quarterly{Qaudrimestral} halfyear{Bianual} yearly{Anual} other{Altres}}{skip, plural, one {}=0{} other{, salta a partir de {skip}}}",
-  "billsInactive": "Inactiva",
-  "billsIsActive": "Factura activa",
-  "billsLayoutGroupSubtitle": "Factures mostrades als seus grups assignats.",
-  "billsLayoutGroupTitle": "Grup",
-  "billsLayoutListSubtitle": "Factures ordenades segons algun criteri.",
-  "billsLayoutListTitle": "Llista",
-  "billsListEmpty": "La llista es troba actualment buida.",
-  "billsNextExpectedMatch": "Pròxima coincidència esperada",
-  "billsNotActive": "Factura inactiva",
-  "billsNotExpected": "No s'espera aquest periode",
-  "billsNoTransactions": "No s'ha trobat cap transacció.",
-  "billsPaidOn": "Pagada a {date}",
-  "billsSortAlphabetical": "Alfabètic",
-  "billsSortByTimePeriod": "Per període de temps",
-  "billsSortFrequency": "Freqüència",
-  "billsSortName": "Nom",
-  "billsUngrouped": "Sense grup",
-  "billsSettingsShowOnlyActive": "Mostra només actius",
-  "billsSettingsShowOnlyActiveDesc": "Mostra només les subscripcions actives.",
-  "billsSettingsShowOnlyExpected": "Mostra només esperats",
-  "billsSettingsShowOnlyExpectedDesc": "Mostra només les subscripcions que s'esperen (o s'han pagat) aquest mes.",
-  "categoryDeleteConfirm": "N'estàs segur que vols esborrar aquesta categoria? Les transaccions no s'esborraran, però ja no tindran cap categoria assignada.",
-  "categoryErrorLoading": "Error al carregar les categories.",
-  "categoryFormLabelIncludeInSum": "Inclou a la suma mensual",
-  "categoryFormLabelName": "Nom de la categoria",
-  "categoryMonthNext": "Mes següent",
-  "categoryMonthPrev": "Mes anterior",
-  "categorySumExcluded": "exclosa",
-  "categoryTitleAdd": "Afegeix Categoria",
-  "categoryTitleDelete": "Esborra la categoria",
-  "categoryTitleEdit": "Edita la categoria",
-  "catNone": "<sense categoria>",
-  "catOther": "Altres",
-  "errorAPIInvalidResponse": "Resposta de l'API invàlida: {message}",
-  "errorAPIUnavailable": "API no disponible",
-  "errorFieldRequired": "Aquest camp és obligatori.",
-  "errorInvalidURL": "URL invàlida",
-  "errorMinAPIVersion": "Cal disposar com a mínim de la versió v{requiredVersion} de Firefly. Per favor, actualitza.",
-  "errorStatusCode": "Codi d'Estat: {code}",
-  "errorUnknown": "Error desconegut.",
-  "formButtonHelp": "Ajuda",
-  "formButtonLogin": "Accedir",
-  "formButtonLogout": "Tanca la Sessió",
-  "formButtonRemove": "Elimina",
-  "formButtonResetLogin": "Reinicia l'inici de sessió",
-  "formButtonTransactionAdd": "Afegir Transacció",
-  "formButtonTryAgain": "Torna a provar",
-  "generalAccount": "Compte",
-  "generalAssets": "Actius",
-  "generalBalance": "Balanç",
-  "generalBalanceOn": "Balanç el {date}",
-  "generalBill": "Factura",
-  "generalBudget": "Pressupost",
-  "generalCategory": "Categoria",
-  "generalCurrency": "Moneda",
-  "generalDateRangeCurrentMonth": "Mes actual",
-  "generalDateRangeLast30Days": "Últims 30 dies",
-  "generalDateRangeCurrentYear": "Any actual",
-  "generalDateRangeLastYear": "Any passat",
-  "generalDateRangeAll": "Tots",
-  "generalDefault": "per defecte",
-  "generalDestinationAccount": "Compte de destí",
-  "generalDismiss": "Ignora",
-  "generalEarned": "Guanyat",
-  "generalError": "Error",
-  "generalExpenses": "Despeses",
-  "generalIncome": "Ingressos",
-  "generalLiabilities": "Passius",
-  "generalMultiple": "múltiples",
-  "generalNever": "mai",
-  "generalReconcile": "Consolidat",
-  "generalReset": "Restableix",
-  "generalSourceAccount": "Compte d'origen",
-  "generalSpent": "Gastat",
-  "generalSum": "Suma",
-  "generalTarget": "Destí",
-  "generalUnknown": "Desconegut",
-  "homeMainBillsInterval": " ({period, select, weekly{setmanalment} monthly{mensualment} quarterly{quatrimestralment} halfyear{semestralment} yearly{anualment} other{desconegut}})",
-  "homeMainBillsTitle": "Factures per a la pròxima setmana",
-  "homeMainBudgetInterval": " ({from} fins a {to}, {period})",
-  "homeMainBudgetIntervalSingle": " ({from} fins a {to})",
-  "homeMainBudgetSum": "{current} {status, select, over{per damunt de} other{queden de}} {available}",
-  "homeMainBudgetTitle": "Pressupostos per al mes actual",
-  "homeMainChartAccountsTitle": "Resum del Compte",
-  "homeMainChartCategoriesTitle": "Resum de la Categoria per a aquest mes",
-  "homeMainChartDailyAvg": "Mitjana de 7 dies",
-  "homeMainChartDailyTitle": "Resum Diari",
-  "homeMainChartNetEarningsTitle": "Ingressos Nets",
-  "homeMainChartNetWorthTitle": "Valor Net",
-  "homeMainChartTagsTitle": "Resum d'etiquetes del mes actual",
-  "homePiggyAdjustDialogTitle": "Estalvia/Gasta Diners",
-  "homePiggyDateStart": "Data d'inici: {date}",
-  "homePiggyDateTarget": "Data objectiu: {date}",
-  "homeMainDialogSettingsTitle": "Personalitza el tauler",
-  "homePiggyLinked": "Enllaçada a {account}",
-  "homePiggyNoAccounts": "No s'ha configurat cap guardiola.",
-  "homePiggyNoAccountsSubtitle": "Crea'n una a la interfície web!",
-  "homePiggyRemaining": "Queda per estalviar: {amount}",
-  "homePiggySaved": "Has estalviat: {amount}",
-  "homePiggySavedMultiple": "Estalviat fins ara:",
-  "homePiggyTarget": "Quantitat objectiu: {amount}",
-  "homePiggyAccountStatus": "Estat del compte",
-  "homePiggyAvailableAmounts": "Quantitats disponibles",
-  "homePiggyAvailable": "Disponible: {amount}",
-  "homePiggyInPiggyBanks": "En guardioles: {amount}",
-  "homeTabLabelBalance": "Fulla de Balanços",
-  "homeTabLabelMain": "Principal",
-  "homeTabLabelPiggybanks": "Guardioles",
-  "homeTabLabelTransactions": "Transaccions",
-  "homeTransactionsActionFilter": "Llista de filtres",
-  "homeTransactionsDialogFilterAccountsAll": "<Tots els Comptes>",
-  "homeTransactionsDialogFilterBillsAll": "<Totes les Factures>",
-  "homeTransactionsDialogFilterBillUnset": "<Cap Factura establerta>",
-  "homeTransactionsDialogFilterBudgetsAll": "<Tots els Pressupostos>",
-  "homeTransactionsDialogFilterBudgetUnset": "<Cap Pressupost establert>",
-  "homeTransactionsDialogFilterCategoriesAll": "<Totes les Categories>",
-  "homeTransactionsDialogFilterCategoryUnset": "<Cap Categoria establerta>",
-  "homeTransactionsDialogFilterCurrenciesAll": "<Totes les Monedes>",
-  "homeTransactionsDialogFilterDateRange": "Interval de dates",
-  "homeTransactionsDialogFilterFutureTransactions": "Mostra transaccions futures",
-  "homeTransactionsDialogFilterSearch": "Cerca un terme",
-  "homeTransactionsDialogFilterTitle": "Selecciona filtres",
-  "homeTransactionsEmpty": "No s'ha trobat cap transacció.",
-  "homeTransactionsMultipleCategories": "{num} categories",
-  "homeTransactionsSettingsShowTags": "Mostra les etiquetes a la llista de transaccions",
-  "liabilityDirectionCredit": "Se'm deu aquest deute",
-  "liabilityDirectionDebit": "Dec aquest deute",
-  "liabilityTypeDebt": "Deute",
-  "liabilityTypeLoan": "Préstec",
-  "liabilityTypeMortgage": "Hipoteca",
-  "loginAbout": "Per a fer servir Waterfly III adequadament cal que tingues el teu propi servidor de Firefly III o l'add-on de Firefly III a Home Assistant.\n\nPer favor, introdueix la URL completa a més del token d'accés (Configuració -> Perfil -> OAuth -> Token d'Accés Personal) a sota.",
-  "loginFormLabelAPIKey": "Clau d'API vàlida",
-  "loginFormLabelHost": "URL d'allotjament",
-  "loginWelcome": "Benvingut/da a Waterfly III",
-  "logoutConfirmation": "Segur que vols tancar la sessió?",
-  "navigationAccounts": "Comptes",
-  "navigationBills": "Factures",
-  "navigationCategories": "Categories",
-  "navigationMain": "Tauler de control Principal",
-  "generalSettings": "Configuració",
-  "no": "No",
-  "numPercent": "{num}",
-  "numPercentOf": "{perc} de {of}",
-  "settingsDialogDebugInfo": "Pots habilitar i enviar registres des d'ací. Aquests poden tenir un impacte sobre el rendiment de l'aplicació, així que no ho actives si no se t'ha demanat. Deshabilitar els registres eliminarà els que hi puguin haver desats.",
-  "settingsDialogDebugMailCreate": "Crear correu electrònic",
-  "settingsDialogDebugMailDisclaimer": "ADVERTIMENT: s'obrirà un esborrany de correu amb el fitxer de registre adjunt (en format de text). Els registres poden contenir informació sensible, com ara el nom d'amfitrió de la vostra instància de Firefly (tot i que intento evitar el registre de qualsevol secret, com ara la clau API). Si us plau, llegiu atentament el registre i censureu qualsevol informació que no vulgueu compartir i/o que no sigui rellevant per al problema que voleu informar.\n\nSi us plau, no envieu registres sense un acord previ per correu electrònic/GitHub per fer-ho. Suprimiré tots els registres enviats sense context per motius de privadesa. No carregueu mai el registre sense censura a GitHub ni a cap altre lloc.",
-  "settingsDialogDebugSendButton": "Envia registres per Correu Electrònic",
-  "settingsDialogDebugTitle": "Registres de depuració",
-  "settingsDialogLanguageTitle": "Selecciona un idioma",
-  "settingsDialogThemeTitle": "Selecciona un Tema",
-  "settingsFAQ": "Preguntes Freqüents",
-  "settingsFAQHelp": "S'obre al navegador. Només disponible en anglès.",
-  "settingsLanguage": "Idioma",
-  "settingsLockscreen": "Pantalla de Bloqueig",
-  "settingsLockscreenHelp": "Requereix autenticació en iniciar l'aplicació",
-  "settingsLockscreenInitial": "Per favor, autentica't per habilitar la pantalla de bloqueig.",
-  "settingsNLAppAccount": "Compte per Defecte",
-  "settingsNLAppAccountDynamic": "<Dinàmic>",
-  "settingsNLAppAdd": "Afegir Aplicació",
-  "settingsNLAppAddHelp": "Toca per afegir una aplicació a la qual escoltar. Només es mostraran les aplicacions compatibles.",
-  "settingsNLAppAddInfo": "Fes algunes transaccions de les aplicacions on rebis notificacions per afegir-les a la llista. Si encara no es mostren, per favor informa app@vogt.pw.",
-  "settingsNLAutoAdd": "Crea una transacció sense interacció",
-  "settingsNLDescription": "Aquest servei et permet obtenir detalls de transaccions a partir de notificacions. Addicionalment, pots seleccionar un compte per defecte al qual assignar les transaccions - si no s'estableix cap valor, s'intenta extreure el compte de la notificació.",
-  "settingsNLEmptyNote": "Mantén el camp de nota buit",
-  "settingsNLPermissionGrant": "Toca per a donar permís.",
-  "settingsNLPermissionNotGranted": "Permís no concedit.",
-  "settingsNLPermissionRemove": "Eliminar permís?",
-  "settingsNLPermissionRemoveHelp": "Per a deshabilitar aquest servei, toca en l'app i elimina els permisos a la pantalla següent.",
-  "settingsNLPrefillTXTitle": "Emplena automàticament el títol de la transacció amb el títol de la notificació",
-  "settingsNLServiceChecking": "Comprovant l'estat…",
-  "settingsNLServiceCheckingError": "No s'ha pogut comprovar l'estat: {error}",
-  "settingsNLServiceRunning": "El servei s'està executant.",
-  "settingsNLServiceStatus": "Estat del Servei",
-  "settingsNLServiceStopped": "El servei s'ha detingut.",
-  "settingsNotificationListener": "Servei d'escolta de notificacions",
-  "settingsTheme": "Tema de l'aplicació",
-  "settingsThemeDynamicColors": "Colors Dinàmics",
-  "settingsThemeValue": "{theme, select, dark{Tema Obscur} light{Tema Clar} other{Per defecte}}",
-  "settingsUseServerTimezone": "Utilitza la zona horària del servidor",
-  "settingsUseServerTimezoneHelp": "Mostra totes les hores a la zona horària del servidor. Això mimetitza el comportament de la interfície web.",
-  "settingsVersion": "Versió de l'aplicació",
-  "settingsVersionChecking": "comprovant…",
-  "transactionAttachments": "Adjunts",
-  "transactionDeleteConfirm": "Segur que vols eliminar aquesta transacció?",
-  "transactionDialogAttachmentsDelete": "Elimina l'adjunt",
-  "transactionDialogAttachmentsDeleteConfirm": "Segur que vols eliminar aquest adjunt?",
-  "transactionDialogAttachmentsErrorDownload": "No s'ha pogut baixar el fitxer.",
-  "transactionDialogAttachmentsErrorOpen": "No s'ha pogut obrir el fitxer: {error}",
-  "transactionDialogAttachmentsErrorUpload": "No s'ha pogut penjar el fitxer: {error}",
-  "transactionDialogAttachmentsTitle": "Adjunts",
-  "transactionDialogBillNoBill": "Cap factura",
-  "transactionDialogBillTitle": "Enllaça a una factura",
-  "transactionDialogCurrencyTitle": "Tria una Moneda",
-  "transactionDialogTagsAdd": "Afegir Etiqueta",
-  "transactionDialogTagsHint": "Cerca/Afegeix una Etiqueta",
-  "transactionDialogTagsTitle": "Selecciona Etiquetes",
-  "transactionDuplicate": "Duplicada",
-  "transactionErrorInvalidAccount": "Compte Invàlid",
-  "transactionErrorInvalidBudget": "Pressupost Invàlid",
-  "transactionErrorNoAccounts": "Si us plau, omple els comptes primer.",
-  "transactionErrorNoAssetAccount": "Si us plau, selecciona un compte d'actiu.",
-  "transactionErrorTitle": "Per favor, introdueix un títol.",
-  "transactionFormLabelAccountDestination": "Compte de destí",
-  "transactionFormLabelAccountForeign": "Compte estranger",
-  "transactionFormLabelAccountOwn": "Compte propi",
-  "transactionFormLabelAccountSource": "Compte d'origen",
-  "transactionFormLabelNotes": "Notes",
-  "transactionFormLabelTags": "Etiquetes",
-  "transactionFormLabelTitle": "Títol de la Transacció",
-  "transactionSplitAdd": "Afegeix una transacció dividida",
-  "transactionSplitChangeCurrency": "Canvia la moneda de la divisió",
-  "transactionSplitChangeDestinationAccount": "Canvia el compte de destinació de la divisió",
-  "transactionSplitChangeSourceAccount": "Canvia el compte d'origen de la divisió",
-  "transactionSplitChangeTarget": "Canvia el compte destí de la divisió",
-  "transactionSplitDelete": "Elimina la divisió",
-  "transactionTitleAdd": "Afegir Transacció",
-  "transactionTitleDelete": "Elimina la Transacció",
-  "transactionTitleEdit": "Edita la Transacció",
-  "transactionTypeDeposit": "Ingrés",
-  "transactionTypeTransfer": "Transferència",
-  "transactionTypeWithdrawal": "Retirada"
+    "@@locale": "ca",
+    "@@x-reference": true,
+    "accountRoleAssetCashWallet": "Cartera d'Efectiu",
+    "@accountRoleAssetCashWallet": {
+        "description": "Firefly Translation String: account_role_cashWalletAsset"
+    },
+    "accountRoleAssetCC": "Targeta de crèdit",
+    "@accountRoleAssetCC": {
+        "description": "Firefly Translation String: account_role_ccAsset"
+    },
+    "accountRoleAssetDefault": "Compte d'actius per defecte",
+    "@accountRoleAssetDefault": {
+        "description": "Firefly Translation String: account_role_defaultAsset"
+    },
+    "accountRoleAssetSavings": "Compte d'estalvis",
+    "@accountRoleAssetSavings": {
+        "description": "Firefly Translation String: account_role_savingAsset"
+    },
+    "accountRoleAssetShared": "Compte d'actius compartit",
+    "@accountRoleAssetShared": {
+        "description": "Firefly Translation String: account_role_sharedAsset"
+    },
+    "accountsLabelAsset": "Comptes d'Actius",
+    "@accountsLabelAsset": {
+        "description": "Firefly Translation String: asset_accounts"
+    },
+    "accountsLabelExpense": "Comptes de Despeses",
+    "@accountsLabelExpense": {
+        "description": "Firefly Translation String: expense_accounts"
+    },
+    "accountsLabelLiabilities": "Passius",
+    "@accountsLabelLiabilities": {
+        "description": "Firefly Translation String: liabilities_accounts"
+    },
+    "accountsLabelRevenue": "Comptes d'Ingressos",
+    "@accountsLabelRevenue": {
+        "description": "Firefly Translation String: revenue_accounts"
+    },
+    "accountsLiabilitiesInterest": "{interest}% d'interès per {period, select, weekly{setmana} monthly{mes} quarterly{quadrimestre} halfyear{mig any} yearly{any} other{desconegut}}",
+    "@accountsLiabilitiesInterest": {
+        "description": "Interest in a certain period",
+        "placeholders": {
+            "interest": {
+                "type": "double",
+                "example": "1.2"
+            },
+            "period": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsAmountAndFrequency": "Factures de transaccions entre {minValue} i {maxvalue}. Es repeteixen {frequency, select, weekly{setmanalment} monthly{mensualment} quarterly{quadrimestralment} halfyear{bianualment} yearly{anualment} other{en altres freqüències}}{skip, plural, one {}=0{} other{, salta a partir de {skip}}}.",
+    "@billsAmountAndFrequency": {
+        "description": "Subscription match for min and max amounts, and frequency",
+        "placeholders": {
+            "minValue": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "maxvalue": {
+                "type": "String",
+                "example": "$60.50"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsChangeLayoutTooltip": "Canvia la disposició",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "Canvia l'ordenació",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsErrorLoading": "Error carregant les factures.",
+    "@billsErrorLoading": {
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
+    },
+    "billsExactAmountAndFrequency": "Factures de transaccions {value}. Es repeteixen {frequency, select, weekly{setmanalment} monthly{mensualment} quarterly{quadrimestralment} halfyear{bianualment} yearly{anualment} other{en altres freqüències}}{skip, plural, one {}=0{} other{, salta a partir de {skip}}}.",
+    "@billsExactAmountAndFrequency": {
+        "description": "Subscription match for exact amount and frequency",
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsExpectedOn": "Data estimada {date}",
+    "@billsExpectedOn": {
+        "description": "Describes what date the subscription is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsFrequency": "{frequency, select, weekly{Setmanal} monthly{Mensual} quarterly{Quadrimestral} halfyear{Bianual} yearly{Anual} other{Altres}}",
+    "@billsFrequency": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsFrequencySkip": "{frequency, select, weekly{Setmanal} monthly{Mensual} quarterly{Qaudrimestral} halfyear{Bianual} yearly{Anual} other{Altres}}{skip, plural, one {}=0{} other{, salta a partir de {skip}}}",
+    "@billsFrequencySkip": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsInactive": "Inactiva",
+    "@billsInactive": {
+        "description": "Text: when the subscription is inactive"
+    },
+    "billsIsActive": "Factura activa",
+    "@billsIsActive": {
+        "description": "Text: the subscription is active"
+    },
+    "billsLayoutGroupSubtitle": "Factures mostrades als seus grups assignats.",
+    "@billsLayoutGroupSubtitle": {
+        "description": "Subtitle text for group layout option"
+    },
+    "billsLayoutGroupTitle": "Grup",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListSubtitle": "Factures ordenades segons algun criteri.",
+    "@billsLayoutListSubtitle": {
+        "description": "Subtitle text for list layout option"
+    },
+    "billsLayoutListTitle": "Llista",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "La llista es troba actualment buida.",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "Pròxima coincidència esperada",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for subscription"
+    },
+    "billsNotActive": "Factura inactiva",
+    "@billsNotActive": {
+        "description": "Text: the subscription is inactive"
+    },
+    "billsNotExpected": "No s'espera aquest periode",
+    "@billsNotExpected": {
+        "description": "Describes that the subscription is not expected this period"
+    },
+    "billsNoTransactions": "No s'ha trobat cap transacció.",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the subscription"
+    },
+    "billsPaidOn": "Pagada a {date}",
+    "@billsPaidOn": {
+        "description": "Describes what date the subscription was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "Alfabètic",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "Per període de temps",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "Freqüència",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "Nom",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "Sense grup",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped subscriptions"
+    },
+    "billsSettingsShowOnlyActive": "Mostra només actius",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Mostra només les subscripcions actives.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Mostra només esperats",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Mostra només les subscripcions que s'esperen (o s'han pagat) aquest mes.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
+    "categoryDeleteConfirm": "N'estàs segur que vols esborrar aquesta categoria? Les transaccions no s'esborraran, però ja no tindran cap categoria assignada.",
+    "@categoryDeleteConfirm": {
+        "description": "Confirmation text to delete category"
+    },
+    "categoryErrorLoading": "Error al carregar les categories.",
+    "@categoryErrorLoading": {
+        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+    },
+    "categoryFormLabelIncludeInSum": "Inclou a la suma mensual",
+    "@categoryFormLabelIncludeInSum": {
+        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+    },
+    "categoryFormLabelName": "Nom de la categoria",
+    "@categoryFormLabelName": {
+        "description": "Category Add/Edit Form: Label for name field"
+    },
+    "categoryMonthNext": "Mes següent",
+    "@categoryMonthNext": {
+        "description": "Button title to view overview for next month"
+    },
+    "categoryMonthPrev": "Mes anterior",
+    "@categoryMonthPrev": {
+        "description": "Button title to view overview for previous month"
+    },
+    "categorySumExcluded": "exclosa",
+    "@categorySumExcluded": {
+        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+    },
+    "categoryTitleAdd": "Afegeix Categoria",
+    "@categoryTitleAdd": {
+        "description": "Title for Dialog: Add Category"
+    },
+    "categoryTitleDelete": "Esborra la categoria",
+    "@categoryTitleDelete": {
+        "description": "Title for Dialog: Delete Category"
+    },
+    "categoryTitleEdit": "Edita la categoria",
+    "@categoryTitleEdit": {
+        "description": "Title for Dialog: Edit Category"
+    },
+    "catNone": "<sense categoria>",
+    "@catNone": {
+        "description": "Placeholder when no category has been set."
+    },
+    "catOther": "Altres",
+    "@catOther": {
+        "description": "Category description for summary category 'Other'"
+    },
+    "errorAPIInvalidResponse": "Resposta de l'API invàlida: {message}",
+    "@errorAPIInvalidResponse": {
+        "description": "Invalid API response error",
+        "placeholders": {
+            "message": {
+                "type": "String",
+                "example": "API could not be reached."
+            }
+        }
+    },
+    "errorAPIUnavailable": "API no disponible",
+    "@errorAPIUnavailable": {
+        "description": "Error thrown when API is unavailable."
+    },
+    "errorFieldRequired": "Aquest camp és obligatori.",
+    "@errorFieldRequired": {
+        "description": "Error: Required field was left empty."
+    },
+    "errorInvalidURL": "URL invàlida",
+    "@errorInvalidURL": {
+        "description": "Error: URL is invalid"
+    },
+    "errorMinAPIVersion": "Cal disposar com a mínim de la versió v{requiredVersion} de Firefly. Per favor, actualitza.",
+    "@errorMinAPIVersion": {
+        "description": "Error: Required API version not met.",
+        "placeholders": {
+            "requiredVersion": {
+                "type": "String",
+                "example": "2.0.0"
+            }
+        }
+    },
+    "errorStatusCode": "Codi d'Estat: {code}",
+    "@errorStatusCode": {
+        "description": "HTTP status code information on error",
+        "placeholders": {
+            "code": {
+                "type": "int",
+                "example": "500"
+            }
+        }
+    },
+    "errorUnknown": "Error desconegut.",
+    "@errorUnknown": {
+        "description": "Error without further information occurred."
+    },
+    "formButtonHelp": "Ajuda",
+    "@formButtonHelp": {
+        "description": "Button Label: Help"
+    },
+    "formButtonLogin": "Accedir",
+    "@formButtonLogin": {
+        "description": "Button Label: Login"
+    },
+    "formButtonLogout": "Tanca la Sessió",
+    "@formButtonLogout": {
+        "description": "Button Label: Logout"
+    },
+    "formButtonRemove": "Elimina",
+    "@formButtonRemove": {
+        "description": "Button Label: Remove"
+    },
+    "formButtonResetLogin": "Reinicia l'inici de sessió",
+    "@formButtonResetLogin": {
+        "description": "Button Label: Reset login form (when error is shown)"
+    },
+    "formButtonTransactionAdd": "Afegir Transacció",
+    "@formButtonTransactionAdd": {
+        "description": "Button Label: Add Transaction"
+    },
+    "formButtonTryAgain": "Torna a provar",
+    "@formButtonTryAgain": {
+        "description": "Button Label: Try that thing again (login etc)"
+    },
+    "generalAccount": "Compte",
+    "@generalAccount": {
+        "description": "Asset/Debt (Bank) Account"
+    },
+    "generalAssets": "Actius",
+    "@generalAssets": {
+        "description": "(Monetary) Assets"
+    },
+    "generalBalance": "Balanç",
+    "@generalBalance": {
+        "description": "(Account) Balance"
+    },
+    "generalBalanceOn": "Balanç el {date}",
+    "@generalBalanceOn": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMd",
+                "example": "2023-05-13"
+            }
+        }
+    },
+    "generalBill": "Factura",
+    "@generalBill": {
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
+    },
+    "generalBudget": "Pressupost",
+    "@generalBudget": {
+        "description": "(Monetary) Budget"
+    },
+    "generalCategory": "Categoria",
+    "@generalCategory": {
+        "description": "Category (of transaction etc.)."
+    },
+    "generalCurrency": "Moneda",
+    "@generalCurrency": {
+        "description": "(Money) Currency"
+    },
+    "generalDateRangeCurrentMonth": "Mes actual",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Últims 30 dies",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Any actual",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Any passat",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Tots",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
+    "generalDefault": "per defecte",
+    "@generalDefault": {
+        "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "Compte de destí",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
+    },
+    "generalDismiss": "Ignora",
+    "@generalDismiss": {
+        "description": "Dismiss window/dialog without action"
+    },
+    "generalEarned": "Guanyat",
+    "@generalEarned": {
+        "description": "(Amount) Earned"
+    },
+    "generalError": "Error",
+    "@generalError": {
+        "description": "Error (title in dialogs etc.)"
+    },
+    "generalExpenses": "Despeses",
+    "@generalExpenses": {
+        "description": "(Account) Expenses"
+    },
+    "generalIncome": "Ingressos",
+    "@generalIncome": {
+        "description": "(Account) Info"
+    },
+    "generalLiabilities": "Passius",
+    "@generalLiabilities": {
+        "description": "Firefly Translation String: liabilities"
+    },
+    "generalMultiple": "múltiples",
+    "@generalMultiple": {
+        "description": "Multiples of a single thing (e.g. source accounts) are existing"
+    },
+    "generalNever": "mai",
+    "@generalNever": {
+        "description": "Has never happened, no update etc."
+    },
+    "generalReconcile": "Consolidat",
+    "@generalReconcile": {
+        "description": "Booking has been confirmed/reconciled"
+    },
+    "generalReset": "Restableix",
+    "@generalReset": {
+        "description": "Reset something (i.e. set filters)"
+    },
+    "generalSourceAccount": "Compte d'origen",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
+    "generalSpent": "Gastat",
+    "@generalSpent": {
+        "description": "(Amount) Spent"
+    },
+    "generalSum": "Suma",
+    "@generalSum": {
+        "description": "(Mathematical) Sum"
+    },
+    "generalTarget": "Destí",
+    "@generalTarget": {
+        "description": "Target value (i.e. a sum to save)"
+    },
+    "generalUnknown": "Desconegut",
+    "@generalUnknown": {
+        "description": "Something is unknown."
+    },
+    "homeMainBillsInterval": " ({period, select, weekly{setmanalment} monthly{mensualment} quarterly{quatrimestralment} halfyear{semestralment} yearly{anualment} other{desconegut}})",
+    "@homeMainBillsInterval": {
+        "description": "subscription interval type",
+        "placeholders": {
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBillsTitle": "Factures per a la pròxima setmana",
+    "@homeMainBillsTitle": {
+        "description": "Title: Subscriptions for the next week"
+    },
+    "homeMainBudgetInterval": " ({from} fins a {to}, {period})",
+    "@homeMainBudgetInterval": {
+        "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
+            },
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBudgetIntervalSingle": " ({from} fins a {to})",
+    "@homeMainBudgetIntervalSingle": {
+        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
+            }
+        }
+    },
+    "homeMainBudgetSum": "{current} {status, select, over{per damunt de} other{queden de}} {available}",
+    "@homeMainBudgetSum": {
+        "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
+        "placeholders": {
+            "current": {
+                "type": "String",
+                "example": "12.34€"
+            },
+            "status": {
+                "type": "String",
+                "example": "left from"
+            },
+            "available": {
+                "type": "String",
+                "example": "12.34€"
+            }
+        }
+    },
+    "homeMainBudgetTitle": "Pressupostos per al mes actual",
+    "@homeMainBudgetTitle": {
+        "description": "Title: Budgets for current month"
+    },
+    "homeMainChartAccountsTitle": "Resum del Compte",
+    "@homeMainChartAccountsTitle": {
+        "description": "Chart Label: Account Summary"
+    },
+    "homeMainChartCategoriesTitle": "Resum de la Categoria per a aquest mes",
+    "@homeMainChartCategoriesTitle": {
+        "description": "Chart Label: Category Summary"
+    },
+    "homeMainChartDailyAvg": "Mitjana de 7 dies",
+    "@homeMainChartDailyAvg": {
+        "description": "Text for last week average spent"
+    },
+    "homeMainChartDailyTitle": "Resum Diari",
+    "@homeMainChartDailyTitle": {
+        "description": "Chart Label: Daily Summary"
+    },
+    "homeMainChartNetEarningsTitle": "Ingressos Nets",
+    "@homeMainChartNetEarningsTitle": {
+        "description": "Chart Label: Net Earnings"
+    },
+    "homeMainChartNetWorthTitle": "Valor Net",
+    "@homeMainChartNetWorthTitle": {
+        "description": "Chart Label: Net Worth"
+    },
+    "homeMainChartTagsTitle": "Resum d'etiquetes del mes actual",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
+    "homePiggyAdjustDialogTitle": "Estalvia/Gasta Diners",
+    "@homePiggyAdjustDialogTitle": {
+        "description": "Title of the dialog where money can be added/removed to a piggy bank."
+    },
+    "homePiggyDateStart": "Data d'inici: {date}",
+    "@homePiggyDateStart": {
+        "description": "Start of the piggy bank",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "March 12, 2023"
+            }
+        }
+    },
+    "homePiggyDateTarget": "Data objectiu: {date}",
+    "@homePiggyDateTarget": {
+        "description": "Set target date of the piggy bank (when saving should be finished)",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "March 12, 2023"
+            }
+        }
+    },
+    "homeMainDialogSettingsTitle": "Personalitza el tauler",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
+    },
+    "homePiggyLinked": "Enllaçada a {account}",
+    "@homePiggyLinked": {
+        "description": "Piggy bank is linked to asset account {account}.",
+        "placeholders": {
+            "account": {
+                "type": "String",
+                "example": "Awesome Bank Account"
+            }
+        }
+    },
+    "homePiggyNoAccounts": "No s'ha configurat cap guardiola.",
+    "@homePiggyNoAccounts": {
+        "description": "Information that no piggy banks are existing"
+    },
+    "homePiggyNoAccountsSubtitle": "Crea'n una a la interfície web!",
+    "@homePiggyNoAccountsSubtitle": {
+        "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
+    },
+    "homePiggyRemaining": "Queda per estalviar: {amount}",
+    "@homePiggyRemaining": {
+        "description": "How much money is left to save",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggySaved": "Has estalviat: {amount}",
+    "@homePiggySaved": {
+        "description": "How much money already was saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggySavedMultiple": "Estalviat fins ara:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
+    "homePiggyTarget": "Quantitat objectiu: {amount}",
+    "@homePiggyTarget": {
+        "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "Estat del compte",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Quantitats disponibles",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "Disponible: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "En guardioles: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homeTabLabelBalance": "Fulla de Balanços",
+    "@homeTabLabelBalance": {
+        "description": "Tab Label: Balance Sheet page"
+    },
+    "homeTabLabelMain": "Principal",
+    "@homeTabLabelMain": {
+        "description": "Tab Label: Start page (\"main\")"
+    },
+    "homeTabLabelPiggybanks": "Guardioles",
+    "@homeTabLabelPiggybanks": {
+        "description": "Tab Label: Piggy Banks page"
+    },
+    "homeTabLabelTransactions": "Transaccions",
+    "@homeTabLabelTransactions": {
+        "description": "Tab Label: Transactions page"
+    },
+    "homeTransactionsActionFilter": "Llista de filtres",
+    "@homeTransactionsActionFilter": {
+        "description": "Action Button Label: Filter list."
+    },
+    "homeTransactionsDialogFilterAccountsAll": "<Tots els Comptes>",
+    "@homeTransactionsDialogFilterAccountsAll": {
+        "description": "Don't filter for a specific account (default entry)"
+    },
+    "homeTransactionsDialogFilterBillsAll": "<Totes les Factures>",
+    "@homeTransactionsDialogFilterBillsAll": {
+        "description": "Don't filter for a specific subscription (default entry)"
+    },
+    "homeTransactionsDialogFilterBillUnset": "<Cap Factura establerta>",
+    "@homeTransactionsDialogFilterBillUnset": {
+        "description": "Filter for unset subscription"
+    },
+    "homeTransactionsDialogFilterBudgetsAll": "<Tots els Pressupostos>",
+    "@homeTransactionsDialogFilterBudgetsAll": {
+        "description": "Don't filter for a specific budget (default entry)"
+    },
+    "homeTransactionsDialogFilterBudgetUnset": "<Cap Pressupost establert>",
+    "@homeTransactionsDialogFilterBudgetUnset": {
+        "description": "Filter for unset budgets"
+    },
+    "homeTransactionsDialogFilterCategoriesAll": "<Totes les Categories>",
+    "@homeTransactionsDialogFilterCategoriesAll": {
+        "description": "Don't filter for a specific category (default entry)"
+    },
+    "homeTransactionsDialogFilterCategoryUnset": "<Cap Categoria establerta>",
+    "@homeTransactionsDialogFilterCategoryUnset": {
+        "description": "Filter for unset categories"
+    },
+    "homeTransactionsDialogFilterCurrenciesAll": "<Totes les Monedes>",
+    "@homeTransactionsDialogFilterCurrenciesAll": {
+        "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "Interval de dates",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
+    },
+    "homeTransactionsDialogFilterFutureTransactions": "Mostra transaccions futures",
+    "@homeTransactionsDialogFilterFutureTransactions": {
+        "description": "Setting to show future transactions"
+    },
+    "homeTransactionsDialogFilterSearch": "Cerca un terme",
+    "@homeTransactionsDialogFilterSearch": {
+        "description": "Search term for filter"
+    },
+    "homeTransactionsDialogFilterTitle": "Selecciona filtres",
+    "@homeTransactionsDialogFilterTitle": {
+        "description": "Title of Filter Dialog"
+    },
+    "homeTransactionsEmpty": "No s'ha trobat cap transacció.",
+    "@homeTransactionsEmpty": {
+        "description": "Message when no transactions are found."
+    },
+    "homeTransactionsMultipleCategories": "{num} categories",
+    "@homeTransactionsMultipleCategories": {
+        "description": "$num categories for the transaction.",
+        "placeholders": {
+            "num": {
+                "type": "int",
+                "example": "2"
+            }
+        }
+    },
+    "homeTransactionsSettingsShowTags": "Mostra les etiquetes a la llista de transaccions",
+    "@homeTransactionsSettingsShowTags": {
+        "description": "Setting label to show tags in transactioon list."
+    },
+    "liabilityDirectionCredit": "Se'm deu aquest deute",
+    "@liabilityDirectionCredit": {
+        "description": "Firefly Translation String: liability_direction_credit"
+    },
+    "liabilityDirectionDebit": "Dec aquest deute",
+    "@liabilityDirectionDebit": {
+        "description": "Firefly Translation String: liability_direction_debit"
+    },
+    "liabilityTypeDebt": "Deute",
+    "@liabilityTypeDebt": {
+        "description": "Firefly Translation String: account_type_debt"
+    },
+    "liabilityTypeLoan": "Préstec",
+    "@liabilityTypeLoan": {
+        "description": "Firefly Translation String: account_type_loan"
+    },
+    "liabilityTypeMortgage": "Hipoteca",
+    "@liabilityTypeMortgage": {
+        "description": "Firefly Translation String: account_type_mortgage"
+    },
+    "loginAbout": "Per a fer servir Waterfly III adequadament cal que tingues el teu propi servidor de Firefly III o l'add-on de Firefly III a Home Assistant.\n\nPer favor, introdueix la URL completa a més del token d'accés (Configuració -> Perfil -> OAuth -> Token d'Accés Personal) a sota.",
+    "@loginAbout": {
+        "description": "Login screen welcome description"
+    },
+    "loginFormLabelAPIKey": "Clau d'API vàlida",
+    "@loginFormLabelAPIKey": {
+        "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHost": "URL d'allotjament",
+    "@loginFormLabelHost": {
+        "description": "Login Form: Label for Host field"
+    },
+    "loginWelcome": "Benvingut/da a Waterfly III",
+    "@loginWelcome": {
+        "description": "Login screen welcome banner"
+    },
+    "logoutConfirmation": "Segur que vols tancar la sessió?",
+    "@logoutConfirmation": {
+        "description": "Get user confirmation if he really wants to log out"
+    },
+    "navigationAccounts": "Comptes",
+    "@navigationAccounts": {
+        "description": "Navigation Label: Accounts Page"
+    },
+    "navigationBills": "Factures",
+    "@navigationBills": {
+        "description": "Navigation Label: Subscriptions"
+    },
+    "navigationCategories": "Categories",
+    "@navigationCategories": {
+        "description": "Navigation Label: Categories"
+    },
+    "navigationMain": "Tauler de control Principal",
+    "@navigationMain": {
+        "description": "Navigation Label: Main Dashboard"
+    },
+    "generalSettings": "Configuració",
+    "@generalSettings": {
+        "description": "Label: Settings"
+    },
+    "no": "No",
+    "@no": {
+        "description": "The word no"
+    },
+    "numPercent": "{num}",
+    "@numPercent": {
+        "description": "Number formatted as percentage",
+        "placeholders": {
+            "num": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            }
+        }
+    },
+    "numPercentOf": "{perc} de {of}",
+    "@numPercentOf": {
+        "description": "Number formatted as percentage, with total amount provided",
+        "placeholders": {
+            "perc": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            },
+            "of": {
+                "type": "String"
+            }
+        }
+    },
+    "settingsDialogDebugInfo": "Pots habilitar i enviar registres des d'ací. Aquests poden tenir un impacte sobre el rendiment de l'aplicació, així que no ho actives si no se t'ha demanat. Deshabilitar els registres eliminarà els que hi puguin haver desats.",
+    "@settingsDialogDebugInfo": {
+        "description": "Information about debug logs and their impact."
+    },
+    "settingsDialogDebugMailCreate": "Crear correu electrònic",
+    "@settingsDialogDebugMailCreate": {
+        "description": "Button to confirm mail creation after privacy disclaimer is shown."
+    },
+    "settingsDialogDebugMailDisclaimer": "ADVERTIMENT: s'obrirà un esborrany de correu amb el fitxer de registre adjunt (en format de text). Els registres poden contenir informació sensible, com ara el nom d'amfitrió de la vostra instància de Firefly (tot i que intento evitar el registre de qualsevol secret, com ara la clau API). Si us plau, llegiu atentament el registre i censureu qualsevol informació que no vulgueu compartir i/o que no sigui rellevant per al problema que voleu informar.\n\nSi us plau, no envieu registres sense un acord previ per correu electrònic/GitHub per fer-ho. Suprimiré tots els registres enviats sense context per motius de privadesa. No carregueu mai el registre sense censura a GitHub ni a cap altre lloc.",
+    "@settingsDialogDebugMailDisclaimer": {
+        "description": "Privacy disclaimer shown before sending logs"
+    },
+    "settingsDialogDebugSendButton": "Envia registres per Correu Electrònic",
+    "@settingsDialogDebugSendButton": {
+        "description": "Button to send logs via E-Mail"
+    },
+    "settingsDialogDebugTitle": "Registres de depuració",
+    "@settingsDialogDebugTitle": {
+        "description": "Dialog title: Debug Logs"
+    },
+    "settingsDialogLanguageTitle": "Selecciona un idioma",
+    "@settingsDialogLanguageTitle": {
+        "description": "Dialog title: Select Language"
+    },
+    "settingsDialogThemeTitle": "Selecciona un Tema",
+    "@settingsDialogThemeTitle": {
+        "description": "Dialog title: Select theme"
+    },
+    "settingsFAQ": "Preguntes Freqüents",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
+    "settingsFAQHelp": "S'obre al navegador. Només disponible en anglès.",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
+    },
+    "settingsLanguage": "Idioma",
+    "@settingsLanguage": {
+        "description": "Currently selected language"
+    },
+    "settingsLockscreen": "Pantalla de Bloqueig",
+    "@settingsLockscreen": {
+        "description": "Setting if a lockscreen is shown (authentication is required on startup)"
+    },
+    "settingsLockscreenHelp": "Requereix autenticació en iniciar l'aplicació",
+    "@settingsLockscreenHelp": {
+        "description": "Description for lockscreen setting"
+    },
+    "settingsLockscreenInitial": "Per favor, autentica't per habilitar la pantalla de bloqueig.",
+    "@settingsLockscreenInitial": {
+        "description": "Prompt to authenticate once to set up the lockscreen"
+    },
+    "settingsNLAppAccount": "Compte per Defecte",
+    "@settingsNLAppAccount": {
+        "description": "Default account which will be used for the transaction."
+    },
+    "settingsNLAppAccountDynamic": "<Dinàmic>",
+    "@settingsNLAppAccountDynamic": {
+        "description": "Account will be selected dynamically by the content of the notification."
+    },
+    "settingsNLAppAdd": "Afegir Aplicació",
+    "@settingsNLAppAdd": {
+        "description": "Button title to add a new app."
+    },
+    "settingsNLAppAddHelp": "Toca per afegir una aplicació a la qual escoltar. Només es mostraran les aplicacions compatibles.",
+    "@settingsNLAppAddHelp": {
+        "description": "Help text below adding the new app button."
+    },
+    "settingsNLAppAddInfo": "Fes algunes transaccions de les aplicacions on rebis notificacions per afegir-les a la llista. Si encara no es mostren, per favor informa app@vogt.pw.",
+    "@settingsNLAppAddInfo": {
+        "description": "Help text when no more app is available to add."
+    },
+    "settingsNLAutoAdd": "Crea una transacció sense interacció",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
+    "settingsNLDescription": "Aquest servei et permet obtenir detalls de transaccions a partir de notificacions. Addicionalment, pots seleccionar un compte per defecte al qual assignar les transaccions - si no s'estableix cap valor, s'intenta extreure el compte de la notificació.",
+    "@settingsNLDescription": {
+        "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "Mantén el camp de nota buit",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
+    },
+    "settingsNLPermissionGrant": "Toca per a donar permís.",
+    "@settingsNLPermissionGrant": {
+        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
+    },
+    "settingsNLPermissionNotGranted": "Permís no concedit.",
+    "@settingsNLPermissionNotGranted": {
+        "description": "A requested permission was not granted."
+    },
+    "settingsNLPermissionRemove": "Eliminar permís?",
+    "@settingsNLPermissionRemove": {
+        "description": "Dialog title asking if permission should be removed."
+    },
+    "settingsNLPermissionRemoveHelp": "Per a deshabilitar aquest servei, toca en l'app i elimina els permisos a la pantalla següent.",
+    "@settingsNLPermissionRemoveHelp": {
+        "description": "Dialog text giving hint how to remove the permission."
+    },
+    "settingsNLPrefillTXTitle": "Emplena automàticament el títol de la transacció amb el títol de la notificació",
+    "@settingsNLPrefillTXTitle": {
+        "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLServiceChecking": "Comprovant l'estat…",
+    "@settingsNLServiceChecking": {
+        "description": "Checking the status of the background service"
+    },
+    "settingsNLServiceCheckingError": "No s'ha pogut comprovar l'estat: {error}",
+    "@settingsNLServiceCheckingError": {
+        "description": "An error occurred while checking the service status",
+        "placeholders": {
+            "error": {
+                "type": "String",
+                "description": "Error details",
+                "example": "Timeout"
+            }
+        }
+    },
+    "settingsNLServiceRunning": "El servei s'està executant.",
+    "@settingsNLServiceRunning": {
+        "description": "A background service is running normally."
+    },
+    "settingsNLServiceStatus": "Estat del Servei",
+    "@settingsNLServiceStatus": {
+        "description": "Status of a background service."
+    },
+    "settingsNLServiceStopped": "El servei s'ha detingut.",
+    "@settingsNLServiceStopped": {
+        "description": "A background service is stopped."
+    },
+    "settingsNotificationListener": "Servei d'escolta de notificacions",
+    "@settingsNotificationListener": {
+        "description": "Setting for the notification listener service."
+    },
+    "settingsTheme": "Tema de l'aplicació",
+    "@settingsTheme": {
+        "description": "App theme (dark or light)"
+    },
+    "settingsThemeDynamicColors": "Colors Dinàmics",
+    "@settingsThemeDynamicColors": {
+        "description": "Material You Dynamic Colors feature"
+    },
+    "settingsThemeValue": "{theme, select, dark{Tema Obscur} light{Tema Clar} other{Per defecte}}",
+    "@settingsThemeValue": {
+        "description": "Currently selected theme (either dark, light or system)",
+        "placeholders": {
+            "theme": {
+                "type": "String",
+                "example": "ThemeMode.dark"
+            }
+        }
+    },
+    "settingsUseServerTimezone": "Utilitza la zona horària del servidor",
+    "@settingsUseServerTimezone": {
+        "description": "Setting label to use server timezone."
+    },
+    "settingsUseServerTimezoneHelp": "Mostra totes les hores a la zona horària del servidor. Això mimetitza el comportament de la interfície web.",
+    "@settingsUseServerTimezoneHelp": {
+        "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
+    },
+    "settingsVersion": "Versió de l'aplicació",
+    "@settingsVersion": {
+        "description": "Current App Version"
+    },
+    "settingsVersionChecking": "comprovant…",
+    "@settingsVersionChecking": {
+        "description": "Shown while checking for app version"
+    },
+    "transactionAttachments": "Adjunts",
+    "@transactionAttachments": {
+        "description": "Button Label: Attachments"
+    },
+    "transactionDeleteConfirm": "Segur que vols eliminar aquesta transacció?",
+    "@transactionDeleteConfirm": {
+        "description": "Confirmation text to delete transaction"
+    },
+    "transactionDialogAttachmentsDelete": "Elimina l'adjunt",
+    "@transactionDialogAttachmentsDelete": {
+        "description": "Button Label: Delete Attachment"
+    },
+    "transactionDialogAttachmentsDeleteConfirm": "Segur que vols eliminar aquest adjunt?",
+    "@transactionDialogAttachmentsDeleteConfirm": {
+        "description": "Confirmation text to delete attachment"
+    },
+    "transactionDialogAttachmentsErrorDownload": "No s'ha pogut baixar el fitxer.",
+    "@transactionDialogAttachmentsErrorDownload": {
+        "description": "Snackbar Text: File download failed."
+    },
+    "transactionDialogAttachmentsErrorOpen": "No s'ha pogut obrir el fitxer: {error}",
+    "@transactionDialogAttachmentsErrorOpen": {
+        "description": "Snackbar Text: File could not be opened, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsErrorUpload": "No s'ha pogut penjar el fitxer: {error}",
+    "@transactionDialogAttachmentsErrorUpload": {
+        "description": "Snackbar Text: File could not be uploaded, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsTitle": "Adjunts",
+    "@transactionDialogAttachmentsTitle": {
+        "description": "Dialog Title: Attachments Dialog"
+    },
+    "transactionDialogBillNoBill": "Cap factura",
+    "@transactionDialogBillNoBill": {
+        "description": "Button Label: no subscription to be used"
+    },
+    "transactionDialogBillTitle": "Enllaça a una factura",
+    "@transactionDialogBillTitle": {
+        "description": "Dialog Title: Link Subscription to transaction"
+    },
+    "transactionDialogCurrencyTitle": "Tria una Moneda",
+    "@transactionDialogCurrencyTitle": {
+        "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "Sense guardiola",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Enllaça amb la guardiola",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
+    },
+    "transactionDialogTagsAdd": "Afegir Etiqueta",
+    "@transactionDialogTagsAdd": {
+        "description": "Button Label: Add Tag"
+    },
+    "transactionDialogTagsHint": "Cerca/Afegeix una Etiqueta",
+    "@transactionDialogTagsHint": {
+        "description": "Hint Text for search tag field"
+    },
+    "transactionDialogTagsTitle": "Selecciona Etiquetes",
+    "@transactionDialogTagsTitle": {
+        "description": "Dialog Title: Select Tags"
+    },
+    "transactionDuplicate": "Duplicada",
+    "@transactionDuplicate": {
+        "description": "Menu Label: Duplicate item"
+    },
+    "transactionErrorInvalidAccount": "Compte Invàlid",
+    "@transactionErrorInvalidAccount": {
+        "description": "Transaction Save Error: Invalid account"
+    },
+    "transactionErrorInvalidBudget": "Pressupost Invàlid",
+    "@transactionErrorInvalidBudget": {
+        "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Si us plau, omple els comptes primer.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Si us plau, selecciona un compte d'actiu.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
+    },
+    "transactionErrorTitle": "Per favor, introdueix un títol.",
+    "@transactionErrorTitle": {
+        "description": "Transaction Save Error: No title provided"
+    },
+    "transactionFormLabelAccountDestination": "Compte de destí",
+    "@transactionFormLabelAccountDestination": {
+        "description": "Transaction Form: Label for destination account for transfer transaction"
+    },
+    "transactionFormLabelAccountForeign": "Compte estranger",
+    "@transactionFormLabelAccountForeign": {
+        "description": "Transaction Form: Label for foreign (other) account"
+    },
+    "transactionFormLabelAccountOwn": "Compte propi",
+    "@transactionFormLabelAccountOwn": {
+        "description": "Transaction Form: Label for own account"
+    },
+    "transactionFormLabelAccountSource": "Compte d'origen",
+    "@transactionFormLabelAccountSource": {
+        "description": "Transaction Form: Label for source account for transfer transaction"
+    },
+    "transactionFormLabelNotes": "Notes",
+    "@transactionFormLabelNotes": {
+        "description": "Transaction Form: Label for notes field"
+    },
+    "transactionFormLabelTags": "Etiquetes",
+    "@transactionFormLabelTags": {
+        "description": "Transaction Form: Label for tags field"
+    },
+    "transactionFormLabelTitle": "Títol de la Transacció",
+    "@transactionFormLabelTitle": {
+        "description": "Transaction Form: Label for title field"
+    },
+    "transactionSplitAdd": "Afegeix una transacció dividida",
+    "@transactionSplitAdd": {
+        "description": "Button Label: Add a split"
+    },
+    "transactionSplitChangeCurrency": "Canvia la moneda de la divisió",
+    "@transactionSplitChangeCurrency": {
+        "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Canvia el compte de destinació de la divisió",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Canvia el compte d'origen de la divisió",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
+    },
+    "transactionSplitChangeTarget": "Canvia el compte destí de la divisió",
+    "@transactionSplitChangeTarget": {
+        "description": "Hint Text: Change target account for single split"
+    },
+    "transactionSplitDelete": "Elimina la divisió",
+    "@transactionSplitDelete": {
+        "description": "Hint Text: Delete single split"
+    },
+    "transactionTitleAdd": "Afegir Transacció",
+    "@transactionTitleAdd": {
+        "description": "Title: Add a new transaction"
+    },
+    "transactionTitleDelete": "Elimina la Transacció",
+    "@transactionTitleDelete": {
+        "description": "Title: Delete existing transaction"
+    },
+    "transactionTitleEdit": "Edita la Transacció",
+    "@transactionTitleEdit": {
+        "description": "Title: Edit existing transaction"
+    },
+    "transactionTypeDeposit": "Ingrés",
+    "@transactionTypeDeposit": {
+        "description": "Deposit transaction type"
+    },
+    "transactionTypeTransfer": "Transferència",
+    "@transactionTypeTransfer": {
+        "description": "Transfer transaction type"
+    },
+    "transactionTypeWithdrawal": "Retirada",
+    "@transactionTypeWithdrawal": {
+        "description": "Withdrawal transaction type"
+    }
 }

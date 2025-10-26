@@ -857,6 +857,12 @@ class SRu extends S {
   String get transactionDialogCurrencyTitle => 'Выбор валюты';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+
+  @override
   String get transactionDialogTagsAdd => 'Добавить тег';
 
   @override

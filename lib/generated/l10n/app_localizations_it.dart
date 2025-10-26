@@ -850,6 +850,12 @@ class SIt extends S {
   String get transactionDialogCurrencyTitle => 'Seleziona la valuta';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+
+  @override
   String get transactionDialogTagsAdd => 'Aggiungi Etichetta';
 
   @override

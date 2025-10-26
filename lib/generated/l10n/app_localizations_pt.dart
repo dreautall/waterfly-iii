@@ -851,6 +851,12 @@ class SPt extends S {
   String get transactionDialogCurrencyTitle => 'Selecione a moeda';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+
+  @override
   String get transactionDialogTagsAdd => 'Adicionar Tag';
 
   @override

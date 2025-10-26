@@ -851,6 +851,12 @@ class SSl extends S {
   String get transactionDialogCurrencyTitle => 'Izberi valuto';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+
+  @override
   String get transactionDialogTagsAdd => 'Dodaj oznako';
 
   @override

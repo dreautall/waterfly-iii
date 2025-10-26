@@ -850,6 +850,12 @@ class SDe extends S {
   String get transactionDialogCurrencyTitle => 'Währung auswählen';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+
+  @override
   String get transactionDialogTagsAdd => 'Schlagwort hinzufügen';
 
   @override

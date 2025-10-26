@@ -852,6 +852,12 @@ class SCs extends S {
   String get transactionDialogCurrencyTitle => 'Vybrat měnu';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+
+  @override
   String get transactionDialogTagsAdd => 'Přidat štítek';
 
   @override

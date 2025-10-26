@@ -830,6 +830,12 @@ class SZh extends S {
   String get transactionDialogCurrencyTitle => '选择货币种类';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+
+  @override
   String get transactionDialogTagsAdd => '添加标签';
 
   @override

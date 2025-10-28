@@ -850,10 +850,10 @@ class SNl extends S {
   String get transactionDialogCurrencyTitle => 'Selecteer valuta';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => 'Geen spaarpot';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => 'Koppelen aan spaarpot';
 
   @override
   String get transactionDialogTagsAdd => 'Label toevoegen';

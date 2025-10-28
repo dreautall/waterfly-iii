@@ -847,10 +847,10 @@ class SSv extends S {
   String get transactionDialogCurrencyTitle => 'Välj valuta';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => 'Ingen spargris';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => 'Koppla till spargris';
 
   @override
   String get transactionDialogTagsAdd => 'Lägg till Tagg';

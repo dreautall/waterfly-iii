@@ -855,10 +855,10 @@ class SPl extends S {
   String get transactionDialogCurrencyTitle => 'Wybierz walutę';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => 'Brak skarbonki';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => 'Połącz ze skarbonką';
 
   @override
   String get transactionDialogTagsAdd => 'Dodaj Tag';

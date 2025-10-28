@@ -322,7 +322,7 @@ class SIt extends S {
   String get generalBill => 'Bolletta';
 
   @override
-  String get generalBudget => 'Bilancio';
+  String get generalBudget => 'Budget';
 
   @override
   String get generalCategory => 'Categoria';
@@ -442,7 +442,7 @@ class SIt extends S {
   }
 
   @override
-  String get homeMainBudgetTitle => 'Bilanci per il mese corrente';
+  String get homeMainBudgetTitle => 'Budget per il mese corrente';
 
   @override
   String get homeMainChartAccountsTitle => 'Riepilogo conti';
@@ -560,10 +560,10 @@ class SIt extends S {
   String get homeTransactionsDialogFilterBillUnset => '<Nessuna bolletta>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetsAll => '<Tutti i bilanci>';
+  String get homeTransactionsDialogFilterBudgetsAll => '<Tutti i budget>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetUnset => '<Nessun bilancio>';
+  String get homeTransactionsDialogFilterBudgetUnset => '<Nessun budget>';
 
   @override
   String get homeTransactionsDialogFilterCategoriesAll =>
@@ -850,10 +850,10 @@ class SIt extends S {
   String get transactionDialogCurrencyTitle => 'Seleziona la valuta';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => 'Nessun salvadanaio';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => 'Collega al salvadanaio';
 
   @override
   String get transactionDialogTagsAdd => 'Aggiungi Etichetta';
@@ -871,7 +871,7 @@ class SIt extends S {
   String get transactionErrorInvalidAccount => 'Conto non valido';
 
   @override
-  String get transactionErrorInvalidBudget => 'Bilancio non valido';
+  String get transactionErrorInvalidBudget => 'Budget non valido';
 
   @override
   String get transactionErrorNoAccounts =>

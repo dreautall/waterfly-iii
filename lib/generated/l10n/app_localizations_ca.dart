@@ -859,10 +859,10 @@ class SCa extends S {
   String get transactionDialogCurrencyTitle => 'Tria una Moneda';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => 'Sense guardiola';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => 'Enllaça amb la guardiola';
 
   @override
   String get transactionDialogTagsAdd => 'Afegir Etiqueta';

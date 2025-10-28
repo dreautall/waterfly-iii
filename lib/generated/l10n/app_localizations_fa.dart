@@ -106,9 +106,6 @@ class SFa extends S {
 
   @override
   String billsExpectedOn(DateTime date) {
-    final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
-    final String dateString = dateDateFormat.format(date);
-
     return 'تاریخ مورد انتظار: :date\n\n\n\n\n\n';
   }
 
@@ -847,10 +844,10 @@ class SFa extends S {
   String get transactionDialogCurrencyTitle => 'واحد پول را انتخاب کنید\n';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => 'بدون قلک';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => 'اتصال به قلک';
 
   @override
   String get transactionDialogTagsAdd => 'افزودن برچسب';

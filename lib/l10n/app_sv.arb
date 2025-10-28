@@ -1,243 +1,1212 @@
 {
-  "@@locale": "sv",
-  "@@x-reference": true,
-  "accountRoleAssetCashWallet": "Plånbok",
-  "accountRoleAssetCC": "Kreditkort",
-  "accountRoleAssetDefault": "Förvalt tillgångskonto",
-  "accountRoleAssetSavings": "Sparkonto",
-  "accountRoleAssetShared": "Delat tillgångskonto",
-  "accountsLabelAsset": "Tillgångskonton",
-  "accountsLabelExpense": "Kostnadskonton",
-  "accountsLabelLiabilities": "Skulder",
-  "accountsLabelRevenue": "Intäktskonton",
-  "accountsLiabilitiesInterest": "{interest}% ränta per {period, select, weekly{vecka} monthly{månad} quarterly{kvartal} halfyear{halvår} yearly{år} other{okänd}}",
-  "billsAmountAndFrequency": "Räkningen matchar transaktioner mellan {minValue} och {maxvalue}. Upprepas {frequency, select, weekly{veckovis} monthly{månadsvis} quarterly{kvartalsvis} halfyear{halvårsvis} yearly{årligen} other{okänt}}{skip, plural, =0{} other{, hoppar över {skip}}}.",
-  "billsChangeLayoutTooltip": "Ändra layout",
-  "billsChangeSortOrderTooltip": "Ändra sorteringsordning",
-  "billsErrorLoading": "Fel vid laddning av räkningar.",
-  "billsExactAmountAndFrequency": "Räkningen matchar transaktioner på {value}. Upprepas {frequency, select, weekly{veckovis} monthly{månadsvis} quarterly{kvartalsvis} halfyear{halvårsvis} yearly{årligen} other{okänt}}{skip, plural, =0{} other{, hoppar över {skip}}}.",
-  "billsExpectedOn": "Förväntad {date}",
-  "billsFrequency": "{frequency, select, weekly{Veckovis} monthly{Månadsvis} quarterly{Kvartalsvis} halfyear{Halvårsvis} yearly{Årligen} other{Okänt}}",
-  "billsFrequencySkip": "{frequency, select, weekly{Veckovis} monthly{Månadsvis} quarterly{Kvartalsvis} halfyear{Halvårsvis} yearly{Årligen} other{Okänt}}{skip, plural, =0{} other{, hoppar över {skip}}}",
-  "billsInactive": "Inaktiv",
-  "billsIsActive": "Räkningen aktiv",
-  "billsLayoutGroupSubtitle": "Räkningar visas i sina tilldelade grupper.",
-  "billsLayoutGroupTitle": "Grupp",
-  "billsLayoutListSubtitle": "Räkningar visas i en lista sorterad efter vissa kriterier.",
-  "billsLayoutListTitle": "Lista",
-  "billsListEmpty": "Den här listan är för närvarande tom.",
-  "billsNextExpectedMatch": "Nästa förväntade träff",
-  "billsNotActive": "Räkningen är inaktiv",
-  "billsNotExpected": "Ej förväntat denna period",
-  "billsNoTransactions": "Inga transaktioner hittade.",
-  "billsPaidOn": "Betald {date}",
-  "billsSortAlphabetical": "Alfabetisk",
-  "billsSortByTimePeriod": "Efter tidsperiod",
-  "billsSortFrequency": "Frekvens",
-  "billsSortName": "Namn",
-  "billsUngrouped": "Ogrupperad",
-  "billsSettingsShowOnlyActive": "Visa endast aktiva",
-  "billsSettingsShowOnlyActiveDesc": "Visar endast aktiva prenumerationer.",
-  "billsSettingsShowOnlyExpected": "Visa endast förväntade",
-  "billsSettingsShowOnlyExpectedDesc": "Visar endast de prenumerationer som är förväntade (eller betalda) denna månad.",
-  "categoryDeleteConfirm": "Är du säker på att du vill ta bort denna kategori? Transaktionerna kommer inte att tas bort, men kommer inte att ha en kategori längre.",
-  "categoryErrorLoading": "Fel vid laddning av kategorier.",
-  "categoryFormLabelIncludeInSum": "Inkludera i månadssumman",
-  "categoryFormLabelName": "Kategorinamn",
-  "categoryMonthNext": "Nästa Månad",
-  "categoryMonthPrev": "Föregående månad",
-  "categorySumExcluded": "exkluderad",
-  "categoryTitleAdd": "Lägg till kategori",
-  "categoryTitleDelete": "Ta bort kategori",
-  "categoryTitleEdit": "Redigera kategori",
-  "catNone": "<ingen kategori>",
-  "catOther": "Övrigt",
-  "errorAPIInvalidResponse": "Ogiltigt svar från API: {message}",
-  "errorAPIUnavailable": "API inte tillgängligt",
-  "errorFieldRequired": "Detta fält är obligatoriskt.",
-  "errorInvalidURL": "Ogiltig URL",
-  "errorMinAPIVersion": "Minsta Firefly API Version v{requiredVersion} krävs. Vänligen uppdatera Firefly.",
-  "errorStatusCode": "Statuskod: {code}",
-  "errorUnknown": "Okänt fel.",
-  "formButtonHelp": "Hjälp",
-  "formButtonLogin": "Logga in",
-  "formButtonLogout": "Logga ut",
-  "formButtonRemove": "Ta bort",
-  "formButtonResetLogin": "Återställ inloggning",
-  "formButtonTransactionAdd": "Lägg till transaktion",
-  "formButtonTryAgain": "Försök igen",
-  "generalAccount": "Konto",
-  "generalAssets": "Tillgångar",
-  "generalBalance": "Balans",
-  "generalBalanceOn": "Saldo för {date}",
-  "generalBill": "Räkning",
-  "generalBudget": "Budget",
-  "generalCategory": "Kategori",
-  "generalCurrency": "Valuta",
-  "generalDateRangeCurrentMonth": "Aktuell månad",
-  "generalDateRangeLast30Days": "Senaste 30 dagarna",
-  "generalDateRangeCurrentYear": "Aktuellt år",
-  "generalDateRangeLastYear": "Förra året",
-  "generalDateRangeAll": "Alla",
-  "generalDefault": "förvald",
-  "generalDestinationAccount": "Målkonto",
-  "generalDismiss": "Stäng",
-  "generalEarned": "Intjänat",
-  "generalError": "Fel",
-  "generalExpenses": "Utgifter",
-  "generalIncome": "Inkomst",
-  "generalLiabilities": "Skulder",
-  "generalMultiple": "multipla",
-  "generalNever": "aldrig",
-  "generalReconcile": "Avstämt",
-  "generalReset": "Återställ",
-  "generalSourceAccount": "Källkonto",
-  "generalSpent": "Spenderat",
-  "generalSum": "Summa",
-  "generalTarget": "Mål",
-  "generalUnknown": "Okänt",
-  "homeMainBillsInterval": " ({period, select, weekly{veckovis} monthly{månadsvis} quarterly{kvartalsvis} halfyear{årligen} yearly{} other{okänd}})",
-  "homeMainBillsTitle": "Räkningar inför nästa vecka",
-  "homeMainBudgetInterval": " ({from} till {to}, {period})",
-  "homeMainBudgetIntervalSingle": " ({from} till {to})",
-  "homeMainBudgetSum": "{current} {status, select, over{över} other{kvar från}} {available}",
-  "homeMainBudgetTitle": "Budgetar för den aktuella månaden",
-  "homeMainChartAccountsTitle": "Kontosammanfattning",
-  "homeMainChartCategoriesTitle": "Kategorisammanfattning för aktuell månad",
-  "homeMainChartDailyAvg": "7 dagars genomsnitt",
-  "homeMainChartDailyTitle": "Daglig sammanfattning",
-  "homeMainChartNetEarningsTitle": "Nettoinkomst",
-  "homeMainChartNetWorthTitle": "Nettoförmögenhet",
-  "homeMainChartTagsTitle": "Taggsammanfattning för aktuell månad",
-  "homePiggyAdjustDialogTitle": "Spara/spendera pengar",
-  "homePiggyDateStart": "Startdatum: {date}",
-  "homePiggyDateTarget": "Måldatum: {date}",
-  "homeMainDialogSettingsTitle": "Anpassa kontrollpanelen",
-  "homePiggyLinked": "Länkad till {account}",
-  "homePiggyNoAccounts": "Inga spargrisar har inrättats.",
-  "homePiggyNoAccountsSubtitle": "Skapa några i webbgränssnittet!",
-  "homePiggyRemaining": "Kvar att spara: {amount}",
-  "homePiggySaved": "Sparat hittills: {amount}",
-  "homePiggySavedMultiple": "Hittills sparat:",
-  "homePiggyTarget": "Målbelopp: {amount}",
-  "homePiggyAccountStatus": "Kontostatus",
-  "homePiggyAvailableAmounts": "Tillgängliga belopp",
-  "homePiggyAvailable": "Tillgängligt: {amount}",
-  "homePiggyInPiggyBanks": "I spargrisar: {amount}",
-  "homeTabLabelBalance": "Balansräkning",
-  "homeTabLabelMain": "Start",
-  "homeTabLabelPiggybanks": "Spargris",
-  "homeTabLabelTransactions": "Transaktioner",
-  "homeTransactionsActionFilter": "Filtrera listan",
-  "homeTransactionsDialogFilterAccountsAll": "<Alla konton>",
-  "homeTransactionsDialogFilterBillsAll": "<Alla räkningar>",
-  "homeTransactionsDialogFilterBillUnset": "<Utan räkning>",
-  "homeTransactionsDialogFilterBudgetsAll": "<All budgetar>",
-  "homeTransactionsDialogFilterBudgetUnset": "<Utan budget>",
-  "homeTransactionsDialogFilterCategoriesAll": "<All kategorier>",
-  "homeTransactionsDialogFilterCategoryUnset": "<Utan kategori>",
-  "homeTransactionsDialogFilterCurrenciesAll": "<Alla valutor>",
-  "homeTransactionsDialogFilterDateRange": "Datumintervall",
-  "homeTransactionsDialogFilterFutureTransactions": "Visa framtida transaktioner",
-  "homeTransactionsDialogFilterSearch": "Sökord",
-  "homeTransactionsDialogFilterTitle": "Välj filter",
-  "homeTransactionsEmpty": "Inga transaktioner hittade.",
-  "homeTransactionsMultipleCategories": "{num} kategorier",
-  "homeTransactionsSettingsShowTags": "Visa taggar i transaktionslista",
-  "liabilityDirectionCredit": "Jag är skyldig denna skuld",
-  "liabilityDirectionDebit": "Jag har denna skuld",
-  "liabilityTypeDebt": "Skuld",
-  "liabilityTypeLoan": "Lån",
-  "liabilityTypeMortgage": "Bolån",
-  "loginAbout": "För att använda Waterfly III på ett produktivt sätt behöver du din egen server med en Firefly III instans eller Firefly III-tillägget för Home Assistant.\n\nAnge hela URL: en samt en personlig åtkomst-token (inställningar -> Profil -> OAuth -> Personlig åtkomst-token) nedan.",
-  "loginFormLabelAPIKey": "Giltig API-nyckel",
-  "loginFormLabelHost": "Värd URL",
-  "loginWelcome": "Välkommen till Waterfly III",
-  "logoutConfirmation": "Är du säker på att du vill logga ut?",
-  "navigationAccounts": "Konton",
-  "navigationBills": "Räkningar",
-  "navigationCategories": "Kategorier",
-  "navigationMain": "Kontrollpanel",
-  "generalSettings": "Inställningar",
-  "no": "Nej",
-  "numPercent": "{num}",
-  "numPercentOf": "{perc} av {of}",
-  "settingsDialogDebugInfo": "Du kan aktivera och skicka felsökningsloggar här. Dessa har en dålig inverkan på prestandan, så var snäll och aktivera dem inte om du inte rekommenderas att göra det. Inaktivering av loggning kommer att ta bort den lagrade loggen.",
-  "settingsDialogDebugMailCreate": "Skapa e-post",
-  "settingsDialogDebugMailDisclaimer": "VARNING: Ett e-postutkast öppnas med loggfilen bifogad (i textformat). Loggarna kan innehålla känslig information, såsom värdnamnet för din Firefly instans (även om jag försöker undvika loggning av några hemligheter, såsom api nyckel). Läs igenom loggen noga och censurera all information som du inte vill dela och/eller inte är relevant för det problem du vill rapportera.\n\nSkicka inte in loggar utan föregående överenskommelse via mail/GitHub. Jag kommer att ta bort alla loggar som skickas utan kontext av sekretessskäl. Ladda aldrig upp loggen ocensurerad till GitHub eller någon annanstans.",
-  "settingsDialogDebugSendButton": "Skicka loggar via e-post",
-  "settingsDialogDebugTitle": "Felsökningsloggar",
-  "settingsDialogLanguageTitle": "Välj språk",
-  "settingsDialogThemeTitle": "Välj tema",
-  "settingsFAQ": "Vanliga frågor",
-  "settingsFAQHelp": "Öppnas i webbläsaren. Endast tillgänglig på engelska.",
-  "settingsLanguage": "Språk",
-  "settingsLockscreen": "Låsskärm",
-  "settingsLockscreenHelp": "Kräv autentisering vid appstart",
-  "settingsLockscreenInitial": "Vänligen autentisera för att aktivera låsskärmen.",
-  "settingsNLAppAccount": "Förvalt konto",
-  "settingsNLAppAccountDynamic": "<Dynamiskt>",
-  "settingsNLAppAdd": "Lägg till app",
-  "settingsNLAppAddHelp": "Klicka för att lägga till en app att lyssna efter. Endast kvalificerade appar visas i listan.",
-  "settingsNLAppAddInfo": "Gör några transaktioner där du får telefonaviseringar för att lägga till appar i den här listan. Om appen fortfarande inte dyker upp, vänligen rapportera det till app@vogt.pw.",
-  "settingsNLAutoAdd": "Skapa transaktion utan interaktion",
-  "settingsNLDescription": "Den här tjänsten låter dig hämta transaktionsdetaljer från inkommande pushnotifikationer. Du kan även välja ett förvalt konto som transaktionen ska göras på - om inget värde ges försöker den extrahera kontot från notifikationen.",
-  "settingsNLEmptyNote": "Håll anteckningsfältet tomt",
-  "settingsNLPermissionGrant": "Tryck för att bevilja tillstånd.",
-  "settingsNLPermissionNotGranted": "Behörighet inte beviljad.",
-  "settingsNLPermissionRemove": "Ta bort behörigheten?",
-  "settingsNLPermissionRemoveHelp": "För att avaktivera den här tjänsten, tryck på appen och ta bort behörigheterna på den nästa skärmen.",
-  "settingsNLPrefillTXTitle": "Fyll i transaktionstiteln med nofikationstiteln i förväg",
-  "settingsNLServiceChecking": "Kontrollerar status…",
-  "settingsNLServiceCheckingError": "Fel vid kontroll av status: {error}",
-  "settingsNLServiceRunning": "Tjänsten körs.",
-  "settingsNLServiceStatus": "Tjänstestatus",
-  "settingsNLServiceStopped": "Tjänsten är stoppad.",
-  "settingsNotificationListener": "Notifikationslyssningstjänst",
-  "settingsTheme": "Apptema",
-  "settingsThemeDynamicColors": "Dynamiska färger",
-  "settingsThemeValue": "{theme, select, dark{Mörkt läge} light{Ljust läge} other{Systemstandard}}",
-  "settingsUseServerTimezone": "Använd serverns tidszon",
-  "settingsUseServerTimezoneHelp": "Visa alla tider i serverns tidszon. Detta härmar beteendet hos webbgränssnittet.",
-  "settingsVersion": "Appversion",
-  "settingsVersionChecking": "kontrollerar…",
-  "transactionAttachments": "Bilagor",
-  "transactionDeleteConfirm": "Är du säker att du vill radera denna transaktion?",
-  "transactionDialogAttachmentsDelete": "Ta bort bifogad fil",
-  "transactionDialogAttachmentsDeleteConfirm": "Är du säker på att du vill radera bilagan?",
-  "transactionDialogAttachmentsErrorDownload": "Kunde inte ladda ner filen.",
-  "transactionDialogAttachmentsErrorOpen": "Kunde inte öppna filen: {error}",
-  "transactionDialogAttachmentsErrorUpload": "Kunde inte ladda upp filen: {error}",
-  "transactionDialogAttachmentsTitle": "Bilagor",
-  "transactionDialogBillNoBill": "Ingen faktura",
-  "transactionDialogBillTitle": "Länk till faktura",
-  "transactionDialogCurrencyTitle": "Välj valuta",
-  "transactionDialogTagsAdd": "Lägg till Tagg",
-  "transactionDialogTagsHint": "Sök/Lägg till tagg",
-  "transactionDialogTagsTitle": "Välj taggar",
-  "transactionDuplicate": "Dubblett",
-  "transactionErrorInvalidAccount": "Ogiltigt konto",
-  "transactionErrorInvalidBudget": "Ogiltig budget",
-  "transactionErrorNoAccounts": "Fyll i kontona först.",
-  "transactionErrorNoAssetAccount": "Vänligen välj ett tillgångskonto.",
-  "transactionErrorTitle": "Vänligen ange en titel.",
-  "transactionFormLabelAccountDestination": "Till konto",
-  "transactionFormLabelAccountForeign": "Mottagarkonto",
-  "transactionFormLabelAccountOwn": "Källkonto",
-  "transactionFormLabelAccountSource": "Källkonto",
-  "transactionFormLabelNotes": "Anteckningar",
-  "transactionFormLabelTags": "Taggar",
-  "transactionFormLabelTitle": "Transaktionstitel",
-  "transactionSplitAdd": "Lägg till delad transaktion",
-  "transactionSplitChangeCurrency": "Ändra delad valuta",
-  "transactionSplitChangeDestinationAccount": "Ändra mottagarkonto för delad transaktion",
-  "transactionSplitChangeSourceAccount": "Ändra avsändarkonto för delad transaktion",
-  "transactionSplitChangeTarget": "Ändra delat målkonto",
-  "transactionSplitDelete": "Ta bort delning",
-  "transactionTitleAdd": "Lägg till transaktion",
-  "transactionTitleDelete": "Ta bort transaktion",
-  "transactionTitleEdit": "Ändra transaktion",
-  "transactionTypeDeposit": "Insättning",
-  "transactionTypeTransfer": "Överföring",
-  "transactionTypeWithdrawal": "Uttag"
+    "@@locale": "sv",
+    "@@x-reference": true,
+    "accountRoleAssetCashWallet": "Plånbok",
+    "@accountRoleAssetCashWallet": {
+        "description": "Firefly Translation String: account_role_cashWalletAsset"
+    },
+    "accountRoleAssetCC": "Kreditkort",
+    "@accountRoleAssetCC": {
+        "description": "Firefly Translation String: account_role_ccAsset"
+    },
+    "accountRoleAssetDefault": "Förvalt tillgångskonto",
+    "@accountRoleAssetDefault": {
+        "description": "Firefly Translation String: account_role_defaultAsset"
+    },
+    "accountRoleAssetSavings": "Sparkonto",
+    "@accountRoleAssetSavings": {
+        "description": "Firefly Translation String: account_role_savingAsset"
+    },
+    "accountRoleAssetShared": "Delat tillgångskonto",
+    "@accountRoleAssetShared": {
+        "description": "Firefly Translation String: account_role_sharedAsset"
+    },
+    "accountsLabelAsset": "Tillgångskonton",
+    "@accountsLabelAsset": {
+        "description": "Firefly Translation String: asset_accounts"
+    },
+    "accountsLabelExpense": "Kostnadskonton",
+    "@accountsLabelExpense": {
+        "description": "Firefly Translation String: expense_accounts"
+    },
+    "accountsLabelLiabilities": "Skulder",
+    "@accountsLabelLiabilities": {
+        "description": "Firefly Translation String: liabilities_accounts"
+    },
+    "accountsLabelRevenue": "Intäktskonton",
+    "@accountsLabelRevenue": {
+        "description": "Firefly Translation String: revenue_accounts"
+    },
+    "accountsLiabilitiesInterest": "{interest}% ränta per {period, select, weekly{vecka} monthly{månad} quarterly{kvartal} halfyear{halvår} yearly{år} other{okänd}}",
+    "@accountsLiabilitiesInterest": {
+        "description": "Interest in a certain period",
+        "placeholders": {
+            "interest": {
+                "type": "double",
+                "example": "1.2"
+            },
+            "period": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsAmountAndFrequency": "Räkningen matchar transaktioner mellan {minValue} och {maxvalue}. Upprepas {frequency, select, weekly{veckovis} monthly{månadsvis} quarterly{kvartalsvis} halfyear{halvårsvis} yearly{årligen} other{okänt}}{skip, plural, =0{} other{, hoppar över {skip}}}.",
+    "@billsAmountAndFrequency": {
+        "description": "Subscription match for min and max amounts, and frequency",
+        "placeholders": {
+            "minValue": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "maxvalue": {
+                "type": "String",
+                "example": "$60.50"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsChangeLayoutTooltip": "Ändra layout",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "Ändra sorteringsordning",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsErrorLoading": "Fel vid laddning av räkningar.",
+    "@billsErrorLoading": {
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
+    },
+    "billsExactAmountAndFrequency": "Räkningen matchar transaktioner på {value}. Upprepas {frequency, select, weekly{veckovis} monthly{månadsvis} quarterly{kvartalsvis} halfyear{halvårsvis} yearly{årligen} other{okänt}}{skip, plural, =0{} other{, hoppar över {skip}}}.",
+    "@billsExactAmountAndFrequency": {
+        "description": "Subscription match for exact amount and frequency",
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsExpectedOn": "Förväntad {date}",
+    "@billsExpectedOn": {
+        "description": "Describes what date the subscription is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsFrequency": "{frequency, select, weekly{Veckovis} monthly{Månadsvis} quarterly{Kvartalsvis} halfyear{Halvårsvis} yearly{Årligen} other{Okänt}}",
+    "@billsFrequency": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsFrequencySkip": "{frequency, select, weekly{Veckovis} monthly{Månadsvis} quarterly{Kvartalsvis} halfyear{Halvårsvis} yearly{Årligen} other{Okänt}}{skip, plural, =0{} other{, hoppar över {skip}}}",
+    "@billsFrequencySkip": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsInactive": "Inaktiv",
+    "@billsInactive": {
+        "description": "Text: when the subscription is inactive"
+    },
+    "billsIsActive": "Räkningen aktiv",
+    "@billsIsActive": {
+        "description": "Text: the subscription is active"
+    },
+    "billsLayoutGroupSubtitle": "Räkningar visas i sina tilldelade grupper.",
+    "@billsLayoutGroupSubtitle": {
+        "description": "Subtitle text for group layout option"
+    },
+    "billsLayoutGroupTitle": "Grupp",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListSubtitle": "Räkningar visas i en lista sorterad efter vissa kriterier.",
+    "@billsLayoutListSubtitle": {
+        "description": "Subtitle text for list layout option"
+    },
+    "billsLayoutListTitle": "Lista",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "Den här listan är för närvarande tom.",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "Nästa förväntade träff",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for subscription"
+    },
+    "billsNotActive": "Räkningen är inaktiv",
+    "@billsNotActive": {
+        "description": "Text: the subscription is inactive"
+    },
+    "billsNotExpected": "Ej förväntat denna period",
+    "@billsNotExpected": {
+        "description": "Describes that the subscription is not expected this period"
+    },
+    "billsNoTransactions": "Inga transaktioner hittade.",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the subscription"
+    },
+    "billsPaidOn": "Betald {date}",
+    "@billsPaidOn": {
+        "description": "Describes what date the subscription was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "Alfabetisk",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "Efter tidsperiod",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "Frekvens",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "Namn",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "Ogrupperad",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped subscriptions"
+    },
+    "billsSettingsShowOnlyActive": "Visa endast aktiva",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Visar endast aktiva prenumerationer.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Visa endast förväntade",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Visar endast de prenumerationer som är förväntade (eller betalda) denna månad.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
+    "categoryDeleteConfirm": "Är du säker på att du vill ta bort denna kategori? Transaktionerna kommer inte att tas bort, men kommer inte att ha en kategori längre.",
+    "@categoryDeleteConfirm": {
+        "description": "Confirmation text to delete category"
+    },
+    "categoryErrorLoading": "Fel vid laddning av kategorier.",
+    "@categoryErrorLoading": {
+        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+    },
+    "categoryFormLabelIncludeInSum": "Inkludera i månadssumman",
+    "@categoryFormLabelIncludeInSum": {
+        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+    },
+    "categoryFormLabelName": "Kategorinamn",
+    "@categoryFormLabelName": {
+        "description": "Category Add/Edit Form: Label for name field"
+    },
+    "categoryMonthNext": "Nästa Månad",
+    "@categoryMonthNext": {
+        "description": "Button title to view overview for next month"
+    },
+    "categoryMonthPrev": "Föregående månad",
+    "@categoryMonthPrev": {
+        "description": "Button title to view overview for previous month"
+    },
+    "categorySumExcluded": "exkluderad",
+    "@categorySumExcluded": {
+        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+    },
+    "categoryTitleAdd": "Lägg till kategori",
+    "@categoryTitleAdd": {
+        "description": "Title for Dialog: Add Category"
+    },
+    "categoryTitleDelete": "Ta bort kategori",
+    "@categoryTitleDelete": {
+        "description": "Title for Dialog: Delete Category"
+    },
+    "categoryTitleEdit": "Redigera kategori",
+    "@categoryTitleEdit": {
+        "description": "Title for Dialog: Edit Category"
+    },
+    "catNone": "<ingen kategori>",
+    "@catNone": {
+        "description": "Placeholder when no category has been set."
+    },
+    "catOther": "Övrigt",
+    "@catOther": {
+        "description": "Category description for summary category 'Other'"
+    },
+    "errorAPIInvalidResponse": "Ogiltigt svar från API: {message}",
+    "@errorAPIInvalidResponse": {
+        "description": "Invalid API response error",
+        "placeholders": {
+            "message": {
+                "type": "String",
+                "example": "API could not be reached."
+            }
+        }
+    },
+    "errorAPIUnavailable": "API inte tillgängligt",
+    "@errorAPIUnavailable": {
+        "description": "Error thrown when API is unavailable."
+    },
+    "errorFieldRequired": "Detta fält är obligatoriskt.",
+    "@errorFieldRequired": {
+        "description": "Error: Required field was left empty."
+    },
+    "errorInvalidURL": "Ogiltig URL",
+    "@errorInvalidURL": {
+        "description": "Error: URL is invalid"
+    },
+    "errorMinAPIVersion": "Minsta Firefly API Version v{requiredVersion} krävs. Vänligen uppdatera Firefly.",
+    "@errorMinAPIVersion": {
+        "description": "Error: Required API version not met.",
+        "placeholders": {
+            "requiredVersion": {
+                "type": "String",
+                "example": "2.0.0"
+            }
+        }
+    },
+    "errorStatusCode": "Statuskod: {code}",
+    "@errorStatusCode": {
+        "description": "HTTP status code information on error",
+        "placeholders": {
+            "code": {
+                "type": "int",
+                "example": "500"
+            }
+        }
+    },
+    "errorUnknown": "Okänt fel.",
+    "@errorUnknown": {
+        "description": "Error without further information occurred."
+    },
+    "formButtonHelp": "Hjälp",
+    "@formButtonHelp": {
+        "description": "Button Label: Help"
+    },
+    "formButtonLogin": "Logga in",
+    "@formButtonLogin": {
+        "description": "Button Label: Login"
+    },
+    "formButtonLogout": "Logga ut",
+    "@formButtonLogout": {
+        "description": "Button Label: Logout"
+    },
+    "formButtonRemove": "Ta bort",
+    "@formButtonRemove": {
+        "description": "Button Label: Remove"
+    },
+    "formButtonResetLogin": "Återställ inloggning",
+    "@formButtonResetLogin": {
+        "description": "Button Label: Reset login form (when error is shown)"
+    },
+    "formButtonTransactionAdd": "Lägg till transaktion",
+    "@formButtonTransactionAdd": {
+        "description": "Button Label: Add Transaction"
+    },
+    "formButtonTryAgain": "Försök igen",
+    "@formButtonTryAgain": {
+        "description": "Button Label: Try that thing again (login etc)"
+    },
+    "generalAccount": "Konto",
+    "@generalAccount": {
+        "description": "Asset/Debt (Bank) Account"
+    },
+    "generalAssets": "Tillgångar",
+    "@generalAssets": {
+        "description": "(Monetary) Assets"
+    },
+    "generalBalance": "Balans",
+    "@generalBalance": {
+        "description": "(Account) Balance"
+    },
+    "generalBalanceOn": "Saldo för {date}",
+    "@generalBalanceOn": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMd",
+                "example": "2023-05-13"
+            }
+        }
+    },
+    "generalBill": "Räkning",
+    "@generalBill": {
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
+    },
+    "generalBudget": "Budget",
+    "@generalBudget": {
+        "description": "(Monetary) Budget"
+    },
+    "generalCategory": "Kategori",
+    "@generalCategory": {
+        "description": "Category (of transaction etc.)."
+    },
+    "generalCurrency": "Valuta",
+    "@generalCurrency": {
+        "description": "(Money) Currency"
+    },
+    "generalDateRangeCurrentMonth": "Aktuell månad",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Senaste 30 dagarna",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Aktuellt år",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Förra året",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Alla",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
+    "generalDefault": "förvald",
+    "@generalDefault": {
+        "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "Målkonto",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
+    },
+    "generalDismiss": "Stäng",
+    "@generalDismiss": {
+        "description": "Dismiss window/dialog without action"
+    },
+    "generalEarned": "Intjänat",
+    "@generalEarned": {
+        "description": "(Amount) Earned"
+    },
+    "generalError": "Fel",
+    "@generalError": {
+        "description": "Error (title in dialogs etc.)"
+    },
+    "generalExpenses": "Utgifter",
+    "@generalExpenses": {
+        "description": "(Account) Expenses"
+    },
+    "generalIncome": "Inkomst",
+    "@generalIncome": {
+        "description": "(Account) Info"
+    },
+    "generalLiabilities": "Skulder",
+    "@generalLiabilities": {
+        "description": "Firefly Translation String: liabilities"
+    },
+    "generalMultiple": "multipla",
+    "@generalMultiple": {
+        "description": "Multiples of a single thing (e.g. source accounts) are existing"
+    },
+    "generalNever": "aldrig",
+    "@generalNever": {
+        "description": "Has never happened, no update etc."
+    },
+    "generalReconcile": "Avstämt",
+    "@generalReconcile": {
+        "description": "Booking has been confirmed/reconciled"
+    },
+    "generalReset": "Återställ",
+    "@generalReset": {
+        "description": "Reset something (i.e. set filters)"
+    },
+    "generalSourceAccount": "Källkonto",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
+    "generalSpent": "Spenderat",
+    "@generalSpent": {
+        "description": "(Amount) Spent"
+    },
+    "generalSum": "Summa",
+    "@generalSum": {
+        "description": "(Mathematical) Sum"
+    },
+    "generalTarget": "Mål",
+    "@generalTarget": {
+        "description": "Target value (i.e. a sum to save)"
+    },
+    "generalUnknown": "Okänt",
+    "@generalUnknown": {
+        "description": "Something is unknown."
+    },
+    "homeMainBillsInterval": " ({period, select, weekly{veckovis} monthly{månadsvis} quarterly{kvartalsvis} halfyear{årligen} yearly{} other{okänd}})",
+    "@homeMainBillsInterval": {
+        "description": "subscription interval type",
+        "placeholders": {
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBillsTitle": "Räkningar inför nästa vecka",
+    "@homeMainBillsTitle": {
+        "description": "Title: Subscriptions for the next week"
+    },
+    "homeMainBudgetInterval": " ({from} till {to}, {period})",
+    "@homeMainBudgetInterval": {
+        "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
+            },
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBudgetIntervalSingle": " ({from} till {to})",
+    "@homeMainBudgetIntervalSingle": {
+        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
+            }
+        }
+    },
+    "homeMainBudgetSum": "{current} {status, select, over{över} other{kvar från}} {available}",
+    "@homeMainBudgetSum": {
+        "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
+        "placeholders": {
+            "current": {
+                "type": "String",
+                "example": "12.34€"
+            },
+            "status": {
+                "type": "String",
+                "example": "left from"
+            },
+            "available": {
+                "type": "String",
+                "example": "12.34€"
+            }
+        }
+    },
+    "homeMainBudgetTitle": "Budgetar för den aktuella månaden",
+    "@homeMainBudgetTitle": {
+        "description": "Title: Budgets for current month"
+    },
+    "homeMainChartAccountsTitle": "Kontosammanfattning",
+    "@homeMainChartAccountsTitle": {
+        "description": "Chart Label: Account Summary"
+    },
+    "homeMainChartCategoriesTitle": "Kategorisammanfattning för aktuell månad",
+    "@homeMainChartCategoriesTitle": {
+        "description": "Chart Label: Category Summary"
+    },
+    "homeMainChartDailyAvg": "7 dagars genomsnitt",
+    "@homeMainChartDailyAvg": {
+        "description": "Text for last week average spent"
+    },
+    "homeMainChartDailyTitle": "Daglig sammanfattning",
+    "@homeMainChartDailyTitle": {
+        "description": "Chart Label: Daily Summary"
+    },
+    "homeMainChartNetEarningsTitle": "Nettoinkomst",
+    "@homeMainChartNetEarningsTitle": {
+        "description": "Chart Label: Net Earnings"
+    },
+    "homeMainChartNetWorthTitle": "Nettoförmögenhet",
+    "@homeMainChartNetWorthTitle": {
+        "description": "Chart Label: Net Worth"
+    },
+    "homeMainChartTagsTitle": "Taggsammanfattning för aktuell månad",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
+    "homePiggyAdjustDialogTitle": "Spara/spendera pengar",
+    "@homePiggyAdjustDialogTitle": {
+        "description": "Title of the dialog where money can be added/removed to a piggy bank."
+    },
+    "homePiggyDateStart": "Startdatum: {date}",
+    "@homePiggyDateStart": {
+        "description": "Start of the piggy bank",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "March 12, 2023"
+            }
+        }
+    },
+    "homePiggyDateTarget": "Måldatum: {date}",
+    "@homePiggyDateTarget": {
+        "description": "Set target date of the piggy bank (when saving should be finished)",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "March 12, 2023"
+            }
+        }
+    },
+    "homeMainDialogSettingsTitle": "Anpassa kontrollpanelen",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
+    },
+    "homePiggyLinked": "Länkad till {account}",
+    "@homePiggyLinked": {
+        "description": "Piggy bank is linked to asset account {account}.",
+        "placeholders": {
+            "account": {
+                "type": "String",
+                "example": "Awesome Bank Account"
+            }
+        }
+    },
+    "homePiggyNoAccounts": "Inga spargrisar har inrättats.",
+    "@homePiggyNoAccounts": {
+        "description": "Information that no piggy banks are existing"
+    },
+    "homePiggyNoAccountsSubtitle": "Skapa några i webbgränssnittet!",
+    "@homePiggyNoAccountsSubtitle": {
+        "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
+    },
+    "homePiggyRemaining": "Kvar att spara: {amount}",
+    "@homePiggyRemaining": {
+        "description": "How much money is left to save",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggySaved": "Sparat hittills: {amount}",
+    "@homePiggySaved": {
+        "description": "How much money already was saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggySavedMultiple": "Hittills sparat:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
+    "homePiggyTarget": "Målbelopp: {amount}",
+    "@homePiggyTarget": {
+        "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "Kontostatus",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Tillgängliga belopp",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "Tillgängligt: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "I spargrisar: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homeTabLabelBalance": "Balansräkning",
+    "@homeTabLabelBalance": {
+        "description": "Tab Label: Balance Sheet page"
+    },
+    "homeTabLabelMain": "Start",
+    "@homeTabLabelMain": {
+        "description": "Tab Label: Start page (\"main\")"
+    },
+    "homeTabLabelPiggybanks": "Spargris",
+    "@homeTabLabelPiggybanks": {
+        "description": "Tab Label: Piggy Banks page"
+    },
+    "homeTabLabelTransactions": "Transaktioner",
+    "@homeTabLabelTransactions": {
+        "description": "Tab Label: Transactions page"
+    },
+    "homeTransactionsActionFilter": "Filtrera listan",
+    "@homeTransactionsActionFilter": {
+        "description": "Action Button Label: Filter list."
+    },
+    "homeTransactionsDialogFilterAccountsAll": "<Alla konton>",
+    "@homeTransactionsDialogFilterAccountsAll": {
+        "description": "Don't filter for a specific account (default entry)"
+    },
+    "homeTransactionsDialogFilterBillsAll": "<Alla räkningar>",
+    "@homeTransactionsDialogFilterBillsAll": {
+        "description": "Don't filter for a specific subscription (default entry)"
+    },
+    "homeTransactionsDialogFilterBillUnset": "<Utan räkning>",
+    "@homeTransactionsDialogFilterBillUnset": {
+        "description": "Filter for unset subscription"
+    },
+    "homeTransactionsDialogFilterBudgetsAll": "<All budgetar>",
+    "@homeTransactionsDialogFilterBudgetsAll": {
+        "description": "Don't filter for a specific budget (default entry)"
+    },
+    "homeTransactionsDialogFilterBudgetUnset": "<Utan budget>",
+    "@homeTransactionsDialogFilterBudgetUnset": {
+        "description": "Filter for unset budgets"
+    },
+    "homeTransactionsDialogFilterCategoriesAll": "<All kategorier>",
+    "@homeTransactionsDialogFilterCategoriesAll": {
+        "description": "Don't filter for a specific category (default entry)"
+    },
+    "homeTransactionsDialogFilterCategoryUnset": "<Utan kategori>",
+    "@homeTransactionsDialogFilterCategoryUnset": {
+        "description": "Filter for unset categories"
+    },
+    "homeTransactionsDialogFilterCurrenciesAll": "<Alla valutor>",
+    "@homeTransactionsDialogFilterCurrenciesAll": {
+        "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "Datumintervall",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
+    },
+    "homeTransactionsDialogFilterFutureTransactions": "Visa framtida transaktioner",
+    "@homeTransactionsDialogFilterFutureTransactions": {
+        "description": "Setting to show future transactions"
+    },
+    "homeTransactionsDialogFilterSearch": "Sökord",
+    "@homeTransactionsDialogFilterSearch": {
+        "description": "Search term for filter"
+    },
+    "homeTransactionsDialogFilterTitle": "Välj filter",
+    "@homeTransactionsDialogFilterTitle": {
+        "description": "Title of Filter Dialog"
+    },
+    "homeTransactionsEmpty": "Inga transaktioner hittade.",
+    "@homeTransactionsEmpty": {
+        "description": "Message when no transactions are found."
+    },
+    "homeTransactionsMultipleCategories": "{num} kategorier",
+    "@homeTransactionsMultipleCategories": {
+        "description": "$num categories for the transaction.",
+        "placeholders": {
+            "num": {
+                "type": "int",
+                "example": "2"
+            }
+        }
+    },
+    "homeTransactionsSettingsShowTags": "Visa taggar i transaktionslista",
+    "@homeTransactionsSettingsShowTags": {
+        "description": "Setting label to show tags in transactioon list."
+    },
+    "liabilityDirectionCredit": "Jag är skyldig denna skuld",
+    "@liabilityDirectionCredit": {
+        "description": "Firefly Translation String: liability_direction_credit"
+    },
+    "liabilityDirectionDebit": "Jag har denna skuld",
+    "@liabilityDirectionDebit": {
+        "description": "Firefly Translation String: liability_direction_debit"
+    },
+    "liabilityTypeDebt": "Skuld",
+    "@liabilityTypeDebt": {
+        "description": "Firefly Translation String: account_type_debt"
+    },
+    "liabilityTypeLoan": "Lån",
+    "@liabilityTypeLoan": {
+        "description": "Firefly Translation String: account_type_loan"
+    },
+    "liabilityTypeMortgage": "Bolån",
+    "@liabilityTypeMortgage": {
+        "description": "Firefly Translation String: account_type_mortgage"
+    },
+    "loginAbout": "För att använda Waterfly III på ett produktivt sätt behöver du din egen server med en Firefly III instans eller Firefly III-tillägget för Home Assistant.\n\nAnge hela URL: en samt en personlig åtkomst-token (inställningar -> Profil -> OAuth -> Personlig åtkomst-token) nedan.",
+    "@loginAbout": {
+        "description": "Login screen welcome description"
+    },
+    "loginFormLabelAPIKey": "Giltig API-nyckel",
+    "@loginFormLabelAPIKey": {
+        "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHost": "Värd URL",
+    "@loginFormLabelHost": {
+        "description": "Login Form: Label for Host field"
+    },
+    "loginWelcome": "Välkommen till Waterfly III",
+    "@loginWelcome": {
+        "description": "Login screen welcome banner"
+    },
+    "logoutConfirmation": "Är du säker på att du vill logga ut?",
+    "@logoutConfirmation": {
+        "description": "Get user confirmation if he really wants to log out"
+    },
+    "navigationAccounts": "Konton",
+    "@navigationAccounts": {
+        "description": "Navigation Label: Accounts Page"
+    },
+    "navigationBills": "Räkningar",
+    "@navigationBills": {
+        "description": "Navigation Label: Subscriptions"
+    },
+    "navigationCategories": "Kategorier",
+    "@navigationCategories": {
+        "description": "Navigation Label: Categories"
+    },
+    "navigationMain": "Kontrollpanel",
+    "@navigationMain": {
+        "description": "Navigation Label: Main Dashboard"
+    },
+    "generalSettings": "Inställningar",
+    "@generalSettings": {
+        "description": "Label: Settings"
+    },
+    "no": "Nej",
+    "@no": {
+        "description": "The word no"
+    },
+    "numPercent": "{num}",
+    "@numPercent": {
+        "description": "Number formatted as percentage",
+        "placeholders": {
+            "num": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            }
+        }
+    },
+    "numPercentOf": "{perc} av {of}",
+    "@numPercentOf": {
+        "description": "Number formatted as percentage, with total amount provided",
+        "placeholders": {
+            "perc": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            },
+            "of": {
+                "type": "String"
+            }
+        }
+    },
+    "settingsDialogDebugInfo": "Du kan aktivera och skicka felsökningsloggar här. Dessa har en dålig inverkan på prestandan, så var snäll och aktivera dem inte om du inte rekommenderas att göra det. Inaktivering av loggning kommer att ta bort den lagrade loggen.",
+    "@settingsDialogDebugInfo": {
+        "description": "Information about debug logs and their impact."
+    },
+    "settingsDialogDebugMailCreate": "Skapa e-post",
+    "@settingsDialogDebugMailCreate": {
+        "description": "Button to confirm mail creation after privacy disclaimer is shown."
+    },
+    "settingsDialogDebugMailDisclaimer": "VARNING: Ett e-postutkast öppnas med loggfilen bifogad (i textformat). Loggarna kan innehålla känslig information, såsom värdnamnet för din Firefly instans (även om jag försöker undvika loggning av några hemligheter, såsom api nyckel). Läs igenom loggen noga och censurera all information som du inte vill dela och/eller inte är relevant för det problem du vill rapportera.\n\nSkicka inte in loggar utan föregående överenskommelse via mail/GitHub. Jag kommer att ta bort alla loggar som skickas utan kontext av sekretessskäl. Ladda aldrig upp loggen ocensurerad till GitHub eller någon annanstans.",
+    "@settingsDialogDebugMailDisclaimer": {
+        "description": "Privacy disclaimer shown before sending logs"
+    },
+    "settingsDialogDebugSendButton": "Skicka loggar via e-post",
+    "@settingsDialogDebugSendButton": {
+        "description": "Button to send logs via E-Mail"
+    },
+    "settingsDialogDebugTitle": "Felsökningsloggar",
+    "@settingsDialogDebugTitle": {
+        "description": "Dialog title: Debug Logs"
+    },
+    "settingsDialogLanguageTitle": "Välj språk",
+    "@settingsDialogLanguageTitle": {
+        "description": "Dialog title: Select Language"
+    },
+    "settingsDialogThemeTitle": "Välj tema",
+    "@settingsDialogThemeTitle": {
+        "description": "Dialog title: Select theme"
+    },
+    "settingsFAQ": "Vanliga frågor",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
+    "settingsFAQHelp": "Öppnas i webbläsaren. Endast tillgänglig på engelska.",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
+    },
+    "settingsLanguage": "Språk",
+    "@settingsLanguage": {
+        "description": "Currently selected language"
+    },
+    "settingsLockscreen": "Låsskärm",
+    "@settingsLockscreen": {
+        "description": "Setting if a lockscreen is shown (authentication is required on startup)"
+    },
+    "settingsLockscreenHelp": "Kräv autentisering vid appstart",
+    "@settingsLockscreenHelp": {
+        "description": "Description for lockscreen setting"
+    },
+    "settingsLockscreenInitial": "Vänligen autentisera för att aktivera låsskärmen.",
+    "@settingsLockscreenInitial": {
+        "description": "Prompt to authenticate once to set up the lockscreen"
+    },
+    "settingsNLAppAccount": "Förvalt konto",
+    "@settingsNLAppAccount": {
+        "description": "Default account which will be used for the transaction."
+    },
+    "settingsNLAppAccountDynamic": "<Dynamiskt>",
+    "@settingsNLAppAccountDynamic": {
+        "description": "Account will be selected dynamically by the content of the notification."
+    },
+    "settingsNLAppAdd": "Lägg till app",
+    "@settingsNLAppAdd": {
+        "description": "Button title to add a new app."
+    },
+    "settingsNLAppAddHelp": "Klicka för att lägga till en app att lyssna efter. Endast kvalificerade appar visas i listan.",
+    "@settingsNLAppAddHelp": {
+        "description": "Help text below adding the new app button."
+    },
+    "settingsNLAppAddInfo": "Gör några transaktioner där du får telefonaviseringar för att lägga till appar i den här listan. Om appen fortfarande inte dyker upp, vänligen rapportera det till app@vogt.pw.",
+    "@settingsNLAppAddInfo": {
+        "description": "Help text when no more app is available to add."
+    },
+    "settingsNLAutoAdd": "Skapa transaktion utan interaktion",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
+    "settingsNLDescription": "Den här tjänsten låter dig hämta transaktionsdetaljer från inkommande pushnotifikationer. Du kan även välja ett förvalt konto som transaktionen ska göras på - om inget värde ges försöker den extrahera kontot från notifikationen.",
+    "@settingsNLDescription": {
+        "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "Håll anteckningsfältet tomt",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
+    },
+    "settingsNLPermissionGrant": "Tryck för att bevilja tillstånd.",
+    "@settingsNLPermissionGrant": {
+        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
+    },
+    "settingsNLPermissionNotGranted": "Behörighet inte beviljad.",
+    "@settingsNLPermissionNotGranted": {
+        "description": "A requested permission was not granted."
+    },
+    "settingsNLPermissionRemove": "Ta bort behörigheten?",
+    "@settingsNLPermissionRemove": {
+        "description": "Dialog title asking if permission should be removed."
+    },
+    "settingsNLPermissionRemoveHelp": "För att avaktivera den här tjänsten, tryck på appen och ta bort behörigheterna på den nästa skärmen.",
+    "@settingsNLPermissionRemoveHelp": {
+        "description": "Dialog text giving hint how to remove the permission."
+    },
+    "settingsNLPrefillTXTitle": "Fyll i transaktionstiteln med nofikationstiteln i förväg",
+    "@settingsNLPrefillTXTitle": {
+        "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLServiceChecking": "Kontrollerar status…",
+    "@settingsNLServiceChecking": {
+        "description": "Checking the status of the background service"
+    },
+    "settingsNLServiceCheckingError": "Fel vid kontroll av status: {error}",
+    "@settingsNLServiceCheckingError": {
+        "description": "An error occurred while checking the service status",
+        "placeholders": {
+            "error": {
+                "type": "String",
+                "description": "Error details",
+                "example": "Timeout"
+            }
+        }
+    },
+    "settingsNLServiceRunning": "Tjänsten körs.",
+    "@settingsNLServiceRunning": {
+        "description": "A background service is running normally."
+    },
+    "settingsNLServiceStatus": "Tjänstestatus",
+    "@settingsNLServiceStatus": {
+        "description": "Status of a background service."
+    },
+    "settingsNLServiceStopped": "Tjänsten är stoppad.",
+    "@settingsNLServiceStopped": {
+        "description": "A background service is stopped."
+    },
+    "settingsNotificationListener": "Notifikationslyssningstjänst",
+    "@settingsNotificationListener": {
+        "description": "Setting for the notification listener service."
+    },
+    "settingsTheme": "Apptema",
+    "@settingsTheme": {
+        "description": "App theme (dark or light)"
+    },
+    "settingsThemeDynamicColors": "Dynamiska färger",
+    "@settingsThemeDynamicColors": {
+        "description": "Material You Dynamic Colors feature"
+    },
+    "settingsThemeValue": "{theme, select, dark{Mörkt läge} light{Ljust läge} other{Systemstandard}}",
+    "@settingsThemeValue": {
+        "description": "Currently selected theme (either dark, light or system)",
+        "placeholders": {
+            "theme": {
+                "type": "String",
+                "example": "ThemeMode.dark"
+            }
+        }
+    },
+    "settingsUseServerTimezone": "Använd serverns tidszon",
+    "@settingsUseServerTimezone": {
+        "description": "Setting label to use server timezone."
+    },
+    "settingsUseServerTimezoneHelp": "Visa alla tider i serverns tidszon. Detta härmar beteendet hos webbgränssnittet.",
+    "@settingsUseServerTimezoneHelp": {
+        "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
+    },
+    "settingsVersion": "Appversion",
+    "@settingsVersion": {
+        "description": "Current App Version"
+    },
+    "settingsVersionChecking": "kontrollerar…",
+    "@settingsVersionChecking": {
+        "description": "Shown while checking for app version"
+    },
+    "transactionAttachments": "Bilagor",
+    "@transactionAttachments": {
+        "description": "Button Label: Attachments"
+    },
+    "transactionDeleteConfirm": "Är du säker att du vill radera denna transaktion?",
+    "@transactionDeleteConfirm": {
+        "description": "Confirmation text to delete transaction"
+    },
+    "transactionDialogAttachmentsDelete": "Ta bort bifogad fil",
+    "@transactionDialogAttachmentsDelete": {
+        "description": "Button Label: Delete Attachment"
+    },
+    "transactionDialogAttachmentsDeleteConfirm": "Är du säker på att du vill radera bilagan?",
+    "@transactionDialogAttachmentsDeleteConfirm": {
+        "description": "Confirmation text to delete attachment"
+    },
+    "transactionDialogAttachmentsErrorDownload": "Kunde inte ladda ner filen.",
+    "@transactionDialogAttachmentsErrorDownload": {
+        "description": "Snackbar Text: File download failed."
+    },
+    "transactionDialogAttachmentsErrorOpen": "Kunde inte öppna filen: {error}",
+    "@transactionDialogAttachmentsErrorOpen": {
+        "description": "Snackbar Text: File could not be opened, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsErrorUpload": "Kunde inte ladda upp filen: {error}",
+    "@transactionDialogAttachmentsErrorUpload": {
+        "description": "Snackbar Text: File could not be uploaded, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsTitle": "Bilagor",
+    "@transactionDialogAttachmentsTitle": {
+        "description": "Dialog Title: Attachments Dialog"
+    },
+    "transactionDialogBillNoBill": "Ingen faktura",
+    "@transactionDialogBillNoBill": {
+        "description": "Button Label: no subscription to be used"
+    },
+    "transactionDialogBillTitle": "Länk till faktura",
+    "@transactionDialogBillTitle": {
+        "description": "Dialog Title: Link Subscription to transaction"
+    },
+    "transactionDialogCurrencyTitle": "Välj valuta",
+    "@transactionDialogCurrencyTitle": {
+        "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "Ingen spargris",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Koppla till spargris",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
+    },
+    "transactionDialogTagsAdd": "Lägg till Tagg",
+    "@transactionDialogTagsAdd": {
+        "description": "Button Label: Add Tag"
+    },
+    "transactionDialogTagsHint": "Sök/Lägg till tagg",
+    "@transactionDialogTagsHint": {
+        "description": "Hint Text for search tag field"
+    },
+    "transactionDialogTagsTitle": "Välj taggar",
+    "@transactionDialogTagsTitle": {
+        "description": "Dialog Title: Select Tags"
+    },
+    "transactionDuplicate": "Dubblett",
+    "@transactionDuplicate": {
+        "description": "Menu Label: Duplicate item"
+    },
+    "transactionErrorInvalidAccount": "Ogiltigt konto",
+    "@transactionErrorInvalidAccount": {
+        "description": "Transaction Save Error: Invalid account"
+    },
+    "transactionErrorInvalidBudget": "Ogiltig budget",
+    "@transactionErrorInvalidBudget": {
+        "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Fyll i kontona först.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Vänligen välj ett tillgångskonto.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
+    },
+    "transactionErrorTitle": "Vänligen ange en titel.",
+    "@transactionErrorTitle": {
+        "description": "Transaction Save Error: No title provided"
+    },
+    "transactionFormLabelAccountDestination": "Till konto",
+    "@transactionFormLabelAccountDestination": {
+        "description": "Transaction Form: Label for destination account for transfer transaction"
+    },
+    "transactionFormLabelAccountForeign": "Mottagarkonto",
+    "@transactionFormLabelAccountForeign": {
+        "description": "Transaction Form: Label for foreign (other) account"
+    },
+    "transactionFormLabelAccountOwn": "Källkonto",
+    "@transactionFormLabelAccountOwn": {
+        "description": "Transaction Form: Label for own account"
+    },
+    "transactionFormLabelAccountSource": "Källkonto",
+    "@transactionFormLabelAccountSource": {
+        "description": "Transaction Form: Label for source account for transfer transaction"
+    },
+    "transactionFormLabelNotes": "Anteckningar",
+    "@transactionFormLabelNotes": {
+        "description": "Transaction Form: Label for notes field"
+    },
+    "transactionFormLabelTags": "Taggar",
+    "@transactionFormLabelTags": {
+        "description": "Transaction Form: Label for tags field"
+    },
+    "transactionFormLabelTitle": "Transaktionstitel",
+    "@transactionFormLabelTitle": {
+        "description": "Transaction Form: Label for title field"
+    },
+    "transactionSplitAdd": "Lägg till delad transaktion",
+    "@transactionSplitAdd": {
+        "description": "Button Label: Add a split"
+    },
+    "transactionSplitChangeCurrency": "Ändra delad valuta",
+    "@transactionSplitChangeCurrency": {
+        "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Ändra mottagarkonto för delad transaktion",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Ändra avsändarkonto för delad transaktion",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
+    },
+    "transactionSplitChangeTarget": "Ändra delat målkonto",
+    "@transactionSplitChangeTarget": {
+        "description": "Hint Text: Change target account for single split"
+    },
+    "transactionSplitDelete": "Ta bort delning",
+    "@transactionSplitDelete": {
+        "description": "Hint Text: Delete single split"
+    },
+    "transactionTitleAdd": "Lägg till transaktion",
+    "@transactionTitleAdd": {
+        "description": "Title: Add a new transaction"
+    },
+    "transactionTitleDelete": "Ta bort transaktion",
+    "@transactionTitleDelete": {
+        "description": "Title: Delete existing transaction"
+    },
+    "transactionTitleEdit": "Ändra transaktion",
+    "@transactionTitleEdit": {
+        "description": "Title: Edit existing transaction"
+    },
+    "transactionTypeDeposit": "Insättning",
+    "@transactionTypeDeposit": {
+        "description": "Deposit transaction type"
+    },
+    "transactionTypeTransfer": "Överföring",
+    "@transactionTypeTransfer": {
+        "description": "Transfer transaction type"
+    },
+    "transactionTypeWithdrawal": "Uttag",
+    "@transactionTypeWithdrawal": {
+        "description": "Withdrawal transaction type"
+    }
 }

@@ -1,243 +1,1212 @@
 {
-  "@@locale": "es",
-  "@@x-reference": true,
-  "accountRoleAssetCashWallet": "Billetera de efectivo",
-  "accountRoleAssetCC": "Tarjeta de crédito",
-  "accountRoleAssetDefault": "Cuenta de activos por defecto",
-  "accountRoleAssetSavings": "Cuenta de ahorros",
-  "accountRoleAssetShared": "Cuenta de activos compartida",
-  "accountsLabelAsset": "Cuentas de activos",
-  "accountsLabelExpense": "Cuentas de gastos",
-  "accountsLabelLiabilities": "Pasivos",
-  "accountsLabelRevenue": "Cuentas de ingresos",
-  "accountsLiabilitiesInterest": "{interest}% de interés por {period, select, weekly{semana} monthly{mes} quarterly{trimestre} halfyear{semestre} yearly{año} other{desconocido}}",
-  "billsAmountAndFrequency": "Factura coincide con transacciones entre {minValue} y {maxvalue}. Se repite {frequency, select, weekly{semanalmente} monthly{mensualmente} quarterly{trimestralmente} halfyear{semestralmente} yearly{anualmente} other{desconocido}}{skip, plural, =0{} other{, saltarse {skip}}}.",
-  "billsChangeLayoutTooltip": "Cambiar diseño",
-  "billsChangeSortOrderTooltip": "Cambiar orden de clasificación",
-  "billsErrorLoading": "Error al cargar facturas.",
-  "billsExactAmountAndFrequency": "La factura coincide con las transacciones de {value}. Se repite {frequency, select, weekly{semanalmente} monthly{mensualmente} quarterly{trimestralmente} halfyear{semestralmente} yearly{anualmente} other{desconocido}}{skip, plural, =0{} other{, saltarse {skip}}}.",
-  "billsExpectedOn": "Esperado {date}",
-  "billsFrequency": "{frequency, select, weekly{Semanal} monthly{Mensual} quarterly{Trimestral} halfyear{Semestral} yearly{Anual} other{Desconocido}}",
-  "billsFrequencySkip": "{frequency, select, weekly{Semanal} monthly{Mensual} quarterly{Trimestral} halfyear{Semestral} yearly{Anual} other{Desconocido}}{skip, plural, =0{} other{, saltarse {skip}}}",
-  "billsInactive": "Inactiva",
-  "billsIsActive": "La factura está activa",
-  "billsLayoutGroupSubtitle": "Facturas mostradas en sus grupos asignados.",
-  "billsLayoutGroupTitle": "Grupo",
-  "billsLayoutListSubtitle": "Facturas mostradas en una lista ordenada por ciertos criterios.",
-  "billsLayoutListTitle": "Lista",
-  "billsListEmpty": "La lista está actualmente vacía.",
-  "billsNextExpectedMatch": "Próxima coincidencia esperada",
-  "billsNotActive": "La factura está inactiva",
-  "billsNotExpected": "No se esperaba este período",
-  "billsNoTransactions": "No se encontraron transacciones.",
-  "billsPaidOn": "Pagado {date}",
-  "billsSortAlphabetical": "Alfabético",
-  "billsSortByTimePeriod": "Por período de tiempo",
-  "billsSortFrequency": "Frecuencia",
-  "billsSortName": "Nombre",
-  "billsUngrouped": "Sin agrupar",
-  "billsSettingsShowOnlyActive": "Mostrar solo activos",
-  "billsSettingsShowOnlyActiveDesc": "Muestra solo las suscripciones activas.",
-  "billsSettingsShowOnlyExpected": "Mostrar solo esperados",
-  "billsSettingsShowOnlyExpectedDesc": "Muestra solo las suscripciones que se esperan (o pagan) este mes.",
-  "categoryDeleteConfirm": "¿Estás seguro de que deseas eliminar esta categoría? Las transacciones no serán eliminadas, pero ya no tendrán categoría.",
-  "categoryErrorLoading": "Error cargando categorías.",
-  "categoryFormLabelIncludeInSum": "Incluir en suma mensual",
-  "categoryFormLabelName": "Nombre de la categoría",
-  "categoryMonthNext": "Próximo Mes",
-  "categoryMonthPrev": "Mes anterior",
-  "categorySumExcluded": "excluida",
-  "categoryTitleAdd": "Agregar categoría",
-  "categoryTitleDelete": "Eliminar categoría",
-  "categoryTitleEdit": "Editar categoría",
-  "catNone": "(sin categoría)",
-  "catOther": "Otros",
-  "errorAPIInvalidResponse": "Respuesta inválida de la API: {message}",
-  "errorAPIUnavailable": "API no disponible",
-  "errorFieldRequired": "Este campo es obligatorio.",
-  "errorInvalidURL": "URL inválida",
-  "errorMinAPIVersion": "Se requiere una versión mínima de la API Firefly -{requiredVersion} Por favor, actualice.",
-  "errorStatusCode": "Código de estado: {code}",
-  "errorUnknown": "Error desconocido.",
-  "formButtonHelp": "Ayuda",
-  "formButtonLogin": "Iniciar Sesión",
-  "formButtonLogout": "Cerrar sesión",
-  "formButtonRemove": "Eliminar",
-  "formButtonResetLogin": "Restablecer inicio de sesión",
-  "formButtonTransactionAdd": "Añadir Transacción",
-  "formButtonTryAgain": "Inténtalo de nuevo",
-  "generalAccount": "Cuenta",
-  "generalAssets": "Activos",
-  "generalBalance": "Saldo",
-  "generalBalanceOn": "Saldo a {date}",
-  "generalBill": "Factura",
-  "generalBudget": "Presupuesto",
-  "generalCategory": "Categoría",
-  "generalCurrency": "Divisa",
-  "generalDateRangeCurrentMonth": "Mes actual",
-  "generalDateRangeLast30Days": "Últimos 30 días",
-  "generalDateRangeCurrentYear": "Año actual",
-  "generalDateRangeLastYear": "Año pasado",
-  "generalDateRangeAll": "Todos",
-  "generalDefault": "por defecto",
-  "generalDestinationAccount": "Cuenta de Destino",
-  "generalDismiss": "Descartar",
-  "generalEarned": "Ingresado",
-  "generalError": "Error",
-  "generalExpenses": "Gastos",
-  "generalIncome": "Ingresos",
-  "generalLiabilities": "Pasivos",
-  "generalMultiple": "múltiple",
-  "generalNever": "nunca",
-  "generalReconcile": "Reconciliado",
-  "generalReset": "Restablecer",
-  "generalSourceAccount": "Cuenta de Origen",
-  "generalSpent": "Gastado",
-  "generalSum": "Suma",
-  "generalTarget": "Objetivo",
-  "generalUnknown": "Desconocido",
-  "homeMainBillsInterval": " ({period, select, weekly{semanalmente} monthly{mensualmente} quarterly{trimestralmente} halfyear{semestralmente} yearly{anualmente} other{desconocido}})",
-  "homeMainBillsTitle": "Facturas para la próxima semana",
-  "homeMainBudgetInterval": " ({from} hasta {to}, {period})",
-  "homeMainBudgetIntervalSingle": " ({from} hasta {to})",
-  "homeMainBudgetSum": "{current} {status, select, over{más de} other{restante}} {available}",
-  "homeMainBudgetTitle": "Presupuestos para el mes actual",
-  "homeMainChartAccountsTitle": "Resumen de la cuenta",
-  "homeMainChartCategoriesTitle": "Resumen de categoría para el mes actual",
-  "homeMainChartDailyAvg": "promedio de 7 días",
-  "homeMainChartDailyTitle": "Resumen diario",
-  "homeMainChartNetEarningsTitle": "Beneficio",
-  "homeMainChartNetWorthTitle": "Valor neto",
-  "homeMainChartTagsTitle": "Resumen de etiquetas del mes actual",
-  "homePiggyAdjustDialogTitle": "Ahorrar/Gastar dinero",
-  "homePiggyDateStart": "Fecha de inicio: {date}",
-  "homePiggyDateTarget": "Fecha objetivo: {date}",
-  "homeMainDialogSettingsTitle": "Personalizar el panel",
-  "homePiggyLinked": "Vinculado a {account}",
-  "homePiggyNoAccounts": "No se han creado huchas.",
-  "homePiggyNoAccountsSubtitle": "¡Cree alguna en la interfaz web!",
-  "homePiggyRemaining": "Pendiente de ahorrar: {amount}",
-  "homePiggySaved": "Ahorrado hasta ahora: {amount}",
-  "homePiggySavedMultiple": "Ahorrado hasta ahora:",
-  "homePiggyTarget": "Objetivo de ahorro: {amount}",
-  "homePiggyAccountStatus": "Estado de la cuenta",
-  "homePiggyAvailableAmounts": "Cantidades disponibles",
-  "homePiggyAvailable": "Disponible: {amount}",
-  "homePiggyInPiggyBanks": "En huchas: {amount}",
-  "homeTabLabelBalance": "Hoja de balance",
-  "homeTabLabelMain": "Principal",
-  "homeTabLabelPiggybanks": "Huchas",
-  "homeTabLabelTransactions": "Transacciones",
-  "homeTransactionsActionFilter": "Listado de filtros",
-  "homeTransactionsDialogFilterAccountsAll": "<Todas las cuentas>",
-  "homeTransactionsDialogFilterBillsAll": "<Todas las facturas>",
-  "homeTransactionsDialogFilterBillUnset": "<Factura no establecida>",
-  "homeTransactionsDialogFilterBudgetsAll": "<Todos los presupuestos>",
-  "homeTransactionsDialogFilterBudgetUnset": "<Presupuesto no establecido>",
-  "homeTransactionsDialogFilterCategoriesAll": "<Todas las categorías>",
-  "homeTransactionsDialogFilterCategoryUnset": "<Categoría no establecida>",
-  "homeTransactionsDialogFilterCurrenciesAll": "<Todas las divisas>",
-  "homeTransactionsDialogFilterDateRange": "Rango de fechas",
-  "homeTransactionsDialogFilterFutureTransactions": "Mostrar transacciones futuras",
-  "homeTransactionsDialogFilterSearch": "Término de búsqueda",
-  "homeTransactionsDialogFilterTitle": "Seleccionar filtros",
-  "homeTransactionsEmpty": "No se encontraron transacciones.",
-  "homeTransactionsMultipleCategories": "{num} categorías",
-  "homeTransactionsSettingsShowTags": "Mostrar etiquetas en la lista de transacciones",
-  "liabilityDirectionCredit": "Se me debe esta deuda",
-  "liabilityDirectionDebit": "Le debo esta deuda a otra persona",
-  "liabilityTypeDebt": "Deuda",
-  "liabilityTypeLoan": "Préstamo",
-  "liabilityTypeMortgage": "Hipoteca",
-  "loginAbout": "Para usar Waterfly III es necesario disponer de un servidor con una instancia de Firefly III o del add-on de Firefly III para Home Assistant.\n\nPor favor, introduzca la URL completa y el token de acceso personal (Ajustes -> Perfil -> OAuth -> Token de Acceso Personal) debajo.",
-  "loginFormLabelAPIKey": "Clave API válida",
-  "loginFormLabelHost": "URL del servidor",
-  "loginWelcome": "Bienvenido a Waterfly III",
-  "logoutConfirmation": "¿Estás seguro de que deseas cerrar sesión?",
-  "navigationAccounts": "Cuentas",
-  "navigationBills": "Facturas",
-  "navigationCategories": "Categorías",
-  "navigationMain": "Panel principal",
-  "generalSettings": "Configuración",
-  "no": "No",
-  "numPercent": "{num}",
-  "numPercentOf": "{perc} de {of}",
-  "settingsDialogDebugInfo": "Puede activar y enviar los registros de depuración desde aquí. Su activación tiene un impacto perjudicial en el rendimiento, así que no los active a no ser que se le haya recomendado. Desactivar los registros elimina los guardados anteriormente.",
-  "settingsDialogDebugMailCreate": "Crear email",
-  "settingsDialogDebugMailDisclaimer": "ATENCIÓN: Se abrirá un borrador de email con los registros de depuración como archivo adjunto (en formato de texto). Los registros pueden contener información sensible, como el nombre del anfitrión de su instancia de Firefly (aunque se ha tratado de no registrar secretos, como la clave API). Por favor, revise los registros cuidadosamente y censure cualquier información que no desea compartir y/o no es relevante para el problema sobre el que quiere informar.",
-  "settingsDialogDebugSendButton": "Enviar registros por correo",
-  "settingsDialogDebugTitle": "Registros de depuración",
-  "settingsDialogLanguageTitle": "Seleccionar idioma",
-  "settingsDialogThemeTitle": "Seleccionar tema",
-  "settingsFAQ": "FAQ",
-  "settingsFAQHelp": "Se abre en el navegador. Sólo disponible en inglés.",
-  "settingsLanguage": "Idioma",
-  "settingsLockscreen": "Pantalla de bloqueo",
-  "settingsLockscreenHelp": "Requerir autenticación al iniciar la aplicación",
-  "settingsLockscreenInitial": "Por favor, autentíquese para activar la pantalla de bloqueo.",
-  "settingsNLAppAccount": "Cuenta por defecto",
-  "settingsNLAppAccountDynamic": "<Dinámico>",
-  "settingsNLAppAdd": "Añadir aplicación",
-  "settingsNLAppAddHelp": "Haga clic para añadir una aplicación para escuchar. Sólo las aplicaciones elegibles aparecerán en la lista.",
-  "settingsNLAppAddInfo": "Haga algunas transacciones que generen notificaciones en el teléfono para añadir aplicaciones a esta lista. Si la aplicación todavía no aparece, por favor, informe a app@vogt.pw.",
-  "settingsNLAutoAdd": "Crear transacción sin interacción",
-  "settingsNLDescription": "Este servicio permite obtener detalles de la transacción a partir de notificaciones entrantes. Además, puede seleccionar una cuenta por defecto a la que asignar la transacción. Si no se establece ningún valor, trata de extraer la información de la notificación.",
-  "settingsNLEmptyNote": "Mantener campo nota vacío",
-  "settingsNLPermissionGrant": "Toque para conceder permiso.",
-  "settingsNLPermissionNotGranted": "Permiso no concedido.",
-  "settingsNLPermissionRemove": "Quitar el permiso?",
-  "settingsNLPermissionRemoveHelp": "Para desactivar este servicio, haga clic en la aplicación y elimine los permisos en la siguiente pantalla.",
-  "settingsNLPrefillTXTitle": "Rellenar el título de la transacción con el título de la notificación",
-  "settingsNLServiceChecking": "Comprobando estado…",
-  "settingsNLServiceCheckingError": "Error comprobando estado: {error}",
-  "settingsNLServiceRunning": "El servicio se está ejecutando.",
-  "settingsNLServiceStatus": "Estado del servicio",
-  "settingsNLServiceStopped": "El servicio está detenido.",
-  "settingsNotificationListener": "Servicio de escucha de notificaciones",
-  "settingsTheme": "Tema de la aplicación",
-  "settingsThemeDynamicColors": "Colores dinámicos",
-  "settingsThemeValue": "{theme, select, dark{Modo Oscuro} light{Modo Luz} other{Predeterminado del sistema}}",
-  "settingsUseServerTimezone": "Usar la zona horaria del servidor",
-  "settingsUseServerTimezoneHelp": "Mostrar todas las horas en la zona horaria del servidor. Esto imita el comportamiento de la interfaz web.",
-  "settingsVersion": "Versión de la aplicación",
-  "settingsVersionChecking": "comprobando…",
-  "transactionAttachments": "Archivos adjuntos",
-  "transactionDeleteConfirm": "¿Seguro que desea eliminar esta transacción?",
-  "transactionDialogAttachmentsDelete": "Eliminar archivo adjunto",
-  "transactionDialogAttachmentsDeleteConfirm": "¿Está seguro de que desea eliminar el archivo adjunto?",
-  "transactionDialogAttachmentsErrorDownload": "No se pudo descargar el archivo.",
-  "transactionDialogAttachmentsErrorOpen": "No se pudo abrir el archivo: {error}",
-  "transactionDialogAttachmentsErrorUpload": "No se pudo subir el archivo: {error}",
-  "transactionDialogAttachmentsTitle": "Archivos adjuntos",
-  "transactionDialogBillNoBill": "Sin factura",
-  "transactionDialogBillTitle": "Enlace a la factura",
-  "transactionDialogCurrencyTitle": "Seleccionar divisa",
-  "transactionDialogTagsAdd": "Añadir etiqueta",
-  "transactionDialogTagsHint": "Buscar/Añadir etiqueta",
-  "transactionDialogTagsTitle": "Seleccionar etiquetas",
-  "transactionDuplicate": "Duplicado",
-  "transactionErrorInvalidAccount": "Cuenta inválida",
-  "transactionErrorInvalidBudget": "Presupuesto inválido",
-  "transactionErrorNoAccounts": "Por favor, primero rellene las cuentas.",
-  "transactionErrorNoAssetAccount": "Por favor, seleccione una cuenta de activo.",
-  "transactionErrorTitle": "Por favor, proporcione un título.",
-  "transactionFormLabelAccountDestination": "Cuenta de destino",
-  "transactionFormLabelAccountForeign": "Cuenta extranjera",
-  "transactionFormLabelAccountOwn": "Cuenta propia",
-  "transactionFormLabelAccountSource": "Cuenta de origen",
-  "transactionFormLabelNotes": "Notas",
-  "transactionFormLabelTags": "Etiquetas",
-  "transactionFormLabelTitle": "Título de la transacción",
-  "transactionSplitAdd": "Añadir transacción dividida",
-  "transactionSplitChangeCurrency": "Cambiar moneda dividida",
-  "transactionSplitChangeDestinationAccount": "Cambiar cuenta de destino dividida",
-  "transactionSplitChangeSourceAccount": "Cambiar cuenta de origen dividida",
-  "transactionSplitChangeTarget": "Cambiar cuenta de destina dividida",
-  "transactionSplitDelete": "Eliminar división",
-  "transactionTitleAdd": "Añadir Transacción",
-  "transactionTitleDelete": "Eliminar transacción",
-  "transactionTitleEdit": "Editar Transacción",
-  "transactionTypeDeposit": "Ingreso",
-  "transactionTypeTransfer": "Transferencia",
-  "transactionTypeWithdrawal": "Retirada"
+    "@@locale": "es",
+    "@@x-reference": true,
+    "accountRoleAssetCashWallet": "Billetera de efectivo",
+    "@accountRoleAssetCashWallet": {
+        "description": "Firefly Translation String: account_role_cashWalletAsset"
+    },
+    "accountRoleAssetCC": "Tarjeta de crédito",
+    "@accountRoleAssetCC": {
+        "description": "Firefly Translation String: account_role_ccAsset"
+    },
+    "accountRoleAssetDefault": "Cuenta de activos por defecto",
+    "@accountRoleAssetDefault": {
+        "description": "Firefly Translation String: account_role_defaultAsset"
+    },
+    "accountRoleAssetSavings": "Cuenta de ahorros",
+    "@accountRoleAssetSavings": {
+        "description": "Firefly Translation String: account_role_savingAsset"
+    },
+    "accountRoleAssetShared": "Cuenta de activos compartida",
+    "@accountRoleAssetShared": {
+        "description": "Firefly Translation String: account_role_sharedAsset"
+    },
+    "accountsLabelAsset": "Cuentas de activos",
+    "@accountsLabelAsset": {
+        "description": "Firefly Translation String: asset_accounts"
+    },
+    "accountsLabelExpense": "Cuentas de gastos",
+    "@accountsLabelExpense": {
+        "description": "Firefly Translation String: expense_accounts"
+    },
+    "accountsLabelLiabilities": "Pasivos",
+    "@accountsLabelLiabilities": {
+        "description": "Firefly Translation String: liabilities_accounts"
+    },
+    "accountsLabelRevenue": "Cuentas de ingresos",
+    "@accountsLabelRevenue": {
+        "description": "Firefly Translation String: revenue_accounts"
+    },
+    "accountsLiabilitiesInterest": "{interest}% de interés por {period, select, weekly{semana} monthly{mes} quarterly{trimestre} halfyear{semestre} yearly{año} other{desconocido}}",
+    "@accountsLiabilitiesInterest": {
+        "description": "Interest in a certain period",
+        "placeholders": {
+            "interest": {
+                "type": "double",
+                "example": "1.2"
+            },
+            "period": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsAmountAndFrequency": "Factura coincide con transacciones entre {minValue} y {maxvalue}. Se repite {frequency, select, weekly{semanalmente} monthly{mensualmente} quarterly{trimestralmente} halfyear{semestralmente} yearly{anualmente} other{desconocido}}{skip, plural, =0{} other{, saltarse {skip}}}.",
+    "@billsAmountAndFrequency": {
+        "description": "Subscription match for min and max amounts, and frequency",
+        "placeholders": {
+            "minValue": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "maxvalue": {
+                "type": "String",
+                "example": "$60.50"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsChangeLayoutTooltip": "Cambiar diseño",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "Cambiar orden de clasificación",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsErrorLoading": "Error al cargar facturas.",
+    "@billsErrorLoading": {
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
+    },
+    "billsExactAmountAndFrequency": "La factura coincide con las transacciones de {value}. Se repite {frequency, select, weekly{semanalmente} monthly{mensualmente} quarterly{trimestralmente} halfyear{semestralmente} yearly{anualmente} other{desconocido}}{skip, plural, =0{} other{, saltarse {skip}}}.",
+    "@billsExactAmountAndFrequency": {
+        "description": "Subscription match for exact amount and frequency",
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsExpectedOn": "Esperado {date}",
+    "@billsExpectedOn": {
+        "description": "Describes what date the subscription is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsFrequency": "{frequency, select, weekly{Semanal} monthly{Mensual} quarterly{Trimestral} halfyear{Semestral} yearly{Anual} other{Desconocido}}",
+    "@billsFrequency": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsFrequencySkip": "{frequency, select, weekly{Semanal} monthly{Mensual} quarterly{Trimestral} halfyear{Semestral} yearly{Anual} other{Desconocido}}{skip, plural, =0{} other{, saltarse {skip}}}",
+    "@billsFrequencySkip": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsInactive": "Inactiva",
+    "@billsInactive": {
+        "description": "Text: when the subscription is inactive"
+    },
+    "billsIsActive": "La factura está activa",
+    "@billsIsActive": {
+        "description": "Text: the subscription is active"
+    },
+    "billsLayoutGroupSubtitle": "Facturas mostradas en sus grupos asignados.",
+    "@billsLayoutGroupSubtitle": {
+        "description": "Subtitle text for group layout option"
+    },
+    "billsLayoutGroupTitle": "Grupo",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListSubtitle": "Facturas mostradas en una lista ordenada por ciertos criterios.",
+    "@billsLayoutListSubtitle": {
+        "description": "Subtitle text for list layout option"
+    },
+    "billsLayoutListTitle": "Lista",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "La lista está actualmente vacía.",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "Próxima coincidencia esperada",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for subscription"
+    },
+    "billsNotActive": "La factura está inactiva",
+    "@billsNotActive": {
+        "description": "Text: the subscription is inactive"
+    },
+    "billsNotExpected": "No se esperaba este período",
+    "@billsNotExpected": {
+        "description": "Describes that the subscription is not expected this period"
+    },
+    "billsNoTransactions": "No se encontraron transacciones.",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the subscription"
+    },
+    "billsPaidOn": "Pagado {date}",
+    "@billsPaidOn": {
+        "description": "Describes what date the subscription was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "Alfabético",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "Por período de tiempo",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "Frecuencia",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "Nombre",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "Sin agrupar",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped subscriptions"
+    },
+    "billsSettingsShowOnlyActive": "Mostrar solo activos",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Muestra solo las suscripciones activas.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Mostrar solo esperados",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Muestra solo las suscripciones que se esperan (o pagan) este mes.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
+    "categoryDeleteConfirm": "¿Estás seguro de que deseas eliminar esta categoría? Las transacciones no serán eliminadas, pero ya no tendrán categoría.",
+    "@categoryDeleteConfirm": {
+        "description": "Confirmation text to delete category"
+    },
+    "categoryErrorLoading": "Error cargando categorías.",
+    "@categoryErrorLoading": {
+        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+    },
+    "categoryFormLabelIncludeInSum": "Incluir en suma mensual",
+    "@categoryFormLabelIncludeInSum": {
+        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+    },
+    "categoryFormLabelName": "Nombre de la categoría",
+    "@categoryFormLabelName": {
+        "description": "Category Add/Edit Form: Label for name field"
+    },
+    "categoryMonthNext": "Próximo Mes",
+    "@categoryMonthNext": {
+        "description": "Button title to view overview for next month"
+    },
+    "categoryMonthPrev": "Mes anterior",
+    "@categoryMonthPrev": {
+        "description": "Button title to view overview for previous month"
+    },
+    "categorySumExcluded": "excluida",
+    "@categorySumExcluded": {
+        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+    },
+    "categoryTitleAdd": "Agregar categoría",
+    "@categoryTitleAdd": {
+        "description": "Title for Dialog: Add Category"
+    },
+    "categoryTitleDelete": "Eliminar categoría",
+    "@categoryTitleDelete": {
+        "description": "Title for Dialog: Delete Category"
+    },
+    "categoryTitleEdit": "Editar categoría",
+    "@categoryTitleEdit": {
+        "description": "Title for Dialog: Edit Category"
+    },
+    "catNone": "(sin categoría)",
+    "@catNone": {
+        "description": "Placeholder when no category has been set."
+    },
+    "catOther": "Otros",
+    "@catOther": {
+        "description": "Category description for summary category 'Other'"
+    },
+    "errorAPIInvalidResponse": "Respuesta inválida de la API: {message}",
+    "@errorAPIInvalidResponse": {
+        "description": "Invalid API response error",
+        "placeholders": {
+            "message": {
+                "type": "String",
+                "example": "API could not be reached."
+            }
+        }
+    },
+    "errorAPIUnavailable": "API no disponible",
+    "@errorAPIUnavailable": {
+        "description": "Error thrown when API is unavailable."
+    },
+    "errorFieldRequired": "Este campo es obligatorio.",
+    "@errorFieldRequired": {
+        "description": "Error: Required field was left empty."
+    },
+    "errorInvalidURL": "URL inválida",
+    "@errorInvalidURL": {
+        "description": "Error: URL is invalid"
+    },
+    "errorMinAPIVersion": "Se requiere una versión mínima de la API Firefly -{requiredVersion} Por favor, actualice.",
+    "@errorMinAPIVersion": {
+        "description": "Error: Required API version not met.",
+        "placeholders": {
+            "requiredVersion": {
+                "type": "String",
+                "example": "2.0.0"
+            }
+        }
+    },
+    "errorStatusCode": "Código de estado: {code}",
+    "@errorStatusCode": {
+        "description": "HTTP status code information on error",
+        "placeholders": {
+            "code": {
+                "type": "int",
+                "example": "500"
+            }
+        }
+    },
+    "errorUnknown": "Error desconocido.",
+    "@errorUnknown": {
+        "description": "Error without further information occurred."
+    },
+    "formButtonHelp": "Ayuda",
+    "@formButtonHelp": {
+        "description": "Button Label: Help"
+    },
+    "formButtonLogin": "Iniciar Sesión",
+    "@formButtonLogin": {
+        "description": "Button Label: Login"
+    },
+    "formButtonLogout": "Cerrar sesión",
+    "@formButtonLogout": {
+        "description": "Button Label: Logout"
+    },
+    "formButtonRemove": "Eliminar",
+    "@formButtonRemove": {
+        "description": "Button Label: Remove"
+    },
+    "formButtonResetLogin": "Restablecer inicio de sesión",
+    "@formButtonResetLogin": {
+        "description": "Button Label: Reset login form (when error is shown)"
+    },
+    "formButtonTransactionAdd": "Añadir Transacción",
+    "@formButtonTransactionAdd": {
+        "description": "Button Label: Add Transaction"
+    },
+    "formButtonTryAgain": "Inténtalo de nuevo",
+    "@formButtonTryAgain": {
+        "description": "Button Label: Try that thing again (login etc)"
+    },
+    "generalAccount": "Cuenta",
+    "@generalAccount": {
+        "description": "Asset/Debt (Bank) Account"
+    },
+    "generalAssets": "Activos",
+    "@generalAssets": {
+        "description": "(Monetary) Assets"
+    },
+    "generalBalance": "Saldo",
+    "@generalBalance": {
+        "description": "(Account) Balance"
+    },
+    "generalBalanceOn": "Saldo a {date}",
+    "@generalBalanceOn": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMd",
+                "example": "2023-05-13"
+            }
+        }
+    },
+    "generalBill": "Factura",
+    "@generalBill": {
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
+    },
+    "generalBudget": "Presupuesto",
+    "@generalBudget": {
+        "description": "(Monetary) Budget"
+    },
+    "generalCategory": "Categoría",
+    "@generalCategory": {
+        "description": "Category (of transaction etc.)."
+    },
+    "generalCurrency": "Divisa",
+    "@generalCurrency": {
+        "description": "(Money) Currency"
+    },
+    "generalDateRangeCurrentMonth": "Mes actual",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Últimos 30 días",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Año actual",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Año pasado",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Todos",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
+    "generalDefault": "por defecto",
+    "@generalDefault": {
+        "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "Cuenta de Destino",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
+    },
+    "generalDismiss": "Descartar",
+    "@generalDismiss": {
+        "description": "Dismiss window/dialog without action"
+    },
+    "generalEarned": "Ingresado",
+    "@generalEarned": {
+        "description": "(Amount) Earned"
+    },
+    "generalError": "Error",
+    "@generalError": {
+        "description": "Error (title in dialogs etc.)"
+    },
+    "generalExpenses": "Gastos",
+    "@generalExpenses": {
+        "description": "(Account) Expenses"
+    },
+    "generalIncome": "Ingresos",
+    "@generalIncome": {
+        "description": "(Account) Info"
+    },
+    "generalLiabilities": "Pasivos",
+    "@generalLiabilities": {
+        "description": "Firefly Translation String: liabilities"
+    },
+    "generalMultiple": "múltiple",
+    "@generalMultiple": {
+        "description": "Multiples of a single thing (e.g. source accounts) are existing"
+    },
+    "generalNever": "nunca",
+    "@generalNever": {
+        "description": "Has never happened, no update etc."
+    },
+    "generalReconcile": "Reconciliado",
+    "@generalReconcile": {
+        "description": "Booking has been confirmed/reconciled"
+    },
+    "generalReset": "Restablecer",
+    "@generalReset": {
+        "description": "Reset something (i.e. set filters)"
+    },
+    "generalSourceAccount": "Cuenta de Origen",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
+    "generalSpent": "Gastado",
+    "@generalSpent": {
+        "description": "(Amount) Spent"
+    },
+    "generalSum": "Suma",
+    "@generalSum": {
+        "description": "(Mathematical) Sum"
+    },
+    "generalTarget": "Objetivo",
+    "@generalTarget": {
+        "description": "Target value (i.e. a sum to save)"
+    },
+    "generalUnknown": "Desconocido",
+    "@generalUnknown": {
+        "description": "Something is unknown."
+    },
+    "homeMainBillsInterval": " ({period, select, weekly{semanalmente} monthly{mensualmente} quarterly{trimestralmente} halfyear{semestralmente} yearly{anualmente} other{desconocido}})",
+    "@homeMainBillsInterval": {
+        "description": "subscription interval type",
+        "placeholders": {
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBillsTitle": "Facturas para la próxima semana",
+    "@homeMainBillsTitle": {
+        "description": "Title: Subscriptions for the next week"
+    },
+    "homeMainBudgetInterval": " ({from} hasta {to}, {period})",
+    "@homeMainBudgetInterval": {
+        "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
+            },
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBudgetIntervalSingle": " ({from} hasta {to})",
+    "@homeMainBudgetIntervalSingle": {
+        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
+            }
+        }
+    },
+    "homeMainBudgetSum": "{current} {status, select, over{más de} other{restante}} {available}",
+    "@homeMainBudgetSum": {
+        "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
+        "placeholders": {
+            "current": {
+                "type": "String",
+                "example": "12.34€"
+            },
+            "status": {
+                "type": "String",
+                "example": "left from"
+            },
+            "available": {
+                "type": "String",
+                "example": "12.34€"
+            }
+        }
+    },
+    "homeMainBudgetTitle": "Presupuestos para el mes actual",
+    "@homeMainBudgetTitle": {
+        "description": "Title: Budgets for current month"
+    },
+    "homeMainChartAccountsTitle": "Resumen de la cuenta",
+    "@homeMainChartAccountsTitle": {
+        "description": "Chart Label: Account Summary"
+    },
+    "homeMainChartCategoriesTitle": "Resumen de categoría para el mes actual",
+    "@homeMainChartCategoriesTitle": {
+        "description": "Chart Label: Category Summary"
+    },
+    "homeMainChartDailyAvg": "promedio de 7 días",
+    "@homeMainChartDailyAvg": {
+        "description": "Text for last week average spent"
+    },
+    "homeMainChartDailyTitle": "Resumen diario",
+    "@homeMainChartDailyTitle": {
+        "description": "Chart Label: Daily Summary"
+    },
+    "homeMainChartNetEarningsTitle": "Beneficio",
+    "@homeMainChartNetEarningsTitle": {
+        "description": "Chart Label: Net Earnings"
+    },
+    "homeMainChartNetWorthTitle": "Valor neto",
+    "@homeMainChartNetWorthTitle": {
+        "description": "Chart Label: Net Worth"
+    },
+    "homeMainChartTagsTitle": "Resumen de etiquetas del mes actual",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
+    "homePiggyAdjustDialogTitle": "Ahorrar/Gastar dinero",
+    "@homePiggyAdjustDialogTitle": {
+        "description": "Title of the dialog where money can be added/removed to a piggy bank."
+    },
+    "homePiggyDateStart": "Fecha de inicio: {date}",
+    "@homePiggyDateStart": {
+        "description": "Start of the piggy bank",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "March 12, 2023"
+            }
+        }
+    },
+    "homePiggyDateTarget": "Fecha objetivo: {date}",
+    "@homePiggyDateTarget": {
+        "description": "Set target date of the piggy bank (when saving should be finished)",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "March 12, 2023"
+            }
+        }
+    },
+    "homeMainDialogSettingsTitle": "Personalizar el panel",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
+    },
+    "homePiggyLinked": "Vinculado a {account}",
+    "@homePiggyLinked": {
+        "description": "Piggy bank is linked to asset account {account}.",
+        "placeholders": {
+            "account": {
+                "type": "String",
+                "example": "Awesome Bank Account"
+            }
+        }
+    },
+    "homePiggyNoAccounts": "No se han creado huchas.",
+    "@homePiggyNoAccounts": {
+        "description": "Information that no piggy banks are existing"
+    },
+    "homePiggyNoAccountsSubtitle": "¡Cree alguna en la interfaz web!",
+    "@homePiggyNoAccountsSubtitle": {
+        "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
+    },
+    "homePiggyRemaining": "Pendiente de ahorrar: {amount}",
+    "@homePiggyRemaining": {
+        "description": "How much money is left to save",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggySaved": "Ahorrado hasta ahora: {amount}",
+    "@homePiggySaved": {
+        "description": "How much money already was saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggySavedMultiple": "Ahorrado hasta ahora:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
+    "homePiggyTarget": "Objetivo de ahorro: {amount}",
+    "@homePiggyTarget": {
+        "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "Estado de la cuenta",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Cantidades disponibles",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "Disponible: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "En huchas: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homeTabLabelBalance": "Hoja de balance",
+    "@homeTabLabelBalance": {
+        "description": "Tab Label: Balance Sheet page"
+    },
+    "homeTabLabelMain": "Principal",
+    "@homeTabLabelMain": {
+        "description": "Tab Label: Start page (\"main\")"
+    },
+    "homeTabLabelPiggybanks": "Huchas",
+    "@homeTabLabelPiggybanks": {
+        "description": "Tab Label: Piggy Banks page"
+    },
+    "homeTabLabelTransactions": "Transacciones",
+    "@homeTabLabelTransactions": {
+        "description": "Tab Label: Transactions page"
+    },
+    "homeTransactionsActionFilter": "Listado de filtros",
+    "@homeTransactionsActionFilter": {
+        "description": "Action Button Label: Filter list."
+    },
+    "homeTransactionsDialogFilterAccountsAll": "<Todas las cuentas>",
+    "@homeTransactionsDialogFilterAccountsAll": {
+        "description": "Don't filter for a specific account (default entry)"
+    },
+    "homeTransactionsDialogFilterBillsAll": "<Todas las facturas>",
+    "@homeTransactionsDialogFilterBillsAll": {
+        "description": "Don't filter for a specific subscription (default entry)"
+    },
+    "homeTransactionsDialogFilterBillUnset": "<Factura no establecida>",
+    "@homeTransactionsDialogFilterBillUnset": {
+        "description": "Filter for unset subscription"
+    },
+    "homeTransactionsDialogFilterBudgetsAll": "<Todos los presupuestos>",
+    "@homeTransactionsDialogFilterBudgetsAll": {
+        "description": "Don't filter for a specific budget (default entry)"
+    },
+    "homeTransactionsDialogFilterBudgetUnset": "<Presupuesto no establecido>",
+    "@homeTransactionsDialogFilterBudgetUnset": {
+        "description": "Filter for unset budgets"
+    },
+    "homeTransactionsDialogFilterCategoriesAll": "<Todas las categorías>",
+    "@homeTransactionsDialogFilterCategoriesAll": {
+        "description": "Don't filter for a specific category (default entry)"
+    },
+    "homeTransactionsDialogFilterCategoryUnset": "<Categoría no establecida>",
+    "@homeTransactionsDialogFilterCategoryUnset": {
+        "description": "Filter for unset categories"
+    },
+    "homeTransactionsDialogFilterCurrenciesAll": "<Todas las divisas>",
+    "@homeTransactionsDialogFilterCurrenciesAll": {
+        "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "Rango de fechas",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
+    },
+    "homeTransactionsDialogFilterFutureTransactions": "Mostrar transacciones futuras",
+    "@homeTransactionsDialogFilterFutureTransactions": {
+        "description": "Setting to show future transactions"
+    },
+    "homeTransactionsDialogFilterSearch": "Término de búsqueda",
+    "@homeTransactionsDialogFilterSearch": {
+        "description": "Search term for filter"
+    },
+    "homeTransactionsDialogFilterTitle": "Seleccionar filtros",
+    "@homeTransactionsDialogFilterTitle": {
+        "description": "Title of Filter Dialog"
+    },
+    "homeTransactionsEmpty": "No se encontraron transacciones.",
+    "@homeTransactionsEmpty": {
+        "description": "Message when no transactions are found."
+    },
+    "homeTransactionsMultipleCategories": "{num} categorías",
+    "@homeTransactionsMultipleCategories": {
+        "description": "$num categories for the transaction.",
+        "placeholders": {
+            "num": {
+                "type": "int",
+                "example": "2"
+            }
+        }
+    },
+    "homeTransactionsSettingsShowTags": "Mostrar etiquetas en la lista de transacciones",
+    "@homeTransactionsSettingsShowTags": {
+        "description": "Setting label to show tags in transactioon list."
+    },
+    "liabilityDirectionCredit": "Se me debe esta deuda",
+    "@liabilityDirectionCredit": {
+        "description": "Firefly Translation String: liability_direction_credit"
+    },
+    "liabilityDirectionDebit": "Le debo esta deuda a otra persona",
+    "@liabilityDirectionDebit": {
+        "description": "Firefly Translation String: liability_direction_debit"
+    },
+    "liabilityTypeDebt": "Deuda",
+    "@liabilityTypeDebt": {
+        "description": "Firefly Translation String: account_type_debt"
+    },
+    "liabilityTypeLoan": "Préstamo",
+    "@liabilityTypeLoan": {
+        "description": "Firefly Translation String: account_type_loan"
+    },
+    "liabilityTypeMortgage": "Hipoteca",
+    "@liabilityTypeMortgage": {
+        "description": "Firefly Translation String: account_type_mortgage"
+    },
+    "loginAbout": "Para usar Waterfly III es necesario disponer de un servidor con una instancia de Firefly III o del add-on de Firefly III para Home Assistant.\n\nPor favor, introduzca la URL completa y el token de acceso personal (Ajustes -> Perfil -> OAuth -> Token de Acceso Personal) debajo.",
+    "@loginAbout": {
+        "description": "Login screen welcome description"
+    },
+    "loginFormLabelAPIKey": "Clave API válida",
+    "@loginFormLabelAPIKey": {
+        "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHost": "URL del servidor",
+    "@loginFormLabelHost": {
+        "description": "Login Form: Label for Host field"
+    },
+    "loginWelcome": "Bienvenido a Waterfly III",
+    "@loginWelcome": {
+        "description": "Login screen welcome banner"
+    },
+    "logoutConfirmation": "¿Estás seguro de que deseas cerrar sesión?",
+    "@logoutConfirmation": {
+        "description": "Get user confirmation if he really wants to log out"
+    },
+    "navigationAccounts": "Cuentas",
+    "@navigationAccounts": {
+        "description": "Navigation Label: Accounts Page"
+    },
+    "navigationBills": "Facturas",
+    "@navigationBills": {
+        "description": "Navigation Label: Subscriptions"
+    },
+    "navigationCategories": "Categorías",
+    "@navigationCategories": {
+        "description": "Navigation Label: Categories"
+    },
+    "navigationMain": "Panel principal",
+    "@navigationMain": {
+        "description": "Navigation Label: Main Dashboard"
+    },
+    "generalSettings": "Configuración",
+    "@generalSettings": {
+        "description": "Label: Settings"
+    },
+    "no": "No",
+    "@no": {
+        "description": "The word no"
+    },
+    "numPercent": "{num}",
+    "@numPercent": {
+        "description": "Number formatted as percentage",
+        "placeholders": {
+            "num": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            }
+        }
+    },
+    "numPercentOf": "{perc} de {of}",
+    "@numPercentOf": {
+        "description": "Number formatted as percentage, with total amount provided",
+        "placeholders": {
+            "perc": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            },
+            "of": {
+                "type": "String"
+            }
+        }
+    },
+    "settingsDialogDebugInfo": "Puede activar y enviar los registros de depuración desde aquí. Su activación tiene un impacto perjudicial en el rendimiento, así que no los active a no ser que se le haya recomendado. Desactivar los registros elimina los guardados anteriormente.",
+    "@settingsDialogDebugInfo": {
+        "description": "Information about debug logs and their impact."
+    },
+    "settingsDialogDebugMailCreate": "Crear email",
+    "@settingsDialogDebugMailCreate": {
+        "description": "Button to confirm mail creation after privacy disclaimer is shown."
+    },
+    "settingsDialogDebugMailDisclaimer": "ATENCIÓN: Se abrirá un borrador de email con los registros de depuración como archivo adjunto (en formato de texto). Los registros pueden contener información sensible, como el nombre del anfitrión de su instancia de Firefly (aunque se ha tratado de no registrar secretos, como la clave API). Por favor, revise los registros cuidadosamente y censure cualquier información que no desea compartir y/o no es relevante para el problema sobre el que quiere informar.",
+    "@settingsDialogDebugMailDisclaimer": {
+        "description": "Privacy disclaimer shown before sending logs"
+    },
+    "settingsDialogDebugSendButton": "Enviar registros por correo",
+    "@settingsDialogDebugSendButton": {
+        "description": "Button to send logs via E-Mail"
+    },
+    "settingsDialogDebugTitle": "Registros de depuración",
+    "@settingsDialogDebugTitle": {
+        "description": "Dialog title: Debug Logs"
+    },
+    "settingsDialogLanguageTitle": "Seleccionar idioma",
+    "@settingsDialogLanguageTitle": {
+        "description": "Dialog title: Select Language"
+    },
+    "settingsDialogThemeTitle": "Seleccionar tema",
+    "@settingsDialogThemeTitle": {
+        "description": "Dialog title: Select theme"
+    },
+    "settingsFAQ": "FAQ",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
+    "settingsFAQHelp": "Se abre en el navegador. Sólo disponible en inglés.",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
+    },
+    "settingsLanguage": "Idioma",
+    "@settingsLanguage": {
+        "description": "Currently selected language"
+    },
+    "settingsLockscreen": "Pantalla de bloqueo",
+    "@settingsLockscreen": {
+        "description": "Setting if a lockscreen is shown (authentication is required on startup)"
+    },
+    "settingsLockscreenHelp": "Requerir autenticación al iniciar la aplicación",
+    "@settingsLockscreenHelp": {
+        "description": "Description for lockscreen setting"
+    },
+    "settingsLockscreenInitial": "Por favor, autentíquese para activar la pantalla de bloqueo.",
+    "@settingsLockscreenInitial": {
+        "description": "Prompt to authenticate once to set up the lockscreen"
+    },
+    "settingsNLAppAccount": "Cuenta por defecto",
+    "@settingsNLAppAccount": {
+        "description": "Default account which will be used for the transaction."
+    },
+    "settingsNLAppAccountDynamic": "<Dinámico>",
+    "@settingsNLAppAccountDynamic": {
+        "description": "Account will be selected dynamically by the content of the notification."
+    },
+    "settingsNLAppAdd": "Añadir aplicación",
+    "@settingsNLAppAdd": {
+        "description": "Button title to add a new app."
+    },
+    "settingsNLAppAddHelp": "Haga clic para añadir una aplicación para escuchar. Sólo las aplicaciones elegibles aparecerán en la lista.",
+    "@settingsNLAppAddHelp": {
+        "description": "Help text below adding the new app button."
+    },
+    "settingsNLAppAddInfo": "Haga algunas transacciones que generen notificaciones en el teléfono para añadir aplicaciones a esta lista. Si la aplicación todavía no aparece, por favor, informe a app@vogt.pw.",
+    "@settingsNLAppAddInfo": {
+        "description": "Help text when no more app is available to add."
+    },
+    "settingsNLAutoAdd": "Crear transacción sin interacción",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
+    "settingsNLDescription": "Este servicio permite obtener detalles de la transacción a partir de notificaciones entrantes. Además, puede seleccionar una cuenta por defecto a la que asignar la transacción. Si no se establece ningún valor, trata de extraer la información de la notificación.",
+    "@settingsNLDescription": {
+        "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "Mantener campo nota vacío",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
+    },
+    "settingsNLPermissionGrant": "Toque para conceder permiso.",
+    "@settingsNLPermissionGrant": {
+        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
+    },
+    "settingsNLPermissionNotGranted": "Permiso no concedido.",
+    "@settingsNLPermissionNotGranted": {
+        "description": "A requested permission was not granted."
+    },
+    "settingsNLPermissionRemove": "Quitar el permiso?",
+    "@settingsNLPermissionRemove": {
+        "description": "Dialog title asking if permission should be removed."
+    },
+    "settingsNLPermissionRemoveHelp": "Para desactivar este servicio, haga clic en la aplicación y elimine los permisos en la siguiente pantalla.",
+    "@settingsNLPermissionRemoveHelp": {
+        "description": "Dialog text giving hint how to remove the permission."
+    },
+    "settingsNLPrefillTXTitle": "Rellenar el título de la transacción con el título de la notificación",
+    "@settingsNLPrefillTXTitle": {
+        "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLServiceChecking": "Comprobando estado…",
+    "@settingsNLServiceChecking": {
+        "description": "Checking the status of the background service"
+    },
+    "settingsNLServiceCheckingError": "Error comprobando estado: {error}",
+    "@settingsNLServiceCheckingError": {
+        "description": "An error occurred while checking the service status",
+        "placeholders": {
+            "error": {
+                "type": "String",
+                "description": "Error details",
+                "example": "Timeout"
+            }
+        }
+    },
+    "settingsNLServiceRunning": "El servicio se está ejecutando.",
+    "@settingsNLServiceRunning": {
+        "description": "A background service is running normally."
+    },
+    "settingsNLServiceStatus": "Estado del servicio",
+    "@settingsNLServiceStatus": {
+        "description": "Status of a background service."
+    },
+    "settingsNLServiceStopped": "El servicio está detenido.",
+    "@settingsNLServiceStopped": {
+        "description": "A background service is stopped."
+    },
+    "settingsNotificationListener": "Servicio de escucha de notificaciones",
+    "@settingsNotificationListener": {
+        "description": "Setting for the notification listener service."
+    },
+    "settingsTheme": "Tema de la aplicación",
+    "@settingsTheme": {
+        "description": "App theme (dark or light)"
+    },
+    "settingsThemeDynamicColors": "Colores dinámicos",
+    "@settingsThemeDynamicColors": {
+        "description": "Material You Dynamic Colors feature"
+    },
+    "settingsThemeValue": "{theme, select, dark{Modo Oscuro} light{Modo Luz} other{Predeterminado del sistema}}",
+    "@settingsThemeValue": {
+        "description": "Currently selected theme (either dark, light or system)",
+        "placeholders": {
+            "theme": {
+                "type": "String",
+                "example": "ThemeMode.dark"
+            }
+        }
+    },
+    "settingsUseServerTimezone": "Usar la zona horaria del servidor",
+    "@settingsUseServerTimezone": {
+        "description": "Setting label to use server timezone."
+    },
+    "settingsUseServerTimezoneHelp": "Mostrar todas las horas en la zona horaria del servidor. Esto imita el comportamiento de la interfaz web.",
+    "@settingsUseServerTimezoneHelp": {
+        "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
+    },
+    "settingsVersion": "Versión de la aplicación",
+    "@settingsVersion": {
+        "description": "Current App Version"
+    },
+    "settingsVersionChecking": "comprobando…",
+    "@settingsVersionChecking": {
+        "description": "Shown while checking for app version"
+    },
+    "transactionAttachments": "Archivos adjuntos",
+    "@transactionAttachments": {
+        "description": "Button Label: Attachments"
+    },
+    "transactionDeleteConfirm": "¿Seguro que desea eliminar esta transacción?",
+    "@transactionDeleteConfirm": {
+        "description": "Confirmation text to delete transaction"
+    },
+    "transactionDialogAttachmentsDelete": "Eliminar archivo adjunto",
+    "@transactionDialogAttachmentsDelete": {
+        "description": "Button Label: Delete Attachment"
+    },
+    "transactionDialogAttachmentsDeleteConfirm": "¿Está seguro de que desea eliminar el archivo adjunto?",
+    "@transactionDialogAttachmentsDeleteConfirm": {
+        "description": "Confirmation text to delete attachment"
+    },
+    "transactionDialogAttachmentsErrorDownload": "No se pudo descargar el archivo.",
+    "@transactionDialogAttachmentsErrorDownload": {
+        "description": "Snackbar Text: File download failed."
+    },
+    "transactionDialogAttachmentsErrorOpen": "No se pudo abrir el archivo: {error}",
+    "@transactionDialogAttachmentsErrorOpen": {
+        "description": "Snackbar Text: File could not be opened, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsErrorUpload": "No se pudo subir el archivo: {error}",
+    "@transactionDialogAttachmentsErrorUpload": {
+        "description": "Snackbar Text: File could not be uploaded, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsTitle": "Archivos adjuntos",
+    "@transactionDialogAttachmentsTitle": {
+        "description": "Dialog Title: Attachments Dialog"
+    },
+    "transactionDialogBillNoBill": "Sin factura",
+    "@transactionDialogBillNoBill": {
+        "description": "Button Label: no subscription to be used"
+    },
+    "transactionDialogBillTitle": "Enlace a la factura",
+    "@transactionDialogBillTitle": {
+        "description": "Dialog Title: Link Subscription to transaction"
+    },
+    "transactionDialogCurrencyTitle": "Seleccionar divisa",
+    "@transactionDialogCurrencyTitle": {
+        "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "Sin hucha",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Vincular a hucha",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
+    },
+    "transactionDialogTagsAdd": "Añadir etiqueta",
+    "@transactionDialogTagsAdd": {
+        "description": "Button Label: Add Tag"
+    },
+    "transactionDialogTagsHint": "Buscar/Añadir etiqueta",
+    "@transactionDialogTagsHint": {
+        "description": "Hint Text for search tag field"
+    },
+    "transactionDialogTagsTitle": "Seleccionar etiquetas",
+    "@transactionDialogTagsTitle": {
+        "description": "Dialog Title: Select Tags"
+    },
+    "transactionDuplicate": "Duplicado",
+    "@transactionDuplicate": {
+        "description": "Menu Label: Duplicate item"
+    },
+    "transactionErrorInvalidAccount": "Cuenta inválida",
+    "@transactionErrorInvalidAccount": {
+        "description": "Transaction Save Error: Invalid account"
+    },
+    "transactionErrorInvalidBudget": "Presupuesto inválido",
+    "@transactionErrorInvalidBudget": {
+        "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Por favor, primero rellene las cuentas.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Por favor, seleccione una cuenta de activo.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
+    },
+    "transactionErrorTitle": "Por favor, proporcione un título.",
+    "@transactionErrorTitle": {
+        "description": "Transaction Save Error: No title provided"
+    },
+    "transactionFormLabelAccountDestination": "Cuenta de destino",
+    "@transactionFormLabelAccountDestination": {
+        "description": "Transaction Form: Label for destination account for transfer transaction"
+    },
+    "transactionFormLabelAccountForeign": "Cuenta extranjera",
+    "@transactionFormLabelAccountForeign": {
+        "description": "Transaction Form: Label for foreign (other) account"
+    },
+    "transactionFormLabelAccountOwn": "Cuenta propia",
+    "@transactionFormLabelAccountOwn": {
+        "description": "Transaction Form: Label for own account"
+    },
+    "transactionFormLabelAccountSource": "Cuenta de origen",
+    "@transactionFormLabelAccountSource": {
+        "description": "Transaction Form: Label for source account for transfer transaction"
+    },
+    "transactionFormLabelNotes": "Notas",
+    "@transactionFormLabelNotes": {
+        "description": "Transaction Form: Label for notes field"
+    },
+    "transactionFormLabelTags": "Etiquetas",
+    "@transactionFormLabelTags": {
+        "description": "Transaction Form: Label for tags field"
+    },
+    "transactionFormLabelTitle": "Título de la transacción",
+    "@transactionFormLabelTitle": {
+        "description": "Transaction Form: Label for title field"
+    },
+    "transactionSplitAdd": "Añadir transacción dividida",
+    "@transactionSplitAdd": {
+        "description": "Button Label: Add a split"
+    },
+    "transactionSplitChangeCurrency": "Cambiar moneda dividida",
+    "@transactionSplitChangeCurrency": {
+        "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Cambiar cuenta de destino dividida",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Cambiar cuenta de origen dividida",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
+    },
+    "transactionSplitChangeTarget": "Cambiar cuenta de destina dividida",
+    "@transactionSplitChangeTarget": {
+        "description": "Hint Text: Change target account for single split"
+    },
+    "transactionSplitDelete": "Eliminar división",
+    "@transactionSplitDelete": {
+        "description": "Hint Text: Delete single split"
+    },
+    "transactionTitleAdd": "Añadir Transacción",
+    "@transactionTitleAdd": {
+        "description": "Title: Add a new transaction"
+    },
+    "transactionTitleDelete": "Eliminar transacción",
+    "@transactionTitleDelete": {
+        "description": "Title: Delete existing transaction"
+    },
+    "transactionTitleEdit": "Editar Transacción",
+    "@transactionTitleEdit": {
+        "description": "Title: Edit existing transaction"
+    },
+    "transactionTypeDeposit": "Ingreso",
+    "@transactionTypeDeposit": {
+        "description": "Deposit transaction type"
+    },
+    "transactionTypeTransfer": "Transferencia",
+    "@transactionTypeTransfer": {
+        "description": "Transfer transaction type"
+    },
+    "transactionTypeWithdrawal": "Retirada",
+    "@transactionTypeWithdrawal": {
+        "description": "Withdrawal transaction type"
+    }
 }

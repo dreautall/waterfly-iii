@@ -1,0 +1,6 @@
+- Feature: Show Piggy Bank account status
+- Feature: Link Transaction to Piggy Bank
+- Feature: Show Summary at end of transaction list (useful when filtering)
+- Fix: Faulty Bill Filtering
+- Fix: Notification Listener Parsing improvements
+- Translation Updates

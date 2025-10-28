@@ -1,2 +1,2 @@
 versionName=1.1.7
-versionCode=900
+versionCode=533

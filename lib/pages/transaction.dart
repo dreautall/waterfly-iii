@@ -1028,7 +1028,10 @@ class _TransactionPageState extends State<TransactionPage>
                                       ? _titleTextControllers[i].text
                                       : _titleTextController.text,
                               billId: _bills[i]?.id ?? "0",
-                              piggyBankId: int.tryParse(_piggy[i]?.id ?? "0"),
+                              piggyBankId:
+                                  (_piggy[i]?.id != null)
+                                      ? (int.parse(_piggy[i]!.id))
+                                      : null,
                               budgetName:
                                   (_transactionType ==
                                           TransactionTypeProperty.withdrawal)

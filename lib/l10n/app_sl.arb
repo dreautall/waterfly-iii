@@ -1,1156 +1,243 @@
 {
-    "@@locale": "sl",
-    "@@x-reference": true,
-    "accountRoleAssetCashWallet": "Gotovina",
-    "@accountRoleAssetCashWallet": {
-        "description": "Firefly Translation String: account_role_cashWalletAsset"
-    },
-    "accountRoleAssetCC": "Kreditna kartica",
-    "@accountRoleAssetCC": {
-        "description": "Firefly Translation String: account_role_ccAsset"
-    },
-    "accountRoleAssetDefault": "Privzeti premoženjski račun",
-    "@accountRoleAssetDefault": {
-        "description": "Firefly Translation String: account_role_defaultAsset"
-    },
-    "accountRoleAssetSavings": "Varčevalni račun",
-    "@accountRoleAssetSavings": {
-        "description": "Firefly Translation String: account_role_savingAsset"
-    },
-    "accountRoleAssetShared": "Skupni račun sredstev",
-    "@accountRoleAssetShared": {
-        "description": "Firefly Translation String: account_role_sharedAsset"
-    },
-    "accountsLabelAsset": "Računi sredstev",
-    "@accountsLabelAsset": {
-        "description": "Firefly Translation String: asset_accounts"
-    },
-    "accountsLabelExpense": "Računi stroškov",
-    "@accountsLabelExpense": {
-        "description": "Firefly Translation String: expense_accounts"
-    },
-    "accountsLabelLiabilities": "Obveznosti",
-    "@accountsLabelLiabilities": {
-        "description": "Firefly Translation String: liabilities_accounts"
-    },
-    "accountsLabelRevenue": "Računi prihodkov",
-    "@accountsLabelRevenue": {
-        "description": "Firefly Translation String: revenue_accounts"
-    },
-    "accountsLiabilitiesInterest": "{interest}% obresti {period, select, weekly{tedensko} monthly{mesečno} quarterly{četrtletno} halfyear{polletno} yearly{letno} other{neznano}}",
-    "@accountsLiabilitiesInterest": {
-        "description": "Interest in a certain period",
-        "placeholders": {
-            "interest": {
-                "type": "double",
-                "example": "1.2"
-            },
-            "period": {
-                "type": "String",
-                "example": "yearly"
-            }
-        }
-    },
-    "billsAmountAndFrequency": "Račun se ujema s transakcijami med {minValue} in {maxvalue}. Ponavlja se {frequency, select, weekly{tedensko} monthly{mesečno} quarterly{četrtletno} halfyear{polletno} yearly{letno} other{neznano}}{skip, plural, =0{} other{, preskoči čez {skip}}}.",
-    "@billsAmountAndFrequency": {
-        "description": "Subscription match for min and max amounts, and frequency",
-        "placeholders": {
-            "minValue": {
-                "type": "String",
-                "example": "$50.12"
-            },
-            "maxvalue": {
-                "type": "String",
-                "example": "$60.50"
-            },
-            "frequency": {
-                "type": "String",
-                "example": "yearly"
-            },
-            "skip": {
-                "type": "num",
-                "example": "1"
-            }
-        }
-    },
-    "billsChangeLayoutTooltip": "Spremeni postavitev",
-    "@billsChangeLayoutTooltip": {
-        "description": "Text for layout change button tooltip"
-    },
-    "billsChangeSortOrderTooltip": "Spremeni vrstni red",
-    "@billsChangeSortOrderTooltip": {
-        "description": "Text for sort order change button tooltip"
-    },
-    "billsErrorLoading": "Napaka pri nalaganju transakcij.",
-    "@billsErrorLoading": {
-        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
-    },
-    "billsExactAmountAndFrequency": "Račun se ujema s transakcijami v vrednosti {value}. Ponavlja se {frequency, select, weekly{tedensko} monthly{mesečno} quarterly{četrtletno} halfyear{polletno} yearly{letno} other{neznano}}{skip, plural, =0{} other{, preskoči čez {skip}}}.",
-    "@billsExactAmountAndFrequency": {
-        "description": "Subscription match for exact amount and frequency",
-        "placeholders": {
-            "value": {
-                "type": "String",
-                "example": "$50.12"
-            },
-            "frequency": {
-                "type": "String",
-                "example": "yearly"
-            },
-            "skip": {
-                "type": "num",
-                "example": "1"
-            }
-        }
-    },
-    "billsExpectedOn": "Predvideno {date}",
-    "@billsExpectedOn": {
-        "description": "Describes what date the subscription is expected",
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMMMMd",
-                "example": "January 5, 2024"
-            }
-        }
-    },
-    "billsFrequency": "{frequency, select, weekly{Tedensko} monthly{Mesečno} quarterly{Četrtletno} halfyear{Polletno} yearly{Letno} other{Neznano}}",
-    "@billsFrequency": {
-        "description": "Subscription frequency",
-        "placeholders": {
-            "frequency": {
-                "type": "String",
-                "example": "yearly"
-            }
-        }
-    },
-    "billsFrequencySkip": "{frequency, select, weekly{Tedensko} monthly{Mesečno} quarterly{Četrtletno} halfyear{Polletno} yearly{Letno} other{Neznano}}{skip, plural, =0{} other{, preskoči čez {skip}}}",
-    "@billsFrequencySkip": {
-        "description": "Subscription frequency",
-        "placeholders": {
-            "frequency": {
-                "type": "String",
-                "example": "yearly"
-            },
-            "skip": {
-                "type": "num",
-                "example": "1"
-            }
-        }
-    },
-    "billsInactive": "Neaktiven",
-    "@billsInactive": {
-        "description": "Text: when the subscription is inactive"
-    },
-    "billsIsActive": "Transakcija je aktivna",
-    "@billsIsActive": {
-        "description": "Text: the subscription is active"
-    },
-    "billsLayoutGroupSubtitle": "Transakcije, prikazane v dodeljenih skupinah.",
-    "@billsLayoutGroupSubtitle": {
-        "description": "Subtitle text for group layout option"
-    },
-    "billsLayoutGroupTitle": "Skupina",
-    "@billsLayoutGroupTitle": {
-        "description": "Title text for group layout option"
-    },
-    "billsLayoutListSubtitle": "Transakcije prikazane na seznamu, razvrščenem po določenih kriterijih.",
-    "@billsLayoutListSubtitle": {
-        "description": "Subtitle text for list layout option"
-    },
-    "billsLayoutListTitle": "Seznam",
-    "@billsLayoutListTitle": {
-        "description": "Title text for list layout option"
-    },
-    "billsListEmpty": "Seznam je trenutno prazen.",
-    "@billsListEmpty": {
-        "description": "Describes that the list is empty"
-    },
-    "billsNextExpectedMatch": "Naslednje pričakovano ujemanje",
-    "@billsNextExpectedMatch": {
-        "description": "Text: next expected match for subscription"
-    },
-    "billsNotActive": "Transakcija ni aktivna",
-    "@billsNotActive": {
-        "description": "Text: the subscription is inactive"
-    },
-    "billsNotExpected": "Ni pričakovano v tem obdobju",
-    "@billsNotExpected": {
-        "description": "Describes that the subscription is not expected this period"
-    },
-    "billsNoTransactions": "Ni najdenih transakcij.",
-    "@billsNoTransactions": {
-        "description": "Describes that there are no transactions connected to the subscription"
-    },
-    "billsPaidOn": "Plačano dne {date}",
-    "@billsPaidOn": {
-        "description": "Describes what date the subscription was paid",
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMMMMd",
-                "example": "January 5, 2024"
-            }
-        }
-    },
-    "billsSortAlphabetical": "Po abecedi",
-    "@billsSortAlphabetical": {
-        "description": "Text for alphabetical sort types"
-    },
-    "billsSortByTimePeriod": "Po časovnem obdobju",
-    "@billsSortByTimePeriod": {
-        "description": "Text for frequency sort type"
-    },
-    "billsSortFrequency": "Pogostost",
-    "@billsSortFrequency": {
-        "description": "Text for sort by frequency"
-    },
-    "billsSortName": "Naziv",
-    "@billsSortName": {
-        "description": "Text for sort by name"
-    },
-    "billsUngrouped": "Nezdruženo",
-    "@billsUngrouped": {
-        "description": "Title for ungrouped subscriptions"
-    },
-    "categoryDeleteConfirm": "Ali ste prepričani, da želite izbrisati to kategorijo? Transakcije ne bodo izbrisane, vendar ne bodo imele več kategorije.",
-    "@categoryDeleteConfirm": {
-        "description": "Confirmation text to delete category"
-    },
-    "categoryErrorLoading": "Napaka pri nalaganju kategorij.",
-    "@categoryErrorLoading": {
-        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
-    },
-    "categoryFormLabelIncludeInSum": "Vključi v mesečni znesek",
-    "@categoryFormLabelIncludeInSum": {
-        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
-    },
-    "categoryFormLabelName": "Ime kategorije",
-    "@categoryFormLabelName": {
-        "description": "Category Add/Edit Form: Label for name field"
-    },
-    "categoryMonthNext": "Naslednji mesec",
-    "@categoryMonthNext": {
-        "description": "Button title to view overview for next month"
-    },
-    "categoryMonthPrev": "Prejšnji mesec",
-    "@categoryMonthPrev": {
-        "description": "Button title to view overview for previous month"
-    },
-    "categorySumExcluded": "izvzeto",
-    "@categorySumExcluded": {
-        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
-    },
-    "categoryTitleAdd": "Dodaj kategorijo",
-    "@categoryTitleAdd": {
-        "description": "Title for Dialog: Add Category"
-    },
-    "categoryTitleDelete": "Izbriši kategorijo",
-    "@categoryTitleDelete": {
-        "description": "Title for Dialog: Delete Category"
-    },
-    "categoryTitleEdit": "Uredi kategorijo",
-    "@categoryTitleEdit": {
-        "description": "Title for Dialog: Edit Category"
-    },
-    "catNone": "<brez kategorije>",
-    "@catNone": {
-        "description": "Placeholder when no category has been set."
-    },
-    "catOther": "Ostalo",
-    "@catOther": {
-        "description": "Category description for summary category 'Other'"
-    },
-    "errorAPIInvalidResponse": "Neveljaven odgovor API-ja: {message}",
-    "@errorAPIInvalidResponse": {
-        "description": "Invalid API response error",
-        "placeholders": {
-            "message": {
-                "type": "String",
-                "example": "API could not be reached."
-            }
-        }
-    },
-    "errorAPIUnavailable": "API ni na voljo",
-    "@errorAPIUnavailable": {
-        "description": "Error thrown when API is unavailable."
-    },
-    "errorFieldRequired": "To polje je obvezno.",
-    "@errorFieldRequired": {
-        "description": "Error: Required field was left empty."
-    },
-    "errorInvalidURL": "Neveljaven URL",
-    "@errorInvalidURL": {
-        "description": "Error: URL is invalid"
-    },
-    "errorMinAPIVersion": "Zahtevana najmanjša različica Firefly API je v{requiredVersion}. Prosimo nadgradite.",
-    "@errorMinAPIVersion": {
-        "description": "Error: Required API version not met.",
-        "placeholders": {
-            "requiredVersion": {
-                "type": "String",
-                "example": "2.0.0"
-            }
-        }
-    },
-    "errorStatusCode": "Statusna koda: {code}",
-    "@errorStatusCode": {
-        "description": "HTTP status code information on error",
-        "placeholders": {
-            "code": {
-                "type": "int",
-                "example": "500"
-            }
-        }
-    },
-    "errorUnknown": "Neznana napaka.",
-    "@errorUnknown": {
-        "description": "Error without further information occurred."
-    },
-    "formButtonHelp": "Pomoč",
-    "@formButtonHelp": {
-        "description": "Button Label: Help"
-    },
-    "formButtonLogin": "Prijava",
-    "@formButtonLogin": {
-        "description": "Button Label: Login"
-    },
-    "formButtonLogout": "Odjava",
-    "@formButtonLogout": {
-        "description": "Button Label: Logout"
-    },
-    "formButtonRemove": "Odstrani",
-    "@formButtonRemove": {
-        "description": "Button Label: Remove"
-    },
-    "formButtonResetLogin": "Ponastavi prijavo",
-    "@formButtonResetLogin": {
-        "description": "Button Label: Reset login form (when error is shown)"
-    },
-    "formButtonTransactionAdd": "Dodaj transakcijo",
-    "@formButtonTransactionAdd": {
-        "description": "Button Label: Add Transaction"
-    },
-    "formButtonTryAgain": "Poskusite znova",
-    "@formButtonTryAgain": {
-        "description": "Button Label: Try that thing again (login etc)"
-    },
-    "generalAccount": "Račun",
-    "@generalAccount": {
-        "description": "Asset/Debt (Bank) Account"
-    },
-    "generalAssets": "Sredstva",
-    "@generalAssets": {
-        "description": "(Monetary) Assets"
-    },
-    "generalBalance": "Stanje",
-    "@generalBalance": {
-        "description": "(Account) Balance"
-    },
-    "generalBalanceOn": "Stanje na {date}",
-    "@generalBalanceOn": {
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMd",
-                "example": "2023-05-13"
-            }
-        }
-    },
-    "generalBill": "Račun",
-    "@generalBill": {
-        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
-    },
-    "generalBudget": "Proračun",
-    "@generalBudget": {
-        "description": "(Monetary) Budget"
-    },
-    "generalCategory": "Kategorija",
-    "@generalCategory": {
-        "description": "Category (of transaction etc.)."
-    },
-    "generalCurrency": "Valuta",
-    "@generalCurrency": {
-        "description": "(Money) Currency"
-    },
-    "generalDateRangeCurrentMonth": "Trenutni mesec",
-    "@generalDateRangeCurrentMonth": {
-        "description": "Date Range: Current Month"
-    },
-    "generalDateRangeLast30Days": "Zadnjih 30 dni",
-    "@generalDateRangeLast30Days": {
-        "description": "Date Range: Last 30 days"
-    },
-    "generalDateRangeCurrentYear": "Trenutno leto",
-    "@generalDateRangeCurrentYear": {
-        "description": "Date Range: Current Year"
-    },
-    "generalDateRangeLastYear": "Prejšnje leto",
-    "@generalDateRangeLastYear": {
-        "description": "Date Range: Last year"
-    },
-    "generalDateRangeAll": "Vse",
-    "@generalDateRangeAll": {
-        "description": "Date Range: All"
-    },
-    "generalDefault": "privzeto",
-    "@generalDefault": {
-        "description": "Indicates that something is the default choice"
-    },
-    "generalDestinationAccount": "Ciljni račun",
-    "@generalDestinationAccount": {
-        "description": "Destination Account (for transaction)"
-    },
-    "generalDismiss": "Opusti",
-    "@generalDismiss": {
-        "description": "Dismiss window/dialog without action"
-    },
-    "generalEarned": "Prisluženo",
-    "@generalEarned": {
-        "description": "(Amount) Earned"
-    },
-    "generalError": "Napaka",
-    "@generalError": {
-        "description": "Error (title in dialogs etc.)"
-    },
-    "generalExpenses": "Stroški",
-    "@generalExpenses": {
-        "description": "(Account) Expenses"
-    },
-    "generalIncome": "Prihodek",
-    "@generalIncome": {
-        "description": "(Account) Info"
-    },
-    "generalLiabilities": "Obveznosti",
-    "@generalLiabilities": {
-        "description": "Firefly Translation String: liabilities"
-    },
-    "generalMultiple": "več",
-    "@generalMultiple": {
-        "description": "Multiples of a single thing (e.g. source accounts) are existing"
-    },
-    "generalNever": "nikoli",
-    "@generalNever": {
-        "description": "Has never happened, no update etc."
-    },
-    "generalReconcile": "Usklajeno",
-    "@generalReconcile": {
-        "description": "Booking has been confirmed/reconciled"
-    },
-    "generalReset": "Ponastavi",
-    "@generalReset": {
-        "description": "Reset something (i.e. set filters)"
-    },
-    "generalSourceAccount": "Izvorni račun",
-    "@generalSourceAccount": {
-        "description": "Source Account (of transaction)"
-    },
-    "generalSpent": "Porabljeno",
-    "@generalSpent": {
-        "description": "(Amount) Spent"
-    },
-    "generalSum": "Vsota",
-    "@generalSum": {
-        "description": "(Mathematical) Sum"
-    },
-    "generalTarget": "Ciljni",
-    "@generalTarget": {
-        "description": "Target value (i.e. a sum to save)"
-    },
-    "generalUnknown": "Neznano",
-    "@generalUnknown": {
-        "description": "Something is unknown."
-    },
-    "homeMainBillsInterval": " ({period, select, weekly{tedensko} monthly{mesečno} quarterly{četrtletno} halfyear{polletno} yearly{letno} other{neznano}})",
-    "@homeMainBillsInterval": {
-        "description": "subscription interval type",
-        "placeholders": {
-            "period": {
-                "type": "String",
-                "example": "weekly"
-            }
-        }
-    },
-    "homeMainBillsTitle": "Računi za naslednji teden",
-    "@homeMainBillsTitle": {
-        "description": "Title: Subscriptions for the next week"
-    },
-    "homeMainBudgetInterval": " ({from} do {to}, {period})",
-    "@homeMainBudgetInterval": {
-        "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
-        "placeholders": {
-            "from": {
-                "type": "DateTime",
-                "format": "MMMd",
-                "example": "May 13"
-            },
-            "to": {
-                "type": "DateTime",
-                "format": "MMMd",
-                "example": "May 17"
-            },
-            "period": {
-                "type": "String",
-                "example": "weekly"
-            }
-        }
-    },
-    "homeMainBudgetIntervalSingle": " ({from} do {to})",
-    "@homeMainBudgetIntervalSingle": {
-        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
-        "placeholders": {
-            "from": {
-                "type": "DateTime",
-                "format": "MMMd",
-                "example": "May 13"
-            },
-            "to": {
-                "type": "DateTime",
-                "format": "MMMd",
-                "example": "May 17"
-            }
-        }
-    },
-    "homeMainBudgetSum": "{current} {status, select, over{čez} other{ostane še}} {available}",
-    "@homeMainBudgetSum": {
-        "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
-        "placeholders": {
-            "current": {
-                "type": "String",
-                "example": "12.34€"
-            },
-            "status": {
-                "type": "String",
-                "example": "left from"
-            },
-            "available": {
-                "type": "String",
-                "example": "12.34€"
-            }
-        }
-    },
-    "homeMainBudgetTitle": "Proračuni za tekoči mesec",
-    "@homeMainBudgetTitle": {
-        "description": "Title: Budgets for current month"
-    },
-    "homeMainChartAccountsTitle": "Povzetek računa",
-    "@homeMainChartAccountsTitle": {
-        "description": "Chart Label: Account Summary"
-    },
-    "homeMainChartCategoriesTitle": "Povzetek kategorij za tekoči mesec",
-    "@homeMainChartCategoriesTitle": {
-        "description": "Chart Label: Category Summary"
-    },
-    "homeMainChartDailyAvg": "Povprečno 7 dni",
-    "@homeMainChartDailyAvg": {
-        "description": "Text for last week average spent"
-    },
-    "homeMainChartDailyTitle": "Dnevno povprečje",
-    "@homeMainChartDailyTitle": {
-        "description": "Chart Label: Daily Summary"
-    },
-    "homeMainChartNetEarningsTitle": "Neto zaslužek",
-    "@homeMainChartNetEarningsTitle": {
-        "description": "Chart Label: Net Earnings"
-    },
-    "homeMainChartNetWorthTitle": "Neto vrednost",
-    "@homeMainChartNetWorthTitle": {
-        "description": "Chart Label: Net Worth"
-    },
-    "homeMainChartTagsTitle": "Povzetek oznak za trenutni mesec",
-    "@homeMainChartTagsTitle": {
-        "description": "Chart Label: Tags Summary"
-    },
-    "homePiggyAdjustDialogTitle": "Prihranek/poraba denarja",
-    "@homePiggyAdjustDialogTitle": {
-        "description": "Title of the dialog where money can be added/removed to a piggy bank."
-    },
-    "homePiggyDateStart": "Začetni datum: {date}",
-    "@homePiggyDateStart": {
-        "description": "Start of the piggy bank",
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMMMMd",
-                "example": "March 12, 2023"
-            }
-        }
-    },
-    "homePiggyDateTarget": "Ciljni datum: {date}",
-    "@homePiggyDateTarget": {
-        "description": "Set target date of the piggy bank (when saving should be finished)",
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMMMMd",
-                "example": "March 12, 2023"
-            }
-        }
-    },
-    "homeMainDialogSettingsTitle": "Prilagodi nadzorno ploščo",
-    "@homeMainDialogSettingsTitle": {
-        "description": "Dialog title for dashboard settings (card order & visibility)"
-    },
-    "homePiggyLinked": "Povezano z {account}",
-    "@homePiggyLinked": {
-        "description": "Piggy bank is linked to asset account {account}.",
-        "placeholders": {
-            "account": {
-                "type": "String",
-                "example": "Awesome Bank Account"
-            }
-        }
-    },
-    "homePiggyNoAccounts": "Nimate še hranilnikov.",
-    "@homePiggyNoAccounts": {
-        "description": "Information that no piggy banks are existing"
-    },
-    "homePiggyNoAccountsSubtitle": "Ustvarite jih v spletnem vmesniku!",
-    "@homePiggyNoAccountsSubtitle": {
-        "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
-    },
-    "homePiggyRemaining": "Preostalo za varčevanje: {amount}",
-    "@homePiggyRemaining": {
-        "description": "How much money is left to save",
-        "placeholders": {
-            "amount": {
-                "type": "String",
-                "example": "€12.34"
-            }
-        }
-    },
-    "homePiggySaved": "Privarčevano do sedaj: {amount}",
-    "@homePiggySaved": {
-        "description": "How much money already was saved",
-        "placeholders": {
-            "amount": {
-                "type": "String",
-                "example": "€12.34"
-            }
-        }
-    },
-    "homePiggyTarget": "Ciljni znesek: {amount}",
-    "@homePiggyTarget": {
-        "description": "How much money should be saved",
-        "placeholders": {
-            "amount": {
-                "type": "String",
-                "example": "€12.34"
-            }
-        }
-    },
-    "homeTabLabelBalance": "Bilanca stanja",
-    "@homeTabLabelBalance": {
-        "description": "Tab Label: Balance Sheet page"
-    },
-    "homeTabLabelMain": "Glavna",
-    "@homeTabLabelMain": {
-        "description": "Tab Label: Start page (\"main\")"
-    },
-    "homeTabLabelPiggybanks": "Hranilniki",
-    "@homeTabLabelPiggybanks": {
-        "description": "Tab Label: Piggy Banks page"
-    },
-    "homeTabLabelTransactions": "Transakcije",
-    "@homeTabLabelTransactions": {
-        "description": "Tab Label: Transactions page"
-    },
-    "homeTransactionsActionFilter": "Seznam filtrov",
-    "@homeTransactionsActionFilter": {
-        "description": "Action Button Label: Filter list."
-    },
-    "homeTransactionsDialogFilterAccountsAll": "<Vsi računi>",
-    "@homeTransactionsDialogFilterAccountsAll": {
-        "description": "Don't filter for a specific account (default entry)"
-    },
-    "homeTransactionsDialogFilterBillsAll": "<Vsi računi>",
-    "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific subscription (default entry)"
-    },
-    "homeTransactionsDialogFilterBillUnset": "<Ni računov>",
-    "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset subscription"
-    },
-    "homeTransactionsDialogFilterBudgetsAll": "<Vsi proračuni>",
-    "@homeTransactionsDialogFilterBudgetsAll": {
-        "description": "Don't filter for a specific budget (default entry)"
-    },
-    "homeTransactionsDialogFilterBudgetUnset": "<Proračuni niso nastavljeni>",
-    "@homeTransactionsDialogFilterBudgetUnset": {
-        "description": "Filter for unset budgets"
-    },
-    "homeTransactionsDialogFilterCategoriesAll": "<Vse kategorije>",
-    "@homeTransactionsDialogFilterCategoriesAll": {
-        "description": "Don't filter for a specific category (default entry)"
-    },
-    "homeTransactionsDialogFilterCategoryUnset": "<Kategorije niso nastavljene>",
-    "@homeTransactionsDialogFilterCategoryUnset": {
-        "description": "Filter for unset categories"
-    },
-    "homeTransactionsDialogFilterCurrenciesAll": "<Vse valute>",
-    "@homeTransactionsDialogFilterCurrenciesAll": {
-        "description": "Don't filter for a specific currency (default entry)"
-    },
-    "homeTransactionsDialogFilterDateRange": "Časovno območje",
-    "@homeTransactionsDialogFilterDateRange": {
-        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
-    },
-    "homeTransactionsDialogFilterFutureTransactions": "Prikaži bodoče transakcije",
-    "@homeTransactionsDialogFilterFutureTransactions": {
-        "description": "Setting to show future transactions"
-    },
-    "homeTransactionsDialogFilterSearch": "Iskalni pojem",
-    "@homeTransactionsDialogFilterSearch": {
-        "description": "Search term for filter"
-    },
-    "homeTransactionsDialogFilterTitle": "Izberi filter",
-    "@homeTransactionsDialogFilterTitle": {
-        "description": "Title of Filter Dialog"
-    },
-    "homeTransactionsEmpty": "Ni najdenih transakcij.",
-    "@homeTransactionsEmpty": {
-        "description": "Message when no transactions are found."
-    },
-    "homeTransactionsMultipleCategories": "{num} kategorij",
-    "@homeTransactionsMultipleCategories": {
-        "description": "$num categories for the transaction.",
-        "placeholders": {
-            "num": {
-                "type": "int",
-                "example": "2"
-            }
-        }
-    },
-    "homeTransactionsSettingsShowTags": "Pokaži oznake na seznamu transakcij",
-    "@homeTransactionsSettingsShowTags": {
-        "description": "Setting label to show tags in transactioon list."
-    },
-    "liabilityDirectionCredit": "Dolžan sem ta dolg",
-    "@liabilityDirectionCredit": {
-        "description": "Firefly Translation String: liability_direction_credit"
-    },
-    "liabilityDirectionDebit": "To dolgujem",
-    "@liabilityDirectionDebit": {
-        "description": "Firefly Translation String: liability_direction_debit"
-    },
-    "liabilityTypeDebt": "Dolg",
-    "@liabilityTypeDebt": {
-        "description": "Firefly Translation String: account_type_debt"
-    },
-    "liabilityTypeLoan": "Posojilo",
-    "@liabilityTypeLoan": {
-        "description": "Firefly Translation String: account_type_loan"
-    },
-    "liabilityTypeMortgage": "Hipoteka",
-    "@liabilityTypeMortgage": {
-        "description": "Firefly Translation String: account_type_mortgage"
-    },
-    "loginAbout": "Za funkcijsko uporabo Waterfly III potrebujete lasten strežnik z namestitvijo Firefly III ali dodatek Firefly III za Home Assistant.\n\nSpodaj vnesite poln URL in osebni žeton dostopa (Možnosti-> Profil -> OAuth -> Osebni dostopni žetoni).",
-    "@loginAbout": {
-        "description": "Login screen welcome description"
-    },
-    "loginFormLabelAPIKey": "Veljaven API ključ",
-    "@loginFormLabelAPIKey": {
-        "description": "Login Form: Label for API Key field"
-    },
-    "loginFormLabelHost": "URL gostitelja",
-    "@loginFormLabelHost": {
-        "description": "Login Form: Label for Host field"
-    },
-    "loginWelcome": "Dobrodošli v Waterfly III",
-    "@loginWelcome": {
-        "description": "Login screen welcome banner"
-    },
-    "logoutConfirmation": "Ali ste prepričani, da se želite odjaviti?",
-    "@logoutConfirmation": {
-        "description": "Get user confirmation if he really wants to log out"
-    },
-    "navigationAccounts": "Računi",
-    "@navigationAccounts": {
-        "description": "Navigation Label: Accounts Page"
-    },
-    "navigationBills": "Transakcije",
-    "@navigationBills": {
-        "description": "Navigation Label: Subscriptions"
-    },
-    "navigationCategories": "Kategorije",
-    "@navigationCategories": {
-        "description": "Navigation Label: Categories"
-    },
-    "navigationMain": "Glavna nadzorna plošča",
-    "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
-    },
-    "navigationSettings": "Nastavitve",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
-    },
-    "no": "Ne",
-    "@no": {
-        "description": "The word no"
-    },
-    "numPercent": "{num}",
-    "@numPercent": {
-        "description": "Number formatted as percentage",
-        "placeholders": {
-            "num": {
-                "type": "double",
-                "format": "decimalPercentPattern",
-                "optionalParameters": {
-                    "decimalDigits": 0
-                }
-            }
-        }
-    },
-    "numPercentOf": "{perc} od {of}",
-    "@numPercentOf": {
-        "description": "Number formatted as percentage, with total amount provided",
-        "placeholders": {
-            "perc": {
-                "type": "double",
-                "format": "decimalPercentPattern",
-                "optionalParameters": {
-                    "decimalDigits": 0
-                }
-            },
-            "of": {
-                "type": "String"
-            }
-        }
-    },
-    "settingsDialogDebugInfo": "Tukaj lahko omogočite in pošljete dnevnike odpravljanja napak. Vklop slabo vpliva na delovanje aplikacije, zato jih ne omogočite, razen če so vam tako svetovali. Če onemogočite beleženje, boste izbrisali shranjeni dnevnik.",
-    "@settingsDialogDebugInfo": {
-        "description": "Information about debug logs and their impact."
-    },
-    "settingsDialogDebugMailCreate": "Ustvari e-pošto",
-    "@settingsDialogDebugMailCreate": {
-        "description": "Button to confirm mail creation after privacy disclaimer is shown."
-    },
-    "settingsDialogDebugMailDisclaimer": "OPOZORILO: Odpre se osnutek pošte s priloženo dnevniško datoteko (v besedilni obliki). Dnevniki lahko vsebujejo občutljive podatke, kot je ime gostitelja vašega primerka Firefly (čeprav se poskušam izogniti zapisovanju kakršnih koli skrivnosti, kot je API ključ). Pozorno preberite dnevnik in cenzurirajte vse informacije, ki jih ne želite deliti in/ali niso pomembne za težavo, ki jo želite prijaviti.\n\nProsimo, ne pošiljajte dnevnikov brez predhodnega dogovora po pošti/GitHubu. Izbrisal bom vse dnevnike, poslane brez konteksta, zaradi zasebnosti. Dnevnika nikoli ne nalagajte necenzuriranega na GitHub ali drugam.",
-    "@settingsDialogDebugMailDisclaimer": {
-        "description": "Privacy disclaimer shown before sending logs"
-    },
-    "settingsDialogDebugSendButton": "Pošlji dnevnike po e-pošti",
-    "@settingsDialogDebugSendButton": {
-        "description": "Button to send logs via E-Mail"
-    },
-    "settingsDialogDebugTitle": "Debug dnevniki",
-    "@settingsDialogDebugTitle": {
-        "description": "Dialog title: Debug Logs"
-    },
-    "settingsDialogLanguageTitle": "Izberite jezik",
-    "@settingsDialogLanguageTitle": {
-        "description": "Dialog title: Select Language"
-    },
-    "settingsDialogThemeTitle": "Izberite temo",
-    "@settingsDialogThemeTitle": {
-        "description": "Dialog title: Select theme"
-    },
-    "settingsFAQ": "FAQ",
-    "@settingsFAQ": {
-        "description": "FAQ title"
-    },
-    "settingsFAQHelp": "Odpre se v brskalniku. Na voljo samo v angleščini.",
-    "@settingsFAQHelp": {
-        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
-    },
-    "settingsLanguage": "Jezik",
-    "@settingsLanguage": {
-        "description": "Currently selected language"
-    },
-    "settingsLockscreen": "Zaklenjen zaslon",
-    "@settingsLockscreen": {
-        "description": "Setting if a lockscreen is shown (authentication is required on startup)"
-    },
-    "settingsLockscreenHelp": "Zahtevaj preverjanje pristnosti ob zagonu aplikacije",
-    "@settingsLockscreenHelp": {
-        "description": "Description for lockscreen setting"
-    },
-    "settingsLockscreenInitial": "Preverite pristnost, da omogočite zaklenjeni zaslon.",
-    "@settingsLockscreenInitial": {
-        "description": "Prompt to authenticate once to set up the lockscreen"
-    },
-    "settingsNLAppAccount": "Privzeti račun",
-    "@settingsNLAppAccount": {
-        "description": "Default account which will be used for the transaction."
-    },
-    "settingsNLAppAccountDynamic": "<Dinamično>",
-    "@settingsNLAppAccountDynamic": {
-        "description": "Account will be selected dynamically by the content of the notification."
-    },
-    "settingsNLAppAdd": "Dodaj aplikacijo",
-    "@settingsNLAppAdd": {
-        "description": "Button title to add a new app."
-    },
-    "settingsNLAppAddHelp": "Kliknite, če želite dodati aplikacijo za poslušanje. Na seznamu bodo prikazane samo primerne aplikacije.",
-    "@settingsNLAppAddHelp": {
-        "description": "Help text below adding the new app button."
-    },
-    "settingsNLAppAddInfo": "Izvedite nekaj transakcij, pri katerih prejmete telefonska obvestila za dodajanje aplikacij na ta seznam. Če se aplikacija še vedno ne prikaže, mi prijavite na app@vogt.pw.",
-    "@settingsNLAppAddInfo": {
-        "description": "Help text when no more app is available to add."
-    },
-    "settingsNLAutoAdd": "Ustvari transakcijo brez interakcije",
-    "@settingsNLAutoAdd": {
-        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
-    },
-    "settingsNLDescription": "Ta storitev vam omogoča pridobivanje podrobnosti transakcije iz dohodnih potisnih obvestil. Poleg tega lahko izberete privzeti račun, ki naj mu bo dodeljena transakcija - če vrednost ni nastavljena, poskuša iz obvestila izvleči račun.",
-    "@settingsNLDescription": {
-        "description": "Description text for the notification listener service."
-    },
-    "settingsNLEmptyNote": "Polje za opombo naj bo prazno",
-    "@settingsNLEmptyNote": {
-        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
-    },
-    "settingsNLPermissionGrant": "Pritisnite za odobritev dovoljenja.",
-    "@settingsNLPermissionGrant": {
-        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
-    },
-    "settingsNLPermissionNotGranted": "Dovoljenje ni odobreno.",
-    "@settingsNLPermissionNotGranted": {
-        "description": "A requested permission was not granted."
-    },
-    "settingsNLPermissionRemove": "Odstrani dovoljenje?",
-    "@settingsNLPermissionRemove": {
-        "description": "Dialog title asking if permission should be removed."
-    },
-    "settingsNLPermissionRemoveHelp": "Če želite onemogočiti to storitev, kliknite aplikacijo in na naslednjem zaslonu odstranite dovoljenja.",
-    "@settingsNLPermissionRemoveHelp": {
-        "description": "Dialog text giving hint how to remove the permission."
-    },
-    "settingsNLPrefillTXTitle": "Vnaprej izpolnite naslov transakcije z naslovom obvestila",
-    "@settingsNLPrefillTXTitle": {
-        "description": "Setting pre-fill transaction title with notification title."
-    },
-    "settingsNLServiceChecking": "Preverjanje stanja…",
-    "@settingsNLServiceChecking": {
-        "description": "Checking the status of the background service"
-    },
-    "settingsNLServiceCheckingError": "Napaka pri preverjanju stanja: {error}",
-    "@settingsNLServiceCheckingError": {
-        "description": "An error occurred while checking the service status",
-        "placeholders": {
-            "error": {
-                "type": "String",
-                "description": "Error details",
-                "example": "Timeout"
-            }
-        }
-    },
-    "settingsNLServiceRunning": "Storitev je zagnana.",
-    "@settingsNLServiceRunning": {
-        "description": "A background service is running normally."
-    },
-    "settingsNLServiceStatus": "Stanje storitve",
-    "@settingsNLServiceStatus": {
-        "description": "Status of a background service."
-    },
-    "settingsNLServiceStopped": "Storitev je ustavljena.",
-    "@settingsNLServiceStopped": {
-        "description": "A background service is stopped."
-    },
-    "settingsNotificationListener": "Storitev poslušanja obvestil",
-    "@settingsNotificationListener": {
-        "description": "Setting for the notification listener service."
-    },
-    "settingsTheme": "Tema aplikacije",
-    "@settingsTheme": {
-        "description": "App theme (dark or light)"
-    },
-    "settingsThemeDynamicColors": "Dinamične barve",
-    "@settingsThemeDynamicColors": {
-        "description": "Material You Dynamic Colors feature"
-    },
-    "settingsThemeValue": "{theme, select, dark{Temen način} light{Svetel način} other{Sistemsko privzeto}}",
-    "@settingsThemeValue": {
-        "description": "Currently selected theme (either dark, light or system)",
-        "placeholders": {
-            "theme": {
-                "type": "String",
-                "example": "ThemeMode.dark"
-            }
-        }
-    },
-    "settingsUseServerTimezone": "Uporabite časovni pas strežnika",
-    "@settingsUseServerTimezone": {
-        "description": "Setting label to use server timezone."
-    },
-    "settingsUseServerTimezoneHelp": "Prikaži vse čase v časovnem pasu strežnika. To posnema vedenje spletnega vmesnika.",
-    "@settingsUseServerTimezoneHelp": {
-        "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
-    },
-    "settingsVersion": "Verzija aplikacije",
-    "@settingsVersion": {
-        "description": "Current App Version"
-    },
-    "settingsVersionChecking": "preverjam…",
-    "@settingsVersionChecking": {
-        "description": "Shown while checking for app version"
-    },
-    "transactionAttachments": "Priponke",
-    "@transactionAttachments": {
-        "description": "Button Label: Attachments"
-    },
-    "transactionDeleteConfirm": "Ali ste prepričani, da želite izbrisati to transakcijo?",
-    "@transactionDeleteConfirm": {
-        "description": "Confirmation text to delete transaction"
-    },
-    "transactionDialogAttachmentsDelete": "Izbriši priponko",
-    "@transactionDialogAttachmentsDelete": {
-        "description": "Button Label: Delete Attachment"
-    },
-    "transactionDialogAttachmentsDeleteConfirm": "Ali ste prepričani, da želite izbrisati to priponko?",
-    "@transactionDialogAttachmentsDeleteConfirm": {
-        "description": "Confirmation text to delete attachment"
-    },
-    "transactionDialogAttachmentsErrorDownload": "Datoteke ni bilo mogoče prenesti.",
-    "@transactionDialogAttachmentsErrorDownload": {
-        "description": "Snackbar Text: File download failed."
-    },
-    "transactionDialogAttachmentsErrorOpen": "Ni bilo mogoče odpreti datoteke: {error}",
-    "@transactionDialogAttachmentsErrorOpen": {
-        "description": "Snackbar Text: File could not be opened, with reason.",
-        "placeholders": {
-            "error": {
-                "type": "String"
-            }
-        }
-    },
-    "transactionDialogAttachmentsErrorUpload": "Ni bilo mogoče naložiti datoteke: {error}",
-    "@transactionDialogAttachmentsErrorUpload": {
-        "description": "Snackbar Text: File could not be uploaded, with reason.",
-        "placeholders": {
-            "error": {
-                "type": "String"
-            }
-        }
-    },
-    "transactionDialogAttachmentsTitle": "Priponke",
-    "@transactionDialogAttachmentsTitle": {
-        "description": "Dialog Title: Attachments Dialog"
-    },
-    "transactionDialogBillNoBill": "Ni računa",
-    "@transactionDialogBillNoBill": {
-        "description": "Button Label: no subscription to be used"
-    },
-    "transactionDialogBillTitle": "Poveži z računom",
-    "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Subscription to transaction"
-    },
-    "transactionDialogCurrencyTitle": "Izberi valuto",
-    "@transactionDialogCurrencyTitle": {
-        "description": "Dialog Title: Currency Selection"
-    },
-    "transactionDialogTagsAdd": "Dodaj oznako",
-    "@transactionDialogTagsAdd": {
-        "description": "Button Label: Add Tag"
-    },
-    "transactionDialogTagsHint": "Išči/dodaj oznako",
-    "@transactionDialogTagsHint": {
-        "description": "Hint Text for search tag field"
-    },
-    "transactionDialogTagsTitle": "Izberi oznake",
-    "@transactionDialogTagsTitle": {
-        "description": "Dialog Title: Select Tags"
-    },
-    "transactionDuplicate": "Podvoji",
-    "@transactionDuplicate": {
-        "description": "Menu Label: Duplicate item"
-    },
-    "transactionErrorInvalidAccount": "Neveljaven račun",
-    "@transactionErrorInvalidAccount": {
-        "description": "Transaction Save Error: Invalid account"
-    },
-    "transactionErrorInvalidBudget": "Neveljaven proračun",
-    "@transactionErrorInvalidBudget": {
-        "description": "Transaction Save Error: Invalid budget"
-    },
-    "transactionErrorNoAccounts": "Najprej izpolni račune.",
-    "@transactionErrorNoAccounts": {
-        "description": "Transaction Save Error: No accounts have been entered"
-    },
-    "transactionErrorNoAssetAccount": "Izberi račun sredstev.",
-    "@transactionErrorNoAssetAccount": {
-        "description": "Transaction Save Error: No account is an asset (own) account"
-    },
-    "transactionErrorTitle": "Prosim navedite naslov.",
-    "@transactionErrorTitle": {
-        "description": "Transaction Save Error: No title provided"
-    },
-    "transactionFormLabelAccountDestination": "Ciljni račun",
-    "@transactionFormLabelAccountDestination": {
-        "description": "Transaction Form: Label for destination account for transfer transaction"
-    },
-    "transactionFormLabelAccountForeign": "Tuji račun",
-    "@transactionFormLabelAccountForeign": {
-        "description": "Transaction Form: Label for foreign (other) account"
-    },
-    "transactionFormLabelAccountOwn": "Lastni račun",
-    "@transactionFormLabelAccountOwn": {
-        "description": "Transaction Form: Label for own account"
-    },
-    "transactionFormLabelAccountSource": "Izvorni račun",
-    "@transactionFormLabelAccountSource": {
-        "description": "Transaction Form: Label for source account for transfer transaction"
-    },
-    "transactionFormLabelNotes": "Zapiski",
-    "@transactionFormLabelNotes": {
-        "description": "Transaction Form: Label for notes field"
-    },
-    "transactionFormLabelTags": "Oznake",
-    "@transactionFormLabelTags": {
-        "description": "Transaction Form: Label for tags field"
-    },
-    "transactionFormLabelTitle": "Naslov transakcije",
-    "@transactionFormLabelTitle": {
-        "description": "Transaction Form: Label for title field"
-    },
-    "transactionSplitAdd": "Dodaj razdeljeno transakcijo",
-    "@transactionSplitAdd": {
-        "description": "Button Label: Add a split"
-    },
-    "transactionSplitChangeCurrency": "Spremeni valuto razdelitve",
-    "@transactionSplitChangeCurrency": {
-        "description": "Hint Text: Change currency for a single split"
-    },
-    "transactionSplitChangeDestinationAccount": "Spremeni razdeljeni ciljni račun",
-    "@transactionSplitChangeDestinationAccount": {
-        "description": "Hint Text: Change destination account for a single split"
-    },
-    "transactionSplitChangeSourceAccount": "Spremeni izvirni račun razdeljenega vira",
-    "@transactionSplitChangeSourceAccount": {
-        "description": "Hint Text: Change source account for a single split"
-    },
-    "transactionSplitChangeTarget": "Spremeni ciljni račun razdelitve",
-    "@transactionSplitChangeTarget": {
-        "description": "Hint Text: Change target account for single split"
-    },
-    "transactionSplitDelete": "Izbriši razdelitev",
-    "@transactionSplitDelete": {
-        "description": "Hint Text: Delete single split"
-    },
-    "transactionTitleAdd": "Dodaj transakcijo",
-    "@transactionTitleAdd": {
-        "description": "Title: Add a new transaction"
-    },
-    "transactionTitleDelete": "Izbriši transakcijo",
-    "@transactionTitleDelete": {
-        "description": "Title: Delete existing transaction"
-    },
-    "transactionTitleEdit": "Uredi transakcijo",
-    "@transactionTitleEdit": {
-        "description": "Title: Edit existing transaction"
-    },
-    "transactionTypeDeposit": "Priliv",
-    "@transactionTypeDeposit": {
-        "description": "Deposit transaction type"
-    },
-    "transactionTypeTransfer": "Prenos",
-    "@transactionTypeTransfer": {
-        "description": "Transfer transaction type"
-    },
-    "transactionTypeWithdrawal": "Dvig",
-    "@transactionTypeWithdrawal": {
-        "description": "Withdrawal transaction type"
-    }
+  "@@locale": "sl",
+  "@@x-reference": true,
+  "accountRoleAssetCashWallet": "Gotovina",
+  "accountRoleAssetCC": "Kreditna kartica",
+  "accountRoleAssetDefault": "Privzeti premoženjski račun",
+  "accountRoleAssetSavings": "Varčevalni račun",
+  "accountRoleAssetShared": "Skupni račun sredstev",
+  "accountsLabelAsset": "Računi sredstev",
+  "accountsLabelExpense": "Računi stroškov",
+  "accountsLabelLiabilities": "Obveznosti",
+  "accountsLabelRevenue": "Računi prihodkov",
+  "accountsLiabilitiesInterest": "{interest}% obresti {period, select, weekly{tedensko} monthly{mesečno} quarterly{četrtletno} halfyear{polletno} yearly{letno} other{neznano}}",
+  "billsAmountAndFrequency": "Račun se ujema s transakcijami med {minValue} in {maxvalue}. Ponavlja se {frequency, select, weekly{tedensko} monthly{mesečno} quarterly{četrtletno} halfyear{polletno} yearly{letno} other{neznano}}{skip, plural, =0{} other{, preskoči čez {skip}}}.",
+  "billsChangeLayoutTooltip": "Spremeni postavitev",
+  "billsChangeSortOrderTooltip": "Spremeni vrstni red",
+  "billsErrorLoading": "Napaka pri nalaganju transakcij.",
+  "billsExactAmountAndFrequency": "Račun se ujema s transakcijami v vrednosti {value}. Ponavlja se {frequency, select, weekly{tedensko} monthly{mesečno} quarterly{četrtletno} halfyear{polletno} yearly{letno} other{neznano}}{skip, plural, =0{} other{, preskoči čez {skip}}}.",
+  "billsExpectedOn": "Predvideno {date}",
+  "billsFrequency": "{frequency, select, weekly{Tedensko} monthly{Mesečno} quarterly{Četrtletno} halfyear{Polletno} yearly{Letno} other{Neznano}}",
+  "billsFrequencySkip": "{frequency, select, weekly{Tedensko} monthly{Mesečno} quarterly{Četrtletno} halfyear{Polletno} yearly{Letno} other{Neznano}}{skip, plural, =0{} other{, preskoči čez {skip}}}",
+  "billsInactive": "Neaktiven",
+  "billsIsActive": "Transakcija je aktivna",
+  "billsLayoutGroupSubtitle": "Transakcije, prikazane v dodeljenih skupinah.",
+  "billsLayoutGroupTitle": "Skupina",
+  "billsLayoutListSubtitle": "Transakcije prikazane na seznamu, razvrščenem po določenih kriterijih.",
+  "billsLayoutListTitle": "Seznam",
+  "billsListEmpty": "Seznam je trenutno prazen.",
+  "billsNextExpectedMatch": "Naslednje pričakovano ujemanje",
+  "billsNotActive": "Transakcija ni aktivna",
+  "billsNotExpected": "Ni pričakovano v tem obdobju",
+  "billsNoTransactions": "Ni najdenih transakcij.",
+  "billsPaidOn": "Plačano dne {date}",
+  "billsSortAlphabetical": "Po abecedi",
+  "billsSortByTimePeriod": "Po časovnem obdobju",
+  "billsSortFrequency": "Pogostost",
+  "billsSortName": "Naziv",
+  "billsUngrouped": "Nezdruženo",
+  "billsSettingsShowOnlyActive": "Prikaži samo aktivne",
+  "billsSettingsShowOnlyActiveDesc": "Prikazuje samo aktivne naročnine.",
+  "billsSettingsShowOnlyExpected": "Prikaži samo pričakovano",
+  "billsSettingsShowOnlyExpectedDesc": "Prikazuje samo tiste naročnine, ki so pričakovane (ali plačane) ta mesec.",
+  "categoryDeleteConfirm": "Ali ste prepričani, da želite izbrisati to kategorijo? Transakcije ne bodo izbrisane, vendar ne bodo imele več kategorije.",
+  "categoryErrorLoading": "Napaka pri nalaganju kategorij.",
+  "categoryFormLabelIncludeInSum": "Vključi v mesečni znesek",
+  "categoryFormLabelName": "Ime kategorije",
+  "categoryMonthNext": "Naslednji mesec",
+  "categoryMonthPrev": "Prejšnji mesec",
+  "categorySumExcluded": "izvzeto",
+  "categoryTitleAdd": "Dodaj kategorijo",
+  "categoryTitleDelete": "Izbriši kategorijo",
+  "categoryTitleEdit": "Uredi kategorijo",
+  "catNone": "<brez kategorije>",
+  "catOther": "Ostalo",
+  "errorAPIInvalidResponse": "Neveljaven odgovor API-ja: {message}",
+  "errorAPIUnavailable": "API ni na voljo",
+  "errorFieldRequired": "To polje je obvezno.",
+  "errorInvalidURL": "Neveljaven URL",
+  "errorMinAPIVersion": "Zahtevana najmanjša različica Firefly API je v{requiredVersion}. Prosimo nadgradite.",
+  "errorStatusCode": "Statusna koda: {code}",
+  "errorUnknown": "Neznana napaka.",
+  "formButtonHelp": "Pomoč",
+  "formButtonLogin": "Prijava",
+  "formButtonLogout": "Odjava",
+  "formButtonRemove": "Odstrani",
+  "formButtonResetLogin": "Ponastavi prijavo",
+  "formButtonTransactionAdd": "Dodaj transakcijo",
+  "formButtonTryAgain": "Poskusite znova",
+  "generalAccount": "Račun",
+  "generalAssets": "Sredstva",
+  "generalBalance": "Stanje",
+  "generalBalanceOn": "Stanje na {date}",
+  "generalBill": "Račun",
+  "generalBudget": "Proračun",
+  "generalCategory": "Kategorija",
+  "generalCurrency": "Valuta",
+  "generalDateRangeCurrentMonth": "Trenutni mesec",
+  "generalDateRangeLast30Days": "Zadnjih 30 dni",
+  "generalDateRangeCurrentYear": "Trenutno leto",
+  "generalDateRangeLastYear": "Prejšnje leto",
+  "generalDateRangeAll": "Vse",
+  "generalDefault": "privzeto",
+  "generalDestinationAccount": "Ciljni račun",
+  "generalDismiss": "Opusti",
+  "generalEarned": "Prisluženo",
+  "generalError": "Napaka",
+  "generalExpenses": "Stroški",
+  "generalIncome": "Prihodek",
+  "generalLiabilities": "Obveznosti",
+  "generalMultiple": "več",
+  "generalNever": "nikoli",
+  "generalReconcile": "Usklajeno",
+  "generalReset": "Ponastavi",
+  "generalSourceAccount": "Izvorni račun",
+  "generalSpent": "Porabljeno",
+  "generalSum": "Vsota",
+  "generalTarget": "Ciljni",
+  "generalUnknown": "Neznano",
+  "homeMainBillsInterval": " ({period, select, weekly{tedensko} monthly{mesečno} quarterly{četrtletno} halfyear{polletno} yearly{letno} other{neznano}})",
+  "homeMainBillsTitle": "Računi za naslednji teden",
+  "homeMainBudgetInterval": " ({from} do {to}, {period})",
+  "homeMainBudgetIntervalSingle": " ({from} do {to})",
+  "homeMainBudgetSum": "{current} {status, select, over{čez} other{ostane še}} {available}",
+  "homeMainBudgetTitle": "Proračuni za tekoči mesec",
+  "homeMainChartAccountsTitle": "Povzetek računa",
+  "homeMainChartCategoriesTitle": "Povzetek kategorij za tekoči mesec",
+  "homeMainChartDailyAvg": "Povprečno 7 dni",
+  "homeMainChartDailyTitle": "Dnevno povprečje",
+  "homeMainChartNetEarningsTitle": "Neto zaslužek",
+  "homeMainChartNetWorthTitle": "Neto vrednost",
+  "homeMainChartTagsTitle": "Povzetek oznak za trenutni mesec",
+  "homePiggyAdjustDialogTitle": "Prihranek/poraba denarja",
+  "homePiggyDateStart": "Začetni datum: {date}",
+  "homePiggyDateTarget": "Ciljni datum: {date}",
+  "homeMainDialogSettingsTitle": "Prilagodi nadzorno ploščo",
+  "homePiggyLinked": "Povezano z {account}",
+  "homePiggyNoAccounts": "Nimate še hranilnikov.",
+  "homePiggyNoAccountsSubtitle": "Ustvarite jih v spletnem vmesniku!",
+  "homePiggyRemaining": "Preostalo za varčevanje: {amount}",
+  "homePiggySaved": "Privarčevano do sedaj: {amount}",
+  "homePiggySavedMultiple": "Privarčevano do sedaj:",
+  "homePiggyTarget": "Ciljni znesek: {amount}",
+  "homePiggyAccountStatus": "Status računa",
+  "homePiggyAvailableAmounts": "Razpoložljivi zneski",
+  "homePiggyAvailable": "Razpoložljivo: {amount}",
+  "homePiggyInPiggyBanks": "V hranilnikih: {amount}",
+  "homeTabLabelBalance": "Bilanca stanja",
+  "homeTabLabelMain": "Glavna",
+  "homeTabLabelPiggybanks": "Hranilniki",
+  "homeTabLabelTransactions": "Transakcije",
+  "homeTransactionsActionFilter": "Seznam filtrov",
+  "homeTransactionsDialogFilterAccountsAll": "<Vsi računi>",
+  "homeTransactionsDialogFilterBillsAll": "<Vsi računi>",
+  "homeTransactionsDialogFilterBillUnset": "<Ni računov>",
+  "homeTransactionsDialogFilterBudgetsAll": "<Vsi proračuni>",
+  "homeTransactionsDialogFilterBudgetUnset": "<Proračuni niso nastavljeni>",
+  "homeTransactionsDialogFilterCategoriesAll": "<Vse kategorije>",
+  "homeTransactionsDialogFilterCategoryUnset": "<Kategorije niso nastavljene>",
+  "homeTransactionsDialogFilterCurrenciesAll": "<Vse valute>",
+  "homeTransactionsDialogFilterDateRange": "Časovno območje",
+  "homeTransactionsDialogFilterFutureTransactions": "Prikaži bodoče transakcije",
+  "homeTransactionsDialogFilterSearch": "Iskalni pojem",
+  "homeTransactionsDialogFilterTitle": "Izberi filter",
+  "homeTransactionsEmpty": "Ni najdenih transakcij.",
+  "homeTransactionsMultipleCategories": "{num} kategorij",
+  "homeTransactionsSettingsShowTags": "Pokaži oznake na seznamu transakcij",
+  "liabilityDirectionCredit": "Dolžan sem ta dolg",
+  "liabilityDirectionDebit": "To dolgujem",
+  "liabilityTypeDebt": "Dolg",
+  "liabilityTypeLoan": "Posojilo",
+  "liabilityTypeMortgage": "Hipoteka",
+  "loginAbout": "Za funkcijsko uporabo Waterfly III potrebujete lasten strežnik z namestitvijo Firefly III ali dodatek Firefly III za Home Assistant.\n\nSpodaj vnesite poln URL in osebni žeton dostopa (Možnosti-> Profil -> OAuth -> Osebni dostopni žetoni).",
+  "loginFormLabelAPIKey": "Veljaven API ključ",
+  "loginFormLabelHost": "URL gostitelja",
+  "loginWelcome": "Dobrodošli v Waterfly III",
+  "logoutConfirmation": "Ali ste prepričani, da se želite odjaviti?",
+  "navigationAccounts": "Računi",
+  "navigationBills": "Transakcije",
+  "navigationCategories": "Kategorije",
+  "navigationMain": "Glavna nadzorna plošča",
+  "generalSettings": "Nastavitve",
+  "no": "Ne",
+  "numPercent": "{num}",
+  "numPercentOf": "{perc} od {of}",
+  "settingsDialogDebugInfo": "Tukaj lahko omogočite in pošljete dnevnike odpravljanja napak. Vklop slabo vpliva na delovanje aplikacije, zato jih ne omogočite, razen če so vam tako svetovali. Če onemogočite beleženje, boste izbrisali shranjeni dnevnik.",
+  "settingsDialogDebugMailCreate": "Ustvari e-pošto",
+  "settingsDialogDebugMailDisclaimer": "OPOZORILO: Odpre se osnutek pošte s priloženo dnevniško datoteko (v besedilni obliki). Dnevniki lahko vsebujejo občutljive podatke, kot je ime gostitelja vašega primerka Firefly (čeprav se poskušam izogniti zapisovanju kakršnih koli skrivnosti, kot je API ključ). Pozorno preberite dnevnik in cenzurirajte vse informacije, ki jih ne želite deliti in/ali niso pomembne za težavo, ki jo želite prijaviti.\n\nProsimo, ne pošiljajte dnevnikov brez predhodnega dogovora po pošti/GitHubu. Izbrisal bom vse dnevnike, poslane brez konteksta, zaradi zasebnosti. Dnevnika nikoli ne nalagajte necenzuriranega na GitHub ali drugam.",
+  "settingsDialogDebugSendButton": "Pošlji dnevnike po e-pošti",
+  "settingsDialogDebugTitle": "Debug dnevniki",
+  "settingsDialogLanguageTitle": "Izberite jezik",
+  "settingsDialogThemeTitle": "Izberite temo",
+  "settingsFAQ": "FAQ",
+  "settingsFAQHelp": "Odpre se v brskalniku. Na voljo samo v angleščini.",
+  "settingsLanguage": "Jezik",
+  "settingsLockscreen": "Zaklenjen zaslon",
+  "settingsLockscreenHelp": "Zahtevaj preverjanje pristnosti ob zagonu aplikacije",
+  "settingsLockscreenInitial": "Preverite pristnost, da omogočite zaklenjeni zaslon.",
+  "settingsNLAppAccount": "Privzeti račun",
+  "settingsNLAppAccountDynamic": "<Dinamično>",
+  "settingsNLAppAdd": "Dodaj aplikacijo",
+  "settingsNLAppAddHelp": "Kliknite, če želite dodati aplikacijo za poslušanje. Na seznamu bodo prikazane samo primerne aplikacije.",
+  "settingsNLAppAddInfo": "Izvedite nekaj transakcij, pri katerih prejmete telefonska obvestila za dodajanje aplikacij na ta seznam. Če se aplikacija še vedno ne prikaže, mi prijavite na app@vogt.pw.",
+  "settingsNLAutoAdd": "Ustvari transakcijo brez interakcije",
+  "settingsNLDescription": "Ta storitev vam omogoča pridobivanje podrobnosti transakcije iz dohodnih potisnih obvestil. Poleg tega lahko izberete privzeti račun, ki naj mu bo dodeljena transakcija - če vrednost ni nastavljena, poskuša iz obvestila izvleči račun.",
+  "settingsNLEmptyNote": "Polje za opombo naj bo prazno",
+  "settingsNLPermissionGrant": "Pritisnite za odobritev dovoljenja.",
+  "settingsNLPermissionNotGranted": "Dovoljenje ni odobreno.",
+  "settingsNLPermissionRemove": "Odstrani dovoljenje?",
+  "settingsNLPermissionRemoveHelp": "Če želite onemogočiti to storitev, kliknite aplikacijo in na naslednjem zaslonu odstranite dovoljenja.",
+  "settingsNLPrefillTXTitle": "Vnaprej izpolnite naslov transakcije z naslovom obvestila",
+  "settingsNLServiceChecking": "Preverjanje stanja…",
+  "settingsNLServiceCheckingError": "Napaka pri preverjanju stanja: {error}",
+  "settingsNLServiceRunning": "Storitev je zagnana.",
+  "settingsNLServiceStatus": "Stanje storitve",
+  "settingsNLServiceStopped": "Storitev je ustavljena.",
+  "settingsNotificationListener": "Storitev poslušanja obvestil",
+  "settingsTheme": "Tema aplikacije",
+  "settingsThemeDynamicColors": "Dinamične barve",
+  "settingsThemeValue": "{theme, select, dark{Temen način} light{Svetel način} other{Sistemsko privzeto}}",
+  "settingsUseServerTimezone": "Uporabite časovni pas strežnika",
+  "settingsUseServerTimezoneHelp": "Prikaži vse čase v časovnem pasu strežnika. To posnema vedenje spletnega vmesnika.",
+  "settingsVersion": "Verzija aplikacije",
+  "settingsVersionChecking": "preverjam…",
+  "transactionAttachments": "Priponke",
+  "transactionDeleteConfirm": "Ali ste prepričani, da želite izbrisati to transakcijo?",
+  "transactionDialogAttachmentsDelete": "Izbriši priponko",
+  "transactionDialogAttachmentsDeleteConfirm": "Ali ste prepričani, da želite izbrisati to priponko?",
+  "transactionDialogAttachmentsErrorDownload": "Datoteke ni bilo mogoče prenesti.",
+  "transactionDialogAttachmentsErrorOpen": "Ni bilo mogoče odpreti datoteke: {error}",
+  "transactionDialogAttachmentsErrorUpload": "Ni bilo mogoče naložiti datoteke: {error}",
+  "transactionDialogAttachmentsTitle": "Priponke",
+  "transactionDialogBillNoBill": "Ni računa",
+  "transactionDialogBillTitle": "Poveži z računom",
+  "transactionDialogCurrencyTitle": "Izberi valuto",
+  "transactionDialogTagsAdd": "Dodaj oznako",
+  "transactionDialogTagsHint": "Išči/dodaj oznako",
+  "transactionDialogTagsTitle": "Izberi oznake",
+  "transactionDuplicate": "Podvoji",
+  "transactionErrorInvalidAccount": "Neveljaven račun",
+  "transactionErrorInvalidBudget": "Neveljaven proračun",
+  "transactionErrorNoAccounts": "Najprej izpolni račune.",
+  "transactionErrorNoAssetAccount": "Izberi račun sredstev.",
+  "transactionErrorTitle": "Prosim navedite naslov.",
+  "transactionFormLabelAccountDestination": "Ciljni račun",
+  "transactionFormLabelAccountForeign": "Tuji račun",
+  "transactionFormLabelAccountOwn": "Lastni račun",
+  "transactionFormLabelAccountSource": "Izvorni račun",
+  "transactionFormLabelNotes": "Zapiski",
+  "transactionFormLabelTags": "Oznake",
+  "transactionFormLabelTitle": "Naslov transakcije",
+  "transactionSplitAdd": "Dodaj razdeljeno transakcijo",
+  "transactionSplitChangeCurrency": "Spremeni valuto razdelitve",
+  "transactionSplitChangeDestinationAccount": "Spremeni razdeljeni ciljni račun",
+  "transactionSplitChangeSourceAccount": "Spremeni izvirni račun razdeljenega vira",
+  "transactionSplitChangeTarget": "Spremeni ciljni račun razdelitve",
+  "transactionSplitDelete": "Izbriši razdelitev",
+  "transactionTitleAdd": "Dodaj transakcijo",
+  "transactionTitleDelete": "Izbriši transakcijo",
+  "transactionTitleEdit": "Uredi transakcijo",
+  "transactionTypeDeposit": "Priliv",
+  "transactionTypeTransfer": "Prenos",
+  "transactionTypeWithdrawal": "Dvig"
 }

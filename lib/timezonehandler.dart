@@ -36,7 +36,8 @@ class TimeZoneHandler {
   }
 
   Future<void> updateDeviceLocation() async {
-    final String deviceTZ = await FlutterTimezone.getLocalTimezone();
+    final TimezoneInfo tzInfo = await FlutterTimezone.getLocalTimezone();
+    final String deviceTZ = tzInfo.identifier;
     try {
       _deviceLoc = tz.getLocation(deviceTZ);
     } on tz.LocationNotFoundException {

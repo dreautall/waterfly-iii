@@ -213,6 +213,22 @@
     "@billsUngrouped": {
         "description": "Title for ungrouped subscriptions"
     },
+    "billsSettingsShowOnlyActive": "Mostrar solo activos",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Muestra solo las suscripciones activas.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Mostrar solo esperados",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Muestra solo las suscripciones que se esperan (o pagan) este mes.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
     "categoryDeleteConfirm": "¿Estás seguro de que deseas eliminar esta categoría? Las transacciones no serán eliminadas, pero ya no tendrán categoría.",
     "@categoryDeleteConfirm": {
         "description": "Confirmation text to delete category"
@@ -372,6 +388,26 @@
     "generalCurrency": "Divisa",
     "@generalCurrency": {
         "description": "(Money) Currency"
+    },
+    "generalDateRangeCurrentMonth": "Mes actual",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Últimos 30 días",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Año actual",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Año pasado",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Todos",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
     },
     "generalDefault": "por defecto",
     "@generalDefault": {
@@ -609,9 +645,41 @@
             }
         }
     },
+    "homePiggySavedMultiple": "Ahorrado hasta ahora:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "Objetivo de ahorro: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "Estado de la cuenta",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Cantidades disponibles",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "Disponible: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "En huchas: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
         "placeholders": {
             "amount": {
                 "type": "String",
@@ -670,6 +738,10 @@
     "homeTransactionsDialogFilterCurrenciesAll": "<Todas las divisas>",
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "Rango de fechas",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
     },
     "homeTransactionsDialogFilterFutureTransactions": "Mostrar transacciones futuras",
     "@homeTransactionsDialogFilterFutureTransactions": {
@@ -757,9 +829,9 @@
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "Ajustes",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "Configuración",
+    "@generalSettings": {
+        "description": "Label: Settings"
     },
     "no": "No",
     "@no": {
@@ -1016,6 +1088,14 @@
     "transactionDialogCurrencyTitle": "Seleccionar divisa",
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "Sin hucha",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Vincular a hucha",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
     },
     "transactionDialogTagsAdd": "Añadir etiqueta",
     "@transactionDialogTagsAdd": {

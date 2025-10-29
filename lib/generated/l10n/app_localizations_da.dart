@@ -56,30 +56,30 @@ class SDa extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'ugentligt',
+      'monthly': 'månedligt',
+      'quarterly': 'kvartalsvis',
+      'halfyear': 'halvårligt',
+      'yearly': 'årligt',
+      'other': 'ukendt',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', springer over $skip',
       zero: '',
     );
-    return 'Subscription matches transactions between $minValue and $maxvalue. Repeats $_temp0$_temp1.';
+    return 'Abonnement matcher transaktioner mellem $minValue og $maxvalue. Gentages $_temp0$_temp1.';
   }
 
   @override
-  String get billsChangeLayoutTooltip => 'Change layout';
+  String get billsChangeLayoutTooltip => 'Skift layout';
 
   @override
-  String get billsChangeSortOrderTooltip => 'Change sort order';
+  String get billsChangeSortOrderTooltip => 'Skift sorteringsrækkefølge';
 
   @override
-  String get billsErrorLoading => 'Error loading subscriptions.';
+  String get billsErrorLoading => 'Fejl ved indlæsning af abonnementer.';
 
   @override
   String billsExactAmountAndFrequency(
@@ -88,20 +88,20 @@ class SDa extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'ugentligt',
+      'monthly': 'månedligt',
+      'quarterly': 'kvartalsvis',
+      'halfyear': 'halvårligt',
+      'yearly': 'årligt',
+      'other': 'ukendt',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', springer over $skip',
       zero: '',
     );
-    return 'Subscription matches transactions of $value. Repeats $_temp0$_temp1.';
+    return 'Abonnement matcher transaktioner af $value. Gentages $_temp0$_temp1.';
   }
 
   @override
@@ -109,18 +109,18 @@ class SDa extends S {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Expected $dateString';
+    return 'Forventet $dateString';
   }
 
   @override
   String billsFrequency(String frequency) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Ugentlig',
+      'monthly': 'Månedlig',
+      'quarterly': 'Kvartalsvis',
+      'halfyear': 'Halvårlig',
+      'yearly': 'Årlig',
+      'other': 'Ukendt',
     });
     return '$_temp0';
   }
@@ -128,93 +128,93 @@ class SDa extends S {
   @override
   String billsFrequencySkip(String frequency, num skip) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Ugentlig',
+      'monthly': 'Månedlig',
+      'quarterly': 'Kvartalsvis',
+      'halfyear': 'Halvårlig',
+      'yearly': 'Årlig',
+      'other': 'Ukendt',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', springer over $skip',
       zero: '',
     );
     return '$_temp0$_temp1';
   }
 
   @override
-  String get billsInactive => 'Inactive';
+  String get billsInactive => 'Inaktiv';
 
   @override
-  String get billsIsActive => 'Subscription is active';
+  String get billsIsActive => 'Abonnementet er aktivt';
 
   @override
   String get billsLayoutGroupSubtitle =>
-      'Subscriptions displayed in their assigned groups.';
+      'Abonnementer vises i deres tildelte grupper.';
 
   @override
-  String get billsLayoutGroupTitle => 'Group';
+  String get billsLayoutGroupTitle => 'Gruppe';
 
   @override
   String get billsLayoutListSubtitle =>
-      'Subscriptions displayed in a list sorted by certain criteria.';
+      'Abonnementer vises på en liste sorteret efter bestemte kriterier.';
 
   @override
-  String get billsLayoutListTitle => 'List';
+  String get billsLayoutListTitle => 'Liste';
 
   @override
-  String get billsListEmpty => 'The list is currently empty.';
+  String get billsListEmpty => 'Listen er i øjeblikket tom.';
 
   @override
-  String get billsNextExpectedMatch => 'Next expected match';
+  String get billsNextExpectedMatch => 'Næste forventede match';
 
   @override
-  String get billsNotActive => 'Subscription is inactive';
+  String get billsNotActive => 'Abonnementet er inaktivt';
 
   @override
-  String get billsNotExpected => 'Not expected this period';
+  String get billsNotExpected => 'Ikke forventet i denne periode';
 
   @override
-  String get billsNoTransactions => 'No transactions found.';
+  String get billsNoTransactions => 'Ingen transaktioner fundet.';
 
   @override
   String billsPaidOn(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Paid $dateString';
+    return 'Betalt $dateString';
   }
 
   @override
-  String get billsSortAlphabetical => 'Alphabetical';
+  String get billsSortAlphabetical => 'Alfabetisk';
 
   @override
-  String get billsSortByTimePeriod => 'By time period';
+  String get billsSortByTimePeriod => 'Efter tidsperiode';
 
   @override
-  String get billsSortFrequency => 'Frequency';
+  String get billsSortFrequency => 'Frekvens';
 
   @override
-  String get billsSortName => 'Name';
+  String get billsSortName => 'Navn';
 
   @override
-  String get billsUngrouped => 'Ungrouped';
+  String get billsUngrouped => 'Ugrupperede';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'Vis kun aktive';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'Viser kun aktive abonnementer.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'Vis kun forventede';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'Viser kun de abonnementer, der forventes (eller er betalt) denne måned.';
 
   @override
   String get categoryDeleteConfirm =>
@@ -224,10 +224,10 @@ class SDa extends S {
   String get categoryErrorLoading => 'Fejl ved indlæsning af kategorier.';
 
   @override
-  String get categoryFormLabelIncludeInSum => 'Include in monthly sum';
+  String get categoryFormLabelIncludeInSum => 'Medregn i månedlig sum';
 
   @override
-  String get categoryFormLabelName => 'Category Name';
+  String get categoryFormLabelName => 'Kategorinavn';
 
   @override
   String get categoryMonthNext => 'Næste måned';
@@ -236,7 +236,7 @@ class SDa extends S {
   String get categoryMonthPrev => 'Sidste måned';
 
   @override
-  String get categorySumExcluded => 'excluded';
+  String get categorySumExcluded => 'udelukket';
 
   @override
   String get categoryTitleAdd => 'Tilføj kategori';
@@ -331,25 +331,25 @@ class SDa extends S {
   String get generalCurrency => 'Valuta';
 
   @override
-  String get generalDateRangeCurrentMonth => 'Current Month';
+  String get generalDateRangeCurrentMonth => 'Nuværende måned';
 
   @override
-  String get generalDateRangeLast30Days => 'Last 30 days';
+  String get generalDateRangeLast30Days => 'Sidste 30 dage';
 
   @override
-  String get generalDateRangeCurrentYear => 'Current Year';
+  String get generalDateRangeCurrentYear => 'Nuværende år';
 
   @override
-  String get generalDateRangeLastYear => 'Last year';
+  String get generalDateRangeLastYear => 'Sidste år';
 
   @override
-  String get generalDateRangeAll => 'All';
+  String get generalDateRangeAll => 'Alle';
 
   @override
   String get generalDefault => 'standard';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'Destinationskonto';
 
   @override
   String get generalDismiss => 'Afvis';
@@ -382,7 +382,7 @@ class SDa extends S {
   String get generalReset => 'Nulstil';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'Kildekonto';
 
   @override
   String get generalSpent => 'Brugt';
@@ -463,7 +463,7 @@ class SDa extends S {
   String get homeMainChartNetWorthTitle => 'Nettoværdi';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle => 'Tag-oversigt for nuværende måned';
 
   @override
   String get homePiggyAdjustDialogTitle => 'Gem/brug penge';
@@ -485,7 +485,7 @@ class SDa extends S {
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'Tilpas Dashboard';
 
   @override
   String homePiggyLinked(String account) {
@@ -509,11 +509,27 @@ class SDa extends S {
   }
 
   @override
-  String get homePiggySavedMultiple => 'Saved so far:';
+  String get homePiggySavedMultiple => 'Opsparet indtil videre:';
 
   @override
   String homePiggyTarget(String amount) {
     return 'Målbeløb: $amount';
+  }
+
+  @override
+  String get homePiggyAccountStatus => 'Kontostatus';
+
+  @override
+  String get homePiggyAvailableAmounts => 'Tilgængelige beløb';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return 'Tilgængelig: $amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return 'I sparegrise: $amount';
   }
 
   @override
@@ -556,7 +572,7 @@ class SDa extends S {
   String get homeTransactionsDialogFilterCurrenciesAll => '<All Currencies>';
 
   @override
-  String get homeTransactionsDialogFilterDateRange => 'Date Range';
+  String get homeTransactionsDialogFilterDateRange => 'Datointerval';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -578,7 +594,7 @@ class SDa extends S {
 
   @override
   String get homeTransactionsSettingsShowTags =>
-      'Show tags in transaction list';
+      'Vis tags på transaktionslisten';
 
   @override
   String get liabilityDirectionCredit => 'Jeg er skyldt denne gæld';
@@ -615,7 +631,7 @@ class SDa extends S {
   String get navigationAccounts => 'Konti';
 
   @override
-  String get navigationBills => 'Subscriptions';
+  String get navigationBills => 'Abonnementer';
 
   @override
   String get navigationCategories => 'Kategorier';
@@ -624,10 +640,10 @@ class SDa extends S {
   String get navigationMain => 'Hoveddashboard';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => 'Indstillinger';
 
   @override
-  String get no => 'No';
+  String get no => 'Nej';
 
   @override
   String numPercent(double num) {
@@ -677,10 +693,11 @@ class SDa extends S {
   String get settingsDialogThemeTitle => 'Vælg tema';
 
   @override
-  String get settingsFAQ => 'FAQ';
+  String get settingsFAQ => 'Ofte stillede spørgsmål';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'Åbnes i browseren. Kun tilgængelig på engelsk.';
 
   @override
   String get settingsLanguage => 'Sprog';
@@ -713,14 +730,14 @@ class SDa extends S {
       'Foretag nogle transaktioner, hvor du modtager telefonmeddelelser for at tilføje apps til denne liste. Hvis appen stadig ikke dukker op, bedes du rapportere den til app@vogt.pw.';
 
   @override
-  String get settingsNLAutoAdd => 'Create transaction without interaction';
+  String get settingsNLAutoAdd => 'Opret transaktion uden interaktion';
 
   @override
   String get settingsNLDescription =>
       'Denne tjeneste giver dig mulighed for at hente transaktionsoplysninger fra indgående push-notifikationer. Derudover kan du vælge en standardkonto, som transaktionen skal tildeles til - hvis ingen værdi er angivet, vil den prøve at udtrække en konto fra notifikationen.';
 
   @override
-  String get settingsNLEmptyNote => 'Keep note field empty';
+  String get settingsNLEmptyNote => 'Lad notatfeltet være tomt';
 
   @override
   String get settingsNLPermissionGrant => 'Tryk for at give tilladelse.';
@@ -829,6 +846,12 @@ class SDa extends S {
   String get transactionDialogCurrencyTitle => 'Vælg valuta';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+
+  @override
   String get transactionDialogTagsAdd => 'Tilføj etiket';
 
   @override
@@ -847,11 +870,10 @@ class SDa extends S {
   String get transactionErrorInvalidBudget => 'Ugyldigt Budget';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts => 'Udfyld venligst konti først.';
 
   @override
-  String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+  String get transactionErrorNoAssetAccount => 'Vælg venligst en aktivkonto.';
 
   @override
   String get transactionErrorTitle => 'Angiv venligst en titel.';
@@ -885,11 +907,11 @@ class SDa extends S {
 
   @override
   String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+      'Skift destinationkonto for opdeling';
 
   @override
   String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+      'Skift kildekonto for opdeling';
 
   @override
   String get transactionSplitChangeTarget => 'Ændr delt målkonto';

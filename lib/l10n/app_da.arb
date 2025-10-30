@@ -269,6 +269,10 @@
     "@categoryTitleEdit": {
         "description": "Title for Dialog: Edit Category"
     },
+    "catNone": "<ingen kategori>",
+    "@catNone": {
+        "description": "Placeholder when no category has been set."
+    },
     "catOther": "Andet",
     "@catOther": {
         "description": "Category description for summary category 'Other'"
@@ -372,6 +376,10 @@
     "generalBill": "Regning",
     "@generalBill": {
         "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
+    },
+    "generalBudget": "Budgetter",
+    "@generalBudget": {
+        "description": "(Monetary) Budget"
     },
     "generalCategory": "Kategori",
     "@generalCategory": {
@@ -699,6 +707,10 @@
     "@homeTransactionsActionFilter": {
         "description": "Action Button Label: Filter list."
     },
+    "homeTransactionsDialogFilterAccountsAll": "<Alle konti>",
+    "@homeTransactionsDialogFilterAccountsAll": {
+        "description": "Don't filter for a specific account (default entry)"
+    },
     "homeTransactionsDialogFilterBillsAll": "<All Bills>",
     "@homeTransactionsDialogFilterBillsAll": {
         "description": "Don't filter for a specific subscription (default entry)"
@@ -706,6 +718,26 @@
     "homeTransactionsDialogFilterBillUnset": "<No Bill set>",
     "@homeTransactionsDialogFilterBillUnset": {
         "description": "Filter for unset subscription"
+    },
+    "homeTransactionsDialogFilterBudgetsAll": "<Alle budgetter>",
+    "@homeTransactionsDialogFilterBudgetsAll": {
+        "description": "Don't filter for a specific budget (default entry)"
+    },
+    "homeTransactionsDialogFilterBudgetUnset": "<Intet budget tildelt>",
+    "@homeTransactionsDialogFilterBudgetUnset": {
+        "description": "Filter for unset budgets"
+    },
+    "homeTransactionsDialogFilterCategoriesAll": "<Alle kategorier>",
+    "@homeTransactionsDialogFilterCategoriesAll": {
+        "description": "Don't filter for a specific category (default entry)"
+    },
+    "homeTransactionsDialogFilterCategoryUnset": "<Ingen kategori tildelt>",
+    "@homeTransactionsDialogFilterCategoryUnset": {
+        "description": "Filter for unset categories"
+    },
+    "homeTransactionsDialogFilterCurrenciesAll": "<Alle valutaer>",
+    "@homeTransactionsDialogFilterCurrenciesAll": {
+        "description": "Don't filter for a specific currency (default entry)"
     },
     "homeTransactionsDialogFilterDateRange": "Datointerval",
     "@homeTransactionsDialogFilterDateRange": {
@@ -805,6 +837,19 @@
     "@no": {
         "description": "The word no"
     },
+    "numPercent": "{num}",
+    "@numPercent": {
+        "description": "Number formatted as percentage",
+        "placeholders": {
+            "num": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            }
+        }
+    },
     "numPercentOf": "{perc} af {of}",
     "@numPercentOf": {
         "description": "Number formatted as percentage, with total amount provided",
@@ -876,6 +921,10 @@
     "settingsNLAppAccount": "Standard konto",
     "@settingsNLAppAccount": {
         "description": "Default account which will be used for the transaction."
+    },
+    "settingsNLAppAccountDynamic": "<Dynamisk>",
+    "@settingsNLAppAccountDynamic": {
+        "description": "Account will be selected dynamically by the content of the notification."
     },
     "settingsNLAppAdd": "Tilføj app",
     "@settingsNLAppAdd": {

@@ -585,7 +585,7 @@ class SDa extends S {
   String get homeTransactionsDialogFilterTitle => 'Vælg filtre';
 
   @override
-  String get homeTransactionsEmpty => 'Ingen transaktion fundet.';
+  String get homeTransactionsEmpty => 'Ingen transaktioner fundet.';
 
   @override
   String homeTransactionsMultipleCategories(int num) {
@@ -846,10 +846,10 @@ class SDa extends S {
   String get transactionDialogCurrencyTitle => 'Vælg valuta';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => 'Ingen opsparingsmål';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => 'Knyt til opsparingsmål';
 
   @override
   String get transactionDialogTagsAdd => 'Tilføj etiket';

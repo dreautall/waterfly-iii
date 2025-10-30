@@ -830,10 +830,10 @@ class SZh extends S {
   String get transactionDialogCurrencyTitle => '选择货币种类';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => '无储蓄目标';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => '链接到储蓄目标';
 
   @override
   String get transactionDialogTagsAdd => '添加标签';
@@ -918,4 +918,12 @@ class SZh extends S {
 
   @override
   String get transactionTypeWithdrawal => '取款';
+}
+
+/// The translations for Chinese, as used in Taiwan (`zh_TW`).
+class SZhTw extends SZh {
+  SZhTw() : super('zh_TW');
+
+  @override
+  String get categoryMonthNext => '下個月';
 }

@@ -837,6 +837,19 @@
     "@no": {
         "description": "The word no"
     },
+    "numPercent": "{num}",
+    "@numPercent": {
+        "description": "Number formatted as percentage",
+        "placeholders": {
+            "num": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            }
+        }
+    },
     "numPercentOf": "{perc} din {of}",
     "@numPercentOf": {
         "description": "Number formatted as percentage, with total amount provided",
@@ -1075,6 +1088,14 @@
     "transactionDialogCurrencyTitle": "Selectează valuta",
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "Fără pușculiță",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Asociază la pușculiță",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
     },
     "transactionDialogTagsAdd": "Adaugă etichetă",
     "@transactionDialogTagsAdd": {

@@ -956,9 +956,27 @@ class _HomeTransactionsState extends State<HomeTransactions>
                                     .sourceBalanceAfter !=
                                 null)
                           TextSpan(
-                            text:
-                                "${item.attributes.transactions.first.primaryCurrencySymbol}"
-                                "${double.parse(item.attributes.transactions.first.destinationId == _filters.account?.id ? item.attributes.transactions.first.destinationBalanceAfter! : item.attributes.transactions.first.sourceBalanceAfter!).toStringAsFixed(2)}",
+                            text: currency.fmt(
+                              double.tryParse(
+                                    item
+                                                .attributes
+                                                .transactions
+                                                .first
+                                                .destinationId ==
+                                            _filters.account?.id
+                                        ? item
+                                            .attributes
+                                            .transactions
+                                            .first
+                                            .destinationBalanceAfter!
+                                        : item
+                                            .attributes
+                                            .transactions
+                                            .first
+                                            .sourceBalanceAfter!,
+                                  ) ??
+                                  0,
+                            ),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         if (_filters.account != null &&

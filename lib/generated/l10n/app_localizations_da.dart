@@ -248,7 +248,7 @@ class SDa extends S {
   String get categoryTitleEdit => 'Redigér kategori';
 
   @override
-  String get catNone => '<no category>';
+  String get catNone => '<ingen kategori>';
 
   @override
   String get catOther => 'Andet';
@@ -322,7 +322,7 @@ class SDa extends S {
   String get generalBill => 'Regning';
 
   @override
-  String get generalBudget => 'Budget';
+  String get generalBudget => 'Budgetter';
 
   @override
   String get generalCategory => 'Kategori';
@@ -548,7 +548,7 @@ class SDa extends S {
   String get homeTransactionsActionFilter => 'Filterliste';
 
   @override
-  String get homeTransactionsDialogFilterAccountsAll => '<All Accounts>';
+  String get homeTransactionsDialogFilterAccountsAll => '<Alle konti>';
 
   @override
   String get homeTransactionsDialogFilterBillsAll => '<All Bills>';
@@ -557,19 +557,21 @@ class SDa extends S {
   String get homeTransactionsDialogFilterBillUnset => '<No Bill set>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetsAll => '<All Budgets>';
+  String get homeTransactionsDialogFilterBudgetsAll => '<Alle budgetter>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetUnset => '<No Budget set>';
+  String get homeTransactionsDialogFilterBudgetUnset =>
+      '<Intet budget tildelt>';
 
   @override
-  String get homeTransactionsDialogFilterCategoriesAll => '<All Categories>';
+  String get homeTransactionsDialogFilterCategoriesAll => '<Alle kategorier>';
 
   @override
-  String get homeTransactionsDialogFilterCategoryUnset => '<No Category set>';
+  String get homeTransactionsDialogFilterCategoryUnset =>
+      '<Ingen kategori tildelt>';
 
   @override
-  String get homeTransactionsDialogFilterCurrenciesAll => '<All Currencies>';
+  String get homeTransactionsDialogFilterCurrenciesAll => '<Alle valutaer>';
 
   @override
   String get homeTransactionsDialogFilterDateRange => 'Datointerval';
@@ -716,7 +718,7 @@ class SDa extends S {
   String get settingsNLAppAccount => 'Standard konto';
 
   @override
-  String get settingsNLAppAccountDynamic => '<Dynamic>';
+  String get settingsNLAppAccountDynamic => '<Dynamisk>';
 
   @override
   String get settingsNLAppAdd => 'Tilføj app';

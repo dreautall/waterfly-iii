@@ -1,17 +1,17 @@
-Waterfly III is an unofficial app for your own instance of Firefly III, a free and open source finance manager.
+Waterfly III este o aplicație neoficială pentru propria dumneavoastră instanță de Firefly III, un administrator financiar gratuit și cu sursă deschisă.
 
-This app requires a self-hosted Firefly III instance on your own server, please visit https://www.firefly-iii.org/ for more information about the software. It is only a companion app and cannot run standalone!
+Această aplicație necesită o instanță Firefly III auto-găzduită pe propriul tău server, te rugăm să vizitezi https://www.firefly-ii.org/ pentru mai multe informații despre software. Este doar o aplicație companion și nu poate rula în mod independent!
 
-Features:
+Funcționalități:
 
-- Dashboard with charts & budget overview
-- Transaction list with filters
-- Add & edit transactions with autocomplete, including attachments, split transactions & multi currency support
-- Piggy Bank support (view & add money)
-- Notification Listener Service to easily create new transactions based on incoming notifications (e.g., from Google Pay or your banking app)
-- Completely open source: https://github.com/dreautall/waterfly-iii
-- No ads or trackers
+- Tablou de bord cu diagrame și prezentare generală a bugetului
+- Lista de tranzacții cu filtre
+- Adaugă și editează tranzacțiile cu autocompletare, inclusiv atașamentele, tranzacții divizate și suport multi valută
+- Suport pușculiță (vizualizează și adaugă bani)
+- Serviciu de Ascultare al Notificărilor pentru a crea cu ușurință noi tranzacții bazate pe notificările primite (de exemplu, din Google Pay sau din aplicația bancară)
+- Sursă complet deschisă: https://github.com/dreautall/waterfly-iii
+- Fără reclame sau trackere
 
-Contribution:
+Contribuie:
 
-If you run into a bug or miss a feature, feel free to give feedback in the play store, send me an email or open an issue on GitHub.
+Dacă găsești o problemă sau îți lipsește o caracteristică, nu ezita să oferi feedback în Play Store, trimite-mi un e-mail sau deschide un issue pe GitHub.

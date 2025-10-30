@@ -21,6 +21,14 @@ import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 
+class TransactionSum {
+  double withdrawals = 0;
+  double deposits = 0;
+  double transfers = 0;
+
+  double get total => deposits - withdrawals;
+}
+
 class HomeTransactions extends StatefulWidget {
   const HomeTransactions({super.key, this.filters});
 
@@ -42,12 +50,15 @@ class _HomeTransactionsState extends State<HomeTransactions>
   late TransStock _stock;
   late TimeZoneHandler _tzHandler;
 
+  TransactionSum _txSum = TransactionSum();
+
   final TransactionFilters _filters = TransactionFilters();
   final ValueNotifier<bool> _tagsHidden = ValueNotifier<bool>(false);
 
   @override
   void initState() {
     super.initState();
+
     _tzHandler = context.read<FireflyService>().tzHandler;
     _pagingState = PagingState<int, TransactionRead>();
     _tagsHidden.value = context.read<SettingsProvider>().hideTags;
@@ -104,6 +115,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     if (ok == null || !ok) {
                       if (settings.showFutureTXs != oldShowFutureTXs) {
                         settings.showFutureTXs = oldShowFutureTXs;
+                        _txSum = TransactionSum();
                         setState(() {
                           _pagingState = _pagingState.reset();
                         });
@@ -113,6 +125,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                         settings.setTransactionDateFilter(
                           oldTransactionDateFilter,
                         );
+                        _txSum = TransactionSum();
                         setState(() {
                           _pagingState = _pagingState.reset();
                         });
@@ -136,6 +149,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     _filters.updateFilters();
                     _rowsWithDate = <int>[];
                     _lastDate = null;
+                    _txSum = TransactionSum();
                     setState(() {
                       _pagingState = _pagingState.reset();
                     });
@@ -147,7 +161,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
     }
 
     _stock = context.read<FireflyService>().transStock!;
-
     _stock.addListener(notifRefresh);
   }
 
@@ -293,6 +306,26 @@ class _HomeTransactionsState extends State<HomeTransactions>
         );
       }
 
+      for (TransactionRead item in transactionList) {
+        for (TransactionSplit tx in item.attributes.transactions) {
+          switch (tx.type) {
+            case TransactionTypeProperty.deposit:
+              _txSum.deposits += double.parse(tx.pcAmount ?? tx.amount);
+              break;
+            case TransactionTypeProperty.withdrawal:
+              _txSum.withdrawals += double.parse(tx.pcAmount ?? tx.amount);
+              break;
+            case TransactionTypeProperty.transfer:
+              _txSum.transfers += double.parse(tx.pcAmount ?? tx.amount);
+              break;
+            case TransactionTypeProperty.openingBalance:
+            case TransactionTypeProperty.reconciliation:
+            case TransactionTypeProperty.swaggerGeneratedUnknown:
+            // do nothing, ignore
+          }
+        }
+      }
+
       final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
 
       if (mounted) {
@@ -332,6 +365,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           () => Future<void>.sync(() {
             _rowsWithDate = <int>[];
             _lastDate = null;
+            _txSum = TransactionSum();
             context.read<FireflyService>().transStock!.clear();
             setState(() {
               _pagingState = _pagingState.reset();
@@ -345,7 +379,123 @@ class _HomeTransactionsState extends State<HomeTransactions>
           transitionDuration: animDurationStandard,
           invisibleItemsThreshold: 10,
           itemBuilder: transactionRowBuilder,
-          noMoreItemsIndicatorBuilder: (_) => const SizedBox(height: 68),
+          noMoreItemsIndicatorBuilder: (BuildContext context) {
+            final CurrencyRead defaultCurrency =
+                context.read<FireflyService>().defaultCurrency;
+            return Padding(
+              padding: const EdgeInsetsGeometry.symmetric(horizontal: 8),
+              child: Column(
+                children: <Widget>[
+                  const Divider(),
+                  Table(
+                    //border: TableBorder.all(), // :DEBUG:
+                    columnWidths: const <int, TableColumnWidth>{
+                      0: FlexColumnWidth(),
+                      1: FlexColumnWidth(),
+                      2: FlexColumnWidth(),
+                    },
+                    children: <TableRow>[
+                      TableRow(
+                        children: <Widget>[
+                          Text(
+                            S.of(context).transactionTypeDeposit,
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            S.of(context).transactionTypeWithdrawal,
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            S.of(context).transactionTypeTransfer,
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+
+                      TableRow(
+                        children: <Widget>[
+                          Text(
+                            defaultCurrency.fmt(_txSum.deposits),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.copyWith(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            defaultCurrency.fmt(_txSum.withdrawals),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.copyWith(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            defaultCurrency.fmt(_txSum.transfers),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.copyWith(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const TableRow(
+                        children: <Widget>[
+                          SizedBox(height: 8),
+                          SizedBox.shrink(),
+                          SizedBox.shrink(),
+                        ],
+                      ),
+                      TableRow(
+                        children: <Widget>[
+                          const SizedBox.shrink(),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              "${S.of(context).generalSum}:  ",
+                              style: Theme.of(context).textTheme.bodyLarge!
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Text(
+                            defaultCurrency.fmt(_txSum.total),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyLarge!.copyWith(
+                              color:
+                                  _txSum.total < 0 ? Colors.red : Colors.green,
+                              fontWeight: FontWeight.bold,
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  // Padding for FAB
+                  const SizedBox(height: 76),
+                ],
+              ),
+            );
+          },
         ),
       ),
       //itemExtent: 80,
@@ -554,6 +704,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                       if (ok ?? false) {
                         _rowsWithDate = <int>[];
                         _lastDate = null;
+                        _txSum = TransactionSum();
                         if (context.mounted) {
                           context.read<FireflyService>().transStock!.clear();
                         }
@@ -587,6 +738,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                       await api.v1TransactionsIdDelete(id: item.id);
                       _rowsWithDate = <int>[];
                       _lastDate = null;
+                      _txSum = TransactionSum();
                       if (context.mounted) {
                         context.read<FireflyService>().transStock!.clear();
                       }
@@ -796,6 +948,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
         if (refresh ?? false == true) {
           _rowsWithDate = <int>[];
           _lastDate = null;
+          _txSum = TransactionSum();
           if (context.mounted) {
             context.read<FireflyService>().transStock!.clear();
           }

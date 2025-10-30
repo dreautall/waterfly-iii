@@ -107,6 +107,7 @@ class _HomeMainState extends State<HomeMain>
             'en_US',
           ).format(now.copyWith(day: now.day - 6)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+          period: V1ChartBalanceBalanceGetPeriod.value_1d,
         );
     apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
 
@@ -234,6 +235,8 @@ class _HomeMainState extends State<HomeMain>
 
     final FireflyIii api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
+    final CurrencyRead defaultCurrency =
+        context.read<FireflyService>().defaultCurrency;
 
     final DateTime now = tzHandler.sNow().clearTime();
 
@@ -285,11 +288,17 @@ class _HomeMainState extends State<HomeMain>
       if (entry.id?.isEmpty ?? true) {
         continue;
       }
+      if (entry.currencyId == null || entry.currencyId != defaultCurrency.id) {
+        continue;
+      }
       incomes[entry.id!] = entry.differenceFloat ?? 0;
     }
 
     for (InsightGroupEntry entry in respExpenseData.body!) {
       if (entry.id?.isEmpty ?? true) {
+        continue;
+      }
+      if (entry.currencyId == null || entry.currencyId != defaultCurrency.id) {
         continue;
       }
       double amount = entry.differenceFloat ?? 0;
@@ -416,7 +425,7 @@ class _HomeMainState extends State<HomeMain>
           api.v1ChartAccountOverviewGet(
             start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
             end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
-            //preselected: 'assets' :TODO: with new FF3 version!
+            preselected: V1ChartAccountOverviewGetPreselected.all,
           ),
         ).wait;
     apiThrowErrorIfEmpty(respAssetAccounts, mounted ? context : null);

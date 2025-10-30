@@ -758,3 +758,18 @@ class CategoryWithSum extends CategoryProperties {
   double sumSpent = 0;
   double sumEarned = 0;
 }
+
+extension LocaleExt on Locale {
+  static Locale fromLanguageTag(String tag) {
+    String? langCode;
+    String? regionCode;
+    final int regionCodeIndex = tag.indexOf(RegExp(r'[A-Z]{2}'));
+    if (regionCodeIndex == -1) {
+      langCode = tag;
+    } else {
+      langCode = tag.substring(0, regionCodeIndex - 1);
+      regionCode = tag.substring(regionCodeIndex);
+    }
+    return Locale(langCode, regionCode);
+  }
+}

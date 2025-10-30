@@ -1,0 +1,10 @@
+**⚠️ This release requires Firefly III v6.3.2 ⚠️**
+
+- Feature: Visibility Settings for Subscriptions.
+- Feature: Clear Button for Autocomplete text fields.
+- Fix: Net Worth chart shows all related assets.
+- Fix: Pie charts correctly handle currency information.
+- Fix: Notification Listener handling improved.
+- Fix: Piggybanks can be updated again from within the app.
+- Fix: Language selector works again
+- Various dependency updates.″

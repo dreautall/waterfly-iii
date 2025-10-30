@@ -51,6 +51,228 @@
             }
         }
     },
+    "billsAmountAndFrequency": "Předplatné odpovídá transakcím mezi {minValue} a {maxvalue}. Opakuje se {frequency, select, weekly{týdně} monthly{měsíčně} quarterly{čtvrtletně} halfyear{pololetně} yearly{ročně} other{neznámé}}{skip, plural, =0{} other{, přeskočí {skip}}}.",
+    "@billsAmountAndFrequency": {
+        "description": "Subscription match for min and max amounts, and frequency",
+        "placeholders": {
+            "minValue": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "maxvalue": {
+                "type": "String",
+                "example": "$60.50"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsChangeLayoutTooltip": "Změnit rozložení",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "Změnit pořadí řazení",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsErrorLoading": "Chyba při načítání předplatných.",
+    "@billsErrorLoading": {
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
+    },
+    "billsExactAmountAndFrequency": "Předplatné odpovídá transakcím v hodnotě {value}. Opakuje se {frequency, select, weekly{týdně} monthly{měsíčně} quarterly{čtvrtletně} halfyear{pololetně} yearly{ročně} other{neznámé}}{skip, plural, =0{} other{, přeskočí {skip}}}.",
+    "@billsExactAmountAndFrequency": {
+        "description": "Subscription match for exact amount and frequency",
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsExpectedOn": "Očekáváno {date}",
+    "@billsExpectedOn": {
+        "description": "Describes what date the subscription is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsFrequency": "{frequency, select, weekly{Týdně} monthly{Měsíčně} quarterly{Čtvrtletně} halfyear{Pololetně} yearly{Ročně} other{Neznámé}}",
+    "@billsFrequency": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsFrequencySkip": "{frequency, select, weekly{Týdně} monthly{Měsíčně} quarterly{Čtvrtletně} halfyear{Pololetně} yearly{Ročně} other{Neznámé}}{skip, plural, =0{} other{, přeskočí {skip}}}",
+    "@billsFrequencySkip": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsInactive": "Neaktivní",
+    "@billsInactive": {
+        "description": "Text: when the subscription is inactive"
+    },
+    "billsIsActive": "Předplatné je aktivní",
+    "@billsIsActive": {
+        "description": "Text: the subscription is active"
+    },
+    "billsLayoutGroupSubtitle": "Předplatná zobrazená v přiřazených skupinách.",
+    "@billsLayoutGroupSubtitle": {
+        "description": "Subtitle text for group layout option"
+    },
+    "billsLayoutGroupTitle": "Skupina",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListSubtitle": "Předplatná zobrazená v seznamu seřazeném podle určitých kritérií.",
+    "@billsLayoutListSubtitle": {
+        "description": "Subtitle text for list layout option"
+    },
+    "billsLayoutListTitle": "Seznam",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "Seznam je aktuálně prázdný.",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "Další očekávaná shoda",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for subscription"
+    },
+    "billsNotActive": "Předplatné je neaktivní",
+    "@billsNotActive": {
+        "description": "Text: the subscription is inactive"
+    },
+    "billsNotExpected": "V tomto období neočekáváno",
+    "@billsNotExpected": {
+        "description": "Describes that the subscription is not expected this period"
+    },
+    "billsNoTransactions": "Nebyly nalezeny žádné transakce.",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the subscription"
+    },
+    "billsPaidOn": "Zaplaceno {date}",
+    "@billsPaidOn": {
+        "description": "Describes what date the subscription was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "Abecedně",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "Podle časového období",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "Frekvence",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "Název",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "Neseskupené",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped subscriptions"
+    },
+    "billsSettingsShowOnlyActive": "Zobrazit pouze aktivní",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Zobrazuje pouze aktivní předplatná.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Zobrazit pouze očekávané",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Zobrazuje pouze ta předplatná, která jsou očekávána (nebo zaplacena) tento měsíc.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
+    "categoryDeleteConfirm": "Opravdu chcete smazat tuto kategorii? Transakce nebudou smazány, ale již nebudou mít přiřazenou kategorii.",
+    "@categoryDeleteConfirm": {
+        "description": "Confirmation text to delete category"
+    },
+    "categoryErrorLoading": "Chyba při načítání kategorií.",
+    "@categoryErrorLoading": {
+        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+    },
+    "categoryFormLabelIncludeInSum": "Zahrnout do měsíčního součtu",
+    "@categoryFormLabelIncludeInSum": {
+        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+    },
+    "categoryFormLabelName": "Název kategorie",
+    "@categoryFormLabelName": {
+        "description": "Category Add/Edit Form: Label for name field"
+    },
+    "categoryMonthNext": "Příští měsíc",
+    "@categoryMonthNext": {
+        "description": "Button title to view overview for next month"
+    },
+    "categoryMonthPrev": "Předchozí měsíc",
+    "@categoryMonthPrev": {
+        "description": "Button title to view overview for previous month"
+    },
+    "categorySumExcluded": "vyloučeno",
+    "@categorySumExcluded": {
+        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+    },
+    "categoryTitleAdd": "Přidat kategorii",
+    "@categoryTitleAdd": {
+        "description": "Title for Dialog: Add Category"
+    },
+    "categoryTitleDelete": "Smazat kategorii",
+    "@categoryTitleDelete": {
+        "description": "Title for Dialog: Delete Category"
+    },
+    "categoryTitleEdit": "Upravit kategorii",
+    "@categoryTitleEdit": {
+        "description": "Title for Dialog: Edit Category"
+    },
+    "catNone": "<bez kategorie>",
+    "@catNone": {
+        "description": "Placeholder when no category has been set."
+    },
     "catOther": "Ostatní",
     "@catOther": {
         "description": "Category description for summary category 'Other'"
@@ -153,7 +375,7 @@
     },
     "generalBill": "Účtenka",
     "@generalBill": {
-        "description": "Bill"
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
     "generalBudget": "Rozpočet",
     "@generalBudget": {
@@ -167,13 +389,41 @@
     "@generalCurrency": {
         "description": "(Money) Currency"
     },
+    "generalDateRangeCurrentMonth": "Aktuální měsíc",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Posledních 30 dní",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Aktuální rok",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Minulý rok",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Vše",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
     "generalDefault": "výchozí",
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
     },
+    "generalDestinationAccount": "Cílový účet",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
+    },
     "generalDismiss": "Zrušit",
     "@generalDismiss": {
         "description": "Dismiss window/dialog without action"
+    },
+    "generalEarned": "Získané",
+    "@generalEarned": {
+        "description": "(Amount) Earned"
     },
     "generalError": "Chyba",
     "@generalError": {
@@ -207,6 +457,14 @@
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
     },
+    "generalSourceAccount": "Zdrojový účet",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
+    "generalSpent": "Utracené",
+    "@generalSpent": {
+        "description": "(Amount) Spent"
+    },
     "generalSum": "Součet",
     "@generalSum": {
         "description": "(Mathematical) Sum"
@@ -221,7 +479,7 @@
     },
     "homeMainBillsInterval": " ({period, select, weekly{týdně} monthly{měsíčně} quarterly{čtvrtletně} halfyear{půlročně} yearly{ročně} other{neznámé}})",
     "@homeMainBillsInterval": {
-        "description": "bill interval type",
+        "description": "subscription interval type",
         "placeholders": {
             "period": {
                 "type": "String",
@@ -231,7 +489,7 @@
     },
     "homeMainBillsTitle": "Účty na příští týden",
     "@homeMainBillsTitle": {
-        "description": "Title: Bills for the next week"
+        "description": "Title: Subscriptions for the next week"
     },
     "homeMainBudgetInterval": " ({from} do {to}, {period})",
     "@homeMainBudgetInterval": {
@@ -291,7 +549,7 @@
     "@homeMainBudgetTitle": {
         "description": "Title: Budgets for current month"
     },
-    "homeMainChartAccountsTitle": "Souhrn účtu",
+    "homeMainChartAccountsTitle": "Souhrn účtů",
     "@homeMainChartAccountsTitle": {
         "description": "Chart Label: Account Summary"
     },
@@ -314,6 +572,10 @@
     "homeMainChartNetWorthTitle": "Čisté jmění",
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
+    },
+    "homeMainChartTagsTitle": "Souhrn štítků za aktuální měsíc",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
     },
     "homePiggyAdjustDialogTitle": "Uložit/utratit peníze",
     "@homePiggyAdjustDialogTitle": {
@@ -340,6 +602,10 @@
                 "example": "March 12, 2023"
             }
         }
+    },
+    "homeMainDialogSettingsTitle": "Přizpůsobit nástěnku",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
     },
     "homePiggyLinked": "Připojeno k {account}",
     "@homePiggyLinked": {
@@ -379,9 +645,41 @@
             }
         }
     },
+    "homePiggySavedMultiple": "Dosud ušetřeno:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "Cílová částka: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "Stav účtu",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Dostupné částky",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "K dispozici: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "V prasátkách: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
         "placeholders": {
             "amount": {
                 "type": "String",
@@ -415,11 +713,11 @@
     },
     "homeTransactionsDialogFilterBillsAll": "<Všechny účty>",
     "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
+        "description": "Don't filter for a specific subscription (default entry)"
     },
     "homeTransactionsDialogFilterBillUnset": "<Žádný účet není nastaven>",
     "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
+        "description": "Filter for unset subscription"
     },
     "homeTransactionsDialogFilterBudgetsAll": "<Všechny rozpočty>",
     "@homeTransactionsDialogFilterBudgetsAll": {
@@ -440,6 +738,10 @@
     "homeTransactionsDialogFilterCurrenciesAll": "<Všechny měny>",
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "Rozsah dat",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
     },
     "homeTransactionsDialogFilterFutureTransactions": "Zobrazit budoucí transakce",
     "@homeTransactionsDialogFilterFutureTransactions": {
@@ -467,6 +769,10 @@
             }
         }
     },
+    "homeTransactionsSettingsShowTags": "Zobrazit štítky v seznamu transakcí",
+    "@homeTransactionsSettingsShowTags": {
+        "description": "Setting label to show tags in transactioon list."
+    },
     "liabilityDirectionCredit": "Je mi dlužen tento dluh",
     "@liabilityDirectionCredit": {
         "description": "Firefly Translation String: liability_direction_credit"
@@ -487,7 +793,7 @@
     "@liabilityTypeMortgage": {
         "description": "Firefly Translation String: account_type_mortgage"
     },
-    "loginAbout": "Pro používání Waterfly III potřebujete Váš server s instancí Firefly III nebo doplněk Firefly III v rámci Home Assistant.\n\nZadejte celou adresu URL spolu s Vašim osobním přístupovým tokenem (Settings -> Profile -> OAuth -> Personal Access Token) níže.",
+    "loginAbout": "Pro používání Waterfly III potřebujete vlastní server s instancí Firefly III nebo doplněk Firefly III v rámci služby Home Assistant.\n\nZadejte celou adresu URL spolu s vaším osobním přístupovým tokenem (Možnosti -> Profil -> OAuth -> Osobní přístupový token) níže.",
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
@@ -511,13 +817,25 @@
     "@navigationAccounts": {
         "description": "Navigation Label: Accounts Page"
     },
+    "navigationBills": "Předplatné",
+    "@navigationBills": {
+        "description": "Navigation Label: Subscriptions"
+    },
+    "navigationCategories": "Kategorie",
+    "@navigationCategories": {
+        "description": "Navigation Label: Categories"
+    },
     "navigationMain": "Přehled",
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "Nastavení",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "Nastavení",
+    "@generalSettings": {
+        "description": "Label: Settings"
+    },
+    "no": "Ne",
+    "@no": {
+        "description": "The word no"
     },
     "numPercent": "{num}",
     "@numPercent": {
@@ -576,6 +894,14 @@
     "@settingsDialogThemeTitle": {
         "description": "Dialog title: Select theme"
     },
+    "settingsFAQ": "Často kladené dotazy",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
+    "settingsFAQHelp": "Otevře se v prohlížeči. Dostupné pouze v angličtině.",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
+    },
     "settingsLanguage": "Jazyk",
     "@settingsLanguage": {
         "description": "Currently selected language"
@@ -608,13 +934,21 @@
     "@settingsNLAppAddHelp": {
         "description": "Help text below adding the new app button."
     },
-    "settingsNLAppAddInfo": "Proveďte transakce při kterých dostáváte notifikaci v telefonu pro přidání aplikací do tohoto seznamu. Pokud se přesto aplikace nezobrazí, prosíme nahlašte to na app@vogt.pw.",
+    "settingsNLAppAddInfo": "Pro přidání aplikací do tohoto seznamu proveďte transakce, při kterých obdržíte oznámení v telefonu. Pokud se aplikace přesto nezobrazí, nahlaste to prosím na app@vogt.pw.",
     "@settingsNLAppAddInfo": {
         "description": "Help text when no more app is available to add."
     },
-    "settingsNLDescription": "Tato služba umožňuje načíst detaily transakce z příchozích push notifikací. Kromě toho si můžete vybrat výchozí účet, ke kterému by měla být transakce přiřazena - pokud není nastavena žádná hodnota, služba se snaží získat účet z textu notifikace.",
+    "settingsNLAutoAdd": "Vytvořit transakci bez interakce",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
+    "settingsNLDescription": "Tato služba umožňuje načíst podrobnosti o transakcích z příchozích oznámení. Kromě toho si můžete vybrat výchozí účet, ke kterému by měla být transakce přiřazena — pokud není nastavena žádná hodnota, služba se pokusí získat účet z textu oznámení.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "Ponechat pole poznámky prázdné",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
     "settingsNLPermissionGrant": "Klepnutím udělte oprávnění.",
     "@settingsNLPermissionGrant": {
@@ -634,7 +968,7 @@
     },
     "settingsNLPrefillTXTitle": "Doplnit název transakce pomocí nadpisu nofikace",
     "@settingsNLPrefillTXTitle": {
-        "description": "First line for setting to use pre-fill transaction title with notification title."
+        "description": "Setting pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "Kontroluji stav…",
     "@settingsNLServiceChecking": {
@@ -663,7 +997,7 @@
     "@settingsNLServiceStopped": {
         "description": "A background service is stopped."
     },
-    "settingsNotificationListener": "Služba pro čtení notifikací",
+    "settingsNotificationListener": "Služba pro čtení oznámení",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
     },
@@ -745,11 +1079,11 @@
     },
     "transactionDialogBillNoBill": "Žádný účet",
     "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
+        "description": "Button Label: no subscription to be used"
     },
     "transactionDialogBillTitle": "Odkaz na účet",
     "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
+        "description": "Dialog Title: Link Subscription to transaction"
     },
     "transactionDialogCurrencyTitle": "Vybrat měnu",
     "@transactionDialogCurrencyTitle": {
@@ -778,6 +1112,14 @@
     "transactionErrorInvalidBudget": "Neplatný rozpočet",
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Prosím, nejprve vyplňte účty.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Prosím, vyberte majetkový účet.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
     },
     "transactionErrorTitle": "Zadejte prosím název.",
     "@transactionErrorTitle": {
@@ -818,6 +1160,14 @@
     "transactionSplitChangeCurrency": "Změnit rozdělenou měnu",
     "@transactionSplitChangeCurrency": {
         "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Změnit cílový účet rozdělené transakce",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Změnit zdrojový účet rozdělené transakce",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
     },
     "transactionSplitChangeTarget": "Změnit cílový účet rozdělení",
     "@transactionSplitChangeTarget": {

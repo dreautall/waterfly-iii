@@ -203,18 +203,18 @@ class SSl extends S {
   String get billsUngrouped => 'Nezdruženo';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'Prikaži samo aktivne';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'Prikazuje samo aktivne naročnine.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'Prikaži samo pričakovano';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'Prikazuje samo tiste naročnine, ki so pričakovane (ali plačane) ta mesec.';
 
   @override
   String get categoryDeleteConfirm =>
@@ -511,11 +511,27 @@ class SSl extends S {
   }
 
   @override
-  String get homePiggySavedMultiple => 'Saved so far:';
+  String get homePiggySavedMultiple => 'Privarčevano do sedaj:';
 
   @override
   String homePiggyTarget(String amount) {
     return 'Ciljni znesek: $amount';
+  }
+
+  @override
+  String get homePiggyAccountStatus => 'Status računa';
+
+  @override
+  String get homePiggyAvailableAmounts => 'Razpoložljivi zneski';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return 'Razpoložljivo: $amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return 'V hranilnikih: $amount';
   }
 
   @override
@@ -628,7 +644,7 @@ class SSl extends S {
   String get navigationMain => 'Glavna nadzorna plošča';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => 'Nastavitve';
 
   @override
   String get no => 'Ne';
@@ -833,6 +849,12 @@ class SSl extends S {
 
   @override
   String get transactionDialogCurrencyTitle => 'Izberi valuto';
+
+  @override
+  String get transactionDialogPiggyNoPiggy => 'Brez hranilnika';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Poveži s hranilnikom';
 
   @override
   String get transactionDialogTagsAdd => 'Dodaj oznako';

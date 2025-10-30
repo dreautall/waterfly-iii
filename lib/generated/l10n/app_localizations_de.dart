@@ -109,7 +109,7 @@ class SDe extends S {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Voraussichtlich $dateString';
+    return 'Voraussichtliches $dateString';
   }
 
   @override
@@ -203,18 +203,18 @@ class SDe extends S {
   String get billsUngrouped => 'Keine Gruppe';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'Nur aktive anzeigen';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'Zeigt nur aktive Abonnements an.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'Nur erwartete anzeigen';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'Zeigt nur Abonnements an, die diesen Monat erwartet werden (oder bereits bezahlt worden sind).';
 
   @override
   String get categoryDeleteConfirm =>
@@ -233,7 +233,7 @@ class SDe extends S {
   String get categoryMonthNext => 'Nächster Monat';
 
   @override
-  String get categoryMonthPrev => 'Voriger Monat';
+  String get categoryMonthPrev => 'Letzter Monat';
 
   @override
   String get categorySumExcluded => 'ausgenommen';
@@ -518,6 +518,22 @@ class SDe extends S {
   }
 
   @override
+  String get homePiggyAccountStatus => 'Kontostatus';
+
+  @override
+  String get homePiggyAvailableAmounts => 'Verfügbarer Betrag';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return 'Verfügbar: $amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return 'In Sparschweinen: $amount';
+  }
+
+  @override
   String get homeTabLabelBalance => 'Kontostände';
 
   @override
@@ -625,7 +641,7 @@ class SDe extends S {
   String get navigationMain => 'Übersicht';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => 'Einstellungen';
 
   @override
   String get no => 'Nein';
@@ -832,6 +848,12 @@ class SDe extends S {
 
   @override
   String get transactionDialogCurrencyTitle => 'Währung auswählen';
+
+  @override
+  String get transactionDialogPiggyNoPiggy => 'Kein Sparschwein';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Mit Sparschwein verknüpfen';
 
   @override
   String get transactionDialogTagsAdd => 'Schlagwort hinzufügen';

@@ -1,1 +1,1 @@
-Uofficiel app for Firefly III, en personlig åben kildekode økonomimanager.
+Unofficial App for Firefly III, an open source personal finance manager.

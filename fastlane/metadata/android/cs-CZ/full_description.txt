@@ -1,4 +1,4 @@
-Waterfly III is an unofficial app for your own instance of Firefly III, a free and open source finance manager.
+Waterfly III je neoficiální aplikace pro Vaši vlastní instanci Firefly III, bezplatný open source software pro správu Vašich financí.
 
 Tato aplikace vyžaduje self-hosted instanci Firefly III na Vašem vlastním serveru, prosíme navštivte https://www.firefly-iii.org/ pro více informací o tomto software. Jedná se pouze o doplňkovou aplikaci, která nemůžeme fungovat samostatně!
 

@@ -142,12 +142,9 @@ class _HomeBalanceState extends State<HomeBalance>
                                 const TextSpan(text: "\n"),
                                 TextSpan(
                                   text:
-                                      account.attributes.currentBalanceDate !=
-                                              null
+                                      account.attributes.lastActivity != null
                                           ? DateFormat.yMd().add_Hms().format(
-                                            account
-                                                .attributes
-                                                .currentBalanceDate!
+                                            account.attributes.lastActivity!
                                                 .toLocal(),
                                           )
                                           : S.of(context).generalNever,

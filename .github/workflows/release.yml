@@ -64,28 +64,28 @@ jobs:
         working-directory: build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/
 
       # Upload generated apk to the artifacts.
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: app-arm64-v8a-release.apk
           path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: app-armeabi-v7a-release.apk
           path: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: app-x86_64-release.apk
           path: build/app/outputs/flutter-apk/app-x86_64-release.apk
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: app-release.aab
           path: build/app/outputs/bundle/release/app-release.aab
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: aab-debug-symbols.zip
           path: build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/aab-debug-symbols.zip
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: mapping.txt
           path: build/app/outputs/mapping/release/mapping.txt
@@ -96,15 +96,15 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
 
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: app-arm64-v8a-release.apk
           path: ./artifacts
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: app-armeabi-v7a-release.apk
           path: ./artifacts
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: app-x86_64-release.apk
           path: ./artifacts
@@ -121,15 +121,15 @@ jobs:
     needs: [build]
 
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: app-release.aab
           path: ./artifacts
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: aab-debug-symbols.zip
           path: ./artifacts
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: mapping.txt
           path: ./artifacts

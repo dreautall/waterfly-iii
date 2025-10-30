@@ -103,7 +103,7 @@
             }
         }
     },
-    "billsExpectedOn": "Voraussichtlich {date}",
+    "billsExpectedOn": "Voraussichtliches {date}",
     "@billsExpectedOn": {
         "description": "Describes what date the subscription is expected",
         "placeholders": {
@@ -249,7 +249,7 @@
     "@categoryMonthNext": {
         "description": "Button title to view overview for next month"
     },
-    "categoryMonthPrev": "Voriger Monat",
+    "categoryMonthPrev": "Letzter Monat",
     "@categoryMonthPrev": {
         "description": "Button title to view overview for previous month"
     },
@@ -659,6 +659,34 @@
             }
         }
     },
+    "homePiggyAccountStatus": "Kontostatus",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Verfügbarer Betrag",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "Verfügbar: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "In Sparschweinen: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
     "homeTabLabelBalance": "Kontostände",
     "@homeTabLabelBalance": {
         "description": "Tab Label: Balance Sheet page"
@@ -1060,6 +1088,14 @@
     "transactionDialogCurrencyTitle": "Währung auswählen",
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "Kein Sparschwein",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Mit Sparschwein verknüpfen",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
     },
     "transactionDialogTagsAdd": "Schlagwort hinzufügen",
     "@transactionDialogTagsAdd": {

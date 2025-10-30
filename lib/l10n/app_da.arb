@@ -51,6 +51,184 @@
             }
         }
     },
+    "billsAmountAndFrequency": "Abonnement matcher transaktioner mellem {minValue} og {maxvalue}. Gentages {frequency, select, weekly{ugentligt} monthly{månedligt} quarterly{kvartalsvis} halfyear{halvårligt} yearly{årligt} other{ukendt}}{skip, plural, =0{} other{, springer over {skip}}}.",
+    "@billsAmountAndFrequency": {
+        "description": "Subscription match for min and max amounts, and frequency",
+        "placeholders": {
+            "minValue": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "maxvalue": {
+                "type": "String",
+                "example": "$60.50"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsChangeLayoutTooltip": "Skift layout",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "Skift sorteringsrækkefølge",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsErrorLoading": "Fejl ved indlæsning af abonnementer.",
+    "@billsErrorLoading": {
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
+    },
+    "billsExactAmountAndFrequency": "Abonnement matcher transaktioner af {value}. Gentages {frequency, select, weekly{ugentligt} monthly{månedligt} quarterly{kvartalsvis} halfyear{halvårligt} yearly{årligt} other{ukendt}}{skip, plural, =0{} other{, springer over {skip}}}.",
+    "@billsExactAmountAndFrequency": {
+        "description": "Subscription match for exact amount and frequency",
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsExpectedOn": "Forventet {date}",
+    "@billsExpectedOn": {
+        "description": "Describes what date the subscription is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsFrequency": "{frequency, select, weekly{Ugentlig} monthly{Månedlig} quarterly{Kvartalsvis} halfyear{Halvårlig} yearly{Årlig} other{Ukendt}}",
+    "@billsFrequency": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsFrequencySkip": "{frequency, select, weekly{Ugentlig} monthly{Månedlig} quarterly{Kvartalsvis} halfyear{Halvårlig} yearly{Årlig} other{Ukendt}}{skip, plural, =0{} other{, springer over {skip}}}",
+    "@billsFrequencySkip": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsInactive": "Inaktiv",
+    "@billsInactive": {
+        "description": "Text: when the subscription is inactive"
+    },
+    "billsIsActive": "Abonnementet er aktivt",
+    "@billsIsActive": {
+        "description": "Text: the subscription is active"
+    },
+    "billsLayoutGroupSubtitle": "Abonnementer vises i deres tildelte grupper.",
+    "@billsLayoutGroupSubtitle": {
+        "description": "Subtitle text for group layout option"
+    },
+    "billsLayoutGroupTitle": "Gruppe",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListSubtitle": "Abonnementer vises på en liste sorteret efter bestemte kriterier.",
+    "@billsLayoutListSubtitle": {
+        "description": "Subtitle text for list layout option"
+    },
+    "billsLayoutListTitle": "Liste",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "Listen er i øjeblikket tom.",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "Næste forventede match",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for subscription"
+    },
+    "billsNotActive": "Abonnementet er inaktivt",
+    "@billsNotActive": {
+        "description": "Text: the subscription is inactive"
+    },
+    "billsNotExpected": "Ikke forventet i denne periode",
+    "@billsNotExpected": {
+        "description": "Describes that the subscription is not expected this period"
+    },
+    "billsNoTransactions": "Ingen transaktioner fundet.",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the subscription"
+    },
+    "billsPaidOn": "Betalt {date}",
+    "@billsPaidOn": {
+        "description": "Describes what date the subscription was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "Alfabetisk",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "Efter tidsperiode",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "Frekvens",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "Navn",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "Ugrupperede",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped subscriptions"
+    },
+    "billsSettingsShowOnlyActive": "Vis kun aktive",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Viser kun aktive abonnementer.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Vis kun forventede",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Viser kun de abonnementer, der forventes (eller er betalt) denne måned.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
     "categoryDeleteConfirm": "Er du sikker på, at du vil slette denne kategori? Transaktionerne vil ikke blive slettet, men vil ikke længere have en kategori.",
     "@categoryDeleteConfirm": {
         "description": "Confirmation text to delete category"
@@ -59,9 +237,13 @@
     "@categoryErrorLoading": {
         "description": "Generic error message when categories can't be loaded (shouldn't occur)"
     },
-    "categoryTitleAdd": "Tilføj kategori",
-    "@categoryTitleAdd": {
-        "description": "Title for Dialog: Add Category"
+    "categoryFormLabelIncludeInSum": "Medregn i månedlig sum",
+    "@categoryFormLabelIncludeInSum": {
+        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+    },
+    "categoryFormLabelName": "Kategorinavn",
+    "@categoryFormLabelName": {
+        "description": "Category Add/Edit Form: Label for name field"
     },
     "categoryMonthNext": "Næste måned",
     "@categoryMonthNext": {
@@ -71,6 +253,14 @@
     "@categoryMonthPrev": {
         "description": "Button title to view overview for previous month"
     },
+    "categorySumExcluded": "udelukket",
+    "@categorySumExcluded": {
+        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+    },
+    "categoryTitleAdd": "Tilføj kategori",
+    "@categoryTitleAdd": {
+        "description": "Title for Dialog: Add Category"
+    },
     "categoryTitleDelete": "Slet kategori",
     "@categoryTitleDelete": {
         "description": "Title for Dialog: Delete Category"
@@ -79,13 +269,13 @@
     "@categoryTitleEdit": {
         "description": "Title for Dialog: Edit Category"
     },
+    "catNone": "<ingen kategori>",
+    "@catNone": {
+        "description": "Placeholder when no category has been set."
+    },
     "catOther": "Andet",
     "@catOther": {
         "description": "Category description for summary category 'Other'"
-    },
-    "catNone": "<no category>",
-    "@catNone": {
-        "description": "Placeholder when no category has been set."
     },
     "errorAPIInvalidResponse": "Ugyldigt svar fra API: {message}",
     "@errorAPIInvalidResponse": {
@@ -185,9 +375,9 @@
     },
     "generalBill": "Regning",
     "@generalBill": {
-        "description": "Bill"
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
-    "generalBudget": "Budget",
+    "generalBudget": "Budgetter",
     "@generalBudget": {
         "description": "(Monetary) Budget"
     },
@@ -199,9 +389,33 @@
     "@generalCurrency": {
         "description": "(Money) Currency"
     },
+    "generalDateRangeCurrentMonth": "Nuværende måned",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Sidste 30 dage",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Nuværende år",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Sidste år",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Alle",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
     "generalDefault": "standard",
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "Destinationskonto",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
     },
     "generalDismiss": "Afvis",
     "@generalDismiss": {
@@ -243,6 +457,10 @@
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
     },
+    "generalSourceAccount": "Kildekonto",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
     "generalSpent": "Brugt",
     "@generalSpent": {
         "description": "(Amount) Spent"
@@ -261,7 +479,7 @@
     },
     "homeMainBillsInterval": "({period, select, weekly{ugentligt} monthly{månedligt} quarterly{kvartalsvis} halfyear{halvårligt} yearly{årligt} other{ukendt}})",
     "@homeMainBillsInterval": {
-        "description": "bill interval type",
+        "description": "subscription interval type",
         "placeholders": {
             "period": {
                 "type": "String",
@@ -271,7 +489,7 @@
     },
     "homeMainBillsTitle": "Regninger for næste uge",
     "@homeMainBillsTitle": {
-        "description": "Title: Bills for the next week"
+        "description": "Title: Subscriptions for the next week"
     },
     "homeMainBudgetInterval": "({from} til {to}, {period})",
     "@homeMainBudgetInterval": {
@@ -355,6 +573,10 @@
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
     },
+    "homeMainChartTagsTitle": "Tag-oversigt for nuværende måned",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
     "homePiggyAdjustDialogTitle": "Gem/brug penge",
     "@homePiggyAdjustDialogTitle": {
         "description": "Title of the dialog where money can be added/removed to a piggy bank."
@@ -380,6 +602,10 @@
                 "example": "March 12, 2023"
             }
         }
+    },
+    "homeMainDialogSettingsTitle": "Tilpas Dashboard",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
     },
     "homePiggyLinked": "Knyttet til {account}",
     "@homePiggyLinked": {
@@ -419,9 +645,41 @@
             }
         }
     },
+    "homePiggySavedMultiple": "Opsparet indtil videre:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "Målbeløb: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "Kontostatus",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Tilgængelige beløb",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "Tilgængelig: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "I sparegrise: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
         "placeholders": {
             "amount": {
                 "type": "String",
@@ -449,37 +707,41 @@
     "@homeTransactionsActionFilter": {
         "description": "Action Button Label: Filter list."
     },
-    "homeTransactionsDialogFilterAccountsAll": "<All Accounts>",
+    "homeTransactionsDialogFilterAccountsAll": "<Alle konti>",
     "@homeTransactionsDialogFilterAccountsAll": {
         "description": "Don't filter for a specific account (default entry)"
     },
     "homeTransactionsDialogFilterBillsAll": "<All Bills>",
     "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
+        "description": "Don't filter for a specific subscription (default entry)"
     },
     "homeTransactionsDialogFilterBillUnset": "<No Bill set>",
     "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
+        "description": "Filter for unset subscription"
     },
-    "homeTransactionsDialogFilterBudgetsAll": "<All Budgets>",
+    "homeTransactionsDialogFilterBudgetsAll": "<Alle budgetter>",
     "@homeTransactionsDialogFilterBudgetsAll": {
         "description": "Don't filter for a specific budget (default entry)"
     },
-    "homeTransactionsDialogFilterBudgetUnset": "<No Budget set>",
+    "homeTransactionsDialogFilterBudgetUnset": "<Intet budget tildelt>",
     "@homeTransactionsDialogFilterBudgetUnset": {
         "description": "Filter for unset budgets"
     },
-    "homeTransactionsDialogFilterCategoriesAll": "<All Categories>",
+    "homeTransactionsDialogFilterCategoriesAll": "<Alle kategorier>",
     "@homeTransactionsDialogFilterCategoriesAll": {
         "description": "Don't filter for a specific category (default entry)"
     },
-    "homeTransactionsDialogFilterCategoryUnset": "<No Category set>",
+    "homeTransactionsDialogFilterCategoryUnset": "<Ingen kategori tildelt>",
     "@homeTransactionsDialogFilterCategoryUnset": {
         "description": "Filter for unset categories"
     },
-    "homeTransactionsDialogFilterCurrenciesAll": "<All Currencies>",
+    "homeTransactionsDialogFilterCurrenciesAll": "<Alle valutaer>",
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "Datointerval",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
     },
     "homeTransactionsDialogFilterFutureTransactions": "Vis fremtidige transaktioner",
     "@homeTransactionsDialogFilterFutureTransactions": {
@@ -493,7 +755,7 @@
     "@homeTransactionsDialogFilterTitle": {
         "description": "Title of Filter Dialog"
     },
-    "homeTransactionsEmpty": "Ingen transaktion fundet.",
+    "homeTransactionsEmpty": "Ingen transaktioner fundet.",
     "@homeTransactionsEmpty": {
         "description": "Message when no transactions are found."
     },
@@ -506,6 +768,10 @@
                 "example": "2"
             }
         }
+    },
+    "homeTransactionsSettingsShowTags": "Vis tags på transaktionslisten",
+    "@homeTransactionsSettingsShowTags": {
+        "description": "Setting label to show tags in transactioon list."
     },
     "liabilityDirectionCredit": "Jeg er skyldt denne gæld",
     "@liabilityDirectionCredit": {
@@ -551,6 +817,10 @@
     "@navigationAccounts": {
         "description": "Navigation Label: Accounts Page"
     },
+    "navigationBills": "Abonnementer",
+    "@navigationBills": {
+        "description": "Navigation Label: Subscriptions"
+    },
     "navigationCategories": "Kategorier",
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
@@ -559,9 +829,13 @@
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "Indstillinger",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "Indstillinger",
+    "@generalSettings": {
+        "description": "Label: Settings"
+    },
+    "no": "Nej",
+    "@no": {
+        "description": "The word no"
     },
     "numPercent": "{num}",
     "@numPercent": {
@@ -620,6 +894,14 @@
     "@settingsDialogThemeTitle": {
         "description": "Dialog title: Select theme"
     },
+    "settingsFAQ": "Ofte stillede spørgsmål",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
+    "settingsFAQHelp": "Åbnes i browseren. Kun tilgængelig på engelsk.",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
+    },
     "settingsLanguage": "Sprog",
     "@settingsLanguage": {
         "description": "Currently selected language"
@@ -640,7 +922,7 @@
     "@settingsNLAppAccount": {
         "description": "Default account which will be used for the transaction."
     },
-    "settingsNLAppAccountDynamic": "<Dynamic>",
+    "settingsNLAppAccountDynamic": "<Dynamisk>",
     "@settingsNLAppAccountDynamic": {
         "description": "Account will be selected dynamically by the content of the notification."
     },
@@ -656,9 +938,17 @@
     "@settingsNLAppAddInfo": {
         "description": "Help text when no more app is available to add."
     },
+    "settingsNLAutoAdd": "Opret transaktion uden interaktion",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
     "settingsNLDescription": "Denne tjeneste giver dig mulighed for at hente transaktionsoplysninger fra indgående push-notifikationer. Derudover kan du vælge en standardkonto, som transaktionen skal tildeles til - hvis ingen værdi er angivet, vil den prøve at udtrække en konto fra notifikationen.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "Lad notatfeltet være tomt",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
     "settingsNLPermissionGrant": "Tryk for at give tilladelse.",
     "@settingsNLPermissionGrant": {
@@ -678,7 +968,7 @@
     },
     "settingsNLPrefillTXTitle": "Forudfyld transaktionstitel med nofikationstitel",
     "@settingsNLPrefillTXTitle": {
-        "description": "First line for setting to use pre-fill transaction title with notification title."
+        "description": "Setting pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "Tjekker status…",
     "@settingsNLServiceChecking": {
@@ -789,15 +1079,23 @@
     },
     "transactionDialogBillNoBill": "Ingen regning",
     "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
+        "description": "Button Label: no subscription to be used"
     },
     "transactionDialogBillTitle": "Link til regning",
     "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
+        "description": "Dialog Title: Link Subscription to transaction"
     },
     "transactionDialogCurrencyTitle": "Vælg valuta",
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "Ingen opsparingsmål",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Knyt til opsparingsmål",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
     },
     "transactionDialogTagsAdd": "Tilføj etiket",
     "@transactionDialogTagsAdd": {
@@ -822,6 +1120,14 @@
     "transactionErrorInvalidBudget": "Ugyldigt Budget",
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Udfyld venligst konti først.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Vælg venligst en aktivkonto.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
     },
     "transactionErrorTitle": "Angiv venligst en titel.",
     "@transactionErrorTitle": {
@@ -862,6 +1168,14 @@
     "transactionSplitChangeCurrency": "Ændr delt valuta",
     "@transactionSplitChangeCurrency": {
         "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Skift destinationkonto for opdeling",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Skift kildekonto for opdeling",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
     },
     "transactionSplitChangeTarget": "Ændr delt målkonto",
     "@transactionSplitChangeTarget": {

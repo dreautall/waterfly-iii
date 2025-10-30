@@ -203,18 +203,18 @@ class SIt extends S {
   String get billsUngrouped => 'Non raggruppate';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'Mostra solo attivi';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'Mostra solo gli abbonamenti attivi.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'Mostra solo previsti';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'Mostra solo gli abbonamenti previsti (o pagati) questo mese.';
 
   @override
   String get categoryDeleteConfirm =>
@@ -322,7 +322,7 @@ class SIt extends S {
   String get generalBill => 'Bolletta';
 
   @override
-  String get generalBudget => 'Bilancio';
+  String get generalBudget => 'Budget';
 
   @override
   String get generalCategory => 'Categoria';
@@ -442,7 +442,7 @@ class SIt extends S {
   }
 
   @override
-  String get homeMainBudgetTitle => 'Bilanci per il mese corrente';
+  String get homeMainBudgetTitle => 'Budget per il mese corrente';
 
   @override
   String get homeMainChartAccountsTitle => 'Riepilogo conti';
@@ -520,6 +520,22 @@ class SIt extends S {
   }
 
   @override
+  String get homePiggyAccountStatus => 'Stato conto';
+
+  @override
+  String get homePiggyAvailableAmounts => 'Importi disponibili';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return 'Disponibile: $amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return 'Nei salvadanai: $amount';
+  }
+
+  @override
   String get homeTabLabelBalance => 'Bilancio';
 
   @override
@@ -544,10 +560,10 @@ class SIt extends S {
   String get homeTransactionsDialogFilterBillUnset => '<Nessuna bolletta>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetsAll => '<Tutti i bilanci>';
+  String get homeTransactionsDialogFilterBudgetsAll => '<Tutti i budget>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetUnset => '<Nessun bilancio>';
+  String get homeTransactionsDialogFilterBudgetUnset => '<Nessun budget>';
 
   @override
   String get homeTransactionsDialogFilterCategoriesAll =>
@@ -628,7 +644,7 @@ class SIt extends S {
   String get navigationMain => 'Dashboard principale';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => 'Impostazioni';
 
   @override
   String get no => 'No';
@@ -834,6 +850,12 @@ class SIt extends S {
   String get transactionDialogCurrencyTitle => 'Seleziona la valuta';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'Nessun salvadanaio';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Collega al salvadanaio';
+
+  @override
   String get transactionDialogTagsAdd => 'Aggiungi Etichetta';
 
   @override
@@ -849,7 +871,7 @@ class SIt extends S {
   String get transactionErrorInvalidAccount => 'Conto non valido';
 
   @override
-  String get transactionErrorInvalidBudget => 'Bilancio non valido';
+  String get transactionErrorInvalidBudget => 'Budget non valido';
 
   @override
   String get transactionErrorNoAccounts =>

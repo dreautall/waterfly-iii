@@ -193,10 +193,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
     final LocalAuthentication auth = LocalAuthentication();
     return auth.authenticate(
       localizedReason: "Waterfly III",
-      options: const AuthenticationOptions(
-        useErrorDialogs: false,
-        stickyAuth: true,
-      ),
+      persistAcrossBackgrounding: true,
     );
   }
 

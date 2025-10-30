@@ -2,7 +2,7 @@ name: waterflyiii
 description: Waterfly III, a mobile client for Firefly III
 publish_to: 'none'
 
-version: 1.1.6
+version: 1.1.7
 
 environment:
   sdk: '>=3.7.0 <4.0.0'
@@ -19,7 +19,7 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   provider: ^6.1.2
   shared_preferences: ^2.3.4
-  chopper: ^8.0.2
+  chopper: ^8.4.0
   json_annotation: ^4.8.0
   flutter_svg: ^2.2.0
   url_launcher: ^6.3.2
@@ -41,7 +41,7 @@ dependencies:
   package_info_plus: ^9.0.0
   logging: ^1.1.1
   flutter_email_sender: ^8.0.0
-  local_auth: ^2.1.8
+  local_auth: ^3.0.0
   dynamic_color: ^1.7.0
   material_color_utilities: ^0.11.1
   version: ^3.0.2
@@ -50,7 +50,7 @@ dependencies:
   syncfusion_flutter_charts: ^31.1.17
   image_picker: ^1.0.7
   timezone: ^0.10.0
-  flutter_timezone: ^4.1.1
+  flutter_timezone: ^5.0.0
   flutter_sharing_intent: ^1.1.1
   http: ^1.2.1
   open_file_plus:
@@ -68,6 +68,9 @@ dev_dependencies:
   swagger_dart_code_generator: ^3.0.1
   flutter_native_splash: ^2.4.6
   translations_cleaner: ^0.0.5
+  flutter_test:
+    sdk: flutter
+  test: ^1.16.0
 
 flutter:
   uses-material-design: true

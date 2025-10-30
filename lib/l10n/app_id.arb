@@ -51,6 +51,174 @@
             }
         }
     },
+    "billsChangeLayoutTooltip": "Ubah tata letak",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "Ubah urutan penyortiran",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsErrorLoading": "Terjadi kesalahan saat memuat langganan.",
+    "@billsErrorLoading": {
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
+    },
+    "billsExpectedOn": "Diharapkan {date}",
+    "@billsExpectedOn": {
+        "description": "Describes what date the subscription is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsFrequency": "{frequency, select, weekly{Mingguan} monthly{Bulanan} quarterly{Triwulanan} halfyear{Setengah tahunan} yearly{Tahunan} other{Tidak diketahui}}",
+    "@billsFrequency": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsInactive": "Tidak aktif",
+    "@billsInactive": {
+        "description": "Text: when the subscription is inactive"
+    },
+    "billsIsActive": "Langganan aktif",
+    "@billsIsActive": {
+        "description": "Text: the subscription is active"
+    },
+    "billsLayoutGroupSubtitle": "Langganan ditampilkan dalam grup yang telah ditetapkan.",
+    "@billsLayoutGroupSubtitle": {
+        "description": "Subtitle text for group layout option"
+    },
+    "billsLayoutGroupTitle": "Grup",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListSubtitle": "Langganan ditampilkan dalam daftar yang diurutkan berdasarkan kriteria tertentu.",
+    "@billsLayoutListSubtitle": {
+        "description": "Subtitle text for list layout option"
+    },
+    "billsLayoutListTitle": "Daftar",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "Daftar saat ini kosong.",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "Kecocokan yang diharapkan berikutnya",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for subscription"
+    },
+    "billsNotActive": "Langganan tidak aktif",
+    "@billsNotActive": {
+        "description": "Text: the subscription is inactive"
+    },
+    "billsNotExpected": "Tidak diharapkan dalam periode ini",
+    "@billsNotExpected": {
+        "description": "Describes that the subscription is not expected this period"
+    },
+    "billsNoTransactions": "Tidak ada transaksi ditemukan.",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the subscription"
+    },
+    "billsPaidOn": "Dibayar {date}",
+    "@billsPaidOn": {
+        "description": "Describes what date the subscription was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "Menurut Abjad",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "Berdasarkan periode waktu",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "Frekuensi",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "Nama",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "Tidak Terkelompok",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped subscriptions"
+    },
+    "billsSettingsShowOnlyActive": "Tampilkan yang aktif saja",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Menampilkan langganan yang aktif saja.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Tampilkan yang diharapkan saja",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Menampilkan langganan yang diharapkan (atau dibayar) bulan ini saja.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
+    "categoryDeleteConfirm": "Apakah Anda yakin ingin menghapus kategori ini? Transaksi tidak akan dihapus, tetapi tidak akan memiliki kategori lagi.",
+    "@categoryDeleteConfirm": {
+        "description": "Confirmation text to delete category"
+    },
+    "categoryErrorLoading": "Gagal memuat kategori.",
+    "@categoryErrorLoading": {
+        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+    },
+    "categoryFormLabelIncludeInSum": "Sertakan dalam jumlah bulanan",
+    "@categoryFormLabelIncludeInSum": {
+        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+    },
+    "categoryFormLabelName": "Nama Kategori",
+    "@categoryFormLabelName": {
+        "description": "Category Add/Edit Form: Label for name field"
+    },
+    "categoryMonthNext": "Bulan Berikutnya",
+    "@categoryMonthNext": {
+        "description": "Button title to view overview for next month"
+    },
+    "categoryMonthPrev": "Bulan Sebelumnya",
+    "@categoryMonthPrev": {
+        "description": "Button title to view overview for previous month"
+    },
+    "categorySumExcluded": "dikecualikan",
+    "@categorySumExcluded": {
+        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+    },
+    "categoryTitleAdd": "Tambah Kategori",
+    "@categoryTitleAdd": {
+        "description": "Title for Dialog: Add Category"
+    },
+    "categoryTitleDelete": "Hapus Kategori",
+    "@categoryTitleDelete": {
+        "description": "Title for Dialog: Delete Category"
+    },
+    "categoryTitleEdit": "Edit Kategori",
+    "@categoryTitleEdit": {
+        "description": "Title for Dialog: Edit Category"
+    },
+    "catNone": "<tanpa kategori>",
+    "@catNone": {
+        "description": "Placeholder when no category has been set."
+    },
     "catOther": "Lainnya",
     "@catOther": {
         "description": "Category description for summary category 'Other'"
@@ -153,7 +321,7 @@
     },
     "generalBill": "Tagihan",
     "@generalBill": {
-        "description": "Bill"
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
     "generalBudget": "Anggaran",
     "@generalBudget": {
@@ -167,13 +335,41 @@
     "@generalCurrency": {
         "description": "(Money) Currency"
     },
+    "generalDateRangeCurrentMonth": "Bulan Ini",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "30 hari terakhir",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Tahun Ini",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Tahun lalu",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Semua",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
     "generalDefault": "bawaan",
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
     },
+    "generalDestinationAccount": "Akun Tujuan",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
+    },
     "generalDismiss": "Tutup",
     "@generalDismiss": {
         "description": "Dismiss window/dialog without action"
+    },
+    "generalEarned": "Didapatkan",
+    "@generalEarned": {
+        "description": "(Amount) Earned"
     },
     "generalError": "Kesalahan",
     "@generalError": {
@@ -207,17 +403,35 @@
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
     },
+    "generalSourceAccount": "Akun Sumber",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
+    "generalSpent": "Dihabiskan",
+    "@generalSpent": {
+        "description": "(Amount) Spent"
+    },
     "generalSum": "Jumlah",
     "@generalSum": {
         "description": "(Mathematical) Sum"
     },
-    "generalTarget": "Target",
-    "@generalTarget": {
-        "description": "Target value (i.e. a sum to save)"
-    },
     "generalUnknown": "Tidak Diketahui",
     "@generalUnknown": {
         "description": "Something is unknown."
+    },
+    "homeMainBillsInterval": " ({period, select, weekly{mingguan} monthly{bulanan} quarterly{triwulanan} halfyear{setengah tahunan} yearly{tahunan} other{tidak diketahui}})",
+    "@homeMainBillsInterval": {
+        "description": "subscription interval type",
+        "placeholders": {
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBillsTitle": "Langganan untuk minggu depan",
+    "@homeMainBillsTitle": {
+        "description": "Title: Subscriptions for the next week"
     },
     "homeMainBudgetInterval": " ({from} ke {to}, {period})",
     "@homeMainBudgetInterval": {
@@ -236,6 +450,22 @@
             "period": {
                 "type": "String",
                 "example": "weekly"
+            }
+        }
+    },
+    "homeMainBudgetIntervalSingle": " ({from} sampai {to})",
+    "@homeMainBudgetIntervalSingle": {
+        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
             }
         }
     },
@@ -285,6 +515,10 @@
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
     },
+    "homeMainChartTagsTitle": "Ringkasan Tag untuk bulan ini",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
     "homePiggyAdjustDialogTitle": "Simpan/Belanjakan Uang",
     "@homePiggyAdjustDialogTitle": {
         "description": "Title of the dialog where money can be added/removed to a piggy bank."
@@ -310,6 +544,10 @@
                 "example": "March 12, 2023"
             }
         }
+    },
+    "homeMainDialogSettingsTitle": "Sesuaikan Dasbor",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
     },
     "homePiggyLinked": "Tautkan ke {account}",
     "@homePiggyLinked": {
@@ -349,9 +587,41 @@
             }
         }
     },
+    "homePiggySavedMultiple": "Tersimpan sejauh ini:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "Jumlah target: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "Status Akun",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Jumlah Tersedia",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "Tersedia: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "Di celengan: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
         "placeholders": {
             "amount": {
                 "type": "String",
@@ -385,11 +655,11 @@
     },
     "homeTransactionsDialogFilterBillsAll": "<Semua Tagihan>",
     "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
+        "description": "Don't filter for a specific subscription (default entry)"
     },
     "homeTransactionsDialogFilterBillUnset": "<Tidak ada Tagihan tersetel>",
     "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
+        "description": "Filter for unset subscription"
     },
     "homeTransactionsDialogFilterBudgetsAll": "<Semua Anggaran>",
     "@homeTransactionsDialogFilterBudgetsAll": {
@@ -411,6 +681,14 @@
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
     },
+    "homeTransactionsDialogFilterDateRange": "Rentang Tanggal",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
+    },
+    "homeTransactionsDialogFilterFutureTransactions": "Tampilkan transaksi mendatang",
+    "@homeTransactionsDialogFilterFutureTransactions": {
+        "description": "Setting to show future transactions"
+    },
     "homeTransactionsDialogFilterSearch": "Istilah Pencarian",
     "@homeTransactionsDialogFilterSearch": {
         "description": "Search term for filter"
@@ -419,7 +697,7 @@
     "@homeTransactionsDialogFilterTitle": {
         "description": "Title of Filter Dialog"
     },
-    "homeTransactionsEmpty": "Transaksi tidak ditemukan.",
+    "homeTransactionsEmpty": "Tidak ada transaksi ditemukan.",
     "@homeTransactionsEmpty": {
         "description": "Message when no transactions are found."
     },
@@ -432,6 +710,10 @@
                 "example": "2"
             }
         }
+    },
+    "homeTransactionsSettingsShowTags": "Tampilkan tag di daftar transaksi",
+    "@homeTransactionsSettingsShowTags": {
+        "description": "Setting label to show tags in transactioon list."
     },
     "liabilityDirectionCredit": "Saya pemberi hutang ini",
     "@liabilityDirectionCredit": {
@@ -477,26 +759,25 @@
     "@navigationAccounts": {
         "description": "Navigation Label: Accounts Page"
     },
+    "navigationBills": "Langganan",
+    "@navigationBills": {
+        "description": "Navigation Label: Subscriptions"
+    },
+    "navigationCategories": "Kategori",
+    "@navigationCategories": {
+        "description": "Navigation Label: Categories"
+    },
     "navigationMain": "Dasbor Utama",
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "Pengaturan",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "Pengaturan",
+    "@generalSettings": {
+        "description": "Label: Settings"
     },
-    "numPercent": "{num}",
-    "@numPercent": {
-        "description": "Number formatted as percentage",
-        "placeholders": {
-            "num": {
-                "type": "double",
-                "format": "decimalPercentPattern",
-                "optionalParameters": {
-                    "decimalDigits": 0
-                }
-            }
-        }
+    "no": "Tidak",
+    "@no": {
+        "description": "The word no"
     },
     "numPercentOf": "{perc} dari {of}",
     "@numPercentOf": {
@@ -542,6 +823,10 @@
     "@settingsDialogThemeTitle": {
         "description": "Dialog title: Select theme"
     },
+    "settingsFAQHelp": "Dibuka di Peramban. Hanya tersedia dalam Bahasa Inggris.",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
+    },
     "settingsLanguage": "Bahasa",
     "@settingsLanguage": {
         "description": "Currently selected language"
@@ -578,9 +863,17 @@
     "@settingsNLAppAddInfo": {
         "description": "Help text when no more app is available to add."
     },
+    "settingsNLAutoAdd": "Buat transaksi tanpa interaksi",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
     "settingsNLDescription": "Layanan ini memungkinkan anda untuk mengambil detail transaksi dari notifikasi push yang masuk. Selain itu, anda dapat memilih akun bawaan dimana transaksi harus ditugaskan kepada - jika tidak ada nilai yang ditetapkan, akan mencoba untuk mengekstrak akun dari notifikasi.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "Biarkan kolom catatan kosong",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
     "settingsNLPermissionGrant": "Ketuk untuk memberikan izin.",
     "@settingsNLPermissionGrant": {
@@ -597,6 +890,10 @@
     "settingsNLPermissionRemoveHelp": "Untuk menonaktifkan layanan ini, klik pada aplikasi dan hapus izin di layar berikutnya.",
     "@settingsNLPermissionRemoveHelp": {
         "description": "Dialog text giving hint how to remove the permission."
+    },
+    "settingsNLPrefillTXTitle": "Isi otomatis judul transaksi dengan judul notifikasi",
+    "@settingsNLPrefillTXTitle": {
+        "description": "Setting pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "Memeriksa status…",
     "@settingsNLServiceChecking": {
@@ -646,6 +943,14 @@
                 "example": "ThemeMode.dark"
             }
         }
+    },
+    "settingsUseServerTimezone": "Gunakan zona waktu server",
+    "@settingsUseServerTimezone": {
+        "description": "Setting label to use server timezone."
+    },
+    "settingsUseServerTimezoneHelp": "Tampilkan semua waktu dalam zona waktu server. Ini meniru perilaku antarmuka web.",
+    "@settingsUseServerTimezoneHelp": {
+        "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
     },
     "settingsVersion": "Versi Aplikasi",
     "@settingsVersion": {
@@ -699,11 +1004,11 @@
     },
     "transactionDialogBillNoBill": "Tidak ada tagihan",
     "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
+        "description": "Button Label: no subscription to be used"
     },
     "transactionDialogBillTitle": "Tautkan ke Tagihan",
     "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
+        "description": "Dialog Title: Link Subscription to transaction"
     },
     "transactionDialogCurrencyTitle": "Pilih mata uang",
     "@transactionDialogCurrencyTitle": {
@@ -732,6 +1037,14 @@
     "transactionErrorInvalidBudget": "Anggaran tidak Valid",
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Harap isi akun terlebih dahulu.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Harap pilih akun aset.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
     },
     "transactionErrorTitle": "Harap berikan judul.",
     "@transactionErrorTitle": {
@@ -773,6 +1086,14 @@
     "@transactionSplitChangeCurrency": {
         "description": "Hint Text: Change currency for a single split"
     },
+    "transactionSplitChangeDestinationAccount": "Ubah Akun Tujuan Pembagian",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Ubah Akun Sumber Pembagian",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
+    },
     "transactionSplitChangeTarget": "Ubah Akun Target Transaksi Terpisah",
     "@transactionSplitChangeTarget": {
         "description": "Hint Text: Change target account for single split"
@@ -796,10 +1117,6 @@
     "transactionTypeDeposit": "Setoran",
     "@transactionTypeDeposit": {
         "description": "Deposit transaction type"
-    },
-    "transactionTypeTransfer": "Transfer",
-    "@transactionTypeTransfer": {
-        "description": "Transfer transaction type"
     },
     "transactionTypeWithdrawal": "Penarikan",
     "@transactionTypeWithdrawal": {

@@ -200,18 +200,18 @@ class SFa extends S {
   String get billsUngrouped => 'گروه‌بندی نشده';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'فقط فعال‌ها را نمایش بده';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'فقط اشتراک‌های فعال را نمایش می‌دهد.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'فقط مورد انتظارها را نمایش بده';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'فقط آن اشتراک‌هایی را نمایش می‌دهد که در این ماه مورد انتظار (یا پرداخت شده) هستند.';
 
   @override
   String get categoryDeleteConfirm =>
@@ -328,25 +328,25 @@ class SFa extends S {
   String get generalCurrency => 'واحدپول';
 
   @override
-  String get generalDateRangeCurrentMonth => 'Current Month';
+  String get generalDateRangeCurrentMonth => 'ماه جاری';
 
   @override
-  String get generalDateRangeLast30Days => 'Last 30 days';
+  String get generalDateRangeLast30Days => '۳۰ روز گذشته';
 
   @override
-  String get generalDateRangeCurrentYear => 'Current Year';
+  String get generalDateRangeCurrentYear => 'سال جاری';
 
   @override
-  String get generalDateRangeLastYear => 'Last year';
+  String get generalDateRangeLastYear => 'سال گذشته';
 
   @override
-  String get generalDateRangeAll => 'All';
+  String get generalDateRangeAll => 'همه';
 
   @override
   String get generalDefault => 'پیش فرض';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'حساب مقصد';
 
   @override
   String get generalDismiss => 'نادیده گرفتن';
@@ -379,7 +379,7 @@ class SFa extends S {
   String get generalReset => 'تنظیم مجدد';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'حساب مبدأ';
 
   @override
   String get generalSpent => 'خرج شده';
@@ -460,7 +460,7 @@ class SFa extends S {
   String get homeMainChartNetWorthTitle => 'ارزش خالص\n';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle => 'خلاصه برچسب‌ها برای ماه جاری';
 
   @override
   String get homePiggyAdjustDialogTitle => 'پس انداز/خرج پول\n';
@@ -482,7 +482,7 @@ class SFa extends S {
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'سفارشی‌سازی داشبورد';
 
   @override
   String homePiggyLinked(String account) {
@@ -506,11 +506,27 @@ class SFa extends S {
   }
 
   @override
-  String get homePiggySavedMultiple => 'Saved so far:';
+  String get homePiggySavedMultiple => 'تاکنون ذخیره شده:';
 
   @override
   String homePiggyTarget(String amount) {
     return 'مقدار هدف: $amount\n';
+  }
+
+  @override
+  String get homePiggyAccountStatus => 'وضعیت حساب';
+
+  @override
+  String get homePiggyAvailableAmounts => 'مبالغ موجود';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return 'موجود: $amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return 'در قلک‌ها: $amount';
   }
 
   @override
@@ -554,7 +570,7 @@ class SFa extends S {
   String get homeTransactionsDialogFilterCurrenciesAll => '<همه ارزها>\n';
 
   @override
-  String get homeTransactionsDialogFilterDateRange => 'Date Range';
+  String get homeTransactionsDialogFilterDateRange => 'بازه زمانی';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -576,7 +592,7 @@ class SFa extends S {
 
   @override
   String get homeTransactionsSettingsShowTags =>
-      'Show tags in transaction list';
+      'نمایش برچسب‌ها در لیست تراکنش‌ها';
 
   @override
   String get liabilityDirectionCredit => 'این بدهی متعلق به من است';
@@ -622,7 +638,7 @@ class SFa extends S {
   String get navigationMain => 'داشبورد اصلی\n';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => 'تنظیمات';
 
   @override
   String get no => 'نه';
@@ -675,10 +691,11 @@ class SFa extends S {
   String get settingsDialogThemeTitle => 'انتخاب تم';
 
   @override
-  String get settingsFAQ => 'FAQ';
+  String get settingsFAQ => 'سوالات متداول';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'در مرورگر باز می‌شود. فقط به زبان انگلیسی موجود است.';
 
   @override
   String get settingsLanguage => 'زبان';
@@ -712,14 +729,14 @@ class SFa extends S {
       'برخی از تراکنش‌ها را در جایی که اعلان‌های تلفن دریافت می‌کنید انجام دهید تا برنامه‌ها را به این فهرست اضافه کنید. اگر برنامه همچنان نمایش داده نشد، لطفاً آن را به app@vogt.pw گزارش دهید.\n';
 
   @override
-  String get settingsNLAutoAdd => 'Create transaction without interaction';
+  String get settingsNLAutoAdd => 'ایجاد تراکنش بدون تعامل';
 
   @override
   String get settingsNLDescription =>
       'این سرویس به شما امکان می‌دهد جزئیات تراکنش را از اعلان‌های فشار دریافتی دریافت کنید. علاوه بر این، می‌توانید یک حساب پیش فرض را انتخاب کنید که تراکنش باید به آن اختصاص یابد - اگر مقداری تنظیم نشده باشد، سعی می‌کند یک حساب از اعلان استخراج کند.\n';
 
   @override
-  String get settingsNLEmptyNote => 'Keep note field empty';
+  String get settingsNLEmptyNote => 'فیلد یادداشت را خالی بگذار';
 
   @override
   String get settingsNLPermissionGrant => 'برای اعطای مجوز ضربه بزنید.\n';
@@ -827,6 +844,12 @@ class SFa extends S {
   String get transactionDialogCurrencyTitle => 'واحد پول را انتخاب کنید\n';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'بدون قلک';
+
+  @override
+  String get transactionDialogPiggyTitle => 'اتصال به قلک';
+
+  @override
   String get transactionDialogTagsAdd => 'افزودن برچسب';
 
   @override
@@ -845,11 +868,11 @@ class SFa extends S {
   String get transactionErrorInvalidBudget => 'بودجه نامعتبر\n';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts => 'لطفاً ابتدا حساب‌ها را وارد کنید.';
 
   @override
   String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+      'لطفاً یک حساب دارایی انتخاب کنید.';
 
   @override
   String get transactionErrorTitle => 'لطفا عنوان بفرمایید\n';
@@ -883,11 +906,10 @@ class SFa extends S {
 
   @override
   String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+      'تغییر حساب مقصد تفکیک';
 
   @override
-  String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+  String get transactionSplitChangeSourceAccount => 'تغییر حساب مبدأ تفکیک';
 
   @override
   String get transactionSplitChangeTarget => 'تغییر حساب هدف تقسیم شده\n';

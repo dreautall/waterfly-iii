@@ -213,6 +213,22 @@
     "@billsUngrouped": {
         "description": "Title for ungrouped subscriptions"
     },
+    "billsSettingsShowOnlyActive": "Mostra solo attivi",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Mostra solo gli abbonamenti attivi.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Mostra solo previsti",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Mostra solo gli abbonamenti previsti (o pagati) questo mese.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
     "categoryDeleteConfirm": "Sei sicuro di voler eliminare questa categoria? Le transazioni non saranno eliminate, ma non avranno più una categoria.",
     "@categoryDeleteConfirm": {
         "description": "Confirmation text to delete category"
@@ -361,7 +377,7 @@
     "@generalBill": {
         "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
-    "generalBudget": "Bilancio",
+    "generalBudget": "Budget",
     "@generalBudget": {
         "description": "(Monetary) Budget"
     },
@@ -529,7 +545,7 @@
             }
         }
     },
-    "homeMainBudgetTitle": "Bilanci per il mese corrente",
+    "homeMainBudgetTitle": "Budget per il mese corrente",
     "@homeMainBudgetTitle": {
         "description": "Title: Budgets for current month"
     },
@@ -643,6 +659,34 @@
             }
         }
     },
+    "homePiggyAccountStatus": "Stato conto",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Importi disponibili",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "Disponibile: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "Nei salvadanai: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
     "homeTabLabelBalance": "Bilancio",
     "@homeTabLabelBalance": {
         "description": "Tab Label: Balance Sheet page"
@@ -675,11 +719,11 @@
     "@homeTransactionsDialogFilterBillUnset": {
         "description": "Filter for unset subscription"
     },
-    "homeTransactionsDialogFilterBudgetsAll": "<Tutti i bilanci>",
+    "homeTransactionsDialogFilterBudgetsAll": "<Tutti i budget>",
     "@homeTransactionsDialogFilterBudgetsAll": {
         "description": "Don't filter for a specific budget (default entry)"
     },
-    "homeTransactionsDialogFilterBudgetUnset": "<Nessun bilancio>",
+    "homeTransactionsDialogFilterBudgetUnset": "<Nessun budget>",
     "@homeTransactionsDialogFilterBudgetUnset": {
         "description": "Filter for unset budgets"
     },
@@ -785,9 +829,9 @@
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "Impostazioni",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "Impostazioni",
+    "@generalSettings": {
+        "description": "Label: Settings"
     },
     "no": "No",
     "@no": {
@@ -1045,6 +1089,14 @@
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
     },
+    "transactionDialogPiggyNoPiggy": "Nessun salvadanaio",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Collega al salvadanaio",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
+    },
     "transactionDialogTagsAdd": "Aggiungi Etichetta",
     "@transactionDialogTagsAdd": {
         "description": "Button Label: Add Tag"
@@ -1065,7 +1117,7 @@
     "@transactionErrorInvalidAccount": {
         "description": "Transaction Save Error: Invalid account"
     },
-    "transactionErrorInvalidBudget": "Bilancio non valido",
+    "transactionErrorInvalidBudget": "Budget non valido",
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
     },

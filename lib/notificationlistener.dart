@@ -49,7 +49,7 @@ class NotificationListenerStatus {
 }
 
 final RegExp rFindMoney = RegExp(
-  r'(?:^|\s)(?<preCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})\s*(?<amount>\d[.,\s\d]+(?:[.,]\d+)?)\s*(?<postCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})(?:$|\s)',
+  r'(?:^|\s)(?<preCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})\s*(?<amount>\d[.,\s\d]+(?:[.,]\d+)?)\s*(?<postCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})(?:$|\s|\.|,)',
 );
 
 Future<NotificationListenerStatus> nlStatus() async {
@@ -280,113 +280,67 @@ Future<(CurrencyRead?, double)> parseNotificationText(
   final Iterable<RegExpMatch> matches = rFindMoney.allMatches(notificationBody);
 
   if (matches.isNotEmpty) {
-    for (RegExpMatch validMatch in matches) {
-      bool matchesCurrencySymbol = false;
+    final List<CurrencyRead> currencies = (await api.v1CurrenciesGet()).body!.data;
+    currencies.add(localCurrency);
 
-      if ((validMatch.namedGroup("postCurrency")?.isNotEmpty ?? false) ||
-          (validMatch.namedGroup("preCurrency")?.isNotEmpty ?? false)) {
+    int bestMatchIndex = -1;
 
-        // Try to find currency symbol right before or after the numeric value
-        String currencyStr = validMatch.namedGroup("preCurrency") ?? "";
-        final String currencyStrAlt =
-            validMatch.namedGroup("postCurrency") ?? "";
+    for (int i = 0; i < matches.length; ++i) {
+      final RegExpMatch match = matches.elementAt(i);
 
-        // Check if there was any currency symbol before the numeric value
-        if (currencyStr.isEmpty) {
-          currencyStr = currencyStrAlt;
+      final bool hasPre = match.namedGroup("preCurrency")?.isNotEmpty ?? false;
+      final bool hasPost = match.namedGroup("postCurrency")!.isNotEmpty;
+
+      if (hasPre || hasPost) {
+        final String preCurrency = match.namedGroup("preCurrency")!;
+        final String postCurrency = match.namedGroup("postCurrency")!;
+
+        // If we haven't found any good match (meaning a match with some valid
+        // pre or post currency) then we should regard the current one as the
+        // best one so far
+        if (bestMatchIndex == -1) {
+          bestMatchIndex = i;
         }
 
-        // Check if there was any currency information after the numeric value
-        if (currencyStr.isEmpty) {
-          // No currency information, log a warning and do nothing
-          log.warning("no currency information found");
-        }
-        else {
-          // Check if the currency information matches the local currency
-          if (localCurrency.attributes.code == currencyStr ||
-              localCurrency.attributes.symbol == currencyStr ||
-              localCurrency.attributes.code == currencyStrAlt ||
-              localCurrency.attributes.symbol == currencyStrAlt) {
-            currency = localCurrency;
-            matchesCurrencySymbol = true;
-          }
-          else {
-            // Query FF for other currencies then check if the currency
-            // information matches any of those
-            final Response<CurrencyArray> response = await api
-                .v1CurrenciesGet();
-
-            if (!response.isSuccessful || response.body == null) {
-              log.warning("api currency fetch failed");
-            }
-            else {
-              for (CurrencyRead cur in response.body!.data) {
-                if (cur.attributes.code == currencyStr ||
-                    cur.attributes.symbol == currencyStr ||
-                    cur.attributes.code == currencyStrAlt ||
-                    cur.attributes.symbol == currencyStrAlt) {
-                  currency = cur;
-                  matchesCurrencySymbol = true;
-                  break;
-                }
-              }
-            }
+        for (CurrencyRead apiCurrency in currencies) {
+          if (apiCurrency.attributes.code == preCurrency ||
+              apiCurrency.attributes.symbol == preCurrency ||
+              apiCurrency.attributes.code == postCurrency ||
+              apiCurrency.attributes.symbol == postCurrency) {
+            bestMatchIndex = i;
+            currency = apiCurrency;
+            break;
           }
         }
-
-        if (!matchesCurrencySymbol || currency == null) {
-          // The match did not contain any expected currency information, so
-          // skip processing it
-          log.warning("no currency matched");
-          continue;
-        }
-
-        // extract amount
-        // Check if string has a decimal separator
-        final String amountStr = (validMatch.namedGroup("amount") ?? "")
-            .replaceAll(RegExp(r"\s+"), "");
-
-        final int decimalSepPos =
-            amountStr.length >= 3 &&
-                    (amountStr[amountStr.length - 3] == "." ||
-                        amountStr[amountStr.length - 3] == ",")
-                ? amountStr.length - 3
-                : amountStr.length - 2;
-
-        final String decimalSep =
-            amountStr.length >= decimalSepPos && decimalSepPos > 0
-                ? amountStr[decimalSepPos]
-                : "";
-
-        if (decimalSep == "," || decimalSep == ".") {
-          final double wholes =
-              double.tryParse(
-                amountStr
-                    .substring(0, decimalSepPos)
-                    .replaceAll(",", "")
-                    .replaceAll(".", ""),
-              ) ??
-              0;
-          final String decStr = amountStr
-              .substring(decimalSepPos + 1)
-              .replaceAll(",", "")
-              .replaceAll(".", "");
-          final double dec = double.tryParse(decStr) ?? 0;
-          amount = decStr.length == 1 ? wholes + dec / 10 : wholes + dec / 100;
-        } else {
-          amount =
-              double.tryParse(
-                amountStr.replaceAll(",", "").replaceAll(".", ""),
-              ) ??
-              0;
-        }
-
-        // We have found a match, we may stop with processing the matches
-        break;
       }
     }
-  } else {
-    log.warning("regex did not match");
+
+    if (bestMatchIndex != -1) {
+      final RegExpMatch bestMatch = matches.elementAt(bestMatchIndex);
+
+      String amountStr = (bestMatch.namedGroup("amount") ?? "").replaceAll(
+        RegExp(r"\s+"),
+        "",
+      );
+
+      if (amountStr.isNotEmpty) {
+        // Find the first non-digit character at the end of the string
+        String separator = amountStr[0];
+        for (int i = amountStr.length - 1; i >= 0; i--) {
+          separator = amountStr[i];
+          if (!RegExp(r'\d').hasMatch(separator)) {
+            break;
+          }
+        }
+
+        // Strip all non-digit characters that are not decimal separators
+        if (separator == "." || separator == ",") {
+          amountStr = amountStr.replaceAll(RegExp('[^0-9$separator]'), '');
+        }
+
+        amount = double.tryParse(amountStr.replaceAll(",", "."))!;
+      }
+    }
   }
 
   return (currency, amount);

@@ -1,1 +1,1 @@
-Aplicație neoficială pentru Firefly III, un manager financiar personal cu sursă deschisă.
+Unofficial App for Firefly III, an open source personal finance manager.

@@ -1,0 +1,1 @@
+App não oficial Firefly III: gestor de finanças pessoais de código aberto.

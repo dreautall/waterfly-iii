@@ -1,1 +1,0 @@
-App no oficial para Firefly III, un gestor de finanzas de código abierto.

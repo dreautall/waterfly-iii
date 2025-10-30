@@ -63,19 +63,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
         type == ShortAccountTypeProperty.expense;
   }
 
-  double _updateBalance(
-    double balance,
-    double amount,
-    TransactionTypeProperty? type,
-  ) {
-    if (type == TransactionTypeProperty.withdrawal ||
-        type == TransactionTypeProperty.transfer) {
-      return balance + amount;
-    } else {
-      return balance - amount;
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -341,15 +328,27 @@ class _HomeTransactionsState extends State<HomeTransactions>
           balance *= -1;
         }
         for (TransactionRead item in transactionList) {
-          // Attempt to retrieve the transaction total amount
-          final TransactionSplit tx = item.attributes.transactions.first;
-          final double amount = double.tryParse(tx.amount) ?? 0.0;
-          // Should never be the case
-          if (amount == 0.0) {
-            continue;
-          }
           _runningBalancesByTransactionId[item.id] = balance;
-          balance = _updateBalance(balance, amount, tx.type);
+          // Attempt to retrieve the transaction total amount
+          for (TransactionSplit tx in item.attributes.transactions) {
+            final double amount = double.tryParse(tx.amount) ?? 0.0;
+            // Should never be the case
+            if (amount == 0.0) {
+              continue;
+            }
+
+            if (tx.type == TransactionTypeProperty.withdrawal) {
+              balance += amount;
+            } else if (tx.type == TransactionTypeProperty.transfer) {
+              if (tx.destinationId == account.id) {
+                balance -= amount;
+              } else {
+                balance += amount;
+              }
+            } else {
+              balance -= amount;
+            }
+          }
           _lastCalculatedBalance = balance;
         }
       }
@@ -710,6 +709,28 @@ class _HomeTransactionsState extends State<HomeTransactions>
       foreignText += " ";
     }
 
+    // Account balance
+    late double balance;
+    if (_filters.account != null) {
+      if (item.attributes.transactions.first.sourceBalanceAfter != null) {
+        balance =
+            double.tryParse(
+              item.attributes.transactions.first.destinationId ==
+                      _filters.account?.id
+                  ? item.attributes.transactions.first.destinationBalanceAfter!
+                  : item.attributes.transactions.first.sourceBalanceAfter!,
+            ) ??
+            0;
+        if (_filters.account!.attributes.type !=
+                ShortAccountTypeProperty.asset &&
+            balance != 0) {
+          balance *= -1;
+        }
+      } else {
+        balance = _runningBalancesByTransactionId[item.id] ?? 0;
+      }
+    }
+
     Widget transactionWidget = OpenContainer(
       openBuilder:
           (BuildContext context, Function closedContainer) =>
@@ -948,47 +969,15 @@ class _HomeTransactionsState extends State<HomeTransactions>
                               child: Icon(Icons.check),
                             ),
                           ),
-                        if (_filters.account != null &&
-                            item
-                                    .attributes
-                                    .transactions
-                                    .first
-                                    .sourceBalanceAfter !=
-                                null)
+                        if (_filters.account != null)
                           TextSpan(
-                            text: currency.fmt(
-                              double.tryParse(
-                                    item
-                                                .attributes
-                                                .transactions
-                                                .first
-                                                .destinationId ==
-                                            _filters.account?.id
-                                        ? item
-                                            .attributes
-                                            .transactions
-                                            .first
-                                            .destinationBalanceAfter!
-                                        : item
-                                            .attributes
-                                            .transactions
-                                            .first
-                                            .sourceBalanceAfter!,
-                                  ) ??
-                                  0,
-                            ),
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        if (_filters.account != null &&
-                            item
-                                    .attributes
-                                    .transactions
-                                    .first
-                                    .sourceBalanceAfter ==
-                                null)
-                          TextSpan(
-                            text: currency.fmt(
-                              _runningBalancesByTransactionId[item.id] ?? 0.0,
+                            text: currency.fmt(balance),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.copyWith(
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
                             ),
                           ),
                         if (_filters.account == null)

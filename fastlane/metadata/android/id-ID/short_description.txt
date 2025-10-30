@@ -1,1 +1,1 @@
-Aplikasi tidak resmi untuk Firefly III, manager keuangan personal open source.
+Unofficial App for Firefly III, an open source personal finance manager.

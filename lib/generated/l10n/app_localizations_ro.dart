@@ -367,7 +367,7 @@ class SRo extends S {
   String get generalIncome => 'Venit';
 
   @override
-  String get generalLiabilities => 'Datorii';
+  String get generalLiabilities => 'Pasive';
 
   @override
   String get generalMultiple => 'multiplu';
@@ -588,7 +588,7 @@ class SRo extends S {
   String get homeTransactionsDialogFilterTitle => 'Selectează filtre';
 
   @override
-  String get homeTransactionsEmpty => 'Nicio tranzacție găsită.';
+  String get homeTransactionsEmpty => 'Nu s-au găsit tranzacții.';
 
   @override
   String homeTransactionsMultipleCategories(int num) {
@@ -853,10 +853,10 @@ class SRo extends S {
   String get transactionDialogCurrencyTitle => 'Selectează valuta';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => 'Fără pușculiță';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => 'Asociază la pușculiță';
 
   @override
   String get transactionDialogTagsAdd => 'Adaugă etichetă';

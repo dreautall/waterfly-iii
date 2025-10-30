@@ -595,7 +595,7 @@ class SRu extends S {
   String get homeTransactionsDialogFilterTitle => 'Выбрать фильтры';
 
   @override
-  String get homeTransactionsEmpty => 'Транзакций не найдено.';
+  String get homeTransactionsEmpty => 'Транзакции не найдены.';
 
   @override
   String homeTransactionsMultipleCategories(int num) {
@@ -857,10 +857,10 @@ class SRu extends S {
   String get transactionDialogCurrencyTitle => 'Выбор валюты';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => 'Нет копилки';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => 'Привязать к копилке';
 
   @override
   String get transactionDialogTagsAdd => 'Добавить тег';

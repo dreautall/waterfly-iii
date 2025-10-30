@@ -11,6 +11,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/pages/bills.dart';
 
@@ -315,13 +316,17 @@ class SettingsProvider with ChangeNotifier {
         _theme = ThemeMode.system;
     }
 
-    final String? countryCode = Intl.defaultLocale?.split("_").last;
-    final Locale locale = Locale(
-      await prefs.getString(settingLocale) ?? "unset",
-    );
-    log.config("read locale $locale");
+    final String localeStr = await prefs.getString(settingLocale) ?? "unset";
+    log.config("read locale $localeStr");
+    final Locale locale = LocaleExt.fromLanguageTag(localeStr);
     if (S.supportedLocales.contains(locale)) {
       _locale = locale;
+      late String? countryCode;
+      if (locale.countryCode?.isEmpty ?? true) {
+        countryCode = Intl.defaultLocale?.split("_").last;
+      } else {
+        countryCode = locale.countryCode;
+      }
       Intl.defaultLocale = "${locale.languageCode}_$countryCode";
     } else {
       _locale = const Locale('en');
@@ -500,12 +505,17 @@ class SettingsProvider with ChangeNotifier {
       return;
     }
 
-    _locale = Locale(locale.languageCode);
-    final String? countryCode = Intl.defaultLocale?.split("_").last;
+    _locale = locale;
+    late String? countryCode;
+    if (locale.countryCode?.isEmpty ?? true) {
+      countryCode = Intl.defaultLocale?.split("_").last;
+    } else {
+      countryCode = locale.countryCode;
+    }
     Intl.defaultLocale = "${locale.languageCode}_$countryCode";
     await SharedPreferencesAsync().setString(
       settingLocale,
-      locale.languageCode,
+      locale.toLanguageTag(),
     );
 
     log.finest(() => "notify SettingsProvider->setLocale()");

@@ -1,0 +1,8 @@
+{
+    "@@locale": "zh_TW",
+    "@@x-reference": true,
+    "categoryMonthNext": "下個月",
+    "@categoryMonthNext": {
+        "description": "Button title to view overview for next month"
+    }
+}

@@ -16,6 +16,7 @@ import 'app_localizations_fr.dart';
 import 'app_localizations_hu.dart';
 import 'app_localizations_id.dart';
 import 'app_localizations_it.dart';
+import 'app_localizations_ko.dart';
 import 'app_localizations_nl.dart';
 import 'app_localizations_pl.dart';
 import 'app_localizations_pt.dart';
@@ -23,6 +24,8 @@ import 'app_localizations_ro.dart';
 import 'app_localizations_ru.dart';
 import 'app_localizations_sl.dart';
 import 'app_localizations_sv.dart';
+import 'app_localizations_tr.dart';
+import 'app_localizations_uk.dart';
 import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
@@ -121,13 +124,18 @@ abstract class S {
     Locale('hu'),
     Locale('id'),
     Locale('it'),
+    Locale('ko'),
     Locale('nl'),
     Locale('pl'),
+    Locale('pt', 'BR'),
     Locale('pt'),
     Locale('ro'),
     Locale('ru'),
     Locale('sl'),
     Locale('sv'),
+    Locale('tr'),
+    Locale('uk'),
+    Locale('zh', 'TW'),
     Locale('zh'),
   ];
 
@@ -1604,6 +1612,7 @@ class _SDelegate extends LocalizationsDelegate<S> {
     'hu',
     'id',
     'it',
+    'ko',
     'nl',
     'pl',
     'pt',
@@ -1611,6 +1620,8 @@ class _SDelegate extends LocalizationsDelegate<S> {
     'ru',
     'sl',
     'sv',
+    'tr',
+    'uk',
     'zh',
   ].contains(locale.languageCode);
 
@@ -1619,6 +1630,26 @@ class _SDelegate extends LocalizationsDelegate<S> {
 }
 
 S lookupS(Locale locale) {
+  // Lookup logic when language+country codes are specified.
+  switch (locale.languageCode) {
+    case 'pt':
+      {
+        switch (locale.countryCode) {
+          case 'BR':
+            return SPtBr();
+        }
+        break;
+      }
+    case 'zh':
+      {
+        switch (locale.countryCode) {
+          case 'TW':
+            return SZhTw();
+        }
+        break;
+      }
+  }
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ca':
@@ -1643,6 +1674,8 @@ S lookupS(Locale locale) {
       return SId();
     case 'it':
       return SIt();
+    case 'ko':
+      return SKo();
     case 'nl':
       return SNl();
     case 'pl':
@@ -1657,6 +1690,10 @@ S lookupS(Locale locale) {
       return SSl();
     case 'sv':
       return SSv();
+    case 'tr':
+      return STr();
+    case 'uk':
+      return SUk();
     case 'zh':
       return SZh();
   }

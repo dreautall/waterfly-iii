@@ -1,242 +1,1191 @@
 {
-  "@@locale": "ro",
-  "accountRoleAssetCashWallet": "Portofel numerar",
-  "accountRoleAssetCC": "Card de credit",
-  "accountRoleAssetDefault": "Cont de active implicit",
-  "accountRoleAssetSavings": "Cont de economii",
-  "accountRoleAssetShared": "Contul de active partajat",
-  "accountsLabelAsset": "Conturi de active",
-  "accountsLabelExpense": "Conturi de cheltuieli",
-  "accountsLabelLiabilities": "Pasive",
-  "accountsLabelRevenue": "Conturi de venituri",
-  "accountsLiabilitiesInterest": "{interest}% dobândă per {period, select, weekly{săptămână} monthly{lună} quarterly{trimestru} halfyear{semestru} yearly{an} other{necunoscut}}",
-  "billsAmountAndFrequency": "Abonamentul se potrivește cu tranzacții între {minValue} și {maxvalue}. Se repetă {frequency, select, weekly{săptămânal} monthly{lunar} quarterly{trimestrial} halfyear{semestrial} yearly{anual} other{necunoscut}}{skip, plural, =0{} other{, sare peste {skip}}}.",
-  "billsChangeLayoutTooltip": "Schimbă aspectul",
-  "billsChangeSortOrderTooltip": "Schimbă ordinea de sortare",
-  "billsErrorLoading": "Eroare la încărcarea abonamentelor.",
-  "billsExactAmountAndFrequency": "Abonamentul se potrivește cu tranzacții de {value}. Se repetă {frequency, select, weekly{săptămânal} monthly{lunar} quarterly{trimestrial} halfyear{semestrial} yearly{anual} other{necunoscut}}{skip, plural, =0{} other{, sare peste {skip}}}.",
-  "billsExpectedOn": "Estimată la data de {date}",
-  "billsFrequency": "{frequency, select, weekly{Săptămânal} monthly{Lunar} quarterly{Trimestrial} halfyear{Semestrial} yearly{Anual} other{Necunoscut}}",
-  "billsFrequencySkip": "{frequency, select, weekly{Săptămânal} monthly{Lunar} quarterly{Trimestrial} halfyear{Semestrial} yearly{Anual} other{Necunoscut}}{skip, plural, =0{} other{, sare peste {skip}}}",
-  "billsInactive": "Inactiv",
-  "billsIsActive": "Abonamentul este activ",
-  "billsLayoutGroupSubtitle": "Abonamentele sunt afișate în grupurile lor atribuite.",
-  "billsLayoutGroupTitle": "Grup",
-  "billsLayoutListSubtitle": "Abonamentele sunt afișate într-o listă sortată după anumite criterii.",
-  "billsLayoutListTitle": "Listă",
-  "billsListEmpty": "Lista este momentan goală.",
-  "billsNextExpectedMatch": "Următoarea potrivire estimată",
-  "billsNotActive": "Abonamentul este inactiv",
-  "billsNotExpected": "Neestimat în această perioadă",
-  "billsNoTransactions": "Nu s-au găsit tranzacții.",
-  "billsPaidOn": "Plătit la data de {date}",
-  "billsSortAlphabetical": "Alfabetic",
-  "billsSortByTimePeriod": "După perioadă de timp",
-  "billsSortFrequency": "Frecvență",
-  "billsSortName": "Nume",
-  "billsUngrouped": "Negrupate",
-  "billsSettingsShowOnlyActive": "Arată doar active",
-  "billsSettingsShowOnlyActiveDesc": "Afișează doar abonamentele active.",
-  "billsSettingsShowOnlyExpected": "Arată doar așteptate",
-  "billsSettingsShowOnlyExpectedDesc": "Afișează doar abonamentele așteptate (sau plătite) în această lună.",
-  "categoryDeleteConfirm": "Sigur doriți să ștergeți această categorie? Tranzacțiile nu vor fi șterse, dar nu vor mai avea o categorie.",
-  "categoryErrorLoading": "Eroare la încărcarea categoriilor.",
-  "categoryFormLabelIncludeInSum": "Include în suma lunară",
-  "categoryFormLabelName": "Nume categorie",
-  "categoryMonthNext": "Luna următoare",
-  "categoryMonthPrev": "Luna precedentă",
-  "categorySumExcluded": "exclus",
-  "categoryTitleAdd": "Adaugă categorie",
-  "categoryTitleDelete": "Șterge categorie",
-  "categoryTitleEdit": "Editează categorie",
-  "catNone": "<fără categorie>",
-  "catOther": "Altele",
-  "errorAPIInvalidResponse": "Răspuns invalid de la API: {message}",
-  "errorAPIUnavailable": "API indisponibil",
-  "errorFieldRequired": "Acest câmp este obligatoriu.",
-  "errorInvalidURL": "URL invalid",
-  "errorMinAPIVersion": "Este necesară versiunea minimă Firefly API v{requiredVersion}. Vă rugăm să actualizați.",
-  "errorStatusCode": "Cod de stare: {code}",
-  "errorUnknown": "Eroare necunoscută.",
-  "formButtonHelp": "Ajutor",
-  "formButtonLogin": "Autentificare",
-  "formButtonLogout": "Deconectare",
-  "formButtonRemove": "Șterge",
-  "formButtonResetLogin": "Resetare autentificare",
-  "formButtonTransactionAdd": "Adaugă Tranzacție",
-  "formButtonTryAgain": "Încearcă din nou",
-  "generalAccount": "Cont",
-  "generalAssets": "Active",
-  "generalBalance": "Sold",
-  "generalBalanceOn": "Sold la {date}",
-  "generalBill": "Abonament",
-  "generalBudget": "Buget",
-  "generalCategory": "Categorie",
-  "generalCurrency": "Valută",
-  "generalDateRangeCurrentMonth": "Luna curentă",
-  "generalDateRangeLast30Days": "Ultimele 30 de zile",
-  "generalDateRangeCurrentYear": "Anul curent",
-  "generalDateRangeLastYear": "Anul trecut",
-  "generalDateRangeAll": "Toate",
-  "generalDefault": "implicit",
-  "generalDestinationAccount": "Cont Destinație",
-  "generalDismiss": "Închide",
-  "generalEarned": "Câștigat",
-  "generalError": "Eroare",
-  "generalExpenses": "Cheltuieli",
-  "generalIncome": "Venit",
-  "generalLiabilities": "Datorii",
-  "generalMultiple": "multiplu",
-  "generalNever": "niciodată",
-  "generalReconcile": "Reconciliat",
-  "generalReset": "Resetare",
-  "generalSourceAccount": "Cont Sursă",
-  "generalSpent": "Cheltuit",
-  "generalSum": "Sumă",
-  "generalTarget": "Țintă",
-  "generalUnknown": "Necunoscut",
-  "homeMainBillsInterval": " ({period, select, weekly{săptămânal} monthly{lunar} quarterly{trimestrial} halfyear{semestrial} yearly{anual} other{necunoscut}})",
-  "homeMainBillsTitle": "Abonamente pentru săptămâna viitoare",
-  "homeMainBudgetInterval": " ({from} la {to}, {period})",
-  "homeMainBudgetIntervalSingle": " ({from} - {to})",
-  "homeMainBudgetSum": "{current} {status, select, over{peste} other{rămase din}} {available}",
-  "homeMainBudgetTitle": "Bugete pentru luna curentă",
-  "homeMainChartAccountsTitle": "Sumar cont",
-  "homeMainChartCategoriesTitle": "Rezumat categorie pentru luna curentă",
-  "homeMainChartDailyAvg": "Media pe 7 de zile",
-  "homeMainChartDailyTitle": "Rezumat zilnic",
-  "homeMainChartNetEarningsTitle": "Câștig Net",
-  "homeMainChartNetWorthTitle": "Valoare Netă",
-  "homeMainChartTagsTitle": "Sumar etichete pentru luna curentă",
-  "homePiggyAdjustDialogTitle": "Salvează/cheltuie bani",
-  "homePiggyDateStart": "Data de început: {date}",
-  "homePiggyDateTarget": "Data țintă: {date}",
-  "homeMainDialogSettingsTitle": "Personalizează Tabloul de Bord",
-  "homePiggyLinked": "Conectat la {account}",
-  "homePiggyNoAccounts": "Nicio pușculiță creată.",
-  "homePiggyNoAccountsSubtitle": "Creează câteva în interfața web!",
-  "homePiggyRemaining": "Mai trebuie economisit: {amount}",
-  "homePiggySaved": "Economisit până acum: {amount}",
-  "homePiggySavedMultiple": "Economisit până acum:",
-  "homePiggyTarget": "Suma ţintă: {amount}",
-  "homePiggyAccountStatus": "Starea Contului",
-  "homePiggyAvailableAmounts": "Sume Disponibile",
-  "homePiggyAvailable": "Disponibil: {amount}",
-  "homePiggyInPiggyBanks": "În pușculițe: {amount}",
-  "homeTabLabelBalance": "Bilanțul soldului",
-  "homeTabLabelMain": "Principal",
-  "homeTabLabelPiggybanks": "Pușculițe",
-  "homeTabLabelTransactions": "Tranzacții",
-  "homeTransactionsActionFilter": "Lista de filtre",
-  "homeTransactionsDialogFilterAccountsAll": "<Toate conturile>",
-  "homeTransactionsDialogFilterBillsAll": "<Toate abonamentele>",
-  "homeTransactionsDialogFilterBillUnset": "<Niciun abonament setat>",
-  "homeTransactionsDialogFilterBudgetsAll": "<Toate bugetele>",
-  "homeTransactionsDialogFilterBudgetUnset": "<Niciun buget setat>",
-  "homeTransactionsDialogFilterCategoriesAll": "<Toate categoriile>",
-  "homeTransactionsDialogFilterCategoryUnset": "<Nicio categorie setată>",
-  "homeTransactionsDialogFilterCurrenciesAll": "<Toate valutele>",
-  "homeTransactionsDialogFilterDateRange": "Interval de date",
-  "homeTransactionsDialogFilterFutureTransactions": "Afișează tranzacțiile viitoare",
-  "homeTransactionsDialogFilterSearch": "Caută termen",
-  "homeTransactionsDialogFilterTitle": "Selectează filtre",
-  "homeTransactionsEmpty": "Nicio tranzacție găsită.",
-  "homeTransactionsMultipleCategories": "{num} categorii",
-  "homeTransactionsSettingsShowTags": "Afișează etichetele în lista de tranzacții",
-  "liabilityDirectionCredit": "Îmi sunt datorate aceste datorii",
-  "liabilityDirectionDebit": "Datorez această datorie",
-  "liabilityTypeDebt": "Datorie",
-  "liabilityTypeLoan": "Împrumut",
-  "liabilityTypeMortgage": "Credit ipotecar",
-  "loginAbout": "Pentru a folosi Waterfly III în mod productiv ai nevoie de propriul server cu o instanță Firefly III sau cu suplimentul Firefly III pentru asistentul la domiciliu.\n\nVă rugăm să introduceți adresa URL completă, precum și un token personal de acces (Setări -> Profile -> OAuth -> Personal Access Token) de mai jos.",
-  "loginFormLabelAPIKey": "Cheie API validă",
-  "loginFormLabelHost": "URL Host",
-  "loginWelcome": "Bine ai venit la Waterfly III",
-  "logoutConfirmation": "Ești sigur(ă) că vrei să te deconectezi?",
-  "navigationAccounts": "Conturi",
-  "navigationBills": "Abonamente",
-  "navigationCategories": "Categorii",
-  "navigationMain": "Panou principal",
-  "generalSettings": "Setări",
-  "no": "Nu",
-  "numPercent": "{num}",
-  "numPercentOf": "{perc} din {of}",
-  "settingsDialogDebugInfo": "Poți activa și trimite jurnale de depanare aici. Acestea au un impact negativ asupra performanței, așa că vă rog să nu le activați decât dacă sunteți sfătuit să faceți acest lucru. Dezactivarea jurnalului va șterge jurnalul stocat.",
-  "settingsDialogDebugMailCreate": "Creează e-mail",
-  "settingsDialogDebugMailDisclaimer": "AVERTISMENT: O ciornă de mail se va deschide cu fişierul de jurnal ataşat (în format de text). Jurnalele ar putea conține informații sensibile, cum ar fi numele gazdei instanței dvs. Firefly (deși încerc să evit logarea oricăror secrete, cum ar fi cheia API). Vă rugăm să citiți jurnalul cu atenție și să cenzurați orice informație pe care nu doriți să o împărtășiți și/sau nu este relevantă pentru problema pe care doriți să o raportați.\n\nVă rugăm să nu trimiteți jurnale fără acord prealabil prin mail/GitHub pentru a face acest lucru. Voi șterge orice jurnal trimis fără context din motive de confidențialitate. Nu încărca niciodată jurnalul necenzurat pe GitHub sau în altă parte.",
-  "settingsDialogDebugSendButton": "Trimite jurnale prin e-mail",
-  "settingsDialogDebugTitle": "Jurnalul de depanare",
-  "settingsDialogLanguageTitle": "Selectează limba",
-  "settingsDialogThemeTitle": "Selectează tema",
-  "settingsFAQ": "Întrebări frecvente",
-  "settingsFAQHelp": "Se deschide în browser. Disponibil doar în engleză.",
-  "settingsLanguage": "Limba",
-  "settingsLockscreen": "Ecran de blocare",
-  "settingsLockscreenHelp": "Necesită autentificarea la pornirea aplicației",
-  "settingsLockscreenInitial": "Vă rugăm să vă autentificați pentru a activa ecranul de blocare.",
-  "settingsNLAppAccount": "Cont implicit",
-  "settingsNLAppAccountDynamic": "<Dinamic>",
-  "settingsNLAppAdd": "Adaugă aplicaţie",
-  "settingsNLAppAddHelp": "Faceți clic pentru a adăuga o aplicație ce va fi ascultă. Numai aplicațiile eligibile vor apărea în listă.",
-  "settingsNLAppAddInfo": "Efectuați unele tranzacții în care primiți notificări prin telefon pentru a adăuga aplicații la această listă. Dacă aplicația încă nu apare, vă rugăm să raportați la app@vogt.pw.",
-  "settingsNLAutoAdd": "Creează tranzacție fără interacțiune",
-  "settingsNLDescription": "Acest serviciu vă permite să preluați detaliile tranzacției de la notificările push primite. În plus, puteți selecta un cont implicit căruia trebuie să îi fie atribuită tranzacția - dacă nu este setată nicio valoare, se va încerca să extragerea un cont din notificare.",
-  "settingsNLEmptyNote": "Păstrează câmpul notei gol",
-  "settingsNLPermissionGrant": "Atingeţi pentru a acorda permisiunea.",
-  "settingsNLPermissionNotGranted": "Permisiunea nu a fost acordată.",
-  "settingsNLPermissionRemove": "Eliminaţi permisiunea?",
-  "settingsNLPermissionRemoveHelp": "Pentru a dezactiva acest serviciu, faceți clic pe aplicație și eliminați permisiunile de pe ecranul următor.",
-  "settingsNLPrefillTXTitle": "Completează automat titlul tranzacției cu titlul notificării",
-  "settingsNLServiceChecking": "Verificare stare…",
-  "settingsNLServiceCheckingError": "Eroare la verificarea stării: {error}",
-  "settingsNLServiceRunning": "Serviciul rulează.",
-  "settingsNLServiceStatus": "Starea serviciului",
-  "settingsNLServiceStopped": "Serviciul este oprit.",
-  "settingsNotificationListener": "Serviciul de clasificare a notificărilor",
-  "settingsTheme": "Tema aplicației",
-  "settingsThemeDynamicColors": "Culori dinamice",
-  "settingsThemeValue": "{theme, select, dark{Mod întunecat} light{Mod luminos} other{Sistem Implicit}}",
-  "settingsUseServerTimezone": "Utilizează fusul orar al serverului",
-  "settingsUseServerTimezoneHelp": "Afișează toate orele în fusul orar al serverului. Aceasta imită comportamentul interfeței web.",
-  "settingsVersion": "Versiune aplicaţie",
-  "settingsVersionChecking": "verificare…",
-  "transactionAttachments": "Atașamente",
-  "transactionDeleteConfirm": "Ești sigur că vrei să ștergi tranzacția selectată?",
-  "transactionDialogAttachmentsDelete": "Şterge ataşament",
-  "transactionDialogAttachmentsDeleteConfirm": "Ești sigur că dorești să ștergi acest atașament?",
-  "transactionDialogAttachmentsErrorDownload": "Descărcarea fișierului a eșuat.",
-  "transactionDialogAttachmentsErrorOpen": "Nu s-a putut deschide fișierul: {error}",
-  "transactionDialogAttachmentsErrorUpload": "Nu s-a putut încărca fișierul: {error}",
-  "transactionDialogAttachmentsTitle": "Atașamente",
-  "transactionDialogBillNoBill": "Fără abonament",
-  "transactionDialogBillTitle": "Asociază cu Abonamentul",
-  "transactionDialogCurrencyTitle": "Selectează valuta",
-  "transactionDialogTagsAdd": "Adaugă etichetă",
-  "transactionDialogTagsHint": "Caută/Adaugă etichetă",
-  "transactionDialogTagsTitle": "Alege etichete",
-  "transactionDuplicate": "Duplică",
-  "transactionErrorInvalidAccount": "Cont invalid",
-  "transactionErrorInvalidBudget": "Buget invalid",
-  "transactionErrorNoAccounts": "Te rugăm să completezi conturile mai întâi.",
-  "transactionErrorNoAssetAccount": "Te rugăm să selectezi un cont de active.",
-  "transactionErrorTitle": "Te rog introdu un titlu.",
-  "transactionFormLabelAccountDestination": "Cont destinație",
-  "transactionFormLabelAccountForeign": "Cont extern",
-  "transactionFormLabelAccountOwn": "Cont propriu",
-  "transactionFormLabelAccountSource": "Cont sursă",
-  "transactionFormLabelNotes": "Notițe",
-  "transactionFormLabelTags": "Etichete",
-  "transactionFormLabelTitle": "Titlul tranzacției",
-  "transactionSplitAdd": "Adaugă tranzacție divizată",
-  "transactionSplitChangeCurrency": "Schimbă moneda divizată",
-  "transactionSplitChangeDestinationAccount": "Schimbă contul destinație al diviziunii",
-  "transactionSplitChangeSourceAccount": "Schimbă contul sursă al diviziunii",
-  "transactionSplitChangeTarget": "Schimbă contul țintă divizat",
-  "transactionSplitDelete": "Șterge diviziune",
-  "transactionTitleAdd": "Adaugă Tranzacție",
-  "transactionTitleDelete": "Şterge tranzacţia",
-  "transactionTitleEdit": "Editează tranzacția",
-  "transactionTypeDeposit": "Depune",
-  "transactionTypeTransfer": "Transferă",
-  "transactionTypeWithdrawal": "Retragere"
+    "@@locale": "ro",
+    "@@x-reference": true,
+    "accountRoleAssetCashWallet": "Portofel numerar",
+    "@accountRoleAssetCashWallet": {
+        "description": "Firefly Translation String: account_role_cashWalletAsset"
+    },
+    "accountRoleAssetCC": "Card de credit",
+    "@accountRoleAssetCC": {
+        "description": "Firefly Translation String: account_role_ccAsset"
+    },
+    "accountRoleAssetDefault": "Cont de active implicit",
+    "@accountRoleAssetDefault": {
+        "description": "Firefly Translation String: account_role_defaultAsset"
+    },
+    "accountRoleAssetSavings": "Cont de economii",
+    "@accountRoleAssetSavings": {
+        "description": "Firefly Translation String: account_role_savingAsset"
+    },
+    "accountRoleAssetShared": "Contul de active partajat",
+    "@accountRoleAssetShared": {
+        "description": "Firefly Translation String: account_role_sharedAsset"
+    },
+    "accountsLabelAsset": "Conturi de active",
+    "@accountsLabelAsset": {
+        "description": "Firefly Translation String: asset_accounts"
+    },
+    "accountsLabelExpense": "Conturi de cheltuieli",
+    "@accountsLabelExpense": {
+        "description": "Firefly Translation String: expense_accounts"
+    },
+    "accountsLabelLiabilities": "Pasive",
+    "@accountsLabelLiabilities": {
+        "description": "Firefly Translation String: liabilities_accounts"
+    },
+    "accountsLabelRevenue": "Conturi de venituri",
+    "@accountsLabelRevenue": {
+        "description": "Firefly Translation String: revenue_accounts"
+    },
+    "accountsLiabilitiesInterest": "{interest}% dobândă per {period, select, weekly{săptămână} monthly{lună} quarterly{trimestru} halfyear{semestru} yearly{an} other{necunoscut}}",
+    "@accountsLiabilitiesInterest": {
+        "description": "Interest in a certain period",
+        "placeholders": {
+            "interest": {
+                "type": "double",
+                "example": "1.2"
+            },
+            "period": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsAmountAndFrequency": "Abonamentul se potrivește cu tranzacții între {minValue} și {maxvalue}. Se repetă {frequency, select, weekly{săptămânal} monthly{lunar} quarterly{trimestrial} halfyear{semestrial} yearly{anual} other{necunoscut}}{skip, plural, =0{} other{, sare peste {skip}}}.",
+    "@billsAmountAndFrequency": {
+        "description": "Subscription match for min and max amounts, and frequency",
+        "placeholders": {
+            "minValue": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "maxvalue": {
+                "type": "String",
+                "example": "$60.50"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsChangeLayoutTooltip": "Schimbă aspectul",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "Schimbă ordinea de sortare",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsErrorLoading": "Eroare la încărcarea abonamentelor.",
+    "@billsErrorLoading": {
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
+    },
+    "billsExactAmountAndFrequency": "Abonamentul se potrivește cu tranzacții de {value}. Se repetă {frequency, select, weekly{săptămânal} monthly{lunar} quarterly{trimestrial} halfyear{semestrial} yearly{anual} other{necunoscut}}{skip, plural, =0{} other{, sare peste {skip}}}.",
+    "@billsExactAmountAndFrequency": {
+        "description": "Subscription match for exact amount and frequency",
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsExpectedOn": "Estimată la data de {date}",
+    "@billsExpectedOn": {
+        "description": "Describes what date the subscription is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsFrequency": "{frequency, select, weekly{Săptămânal} monthly{Lunar} quarterly{Trimestrial} halfyear{Semestrial} yearly{Anual} other{Necunoscut}}",
+    "@billsFrequency": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsFrequencySkip": "{frequency, select, weekly{Săptămânal} monthly{Lunar} quarterly{Trimestrial} halfyear{Semestrial} yearly{Anual} other{Necunoscut}}{skip, plural, =0{} other{, sare peste {skip}}}",
+    "@billsFrequencySkip": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsInactive": "Inactiv",
+    "@billsInactive": {
+        "description": "Text: when the subscription is inactive"
+    },
+    "billsIsActive": "Abonamentul este activ",
+    "@billsIsActive": {
+        "description": "Text: the subscription is active"
+    },
+    "billsLayoutGroupSubtitle": "Abonamentele sunt afișate în grupurile lor atribuite.",
+    "@billsLayoutGroupSubtitle": {
+        "description": "Subtitle text for group layout option"
+    },
+    "billsLayoutGroupTitle": "Grup",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListSubtitle": "Abonamentele sunt afișate într-o listă sortată după anumite criterii.",
+    "@billsLayoutListSubtitle": {
+        "description": "Subtitle text for list layout option"
+    },
+    "billsLayoutListTitle": "Listă",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "Lista este momentan goală.",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "Următoarea potrivire estimată",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for subscription"
+    },
+    "billsNotActive": "Abonamentul este inactiv",
+    "@billsNotActive": {
+        "description": "Text: the subscription is inactive"
+    },
+    "billsNotExpected": "Neestimat în această perioadă",
+    "@billsNotExpected": {
+        "description": "Describes that the subscription is not expected this period"
+    },
+    "billsNoTransactions": "Nu s-au găsit tranzacții.",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the subscription"
+    },
+    "billsPaidOn": "Plătit la data de {date}",
+    "@billsPaidOn": {
+        "description": "Describes what date the subscription was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "Alfabetic",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "După perioadă de timp",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "Frecvență",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "Nume",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "Negrupate",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped subscriptions"
+    },
+    "billsSettingsShowOnlyActive": "Arată doar active",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Afișează doar abonamentele active.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Arată doar așteptate",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Afișează doar abonamentele așteptate (sau plătite) în această lună.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
+    "categoryDeleteConfirm": "Sigur doriți să ștergeți această categorie? Tranzacțiile nu vor fi șterse, dar nu vor mai avea o categorie.",
+    "@categoryDeleteConfirm": {
+        "description": "Confirmation text to delete category"
+    },
+    "categoryErrorLoading": "Eroare la încărcarea categoriilor.",
+    "@categoryErrorLoading": {
+        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+    },
+    "categoryFormLabelIncludeInSum": "Include în suma lunară",
+    "@categoryFormLabelIncludeInSum": {
+        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+    },
+    "categoryFormLabelName": "Nume categorie",
+    "@categoryFormLabelName": {
+        "description": "Category Add/Edit Form: Label for name field"
+    },
+    "categoryMonthNext": "Luna următoare",
+    "@categoryMonthNext": {
+        "description": "Button title to view overview for next month"
+    },
+    "categoryMonthPrev": "Luna precedentă",
+    "@categoryMonthPrev": {
+        "description": "Button title to view overview for previous month"
+    },
+    "categorySumExcluded": "exclus",
+    "@categorySumExcluded": {
+        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+    },
+    "categoryTitleAdd": "Adaugă categorie",
+    "@categoryTitleAdd": {
+        "description": "Title for Dialog: Add Category"
+    },
+    "categoryTitleDelete": "Șterge categorie",
+    "@categoryTitleDelete": {
+        "description": "Title for Dialog: Delete Category"
+    },
+    "categoryTitleEdit": "Editează categorie",
+    "@categoryTitleEdit": {
+        "description": "Title for Dialog: Edit Category"
+    },
+    "catNone": "<fără categorie>",
+    "@catNone": {
+        "description": "Placeholder when no category has been set."
+    },
+    "catOther": "Altele",
+    "@catOther": {
+        "description": "Category description for summary category 'Other'"
+    },
+    "errorAPIInvalidResponse": "Răspuns invalid de la API: {message}",
+    "@errorAPIInvalidResponse": {
+        "description": "Invalid API response error",
+        "placeholders": {
+            "message": {
+                "type": "String",
+                "example": "API could not be reached."
+            }
+        }
+    },
+    "errorAPIUnavailable": "API indisponibil",
+    "@errorAPIUnavailable": {
+        "description": "Error thrown when API is unavailable."
+    },
+    "errorFieldRequired": "Acest câmp este obligatoriu.",
+    "@errorFieldRequired": {
+        "description": "Error: Required field was left empty."
+    },
+    "errorInvalidURL": "URL invalid",
+    "@errorInvalidURL": {
+        "description": "Error: URL is invalid"
+    },
+    "errorMinAPIVersion": "Este necesară versiunea minimă Firefly API v{requiredVersion}. Vă rugăm să actualizați.",
+    "@errorMinAPIVersion": {
+        "description": "Error: Required API version not met.",
+        "placeholders": {
+            "requiredVersion": {
+                "type": "String",
+                "example": "2.0.0"
+            }
+        }
+    },
+    "errorStatusCode": "Cod de stare: {code}",
+    "@errorStatusCode": {
+        "description": "HTTP status code information on error",
+        "placeholders": {
+            "code": {
+                "type": "int",
+                "example": "500"
+            }
+        }
+    },
+    "errorUnknown": "Eroare necunoscută.",
+    "@errorUnknown": {
+        "description": "Error without further information occurred."
+    },
+    "formButtonHelp": "Ajutor",
+    "@formButtonHelp": {
+        "description": "Button Label: Help"
+    },
+    "formButtonLogin": "Autentificare",
+    "@formButtonLogin": {
+        "description": "Button Label: Login"
+    },
+    "formButtonLogout": "Deconectare",
+    "@formButtonLogout": {
+        "description": "Button Label: Logout"
+    },
+    "formButtonRemove": "Șterge",
+    "@formButtonRemove": {
+        "description": "Button Label: Remove"
+    },
+    "formButtonResetLogin": "Resetare autentificare",
+    "@formButtonResetLogin": {
+        "description": "Button Label: Reset login form (when error is shown)"
+    },
+    "formButtonTransactionAdd": "Adaugă Tranzacție",
+    "@formButtonTransactionAdd": {
+        "description": "Button Label: Add Transaction"
+    },
+    "formButtonTryAgain": "Încearcă din nou",
+    "@formButtonTryAgain": {
+        "description": "Button Label: Try that thing again (login etc)"
+    },
+    "generalAccount": "Cont",
+    "@generalAccount": {
+        "description": "Asset/Debt (Bank) Account"
+    },
+    "generalAssets": "Active",
+    "@generalAssets": {
+        "description": "(Monetary) Assets"
+    },
+    "generalBalance": "Sold",
+    "@generalBalance": {
+        "description": "(Account) Balance"
+    },
+    "generalBalanceOn": "Sold la {date}",
+    "@generalBalanceOn": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMd",
+                "example": "2023-05-13"
+            }
+        }
+    },
+    "generalBill": "Abonament",
+    "@generalBill": {
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
+    },
+    "generalBudget": "Buget",
+    "@generalBudget": {
+        "description": "(Monetary) Budget"
+    },
+    "generalCategory": "Categorie",
+    "@generalCategory": {
+        "description": "Category (of transaction etc.)."
+    },
+    "generalCurrency": "Valută",
+    "@generalCurrency": {
+        "description": "(Money) Currency"
+    },
+    "generalDateRangeCurrentMonth": "Luna curentă",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Ultimele 30 de zile",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Anul curent",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Anul trecut",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Toate",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
+    "generalDefault": "implicit",
+    "@generalDefault": {
+        "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "Cont Destinație",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
+    },
+    "generalDismiss": "Închide",
+    "@generalDismiss": {
+        "description": "Dismiss window/dialog without action"
+    },
+    "generalEarned": "Câștigat",
+    "@generalEarned": {
+        "description": "(Amount) Earned"
+    },
+    "generalError": "Eroare",
+    "@generalError": {
+        "description": "Error (title in dialogs etc.)"
+    },
+    "generalExpenses": "Cheltuieli",
+    "@generalExpenses": {
+        "description": "(Account) Expenses"
+    },
+    "generalIncome": "Venit",
+    "@generalIncome": {
+        "description": "(Account) Info"
+    },
+    "generalLiabilities": "Pasive",
+    "@generalLiabilities": {
+        "description": "Firefly Translation String: liabilities"
+    },
+    "generalMultiple": "multiplu",
+    "@generalMultiple": {
+        "description": "Multiples of a single thing (e.g. source accounts) are existing"
+    },
+    "generalNever": "niciodată",
+    "@generalNever": {
+        "description": "Has never happened, no update etc."
+    },
+    "generalReconcile": "Reconciliat",
+    "@generalReconcile": {
+        "description": "Booking has been confirmed/reconciled"
+    },
+    "generalReset": "Resetare",
+    "@generalReset": {
+        "description": "Reset something (i.e. set filters)"
+    },
+    "generalSourceAccount": "Cont Sursă",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
+    "generalSpent": "Cheltuit",
+    "@generalSpent": {
+        "description": "(Amount) Spent"
+    },
+    "generalSum": "Sumă",
+    "@generalSum": {
+        "description": "(Mathematical) Sum"
+    },
+    "generalTarget": "Țintă",
+    "@generalTarget": {
+        "description": "Target value (i.e. a sum to save)"
+    },
+    "generalUnknown": "Necunoscut",
+    "@generalUnknown": {
+        "description": "Something is unknown."
+    },
+    "homeMainBillsInterval": " ({period, select, weekly{săptămânal} monthly{lunar} quarterly{trimestrial} halfyear{semestrial} yearly{anual} other{necunoscut}})",
+    "@homeMainBillsInterval": {
+        "description": "subscription interval type",
+        "placeholders": {
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBillsTitle": "Abonamente pentru săptămâna viitoare",
+    "@homeMainBillsTitle": {
+        "description": "Title: Subscriptions for the next week"
+    },
+    "homeMainBudgetInterval": " ({from} la {to}, {period})",
+    "@homeMainBudgetInterval": {
+        "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
+            },
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBudgetIntervalSingle": " ({from} - {to})",
+    "@homeMainBudgetIntervalSingle": {
+        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
+            }
+        }
+    },
+    "homeMainBudgetSum": "{current} {status, select, over{peste} other{rămase din}} {available}",
+    "@homeMainBudgetSum": {
+        "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
+        "placeholders": {
+            "current": {
+                "type": "String",
+                "example": "12.34€"
+            },
+            "status": {
+                "type": "String",
+                "example": "left from"
+            },
+            "available": {
+                "type": "String",
+                "example": "12.34€"
+            }
+        }
+    },
+    "homeMainBudgetTitle": "Bugete pentru luna curentă",
+    "@homeMainBudgetTitle": {
+        "description": "Title: Budgets for current month"
+    },
+    "homeMainChartAccountsTitle": "Sumar cont",
+    "@homeMainChartAccountsTitle": {
+        "description": "Chart Label: Account Summary"
+    },
+    "homeMainChartCategoriesTitle": "Rezumat categorie pentru luna curentă",
+    "@homeMainChartCategoriesTitle": {
+        "description": "Chart Label: Category Summary"
+    },
+    "homeMainChartDailyAvg": "Media pe 7 de zile",
+    "@homeMainChartDailyAvg": {
+        "description": "Text for last week average spent"
+    },
+    "homeMainChartDailyTitle": "Rezumat zilnic",
+    "@homeMainChartDailyTitle": {
+        "description": "Chart Label: Daily Summary"
+    },
+    "homeMainChartNetEarningsTitle": "Câștig Net",
+    "@homeMainChartNetEarningsTitle": {
+        "description": "Chart Label: Net Earnings"
+    },
+    "homeMainChartNetWorthTitle": "Valoare Netă",
+    "@homeMainChartNetWorthTitle": {
+        "description": "Chart Label: Net Worth"
+    },
+    "homeMainChartTagsTitle": "Sumar etichete pentru luna curentă",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
+    "homePiggyAdjustDialogTitle": "Salvează/cheltuie bani",
+    "@homePiggyAdjustDialogTitle": {
+        "description": "Title of the dialog where money can be added/removed to a piggy bank."
+    },
+    "homePiggyDateStart": "Data de început: {date}",
+    "@homePiggyDateStart": {
+        "description": "Start of the piggy bank",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "March 12, 2023"
+            }
+        }
+    },
+    "homePiggyDateTarget": "Data țintă: {date}",
+    "@homePiggyDateTarget": {
+        "description": "Set target date of the piggy bank (when saving should be finished)",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "March 12, 2023"
+            }
+        }
+    },
+    "homeMainDialogSettingsTitle": "Personalizează Tabloul de Bord",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
+    },
+    "homePiggyLinked": "Conectat la {account}",
+    "@homePiggyLinked": {
+        "description": "Piggy bank is linked to asset account {account}.",
+        "placeholders": {
+            "account": {
+                "type": "String",
+                "example": "Awesome Bank Account"
+            }
+        }
+    },
+    "homePiggyNoAccounts": "Nicio pușculiță creată.",
+    "@homePiggyNoAccounts": {
+        "description": "Information that no piggy banks are existing"
+    },
+    "homePiggyNoAccountsSubtitle": "Creează câteva în interfața web!",
+    "@homePiggyNoAccountsSubtitle": {
+        "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
+    },
+    "homePiggyRemaining": "Mai trebuie economisit: {amount}",
+    "@homePiggyRemaining": {
+        "description": "How much money is left to save",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggySaved": "Economisit până acum: {amount}",
+    "@homePiggySaved": {
+        "description": "How much money already was saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggySavedMultiple": "Economisit până acum:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
+    "homePiggyTarget": "Suma ţintă: {amount}",
+    "@homePiggyTarget": {
+        "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "Starea Contului",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Sume Disponibile",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "Disponibil: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "În pușculițe: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homeTabLabelBalance": "Bilanțul soldului",
+    "@homeTabLabelBalance": {
+        "description": "Tab Label: Balance Sheet page"
+    },
+    "homeTabLabelMain": "Principal",
+    "@homeTabLabelMain": {
+        "description": "Tab Label: Start page (\"main\")"
+    },
+    "homeTabLabelPiggybanks": "Pușculițe",
+    "@homeTabLabelPiggybanks": {
+        "description": "Tab Label: Piggy Banks page"
+    },
+    "homeTabLabelTransactions": "Tranzacții",
+    "@homeTabLabelTransactions": {
+        "description": "Tab Label: Transactions page"
+    },
+    "homeTransactionsActionFilter": "Lista de filtre",
+    "@homeTransactionsActionFilter": {
+        "description": "Action Button Label: Filter list."
+    },
+    "homeTransactionsDialogFilterAccountsAll": "<Toate conturile>",
+    "@homeTransactionsDialogFilterAccountsAll": {
+        "description": "Don't filter for a specific account (default entry)"
+    },
+    "homeTransactionsDialogFilterBillsAll": "<Toate abonamentele>",
+    "@homeTransactionsDialogFilterBillsAll": {
+        "description": "Don't filter for a specific subscription (default entry)"
+    },
+    "homeTransactionsDialogFilterBillUnset": "<Niciun abonament setat>",
+    "@homeTransactionsDialogFilterBillUnset": {
+        "description": "Filter for unset subscription"
+    },
+    "homeTransactionsDialogFilterBudgetsAll": "<Toate bugetele>",
+    "@homeTransactionsDialogFilterBudgetsAll": {
+        "description": "Don't filter for a specific budget (default entry)"
+    },
+    "homeTransactionsDialogFilterBudgetUnset": "<Niciun buget setat>",
+    "@homeTransactionsDialogFilterBudgetUnset": {
+        "description": "Filter for unset budgets"
+    },
+    "homeTransactionsDialogFilterCategoriesAll": "<Toate categoriile>",
+    "@homeTransactionsDialogFilterCategoriesAll": {
+        "description": "Don't filter for a specific category (default entry)"
+    },
+    "homeTransactionsDialogFilterCategoryUnset": "<Nicio categorie setată>",
+    "@homeTransactionsDialogFilterCategoryUnset": {
+        "description": "Filter for unset categories"
+    },
+    "homeTransactionsDialogFilterCurrenciesAll": "<Toate valutele>",
+    "@homeTransactionsDialogFilterCurrenciesAll": {
+        "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "Interval de date",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
+    },
+    "homeTransactionsDialogFilterFutureTransactions": "Afișează tranzacțiile viitoare",
+    "@homeTransactionsDialogFilterFutureTransactions": {
+        "description": "Setting to show future transactions"
+    },
+    "homeTransactionsDialogFilterSearch": "Caută termen",
+    "@homeTransactionsDialogFilterSearch": {
+        "description": "Search term for filter"
+    },
+    "homeTransactionsDialogFilterTitle": "Selectează filtre",
+    "@homeTransactionsDialogFilterTitle": {
+        "description": "Title of Filter Dialog"
+    },
+    "homeTransactionsEmpty": "Nu s-au găsit tranzacții.",
+    "@homeTransactionsEmpty": {
+        "description": "Message when no transactions are found."
+    },
+    "homeTransactionsMultipleCategories": "{num} categorii",
+    "@homeTransactionsMultipleCategories": {
+        "description": "$num categories for the transaction.",
+        "placeholders": {
+            "num": {
+                "type": "int",
+                "example": "2"
+            }
+        }
+    },
+    "homeTransactionsSettingsShowTags": "Afișează etichetele în lista de tranzacții",
+    "@homeTransactionsSettingsShowTags": {
+        "description": "Setting label to show tags in transactioon list."
+    },
+    "liabilityDirectionCredit": "Îmi sunt datorate aceste datorii",
+    "@liabilityDirectionCredit": {
+        "description": "Firefly Translation String: liability_direction_credit"
+    },
+    "liabilityDirectionDebit": "Datorez această datorie",
+    "@liabilityDirectionDebit": {
+        "description": "Firefly Translation String: liability_direction_debit"
+    },
+    "liabilityTypeDebt": "Datorie",
+    "@liabilityTypeDebt": {
+        "description": "Firefly Translation String: account_type_debt"
+    },
+    "liabilityTypeLoan": "Împrumut",
+    "@liabilityTypeLoan": {
+        "description": "Firefly Translation String: account_type_loan"
+    },
+    "liabilityTypeMortgage": "Credit ipotecar",
+    "@liabilityTypeMortgage": {
+        "description": "Firefly Translation String: account_type_mortgage"
+    },
+    "loginAbout": "Pentru a folosi Waterfly III în mod productiv ai nevoie de propriul server cu o instanță Firefly III sau cu suplimentul Firefly III pentru asistentul la domiciliu.\n\nVă rugăm să introduceți adresa URL completă, precum și un token personal de acces (Setări -> Profile -> OAuth -> Personal Access Token) de mai jos.",
+    "@loginAbout": {
+        "description": "Login screen welcome description"
+    },
+    "loginFormLabelAPIKey": "Cheie API validă",
+    "@loginFormLabelAPIKey": {
+        "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHost": "URL Host",
+    "@loginFormLabelHost": {
+        "description": "Login Form: Label for Host field"
+    },
+    "loginWelcome": "Bine ai venit la Waterfly III",
+    "@loginWelcome": {
+        "description": "Login screen welcome banner"
+    },
+    "logoutConfirmation": "Ești sigur(ă) că vrei să te deconectezi?",
+    "@logoutConfirmation": {
+        "description": "Get user confirmation if he really wants to log out"
+    },
+    "navigationAccounts": "Conturi",
+    "@navigationAccounts": {
+        "description": "Navigation Label: Accounts Page"
+    },
+    "navigationBills": "Abonamente",
+    "@navigationBills": {
+        "description": "Navigation Label: Subscriptions"
+    },
+    "navigationCategories": "Categorii",
+    "@navigationCategories": {
+        "description": "Navigation Label: Categories"
+    },
+    "navigationMain": "Panou principal",
+    "@navigationMain": {
+        "description": "Navigation Label: Main Dashboard"
+    },
+    "generalSettings": "Setări",
+    "@generalSettings": {
+        "description": "Label: Settings"
+    },
+    "no": "Nu",
+    "@no": {
+        "description": "The word no"
+    },
+    "numPercentOf": "{perc} din {of}",
+    "@numPercentOf": {
+        "description": "Number formatted as percentage, with total amount provided",
+        "placeholders": {
+            "perc": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            },
+            "of": {
+                "type": "String"
+            }
+        }
+    },
+    "settingsDialogDebugInfo": "Poți activa și trimite jurnale de depanare aici. Acestea au un impact negativ asupra performanței, așa că vă rog să nu le activați decât dacă sunteți sfătuit să faceți acest lucru. Dezactivarea jurnalului va șterge jurnalul stocat.",
+    "@settingsDialogDebugInfo": {
+        "description": "Information about debug logs and their impact."
+    },
+    "settingsDialogDebugMailCreate": "Creează e-mail",
+    "@settingsDialogDebugMailCreate": {
+        "description": "Button to confirm mail creation after privacy disclaimer is shown."
+    },
+    "settingsDialogDebugMailDisclaimer": "AVERTISMENT: O ciornă de mail se va deschide cu fişierul de jurnal ataşat (în format de text). Jurnalele ar putea conține informații sensibile, cum ar fi numele gazdei instanței dvs. Firefly (deși încerc să evit logarea oricăror secrete, cum ar fi cheia API). Vă rugăm să citiți jurnalul cu atenție și să cenzurați orice informație pe care nu doriți să o împărtășiți și/sau nu este relevantă pentru problema pe care doriți să o raportați.\n\nVă rugăm să nu trimiteți jurnale fără acord prealabil prin mail/GitHub pentru a face acest lucru. Voi șterge orice jurnal trimis fără context din motive de confidențialitate. Nu încărca niciodată jurnalul necenzurat pe GitHub sau în altă parte.",
+    "@settingsDialogDebugMailDisclaimer": {
+        "description": "Privacy disclaimer shown before sending logs"
+    },
+    "settingsDialogDebugSendButton": "Trimite jurnale prin e-mail",
+    "@settingsDialogDebugSendButton": {
+        "description": "Button to send logs via E-Mail"
+    },
+    "settingsDialogDebugTitle": "Jurnalul de depanare",
+    "@settingsDialogDebugTitle": {
+        "description": "Dialog title: Debug Logs"
+    },
+    "settingsDialogLanguageTitle": "Selectează limba",
+    "@settingsDialogLanguageTitle": {
+        "description": "Dialog title: Select Language"
+    },
+    "settingsDialogThemeTitle": "Selectează tema",
+    "@settingsDialogThemeTitle": {
+        "description": "Dialog title: Select theme"
+    },
+    "settingsFAQ": "Întrebări frecvente",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
+    "settingsFAQHelp": "Se deschide în browser. Disponibil doar în engleză.",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
+    },
+    "settingsLanguage": "Limba",
+    "@settingsLanguage": {
+        "description": "Currently selected language"
+    },
+    "settingsLockscreen": "Ecran de blocare",
+    "@settingsLockscreen": {
+        "description": "Setting if a lockscreen is shown (authentication is required on startup)"
+    },
+    "settingsLockscreenHelp": "Necesită autentificarea la pornirea aplicației",
+    "@settingsLockscreenHelp": {
+        "description": "Description for lockscreen setting"
+    },
+    "settingsLockscreenInitial": "Vă rugăm să vă autentificați pentru a activa ecranul de blocare.",
+    "@settingsLockscreenInitial": {
+        "description": "Prompt to authenticate once to set up the lockscreen"
+    },
+    "settingsNLAppAccount": "Cont implicit",
+    "@settingsNLAppAccount": {
+        "description": "Default account which will be used for the transaction."
+    },
+    "settingsNLAppAccountDynamic": "<Dinamic>",
+    "@settingsNLAppAccountDynamic": {
+        "description": "Account will be selected dynamically by the content of the notification."
+    },
+    "settingsNLAppAdd": "Adaugă aplicaţie",
+    "@settingsNLAppAdd": {
+        "description": "Button title to add a new app."
+    },
+    "settingsNLAppAddHelp": "Faceți clic pentru a adăuga o aplicație ce va fi ascultă. Numai aplicațiile eligibile vor apărea în listă.",
+    "@settingsNLAppAddHelp": {
+        "description": "Help text below adding the new app button."
+    },
+    "settingsNLAppAddInfo": "Efectuați unele tranzacții în care primiți notificări prin telefon pentru a adăuga aplicații la această listă. Dacă aplicația încă nu apare, vă rugăm să raportați la app@vogt.pw.",
+    "@settingsNLAppAddInfo": {
+        "description": "Help text when no more app is available to add."
+    },
+    "settingsNLAutoAdd": "Creează tranzacție fără interacțiune",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
+    "settingsNLDescription": "Acest serviciu vă permite să preluați detaliile tranzacției de la notificările push primite. În plus, puteți selecta un cont implicit căruia trebuie să îi fie atribuită tranzacția - dacă nu este setată nicio valoare, se va încerca să extragerea un cont din notificare.",
+    "@settingsNLDescription": {
+        "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "Păstrează câmpul notei gol",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
+    },
+    "settingsNLPermissionGrant": "Atingeţi pentru a acorda permisiunea.",
+    "@settingsNLPermissionGrant": {
+        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
+    },
+    "settingsNLPermissionNotGranted": "Permisiunea nu a fost acordată.",
+    "@settingsNLPermissionNotGranted": {
+        "description": "A requested permission was not granted."
+    },
+    "settingsNLPermissionRemove": "Eliminaţi permisiunea?",
+    "@settingsNLPermissionRemove": {
+        "description": "Dialog title asking if permission should be removed."
+    },
+    "settingsNLPermissionRemoveHelp": "Pentru a dezactiva acest serviciu, faceți clic pe aplicație și eliminați permisiunile de pe ecranul următor.",
+    "@settingsNLPermissionRemoveHelp": {
+        "description": "Dialog text giving hint how to remove the permission."
+    },
+    "settingsNLPrefillTXTitle": "Completează automat titlul tranzacției cu titlul notificării",
+    "@settingsNLPrefillTXTitle": {
+        "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLServiceChecking": "Verificare stare…",
+    "@settingsNLServiceChecking": {
+        "description": "Checking the status of the background service"
+    },
+    "settingsNLServiceCheckingError": "Eroare la verificarea stării: {error}",
+    "@settingsNLServiceCheckingError": {
+        "description": "An error occurred while checking the service status",
+        "placeholders": {
+            "error": {
+                "type": "String",
+                "description": "Error details",
+                "example": "Timeout"
+            }
+        }
+    },
+    "settingsNLServiceRunning": "Serviciul rulează.",
+    "@settingsNLServiceRunning": {
+        "description": "A background service is running normally."
+    },
+    "settingsNLServiceStatus": "Starea serviciului",
+    "@settingsNLServiceStatus": {
+        "description": "Status of a background service."
+    },
+    "settingsNLServiceStopped": "Serviciul este oprit.",
+    "@settingsNLServiceStopped": {
+        "description": "A background service is stopped."
+    },
+    "settingsNotificationListener": "Serviciul de clasificare a notificărilor",
+    "@settingsNotificationListener": {
+        "description": "Setting for the notification listener service."
+    },
+    "settingsTheme": "Tema aplicației",
+    "@settingsTheme": {
+        "description": "App theme (dark or light)"
+    },
+    "settingsThemeDynamicColors": "Culori dinamice",
+    "@settingsThemeDynamicColors": {
+        "description": "Material You Dynamic Colors feature"
+    },
+    "settingsThemeValue": "{theme, select, dark{Mod întunecat} light{Mod luminos} other{Sistem Implicit}}",
+    "@settingsThemeValue": {
+        "description": "Currently selected theme (either dark, light or system)",
+        "placeholders": {
+            "theme": {
+                "type": "String",
+                "example": "ThemeMode.dark"
+            }
+        }
+    },
+    "settingsUseServerTimezone": "Utilizează fusul orar al serverului",
+    "@settingsUseServerTimezone": {
+        "description": "Setting label to use server timezone."
+    },
+    "settingsUseServerTimezoneHelp": "Afișează toate orele în fusul orar al serverului. Aceasta imită comportamentul interfeței web.",
+    "@settingsUseServerTimezoneHelp": {
+        "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
+    },
+    "settingsVersion": "Versiune aplicaţie",
+    "@settingsVersion": {
+        "description": "Current App Version"
+    },
+    "settingsVersionChecking": "verificare…",
+    "@settingsVersionChecking": {
+        "description": "Shown while checking for app version"
+    },
+    "transactionAttachments": "Atașamente",
+    "@transactionAttachments": {
+        "description": "Button Label: Attachments"
+    },
+    "transactionDeleteConfirm": "Ești sigur că vrei să ștergi tranzacția selectată?",
+    "@transactionDeleteConfirm": {
+        "description": "Confirmation text to delete transaction"
+    },
+    "transactionDialogAttachmentsDelete": "Şterge ataşament",
+    "@transactionDialogAttachmentsDelete": {
+        "description": "Button Label: Delete Attachment"
+    },
+    "transactionDialogAttachmentsDeleteConfirm": "Ești sigur că dorești să ștergi acest atașament?",
+    "@transactionDialogAttachmentsDeleteConfirm": {
+        "description": "Confirmation text to delete attachment"
+    },
+    "transactionDialogAttachmentsErrorDownload": "Descărcarea fișierului a eșuat.",
+    "@transactionDialogAttachmentsErrorDownload": {
+        "description": "Snackbar Text: File download failed."
+    },
+    "transactionDialogAttachmentsErrorOpen": "Nu s-a putut deschide fișierul: {error}",
+    "@transactionDialogAttachmentsErrorOpen": {
+        "description": "Snackbar Text: File could not be opened, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsErrorUpload": "Nu s-a putut încărca fișierul: {error}",
+    "@transactionDialogAttachmentsErrorUpload": {
+        "description": "Snackbar Text: File could not be uploaded, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsTitle": "Atașamente",
+    "@transactionDialogAttachmentsTitle": {
+        "description": "Dialog Title: Attachments Dialog"
+    },
+    "transactionDialogBillNoBill": "Fără abonament",
+    "@transactionDialogBillNoBill": {
+        "description": "Button Label: no subscription to be used"
+    },
+    "transactionDialogBillTitle": "Asociază cu Abonamentul",
+    "@transactionDialogBillTitle": {
+        "description": "Dialog Title: Link Subscription to transaction"
+    },
+    "transactionDialogCurrencyTitle": "Selectează valuta",
+    "@transactionDialogCurrencyTitle": {
+        "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogTagsAdd": "Adaugă etichetă",
+    "@transactionDialogTagsAdd": {
+        "description": "Button Label: Add Tag"
+    },
+    "transactionDialogTagsHint": "Caută/Adaugă etichetă",
+    "@transactionDialogTagsHint": {
+        "description": "Hint Text for search tag field"
+    },
+    "transactionDialogTagsTitle": "Alege etichete",
+    "@transactionDialogTagsTitle": {
+        "description": "Dialog Title: Select Tags"
+    },
+    "transactionDuplicate": "Duplică",
+    "@transactionDuplicate": {
+        "description": "Menu Label: Duplicate item"
+    },
+    "transactionErrorInvalidAccount": "Cont invalid",
+    "@transactionErrorInvalidAccount": {
+        "description": "Transaction Save Error: Invalid account"
+    },
+    "transactionErrorInvalidBudget": "Buget invalid",
+    "@transactionErrorInvalidBudget": {
+        "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Te rugăm să completezi conturile mai întâi.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Te rugăm să selectezi un cont de active.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
+    },
+    "transactionErrorTitle": "Te rog introdu un titlu.",
+    "@transactionErrorTitle": {
+        "description": "Transaction Save Error: No title provided"
+    },
+    "transactionFormLabelAccountDestination": "Cont destinație",
+    "@transactionFormLabelAccountDestination": {
+        "description": "Transaction Form: Label for destination account for transfer transaction"
+    },
+    "transactionFormLabelAccountForeign": "Cont extern",
+    "@transactionFormLabelAccountForeign": {
+        "description": "Transaction Form: Label for foreign (other) account"
+    },
+    "transactionFormLabelAccountOwn": "Cont propriu",
+    "@transactionFormLabelAccountOwn": {
+        "description": "Transaction Form: Label for own account"
+    },
+    "transactionFormLabelAccountSource": "Cont sursă",
+    "@transactionFormLabelAccountSource": {
+        "description": "Transaction Form: Label for source account for transfer transaction"
+    },
+    "transactionFormLabelNotes": "Notițe",
+    "@transactionFormLabelNotes": {
+        "description": "Transaction Form: Label for notes field"
+    },
+    "transactionFormLabelTags": "Etichete",
+    "@transactionFormLabelTags": {
+        "description": "Transaction Form: Label for tags field"
+    },
+    "transactionFormLabelTitle": "Titlul tranzacției",
+    "@transactionFormLabelTitle": {
+        "description": "Transaction Form: Label for title field"
+    },
+    "transactionSplitAdd": "Adaugă tranzacție divizată",
+    "@transactionSplitAdd": {
+        "description": "Button Label: Add a split"
+    },
+    "transactionSplitChangeCurrency": "Schimbă moneda divizată",
+    "@transactionSplitChangeCurrency": {
+        "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Schimbă contul destinație al diviziunii",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Schimbă contul sursă al diviziunii",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
+    },
+    "transactionSplitChangeTarget": "Schimbă contul țintă divizat",
+    "@transactionSplitChangeTarget": {
+        "description": "Hint Text: Change target account for single split"
+    },
+    "transactionSplitDelete": "Șterge diviziune",
+    "@transactionSplitDelete": {
+        "description": "Hint Text: Delete single split"
+    },
+    "transactionTitleAdd": "Adaugă Tranzacție",
+    "@transactionTitleAdd": {
+        "description": "Title: Add a new transaction"
+    },
+    "transactionTitleDelete": "Şterge tranzacţia",
+    "@transactionTitleDelete": {
+        "description": "Title: Delete existing transaction"
+    },
+    "transactionTitleEdit": "Editează tranzacția",
+    "@transactionTitleEdit": {
+        "description": "Title: Edit existing transaction"
+    },
+    "transactionTypeDeposit": "Depune",
+    "@transactionTypeDeposit": {
+        "description": "Deposit transaction type"
+    },
+    "transactionTypeTransfer": "Transferă",
+    "@transactionTypeTransfer": {
+        "description": "Transfer transaction type"
+    },
+    "transactionTypeWithdrawal": "Retragere",
+    "@transactionTypeWithdrawal": {
+        "description": "Withdrawal transaction type"
+    }
 }

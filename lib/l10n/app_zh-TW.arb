@@ -9,8 +9,228 @@
     "@accountRoleAssetCC": {
         "description": "Firefly Translation String: account_role_ccAsset"
     },
+    "accountRoleAssetDefault": "預設資產帳戶",
+    "@accountRoleAssetDefault": {
+        "description": "Firefly Translation String: account_role_defaultAsset"
+    },
+    "accountRoleAssetSavings": "儲蓄帳戶",
+    "@accountRoleAssetSavings": {
+        "description": "Firefly Translation String: account_role_savingAsset"
+    },
+    "accountRoleAssetShared": "共用資產帳戶",
+    "@accountRoleAssetShared": {
+        "description": "Firefly Translation String: account_role_sharedAsset"
+    },
+    "accountsLabelAsset": "資產帳戶",
+    "@accountsLabelAsset": {
+        "description": "Firefly Translation String: asset_accounts"
+    },
+    "accountsLabelExpense": "支出帳戶",
+    "@accountsLabelExpense": {
+        "description": "Firefly Translation String: expense_accounts"
+    },
+    "accountsLabelLiabilities": "負債",
+    "@accountsLabelLiabilities": {
+        "description": "Firefly Translation String: liabilities_accounts"
+    },
+    "accountsLabelRevenue": "收入帳戶",
+    "@accountsLabelRevenue": {
+        "description": "Firefly Translation String: revenue_accounts"
+    },
+    "accountsLiabilitiesInterest": "{period, select, weekly{週} monthly{月} quarterly{季} halfyear{半年} yearly{年} other{未知週期}}利率 {interest}%",
+    "@accountsLiabilitiesInterest": {
+        "description": "Interest in a certain period",
+        "placeholders": {
+            "interest": {
+                "type": "double",
+                "example": "1.2"
+            },
+            "period": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsAmountAndFrequency": "帳單符合金額在 {minValue} 和 {maxvalue} 之間的交易。{frequency, select, weekly{每週} monthly{每月} quarterly{每季} halfyear{每半年} yearly{每年} other{未知}}重複{skip, plural, =0{} other{，跳過 {skip} 次}}。",
+    "@billsAmountAndFrequency": {
+        "description": "Subscription match for min and max amounts, and frequency",
+        "placeholders": {
+            "minValue": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "maxvalue": {
+                "type": "String",
+                "example": "$60.50"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsChangeLayoutTooltip": "變更版面佈局",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "變更排序順序",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsErrorLoading": "載入帳單時發生錯誤。",
+    "@billsErrorLoading": {
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
+    },
+    "billsExactAmountAndFrequency": "帳單符合金額為 {value} 的交易。{frequency, select, weekly{每週} monthly{每月} quarterly{每季} halfyear{每半年} yearly{每年} other{未知}}重複{skip, plural, =0{} other{，跳過 {skip} 次}}。",
+    "@billsExactAmountAndFrequency": {
+        "description": "Subscription match for exact amount and frequency",
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsExpectedOn": "預計日期 {date}",
+    "@billsExpectedOn": {
+        "description": "Describes what date the subscription is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsFrequency": "{frequency, select,weekly{每週} monthly{每月} quarterly{每季} halfyear{每半年} yearly{每年} other{未知}}",
+    "@billsFrequency": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsFrequencySkip": "{frequency, select, weekly{每週} monthly{每月} quarterly{每季} halfyear{每半年} yearly{每年} other{未知}}重複{skip, plural, =0{} other{，跳過 {skip} 次}}",
+    "@billsFrequencySkip": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsInactive": "未啟用",
+    "@billsInactive": {
+        "description": "Text: when the subscription is inactive"
+    },
+    "billsIsActive": "帳單已啟用",
+    "@billsIsActive": {
+        "description": "Text: the subscription is active"
+    },
+    "billsLayoutGroupSubtitle": "帳單顯示在指定的群組中。",
+    "@billsLayoutGroupSubtitle": {
+        "description": "Subtitle text for group layout option"
+    },
+    "billsLayoutGroupTitle": "群組",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListSubtitle": "帳單顯示在按特定標準排序的列表中。",
+    "@billsLayoutListSubtitle": {
+        "description": "Subtitle text for list layout option"
+    },
+    "billsLayoutListTitle": "列表",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "此列表目前為空。",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "下次預期的支付符合",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for subscription"
+    },
+    "billsNotActive": "帳單未啟用",
+    "@billsNotActive": {
+        "description": "Text: the subscription is inactive"
+    },
+    "billsNotExpected": "此週期內沒有預期的支付",
+    "@billsNotExpected": {
+        "description": "Describes that the subscription is not expected this period"
+    },
+    "billsNoTransactions": "未找到交易記錄。",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the subscription"
+    },
+    "billsPaidOn": "支付日期 {date}",
+    "@billsPaidOn": {
+        "description": "Describes what date the subscription was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "按字母順序",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "按時間間隔排序",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "頻率",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "名稱",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "未分組的",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped subscriptions"
+    },
+    "billsSettingsShowOnlyActive": "僅顯示已啟用的",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "僅顯示已啟用的帳單。",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
     "categoryMonthNext": "下個月",
     "@categoryMonthNext": {
         "description": "Button title to view overview for next month"
+    },
+    "generalLiabilities": "負債",
+    "@generalLiabilities": {
+        "description": "Firefly Translation String: liabilities"
+    },
+    "homeTransactionsEmpty": "未找到交易記錄。",
+    "@homeTransactionsEmpty": {
+        "description": "Message when no transactions are found."
     }
 }

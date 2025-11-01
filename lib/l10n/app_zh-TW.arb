@@ -1,6 +1,14 @@
 {
     "@@locale": "zh-TW",
     "@@x-reference": true,
+    "accountRoleAssetCashWallet": "現金皮夾",
+    "@accountRoleAssetCashWallet": {
+        "description": "Firefly Translation String: account_role_cashWalletAsset"
+    },
+    "accountRoleAssetCC": "信用卡",
+    "@accountRoleAssetCC": {
+        "description": "Firefly Translation String: account_role_ccAsset"
+    },
     "categoryMonthNext": "下個月",
     "@categoryMonthNext": {
         "description": "Button title to view overview for next month"

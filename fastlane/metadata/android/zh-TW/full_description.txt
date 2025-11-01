@@ -14,4 +14,4 @@ Waterfly III 是為您的 Firefly III (一個自由、開源的財務管理程�
 
 貢獻及回報：
 
-If you run into a bug or miss a feature, feel free to give feedback in the play store, send me an email or open an issue on GitHub.
+如果您發現任何錯誤，或是希望增加什麼功能，您可以在 Play store 回報、發送電子郵件給我，或是在 Github 上開 issue。

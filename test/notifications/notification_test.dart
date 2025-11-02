@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
-import 'package:http/http.dart' as http;
 import 'package:waterflyiii/notificationlistener.dart';
 
 void main() {
@@ -13,46 +13,44 @@ void main() {
   late CurrencyRead cadCurrency;
   late CurrencyRead amsCurrency;
 
-  setUpAll(() async {
+  setUpAll(() {
     final MockClient mockHttpClient = MockClient((http.Request request) async {
       if (request.url.path == '/v1/currencies') {
         return http.Response(
-          json.encode(
-            <String, Object>{
-              "data": <Map<String, Object>>[
-                <String, Object>{
-                  "type": "currencies",
-                  "id": "2",
-                  "attributes": <String, Object>{
-                    "created_at": "2025-09-01T00:00:00+00:00",
-                    "updated_at": "2025-09-01T00:00:00+00:00",
-                    "enabled": true,
-                    "primary": false,
-                    "code": "CAD",
-                    "name": "Canadian dollar",
-                    "symbol": "\$",
-                    "decimal_places": 2
-                  }
-                }
-              ],
-              "meta": <String, Map<String, int>>{
-                "pagination": <String, int>{
-                  "total": 3,
-                  "count": 20,
-                  "per_page": 100,
-                  "current_page": 1,
-                  "total_pages": 1
-                }
+          json.encode(<String, Object>{
+            "data": <Map<String, Object>>[
+              <String, Object>{
+                "type": "currencies",
+                "id": "2",
+                "attributes": <String, Object>{
+                  "created_at": "2025-09-01T00:00:00+00:00",
+                  "updated_at": "2025-09-01T00:00:00+00:00",
+                  "enabled": true,
+                  "primary": false,
+                  "code": "CAD",
+                  "name": "Canadian dollar",
+                  "symbol": "\$",
+                  "decimal_places": 2,
+                },
               },
-              "links": <String, String>{
-                "self": "https://demo.firefly-iii.org/api/v1/OBJECT?&page=4",
-                "first": "https://demo.firefly-iii.org/api/v1/OBJECT?&page=1",
-                "next": "https://demo.firefly-iii.org/api/v1/OBJECT?&page=3",
-                "prev": "https://demo.firefly-iii.org/api/v1/OBJECT?&page=2",
-                "last": "https://demo.firefly-iii.org/api/v1/OBJECT?&page=12"
-              }
-            }
-          ),
+            ],
+            "meta": <String, Map<String, int>>{
+              "pagination": <String, int>{
+                "total": 3,
+                "count": 20,
+                "per_page": 100,
+                "current_page": 1,
+                "total_pages": 1,
+              },
+            },
+            "links": <String, String>{
+              "self": "https://demo.firefly-iii.org/api/v1/OBJECT?&page=4",
+              "first": "https://demo.firefly-iii.org/api/v1/OBJECT?&page=1",
+              "next": "https://demo.firefly-iii.org/api/v1/OBJECT?&page=3",
+              "prev": "https://demo.firefly-iii.org/api/v1/OBJECT?&page=2",
+              "last": "https://demo.firefly-iii.org/api/v1/OBJECT?&page=12",
+            },
+          }),
           200,
           headers: <String, String>{'content-type': 'application/json'},
         );

@@ -99,7 +99,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   ),
                   isSelected: !value,
                   tooltip: S.of(context).homeTransactionsSettingsShowTags,
-                  onPressed: () async {
+                  onPressed: () {
                     final SettingsProvider settings =
                         context.read<SettingsProvider>();
                     settings.hideTags = !settings.hideTags;
@@ -143,7 +143,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                       }
                       if (settings.transactionDateFilter !=
                           oldTransactionDateFilter) {
-                        settings.setTransactionDateFilter(
+                        await settings.setTransactionDateFilter(
                           oldTransactionDateFilter,
                         );
                         _txSum = TransactionSum();
@@ -199,7 +199,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     });
   }
 
-  void _fetchPage() async {
+  Future<void> _fetchPage() async {
     if (_pagingState.isLoading) return;
 
     final TransStock? stock = context.read<FireflyService>().transStock;
@@ -727,7 +727,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
             onLongPressStart: (LongPressStartDetails details) async {
               final Size screenSize = MediaQuery.of(context).size;
               final Offset offset = details.globalPosition;
-              HapticFeedback.vibrate();
+              unawaited(HapticFeedback.vibrate());
               final Function? func = await showMenu<Function>(
                 context: context,
                 position: RelativeRect.fromLTRB(

@@ -152,7 +152,7 @@ class DashboardCard extends StatelessWidget {
             selectedIcon: const Icon(Icons.visibility_off_outlined),
             isSelected: hidden,
             onPressed:
-                () async =>
+                () =>
                     hidden
                         ? context.read<SettingsProvider>().dashboardShowCard(
                           card,

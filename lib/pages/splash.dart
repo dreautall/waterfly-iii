@@ -24,7 +24,7 @@ class _SplashPageState extends State<SplashPage> {
 
   Object? _loginError;
 
-  void _login(String? host, String? apiKey) async {
+  Future<void> _login(String? host, String? apiKey) async {
     log.fine(() => "SplashPage->_login()");
 
     bool success = false;

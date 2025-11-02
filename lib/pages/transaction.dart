@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -823,7 +824,7 @@ class _TransactionPageState extends State<TransactionPage>
     }
   }
 
-  void updateAttachmentCount() async {
+  Future<void> updateAttachmentCount() async {
     try {
       final FireflyIii api = context.read<FireflyService>().api;
       final Response<AttachmentArray> response = await api
@@ -1208,10 +1209,10 @@ class _TransactionPageState extends State<TransactionPage>
                       } else {
                         // Launched from notification
                         // https://stackoverflow.com/questions/45109557/flutter-how-to-programmatically-exit-the-app
-                        SystemChannels.platform.invokeMethod(
+                        await SystemChannels.platform.invokeMethod(
                           'SystemNavigator.pop',
                         );
-                        nav.pushReplacement(
+                        await nav.pushReplacement(
                           MaterialPageRoute<bool>(
                             builder: (BuildContext context) => const NavPage(),
                           ),
@@ -1400,7 +1401,7 @@ class _TransactionPageState extends State<TransactionPage>
                       (AutocompleteAccount option) => option.name,
                   optionsBuilder: (TextEditingValue textEditingValue) async {
                     try {
-                      fetchOpSource?.cancel();
+                      unawaited(fetchOpSource?.cancel());
 
                       final FireflyIii api = context.read<FireflyService>().api;
                       fetchOpSource = CancelableOperation<
@@ -1501,7 +1502,7 @@ class _TransactionPageState extends State<TransactionPage>
                     },
                     optionsBuilder: (TextEditingValue textEditingValue) async {
                       try {
-                        fetchOpDestination?.cancel();
+                        unawaited(fetchOpDestination?.cancel());
 
                         final FireflyIii api =
                             context.read<FireflyService>().api;
@@ -1792,7 +1793,7 @@ class _TransactionPageState extends State<TransactionPage>
                                       TextEditingValue textEditingValue,
                                     ) async {
                                       try {
-                                        fetchOp?.cancel();
+                                        unawaited(fetchOp?.cancel());
 
                                         final FireflyIii api =
                                             context.read<FireflyService>().api;
@@ -2421,7 +2422,7 @@ class TransactionTitle extends StatelessWidget {
         focusNode: focusNode,
         optionsBuilder: (TextEditingValue textEditingValue) async {
           try {
-            fetchOp?.cancel();
+            unawaited(fetchOp?.cancel());
 
             final FireflyIii api = context.read<FireflyService>().api;
             fetchOp = CancelableOperation<
@@ -2510,7 +2511,7 @@ class TransactionCategory extends StatelessWidget {
             focusNode: focusNode,
             optionsBuilder: (TextEditingValue textEditingValue) async {
               try {
-                fetchOp?.cancel();
+                unawaited(fetchOp?.cancel());
 
                 final FireflyIii api = context.read<FireflyService>().api;
                 fetchOp = CancelableOperation<
@@ -2632,7 +2633,7 @@ class _TransactionBudgetState extends State<TransactionBudget> {
             },
             optionsBuilder: (TextEditingValue textEditingValue) async {
               try {
-                fetchOp?.cancel();
+                unawaited(fetchOp?.cancel());
 
                 final FireflyIii api = context.read<FireflyService>().api;
                 fetchOp = CancelableOperation<

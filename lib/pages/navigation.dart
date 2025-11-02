@@ -222,7 +222,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                         return;
                       }
 
-                      ff.signOut();
+                      await ff.signOut();
                     },
                     child: Text(
                       S.of(context).formButtonLogout,

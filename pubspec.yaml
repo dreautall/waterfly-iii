@@ -67,7 +67,6 @@ dev_dependencies:
   json_serializable: ^6.9.0
   swagger_dart_code_generator: ^3.0.1
   flutter_native_splash: ^2.4.6
-  translations_cleaner: ^0.0.5
   flutter_test:
     sdk: flutter
   test: ^1.16.0

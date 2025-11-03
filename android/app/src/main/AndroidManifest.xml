@@ -81,6 +81,7 @@
         <package android:name="au.com.suncorp.marketplace"/>
         <package android:name="au.com.up.money"/>
         <package android:name="bank.discovery.banking.production.release"/>
+        <package android:name="be.aion.android.app"/>
         <package android:name="br.com.bb.android"/>
         <package android:name="br.com.digio"/>
         <package android:name="by.alfabank.insync"/>
@@ -142,12 +143,14 @@
         <package android:name="com.dkbcodefactory.banking"/>
         <package android:name="com.ehorizon.apollo.numobile"/>
         <package android:name="com.esunbank.ESUNWALLET"/>
+        <package android:name="com.finanteq.finance.bgz"/>
         <package android:name="com.fineco.it"/>
         <package android:name="com.firstbank.mbanklite"/>
         <package android:name="com.ftband.koto"/>
         <package android:name="com.ftband.mono"/>
         <package android:name="com.fuib.android.spot.online"/>
         <package android:name="com.fusion.banking"/>
+        <package android:name="com.getingroup.mobilebanking"/>
         <package android:name="com.giro"/>
         <package android:name="com.globe.gcash.android"/>
         <package android:name="com.golden1.card"/>
@@ -174,6 +177,7 @@
         <package android:name="com.joaomgcd.autonotification"/>
         <package android:name="com.kasikorn.retail.mbanking.wap"/>
         <package android:name="com.konylabs.capitalone"/>
+        <package android:name="com.konylabs.cbplpat"/>
         <package android:name="com.krungsri.kma"/>
         <package android:name="com.latuabancaperandroid"/>
         <package android:name="com.loan.cash.credit.nanopay"/>
@@ -203,6 +207,7 @@
         <package android:name="com.revolut.revolut"/>
         <package android:name="com.rewire.app"/>
         <package android:name="com.ripley.banco.peru"/>
+        <package android:name="com.s_payment.mobiles_bezahlen"/>
         <package android:name="com.samsung.android.email.provider"/>
         <package android:name="com.samsung.android.messaging"/>
         <package android:name="com.samsung.android.samsungpay.gear"/>
@@ -221,7 +226,6 @@
         <package android:name="com.sixgroup.debixplus"/>
         <package android:name="com.softteco.bsbank"/>
         <package android:name="com.starlingbank.android"/>
-        <package android:name="com.s_payment.mobiles_bezahlen"/>
         <package android:name="com.taxis99"/>
         <package android:name="com.tpaay.bigpay"/>
         <package android:name="com.transferwise.android"/>
@@ -259,13 +263,13 @@
         <package android:name="hu.netbank.netbankdroid"/>
         <package android:name="hu.otpbank.mobile"/>
         <package android:name="in.amazon.mShop.android.shopping"/>
+        <package android:name="in.codeseed.undonotification.pro"/>
         <package android:name="it.bancomat.pay.user"/>
         <package android:name="it.beem.app"/>
         <package android:name="it.hype.app"/>
         <package android:name="it.icbpi.mobile"/>
         <package android:name="it.ingdirect.app"/>
         <package android:name="it.nexi.yap"/>
-        <package android:name="in.codeseed.undonotification.pro"/>
         <package android:name="md.maib.maibank"/>
         <package android:name="mx.com.hsbc.controltotal"/>
         <package android:name="my.com.myboost"/>
@@ -280,9 +284,14 @@
         <package android:name="org.westpac.bank"/>
         <package android:name="pe.com.interbank.mobilebanking"/>
         <package android:name="pe.com.scotiabank.blpm.android.client"/>
+        <package android:name="pl.aliorbank.aib"/>
+        <package android:name="pl.bzwbk.bzwbk24"/>
+        <package android:name="pl.creditagricole.nmobi"/>
+        <package android:name="pl.envelobank.aplikacja"/>
         <package android:name="pl.ing.mojeing"/>
         <package android:name="pl.mbank"/>
-        <package android:name="pl.pkobp.iko" />
+        <package android:name="pl.pkobp.iko"/>
+        <package android:name="pl.sgb.mobile"/>
         <package android:name="ro.ing.mobile.banking.android.activity"/>
         <package android:name="ru.abr"/>
         <package android:name="ru.nspk.mirpay"/>
@@ -291,6 +300,7 @@
         <package android:name="ru.vtb24.mobilebanking.android"/>
         <package android:name="si.delavskahranilnica.dhdenarnik"/>
         <package android:name="sk.fio.sb2" />
+        <package android:name="softax.pekao.powerpay"/>
         <package android:name="tw.com.hncb.sny"/>
         <package android:name="ua.alfabank.mobile.android"/>
         <package android:name="ua.aval.dbo.client.android"/>
@@ -299,7 +309,7 @@
         <package android:name="ua.oschadbank.online"/>
         <package android:name="ua.privatbank.ap24"/>
         <package android:name="uk.co.hsbc.hsbcukmobilebanking"/>
-        <package android:name="wit.android.bcpBankingApp.millenniumPL" />
+        <package android:name="wit.android.bcpBankingApp.millenniumPL"/>
         <package android:name="za.co.fnb.connect.itt"/>
         <package android:name="za.co.nedbank"/>
     </queries>

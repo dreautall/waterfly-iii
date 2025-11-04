@@ -221,6 +221,22 @@
     "@billsSettingsShowOnlyActiveDesc": {
         "description": "Text for show only active subscriptions settings item description"
     },
+    "billsSettingsShowOnlyExpected": "僅顯示預期的",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "僅顯示預期的 (或是已付款的) 帳單。",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
+    "categoryDeleteConfirm": "確定要刪除這個分類嗎？相關的交易不會刪除，但會變成未分類的。",
+    "@categoryDeleteConfirm": {
+        "description": "Confirmation text to delete category"
+    },
+    "categoryErrorLoading": "無法載入分類。",
+    "@categoryErrorLoading": {
+        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+    },
     "categoryMonthNext": "下個月",
     "@categoryMonthNext": {
         "description": "Button title to view overview for next month"

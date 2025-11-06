@@ -305,6 +305,9 @@ class _TransactionPageState extends State<TransactionPage>
         //// Attachments
         _hasAttachments = _hasAttachments || (trans.hasAttachments ?? false);
 
+        //// Piggy (always zeroed out, only relevant for cloning)
+        _piggy.add(null);
+
         // Card Animations
         _cardsAnimationController.add(
           AnimationController(

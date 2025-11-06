@@ -203,12 +203,23 @@ void main() {
       );
       expect(extractedAmount, 80);
 
+      // Test with unknown/invalid currency (RON)
       (extractedCurrency, extractedAmount) = await parseNotificationText(
         apiService,
         r"Paid RON33.97 at Mega Image. RON balance: RON127.56",
         cadCurrency,
       );
       expect(extractedAmount, 33.97);
+      expect(extractedCurrency?.attributes.code, null);
+
+      // Test with known/default currency (CAD)
+      (extractedCurrency, extractedAmount) = await parseNotificationText(
+        apiService,
+        r"Paid CAD33.97 at Mega Image. CAD balance: CAD127.56",
+        cadCurrency,
+      );
+      expect(extractedAmount, 33.97);
+      expect(extractedCurrency?.attributes.code, "CAD");
 
       (extractedCurrency, extractedAmount) = await parseNotificationText(
         apiService,

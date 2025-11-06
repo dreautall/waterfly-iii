@@ -291,6 +291,7 @@ Future<(CurrencyRead?, double)> parseNotificationText(
 
     int bestMatchIndex = -1;
 
+    matchesloop:
     for (int i = 0; i < matches.length; ++i) {
       final RegExpMatch match = matches.elementAt(i);
 
@@ -315,7 +316,7 @@ Future<(CurrencyRead?, double)> parseNotificationText(
               apiCurrency.attributes.symbol == postCurrency) {
             bestMatchIndex = i;
             currency = apiCurrency;
-            break;
+            break matchesloop;
           }
         }
       }

@@ -241,7 +241,7 @@
     "@categoryFormLabelIncludeInSum": {
         "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
     },
-    "categoryFormLabelName": "名稱",
+    "categoryFormLabelName": "分類名稱",
     "@categoryFormLabelName": {
         "description": "Category Add/Edit Form: Label for name field"
     },
@@ -934,6 +934,22 @@
     "@settingsNLAppAddHelp": {
         "description": "Help text below adding the new app button."
     },
+    "settingsNLAppAddInfo": "請先做幾筆交易，等你的 App 跳通知後，才會出現在這個列表裡。如果你的 App 一直沒有出現在列表中，請聯繫 app@vogt.pw。",
+    "@settingsNLAppAddInfo": {
+        "description": "Help text when no more app is available to add."
+    },
+    "settingsNLAutoAdd": "直接新增交易記錄",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
+    "settingsNLDescription": "這項服務讓您可以從手機 App 的通知來自動取得交易資訊。你也可以指定一個這筆交易所屬的帳戶，沒有指定的話，程式會試著自動判斷。",
+    "@settingsNLDescription": {
+        "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "不要填備註",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
+    },
     "settingsNLPermissionGrant": "點選來授予權限。",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
@@ -945,6 +961,14 @@
     "settingsNLPermissionRemove": "是否取消權限？",
     "@settingsNLPermissionRemove": {
         "description": "Dialog title asking if permission should be removed."
+    },
+    "settingsNLPermissionRemoveHelp": "若您想要停用這個服務，請點擊 App，然後在下一個畫面移除相關權限。",
+    "@settingsNLPermissionRemoveHelp": {
+        "description": "Dialog text giving hint how to remove the permission."
+    },
+    "settingsNLPrefillTXTitle": "用通知標題作為交易標題",
+    "@settingsNLPrefillTXTitle": {
+        "description": "Setting pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "正在檢查狀態…",
     "@settingsNLServiceChecking": {
@@ -960,6 +984,194 @@
                 "example": "Timeout"
             }
         }
+    },
+    "settingsNLServiceRunning": "服務已啟動。",
+    "@settingsNLServiceRunning": {
+        "description": "A background service is running normally."
+    },
+    "settingsNLServiceStatus": "服務狀態",
+    "@settingsNLServiceStatus": {
+        "description": "Status of a background service."
+    },
+    "settingsNLServiceStopped": "服務已經停止。",
+    "@settingsNLServiceStopped": {
+        "description": "A background service is stopped."
+    },
+    "settingsNotificationListener": "通知監聽服務",
+    "@settingsNotificationListener": {
+        "description": "Setting for the notification listener service."
+    },
+    "settingsTheme": "App 樣式",
+    "@settingsTheme": {
+        "description": "App theme (dark or light)"
+    },
+    "settingsThemeDynamicColors": "自動樣式",
+    "@settingsThemeDynamicColors": {
+        "description": "Material You Dynamic Colors feature"
+    },
+    "settingsThemeValue": "{theme, select, dark{深色模式} light{淺色模式} other{系統預設}}",
+    "@settingsThemeValue": {
+        "description": "Currently selected theme (either dark, light or system)",
+        "placeholders": {
+            "theme": {
+                "type": "String",
+                "example": "ThemeMode.dark"
+            }
+        }
+    },
+    "settingsUseServerTimezone": "使用伺服器的時區",
+    "@settingsUseServerTimezone": {
+        "description": "Setting label to use server timezone."
+    },
+    "settingsUseServerTimezoneHelp": "以伺服器上的時區設定來顯示時間。這與網頁介面的行為相同。",
+    "@settingsUseServerTimezoneHelp": {
+        "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
+    },
+    "settingsVersion": "版本",
+    "@settingsVersion": {
+        "description": "Current App Version"
+    },
+    "settingsVersionChecking": "檢查中…",
+    "@settingsVersionChecking": {
+        "description": "Shown while checking for app version"
+    },
+    "transactionAttachments": "附件",
+    "@transactionAttachments": {
+        "description": "Button Label: Attachments"
+    },
+    "transactionDeleteConfirm": "您確定要刪除這筆交易記錄嗎？",
+    "@transactionDeleteConfirm": {
+        "description": "Confirmation text to delete transaction"
+    },
+    "transactionDialogAttachmentsDelete": "刪除附件",
+    "@transactionDialogAttachmentsDelete": {
+        "description": "Button Label: Delete Attachment"
+    },
+    "transactionDialogAttachmentsDeleteConfirm": "您確定要刪除這個附件嗎？",
+    "@transactionDialogAttachmentsDeleteConfirm": {
+        "description": "Confirmation text to delete attachment"
+    },
+    "transactionDialogAttachmentsErrorDownload": "無法下載檔案。",
+    "@transactionDialogAttachmentsErrorDownload": {
+        "description": "Snackbar Text: File download failed."
+    },
+    "transactionDialogAttachmentsErrorOpen": "無法開啟檔案：{error}",
+    "@transactionDialogAttachmentsErrorOpen": {
+        "description": "Snackbar Text: File could not be opened, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsErrorUpload": "無法上傳檔案：{error}",
+    "@transactionDialogAttachmentsErrorUpload": {
+        "description": "Snackbar Text: File could not be uploaded, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsTitle": "附件",
+    "@transactionDialogAttachmentsTitle": {
+        "description": "Dialog Title: Attachments Dialog"
+    },
+    "transactionDialogBillNoBill": "沒有帳單",
+    "@transactionDialogBillNoBill": {
+        "description": "Button Label: no subscription to be used"
+    },
+    "transactionDialogBillTitle": "連結帳單",
+    "@transactionDialogBillTitle": {
+        "description": "Dialog Title: Link Subscription to transaction"
+    },
+    "transactionDialogCurrencyTitle": "選擇幣別",
+    "@transactionDialogCurrencyTitle": {
+        "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "沒有小豬撲滿",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "連結小豬撲滿",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
+    },
+    "transactionDialogTagsAdd": "新增標籤",
+    "@transactionDialogTagsAdd": {
+        "description": "Button Label: Add Tag"
+    },
+    "transactionDialogTagsHint": "搜尋或新增標籤",
+    "@transactionDialogTagsHint": {
+        "description": "Hint Text for search tag field"
+    },
+    "transactionDialogTagsTitle": "選擇標籤",
+    "@transactionDialogTagsTitle": {
+        "description": "Dialog Title: Select Tags"
+    },
+    "transactionDuplicate": "複製一份",
+    "@transactionDuplicate": {
+        "description": "Menu Label: Duplicate item"
+    },
+    "transactionErrorInvalidAccount": "帳戶無效",
+    "@transactionErrorInvalidAccount": {
+        "description": "Transaction Save Error: Invalid account"
+    },
+    "transactionErrorInvalidBudget": "預算項目無效",
+    "@transactionErrorInvalidBudget": {
+        "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "您必須先選擇帳戶。",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "請選擇資產帳戶。",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
+    },
+    "transactionErrorTitle": "請填寫標題。",
+    "@transactionErrorTitle": {
+        "description": "Transaction Save Error: No title provided"
+    },
+    "transactionFormLabelAccountDestination": "收款帳戶",
+    "@transactionFormLabelAccountDestination": {
+        "description": "Transaction Form: Label for destination account for transfer transaction"
+    },
+    "transactionFormLabelAccountForeign": "外部帳戶",
+    "@transactionFormLabelAccountForeign": {
+        "description": "Transaction Form: Label for foreign (other) account"
+    },
+    "transactionFormLabelAccountOwn": "自有帳戶",
+    "@transactionFormLabelAccountOwn": {
+        "description": "Transaction Form: Label for own account"
+    },
+    "transactionFormLabelAccountSource": "付款帳戶",
+    "@transactionFormLabelAccountSource": {
+        "description": "Transaction Form: Label for source account for transfer transaction"
+    },
+    "transactionFormLabelNotes": "備註",
+    "@transactionFormLabelNotes": {
+        "description": "Transaction Form: Label for notes field"
+    },
+    "transactionFormLabelTags": "標籤",
+    "@transactionFormLabelTags": {
+        "description": "Transaction Form: Label for tags field"
+    },
+    "transactionFormLabelTitle": "交易標題",
+    "@transactionFormLabelTitle": {
+        "description": "Transaction Form: Label for title field"
+    },
+    "transactionSplitAdd": "新增子交易",
+    "@transactionSplitAdd": {
+        "description": "Button Label: Add a split"
+    },
+    "transactionSplitChangeCurrency": "更改子交易的幣別",
+    "@transactionSplitChangeCurrency": {
+        "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "更改子交易的收款帳戶",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
     },
     "transactionTitleAdd": "新增交易",
     "@transactionTitleAdd": {

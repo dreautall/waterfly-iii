@@ -926,6 +926,14 @@
     "@settingsNLAppAccountDynamic": {
         "description": "Account will be selected dynamically by the content of the notification."
     },
+    "settingsNLAppAdd": "加入 App",
+    "@settingsNLAppAdd": {
+        "description": "Button title to add a new app."
+    },
+    "settingsNLAppAddHelp": "點擊以新增要監聽通知的 App。只會列出符合條件的 App。",
+    "@settingsNLAppAddHelp": {
+        "description": "Help text below adding the new app button."
+    },
     "settingsNLPermissionGrant": "點選來授予權限。",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."

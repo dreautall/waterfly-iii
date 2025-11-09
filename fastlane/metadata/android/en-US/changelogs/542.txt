@@ -1,0 +1,6 @@
+- Feature: Show current balance when viewing transactions of accounts
+- Fix: Transaction view for Firefly III v6.4.6
+- Fix: Duplicating transaction
+- Fix: Notification listener
+- Improved Translation Updates
+- Improved: New banking apps

@@ -1,2 +1,2 @@
-versionName=1.1.7
-versionCode=533
+versionName=1.1.8
+versionCode=542

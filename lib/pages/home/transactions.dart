@@ -218,7 +218,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       }
 
       // Get start date
-      late DateTime? startDate;
+      late DateTime startDate;
       final DateTime now = _tzHandler.sNow().clearTime();
       switch (context.read<SettingsProvider>().transactionDateFilter) {
         case TransactionDateFilter.currentMonth:
@@ -254,10 +254,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
               context.read<SettingsProvider>().showFutureTXs
                   ? null
                   : DateFormat('yyyy-MM-dd', 'en_US').format(now),
-          start:
-              startDate != null
-                  ? DateFormat('yyyy-MM-dd', 'en_US').format(startDate)
-                  : null,
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(startDate),
         );
       } else if (_filters.hasFilters) {
         String query = _filters.text ?? "";
@@ -290,10 +287,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
             query = "tag_is:\"$tag\" $query";
           }
         }
-        if (startDate != null) {
-          query =
-              "date_after:${DateFormat('yyyy-MM-dd', 'en_US').format(startDate)} $query";
-        }
+        query =
+            "date_after:${DateFormat('yyyy-MM-dd', 'en_US').format(startDate)} $query";
         if (!context.read<SettingsProvider>().showFutureTXs) {
           query = "date_before:today $query";
         }
@@ -312,10 +307,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
               context.read<SettingsProvider>().showFutureTXs
                   ? null
                   : DateFormat('yyyy-MM-dd', 'en_US').format(now),
-          start:
-              startDate != null
-                  ? DateFormat('yyyy-MM-dd', 'en_US').format(startDate)
-                  : null,
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(startDate),
         );
       }
 

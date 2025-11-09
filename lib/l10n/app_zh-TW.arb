@@ -1,5 +1,5 @@
 {
-    "@@locale": "zh-TW",
+  "@@locale": "zh_TW",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "現金皮夾",
     "@accountRoleAssetCashWallet": {

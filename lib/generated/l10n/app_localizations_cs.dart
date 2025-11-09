@@ -445,7 +445,7 @@ class SCs extends S {
   String get homeMainBudgetTitle => 'Rozpočty na aktuální měsíc';
 
   @override
-  String get homeMainChartAccountsTitle => 'Souhrn účtu';
+  String get homeMainChartAccountsTitle => 'Souhrn účtů';
 
   @override
   String get homeMainChartCategoriesTitle =>
@@ -618,7 +618,7 @@ class SCs extends S {
 
   @override
   String get loginAbout =>
-      'Pro používání Waterfly III potřebujete Váš server s instancí Firefly III nebo doplněk Firefly III v rámci Home Assistant.\n\nZadejte celou adresu URL spolu s Vašim osobním přístupovým tokenem (Settings -> Profile -> OAuth -> Personal Access Token) níže.';
+      'Pro používání Waterfly III potřebujete vlastní server s instancí Firefly III nebo doplněk Firefly III v rámci služby Home Assistant.\n\nZadejte celou adresu URL spolu s vaším osobním přístupovým tokenem (Možnosti -> Profil -> OAuth -> Osobní přístupový token) níže.';
 
   @override
   String get loginFormLabelAPIKey => 'Platný klíč API';
@@ -733,14 +733,14 @@ class SCs extends S {
 
   @override
   String get settingsNLAppAddInfo =>
-      'Proveďte transakce při kterých dostáváte notifikaci v telefonu pro přidání aplikací do tohoto seznamu. Pokud se přesto aplikace nezobrazí, prosíme nahlašte to na app@vogt.pw.';
+      'Pro přidání aplikací do tohoto seznamu proveďte transakce, při kterých obdržíte oznámení v telefonu. Pokud se aplikace přesto nezobrazí, nahlaste to prosím na app@vogt.pw.';
 
   @override
   String get settingsNLAutoAdd => 'Vytvořit transakci bez interakce';
 
   @override
   String get settingsNLDescription =>
-      'Tato služba umožňuje načíst detaily transakce z příchozích push notifikací. Kromě toho si můžete vybrat výchozí účet, ke kterému by měla být transakce přiřazena - pokud není nastavena žádná hodnota, služba se snaží získat účet z textu notifikace.';
+      'Tato služba umožňuje načíst podrobnosti o transakcích z příchozích oznámení. Kromě toho si můžete vybrat výchozí účet, ke kterému by měla být transakce přiřazena — pokud není nastavena žádná hodnota, služba se pokusí získat účet z textu oznámení.';
 
   @override
   String get settingsNLEmptyNote => 'Ponechat pole poznámky prázdné';
@@ -780,7 +780,7 @@ class SCs extends S {
   String get settingsNLServiceStopped => 'Služba je zastavena.';
 
   @override
-  String get settingsNotificationListener => 'Služba pro čtení notifikací';
+  String get settingsNotificationListener => 'Služba pro čtení oznámení';
 
   @override
   String get settingsTheme => 'Motiv aplikace';

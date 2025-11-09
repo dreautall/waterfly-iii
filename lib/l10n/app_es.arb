@@ -1,5 +1,5 @@
 {
-    "@@locale": "es",
+  "@@locale": "es",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "Billetera de efectivo",
     "@accountRoleAssetCashWallet": {

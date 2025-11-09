@@ -14,8 +14,8 @@ current time. You can modify any fields before saving it.
 A: With the current technical implementation, the app uses the Android certificate store. You can
 create your own CA (Certificate Authority) to create your self-signed certificates and add the
 CA's (long-living) certificate into the Android Certificate Store. Then, any certificates signed by
-your CA will be trusted by the app. However, due to technical limitations, I cannot implement an "
-bypass certificate validation" option (or something similar). You can find a more technical
+your CA will be trusted by the app. However, due to technical limitations, I cannot implement an
+"bypass certificate validation" option (or something similar). You can find a more technical
 answer [here](https://github.com/dreautall/waterfly-iii/issues/77#issuecomment-2143724258)
 and [here](https://github.com/dreautall/waterfly-iii/issues/418#issuecomment-2237184561).
 
@@ -79,7 +79,12 @@ still doesn't show up, there are a couple of reasons why:
 
 **Q: The app selects the wrong currency!**
 
-A: Most of the time, the issue is from currencies that also use the `$` (Dollar) sign, for example Austrian Dollar (`A$`). The app checks the notification for an exact match of the currency, so a transaction with "*You paid $12.34*" gets matched to the (US-)Dollar. To fix this, you can change the currency settings in Firefly III, for example make the sign of the US-Dollar to `US$`, and change Austrian Dollar from `A$` to just `$`. This way, notifications with just `$` will get matched to Austrian Dollar.
+A: Most of the time, the issue is from currencies that also use the `$` (Dollar) sign, for example
+Austrian Dollar (`A$`). The app checks the notification for an exact match of the currency, so a
+transaction with "*You paid $12.34*" gets matched to the (US-)Dollar. To fix this, you can change
+the currency settings in Firefly III, for example change the sign of the US-Dollar to `US$`, and
+change Austrian Dollar from `A$` to just `$`. This way, notifications with just `$` will get matched
+to Austrian Dollar.
 
 
 
@@ -96,16 +101,6 @@ via [GitHub Sponsors](https://github.com/sponsors/dreautall), but I do not expec
 
 A: The app has a minimal privacy policy. The app only sends data to the server you specify during
 setup. Google may collect crash reports if you install the app via the Play Store that are forwarded
-to me. Google requires a Privacy Policy for the Play Store listing, which you can
-find [here](https://github.com/dreautall/waterfly-iii/blob/master/.playstore/privacy-policy.md).
-
-
-**Q: Why can't I find the app on F-Droid?**
-
-A: I honestly don't know. Opening the request to include the app into the F-Droid store was made
-pretty
-early ([GitHub issue](https://github.com/dreautall/waterfly-iii/issues/2), [F-Droid issue](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/12959)).
-There was quite a bit of back-and-forth on the F-Droid issue, but not really any solution or path
-for me to work towards.
-You can however add *IzzyOnDroid*s F-Droid store
-and [find the app there](https://apt.izzysoft.de/fdroid/index/apk/com.dreautall.waterflyiii)
+to me. These don't contain any sensitive information. Google requires a Privacy Policy for the Play
+Store listing, which you can find
+[here](https://github.com/dreautall/waterfly-iii/blob/master/.playstore/privacy-policy.md).

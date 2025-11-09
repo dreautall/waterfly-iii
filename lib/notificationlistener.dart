@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
@@ -66,7 +67,7 @@ Future<NotificationListenerStatus> nlStatus() async {
 }
 
 @pragma('vm:entry-point')
-void nlCallback() async {
+void nlCallback() {
   log.finest(() => "nlCallback()");
   NotificationServicePlugin.instance.executeNotificationListener((
     NotificationEvent? evt,
@@ -190,21 +191,23 @@ void nlCallback() async {
           }
         }
 
-        FlutterLocalNotificationsPlugin().show(
-          DateTime.now().millisecondsSinceEpoch ~/ 1000,
-          "Transaction created",
-          "Transaction created based on notification ${evt.title}",
-          const NotificationDetails(
-            android: AndroidNotificationDetails(
-              'extract_transaction_created',
-              'Transaction from Notification Created',
-              channelDescription:
-                  'Notification that a Transaction has been created from another Notification.',
-              importance: Importance.low, // Android 8.0 and higher
-              priority: Priority.low, // Android 7.1 and lower
+        unawaited(
+          FlutterLocalNotificationsPlugin().show(
+            DateTime.now().millisecondsSinceEpoch ~/ 1000,
+            "Transaction created",
+            "Transaction created based on notification ${evt.title}",
+            const NotificationDetails(
+              android: AndroidNotificationDetails(
+                'extract_transaction_created',
+                'Transaction from Notification Created',
+                channelDescription:
+                    'Notification that a Transaction has been created from another Notification.',
+                importance: Importance.low, // Android 8.0 and higher
+                priority: Priority.low, // Android 7.1 and lower
+              ),
             ),
+            payload: "",
           ),
-          payload: "",
         );
 
         showNotification = false;
@@ -216,27 +219,29 @@ void nlCallback() async {
 
     if (showNotification) {
       // :TODO: l10n
-      FlutterLocalNotificationsPlugin().show(
-        DateTime.now().millisecondsSinceEpoch ~/ 1000,
-        "Create Transaction?",
-        // :TODO: once we l10n this, a better switch can be implemented...
-        "Click to create a transaction based on the notification ${evt.title ?? evt.packageName ?? ""}",
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-            'extract_transaction',
-            'Create Transaction from Notification',
-            channelDescription:
-                'Notification asking to create a transaction from another Notification.',
-            importance: Importance.low, // Android 8.0 and higher
-            priority: Priority.low, // Android 7.1 and lower
+      unawaited(
+        FlutterLocalNotificationsPlugin().show(
+          DateTime.now().millisecondsSinceEpoch ~/ 1000,
+          "Create Transaction?",
+          // :TODO: once we l10n this, a better switch can be implemented...
+          "Click to create a transaction based on the notification ${evt.title ?? evt.packageName ?? ""}",
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              'extract_transaction',
+              'Create Transaction from Notification',
+              channelDescription:
+                  'Notification asking to create a transaction from another Notification.',
+              importance: Importance.low, // Android 8.0 and higher
+              priority: Priority.low, // Android 7.1 and lower
+            ),
           ),
-        ),
-        payload: jsonEncode(
-          NotificationTransaction(
-            evt.packageName ?? "",
-            evt.title ?? "",
-            evt.text ?? "",
-            DateTime.tryParse(evt.postTime ?? "") ?? DateTime.now(),
+          payload: jsonEncode(
+            NotificationTransaction(
+              evt.packageName ?? "",
+              evt.title ?? "",
+              evt.text ?? "",
+              DateTime.tryParse(evt.postTime ?? "") ?? DateTime.now(),
+            ),
           ),
         ),
       );
@@ -280,11 +285,13 @@ Future<(CurrencyRead?, double)> parseNotificationText(
   final Iterable<RegExpMatch> matches = rFindMoney.allMatches(notificationBody);
 
   if (matches.isNotEmpty) {
-    final List<CurrencyRead> currencies = (await api.v1CurrenciesGet()).body!.data;
+    final List<CurrencyRead> currencies =
+        (await api.v1CurrenciesGet()).body!.data;
     currencies.add(localCurrency);
 
     int bestMatchIndex = -1;
 
+    matchesloop:
     for (int i = 0; i < matches.length; ++i) {
       final RegExpMatch match = matches.elementAt(i);
 
@@ -309,7 +316,7 @@ Future<(CurrencyRead?, double)> parseNotificationText(
               apiCurrency.attributes.symbol == postCurrency) {
             bestMatchIndex = i;
             currency = apiCurrency;
-            break;
+            break matchesloop;
           }
         }
       }

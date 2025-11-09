@@ -1,0 +1,234 @@
+{
+    "@@locale": "uk",
+    "@@x-reference": true,
+    "accountRoleAssetCashWallet": "Гаманець",
+    "@accountRoleAssetCashWallet": {
+        "description": "Firefly Translation String: account_role_cashWalletAsset"
+    },
+    "accountRoleAssetCC": "Кредитна карта",
+    "@accountRoleAssetCC": {
+        "description": "Firefly Translation String: account_role_ccAsset"
+    },
+    "accountRoleAssetDefault": "Основний рахунок за замовчуванням",
+    "@accountRoleAssetDefault": {
+        "description": "Firefly Translation String: account_role_defaultAsset"
+    },
+    "accountRoleAssetSavings": "Накопичувальний рахунок",
+    "@accountRoleAssetSavings": {
+        "description": "Firefly Translation String: account_role_savingAsset"
+    },
+    "accountRoleAssetShared": "Спільний рахунок",
+    "@accountRoleAssetShared": {
+        "description": "Firefly Translation String: account_role_sharedAsset"
+    },
+    "accountsLabelAsset": "Активні рахунки",
+    "@accountsLabelAsset": {
+        "description": "Firefly Translation String: asset_accounts"
+    },
+    "accountsLabelExpense": "Рахунки витрат",
+    "@accountsLabelExpense": {
+        "description": "Firefly Translation String: expense_accounts"
+    },
+    "accountsLabelLiabilities": "Зобов’язання",
+    "@accountsLabelLiabilities": {
+        "description": "Firefly Translation String: liabilities_accounts"
+    },
+    "accountsLabelRevenue": "Джерела доходів",
+    "@accountsLabelRevenue": {
+        "description": "Firefly Translation String: revenue_accounts"
+    },
+    "billsChangeLayoutTooltip": "Змінити вигляд",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "Змінити порядок сортування",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsExpectedOn": "Очікується {date}",
+    "@billsExpectedOn": {
+        "description": "Describes what date the subscription is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsInactive": "Неактивний",
+    "@billsInactive": {
+        "description": "Text: when the subscription is inactive"
+    },
+    "billsLayoutGroupTitle": "Група",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListTitle": "Список",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "Список наразі порожній.",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "Наступний очікуваний збіг",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for subscription"
+    },
+    "billsNoTransactions": "Трансакцій не знайдено.",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the subscription"
+    },
+    "billsPaidOn": "Сплачено {date}",
+    "@billsPaidOn": {
+        "description": "Describes what date the subscription was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "За алфавітом",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "За період часу",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "Періодичність",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "Назва",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "Без групи",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped subscriptions"
+    },
+    "categoryDeleteConfirm": "Ви впевнені, що хочете видалити цю категорію? Операції не будуть видалені, але більше не будуть мати категорій.",
+    "@categoryDeleteConfirm": {
+        "description": "Confirmation text to delete category"
+    },
+    "categoryErrorLoading": "Помилка при завантаженні категорій.",
+    "@categoryErrorLoading": {
+        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+    },
+    "categoryFormLabelIncludeInSum": "Включати в щомісячну суму",
+    "@categoryFormLabelIncludeInSum": {
+        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+    },
+    "categoryFormLabelName": "Назва категорії",
+    "@categoryFormLabelName": {
+        "description": "Category Add/Edit Form: Label for name field"
+    },
+    "categoryMonthNext": "Наступний місяць",
+    "@categoryMonthNext": {
+        "description": "Button title to view overview for next month"
+    },
+    "categoryMonthPrev": "Попередній місяць",
+    "@categoryMonthPrev": {
+        "description": "Button title to view overview for previous month"
+    },
+    "categorySumExcluded": "виключена",
+    "@categorySumExcluded": {
+        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+    },
+    "categoryTitleAdd": "Додати категорію",
+    "@categoryTitleAdd": {
+        "description": "Title for Dialog: Add Category"
+    },
+    "categoryTitleDelete": "Видалити категорію",
+    "@categoryTitleDelete": {
+        "description": "Title for Dialog: Delete Category"
+    },
+    "categoryTitleEdit": "Редагувати категорію",
+    "@categoryTitleEdit": {
+        "description": "Title for Dialog: Edit Category"
+    },
+    "catNone": "<немає категорії>",
+    "@catNone": {
+        "description": "Placeholder when no category has been set."
+    },
+    "catOther": "Інше",
+    "@catOther": {
+        "description": "Category description for summary category 'Other'"
+    },
+    "errorAPIInvalidResponse": "Невірна відповідь від API: {message}",
+    "@errorAPIInvalidResponse": {
+        "description": "Invalid API response error",
+        "placeholders": {
+            "message": {
+                "type": "String",
+                "example": "API could not be reached."
+            }
+        }
+    },
+    "errorAPIUnavailable": "API недоступне",
+    "@errorAPIUnavailable": {
+        "description": "Error thrown when API is unavailable."
+    },
+    "errorFieldRequired": "Це поле є обов'язковим.",
+    "@errorFieldRequired": {
+        "description": "Error: Required field was left empty."
+    },
+    "errorInvalidURL": "Некоректна адреса URL",
+    "@errorInvalidURL": {
+        "description": "Error: URL is invalid"
+    },
+    "errorMinAPIVersion": "Необхідна мінімальна версія API Firefly v{requiredVersion}. Будь ласка, оновіть програму.",
+    "@errorMinAPIVersion": {
+        "description": "Error: Required API version not met.",
+        "placeholders": {
+            "requiredVersion": {
+                "type": "String",
+                "example": "2.0.0"
+            }
+        }
+    },
+    "errorUnknown": "Невідома помилка.",
+    "@errorUnknown": {
+        "description": "Error without further information occurred."
+    },
+    "formButtonHelp": "Допомога",
+    "@formButtonHelp": {
+        "description": "Button Label: Help"
+    },
+    "formButtonLogin": "Вхід",
+    "@formButtonLogin": {
+        "description": "Button Label: Login"
+    },
+    "formButtonLogout": "Вихід",
+    "@formButtonLogout": {
+        "description": "Button Label: Logout"
+    },
+    "formButtonRemove": "Видалити",
+    "@formButtonRemove": {
+        "description": "Button Label: Remove"
+    },
+    "formButtonTransactionAdd": "Додати транзакцію",
+    "@formButtonTransactionAdd": {
+        "description": "Button Label: Add Transaction"
+    },
+    "formButtonTryAgain": "Спробувати ще раз",
+    "@formButtonTryAgain": {
+        "description": "Button Label: Try that thing again (login etc)"
+    },
+    "generalLiabilities": "Зобов’язання",
+    "@generalLiabilities": {
+        "description": "Firefly Translation String: liabilities"
+    },
+    "homeTransactionsEmpty": "Трансакцій не знайдено.",
+    "@homeTransactionsEmpty": {
+        "description": "Message when no transactions are found."
+    },
+    "transactionTitleAdd": "Додати транзакцію",
+    "@transactionTitleAdd": {
+        "description": "Title: Add a new transaction"
+    }
+}

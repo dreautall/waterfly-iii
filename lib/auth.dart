@@ -100,9 +100,7 @@ class APIRequestInterceptor implements Interceptor {
   final Function() headerFunc;
 
   @override
-  FutureOr<Response<BodyType>> intercept<BodyType>(
-    Chain<BodyType> chain,
-  ) async {
+  FutureOr<Response<BodyType>> intercept<BodyType>(Chain<BodyType> chain) {
     log.finest(() => "API query ${chain.request.method} ${chain.request.url}");
     if (chain.request.body != null) {
       log.finest(() => "Query Body: ${chain.request.body}");
@@ -269,7 +267,7 @@ class FireflyService with ChangeNotifier {
     }
 
     try {
-      return await signIn(apiHost, apiKey);
+      return signIn(apiHost, apiKey);
     } catch (e) {
       _storageSignInException = e;
       log.finest(() => "notify FireflyService->signInFromStorage");
@@ -345,8 +343,8 @@ class FireflyService with ChangeNotifier {
     log.finest(() => "notify FireflyService->signIn");
     notifyListeners();
 
-    storage.write(key: 'api_host', value: host);
-    storage.write(key: 'api_key', value: apiKey);
+    await storage.write(key: 'api_host', value: host);
+    await storage.write(key: 'api_key', value: apiKey);
 
     return true;
   }

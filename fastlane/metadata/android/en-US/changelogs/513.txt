@@ -7,4 +7,4 @@
 - Fix: Notification Listener handling improved.
 - Fix: Piggybanks can be updated again from within the app.
 - Fix: Language selector works again
-- Various dependency updates.″
+- Various dependency updates.

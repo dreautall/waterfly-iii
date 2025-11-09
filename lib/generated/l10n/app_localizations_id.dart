@@ -56,19 +56,20 @@ class SId extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'mingguan',
-      'monthly': 'bulanan',
-      'quarterly': 'triwulanan',
-      'halfyear': 'setengah tahunan',
-      'yearly': 'tahunan',
-      'other': 'tidak diketahui',
+      'weekly': 'weekly',
+      'monthly': 'monthly',
+      'quarterly': 'quarterly',
+      'halfyear': 'half-yearly',
+      'yearly': 'yearly',
+      'other': 'unknown',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', melewati $skip',
+      other: ', skips over $skip',
+      zero: '',
     );
-    return 'Langganan cocok dengan transaksi antara $minValue dan $maxvalue. Berulang $_temp0$_temp1.';
+    return 'Subscription matches transactions between $minValue and $maxvalue. Repeats $_temp0$_temp1.';
   }
 
   @override
@@ -87,19 +88,20 @@ class SId extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'mingguan',
-      'monthly': 'bulanan',
-      'quarterly': 'triwulanan',
-      'halfyear': 'setengah tahunan',
-      'yearly': 'tahunan',
-      'other': 'tidak diketahui',
+      'weekly': 'weekly',
+      'monthly': 'monthly',
+      'quarterly': 'quarterly',
+      'halfyear': 'half-yearly',
+      'yearly': 'yearly',
+      'other': 'unknown',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', melewati $skip',
+      other: ', skips over $skip',
+      zero: '',
     );
-    return 'Langganan cocok dengan transaksi sebesar $value. Berulang $_temp0$_temp1.';
+    return 'Subscription matches transactions of $value. Repeats $_temp0$_temp1.';
   }
 
   @override
@@ -126,17 +128,18 @@ class SId extends S {
   @override
   String billsFrequencySkip(String frequency, num skip) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Mingguan',
-      'monthly': 'Bulanan',
-      'quarterly': 'Triwulanan',
-      'halfyear': 'Setengah tahunan',
-      'yearly': 'Tahunan',
-      'other': 'Tidak diketahui',
+      'weekly': 'Weekly',
+      'monthly': 'Monthly',
+      'quarterly': 'Quarterly',
+      'halfyear': 'Half-yearly',
+      'yearly': 'Yearly',
+      'other': 'Unknown',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', melewati $skip',
+      other: ', skips over $skip',
+      zero: '',
     );
     return '$_temp0$_temp1';
   }
@@ -586,7 +589,7 @@ class SId extends S {
   String get homeTransactionsDialogFilterTitle => 'Pilih filter';
 
   @override
-  String get homeTransactionsEmpty => 'Transaksi tidak ditemukan.';
+  String get homeTransactionsEmpty => 'Tidak ada transaksi ditemukan.';
 
   @override
   String homeTransactionsMultipleCategories(int num) {

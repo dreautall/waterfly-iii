@@ -243,7 +243,7 @@ class _AccountTXpageState extends State<AccountTXpage> {
     });
   }
 
-  void submitTextfield() async {
+  Future<void> submitTextfield() async {
     log.finest(() => "submitting edit field");
     final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
 

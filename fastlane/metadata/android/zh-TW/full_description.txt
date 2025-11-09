@@ -1,17 +1,17 @@
-Waterfly III is an unofficial app for your own instance of Firefly III, a free and open source finance manager.
+Waterfly III 是為您的 Firefly III (一個自由、開源的財務管理程式) 打造的非官方 App。
 
-This app requires a self-hosted Firefly III instance on your own server, please visit https://www.firefly-iii.org/ for more information about the software. It is only a companion app and cannot run standalone!
+您必須自行頢設 Firefly III 伺服器，才能使用本 App。您可以前往 https://www.firefly-iii.org/ 找到架設伺服器的指引以及更多資訊。 這個 App 無法獨立執行，它需要與您的 Firefly III 伺服器協作。
 
-Features:
+功能：
 
-- Dashboard with charts & budget overview
-- Transaction list with filters
-- Add & edit transactions with autocomplete, including attachments, split transactions & multi currency support
-- Piggy Bank support (view & add money)
-- Notification Listener Service to easily create new transactions based on incoming notifications (e.g., from Google Pay or your banking app)
-- Completely open source: https://github.com/dreautall/waterfly-iii
-- No ads or trackers
+- 首頁提供圖表及預算概況讓您快速瀏覽
+- 可以自訂查詢或過濾的交易列表
+- 新增及編輯交易時可以自動補完，且支援附件、分割交易及多種幣別
+- 支援小豬撲滿 (查看及存入)
+- 透過監聽手機通知輕鬆記帳，例如 Google Pay 或是銀行 App 的交易通知
+- 開源：https://github.com/dreautall/waterfly-iii
+- 沒有廣告及追蹤程式
 
-Contribution:
+貢獻及回報：
 
-If you run into a bug or miss a feature, feel free to give feedback in the play store, send me an email or open an issue on GitHub.
+如果您發現任何錯誤，或是希望增加什麼功能，您可以在 Play store 回報、發送電子郵件給我，或是在 Github 上開 issue。

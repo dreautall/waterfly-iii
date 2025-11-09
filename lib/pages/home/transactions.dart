@@ -234,7 +234,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
           startDate = now.copyWith(year: now.year - 1);
           break;
         default:
-          startDate = null;
+          // Don't use 0 seconds, as DST & stuff might throw an error:
+          // "The start must be a date after 1970-01-02."
+          startDate = DateTime.fromMillisecondsSinceEpoch(
+            365 * 24 * 60 * 60 * 1000,
+          );
           break;
       }
 

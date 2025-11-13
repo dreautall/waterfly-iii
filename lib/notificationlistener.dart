@@ -148,7 +148,7 @@ void nlCallback() {
         }
 
         // Check currency
-        if (currency != localCurrency) {
+        if (currency?.id != localCurrency.id) {
           throw Exception("Can't auto-add TX with foreign currency");
         }
 

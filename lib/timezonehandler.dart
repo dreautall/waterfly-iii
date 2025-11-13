@@ -30,13 +30,14 @@ class TimeZoneHandler {
   Future<void> setUseServerTime(bool useServerTime) async {
     _useServerTime = useServerTime;
     log.finest(() => "set useServertime to $useServerTime");
-    updateDeviceLocation().then(
+    await updateDeviceLocation().then(
       (_) => tz.setLocalLocation(useServerTime ? sLocation : dLocation),
     );
   }
 
   Future<void> updateDeviceLocation() async {
-    final String deviceTZ = await FlutterTimezone.getLocalTimezone();
+    final TimezoneInfo tzInfo = await FlutterTimezone.getLocalTimezone();
+    final String deviceTZ = tzInfo.identifier;
     try {
       _deviceLoc = tz.getLocation(deviceTZ);
     } on tz.LocationNotFoundException {

@@ -83,7 +83,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit The number of items returned.
   ///@param date If the account is an asset account or a liability, the autocomplete will also return the balance of the account on this date.
   ///@param types Optional filter on the account type(s) used in the autocomplete.
-  @Get(path: '/v1/autocomplete/accounts')
+  @GET(path: '/v1/autocomplete/accounts')
   Future<chopper.Response<AutocompleteAccountArray>>
   _v1AutocompleteAccountsGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -118,7 +118,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/v1/autocomplete/bills')
+  @GET(path: '/v1/autocomplete/bills')
   Future<chopper.Response<AutocompleteBillArray>> _v1AutocompleteBillsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
@@ -150,7 +150,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/v1/autocomplete/budgets')
+  @GET(path: '/v1/autocomplete/budgets')
   Future<chopper.Response<AutocompleteBudgetArray>> _v1AutocompleteBudgetsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
@@ -179,7 +179,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/v1/autocomplete/categories')
+  @GET(path: '/v1/autocomplete/categories')
   Future<chopper.Response<AutocompleteCategoryArray>>
   _v1AutocompleteCategoriesGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -209,7 +209,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/v1/autocomplete/currencies')
+  @GET(path: '/v1/autocomplete/currencies')
   Future<chopper.Response<AutocompleteCurrencyArray>>
   _v1AutocompleteCurrenciesGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -243,7 +243,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/v1/autocomplete/currencies-with-code')
+  @GET(path: '/v1/autocomplete/currencies-with-code')
   Future<chopper.Response<AutocompleteCurrencyCodeArray>>
   _v1AutocompleteCurrenciesWithCodeGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -273,7 +273,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/v1/autocomplete/object-groups')
+  @GET(path: '/v1/autocomplete/object-groups')
   Future<chopper.Response<AutocompleteObjectGroupArray>>
   _v1AutocompleteObjectGroupsGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -306,7 +306,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/v1/autocomplete/piggy-banks')
+  @GET(path: '/v1/autocomplete/piggy-banks')
   Future<chopper.Response<AutocompletePiggyArray>>
   _v1AutocompletePiggyBanksGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -340,7 +340,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/v1/autocomplete/piggy-banks-with-balance')
+  @GET(path: '/v1/autocomplete/piggy-banks-with-balance')
   Future<chopper.Response<AutocompletePiggyBalanceArray>>
   _v1AutocompletePiggyBanksWithBalanceGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -370,7 +370,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/v1/autocomplete/recurring')
+  @GET(path: '/v1/autocomplete/recurring')
   Future<chopper.Response<AutocompleteRecurrenceArray>>
   _v1AutocompleteRecurringGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -400,7 +400,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/v1/autocomplete/rule-groups')
+  @GET(path: '/v1/autocomplete/rule-groups')
   Future<chopper.Response<AutocompleteRuleGroupArray>>
   _v1AutocompleteRuleGroupsGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -433,8 +433,42 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/v1/autocomplete/rules')
+  @GET(path: '/v1/autocomplete/rules')
   Future<chopper.Response<AutocompleteRuleArray>> _v1AutocompleteRulesGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('query') String? query,
+    @Query('limit') int? limit,
+  });
+
+  ///Returns all subscriptions of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  Future<chopper.Response<AutocompleteBillArray>>
+  v1AutocompleteSubscriptionsGet({
+    String? xTraceId,
+    String? query,
+    int? limit,
+  }) {
+    generatedMapping.putIfAbsent(
+      AutocompleteBill,
+      () => AutocompleteBill.fromJsonFactory,
+    );
+
+    return _v1AutocompleteSubscriptionsGet(
+      xTraceId: xTraceId?.toString(),
+      query: query,
+      limit: limit,
+    );
+  }
+
+  ///Returns all subscriptions of the user returned in a basic auto-complete array.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param query The autocomplete search query.
+  ///@param limit The number of items returned.
+  @GET(path: '/v1/autocomplete/subscriptions')
+  Future<chopper.Response<AutocompleteBillArray>>
+  _v1AutocompleteSubscriptionsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
@@ -465,7 +499,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/v1/autocomplete/tags')
+  @GET(path: '/v1/autocomplete/tags')
   Future<chopper.Response<AutocompleteTagArray>> _v1AutocompleteTagsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
@@ -498,7 +532,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/v1/autocomplete/transaction-types')
+  @GET(path: '/v1/autocomplete/transaction-types')
   Future<chopper.Response<AutocompleteTransactionTypeArray>>
   _v1AutocompleteTransactionTypesGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -528,7 +562,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/v1/autocomplete/transactions')
+  @GET(path: '/v1/autocomplete/transactions')
   Future<chopper.Response<AutocompleteTransactionArray>>
   _v1AutocompleteTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -562,7 +596,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The autocomplete search query.
   ///@param limit The number of items returned.
-  @Get(path: '/v1/autocomplete/transactions-with-id')
+  @GET(path: '/v1/autocomplete/transactions-with-id')
   Future<chopper.Response<AutocompleteTransactionIDArray>>
   _v1AutocompleteTransactionsWithIdGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -574,10 +608,14 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
+  ///@param period Optional period to group the data by. If not provided, it will default to '1M' or whatever is deemed relevant for the range provided.  If you want to know which periods are available, see the enums or get the configuration value: `GET /api/v1/configuration/firefly.valid_view_ranges`
+  ///@param preselected Optional set of preselected accounts to limit the chart to. This may be easier than submitting all asset accounts manually, for example. If you want to know which selection are available, see the enums here or get the configuration value: `GET /api/v1/configuration/firefly.preselected_accounts`  - `empty`: do not do a pre-selection - `all`: select all asset and all liability accounts - `assets`: select all asset accounts - `liabilities`: select all liability accounts  If no accounts are found, the user's "frontpage accounts" preference will be used. If that is empty, all asset accounts will be used.
   Future<chopper.Response<ChartLine>> v1ChartAccountOverviewGet({
     String? xTraceId,
     required String? start,
     required String? end,
+    enums.V1ChartAccountOverviewGetPeriod? period,
+    enums.V1ChartAccountOverviewGetPreselected? preselected,
   }) {
     generatedMapping.putIfAbsent(
       ChartDataSet,
@@ -588,6 +626,8 @@ abstract class FireflyIii extends ChopperService {
       xTraceId: xTraceId?.toString(),
       start: start,
       end: end,
+      period: period?.value?.toString(),
+      preselected: preselected?.value?.toString(),
     );
   }
 
@@ -595,8 +635,123 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  @Get(path: '/v1/chart/account/overview')
+  ///@param period Optional period to group the data by. If not provided, it will default to '1M' or whatever is deemed relevant for the range provided.  If you want to know which periods are available, see the enums or get the configuration value: `GET /api/v1/configuration/firefly.valid_view_ranges`
+  ///@param preselected Optional set of preselected accounts to limit the chart to. This may be easier than submitting all asset accounts manually, for example. If you want to know which selection are available, see the enums here or get the configuration value: `GET /api/v1/configuration/firefly.preselected_accounts`  - `empty`: do not do a pre-selection - `all`: select all asset and all liability accounts - `assets`: select all asset accounts - `liabilities`: select all liability accounts  If no accounts are found, the user's "frontpage accounts" preference will be used. If that is empty, all asset accounts will be used.
+  @GET(path: '/v1/chart/account/overview')
   Future<chopper.Response<ChartLine>> _v1ChartAccountOverviewGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('period') String? period,
+    @Query('preselected') String? preselected,
+  });
+
+  ///Dashboard chart with balance information.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param period Optional period to group the data by. If not provided, it will default to '1M' or whatever is deemed relevant for the range provided.  If you want to know which periods are available, see the enums or get the configuration value: `GET /api/v1/configuration/firefly.valid_view_ranges`
+  ///@param preselected Optional set of preselected accounts to limit the chart to. This may be easier than submitting all asset accounts manually, for example. If you want to know which selection are available, see the enums here or get the configuration value: `GET /api/v1/configuration/firefly.preselected_accounts`  - `empty`: do not do a pre-selection - `all`: select all asset and all liability accounts - `assets`: select all asset accounts - `liabilities`: select all liability accounts  If no accounts are found, the user's "frontpage accounts" preference will be used. If that is empty, all asset accounts will be used.
+  ///@param accounts[] Limit the chart to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.  This list of accounts will be OVERRULED by the `preselected` parameter.
+  Future<chopper.Response<ChartLine>> v1ChartBalanceBalanceGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+    enums.V1ChartBalanceBalanceGetPeriod? period,
+    enums.V1ChartBalanceBalanceGetPreselected? preselected,
+    List<int>? accounts,
+  }) {
+    generatedMapping.putIfAbsent(
+      ChartDataSet,
+      () => ChartDataSet.fromJsonFactory,
+    );
+
+    return _v1ChartBalanceBalanceGet(
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+      period: period?.value?.toString(),
+      preselected: preselected?.value?.toString(),
+      accounts: accounts,
+    );
+  }
+
+  ///Dashboard chart with balance information.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  ///@param period Optional period to group the data by. If not provided, it will default to '1M' or whatever is deemed relevant for the range provided.  If you want to know which periods are available, see the enums or get the configuration value: `GET /api/v1/configuration/firefly.valid_view_ranges`
+  ///@param preselected Optional set of preselected accounts to limit the chart to. This may be easier than submitting all asset accounts manually, for example. If you want to know which selection are available, see the enums here or get the configuration value: `GET /api/v1/configuration/firefly.preselected_accounts`  - `empty`: do not do a pre-selection - `all`: select all asset and all liability accounts - `assets`: select all asset accounts - `liabilities`: select all liability accounts  If no accounts are found, the user's "frontpage accounts" preference will be used. If that is empty, all asset accounts will be used.
+  ///@param accounts[] Limit the chart to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.  This list of accounts will be OVERRULED by the `preselected` parameter.
+  @GET(path: '/v1/chart/balance/balance')
+  Future<chopper.Response<ChartLine>> _v1ChartBalanceBalanceGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+    @Query('period') String? period,
+    @Query('preselected') String? preselected,
+    @Query('accounts[]') List<int>? accounts,
+  });
+
+  ///Dashboard chart with budget information.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  Future<chopper.Response<ChartLine>> v1ChartBudgetOverviewGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+  }) {
+    generatedMapping.putIfAbsent(
+      ChartDataSet,
+      () => ChartDataSet.fromJsonFactory,
+    );
+
+    return _v1ChartBudgetOverviewGet(
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+    );
+  }
+
+  ///Dashboard chart with budget information.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  @GET(path: '/v1/chart/budget/overview')
+  Future<chopper.Response<ChartLine>> _v1ChartBudgetOverviewGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') required String? start,
+    @Query('end') required String? end,
+  });
+
+  ///Dashboard chart with category information.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  Future<chopper.Response<ChartLine>> v1ChartCategoryOverviewGet({
+    String? xTraceId,
+    required String? start,
+    required String? end,
+  }) {
+    generatedMapping.putIfAbsent(
+      ChartDataSet,
+      () => ChartDataSet.fromJsonFactory,
+    );
+
+    return _v1ChartCategoryOverviewGet(
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+    );
+  }
+
+  ///Dashboard chart with category information.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD.
+  ///@param end A date formatted YYYY-MM-DD.
+  @GET(path: '/v1/chart/category/overview')
+  Future<chopper.Response<ChartLine>> _v1ChartCategoryOverviewGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
@@ -618,7 +773,7 @@ abstract class FireflyIii extends ChopperService {
   ///Bulk update transaction properties. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param query The JSON query.
-  @Post(path: '/v1/data/bulk/transactions', optionalBody: true)
+  @POST(path: '/v1/data/bulk/transactions', optionalBody: true)
   Future<chopper.Response> _v1DataBulkTransactionsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') required String? query,
@@ -640,7 +795,7 @@ abstract class FireflyIii extends ChopperService {
   ///Endpoint to destroy user data
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param objects The type of data that you wish to destroy. You can only use one at a time.
-  @Delete(path: '/v1/data/destroy')
+  @DELETE(path: '/v1/data/destroy')
   Future<chopper.Response> _v1DataDestroyDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('objects') required String? objects,
@@ -662,7 +817,7 @@ abstract class FireflyIii extends ChopperService {
   ///Export account data from Firefly III
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/v1/data/export/accounts')
+  @GET(path: '/v1/data/export/accounts')
   Future<chopper.Response<String>> _v1DataExportAccountsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
@@ -684,7 +839,7 @@ abstract class FireflyIii extends ChopperService {
   ///Export bills from Firefly III
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/v1/data/export/bills')
+  @GET(path: '/v1/data/export/bills')
   Future<chopper.Response<String>> _v1DataExportBillsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
@@ -706,7 +861,7 @@ abstract class FireflyIii extends ChopperService {
   ///Export budgets and budget amount data from Firefly III
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/v1/data/export/budgets')
+  @GET(path: '/v1/data/export/budgets')
   Future<chopper.Response<String>> _v1DataExportBudgetsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
@@ -728,7 +883,7 @@ abstract class FireflyIii extends ChopperService {
   ///Export category data from Firefly III
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/v1/data/export/categories')
+  @GET(path: '/v1/data/export/categories')
   Future<chopper.Response<String>> _v1DataExportCategoriesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
@@ -750,7 +905,7 @@ abstract class FireflyIii extends ChopperService {
   ///Export piggy banks from Firefly III
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/v1/data/export/piggy-banks')
+  @GET(path: '/v1/data/export/piggy-banks')
   Future<chopper.Response<String>> _v1DataExportPiggyBanksGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
@@ -772,7 +927,7 @@ abstract class FireflyIii extends ChopperService {
   ///Export recurring transaction data from Firefly III
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/v1/data/export/recurring')
+  @GET(path: '/v1/data/export/recurring')
   Future<chopper.Response<String>> _v1DataExportRecurringGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
@@ -794,7 +949,7 @@ abstract class FireflyIii extends ChopperService {
   ///Export rule groups and rule data from Firefly III
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/v1/data/export/rules')
+  @GET(path: '/v1/data/export/rules')
   Future<chopper.Response<String>> _v1DataExportRulesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
@@ -816,7 +971,7 @@ abstract class FireflyIii extends ChopperService {
   ///Export tag data from Firefly III
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/v1/data/export/tags')
+  @GET(path: '/v1/data/export/tags')
   Future<chopper.Response<String>> _v1DataExportTagsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
@@ -850,7 +1005,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts Limit the export of transactions to these accounts only. Only asset accounts will be accepted. Other types will be silently dropped.
   ///@param type The file type the export file (CSV is currently the only option).
-  @Get(path: '/v1/data/export/transactions')
+  @GET(path: '/v1/data/export/transactions')
   Future<chopper.Response<String>> _v1DataExportTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -867,7 +1022,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Endpoint to purge user data
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Delete(path: '/v1/data/purge')
+  @DELETE(path: '/v1/data/purge')
   Future<chopper.Response> _v1DataPurgeDelete({
     @Header('X-Trace-Id') String? xTraceId,
   });
@@ -901,7 +1056,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you add the accounts ID's of expense accounts, only those accounts are included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. You can combine both asset / liability and expense account ID's. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/expense/expense')
+  @GET(path: '/v1/insight/expense/expense')
   Future<chopper.Response<InsightGroup>> _v1InsightExpenseExpenseGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -938,7 +1093,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/expense/asset')
+  @GET(path: '/v1/insight/expense/asset')
   Future<chopper.Response<InsightGroup>> _v1InsightExpenseAssetGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -975,7 +1130,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you add the accounts ID's of revenue accounts, only those accounts are included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. You can combine both asset / liability and deposit account ID's. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/income/revenue')
+  @GET(path: '/v1/insight/income/revenue')
   Future<chopper.Response<InsightGroup>> _v1InsightIncomeRevenueGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1012,7 +1167,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/income/asset')
+  @GET(path: '/v1/insight/income/asset')
   Future<chopper.Response<InsightGroup>> _v1InsightIncomeAssetGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1049,7 +1204,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/transfer/asset')
+  @GET(path: '/v1/insight/transfer/asset')
   Future<chopper.Response<InsightTransfer>> _v1InsightTransferAssetGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1090,7 +1245,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param end A date formatted YYYY-MM-DD.
   ///@param bills[] The bills to be included in the results.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/expense/bill')
+  @GET(path: '/v1/insight/expense/bill')
   Future<chopper.Response<InsightGroup>> _v1InsightExpenseBillGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1128,7 +1283,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/expense/no-bill')
+  @GET(path: '/v1/insight/expense/no-bill')
   Future<chopper.Response<InsightTotal>> _v1InsightExpenseNoBillGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1169,7 +1324,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param end A date formatted YYYY-MM-DD.
   ///@param budgets[] The budgets to be included in the results.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/expense/budget')
+  @GET(path: '/v1/insight/expense/budget')
   Future<chopper.Response<InsightGroup>> _v1InsightExpenseBudgetGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1207,7 +1362,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/expense/no-budget')
+  @GET(path: '/v1/insight/expense/no-budget')
   Future<chopper.Response<InsightTotal>> _v1InsightExpenseNoBudgetGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1248,7 +1403,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param end A date formatted YYYY-MM-DD.
   ///@param categories[] The categories to be included in the results.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/expense/category')
+  @GET(path: '/v1/insight/expense/category')
   Future<chopper.Response<InsightGroup>> _v1InsightExpenseCategoryGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1286,7 +1441,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/expense/no-category')
+  @GET(path: '/v1/insight/expense/no-category')
   Future<chopper.Response<InsightTotal>> _v1InsightExpenseNoCategoryGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1327,7 +1482,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param end A date formatted YYYY-MM-DD.
   ///@param categories[] The categories to be included in the results.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/income/category')
+  @GET(path: '/v1/insight/income/category')
   Future<chopper.Response<InsightGroup>> _v1InsightIncomeCategoryGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1365,7 +1520,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/income/no-category')
+  @GET(path: '/v1/insight/income/no-category')
   Future<chopper.Response<InsightTotal>> _v1InsightIncomeNoCategoryGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1406,7 +1561,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param end A date formatted YYYY-MM-DD.
   ///@param categories[] The categories to be included in the results.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/transfer/category')
+  @GET(path: '/v1/insight/transfer/category')
   Future<chopper.Response<InsightGroup>> _v1InsightTransferCategoryGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1444,7 +1599,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/transfer/no-category')
+  @GET(path: '/v1/insight/transfer/no-category')
   Future<chopper.Response<InsightTotal>> _v1InsightTransferNoCategoryGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1485,7 +1640,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param end A date formatted YYYY-MM-DD.
   ///@param tags[] The tags to be included in the results.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/expense/tag')
+  @GET(path: '/v1/insight/expense/tag')
   Future<chopper.Response<InsightGroup>> _v1InsightExpenseTagGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1523,7 +1678,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/expense/no-tag')
+  @GET(path: '/v1/insight/expense/no-tag')
   Future<chopper.Response<InsightTotal>> _v1InsightExpenseNoTagGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1564,7 +1719,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param end A date formatted YYYY-MM-DD.
   ///@param tags[] The tags to be included in the results.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/income/tag')
+  @GET(path: '/v1/insight/income/tag')
   Future<chopper.Response<InsightGroup>> _v1InsightIncomeTagGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1602,7 +1757,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/income/no-tag')
+  @GET(path: '/v1/insight/income/no-tag')
   Future<chopper.Response<InsightTotal>> _v1InsightIncomeNoTagGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1643,7 +1798,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param end A date formatted YYYY-MM-DD.
   ///@param tags[] The tags to be included in the results.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/transfer/tag')
+  @GET(path: '/v1/insight/transfer/tag')
   Future<chopper.Response<InsightGroup>> _v1InsightTransferTagGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1681,7 +1836,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/transfer/no-tag')
+  @GET(path: '/v1/insight/transfer/no-tag')
   Future<chopper.Response<InsightTotal>> _v1InsightTransferNoTagGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1718,7 +1873,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only withdrawals from those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/expense/total')
+  @GET(path: '/v1/insight/expense/total')
   Future<chopper.Response<InsightTotal>> _v1InsightExpenseTotalGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1755,7 +1910,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only deposits to those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/income/total')
+  @GET(path: '/v1/insight/income/total')
   Future<chopper.Response<InsightTotal>> _v1InsightIncomeTotalGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1792,7 +1947,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param accounts[] The accounts to be included in the results. If you include ID's of asset accounts or liabilities, only transfers between those asset accounts / liabilities will be included. Other account ID's will be ignored.
-  @Get(path: '/v1/insight/transfer/total')
+  @GET(path: '/v1/insight/transfer/total')
   Future<chopper.Response<InsightTotal>> _v1InsightTransferTotalGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -1841,7 +1996,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param type Optional filter on the transaction type(s) returned.
-  @Get(path: '/v1/accounts/{id}/transactions')
+  @GET(path: '/v1/accounts/{id}/transactions')
   Future<chopper.Response<TransactionArray>> _v1AccountsIdTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -1881,7 +2036,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the account.
-  @Get(path: '/v1/accounts/{id}/attachments')
+  @GET(path: '/v1/accounts/{id}/attachments')
   Future<chopper.Response<AttachmentArray>> _v1AccountsIdAttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -1918,7 +2073,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the account.
-  @Get(path: '/v1/accounts/{id}/piggy-banks')
+  @GET(path: '/v1/accounts/{id}/piggy-banks')
   Future<chopper.Response<PiggyBankArray>> _v1AccountsIdPiggyBanksGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -1930,12 +2085,16 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
+  ///@param start A date formatted YYYY-MM-DD. May be omitted.
+  ///@param end A date formatted YYYY-MM-DD. Must be after "start". Can not be the same as "start". May be omitted.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
   ///@param type Optional filter on the account type(s) returned
   Future<chopper.Response<AccountArray>> v1AccountsGet({
     String? xTraceId,
     int? limit,
     int? page,
+    String? start,
+    String? end,
     String? date,
     enums.AccountTypeFilter? type,
   }) {
@@ -1948,6 +2107,8 @@ abstract class FireflyIii extends ChopperService {
       xTraceId: xTraceId?.toString(),
       limit: limit,
       page: page,
+      start: start,
+      end: end,
       date: date,
       type: type?.value?.toString(),
     );
@@ -1957,13 +2118,17 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
+  ///@param start A date formatted YYYY-MM-DD. May be omitted.
+  ///@param end A date formatted YYYY-MM-DD. Must be after "start". Can not be the same as "start". May be omitted.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
   ///@param type Optional filter on the account type(s) returned
-  @Get(path: '/v1/accounts')
+  @GET(path: '/v1/accounts')
   Future<chopper.Response<AccountArray>> _v1AccountsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @Query('start') String? start,
+    @Query('end') String? end,
     @Query('date') String? date,
     @Query('type') String? type,
   });
@@ -1984,7 +2149,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Create new account.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/accounts', optionalBody: true)
+  @POST(path: '/v1/accounts', optionalBody: true)
   Future<chopper.Response<AccountSingle>> _v1AccountsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required AccountStore? body,
@@ -1992,10 +2157,14 @@ abstract class FireflyIii extends ChopperService {
 
   ///Get single account.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD. May be omitted.
+  ///@param end A date formatted YYYY-MM-DD. Must be after "start". Can not be the same as "start". May be omitted.
   ///@param id The ID of the account.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
   Future<chopper.Response<AccountSingle>> v1AccountsIdGet({
     String? xTraceId,
+    String? start,
+    String? end,
     required String? id,
     String? date,
   }) {
@@ -2004,16 +2173,26 @@ abstract class FireflyIii extends ChopperService {
       () => AccountSingle.fromJsonFactory,
     );
 
-    return _v1AccountsIdGet(xTraceId: xTraceId?.toString(), id: id, date: date);
+    return _v1AccountsIdGet(
+      xTraceId: xTraceId?.toString(),
+      start: start,
+      end: end,
+      id: id,
+      date: date,
+    );
   }
 
   ///Get single account.
   ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param start A date formatted YYYY-MM-DD. May be omitted.
+  ///@param end A date formatted YYYY-MM-DD. Must be after "start". Can not be the same as "start". May be omitted.
   ///@param id The ID of the account.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
-  @Get(path: '/v1/accounts/{id}')
+  @GET(path: '/v1/accounts/{id}')
   Future<chopper.Response<AccountSingle>> _v1AccountsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @Query('start') String? start,
+    @Query('end') String? end,
     @Path('id') required String? id,
     @Query('date') String? date,
   });
@@ -2037,7 +2216,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing account.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the account.
-  @Put(path: '/v1/accounts/{id}', optionalBody: true)
+  @PUT(path: '/v1/accounts/{id}', optionalBody: true)
   Future<chopper.Response<AccountSingle>> _v1AccountsIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2057,7 +2236,7 @@ abstract class FireflyIii extends ChopperService {
   ///Permanently delete account.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the account.
-  @Delete(path: '/v1/accounts/{id}')
+  @DELETE(path: '/v1/accounts/{id}')
   Future<chopper.Response> _v1AccountsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2088,7 +2267,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/attachments')
+  @GET(path: '/v1/attachments')
   Future<chopper.Response<AttachmentArray>> _v1AttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -2111,7 +2290,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Store a new attachment.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/attachments', optionalBody: true)
+  @POST(path: '/v1/attachments', optionalBody: true)
   Future<chopper.Response<AttachmentSingle>> _v1AttachmentsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required AttachmentStore? body,
@@ -2135,7 +2314,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get a single attachment.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the attachment.
-  @Get(path: '/v1/attachments/{id}')
+  @GET(path: '/v1/attachments/{id}')
   Future<chopper.Response<AttachmentSingle>> _v1AttachmentsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2164,7 +2343,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing attachment.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the attachment.
-  @Put(path: '/v1/attachments/{id}', optionalBody: true)
+  @PUT(path: '/v1/attachments/{id}', optionalBody: true)
   Future<chopper.Response<AttachmentSingle>> _v1AttachmentsIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2184,7 +2363,7 @@ abstract class FireflyIii extends ChopperService {
   ///Delete an attachment.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the single attachment.
-  @Delete(path: '/v1/attachments/{id}')
+  @DELETE(path: '/v1/attachments/{id}')
   Future<chopper.Response> _v1AttachmentsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2203,7 +2382,7 @@ abstract class FireflyIii extends ChopperService {
   ///Download a single attachment.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the attachment.
-  @Get(path: '/v1/attachments/{id}/download')
+  @GET(path: '/v1/attachments/{id}/download')
   Future<chopper.Response<String>> _v1AttachmentsIdDownloadGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2227,7 +2406,7 @@ abstract class FireflyIii extends ChopperService {
   ///Upload an attachment.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the attachment.
-  @Post(path: '/v1/attachments/{id}/upload', optionalBody: true)
+  @POST(path: '/v1/attachments/{id}/upload', optionalBody: true)
   Future<chopper.Response> _v1AttachmentsIdUploadPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2267,7 +2446,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param page Page number. The default pagination is per 50 items.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  @Get(path: '/v1/available-budgets')
+  @GET(path: '/v1/available-budgets')
   Future<chopper.Response<AvailableBudgetArray>> _v1AvailableBudgetsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -2294,7 +2473,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get a single available budget.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the available budget.
-  @Get(path: '/v1/available-budgets/{id}')
+  @GET(path: '/v1/available-budgets/{id}')
   Future<chopper.Response<AvailableBudgetSingle>> _v1AvailableBudgetsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2329,7 +2508,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the bill.
-  @Get(path: '/v1/bills/{id}/attachments')
+  @GET(path: '/v1/bills/{id}/attachments')
   Future<chopper.Response<AttachmentArray>> _v1BillsIdAttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -2352,7 +2531,7 @@ abstract class FireflyIii extends ChopperService {
   ///List all rules associated with the bill.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the bill.
-  @Get(path: '/v1/bills/{id}/rules')
+  @GET(path: '/v1/bills/{id}/rules')
   Future<chopper.Response<RuleArray>> _v1BillsIdRulesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2399,7 +2578,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param type Optional filter on the transaction type(s) returned
-  @Get(path: '/v1/bills/{id}/transactions')
+  @GET(path: '/v1/bills/{id}/transactions')
   Future<chopper.Response<TransactionArray>> _v1BillsIdTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -2440,7 +2619,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param page Page number. The default pagination is per 50 items.
   ///@param start A date formatted YYYY-MM-DD. If it is are added to the request, Firefly III will calculate the appropriate payment and paid dates.
   ///@param end A date formatted YYYY-MM-DD. If it is added to the request, Firefly III will calculate the appropriate payment and paid dates.
-  @Get(path: '/v1/bills')
+  @GET(path: '/v1/bills')
   Future<chopper.Response<BillArray>> _v1BillsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -2462,7 +2641,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Store a new bill
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/bills', optionalBody: true)
+  @POST(path: '/v1/bills', optionalBody: true)
   Future<chopper.Response<BillSingle>> _v1BillsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required BillStore? body,
@@ -2494,7 +2673,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param id The ID of the bill.
   ///@param start A date formatted YYYY-MM-DD. If it is are added to the request, Firefly III will calculate the appropriate payment and paid dates.
   ///@param end A date formatted YYYY-MM-DD. If it is added to the request, Firefly III will calculate the appropriate payment and paid dates.
-  @Get(path: '/v1/bills/{id}')
+  @GET(path: '/v1/bills/{id}')
   Future<chopper.Response<BillSingle>> _v1BillsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2518,7 +2697,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing bill.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the bill.
-  @Put(path: '/v1/bills/{id}', optionalBody: true)
+  @PUT(path: '/v1/bills/{id}', optionalBody: true)
   Future<chopper.Response<BillSingle>> _v1BillsIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2538,7 +2717,7 @@ abstract class FireflyIii extends ChopperService {
   ///Delete a bill.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the bill.
-  @Delete(path: '/v1/bills/{id}')
+  @DELETE(path: '/v1/bills/{id}')
   Future<chopper.Response> _v1BillsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2582,7 +2761,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
   ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
   ///@param type Optional filter on the transaction type(s) returned
-  @Get(path: '/v1/budgets/{id}/limits/{limitId}/transactions')
+  @GET(path: '/v1/budgets/{id}/limits/{limitId}/transactions')
   Future<chopper.Response<TransactionArray>>
   _v1BudgetsIdLimitsLimitIdTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -2622,7 +2801,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param id The ID of the requested budget.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  @Get(path: '/v1/budgets/{id}/limits')
+  @GET(path: '/v1/budgets/{id}/limits')
   Future<chopper.Response<BudgetLimitArray>> _v1BudgetsIdLimitsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2653,7 +2832,7 @@ abstract class FireflyIii extends ChopperService {
   ///Store new budget limit.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget.
-  @Post(path: '/v1/budgets/{id}/limits', optionalBody: true)
+  @POST(path: '/v1/budgets/{id}/limits', optionalBody: true)
   Future<chopper.Response<BudgetLimitSingle>> _v1BudgetsIdLimitsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2685,7 +2864,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
   ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
-  @Get(path: '/v1/budgets/{id}/limits/{limitId}')
+  @GET(path: '/v1/budgets/{id}/limits/{limitId}')
   Future<chopper.Response<BudgetLimitSingle>> _v1BudgetsIdLimitsLimitIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2700,7 +2879,7 @@ abstract class FireflyIii extends ChopperService {
     String? xTraceId,
     required String? id,
     required String? limitId,
-    required BudgetLimit? body,
+    required BudgetLimitUpdate? body,
   }) {
     generatedMapping.putIfAbsent(
       BudgetLimitSingle,
@@ -2719,12 +2898,12 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
   ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
-  @Put(path: '/v1/budgets/{id}/limits/{limitId}', optionalBody: true)
+  @PUT(path: '/v1/budgets/{id}/limits/{limitId}', optionalBody: true)
   Future<chopper.Response<BudgetLimitSingle>> _v1BudgetsIdLimitsLimitIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Path('limitId') required String? limitId,
-    @Body() required BudgetLimit? body,
+    @Body() required BudgetLimitUpdate? body,
   });
 
   ///Delete a budget limit.
@@ -2747,7 +2926,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget. The budget limit MUST be associated to the budget ID.
   ///@param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
-  @Delete(path: '/v1/budgets/{id}/limits/{limitId}')
+  @DELETE(path: '/v1/budgets/{id}/limits/{limitId}')
   Future<chopper.Response> _v1BudgetsIdLimitsLimitIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -2779,7 +2958,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  @Get(path: '/v1/budget-limits')
+  @GET(path: '/v1/budget-limits')
   Future<chopper.Response<BudgetLimitArray>> _v1BudgetLimitsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -2827,7 +3006,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param type Optional filter on the transaction type(s) returned
-  @Get(path: '/v1/budgets/{id}/transactions')
+  @GET(path: '/v1/budgets/{id}/transactions')
   Future<chopper.Response<TransactionArray>> _v1BudgetsIdTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -2867,7 +3046,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the budget.
-  @Get(path: '/v1/budgets/{id}/attachments')
+  @GET(path: '/v1/budgets/{id}/attachments')
   Future<chopper.Response<AttachmentArray>> _v1BudgetsIdAttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -2909,7 +3088,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param page Page number. The default pagination is per 50 items.
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
-  @Get(path: '/v1/budgets//transactions-without-budget')
+  @GET(path: '/v1/budgets/transactions-without-budget')
   Future<chopper.Response<TransactionArray>>
   _v1BudgetsTransactionsWithoutBudgetGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -2952,7 +3131,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param page Page number. The default pagination is per 50 items.
   ///@param start A date formatted YYYY-MM-DD, to get info on how much the user has spent. You must submit both start and end.
   ///@param end A date formatted YYYY-MM-DD, to get info on how much the user has spent. You must submit both start and end.
-  @Get(path: '/v1/budgets')
+  @GET(path: '/v1/budgets')
   Future<chopper.Response<BudgetArray>> _v1BudgetsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -2977,7 +3156,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Store a new budget
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/budgets', optionalBody: true)
+  @POST(path: '/v1/budgets', optionalBody: true)
   Future<chopper.Response<BudgetSingle>> _v1BudgetsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required BudgetStore? body,
@@ -3012,7 +3191,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param id The ID of the requested budget.
   ///@param start A date formatted YYYY-MM-DD, to get info on how much the user has spent.
   ///@param end A date formatted YYYY-MM-DD, to get info on how much the user has spent.
-  @Get(path: '/v1/budgets/{id}')
+  @GET(path: '/v1/budgets/{id}')
   Future<chopper.Response<BudgetSingle>> _v1BudgetsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -3039,7 +3218,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing budget.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget.
-  @Put(path: '/v1/budgets/{id}', optionalBody: true)
+  @PUT(path: '/v1/budgets/{id}', optionalBody: true)
   Future<chopper.Response<BudgetSingle>> _v1BudgetsIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -3059,7 +3238,7 @@ abstract class FireflyIii extends ChopperService {
   ///Delete a budget.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the budget.
-  @Delete(path: '/v1/budgets/{id}')
+  @DELETE(path: '/v1/budgets/{id}')
   Future<chopper.Response> _v1BudgetsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -3106,7 +3285,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD, to limit the result list.
   ///@param end A date formatted YYYY-MM-DD, to limit the result list.
   ///@param type Optional filter on the transaction type(s) returned
-  @Get(path: '/v1/categories/{id}/transactions')
+  @GET(path: '/v1/categories/{id}/transactions')
   Future<chopper.Response<TransactionArray>> _v1CategoriesIdTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -3146,7 +3325,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the category.
-  @Get(path: '/v1/categories/{id}/attachments')
+  @GET(path: '/v1/categories/{id}/attachments')
   Future<chopper.Response<AttachmentArray>> _v1CategoriesIdAttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -3179,7 +3358,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/categories')
+  @GET(path: '/v1/categories')
   Future<chopper.Response<CategoryArray>> _v1CategoriesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -3190,7 +3369,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   Future<chopper.Response<CategorySingle>> v1CategoriesPost({
     String? xTraceId,
-    required Category? body,
+    required CategoryStore? body,
   }) {
     generatedMapping.putIfAbsent(
       CategorySingle,
@@ -3202,10 +3381,10 @@ abstract class FireflyIii extends ChopperService {
 
   ///Store a new category
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/categories', optionalBody: true)
+  @POST(path: '/v1/categories', optionalBody: true)
   Future<chopper.Response<CategorySingle>> _v1CategoriesPost({
     @Header('X-Trace-Id') String? xTraceId,
-    @Body() required Category? body,
+    @Body() required CategoryStore? body,
   });
 
   ///Get a single category.
@@ -3237,7 +3416,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param id The ID of the category.
   ///@param start A date formatted YYYY-MM-DD, to show spent and earned info.
   ///@param end A date formatted YYYY-MM-DD, to show spent and earned info.
-  @Get(path: '/v1/categories/{id}')
+  @GET(path: '/v1/categories/{id}')
   Future<chopper.Response<CategorySingle>> _v1CategoriesIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -3268,7 +3447,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing category.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the category.
-  @Put(path: '/v1/categories/{id}', optionalBody: true)
+  @PUT(path: '/v1/categories/{id}', optionalBody: true)
   Future<chopper.Response<CategorySingle>> _v1CategoriesIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -3288,13 +3467,13 @@ abstract class FireflyIii extends ChopperService {
   ///Delete a category.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the category.
-  @Delete(path: '/v1/categories/{id}')
+  @DELETE(path: '/v1/categories/{id}')
   Future<chopper.Response> _v1CategoriesIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
   });
 
-  ///List all exchange rates.
+  ///List all exchange rates that Firefly III knows.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
@@ -3315,15 +3494,37 @@ abstract class FireflyIii extends ChopperService {
     );
   }
 
-  ///List all exchange rates.
+  ///List all exchange rates that Firefly III knows.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/exchange-rates')
+  @GET(path: '/v1/exchange-rates')
   Future<chopper.Response<CurrencyExchangeRateArray>> _v1ExchangeRatesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+  });
+
+  ///Store a new currency exchange rate.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response<CurrencyExchangeRateSingle>> v1ExchangeRatesPost({
+    String? xTraceId,
+    required CurrencyExchangeRateStore? body,
+  }) {
+    generatedMapping.putIfAbsent(
+      CurrencyExchangeRateSingle,
+      () => CurrencyExchangeRateSingle.fromJsonFactory,
+    );
+
+    return _v1ExchangeRatesPost(xTraceId: xTraceId?.toString(), body: body);
+  }
+
+  ///Store a new currency exchange rate.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @POST(path: '/v1/exchange-rates', optionalBody: true)
+  Future<chopper.Response<CurrencyExchangeRateSingle>> _v1ExchangeRatesPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Body() required CurrencyExchangeRateStore? body,
   });
 
   ///List a single specific exchange rate.
@@ -3355,7 +3556,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the requested currency exchange rate.
-  @Get(path: '/v1/exchange-rates/{id}')
+  @GET(path: '/v1/exchange-rates/{id}')
   Future<chopper.Response<CurrencyExchangeRateSingle>> _v1ExchangeRatesIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -3376,7 +3577,7 @@ abstract class FireflyIii extends ChopperService {
   ///Delete a specific currency exchange rate.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the requested currency exchange rate.
-  @Delete(path: '/v1/exchange-rates/{id}')
+  @DELETE(path: '/v1/exchange-rates/{id}')
   Future<chopper.Response> _v1ExchangeRatesIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -3405,21 +3606,20 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing currency exchange rate.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the currency exchange rate.
-  @Put(path: '/v1/exchange-rates/{id}', optionalBody: true)
+  @PUT(path: '/v1/exchange-rates/{id}', optionalBody: true)
   Future<chopper.Response<CurrencyExchangeRateSingle>> _v1ExchangeRatesIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required CurrencyExchangeRateUpdate? body,
   });
 
-  ///List all exchange rate from/to the mentioned currencies.
+  ///List all exchange rates from/to the mentioned currencies.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param from The currency code of the 'from' currency.
   ///@param to The currency code of the 'to' currency.
-  Future<chopper.Response<CurrencyExchangeRateArray>>
-  v1ExchangeRatesRatesFromToGet({
+  Future<chopper.Response<CurrencyExchangeRateArray>> v1ExchangeRatesFromToGet({
     String? xTraceId,
     int? limit,
     int? page,
@@ -3431,7 +3631,7 @@ abstract class FireflyIii extends ChopperService {
       () => CurrencyExchangeRateArray.fromJsonFactory,
     );
 
-    return _v1ExchangeRatesRatesFromToGet(
+    return _v1ExchangeRatesFromToGet(
       xTraceId: xTraceId?.toString(),
       limit: limit,
       page: page,
@@ -3440,15 +3640,15 @@ abstract class FireflyIii extends ChopperService {
     );
   }
 
-  ///List all exchange rate from/to the mentioned currencies.
+  ///List all exchange rates from/to the mentioned currencies.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param from The currency code of the 'from' currency.
   ///@param to The currency code of the 'to' currency.
-  @Get(path: '/v1/exchange-rates/rates/{from}/{to}')
+  @GET(path: '/v1/exchange-rates/{from}/{to}')
   Future<chopper.Response<CurrencyExchangeRateArray>>
-  _v1ExchangeRatesRatesFromToGet({
+  _v1ExchangeRatesFromToGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
@@ -3456,18 +3656,94 @@ abstract class FireflyIii extends ChopperService {
     @Path('to') required String? to,
   });
 
-  ///Delete all currency exchange rates from 'from' to 'to'.
+  ///Deletes ALL currency exchange rates from 'from' to 'to'.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param from The currency code of the 'from' currency.
   ///@param to The currency code of the 'to' currency.
-  ///@param date A date formatted YYYY-MM-DD. Defaults to today.
-  Future<chopper.Response> v1ExchangeRatesRatesFromToDelete({
+  Future<chopper.Response> v1ExchangeRatesFromToDelete({
     String? xTraceId,
     required String? from,
     required String? to,
-    String? date,
   }) {
-    return _v1ExchangeRatesRatesFromToDelete(
+    return _v1ExchangeRatesFromToDelete(
+      xTraceId: xTraceId?.toString(),
+      from: from,
+      to: to,
+    );
+  }
+
+  ///Deletes ALL currency exchange rates from 'from' to 'to'.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param from The currency code of the 'from' currency.
+  ///@param to The currency code of the 'to' currency.
+  @DELETE(path: '/v1/exchange-rates/{from}/{to}')
+  Future<chopper.Response> _v1ExchangeRatesFromToDelete({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('from') required String? from,
+    @Path('to') required String? to,
+  });
+
+  ///List the exchange rate for the from and to-currency on the requested date.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
+  ///@param from The currency code of the 'from' currency.
+  ///@param to The currency code of the 'to' currency.
+  ///@param date
+  Future<chopper.Response<CurrencyExchangeRateArray>>
+  v1ExchangeRatesFromToDateGet({
+    String? xTraceId,
+    int? limit,
+    int? page,
+    required String? from,
+    required String? to,
+    required String? date,
+  }) {
+    generatedMapping.putIfAbsent(
+      CurrencyExchangeRateArray,
+      () => CurrencyExchangeRateArray.fromJsonFactory,
+    );
+
+    return _v1ExchangeRatesFromToDateGet(
+      xTraceId: xTraceId?.toString(),
+      limit: limit,
+      page: page,
+      from: from,
+      to: to,
+      date: date,
+    );
+  }
+
+  ///List the exchange rate for the from and to-currency on the requested date.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param limit Number of items per page. The default pagination is per 50 items.
+  ///@param page Page number. The default pagination is per 50 items.
+  ///@param from The currency code of the 'from' currency.
+  ///@param to The currency code of the 'to' currency.
+  ///@param date
+  @GET(path: '/v1/exchange-rates/{from}/{to}/{date}')
+  Future<chopper.Response<CurrencyExchangeRateArray>>
+  _v1ExchangeRatesFromToDateGet({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Query('limit') int? limit,
+    @Query('page') int? page,
+    @Path('from') required String? from,
+    @Path('to') required String? to,
+    @Path('date') required String? date,
+  });
+
+  ///Delete the currency exchange rate from 'from' to 'to' on the specified date.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param from The currency code of the 'from' currency.
+  ///@param to The currency code of the 'to' currency.
+  ///@param date
+  Future<chopper.Response> v1ExchangeRatesFromToDateDelete({
+    String? xTraceId,
+    required String? from,
+    required String? to,
+    required String? date,
+  }) {
+    return _v1ExchangeRatesFromToDateDelete(
       xTraceId: xTraceId?.toString(),
       from: from,
       to: to,
@@ -3475,17 +3751,131 @@ abstract class FireflyIii extends ChopperService {
     );
   }
 
-  ///Delete all currency exchange rates from 'from' to 'to'.
+  ///Delete the currency exchange rate from 'from' to 'to' on the specified date.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param from The currency code of the 'from' currency.
   ///@param to The currency code of the 'to' currency.
-  ///@param date A date formatted YYYY-MM-DD. Defaults to today.
-  @Delete(path: '/v1/exchange-rates/rates/{from}/{to}')
-  Future<chopper.Response> _v1ExchangeRatesRatesFromToDelete({
+  ///@param date
+  @DELETE(path: '/v1/exchange-rates/{from}/{to}/{date}')
+  Future<chopper.Response> _v1ExchangeRatesFromToDateDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('from') required String? from,
     @Path('to') required String? to,
-    @Query('date') String? date,
+    @Path('date') required String? date,
+  });
+
+  ///Update existing currency exchange rate.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param from The currency code of the 'from' currency.
+  ///@param to The currency code of the 'to' currency.
+  ///@param date
+  Future<chopper.Response<CurrencyExchangeRateSingle>>
+  v1ExchangeRatesFromToDatePut({
+    String? xTraceId,
+    required String? from,
+    required String? to,
+    required String? date,
+    required CurrencyExchangeRateUpdateNoDate? body,
+  }) {
+    generatedMapping.putIfAbsent(
+      CurrencyExchangeRateSingle,
+      () => CurrencyExchangeRateSingle.fromJsonFactory,
+    );
+
+    return _v1ExchangeRatesFromToDatePut(
+      xTraceId: xTraceId?.toString(),
+      from: from,
+      to: to,
+      date: date,
+      body: body,
+    );
+  }
+
+  ///Update existing currency exchange rate.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param from The currency code of the 'from' currency.
+  ///@param to The currency code of the 'to' currency.
+  ///@param date
+  @PUT(path: '/v1/exchange-rates/{from}/{to}/{date}', optionalBody: true)
+  Future<chopper.Response<CurrencyExchangeRateSingle>>
+  _v1ExchangeRatesFromToDatePut({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('from') required String? from,
+    @Path('to') required String? to,
+    @Path('date') required String? date,
+    @Body() required CurrencyExchangeRateUpdateNoDate? body,
+  });
+
+  ///Store new currency exchange rates under this date
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param date
+  Future<chopper.Response<CurrencyExchangeRateArray>>
+  v1ExchangeRatesByDateDatePost({
+    String? xTraceId,
+    required String? date,
+    required CurrencyExchangeRateStoreByDate? body,
+  }) {
+    generatedMapping.putIfAbsent(
+      CurrencyExchangeRateArray,
+      () => CurrencyExchangeRateArray.fromJsonFactory,
+    );
+
+    return _v1ExchangeRatesByDateDatePost(
+      xTraceId: xTraceId?.toString(),
+      date: date,
+      body: body,
+    );
+  }
+
+  ///Store new currency exchange rates under this date
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param date
+  @POST(path: '/v1/exchange-rates/by-date/{date}', optionalBody: true)
+  Future<chopper.Response<CurrencyExchangeRateArray>>
+  _v1ExchangeRatesByDateDatePost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('date') required String? date,
+    @Body() required CurrencyExchangeRateStoreByDate? body,
+  });
+
+  ///Store new currency exchange rates under this from/to pair.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param from The currency code of the 'from' currency.
+  ///@param to The currency code of the 'to' currency.
+  Future<chopper.Response<CurrencyExchangeRateArray>>
+  v1ExchangeRatesByCurrenciesFromToPost({
+    String? xTraceId,
+    required String? from,
+    required String? to,
+    required CurrencyExchangeRateStoreByPair? body,
+  }) {
+    generatedMapping.putIfAbsent(
+      CurrencyExchangeRateArray,
+      () => CurrencyExchangeRateArray.fromJsonFactory,
+    );
+
+    return _v1ExchangeRatesByCurrenciesFromToPost(
+      xTraceId: xTraceId?.toString(),
+      from: from,
+      to: to,
+      body: body,
+    );
+  }
+
+  ///Store new currency exchange rates under this from/to pair.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param from The currency code of the 'from' currency.
+  ///@param to The currency code of the 'to' currency.
+  @POST(
+    path: '/v1/exchange-rates/by-currencies/{from}/{to}',
+    optionalBody: true,
+  )
+  Future<chopper.Response<CurrencyExchangeRateArray>>
+  _v1ExchangeRatesByCurrenciesFromToPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('from') required String? from,
+    @Path('to') required String? to,
+    @Body() required CurrencyExchangeRateStoreByPair? body,
   });
 
   ///List all transactions under this link type.
@@ -3529,7 +3919,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD, to limit the results.
   ///@param end A date formatted YYYY-MM-DD, to limit the results.
   ///@param type Optional filter on the transaction type(s) returned.
-  @Get(path: '/v1/link-types/{id}/transactions')
+  @GET(path: '/v1/link-types/{id}/transactions')
   Future<chopper.Response<TransactionArray>> _v1LinkTypesIdTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -3565,7 +3955,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/link-types')
+  @GET(path: '/v1/link-types')
   Future<chopper.Response<LinkTypeArray>> _v1LinkTypesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -3588,7 +3978,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Create a new link type
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/link-types', optionalBody: true)
+  @POST(path: '/v1/link-types', optionalBody: true)
   Future<chopper.Response<LinkTypeSingle>> _v1LinkTypesPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required LinkType? body,
@@ -3612,7 +4002,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get single a link type.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the link type.
-  @Get(path: '/v1/link-types/{id}')
+  @GET(path: '/v1/link-types/{id}')
   Future<chopper.Response<LinkTypeSingle>> _v1LinkTypesIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -3641,7 +4031,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing link type.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the link type.
-  @Put(path: '/v1/link-types/{id}', optionalBody: true)
+  @PUT(path: '/v1/link-types/{id}', optionalBody: true)
   Future<chopper.Response<LinkTypeSingle>> _v1LinkTypesIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -3661,7 +4051,7 @@ abstract class FireflyIii extends ChopperService {
   ///Permanently delete link type.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the link type.
-  @Delete(path: '/v1/link-types/{id}')
+  @DELETE(path: '/v1/link-types/{id}')
   Future<chopper.Response> _v1LinkTypesIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -3692,7 +4082,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/transaction-links')
+  @GET(path: '/v1/transaction-links')
   Future<chopper.Response<TransactionLinkArray>> _v1TransactionLinksGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -3715,7 +4105,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Create a new link between transactions
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/transaction-links', optionalBody: true)
+  @POST(path: '/v1/transaction-links', optionalBody: true)
   Future<chopper.Response<TransactionLinkSingle>> _v1TransactionLinksPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required TransactionLinkStore? body,
@@ -3739,7 +4129,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get a single link.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the transaction link.
-  @Get(path: '/v1/transaction-links/{id}')
+  @GET(path: '/v1/transaction-links/{id}')
   Future<chopper.Response<TransactionLinkSingle>> _v1TransactionLinksIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -3758,7 +4148,7 @@ abstract class FireflyIii extends ChopperService {
   ///Permanently delete link between transactions.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the transaction link.
-  @Delete(path: '/v1/transaction-links/{id}')
+  @DELETE(path: '/v1/transaction-links/{id}')
   Future<chopper.Response> _v1TransactionLinksIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -3787,7 +4177,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update an existing link between transactions.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the transaction link.
-  @Put(path: '/v1/transaction-links/{id}', optionalBody: true)
+  @PUT(path: '/v1/transaction-links/{id}', optionalBody: true)
   Future<chopper.Response<TransactionLinkSingle>> _v1TransactionLinksIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -3823,7 +4213,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the account.
-  @Get(path: '/v1/object-groups/{id}/piggy-banks')
+  @GET(path: '/v1/object-groups/{id}/piggy-banks')
   Future<chopper.Response<PiggyBankArray>> _v1ObjectGroupsIdPiggyBanksGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -3857,7 +4247,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the account.
-  @Get(path: '/v1/object-groups/{id}/bills')
+  @GET(path: '/v1/object-groups/{id}/bills')
   Future<chopper.Response<BillArray>> _v1ObjectGroupsIdBillsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -3865,7 +4255,7 @@ abstract class FireflyIii extends ChopperService {
     @Path('id') required String? id,
   });
 
-  ///List all oject groups.
+  ///List all object groups.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
@@ -3886,11 +4276,11 @@ abstract class FireflyIii extends ChopperService {
     );
   }
 
-  ///List all oject groups.
+  ///List all object groups.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/object-groups')
+  @GET(path: '/v1/object-groups')
   Future<chopper.Response<ObjectGroupArray>> _v1ObjectGroupsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -3915,7 +4305,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get a single object group.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the object group.
-  @Get(path: '/v1/object-groups/{id}')
+  @GET(path: '/v1/object-groups/{id}')
   Future<chopper.Response<ObjectGroupSingle>> _v1ObjectGroupsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -3944,7 +4334,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing object group.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the object group
-  @Put(path: '/v1/object-groups/{id}', optionalBody: true)
+  @PUT(path: '/v1/object-groups/{id}', optionalBody: true)
   Future<chopper.Response<ObjectGroupSingle>> _v1ObjectGroupsIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -3964,7 +4354,7 @@ abstract class FireflyIii extends ChopperService {
   ///Delete a object group.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the object group.
-  @Delete(path: '/v1/object-groups/{id}')
+  @DELETE(path: '/v1/object-groups/{id}')
   Future<chopper.Response> _v1ObjectGroupsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -3999,7 +4389,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the piggy bank
-  @Get(path: '/v1/piggy-banks/{id}/events')
+  @GET(path: '/v1/piggy-banks/{id}/events')
   Future<chopper.Response<PiggyBankEventArray>> _v1PiggyBanksIdEventsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -4036,7 +4426,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the piggy bank.
-  @Get(path: '/v1/piggy-banks/{id}/attachments')
+  @GET(path: '/v1/piggy-banks/{id}/attachments')
   Future<chopper.Response<AttachmentArray>> _v1PiggyBanksIdAttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -4069,7 +4459,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/piggy-banks')
+  @GET(path: '/v1/piggy-banks')
   Future<chopper.Response<PiggyBankArray>> _v1PiggyBanksGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -4092,7 +4482,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Store a new piggy bank
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/piggy-banks', optionalBody: true)
+  @POST(path: '/v1/piggy-banks', optionalBody: true)
   Future<chopper.Response<PiggyBankSingle>> _v1PiggyBanksPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required PiggyBankStore? body,
@@ -4116,7 +4506,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get a single piggy bank.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the piggy bank.
-  @Get(path: '/v1/piggy-banks/{id}')
+  @GET(path: '/v1/piggy-banks/{id}')
   Future<chopper.Response<PiggyBankSingle>> _v1PiggyBanksIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -4145,7 +4535,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing piggy bank.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the piggy bank
-  @Put(path: '/v1/piggy-banks/{id}', optionalBody: true)
+  @PUT(path: '/v1/piggy-banks/{id}', optionalBody: true)
   Future<chopper.Response<PiggyBankSingle>> _v1PiggyBanksIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -4165,7 +4555,7 @@ abstract class FireflyIii extends ChopperService {
   ///Delete a piggy bank.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the piggy bank.
-  @Delete(path: '/v1/piggy-banks/{id}')
+  @DELETE(path: '/v1/piggy-banks/{id}')
   Future<chopper.Response> _v1PiggyBanksIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -4212,7 +4602,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD. Both the start and end date must be present.
   ///@param end A date formatted YYYY-MM-DD. Both the start and end date must be present.
   ///@param type Optional filter on the transaction type(s) returned
-  @Get(path: '/v1/recurrences/{id}/transactions')
+  @GET(path: '/v1/recurrences/{id}/transactions')
   Future<chopper.Response<TransactionArray>> _v1RecurrencesIdTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -4248,7 +4638,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/recurrences')
+  @GET(path: '/v1/recurrences')
   Future<chopper.Response<RecurrenceArray>> _v1RecurrencesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -4271,7 +4661,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Store a new recurring transaction
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/recurrences', optionalBody: true)
+  @POST(path: '/v1/recurrences', optionalBody: true)
   Future<chopper.Response<RecurrenceSingle>> _v1RecurrencesPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required RecurrenceStore? body,
@@ -4295,7 +4685,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get a single recurring transaction.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the recurring transaction.
-  @Get(path: '/v1/recurrences/{id}')
+  @GET(path: '/v1/recurrences/{id}')
   Future<chopper.Response<RecurrenceSingle>> _v1RecurrencesIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -4324,7 +4714,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing recurring transaction.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the recurring transaction.
-  @Put(path: '/v1/recurrences/{id}', optionalBody: true)
+  @PUT(path: '/v1/recurrences/{id}', optionalBody: true)
   Future<chopper.Response<RecurrenceSingle>> _v1RecurrencesIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -4344,10 +4734,42 @@ abstract class FireflyIii extends ChopperService {
   ///Delete a recurring transaction.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the recurring transaction.
-  @Delete(path: '/v1/recurrences/{id}')
+  @DELETE(path: '/v1/recurrences/{id}')
   Future<chopper.Response> _v1RecurrencesIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+  });
+
+  ///Trigger the creation of a transaction for a specific recurring transaction
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the recurring transaction.
+  ///@param date A date formatted YYYY-MM-DD. This is the date for which you want the recurrence to fire. You can take the date from the list of occurrences in the recurring transaction.
+  Future<chopper.Response<TransactionArray>> v1RecurrencesIdTriggerPost({
+    String? xTraceId,
+    required String? id,
+    required String? date,
+  }) {
+    generatedMapping.putIfAbsent(
+      TransactionArray,
+      () => TransactionArray.fromJsonFactory,
+    );
+
+    return _v1RecurrencesIdTriggerPost(
+      xTraceId: xTraceId?.toString(),
+      id: id,
+      date: date,
+    );
+  }
+
+  ///Trigger the creation of a transaction for a specific recurring transaction
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  ///@param id The ID of the recurring transaction.
+  ///@param date A date formatted YYYY-MM-DD. This is the date for which you want the recurrence to fire. You can take the date from the list of occurrences in the recurring transaction.
+  @POST(path: '/v1/recurrences/{id}/trigger', optionalBody: true)
+  Future<chopper.Response<TransactionArray>> _v1RecurrencesIdTriggerPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @Path('id') required String? id,
+    @Query('date') required String? date,
   });
 
   ///List rules in this rule group.
@@ -4376,7 +4798,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the rule group.
-  @Get(path: '/v1/rule-groups/{id}/rules')
+  @GET(path: '/v1/rule-groups/{id}/rules')
   Future<chopper.Response<RuleArray>> _v1RuleGroupsIdRulesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -4433,7 +4855,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param search_limit Maximum number of transactions Firefly III will try. Don't set this too high, or it will take Firefly III very long to run the test. I suggest a max of 200.
   ///@param triggered_limit Maximum number of transactions the rule group can actually trigger on, before Firefly III stops. I would suggest setting this to 10 or 15. Don't go above the user's page size, because browsing to page 2 or 3 of a test result would fire the test again, making any navigation efforts very slow.
   ///@param accounts[] Limit the testing of the rule group to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
-  @Get(path: '/v1/rule-groups/{id}/test')
+  @GET(path: '/v1/rule-groups/{id}/test')
   Future<chopper.Response<TransactionArray>> _v1RuleGroupsIdTestGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -4474,7 +4896,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. Both the start date and the end date must be present.
   ///@param end A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. Both the start date and the end date must be present.
   ///@param accounts[] Limit the triggering of the rule group to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
-  @Post(path: '/v1/rule-groups/{id}/trigger', optionalBody: true)
+  @POST(path: '/v1/rule-groups/{id}/trigger', optionalBody: true)
   Future<chopper.Response> _v1RuleGroupsIdTriggerPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -4508,7 +4930,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/rule-groups')
+  @GET(path: '/v1/rule-groups')
   Future<chopper.Response<RuleGroupArray>> _v1RuleGroupsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -4531,7 +4953,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Store a new rule group.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/rule-groups', optionalBody: true)
+  @POST(path: '/v1/rule-groups', optionalBody: true)
   Future<chopper.Response<RuleGroupSingle>> _v1RuleGroupsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required RuleGroupStore? body,
@@ -4555,7 +4977,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get a single rule group.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the rule group.
-  @Get(path: '/v1/rule-groups/{id}')
+  @GET(path: '/v1/rule-groups/{id}')
   Future<chopper.Response<RuleGroupSingle>> _v1RuleGroupsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -4584,7 +5006,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing rule group.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the rule group.
-  @Put(path: '/v1/rule-groups/{id}', optionalBody: true)
+  @PUT(path: '/v1/rule-groups/{id}', optionalBody: true)
   Future<chopper.Response<RuleGroupSingle>> _v1RuleGroupsIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -4604,7 +5026,7 @@ abstract class FireflyIii extends ChopperService {
   ///Delete a rule group.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the rule group.
-  @Delete(path: '/v1/rule-groups/{id}')
+  @DELETE(path: '/v1/rule-groups/{id}')
   Future<chopper.Response> _v1RuleGroupsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -4643,7 +5065,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
   ///@param end A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.
   ///@param accounts[] Limit the testing of the rule to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
-  @Get(path: '/v1/rules/{id}/test')
+  @GET(path: '/v1/rules/{id}/test')
   Future<chopper.Response<TransactionArray>> _v1RulesIdTestGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -4680,7 +5102,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. If the start date is not present, it will be set to one year ago. If you use this field, both the start date and the end date must be present.
   ///@param end A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. If the end date is not present, it will be set to today. If you use this field, both the start date and the end date must be present.
   ///@param accounts[] Limit the triggering of the rule to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.
-  @Post(path: '/v1/rules/{id}/trigger', optionalBody: true)
+  @POST(path: '/v1/rules/{id}/trigger', optionalBody: true)
   Future<chopper.Response> _v1RulesIdTriggerPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -4711,7 +5133,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/rules')
+  @GET(path: '/v1/rules')
   Future<chopper.Response<RuleArray>> _v1RulesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -4731,7 +5153,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Store a new rule
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/rules', optionalBody: true)
+  @POST(path: '/v1/rules', optionalBody: true)
   Future<chopper.Response<RuleSingle>> _v1RulesPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required RuleStore? body,
@@ -4752,7 +5174,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get a single rule.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the object.
-  @Get(path: '/v1/rules/{id}')
+  @GET(path: '/v1/rules/{id}')
   Future<chopper.Response<RuleSingle>> _v1RulesIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -4774,7 +5196,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing rule.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the object.
-  @Put(path: '/v1/rules/{id}', optionalBody: true)
+  @PUT(path: '/v1/rules/{id}', optionalBody: true)
   Future<chopper.Response<RuleSingle>> _v1RulesIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -4794,7 +5216,7 @@ abstract class FireflyIii extends ChopperService {
   ///Delete an rule.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the rule.
-  @Delete(path: '/v1/rules/{id}')
+  @DELETE(path: '/v1/rules/{id}')
   Future<chopper.Response> _v1RulesIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -4829,7 +5251,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param tag Either the tag itself or the tag ID.
-  @Get(path: '/v1/tags/{tag}/attachments')
+  @GET(path: '/v1/tags/{tag}/attachments')
   Future<chopper.Response<AttachmentArray>> _v1TagsTagAttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -4878,7 +5300,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD. This is the start date of the selected range (inclusive).
   ///@param end A date formatted YYYY-MM-DD. This is the end date of the selected range (inclusive).
   ///@param type Optional filter on the transaction type(s) returned.
-  @Get(path: '/v1/tags/{tag}/transactions')
+  @GET(path: '/v1/tags/{tag}/transactions')
   Future<chopper.Response<TransactionArray>> _v1TagsTagTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -4907,7 +5329,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/tags')
+  @GET(path: '/v1/tags')
   Future<chopper.Response<TagArray>> _v1TagsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -4927,7 +5349,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Store a new tag
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/tags', optionalBody: true)
+  @POST(path: '/v1/tags', optionalBody: true)
   Future<chopper.Response<TagSingle>> _v1TagsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required TagModelStore? body,
@@ -4937,7 +5359,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
+  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your mileage may vary.
   Future<chopper.Response<TagSingle>> v1TagsTagGet({
     String? xTraceId,
     int? limit,
@@ -4958,8 +5380,8 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
-  @Get(path: '/v1/tags/{tag}')
+  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your mileage may vary.
+  @GET(path: '/v1/tags/{tag}')
   Future<chopper.Response<TagSingle>> _v1TagsTagGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -4969,7 +5391,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Update existing tag.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
+  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your mileage may vary.
   Future<chopper.Response<TagSingle>> v1TagsTagPut({
     String? xTraceId,
     required String? tag,
@@ -4982,8 +5404,8 @@ abstract class FireflyIii extends ChopperService {
 
   ///Update existing tag.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
-  @Put(path: '/v1/tags/{tag}', optionalBody: true)
+  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your mileage may vary.
+  @PUT(path: '/v1/tags/{tag}', optionalBody: true)
   Future<chopper.Response<TagSingle>> _v1TagsTagPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('tag') required String? tag,
@@ -4992,7 +5414,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Delete an tag.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
+  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your mileage may vary.
   Future<chopper.Response> v1TagsTagDelete({
     String? xTraceId,
     required String? tag,
@@ -5002,8 +5424,8 @@ abstract class FireflyIii extends ChopperService {
 
   ///Delete an tag.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
-  @Delete(path: '/v1/tags/{tag}')
+  ///@param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your mileage may vary.
+  @DELETE(path: '/v1/tags/{tag}')
   Future<chopper.Response> _v1TagsTagDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('tag') required String? tag,
@@ -5046,7 +5468,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param code The currency code.
   ///@param date A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.
   ///@param type Optional filter on the account type(s) returned
-  @Get(path: '/v1/currencies/{code}/accounts')
+  @GET(path: '/v1/currencies/{code}/accounts')
   Future<chopper.Response<AccountArray>> _v1CurrenciesCodeAccountsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -5086,7 +5508,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  @Get(path: '/v1/currencies/{code}/available-budgets')
+  @GET(path: '/v1/currencies/{code}/available-budgets')
   Future<chopper.Response<AvailableBudgetArray>>
   _v1CurrenciesCodeAvailableBudgetsGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -5121,7 +5543,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  @Get(path: '/v1/currencies/{code}/bills')
+  @GET(path: '/v1/currencies/{code}/bills')
   Future<chopper.Response<BillArray>> _v1CurrenciesCodeBillsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -5166,7 +5588,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param code The currency code.
   ///@param start Start date for the budget limit list.
   ///@param end End date for the budget limit list.
-  @Get(path: '/v1/currencies/{code}/budget-limits')
+  @GET(path: '/v1/currencies/{code}/budget-limits')
   Future<chopper.Response<BudgetLimitArray>> _v1CurrenciesCodeBudgetLimitsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -5205,7 +5627,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  @Get(path: '/v1/currencies/{code}/recurrences')
+  @GET(path: '/v1/currencies/{code}/recurrences')
   Future<chopper.Response<RecurrenceArray>> _v1CurrenciesCodeRecurrencesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -5239,7 +5661,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param code The currency code.
-  @Get(path: '/v1/currencies/{code}/rules')
+  @GET(path: '/v1/currencies/{code}/rules')
   Future<chopper.Response<RuleArray>> _v1CurrenciesCodeRulesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -5288,7 +5710,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD, to limit the list of transactions.
   ///@param end A date formatted YYYY-MM-DD, to limit the list of transactions.
   ///@param type Optional filter on the transaction type(s) returned
-  @Get(path: '/v1/currencies/{code}/transactions')
+  @GET(path: '/v1/currencies/{code}/transactions')
   Future<chopper.Response<TransactionArray>> _v1CurrenciesCodeTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -5324,7 +5746,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/currencies')
+  @GET(path: '/v1/currencies')
   Future<chopper.Response<CurrencyArray>> _v1CurrenciesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -5347,7 +5769,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Store a new currency
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/currencies', optionalBody: true)
+  @POST(path: '/v1/currencies', optionalBody: true)
   Future<chopper.Response<CurrencySingle>> _v1CurrenciesPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required CurrencyStore? body,
@@ -5374,7 +5796,7 @@ abstract class FireflyIii extends ChopperService {
   ///Enable a single currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param code The currency code.
-  @Post(path: '/v1/currencies/{code}/enable', optionalBody: true)
+  @POST(path: '/v1/currencies/{code}/enable', optionalBody: true)
   Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodeEnablePost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
@@ -5401,16 +5823,16 @@ abstract class FireflyIii extends ChopperService {
   ///Disable a currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param code The currency code.
-  @Post(path: '/v1/currencies/{code}/disable', optionalBody: true)
+  @POST(path: '/v1/currencies/{code}/disable', optionalBody: true)
   Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodeDisablePost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
   });
 
-  ///Make currency default currency.
+  ///Make currency primary currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param code The currency code.
-  Future<chopper.Response<CurrencySingle>> v1CurrenciesCodeDefaultPost({
+  Future<chopper.Response<CurrencySingle>> v1CurrenciesCodePrimaryPost({
     String? xTraceId,
     required String? code,
   }) {
@@ -5419,17 +5841,17 @@ abstract class FireflyIii extends ChopperService {
       () => CurrencySingle.fromJsonFactory,
     );
 
-    return _v1CurrenciesCodeDefaultPost(
+    return _v1CurrenciesCodePrimaryPost(
       xTraceId: xTraceId?.toString(),
       code: code,
     );
   }
 
-  ///Make currency default currency.
+  ///Make currency primary currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param code The currency code.
-  @Post(path: '/v1/currencies/{code}/default', optionalBody: true)
-  Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodeDefaultPost({
+  @POST(path: '/v1/currencies/{code}/primary', optionalBody: true)
+  Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodePrimaryPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
   });
@@ -5452,7 +5874,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get a single currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param code The currency code.
-  @Get(path: '/v1/currencies/{code}')
+  @GET(path: '/v1/currencies/{code}')
   Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodeGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
@@ -5481,7 +5903,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param code The currency code.
-  @Put(
+  @PUT(
     path: '/v1/currencies/{code}',
     headers: {contentTypeKey: formEncodedHeaders},
   )
@@ -5505,15 +5927,15 @@ abstract class FireflyIii extends ChopperService {
   ///Delete a currency.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param code The currency code.
-  @Delete(path: '/v1/currencies/{code}')
+  @DELETE(path: '/v1/currencies/{code}')
   Future<chopper.Response> _v1CurrenciesCodeDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
   });
 
-  ///Get the user's default currency.
+  ///Get the primary currency of the current administration.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  Future<chopper.Response<CurrencySingle>> v1CurrenciesDefaultGet({
+  Future<chopper.Response<CurrencySingle>> v1CurrenciesPrimaryGet({
     String? xTraceId,
   }) {
     generatedMapping.putIfAbsent(
@@ -5521,33 +5943,13 @@ abstract class FireflyIii extends ChopperService {
       () => CurrencySingle.fromJsonFactory,
     );
 
-    return _v1CurrenciesDefaultGet(xTraceId: xTraceId?.toString());
+    return _v1CurrenciesPrimaryGet(xTraceId: xTraceId?.toString());
   }
 
-  ///Get the user's default currency.
+  ///Get the primary currency of the current administration.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Get(path: '/v1/currencies/default')
-  Future<chopper.Response<CurrencySingle>> _v1CurrenciesDefaultGet({
-    @Header('X-Trace-Id') String? xTraceId,
-  });
-
-  ///Get the native currency of the current administration.
-  ///@param X-Trace-Id Unique identifier associated with this request.
-  Future<chopper.Response<CurrencySingle>> v1CurrenciesNativeGet({
-    String? xTraceId,
-  }) {
-    generatedMapping.putIfAbsent(
-      CurrencySingle,
-      () => CurrencySingle.fromJsonFactory,
-    );
-
-    return _v1CurrenciesNativeGet(xTraceId: xTraceId?.toString());
-  }
-
-  ///Get the native currency of the current administration.
-  ///@param X-Trace-Id Unique identifier associated with this request.
-  @Get(path: '/v1/currencies/native')
-  Future<chopper.Response<CurrencySingle>> _v1CurrenciesNativeGet({
+  @GET(path: '/v1/currencies/primary')
+  Future<chopper.Response<CurrencySingle>> _v1CurrenciesPrimaryGet({
     @Header('X-Trace-Id') String? xTraceId,
   });
 
@@ -5581,7 +5983,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the transaction journal / the split.
-  @Get(path: '/v1/transaction-journals/{id}/links')
+  @GET(path: '/v1/transaction-journals/{id}/links')
   Future<chopper.Response<TransactionLinkArray>>
   _v1TransactionJournalsIdLinksGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -5608,7 +6010,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get a single transaction, based on one of the underlying transaction journals (transaction splits).
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the transaction journal (split).
-  @Get(path: '/v1/transaction-journals/{id}')
+  @GET(path: '/v1/transaction-journals/{id}')
   Future<chopper.Response<TransactionSingle>> _v1TransactionJournalsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -5630,7 +6032,7 @@ abstract class FireflyIii extends ChopperService {
   ///Delete split from transaction
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the transaction journal (the split) you wish to delete.
-  @Delete(path: '/v1/transaction-journals/{id}')
+  @DELETE(path: '/v1/transaction-journals/{id}')
   Future<chopper.Response> _v1TransactionJournalsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -5665,7 +6067,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the transaction.
-  @Get(path: '/v1/transactions/{id}/attachments')
+  @GET(path: '/v1/transactions/{id}/attachments')
   Future<chopper.Response<AttachmentArray>> _v1TransactionsIdAttachmentsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -5703,7 +6105,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param id The ID of the transaction.
-  @Get(path: '/v1/transactions/{id}/piggy-bank-events')
+  @GET(path: '/v1/transactions/{id}/piggy-bank-events')
   Future<chopper.Response<PiggyBankEventArray>>
   _v1TransactionsIdPiggyBankEventsGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -5751,7 +6153,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD. This is the start date of the selected range (inclusive).
   ///@param end A date formatted YYYY-MM-DD. This is the end date of the selected range (inclusive).
   ///@param type Optional filter on the transaction type(s) returned.
-  @Get(path: '/v1/transactions')
+  @GET(path: '/v1/transactions')
   Future<chopper.Response<TransactionArray>> _v1TransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -5777,7 +6179,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Store a new transaction
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/transactions', optionalBody: true)
+  @POST(path: '/v1/transactions', optionalBody: true)
   Future<chopper.Response<TransactionSingle>> _v1TransactionsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required TransactionStore? body,
@@ -5801,7 +6203,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get a single transaction.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the transaction.
-  @Get(path: '/v1/transactions/{id}')
+  @GET(path: '/v1/transactions/{id}')
   Future<chopper.Response<TransactionSingle>> _v1TransactionsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -5830,7 +6232,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing transaction. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the transaction.
-  @Put(path: '/v1/transactions/{id}', optionalBody: true)
+  @PUT(path: '/v1/transactions/{id}', optionalBody: true)
   Future<chopper.Response<TransactionSingle>> _v1TransactionsIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -5850,7 +6252,7 @@ abstract class FireflyIii extends ChopperService {
   ///Delete a transaction.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the transaction.
-  @Delete(path: '/v1/transactions/{id}')
+  @DELETE(path: '/v1/transactions/{id}')
   Future<chopper.Response> _v1TransactionsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -5883,7 +6285,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/user-groups')
+  @GET(path: '/v1/user-groups')
   Future<chopper.Response<UserGroupArray>> _v1UserGroupsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -5908,7 +6310,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get a single user group.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the user group.
-  @Get(path: '/v1/user-groups/{id}')
+  @GET(path: '/v1/user-groups/{id}')
   Future<chopper.Response<UserGroupSingle>> _v1UserGroupsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -5937,7 +6339,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update an existing user group.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The ID of the account.
-  @Put(path: '/v1/user-groups/{id}', optionalBody: true)
+  @PUT(path: '/v1/user-groups/{id}', optionalBody: true)
   Future<chopper.Response<UserGroupSingle>> _v1UserGroupsIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -5981,7 +6383,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param query The query you wish to search for.
   ///@param type The type of accounts you wish to limit the search to.
   ///@param field The account field(s) you want to search in.
-  @Get(path: '/v1/search/accounts')
+  @GET(path: '/v1/search/accounts')
   Future<chopper.Response<AccountArray>> _v1SearchAccountsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -6020,7 +6422,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
   ///@param query The query you wish to search for.
-  @Get(path: '/v1/search/transactions')
+  @GET(path: '/v1/search/transactions')
   Future<chopper.Response<TransactionArray>> _v1SearchTransactionsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -6057,7 +6459,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param start A date formatted YYYY-MM-DD.
   ///@param end A date formatted YYYY-MM-DD.
   ///@param currency_code A currency code like EUR or USD, to filter the result.
-  @Get(path: '/v1/summary/basic')
+  @GET(path: '/v1/summary/basic')
   Future<chopper.Response<BasicSummary>> _v1SummaryBasicGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
@@ -6075,7 +6477,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///System information end point.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Get(path: '/v1/about')
+  @GET(path: '/v1/about')
   Future<chopper.Response<SystemInfo>> _v1AboutGet({
     @Header('X-Trace-Id') String? xTraceId,
   });
@@ -6090,7 +6492,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Currently authenticated user endpoint.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Get(path: '/v1/about/user')
+  @GET(path: '/v1/about/user')
   Future<chopper.Response<UserSingle>> _v1AboutUserGet({
     @Header('X-Trace-Id') String? xTraceId,
   });
@@ -6110,7 +6512,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Get Firefly III system configuration values.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Get(path: '/v1/configuration')
+  @GET(path: '/v1/configuration')
   Future<chopper.Response<ConfigurationArray>> _v1ConfigurationGet({
     @Header('X-Trace-Id') String? xTraceId,
   });
@@ -6136,7 +6538,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get a single Firefly III system configuration value
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param name The name of the configuration value you want to know.
-  @Get(path: '/v1/configuration/{name}')
+  @GET(path: '/v1/configuration/{name}')
   Future<chopper.Response<ConfigurationSingle>> _v1ConfigurationNameGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('name') required String? name,
@@ -6165,7 +6567,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update configuration value
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param name The name of the configuration value you want to update.
-  @Put(path: '/v1/configuration/{name}', optionalBody: true)
+  @PUT(path: '/v1/configuration/{name}', optionalBody: true)
   Future<chopper.Response<ConfigurationSingle>> _v1ConfigurationNamePut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('name') required String? name,
@@ -6198,7 +6600,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param cliToken The CLI token of any user in Firefly III, required to run the cron job.
   ///@param date A date formatted YYYY-MM-DD. This can be used to make the cron job pretend it's running on another day.
   ///@param force Forces the cron job to fire, regardless of whether it has fired before. This may result in double transactions or weird budgets, so be careful.
-  @Get(path: '/v1/cron/{cliToken}')
+  @GET(path: '/v1/cron/{cliToken}')
   Future<chopper.Response<CronResult>> _v1CronCliTokenGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('cliToken') required String? cliToken,
@@ -6228,7 +6630,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/users')
+  @GET(path: '/v1/users')
   Future<chopper.Response<UserArray>> _v1UsersGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -6248,7 +6650,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Store a new user
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/users', optionalBody: true)
+  @POST(path: '/v1/users', optionalBody: true)
   Future<chopper.Response<UserSingle>> _v1UsersPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required User? body,
@@ -6269,7 +6671,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get a single user.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The user ID.
-  @Get(path: '/v1/users/{id}')
+  @GET(path: '/v1/users/{id}')
   Future<chopper.Response<UserSingle>> _v1UsersIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -6291,7 +6693,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update an existing user's information.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The user ID.
-  @Put(path: '/v1/users/{id}', optionalBody: true)
+  @PUT(path: '/v1/users/{id}', optionalBody: true)
   Future<chopper.Response<UserSingle>> _v1UsersIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -6311,7 +6713,7 @@ abstract class FireflyIii extends ChopperService {
   ///Delete a user.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The user ID.
-  @Delete(path: '/v1/users/{id}')
+  @DELETE(path: '/v1/users/{id}')
   Future<chopper.Response> _v1UsersIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -6342,7 +6744,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/preferences')
+  @GET(path: '/v1/preferences')
   Future<chopper.Response<PreferenceArray>> _v1PreferencesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -6365,7 +6767,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Store a new preference for this user.
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/preferences', optionalBody: true)
+  @POST(path: '/v1/preferences', optionalBody: true)
   Future<chopper.Response<PreferenceSingle>> _v1PreferencesPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required Preference? body,
@@ -6389,7 +6791,7 @@ abstract class FireflyIii extends ChopperService {
   ///Return a single preference.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param name The name of the preference.
-  @Get(path: '/v1/preferences/{name}')
+  @GET(path: '/v1/preferences/{name}')
   Future<chopper.Response<PreferenceSingle>> _v1PreferencesNameGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('name') required String? name,
@@ -6418,7 +6820,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update preference
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param name The name of the preference. Will always overwrite. Will be created if it does not exist.
-  @Put(path: '/v1/preferences/{name}', optionalBody: true)
+  @PUT(path: '/v1/preferences/{name}', optionalBody: true)
   Future<chopper.Response<PreferenceSingle>> _v1PreferencesNamePut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('name') required String? name,
@@ -6443,7 +6845,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get all the messages of a single webhook.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
-  @Get(path: '/v1/webhooks/{id}/messages')
+  @GET(path: '/v1/webhooks/{id}/messages')
   Future<chopper.Response<WebhookMessageArray>> _v1WebhooksIdMessagesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -6475,7 +6877,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
-  @Get(path: '/v1/webhooks/{id}/messages/{messageId}')
+  @GET(path: '/v1/webhooks/{id}/messages/{messageId}')
   Future<chopper.Response<WebhookMessageSingle>>
   _v1WebhooksIdMessagesMessageIdGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -6503,7 +6905,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
-  @Delete(path: '/v1/webhooks/{id}/messages/{messageId}')
+  @DELETE(path: '/v1/webhooks/{id}/messages/{messageId}')
   Future<chopper.Response> _v1WebhooksIdMessagesMessageIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -6544,7 +6946,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param page Page number. The default pagination is per 50 items.
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
-  @Get(path: '/v1/webhooks/{id}/messages/{messageId}/attempts')
+  @GET(path: '/v1/webhooks/{id}/messages/{messageId}/attempts')
   Future<chopper.Response<WebhookAttemptArray>>
   _v1WebhooksIdMessagesMessageIdAttemptsGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -6584,7 +6986,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
   ///@param attemptId The webhook attempt ID.
-  @Get(path: '/v1/webhooks/{id}/messages/{messageId}/attempts/{attemptId}')
+  @GET(path: '/v1/webhooks/{id}/messages/{messageId}/attempts/{attemptId}')
   Future<chopper.Response<WebhookAttemptSingle>>
   _v1WebhooksIdMessagesMessageIdAttemptsAttemptIdGet({
     @Header('X-Trace-Id') String? xTraceId,
@@ -6618,7 +7020,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param id The webhook ID.
   ///@param messageId The webhook message ID.
   ///@param attemptId The webhook message attempt ID.
-  @Delete(path: '/v1/webhooks/{id}/messages/{messageId}/attempts/{attemptId}')
+  @DELETE(path: '/v1/webhooks/{id}/messages/{messageId}/attempts/{attemptId}')
   Future<chopper.Response>
   _v1WebhooksIdMessagesMessageIdAttemptsAttemptIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
@@ -6640,7 +7042,7 @@ abstract class FireflyIii extends ChopperService {
   ///Submit messages for a webhook.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
-  @Post(path: '/v1/webhooks/{id}/submit', optionalBody: true)
+  @POST(path: '/v1/webhooks/{id}/submit', optionalBody: true)
   Future<chopper.Response> _v1WebhooksIdSubmitPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -6666,7 +7068,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
   ///@param transactionId The transaction ID.
-  @Post(
+  @POST(
     path: '/v1/webhooks/{id}/trigger-transaction/{transactionId}',
     optionalBody: true,
   )
@@ -6701,7 +7103,7 @@ abstract class FireflyIii extends ChopperService {
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param limit Number of items per page. The default pagination is per 50 items.
   ///@param page Page number. The default pagination is per 50 items.
-  @Get(path: '/v1/webhooks')
+  @GET(path: '/v1/webhooks')
   Future<chopper.Response<WebhookArray>> _v1WebhooksGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
@@ -6724,7 +7126,7 @@ abstract class FireflyIii extends ChopperService {
 
   ///Store a new webhook
   ///@param X-Trace-Id Unique identifier associated with this request.
-  @Post(path: '/v1/webhooks', optionalBody: true)
+  @POST(path: '/v1/webhooks', optionalBody: true)
   Future<chopper.Response<WebhookSingle>> _v1WebhooksPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required WebhookStore? body,
@@ -6748,7 +7150,7 @@ abstract class FireflyIii extends ChopperService {
   ///Get a single webhook.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
-  @Get(path: '/v1/webhooks/{id}')
+  @GET(path: '/v1/webhooks/{id}')
   Future<chopper.Response<WebhookSingle>> _v1WebhooksIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -6773,7 +7175,7 @@ abstract class FireflyIii extends ChopperService {
   ///Update existing webhook.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
-  @Put(path: '/v1/webhooks/{id}', optionalBody: true)
+  @PUT(path: '/v1/webhooks/{id}', optionalBody: true)
   Future<chopper.Response<WebhookSingle>> _v1WebhooksIdPut({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
@@ -6793,7 +7195,7 @@ abstract class FireflyIii extends ChopperService {
   ///Delete a webhook.
   ///@param X-Trace-Id Unique identifier associated with this request.
   ///@param id The webhook ID.
-  @Delete(path: '/v1/webhooks/{id}')
+  @DELETE(path: '/v1/webhooks/{id}')
   Future<chopper.Response> _v1WebhooksIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,

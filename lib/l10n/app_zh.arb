@@ -1,5 +1,5 @@
 {
-    "@@locale": "zh",
+  "@@locale": "zh",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "现金",
     "@accountRoleAssetCashWallet": {
@@ -213,6 +213,22 @@
     "@billsUngrouped": {
         "description": "Title for ungrouped subscriptions"
     },
+    "billsSettingsShowOnlyActive": "仅显示活跃",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "仅显示活跃的订阅。",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "仅显示预期",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "仅显示本月预期（或已支付）的订阅。",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
     "categoryDeleteConfirm": "您确定要删除这个分类吗？与该分类关联的账单不会被删除，但该分类将彻底删除。",
     "@categoryDeleteConfirm": {
         "description": "Confirmation text to delete category"
@@ -372,6 +388,26 @@
     "generalCurrency": "货币",
     "@generalCurrency": {
         "description": "(Money) Currency"
+    },
+    "generalDateRangeCurrentMonth": "本月",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "最近 30 天",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "本年度",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "去年",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "所有",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
     },
     "generalDefault": "默认",
     "@generalDefault": {
@@ -537,7 +573,7 @@
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
     },
-    "homeMainChartTagsTitle": "",
+    "homeMainChartTagsTitle": "本月标签摘要",
     "@homeMainChartTagsTitle": {
         "description": "Chart Label: Tags Summary"
     },
@@ -609,9 +645,41 @@
             }
         }
     },
+    "homePiggySavedMultiple": "已储蓄金额：",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "收费金额: {amount}%",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "账户状态",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "可用金额",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "可用余额：{amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "在储蓄罐中：{amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
         "placeholders": {
             "amount": {
                 "type": "String",
@@ -670,6 +738,10 @@
     "homeTransactionsDialogFilterCurrenciesAll": "<全部货币>",
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "日期范围",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
     },
     "homeTransactionsDialogFilterFutureTransactions": "显示未来交易",
     "@homeTransactionsDialogFilterFutureTransactions": {
@@ -757,9 +829,9 @@
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "设置",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "设置",
+    "@generalSettings": {
+        "description": "Label: Settings"
     },
     "no": "取消",
     "@no": {
@@ -1016,6 +1088,14 @@
     "transactionDialogCurrencyTitle": "选择货币种类",
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "无储蓄目标",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "链接到储蓄目标",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
     },
     "transactionDialogTagsAdd": "添加标签",
     "@transactionDialogTagsAdd": {

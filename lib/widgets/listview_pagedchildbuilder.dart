@@ -27,7 +27,7 @@ PagedChildBuilderDelegate<T> customPagedChildBuilderDelegate<T>({
         ),
     newPageProgressIndicatorBuilder:
         (_) => const Padding(
-          padding: const EdgeInsets.only(top: 16, bottom: 16),
+          padding: EdgeInsets.only(top: 16, bottom: 16),
           child: Center(child: CircularProgressIndicator.adaptive()),
         ),
   );

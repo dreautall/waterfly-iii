@@ -28,7 +28,7 @@ class CategoryChart extends StatelessWidget {
     );
 
     if (data.length > 5) {
-      LabelAmountChart otherData = chartData
+      final LabelAmountChart otherData = chartData
           .skip(5)
           .reduce(
             (LabelAmountChart v, LabelAmountChart e) =>
@@ -80,7 +80,7 @@ class CategoryChart extends StatelessWidget {
                 return;
               }
               final ChartPoint<String> chart = pid.dataPoints![pid.pointIndex!];
-              InsightGroupEntry? category = data.firstWhere(
+              final InsightGroupEntry category = data.firstWhere(
                 (InsightGroupEntry e) => e.name == chart.x,
                 orElse: () => const InsightGroupEntry(),
               );
@@ -99,7 +99,9 @@ class CategoryChart extends StatelessWidget {
                             category: CategoryRead(
                               id: category.id!,
                               type: "filter-category",
-                              attributes: Category(name: category.name!),
+                              attributes: CategoryProperties(
+                                name: category.name!,
+                              ),
                             ),
                           ),
                         ),

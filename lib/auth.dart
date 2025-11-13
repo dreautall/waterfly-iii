@@ -19,13 +19,12 @@ import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:version/version.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
-import 'package:waterflyiii/generated/swagger_fireflyiii_api/client_index.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 
 final Logger log = Logger("Auth");
-final Version minApiVersion = Version(2, 0, 0);
+final Version minApiVersion = Version(6, 3, 2);
 
 class APITZReply {
   APITZReply(this.data);
@@ -106,9 +105,7 @@ class APIRequestInterceptor implements Interceptor {
   final Function() headerFunc;
 
   @override
-  FutureOr<Response<BodyType>> intercept<BodyType>(
-    Chain<BodyType> chain,
-  ) async {
+  FutureOr<Response<BodyType>> intercept<BodyType>(Chain<BodyType> chain) {
     log.finest(() => "API query ${chain.request.method} ${chain.request.url}");
     if (chain.request.body != null) {
       log.finest(() => "Query Body: ${chain.request.body}");
@@ -128,11 +125,13 @@ class AuthUser {
   late Uri _host;
   late String _apiKey;
   late FireflyIii _api;
-  late FireflyIiiV2 _apiV2;
+
+  //late FireflyIiiV2 _apiV2;
 
   Uri get host => _host;
   FireflyIii get api => _api;
-  FireflyIiiV2 get apiV2 => _apiV2;
+
+  //FireflyIiiV2 get apiV2 => _apiV2;
 
   final Logger log = Logger("Auth.AuthUser");
 
@@ -148,11 +147,11 @@ class AuthUser {
       interceptors: <Interceptor>[APIRequestInterceptor(headers)],
     );
 
-    _apiV2 = FireflyIiiV2.create(
+    /*_apiV2 = FireflyIiiV2.create(
       baseUrl: _host,
       httpClient: httpClient,
       interceptors: <Interceptor>[APIRequestInterceptor(headers)],
-    );
+    );*/
   }
 
   Map<String, String> headers() {
@@ -176,7 +175,7 @@ class AuthUser {
       throw AuthErrorHost(host);
     }
 
-    Uri aboutUri = uri.replace(
+    final Uri aboutUri = uri.replace(
       pathSegments: <String>[...uri.pathSegments, "api", "v1", "about"],
     );
 
@@ -238,13 +237,13 @@ class FireflyService with ChangeNotifier {
     return _currentUser!.api;
   }
 
-  FireflyIiiV2 get apiV2 {
+  /*FireflyIiiV2 get apiV2 {
     if (_currentUser?.apiV2 == null) {
       signOut();
       throw Exception("FireflyService.apiV2: API unavailable");
     }
     return _currentUser!.apiV2;
-  }
+  }*/
 
   late CurrencyRead defaultCurrency;
   late TimeZoneHandler tzHandler;
@@ -261,8 +260,8 @@ class FireflyService with ChangeNotifier {
 
   Future<bool> signInFromStorage() async {
     _storageSignInException = null;
-    String? apiHost = await storage.read(key: 'api_host');
-    String? apiKey = await storage.read(key: 'api_key');
+    final String? apiHost = await storage.read(key: 'api_host');
+    final String? apiKey = await storage.read(key: 'api_key');
 
     log.config(
       "storage: $apiHost, apiKey ${apiKey?.isEmpty ?? true ? "unset" : "set"}",
@@ -273,7 +272,8 @@ class FireflyService with ChangeNotifier {
     }
 
     try {
-      return await signIn(apiHost, apiKey);
+      await signIn(apiHost, apiKey);
+      return true;
     } catch (e) {
       _storageSignInException = e;
       log.finest(() => "notify FireflyService->signInFromStorage");
@@ -288,7 +288,7 @@ class FireflyService with ChangeNotifier {
     _signedIn = false;
     _storageSignInException = null;
     await storage.deleteAll();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
 
     log.finest(() => "notify FireflyService->signOut");
@@ -304,10 +304,11 @@ class FireflyService with ChangeNotifier {
     _currentUser = await AuthUser.create(host, apiKey);
     if (_currentUser == null || !hasApi) return false;
 
-    Response<CurrencySingle> currencyInfo = await api.v1CurrenciesDefaultGet();
+    final Response<CurrencySingle> currencyInfo =
+        await api.v1CurrenciesPrimaryGet();
     defaultCurrency = currencyInfo.body!.data;
 
-    Response<SystemInfo> about = await api.v1AboutGet();
+    final Response<SystemInfo> about = await api.v1AboutGet();
     try {
       String apiVersionStr = about.body?.data?.apiVersion ?? "";
       if (apiVersionStr.startsWith("develop/")) {
@@ -324,7 +325,7 @@ class FireflyService with ChangeNotifier {
 
     // Manual API query as the Swagger type doesn't resolve in Flutter :(
     final http.Client client = httpClient;
-    Uri tzUri = user!.host.replace(
+    final Uri tzUri = user!.host.replace(
       pathSegments: <String>[
         ...user!.host.pathSegments,
         "v1",
@@ -348,8 +349,8 @@ class FireflyService with ChangeNotifier {
     log.finest(() => "notify FireflyService->signIn");
     notifyListeners();
 
-    storage.write(key: 'api_host', value: host);
-    storage.write(key: 'api_key', value: apiKey);
+    await storage.write(key: 'api_host', value: host);
+    await storage.write(key: 'api_key', value: apiKey);
 
     return true;
   }

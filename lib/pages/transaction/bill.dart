@@ -55,7 +55,7 @@ class _BillDialogState extends State<BillDialog> {
               BillRead(
                 type: "bill",
                 id: "0",
-                attributes: Bill(
+                attributes: BillProperties(
                   name: "",
                   amountMin: "",
                   amountMax: "",
@@ -88,7 +88,7 @@ class _BillDialogState extends State<BillDialog> {
               _bill = BillRead(
                 type: "bill",
                 id: option.id,
-                attributes: Bill(
+                attributes: BillProperties(
                   name: option.name,
                   amountMin: "",
                   amountMax: "",

@@ -213,6 +213,22 @@
     "@billsUngrouped": {
         "description": "Title for ungrouped subscriptions"
     },
+    "billsSettingsShowOnlyActive": "Pokaż tylko aktywne",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Pokazuje tylko aktywne subskrypcje.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Pokaż tylko oczekiwane",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Pokazuje tylko te subskrypcje, które są oczekiwane (lub opłacone) w tym miesiącu.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
     "categoryDeleteConfirm": "Czy na pewno chcesz usunąć tę kategorię? Transakcje nie zostaną usunięte, ale nie będą już posiadały kategorii.",
     "@categoryDeleteConfirm": {
         "description": "Confirmation text to delete category"
@@ -372,6 +388,26 @@
     "generalCurrency": "Waluta",
     "@generalCurrency": {
         "description": "(Money) Currency"
+    },
+    "generalDateRangeCurrentMonth": "Bieżący miesiąc",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Ostatnie 30 dni",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Bieżący rok",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Poprzedni rok",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Wszystko",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
     },
     "generalDefault": "domyślnie",
     "@generalDefault": {
@@ -609,9 +645,41 @@
             }
         }
     },
+    "homePiggySavedMultiple": "Zaoszczędzono do tej pory:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "Docelowa kwota: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "Status konta",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Dostępne kwoty",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "Dostępne: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "W skarbonkach: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
         "placeholders": {
             "amount": {
                 "type": "String",
@@ -670,6 +738,10 @@
     "homeTransactionsDialogFilterCurrenciesAll": "<Wszystkie waluty>",
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "Zakres dat",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
     },
     "homeTransactionsDialogFilterFutureTransactions": "Pokaż przyszłe transakcje",
     "@homeTransactionsDialogFilterFutureTransactions": {
@@ -757,9 +829,9 @@
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "Ustawienia",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "Ustawienia",
+    "@generalSettings": {
+        "description": "Label: Settings"
     },
     "no": "Nie",
     "@no": {
@@ -1016,6 +1088,14 @@
     "transactionDialogCurrencyTitle": "Wybierz walutę",
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "Brak skarbonki",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Połącz ze skarbonką",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
     },
     "transactionDialogTagsAdd": "Dodaj Tag",
     "@transactionDialogTagsAdd": {

@@ -16,12 +16,16 @@ import 'app_localizations_fr.dart';
 import 'app_localizations_hu.dart';
 import 'app_localizations_id.dart';
 import 'app_localizations_it.dart';
+import 'app_localizations_ko.dart';
+import 'app_localizations_nl.dart';
 import 'app_localizations_pl.dart';
 import 'app_localizations_pt.dart';
 import 'app_localizations_ro.dart';
 import 'app_localizations_ru.dart';
 import 'app_localizations_sl.dart';
 import 'app_localizations_sv.dart';
+import 'app_localizations_tr.dart';
+import 'app_localizations_uk.dart';
 import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
@@ -120,12 +124,18 @@ abstract class S {
     Locale('hu'),
     Locale('id'),
     Locale('it'),
+    Locale('ko'),
+    Locale('nl'),
     Locale('pl'),
+    Locale('pt', 'BR'),
     Locale('pt'),
     Locale('ro'),
     Locale('ru'),
     Locale('sl'),
     Locale('sv'),
+    Locale('tr'),
+    Locale('uk'),
+    Locale('zh', 'TW'),
     Locale('zh'),
   ];
 
@@ -344,6 +354,30 @@ abstract class S {
   /// **'Ungrouped'**
   String get billsUngrouped;
 
+  /// Text for show only active subscriptions settings item
+  ///
+  /// In en, this message translates to:
+  /// **'Show only active'**
+  String get billsSettingsShowOnlyActive;
+
+  /// Text for show only active subscriptions settings item description
+  ///
+  /// In en, this message translates to:
+  /// **'Shows only active subscriptions.'**
+  String get billsSettingsShowOnlyActiveDesc;
+
+  /// Text for show only expected subscriptions settings item
+  ///
+  /// In en, this message translates to:
+  /// **'Show only expected'**
+  String get billsSettingsShowOnlyExpected;
+
+  /// Text for show only expected subscriptions settings item description
+  ///
+  /// In en, this message translates to:
+  /// **'Shows only those subscriptions that are expected (or paid) this month.'**
+  String get billsSettingsShowOnlyExpectedDesc;
+
   /// Confirmation text to delete category
   ///
   /// In en, this message translates to:
@@ -547,6 +581,36 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Currency'**
   String get generalCurrency;
+
+  /// Date Range: Current Month
+  ///
+  /// In en, this message translates to:
+  /// **'Current Month'**
+  String get generalDateRangeCurrentMonth;
+
+  /// Date Range: Last 30 days
+  ///
+  /// In en, this message translates to:
+  /// **'Last 30 days'**
+  String get generalDateRangeLast30Days;
+
+  /// Date Range: Current Year
+  ///
+  /// In en, this message translates to:
+  /// **'Current Year'**
+  String get generalDateRangeCurrentYear;
+
+  /// Date Range: Last year
+  ///
+  /// In en, this message translates to:
+  /// **'Last year'**
+  String get generalDateRangeLastYear;
+
+  /// Date Range: All
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get generalDateRangeAll;
 
   /// Indicates that something is the default choice
   ///
@@ -782,11 +846,41 @@ abstract class S {
   /// **'Saved so far: {amount}'**
   String homePiggySaved(String amount);
 
+  /// Title for a list of multiple accounts with the amount of money saved so far
+  ///
+  /// In en, this message translates to:
+  /// **'Saved so far:'**
+  String get homePiggySavedMultiple;
+
   /// How much money should be saved
   ///
   /// In en, this message translates to:
   /// **'Target amount: {amount}'**
   String homePiggyTarget(String amount);
+
+  /// Title for the account status section showing balances and piggy bank totals
+  ///
+  /// In en, this message translates to:
+  /// **'Account Status'**
+  String get homePiggyAccountStatus;
+
+  /// Title for the available amounts section showing money not in piggy banks
+  ///
+  /// In en, this message translates to:
+  /// **'Available Amounts'**
+  String get homePiggyAvailableAmounts;
+
+  /// Available balance after subtracting piggy bank amounts
+  ///
+  /// In en, this message translates to:
+  /// **'Available: {amount}'**
+  String homePiggyAvailable(String amount);
+
+  /// Amount currently in piggy banks for this account
+  ///
+  /// In en, this message translates to:
+  /// **'In piggy banks: {amount}'**
+  String homePiggyInPiggyBanks(String amount);
 
   /// Tab Label: Balance Sheet page
   ///
@@ -865,6 +959,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'<All Currencies>'**
   String get homeTransactionsDialogFilterCurrenciesAll;
+
+  /// Label for the date range dropdown (all, last year, last month, last 30 days etc)
+  ///
+  /// In en, this message translates to:
+  /// **'Date Range'**
+  String get homeTransactionsDialogFilterDateRange;
 
   /// Setting to show future transactions
   ///
@@ -986,11 +1086,11 @@ abstract class S {
   /// **'Main Dashboard'**
   String get navigationMain;
 
-  /// Navigation Label: Settings
+  /// Label: Settings
   ///
   /// In en, this message translates to:
   /// **'Settings'**
-  String get navigationSettings;
+  String get generalSettings;
 
   /// The word no
   ///
@@ -1310,6 +1410,18 @@ abstract class S {
   /// **'Select currency'**
   String get transactionDialogCurrencyTitle;
 
+  /// Button Label: no piggy bank to be used
+  ///
+  /// In en, this message translates to:
+  /// **'No Piggy Bank'**
+  String get transactionDialogPiggyNoPiggy;
+
+  /// Dialog Title: Link transaction to piggy bank
+  ///
+  /// In en, this message translates to:
+  /// **'Link to Piggy Bank'**
+  String get transactionDialogPiggyTitle;
+
   /// Button Label: Add Tag
   ///
   /// In en, this message translates to:
@@ -1500,12 +1612,16 @@ class _SDelegate extends LocalizationsDelegate<S> {
     'hu',
     'id',
     'it',
+    'ko',
+    'nl',
     'pl',
     'pt',
     'ro',
     'ru',
     'sl',
     'sv',
+    'tr',
+    'uk',
     'zh',
   ].contains(locale.languageCode);
 
@@ -1514,6 +1630,26 @@ class _SDelegate extends LocalizationsDelegate<S> {
 }
 
 S lookupS(Locale locale) {
+  // Lookup logic when language+country codes are specified.
+  switch (locale.languageCode) {
+    case 'pt':
+      {
+        switch (locale.countryCode) {
+          case 'BR':
+            return SPtBr();
+        }
+        break;
+      }
+    case 'zh':
+      {
+        switch (locale.countryCode) {
+          case 'TW':
+            return SZhTw();
+        }
+        break;
+      }
+  }
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ca':
@@ -1538,6 +1674,10 @@ S lookupS(Locale locale) {
       return SId();
     case 'it':
       return SIt();
+    case 'ko':
+      return SKo();
+    case 'nl':
+      return SNl();
     case 'pl':
       return SPl();
     case 'pt':
@@ -1550,6 +1690,10 @@ S lookupS(Locale locale) {
       return SSl();
     case 'sv':
       return SSv();
+    case 'tr':
+      return STr();
+    case 'uk':
+      return SUk();
     case 'zh':
       return SZh();
   }

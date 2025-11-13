@@ -1,0 +1,1 @@
+Onofficiële app voor Firefly III, een programma voor het beheren van financiën.

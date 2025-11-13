@@ -42,7 +42,7 @@ class _BillDetailsState extends State<BillDetails> {
     _currency = CurrencyRead(
       id: "0",
       type: "currencies",
-      attributes: Currency(
+      attributes: CurrencyProperties(
         code: widget.bill.attributes.currencyCode ?? "",
         name: "",
         symbol: widget.bill.attributes.currencySymbol ?? "",
@@ -58,7 +58,7 @@ class _BillDetailsState extends State<BillDetails> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.bill.attributes.name),
+        title: Text(widget.bill.attributes.name!),
         elevation: 1,
         scrolledUnderElevation: 1,
         backgroundColor: Theme.of(context).colorScheme.surface,
@@ -90,7 +90,8 @@ class _BillDetailsState extends State<BillDetails> {
                                   .billsExactAmountAndFrequency(
                                     _currency.fmt(
                                       double.tryParse(
-                                            widget.bill.attributes.amountMin,
+                                            widget.bill.attributes.amountMin ??
+                                                "0",
                                           ) ??
                                           0,
                                     ),
@@ -105,13 +106,15 @@ class _BillDetailsState extends State<BillDetails> {
                                   .billsAmountAndFrequency(
                                     _currency.fmt(
                                       double.tryParse(
-                                            widget.bill.attributes.amountMin,
+                                            widget.bill.attributes.amountMin ??
+                                                "0",
                                           ) ??
                                           0,
                                     ),
                                     _currency.fmt(
                                       double.tryParse(
-                                            widget.bill.attributes.amountMax,
+                                            widget.bill.attributes.amountMax ??
+                                                "0",
                                           ) ??
                                           0,
                                     ),
@@ -186,7 +189,7 @@ class _BillDetailsState extends State<BillDetails> {
     TransactionRead transaction,
     int index,
   ) {
-    DateTime date =
+    final DateTime date =
         _tzHandler
             .sTime(transaction.attributes.transactions.first.date)
             .toLocal();
@@ -336,14 +339,12 @@ class _BillDetailsState extends State<BillDetails> {
         "Getting page $pageKey (${_pagingState.pages?.length} items loaded so far)",
       );
 
-      Response<TransactionArray> response = await api.v1BillsIdTransactionsGet(
-        id: widget.bill.id,
-        page: pageKey,
-      );
+      final Response<TransactionArray> response = await api
+          .v1BillsIdTransactionsGet(id: widget.bill.id, page: pageKey);
       apiThrowErrorIfEmpty(response, mounted ? context : null);
 
       _billChartKey.currentState!.doneLoading();
-      List<TransactionRead> transactions = response.body!.data;
+      final List<TransactionRead> transactions = response.body!.data;
       _billChartKey.currentState!.addTransactions(transactions);
 
       final bool isLastPage =
@@ -377,7 +378,7 @@ class _BillDetailsState extends State<BillDetails> {
   Future<TransactionRead> _fetchFullTx(String id) async {
     final FireflyIii api = context.read<FireflyService>().api;
 
-    Response<TransactionSingle> response = await api.v1TransactionsIdGet(
+    final Response<TransactionSingle> response = await api.v1TransactionsIdGet(
       id: id,
     );
     apiThrowErrorIfEmpty(response, mounted ? context : null);

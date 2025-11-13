@@ -24,7 +24,7 @@ class _SplashPageState extends State<SplashPage> {
 
   Object? _loginError;
 
-  void _login(String? host, String? apiKey) async {
+  Future<void> _login(String? host, String? apiKey) async {
     log.fine(() => "SplashPage->_login()");
 
     bool success = false;
@@ -107,15 +107,16 @@ class _SplashPageState extends State<SplashPage> {
             _loginError is AuthErrorApiKey ||
             _loginError is AuthErrorNoInstance ||
             _loginError is AuthErrorVersionInvalid) {
-          AuthError errorType = _loginError as AuthError;
+          final AuthError errorType = _loginError as AuthError;
           return errorType.cause;
         } else if (_loginError is AuthErrorStatusCode) {
-          AuthErrorStatusCode errorType = _loginError as AuthErrorStatusCode;
+          final AuthErrorStatusCode errorType =
+              _loginError as AuthErrorStatusCode;
           errorDetails += "\n";
           errorDetails += S.of(context).errorStatusCode(errorType.code);
           return errorType.cause;
         } else if (_loginError is AuthErrorVersionTooLow) {
-          AuthErrorVersionTooLow errorType =
+          final AuthErrorVersionTooLow errorType =
               _loginError as AuthErrorVersionTooLow;
           errorDetails += "\n";
           errorDetails += S

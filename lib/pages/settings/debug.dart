@@ -22,9 +22,9 @@ class DebugDialog extends StatelessWidget {
         ),
         SwitchListTile.adaptive(
           value: context.select((SettingsProvider s) => s.debug),
-          onChanged: (bool value) async {
-            context.read<SettingsProvider>().debug = value;
-          },
+          onChanged:
+              (bool value) => context.read<SettingsProvider>().debug = value,
+
           title: Text(S.of(context).settingsDialogDebugTitle),
           secondary: const Icon(Icons.bug_report),
         ),

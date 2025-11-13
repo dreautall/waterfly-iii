@@ -105,7 +105,7 @@ class TransStock with ChangeNotifier {
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
-  }) async {
+  }) {
     return _getStock
         .get(
           jsonEncode(
@@ -130,7 +130,7 @@ class TransStock with ChangeNotifier {
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
-  }) async {
+  }) {
     return _getAccountStock
         .get(
           jsonEncode(
@@ -153,7 +153,7 @@ class TransStock with ChangeNotifier {
     required String? query,
     int? page,
     int? limit,
-  }) async {
+  }) {
     return _getSearchStock
         .get(
           jsonEncode(
@@ -169,7 +169,7 @@ class TransStock with ChangeNotifier {
   }
 
   FutureOr<List<TransactionRead>> _onGetValue(List<String> list) async {
-    List<TransactionRead> result = <TransactionRead>[];
+    final List<TransactionRead> result = <TransactionRead>[];
     for (String element in list) {
       result.add(await _singleStock.get(element));
     }
@@ -184,7 +184,7 @@ class TransStock with ChangeNotifier {
   }
 
   Future<void> setTransaction(TransactionRead transaction) async {
-    TransactionRead? oldTransaction =
+    final TransactionRead? oldTransaction =
         await _singleSoT.reader(transaction.id).first;
     // if no old transaction (= new one) or date has changed, clear cache
     if (oldTransaction == null ||
@@ -304,13 +304,13 @@ class CatStock {
               type: "categories",
               attributes: CategoryWithSum(
                 name: cat.name!,
-                spent: <CategorySpent>[],
-                earned: <CategoryEarned>[],
+                spent: <ArrayEntryWithCurrencyAndSum>[],
+                earned: <ArrayEntryWithCurrencyAndSum>[],
               ),
             );
           }
           categories[cat.id!]!.attributes.earned!.add(
-            CategoryEarned(
+            ArrayEntryWithCurrencyAndSum(
               currencyId: cat.currencyId,
               currencyCode: cat.currencyCode,
               currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
@@ -333,13 +333,13 @@ class CatStock {
               type: "categories",
               attributes: CategoryWithSum(
                 name: cat.name!,
-                spent: <CategorySpent>[],
-                earned: <CategoryEarned>[],
+                spent: <ArrayEntryWithCurrencyAndSum>[],
+                earned: <ArrayEntryWithCurrencyAndSum>[],
               ),
             );
           }
           categories[cat.id!]!.attributes.spent!.add(
-            CategorySpent(
+            ArrayEntryWithCurrencyAndSum(
               currencyId: cat.currencyId,
               currencyCode: cat.currencyCode,
               currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
@@ -358,13 +358,13 @@ class CatStock {
               type: "no-category",
               attributes: CategoryWithSum(
                 name: "L10NNONE",
-                spent: <CategorySpent>[],
-                earned: <CategoryEarned>[],
+                spent: <ArrayEntryWithCurrencyAndSum>[],
+                earned: <ArrayEntryWithCurrencyAndSum>[],
               ),
             );
           }
           categories["-1"]!.attributes.earned!.add(
-            CategoryEarned(
+            ArrayEntryWithCurrencyAndSum(
               currencyId: cat.currencyId,
               currencyCode: cat.currencyCode,
               currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
@@ -383,13 +383,13 @@ class CatStock {
               type: "no-category",
               attributes: CategoryWithSum(
                 name: "L10NNONE",
-                spent: <CategorySpent>[],
-                earned: <CategoryEarned>[],
+                spent: <ArrayEntryWithCurrencyAndSum>[],
+                earned: <ArrayEntryWithCurrencyAndSum>[],
               ),
             );
           }
           categories["-1"]!.attributes.spent!.add(
-            CategorySpent(
+            ArrayEntryWithCurrencyAndSum(
               currencyId: cat.currencyId,
               currencyCode: cat.currencyCode,
               currencyDecimalPlaces: defaultCurrency.attributes.decimalPlaces,
@@ -400,14 +400,16 @@ class CatStock {
         }
 
         categories.forEach((_, CategoryRead c) {
-          CategoryWithSum cs = c.attributes as CategoryWithSum;
+          final CategoryWithSum cs = c.attributes as CategoryWithSum;
           cs.sumEarned = c.attributes.earned!.fold<double>(
             0,
-            (double p, CategoryEarned e) => p += double.parse(e.sum ?? "0"),
+            (double p, ArrayEntryWithCurrencyAndSum e) =>
+                p += double.parse(e.sum ?? "0"),
           );
           cs.sumSpent = c.attributes.spent!.fold<double>(
             0,
-            (double p, CategorySpent e) => p += double.parse(e.sum ?? "0"),
+            (double p, ArrayEntryWithCurrencyAndSum e) =>
+                p += double.parse(e.sum ?? "0"),
           );
         });
 

@@ -6,5 +6,4 @@ required-resource-attributes: true
 untranslated-messages-file: build/l10n_untranslated.json
 output-class: S
 format: true
-synthetic-package: false
 output-dir: lib/generated/l10n

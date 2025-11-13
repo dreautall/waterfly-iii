@@ -53,7 +53,7 @@
     },
     "billsAmountAndFrequency": "قبض مطابق با تراکنش‌ها بین {minValue} و {maxvalue} است. تکرارها {frequency, select, weekly{هفتگی} monthly{ماهیانه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سالیانه} other{نامشخص}}{skip, plural, =0{} other{، از {skip} گذر می‌کند}}.",
     "@billsAmountAndFrequency": {
-        "description": "Bill match for min and max amounts, and frequency",
+        "description": "Subscription match for min and max amounts, and frequency",
         "placeholders": {
             "minValue": {
                 "type": "String",
@@ -83,11 +83,11 @@
     },
     "billsErrorLoading": "خطا در بارگیری صورتحساب.\n",
     "@billsErrorLoading": {
-        "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
     },
     "billsExactAmountAndFrequency": "قبض با تراکنش‌های مبلغ {value} مطابقت دارد. تکرارها {frequency, select, weekly{هفتگی} monthly{ماهیانه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سالیانه} other{نامشخص}}{skip, plural, =0{} other{، از {skip} گذر می‌کند}}.",
     "@billsExactAmountAndFrequency": {
-        "description": "Bill match for exact amount and frequency",
+        "description": "Subscription match for exact amount and frequency",
         "placeholders": {
             "value": {
                 "type": "String",
@@ -105,7 +105,7 @@
     },
     "billsExpectedOn": "تاریخ مورد انتظار: :date\n\n\n\n\n\n",
     "@billsExpectedOn": {
-        "description": "Describes what date the bill is expected",
+        "description": "Describes what date the subscription is expected",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -116,7 +116,7 @@
     },
     "billsFrequency": "{frequency, select, weekly{هفتگی} monthly{ماهیانه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سالیانه} other{نامشخص}}",
     "@billsFrequency": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -126,7 +126,7 @@
     },
     "billsFrequencySkip": "{frequency, select, weekly{هفتگی} monthly{ماهیانه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سالیانه} other{نامشخص}}{skip, plural, =0{} other{، از {skip} گذر می‌کند}}",
     "@billsFrequencySkip": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -140,11 +140,11 @@
     },
     "billsInactive": "غیر فعال",
     "@billsInactive": {
-        "description": "Text: when the bill is inactive"
+        "description": "Text: when the subscription is inactive"
     },
     "billsIsActive": "قبض فعال است\n\n\n\n\n\n",
     "@billsIsActive": {
-        "description": "Text: the bill is active"
+        "description": "Text: the subscription is active"
     },
     "billsLayoutGroupSubtitle": "صورت‌حساب‌ها در گروه‌های اختصاص داده شده نمایش داده می‌شوند.\n",
     "@billsLayoutGroupSubtitle": {
@@ -168,23 +168,23 @@
     },
     "billsNextExpectedMatch": "مسابقه بعدی مورد انتظار\n",
     "@billsNextExpectedMatch": {
-        "description": "Text: next expected match for bill"
+        "description": "Text: next expected match for subscription"
     },
     "billsNotActive": "قبض غیرفعال است\n\n\n\n\n\n",
     "@billsNotActive": {
-        "description": "Text: the bill is inactive"
+        "description": "Text: the subscription is inactive"
     },
     "billsNotExpected": "این دوره انتظار نمی رود\n",
     "@billsNotExpected": {
-        "description": "Describes that the bill is not expected this period"
+        "description": "Describes that the subscription is not expected this period"
     },
     "billsNoTransactions": "هیچ تراکنشی یافت نشد",
     "@billsNoTransactions": {
-        "description": "Describes that there are no transactions connected to the bill"
+        "description": "Describes that there are no transactions connected to the subscription"
     },
     "billsPaidOn": "پرداخت شده {date}\n",
     "@billsPaidOn": {
-        "description": "Describes what date the bill was paid",
+        "description": "Describes what date the subscription was paid",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -211,7 +211,23 @@
     },
     "billsUngrouped": "گروه‌بندی نشده",
     "@billsUngrouped": {
-        "description": "Title for ungrouped bills"
+        "description": "Title for ungrouped subscriptions"
+    },
+    "billsSettingsShowOnlyActive": "فقط فعال‌ها را نمایش بده",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "فقط اشتراک‌های فعال را نمایش می‌دهد.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "فقط مورد انتظارها را نمایش بده",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "فقط آن اشتراک‌هایی را نمایش می‌دهد که در این ماه مورد انتظار (یا پرداخت شده) هستند.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
     },
     "categoryDeleteConfirm": "آیا مطمئن هستید که می‌خواهید این دسته را حذف کنید؟ تراکنش ها حذف نمی شوند، اما دیگر دسته بندی نخواهند داشت.\n",
     "@categoryDeleteConfirm": {
@@ -359,7 +375,7 @@
     },
     "generalBill": "صورت حساب",
     "@generalBill": {
-        "description": "Bill"
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
     "generalBudget": "بودجه",
     "@generalBudget": {
@@ -373,9 +389,33 @@
     "@generalCurrency": {
         "description": "(Money) Currency"
     },
+    "generalDateRangeCurrentMonth": "ماه جاری",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "۳۰ روز گذشته",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "سال جاری",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "سال گذشته",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "همه",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
     "generalDefault": "پیش فرض",
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "حساب مقصد",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
     },
     "generalDismiss": "نادیده گرفتن",
     "@generalDismiss": {
@@ -417,6 +457,10 @@
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
     },
+    "generalSourceAccount": "حساب مبدأ",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
     "generalSpent": "خرج شده",
     "@generalSpent": {
         "description": "(Amount) Spent"
@@ -435,7 +479,7 @@
     },
     "homeMainBillsInterval": "({period, select, weekly{هفتگی} monthly{ماهیانه} quarterly{سه‌ماهه} halfyear{نیم‌ساله} yearly{سالیانه} other{نامشخص}})",
     "@homeMainBillsInterval": {
-        "description": "bill interval type",
+        "description": "subscription interval type",
         "placeholders": {
             "period": {
                 "type": "String",
@@ -445,7 +489,7 @@
     },
     "homeMainBillsTitle": "صورت حساب های هفته آینده\n",
     "@homeMainBillsTitle": {
-        "description": "Title: Bills for the next week"
+        "description": "Title: Subscriptions for the next week"
     },
     "homeMainBudgetInterval": "({from} تا {to}، {period})",
     "@homeMainBudgetInterval": {
@@ -529,6 +573,10 @@
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
     },
+    "homeMainChartTagsTitle": "خلاصه برچسب‌ها برای ماه جاری",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
     "homePiggyAdjustDialogTitle": "پس انداز/خرج پول\n",
     "@homePiggyAdjustDialogTitle": {
         "description": "Title of the dialog where money can be added/removed to a piggy bank."
@@ -554,6 +602,10 @@
                 "example": "March 12, 2023"
             }
         }
+    },
+    "homeMainDialogSettingsTitle": "سفارشی‌سازی داشبورد",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
     },
     "homePiggyLinked": "لینک به {account}\n",
     "@homePiggyLinked": {
@@ -593,9 +645,41 @@
             }
         }
     },
+    "homePiggySavedMultiple": "تاکنون ذخیره شده:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "مقدار هدف: {amount}\n",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "وضعیت حساب",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "مبالغ موجود",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "موجود: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "در قلک‌ها: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
         "placeholders": {
             "amount": {
                 "type": "String",
@@ -629,11 +713,11 @@
     },
     "homeTransactionsDialogFilterBillsAll": "<همه قبوض>",
     "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
+        "description": "Don't filter for a specific subscription (default entry)"
     },
     "homeTransactionsDialogFilterBillUnset": "<بدون تنظیم صورت حساب>\n",
     "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
+        "description": "Filter for unset subscription"
     },
     "homeTransactionsDialogFilterBudgetsAll": "<همه بودجه‌ها>\n",
     "@homeTransactionsDialogFilterBudgetsAll": {
@@ -654,6 +738,10 @@
     "homeTransactionsDialogFilterCurrenciesAll": "<همه ارزها>\n",
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "بازه زمانی",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
     },
     "homeTransactionsDialogFilterFutureTransactions": "نمایش معاملات آتی\n",
     "@homeTransactionsDialogFilterFutureTransactions": {
@@ -680,6 +768,10 @@
                 "example": "2"
             }
         }
+    },
+    "homeTransactionsSettingsShowTags": "نمایش برچسب‌ها در لیست تراکنش‌ها",
+    "@homeTransactionsSettingsShowTags": {
+        "description": "Setting label to show tags in transactioon list."
     },
     "liabilityDirectionCredit": "این بدهی متعلق به من است",
     "@liabilityDirectionCredit": {
@@ -727,7 +819,7 @@
     },
     "navigationBills": "صورت حساب",
     "@navigationBills": {
-        "description": "Navigation Label: Bills"
+        "description": "Navigation Label: Subscriptions"
     },
     "navigationCategories": "دسته\n",
     "@navigationCategories": {
@@ -737,9 +829,9 @@
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "تنظیمات",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "تنظیمات",
+    "@generalSettings": {
+        "description": "Label: Settings"
     },
     "no": "نه",
     "@no": {
@@ -802,6 +894,14 @@
     "@settingsDialogThemeTitle": {
         "description": "Dialog title: Select theme"
     },
+    "settingsFAQ": "سوالات متداول",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
+    "settingsFAQHelp": "در مرورگر باز می‌شود. فقط به زبان انگلیسی موجود است.",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
+    },
     "settingsLanguage": "زبان",
     "@settingsLanguage": {
         "description": "Currently selected language"
@@ -838,9 +938,17 @@
     "@settingsNLAppAddInfo": {
         "description": "Help text when no more app is available to add."
     },
+    "settingsNLAutoAdd": "ایجاد تراکنش بدون تعامل",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
     "settingsNLDescription": "این سرویس به شما امکان می‌دهد جزئیات تراکنش را از اعلان‌های فشار دریافتی دریافت کنید. علاوه بر این، می‌توانید یک حساب پیش فرض را انتخاب کنید که تراکنش باید به آن اختصاص یابد - اگر مقداری تنظیم نشده باشد، سعی می‌کند یک حساب از اعلان استخراج کند.\n",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "فیلد یادداشت را خالی بگذار",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
     "settingsNLPermissionGrant": "برای اعطای مجوز ضربه بزنید.\n",
     "@settingsNLPermissionGrant": {
@@ -860,7 +968,7 @@
     },
     "settingsNLPrefillTXTitle": "عنوان تراکنش را با عنوان اعلان از قبل پر کنید\n",
     "@settingsNLPrefillTXTitle": {
-        "description": "First line for setting to use pre-fill transaction title with notification title."
+        "description": "Setting pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "در حال بررسی وضعیت...",
     "@settingsNLServiceChecking": {
@@ -971,15 +1079,23 @@
     },
     "transactionDialogBillNoBill": "بدون صورتحساب\n",
     "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
+        "description": "Button Label: no subscription to be used"
     },
     "transactionDialogBillTitle": "پیوند به بیل\n",
     "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
+        "description": "Dialog Title: Link Subscription to transaction"
     },
     "transactionDialogCurrencyTitle": "واحد پول را انتخاب کنید\n",
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "بدون قلک",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "اتصال به قلک",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
     },
     "transactionDialogTagsAdd": "افزودن برچسب",
     "@transactionDialogTagsAdd": {
@@ -1004,6 +1120,14 @@
     "transactionErrorInvalidBudget": "بودجه نامعتبر\n",
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "لطفاً ابتدا حساب‌ها را وارد کنید.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "لطفاً یک حساب دارایی انتخاب کنید.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
     },
     "transactionErrorTitle": "لطفا عنوان بفرمایید\n",
     "@transactionErrorTitle": {
@@ -1044,6 +1168,14 @@
     "transactionSplitChangeCurrency": "ارز تقسیم شده را تغییر دهید\n",
     "@transactionSplitChangeCurrency": {
         "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "تغییر حساب مقصد تفکیک",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "تغییر حساب مبدأ تفکیک",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
     },
     "transactionSplitChangeTarget": "تغییر حساب هدف تقسیم شده\n",
     "@transactionSplitChangeTarget": {

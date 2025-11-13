@@ -1,0 +1,6 @@
+- **⚠️ Due to a dependency update, the login details will be deleted with this version. Please issue a new personal access token and use it to log back in - no other settings will be lost! ⚠️**
+- New: Date filter for TX list
+- New: Dashboard Chart Tag Summary (hidden by default)
+- New: TX list for single account shows current balance, thank you @Arkarr
+- Improved: Better "Saving" state for transaction page, thank you @Aegeontis
+- Improved: New banking apps

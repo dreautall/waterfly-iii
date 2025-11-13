@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-import 'package:version/version.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
@@ -124,20 +123,12 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
         const Icon(Icons.receipt),
       ),
       NavDestination(
-        S.of(context).navigationSettings,
+        S.of(context).generalSettings,
         const SettingsPage(),
         const Icon(Icons.settings_outlined),
         const Icon(Icons.settings),
       ),
     ];
-
-    // Bills page not working below Firefly 6.1.0 (API Version 2.0.12)
-    // https://github.com/firefly-iii/firefly-iii/issues/8106
-    if (context.read<FireflyService>().apiVersion! < Version(2, 0, 12)) {
-      navDestinations.removeWhere(
-        (NavDestination e) => e.label == S.of(context).navigationBills,
-      );
-    }
 
     _tabController = TabController(vsync: this, length: navDestinations.length);
   }
@@ -221,7 +212,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                   child: GestureDetector(
                     onTap: () async {
                       final FireflyService ff = context.read<FireflyService>();
-                      bool? ok = await showDialog<bool>(
+                      final bool? ok = await showDialog<bool>(
                         context: context,
                         builder:
                             (BuildContext context) =>
@@ -231,7 +222,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                         return;
                       }
 
-                      ff.signOut();
+                      await ff.signOut();
                     },
                     child: Text(
                       S.of(context).formButtonLogout,

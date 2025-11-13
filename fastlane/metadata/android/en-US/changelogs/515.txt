@@ -1,0 +1,1 @@
+- Fix for version code generation (required for FDroid etc.)

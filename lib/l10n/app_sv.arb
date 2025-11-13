@@ -1,5 +1,5 @@
 {
-    "@@locale": "sv",
+  "@@locale": "sv",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "Plånbok",
     "@accountRoleAssetCashWallet": {
@@ -53,7 +53,7 @@
     },
     "billsAmountAndFrequency": "Räkningen matchar transaktioner mellan {minValue} och {maxvalue}. Upprepas {frequency, select, weekly{veckovis} monthly{månadsvis} quarterly{kvartalsvis} halfyear{halvårsvis} yearly{årligen} other{okänt}}{skip, plural, =0{} other{, hoppar över {skip}}}.",
     "@billsAmountAndFrequency": {
-        "description": "Bill match for min and max amounts, and frequency",
+        "description": "Subscription match for min and max amounts, and frequency",
         "placeholders": {
             "minValue": {
                 "type": "String",
@@ -83,11 +83,11 @@
     },
     "billsErrorLoading": "Fel vid laddning av räkningar.",
     "@billsErrorLoading": {
-        "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
     },
     "billsExactAmountAndFrequency": "Räkningen matchar transaktioner på {value}. Upprepas {frequency, select, weekly{veckovis} monthly{månadsvis} quarterly{kvartalsvis} halfyear{halvårsvis} yearly{årligen} other{okänt}}{skip, plural, =0{} other{, hoppar över {skip}}}.",
     "@billsExactAmountAndFrequency": {
-        "description": "Bill match for exact amount and frequency",
+        "description": "Subscription match for exact amount and frequency",
         "placeholders": {
             "value": {
                 "type": "String",
@@ -105,7 +105,7 @@
     },
     "billsExpectedOn": "Förväntad {date}",
     "@billsExpectedOn": {
-        "description": "Describes what date the bill is expected",
+        "description": "Describes what date the subscription is expected",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -116,7 +116,7 @@
     },
     "billsFrequency": "{frequency, select, weekly{Veckovis} monthly{Månadsvis} quarterly{Kvartalsvis} halfyear{Halvårsvis} yearly{Årligen} other{Okänt}}",
     "@billsFrequency": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -126,7 +126,7 @@
     },
     "billsFrequencySkip": "{frequency, select, weekly{Veckovis} monthly{Månadsvis} quarterly{Kvartalsvis} halfyear{Halvårsvis} yearly{Årligen} other{Okänt}}{skip, plural, =0{} other{, hoppar över {skip}}}",
     "@billsFrequencySkip": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -140,11 +140,11 @@
     },
     "billsInactive": "Inaktiv",
     "@billsInactive": {
-        "description": "Text: when the bill is inactive"
+        "description": "Text: when the subscription is inactive"
     },
     "billsIsActive": "Räkningen aktiv",
     "@billsIsActive": {
-        "description": "Text: the bill is active"
+        "description": "Text: the subscription is active"
     },
     "billsLayoutGroupSubtitle": "Räkningar visas i sina tilldelade grupper.",
     "@billsLayoutGroupSubtitle": {
@@ -168,23 +168,23 @@
     },
     "billsNextExpectedMatch": "Nästa förväntade träff",
     "@billsNextExpectedMatch": {
-        "description": "Text: next expected match for bill"
+        "description": "Text: next expected match for subscription"
     },
     "billsNotActive": "Räkningen är inaktiv",
     "@billsNotActive": {
-        "description": "Text: the bill is inactive"
+        "description": "Text: the subscription is inactive"
     },
     "billsNotExpected": "Ej förväntat denna period",
     "@billsNotExpected": {
-        "description": "Describes that the bill is not expected this period"
+        "description": "Describes that the subscription is not expected this period"
     },
     "billsNoTransactions": "Inga transaktioner hittade.",
     "@billsNoTransactions": {
-        "description": "Describes that there are no transactions connected to the bill"
+        "description": "Describes that there are no transactions connected to the subscription"
     },
     "billsPaidOn": "Betald {date}",
     "@billsPaidOn": {
-        "description": "Describes what date the bill was paid",
+        "description": "Describes what date the subscription was paid",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -211,7 +211,23 @@
     },
     "billsUngrouped": "Ogrupperad",
     "@billsUngrouped": {
-        "description": "Title for ungrouped bills"
+        "description": "Title for ungrouped subscriptions"
+    },
+    "billsSettingsShowOnlyActive": "Visa endast aktiva",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Visar endast aktiva prenumerationer.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Visa endast förväntade",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Visar endast de prenumerationer som är förväntade (eller betalda) denna månad.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
     },
     "categoryDeleteConfirm": "Är du säker på att du vill ta bort denna kategori? Transaktionerna kommer inte att tas bort, men kommer inte att ha en kategori längre.",
     "@categoryDeleteConfirm": {
@@ -359,7 +375,7 @@
     },
     "generalBill": "Räkning",
     "@generalBill": {
-        "description": "Bill"
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
     "generalBudget": "Budget",
     "@generalBudget": {
@@ -373,9 +389,33 @@
     "@generalCurrency": {
         "description": "(Money) Currency"
     },
+    "generalDateRangeCurrentMonth": "Aktuell månad",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Senaste 30 dagarna",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Aktuellt år",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Förra året",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Alla",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
     "generalDefault": "förvald",
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "Målkonto",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
     },
     "generalDismiss": "Stäng",
     "@generalDismiss": {
@@ -417,6 +457,10 @@
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
     },
+    "generalSourceAccount": "Källkonto",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
     "generalSpent": "Spenderat",
     "@generalSpent": {
         "description": "(Amount) Spent"
@@ -435,7 +479,7 @@
     },
     "homeMainBillsInterval": " ({period, select, weekly{veckovis} monthly{månadsvis} quarterly{kvartalsvis} halfyear{årligen} yearly{} other{okänd}})",
     "@homeMainBillsInterval": {
-        "description": "bill interval type",
+        "description": "subscription interval type",
         "placeholders": {
             "period": {
                 "type": "String",
@@ -445,7 +489,7 @@
     },
     "homeMainBillsTitle": "Räkningar inför nästa vecka",
     "@homeMainBillsTitle": {
-        "description": "Title: Bills for the next week"
+        "description": "Title: Subscriptions for the next week"
     },
     "homeMainBudgetInterval": " ({from} till {to}, {period})",
     "@homeMainBudgetInterval": {
@@ -529,6 +573,10 @@
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
     },
+    "homeMainChartTagsTitle": "Taggsammanfattning för aktuell månad",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
     "homePiggyAdjustDialogTitle": "Spara/spendera pengar",
     "@homePiggyAdjustDialogTitle": {
         "description": "Title of the dialog where money can be added/removed to a piggy bank."
@@ -554,6 +602,10 @@
                 "example": "March 12, 2023"
             }
         }
+    },
+    "homeMainDialogSettingsTitle": "Anpassa kontrollpanelen",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
     },
     "homePiggyLinked": "Länkad till {account}",
     "@homePiggyLinked": {
@@ -593,9 +645,41 @@
             }
         }
     },
+    "homePiggySavedMultiple": "Hittills sparat:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "Målbelopp: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "Kontostatus",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Tillgängliga belopp",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "Tillgängligt: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "I spargrisar: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
         "placeholders": {
             "amount": {
                 "type": "String",
@@ -629,11 +713,11 @@
     },
     "homeTransactionsDialogFilterBillsAll": "<Alla räkningar>",
     "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
+        "description": "Don't filter for a specific subscription (default entry)"
     },
     "homeTransactionsDialogFilterBillUnset": "<Utan räkning>",
     "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
+        "description": "Filter for unset subscription"
     },
     "homeTransactionsDialogFilterBudgetsAll": "<All budgetar>",
     "@homeTransactionsDialogFilterBudgetsAll": {
@@ -654,6 +738,10 @@
     "homeTransactionsDialogFilterCurrenciesAll": "<Alla valutor>",
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "Datumintervall",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
     },
     "homeTransactionsDialogFilterFutureTransactions": "Visa framtida transaktioner",
     "@homeTransactionsDialogFilterFutureTransactions": {
@@ -680,6 +768,10 @@
                 "example": "2"
             }
         }
+    },
+    "homeTransactionsSettingsShowTags": "Visa taggar i transaktionslista",
+    "@homeTransactionsSettingsShowTags": {
+        "description": "Setting label to show tags in transactioon list."
     },
     "liabilityDirectionCredit": "Jag är skyldig denna skuld",
     "@liabilityDirectionCredit": {
@@ -727,7 +819,7 @@
     },
     "navigationBills": "Räkningar",
     "@navigationBills": {
-        "description": "Navigation Label: Bills"
+        "description": "Navigation Label: Subscriptions"
     },
     "navigationCategories": "Kategorier",
     "@navigationCategories": {
@@ -737,9 +829,9 @@
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "Inställningar",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "Inställningar",
+    "@generalSettings": {
+        "description": "Label: Settings"
     },
     "no": "Nej",
     "@no": {
@@ -802,6 +894,14 @@
     "@settingsDialogThemeTitle": {
         "description": "Dialog title: Select theme"
     },
+    "settingsFAQ": "Vanliga frågor",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
+    "settingsFAQHelp": "Öppnas i webbläsaren. Endast tillgänglig på engelska.",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
+    },
     "settingsLanguage": "Språk",
     "@settingsLanguage": {
         "description": "Currently selected language"
@@ -838,9 +938,17 @@
     "@settingsNLAppAddInfo": {
         "description": "Help text when no more app is available to add."
     },
+    "settingsNLAutoAdd": "Skapa transaktion utan interaktion",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
     "settingsNLDescription": "Den här tjänsten låter dig hämta transaktionsdetaljer från inkommande pushnotifikationer. Du kan även välja ett förvalt konto som transaktionen ska göras på - om inget värde ges försöker den extrahera kontot från notifikationen.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "Håll anteckningsfältet tomt",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
     "settingsNLPermissionGrant": "Tryck för att bevilja tillstånd.",
     "@settingsNLPermissionGrant": {
@@ -860,7 +968,7 @@
     },
     "settingsNLPrefillTXTitle": "Fyll i transaktionstiteln med nofikationstiteln i förväg",
     "@settingsNLPrefillTXTitle": {
-        "description": "First line for setting to use pre-fill transaction title with notification title."
+        "description": "Setting pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "Kontrollerar status…",
     "@settingsNLServiceChecking": {
@@ -971,15 +1079,23 @@
     },
     "transactionDialogBillNoBill": "Ingen faktura",
     "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
+        "description": "Button Label: no subscription to be used"
     },
     "transactionDialogBillTitle": "Länk till faktura",
     "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
+        "description": "Dialog Title: Link Subscription to transaction"
     },
     "transactionDialogCurrencyTitle": "Välj valuta",
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "Ingen spargris",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Koppla till spargris",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
     },
     "transactionDialogTagsAdd": "Lägg till Tagg",
     "@transactionDialogTagsAdd": {
@@ -1004,6 +1120,14 @@
     "transactionErrorInvalidBudget": "Ogiltig budget",
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Fyll i kontona först.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Vänligen välj ett tillgångskonto.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
     },
     "transactionErrorTitle": "Vänligen ange en titel.",
     "@transactionErrorTitle": {
@@ -1044,6 +1168,14 @@
     "transactionSplitChangeCurrency": "Ändra delad valuta",
     "@transactionSplitChangeCurrency": {
         "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Ändra mottagarkonto för delad transaktion",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Ändra avsändarkonto för delad transaktion",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
     },
     "transactionSplitChangeTarget": "Ändra delat målkonto",
     "@transactionSplitChangeTarget": {

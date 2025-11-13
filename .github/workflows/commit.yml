@@ -11,23 +11,27 @@ on:
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    name: codecheck
+    name: Analyze and Test
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v5
 
       # Call setup_env action to setup workspace
-      - uses: ./.github/actions/setup_env
+      - name: Setup Flutter environment
+        uses: ./.github/actions/setup_env
         with:
           java-version: 17.x
           flutter-channel: stable
 
       # Check for any formatting issues in the code.
-      # Disabled for now due to formatting issues with generated files.
-      #- run: dart format --set-exit-if-changed .
+      - name: Check for any formatting issues
+        run: dart format --set-exit-if-changed .
 
       # Statically analyze the Dart code for any errors.
-      - run: dart analyze .
+      - name: Statically analyze the Dart code
+        run: dart analyze .
 
-      # Run widget tests for our flutter project.
-      # - run: flutter test
+      # Run flutter tests.
+      - name: Run flutter tests
+        run: flutter test

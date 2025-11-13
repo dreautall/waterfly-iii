@@ -56,30 +56,33 @@ class SRu extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'еженедельно',
+      'monthly': 'ежемесячно',
+      'quarterly': 'ежеквартально',
+      'halfyear': 'раз в полгода',
+      'yearly': 'ежегодно',
+      'other': 'неизвестно',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', пропускает $skip раз',
+      many: ', пропускает $skip раз',
+      few: ', пропускает $skip раза',
+      one: ', пропускает $skip раз',
       zero: '',
     );
-    return 'Subscription matches transactions between $minValue and $maxvalue. Repeats $_temp0$_temp1.';
+    return 'Подписка соответствует транзакциям между $minValue и $maxvalue. Повторяется $_temp0$_temp1.';
   }
 
   @override
-  String get billsChangeLayoutTooltip => 'Change layout';
+  String get billsChangeLayoutTooltip => 'Изменить вид';
 
   @override
-  String get billsChangeSortOrderTooltip => 'Change sort order';
+  String get billsChangeSortOrderTooltip => 'Изменить порядок сортировки';
 
   @override
-  String get billsErrorLoading => 'Error loading subscriptions.';
+  String get billsErrorLoading => 'Ошибка при загрузке подписок.';
 
   @override
   String billsExactAmountAndFrequency(
@@ -88,20 +91,23 @@ class SRu extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'еженедельно',
+      'monthly': 'ежемесячно',
+      'quarterly': 'ежеквартально',
+      'halfyear': 'раз в полгода',
+      'yearly': 'ежегодно',
+      'other': 'неизвестно',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', пропускает $skip раз',
+      many: ', пропускает $skip раз',
+      few: ', пропускает $skip раза',
+      one: ', пропускает $skip раз',
       zero: '',
     );
-    return 'Subscription matches transactions of $value. Repeats $_temp0$_temp1.';
+    return 'Подписка соответствует транзакциям на сумму $value. Повторяется $_temp0$_temp1.';
   }
 
   @override
@@ -109,18 +115,18 @@ class SRu extends S {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Expected $dateString';
+    return 'Ожидается $dateString';
   }
 
   @override
   String billsFrequency(String frequency) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Еженедельно',
+      'monthly': 'Ежемесячно',
+      'quarterly': 'Ежеквартально',
+      'halfyear': 'Раз в полгода',
+      'yearly': 'Ежегодно',
+      'other': 'Неизвестно',
     });
     return '$_temp0';
   }
@@ -128,79 +134,96 @@ class SRu extends S {
   @override
   String billsFrequencySkip(String frequency, num skip) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Еженедельно',
+      'monthly': 'Ежемесячно',
+      'quarterly': 'Ежеквартально',
+      'halfyear': 'Раз в полгода',
+      'yearly': 'Ежегодно',
+      'other': 'Неизвестно',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', пропускает $skip раз',
+      many: ', пропускает $skip раз',
+      few: ', пропускает $skip раза',
+      one: ', пропускает $skip раз',
       zero: '',
     );
     return '$_temp0$_temp1';
   }
 
   @override
-  String get billsInactive => 'Inactive';
+  String get billsInactive => 'Неактивна';
 
   @override
-  String get billsIsActive => 'Subscription is active';
+  String get billsIsActive => 'Подписка активна';
 
   @override
   String get billsLayoutGroupSubtitle =>
-      'Subscriptions displayed in their assigned groups.';
+      'Подписки отображаются в назначенных им группах.';
 
   @override
-  String get billsLayoutGroupTitle => 'Group';
+  String get billsLayoutGroupTitle => 'Группа';
 
   @override
   String get billsLayoutListSubtitle =>
-      'Subscriptions displayed in a list sorted by certain criteria.';
+      'Подписки отображаются в виде списка, отсортированного по определённым критериям.';
 
   @override
-  String get billsLayoutListTitle => 'List';
+  String get billsLayoutListTitle => 'Список';
 
   @override
-  String get billsListEmpty => 'The list is currently empty.';
+  String get billsListEmpty => 'Список в настоящее время пуст.';
 
   @override
-  String get billsNextExpectedMatch => 'Next expected match';
+  String get billsNextExpectedMatch => 'Следующее ожидаемое совпадение';
 
   @override
-  String get billsNotActive => 'Subscription is inactive';
+  String get billsNotActive => 'Подписка неактивна';
 
   @override
-  String get billsNotExpected => 'Not expected this period';
+  String get billsNotExpected => 'Не ожидается в этот период';
 
   @override
-  String get billsNoTransactions => 'No transactions found.';
+  String get billsNoTransactions => 'Транзакции не найдены.';
 
   @override
   String billsPaidOn(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Paid $dateString';
+    return 'Оплачено $dateString';
   }
 
   @override
-  String get billsSortAlphabetical => 'Alphabetical';
+  String get billsSortAlphabetical => 'По алфавиту';
 
   @override
-  String get billsSortByTimePeriod => 'By time period';
+  String get billsSortByTimePeriod => 'По периоду';
 
   @override
-  String get billsSortFrequency => 'Frequency';
+  String get billsSortFrequency => 'По частоте';
 
   @override
-  String get billsSortName => 'Name';
+  String get billsSortName => 'По имени';
 
   @override
-  String get billsUngrouped => 'Ungrouped';
+  String get billsUngrouped => 'Без группы';
+
+  @override
+  String get billsSettingsShowOnlyActive => 'Показывать только активные';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Показывает только активные подписки.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Показывать только ожидаемые';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Показывает только те подписки, которые ожидаются (или оплачены) в этом месяце.';
 
   @override
   String get categoryDeleteConfirm =>
@@ -210,10 +233,10 @@ class SRu extends S {
   String get categoryErrorLoading => 'Ошибка загрузки категорий.';
 
   @override
-  String get categoryFormLabelIncludeInSum => 'Include in monthly sum';
+  String get categoryFormLabelIncludeInSum => 'Включить в месячную сумму';
 
   @override
-  String get categoryFormLabelName => 'Category Name';
+  String get categoryFormLabelName => 'Название категории';
 
   @override
   String get categoryMonthNext => 'След. месяц';
@@ -222,7 +245,7 @@ class SRu extends S {
   String get categoryMonthPrev => 'Пред. месяц';
 
   @override
-  String get categorySumExcluded => 'excluded';
+  String get categorySumExcluded => 'исключено';
 
   @override
   String get categoryTitleAdd => 'Добавить категорию';
@@ -317,10 +340,25 @@ class SRu extends S {
   String get generalCurrency => 'Валюта';
 
   @override
+  String get generalDateRangeCurrentMonth => 'Текущий месяц';
+
+  @override
+  String get generalDateRangeLast30Days => 'Последние 30 дней';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Текущий год';
+
+  @override
+  String get generalDateRangeLastYear => 'Прошлый год';
+
+  @override
+  String get generalDateRangeAll => 'Все';
+
+  @override
   String get generalDefault => 'по умолчанию';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'Счет назначения';
 
   @override
   String get generalDismiss => 'Отмена';
@@ -353,7 +391,7 @@ class SRu extends S {
   String get generalReset => 'Сбросить';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'Счет отправителя';
 
   @override
   String get generalSpent => 'Потрачено';
@@ -435,7 +473,7 @@ class SRu extends S {
   String get homeMainChartNetWorthTitle => 'Общая средства';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle => 'Сводка по тегам за текущий месяц';
 
   @override
   String get homePiggyAdjustDialogTitle => 'Сохранить/потратить деньги';
@@ -457,7 +495,7 @@ class SRu extends S {
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'Настроить панель управления';
 
   @override
   String homePiggyLinked(String account) {
@@ -481,8 +519,27 @@ class SRu extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Накоплено:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'Целевая сумма: $amount';
+  }
+
+  @override
+  String get homePiggyAccountStatus => 'Статус счета';
+
+  @override
+  String get homePiggyAvailableAmounts => 'Доступные средства';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return 'Доступно: $amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return 'В копилках: $amount';
   }
 
   @override
@@ -525,6 +582,9 @@ class SRu extends S {
   String get homeTransactionsDialogFilterCurrenciesAll => '<All Currencies>';
 
   @override
+  String get homeTransactionsDialogFilterDateRange => 'Диапазон дат';
+
+  @override
   String get homeTransactionsDialogFilterFutureTransactions =>
       'Показать предстоящие транзакции';
 
@@ -535,7 +595,7 @@ class SRu extends S {
   String get homeTransactionsDialogFilterTitle => 'Выбрать фильтры';
 
   @override
-  String get homeTransactionsEmpty => 'Транзакций не найдено.';
+  String get homeTransactionsEmpty => 'Транзакции не найдены.';
 
   @override
   String homeTransactionsMultipleCategories(int num) {
@@ -544,7 +604,7 @@ class SRu extends S {
 
   @override
   String get homeTransactionsSettingsShowTags =>
-      'Show tags in transaction list';
+      'Показывать теги в списке транзакций';
 
   @override
   String get liabilityDirectionCredit => 'Мне причитается этот долг';
@@ -581,7 +641,7 @@ class SRu extends S {
   String get navigationAccounts => 'Аккаунты';
 
   @override
-  String get navigationBills => 'Subscriptions';
+  String get navigationBills => 'Подписки';
 
   @override
   String get navigationCategories => 'Категории';
@@ -590,10 +650,10 @@ class SRu extends S {
   String get navigationMain => 'Главное табло';
 
   @override
-  String get navigationSettings => 'Настройки';
+  String get generalSettings => 'Настройки';
 
   @override
-  String get no => 'No';
+  String get no => 'Нет';
 
   @override
   String numPercent(double num) {
@@ -643,10 +703,11 @@ class SRu extends S {
   String get settingsDialogThemeTitle => 'Выберите тему';
 
   @override
-  String get settingsFAQ => 'FAQ';
+  String get settingsFAQ => 'Часто задаваемые вопросы';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'Открывается в браузере. Доступно только на английском языке.';
 
   @override
   String get settingsLanguage => 'Язык';
@@ -680,14 +741,14 @@ class SRu extends S {
       'Сделайте несколько транзакций, в которых Вы должны получить уведомление на телефон, для добавления приложения в этот лист. Если приложение до сих пор не отображается, пожалуйста, сообщите нам на app@vogt.pw.';
 
   @override
-  String get settingsNLAutoAdd => 'Create transaction without interaction';
+  String get settingsNLAutoAdd => 'Создавать транзакцию без подтверждения';
 
   @override
   String get settingsNLDescription =>
       'Данный сервис позволяет получать данные о транзакциях из входящих push-уведомлений. Кроме того, можно выбрать счет по умолчанию, к которому должна быть отнесена транзакция, - если значение не задано, он пытается извлечь счет из уведомления.';
 
   @override
-  String get settingsNLEmptyNote => 'Keep note field empty';
+  String get settingsNLEmptyNote => 'Оставлять поле заметки пустым';
 
   @override
   String get settingsNLPermissionGrant => 'Нажмите для подтверждения.';
@@ -796,6 +857,12 @@ class SRu extends S {
   String get transactionDialogCurrencyTitle => 'Выбор валюты';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'Нет копилки';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Привязать к копилке';
+
+  @override
   String get transactionDialogTagsAdd => 'Добавить тег';
 
   @override
@@ -814,11 +881,11 @@ class SRu extends S {
   String get transactionErrorInvalidBudget => 'Неверный бюджет';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts => 'Пожалуйста, сначала укажите счета.';
 
   @override
   String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+      'Пожалуйста, выберите счёт актива.';
 
   @override
   String get transactionErrorTitle => 'Пожалуйста, укажите заголовок.';
@@ -852,11 +919,11 @@ class SRu extends S {
 
   @override
   String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+      'Изменить счёт назначения для разделения';
 
   @override
   String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+      'Изменить исходный счёт для разделения';
 
   @override
   String get transactionSplitChangeTarget =>

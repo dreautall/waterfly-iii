@@ -1,4 +1,4 @@
-name: Build
+name: Build and Release
 
 on:
   release:
@@ -12,129 +12,157 @@ env:
   PROPERTIES_PATH: "./android/key.properties"
 
 jobs:
+  # This job runs the syntax check workflow.
   check:
     uses: ./.github/workflows/commit.yml
-    name: codecheck
+    name: Code Check
 
+  # This job builds the Android app (APK and App Bundle).
   build:
     runs-on: ubuntu-latest
     if: ${{ !contains(github.event.head_commit.message, '[skip build]') }}
     needs: [check]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v5
 
       # Call setup_env action to setup workspace
-      - uses: ./.github/actions/setup_env
+      - name: Setup Flutter environment
+        uses: ./.github/actions/setup_env
         with:
           java-version: 17.x
           flutter-channel: stable
 
-      # Generate keystore
-      - uses: timheuer/base64-to-file@v1.2
+      # Generate keystore from base64 secret
+      - name: Generate keystore
+        uses: timheuer/base64-to-file@v1.2
         id: android_keystore
         with:
           fileName: upload-keystore.jks
           encodedString: ${{ secrets.KEYSTORE_BASE64 }}
 
-      # Create key.properties
-      - run: |
+      # Create key.properties file for signing
+      - name: Create key.properties
+        run: |
           echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > ${{env.PROPERTIES_PATH}}
           echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
           echo "keyAlias=upload" >> ${{env.PROPERTIES_PATH}}
 
-      # Set build number
-      - run: |
+      # Set build number in pubspec.yaml
+      - name: Set build number
+        run: |
           sed -i 's/^\(version: [0-9\.]\{1,\}\(-[a-z]\{1,\}\)\{0,1\}\([0-9\.]\)\{0,\}\)$/\1+${{ github.run_number }}/m' pubspec.yaml
 
       # Build l10n files
-      - run: mkdir -p build && flutter gen-l10n
+      - name: Generate localization files
+        run: mkdir -p build && flutter gen-l10n
 
-      # Build apk.
-      - run: flutter build apk --obfuscate --split-debug-info=build/app/outputs/symbols/apk --release --split-per-abi --dart-define=cronetHttpNoPlay=true
+      # Build the APKs
+      - name: Build APK
+        run: flutter build apk --obfuscate --split-debug-info=build/app/outputs/symbols/apk --release --split-per-abi --dart-define=cronetHttpNoPlay=true
 
-      # Build aab
+      # Build the App Bundle
       # Since the aab is only distributed to the play store and never uploaded somewhere else, we can use the Google Play Services cronet here.
-      - run: flutter build appbundle --obfuscate --split-debug-info=build/app/outputs/symbols/aab --release
+      - name: Build App Bundle
+        run: flutter build appbundle --obfuscate --split-debug-info=build/app/outputs/symbols/aab --release
 
       # Zip symbols
-      - uses: montudor/action-zip@v1
-      - run: zip -qq -r aab-debug-symbols.zip *
+      - name: Prepare symbols for zipping
+        uses: montudor/action-zip@v1
+      - name: Zip AAB debug symbols
+        run: zip -qq -r aab-debug-symbols.zip *
         working-directory: build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/
 
-      # Upload generated apk to the artifacts.
-      - uses: actions/upload-artifact@v4
+      # Upload generated artifacts.
+      - name: Upload arm64-v8a APK
+        uses: actions/upload-artifact@v5
         with:
           name: app-arm64-v8a-release.apk
           path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
-      - uses: actions/upload-artifact@v4
+      - name: Upload armeabi-v7a APK
+        uses: actions/upload-artifact@v5
         with:
           name: app-armeabi-v7a-release.apk
           path: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
-      - uses: actions/upload-artifact@v4
+      - name: Upload x86_64 APK
+        uses: actions/upload-artifact@v5
         with:
           name: app-x86_64-release.apk
           path: build/app/outputs/flutter-apk/app-x86_64-release.apk
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload App Bundle
+        uses: actions/upload-artifact@v5
         with:
           name: app-release.aab
           path: build/app/outputs/bundle/release/app-release.aab
-      - uses: actions/upload-artifact@v4
+      - name: Upload AAB debug symbols
+        uses: actions/upload-artifact@v5
         with:
           name: aab-debug-symbols.zip
           path: build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/aab-debug-symbols.zip
-      - uses: actions/upload-artifact@v4
+      - name: Upload Proguard mapping
+        uses: actions/upload-artifact@v5
         with:
           name: mapping.txt
           path: build/app/outputs/mapping/release/mapping.txt
 
+  # This job uploads the built APKs to the GitHub release.
   upload-to-github:
     runs-on: ubuntu-latest
     needs: [build]
     if: startsWith(github.ref, 'refs/tags/')
 
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download arm64-v8a APK
+        uses: actions/download-artifact@v6
         with:
           name: app-arm64-v8a-release.apk
           path: ./artifacts
-      - uses: actions/download-artifact@v4
+      - name: Download armeabi-v7a APK
+        uses: actions/download-artifact@v6
         with:
           name: app-armeabi-v7a-release.apk
           path: ./artifacts
-      - uses: actions/download-artifact@v4
+      - name: Download x86_64 APK
+        uses: actions/download-artifact@v6
         with:
           name: app-x86_64-release.apk
           path: ./artifacts
-      
-      - uses: softprops/action-gh-release@v2
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             ./artifacts/app-arm64-v8a-release.apk
             ./artifacts/app-armeabi-v7a-release.apk
             ./artifacts/app-x86_64-release.apk
 
+  # This job deploys the App Bundle to Google Play.
   deploy:
     runs-on: ubuntu-latest
     needs: [build]
 
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download App Bundle
+        uses: actions/download-artifact@v6
         with:
           name: app-release.aab
           path: ./artifacts
-      - uses: actions/download-artifact@v4
+      - name: Download AAB debug symbols
+        uses: actions/download-artifact@v6
         with:
           name: aab-debug-symbols.zip
           path: ./artifacts
-      - uses: actions/download-artifact@v4
+      - name: Download Proguard mapping
+        uses: actions/download-artifact@v6
         with:
           name: mapping.txt
           path: ./artifacts
       # not a release --> push to internal
-      - uses: r0adkll/upload-google-play@v1
+      - name: Deploy to Internal track
+        uses: r0adkll/upload-google-play@v1
         if: ${{ !startsWith(github.ref, 'refs/tags/')  }}
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAYSTORE_ACCOUNT_KEY }}
@@ -145,7 +173,8 @@ jobs:
           track: internal
           status: completed
       # prerelease --> push to beta
-      - uses: r0adkll/upload-google-play@v1
+      - name: Deploy to Beta track
+        uses: r0adkll/upload-google-play@v1
         if: ${{ startsWith(github.ref, 'refs/tags/') && github.event.release.prerelease  }}
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAYSTORE_ACCOUNT_KEY }}
@@ -156,7 +185,8 @@ jobs:
           track: beta
           status: completed
       # release --> push to production
-      - uses: r0adkll/upload-google-play@v1
+      - name: Deploy to Production track
+        uses: r0adkll/upload-google-play@v1
         if: ${{ startsWith(github.ref, 'refs/tags/') && !github.event.release.prerelease  }}
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAYSTORE_ACCOUNT_KEY }}

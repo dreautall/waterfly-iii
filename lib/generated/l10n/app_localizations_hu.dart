@@ -203,6 +203,20 @@ class SHu extends S {
   String get billsUngrouped => 'Csoportosítatlan';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Csak az aktívak';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Csak az aktív előfizetéseket mutatja.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Csak a várhatók';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Csak azokat az előfizetéseket mutatja, amelyek várhatóak (vagy kifizetésre kerültek) ebben a hónapban.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Biztosan törli ezt a kategóriát? A tranzakciók nem kerülnek törlésre, ugyanakkor nem lesznek kategóriához rendelve.';
 
@@ -317,10 +331,25 @@ class SHu extends S {
   String get generalCurrency => 'Pénznem';
 
   @override
+  String get generalDateRangeCurrentMonth => 'Aktuális hónap';
+
+  @override
+  String get generalDateRangeLast30Days => 'Utolsó 30 nap';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Aktuális év';
+
+  @override
+  String get generalDateRangeLastYear => 'Előző év';
+
+  @override
+  String get generalDateRangeAll => 'Összes';
+
+  @override
   String get generalDefault => 'alapértelmezett';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'Célszámla';
 
   @override
   String get generalDismiss => 'Elvetés';
@@ -353,7 +382,7 @@ class SHu extends S {
   String get generalReset => 'Visszaállítás';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'Forrásszámla';
 
   @override
   String get generalSpent => 'Elköltött';
@@ -439,7 +468,7 @@ class SHu extends S {
   String get homeMainChartNetWorthTitle => 'Nettó Érték';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle => 'Címke összefoglaló az aktuális hónapra';
 
   @override
   String get homePiggyAdjustDialogTitle => 'Pénz megtakarítása/költése';
@@ -461,7 +490,7 @@ class SHu extends S {
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'Műszerfal testreszabása';
 
   @override
   String homePiggyLinked(String account) {
@@ -486,8 +515,27 @@ class SHu extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Eddig megtakarítva:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'Célösszeg: $amount';
+  }
+
+  @override
+  String get homePiggyAccountStatus => 'Számla állapota';
+
+  @override
+  String get homePiggyAvailableAmounts => 'Rendelkezésre álló összegek';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return 'Rendelkezésre álló: $amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return 'Perselyekben: $amount';
   }
 
   @override
@@ -531,6 +579,9 @@ class SHu extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Összes Pénznem>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Dátumtartomány';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -598,7 +649,7 @@ class SHu extends S {
   String get navigationMain => 'Főoldal';
 
   @override
-  String get navigationSettings => 'Beállítások';
+  String get generalSettings => 'Beállítások';
 
   @override
   String get no => 'Nem';
@@ -806,6 +857,12 @@ class SHu extends S {
   String get transactionDialogCurrencyTitle => 'Pénznem kiválasztása';
 
   @override
+  String get transactionDialogPiggyNoPiggy => 'Nincs malacpersely';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Kapcsolás malacperselyhez';
+
+  @override
   String get transactionDialogTagsAdd => 'Címke hozzáadása';
 
   @override
@@ -824,11 +881,12 @@ class SHu extends S {
   String get transactionErrorInvalidBudget => 'Érvénytelen Költségkeret';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts =>
+      'Kérjük, először töltse ki a számlákat.';
 
   @override
   String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+      'Kérjük, válasszon ki egy eszközzámlát.';
 
   @override
   String get transactionErrorTitle => 'Kérjük, adjon meg egy leírást.';
@@ -863,11 +921,11 @@ class SHu extends S {
 
   @override
   String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+      'Részletes felosztás célszámlájának módosítása';
 
   @override
   String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+      'Részletes felosztás forrásszámlájának módosítása';
 
   @override
   String get transactionSplitChangeTarget =>

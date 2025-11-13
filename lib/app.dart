@@ -99,7 +99,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
           _lcLastOpen = null;
           _authed = false;
 
-          bool canPush = navigatorKey.currentState != null;
+          final bool canPush = navigatorKey.currentState != null;
           if (canPush) {
             navigatorKey.currentState?.push(
               MaterialPageRoute<Widget>(
@@ -180,10 +180,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
     final LocalAuthentication auth = LocalAuthentication();
     return auth.authenticate(
       localizedReason: "Waterfly III",
-      options: const AuthenticationOptions(
-        useErrorDialogs: false,
-        stickyAuth: true,
-      ),
+      persistAcrossBackgrounding: true,
     );
   }
 
@@ -196,8 +193,10 @@ class _WaterflyAppState extends State<WaterflyApp> {
         ColorScheme? cSchemeDynamicLight,
         ColorScheme? cSchemeDynamicDark,
       ) {
-        ColorScheme cSchemeLight = ColorScheme.fromSeed(seedColor: Colors.blue);
-        ColorScheme cSchemeDark = ColorScheme.fromSeed(
+        final ColorScheme cSchemeLight = ColorScheme.fromSeed(
+          seedColor: Colors.blue,
+        );
+        final ColorScheme cSchemeDark = ColorScheme.fromSeed(
           seedColor: Colors.blue,
           brightness: Brightness.dark,
         ).copyWith(

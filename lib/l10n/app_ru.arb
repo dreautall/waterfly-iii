@@ -51,6 +51,184 @@
             }
         }
     },
+    "billsAmountAndFrequency": "Подписка соответствует транзакциям между {minValue} и {maxvalue}. Повторяется {frequency, select, weekly{еженедельно} monthly{ежемесячно} quarterly{ежеквартально} halfyear{раз в полгода} yearly{ежегодно} other{неизвестно}}{skip, plural, =0{} one{, пропускает {skip} раз} few{, пропускает {skip} раза} many{, пропускает {skip} раз} other{, пропускает {skip} раз}}.",
+    "@billsAmountAndFrequency": {
+        "description": "Subscription match for min and max amounts, and frequency",
+        "placeholders": {
+            "minValue": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "maxvalue": {
+                "type": "String",
+                "example": "$60.50"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsChangeLayoutTooltip": "Изменить вид",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "Изменить порядок сортировки",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsErrorLoading": "Ошибка при загрузке подписок.",
+    "@billsErrorLoading": {
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
+    },
+    "billsExactAmountAndFrequency": "Подписка соответствует транзакциям на сумму {value}. Повторяется {frequency, select, weekly{еженедельно} monthly{ежемесячно} quarterly{ежеквартально} halfyear{раз в полгода} yearly{ежегодно} other{неизвестно}}{skip, plural, =0{} one{, пропускает {skip} раз} few{, пропускает {skip} раза} many{, пропускает {skip} раз} other{, пропускает {skip} раз}}.",
+    "@billsExactAmountAndFrequency": {
+        "description": "Subscription match for exact amount and frequency",
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsExpectedOn": "Ожидается {date}",
+    "@billsExpectedOn": {
+        "description": "Describes what date the subscription is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsFrequency": "{frequency, select, weekly{Еженедельно} monthly{Ежемесячно} quarterly{Ежеквартально} halfyear{Раз в полгода} yearly{Ежегодно} other{Неизвестно}}",
+    "@billsFrequency": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsFrequencySkip": "{frequency, select, weekly{Еженедельно} monthly{Ежемесячно} quarterly{Ежеквартально} halfyear{Раз в полгода} yearly{Ежегодно} other{Неизвестно}}{skip, plural, =0{} one{, пропускает {skip} раз} few{, пропускает {skip} раза} many{, пропускает {skip} раз} other{, пропускает {skip} раз}}",
+    "@billsFrequencySkip": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsInactive": "Неактивна",
+    "@billsInactive": {
+        "description": "Text: when the subscription is inactive"
+    },
+    "billsIsActive": "Подписка активна",
+    "@billsIsActive": {
+        "description": "Text: the subscription is active"
+    },
+    "billsLayoutGroupSubtitle": "Подписки отображаются в назначенных им группах.",
+    "@billsLayoutGroupSubtitle": {
+        "description": "Subtitle text for group layout option"
+    },
+    "billsLayoutGroupTitle": "Группа",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListSubtitle": "Подписки отображаются в виде списка, отсортированного по определённым критериям.",
+    "@billsLayoutListSubtitle": {
+        "description": "Subtitle text for list layout option"
+    },
+    "billsLayoutListTitle": "Список",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "Список в настоящее время пуст.",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "Следующее ожидаемое совпадение",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for subscription"
+    },
+    "billsNotActive": "Подписка неактивна",
+    "@billsNotActive": {
+        "description": "Text: the subscription is inactive"
+    },
+    "billsNotExpected": "Не ожидается в этот период",
+    "@billsNotExpected": {
+        "description": "Describes that the subscription is not expected this period"
+    },
+    "billsNoTransactions": "Транзакции не найдены.",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the subscription"
+    },
+    "billsPaidOn": "Оплачено {date}",
+    "@billsPaidOn": {
+        "description": "Describes what date the subscription was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "По алфавиту",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "По периоду",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "По частоте",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "По имени",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "Без группы",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped subscriptions"
+    },
+    "billsSettingsShowOnlyActive": "Показывать только активные",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Показывает только активные подписки.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Показывать только ожидаемые",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Показывает только те подписки, которые ожидаются (или оплачены) в этом месяце.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
     "categoryDeleteConfirm": "Вы уверены, что хотите удалить категорию? Транзакции, входящие в нее, удалены не будут, они просто останутся без категории.",
     "@categoryDeleteConfirm": {
         "description": "Confirmation text to delete category"
@@ -59,9 +237,13 @@
     "@categoryErrorLoading": {
         "description": "Generic error message when categories can't be loaded (shouldn't occur)"
     },
-    "categoryTitleAdd": "Добавить категорию",
-    "@categoryTitleAdd": {
-        "description": "Title for Dialog: Add Category"
+    "categoryFormLabelIncludeInSum": "Включить в месячную сумму",
+    "@categoryFormLabelIncludeInSum": {
+        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+    },
+    "categoryFormLabelName": "Название категории",
+    "@categoryFormLabelName": {
+        "description": "Category Add/Edit Form: Label for name field"
     },
     "categoryMonthNext": "След. месяц",
     "@categoryMonthNext": {
@@ -71,6 +253,14 @@
     "@categoryMonthPrev": {
         "description": "Button title to view overview for previous month"
     },
+    "categorySumExcluded": "исключено",
+    "@categorySumExcluded": {
+        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+    },
+    "categoryTitleAdd": "Добавить категорию",
+    "@categoryTitleAdd": {
+        "description": "Title for Dialog: Add Category"
+    },
     "categoryTitleDelete": "Удалить категорию",
     "@categoryTitleDelete": {
         "description": "Title for Dialog: Delete Category"
@@ -79,13 +269,13 @@
     "@categoryTitleEdit": {
         "description": "Title for Dialog: Edit Category"
     },
-    "catOther": "Прочее",
-    "@catOther": {
-        "description": "Category description for summary category 'Other'"
-    },
     "catNone": "<без категории>",
     "@catNone": {
         "description": "Placeholder when no category has been set."
+    },
+    "catOther": "Прочее",
+    "@catOther": {
+        "description": "Category description for summary category 'Other'"
     },
     "errorAPIInvalidResponse": "Неверный ответ API: {message}",
     "@errorAPIInvalidResponse": {
@@ -185,7 +375,7 @@
     },
     "generalBill": "Счет",
     "@generalBill": {
-        "description": "Bill"
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
     "generalBudget": "Бюджет",
     "@generalBudget": {
@@ -199,9 +389,33 @@
     "@generalCurrency": {
         "description": "(Money) Currency"
     },
+    "generalDateRangeCurrentMonth": "Текущий месяц",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Последние 30 дней",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Текущий год",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Прошлый год",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Все",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
     "generalDefault": "по умолчанию",
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "Счет назначения",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
     },
     "generalDismiss": "Отмена",
     "@generalDismiss": {
@@ -243,6 +457,10 @@
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
     },
+    "generalSourceAccount": "Счет отправителя",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
     "generalSpent": "Потрачено",
     "@generalSpent": {
         "description": "(Amount) Spent"
@@ -261,7 +479,7 @@
     },
     "homeMainBillsInterval": " ({period, select,weekly{еженедельно} monthly{ежемесячно} quarterly{ежеквартально} halfyear{каждые полгода} yearly{ежегодно} other{неизвестно}})",
     "@homeMainBillsInterval": {
-        "description": "bill interval type",
+        "description": "subscription interval type",
         "placeholders": {
             "period": {
                 "type": "String",
@@ -271,7 +489,7 @@
     },
     "homeMainBillsTitle": "Счета на следующую неделю",
     "@homeMainBillsTitle": {
-        "description": "Title: Bills for the next week"
+        "description": "Title: Subscriptions for the next week"
     },
     "homeMainBudgetInterval": " ({from} до {to}, {period})",
     "@homeMainBudgetInterval": {
@@ -309,24 +527,6 @@
             }
         }
     },
-    "homeMainBudgetSum": "{current} {status, select, over{over} other{left from}} {available}",
-    "@homeMainBudgetSum": {
-        "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
-        "placeholders": {
-            "current": {
-                "type": "String",
-                "example": "12.34€"
-            },
-            "status": {
-                "type": "String",
-                "example": "left from"
-            },
-            "available": {
-                "type": "String",
-                "example": "12.34€"
-            }
-        }
-    },
     "homeMainBudgetTitle": "Бюджеты за текущий месяц",
     "@homeMainBudgetTitle": {
         "description": "Title: Budgets for current month"
@@ -355,6 +555,10 @@
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
     },
+    "homeMainChartTagsTitle": "Сводка по тегам за текущий месяц",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
     "homePiggyAdjustDialogTitle": "Сохранить/потратить деньги",
     "@homePiggyAdjustDialogTitle": {
         "description": "Title of the dialog where money can be added/removed to a piggy bank."
@@ -380,6 +584,10 @@
                 "example": "March 12, 2023"
             }
         }
+    },
+    "homeMainDialogSettingsTitle": "Настроить панель управления",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
     },
     "homePiggyLinked": "Привязано к {account}",
     "@homePiggyLinked": {
@@ -419,9 +627,41 @@
             }
         }
     },
+    "homePiggySavedMultiple": "Накоплено:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "Целевая сумма: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "Статус счета",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Доступные средства",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "Доступно: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "В копилках: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
         "placeholders": {
             "amount": {
                 "type": "String",
@@ -449,37 +689,17 @@
     "@homeTransactionsActionFilter": {
         "description": "Action Button Label: Filter list."
     },
-    "homeTransactionsDialogFilterAccountsAll": "<All Accounts>",
-    "@homeTransactionsDialogFilterAccountsAll": {
-        "description": "Don't filter for a specific account (default entry)"
-    },
     "homeTransactionsDialogFilterBillsAll": "<All Bills>",
     "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
+        "description": "Don't filter for a specific subscription (default entry)"
     },
     "homeTransactionsDialogFilterBillUnset": "<No Bill set>",
     "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
+        "description": "Filter for unset subscription"
     },
-    "homeTransactionsDialogFilterBudgetsAll": "<All Budgets>",
-    "@homeTransactionsDialogFilterBudgetsAll": {
-        "description": "Don't filter for a specific budget (default entry)"
-    },
-    "homeTransactionsDialogFilterBudgetUnset": "<No Budget set>",
-    "@homeTransactionsDialogFilterBudgetUnset": {
-        "description": "Filter for unset budgets"
-    },
-    "homeTransactionsDialogFilterCategoriesAll": "<All Categories>",
-    "@homeTransactionsDialogFilterCategoriesAll": {
-        "description": "Don't filter for a specific category (default entry)"
-    },
-    "homeTransactionsDialogFilterCategoryUnset": "<No Category set>",
-    "@homeTransactionsDialogFilterCategoryUnset": {
-        "description": "Filter for unset categories"
-    },
-    "homeTransactionsDialogFilterCurrenciesAll": "<All Currencies>",
-    "@homeTransactionsDialogFilterCurrenciesAll": {
-        "description": "Don't filter for a specific currency (default entry)"
+    "homeTransactionsDialogFilterDateRange": "Диапазон дат",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
     },
     "homeTransactionsDialogFilterFutureTransactions": "Показать предстоящие транзакции",
     "@homeTransactionsDialogFilterFutureTransactions": {
@@ -493,7 +713,7 @@
     "@homeTransactionsDialogFilterTitle": {
         "description": "Title of Filter Dialog"
     },
-    "homeTransactionsEmpty": "Транзакций не найдено.",
+    "homeTransactionsEmpty": "Транзакции не найдены.",
     "@homeTransactionsEmpty": {
         "description": "Message when no transactions are found."
     },
@@ -506,6 +726,10 @@
                 "example": "2"
             }
         }
+    },
+    "homeTransactionsSettingsShowTags": "Показывать теги в списке транзакций",
+    "@homeTransactionsSettingsShowTags": {
+        "description": "Setting label to show tags in transactioon list."
     },
     "liabilityDirectionCredit": "Мне причитается этот долг",
     "@liabilityDirectionCredit": {
@@ -551,6 +775,10 @@
     "@navigationAccounts": {
         "description": "Navigation Label: Accounts Page"
     },
+    "navigationBills": "Подписки",
+    "@navigationBills": {
+        "description": "Navigation Label: Subscriptions"
+    },
     "navigationCategories": "Категории",
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
@@ -559,22 +787,13 @@
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "Настройки",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "Настройки",
+    "@generalSettings": {
+        "description": "Label: Settings"
     },
-    "numPercent": "{num}",
-    "@numPercent": {
-        "description": "Number formatted as percentage",
-        "placeholders": {
-            "num": {
-                "type": "double",
-                "format": "decimalPercentPattern",
-                "optionalParameters": {
-                    "decimalDigits": 0
-                }
-            }
-        }
+    "no": "Нет",
+    "@no": {
+        "description": "The word no"
     },
     "numPercentOf": "{perc} из {of}",
     "@numPercentOf": {
@@ -620,6 +839,14 @@
     "@settingsDialogThemeTitle": {
         "description": "Dialog title: Select theme"
     },
+    "settingsFAQ": "Часто задаваемые вопросы",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
+    "settingsFAQHelp": "Открывается в браузере. Доступно только на английском языке.",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
+    },
     "settingsLanguage": "Язык",
     "@settingsLanguage": {
         "description": "Currently selected language"
@@ -640,10 +867,6 @@
     "@settingsNLAppAccount": {
         "description": "Default account which will be used for the transaction."
     },
-    "settingsNLAppAccountDynamic": "<Dynamic>",
-    "@settingsNLAppAccountDynamic": {
-        "description": "Account will be selected dynamically by the content of the notification."
-    },
     "settingsNLAppAdd": "Добавить приложение",
     "@settingsNLAppAdd": {
         "description": "Button title to add a new app."
@@ -656,9 +879,17 @@
     "@settingsNLAppAddInfo": {
         "description": "Help text when no more app is available to add."
     },
+    "settingsNLAutoAdd": "Создавать транзакцию без подтверждения",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
     "settingsNLDescription": "Данный сервис позволяет получать данные о транзакциях из входящих push-уведомлений. Кроме того, можно выбрать счет по умолчанию, к которому должна быть отнесена транзакция, - если значение не задано, он пытается извлечь счет из уведомления.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "Оставлять поле заметки пустым",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
     "settingsNLPermissionGrant": "Нажмите для подтверждения.",
     "@settingsNLPermissionGrant": {
@@ -678,7 +909,7 @@
     },
     "settingsNLPrefillTXTitle": "Заполнить заголовок транзакции, используя заголовок уведомления",
     "@settingsNLPrefillTXTitle": {
-        "description": "First line for setting to use pre-fill transaction title with notification title."
+        "description": "Setting pre-fill transaction title with notification title."
     },
     "settingsNLServiceChecking": "Проверка статуса…",
     "@settingsNLServiceChecking": {
@@ -789,15 +1020,23 @@
     },
     "transactionDialogBillNoBill": "Нет счета",
     "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
+        "description": "Button Label: no subscription to be used"
     },
     "transactionDialogBillTitle": "Ссылка на счет",
     "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
+        "description": "Dialog Title: Link Subscription to transaction"
     },
     "transactionDialogCurrencyTitle": "Выбор валюты",
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "Нет копилки",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Привязать к копилке",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
     },
     "transactionDialogTagsAdd": "Добавить тег",
     "@transactionDialogTagsAdd": {
@@ -822,6 +1061,14 @@
     "transactionErrorInvalidBudget": "Неверный бюджет",
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Пожалуйста, сначала укажите счета.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Пожалуйста, выберите счёт актива.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
     },
     "transactionErrorTitle": "Пожалуйста, укажите заголовок.",
     "@transactionErrorTitle": {
@@ -862,6 +1109,14 @@
     "transactionSplitChangeCurrency": "Изменить раздельную валюту",
     "@transactionSplitChangeCurrency": {
         "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Изменить счёт назначения для разделения",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Изменить исходный счёт для разделения",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
     },
     "transactionSplitChangeTarget": "Изменение раздельного целевого счета",
     "@transactionSplitChangeTarget": {

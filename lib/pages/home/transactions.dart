@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:animations/animations.dart';
+import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-import 'package:version/version.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
@@ -20,6 +20,14 @@ import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
+
+class TransactionSum {
+  double withdrawals = 0;
+  double deposits = 0;
+  double transfers = 0;
+
+  double get total => deposits - withdrawals;
+}
 
 class HomeTransactions extends StatefulWidget {
   const HomeTransactions({super.key, this.filters});
@@ -35,7 +43,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
   final Logger log = Logger("Pages.Home.Transaction");
 
   final int _numberOfPostsPerRequest = 50;
-
   late PagingState<int, TransactionRead> _pagingState;
 
   DateTime? _lastDate;
@@ -43,8 +50,18 @@ class _HomeTransactionsState extends State<HomeTransactions>
   late TransStock _stock;
   late TimeZoneHandler _tzHandler;
 
+  TransactionSum _txSum = TransactionSum();
+
   final TransactionFilters _filters = TransactionFilters();
   final ValueNotifier<bool> _tagsHidden = ValueNotifier<bool>(false);
+  final Map<String, double> _runningBalancesByTransactionId =
+      <String, double>{};
+  double? _lastCalculatedBalance;
+
+  bool _isRevenueOrExpense(ShortAccountTypeProperty? type) {
+    return type == ShortAccountTypeProperty.revenue ||
+        type == ShortAccountTypeProperty.expense;
+  }
 
   @override
   void initState() {
@@ -69,7 +86,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   ),
                   isSelected: !value,
                   tooltip: S.of(context).homeTransactionsSettingsShowTags,
-                  onPressed: () async {
+                  onPressed: () {
                     final SettingsProvider settings =
                         context.read<SettingsProvider>();
                     settings.hideTags = !settings.hideTags;
@@ -89,11 +106,13 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   isSelected: context.watch<TransactionFilters>().hasFilters,
                   tooltip: S.of(context).homeTransactionsActionFilter,
                   onPressed: () async {
-                    TransactionFilters oldFilters = _filters.copyWith();
+                    final TransactionFilters oldFilters = _filters.copyWith();
                     final SettingsProvider settings =
                         context.read<SettingsProvider>();
                     final bool oldShowFutureTXs = settings.showFutureTXs;
-                    bool? ok = await showDialog<bool>(
+                    final TransactionDateFilter oldTransactionDateFilter =
+                        settings.transactionDateFilter;
+                    final bool? ok = await showDialog<bool>(
                       context: context,
                       builder:
                           (BuildContext context) => FilterDialog(
@@ -104,6 +123,17 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     if (ok == null || !ok) {
                       if (settings.showFutureTXs != oldShowFutureTXs) {
                         settings.showFutureTXs = oldShowFutureTXs;
+                        _txSum = TransactionSum();
+                        setState(() {
+                          _pagingState = _pagingState.reset();
+                        });
+                      }
+                      if (settings.transactionDateFilter !=
+                          oldTransactionDateFilter) {
+                        await settings.setTransactionDateFilter(
+                          oldTransactionDateFilter,
+                        );
+                        _txSum = TransactionSum();
                         setState(() {
                           _pagingState = _pagingState.reset();
                         });
@@ -119,12 +149,15 @@ class _HomeTransactionsState extends State<HomeTransactions>
                       return;
                     }
                     if (oldFilters == _filters &&
-                        settings.showFutureTXs == oldShowFutureTXs) {
+                        settings.showFutureTXs == oldShowFutureTXs &&
+                        settings.transactionDateFilter ==
+                            oldTransactionDateFilter) {
                       return;
                     }
                     _filters.updateFilters();
                     _rowsWithDate = <int>[];
                     _lastDate = null;
+                    _txSum = TransactionSum();
                     setState(() {
                       _pagingState = _pagingState.reset();
                     });
@@ -136,7 +169,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
     }
 
     _stock = context.read<FireflyService>().transStock!;
-
     _stock.addListener(notifRefresh);
   }
 
@@ -149,11 +181,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
   void notifRefresh() {
     setState(() {
+      _lastCalculatedBalance = null;
       _pagingState = _pagingState.reset();
     });
   }
 
-  void _fetchPage() async {
+  Future<void> _fetchPage() async {
     if (_pagingState.isLoading) return;
 
     final TransStock? stock = context.read<FireflyService>().transStock;
@@ -184,6 +217,31 @@ class _HomeTransactionsState extends State<HomeTransactions>
         _filters.updateFilters();
       }
 
+      // Get start date
+      late DateTime startDate;
+      final DateTime now = _tzHandler.sNow().clearTime();
+      switch (context.read<SettingsProvider>().transactionDateFilter) {
+        case TransactionDateFilter.currentMonth:
+          startDate = now.copyWith(day: 1);
+          break;
+        case TransactionDateFilter.currentYear:
+          startDate = now.copyWith(month: 1, day: 1);
+          break;
+        case TransactionDateFilter.last30Days:
+          startDate = now.subtract(const Duration(days: 30));
+          break;
+        case TransactionDateFilter.lastYear:
+          startDate = now.copyWith(year: now.year - 1);
+          break;
+        default:
+          // Don't use 0 seconds, as DST & stuff might throw an error:
+          // "The start must be a date after 1970-01-02."
+          startDate = DateTime.fromMillisecondsSinceEpoch(
+            365 * 24 * 60 * 60 * 1000,
+          );
+          break;
+      }
+
       // Faster than searching for an account, and also has cache (stock) behind
       // This search should never have additional filters!
       if (widget.filters?.account != null) {
@@ -195,11 +253,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
           end:
               context.read<SettingsProvider>().showFutureTXs
                   ? null
-                  : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
-          start:
-              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
-                  ? null
-                  : "1900-01-01",
+                  : DateFormat('yyyy-MM-dd', 'en_US').format(now),
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(startDate),
         );
       } else if (_filters.hasFilters) {
         String query = _filters.text ?? "";
@@ -210,34 +265,32 @@ class _HomeTransactionsState extends State<HomeTransactions>
           query = "currency_is:${_filters.currency!.attributes.code} $query";
         }
         if (_filters.category != null) {
-          if (_filters.category!.id == "-1") {
-            query = "has_no_category:true $query";
-          } else {
-            query =
-                "category_is:\"${_filters.category!.attributes.name}\" $query";
-          }
+          query =
+              (_filters.category!.id == "-1")
+                  ? "has_no_category:true $query"
+                  : "category_is:\"${_filters.category!.attributes.name}\" $query";
         }
         if (_filters.budget != null) {
-          if (_filters.budget!.id == "-1") {
-            query = "has_no_budget:true $query";
-          } else {
-            query = "budget_is:\"${_filters.budget!.attributes.name}\" $query";
-          }
+          query =
+              (_filters.budget!.id == "-1")
+                  ? "has_no_budget:true $query"
+                  : "budget_is:\"${_filters.budget!.attributes.name}\" $query";
         }
         if (_filters.bill != null) {
-          if (_filters.bill!.id == "-1") {
-            query = "has_no_bill:true $query";
-          } else {
-            query = "bill_is:\"${_filters.bill!.attributes.name}\" $query";
-          }
+          query =
+              (_filters.bill!.id == "-1")
+                  ? "has_no_bill:true $query"
+                  : "bill_is:\"${_filters.bill!.attributes.name}\" $query";
         }
         if (_filters.tags != null) {
           for (String tag in _filters.tags!.tags) {
             query = "tag_is:\"$tag\" $query";
           }
         }
+        query =
+            "date_after:${DateFormat('yyyy-MM-dd', 'en_US').format(startDate)} $query";
         if (!context.read<SettingsProvider>().showFutureTXs) {
-          query = "date_before:today $query ";
+          query = "date_before:today $query";
         }
         log.fine(() => "Search query: $query");
         transactionList = await stock.getSearch(
@@ -253,12 +306,67 @@ class _HomeTransactionsState extends State<HomeTransactions>
           end:
               context.read<SettingsProvider>().showFutureTXs
                   ? null
-                  : DateFormat('yyyy-MM-dd', 'en_US').format(_tzHandler.sNow()),
-          start:
-              (context.read<FireflyService>().apiVersion! >= Version(2, 0, 9))
-                  ? null
-                  : "1900-01-01",
+                  : DateFormat('yyyy-MM-dd', 'en_US').format(now),
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(startDate),
         );
+      }
+
+      if (_filters.account != null) {
+        final AccountRead account = _filters.account!;
+        // Attempt to retrieve the opening balance
+        double balance =
+            _lastCalculatedBalance ??
+            double.tryParse(account.attributes.currentBalance!) ??
+            0.0;
+        // If the account is a revenue/expense account, we need to invert the balance
+        if (_lastCalculatedBalance == null &&
+            _isRevenueOrExpense(account.attributes.type)) {
+          balance *= -1;
+        }
+        for (TransactionRead item in transactionList) {
+          _runningBalancesByTransactionId[item.id] = balance;
+          // Attempt to retrieve the transaction total amount
+          for (TransactionSplit tx in item.attributes.transactions) {
+            final double amount = double.tryParse(tx.amount) ?? 0.0;
+            // Should never be the case
+            if (amount == 0.0) {
+              continue;
+            }
+
+            if (tx.type == TransactionTypeProperty.withdrawal) {
+              balance += amount;
+            } else if (tx.type == TransactionTypeProperty.transfer) {
+              if (tx.destinationId == account.id) {
+                balance -= amount;
+              } else {
+                balance += amount;
+              }
+            } else {
+              balance -= amount;
+            }
+          }
+          _lastCalculatedBalance = balance;
+        }
+      }
+
+      for (TransactionRead item in transactionList) {
+        for (TransactionSplit tx in item.attributes.transactions) {
+          switch (tx.type) {
+            case TransactionTypeProperty.deposit:
+              _txSum.deposits += double.parse(tx.pcAmount ?? tx.amount);
+              break;
+            case TransactionTypeProperty.withdrawal:
+              _txSum.withdrawals += double.parse(tx.pcAmount ?? tx.amount);
+              break;
+            case TransactionTypeProperty.transfer:
+              _txSum.transfers += double.parse(tx.pcAmount ?? tx.amount);
+              break;
+            case TransactionTypeProperty.openingBalance:
+            case TransactionTypeProperty.reconciliation:
+            case TransactionTypeProperty.swaggerGeneratedUnknown:
+            // do nothing, ignore
+          }
+        }
       }
 
       final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
@@ -300,8 +408,10 @@ class _HomeTransactionsState extends State<HomeTransactions>
           () => Future<void>.sync(() {
             _rowsWithDate = <int>[];
             _lastDate = null;
+            _txSum = TransactionSum();
             context.read<FireflyService>().transStock!.clear();
             setState(() {
+              _lastCalculatedBalance = null;
               _pagingState = _pagingState.reset();
             });
           }),
@@ -310,7 +420,123 @@ class _HomeTransactionsState extends State<HomeTransactions>
         fetchNextPage: _fetchPage,
         builderDelegate: customPagedChildBuilderDelegate<TransactionRead>(
           itemBuilder: transactionRowBuilder,
-          noMoreItemsIndicatorBuilder: (_) => const SizedBox(height: 68),
+          noMoreItemsIndicatorBuilder: (BuildContext context) {
+            final CurrencyRead defaultCurrency =
+                context.read<FireflyService>().defaultCurrency;
+            return Padding(
+              padding: const EdgeInsetsGeometry.symmetric(horizontal: 8),
+              child: Column(
+                children: <Widget>[
+                  const Divider(),
+                  Table(
+                    //border: TableBorder.all(), // :DEBUG:
+                    columnWidths: const <int, TableColumnWidth>{
+                      0: FlexColumnWidth(),
+                      1: FlexColumnWidth(),
+                      2: FlexColumnWidth(),
+                    },
+                    children: <TableRow>[
+                      TableRow(
+                        children: <Widget>[
+                          Text(
+                            S.of(context).transactionTypeDeposit,
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            S.of(context).transactionTypeWithdrawal,
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            S.of(context).transactionTypeTransfer,
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+
+                      TableRow(
+                        children: <Widget>[
+                          Text(
+                            defaultCurrency.fmt(_txSum.deposits),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.copyWith(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            defaultCurrency.fmt(_txSum.withdrawals),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.copyWith(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            defaultCurrency.fmt(_txSum.transfers),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.copyWith(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const TableRow(
+                        children: <Widget>[
+                          SizedBox(height: 8),
+                          SizedBox.shrink(),
+                          SizedBox.shrink(),
+                        ],
+                      ),
+                      TableRow(
+                        children: <Widget>[
+                          const SizedBox.shrink(),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              "${S.of(context).generalSum}:  ",
+                              style: Theme.of(context).textTheme.bodyLarge!
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Text(
+                            defaultCurrency.fmt(_txSum.total),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyLarge!.copyWith(
+                              color:
+                                  _txSum.total < 0 ? Colors.red : Colors.green,
+                              fontWeight: FontWeight.bold,
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  // Padding for FAB
+                  const SizedBox(height: 76),
+                ],
+              ),
+            );
+          },
         ),
       ),
       //itemExtent: 80,
@@ -322,7 +548,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     TransactionRead item,
     int index,
   ) {
-    List<TransactionSplit> transactions = item.attributes.transactions;
+    final List<TransactionSplit> transactions = item.attributes.transactions;
     if (transactions.isEmpty) {
       return Text(S.of(context).homeTransactionsEmpty);
     }
@@ -369,7 +595,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           foreignCurrencies[foreignSymbol] = CurrencyRead(
             id: trans.foreignCurrencyId ?? "0",
             type: "currencies",
-            attributes: Currency(
+            attributes: CurrencyProperties(
               code: trans.foreignCurrencyCode ?? "",
               name: "",
               symbol: trans.foreignCurrencySymbol ?? "",
@@ -401,7 +627,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       title = transactions.first.description;
     }
     // Subtitle
-    List<InlineSpan> subtitle = <InlineSpan>[];
+    final List<InlineSpan> subtitle = <InlineSpan>[];
     if (hasAttachments) {
       subtitle.add(
         const WidgetSpan(
@@ -460,7 +686,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     final CurrencyRead currency = CurrencyRead(
       id: transactions.first.currencyId ?? "0",
       type: "currencies",
-      attributes: Currency(
+      attributes: CurrencyProperties(
         code: transactions.first.currencyCode ?? "",
         name: transactions.first.currencyName ?? "",
         symbol: transactions.first.currencySymbol ?? "",
@@ -474,6 +700,28 @@ class _HomeTransactionsState extends State<HomeTransactions>
         }
       });
       foreignText += " ";
+    }
+
+    // Account balance
+    late double balance;
+    if (_filters.account != null) {
+      if (item.attributes.transactions.first.sourceBalanceAfter != null) {
+        balance =
+            double.tryParse(
+              item.attributes.transactions.first.destinationId ==
+                      _filters.account?.id
+                  ? item.attributes.transactions.first.destinationBalanceAfter!
+                  : item.attributes.transactions.first.sourceBalanceAfter!,
+            ) ??
+            0;
+        if (_filters.account!.attributes.type !=
+                ShortAccountTypeProperty.asset &&
+            balance != 0) {
+          balance *= -1;
+        }
+      } else {
+        balance = _runningBalancesByTransactionId[item.id] ?? 0;
+      }
     }
 
     Widget transactionWidget = OpenContainer(
@@ -494,7 +742,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
             onLongPressStart: (LongPressStartDetails details) async {
               final Size screenSize = MediaQuery.of(context).size;
               final Offset offset = details.globalPosition;
-              HapticFeedback.vibrate();
+              unawaited(HapticFeedback.vibrate());
               final Function? func = await showMenu<Function>(
                 context: context,
                 position: RelativeRect.fromLTRB(
@@ -506,7 +754,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                 items: <PopupMenuEntry<Function>>[
                   PopupMenuItem<Function>(
                     value: () async {
-                      bool? ok = await Navigator.push(
+                      final bool? ok = await Navigator.push(
                         context,
                         MaterialPageRoute<bool>(
                           builder:
@@ -519,11 +767,13 @@ class _HomeTransactionsState extends State<HomeTransactions>
                       if (ok ?? false) {
                         _rowsWithDate = <int>[];
                         _lastDate = null;
+                        _txSum = TransactionSum();
                         if (context.mounted) {
                           context.read<FireflyService>().transStock!.clear();
                         }
                       }
                       setState(() {
+                        _lastCalculatedBalance = null;
                         _pagingState = _pagingState.reset();
                       });
                     },
@@ -539,7 +789,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   PopupMenuItem<Function>(
                     value: () async {
                       final FireflyIii api = context.read<FireflyService>().api;
-                      bool? ok = await showDialog<bool>(
+                      final bool? ok = await showDialog<bool>(
                         context: context,
                         builder:
                             (BuildContext context) =>
@@ -552,10 +802,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
                       await api.v1TransactionsIdDelete(id: item.id);
                       _rowsWithDate = <int>[];
                       _lastDate = null;
+                      _txSum = TransactionSum();
                       if (context.mounted) {
                         context.read<FireflyService>().transStock!.clear();
                       }
                       setState(() {
+                        _lastCalculatedBalance = null;
                         _pagingState = _pagingState.reset();
                       });
                     },
@@ -583,55 +835,157 @@ class _HomeTransactionsState extends State<HomeTransactions>
                 backgroundColor: transactions.first.type.color,
                 child: Icon(transactions.first.type.icon),
               ),
-              title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
-              subtitle: Column(
+              title: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  RichText(
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    text: TextSpan(
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      children: subtitle,
+                  // Front part
+                  Expanded(
+                    child: Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  if (!context.watch<SettingsProvider>().hideTags &&
-                      tags.isNotEmpty) ...<Widget>[
-                    Wrap(
-                      children:
-                          tags
-                              .map(
-                                (String tag) => Card(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        const Icon(
-                                          Icons.label_outline,
-                                          size: 16,
-                                        ),
-                                        const SizedBox(width: 5),
-                                        Flexible(
-                                          child: RichText(
-                                            overflow: TextOverflow.fade,
-                                            text: TextSpan(
-                                              style:
-                                                  Theme.of(
-                                                    context,
-                                                  ).textTheme.bodyMedium,
-                                              text: tag,
-                                            ),
+                  const SizedBox(width: 8),
+                  // Trailing part
+                  RichText(
+                    textAlign: TextAlign.end,
+                    maxLines: 1,
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      children: <InlineSpan>[
+                        if (foreignText.isNotEmpty)
+                          TextSpan(
+                            text: foreignText,
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodySmall!.copyWith(
+                              color: Colors.blue,
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                        TextSpan(
+                          text: currency.fmt(amount),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleMedium!.copyWith(
+                            color:
+                                transactions.first.type !=
+                                        TransactionTypeProperty.reconciliation
+                                    ? transactions.first.type.color
+                                    : (transactions.first.sourceType ==
+                                        AccountTypeProperty
+                                            .reconciliationAccount)
+                                    ? Colors.green
+                                    : Colors.red,
+                            fontFeatures: const <FontFeature>[
+                              FontFeature.tabularFigures(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              subtitle: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  // Front part
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        RichText(
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            children: subtitle,
+                          ),
+                        ),
+                        if (!context.watch<SettingsProvider>().hideTags &&
+                            tags.isNotEmpty) ...<Widget>[
+                          Wrap(
+                            children:
+                                tags
+                                    .map(
+                                      (String tag) => Card(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(6.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              const Icon(
+                                                Icons.label_outline,
+                                                size: 16,
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Flexible(
+                                                child: RichText(
+                                                  overflow: TextOverflow.fade,
+                                                  text: TextSpan(
+                                                    style:
+                                                        Theme.of(
+                                                          context,
+                                                        ).textTheme.bodyMedium,
+                                                    text: tag,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-                              .toList(),
+                                      ),
+                                    )
+                                    .toList(),
+                          ),
+                        ],
+                      ],
                     ),
-                  ],
+                  ),
+                  // Trailing part
+                  RichText(
+                    textAlign: TextAlign.end,
+                    maxLines: 1,
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      children: <InlineSpan>[
+                        if (reconciled)
+                          const WidgetSpan(
+                            baseline: TextBaseline.ideographic,
+                            alignment: PlaceholderAlignment.middle,
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 2),
+                              child: Icon(Icons.check),
+                            ),
+                          ),
+                        if (_filters.account != null)
+                          TextSpan(
+                            text: currency.fmt(balance),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.copyWith(
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                        if (_filters.account == null)
+                          TextSpan(
+                            text: switch (transactions.first.type) {
+                              TransactionTypeProperty.deposit =>
+                                destinationName,
+                              TransactionTypeProperty.openingBalance => "",
+                              TransactionTypeProperty.reconciliation => "",
+                              _ => sourceName,
+                            },
+                          ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
               isThreeLine: true,
@@ -641,75 +995,46 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   bottomLeft: Radius.circular(16),
                 ),
               ),
-              trailing: RichText(
-                textAlign: TextAlign.end,
-                maxLines: 2,
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  children: <InlineSpan>[
-                    if (foreignText.isNotEmpty)
-                      TextSpan(
-                        text: foreignText,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodySmall!.copyWith(color: Colors.blue),
-                      ),
-                    TextSpan(
-                      text: currency.fmt(amount),
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color:
-                            transactions.first.type !=
-                                    TransactionTypeProperty.reconciliation
-                                ? transactions.first.type.color
-                                : (transactions.first.sourceType ==
-                                    AccountTypeProperty.reconciliationAccount)
-                                ? Colors.green
-                                : Colors.red,
-                        fontFeatures: const <FontFeature>[
-                          FontFeature.tabularFigures(),
-                        ],
-                      ),
-                    ),
-                    const TextSpan(text: "\n"),
-                    if (reconciled)
-                      const WidgetSpan(
-                        baseline: TextBaseline.ideographic,
-                        alignment: PlaceholderAlignment.middle,
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 2),
-                          child: Icon(Icons.check),
-                        ),
-                      ),
-                    TextSpan(
-                      text: switch (transactions.first.type) {
-                        TransactionTypeProperty.deposit => destinationName,
-                        TransactionTypeProperty.openingBalance => "",
-                        TransactionTypeProperty.reconciliation => "",
-                        _ => sourceName,
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              onTap: () => openContainer(),
             ),
           ),
-      onClosed: (bool? refresh) {
+      onClosed: (bool? refresh) async {
+        if (_filters.account != null) {
+          // Reset last balance calculated
+          final FireflyIii api = context.read<FireflyService>().api;
+          // Retrieve the account to get the current balance
+          final Response<AccountSingle> respAccount = await api.v1AccountsIdGet(
+            id: _filters.account!.id,
+          );
+          apiThrowErrorIfEmpty(respAccount, mounted ? context : null);
+          final AccountRead account = respAccount.body!.data;
+          _lastCalculatedBalance =
+              double.tryParse(account.attributes.currentBalance!) ?? 0.0;
+          // If the account is a revenue/expense account, we need to invert the balance
+          if (_isRevenueOrExpense(account.attributes.type)) {
+            _lastCalculatedBalance =
+                _lastCalculatedBalance != null
+                    ? _lastCalculatedBalance! * -1
+                    : 0;
+          }
+        }
+
         if (refresh ?? false == true) {
           _rowsWithDate = <int>[];
           _lastDate = null;
+          _txSum = TransactionSum();
           if (context.mounted) {
             context.read<FireflyService>().transStock!.clear();
           }
         }
         setState(() {
+          _lastCalculatedBalance = null;
           _pagingState = _pagingState.reset();
         });
       },
     );
 
     // Date
-    DateTime date = _tzHandler.sTime(transactions.first.date).toLocal();
+    final DateTime date = _tzHandler.sTime(transactions.first.date).toLocal();
     // Show Date Banner when:
     // 1. _lastDate is not set (= first element)
     // 2. _lastDate has a different day than current date (= date changed) and

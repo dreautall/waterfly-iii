@@ -644,7 +644,10 @@ TransactionTypeProperty accountsToTransaction(
   AccountTypeProperty source,
   AccountTypeProperty destination,
 ) {
-  Map<AccountTypeProperty, Map<AccountTypeProperty, TransactionTypeProperty>>
+  final Map<
+    AccountTypeProperty,
+    Map<AccountTypeProperty, TransactionTypeProperty>
+  >
   map = <
     AccountTypeProperty,
     Map<AccountTypeProperty, TransactionTypeProperty>
@@ -726,10 +729,10 @@ TransactionTypeProperty accountsToTransaction(
       TransactionTypeProperty.swaggerGeneratedUnknown;
 }
 
-extension BillAmountAvg on Bill {
+extension BillAmountAvg on BillProperties {
   double avgAmount() {
-    final double amountMax = (double.tryParse(this.amountMax) ?? 0).abs();
-    final double amountMin = (double.tryParse(this.amountMin) ?? 0).abs();
+    final double amountMax = (double.tryParse(this.amountMax!) ?? 0).abs();
+    final double amountMin = (double.tryParse(this.amountMin!) ?? 0).abs();
     if (amountMax == 0) {
       return amountMin;
     }
@@ -742,7 +745,7 @@ extension BillAmountAvg on Bill {
   }
 }
 
-class CategoryWithSum extends Category {
+class CategoryWithSum extends CategoryProperties {
   CategoryWithSum({
     super.createdAt,
     super.updatedAt,
@@ -754,4 +757,19 @@ class CategoryWithSum extends Category {
 
   double sumSpent = 0;
   double sumEarned = 0;
+}
+
+extension LocaleExt on Locale {
+  static Locale fromLanguageTag(String tag) {
+    String? langCode;
+    String? regionCode;
+    final int regionCodeIndex = tag.indexOf(RegExp(r'[A-Z]{2}'));
+    if (regionCodeIndex == -1) {
+      langCode = tag;
+    } else {
+      langCode = tag.substring(0, regionCodeIndex - 1);
+      regionCode = tag.substring(regionCodeIndex);
+    }
+    return Locale(langCode, regionCode);
+  }
 }

@@ -203,6 +203,20 @@ class SEs extends S {
   String get billsUngrouped => 'Sin agrupar';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Mostrar solo activos';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Muestra solo las suscripciones activas.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Mostrar solo esperados';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Muestra solo las suscripciones que se esperan (o pagan) este mes.';
+
+  @override
   String get categoryDeleteConfirm =>
       '¿Estás seguro de que deseas eliminar esta categoría? Las transacciones no serán eliminadas, pero ya no tendrán categoría.';
 
@@ -315,6 +329,21 @@ class SEs extends S {
 
   @override
   String get generalCurrency => 'Divisa';
+
+  @override
+  String get generalDateRangeCurrentMonth => 'Mes actual';
+
+  @override
+  String get generalDateRangeLast30Days => 'Últimos 30 días';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Año actual';
+
+  @override
+  String get generalDateRangeLastYear => 'Año pasado';
+
+  @override
+  String get generalDateRangeAll => 'Todos';
 
   @override
   String get generalDefault => 'por defecto';
@@ -481,8 +510,27 @@ class SEs extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Ahorrado hasta ahora:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'Objetivo de ahorro: $amount';
+  }
+
+  @override
+  String get homePiggyAccountStatus => 'Estado de la cuenta';
+
+  @override
+  String get homePiggyAvailableAmounts => 'Cantidades disponibles';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return 'Disponible: $amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return 'En huchas: $amount';
   }
 
   @override
@@ -528,6 +576,9 @@ class SEs extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Todas las divisas>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Rango de fechas';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -595,7 +646,7 @@ class SEs extends S {
   String get navigationMain => 'Panel principal';
 
   @override
-  String get navigationSettings => 'Ajustes';
+  String get generalSettings => 'Configuración';
 
   @override
   String get no => 'No';
@@ -801,6 +852,12 @@ class SEs extends S {
 
   @override
   String get transactionDialogCurrencyTitle => 'Seleccionar divisa';
+
+  @override
+  String get transactionDialogPiggyNoPiggy => 'Sin hucha';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Vincular a hucha';
 
   @override
   String get transactionDialogTagsAdd => 'Añadir etiqueta';

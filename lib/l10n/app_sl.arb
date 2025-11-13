@@ -213,6 +213,22 @@
     "@billsUngrouped": {
         "description": "Title for ungrouped subscriptions"
     },
+    "billsSettingsShowOnlyActive": "Prikaži samo aktivne",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Prikazuje samo aktivne naročnine.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Prikaži samo pričakovano",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Prikazuje samo tiste naročnine, ki so pričakovane (ali plačane) ta mesec.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
     "categoryDeleteConfirm": "Ali ste prepričani, da želite izbrisati to kategorijo? Transakcije ne bodo izbrisane, vendar ne bodo imele več kategorije.",
     "@categoryDeleteConfirm": {
         "description": "Confirmation text to delete category"
@@ -372,6 +388,26 @@
     "generalCurrency": "Valuta",
     "@generalCurrency": {
         "description": "(Money) Currency"
+    },
+    "generalDateRangeCurrentMonth": "Trenutni mesec",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Zadnjih 30 dni",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Trenutno leto",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Prejšnje leto",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Vse",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
     },
     "generalDefault": "privzeto",
     "@generalDefault": {
@@ -537,6 +573,10 @@
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
     },
+    "homeMainChartTagsTitle": "Povzetek oznak za trenutni mesec",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
     "homePiggyAdjustDialogTitle": "Prihranek/poraba denarja",
     "@homePiggyAdjustDialogTitle": {
         "description": "Title of the dialog where money can be added/removed to a piggy bank."
@@ -605,9 +645,41 @@
             }
         }
     },
+    "homePiggySavedMultiple": "Privarčevano do sedaj:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "Ciljni znesek: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "Status računa",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Razpoložljivi zneski",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "Razpoložljivo: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "V hranilnikih: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
         "placeholders": {
             "amount": {
                 "type": "String",
@@ -666,6 +738,10 @@
     "homeTransactionsDialogFilterCurrenciesAll": "<Vse valute>",
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "Časovno območje",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
     },
     "homeTransactionsDialogFilterFutureTransactions": "Prikaži bodoče transakcije",
     "@homeTransactionsDialogFilterFutureTransactions": {
@@ -753,9 +829,9 @@
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "Nastavitve",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "Nastavitve",
+    "@generalSettings": {
+        "description": "Label: Settings"
     },
     "no": "Ne",
     "@no": {
@@ -1013,6 +1089,14 @@
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
     },
+    "transactionDialogPiggyNoPiggy": "Brez hranilnika",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Poveži s hranilnikom",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
+    },
     "transactionDialogTagsAdd": "Dodaj oznako",
     "@transactionDialogTagsAdd": {
         "description": "Button Label: Add Tag"
@@ -1113,7 +1197,7 @@
     "@transactionTitleEdit": {
         "description": "Title: Edit existing transaction"
     },
-    "transactionTypeDeposit": "Polog",
+    "transactionTypeDeposit": "Priliv",
     "@transactionTypeDeposit": {
         "description": "Deposit transaction type"
     },

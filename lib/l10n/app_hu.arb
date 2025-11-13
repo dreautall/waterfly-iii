@@ -53,7 +53,7 @@
     },
     "billsAmountAndFrequency": "A számla {minValue} és {maxvalue} közötti értékű tranzakcióknak felel meg. {frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}} ismétlődésű{skip, plural, =0{} other{, {skip} ismétlést átugorva}}.",
     "@billsAmountAndFrequency": {
-        "description": "Bill match for min and max amounts, and frequency",
+        "description": "Subscription match for min and max amounts, and frequency",
         "placeholders": {
             "minValue": {
                 "type": "String",
@@ -83,11 +83,11 @@
     },
     "billsErrorLoading": "Hiba a számla betöltése során.",
     "@billsErrorLoading": {
-        "description": "Generic error message when bills can't be loaded (shouldn't occur)"
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
     },
     "billsExactAmountAndFrequency": "A számla {value} értékű tranzakcióknak felel meg. {frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}} ismétlődésű{skip, plural, =0{} other{, {skip} ismétlést átugorva}}.",
     "@billsExactAmountAndFrequency": {
-        "description": "Bill match for exact amount and frequency",
+        "description": "Subscription match for exact amount and frequency",
         "placeholders": {
             "value": {
                 "type": "String",
@@ -105,7 +105,7 @@
     },
     "billsExpectedOn": "Várható dátum {date}",
     "@billsExpectedOn": {
-        "description": "Describes what date the bill is expected",
+        "description": "Describes what date the subscription is expected",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -116,7 +116,7 @@
     },
     "billsFrequency": "{frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}}",
     "@billsFrequency": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -126,7 +126,7 @@
     },
     "billsFrequencySkip": "{frequency, select, weekly{Heti} monthly{Havi} quarterly{Negyedéves} halfyear{Féléves} yearly{Éves} other{Ismeretlen}} ismétlődésű{skip, plural, =0{} other{, {skip} ismétlést átugorva}}",
     "@billsFrequencySkip": {
-        "description": "Bill frequency",
+        "description": "Subscription frequency",
         "placeholders": {
             "frequency": {
                 "type": "String",
@@ -140,11 +140,11 @@
     },
     "billsInactive": "Inaktív",
     "@billsInactive": {
-        "description": "Text: when the bill is inactive"
+        "description": "Text: when the subscription is inactive"
     },
     "billsIsActive": "Aktív számla",
     "@billsIsActive": {
-        "description": "Text: the bill is active"
+        "description": "Text: the subscription is active"
     },
     "billsLayoutGroupSubtitle": "Számlák megjelenítése a hozzájuk rendelt csoportokban.",
     "@billsLayoutGroupSubtitle": {
@@ -168,23 +168,23 @@
     },
     "billsNextExpectedMatch": "Következő várható egyezés",
     "@billsNextExpectedMatch": {
-        "description": "Text: next expected match for bill"
+        "description": "Text: next expected match for subscription"
     },
     "billsNotActive": "Inaktív számla",
     "@billsNotActive": {
-        "description": "Text: the bill is inactive"
+        "description": "Text: the subscription is inactive"
     },
     "billsNotExpected": "Nem várható ebben az időszakban",
     "@billsNotExpected": {
-        "description": "Describes that the bill is not expected this period"
+        "description": "Describes that the subscription is not expected this period"
     },
     "billsNoTransactions": "Nem található tranzakció.",
     "@billsNoTransactions": {
-        "description": "Describes that there are no transactions connected to the bill"
+        "description": "Describes that there are no transactions connected to the subscription"
     },
     "billsPaidOn": "Kifizetés dátuma {date}",
     "@billsPaidOn": {
-        "description": "Describes what date the bill was paid",
+        "description": "Describes what date the subscription was paid",
         "placeholders": {
             "date": {
                 "type": "DateTime",
@@ -211,7 +211,23 @@
     },
     "billsUngrouped": "Csoportosítatlan",
     "@billsUngrouped": {
-        "description": "Title for ungrouped bills"
+        "description": "Title for ungrouped subscriptions"
+    },
+    "billsSettingsShowOnlyActive": "Csak az aktívak",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Csak az aktív előfizetéseket mutatja.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Csak a várhatók",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Csak azokat az előfizetéseket mutatja, amelyek várhatóak (vagy kifizetésre kerültek) ebben a hónapban.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
     },
     "categoryDeleteConfirm": "Biztosan törli ezt a kategóriát? A tranzakciók nem kerülnek törlésre, ugyanakkor nem lesznek kategóriához rendelve.",
     "@categoryDeleteConfirm": {
@@ -359,7 +375,7 @@
     },
     "generalBill": "Számla",
     "@generalBill": {
-        "description": "Bill"
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
     },
     "generalBudget": "Költségkeret",
     "@generalBudget": {
@@ -373,9 +389,33 @@
     "@generalCurrency": {
         "description": "(Money) Currency"
     },
+    "generalDateRangeCurrentMonth": "Aktuális hónap",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Utolsó 30 nap",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Aktuális év",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Előző év",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Összes",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
     "generalDefault": "alapértelmezett",
     "@generalDefault": {
         "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "Célszámla",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
     },
     "generalDismiss": "Elvetés",
     "@generalDismiss": {
@@ -417,6 +457,10 @@
     "@generalReset": {
         "description": "Reset something (i.e. set filters)"
     },
+    "generalSourceAccount": "Forrásszámla",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
     "generalSpent": "Elköltött",
     "@generalSpent": {
         "description": "(Amount) Spent"
@@ -435,7 +479,7 @@
     },
     "homeMainBillsInterval": " ({period, select, weekly{heti} monthly{havi} quarterly{negyedéves} halfyear{féléves} yearly{éves} other{ismeretlen}})",
     "@homeMainBillsInterval": {
-        "description": "bill interval type",
+        "description": "subscription interval type",
         "placeholders": {
             "period": {
                 "type": "String",
@@ -445,7 +489,7 @@
     },
     "homeMainBillsTitle": "Számlák a következő hétre",
     "@homeMainBillsTitle": {
-        "description": "Title: Bills for the next week"
+        "description": "Title: Subscriptions for the next week"
     },
     "homeMainBudgetInterval": " (Ettől: {from} eddig: {to}, {period})",
     "@homeMainBudgetInterval": {
@@ -529,6 +573,10 @@
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
     },
+    "homeMainChartTagsTitle": "Címke összefoglaló az aktuális hónapra",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
     "homePiggyAdjustDialogTitle": "Pénz megtakarítása/költése",
     "@homePiggyAdjustDialogTitle": {
         "description": "Title of the dialog where money can be added/removed to a piggy bank."
@@ -554,6 +602,10 @@
                 "example": "March 12, 2023"
             }
         }
+    },
+    "homeMainDialogSettingsTitle": "Műszerfal testreszabása",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
     },
     "homePiggyLinked": "Összekapcsolva a következővel: {account}",
     "@homePiggyLinked": {
@@ -593,9 +645,41 @@
             }
         }
     },
+    "homePiggySavedMultiple": "Eddig megtakarítva:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
     "homePiggyTarget": "Célösszeg: {amount}",
     "@homePiggyTarget": {
         "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "Számla állapota",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Rendelkezésre álló összegek",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "Rendelkezésre álló: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "Perselyekben: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
         "placeholders": {
             "amount": {
                 "type": "String",
@@ -629,11 +713,11 @@
     },
     "homeTransactionsDialogFilterBillsAll": "<Összes Számla>",
     "@homeTransactionsDialogFilterBillsAll": {
-        "description": "Don't filter for a specific bill (default entry)"
+        "description": "Don't filter for a specific subscription (default entry)"
     },
     "homeTransactionsDialogFilterBillUnset": "<Nincs Számla Kiválasztva>",
     "@homeTransactionsDialogFilterBillUnset": {
-        "description": "Filter for unset bills"
+        "description": "Filter for unset subscription"
     },
     "homeTransactionsDialogFilterBudgetsAll": "<Összes Költségkeret>",
     "@homeTransactionsDialogFilterBudgetsAll": {
@@ -654,6 +738,10 @@
     "homeTransactionsDialogFilterCurrenciesAll": "<Összes Pénznem>",
     "@homeTransactionsDialogFilterCurrenciesAll": {
         "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "Dátumtartomány",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
     },
     "homeTransactionsDialogFilterFutureTransactions": "Jövőbeli tranzakciók megjelenítése",
     "@homeTransactionsDialogFilterFutureTransactions": {
@@ -731,7 +819,7 @@
     },
     "navigationBills": "Számlák",
     "@navigationBills": {
-        "description": "Navigation Label: Bills"
+        "description": "Navigation Label: Subscriptions"
     },
     "navigationCategories": "Kategóriák",
     "@navigationCategories": {
@@ -741,9 +829,9 @@
     "@navigationMain": {
         "description": "Navigation Label: Main Dashboard"
     },
-    "navigationSettings": "Beállítások",
-    "@navigationSettings": {
-        "description": "Navigation Label: Settings"
+    "generalSettings": "Beállítások",
+    "@generalSettings": {
+        "description": "Label: Settings"
     },
     "no": "Nem",
     "@no": {
@@ -991,15 +1079,23 @@
     },
     "transactionDialogBillNoBill": "Nincs számla",
     "@transactionDialogBillNoBill": {
-        "description": "Button Label: no bill to be used"
+        "description": "Button Label: no subscription to be used"
     },
     "transactionDialogBillTitle": "Számlához Rendelés",
     "@transactionDialogBillTitle": {
-        "description": "Dialog Title: Link Bill to transaction"
+        "description": "Dialog Title: Link Subscription to transaction"
     },
     "transactionDialogCurrencyTitle": "Pénznem kiválasztása",
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "Nincs malacpersely",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Kapcsolás malacperselyhez",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
     },
     "transactionDialogTagsAdd": "Címke hozzáadása",
     "@transactionDialogTagsAdd": {
@@ -1024,6 +1120,14 @@
     "transactionErrorInvalidBudget": "Érvénytelen Költségkeret",
     "@transactionErrorInvalidBudget": {
         "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Kérjük, először töltse ki a számlákat.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Kérjük, válasszon ki egy eszközzámlát.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
     },
     "transactionErrorTitle": "Kérjük, adjon meg egy leírást.",
     "@transactionErrorTitle": {
@@ -1064,6 +1168,14 @@
     "transactionSplitChangeCurrency": "Felosztás Pénznemének Megváltoztatása",
     "@transactionSplitChangeCurrency": {
         "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Részletes felosztás célszámlájának módosítása",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Részletes felosztás forrásszámlájának módosítása",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
     },
     "transactionSplitChangeTarget": "Felosztás Célszámlájának Megváltoztatása",
     "@transactionSplitChangeTarget": {

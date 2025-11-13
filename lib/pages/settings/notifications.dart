@@ -61,7 +61,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                 if (!snapshot.data!.servicePermission) {
                   subtitle = l10n.settingsNLPermissionGrant;
                   clickFn = () async {
-                    bool granted =
+                    final bool granted =
                         await FlutterLocalNotificationsPlugin()
                             .resolvePlatformSpecificImplementation<
                               AndroidFlutterLocalNotificationsPlugin
@@ -177,7 +177,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
               onTap: () async {
                 final SettingsProvider settings =
                     context.read<SettingsProvider>();
-                AppInfo? app = await showDialog<AppInfo>(
+                final AppInfo? app = await showDialog<AppInfo>(
                   context: context,
                   builder: (BuildContext context) => const AppDialog(),
                 );
@@ -305,13 +305,13 @@ class _AppCardState extends State<AppCard> {
 
   @override
   Widget build(BuildContext context) {
-    List<DropdownMenuEntry<AccountRead>> accountOptions =
+    final List<DropdownMenuEntry<AccountRead>> accountOptions =
         <DropdownMenuEntry<AccountRead>>[
           DropdownMenuEntry<AccountRead>(
             value: AccountRead(
               id: "0",
               type: "dummy",
-              attributes: Account(
+              attributes: AccountProperties(
                 name: S.of(context).settingsNLAppAccountDynamic,
                 type: ShortAccountTypeProperty.swaggerGeneratedUnknown,
               ),
@@ -464,7 +464,7 @@ class AppDialog extends StatelessWidget {
             AsyncSnapshot<List<String>> snapshot,
           ) {
             if (snapshot.hasData) {
-              List<Widget> child = <Widget>[];
+              final List<Widget> child = <Widget>[];
               child.add(
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),

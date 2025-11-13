@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:waterflyiii/auth.dart';
+import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/settings/debug.dart';
@@ -273,17 +274,24 @@ class LanguageDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("current locale: ${S.of(context).localeName}");
     return SimpleDialog(
       title: Text(S.of(context).settingsDialogLanguageTitle),
       children: <Widget>[
-        ...S.supportedLocales.map(
-          (Locale locale) => RadioListTile<String>.adaptive(
-            value: locale.languageCode,
-            title: Text(locale.toLanguageTag()),
-            groupValue: S.of(context).localeName,
-            onChanged: (_) {
-              Navigator.pop(context, locale);
-            },
+        RadioGroup<Locale>(
+          groupValue: LocaleExt.fromLanguageTag(S.of(context).localeName),
+          onChanged: (Locale? locale) {
+            Navigator.pop(context, locale);
+          },
+          child: Column(
+            children: <Widget>[
+              ...S.supportedLocales.map(
+                (Locale locale) => RadioListTile<Locale>.adaptive(
+                  value: locale,
+                  title: Text(locale.toLanguageTag()),
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -310,18 +318,24 @@ class ThemeDialog extends StatelessWidget {
               onChanged: (bool value) => settings.dynamicColors = value,
             )
             : const SizedBox.shrink(),
-        ...ThemeMode.values.map(
+        RadioGroup<ThemeMode>(
+          groupValue: settings.theme,
+          onChanged: (ThemeMode? theme) {
+            Navigator.pop(context, theme);
+          },
+          child: Column(
+            children: <Widget>[
+              ...ThemeMode.values.map(
           (ThemeMode theme) => RadioListTile<ThemeMode>.adaptive(
-            value: theme,
-            title: Text(
-              S
-                  .of(context)
-                  .settingsThemeValue(theme.toString().split('.').last),
-            ),
-            groupValue: settings.theme,
-            onChanged: (_) {
-              Navigator.pop(context, theme);
-            },
+                  value: theme,
+                  title: Text(
+                    S
+                        .of(context)
+                        .settingsThemeValue(theme.toString().split('.').last),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],

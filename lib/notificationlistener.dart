@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -50,7 +51,7 @@ class NotificationListenerStatus {
 }
 
 final RegExp rFindMoney = RegExp(
-  r'(?:^|\s)(?<preCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})\s*(?<amount>\d[.,\s\d]+(?:[.,]\d+)?)\s*(?<postCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})(?:$|\s)',
+  r'(?:^|\s)(?<preCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})\s*(?<amount>\d[.,\s\d]+(?:[.,]\d+)?)\s*(?<postCurrency>(?:[^\r\n\t\f\v 0-9]){0,3})(?:$|\s|\.|,)',
 );
 
 Future<NotificationListenerStatus> nlStatus() async {
@@ -71,7 +72,7 @@ Future<NotificationListenerStatus> nlStatus() async {
 }
 
 @pragma('vm:entry-point')
-void nlCallback() async {
+void nlCallback() {
   if (!Platform.isAndroid) {
     return;
   }
@@ -141,11 +142,9 @@ void nlCallback() async {
           evt.text!,
           localCurrency,
         );
-        // Fallback solution
-        currency ??= localCurrency;
 
         // Set date
-        DateTime date =
+        final DateTime date =
             ffService.tzHandler
                 .notificationTXTime(
                   DateTime.tryParse(evt.postTime ?? "") ?? DateTime.now(),
@@ -157,7 +156,7 @@ void nlCallback() async {
         }
 
         // Check currency
-        if (currency != localCurrency) {
+        if (currency?.id != localCurrency.id) {
           throw Exception("Can't auto-add TX with foreign currency");
         }
 
@@ -190,30 +189,33 @@ void nlCallback() async {
         );
         if (!resp.isSuccessful || resp.body == null) {
           try {
-            ValidationErrorResponse valError = ValidationErrorResponse.fromJson(
-              json.decode(resp.error.toString()),
-            );
+            final ValidationErrorResponse valError =
+                ValidationErrorResponse.fromJson(
+                  json.decode(resp.error.toString()),
+                );
             throw Exception("nlCallBack PostTransaction: ${valError.message}");
           } catch (_) {
             throw Exception("nlCallBack PostTransaction: unknown");
           }
         }
 
-        FlutterLocalNotificationsPlugin().show(
-          DateTime.now().millisecondsSinceEpoch ~/ 1000,
-          "Transaction created",
-          "Transaction created based on notification ${evt.title}",
-          const NotificationDetails(
-            android: AndroidNotificationDetails(
-              'extract_transaction_created',
-              'Transaction from Notification Created',
-              channelDescription:
-                  'Notification that a Transaction has been created from another Notification.',
-              importance: Importance.low, // Android 8.0 and higher
-              priority: Priority.low, // Android 7.1 and lower
+        unawaited(
+          FlutterLocalNotificationsPlugin().show(
+            DateTime.now().millisecondsSinceEpoch ~/ 1000,
+            "Transaction created",
+            "Transaction created based on notification ${evt.title}",
+            const NotificationDetails(
+              android: AndroidNotificationDetails(
+                'extract_transaction_created',
+                'Transaction from Notification Created',
+                channelDescription:
+                    'Notification that a Transaction has been created from another Notification.',
+                importance: Importance.low, // Android 8.0 and higher
+                priority: Priority.low, // Android 7.1 and lower
+              ),
             ),
+            payload: "",
           ),
-          payload: "",
         );
 
         showNotification = false;
@@ -224,26 +226,30 @@ void nlCallback() async {
     }
 
     if (showNotification) {
-      FlutterLocalNotificationsPlugin().show(
-        DateTime.now().millisecondsSinceEpoch ~/ 1000,
-        "Create Transaction?",
-        "Click to create a transaction based on the notification ${evt.title}",
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-            'extract_transaction',
-            'Create Transaction from Notification',
-            channelDescription:
-                'Notification asking to create a transaction from another Notification.',
-            importance: Importance.low, // Android 8.0 and higher
-            priority: Priority.low, // Android 7.1 and lower
+      // :TODO: l10n
+      unawaited(
+        FlutterLocalNotificationsPlugin().show(
+          DateTime.now().millisecondsSinceEpoch ~/ 1000,
+          "Create Transaction?",
+          // :TODO: once we l10n this, a better switch can be implemented...
+          "Click to create a transaction based on the notification ${evt.title ?? evt.packageName ?? ""}",
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              'extract_transaction',
+              'Create Transaction from Notification',
+              channelDescription:
+                  'Notification asking to create a transaction from another Notification.',
+              importance: Importance.low, // Android 8.0 and higher
+              priority: Priority.low, // Android 7.1 and lower
+            ),
           ),
-        ),
-        payload: jsonEncode(
-          NotificationTransaction(
-            evt.packageName ?? "",
-            evt.title ?? "",
-            evt.text ?? "",
-            DateTime.tryParse(evt.postTime ?? "") ?? DateTime.now(),
+          payload: jsonEncode(
+            NotificationTransaction(
+              evt.packageName ?? "",
+              evt.title ?? "",
+              evt.text ?? "",
+              DateTime.tryParse(evt.postTime ?? "") ?? DateTime.now(),
+            ),
           ),
         ),
       );
@@ -285,88 +291,74 @@ Future<(CurrencyRead?, double)> parseNotificationText(
 ) async {
   CurrencyRead? currency;
   double amount = 0;
-  // Try to extract some money
+
+  // Try to extract substrings that may (or may not) relate to spending amount
   final Iterable<RegExpMatch> matches = rFindMoney.allMatches(notificationBody);
+
   if (matches.isNotEmpty) {
-    RegExpMatch? validMatch;
-    for (RegExpMatch match in matches) {
-      if ((match.namedGroup("postCurrency")?.isNotEmpty ?? false) ||
-          (match.namedGroup("preCurrency")?.isNotEmpty ?? false)) {
-        validMatch = match;
-        break;
-      }
-    }
-    if (validMatch != null) {
-      // extract currency
-      String currencyStr = validMatch.namedGroup("preCurrency") ?? "";
-      String currencyStrAlt = validMatch.namedGroup("postCurrency") ?? "";
-      if (currencyStr.isEmpty) {
-        currencyStr = currencyStrAlt;
-      }
-      if (currencyStr.isEmpty) {
-        log.warning("no currency found");
-      }
-      if (localCurrency.attributes.code == currencyStr ||
-          localCurrency.attributes.symbol == currencyStr ||
-          localCurrency.attributes.code == currencyStrAlt ||
-          localCurrency.attributes.symbol == currencyStrAlt) {
-      } else {
-        final Response<CurrencyArray> response = await api.v1CurrenciesGet();
-        if (!response.isSuccessful || response.body == null) {
-          log.warning("api currency fetch failed");
-        } else {
-          for (CurrencyRead cur in response.body!.data) {
-            if (cur.attributes.code == currencyStr ||
-                cur.attributes.symbol == currencyStr ||
-                cur.attributes.code == currencyStrAlt ||
-                cur.attributes.symbol == currencyStrAlt) {
-              currency = cur;
-              break;
-            }
+    final List<CurrencyRead> currencies =
+        (await api.v1CurrenciesGet()).body!.data;
+    currencies.add(localCurrency);
+
+    int bestMatchIndex = -1;
+
+    matchesloop:
+    for (int i = 0; i < matches.length; ++i) {
+      final RegExpMatch match = matches.elementAt(i);
+
+      final bool hasPre = match.namedGroup("preCurrency")?.isNotEmpty ?? false;
+      final bool hasPost = match.namedGroup("postCurrency")!.isNotEmpty;
+
+      if (hasPre || hasPost) {
+        final String preCurrency = match.namedGroup("preCurrency")!;
+        final String postCurrency = match.namedGroup("postCurrency")!;
+
+        // If we haven't found any good match (meaning a match with some valid
+        // pre or post currency) then we should regard the current one as the
+        // best one so far
+        if (bestMatchIndex == -1) {
+          bestMatchIndex = i;
+        }
+
+        for (CurrencyRead apiCurrency in currencies) {
+          if (apiCurrency.attributes.code == preCurrency ||
+              apiCurrency.attributes.symbol == preCurrency ||
+              apiCurrency.attributes.code == postCurrency ||
+              apiCurrency.attributes.symbol == postCurrency) {
+            bestMatchIndex = i;
+            currency = apiCurrency;
+            break matchesloop;
           }
         }
       }
-      // extract amount
-      // Check if string has a decimal separator
-      final String amountStr = (validMatch.namedGroup("amount") ?? "")
-          .replaceAll(RegExp(r"\s+"), "");
-      final int decimalSepPos =
-          amountStr.length >= 3 &&
-                  (amountStr[amountStr.length - 3] == "." ||
-                      amountStr[amountStr.length - 3] == ",")
-              ? amountStr.length - 3
-              : amountStr.length - 2;
-      final String decimalSep =
-          amountStr.length >= decimalSepPos && decimalSepPos > 0
-              ? amountStr[decimalSepPos]
-              : "";
-      if (decimalSep == "," || decimalSep == ".") {
-        final double wholes =
-            double.tryParse(
-              amountStr
-                  .substring(0, decimalSepPos)
-                  .replaceAll(",", "")
-                  .replaceAll(".", ""),
-            ) ??
-            0;
-        final String decStr = amountStr
-            .substring(decimalSepPos + 1)
-            .replaceAll(",", "")
-            .replaceAll(".", "");
-        final double dec = double.tryParse(decStr) ?? 0;
-        amount = decStr.length == 1 ? wholes + dec / 10 : wholes + dec / 100;
-      } else {
-        amount =
-            double.tryParse(
-              amountStr.replaceAll(",", "").replaceAll(".", ""),
-            ) ??
-            0;
-      }
-    } else {
-      log.info("no currency was found");
     }
-  } else {
-    log.warning("regex did not match");
+
+    if (bestMatchIndex != -1) {
+      final RegExpMatch bestMatch = matches.elementAt(bestMatchIndex);
+
+      String amountStr = (bestMatch.namedGroup("amount") ?? "").replaceAll(
+        RegExp(r"\s+"),
+        "",
+      );
+
+      if (amountStr.isNotEmpty) {
+        // Find the first non-digit character at the end of the string
+        String separator = amountStr[0];
+        for (int i = amountStr.length - 1; i >= 0; i--) {
+          separator = amountStr[i];
+          if (!RegExp(r'\d').hasMatch(separator)) {
+            break;
+          }
+        }
+
+        // Strip all non-digit characters that are not decimal separators
+        if (separator == "." || separator == ",") {
+          amountStr = amountStr.replaceAll(RegExp('[^0-9$separator]'), '');
+        }
+
+        amount = double.tryParse(amountStr.replaceAll(",", "."))!;
+      }
+    }
   }
 
   return (currency, amount);

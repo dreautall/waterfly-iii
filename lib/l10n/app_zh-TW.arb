@@ -1,0 +1,1212 @@
+{
+    "@@locale": "zh_TW",
+    "@@x-reference": true,
+    "accountRoleAssetCashWallet": "現金皮夾",
+    "@accountRoleAssetCashWallet": {
+        "description": "Firefly Translation String: account_role_cashWalletAsset"
+    },
+    "accountRoleAssetCC": "信用卡",
+    "@accountRoleAssetCC": {
+        "description": "Firefly Translation String: account_role_ccAsset"
+    },
+    "accountRoleAssetDefault": "預設資產帳戶",
+    "@accountRoleAssetDefault": {
+        "description": "Firefly Translation String: account_role_defaultAsset"
+    },
+    "accountRoleAssetSavings": "儲蓄帳戶",
+    "@accountRoleAssetSavings": {
+        "description": "Firefly Translation String: account_role_savingAsset"
+    },
+    "accountRoleAssetShared": "共用資產帳戶",
+    "@accountRoleAssetShared": {
+        "description": "Firefly Translation String: account_role_sharedAsset"
+    },
+    "accountsLabelAsset": "資產帳戶",
+    "@accountsLabelAsset": {
+        "description": "Firefly Translation String: asset_accounts"
+    },
+    "accountsLabelExpense": "支出帳戶",
+    "@accountsLabelExpense": {
+        "description": "Firefly Translation String: expense_accounts"
+    },
+    "accountsLabelLiabilities": "負債",
+    "@accountsLabelLiabilities": {
+        "description": "Firefly Translation String: liabilities_accounts"
+    },
+    "accountsLabelRevenue": "收入帳戶",
+    "@accountsLabelRevenue": {
+        "description": "Firefly Translation String: revenue_accounts"
+    },
+    "accountsLiabilitiesInterest": "{period, select, weekly{週} monthly{月} quarterly{季} halfyear{半年} yearly{年} other{未知週期}}利率 {interest}%",
+    "@accountsLiabilitiesInterest": {
+        "description": "Interest in a certain period",
+        "placeholders": {
+            "interest": {
+                "type": "double",
+                "example": "1.2"
+            },
+            "period": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsAmountAndFrequency": "帳單符合金額在 {minValue} 和 {maxvalue} 之間的交易。{frequency, select, weekly{每週} monthly{每月} quarterly{每季} halfyear{每半年} yearly{每年} other{未知}}重複{skip, plural, =0{} other{，跳過 {skip} 次}}。",
+    "@billsAmountAndFrequency": {
+        "description": "Subscription match for min and max amounts, and frequency",
+        "placeholders": {
+            "minValue": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "maxvalue": {
+                "type": "String",
+                "example": "$60.50"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsChangeLayoutTooltip": "變更版面配置",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "變更排序順序",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsErrorLoading": "載入帳單時發生錯誤。",
+    "@billsErrorLoading": {
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
+    },
+    "billsExactAmountAndFrequency": "帳單符合金額為 {value} 的交易。{frequency, select, weekly{每週} monthly{每月} quarterly{每季} halfyear{每半年} yearly{每年} other{未知}}重複{skip, plural, =0{} other{，跳過 {skip} 次}}。",
+    "@billsExactAmountAndFrequency": {
+        "description": "Subscription match for exact amount and frequency",
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsExpectedOn": "預計日期 {date}",
+    "@billsExpectedOn": {
+        "description": "Describes what date the subscription is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsFrequency": "{frequency, select,weekly{每週} monthly{每月} quarterly{每季} halfyear{每半年} yearly{每年} other{未知}}",
+    "@billsFrequency": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsFrequencySkip": "{frequency, select, weekly{每週} monthly{每月} quarterly{每季} halfyear{每半年} yearly{每年} other{未知}}重複{skip, plural, =0{} other{，跳過 {skip} 次}}",
+    "@billsFrequencySkip": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsInactive": "未啟用",
+    "@billsInactive": {
+        "description": "Text: when the subscription is inactive"
+    },
+    "billsIsActive": "帳單已啟用",
+    "@billsIsActive": {
+        "description": "Text: the subscription is active"
+    },
+    "billsLayoutGroupSubtitle": "帳單顯示在指定的群組中。",
+    "@billsLayoutGroupSubtitle": {
+        "description": "Subtitle text for group layout option"
+    },
+    "billsLayoutGroupTitle": "群組",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListSubtitle": "帳單顯示在按特定標準排序的列表中。",
+    "@billsLayoutListSubtitle": {
+        "description": "Subtitle text for list layout option"
+    },
+    "billsLayoutListTitle": "列表",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "此列表目前為空。",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "下次預期的支付符合",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for subscription"
+    },
+    "billsNotActive": "帳單未啟用",
+    "@billsNotActive": {
+        "description": "Text: the subscription is inactive"
+    },
+    "billsNotExpected": "此週期內沒有預期的支付",
+    "@billsNotExpected": {
+        "description": "Describes that the subscription is not expected this period"
+    },
+    "billsNoTransactions": "未找到交易記錄。",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the subscription"
+    },
+    "billsPaidOn": "支付日期 {date}",
+    "@billsPaidOn": {
+        "description": "Describes what date the subscription was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "按字母順序",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "按時間間隔排序",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "頻率",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "名稱",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "未分組的",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped subscriptions"
+    },
+    "billsSettingsShowOnlyActive": "僅顯示已啟用的",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "僅顯示已啟用的帳單。",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "僅顯示預期的",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "僅顯示預期的 (或是已付款的) 帳單。",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
+    "categoryDeleteConfirm": "確定要刪除這個分類嗎？相關的交易不會刪除，但會變成未分類的。",
+    "@categoryDeleteConfirm": {
+        "description": "Confirmation text to delete category"
+    },
+    "categoryErrorLoading": "無法載入分類。",
+    "@categoryErrorLoading": {
+        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+    },
+    "categoryFormLabelIncludeInSum": "包含於每月金額中",
+    "@categoryFormLabelIncludeInSum": {
+        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+    },
+    "categoryFormLabelName": "分類名稱",
+    "@categoryFormLabelName": {
+        "description": "Category Add/Edit Form: Label for name field"
+    },
+    "categoryMonthNext": "下個月",
+    "@categoryMonthNext": {
+        "description": "Button title to view overview for next month"
+    },
+    "categoryMonthPrev": "上個月",
+    "@categoryMonthPrev": {
+        "description": "Button title to view overview for previous month"
+    },
+    "categorySumExcluded": "已排除",
+    "@categorySumExcluded": {
+        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+    },
+    "categoryTitleAdd": "新增分類",
+    "@categoryTitleAdd": {
+        "description": "Title for Dialog: Add Category"
+    },
+    "categoryTitleDelete": "刪除分類",
+    "@categoryTitleDelete": {
+        "description": "Title for Dialog: Delete Category"
+    },
+    "categoryTitleEdit": "編輯分類",
+    "@categoryTitleEdit": {
+        "description": "Title for Dialog: Edit Category"
+    },
+    "catNone": "未分類",
+    "@catNone": {
+        "description": "Placeholder when no category has been set."
+    },
+    "catOther": "其他",
+    "@catOther": {
+        "description": "Category description for summary category 'Other'"
+    },
+    "errorAPIInvalidResponse": "API 回應錯誤: {message}",
+    "@errorAPIInvalidResponse": {
+        "description": "Invalid API response error",
+        "placeholders": {
+            "message": {
+                "type": "String",
+                "example": "API could not be reached."
+            }
+        }
+    },
+    "errorAPIUnavailable": "無法使用 API",
+    "@errorAPIUnavailable": {
+        "description": "Error thrown when API is unavailable."
+    },
+    "errorFieldRequired": "必填欄位。",
+    "@errorFieldRequired": {
+        "description": "Error: Required field was left empty."
+    },
+    "errorInvalidURL": "無效的網址",
+    "@errorInvalidURL": {
+        "description": "Error: URL is invalid"
+    },
+    "errorMinAPIVersion": "Firefly API 的版本過舊，請升級到 {requiredVersion} 或更新的版本。",
+    "@errorMinAPIVersion": {
+        "description": "Error: Required API version not met.",
+        "placeholders": {
+            "requiredVersion": {
+                "type": "String",
+                "example": "2.0.0"
+            }
+        }
+    },
+    "errorStatusCode": "HTTP 狀態碼: {code}",
+    "@errorStatusCode": {
+        "description": "HTTP status code information on error",
+        "placeholders": {
+            "code": {
+                "type": "int",
+                "example": "500"
+            }
+        }
+    },
+    "errorUnknown": "未知的錯誤。",
+    "@errorUnknown": {
+        "description": "Error without further information occurred."
+    },
+    "formButtonHelp": "幫助",
+    "@formButtonHelp": {
+        "description": "Button Label: Help"
+    },
+    "formButtonLogin": "登入",
+    "@formButtonLogin": {
+        "description": "Button Label: Login"
+    },
+    "formButtonLogout": "登出",
+    "@formButtonLogout": {
+        "description": "Button Label: Logout"
+    },
+    "formButtonRemove": "刪除",
+    "@formButtonRemove": {
+        "description": "Button Label: Remove"
+    },
+    "formButtonResetLogin": "重設登入資訊",
+    "@formButtonResetLogin": {
+        "description": "Button Label: Reset login form (when error is shown)"
+    },
+    "formButtonTransactionAdd": "新增交易",
+    "@formButtonTransactionAdd": {
+        "description": "Button Label: Add Transaction"
+    },
+    "formButtonTryAgain": "請重試一次",
+    "@formButtonTryAgain": {
+        "description": "Button Label: Try that thing again (login etc)"
+    },
+    "generalAccount": "帳戶",
+    "@generalAccount": {
+        "description": "Asset/Debt (Bank) Account"
+    },
+    "generalAssets": "資產",
+    "@generalAssets": {
+        "description": "(Monetary) Assets"
+    },
+    "generalBalance": "餘額",
+    "@generalBalance": {
+        "description": "(Account) Balance"
+    },
+    "generalBalanceOn": "{date} 的餘額",
+    "@generalBalanceOn": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMd",
+                "example": "2023-05-13"
+            }
+        }
+    },
+    "generalBill": "帳單",
+    "@generalBill": {
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
+    },
+    "generalBudget": "預算",
+    "@generalBudget": {
+        "description": "(Monetary) Budget"
+    },
+    "generalCategory": "分類",
+    "@generalCategory": {
+        "description": "Category (of transaction etc.)."
+    },
+    "generalCurrency": "貨幣",
+    "@generalCurrency": {
+        "description": "(Money) Currency"
+    },
+    "generalDateRangeCurrentMonth": "本月",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "最近 30 天",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "今年",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "去年",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "全部",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
+    "generalDefault": "預設",
+    "@generalDefault": {
+        "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "收款帳戶",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
+    },
+    "generalDismiss": "取消",
+    "@generalDismiss": {
+        "description": "Dismiss window/dialog without action"
+    },
+    "generalEarned": "盈餘",
+    "@generalEarned": {
+        "description": "(Amount) Earned"
+    },
+    "generalError": "錯誤",
+    "@generalError": {
+        "description": "Error (title in dialogs etc.)"
+    },
+    "generalExpenses": "消費",
+    "@generalExpenses": {
+        "description": "(Account) Expenses"
+    },
+    "generalIncome": "收入",
+    "@generalIncome": {
+        "description": "(Account) Info"
+    },
+    "generalLiabilities": "負債",
+    "@generalLiabilities": {
+        "description": "Firefly Translation String: liabilities"
+    },
+    "generalMultiple": "多個",
+    "@generalMultiple": {
+        "description": "Multiples of a single thing (e.g. source accounts) are existing"
+    },
+    "generalNever": "永不",
+    "@generalNever": {
+        "description": "Has never happened, no update etc."
+    },
+    "generalReconcile": "已對帳",
+    "@generalReconcile": {
+        "description": "Booking has been confirmed/reconciled"
+    },
+    "generalReset": "重設",
+    "@generalReset": {
+        "description": "Reset something (i.e. set filters)"
+    },
+    "generalSourceAccount": "付款帳戶",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
+    "generalSpent": "開銷",
+    "@generalSpent": {
+        "description": "(Amount) Spent"
+    },
+    "generalSum": "小計",
+    "@generalSum": {
+        "description": "(Mathematical) Sum"
+    },
+    "generalTarget": "目標",
+    "@generalTarget": {
+        "description": "Target value (i.e. a sum to save)"
+    },
+    "generalUnknown": "未知",
+    "@generalUnknown": {
+        "description": "Something is unknown."
+    },
+    "homeMainBillsInterval": " ({period, select, weekly{每週} monthly{每月} quarterly{每季} halfyear{每半年} yearly{每年} other{未知}})",
+    "@homeMainBillsInterval": {
+        "description": "subscription interval type",
+        "placeholders": {
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBillsTitle": "下週的帳單",
+    "@homeMainBillsTitle": {
+        "description": "Title: Subscriptions for the next week"
+    },
+    "homeMainBudgetInterval": " ({from} 到 {to}, {period})",
+    "@homeMainBudgetInterval": {
+        "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
+            },
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBudgetIntervalSingle": " ({from} 到 {to})",
+    "@homeMainBudgetIntervalSingle": {
+        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
+            }
+        }
+    },
+    "homeMainBudgetSum": "{available} ({status, select, over{超支} other{尚餘}} {current})",
+    "@homeMainBudgetSum": {
+        "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
+        "placeholders": {
+            "current": {
+                "type": "String",
+                "example": "12.34€"
+            },
+            "status": {
+                "type": "String",
+                "example": "left from"
+            },
+            "available": {
+                "type": "String",
+                "example": "12.34€"
+            }
+        }
+    },
+    "homeMainBudgetTitle": "本月預算",
+    "@homeMainBudgetTitle": {
+        "description": "Title: Budgets for current month"
+    },
+    "homeMainChartAccountsTitle": "帳戶綜覽",
+    "@homeMainChartAccountsTitle": {
+        "description": "Chart Label: Account Summary"
+    },
+    "homeMainChartCategoriesTitle": "本月分類報表",
+    "@homeMainChartCategoriesTitle": {
+        "description": "Chart Label: Category Summary"
+    },
+    "homeMainChartDailyAvg": "7 日平均",
+    "@homeMainChartDailyAvg": {
+        "description": "Text for last week average spent"
+    },
+    "homeMainChartDailyTitle": "日報表",
+    "@homeMainChartDailyTitle": {
+        "description": "Chart Label: Daily Summary"
+    },
+    "homeMainChartNetEarningsTitle": "總盈餘",
+    "@homeMainChartNetEarningsTitle": {
+        "description": "Chart Label: Net Earnings"
+    },
+    "homeMainChartNetWorthTitle": "總值",
+    "@homeMainChartNetWorthTitle": {
+        "description": "Chart Label: Net Worth"
+    },
+    "homeMainChartTagsTitle": "本月標籤報表",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
+    "homePiggyAdjustDialogTitle": "存入/支出",
+    "@homePiggyAdjustDialogTitle": {
+        "description": "Title of the dialog where money can be added/removed to a piggy bank."
+    },
+    "homePiggyDateStart": "開始日期：{date}",
+    "@homePiggyDateStart": {
+        "description": "Start of the piggy bank",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "March 12, 2023"
+            }
+        }
+    },
+    "homePiggyDateTarget": "目標日期:{date}",
+    "@homePiggyDateTarget": {
+        "description": "Set target date of the piggy bank (when saving should be finished)",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "March 12, 2023"
+            }
+        }
+    },
+    "homeMainDialogSettingsTitle": "自訂首頁",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
+    },
+    "homePiggyLinked": "連結到 {account}",
+    "@homePiggyLinked": {
+        "description": "Piggy bank is linked to asset account {account}.",
+        "placeholders": {
+            "account": {
+                "type": "String",
+                "example": "Awesome Bank Account"
+            }
+        }
+    },
+    "homePiggyNoAccounts": "目前沒有小豬撲滿。",
+    "@homePiggyNoAccounts": {
+        "description": "Information that no piggy banks are existing"
+    },
+    "homePiggyNoAccountsSubtitle": "請從網頁介面新增。",
+    "@homePiggyNoAccountsSubtitle": {
+        "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
+    },
+    "homePiggyRemaining": "可存入金額：{amount}",
+    "@homePiggyRemaining": {
+        "description": "How much money is left to save",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggySaved": "已存入金額：{amount}",
+    "@homePiggySaved": {
+        "description": "How much money already was saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggySavedMultiple": "已存入：",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
+    "homePiggyTarget": "目標金額：{amount}",
+    "@homePiggyTarget": {
+        "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "帳戶資訊",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "可用餘額",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "可用金額：{amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "撲滿中：{amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homeTabLabelBalance": "帳戶餘額",
+    "@homeTabLabelBalance": {
+        "description": "Tab Label: Balance Sheet page"
+    },
+    "homeTabLabelMain": "主要報表",
+    "@homeTabLabelMain": {
+        "description": "Tab Label: Start page (\"main\")"
+    },
+    "homeTabLabelPiggybanks": "小豬撲滿",
+    "@homeTabLabelPiggybanks": {
+        "description": "Tab Label: Piggy Banks page"
+    },
+    "homeTabLabelTransactions": "交易",
+    "@homeTabLabelTransactions": {
+        "description": "Tab Label: Transactions page"
+    },
+    "homeTransactionsActionFilter": "過濾器",
+    "@homeTransactionsActionFilter": {
+        "description": "Action Button Label: Filter list."
+    },
+    "homeTransactionsDialogFilterAccountsAll": "所有帳戶",
+    "@homeTransactionsDialogFilterAccountsAll": {
+        "description": "Don't filter for a specific account (default entry)"
+    },
+    "homeTransactionsDialogFilterBillsAll": "所有帳單",
+    "@homeTransactionsDialogFilterBillsAll": {
+        "description": "Don't filter for a specific subscription (default entry)"
+    },
+    "homeTransactionsDialogFilterBillUnset": "目前沒有設定帳單",
+    "@homeTransactionsDialogFilterBillUnset": {
+        "description": "Filter for unset subscription"
+    },
+    "homeTransactionsDialogFilterBudgetsAll": "所有預算",
+    "@homeTransactionsDialogFilterBudgetsAll": {
+        "description": "Don't filter for a specific budget (default entry)"
+    },
+    "homeTransactionsDialogFilterBudgetUnset": "目前沒有設定預算",
+    "@homeTransactionsDialogFilterBudgetUnset": {
+        "description": "Filter for unset budgets"
+    },
+    "homeTransactionsDialogFilterCategoriesAll": "所有分類",
+    "@homeTransactionsDialogFilterCategoriesAll": {
+        "description": "Don't filter for a specific category (default entry)"
+    },
+    "homeTransactionsDialogFilterCategoryUnset": "目前沒有設定分類",
+    "@homeTransactionsDialogFilterCategoryUnset": {
+        "description": "Filter for unset categories"
+    },
+    "homeTransactionsDialogFilterCurrenciesAll": "所有幣別",
+    "@homeTransactionsDialogFilterCurrenciesAll": {
+        "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "期間",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
+    },
+    "homeTransactionsDialogFilterFutureTransactions": "顯示未來的交易",
+    "@homeTransactionsDialogFilterFutureTransactions": {
+        "description": "Setting to show future transactions"
+    },
+    "homeTransactionsDialogFilterSearch": "關鍵字",
+    "@homeTransactionsDialogFilterSearch": {
+        "description": "Search term for filter"
+    },
+    "homeTransactionsDialogFilterTitle": "選擇過濾器",
+    "@homeTransactionsDialogFilterTitle": {
+        "description": "Title of Filter Dialog"
+    },
+    "homeTransactionsEmpty": "未找到交易記錄。",
+    "@homeTransactionsEmpty": {
+        "description": "Message when no transactions are found."
+    },
+    "homeTransactionsMultipleCategories": "{num} 個分類",
+    "@homeTransactionsMultipleCategories": {
+        "description": "$num categories for the transaction.",
+        "placeholders": {
+            "num": {
+                "type": "int",
+                "example": "2"
+            }
+        }
+    },
+    "homeTransactionsSettingsShowTags": "在交易列表中顯示標籤",
+    "@homeTransactionsSettingsShowTags": {
+        "description": "Setting label to show tags in transactioon list."
+    },
+    "liabilityDirectionCredit": "別人欠我這筆債務",
+    "@liabilityDirectionCredit": {
+        "description": "Firefly Translation String: liability_direction_credit"
+    },
+    "liabilityDirectionDebit": "我欠人這筆債務",
+    "@liabilityDirectionDebit": {
+        "description": "Firefly Translation String: liability_direction_debit"
+    },
+    "liabilityTypeDebt": "負債",
+    "@liabilityTypeDebt": {
+        "description": "Firefly Translation String: account_type_debt"
+    },
+    "liabilityTypeLoan": "貸款",
+    "@liabilityTypeLoan": {
+        "description": "Firefly Translation String: account_type_loan"
+    },
+    "liabilityTypeMortgage": "抵押",
+    "@liabilityTypeMortgage": {
+        "description": "Firefly Translation String: account_type_mortgage"
+    },
+    "loginAbout": "想要使用 Waterfly III 的完整功能，您必須架設您的 Firefly III 伺服器，或是安裝智慧家居的擴充功能 (您可以在 Firefly III 官網找到相關的指引)。\n\n請在以下欄位輸入您的伺服器的完整網址，以及您的個人存取權杖 (設定 -> 個人檔案 -> OAuth -> 個人存取權杖)。",
+    "@loginAbout": {
+        "description": "Login screen welcome description"
+    },
+    "loginFormLabelAPIKey": "有效的 API 密鑰",
+    "@loginFormLabelAPIKey": {
+        "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHost": "伺服器的網址",
+    "@loginFormLabelHost": {
+        "description": "Login Form: Label for Host field"
+    },
+    "loginWelcome": "歡迎使用 Waterfly III",
+    "@loginWelcome": {
+        "description": "Login screen welcome banner"
+    },
+    "logoutConfirmation": "您確定要登出？",
+    "@logoutConfirmation": {
+        "description": "Get user confirmation if he really wants to log out"
+    },
+    "navigationAccounts": "帳戶",
+    "@navigationAccounts": {
+        "description": "Navigation Label: Accounts Page"
+    },
+    "navigationBills": "帳單",
+    "@navigationBills": {
+        "description": "Navigation Label: Subscriptions"
+    },
+    "navigationCategories": "分類",
+    "@navigationCategories": {
+        "description": "Navigation Label: Categories"
+    },
+    "navigationMain": "主頁",
+    "@navigationMain": {
+        "description": "Navigation Label: Main Dashboard"
+    },
+    "generalSettings": "設定",
+    "@generalSettings": {
+        "description": "Label: Settings"
+    },
+    "no": "取消",
+    "@no": {
+        "description": "The word no"
+    },
+    "numPercent": "{num}",
+    "@numPercent": {
+        "description": "Number formatted as percentage",
+        "placeholders": {
+            "num": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            }
+        }
+    },
+    "numPercentOf": "{of} 中的 {perc}",
+    "@numPercentOf": {
+        "description": "Number formatted as percentage, with total amount provided",
+        "placeholders": {
+            "perc": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            },
+            "of": {
+                "type": "String"
+            }
+        }
+    },
+    "settingsDialogDebugInfo": "啟用並傳送除錯資訊。這會影響效能，所以沒有必要的話請盡量不要啟用。停用時會刪除儲存的除錯資訊。",
+    "@settingsDialogDebugInfo": {
+        "description": "Information about debug logs and their impact."
+    },
+    "settingsDialogDebugMailCreate": "新增郵件",
+    "@settingsDialogDebugMailCreate": {
+        "description": "Button to confirm mail creation after privacy disclaimer is shown."
+    },
+    "settingsDialogDebugMailDisclaimer": "請注意：除錯資訊將會以純文字的方式附在郵件中。儘管我已經努力避免在除錯資訊中記錄您的隱私資訊 (例如伺服器的網址、您的 API 密鑰等)，但仍然需要您仔細檢視，確保您的個人隱私。請務必完整審視除錯資訊，碼掉您的個人資訊，移除無關或不必要的記錄。\n\n如果您沒有透過電子郵件或 GitHub 與我協議，請勿傳送除錯資訊。為了確保您的隱私，我會直接刪除沒有與我協議的郵件。請勿直接將含有個人資訊的除錯資訊上傳到 GitHub。",
+    "@settingsDialogDebugMailDisclaimer": {
+        "description": "Privacy disclaimer shown before sending logs"
+    },
+    "settingsDialogDebugSendButton": "通過電子郵件傳送除錯資訊",
+    "@settingsDialogDebugSendButton": {
+        "description": "Button to send logs via E-Mail"
+    },
+    "settingsDialogDebugTitle": "除錯資訊",
+    "@settingsDialogDebugTitle": {
+        "description": "Dialog title: Debug Logs"
+    },
+    "settingsDialogLanguageTitle": "選擇語言",
+    "@settingsDialogLanguageTitle": {
+        "description": "Dialog title: Select Language"
+    },
+    "settingsDialogThemeTitle": "選取佈景主題",
+    "@settingsDialogThemeTitle": {
+        "description": "Dialog title: Select theme"
+    },
+    "settingsFAQ": "常見問題",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
+    "settingsFAQHelp": "使用瀏覽器開啟。常見問題只有英文版。",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
+    },
+    "settingsLanguage": "語言",
+    "@settingsLanguage": {
+        "description": "Currently selected language"
+    },
+    "settingsLockscreen": "鎖定畫面選項",
+    "@settingsLockscreen": {
+        "description": "Setting if a lockscreen is shown (authentication is required on startup)"
+    },
+    "settingsLockscreenHelp": "程動程式時需要先通過身份認證",
+    "@settingsLockscreenHelp": {
+        "description": "Description for lockscreen setting"
+    },
+    "settingsLockscreenInitial": "請通過身份認證以啟用鎖定螢幕功能。",
+    "@settingsLockscreenInitial": {
+        "description": "Prompt to authenticate once to set up the lockscreen"
+    },
+    "settingsNLAppAccount": "預設帳戶",
+    "@settingsNLAppAccount": {
+        "description": "Default account which will be used for the transaction."
+    },
+    "settingsNLAppAccountDynamic": "<Dynamic>",
+    "@settingsNLAppAccountDynamic": {
+        "description": "Account will be selected dynamically by the content of the notification."
+    },
+    "settingsNLAppAdd": "加入 App",
+    "@settingsNLAppAdd": {
+        "description": "Button title to add a new app."
+    },
+    "settingsNLAppAddHelp": "點擊以新增要監聽通知的 App。只會列出符合條件的 App。",
+    "@settingsNLAppAddHelp": {
+        "description": "Help text below adding the new app button."
+    },
+    "settingsNLAppAddInfo": "請先做幾筆交易，等你的 App 跳通知後，才會出現在這個列表裡。如果你的 App 一直沒有出現在列表中，請聯繫 app@vogt.pw。",
+    "@settingsNLAppAddInfo": {
+        "description": "Help text when no more app is available to add."
+    },
+    "settingsNLAutoAdd": "直接新增交易記錄",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
+    "settingsNLDescription": "這項服務讓您可以從手機 App 的通知來自動取得交易資訊。你也可以指定一個這筆交易所屬的帳戶，沒有指定的話，程式會試著自動判斷。",
+    "@settingsNLDescription": {
+        "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "不要填備註",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
+    },
+    "settingsNLPermissionGrant": "點選來授予權限。",
+    "@settingsNLPermissionGrant": {
+        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
+    },
+    "settingsNLPermissionNotGranted": "未取得權限。",
+    "@settingsNLPermissionNotGranted": {
+        "description": "A requested permission was not granted."
+    },
+    "settingsNLPermissionRemove": "是否取消權限？",
+    "@settingsNLPermissionRemove": {
+        "description": "Dialog title asking if permission should be removed."
+    },
+    "settingsNLPermissionRemoveHelp": "若您想要停用這個服務，請點擊 App，然後在下一個畫面移除相關權限。",
+    "@settingsNLPermissionRemoveHelp": {
+        "description": "Dialog text giving hint how to remove the permission."
+    },
+    "settingsNLPrefillTXTitle": "用通知標題作為交易標題",
+    "@settingsNLPrefillTXTitle": {
+        "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLServiceChecking": "正在檢查狀態…",
+    "@settingsNLServiceChecking": {
+        "description": "Checking the status of the background service"
+    },
+    "settingsNLServiceCheckingError": "無法檢查狀態：{error}",
+    "@settingsNLServiceCheckingError": {
+        "description": "An error occurred while checking the service status",
+        "placeholders": {
+            "error": {
+                "type": "String",
+                "description": "Error details",
+                "example": "Timeout"
+            }
+        }
+    },
+    "settingsNLServiceRunning": "服務已啟動。",
+    "@settingsNLServiceRunning": {
+        "description": "A background service is running normally."
+    },
+    "settingsNLServiceStatus": "服務狀態",
+    "@settingsNLServiceStatus": {
+        "description": "Status of a background service."
+    },
+    "settingsNLServiceStopped": "服務已經停止。",
+    "@settingsNLServiceStopped": {
+        "description": "A background service is stopped."
+    },
+    "settingsNotificationListener": "通知監聽服務",
+    "@settingsNotificationListener": {
+        "description": "Setting for the notification listener service."
+    },
+    "settingsTheme": "App 樣式",
+    "@settingsTheme": {
+        "description": "App theme (dark or light)"
+    },
+    "settingsThemeDynamicColors": "自動樣式",
+    "@settingsThemeDynamicColors": {
+        "description": "Material You Dynamic Colors feature"
+    },
+    "settingsThemeValue": "{theme, select, dark{深色模式} light{淺色模式} other{系統預設}}",
+    "@settingsThemeValue": {
+        "description": "Currently selected theme (either dark, light or system)",
+        "placeholders": {
+            "theme": {
+                "type": "String",
+                "example": "ThemeMode.dark"
+            }
+        }
+    },
+    "settingsUseServerTimezone": "使用伺服器的時區",
+    "@settingsUseServerTimezone": {
+        "description": "Setting label to use server timezone."
+    },
+    "settingsUseServerTimezoneHelp": "以伺服器上的時區設定來顯示時間。這與網頁介面的行為相同。",
+    "@settingsUseServerTimezoneHelp": {
+        "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
+    },
+    "settingsVersion": "版本",
+    "@settingsVersion": {
+        "description": "Current App Version"
+    },
+    "settingsVersionChecking": "檢查中…",
+    "@settingsVersionChecking": {
+        "description": "Shown while checking for app version"
+    },
+    "transactionAttachments": "附件",
+    "@transactionAttachments": {
+        "description": "Button Label: Attachments"
+    },
+    "transactionDeleteConfirm": "您確定要刪除這筆交易記錄嗎？",
+    "@transactionDeleteConfirm": {
+        "description": "Confirmation text to delete transaction"
+    },
+    "transactionDialogAttachmentsDelete": "刪除附件",
+    "@transactionDialogAttachmentsDelete": {
+        "description": "Button Label: Delete Attachment"
+    },
+    "transactionDialogAttachmentsDeleteConfirm": "您確定要刪除這個附件嗎？",
+    "@transactionDialogAttachmentsDeleteConfirm": {
+        "description": "Confirmation text to delete attachment"
+    },
+    "transactionDialogAttachmentsErrorDownload": "無法下載檔案。",
+    "@transactionDialogAttachmentsErrorDownload": {
+        "description": "Snackbar Text: File download failed."
+    },
+    "transactionDialogAttachmentsErrorOpen": "無法開啟檔案：{error}",
+    "@transactionDialogAttachmentsErrorOpen": {
+        "description": "Snackbar Text: File could not be opened, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsErrorUpload": "無法上傳檔案：{error}",
+    "@transactionDialogAttachmentsErrorUpload": {
+        "description": "Snackbar Text: File could not be uploaded, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsTitle": "附件",
+    "@transactionDialogAttachmentsTitle": {
+        "description": "Dialog Title: Attachments Dialog"
+    },
+    "transactionDialogBillNoBill": "沒有帳單",
+    "@transactionDialogBillNoBill": {
+        "description": "Button Label: no subscription to be used"
+    },
+    "transactionDialogBillTitle": "連結帳單",
+    "@transactionDialogBillTitle": {
+        "description": "Dialog Title: Link Subscription to transaction"
+    },
+    "transactionDialogCurrencyTitle": "選擇幣別",
+    "@transactionDialogCurrencyTitle": {
+        "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "沒有小豬撲滿",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "連結小豬撲滿",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
+    },
+    "transactionDialogTagsAdd": "新增標籤",
+    "@transactionDialogTagsAdd": {
+        "description": "Button Label: Add Tag"
+    },
+    "transactionDialogTagsHint": "搜尋或新增標籤",
+    "@transactionDialogTagsHint": {
+        "description": "Hint Text for search tag field"
+    },
+    "transactionDialogTagsTitle": "選擇標籤",
+    "@transactionDialogTagsTitle": {
+        "description": "Dialog Title: Select Tags"
+    },
+    "transactionDuplicate": "複製一份",
+    "@transactionDuplicate": {
+        "description": "Menu Label: Duplicate item"
+    },
+    "transactionErrorInvalidAccount": "帳戶無效",
+    "@transactionErrorInvalidAccount": {
+        "description": "Transaction Save Error: Invalid account"
+    },
+    "transactionErrorInvalidBudget": "預算項目無效",
+    "@transactionErrorInvalidBudget": {
+        "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "您必須先選擇帳戶。",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "請選擇資產帳戶。",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
+    },
+    "transactionErrorTitle": "請填寫標題。",
+    "@transactionErrorTitle": {
+        "description": "Transaction Save Error: No title provided"
+    },
+    "transactionFormLabelAccountDestination": "收款帳戶",
+    "@transactionFormLabelAccountDestination": {
+        "description": "Transaction Form: Label for destination account for transfer transaction"
+    },
+    "transactionFormLabelAccountForeign": "外部帳戶",
+    "@transactionFormLabelAccountForeign": {
+        "description": "Transaction Form: Label for foreign (other) account"
+    },
+    "transactionFormLabelAccountOwn": "自有帳戶",
+    "@transactionFormLabelAccountOwn": {
+        "description": "Transaction Form: Label for own account"
+    },
+    "transactionFormLabelAccountSource": "付款帳戶",
+    "@transactionFormLabelAccountSource": {
+        "description": "Transaction Form: Label for source account for transfer transaction"
+    },
+    "transactionFormLabelNotes": "備註",
+    "@transactionFormLabelNotes": {
+        "description": "Transaction Form: Label for notes field"
+    },
+    "transactionFormLabelTags": "標籤",
+    "@transactionFormLabelTags": {
+        "description": "Transaction Form: Label for tags field"
+    },
+    "transactionFormLabelTitle": "交易標題",
+    "@transactionFormLabelTitle": {
+        "description": "Transaction Form: Label for title field"
+    },
+    "transactionSplitAdd": "新增子交易",
+    "@transactionSplitAdd": {
+        "description": "Button Label: Add a split"
+    },
+    "transactionSplitChangeCurrency": "更改子交易的幣別",
+    "@transactionSplitChangeCurrency": {
+        "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "更改子交易的收款帳戶",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "更改子交易的付款帳戶",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
+    },
+    "transactionSplitChangeTarget": "更改子交易的收款帳戶",
+    "@transactionSplitChangeTarget": {
+        "description": "Hint Text: Change target account for single split"
+    },
+    "transactionSplitDelete": "刪除子交易",
+    "@transactionSplitDelete": {
+        "description": "Hint Text: Delete single split"
+    },
+    "transactionTitleAdd": "新增交易",
+    "@transactionTitleAdd": {
+        "description": "Title: Add a new transaction"
+    },
+    "transactionTitleDelete": "刪除交易",
+    "@transactionTitleDelete": {
+        "description": "Title: Delete existing transaction"
+    },
+    "transactionTitleEdit": "編輯交易",
+    "@transactionTitleEdit": {
+        "description": "Title: Edit existing transaction"
+    },
+    "transactionTypeDeposit": "存款",
+    "@transactionTypeDeposit": {
+        "description": "Deposit transaction type"
+    },
+    "transactionTypeTransfer": "轉帳",
+    "@transactionTypeTransfer": {
+        "description": "Transfer transaction type"
+    },
+    "transactionTypeWithdrawal": "提款",
+    "@transactionTypeWithdrawal": {
+        "description": "Withdrawal transaction type"
+    }
+}

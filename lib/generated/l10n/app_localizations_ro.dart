@@ -56,30 +56,30 @@ class SRo extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'săptămânal',
+      'monthly': 'lunar',
+      'quarterly': 'trimestrial',
+      'halfyear': 'semestrial',
+      'yearly': 'anual',
+      'other': 'necunoscut',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', sare peste $skip',
       zero: '',
     );
-    return 'Subscription matches transactions between $minValue and $maxvalue. Repeats $_temp0$_temp1.';
+    return 'Abonamentul se potrivește cu tranzacții între $minValue și $maxvalue. Se repetă $_temp0$_temp1.';
   }
 
   @override
-  String get billsChangeLayoutTooltip => 'Change layout';
+  String get billsChangeLayoutTooltip => 'Schimbă aspectul';
 
   @override
-  String get billsChangeSortOrderTooltip => 'Change sort order';
+  String get billsChangeSortOrderTooltip => 'Schimbă ordinea de sortare';
 
   @override
-  String get billsErrorLoading => 'Error loading subscriptions.';
+  String get billsErrorLoading => 'Eroare la încărcarea abonamentelor.';
 
   @override
   String billsExactAmountAndFrequency(
@@ -88,20 +88,20 @@ class SRo extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'săptămânal',
+      'monthly': 'lunar',
+      'quarterly': 'trimestrial',
+      'halfyear': 'semestrial',
+      'yearly': 'anual',
+      'other': 'necunoscut',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', sare peste $skip',
       zero: '',
     );
-    return 'Subscription matches transactions of $value. Repeats $_temp0$_temp1.';
+    return 'Abonamentul se potrivește cu tranzacții de $value. Se repetă $_temp0$_temp1.';
   }
 
   @override
@@ -109,18 +109,18 @@ class SRo extends S {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Expected $dateString';
+    return 'Estimată la data de $dateString';
   }
 
   @override
   String billsFrequency(String frequency) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Săptămânal',
+      'monthly': 'Lunar',
+      'quarterly': 'Trimestrial',
+      'halfyear': 'Semestrial',
+      'yearly': 'Anual',
+      'other': 'Necunoscut',
     });
     return '$_temp0';
   }
@@ -128,113 +128,127 @@ class SRo extends S {
   @override
   String billsFrequencySkip(String frequency, num skip) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Săptămânal',
+      'monthly': 'Lunar',
+      'quarterly': 'Trimestrial',
+      'halfyear': 'Semestrial',
+      'yearly': 'Anual',
+      'other': 'Necunoscut',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', sare peste $skip',
       zero: '',
     );
     return '$_temp0$_temp1';
   }
 
   @override
-  String get billsInactive => 'Inactive';
+  String get billsInactive => 'Inactiv';
 
   @override
-  String get billsIsActive => 'Subscription is active';
+  String get billsIsActive => 'Abonamentul este activ';
 
   @override
   String get billsLayoutGroupSubtitle =>
-      'Subscriptions displayed in their assigned groups.';
+      'Abonamentele sunt afișate în grupurile lor atribuite.';
 
   @override
-  String get billsLayoutGroupTitle => 'Group';
+  String get billsLayoutGroupTitle => 'Grup';
 
   @override
   String get billsLayoutListSubtitle =>
-      'Subscriptions displayed in a list sorted by certain criteria.';
+      'Abonamentele sunt afișate într-o listă sortată după anumite criterii.';
 
   @override
-  String get billsLayoutListTitle => 'List';
+  String get billsLayoutListTitle => 'Listă';
 
   @override
-  String get billsListEmpty => 'The list is currently empty.';
+  String get billsListEmpty => 'Lista este momentan goală.';
 
   @override
-  String get billsNextExpectedMatch => 'Next expected match';
+  String get billsNextExpectedMatch => 'Următoarea potrivire estimată';
 
   @override
-  String get billsNotActive => 'Subscription is inactive';
+  String get billsNotActive => 'Abonamentul este inactiv';
 
   @override
-  String get billsNotExpected => 'Not expected this period';
+  String get billsNotExpected => 'Neestimat în această perioadă';
 
   @override
-  String get billsNoTransactions => 'No transactions found.';
+  String get billsNoTransactions => 'Nu s-au găsit tranzacții.';
 
   @override
   String billsPaidOn(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Paid $dateString';
+    return 'Plătit la data de $dateString';
   }
 
   @override
-  String get billsSortAlphabetical => 'Alphabetical';
+  String get billsSortAlphabetical => 'Alfabetic';
 
   @override
-  String get billsSortByTimePeriod => 'By time period';
+  String get billsSortByTimePeriod => 'După perioadă de timp';
 
   @override
-  String get billsSortFrequency => 'Frequency';
+  String get billsSortFrequency => 'Frecvență';
 
   @override
-  String get billsSortName => 'Name';
+  String get billsSortName => 'Nume';
 
   @override
-  String get billsUngrouped => 'Ungrouped';
+  String get billsUngrouped => 'Negrupate';
+
+  @override
+  String get billsSettingsShowOnlyActive => 'Arată doar active';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Afișează doar abonamentele active.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Arată doar așteptate';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Afișează doar abonamentele așteptate (sau plătite) în această lună.';
 
   @override
   String get categoryDeleteConfirm =>
-      'Are you sure you want to delete this category? The transactions will not be deleted, but will not have a category anymore.';
+      'Sigur doriți să ștergeți această categorie? Tranzacțiile nu vor fi șterse, dar nu vor mai avea o categorie.';
 
   @override
-  String get categoryErrorLoading => 'Error loading categories.';
+  String get categoryErrorLoading => 'Eroare la încărcarea categoriilor.';
 
   @override
-  String get categoryFormLabelIncludeInSum => 'Include in monthly sum';
+  String get categoryFormLabelIncludeInSum => 'Include în suma lunară';
 
   @override
-  String get categoryFormLabelName => 'Category Name';
+  String get categoryFormLabelName => 'Nume categorie';
 
   @override
-  String get categoryMonthNext => 'Next Month';
+  String get categoryMonthNext => 'Luna următoare';
 
   @override
-  String get categoryMonthPrev => 'Previous Month';
+  String get categoryMonthPrev => 'Luna precedentă';
 
   @override
-  String get categorySumExcluded => 'excluded';
+  String get categorySumExcluded => 'exclus';
 
   @override
-  String get categoryTitleAdd => 'Add Category';
+  String get categoryTitleAdd => 'Adaugă categorie';
 
   @override
-  String get categoryTitleDelete => 'Delete Category';
+  String get categoryTitleDelete => 'Șterge categorie';
 
   @override
-  String get categoryTitleEdit => 'Edit Category';
+  String get categoryTitleEdit => 'Editează categorie';
 
   @override
-  String get catNone => '<no category>';
+  String get catNone => '<fără categorie>';
 
   @override
   String get catOther => 'Altele';
@@ -255,7 +269,7 @@ class SRo extends S {
 
   @override
   String errorMinAPIVersion(String requiredVersion) {
-    return 'Minimum Firefly API Version v$requiredVersion required. Please upgrade.';
+    return 'Este necesară versiunea minimă Firefly API v$requiredVersion. Vă rugăm să actualizați.';
   }
 
   @override
@@ -291,7 +305,7 @@ class SRo extends S {
   String get generalAccount => 'Cont';
 
   @override
-  String get generalAssets => 'Assets';
+  String get generalAssets => 'Active';
 
   @override
   String get generalBalance => 'Sold';
@@ -301,11 +315,11 @@ class SRo extends S {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Balance on $dateString';
+    return 'Sold la $dateString';
   }
 
   @override
-  String get generalBill => 'Subscription';
+  String get generalBill => 'Abonament';
 
   @override
   String get generalBudget => 'Buget';
@@ -317,16 +331,31 @@ class SRo extends S {
   String get generalCurrency => 'Valută';
 
   @override
+  String get generalDateRangeCurrentMonth => 'Luna curentă';
+
+  @override
+  String get generalDateRangeLast30Days => 'Ultimele 30 de zile';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Anul curent';
+
+  @override
+  String get generalDateRangeLastYear => 'Anul trecut';
+
+  @override
+  String get generalDateRangeAll => 'Toate';
+
+  @override
   String get generalDefault => 'implicit';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'Cont Destinație';
 
   @override
   String get generalDismiss => 'Închide';
 
   @override
-  String get generalEarned => 'Earned';
+  String get generalEarned => 'Câștigat';
 
   @override
   String get generalError => 'Eroare';
@@ -338,7 +367,7 @@ class SRo extends S {
   String get generalIncome => 'Venit';
 
   @override
-  String get generalLiabilities => 'Liabilities';
+  String get generalLiabilities => 'Pasive';
 
   @override
   String get generalMultiple => 'multiplu';
@@ -347,16 +376,16 @@ class SRo extends S {
   String get generalNever => 'niciodată';
 
   @override
-  String get generalReconcile => 'Reconciled';
+  String get generalReconcile => 'Reconciliat';
 
   @override
-  String get generalReset => 'Reset';
+  String get generalReset => 'Resetare';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'Cont Sursă';
 
   @override
-  String get generalSpent => 'Spent';
+  String get generalSpent => 'Cheltuit';
 
   @override
   String get generalSum => 'Sumă';
@@ -370,18 +399,18 @@ class SRo extends S {
   @override
   String homeMainBillsInterval(String period) {
     String _temp0 = intl.Intl.selectLogic(period, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-year',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'săptămânal',
+      'monthly': 'lunar',
+      'quarterly': 'trimestrial',
+      'halfyear': 'semestrial',
+      'yearly': 'anual',
+      'other': 'necunoscut',
     });
     return ' ($_temp0)';
   }
 
   @override
-  String get homeMainBillsTitle => 'Subscriptions for the next week';
+  String get homeMainBillsTitle => 'Abonamente pentru săptămâna viitoare';
 
   @override
   String homeMainBudgetInterval(DateTime from, DateTime to, String period) {
@@ -400,7 +429,7 @@ class SRo extends S {
     final intl.DateFormat toDateFormat = intl.DateFormat.MMMd(localeName);
     final String toString = toDateFormat.format(to);
 
-    return ' ($fromString to $toString)';
+    return ' ($fromString - $toString)';
   }
 
   @override
@@ -429,13 +458,13 @@ class SRo extends S {
   String get homeMainChartDailyTitle => 'Rezumat zilnic';
 
   @override
-  String get homeMainChartNetEarningsTitle => 'Net Earnings';
+  String get homeMainChartNetEarningsTitle => 'Câștig Net';
 
   @override
-  String get homeMainChartNetWorthTitle => 'Net Worth';
+  String get homeMainChartNetWorthTitle => 'Valoare Netă';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle => 'Sumar etichete pentru luna curentă';
 
   @override
   String get homePiggyAdjustDialogTitle => 'Salvează/cheltuie bani';
@@ -457,7 +486,7 @@ class SRo extends S {
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'Personalizează Tabloul de Bord';
 
   @override
   String homePiggyLinked(String account) {
@@ -481,8 +510,27 @@ class SRo extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Economisit până acum:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'Suma ţintă: $amount';
+  }
+
+  @override
+  String get homePiggyAccountStatus => 'Starea Contului';
+
+  @override
+  String get homePiggyAvailableAmounts => 'Sume Disponibile';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return 'Disponibil: $amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return 'În pușculițe: $amount';
   }
 
   @override
@@ -504,29 +552,34 @@ class SRo extends S {
   String get homeTransactionsDialogFilterAccountsAll => '<Toate conturile>';
 
   @override
-  String get homeTransactionsDialogFilterBillsAll => '<All Subscriptions>';
+  String get homeTransactionsDialogFilterBillsAll => '<Toate abonamentele>';
 
   @override
-  String get homeTransactionsDialogFilterBillUnset => '<No Subscription set>';
+  String get homeTransactionsDialogFilterBillUnset =>
+      '<Niciun abonament setat>';
 
   @override
   String get homeTransactionsDialogFilterBudgetsAll => '<Toate bugetele>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetUnset => '<No Budget set>';
+  String get homeTransactionsDialogFilterBudgetUnset => '<Niciun buget setat>';
 
   @override
   String get homeTransactionsDialogFilterCategoriesAll => '<Toate categoriile>';
 
   @override
-  String get homeTransactionsDialogFilterCategoryUnset => '<No Category set>';
+  String get homeTransactionsDialogFilterCategoryUnset =>
+      '<Nicio categorie setată>';
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Toate valutele>';
 
   @override
+  String get homeTransactionsDialogFilterDateRange => 'Interval de date';
+
+  @override
   String get homeTransactionsDialogFilterFutureTransactions =>
-      'Show future transactions';
+      'Afișează tranzacțiile viitoare';
 
   @override
   String get homeTransactionsDialogFilterSearch => 'Caută termen';
@@ -535,7 +588,7 @@ class SRo extends S {
   String get homeTransactionsDialogFilterTitle => 'Selectează filtre';
 
   @override
-  String get homeTransactionsEmpty => 'Nicio tranzacție găsită.';
+  String get homeTransactionsEmpty => 'Nu s-au găsit tranzacții.';
 
   @override
   String homeTransactionsMultipleCategories(int num) {
@@ -544,7 +597,7 @@ class SRo extends S {
 
   @override
   String get homeTransactionsSettingsShowTags =>
-      'Show tags in transaction list';
+      'Afișează etichetele în lista de tranzacții';
 
   @override
   String get liabilityDirectionCredit => 'Îmi sunt datorate aceste datorii';
@@ -575,25 +628,25 @@ class SRo extends S {
   String get loginWelcome => 'Bine ai venit la Waterfly III';
 
   @override
-  String get logoutConfirmation => 'Are you sure you want to log out?';
+  String get logoutConfirmation => 'Ești sigur(ă) că vrei să te deconectezi?';
 
   @override
   String get navigationAccounts => 'Conturi';
 
   @override
-  String get navigationBills => 'Subscriptions';
+  String get navigationBills => 'Abonamente';
 
   @override
-  String get navigationCategories => 'Categories';
+  String get navigationCategories => 'Categorii';
 
   @override
   String get navigationMain => 'Panou principal';
 
   @override
-  String get navigationSettings => 'Setări';
+  String get generalSettings => 'Setări';
 
   @override
-  String get no => 'No';
+  String get no => 'Nu';
 
   @override
   String numPercent(double num) {
@@ -643,10 +696,11 @@ class SRo extends S {
   String get settingsDialogThemeTitle => 'Selectează tema';
 
   @override
-  String get settingsFAQ => 'FAQ';
+  String get settingsFAQ => 'Întrebări frecvente';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'Se deschide în browser. Disponibil doar în engleză.';
 
   @override
   String get settingsLanguage => 'Limba';
@@ -680,14 +734,14 @@ class SRo extends S {
       'Efectuați unele tranzacții în care primiți notificări prin telefon pentru a adăuga aplicații la această listă. Dacă aplicația încă nu apare, vă rugăm să raportați la app@vogt.pw.';
 
   @override
-  String get settingsNLAutoAdd => 'Create transaction without interaction';
+  String get settingsNLAutoAdd => 'Creează tranzacție fără interacțiune';
 
   @override
   String get settingsNLDescription =>
       'Acest serviciu vă permite să preluați detaliile tranzacției de la notificările push primite. În plus, puteți selecta un cont implicit căruia trebuie să îi fie atribuită tranzacția - dacă nu este setată nicio valoare, se va încerca să extragerea un cont din notificare.';
 
   @override
-  String get settingsNLEmptyNote => 'Keep note field empty';
+  String get settingsNLEmptyNote => 'Păstrează câmpul notei gol';
 
   @override
   String get settingsNLPermissionGrant =>
@@ -706,7 +760,7 @@ class SRo extends S {
 
   @override
   String get settingsNLPrefillTXTitle =>
-      'Prefill transaction title with notification title';
+      'Completează automat titlul tranzacției cu titlul notificării';
 
   @override
   String get settingsNLServiceChecking => 'Verificare stare…';
@@ -746,11 +800,11 @@ class SRo extends S {
   }
 
   @override
-  String get settingsUseServerTimezone => 'Use server timezone';
+  String get settingsUseServerTimezone => 'Utilizează fusul orar al serverului';
 
   @override
   String get settingsUseServerTimezoneHelp =>
-      'Show all times in the server timezone. This mimics the behavior of the webinterface.';
+      'Afișează toate orele în fusul orar al serverului. Aceasta imită comportamentul interfeței web.';
 
   @override
   String get settingsVersion => 'Versiune aplicaţie';
@@ -790,13 +844,19 @@ class SRo extends S {
   String get transactionDialogAttachmentsTitle => 'Atașamente';
 
   @override
-  String get transactionDialogBillNoBill => 'No subscription';
+  String get transactionDialogBillNoBill => 'Fără abonament';
 
   @override
-  String get transactionDialogBillTitle => 'Link to Subscription';
+  String get transactionDialogBillTitle => 'Asociază cu Abonamentul';
 
   @override
   String get transactionDialogCurrencyTitle => 'Selectează valuta';
+
+  @override
+  String get transactionDialogPiggyNoPiggy => 'Fără pușculiță';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Asociază la pușculiță';
 
   @override
   String get transactionDialogTagsAdd => 'Adaugă etichetă';
@@ -817,11 +877,12 @@ class SRo extends S {
   String get transactionErrorInvalidBudget => 'Buget invalid';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts =>
+      'Te rugăm să completezi conturile mai întâi.';
 
   @override
   String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+      'Te rugăm să selectezi un cont de active.';
 
   @override
   String get transactionErrorTitle => 'Te rog introdu un titlu.';
@@ -855,11 +916,11 @@ class SRo extends S {
 
   @override
   String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+      'Schimbă contul destinație al diviziunii';
 
   @override
   String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+      'Schimbă contul sursă al diviziunii';
 
   @override
   String get transactionSplitChangeTarget => 'Schimbă contul țintă divizat';

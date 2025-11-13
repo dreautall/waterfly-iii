@@ -1,0 +1,7 @@
+⚠️ This release requires Firefly III v6.3.1 ⚠️
+
+Please do not update unless you also updated Firefly III. The app will not let you login otherwise!
+
+- Fix: Implement API changes for Firefly III v6.3.0
+- Fix: Notification listener parsing
+- Version updates of dependencies, Flutter etc.

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -51,7 +53,7 @@ class _CategoriesPageState extends State<CategoriesPage>
   }
 
   void refreshAppBarButtons() {
-    bool nextMonthDisabled = selectedMonth
+    final bool nextMonthDisabled = selectedMonth
         .copyWith(day: 1, month: selectedMonth.month + 1)
         .isAfter(now.copyWith(day: 1));
     context.read<NavPageElements>().appBarActions = <Widget>[
@@ -59,7 +61,7 @@ class _CategoriesPageState extends State<CategoriesPage>
         icon: const Icon(Icons.plus_one),
         tooltip: S.of(context).categoryTitleAdd,
         onPressed: () async {
-          bool? ok = await showDialog(
+          final bool? ok = await showDialog(
             context: context,
             builder:
                 (BuildContext context) =>
@@ -70,7 +72,7 @@ class _CategoriesPageState extends State<CategoriesPage>
           }
 
           // Refresh page
-          stock.reset();
+          await stock.reset();
           setState(() {});
         },
       ),
@@ -190,8 +192,8 @@ class _CategoriesPageState extends State<CategoriesPage>
         // 2. Spent sum
         // 3. Earned sum
         snapshot.data!.data.sort((CategoryRead a, CategoryRead b) {
-          CategoryWithSum cA = a.attributes as CategoryWithSum;
-          CategoryWithSum cB = b.attributes as CategoryWithSum;
+          final CategoryWithSum cA = a.attributes as CategoryWithSum;
+          final CategoryWithSum cB = b.attributes as CategoryWithSum;
           final double sumA = cA.sumSpent + cA.sumEarned;
           final double sumB = cB.sumSpent + cB.sumEarned;
           if (sumA == sumB) {
@@ -205,7 +207,7 @@ class _CategoriesPageState extends State<CategoriesPage>
           }
         });
 
-        List<String> categoriesSumExcluded =
+        final List<String> categoriesSumExcluded =
             context.read<SettingsProvider>().categoriesSumExcluded;
 
         final double totalEarned = snapshot.data!.data.fold<double>(
@@ -376,7 +378,7 @@ class CategoryLine extends StatelessWidget {
     final CurrencyRead defaultCurrency =
         context.read<FireflyService>().defaultCurrency;
 
-    CategoryWithSum cs = category.attributes as CategoryWithSum;
+    final CategoryWithSum cs = category.attributes as CategoryWithSum;
     final double totalBalance = cs.sumSpent + cs.sumEarned;
 
     return OpenContainer(
@@ -426,7 +428,7 @@ class CategoryLine extends StatelessWidget {
                     : (LongPressStartDetails details) async {
                       final Size screenSize = MediaQuery.of(context).size;
                       final Offset offset = details.globalPosition;
-                      HapticFeedback.vibrate();
+                      unawaited(HapticFeedback.vibrate());
                       final Function? func = await showMenu<Function>(
                         context: context,
                         position: RelativeRect.fromLTRB(
@@ -438,7 +440,7 @@ class CategoryLine extends StatelessWidget {
                         items: <PopupMenuEntry<Function>>[
                           PopupMenuItem<Function>(
                             value: () async {
-                              bool? ok = await showDialog(
+                              final bool? ok = await showDialog(
                                 context: context,
                                 builder:
                                     (BuildContext context) =>
@@ -451,7 +453,7 @@ class CategoryLine extends StatelessWidget {
                               }
 
                               // Refresh page
-                              stock.reset();
+                              await stock.reset();
                               setState(() {});
                             },
                             child: Row(

@@ -203,6 +203,20 @@ class SPl extends S {
   String get billsUngrouped => 'Niezgrupowane';
 
   @override
+  String get billsSettingsShowOnlyActive => 'Pokaż tylko aktywne';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc =>
+      'Pokazuje tylko aktywne subskrypcje.';
+
+  @override
+  String get billsSettingsShowOnlyExpected => 'Pokaż tylko oczekiwane';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc =>
+      'Pokazuje tylko te subskrypcje, które są oczekiwane (lub opłacone) w tym miesiącu.';
+
+  @override
   String get categoryDeleteConfirm =>
       'Czy na pewno chcesz usunąć tę kategorię? Transakcje nie zostaną usunięte, ale nie będą już posiadały kategorii.';
 
@@ -315,6 +329,21 @@ class SPl extends S {
 
   @override
   String get generalCurrency => 'Waluta';
+
+  @override
+  String get generalDateRangeCurrentMonth => 'Bieżący miesiąc';
+
+  @override
+  String get generalDateRangeLast30Days => 'Ostatnie 30 dni';
+
+  @override
+  String get generalDateRangeCurrentYear => 'Bieżący rok';
+
+  @override
+  String get generalDateRangeLastYear => 'Poprzedni rok';
+
+  @override
+  String get generalDateRangeAll => 'Wszystko';
 
   @override
   String get generalDefault => 'domyślnie';
@@ -483,8 +512,27 @@ class SPl extends S {
   }
 
   @override
+  String get homePiggySavedMultiple => 'Zaoszczędzono do tej pory:';
+
+  @override
   String homePiggyTarget(String amount) {
     return 'Docelowa kwota: $amount';
+  }
+
+  @override
+  String get homePiggyAccountStatus => 'Status konta';
+
+  @override
+  String get homePiggyAvailableAmounts => 'Dostępne kwoty';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return 'Dostępne: $amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return 'W skarbonkach: $amount';
   }
 
   @override
@@ -529,6 +577,9 @@ class SPl extends S {
 
   @override
   String get homeTransactionsDialogFilterCurrenciesAll => '<Wszystkie waluty>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Zakres dat';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
@@ -597,7 +648,7 @@ class SPl extends S {
   String get navigationMain => 'Panel główny';
 
   @override
-  String get navigationSettings => 'Ustawienia';
+  String get generalSettings => 'Ustawienia';
 
   @override
   String get no => 'Nie';
@@ -802,6 +853,12 @@ class SPl extends S {
 
   @override
   String get transactionDialogCurrencyTitle => 'Wybierz walutę';
+
+  @override
+  String get transactionDialogPiggyNoPiggy => 'Brak skarbonki';
+
+  @override
+  String get transactionDialogPiggyTitle => 'Połącz ze skarbonką';
 
   @override
   String get transactionDialogTagsAdd => 'Dodaj Tag';

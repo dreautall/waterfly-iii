@@ -989,7 +989,7 @@ class SZhTw extends SZh {
   }
 
   @override
-  String get billsChangeLayoutTooltip => '變更版面佈局';
+  String get billsChangeLayoutTooltip => '變更版面配置';
 
   @override
   String get billsChangeSortOrderTooltip => '變更排序順序';
@@ -1444,7 +1444,7 @@ class SZhTw extends SZh {
   }
 
   @override
-  String get homeTabLabelBalance => '資產負債表';
+  String get homeTabLabelBalance => '帳戶餘額';
 
   @override
   String get homeTabLabelMain => '主要報表';
@@ -1810,5 +1810,29 @@ class SZhTw extends SZh {
   String get transactionSplitChangeDestinationAccount => '更改子交易的收款帳戶';
 
   @override
+  String get transactionSplitChangeSourceAccount => '更改子交易的付款帳戶';
+
+  @override
+  String get transactionSplitChangeTarget => '更改子交易的收款帳戶';
+
+  @override
+  String get transactionSplitDelete => '刪除子交易';
+
+  @override
   String get transactionTitleAdd => '新增交易';
+
+  @override
+  String get transactionTitleDelete => '刪除交易';
+
+  @override
+  String get transactionTitleEdit => '編輯交易';
+
+  @override
+  String get transactionTypeDeposit => '存款';
+
+  @override
+  String get transactionTypeTransfer => '轉帳';
+
+  @override
+  String get transactionTypeWithdrawal => '提款';
 }

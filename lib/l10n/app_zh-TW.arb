@@ -1,5 +1,5 @@
 {
-  "@@locale": "zh_TW",
+    "@@locale": "zh_TW",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "現金皮夾",
     "@accountRoleAssetCashWallet": {
@@ -73,7 +73,7 @@
             }
         }
     },
-    "billsChangeLayoutTooltip": "變更版面佈局",
+    "billsChangeLayoutTooltip": "變更版面配置",
     "@billsChangeLayoutTooltip": {
         "description": "Text for layout change button tooltip"
     },
@@ -687,7 +687,7 @@
             }
         }
     },
-    "homeTabLabelBalance": "資產負債表",
+    "homeTabLabelBalance": "帳戶餘額",
     "@homeTabLabelBalance": {
         "description": "Tab Label: Balance Sheet page"
     },
@@ -1173,8 +1173,40 @@
     "@transactionSplitChangeDestinationAccount": {
         "description": "Hint Text: Change destination account for a single split"
     },
+    "transactionSplitChangeSourceAccount": "更改子交易的付款帳戶",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
+    },
+    "transactionSplitChangeTarget": "更改子交易的收款帳戶",
+    "@transactionSplitChangeTarget": {
+        "description": "Hint Text: Change target account for single split"
+    },
+    "transactionSplitDelete": "刪除子交易",
+    "@transactionSplitDelete": {
+        "description": "Hint Text: Delete single split"
+    },
     "transactionTitleAdd": "新增交易",
     "@transactionTitleAdd": {
         "description": "Title: Add a new transaction"
+    },
+    "transactionTitleDelete": "刪除交易",
+    "@transactionTitleDelete": {
+        "description": "Title: Delete existing transaction"
+    },
+    "transactionTitleEdit": "編輯交易",
+    "@transactionTitleEdit": {
+        "description": "Title: Edit existing transaction"
+    },
+    "transactionTypeDeposit": "存款",
+    "@transactionTypeDeposit": {
+        "description": "Deposit transaction type"
+    },
+    "transactionTypeTransfer": "轉帳",
+    "@transactionTypeTransfer": {
+        "description": "Transfer transaction type"
+    },
+    "transactionTypeWithdrawal": "提款",
+    "@transactionTypeWithdrawal": {
+        "description": "Withdrawal transaction type"
     }
 }

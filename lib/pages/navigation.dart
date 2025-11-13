@@ -268,6 +268,28 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                             selectedIcon: destination.selectedIcon,
                           );
                         }).toList(),
+                    trailingAtBottom: true,
+                    trailing: GestureDetector(
+                      onTap: () async {
+                        final FireflyService ff =
+                            context.read<FireflyService>();
+                        final bool? ok = await showDialog<bool>(
+                          context: context,
+                          builder:
+                              (BuildContext context) =>
+                                  const LogoutConfirmDialog(),
+                        );
+                        if (!(ok ?? false)) {
+                          return;
+                        }
+
+                        await ff.signOut();
+                      },
+                      child: Text(
+                        S.of(context).formButtonLogout,
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                    ),
                   ),
                 Expanded(
                   child: PageTransitionSwitcher(

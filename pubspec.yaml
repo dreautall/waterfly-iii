@@ -52,7 +52,7 @@ dependencies:
   timezone: ^0.10.0
   flutter_timezone: ^5.0.0
   flutter_sharing_intent: ^1.1.1
-  http: ^1.2.1
+  http: ^1.6.0
   open_file_plus:
     git:
       url: https://github.com/postflow/open_file_plus.git

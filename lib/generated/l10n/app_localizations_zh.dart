@@ -925,5 +925,914 @@ class SZhTw extends SZh {
   SZhTw() : super('zh_TW');
 
   @override
+  String get accountRoleAssetCashWallet => '現金皮夾';
+
+  @override
+  String get accountRoleAssetCC => '信用卡';
+
+  @override
+  String get accountRoleAssetDefault => '預設資產帳戶';
+
+  @override
+  String get accountRoleAssetSavings => '儲蓄帳戶';
+
+  @override
+  String get accountRoleAssetShared => '共用資產帳戶';
+
+  @override
+  String get accountsLabelAsset => '資產帳戶';
+
+  @override
+  String get accountsLabelExpense => '支出帳戶';
+
+  @override
+  String get accountsLabelLiabilities => '負債';
+
+  @override
+  String get accountsLabelRevenue => '收入帳戶';
+
+  @override
+  String accountsLiabilitiesInterest(double interest, String period) {
+    String _temp0 = intl.Intl.selectLogic(period, {
+      'weekly': '週',
+      'monthly': '月',
+      'quarterly': '季',
+      'halfyear': '半年',
+      'yearly': '年',
+      'other': '未知週期',
+    });
+    return '$_temp0利率 $interest%';
+  }
+
+  @override
+  String billsAmountAndFrequency(
+    String minValue,
+    String maxvalue,
+    String frequency,
+    num skip,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': '每週',
+      'monthly': '每月',
+      'quarterly': '每季',
+      'halfyear': '每半年',
+      'yearly': '每年',
+      'other': '未知',
+    });
+    String _temp1 = intl.Intl.pluralLogic(
+      skip,
+      locale: localeName,
+      other: '，跳過 $skip 次',
+      zero: '',
+    );
+    return '帳單符合金額在 $minValue 和 $maxvalue 之間的交易。$_temp0重複$_temp1。';
+  }
+
+  @override
+  String get billsChangeLayoutTooltip => '變更版面配置';
+
+  @override
+  String get billsChangeSortOrderTooltip => '變更排序順序';
+
+  @override
+  String get billsErrorLoading => '載入帳單時發生錯誤。';
+
+  @override
+  String billsExactAmountAndFrequency(
+    String value,
+    String frequency,
+    num skip,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': '每週',
+      'monthly': '每月',
+      'quarterly': '每季',
+      'halfyear': '每半年',
+      'yearly': '每年',
+      'other': '未知',
+    });
+    String _temp1 = intl.Intl.pluralLogic(
+      skip,
+      locale: localeName,
+      other: '，跳過 $skip 次',
+      zero: '',
+    );
+    return '帳單符合金額為 $value 的交易。$_temp0重複$_temp1。';
+  }
+
+  @override
+  String billsExpectedOn(DateTime date) {
+    final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return '預計日期 $dateString';
+  }
+
+  @override
+  String billsFrequency(String frequency) {
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': '每週',
+      'monthly': '每月',
+      'quarterly': '每季',
+      'halfyear': '每半年',
+      'yearly': '每年',
+      'other': '未知',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String billsFrequencySkip(String frequency, num skip) {
+    String _temp0 = intl.Intl.selectLogic(frequency, {
+      'weekly': '每週',
+      'monthly': '每月',
+      'quarterly': '每季',
+      'halfyear': '每半年',
+      'yearly': '每年',
+      'other': '未知',
+    });
+    String _temp1 = intl.Intl.pluralLogic(
+      skip,
+      locale: localeName,
+      other: '，跳過 $skip 次',
+      zero: '',
+    );
+    return '$_temp0重複$_temp1';
+  }
+
+  @override
+  String get billsInactive => '未啟用';
+
+  @override
+  String get billsIsActive => '帳單已啟用';
+
+  @override
+  String get billsLayoutGroupSubtitle => '帳單顯示在指定的群組中。';
+
+  @override
+  String get billsLayoutGroupTitle => '群組';
+
+  @override
+  String get billsLayoutListSubtitle => '帳單顯示在按特定標準排序的列表中。';
+
+  @override
+  String get billsLayoutListTitle => '列表';
+
+  @override
+  String get billsListEmpty => '此列表目前為空。';
+
+  @override
+  String get billsNextExpectedMatch => '下次預期的支付符合';
+
+  @override
+  String get billsNotActive => '帳單未啟用';
+
+  @override
+  String get billsNotExpected => '此週期內沒有預期的支付';
+
+  @override
+  String get billsNoTransactions => '未找到交易記錄。';
+
+  @override
+  String billsPaidOn(DateTime date) {
+    final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return '支付日期 $dateString';
+  }
+
+  @override
+  String get billsSortAlphabetical => '按字母順序';
+
+  @override
+  String get billsSortByTimePeriod => '按時間間隔排序';
+
+  @override
+  String get billsSortFrequency => '頻率';
+
+  @override
+  String get billsSortName => '名稱';
+
+  @override
+  String get billsUngrouped => '未分組的';
+
+  @override
+  String get billsSettingsShowOnlyActive => '僅顯示已啟用的';
+
+  @override
+  String get billsSettingsShowOnlyActiveDesc => '僅顯示已啟用的帳單。';
+
+  @override
+  String get billsSettingsShowOnlyExpected => '僅顯示預期的';
+
+  @override
+  String get billsSettingsShowOnlyExpectedDesc => '僅顯示預期的 (或是已付款的) 帳單。';
+
+  @override
+  String get categoryDeleteConfirm => '確定要刪除這個分類嗎？相關的交易不會刪除，但會變成未分類的。';
+
+  @override
+  String get categoryErrorLoading => '無法載入分類。';
+
+  @override
+  String get categoryFormLabelIncludeInSum => '包含於每月金額中';
+
+  @override
+  String get categoryFormLabelName => '分類名稱';
+
+  @override
   String get categoryMonthNext => '下個月';
+
+  @override
+  String get categoryMonthPrev => '上個月';
+
+  @override
+  String get categorySumExcluded => '已排除';
+
+  @override
+  String get categoryTitleAdd => '新增分類';
+
+  @override
+  String get categoryTitleDelete => '刪除分類';
+
+  @override
+  String get categoryTitleEdit => '編輯分類';
+
+  @override
+  String get catNone => '未分類';
+
+  @override
+  String get catOther => '其他';
+
+  @override
+  String errorAPIInvalidResponse(String message) {
+    return 'API 回應錯誤: $message';
+  }
+
+  @override
+  String get errorAPIUnavailable => '無法使用 API';
+
+  @override
+  String get errorFieldRequired => '必填欄位。';
+
+  @override
+  String get errorInvalidURL => '無效的網址';
+
+  @override
+  String errorMinAPIVersion(String requiredVersion) {
+    return 'Firefly API 的版本過舊，請升級到 $requiredVersion 或更新的版本。';
+  }
+
+  @override
+  String errorStatusCode(int code) {
+    return 'HTTP 狀態碼: $code';
+  }
+
+  @override
+  String get errorUnknown => '未知的錯誤。';
+
+  @override
+  String get formButtonHelp => '幫助';
+
+  @override
+  String get formButtonLogin => '登入';
+
+  @override
+  String get formButtonLogout => '登出';
+
+  @override
+  String get formButtonRemove => '刪除';
+
+  @override
+  String get formButtonResetLogin => '重設登入資訊';
+
+  @override
+  String get formButtonTransactionAdd => '新增交易';
+
+  @override
+  String get formButtonTryAgain => '請重試一次';
+
+  @override
+  String get generalAccount => '帳戶';
+
+  @override
+  String get generalAssets => '資產';
+
+  @override
+  String get generalBalance => '餘額';
+
+  @override
+  String generalBalanceOn(DateTime date) {
+    final intl.DateFormat dateDateFormat = intl.DateFormat.yMd(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return '$dateString 的餘額';
+  }
+
+  @override
+  String get generalBill => '帳單';
+
+  @override
+  String get generalBudget => '預算';
+
+  @override
+  String get generalCategory => '分類';
+
+  @override
+  String get generalCurrency => '貨幣';
+
+  @override
+  String get generalDateRangeCurrentMonth => '本月';
+
+  @override
+  String get generalDateRangeLast30Days => '最近 30 天';
+
+  @override
+  String get generalDateRangeCurrentYear => '今年';
+
+  @override
+  String get generalDateRangeLastYear => '去年';
+
+  @override
+  String get generalDateRangeAll => '全部';
+
+  @override
+  String get generalDefault => '預設';
+
+  @override
+  String get generalDestinationAccount => '收款帳戶';
+
+  @override
+  String get generalDismiss => '取消';
+
+  @override
+  String get generalEarned => '盈餘';
+
+  @override
+  String get generalError => '錯誤';
+
+  @override
+  String get generalExpenses => '消費';
+
+  @override
+  String get generalIncome => '收入';
+
+  @override
+  String get generalLiabilities => '負債';
+
+  @override
+  String get generalMultiple => '多個';
+
+  @override
+  String get generalNever => '永不';
+
+  @override
+  String get generalReconcile => '已對帳';
+
+  @override
+  String get generalReset => '重設';
+
+  @override
+  String get generalSourceAccount => '付款帳戶';
+
+  @override
+  String get generalSpent => '開銷';
+
+  @override
+  String get generalSum => '小計';
+
+  @override
+  String get generalTarget => '目標';
+
+  @override
+  String get generalUnknown => '未知';
+
+  @override
+  String homeMainBillsInterval(String period) {
+    String _temp0 = intl.Intl.selectLogic(period, {
+      'weekly': '每週',
+      'monthly': '每月',
+      'quarterly': '每季',
+      'halfyear': '每半年',
+      'yearly': '每年',
+      'other': '未知',
+    });
+    return ' ($_temp0)';
+  }
+
+  @override
+  String get homeMainBillsTitle => '下週的帳單';
+
+  @override
+  String homeMainBudgetInterval(DateTime from, DateTime to, String period) {
+    final intl.DateFormat fromDateFormat = intl.DateFormat.MMMd(localeName);
+    final String fromString = fromDateFormat.format(from);
+    final intl.DateFormat toDateFormat = intl.DateFormat.MMMd(localeName);
+    final String toString = toDateFormat.format(to);
+
+    return ' ($fromString 到 $toString, $period)';
+  }
+
+  @override
+  String homeMainBudgetIntervalSingle(DateTime from, DateTime to) {
+    final intl.DateFormat fromDateFormat = intl.DateFormat.MMMd(localeName);
+    final String fromString = fromDateFormat.format(from);
+    final intl.DateFormat toDateFormat = intl.DateFormat.MMMd(localeName);
+    final String toString = toDateFormat.format(to);
+
+    return ' ($fromString 到 $toString)';
+  }
+
+  @override
+  String homeMainBudgetSum(String current, String status, String available) {
+    String _temp0 = intl.Intl.selectLogic(status, {
+      'over': '超支',
+      'other': '尚餘',
+    });
+    return '$available ($_temp0 $current)';
+  }
+
+  @override
+  String get homeMainBudgetTitle => '本月預算';
+
+  @override
+  String get homeMainChartAccountsTitle => '帳戶綜覽';
+
+  @override
+  String get homeMainChartCategoriesTitle => '本月分類報表';
+
+  @override
+  String get homeMainChartDailyAvg => '7 日平均';
+
+  @override
+  String get homeMainChartDailyTitle => '日報表';
+
+  @override
+  String get homeMainChartNetEarningsTitle => '總盈餘';
+
+  @override
+  String get homeMainChartNetWorthTitle => '總值';
+
+  @override
+  String get homeMainChartTagsTitle => '本月標籤報表';
+
+  @override
+  String get homePiggyAdjustDialogTitle => '存入/支出';
+
+  @override
+  String homePiggyDateStart(DateTime date) {
+    final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return '開始日期：$dateString';
+  }
+
+  @override
+  String homePiggyDateTarget(DateTime date) {
+    final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return '目標日期:$dateString';
+  }
+
+  @override
+  String get homeMainDialogSettingsTitle => '自訂首頁';
+
+  @override
+  String homePiggyLinked(String account) {
+    return '連結到 $account';
+  }
+
+  @override
+  String get homePiggyNoAccounts => '目前沒有小豬撲滿。';
+
+  @override
+  String get homePiggyNoAccountsSubtitle => '請從網頁介面新增。';
+
+  @override
+  String homePiggyRemaining(String amount) {
+    return '可存入金額：$amount';
+  }
+
+  @override
+  String homePiggySaved(String amount) {
+    return '已存入金額：$amount';
+  }
+
+  @override
+  String get homePiggySavedMultiple => '已存入：';
+
+  @override
+  String homePiggyTarget(String amount) {
+    return '目標金額：$amount';
+  }
+
+  @override
+  String get homePiggyAccountStatus => '帳戶資訊';
+
+  @override
+  String get homePiggyAvailableAmounts => '可用餘額';
+
+  @override
+  String homePiggyAvailable(String amount) {
+    return '可用金額：$amount';
+  }
+
+  @override
+  String homePiggyInPiggyBanks(String amount) {
+    return '撲滿中：$amount';
+  }
+
+  @override
+  String get homeTabLabelBalance => '帳戶餘額';
+
+  @override
+  String get homeTabLabelMain => '主要報表';
+
+  @override
+  String get homeTabLabelPiggybanks => '小豬撲滿';
+
+  @override
+  String get homeTabLabelTransactions => '交易';
+
+  @override
+  String get homeTransactionsActionFilter => '過濾器';
+
+  @override
+  String get homeTransactionsDialogFilterAccountsAll => '所有帳戶';
+
+  @override
+  String get homeTransactionsDialogFilterBillsAll => '所有帳單';
+
+  @override
+  String get homeTransactionsDialogFilterBillUnset => '目前沒有設定帳單';
+
+  @override
+  String get homeTransactionsDialogFilterBudgetsAll => '所有預算';
+
+  @override
+  String get homeTransactionsDialogFilterBudgetUnset => '目前沒有設定預算';
+
+  @override
+  String get homeTransactionsDialogFilterCategoriesAll => '所有分類';
+
+  @override
+  String get homeTransactionsDialogFilterCategoryUnset => '目前沒有設定分類';
+
+  @override
+  String get homeTransactionsDialogFilterCurrenciesAll => '所有幣別';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => '期間';
+
+  @override
+  String get homeTransactionsDialogFilterFutureTransactions => '顯示未來的交易';
+
+  @override
+  String get homeTransactionsDialogFilterSearch => '關鍵字';
+
+  @override
+  String get homeTransactionsDialogFilterTitle => '選擇過濾器';
+
+  @override
+  String get homeTransactionsEmpty => '未找到交易記錄。';
+
+  @override
+  String homeTransactionsMultipleCategories(int num) {
+    return '$num 個分類';
+  }
+
+  @override
+  String get homeTransactionsSettingsShowTags => '在交易列表中顯示標籤';
+
+  @override
+  String get liabilityDirectionCredit => '別人欠我這筆債務';
+
+  @override
+  String get liabilityDirectionDebit => '我欠人這筆債務';
+
+  @override
+  String get liabilityTypeDebt => '負債';
+
+  @override
+  String get liabilityTypeLoan => '貸款';
+
+  @override
+  String get liabilityTypeMortgage => '抵押';
+
+  @override
+  String get loginAbout =>
+      '想要使用 Waterfly III 的完整功能，您必須架設您的 Firefly III 伺服器，或是安裝智慧家居的擴充功能 (您可以在 Firefly III 官網找到相關的指引)。\n\n請在以下欄位輸入您的伺服器的完整網址，以及您的個人存取權杖 (設定 -> 個人檔案 -> OAuth -> 個人存取權杖)。';
+
+  @override
+  String get loginFormLabelAPIKey => '有效的 API 密鑰';
+
+  @override
+  String get loginFormLabelHost => '伺服器的網址';
+
+  @override
+  String get loginWelcome => '歡迎使用 Waterfly III';
+
+  @override
+  String get logoutConfirmation => '您確定要登出？';
+
+  @override
+  String get navigationAccounts => '帳戶';
+
+  @override
+  String get navigationBills => '帳單';
+
+  @override
+  String get navigationCategories => '分類';
+
+  @override
+  String get navigationMain => '主頁';
+
+  @override
+  String get generalSettings => '設定';
+
+  @override
+  String get no => '取消';
+
+  @override
+  String numPercent(double num) {
+    final intl.NumberFormat numNumberFormat = intl
+        .NumberFormat.decimalPercentPattern(
+      locale: localeName,
+      decimalDigits: 0,
+    );
+    final String numString = numNumberFormat.format(num);
+
+    return '$numString';
+  }
+
+  @override
+  String numPercentOf(double perc, String of) {
+    final intl.NumberFormat percNumberFormat = intl
+        .NumberFormat.decimalPercentPattern(
+      locale: localeName,
+      decimalDigits: 0,
+    );
+    final String percString = percNumberFormat.format(perc);
+
+    return '$of 中的 $percString';
+  }
+
+  @override
+  String get settingsDialogDebugInfo =>
+      '啟用並傳送除錯資訊。這會影響效能，所以沒有必要的話請盡量不要啟用。停用時會刪除儲存的除錯資訊。';
+
+  @override
+  String get settingsDialogDebugMailCreate => '新增郵件';
+
+  @override
+  String get settingsDialogDebugMailDisclaimer =>
+      '請注意：除錯資訊將會以純文字的方式附在郵件中。儘管我已經努力避免在除錯資訊中記錄您的隱私資訊 (例如伺服器的網址、您的 API 密鑰等)，但仍然需要您仔細檢視，確保您的個人隱私。請務必完整審視除錯資訊，碼掉您的個人資訊，移除無關或不必要的記錄。\n\n如果您沒有透過電子郵件或 GitHub 與我協議，請勿傳送除錯資訊。為了確保您的隱私，我會直接刪除沒有與我協議的郵件。請勿直接將含有個人資訊的除錯資訊上傳到 GitHub。';
+
+  @override
+  String get settingsDialogDebugSendButton => '通過電子郵件傳送除錯資訊';
+
+  @override
+  String get settingsDialogDebugTitle => '除錯資訊';
+
+  @override
+  String get settingsDialogLanguageTitle => '選擇語言';
+
+  @override
+  String get settingsDialogThemeTitle => '選取佈景主題';
+
+  @override
+  String get settingsFAQ => '常見問題';
+
+  @override
+  String get settingsFAQHelp => '使用瀏覽器開啟。常見問題只有英文版。';
+
+  @override
+  String get settingsLanguage => '語言';
+
+  @override
+  String get settingsLockscreen => '鎖定畫面選項';
+
+  @override
+  String get settingsLockscreenHelp => '程動程式時需要先通過身份認證';
+
+  @override
+  String get settingsLockscreenInitial => '請通過身份認證以啟用鎖定螢幕功能。';
+
+  @override
+  String get settingsNLAppAccount => '預設帳戶';
+
+  @override
+  String get settingsNLAppAccountDynamic => '<Dynamic>';
+
+  @override
+  String get settingsNLAppAdd => '加入 App';
+
+  @override
+  String get settingsNLAppAddHelp => '點擊以新增要監聽通知的 App。只會列出符合條件的 App。';
+
+  @override
+  String get settingsNLAppAddInfo =>
+      '請先做幾筆交易，等你的 App 跳通知後，才會出現在這個列表裡。如果你的 App 一直沒有出現在列表中，請聯繫 app@vogt.pw。';
+
+  @override
+  String get settingsNLAutoAdd => '直接新增交易記錄';
+
+  @override
+  String get settingsNLDescription =>
+      '這項服務讓您可以從手機 App 的通知來自動取得交易資訊。你也可以指定一個這筆交易所屬的帳戶，沒有指定的話，程式會試著自動判斷。';
+
+  @override
+  String get settingsNLEmptyNote => '不要填備註';
+
+  @override
+  String get settingsNLPermissionGrant => '點選來授予權限。';
+
+  @override
+  String get settingsNLPermissionNotGranted => '未取得權限。';
+
+  @override
+  String get settingsNLPermissionRemove => '是否取消權限？';
+
+  @override
+  String get settingsNLPermissionRemoveHelp =>
+      '若您想要停用這個服務，請點擊 App，然後在下一個畫面移除相關權限。';
+
+  @override
+  String get settingsNLPrefillTXTitle => '用通知標題作為交易標題';
+
+  @override
+  String get settingsNLServiceChecking => '正在檢查狀態…';
+
+  @override
+  String settingsNLServiceCheckingError(String error) {
+    return '無法檢查狀態：$error';
+  }
+
+  @override
+  String get settingsNLServiceRunning => '服務已啟動。';
+
+  @override
+  String get settingsNLServiceStatus => '服務狀態';
+
+  @override
+  String get settingsNLServiceStopped => '服務已經停止。';
+
+  @override
+  String get settingsNotificationListener => '通知監聽服務';
+
+  @override
+  String get settingsTheme => 'App 樣式';
+
+  @override
+  String get settingsThemeDynamicColors => '自動樣式';
+
+  @override
+  String settingsThemeValue(String theme) {
+    String _temp0 = intl.Intl.selectLogic(theme, {
+      'dark': '深色模式',
+      'light': '淺色模式',
+      'other': '系統預設',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get settingsUseServerTimezone => '使用伺服器的時區';
+
+  @override
+  String get settingsUseServerTimezoneHelp => '以伺服器上的時區設定來顯示時間。這與網頁介面的行為相同。';
+
+  @override
+  String get settingsVersion => '版本';
+
+  @override
+  String get settingsVersionChecking => '檢查中…';
+
+  @override
+  String get transactionAttachments => '附件';
+
+  @override
+  String get transactionDeleteConfirm => '您確定要刪除這筆交易記錄嗎？';
+
+  @override
+  String get transactionDialogAttachmentsDelete => '刪除附件';
+
+  @override
+  String get transactionDialogAttachmentsDeleteConfirm => '您確定要刪除這個附件嗎？';
+
+  @override
+  String get transactionDialogAttachmentsErrorDownload => '無法下載檔案。';
+
+  @override
+  String transactionDialogAttachmentsErrorOpen(String error) {
+    return '無法開啟檔案：$error';
+  }
+
+  @override
+  String transactionDialogAttachmentsErrorUpload(String error) {
+    return '無法上傳檔案：$error';
+  }
+
+  @override
+  String get transactionDialogAttachmentsTitle => '附件';
+
+  @override
+  String get transactionDialogBillNoBill => '沒有帳單';
+
+  @override
+  String get transactionDialogBillTitle => '連結帳單';
+
+  @override
+  String get transactionDialogCurrencyTitle => '選擇幣別';
+
+  @override
+  String get transactionDialogPiggyNoPiggy => '沒有小豬撲滿';
+
+  @override
+  String get transactionDialogPiggyTitle => '連結小豬撲滿';
+
+  @override
+  String get transactionDialogTagsAdd => '新增標籤';
+
+  @override
+  String get transactionDialogTagsHint => '搜尋或新增標籤';
+
+  @override
+  String get transactionDialogTagsTitle => '選擇標籤';
+
+  @override
+  String get transactionDuplicate => '複製一份';
+
+  @override
+  String get transactionErrorInvalidAccount => '帳戶無效';
+
+  @override
+  String get transactionErrorInvalidBudget => '預算項目無效';
+
+  @override
+  String get transactionErrorNoAccounts => '您必須先選擇帳戶。';
+
+  @override
+  String get transactionErrorNoAssetAccount => '請選擇資產帳戶。';
+
+  @override
+  String get transactionErrorTitle => '請填寫標題。';
+
+  @override
+  String get transactionFormLabelAccountDestination => '收款帳戶';
+
+  @override
+  String get transactionFormLabelAccountForeign => '外部帳戶';
+
+  @override
+  String get transactionFormLabelAccountOwn => '自有帳戶';
+
+  @override
+  String get transactionFormLabelAccountSource => '付款帳戶';
+
+  @override
+  String get transactionFormLabelNotes => '備註';
+
+  @override
+  String get transactionFormLabelTags => '標籤';
+
+  @override
+  String get transactionFormLabelTitle => '交易標題';
+
+  @override
+  String get transactionSplitAdd => '新增子交易';
+
+  @override
+  String get transactionSplitChangeCurrency => '更改子交易的幣別';
+
+  @override
+  String get transactionSplitChangeDestinationAccount => '更改子交易的收款帳戶';
+
+  @override
+  String get transactionSplitChangeSourceAccount => '更改子交易的付款帳戶';
+
+  @override
+  String get transactionSplitChangeTarget => '更改子交易的收款帳戶';
+
+  @override
+  String get transactionSplitDelete => '刪除子交易';
+
+  @override
+  String get transactionTitleAdd => '新增交易';
+
+  @override
+  String get transactionTitleDelete => '刪除交易';
+
+  @override
+  String get transactionTitleEdit => '編輯交易';
+
+  @override
+  String get transactionTypeDeposit => '存款';
+
+  @override
+  String get transactionTypeTransfer => '轉帳';
+
+  @override
+  String get transactionTypeWithdrawal => '提款';
 }

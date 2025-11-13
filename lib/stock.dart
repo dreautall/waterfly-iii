@@ -105,7 +105,7 @@ class TransStock with ChangeNotifier {
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
-  }) async {
+  }) {
     return _getStock
         .get(
           jsonEncode(
@@ -130,7 +130,7 @@ class TransStock with ChangeNotifier {
     String? start,
     String? end,
     enums.TransactionTypeFilter? type,
-  }) async {
+  }) {
     return _getAccountStock
         .get(
           jsonEncode(
@@ -153,7 +153,7 @@ class TransStock with ChangeNotifier {
     required String? query,
     int? page,
     int? limit,
-  }) async {
+  }) {
     return _getSearchStock
         .get(
           jsonEncode(

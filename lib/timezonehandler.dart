@@ -30,7 +30,7 @@ class TimeZoneHandler {
   Future<void> setUseServerTime(bool useServerTime) async {
     _useServerTime = useServerTime;
     log.finest(() => "set useServertime to $useServerTime");
-    updateDeviceLocation().then(
+    await updateDeviceLocation().then(
       (_) => tz.setLocalLocation(useServerTime ? sLocation : dLocation),
     );
   }

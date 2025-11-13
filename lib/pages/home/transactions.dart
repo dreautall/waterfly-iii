@@ -63,19 +63,6 @@ class _HomeTransactionsState extends State<HomeTransactions>
         type == ShortAccountTypeProperty.expense;
   }
 
-  double _updateBalance(
-    double balance,
-    double amount,
-    TransactionTypeProperty? type,
-  ) {
-    if (type == TransactionTypeProperty.withdrawal ||
-        type == TransactionTypeProperty.transfer) {
-      return balance + amount;
-    } else {
-      return balance - amount;
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -99,7 +86,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   ),
                   isSelected: !value,
                   tooltip: S.of(context).homeTransactionsSettingsShowTags,
-                  onPressed: () async {
+                  onPressed: () {
                     final SettingsProvider settings =
                         context.read<SettingsProvider>();
                     settings.hideTags = !settings.hideTags;
@@ -143,7 +130,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                       }
                       if (settings.transactionDateFilter !=
                           oldTransactionDateFilter) {
-                        settings.setTransactionDateFilter(
+                        await settings.setTransactionDateFilter(
                           oldTransactionDateFilter,
                         );
                         _txSum = TransactionSum();
@@ -199,7 +186,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     });
   }
 
-  void _fetchPage() async {
+  Future<void> _fetchPage() async {
     if (_pagingState.isLoading) return;
 
     final TransStock? stock = context.read<FireflyService>().transStock;
@@ -231,7 +218,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       }
 
       // Get start date
-      late DateTime? startDate;
+      late DateTime startDate;
       final DateTime now = _tzHandler.sNow().clearTime();
       switch (context.read<SettingsProvider>().transactionDateFilter) {
         case TransactionDateFilter.currentMonth:
@@ -247,7 +234,11 @@ class _HomeTransactionsState extends State<HomeTransactions>
           startDate = now.copyWith(year: now.year - 1);
           break;
         default:
-          startDate = null;
+          // Don't use 0 seconds, as DST & stuff might throw an error:
+          // "The start must be a date after 1970-01-02."
+          startDate = DateTime.fromMillisecondsSinceEpoch(
+            365 * 24 * 60 * 60 * 1000,
+          );
           break;
       }
 
@@ -263,10 +254,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
               context.read<SettingsProvider>().showFutureTXs
                   ? null
                   : DateFormat('yyyy-MM-dd', 'en_US').format(now),
-          start:
-              startDate != null
-                  ? DateFormat('yyyy-MM-dd', 'en_US').format(startDate)
-                  : null,
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(startDate),
         );
       } else if (_filters.hasFilters) {
         String query = _filters.text ?? "";
@@ -299,10 +287,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
             query = "tag_is:\"$tag\" $query";
           }
         }
-        if (startDate != null) {
-          query =
-              "date_after:${DateFormat('yyyy-MM-dd', 'en_US').format(startDate)} $query";
-        }
+        query =
+            "date_after:${DateFormat('yyyy-MM-dd', 'en_US').format(startDate)} $query";
         if (!context.read<SettingsProvider>().showFutureTXs) {
           query = "date_before:today $query";
         }
@@ -321,10 +307,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
               context.read<SettingsProvider>().showFutureTXs
                   ? null
                   : DateFormat('yyyy-MM-dd', 'en_US').format(now),
-          start:
-              startDate != null
-                  ? DateFormat('yyyy-MM-dd', 'en_US').format(startDate)
-                  : null,
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(startDate),
         );
       }
 
@@ -341,15 +324,27 @@ class _HomeTransactionsState extends State<HomeTransactions>
           balance *= -1;
         }
         for (TransactionRead item in transactionList) {
-          // Attempt to retrieve the transaction total amount
-          final TransactionSplit tx = item.attributes.transactions.first;
-          final double amount = double.tryParse(tx.amount) ?? 0.0;
-          // Should never be the case
-          if (amount == 0.0) {
-            continue;
-          }
           _runningBalancesByTransactionId[item.id] = balance;
-          balance = _updateBalance(balance, amount, tx.type);
+          // Attempt to retrieve the transaction total amount
+          for (TransactionSplit tx in item.attributes.transactions) {
+            final double amount = double.tryParse(tx.amount) ?? 0.0;
+            // Should never be the case
+            if (amount == 0.0) {
+              continue;
+            }
+
+            if (tx.type == TransactionTypeProperty.withdrawal) {
+              balance += amount;
+            } else if (tx.type == TransactionTypeProperty.transfer) {
+              if (tx.destinationId == account.id) {
+                balance -= amount;
+              } else {
+                balance += amount;
+              }
+            } else {
+              balance -= amount;
+            }
+          }
           _lastCalculatedBalance = balance;
         }
       }
@@ -416,6 +411,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
             _txSum = TransactionSum();
             context.read<FireflyService>().transStock!.clear();
             setState(() {
+              _lastCalculatedBalance = null;
               _pagingState = _pagingState.reset();
             });
           }),
@@ -709,6 +705,28 @@ class _HomeTransactionsState extends State<HomeTransactions>
       foreignText += " ";
     }
 
+    // Account balance
+    late double balance;
+    if (_filters.account != null) {
+      if (item.attributes.transactions.first.sourceBalanceAfter != null) {
+        balance =
+            double.tryParse(
+              item.attributes.transactions.first.destinationId ==
+                      _filters.account?.id
+                  ? item.attributes.transactions.first.destinationBalanceAfter!
+                  : item.attributes.transactions.first.sourceBalanceAfter!,
+            ) ??
+            0;
+        if (_filters.account!.attributes.type !=
+                ShortAccountTypeProperty.asset &&
+            balance != 0) {
+          balance *= -1;
+        }
+      } else {
+        balance = _runningBalancesByTransactionId[item.id] ?? 0;
+      }
+    }
+
     Widget transactionWidget = OpenContainer(
       openBuilder:
           (BuildContext context, Function closedContainer) =>
@@ -727,7 +745,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
             onLongPressStart: (LongPressStartDetails details) async {
               final Size screenSize = MediaQuery.of(context).size;
               final Offset offset = details.globalPosition;
-              HapticFeedback.vibrate();
+              unawaited(HapticFeedback.vibrate());
               final Function? func = await showMenu<Function>(
                 context: context,
                 position: RelativeRect.fromLTRB(
@@ -758,6 +776,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                         }
                       }
                       setState(() {
+                        _lastCalculatedBalance = null;
                         _pagingState = _pagingState.reset();
                       });
                     },
@@ -791,6 +810,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                         context.read<FireflyService>().transStock!.clear();
                       }
                       setState(() {
+                        _lastCalculatedBalance = null;
                         _pagingState = _pagingState.reset();
                       });
                     },
@@ -947,10 +967,14 @@ class _HomeTransactionsState extends State<HomeTransactions>
                           ),
                         if (_filters.account != null)
                           TextSpan(
-                            text: currency.fmt(
-                              _runningBalancesByTransactionId[item.id] ?? 0.0,
+                            text: currency.fmt(balance),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium!.copyWith(
+                              fontFeatures: const <FontFeature>[
+                                FontFeature.tabularFigures(),
+                              ],
                             ),
-                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         if (_filters.account == null)
                           TextSpan(
@@ -1006,6 +1030,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
           }
         }
         setState(() {
+          _lastCalculatedBalance = null;
           _pagingState = _pagingState.reset();
         });
       },

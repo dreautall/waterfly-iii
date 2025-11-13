@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -70,7 +72,7 @@ class _CategoriesPageState extends State<CategoriesPage>
           }
 
           // Refresh page
-          stock.reset();
+          await stock.reset();
           setState(() {});
         },
       ),
@@ -426,7 +428,7 @@ class CategoryLine extends StatelessWidget {
                     : (LongPressStartDetails details) async {
                       final Size screenSize = MediaQuery.of(context).size;
                       final Offset offset = details.globalPosition;
-                      HapticFeedback.vibrate();
+                      unawaited(HapticFeedback.vibrate());
                       final Function? func = await showMenu<Function>(
                         context: context,
                         position: RelativeRect.fromLTRB(
@@ -451,7 +453,7 @@ class CategoryLine extends StatelessWidget {
                               }
 
                               // Refresh page
-                              stock.reset();
+                              await stock.reset();
                               setState(() {});
                             },
                             child: Row(

@@ -258,6 +258,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  cupertino_http:
+    dependency: "direct main"
+    description:
+      name: cupertino_http
+      sha256: "72187f715837290a63479a5b0ae709f4fedad0ed6bd0441c275eceaa02d5abae"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
   dart_style:
     dependency: transitive
     description:
@@ -879,6 +887,14 @@ packages:
       url: "https://github.com/dreautall/notification_listener_service.git"
     source: git
     version: "0.0.2"
+  objective_c:
+    dependency: transitive
+    description:
+      name: objective_c
+      sha256: "9f034ba1eeca53ddb339bc8f4813cb07336a849cd735559b60cdc068ecce2dc7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.1.0"
   open_file_plus:
     dependency: "direct main"
     description:

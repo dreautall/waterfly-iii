@@ -74,7 +74,6 @@ class _WaterflyAppState extends State<WaterflyApp> {
     }
 
     // Quick Actions (Android + iOS)
-    // :TODO: icon on iOS
     const QuickActions quickActions = QuickActions();
     quickActions.initialize((String shortcutType) {
       log.info("Was launched from QuickAction $shortcutType");

@@ -215,7 +215,7 @@ class _TagDialogState extends State<TagDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog.adaptive(
+    return AlertDialog(
       title: Text(S.of(context).transactionDialogTagsTitle),
       clipBehavior: Clip.hardEdge,
       actions: <Widget>[

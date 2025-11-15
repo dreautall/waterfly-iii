@@ -67,7 +67,7 @@ class _DashboardDialogState extends State<DashboardDialog> {
       );
     }
 
-    return AlertDialog.adaptive(
+    return AlertDialog(
       title: Text(S.of(context).homeMainDialogSettingsTitle),
       clipBehavior: Clip.hardEdge,
       actions: <Widget>[

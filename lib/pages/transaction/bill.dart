@@ -42,7 +42,7 @@ class _BillDialogState extends State<BillDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog.adaptive(
+    return AlertDialog(
       icon: const Icon(Icons.calendar_today),
       title: Text(S.of(context).transactionDialogBillTitle),
       clipBehavior: Clip.hardEdge,

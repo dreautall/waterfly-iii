@@ -857,7 +857,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                     await showDialog<void>(
                       context: context,
                       builder:
-                          (BuildContext context) => AlertDialog.adaptive(
+                          (BuildContext context) => AlertDialog(
                             icon: const Icon(Icons.error),
                             title: Text(S.of(context).generalError),
                             clipBehavior: Clip.hardEdge,

@@ -37,7 +37,7 @@ class DebugDialog extends StatelessWidget {
             final bool? ok = await showDialog<bool>(
               context: context,
               builder:
-                  (BuildContext context) => AlertDialog.adaptive(
+                  (BuildContext context) => AlertDialog(
                     icon: const Icon(Icons.mail),
                     title: Text(S.of(context).settingsDialogDebugSendButton),
                     clipBehavior: Clip.hardEdge,

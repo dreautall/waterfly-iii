@@ -138,7 +138,7 @@ class FilterDialog extends StatelessWidget {
     final TransactionDateFilter oldTransactionDateFilter =
         context.read<SettingsProvider>().transactionDateFilter;
 
-    return AlertDialog.adaptive(
+    return AlertDialog(
       icon: const Icon(Icons.tune),
       title: Text(S.of(context).homeTransactionsDialogFilterTitle),
       clipBehavior: Clip.hardEdge,
@@ -192,7 +192,7 @@ class FilterDialog extends StatelessWidget {
                   child.add(
                     SizedBox(
                       width: inputWidth,
-                      child: CheckboxListTile.adaptive(
+                      child: SwitchListTile.adaptive(
                         value: context.watch<SettingsProvider>().showFutureTXs,
                         onChanged:
                             (bool? value) =>

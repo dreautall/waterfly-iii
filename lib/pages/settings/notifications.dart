@@ -101,7 +101,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                     final bool? ok = await showDialog<bool>(
                       context: context,
                       builder:
-                          (BuildContext context) => AlertDialog.adaptive(
+                          (BuildContext context) => AlertDialog(
                             icon: const Icon(Icons.remove_done),
                             title: Text(
                               S.of(context).settingsNLPermissionRemove,

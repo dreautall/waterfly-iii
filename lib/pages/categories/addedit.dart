@@ -67,7 +67,7 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
     //final Logger log = Logger("Pages.Categories.AddEditDialog");
     final double inputWidth = MediaQuery.of(context).size.width - 128 - 24;
 
-    return AlertDialog.adaptive(
+    return AlertDialog(
       icon: const Icon(Icons.assignment),
       title: Text(
         widget.category == null
@@ -238,7 +238,7 @@ class DeletionConfirmDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog.adaptive(
+    return AlertDialog(
       icon: const Icon(Icons.delete),
       title: Text(S.of(context).categoryTitleDelete),
       clipBehavior: Clip.hardEdge,

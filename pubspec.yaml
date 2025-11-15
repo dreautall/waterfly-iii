@@ -81,7 +81,7 @@ flutter:
 
 flutter_native_splash:
   android: true
-  ios: false
+  ios: true
   web: false
   color: "#fdfcfe"
   color_dark: "#1a1c1e"

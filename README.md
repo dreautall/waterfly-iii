@@ -16,7 +16,8 @@ also read the [FAQ](https://github.com/dreautall/waterfly-iii/blob/master/FAQ.md
 - General
   - Light & Dark mode, supports dynamic colors
   - Translation ready - [**help to translate via Crowdin**](https://crowdin.com/project/waterfly-iii)!
-  - Listen to incoming notifications (e.g., from Google Pay or your banking app) and pre-fill transactions
+  - Listen to incoming notifications (e.g., from Google Pay or your banking app) and pre-fill
+    transactions (*Android only*)
   - Option to require fingerprint to open the app
 - Dashboard
   - Five different charts charts for the current balance & recent history

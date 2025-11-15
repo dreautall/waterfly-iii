@@ -255,7 +255,7 @@ class NotificationApps extends StatelessWidget {
                       );
                       return const SizedBox.shrink();
                     } else {
-                      return const CircularProgressIndicator();
+                      return const CircularProgressIndicator.adaptive();
                     }
                   },
                 );
@@ -274,7 +274,7 @@ class NotificationApps extends StatelessWidget {
                 .settingsNLServiceCheckingError(snapshot.error.toString()),
           );
         } else {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator.adaptive());
         }
       },
     );
@@ -368,7 +368,7 @@ class _AppCardState extends State<AppCard> {
                     },
                   ),
                   const SizedBox(height: 16),
-                  CheckboxListTile(
+                  CheckboxListTile.adaptive(
                     title: Text(S.of(context).settingsNLPrefillTXTitle),
                     isThreeLine: false,
                     value: widget.settings.includeTitle,
@@ -385,7 +385,7 @@ class _AppCardState extends State<AppCard> {
                           );
                     },
                   ),
-                  CheckboxListTile(
+                  CheckboxListTile.adaptive(
                     title: Text(S.of(context).settingsNLAutoAdd),
                     isThreeLine: false,
                     value: widget.settings.autoAdd,
@@ -403,7 +403,7 @@ class _AppCardState extends State<AppCard> {
                           );
                     },
                   ),
-                  CheckboxListTile(
+                  CheckboxListTile.adaptive(
                     title: Text(S.of(context).settingsNLEmptyNote),
                     isThreeLine: false,
                     value: widget.settings.emptyNote,
@@ -487,7 +487,7 @@ class AppDialog extends StatelessWidget {
               Navigator.pop(context);
               return const SizedBox.shrink();
             } else {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator.adaptive());
             }
           },
         ),
@@ -537,7 +537,7 @@ class AppDialogEntry extends StatelessWidget {
           );
           return const SizedBox.shrink();
         } else {
-          return const CircularProgressIndicator();
+          return const CircularProgressIndicator.adaptive();
         }
       },
     );

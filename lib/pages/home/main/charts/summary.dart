@@ -267,7 +267,7 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
             } else {
               return const Padding(
                 padding: EdgeInsets.all(8),
-                child: Center(child: CircularProgressIndicator()),
+                child: Center(child: CircularProgressIndicator.adaptive()),
               );
             }
           },

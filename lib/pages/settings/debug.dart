@@ -20,7 +20,7 @@ class DebugDialog extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
           child: Text(S.of(context).settingsDialogDebugInfo),
         ),
-        SwitchListTile(
+        SwitchListTile.adaptive(
           value: context.select((SettingsProvider s) => s.debug),
           onChanged:
               (bool value) => context.read<SettingsProvider>().debug = value,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
@@ -49,28 +50,30 @@ class _WaterflyAppState extends State<WaterflyApp> {
   void initState() {
     super.initState();
 
-    // Notifications
-    FlutterLocalNotificationsPlugin().initialize(
-      const InitializationSettings(
-        android: AndroidInitializationSettings('ic_stat_notification'),
-      ),
-      onDidReceiveNotificationResponse: nlNotificationTap,
-    );
+    // Notifications (Android only)
+    if (Platform.isAndroid) {
+      FlutterLocalNotificationsPlugin().initialize(
+        const InitializationSettings(
+          android: AndroidInitializationSettings('ic_stat_notification'),
+        ),
+        onDidReceiveNotificationResponse: nlNotificationTap,
+      );
 
-    FlutterLocalNotificationsPlugin().getNotificationAppLaunchDetails().then((
-      NotificationAppLaunchDetails? details,
-    ) {
-      log.config("checking NotificationAppLaunchDetails");
-      if ((details?.didNotificationLaunchApp ?? false) &&
-          (details?.notificationResponse?.payload?.isNotEmpty ?? false)) {
-        log.info("Was launched from notification!");
-        _notificationPayload = NotificationTransaction.fromJson(
-          jsonDecode(details!.notificationResponse!.payload!),
-        );
-      }
-    });
+      FlutterLocalNotificationsPlugin().getNotificationAppLaunchDetails().then((
+        NotificationAppLaunchDetails? details,
+      ) {
+        log.config("checking NotificationAppLaunchDetails");
+        if ((details?.didNotificationLaunchApp ?? false) &&
+            (details?.notificationResponse?.payload?.isNotEmpty ?? false)) {
+          log.info("Was launched from notification!");
+          _notificationPayload = NotificationTransaction.fromJson(
+            jsonDecode(details!.notificationResponse!.payload!),
+          );
+        }
+      });
+    }
 
-    // Quick Actions
+    // Quick Actions (Android + iOS)
     const QuickActions quickActions = QuickActions();
     quickActions.initialize((String shortcutType) {
       log.info("Was launched from QuickAction $shortcutType");

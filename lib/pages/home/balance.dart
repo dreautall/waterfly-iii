@@ -46,7 +46,7 @@ class _HomeBalanceState extends State<HomeBalance>
     super.build(context);
     log.finest(() => "build()");
 
-    return RefreshIndicator(
+    return RefreshIndicator.adaptive(
       onRefresh: _refreshStats,
       child: FutureBuilder<AccountArray>(
         future: _fetchAccounts(),
@@ -168,7 +168,7 @@ class _HomeBalanceState extends State<HomeBalance>
           } else {
             return const Padding(
               padding: EdgeInsets.all(8),
-              child: Center(child: CircularProgressIndicator()),
+              child: Center(child: CircularProgressIndicator.adaptive()),
             );
           }
         },

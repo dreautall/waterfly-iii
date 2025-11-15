@@ -8,6 +8,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/accounts/row.dart';
+import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
 
 class AccountSearch extends StatefulWidget {
   const AccountSearch({super.key, required this.type});
@@ -204,24 +205,22 @@ class _AccountSearchState extends State<AccountSearch> {
                     ? PagedListView<int, AccountRead>(
                       state: _pagingState,
                       fetchNextPage: _fetchPage,
-                      builderDelegate: PagedChildBuilderDelegate<AccountRead>(
-                        animateTransitions: true,
-                        transitionDuration: animDurationStandard,
-                        invisibleItemsThreshold: 10,
-                        itemBuilder:
-                            (
-                              BuildContext context,
-                              AccountRead item,
-                              int index,
-                            ) => accountRowBuilder(
-                              context,
-                              item,
-                              index,
-                              () => setState(() {
-                                _pagingState = _pagingState.reset();
-                              }),
-                            ),
-                      ),
+                      builderDelegate:
+                          customPagedChildBuilderDelegate<AccountRead>(
+                            itemBuilder:
+                                (
+                                  BuildContext context,
+                                  AccountRead item,
+                                  int index,
+                                ) => accountRowBuilder(
+                                  context,
+                                  item,
+                                  index,
+                                  () => setState(() {
+                                    _pagingState = _pagingState.reset();
+                                  }),
+                                ),
+                          ),
                     )
                     : const SizedBox.expand(),
           ),

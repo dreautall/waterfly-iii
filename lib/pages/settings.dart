@@ -326,7 +326,7 @@ class ThemeDialog extends StatelessWidget {
           child: Column(
             children: <Widget>[
               ...ThemeMode.values.map(
-          (ThemeMode theme) => RadioListTile<ThemeMode>.adaptive(
+                (ThemeMode theme) => RadioListTile<ThemeMode>.adaptive(
                   value: theme,
                   title: Text(
                     S

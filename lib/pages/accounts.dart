@@ -8,8 +8,8 @@ import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/accounts/search.dart';
 import 'package:waterflyiii/pages/home/accounts/row.dart';
-import 'package:waterflyiii/pages/home/accounts/search.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 
 final Logger log = Logger("Pages.Accounts");

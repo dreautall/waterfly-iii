@@ -480,160 +480,147 @@ class CategoryLine extends StatelessWidget {
                 ),
               ),
               onTap: () => openContainer(),
-              child: Semantics(
-                enabled: true,
-                child: Ink(
-                  decoration: const ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        bottomLeft: Radius.circular(16),
-                      ),
+              child: Ink(
+                decoration: const ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      bottomLeft: Radius.circular(16),
                     ),
                   ),
-                  child: SafeArea(
-                    top: false,
-                    bottom: false,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8,
-                        horizontal: 16,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 16,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
                         children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                category.attributes.name == "L10NNONE"
-                                    ? S.of(context).catNone
-                                    : category.attributes.name,
-                                style: Theme.of(
-                                  context,
-                                ).textTheme.bodyLarge?.copyWith(
-                                  color:
-                                      !excluded
-                                          ? Theme.of(
-                                            context,
-                                          ).colorScheme.onSurface
-                                          : Theme.of(context).disabledColor,
-                                ),
-                              ),
-                              if (!excluded)
-                                ActionChip(
-                                  label: Text(
-                                    excluded
-                                        ? "Excluded"
-                                        : NumberFormat.percentPattern().format(
-                                          totalBalance < 0
-                                              ? cs.sumSpent / totalSpent
-                                              : cs.sumEarned / totalEarned,
-                                        ),
-                                  ),
-                                  labelStyle:
-                                      Theme.of(context).textTheme.labelLarge,
-                                  labelPadding: const EdgeInsets.symmetric(
-                                    horizontal: 2,
-                                    vertical: -4,
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 2,
-                                    vertical: -4,
-                                  ),
-                                  side: BorderSide(
-                                    color:
-                                        totalBalance < 0
-                                            ? Colors.red
-                                            : totalBalance > 0
-                                            ? Colors.green
-                                            : Colors.grey,
-                                  ),
-                                ),
-                              // Completely separate due to different paddings
-                              if (excluded) const SizedBox(width: 6),
-                              if (excluded)
-                                ActionChip(
-                                  label: Text(
-                                    S.of(context).categorySumExcluded,
-                                  ),
-                                  labelStyle:
-                                      Theme.of(context).textTheme.labelLarge,
-                                  labelPadding: const EdgeInsets.symmetric(
-                                    horizontal: 4,
-                                    vertical: -4,
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 4,
-                                    vertical: -4,
-                                  ),
-                                ),
-                            ],
+                          Text(
+                            category.attributes.name == "L10NNONE"
+                                ? S.of(context).catNone
+                                : category.attributes.name,
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyLarge?.copyWith(
+                              color:
+                                  !excluded
+                                      ? Theme.of(context).colorScheme.onSurface
+                                      : Theme.of(context).disabledColor,
+                            ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              const Expanded(child: SizedBox.shrink()),
-                              Expanded(
-                                child: Text(
-                                  defaultCurrency.fmt(cs.sumSpent),
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(
-                                    color:
-                                        cs.sumSpent < 0
-                                            ? Colors.red
-                                            : cs.sumSpent > 0
-                                            ? Colors.green
-                                            : Colors.grey,
-                                    fontWeight: FontWeight.bold,
-                                    fontFeatures: const <FontFeature>[
-                                      FontFeature.tabularFigures(),
-                                    ],
-                                  ),
-                                ),
+                          if (!excluded)
+                            ActionChip(
+                              label: Text(
+                                excluded
+                                    ? "Excluded"
+                                    : NumberFormat.percentPattern().format(
+                                      totalBalance < 0
+                                          ? cs.sumSpent / totalSpent
+                                          : cs.sumEarned / totalEarned,
+                                    ),
                               ),
-                              Expanded(
-                                child: Text(
-                                  defaultCurrency.fmt(cs.sumEarned),
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(
-                                    color:
-                                        cs.sumEarned < 0
-                                            ? Colors.red
-                                            : cs.sumEarned > 0
-                                            ? Colors.green
-                                            : Colors.grey,
-                                    fontWeight: FontWeight.bold,
-                                    fontFeatures: const <FontFeature>[
-                                      FontFeature.tabularFigures(),
-                                    ],
-                                  ),
-                                ),
+                              labelStyle:
+                                  Theme.of(context).textTheme.labelLarge,
+                              labelPadding: const EdgeInsets.symmetric(
+                                horizontal: 2,
+                                vertical: -4,
                               ),
-                              Expanded(
-                                child: Text(
-                                  defaultCurrency.fmt(
-                                    cs.sumSpent + cs.sumEarned,
-                                  ),
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(
-                                    color:
-                                        totalBalance < 0
-                                            ? Colors.red
-                                            : totalBalance > 0
-                                            ? Colors.green
-                                            : Colors.grey,
-                                    fontWeight: FontWeight.bold,
-                                    fontFeatures: const <FontFeature>[
-                                      FontFeature.tabularFigures(),
-                                    ],
-                                  ),
-                                ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 2,
+                                vertical: -4,
                               ),
-                            ],
+                              side: BorderSide(
+                                color:
+                                    totalBalance < 0
+                                        ? Colors.red
+                                        : totalBalance > 0
+                                        ? Colors.green
+                                        : Colors.grey,
+                              ),
+                            ),
+                          // Completely separate due to different paddings
+                          if (excluded) const SizedBox(width: 6),
+                          if (excluded)
+                            ActionChip(
+                              label: Text(S.of(context).categorySumExcluded),
+                              labelStyle:
+                                  Theme.of(context).textTheme.labelLarge,
+                              labelPadding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                                vertical: -4,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                                vertical: -4,
+                              ),
+                            ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          const Expanded(child: SizedBox.shrink()),
+                          Expanded(
+                            child: Text(
+                              defaultCurrency.fmt(cs.sumSpent),
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                color:
+                                    cs.sumSpent < 0
+                                        ? Colors.red
+                                        : cs.sumSpent > 0
+                                        ? Colors.green
+                                        : Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontFeatures: const <FontFeature>[
+                                  FontFeature.tabularFigures(),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              defaultCurrency.fmt(cs.sumEarned),
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                color:
+                                    cs.sumEarned < 0
+                                        ? Colors.red
+                                        : cs.sumEarned > 0
+                                        ? Colors.green
+                                        : Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontFeatures: const <FontFeature>[
+                                  FontFeature.tabularFigures(),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              defaultCurrency.fmt(cs.sumSpent + cs.sumEarned),
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                color:
+                                    totalBalance < 0
+                                        ? Colors.red
+                                        : totalBalance > 0
+                                        ? Colors.green
+                                        : Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontFeatures: const <FontFeature>[
+                                  FontFeature.tabularFigures(),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),

@@ -573,7 +573,7 @@
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
     },
-    "homeMainChartTagsTitle": "Podsumowanie tagów dla bieżącego miesiąca",
+    "homeMainChartTagsTitle": "Bilans tagów dla bieżącego miesiąca",
     "@homeMainChartTagsTitle": {
         "description": "Chart Label: Tags Summary"
     },

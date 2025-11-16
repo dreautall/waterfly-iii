@@ -36,7 +36,7 @@ void main() {
             ],
             "meta": <String, Map<String, int>>{
               "pagination": <String, int>{
-                "total": 3,
+                "total": 1,
                 "count": 20,
                 "per_page": 100,
                 "current_page": 1,
@@ -297,6 +297,14 @@ void main() {
         cadCurrency,
       );
       expect(extractedAmount, 12.34);
+
+      (extractedCurrency, extractedAmount) = await parseNotificationText(
+        apiService,
+        r"There was an authorization for $12.34 at WALMART STORE #1234 on account credit_card_number_here at 6:59 pm ET. If you didn't do this, call 1-xxx-xxx-xxxx,",
+        cadCurrency,
+      );
+      expect(extractedAmount, 12.34);
+      expect(extractedCurrency?.attributes.code, "CAD");
     });
   });
 }

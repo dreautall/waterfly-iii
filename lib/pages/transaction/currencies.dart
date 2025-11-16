@@ -16,6 +16,11 @@ class CurrencyDialog extends StatelessWidget {
     apiThrowErrorIfEmpty(response, context.mounted ? context : null);
 
     final List<CurrencyRead> currencies = response.body!.data;
+
+    currencies.removeWhere(
+      (CurrencyRead currency) => currency.attributes.enabled != true,
+    );
+
     currencies.sort((CurrencyRead a, CurrencyRead b) {
       if (a.id == context.read<FireflyService>().defaultCurrency.id) {
         return -1;

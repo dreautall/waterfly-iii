@@ -298,6 +298,9 @@ Future<(CurrencyRead?, double)> parseNotificationText(
   if (matches.isNotEmpty) {
     final List<CurrencyRead> currencies =
         (await api.v1CurrenciesGet()).body!.data;
+    currencies.removeWhere(
+      (CurrencyRead currency) => currency.attributes.enabled != true,
+    );
     currencies.add(localCurrency);
 
     int bestMatchIndex = -1;

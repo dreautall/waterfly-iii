@@ -449,7 +449,7 @@ class SPl extends S {
 
   @override
   String get homeMainChartCategoriesTitle =>
-      'Podsumowanie kategorii dla bieżącego miesiąca';
+      'Bilans kategorii dla bieżącego miesiąca';
 
   @override
   String get homeMainChartDailyAvg => 'Średnia z 7 dni';
@@ -464,8 +464,7 @@ class SPl extends S {
   String get homeMainChartNetWorthTitle => 'Wartość netto';
 
   @override
-  String get homeMainChartTagsTitle =>
-      'Podsumowanie tagów dla bieżącego miesiąca';
+  String get homeMainChartTagsTitle => 'Bilans tagów dla bieżącego miesiąca';
 
   @override
   String get homePiggyAdjustDialogTitle => 'Wrzuć/Wyjmij Pieniądze';

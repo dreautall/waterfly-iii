@@ -338,7 +338,13 @@ class FilterDialog extends StatelessWidget {
                     ),
                   ];
                   CurrencyRead? currentCurrency = currencyOptions.first.value;
-                  for (CurrencyRead e in snapshot.data!.currencies) {
+                  final List<CurrencyRead> currencies =
+                      snapshot.data!.currencies;
+                  currencies.removeWhere(
+                    (CurrencyRead currency) =>
+                        currency.attributes.enabled != true,
+                  );
+                  for (CurrencyRead e in currencies) {
                     currencyOptions.add(
                       DropdownMenuEntry<CurrencyRead>(
                         value: e,

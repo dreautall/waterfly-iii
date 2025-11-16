@@ -553,7 +553,7 @@
     "@homeMainChartAccountsTitle": {
         "description": "Chart Label: Account Summary"
     },
-    "homeMainChartCategoriesTitle": "Podsumowanie kategorii dla bieżącego miesiąca",
+    "homeMainChartCategoriesTitle": "Bilans kategorii dla bieżącego miesiąca",
     "@homeMainChartCategoriesTitle": {
         "description": "Chart Label: Category Summary"
     },
@@ -573,7 +573,7 @@
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
     },
-    "homeMainChartTagsTitle": "Podsumowanie tagów dla bieżącego miesiąca",
+    "homeMainChartTagsTitle": "Bilans tagów dla bieżącego miesiąca",
     "@homeMainChartTagsTitle": {
         "description": "Chart Label: Tags Summary"
     },

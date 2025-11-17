@@ -267,7 +267,8 @@ class FireflyService with ChangeNotifier {
     }
 
     try {
-      return signIn(apiHost, apiKey);
+      await signIn(apiHost, apiKey);
+      return true;
     } catch (e) {
       _storageSignInException = e;
       log.finest(() => "notify FireflyService->signInFromStorage");

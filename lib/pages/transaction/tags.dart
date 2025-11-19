@@ -314,7 +314,7 @@ class _TagDialogState extends State<TagDialog> {
                     continue;
                   }
                   child.add(
-                    CheckboxListTile(
+                    CheckboxListTile.adaptive(
                       value: _newSelectedTags.containsIgnoreCase(tag),
                       onChanged: (bool? selected) {
                         setAlertState(() {
@@ -358,9 +358,9 @@ class _TagDialogState extends State<TagDialog> {
               snapshot.stackTrace,
             );
             Navigator.pop(context);
-            return const CircularProgressIndicator();
+            return const CircularProgressIndicator.adaptive();
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator.adaptive());
           }
         },
       ),

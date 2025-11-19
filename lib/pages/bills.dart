@@ -92,7 +92,7 @@ class _BillsPageState extends State<BillsPage>
       ];
     });
 
-    return RefreshIndicator(
+    return RefreshIndicator.adaptive(
       onRefresh: () async => setState(() {}),
       child: FutureBuilder<Map<String, List<BillRead>>>(
         future: _fetchBills(),
@@ -101,7 +101,7 @@ class _BillsPageState extends State<BillsPage>
           AsyncSnapshot<Map<String, List<BillRead>>> snapshot,
         ) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator.adaptive());
           }
           if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
             log.severe(

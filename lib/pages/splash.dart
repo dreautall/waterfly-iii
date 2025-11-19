@@ -89,7 +89,7 @@ class _SplashPageState extends State<SplashPage> {
       log.finer(() => "_loginError null --> show spinner");
       page = Container(
         alignment: const Alignment(0, 0),
-        child: const CircularProgressIndicator(),
+        child: const CircularProgressIndicator.adaptive(),
       );
       const QuickActions().setShortcutItems(<ShortcutItem>[
         ShortcutItem(

@@ -75,7 +75,7 @@ class BillChartState extends State<BillChart> {
     // Still loading
     return const SizedBox(
       height: 141, // Measured final chart height
-      child: Center(child: CircularProgressIndicator()),
+      child: Center(child: CircularProgressIndicator.adaptive()),
     );
   }
 

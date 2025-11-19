@@ -70,9 +70,9 @@ class CurrencyDialog extends StatelessWidget {
                 snapshot.stackTrace,
               );
               Navigator.pop(context);
-              return const CircularProgressIndicator();
+              return const CircularProgressIndicator.adaptive();
             } else {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator.adaptive());
             }
           },
         ),

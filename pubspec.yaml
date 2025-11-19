@@ -58,6 +58,7 @@ dependencies:
       url: https://github.com/postflow/open_file_plus.git
       ref: main
   cronet_http: ^1.5.0
+  cupertino_http: ^2.3.0
 
 dev_dependencies:
   flutter_lints: ^6.0.0
@@ -80,7 +81,7 @@ flutter:
 
 flutter_native_splash:
   android: true
-  ios: false
+  ios: true
   web: false
   color: "#fdfcfe"
   color_dark: "#1a1c1e"

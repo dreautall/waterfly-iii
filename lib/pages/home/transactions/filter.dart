@@ -192,7 +192,7 @@ class FilterDialog extends StatelessWidget {
                   child.add(
                     SizedBox(
                       width: inputWidth,
-                      child: CheckboxListTile(
+                      child: SwitchListTile.adaptive(
                         value: context.watch<SettingsProvider>().showFutureTXs,
                         onChanged:
                             (bool? value) =>
@@ -610,7 +610,9 @@ class FilterDialog extends StatelessWidget {
                   Navigator.pop(context);
                   return const SizedBox.shrink();
                 } else {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  );
                 }
               },
             ),

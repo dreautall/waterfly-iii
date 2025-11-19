@@ -214,7 +214,7 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
             if (widget.category != null)
               SizedBox(
                 width: inputWidth,
-                child: SwitchListTile(
+                child: SwitchListTile.adaptive(
                   title: Text(S.of(context).categoryFormLabelIncludeInSum),
                   value: includeInSum,
                   isThreeLine: false,

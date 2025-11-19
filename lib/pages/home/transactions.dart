@@ -8,7 +8,6 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
@@ -20,6 +19,7 @@ import 'package:waterflyiii/pages/transaction/delete.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
+import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
 
 class TransactionSum {
   double withdrawals = 0;
@@ -403,7 +403,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     log.finest(() => "build()");
     super.build(context);
 
-    return RefreshIndicator(
+    return RefreshIndicator.adaptive(
       onRefresh:
           () => Future<void>.sync(() {
             _rowsWithDate = <int>[];
@@ -418,10 +418,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       child: PagedListView<int, TransactionRead>(
         state: _pagingState,
         fetchNextPage: _fetchPage,
-        builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
-          animateTransitions: true,
-          transitionDuration: animDurationStandard,
-          invisibleItemsThreshold: 10,
+        builderDelegate: customPagedChildBuilderDelegate<TransactionRead>(
           itemBuilder: transactionRowBuilder,
           noMoreItemsIndicatorBuilder: (BuildContext context) {
             final CurrencyRead defaultCurrency =

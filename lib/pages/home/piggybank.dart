@@ -14,6 +14,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/piggybank/chart.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
+import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
 
 class AccountStatusData {
@@ -193,7 +194,7 @@ class _HomePiggybankState extends State<HomePiggybank>
 
     int lastGroupId = -1;
 
-    return RefreshIndicator(
+    return RefreshIndicator.adaptive(
       onRefresh:
           () => Future<void>.sync(
             () => setState(() {
@@ -203,10 +204,7 @@ class _HomePiggybankState extends State<HomePiggybank>
       child: PagedListView<int, PiggyBankRead>(
         state: _pagingState,
         fetchNextPage: _fetchPage,
-        builderDelegate: PagedChildBuilderDelegate<PiggyBankRead>(
-          animateTransitions: true,
-          transitionDuration: animDurationStandard,
-          invisibleItemsThreshold: 10,
+        builderDelegate: customPagedChildBuilderDelegate<PiggyBankRead>(
           itemBuilder: (BuildContext context, PiggyBankRead piggy, int index) {
             Widget? groupHeader;
             final int groupId =
@@ -609,7 +607,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
               } else {
                 return const Padding(
                   padding: EdgeInsets.all(8),
-                  child: Center(child: CircularProgressIndicator()),
+                  child: Center(child: CircularProgressIndicator.adaptive()),
                 );
               }
             },

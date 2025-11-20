@@ -1080,10 +1080,10 @@ abstract class S {
   /// **'Categories'**
   String get navigationCategories;
 
-  /// Navigation Label: Main Dashboard
+  /// Navigation Label: Dashboard
   ///
   /// In en, this message translates to:
-  /// **'Main Dashboard'**
+  /// **'Dashboard'**
   String get navigationMain;
 
   /// Label: Settings

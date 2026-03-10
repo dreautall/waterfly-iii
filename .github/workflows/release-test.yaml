@@ -1,0 +1,122 @@
+name: Build
+
+on:
+  workflow_dispatch: 
+  release:
+    types:
+      - created
+  push:
+    branches:
+      - develop
+
+env:
+  PROPERTIES_PATH: "./android/key.properties"
+
+jobs:
+  # check:
+  #   uses: ./.github/workflows/commit.yml
+  #   name: codecheck
+
+  build:
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, '[skip build]') }}
+    # needs: [check]
+
+    steps:
+      - uses: actions/checkout@v5
+
+      # Call setup_env action to setup workspace
+      - uses: ./.github/actions/setup_env
+        with:
+          java-version: 17.x
+          flutter-channel: stable
+
+      # Generate keystore
+      - uses: timheuer/base64-to-file@v1.2
+        id: android_keystore
+        with:
+          fileName: upload-keystore.jks
+          encodedString: ${{ secrets.KEYSTORE_BASE64 }}
+
+      - run: |
+          flutter pub run rename setBundleId --value "com.waterflyiii.test" --targets android
+
+      # Create key.properties
+      - run: |
+          echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > ${{env.PROPERTIES_PATH}}
+          echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
+          echo "keyAlias=upload" >> ${{env.PROPERTIES_PATH}}
+
+      # Set build number
+      - run: |
+          sed -i 's/^\(version: [0-9\.]\{1,\}\(-[a-z]\{1,\}\)\{0,1\}\([0-9\.]\)\{0,\}\)$/\1+${{ github.run_number }}/m' pubspec.yaml
+
+      # Build l10n files
+      - run: mkdir -p build && flutter gen-l10n
+
+      # Build apk.
+      - run: flutter build apk --release --split-per-abi --target-platform android-arm64 --dart-define=cronetHttpNoPlay=true
+     # - run: flutter build apk --obfuscate --split-debug-info=build/app/outputs/symbols/apk --release --split-per-abi --target-platform android-arm64 --dart-define=cronetHttpNoPlay=true
+
+      # Build aab
+      # Since the aab is only distributed to the play store and never uploaded somewhere else, we can use the Google Play Services cronet here.
+    #  - run: flutter build appbundle --obfuscate --split-debug-info=build/app/outputs/symbols/aab --release
+
+      # Zip symbols
+     # - uses: montudor/action-zip@v1
+     # - run: zip -qq -r aab-debug-symbols.zip *
+      #  working-directory: build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/
+
+      # Upload generated apk to the artifacts.
+      - uses: actions/upload-artifact@v5
+        with:
+          name: app-arm64-v8a-release.apk
+          path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
+    #  - uses: actions/upload-artifact@v5
+      #  with:
+     #     name: app-armeabi-v7a-release.apk
+    #      path: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
+      #- uses: actions/upload-artifact@v5
+    #    with:
+    #      name: app-x86_64-release.apk
+    #      path: build/app/outputs/flutter-apk/app-x86_64-release.apk
+
+     # - uses: actions/upload-artifact@v5
+     #   with:
+     #     name: app-release.aab
+      #    path: build/app/outputs/bundle/release/app-release.aab
+     # - uses: actions/upload-artifact@v5
+     #   with:
+    #      name: aab-debug-symbols.zip
+      #    path: build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/aab-debug-symbols.zip
+      - uses: actions/upload-artifact@v5
+        with:
+          name: mapping.txt
+          path: build/app/outputs/mapping/release/mapping.txt
+
+  upload-to-github:
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - uses: actions/download-artifact@v6
+        with:
+          name: app-arm64-v8a-release.apk
+          path: ./artifacts
+      - uses: actions/download-artifact@v6
+        with:
+          name: app-armeabi-v7a-release.apk
+          path: ./artifacts
+      - uses: actions/download-artifact@v6
+        with:
+          name: app-x86_64-release.apk
+          path: ./artifacts
+      
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ./artifacts/app-arm64-v8a-release.apk
+            ./artifacts/app-armeabi-v7a-release.apk
+            ./artifacts/app-x86_64-release.apk

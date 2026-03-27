@@ -825,6 +825,10 @@
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
+    "navigationMain": "Dashboard",
+    "@navigationMain": {
+        "description": "Navigation Label: Dashboard"
+    },
     "generalSettings": "Einstellungen",
     "@generalSettings": {
         "description": "Label: Settings"
@@ -945,6 +949,38 @@
     "settingsNLEmptyNote": "Notizfeld leer lassen",
     "@settingsNLEmptyNote": {
         "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
+    },
+    "settingsNLHistory": "Benachrichtigungsverlauf",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "Bisher keine Benachrichtigungen.",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "Dies ist ein Verlauf der letzten {notificationHistorySize} Benachrichtigungen, die die App empfangen hat. Zusätzlich können Transaktionen aus (gültigen) Benachrichtigungen erstellt werden, oder es wird der Grund angezeigt, warum eine Benachrichtigung nicht verarbeitet werden konnte.",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "Benachrichtigung übersprungen: {reason, select, noMoney{Kein Geldwert gefunden} noCurrency{Keine Währung gefunden} appNotUsed{App nicht eingerichtet} other{Unbekannter Grund}}.",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "Bisherige Benachrichtigungen auflisten",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
     },
     "settingsNLPermissionGrant": "Klicke, um die Berechtigung zu erteilen.",
     "@settingsNLPermissionGrant": {

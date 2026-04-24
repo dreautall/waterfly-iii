@@ -46,19 +46,16 @@ class NumberInput extends StatelessWidget {
         onChanged: onChanged as void Function(String)?,
         readOnly: disabled,
         enabled: !disabled,
-        keyboardType: TextInputType.numberWithOptions(
+        keyboardType: .numberWithOptions(
           decimal: (decimals > 0),
           signed: false,
         ),
         inputFormatters: <TextInputFormatter>[
-          TextInputFormatter.withFunction(
+          .withFunction(
             (TextEditingValue oldValue, TextEditingValue newValue) =>
                 newValue.copyWith(text: newValue.text.replaceAll(',', '.')),
           ),
-          TextInputFormatter.withFunction((
-            TextEditingValue oldValue,
-            TextEditingValue newValue,
-          ) {
+          .withFunction((TextEditingValue oldValue, TextEditingValue newValue) {
             if (newValue.composing != TextRange.empty) {
               return newValue;
             }
@@ -88,7 +85,7 @@ class NumberInput extends StatelessWidget {
                     newValue.text.substring(oldValue.text.length);
                 return newValue.copyWith(
                   text: newText,
-                  selection: TextSelection.collapsed(offset: newText.length),
+                  selection: .collapsed(offset: newText.length),
                 );
               }
             }

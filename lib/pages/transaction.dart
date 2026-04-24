@@ -82,13 +82,11 @@ class _TransactionPageState extends State<TransactionPage>
   final TextEditingController _sourceAccountTextController =
       TextEditingController();
   final FocusNode _sourceAccountFocusNode = FocusNode();
-  AccountTypeProperty _sourceAccountType =
-      AccountTypeProperty.swaggerGeneratedUnknown;
+  AccountTypeProperty _sourceAccountType = .swaggerGeneratedUnknown;
   final TextEditingController _destinationAccountTextController =
       TextEditingController();
   final FocusNode _destinationAccountFocusNode = FocusNode();
-  AccountTypeProperty _destinationAccountType =
-      AccountTypeProperty.swaggerGeneratedUnknown;
+  AccountTypeProperty _destinationAccountType = .swaggerGeneratedUnknown;
   final TextEditingController _localAmountTextController =
       TextEditingController();
 
@@ -171,13 +169,13 @@ class _TransactionPageState extends State<TransactionPage>
 
       /// own account
       switch (_transactionType) {
-        case TransactionTypeProperty.withdrawal:
-        case TransactionTypeProperty.transfer:
+        case .withdrawal:
+        case .transfer:
           _ownAccountId = transactions.first.sourceId;
           break;
-        case TransactionTypeProperty.deposit:
-        case TransactionTypeProperty.openingBalance:
-        case TransactionTypeProperty.reconciliation:
+        case .deposit:
+        case .openingBalance:
+        case .reconciliation:
           _ownAccountId = transactions.first.destinationId;
           break;
         default:
@@ -235,7 +233,7 @@ class _TransactionPageState extends State<TransactionPage>
                 amountMin: "",
                 amountMax: "",
                 date: DateTime.now(),
-                repeatFreq: BillRepeatFrequency.swaggerGeneratedUnknown,
+                repeatFreq: .swaggerGeneratedUnknown,
               ),
             ),
           );
@@ -348,7 +346,7 @@ class _TransactionPageState extends State<TransactionPage>
     } else {
       // New transaction
       _titleFocusNode.requestFocus();
-      _transactionType = TransactionTypeProperty.swaggerGeneratedUnknown;
+      _transactionType = .swaggerGeneratedUnknown;
 
       if (widget.notification != null) {
         _date = _tzHandler
@@ -367,21 +365,23 @@ class _TransactionPageState extends State<TransactionPage>
           final SettingsProvider settings = context.read<SettingsProvider>();
 
           log.info("Got notification ${widget.notification?.title}");
-          _transactionType = TransactionTypeProperty.withdrawal;
+          _transactionType = .withdrawal;
+
+          // Amount & Currency
           final CurrencyRead defaultCurrency = context
               .read<FireflyService>()
               .defaultCurrency;
+          final NotificationAppSettings appSettings = await settings
+              .notificationGetAppSettings(widget.notification!.appName);
           late CurrencyRead? currency;
           late double amount;
-
           (currency, amount) = await parseNotificationText(
             api,
             widget.notification!.body,
             _localCurrency!,
+            userRegex: appSettings.regex,
           );
-
-          // Fallback solution
-          currency ??= defaultCurrency;
+          currency ??= defaultCurrency; // Fallback solution
 
           // Set date
           _date = _tzHandler
@@ -391,8 +391,6 @@ class _TransactionPageState extends State<TransactionPage>
           _timeTextController.text = DateFormat.Hm().format(_date);
 
           // Title & Note
-          final NotificationAppSettings appSettings = await settings
-              .notificationGetAppSettings(widget.notification!.appName);
           if (appSettings.includeTitle) {
             _titleTextController.text = widget.notification!.title;
           } else {
@@ -407,7 +405,7 @@ class _TransactionPageState extends State<TransactionPage>
 
           // Check account
           final Response<AccountArray> response = await api.v1AccountsGet(
-            type: AccountTypeFilter.assetAccount,
+            type: .assetAccount,
           );
           if (!response.isSuccessful || response.body == null) {
             log.warning("api account fetch failed");
@@ -421,7 +419,7 @@ class _TransactionPageState extends State<TransactionPage>
                 )) {
               _sourceAccountTextController.text = acc.attributes.name;
               _ownAccountId = acc.id;
-              _sourceAccountType = AccountTypeProperty.assetAccount;
+              _sourceAccountType = .assetAccount;
               if (currency.id == acc.attributes.currencyId) {
                 _localCurrency = currency;
               } else {
@@ -465,7 +463,7 @@ class _TransactionPageState extends State<TransactionPage>
           final Response<AccountArray> response = await context
               .read<FireflyService>()
               .api
-              .v1AccountsGet(type: AccountTypeFilter.assetAccount);
+              .v1AccountsGet(type: .assetAccount);
           if (!response.isSuccessful || response.body == null) {
             log.warning("api account fetch failed");
             return;
@@ -473,7 +471,7 @@ class _TransactionPageState extends State<TransactionPage>
           for (AccountRead acc in response.body!.data) {
             if (acc.id == widget.accountId) {
               _sourceAccountTextController.text = acc.attributes.name;
-              _sourceAccountType = AccountTypeProperty.assetAccount;
+              _sourceAccountType = .assetAccount;
               _ownAccountId = acc.id;
               checkTXType();
               break;
@@ -493,7 +491,7 @@ class _TransactionPageState extends State<TransactionPage>
                 type: "attachments",
                 id: _attachments!.length.toString(),
                 attributes: AttachmentProperties(
-                  attachableType: AttachableType.transactionjournal,
+                  attachableType: .transactionjournal,
                   attachableId: "FAKE",
                   filename: xfile.name,
                   uploadUrl: xfile.path,
@@ -601,7 +599,7 @@ class _TransactionPageState extends State<TransactionPage>
 
   void Function(AnimationStatus) deleteCardAnimated(int i) {
     return (AnimationStatus status) {
-      if (status == AnimationStatus.dismissed) {
+      if (status == .dismissed) {
         splitTransactionRemove(i);
       }
     };
@@ -825,13 +823,13 @@ class _TransactionPageState extends State<TransactionPage>
     final bool prevShowSource = _showSourceAccountSelection;
     final bool prevShowDest = _showDestinationAccountSelection;
     _showSourceAccountSelection =
-        _transactionType == TransactionTypeProperty.deposit &&
+        _transactionType == .deposit &&
         _sourceAccountTextControllers.every(
           (TextEditingController e) =>
               e.text != _sourceAccountTextController.text,
         );
     _showDestinationAccountSelection =
-        _transactionType == TransactionTypeProperty.withdrawal &&
+        _transactionType == .withdrawal &&
         _destinationAccountTextControllers.every(
           (TextEditingController e) =>
               e.text != _destinationAccountTextController.text,
@@ -902,16 +900,12 @@ class _TransactionPageState extends State<TransactionPage>
                 if (user == null || stock == null) {
                   error = S.of(context).errorAPIUnavailable;
                 }
-                if (_transactionType ==
-                    TransactionTypeProperty.swaggerGeneratedUnknown) {
+                if (_transactionType == .swaggerGeneratedUnknown) {
                   error = S.of(context).transactionErrorNoAccounts;
                 }
                 if (error != null) {
                   msg.showSnackBar(
-                    SnackBar(
-                      content: Text(error),
-                      behavior: SnackBarBehavior.floating,
-                    ),
+                    SnackBar(content: Text(error), behavior: .floating),
                   );
                   return;
                 }
@@ -938,15 +932,11 @@ class _TransactionPageState extends State<TransactionPage>
                     if (destinationName.isEmpty) {
                       destinationName = _destinationAccountTextController.text;
                     }
-                    debugPrint(sourceName);
-                    debugPrint(destinationName);
 
                     final TransactionSplitUpdate txSs = TransactionSplitUpdate(
                       amount: _localAmounts[i].toString(),
                       billId: _bills[i]?.id ?? "0",
-                      budgetName:
-                          (_transactionType ==
-                              TransactionTypeProperty.withdrawal)
+                      budgetName: (_transactionType == .withdrawal)
                           ? _budgetTextControllers[i].text
                           : "",
                       categoryName: _categoryTextControllers[i].text,
@@ -1070,10 +1060,9 @@ class _TransactionPageState extends State<TransactionPage>
                 // Check if insert/update was successful
                 if (!resp.isSuccessful || resp.body == null) {
                   try {
-                    final ValidationErrorResponse valError =
-                        ValidationErrorResponse.fromJson(
-                          json.decode(resp.error.toString()),
-                        );
+                    final ValidationErrorResponse valError = .fromJson(
+                      json.decode(resp.error.toString()),
+                    );
                     error =
                         valError.message ??
                         // ignore: use_build_context_synchronously
@@ -1090,10 +1079,7 @@ class _TransactionPageState extends State<TransactionPage>
                   }
 
                   msg.showSnackBar(
-                    SnackBar(
-                      content: Text(error),
-                      behavior: SnackBarBehavior.floating,
-                    ),
+                    SnackBar(content: Text(error), behavior: .floating),
                   );
                   setState(() {
                     _savingInProgress = false;
@@ -1133,7 +1119,7 @@ class _TransactionPageState extends State<TransactionPage>
                           await api.v1AttachmentsPost(
                             body: AttachmentStore(
                               filename: attachment.attributes.filename!,
-                              attachableType: AttachableType.transactionjournal,
+                              attachableType: .transactionjournal,
                               attachableId: txId,
                             ),
                           );
@@ -1228,12 +1214,12 @@ class _TransactionPageState extends State<TransactionPage>
         child: ListView(
           shrinkWrap: true,
           cacheExtent: 10000,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          padding: const .symmetric(horizontal: 24, vertical: 16),
           children: _transactionDetailBuilder(context),
         ),
       ),
     );
-    if (context.read<LayoutProvider>().currentSize >= ScreenSize.expanded &&
+    if (context.read<LayoutProvider>().currentSize >= .expanded &&
         _newTX &&
         !widget.clone) {
       // Via FAB opened in a dialog
@@ -1319,7 +1305,7 @@ class _TransactionPageState extends State<TransactionPage>
     childs.add(
       // Date/Time select might overflow, so we need to be able to scroll horizontally.
       SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
+        scrollDirection: .horizontal,
         child: Row(
           children: <Widget>[
             SizedBox(
@@ -1452,8 +1438,7 @@ class _TransactionPageState extends State<TransactionPage>
                         AccountTypeProperty.assetAccount) {
                       _ownAccountId = null;
                     }
-                    _sourceAccountType =
-                        AccountTypeProperty.swaggerGeneratedUnknown;
+                    _sourceAccountType = .swaggerGeneratedUnknown;
                     checkTXType();
                   },
                   onSelected: (AutocompleteAccount option) {
@@ -1463,14 +1448,13 @@ class _TransactionPageState extends State<TransactionPage>
                     }
                     _sourceAccountType = AccountTypeProperty.values.firstWhere(
                       (AccountTypeProperty e) => e.value == option.type,
-                      orElse: () => AccountTypeProperty.swaggerGeneratedUnknown,
+                      orElse: () => .swaggerGeneratedUnknown,
                     );
                     log.finer(
                       () =>
                           "selected source account ${option.name}, type ${_sourceAccountType.toString()} (${option.type})",
                     );
-                    if (_sourceAccountType ==
-                        AccountTypeProperty.assetAccount) {
+                    if (_sourceAccountType == .assetAccount) {
                       _ownAccountId = option.id;
                     }
                     checkTXType();
@@ -1547,8 +1531,7 @@ class _TransactionPageState extends State<TransactionPage>
                           AccountTypeProperty.assetAccount) {
                         _ownAccountId = null;
                       }
-                      _destinationAccountType =
-                          AccountTypeProperty.swaggerGeneratedUnknown;
+                      _destinationAccountType = .swaggerGeneratedUnknown;
                       checkTXType();
                     },
                     errorIconOnly: true,
@@ -1562,11 +1545,9 @@ class _TransactionPageState extends State<TransactionPage>
                       _destinationAccountType = AccountTypeProperty.values
                           .firstWhere(
                             (AccountTypeProperty e) => e.value == option.type,
-                            orElse: () =>
-                                AccountTypeProperty.swaggerGeneratedUnknown,
+                            orElse: () => .swaggerGeneratedUnknown,
                           );
-                      if (_destinationAccountType ==
-                          AccountTypeProperty.assetAccount) {
+                      if (_destinationAccountType == .assetAccount) {
                         _ownAccountId = option.id;
                       }
                       log.finer(
@@ -1630,9 +1611,7 @@ class _TransactionPageState extends State<TransactionPage>
             right: 15,
             child: FloatingActionButton.extended(
               extendedIconLabelSpacing: _txTypeChipExtended ? 10 : 0,
-              extendedPadding: _txTypeChipExtended
-                  ? null
-                  : const EdgeInsets.all(16),
+              extendedPadding: _txTypeChipExtended ? null : const .all(16),
               onPressed: null,
               label: AnimatedSize(
                 duration: animDurationEmphasized,
@@ -1656,7 +1635,7 @@ class _TransactionPageState extends State<TransactionPage>
       childs.add(
         SizeTransition(
           sizeFactor: _cardsAnimation[i],
-          axis: Axis.vertical,
+          axis: .vertical,
           child: _buildSplitWidget(context, i),
         ),
       );
@@ -1685,13 +1664,12 @@ class _TransactionPageState extends State<TransactionPage>
     // 2. set account is destination & assetAccount & source account is NOT an
     //    asset account
     // 3. either source or destination account are still unset, so first to set
-    if ((isSource && _sourceAccountType == AccountTypeProperty.assetAccount) ||
+    if ((isSource && _sourceAccountType == .assetAccount) ||
         (!isSource &&
-            _destinationAccountType == AccountTypeProperty.assetAccount &&
-            _sourceAccountType != AccountTypeProperty.assetAccount) ||
-        (_sourceAccountType == AccountTypeProperty.swaggerGeneratedUnknown ||
-            _destinationAccountType ==
-                AccountTypeProperty.swaggerGeneratedUnknown)) {
+            _destinationAccountType == .assetAccount &&
+            _sourceAccountType != .assetAccount) ||
+        (_sourceAccountType == .swaggerGeneratedUnknown ||
+            _destinationAccountType == .swaggerGeneratedUnknown)) {
       if (_localCurrency?.id != option.currencyId.toString()) {
         setState(() {
           _localCurrency = CurrencyRead(
@@ -1710,8 +1688,8 @@ class _TransactionPageState extends State<TransactionPage>
     // set foreign currency if account is destination & asset account and source
     // account is also asset account (transfer from one currency to other)
     if ((!isSource &&
-            _destinationAccountType == AccountTypeProperty.assetAccount &&
-            _sourceAccountType == AccountTypeProperty.assetAccount) &&
+            _destinationAccountType == .assetAccount &&
+            _sourceAccountType == .assetAccount) &&
         _localCurrency?.id != option.currencyId) {
       // Only when destination & source account have different currency
       if (!_foreignCurrencies.every(
@@ -1758,28 +1736,25 @@ class _TransactionPageState extends State<TransactionPage>
      * in this app] will throw an error!).
      */
 
-    if (txType == TransactionTypeProperty.swaggerGeneratedUnknown &&
-        _sourceAccountType == AccountTypeProperty.assetAccount &&
-        _destinationAccountType ==
-            AccountTypeProperty.swaggerGeneratedUnknown) {
-      txType = TransactionTypeProperty.withdrawal;
-    } else if (txType == TransactionTypeProperty.swaggerGeneratedUnknown &&
-        _sourceAccountType == AccountTypeProperty.swaggerGeneratedUnknown &&
-        _destinationAccountType == AccountTypeProperty.assetAccount) {
-      txType = TransactionTypeProperty.deposit;
+    if (txType == .swaggerGeneratedUnknown &&
+        _sourceAccountType == .assetAccount &&
+        _destinationAccountType == .swaggerGeneratedUnknown) {
+      txType = .withdrawal;
+    } else if (txType == .swaggerGeneratedUnknown &&
+        _sourceAccountType == .swaggerGeneratedUnknown &&
+        _destinationAccountType == .assetAccount) {
+      txType = .deposit;
     }
 
     // Withdrawal: splits have common source account
     // Deposit: splits have common destination account
     // Transfer: splits have common accounts for both
-    if (txType == TransactionTypeProperty.withdrawal ||
-        txType == TransactionTypeProperty.transfer) {
+    if (txType == .withdrawal || txType == .transfer) {
       for (TextEditingController e in _sourceAccountTextControllers) {
         e.text = _sourceAccountTextController.text;
       }
     }
-    if (txType == TransactionTypeProperty.deposit ||
-        txType == TransactionTypeProperty.transfer) {
+    if (txType == .deposit || txType == .transfer) {
       for (TextEditingController e in _destinationAccountTextControllers) {
         e.text = _destinationAccountTextController.text;
       }
@@ -1787,7 +1762,7 @@ class _TransactionPageState extends State<TransactionPage>
 
     if (_transactionType != txType) {
       setState(() {
-        if (txType != TransactionTypeProperty.swaggerGeneratedUnknown) {
+        if (txType != .swaggerGeneratedUnknown) {
           _txTypeChipExtended = true;
           Future<void>.delayed(animDurationEmphasized * 3, () {
             setState(() {
@@ -1808,7 +1783,7 @@ class _TransactionPageState extends State<TransactionPage>
     return Card(
       key: ValueKey<int>(i),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const .all(16),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -2004,8 +1979,7 @@ class _TransactionPageState extends State<TransactionPage>
                   hDivider,
                   // Budget (for withdrawals)
                   AnimatedHeight(
-                    child:
-                        (_transactionType == TransactionTypeProperty.withdrawal)
+                    child: (_transactionType == .withdrawal)
                         ? TransactionBudget(
                             textController: _budgetTextControllers[i],
                             focusNode: _budgetFocusNodes[i],
@@ -2013,8 +1987,7 @@ class _TransactionPageState extends State<TransactionPage>
                         : const SizedBox.shrink(),
                   ),
                   AnimatedHeight(
-                    child:
-                        (_transactionType == TransactionTypeProperty.withdrawal)
+                    child: (_transactionType == .withdrawal)
                         ? hDivider
                         : const SizedBox.shrink(),
                   ),
@@ -2126,11 +2099,11 @@ class _TransactionPageState extends State<TransactionPage>
             SizedBox(
               width: 48,
               child: Align(
-                alignment: Alignment.centerRight,
+                alignment: .centerRight,
                 child: AnimatedSize(
                   duration: animDurationStandard,
                   curve: animCurveStandard,
-                  alignment: Alignment.topCenter,
+                  alignment: .topCenter,
                   child: Column(
                     children: <Widget>[
                       // Reconciled Button
@@ -2261,16 +2234,14 @@ class _TransactionPageState extends State<TransactionPage>
                         // (Split) Source Account Button (for deposits)
                         if (_split) ...<Widget>[
                           if (!_showSourceAccountSelection &&
-                              _transactionType ==
-                                  TransactionTypeProperty.deposit) ...<Widget>[
+                              _transactionType == .deposit) ...<Widget>[
                             IconButton(
                               icon: const Icon(Icons.add_business),
                               onPressed: _savingInProgress
                                   ? null
                                   : _split &&
                                         !_showSourceAccountSelection &&
-                                        _transactionType ==
-                                            TransactionTypeProperty.deposit &&
+                                        _transactionType == .deposit &&
                                         !(_reconciled && _initiallyReconciled)
                                   ? () {
                                       log.fine(
@@ -2294,18 +2265,14 @@ class _TransactionPageState extends State<TransactionPage>
                           ],
                           // (Split) Destination Account Button (for withdrawals)
                           if (!_showDestinationAccountSelection &&
-                              _transactionType ==
-                                  TransactionTypeProperty
-                                      .withdrawal) ...<Widget>[
+                              _transactionType == .withdrawal) ...<Widget>[
                             IconButton(
                               icon: const Icon(Icons.add_business),
                               onPressed: _savingInProgress
                                   ? null
                                   : _split &&
                                         !_showDestinationAccountSelection &&
-                                        _transactionType ==
-                                            TransactionTypeProperty
-                                                .withdrawal &&
+                                        _transactionType == .withdrawal &&
                                         !(_reconciled && _initiallyReconciled)
                                   ? () {
                                       log.fine(

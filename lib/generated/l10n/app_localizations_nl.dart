@@ -619,7 +619,20 @@ class SNl extends S {
       'Om Waterfly III productief te gebruiken, heb je je eigen server nodig met een Firefly III-installatie of de Firefly III-add-on voor Home Assistant.\n\nVoer de volledige URL en ook een persoonlijke toegangstoken in (Instellingen -> Profiel -> OAuth -> Persoonlijke Toegang) hieronder in.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Hide Headers';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Custom Headers';
+
+  @override
   String get loginFormLabelAPIKey => 'Geldige API-sleutel';
+
+  @override
+  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'One per line, format: HeaderName: value';
 
   @override
   String get loginFormLabelHost => 'Host-URL';
@@ -744,6 +757,31 @@ class SNl extends S {
   String get settingsNLEmptyNote => 'Houd notitie veld leeg';
 
   @override
+  String get settingsNLHistory => 'Notification History';
+
+  @override
+  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'No monetary value found',
+      'noCurrency': 'No currency found',
+      'appNotUsed': 'App not listened to',
+      'other': 'Unknown reason',
+    });
+    return 'Notification skipped: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription => 'List previous notifications';
+
+  @override
   String get settingsNLPermissionGrant => 'Klik hier om toestemming te geven.';
 
   @override
@@ -759,6 +797,12 @@ class SNl extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Transactietitel vooraf invullen met meldingstitel';
+
+  @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
 
   @override
   String get settingsNLServiceChecking => 'Status controleren…';
@@ -779,6 +823,12 @@ class SNl extends S {
 
   @override
   String get settingsNotificationListener => 'Notificatie Luister Service';
+
+  @override
+  String get settingsServerConnection => 'Server Connection';
+
+  @override
+  String get settingsServerConnectionUpdated => 'Connection settings updated.';
 
   @override
   String get settingsTheme => 'Applicatie thema';

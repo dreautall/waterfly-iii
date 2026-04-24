@@ -75,14 +75,14 @@ class _BillsPageState extends State<BillsPage>
           tooltip: S.of(context).generalSettings,
           onPressed: _showSettingsDialog,
         ),
-        if (_billsLayout == BillsLayout.list)
+        if (_billsLayout == .list)
           IconButton(
             icon: const Icon(Icons.sort),
             tooltip: S.of(context).billsChangeSortOrderTooltip,
             onPressed: _showSortOrderPickerDialog,
           ),
         IconButton(
-          icon: _billsLayout == BillsLayout.list
+          icon: _billsLayout == .list
               ? const Icon(Icons.table_rows_outlined)
               : const Icon(Icons.view_agenda_outlined),
           tooltip: S.of(context).billsChangeLayoutTooltip,
@@ -100,7 +100,7 @@ class _BillsPageState extends State<BillsPage>
               BuildContext context,
               AsyncSnapshot<Map<String, List<BillRead>>> snapshot,
             ) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
+              if (snapshot.connectionState == .waiting) {
                 return const Center(
                   child: CircularProgressIndicator.adaptive(),
                 );
@@ -123,8 +123,8 @@ class _BillsPageState extends State<BillsPage>
                 );
               }
               return Padding(
-                padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                child: _billsLayout == BillsLayout.list
+                padding: const .fromLTRB(8, 0, 8, 8),
+                child: _billsLayout == .list
                     ? _listBuilder(snapshot.data!)
                     : _groupBuilder(snapshot.data!),
               );
@@ -139,13 +139,13 @@ class _BillsPageState extends State<BillsPage>
         .toList();
 
     switch (_billsSort) {
-      case BillsSort.name:
+      case .name:
         billList.sort(
           (BillRead a, BillRead b) => _billsSortOrder == SortingOrder.ascending
               ? a.attributes.name!.compareTo(b.attributes.name!)
               : b.attributes.name!.compareTo(a.attributes.name!),
         );
-      case BillsSort.frequency:
+      case .frequency:
         billList.sort(
           (BillRead a, BillRead b) => _billsSortOrder == SortingOrder.ascending
               ? Enum.compareByIndex(
@@ -171,7 +171,7 @@ class _BillsPageState extends State<BillsPage>
       children: <Widget>[
         ...groupedBills.keys.map(
           (String groupName) => Card(
-            clipBehavior: Clip.hardEdge,
+            clipBehavior: .hardEdge,
             child: ExpansionTile(
               title: Text(
                 groupName,
@@ -181,10 +181,10 @@ class _BillsPageState extends State<BillsPage>
               ),
               initiallyExpanded: true,
               collapsedShape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderRadius: .all(Radius.circular(12)),
               ),
               shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderRadius: .all(Radius.circular(12)),
               ),
               children: <Widget>[
                 Container(
@@ -192,9 +192,9 @@ class _BillsPageState extends State<BillsPage>
                     color: Theme.of(
                       context,
                     ).colorScheme.surfaceContainerHighest,
-                    borderRadius: const BorderRadius.only(
-                      bottomRight: Radius.circular(12),
-                      bottomLeft: Radius.circular(12),
+                    borderRadius: const .only(
+                      bottomRight: .circular(12),
+                      bottomLeft: .circular(12),
                     ),
                   ),
                   child: Column(
@@ -215,28 +215,21 @@ class _BillsPageState extends State<BillsPage>
     return OpenContainer(
       openBuilder: (BuildContext context, Function closedContainer) =>
           BillDetails(bill: bill),
-      openColor: _billsLayout == BillsLayout.list
+      openColor: _billsLayout == .list
           ? Theme.of(context).cardColor
           : Theme.of(context).colorScheme.surfaceContainerHighest,
-      closedColor: _billsLayout == BillsLayout.list
+      closedColor: _billsLayout == .list
           ? Theme.of(context).cardColor
           : Theme.of(context).colorScheme.surfaceContainerHighest,
       closedShape: RoundedRectangleBorder(
-        borderRadius: _billsLayout == BillsLayout.list
-            ? const BorderRadius.only(
-                topLeft: Radius.circular(16),
-                bottomLeft: Radius.circular(16),
-              )
-            : const BorderRadius.all(Radius.circular(12)),
+        borderRadius: _billsLayout == .list
+            ? const .only(topLeft: .circular(16), bottomLeft: .circular(16))
+            : const .all(.circular(12)),
       ),
       closedElevation: 0,
       closedBuilder: (BuildContext context, Function openContainer) => ListTile(
         leading: const CircleAvatar(child: Icon(Icons.receipt_outlined)),
-        title: Text(
-          bill.attributes.name!,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
+        title: Text(bill.attributes.name!, maxLines: 1, overflow: .ellipsis),
         titleTextStyle:
             ListTileTheme.of(context).titleTextStyle ??
             Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -261,16 +254,13 @@ class _BillsPageState extends State<BillsPage>
                   : Theme.of(context).disabledColor,
             ),
         shape: RoundedRectangleBorder(
-          borderRadius: _billsLayout == BillsLayout.list
-              ? const BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  bottomLeft: Radius.circular(16),
-                )
-              : const BorderRadius.all(Radius.circular(12)),
+          borderRadius: _billsLayout == .list
+              ? const .only(topLeft: .circular(16), bottomLeft: .circular(16))
+              : const .all(.circular(12)),
         ),
         isThreeLine: false,
         trailing: RichText(
-          textAlign: TextAlign.end,
+          textAlign: .end,
           maxLines: 2,
           text: TextSpan(
             style: Theme.of(context).textTheme.bodyMedium,
@@ -279,9 +269,7 @@ class _BillsPageState extends State<BillsPage>
                 text: _getAverageBillAmount(bill),
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                   color: Colors.red,
-                  fontFeatures: const <FontFeature>[
-                    FontFeature.tabularFigures(),
-                  ],
+                  fontFeatures: const <FontFeature>[.tabularFigures()],
                 ),
               ),
               const TextSpan(text: "\n"),
@@ -364,14 +352,14 @@ class _BillsPageState extends State<BillsPage>
           children: <Widget>[
             const SizedBox(height: 8),
             ListTile(
-              leading: _billsLayout == BillsLayout.grouped
+              leading: _billsLayout == .grouped
                   ? const Icon(Icons.view_agenda)
                   : const Icon(Icons.view_agenda_outlined),
               title: Text(
                 S.of(context).billsLayoutGroupTitle,
                 style: Theme.of(
                   context,
-                ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                ).textTheme.bodyLarge!.copyWith(fontWeight: .bold),
               ),
               subtitle: Text(
                 S.of(context).billsLayoutGroupSubtitle,
@@ -379,24 +367,24 @@ class _BillsPageState extends State<BillsPage>
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
-              trailing: _billsLayout == BillsLayout.grouped
+              trailing: _billsLayout == .grouped
                   ? const Icon(Icons.check)
                   : const SizedBox.shrink(),
               onTap: () => setState(() {
-                _billsLayout = BillsLayout.grouped;
+                _billsLayout = .grouped;
                 Navigator.pop(context);
               }),
             ),
             const Divider(indent: 8, endIndent: 8),
             ListTile(
-              leading: _billsLayout == BillsLayout.list
+              leading: _billsLayout == .list
                   ? const Icon(Icons.table_rows)
                   : const Icon(Icons.table_rows_outlined),
               title: Text(
                 S.of(context).billsLayoutListTitle,
                 style: Theme.of(
                   context,
-                ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                ).textTheme.bodyLarge!.copyWith(fontWeight: .bold),
               ),
               subtitle: Text(
                 S.of(context).billsLayoutListSubtitle,
@@ -404,13 +392,13 @@ class _BillsPageState extends State<BillsPage>
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
-              trailing: _billsLayout == BillsLayout.list
+              trailing: _billsLayout == .list
                   ? const Icon(Icons.check)
                   : const SizedBox.shrink(),
               onTap: () => setState(() {
-                _billsLayout = BillsLayout.list;
-                _billsSort = BillsSort.name;
-                _billsSortOrder = SortingOrder.ascending;
+                _billsLayout = .list;
+                _billsSort = .name;
+                _billsSortOrder = .ascending;
                 Navigator.pop(context);
               }),
             ),
@@ -434,7 +422,7 @@ class _BillsPageState extends State<BillsPage>
                 S.of(context).billsSortName,
                 style: Theme.of(
                   context,
-                ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                ).textTheme.bodyLarge!.copyWith(fontWeight: .bold),
               ),
               subtitle: Text(
                 S.of(context).billsSortAlphabetical,
@@ -442,12 +430,12 @@ class _BillsPageState extends State<BillsPage>
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
-              trailing: _billsSort == BillsSort.name
-                  ? _billsSortOrder == SortingOrder.ascending
+              trailing: _billsSort == .name
+                  ? _billsSortOrder == .ascending
                         ? const Icon(Icons.north)
                         : const Icon(Icons.south)
                   : const SizedBox.shrink(),
-              onTap: () => _onSortSelected(BillsSort.name),
+              onTap: () => _onSortSelected(.name),
             ),
             const Divider(indent: 8, endIndent: 8),
             ListTile(
@@ -456,7 +444,7 @@ class _BillsPageState extends State<BillsPage>
                 S.of(context).billsSortFrequency,
                 style: Theme.of(
                   context,
-                ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                ).textTheme.bodyLarge!.copyWith(fontWeight: .bold),
               ),
               subtitle: Text(
                 S.of(context).billsSortByTimePeriod,
@@ -464,12 +452,12 @@ class _BillsPageState extends State<BillsPage>
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
-              trailing: _billsSort == BillsSort.frequency
-                  ? _billsSortOrder == SortingOrder.ascending
+              trailing: _billsSort == .frequency
+                  ? _billsSortOrder == .ascending
                         ? const Icon(Icons.north)
                         : const Icon(Icons.south)
                   : const SizedBox.shrink(),
-              onTap: () => _onSortSelected(BillsSort.frequency),
+              onTap: () => _onSortSelected(.frequency),
             ),
             const SizedBox(height: 8),
           ],
@@ -491,7 +479,7 @@ class _BillsPageState extends State<BillsPage>
                 S.of(context).billsSettingsShowOnlyActive,
                 style: Theme.of(
                   context,
-                ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                ).textTheme.bodyLarge!.copyWith(fontWeight: .bold),
               ),
               subtitle: Text(
                 S.of(context).billsSettingsShowOnlyActiveDesc,
@@ -511,7 +499,7 @@ class _BillsPageState extends State<BillsPage>
                 S.of(context).billsSettingsShowOnlyExpected,
                 style: Theme.of(
                   context,
-                ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                ).textTheme.bodyLarge!.copyWith(fontWeight: .bold),
               ),
               subtitle: Text(
                 S.of(context).billsSettingsShowOnlyExpectedDesc,
@@ -548,12 +536,12 @@ class _BillsPageState extends State<BillsPage>
   void _onSortSelected(BillsSort newSort) {
     setState(() {
       if (_billsSort == newSort) {
-        _billsSortOrder = _billsSortOrder == SortingOrder.ascending
+        _billsSortOrder = _billsSortOrder == .ascending
             ? SortingOrder.descending
             : SortingOrder.ascending;
       } else {
         _billsSort = newSort;
-        _billsSortOrder = SortingOrder.ascending;
+        _billsSortOrder = .ascending;
       }
     });
     Navigator.pop(context);

@@ -67,15 +67,15 @@ class _BillDetailsState extends State<BillDetails> {
         children: <Widget>[
           AnimatedHeight(
             child: Card(
-              margin: const EdgeInsets.fromLTRB(0, 0, 0, 1),
+              margin: const .fromLTRB(0, 0, 0, 1),
               shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(12),
-                  bottomRight: Radius.circular(12),
+                borderRadius: .only(
+                  bottomLeft: .circular(12),
+                  bottomRight: .circular(12),
                 ),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: <Widget>[
                   ListTile(
                     leading: const CircleAvatar(
@@ -159,7 +159,7 @@ class _BillDetailsState extends State<BillDetails> {
           const SizedBox(height: 16),
           Expanded(
             /*child: RawScrollbar(
-              radius: const Radius.circular(12),
+              radius: const .circular(12),
               thickness: 5,
               thumbVisibility: true,
               thumbColor: Theme.of(context).colorScheme.outlineVariant,
@@ -201,7 +201,7 @@ class _BillDetailsState extends State<BillDetails> {
           future: _fetchFullTx(transaction.id),
           builder:
               (BuildContext context, AsyncSnapshot<TransactionRead> snapshot) {
-                if (snapshot.connectionState == ConnectionState.done &&
+                if (snapshot.connectionState == .done &&
                     snapshot.hasData &&
                     snapshot.data != null) {
                   return TransactionPage(transaction: snapshot.data);
@@ -219,7 +219,7 @@ class _BillDetailsState extends State<BillDetails> {
       openColor: Theme.of(context).cardColor,
       closedColor: Theme.of(context).cardColor,
       closedShape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+        borderRadius: .all(.circular(16)),
       ),
       closedElevation: 0,
       closedBuilder: (BuildContext context, Function openContainer) => ListTile(
@@ -230,9 +230,7 @@ class _BillDetailsState extends State<BillDetails> {
             color: Theme.of(context).colorScheme.secondary,
           ),
         ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-        ),
+        shape: const RoundedRectangleBorder(borderRadius: .all(.circular(16))),
         isThreeLine: false,
         trailing: RichText(
           textAlign: TextAlign.end,
@@ -241,7 +239,7 @@ class _BillDetailsState extends State<BillDetails> {
             text: _getTransactionAmount(transaction),
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: Colors.red,
-              fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
+              fontFeatures: const <FontFeature>[.tabularFigures()],
             ),
             children: <InlineSpan>[
               const TextSpan(text: "\n"),
@@ -301,11 +299,11 @@ class _BillDetailsState extends State<BillDetails> {
 
   Widget _emptyListBuilder(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+      padding: const .fromLTRB(0, 30, 0, 0),
       child: Align(
-        alignment: Alignment.topCenter,
+        alignment: .topCenter,
         child: Text.rich(
-          textAlign: TextAlign.center,
+          textAlign: .center,
           TextSpan(
             text: S.of(context).billsNoTransactions,
             style: Theme.of(context).textTheme.titleMedium,

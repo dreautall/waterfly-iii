@@ -28,8 +28,8 @@ class AnimatedHeight extends StatelessWidget {
     return AnimatedSize(
       duration: animDurationEmphasized,
       curve: animCurveEmphasized,
-      alignment: Alignment.topCenter,
-      child: SizedBox(width: double.infinity, child: child),
+      alignment: .topCenter,
+      child: SizedBox(width: .infinity, child: child),
     );
   }
 }

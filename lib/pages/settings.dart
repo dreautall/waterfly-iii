@@ -17,6 +17,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notificationlistener.dart';
+import 'package:waterflyiii/pages/settings/connection.dart';
 import 'package:waterflyiii/pages/settings/debug.dart';
 import 'package:waterflyiii/pages/settings/notifications.dart';
 import 'package:waterflyiii/settings.dart';
@@ -41,7 +42,7 @@ class SettingsPageState extends State<SettingsPage>
     final SettingsProvider settings = context.read<SettingsProvider>();
 
     return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const .symmetric(horizontal: 24),
       primary: false,
       children: <Widget>[
         ListTile(
@@ -74,7 +75,7 @@ class SettingsPageState extends State<SettingsPage>
           builder: (BuildContext context, AsyncSnapshot<CorePalette?> snapshot) {
             String dynamicColor = "";
             bool dynamicColorAvailable = false;
-            if (snapshot.connectionState == ConnectionState.done &&
+            if (snapshot.connectionState == .done &&
                 snapshot.hasData &&
                 snapshot.data != null) {
               // Dynamic color support available
@@ -101,6 +102,31 @@ class SettingsPageState extends State<SettingsPage>
                   settings.setTheme(theme);
                 });
               },
+            );
+          },
+        ),
+        const Divider(),
+        ListTile(
+          title: Text(S.of(context).settingsServerConnection),
+          subtitle: Text(
+            context.select((FireflyService f) {
+              final Uri? host = f.user?.host;
+              if (host == null) {
+                return "";
+              }
+              final List<String> segments = <String>[...host.pathSegments];
+              if (segments.isNotEmpty && segments.last == "api") {
+                segments.removeLast();
+              }
+              return host.replace(pathSegments: segments).toString();
+            }),
+            maxLines: 2,
+          ),
+          leading: const CircleAvatar(child: Icon(Icons.cloud_outlined)),
+          onTap: () {
+            showDialog<void>(
+              context: context,
+              builder: (BuildContext context) => const ConnectionDialog(),
             );
           },
         ),
@@ -157,7 +183,7 @@ class SettingsPageState extends State<SettingsPage>
                 msg.showSnackBar(
                   SnackBar(
                     content: Text(l10n.errorUnknown),
-                    behavior: SnackBarBehavior.floating,
+                    behavior: .floating,
                   ),
                 );
                 return;
@@ -183,8 +209,7 @@ class SettingsPageState extends State<SettingsPage>
                   final S l10n = S.of(context);
 
                   late String subtitle;
-                  if (snapshot.connectionState == ConnectionState.done &&
-                      snapshot.hasData) {
+                  if (snapshot.connectionState == .done && snapshot.hasData) {
                     if (!snapshot.data!.servicePermission ||
                         !snapshot.data!.notificationPermission) {
                       subtitle = l10n.settingsNLPermissionNotGranted;

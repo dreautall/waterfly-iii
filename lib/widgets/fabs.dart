@@ -14,7 +14,7 @@ class NewTransactionFab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (context.watch<LayoutProvider>().currentSize >= ScreenSize.expanded) {
+    if (context.watch<LayoutProvider>().currentSize >= .expanded) {
       return FloatingActionButton(
         onPressed: () => showDialog(
           context: context,
@@ -25,7 +25,7 @@ class NewTransactionFab extends StatelessWidget {
                 minWidth: 280,
                 maxWidth: MediaQuery.of(context).size.width * 0.5,
               ),
-              width: double.maxFinite,
+              width: .maxFinite,
               child: TransactionPage(accountId: accountId),
             ),
           ),
@@ -42,9 +42,7 @@ class NewTransactionFab extends StatelessWidget {
         closedColor: Theme.of(context).colorScheme.primaryContainer,
         closedShape:
             Theme.of(context).floatingActionButtonTheme.shape ??
-            const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(16.0)),
-            ),
+            const RoundedRectangleBorder(borderRadius: .all(.circular(16.0))),
         closedElevation:
             Theme.of(context).floatingActionButtonTheme.elevation ?? 6,
         closedBuilder: (BuildContext context, Function openContainer) {

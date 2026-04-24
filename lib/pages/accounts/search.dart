@@ -61,7 +61,7 @@ class _AccountSearchState extends State<AccountSearch> {
           type: currentFilter,
           page: pageKey,
           query: _searchController.text,
-          field: AccountSearchFieldFilter.all,
+          field: .all,
         );
       } else {
         respAccounts = await api.v1AccountsGet(
@@ -102,7 +102,7 @@ class _AccountSearchState extends State<AccountSearch> {
         AnimatedSize(
           duration: animDurationEmphasized,
           curve: animCurveEmphasized,
-          alignment: Alignment.center,
+          alignment: .center,
           child: SizedBox(
             height: 40,
             child: currentFilter == accType
@@ -159,7 +159,7 @@ class _AccountSearchState extends State<AccountSearch> {
           focusNode: _searchFocusNode,
           decoration: InputDecoration(
             hintText: MaterialLocalizations.of(context).searchFieldLabel,
-            border: InputBorder.none,
+            border: .none,
             suffixIcon: _searchController.text.isNotEmpty
                 ? IconButton(
                     icon: const Icon(Icons.clear),
@@ -190,8 +190,8 @@ class _AccountSearchState extends State<AccountSearch> {
           SizedBox(
             height: 40 + 8 + 8,
             child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              scrollDirection: .horizontal,
+              padding: const .symmetric(horizontal: 16, vertical: 8),
               children: chips,
             ),
           ),

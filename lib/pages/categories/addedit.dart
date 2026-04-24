@@ -73,7 +73,7 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
             ? S.of(context).categoryTitleAdd
             : S.of(context).categoryTitleEdit,
       ),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       actions: <Widget>[
         if (widget.category != null)
           OutlinedButton(
@@ -136,10 +136,9 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
             if (!resp.isSuccessful || resp.body == null) {
               late String error;
               try {
-                final ValidationErrorResponse valError =
-                    ValidationErrorResponse.fromJson(
-                      json.decode(resp.error.toString()),
-                    );
+                final ValidationErrorResponse valError = .fromJson(
+                  json.decode(resp.error.toString()),
+                );
                 error =
                     valError.message ??
                     (context.mounted
@@ -179,7 +178,7 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
       ],
       content: SingleChildScrollView(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: .min,
           children: <Widget>[
             SizedBox(
               width: inputWidth,
@@ -238,7 +237,7 @@ class DeletionConfirmDialog extends StatelessWidget {
     return AlertDialog(
       icon: const Icon(Icons.delete),
       title: Text(S.of(context).categoryTitleDelete),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       actions: <Widget>[
         TextButton(
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),

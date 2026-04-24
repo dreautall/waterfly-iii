@@ -39,7 +39,7 @@ class CurrencyDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return SimpleDialog(
       title: Text(S.of(context).transactionDialogCurrencyTitle),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       children: <Widget>[
         FutureBuilder<List<CurrencyRead>>(
           future: _getCurrencies(context),
@@ -60,10 +60,7 @@ class CurrencyDialog extends StatelessWidget {
                     child.add(const Divider());
                   }
                   child.removeLast();
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: child,
-                  );
+                  return Column(crossAxisAlignment: .start, children: child);
                 } else if (snapshot.hasError) {
                   log.severe(
                     "error getting currencies",
@@ -101,18 +98,18 @@ class CurrencyDialogOption extends StatelessWidget {
         Navigator.pop(context, currency);
       },
       /*child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: .stretch,
         children: <Widget>[
           Text(
             currencyWithSymbol ?? currency.attributes.code,
             style: const TextStyle(
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
             ),
           ),
           Text(currency.attributes.name),
         ],
       ),*/
-      padding: EdgeInsets.zero,
+      padding: .zero,
       child: */ ListTile(
       leading: CircleAvatar(child: Text(optionCurrency.attributes.symbol)),
       title: Text(optionCurrency.attributes.code),
@@ -125,7 +122,7 @@ class CurrencyDialogOption extends StatelessWidget {
               context.read<FireflyService>().defaultCurrency.id)
           ? Text(
               S.of(context).generalDefault,
-              style: const TextStyle(fontStyle: FontStyle.italic),
+              style: const TextStyle(fontStyle: .italic),
             )
           : null,
       selected: (optionCurrency.id == currentCurrency.id),

@@ -17,7 +17,7 @@ class DebugDialog extends StatelessWidget {
       title: Text(S.of(context).settingsDialogDebugTitle),
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
+          padding: const .fromLTRB(24, 12, 24, 0),
           child: Text(S.of(context).settingsDialogDebugInfo),
         ),
         SwitchListTile.adaptive(
@@ -39,7 +39,7 @@ class DebugDialog extends StatelessWidget {
               builder: (BuildContext context) => AlertDialog(
                 icon: const Icon(Icons.mail),
                 title: Text(S.of(context).settingsDialogDebugSendButton),
-                clipBehavior: Clip.hardEdge,
+                clipBehavior: .hardEdge,
                 actions: <Widget>[
                   TextButton(
                     child: Text(

@@ -63,7 +63,7 @@ class HomePageState extends State<HomePage>
           Tab(text: S.of(context).homeTabLabelBalance),
           Tab(text: S.of(context).homeTabLabelPiggybanks),
         ],
-        tabAlignment: TabAlignment.start,
+        tabAlignment: .start,
       );
       // Call once to set fab/page actions
       _handleTabChange();

@@ -1038,11 +1038,35 @@ abstract class S {
   /// **'To use Waterfly III productively you need your own server with a Firefly III instance or the Firefly III add-on for Home Assistant.\n\nPlease enter the full URL as well as a personal access token (Settings -> Profile -> OAuth -> Personal Access Token) below.'**
   String get loginAbout;
 
+  /// Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button
+  ///
+  /// In en, this message translates to:
+  /// **'Hide Headers'**
+  String get loginFormButtonHideHeaders;
+
+  /// Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Headers'**
+  String get loginFormButtonShowHeaders;
+
   /// Login Form: Label for API Key field
   ///
   /// In en, this message translates to:
   /// **'Valid API Key'**
   String get loginFormLabelAPIKey;
+
+  /// Login Form: Label for Custom Headers field
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Headers (optional)'**
+  String get loginFormLabelHeaders;
+
+  /// Login Form: Helper text for Custom Headers field
+  ///
+  /// In en, this message translates to:
+  /// **'One per line, format: HeaderName: value'**
+  String get loginFormLabelHeadersHelp;
 
   /// Login Form: Label for Host field
   ///
@@ -1236,6 +1260,36 @@ abstract class S {
   /// **'Keep note field empty'**
   String get settingsNLEmptyNote;
 
+  /// Label: Notification History view
+  ///
+  /// In en, this message translates to:
+  /// **'Notification History'**
+  String get settingsNLHistory;
+
+  /// Notification history is empty
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications recorded so far.'**
+  String get settingsNLHistoryEmpty;
+
+  /// Long description of the notification history feature.
+  ///
+  /// In en, this message translates to:
+  /// **'This is a history of the last {notificationHistorySize} notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.'**
+  String settingsNLHistoryLongDescription(int notificationHistorySize);
+
+  /// Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)
+  ///
+  /// In en, this message translates to:
+  /// **'Notification skipped: {reason, select, noMoney{No monetary value found} noCurrency{No currency found} appNotUsed{App not listened to} other{Unknown reason}}.'**
+  String settingsNLHistoryRejectedReason(String reason);
+
+  /// Short description of the notification history feature (for the settings navigation)
+  ///
+  /// In en, this message translates to:
+  /// **'List previous notifications'**
+  String get settingsNLHistoryShortDescription;
+
   /// Indicates user should tap the text to grant certain permissions (notification access).
   ///
   /// In en, this message translates to:
@@ -1265,6 +1319,18 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Prefill transaction title with notification title'**
   String get settingsNLPrefillTXTitle;
+
+  /// Setting to use a custom regular expression (regex).
+  ///
+  /// In en, this message translates to:
+  /// **'Regular Expression (optional)'**
+  String get settingsNLRegularExpression;
+
+  /// Custom provided regular expression is invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Regular Expression'**
+  String get settingsNLRegularExpressionInvalid;
 
   /// Checking the status of the background service
   ///
@@ -1301,6 +1367,18 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Notification Listener Service'**
   String get settingsNotificationListener;
+
+  /// Settings for the server connection
+  ///
+  /// In en, this message translates to:
+  /// **'Server Connection'**
+  String get settingsServerConnection;
+
+  /// Server connection settings have been updated
+  ///
+  /// In en, this message translates to:
+  /// **'Connection settings updated.'**
+  String get settingsServerConnectionUpdated;
 
   /// App theme (dark or light)
   ///

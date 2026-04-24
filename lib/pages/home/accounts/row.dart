@@ -44,7 +44,7 @@ Widget accountRowBuilder(
 
   late String subtitle;
   switch (account.attributes.type) {
-    case ShortAccountTypeProperty.asset:
+    case .asset:
       subtitle =
           account.attributes.accountRole?.friendlyName(context) ??
           S.of(context).generalUnknown;
@@ -52,29 +52,29 @@ Widget accountRowBuilder(
         subtitle += "\nIBAN: ${account.attributes.iban!}";
       }
       break;
-    case ShortAccountTypeProperty.expense:
+    case .expense:
       subtitle = account.attributes.iban ?? "";
       // Switch sign, see #96
       if (currentAmount != 0) {
         currentAmount *= -1;
       }
       break;
-    case ShortAccountTypeProperty.revenue:
+    case .revenue:
       subtitle = account.attributes.iban ?? "";
       // Switch sign, see #96
       if (currentAmount != 0) {
         currentAmount *= -1;
       }
       break;
-    case ShortAccountTypeProperty.liabilities:
+    case .liabilities:
       switch (account.attributes.liabilityType) {
-        case LiabilityTypeProperty.debt:
+        case .debt:
           subtitle = S.of(context).liabilityTypeDebt;
           break;
-        case LiabilityTypeProperty.loan:
+        case .loan:
           subtitle = S.of(context).liabilityTypeLoan;
           break;
-        case LiabilityTypeProperty.mortgage:
+        case .mortgage:
           subtitle = S.of(context).liabilityTypeMortgage;
           break;
         default:
@@ -82,10 +82,10 @@ Widget accountRowBuilder(
       }
       subtitle += "; ";
       switch (account.attributes.liabilityDirection) {
-        case LiabilityDirectionProperty.credit:
+        case .credit:
           subtitle += S.of(context).liabilityDirectionCredit;
           break;
-        case LiabilityDirectionProperty.debit:
+        case .debit:
           subtitle += S.of(context).liabilityDirectionDebit;
           break;
         default:
@@ -120,27 +120,24 @@ Widget accountRowBuilder(
     openColor: Theme.of(context).cardColor,
     closedColor: Theme.of(context).cardColor,
     closedShape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(16),
-        bottomLeft: Radius.circular(16),
-      ),
+      borderRadius: .only(topLeft: .circular(16), bottomLeft: .circular(16)),
     ),
     closedElevation: 0,
     closedBuilder: (BuildContext context, Function openContainer) => ListTile(
-      title: Text(name, maxLines: 1, overflow: TextOverflow.ellipsis),
+      title: Text(name, maxLines: 1, overflow: .ellipsis),
       subtitle: Text(
         subtitle,
         maxLines:
-            account.attributes.type == ShortAccountTypeProperty.asset ||
-                account.attributes.type == ShortAccountTypeProperty.liabilities
+            account.attributes.type == .asset ||
+                account.attributes.type == .liabilities
             ? 2
             : 1,
       ),
       isThreeLine:
-          account.attributes.type == ShortAccountTypeProperty.asset ||
-          account.attributes.type == ShortAccountTypeProperty.liabilities,
+          account.attributes.type == .asset ||
+          account.attributes.type == .liabilities,
       trailing: RichText(
-        textAlign: TextAlign.end,
+        textAlign: .end,
         maxLines: 2,
         text: TextSpan(
           style: Theme.of(context).textTheme.bodyMedium,
@@ -149,8 +146,8 @@ Widget accountRowBuilder(
               text: currency.fmt(currentAmount),
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: (currentAmount < 0) ? Colors.red : Colors.green,
-                fontWeight: FontWeight.bold,
-                fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
+                fontWeight: .bold,
+                fontFeatures: const <FontFeature>[.tabularFigures()],
               ),
             ),
             const TextSpan(text: "\n"),
@@ -166,10 +163,7 @@ Widget accountRowBuilder(
       ),
       enabled: account.attributes.active ?? true,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          bottomLeft: Radius.circular(16),
-        ),
+        borderRadius: .only(topLeft: .circular(16), bottomLeft: .circular(16)),
       ),
       onTap: () => openContainer(),
     ),
@@ -254,10 +248,9 @@ class _AccountTXpageState extends State<AccountTXpage> {
           log.severe("Error while submitting new name to API");
           String error;
           try {
-            final ValidationErrorResponse valError =
-                ValidationErrorResponse.fromJson(
-                  json.decode(response.error.toString()),
-                );
+            final ValidationErrorResponse valError = .fromJson(
+              json.decode(response.error.toString()),
+            );
             error =
                 valError.message ??
                 // ignore: use_build_context_synchronously
@@ -273,9 +266,7 @@ class _AccountTXpageState extends State<AccountTXpage> {
                 : "[nocontext] Unknown error.";
           }
 
-          msg.showSnackBar(
-            SnackBar(content: Text(error), behavior: SnackBarBehavior.floating),
-          );
+          msg.showSnackBar(SnackBar(content: Text(error), behavior: .floating));
           return;
         }
 
@@ -300,8 +291,7 @@ class _AccountTXpageState extends State<AccountTXpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: _titleWidget, actions: <Widget>[_editIcon]),
-      floatingActionButton:
-          widget.account.attributes.type == ShortAccountTypeProperty.asset
+      floatingActionButton: widget.account.attributes.type == .asset
           ? NewTransactionFab(context: context, accountId: widget.account.id)
           : null,
       body: HomeTransactions(

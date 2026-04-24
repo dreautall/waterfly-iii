@@ -27,7 +27,7 @@ class _HomeBalanceState extends State<HomeBalance>
     final FireflyIii api = context.read<FireflyService>().api;
 
     final Response<AccountArray> respAccounts = await api.v1AccountsGet(
-      type: AccountTypeFilter.assetAccount,
+      type: .assetAccount,
     );
     apiThrowErrorIfEmpty(respAccounts, mounted ? context : null);
 
@@ -51,11 +51,10 @@ class _HomeBalanceState extends State<HomeBalance>
       child: FutureBuilder<AccountArray>(
         future: _fetchAccounts(),
         builder: (BuildContext context, AsyncSnapshot<AccountArray> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.hasData) {
+          if (snapshot.connectionState == .done && snapshot.hasData) {
             return ListView(
               cacheExtent: 1000,
-              padding: const EdgeInsets.all(8),
+              padding: const .all(8),
               children: <Widget>[
                 ...snapshot.data!.data.map((AccountRead account) {
                   if (!(account.attributes.active ?? false)) {
@@ -93,9 +92,9 @@ class _HomeBalanceState extends State<HomeBalance>
                     openColor: Theme.of(context).cardColor,
                     closedColor: Theme.of(context).cardColor,
                     closedShape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        bottomLeft: Radius.circular(16),
+                      borderRadius: .only(
+                        topLeft: .circular(16),
+                        bottomLeft: .circular(16),
                       ),
                     ),
                     closedElevation: 0,
@@ -112,14 +111,14 @@ class _HomeBalanceState extends State<HomeBalance>
                                 S.of(context).generalUnknown,
                           ),
                           shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16),
-                              bottomLeft: Radius.circular(16),
+                            borderRadius: .only(
+                              topLeft: .circular(16),
+                              bottomLeft: .circular(16),
                             ),
                           ),
                           isThreeLine: false,
                           trailing: RichText(
-                            textAlign: TextAlign.end,
+                            textAlign: .end,
                             maxLines: 2,
                             text: TextSpan(
                               style: Theme.of(context).textTheme.bodyMedium,
@@ -133,9 +132,9 @@ class _HomeBalanceState extends State<HomeBalance>
                                         color: (balance < 0)
                                             ? Colors.red
                                             : Colors.green,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: .bold,
                                         fontFeatures: const <FontFeature>[
-                                          FontFeature.tabularFigures(),
+                                          .tabularFigures(),
                                         ],
                                       ),
                                 ),
@@ -166,7 +165,7 @@ class _HomeBalanceState extends State<HomeBalance>
             return Text(snapshot.error!.toString());
           } else {
             return const Padding(
-              padding: EdgeInsets.all(8),
+              padding: .all(8),
               child: Center(child: CircularProgressIndicator.adaptive()),
             );
           }

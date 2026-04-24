@@ -78,7 +78,7 @@ class _TransactionTagsState extends State<TransactionTags> {
                 filled: !widget.interactable,
                 prefixIcon: widget.tagsController.tags.isNotEmpty
                     ? Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const .all(16),
                         child: Wrap(
                           spacing: 5,
                           runSpacing: 5,
@@ -214,7 +214,7 @@ class _TagDialogState extends State<TagDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(S.of(context).transactionDialogTagsTitle),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       actions: <Widget>[
         TextButton(
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
@@ -332,10 +332,7 @@ class _TagDialogState extends State<TagDialog> {
 
                 return SingleChildScrollView(
                   child: AnimatedHeight(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: child,
-                    ),
+                    child: Column(crossAxisAlignment: .start, children: child),
                   ),
                 );
               },

@@ -107,7 +107,7 @@ class FilterDialog extends StatelessWidget {
       Response<BudgetArray> respBudgets,
       Response<BillArray> respBills,
     ) = await (
-      api.v1AccountsGet(type: AccountTypeFilter.assetAccount),
+      api.v1AccountsGet(type: .assetAccount),
       api.v1CurrenciesGet(),
       api.v1CategoriesGet(),
       api.v1BudgetsGet(),
@@ -143,7 +143,7 @@ class FilterDialog extends StatelessWidget {
     return AlertDialog(
       icon: const Icon(Icons.tune),
       title: Text(S.of(context).homeTransactionsDialogFilterTitle),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       actions: <Widget>[
         TextButton(
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
@@ -162,9 +162,7 @@ class FilterDialog extends StatelessWidget {
             filters.reset();
             // Reset to defaults
             context.read<SettingsProvider>().showFutureTXs = false;
-            context.read<SettingsProvider>().setTransactionDateFilter(
-              TransactionDateFilter.all,
-            );
+            context.read<SettingsProvider>().setTransactionDateFilter(.all);
             Navigator.of(context).pop(true);
           },
         ),
@@ -177,7 +175,7 @@ class FilterDialog extends StatelessWidget {
       ],
       content: SingleChildScrollView(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: .min,
           children: <Widget>[
             FutureBuilder<FilterData>(
               future: _getData(context),
@@ -276,8 +274,7 @@ class FilterDialog extends StatelessWidget {
                               name: S
                                   .of(context)
                                   .homeTransactionsDialogFilterAccountsAll,
-                              type: ShortAccountTypeProperty
-                                  .swaggerGeneratedUnknown,
+                              type: .swaggerGeneratedUnknown,
                             ),
                           ),
                           label: S
@@ -504,47 +501,45 @@ class FilterDialog extends StatelessWidget {
                       child.add(const SizedBox(height: 12));
 
                       // Bill Select
-                      final List<DropdownMenuEntry<BillRead>>
-                      billOptions = <DropdownMenuEntry<BillRead>>[
-                        DropdownMenuEntry<BillRead>(
-                          value: BillRead(
-                            id: "0",
-                            type: "dummy",
-                            attributes: BillProperties(
-                              amountMax: "0",
-                              amountMin: "0",
-                              date: DateTime.now(),
-                              repeatFreq:
-                                  BillRepeatFrequency.swaggerGeneratedUnknown,
-                              name: S
+                      final List<DropdownMenuEntry<BillRead>> billOptions =
+                          <DropdownMenuEntry<BillRead>>[
+                            DropdownMenuEntry<BillRead>(
+                              value: BillRead(
+                                id: "0",
+                                type: "dummy",
+                                attributes: BillProperties(
+                                  amountMax: "0",
+                                  amountMin: "0",
+                                  date: DateTime.now(),
+                                  repeatFreq: .swaggerGeneratedUnknown,
+                                  name: S
+                                      .of(context)
+                                      .homeTransactionsDialogFilterBillsAll,
+                                ),
+                              ),
+                              label: S
                                   .of(context)
                                   .homeTransactionsDialogFilterBillsAll,
                             ),
-                          ),
-                          label: S
-                              .of(context)
-                              .homeTransactionsDialogFilterBillsAll,
-                        ),
-                        DropdownMenuEntry<BillRead>(
-                          value: BillRead(
-                            id: "-1",
-                            type: "dummy",
-                            attributes: BillProperties(
-                              amountMax: "0",
-                              amountMin: "0",
-                              date: DateTime.now(),
-                              repeatFreq:
-                                  BillRepeatFrequency.swaggerGeneratedUnknown,
-                              name: S
+                            DropdownMenuEntry<BillRead>(
+                              value: BillRead(
+                                id: "-1",
+                                type: "dummy",
+                                attributes: BillProperties(
+                                  amountMax: "0",
+                                  amountMin: "0",
+                                  date: DateTime.now(),
+                                  repeatFreq: .swaggerGeneratedUnknown,
+                                  name: S
+                                      .of(context)
+                                      .homeTransactionsDialogFilterBillUnset,
+                                ),
+                              ),
+                              label: S
                                   .of(context)
                                   .homeTransactionsDialogFilterBillUnset,
                             ),
-                          ),
-                          label: S
-                              .of(context)
-                              .homeTransactionsDialogFilterBillUnset,
-                        ),
-                      ];
+                          ];
                       BillRead? currentBill = billOptions.first.value;
                       if (filters.bill?.id == "-1") {
                         currentBill = billOptions.last.value;
@@ -592,9 +587,9 @@ class FilterDialog extends StatelessWidget {
                       child.add(const SizedBox(height: 12));
 
                       return Padding(
-                        padding: const EdgeInsets.all(12),
+                        padding: const .all(12),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          crossAxisAlignment: .stretch,
                           children: child,
                         ),
                       );
@@ -621,15 +616,15 @@ class FilterDialog extends StatelessWidget {
 
   String _getFilterName(BuildContext context, TransactionDateFilter filter) {
     switch (filter) {
-      case TransactionDateFilter.currentMonth:
+      case .currentMonth:
         return S.of(context).generalDateRangeCurrentMonth;
-      case TransactionDateFilter.last30Days:
+      case .last30Days:
         return S.of(context).generalDateRangeLast30Days;
-      case TransactionDateFilter.currentYear:
+      case .currentYear:
         return S.of(context).generalDateRangeCurrentYear;
-      case TransactionDateFilter.lastYear:
+      case .lastYear:
         return S.of(context).generalDateRangeLastYear;
-      case TransactionDateFilter.all:
+      case .all:
         return S.of(context).generalDateRangeAll;
     }
   }

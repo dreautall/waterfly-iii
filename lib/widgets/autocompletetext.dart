@@ -121,7 +121,7 @@ class _AutoCompleteTextState<T extends Object>
                     }
                     Actions.invoke(ctx, const DismissIntent());
                   },
-                  textCapitalization: TextCapitalization.sentences,
+                  textCapitalization: .sentences,
                 ),
             optionsViewBuilder:
                 (
@@ -129,11 +129,9 @@ class _AutoCompleteTextState<T extends Object>
                   void Function(T) onOptionSelected,
                   Iterable<T> options,
                 ) => Align(
-                  alignment: Alignment.topLeft,
+                  alignment: .topLeft,
                   child: Padding(
-                    padding: EdgeInsets.only(
-                      left: widget.labelIcon == null ? 0 : 40,
-                    ),
+                    padding: .only(left: widget.labelIcon == null ? 0 : 40),
                     child: Material(
                       elevation: 4.0,
                       child: ConstrainedBox(
@@ -144,7 +142,7 @@ class _AutoCompleteTextState<T extends Object>
                               (widget.labelIcon == null ? 0 : 40),
                         ),
                         child: ListView.builder(
-                          padding: EdgeInsets.zero,
+                          padding: .zero,
                           itemCount: options.length,
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {
@@ -171,7 +169,7 @@ class _AutoCompleteTextState<T extends Object>
                                     color: highlight
                                         ? Theme.of(context).focusColor
                                         : null,
-                                    padding: const EdgeInsets.all(16.0),
+                                    padding: const .all(16.0),
                                     child: Text(
                                       widget.displayStringForOption(option),
                                     ),

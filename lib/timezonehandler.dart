@@ -7,8 +7,8 @@ class TimeZoneHandler {
   tz.Location? _deviceLoc;
 
   final Logger log = Logger("TimeZoneHandler");
+  final String defaultTZ = "Etc/UTC";
 
-  // :TODO: make variable
   bool _useServerTime = true;
   bool get useServerTime => _useServerTime;
 
@@ -16,7 +16,7 @@ class TimeZoneHandler {
     try {
       _serverLoc = tz.getLocation(serverTZ);
     } on tz.LocationNotFoundException {
-      _serverLoc = tz.getLocation("UTC");
+      _serverLoc = tz.getLocation(defaultTZ);
     }
     log.info(() => "Server Timezone: $serverTZ ($sLocation)");
     updateDeviceLocation().then(
@@ -25,7 +25,8 @@ class TimeZoneHandler {
   }
 
   tz.Location get sLocation => _serverLoc;
-  tz.Location get dLocation => _deviceLoc ?? tz.getLocation("UTC");
+
+  tz.Location get dLocation => _deviceLoc ?? tz.getLocation(defaultTZ);
 
   Future<void> setUseServerTime(bool useServerTime) async {
     _useServerTime = useServerTime;
@@ -41,7 +42,7 @@ class TimeZoneHandler {
     try {
       _deviceLoc = tz.getLocation(deviceTZ);
     } on tz.LocationNotFoundException {
-      _deviceLoc = tz.getLocation("utc");
+      _deviceLoc = tz.getLocation(defaultTZ);
     }
     log.info(() => "Device Timezone: $deviceTZ ($dLocation)");
   }

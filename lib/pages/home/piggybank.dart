@@ -214,10 +214,10 @@ class _HomePiggybankState extends State<HomePiggybank>
                 (piggy.attributes.objectGroupTitle ?? "").isNotEmpty) {
               lastGroupId = groupId;
               groupHeader = Padding(
-                padding: const EdgeInsets.only(top: 16, left: 16),
+                padding: const .only(top: 16, left: 16),
                 child: Text(
                   piggy.attributes.objectGroupTitle ?? "(no title)",
-                  textAlign: TextAlign.start,
+                  textAlign: .start,
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
               );
@@ -259,16 +259,16 @@ class _HomePiggybankState extends State<HomePiggybank>
             }
 
             return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: <Widget>[
                 groupHeader ?? const SizedBox.shrink(),
                 ListTile(
                   title: Text(piggy.attributes.name),
                   subtitle: Text(subtitle),
                   shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      bottomLeft: Radius.circular(16),
+                    borderRadius: .only(
+                      topLeft: .circular(16),
+                      bottomLeft: .circular(16),
                     ),
                   ),
                   isThreeLine: false,
@@ -281,10 +281,10 @@ class _HomePiggybankState extends State<HomePiggybank>
                         maxWidth: 40,
                       ),
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
+                        shape: .circle,
                         gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
+                          begin: .bottomCenter,
+                          end: .topCenter,
                           stops: <double>[
                             0,
                             (piggy.attributes.percentage ?? 0) / 100,
@@ -303,7 +303,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                     ),
                   ),
                   trailing: RichText(
-                    textAlign: TextAlign.end,
+                    textAlign: .end,
                     maxLines: 2,
                     text: TextSpan(
                       style: Theme.of(context).textTheme.bodyMedium,
@@ -315,9 +315,9 @@ class _HomePiggybankState extends State<HomePiggybank>
                                 color: (currentAmount < 0)
                                     ? Colors.red
                                     : Colors.green,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 fontFeatures: const <FontFeature>[
-                                  FontFeature.tabularFigures(),
+                                  .tabularFigures(),
                                 ],
                               ),
                         ),
@@ -355,8 +355,8 @@ class _HomePiggybankState extends State<HomePiggybank>
           },
           noItemsFoundIndicatorBuilder: (BuildContext context) => Center(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: .center,
+              mainAxisAlignment: .center,
               children: <Widget>[
                 Text(
                   S.of(context).homePiggyNoAccounts,
@@ -386,7 +386,7 @@ class _HomePiggybankState extends State<HomePiggybank>
             maxHeight: MediaQuery.of(context).size.height / 3,
           ),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: .min,
             children: <Widget>[
               const SizedBox(height: 8),
               ListTile(
@@ -394,7 +394,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                   S.of(context).homePiggyAvailableAmounts,
                   style: Theme.of(
                     context,
-                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                  ).textTheme.titleLarge?.copyWith(fontWeight: .bold),
                 ),
               ),
               const Divider(indent: 8, endIndent: 8),
@@ -432,7 +432,7 @@ class _HomePiggybankState extends State<HomePiggybank>
       ),
       isThreeLine: false,
       trailing: RichText(
-        textAlign: TextAlign.end,
+        textAlign: .end,
         maxLines: 2,
         text: TextSpan(
           style: Theme.of(context).textTheme.bodyMedium,
@@ -443,8 +443,8 @@ class _HomePiggybankState extends State<HomePiggybank>
                 color: (statusData.availableBalance < 0)
                     ? Colors.red
                     : Colors.green,
-                fontWeight: FontWeight.bold,
-                fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
+                fontWeight: .bold,
+                fontFeatures: const <FontFeature>[.tabularFigures()],
               ),
             ),
             const TextSpan(text: "\n"),
@@ -555,7 +555,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
 
     return SimpleDialog(
       title: Text(currentPiggy.attributes.name),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       children: <Widget>[
         currentPiggy.attributes.percentage != null
             ? LinearProgressIndicator(
@@ -563,7 +563,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
               )
             : const Divider(height: 0),
         Padding(
-          padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
+          padding: const .fromLTRB(24, 12, 24, 0),
           child: Text(infoText.trim()),
         ),
         AnimatedHeight(
@@ -574,17 +574,16 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                   BuildContext context,
                   AsyncSnapshot<List<PiggyBankEventRead>> snapshot,
                 ) {
-                  if (snapshot.connectionState == ConnectionState.done &&
-                      snapshot.hasData) {
+                  if (snapshot.connectionState == .done && snapshot.hasData) {
                     if (snapshot.data!.isEmpty) {
                       return Padding(
-                        padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
+                        padding: const .fromLTRB(24, 12, 24, 0),
                         child: Text(S.of(context).homeTransactionsEmpty),
                       );
                     }
 
                     return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      padding: const .symmetric(horizontal: 24),
                       child: SizedBox(
                         height: 300,
                         width: MediaQuery.of(context).size.width,
@@ -601,7 +600,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
                     return const SizedBox.shrink();
                   } else {
                     return const Padding(
-                      padding: EdgeInsets.all(8),
+                      padding: .all(8),
                       child: Center(
                         child: CircularProgressIndicator.adaptive(),
                       ),
@@ -611,7 +610,7 @@ class _PiggyDetailsState extends State<PiggyDetails> {
           ),
         ),
         OverflowBar(
-          alignment: MainAxisAlignment.end,
+          alignment: .end,
           spacing: 12,
           overflowSpacing: 12,
           children: <Widget>[
@@ -658,7 +657,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
   final Logger log = Logger("Pages.Home.Piggybank.AdjustBalance");
 
   final TextEditingController _amountTextController = TextEditingController();
-  TransactionTypeProperty _transactionType = TransactionTypeProperty.deposit;
+  TransactionTypeProperty _transactionType = .deposit;
 
   late double currentAmount;
   late CurrencyRead currency;
@@ -702,12 +701,12 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
   Widget build(BuildContext context) {
     return SimpleDialog(
       title: Text(S.of(context).homePiggyAdjustDialogTitle),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const .symmetric(horizontal: 24),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: <Widget>[
               if (!hasMultipleAccounts)
                 Text(S.of(context).homePiggySaved(currency.fmt(currentAmount))),
@@ -739,11 +738,10 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                     backgroundColor: _transactionType.color,
                     onPressed: () {
                       setState(() {
-                        if (_transactionType ==
-                            TransactionTypeProperty.deposit) {
-                          _transactionType = TransactionTypeProperty.withdrawal;
+                        if (_transactionType == .deposit) {
+                          _transactionType = .withdrawal;
                         } else {
-                          _transactionType = TransactionTypeProperty.deposit;
+                          _transactionType = .deposit;
                         }
                       });
                     },
@@ -764,7 +762,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
         ),
         const SizedBox(height: 16),
         OverflowBar(
-          alignment: MainAxisAlignment.end,
+          alignment: .end,
           spacing: 12,
           overflowSpacing: 12,
           children: <Widget>[
@@ -783,7 +781,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                 if (amount == 0) {
                   nav.pop();
                 }
-                if (_transactionType == TransactionTypeProperty.withdrawal) {
+                if (_transactionType == .withdrawal) {
                   amount *= -1;
                 }
 
@@ -830,10 +828,9 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                 if (!resp.isSuccessful || resp.body == null) {
                   late String error;
                   try {
-                    final ValidationErrorResponse valError =
-                        ValidationErrorResponse.fromJson(
-                          json.decode(resp.error.toString()),
-                        );
+                    final ValidationErrorResponse valError = .fromJson(
+                      json.decode(resp.error.toString()),
+                    );
                     if (context.mounted) {
                       error = valError.message ?? S.of(context).errorUnknown;
                     } else {
@@ -853,7 +850,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                       builder: (BuildContext context) => AlertDialog(
                         icon: const Icon(Icons.error),
                         title: Text(S.of(context).generalError),
-                        clipBehavior: Clip.hardEdge,
+                        clipBehavior: .hardEdge,
                         actions: <Widget>[
                           FilledButton(
                             child: Text(S.of(context).generalDismiss),

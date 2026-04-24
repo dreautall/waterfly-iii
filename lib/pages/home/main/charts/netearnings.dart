@@ -46,7 +46,7 @@ class NetEarningsChart extends StatelessWidget {
     expenseChartData = expenseChartData.reversed.toList();
 
     return Padding(
-      padding: const EdgeInsets.only(left: 12),
+      padding: const .only(left: 12),
       child: charts.BarChart(
         <charts.Series<LabelAmountChart, String>>[
           charts.Series<LabelAmountChart, String>(
@@ -160,7 +160,7 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
 
     return SimpleDialog(
       title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: <Widget>[
           Text(DateFormat.yMMMM().format(currentMonth)),
           Row(
@@ -185,8 +185,8 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
           ),
         ],
       ),
-      clipBehavior: Clip.hardEdge,
-      insetPadding: const EdgeInsets.all(12),
+      clipBehavior: .hardEdge,
+      insetPadding: const .all(12),
       children: <Widget>[
         FutureBuilder<Map<String, double>>(
           future: _fetchData(context),
@@ -195,8 +195,7 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                 BuildContext context,
                 AsyncSnapshot<Map<String, double>> snapshot,
               ) {
-                if (snapshot.connectionState == ConnectionState.done &&
-                    snapshot.hasData) {
+                if (snapshot.connectionState == .done && snapshot.hasData) {
                   final List<WFChartData> chartData = <WFChartData>[];
 
                   double min = 0;
@@ -225,7 +224,7 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                   return Column(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(left: 12),
+                        padding: const .only(left: 12),
                         child: SizedBox(
                           height: 400,
                           width: MediaQuery.of(context).size.width,
@@ -233,7 +232,7 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                             primaryXAxis: CategoryAxis(
                               labelRotation: 90,
                               labelStyle: Theme.of(context).textTheme.labelSmall
-                                  ?.copyWith(fontWeight: FontWeight.normal),
+                                  ?.copyWith(fontWeight: .normal),
                               axisLine: AxisLine(
                                 color: Theme.of(
                                   context,
@@ -245,7 +244,7 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                               labelStyle: Theme.of(context)
                                   .textTheme
                                   .labelMedium
-                                  ?.copyWith(fontWeight: FontWeight.normal),
+                                  ?.copyWith(fontWeight: .normal),
                               axisLine: AxisLine(
                                 color: Theme.of(
                                   context,
@@ -285,13 +284,13 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                                 dataLabelSettings: DataLabelSettings(
                                   isVisible: true,
                                   angle: 90,
-                                  alignment: ChartAlignment.center,
-                                  labelAlignment: ChartDataLabelAlignment.outer,
-                                  labelPosition: ChartDataLabelPosition.outside,
+                                  alignment: .center,
+                                  labelAlignment: .outer,
+                                  labelPosition: .outside,
                                   textStyle: Theme.of(context)
                                       .textTheme
                                       .labelSmall
-                                      ?.copyWith(fontWeight: FontWeight.normal),
+                                      ?.copyWith(fontWeight: .normal),
                                 ),
                               ),
                             ],
@@ -302,14 +301,14 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                             zoomPanBehavior: ZoomPanBehavior(
                               enablePanning: true,
                               enablePinching: true,
-                              zoomMode: ZoomMode.x,
+                              zoomMode: .x,
                               enableDoubleTapZooming: true,
                             ),
                           ),
                         ),
                       ),
                       /*Padding(
-                    padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                    padding: const .fromLTRB(12, 12, 12, 0),
                     child: ValueListenableBuilder<DateTime?>(
                       valueListenable: date,
                       builder: (BuildContext context, DateTime? value,
@@ -335,7 +334,7 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                   return const SizedBox.shrink();
                 } else {
                   return const Padding(
-                    padding: EdgeInsets.all(8),
+                    padding: .all(8),
                     child: Center(child: CircularProgressIndicator.adaptive()),
                   );
                 }

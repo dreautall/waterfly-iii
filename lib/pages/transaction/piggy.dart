@@ -47,7 +47,7 @@ class _PiggyDialogState extends State<PiggyDialog> {
     return AlertDialog(
       icon: const Icon(Icons.savings_outlined),
       title: Text(S.of(context).transactionDialogPiggyTitle),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       scrollable: false,
       actions: <Widget>[
         TextButton(

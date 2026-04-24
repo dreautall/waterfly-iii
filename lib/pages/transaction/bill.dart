@@ -45,7 +45,7 @@ class _BillDialogState extends State<BillDialog> {
     return AlertDialog(
       icon: const Icon(Icons.calendar_today),
       title: Text(S.of(context).transactionDialogBillTitle),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       scrollable: false,
       actions: <Widget>[
         TextButton(
@@ -60,7 +60,7 @@ class _BillDialogState extends State<BillDialog> {
                   amountMin: "",
                   amountMax: "",
                   date: DateTime.now(),
-                  repeatFreq: BillRepeatFrequency.swaggerGeneratedUnknown,
+                  repeatFreq: .swaggerGeneratedUnknown,
                 ),
               ),
             );
@@ -93,7 +93,7 @@ class _BillDialogState extends State<BillDialog> {
                   amountMin: "",
                   amountMax: "",
                   date: DateTime.now(),
-                  repeatFreq: BillRepeatFrequency.swaggerGeneratedUnknown,
+                  repeatFreq: .swaggerGeneratedUnknown,
                 ),
               );
             });

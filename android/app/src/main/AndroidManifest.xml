@@ -109,6 +109,7 @@
         <package android:name="com.americanexpress.receiptmatch.activities"/>
         <package android:name="com.anz.android.gomoney"/>
         <package android:name="com.apps4fuun.smssender"/>
+        <package android:name="com.avuscapital.trading212"/>
         <package android:name="com.axis.mobile"/>
         <package android:name="com.b2winc.amedigital"/>
         <package android:name="com.bancomer.mbanking" />
@@ -125,6 +126,7 @@
         <package android:name="com.boursorama.android.clients"/>
         <package android:name="com.bpi.ng.mobilebanking"/>
         <package android:name="com.btg.pactual.banking" />
+        <package android:name="com.bunq.android"/>
         <package android:name="com.c6bank.app"/>
         <package android:name="com.chase.sig.android"/>
         <package android:name="com.chinatrust.mobilebank"/>

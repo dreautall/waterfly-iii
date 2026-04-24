@@ -68,7 +68,7 @@ class _AccountsPageState extends State<AccountsPage>
                     ) => SharedAxisTransition(
                       animation: primaryAnimation,
                       secondaryAnimation: secondaryAnimation,
-                      transitionType: SharedAxisTransitionType.horizontal,
+                      transitionType: .horizontal,
                       child: child,
                     ),
               ),
@@ -104,10 +104,10 @@ class _AccountsPageState extends State<AccountsPage>
   }
 
   static const List<AccountTypeFilter> _accountTypes = <AccountTypeFilter>[
-    AccountTypeFilter.asset,
-    AccountTypeFilter.expense,
-    AccountTypeFilter.revenue,
-    AccountTypeFilter.liabilities,
+    .asset,
+    .expense,
+    .revenue,
+    .liabilities,
   ];
   final List<Widget> _tabPages = _accountTypes
       .map<Widget>((AccountTypeFilter t) => AccountDetails(accountType: t))

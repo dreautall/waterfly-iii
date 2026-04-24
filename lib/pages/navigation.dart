@@ -180,7 +180,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
           title: context.select((NavPageElements n) => n.appBarTitle),
           actions: context.select((NavPageElements n) => n.appBarActions),
         ),
-        drawer: context.watch<LayoutProvider>().currentSize >= ScreenSize.medium
+        drawer: context.watch<LayoutProvider>().currentSize >= .medium
             ? null
             : NavigationDrawer(
                 selectedIndex: screenIndex,
@@ -190,10 +190,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                 },
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 28,
-                      vertical: 16,
-                    ),
+                    padding: const .symmetric(horizontal: 28, vertical: 16),
                     child: Text(
                       'Waterfly III',
                       style: Theme.of(context).textTheme.titleSmall,
@@ -208,10 +205,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                   }),
                   const Divider(indent: 28, endIndent: 28),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 28,
-                      vertical: 16,
-                    ),
+                    padding: const .symmetric(horizontal: 28, vertical: 16),
                     child: GestureDetector(
                       onTap: () async {
                         final FireflyService ff = context
@@ -237,8 +231,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
               ),
         body: Row(
           children: <Widget>[
-            if (context.watch<LayoutProvider>().currentSize >=
-                ScreenSize.medium)
+            if (context.watch<LayoutProvider>().currentSize >= .medium)
               NavigationRail(
                 selectedIndex: screenIndex,
                 labelType: NavigationRailLabelType.all,
@@ -246,8 +239,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                 onDestinationSelected: (int index) =>
                     navOnDestinationSelected(context, index),
                 leading:
-                    (context.watch<LayoutProvider>().currentSize >=
-                        ScreenSize.expanded)
+                    (context.watch<LayoutProvider>().currentSize >= .expanded)
                     ? SizedBox(
                         height: 56,
                         child: AnimatedSwitcher(
@@ -260,8 +252,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                       )
                     : null,
                 groupAlignment:
-                    (context.watch<LayoutProvider>().currentSize >=
-                        ScreenSize.expanded)
+                    (context.watch<LayoutProvider>().currentSize >= .expanded)
                     ? 0
                     : -1,
                 destinations: navDestinations.map((NavDestination destination) {
@@ -318,7 +309,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
           ],
         ),
         floatingActionButton:
-            context.watch<LayoutProvider>().currentSize >= ScreenSize.expanded
+            context.watch<LayoutProvider>().currentSize >= .expanded
             ? null
             : context.select((NavPageElements n) => n.fab),
       ),
@@ -334,7 +325,7 @@ class LogoutConfirmDialog extends StatelessWidget {
     return AlertDialog(
       icon: const Icon(Icons.logout),
       title: Text(S.of(context).formButtonLogout),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       actions: <Widget>[
         TextButton(
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),

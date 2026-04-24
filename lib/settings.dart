@@ -24,6 +24,7 @@ class NotificationAppSettings {
     this.includeTitle = true,
     this.autoAdd = false,
     this.emptyNote = false,
+    this.regex,
   });
 
   final String appName;
@@ -31,13 +32,15 @@ class NotificationAppSettings {
   bool includeTitle = true;
   bool autoAdd = false;
   bool emptyNote = false;
+  RegExp? regex;
 
   NotificationAppSettings.fromJson(Map<String, dynamic> json)
     : appName = json['appName'],
       defaultAccountId = json['defaultAccountId'],
       includeTitle = json['includeTitle'] ?? true,
       autoAdd = json['autoAdd'] ?? false,
-      emptyNote = json['emptyNote'] ?? false;
+      emptyNote = json['emptyNote'] ?? false,
+      regex = (json['regex'] != null) ? RegExp(json['regex']) : null;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
     'appName': appName,
@@ -45,6 +48,7 @@ class NotificationAppSettings {
     'includeTitle': includeTitle,
     'autoAdd': autoAdd,
     'emptyNote': emptyNote,
+    'regex': regex?.pattern,
   };
 }
 
@@ -78,6 +82,35 @@ enum TransactionDateFilter {
   lastYear,
   all,
 }
+
+class PastNotification {
+  PastNotification(this.appName, this.title, this.body, this.time, this.reason);
+
+  final String appName;
+  final String title;
+  final String body;
+  final DateTime time;
+  PastNotificationMissedReasons? reason;
+
+  PastNotification.fromJson(Map<String, dynamic> json)
+    : appName = json['appName'],
+      title = json['title'],
+      body = json['body'],
+      time = DateTime.fromMillisecondsSinceEpoch(json['time']),
+      reason = (json['reason'] != null && json['reason'] != '')
+          ? PastNotificationMissedReasons.values[json['reason']]
+          : null;
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    'appName': appName,
+    'title': title,
+    'body': body,
+    'time': time.millisecondsSinceEpoch,
+    'reason': reason?.index,
+  };
+}
+
+enum PastNotificationMissedReasons { noMoney, noCurrency, appNotUsed }
 
 class SettingsBitmask {
   int _value;
@@ -131,6 +164,8 @@ class SettingsProvider with ChangeNotifier {
   static const String settingNLKnownApps = "NL_KNOWNAPPS";
   static const String settingNLUsedApps = "NL_USEDAPPS";
   static const String settingNLAppPrefix = "NL_APP_";
+  static const String settingNLHistory = "NL_HISTORY";
+  static const int settingNLHistoryLength = 15;
   static const String settingTheme = "THEME";
   static const String settingThemeDark = "DARK";
   static const String settingThemeLight = "LIGHT";
@@ -145,21 +180,21 @@ class SettingsProvider with ChangeNotifier {
   static const String settingsDashboardHidden = "DASHBOARD_HIDDEN";
   static const String settingTransactionDateFilter = "TX_DATE_FILTER";
 
-  bool get debug => _loaded ? _boolSettings[BoolSettings.debug] : false;
-  bool get lock => _loaded ? _boolSettings[BoolSettings.lock] : false;
-  bool get showFutureTXs =>
-      _loaded ? _boolSettings[BoolSettings.showFutureTXs] : false;
-  bool get dynamicColors =>
-      _loaded ? _boolSettings[BoolSettings.dynamicColors] : false;
-  bool get useServerTime =>
-      _loaded ? _boolSettings[BoolSettings.useServerTime] : true;
-  bool get hideTags => _loaded ? _boolSettings[BoolSettings.hideTags] : false;
+  bool get debug => _loaded ? _boolSettings[.debug] : false;
+  bool get lock => _loaded ? _boolSettings[.lock] : false;
+  bool get showFutureTXs => _loaded ? _boolSettings[.showFutureTXs] : false;
+  bool get dynamicColors => _loaded ? _boolSettings[.dynamicColors] : false;
+  bool get useServerTime => _loaded ? _boolSettings[.useServerTime] : true;
+  bool get hideTags => _loaded ? _boolSettings[.hideTags] : false;
   bool get billsShowOnlyActive =>
-      _loaded ? _boolSettings[BoolSettings.billsShowOnlyActive] : false;
+      _loaded ? _boolSettings[.billsShowOnlyActive] : false;
   bool get billsShowOnlyExpected =>
-      _loaded ? _boolSettings[BoolSettings.billsShowOnlyExpected] : false;
+      _loaded ? _boolSettings[.billsShowOnlyExpected] : false;
+  bool _isSessionAuthed = false;
 
-  ThemeMode _theme = ThemeMode.system;
+  bool get isSessionAuthed => _isSessionAuthed;
+
+  ThemeMode _theme = .system;
   ThemeMode get theme => _theme;
 
   Locale? _locale;
@@ -175,11 +210,11 @@ class SettingsProvider with ChangeNotifier {
   List<String> _notificationApps = <String>[];
   List<String> get notificationApps => _notificationApps;
 
-  BillsLayout _billsLayout = BillsLayout.grouped;
+  BillsLayout _billsLayout = .grouped;
   BillsLayout get billsLayout => _billsLayout;
-  BillsSort _billsSort = BillsSort.name;
+  BillsSort _billsSort = .name;
   BillsSort get billsSort => _billsSort;
-  SortingOrder _billsSortOrder = SortingOrder.ascending;
+  SortingOrder _billsSortOrder = .ascending;
   SortingOrder get billsSortOrder => _billsSortOrder;
 
   List<String> _categoriesSumExcluded = <String>[];
@@ -194,7 +229,7 @@ class SettingsProvider with ChangeNotifier {
   late SettingsBitmask _boolSettings;
   SettingsBitmask get boolSettings => _boolSettings;
 
-  TransactionDateFilter _transactionDateFilter = TransactionDateFilter.all;
+  TransactionDateFilter _transactionDateFilter = .all;
 
   TransactionDateFilter get transactionDateFilter => _transactionDateFilter;
 
@@ -206,18 +241,17 @@ class SettingsProvider with ChangeNotifier {
     if (!oldPrefs.containsKey(settingsBitmask)) {
       // Fallback solution for migration
       log.config("no bitmask saved, trying legacy settings");
-      _boolSettings[BoolSettings.debug] =
-          oldPrefs.getBool(settingDebug) ?? false;
-      _boolSettings[BoolSettings.lock] = oldPrefs.getBool(settingLock) ?? false;
-      _boolSettings[BoolSettings.showFutureTXs] =
+      _boolSettings[.debug] = oldPrefs.getBool(settingDebug) ?? false;
+      _boolSettings[.lock] = oldPrefs.getBool(settingLock) ?? false;
+      _boolSettings[.showFutureTXs] =
           oldPrefs.getBool(settingShowFutureTXs) ?? false;
-      _boolSettings[BoolSettings.dynamicColors] =
+      _boolSettings[.dynamicColors] =
           oldPrefs.getBool(settingDynamicColors) ?? false;
-      _boolSettings[BoolSettings.useServerTime] =
+      _boolSettings[.useServerTime] =
           oldPrefs.getBool(settingUseServerTime) ?? true;
-      _boolSettings[BoolSettings.hideTags] = false;
-      _boolSettings[BoolSettings.billsShowOnlyActive] = false;
-      _boolSettings[BoolSettings.billsShowOnlyExpected] = false;
+      _boolSettings[.hideTags] = false;
+      _boolSettings[.billsShowOnlyActive] = false;
+      _boolSettings[.billsShowOnlyExpected] = false;
     }
     await prefs.setInt(settingsBitmask, _boolSettings.value);
 
@@ -306,14 +340,14 @@ class SettingsProvider with ChangeNotifier {
     log.config("read theme $theme");
     switch (theme) {
       case settingThemeDark:
-        _theme = ThemeMode.dark;
+        _theme = .dark;
         break;
       case settingThemeLight:
-        _theme = ThemeMode.light;
+        _theme = .light;
         break;
       case settingThemeSystem:
       default:
-        _theme = ThemeMode.system;
+        _theme = .system;
     }
 
     final String localeStr = await prefs.getString(settingLocale) ?? "unset";
@@ -334,11 +368,11 @@ class SettingsProvider with ChangeNotifier {
 
     if (debug) {
       log.config("setting debug");
-      Logger.root.level = Level.ALL;
+      Logger.root.level = .ALL;
       _debugLogger = Logger.root.onRecord.listen(await DebugLogger().get());
     } else {
       log.config("not setting debug");
-      Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
+      Logger.root.level = kDebugMode ? .ALL : .INFO;
     }
 
     _notificationApps =
@@ -346,20 +380,18 @@ class SettingsProvider with ChangeNotifier {
 
     final int? billsLayoutIndex = await prefs.getInt(settingBillsDefaultLayout);
     _billsLayout = billsLayoutIndex == null
-        ? BillsLayout.grouped
-        : BillsLayout.values[billsLayoutIndex];
+        ? .grouped
+        : .values[billsLayoutIndex];
 
     final int? billsSortIndex = await prefs.getInt(settingBillsDefaultSort);
-    _billsSort = billsSortIndex == null
-        ? BillsSort.name
-        : BillsSort.values[billsSortIndex];
+    _billsSort = billsSortIndex == null ? .name : .values[billsSortIndex];
 
     final int? billsSortOrderIndex = await prefs.getInt(
       settingBillsDefaultSortOrder,
     );
     _billsSortOrder = billsSortOrderIndex == null
-        ? SortingOrder.ascending
-        : SortingOrder.values[billsSortOrderIndex];
+        ? .ascending
+        : .values[billsSortOrderIndex];
 
     _categoriesSumExcluded =
         await prefs.getStringList(settingsCategoriesSumExcluded) ?? <String>[];
@@ -407,8 +439,8 @@ class SettingsProvider with ChangeNotifier {
       settingTransactionDateFilter,
     );
     _transactionDateFilter = txDateFilterIndex == null
-        ? TransactionDateFilter.all
-        : TransactionDateFilter.values[txDateFilterIndex];
+        ? .all
+        : .values[txDateFilterIndex];
 
     _loaded = _loading = true;
     log.finest(() => "notify SettingsProvider->loadSettings()");
@@ -443,49 +475,55 @@ class SettingsProvider with ChangeNotifier {
 
     () async {
       if (debug) {
-        Logger.root.level = Level.ALL;
+        Logger.root.level = .ALL;
         _debugLogger = Logger.root.onRecord.listen(await DebugLogger().get());
         final PackageInfo appInfo = await PackageInfo.fromPlatform();
         log.info(
           "Enabling debug logs, app ${appInfo.appName} v${appInfo.version}+${appInfo.buildNumber}",
         );
       } else {
-        Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
+        Logger.root.level = kDebugMode ? .ALL : .INFO;
         await _debugLogger?.cancel();
         await DebugLogger().destroy();
       }
     }();
   }
 
-  set lock(bool enabled) => _setBool(BoolSettings.lock, enabled);
-  set showFutureTXs(bool enabled) =>
-      _setBool(BoolSettings.showFutureTXs, enabled);
-  set dynamicColors(bool enabled) =>
-      _setBool(BoolSettings.dynamicColors, enabled);
-  set useServerTime(bool enabled) =>
-      _setBool(BoolSettings.useServerTime, enabled);
-  set hideTags(bool enabled) => _setBool(BoolSettings.hideTags, enabled);
+  set lock(bool enabled) {
+    _setBool(.lock, enabled);
+    _isSessionAuthed = enabled;
+    log.finest(() => "notify SettingsProvider->lock()");
+    notifyListeners();
+  }
+
+  set showFutureTXs(bool enabled) => _setBool(.showFutureTXs, enabled);
+
+  set dynamicColors(bool enabled) => _setBool(.dynamicColors, enabled);
+
+  set useServerTime(bool enabled) => _setBool(.useServerTime, enabled);
+
+  set hideTags(bool enabled) => _setBool(.hideTags, enabled);
   set billsShowOnlyActive(bool enabled) =>
-      _setBool(BoolSettings.billsShowOnlyActive, enabled);
+      _setBool(.billsShowOnlyActive, enabled);
   set billsShowOnlyExpected(bool enabled) =>
-      _setBool(BoolSettings.billsShowOnlyExpected, enabled);
+      _setBool(.billsShowOnlyExpected, enabled);
 
   Future<void> setTheme(ThemeMode theme) async {
     _theme = theme;
     switch (theme) {
-      case ThemeMode.dark:
+      case .dark:
         await SharedPreferencesAsync().setString(
           settingTheme,
           settingThemeDark,
         );
         break;
-      case ThemeMode.light:
+      case .light:
         await SharedPreferencesAsync().setString(
           settingTheme,
           settingThemeLight,
         );
         break;
-      case ThemeMode.system:
+      case .system:
         await SharedPreferencesAsync().setString(
           settingTheme,
           settingThemeSystem,
@@ -580,7 +618,6 @@ class SettingsProvider with ChangeNotifier {
     _notificationApps = apps;
 
     log.finest(() => "notify SettingsProvider->notificationRemoveUsedApp()");
-
     notifyListeners();
     return true;
   }
@@ -608,7 +645,7 @@ class SettingsProvider with ChangeNotifier {
         ) ??
         "";
     try {
-      return NotificationAppSettings.fromJson(jsonDecode(json));
+      return .fromJson(jsonDecode(json));
     } on FormatException catch (_) {
       return NotificationAppSettings(packageName);
     }
@@ -768,6 +805,43 @@ class SettingsProvider with ChangeNotifier {
     );
 
     log.finest(() => "notify SettingsProvider->setTransactionDateFilter()");
+    notifyListeners();
+  }
+
+  Future<void> notificationHistoryAdd(PastNotification notification) async {
+    final SharedPreferencesAsync prefs = SharedPreferencesAsync();
+    final List<String> notifs =
+        await prefs.getStringList(settingNLHistory) ?? <String>[];
+
+    if (notifs.length > settingNLHistoryLength) {
+      notifs.removeAt(0);
+    }
+
+    notifs.add(jsonEncode(notification));
+
+    return prefs.setStringList(settingNLHistory, notifs);
+  }
+
+  Future<List<PastNotification>> notificationHistoryGet() async {
+    final List<String> notifsStr =
+        await SharedPreferencesAsync().getStringList(settingNLHistory) ??
+        <String>[];
+
+    final List<PastNotification> notifs = notifsStr
+        .map((String e) => PastNotification.fromJson(jsonDecode(e)))
+        .toList();
+
+    return notifs;
+  }
+
+  void sessionAuthed() {
+    _isSessionAuthed = true;
+    notifyListeners();
+  }
+
+  // Call this on app resume/timeout
+  void sessionLock() {
+    _isSessionAuthed = false;
     notifyListeners();
   }
 }

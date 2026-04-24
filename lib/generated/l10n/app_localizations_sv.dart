@@ -617,7 +617,20 @@ class SSv extends S {
       'För att använda Waterfly III på ett produktivt sätt behöver du din egen server med en Firefly III instans eller Firefly III-tillägget för Home Assistant.\n\nAnge hela URL: en samt en personlig åtkomst-token (inställningar -> Profil -> OAuth -> Personlig åtkomst-token) nedan.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Hide Headers';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Custom Headers';
+
+  @override
   String get loginFormLabelAPIKey => 'Giltig API-nyckel';
+
+  @override
+  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'One per line, format: HeaderName: value';
 
   @override
   String get loginFormLabelHost => 'Värd URL';
@@ -741,6 +754,31 @@ class SSv extends S {
   String get settingsNLEmptyNote => 'Håll anteckningsfältet tomt';
 
   @override
+  String get settingsNLHistory => 'Notification History';
+
+  @override
+  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'No monetary value found',
+      'noCurrency': 'No currency found',
+      'appNotUsed': 'App not listened to',
+      'other': 'Unknown reason',
+    });
+    return 'Notification skipped: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription => 'List previous notifications';
+
+  @override
   String get settingsNLPermissionGrant => 'Tryck för att bevilja tillstånd.';
 
   @override
@@ -756,6 +794,12 @@ class SSv extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Fyll i transaktionstiteln med nofikationstiteln i förväg';
+
+  @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
 
   @override
   String get settingsNLServiceChecking => 'Kontrollerar status…';
@@ -776,6 +820,12 @@ class SSv extends S {
 
   @override
   String get settingsNotificationListener => 'Notifikationslyssningstjänst';
+
+  @override
+  String get settingsServerConnection => 'Server Connection';
+
+  @override
+  String get settingsServerConnectionUpdated => 'Connection settings updated.';
 
   @override
   String get settingsTheme => 'Apptema';

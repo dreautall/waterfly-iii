@@ -118,7 +118,7 @@ class NetWorthChart extends StatelessWidget {
       primaryXAxis: CategoryAxis(
         labelStyle: Theme.of(
           context,
-        ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+        ).textTheme.labelMedium?.copyWith(fontWeight: .normal),
         axisLine: AxisLine(
           color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
@@ -126,7 +126,7 @@ class NetWorthChart extends StatelessWidget {
       primaryYAxis: NumericAxis(
         labelStyle: Theme.of(
           context,
-        ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+        ).textTheme.labelMedium?.copyWith(fontWeight: .normal),
         axisLine: AxisLine(
           color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),

@@ -620,7 +620,20 @@ class SId extends S {
       'Untuk menggunakan Waterfly III secara produktif anda memerlukan server sendiri dengan instansi Firefly III atau tambahan Firefly III untuk Home Assistant.\n\nSilahkan masukkan URL penuh serta token akses pribadi (Pengaturan -> Profil -> OAuth -> Token Akses Pribadi) di bawah.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Hide Headers';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Custom Headers';
+
+  @override
   String get loginFormLabelAPIKey => 'Kunci API Valid';
+
+  @override
+  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'One per line, format: HeaderName: value';
 
   @override
   String get loginFormLabelHost => 'URL Host';
@@ -745,6 +758,31 @@ class SId extends S {
   String get settingsNLEmptyNote => 'Biarkan kolom catatan kosong';
 
   @override
+  String get settingsNLHistory => 'Notification History';
+
+  @override
+  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'No monetary value found',
+      'noCurrency': 'No currency found',
+      'appNotUsed': 'App not listened to',
+      'other': 'Unknown reason',
+    });
+    return 'Notification skipped: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription => 'List previous notifications';
+
+  @override
   String get settingsNLPermissionGrant => 'Ketuk untuk memberikan izin.';
 
   @override
@@ -760,6 +798,12 @@ class SId extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Isi otomatis judul transaksi dengan judul notifikasi';
+
+  @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
 
   @override
   String get settingsNLServiceChecking => 'Memeriksa status…';
@@ -780,6 +824,12 @@ class SId extends S {
 
   @override
   String get settingsNotificationListener => 'Layanan Pendengar Notifikasi';
+
+  @override
+  String get settingsServerConnection => 'Server Connection';
+
+  @override
+  String get settingsServerConnectionUpdated => 'Connection settings updated.';
 
   @override
   String get settingsTheme => 'Tema Aplikasi';

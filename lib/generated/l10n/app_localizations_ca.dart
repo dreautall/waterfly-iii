@@ -625,7 +625,20 @@ class SCa extends S {
       'Per a fer servir Waterfly III adequadament cal que tingues el teu propi servidor de Firefly III o l\'add-on de Firefly III a Home Assistant.\n\nPer favor, introdueix la URL completa a més del token d\'accés (Configuració -> Perfil -> OAuth -> Token d\'Accés Personal) a sota.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Hide Headers';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Custom Headers';
+
+  @override
   String get loginFormLabelAPIKey => 'Clau d\'API vàlida';
+
+  @override
+  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'One per line, format: HeaderName: value';
 
   @override
   String get loginFormLabelHost => 'URL d\'allotjament';
@@ -751,6 +764,31 @@ class SCa extends S {
   String get settingsNLEmptyNote => 'Mantén el camp de nota buit';
 
   @override
+  String get settingsNLHistory => 'Notification History';
+
+  @override
+  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'No monetary value found',
+      'noCurrency': 'No currency found',
+      'appNotUsed': 'App not listened to',
+      'other': 'Unknown reason',
+    });
+    return 'Notification skipped: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription => 'List previous notifications';
+
+  @override
   String get settingsNLPermissionGrant => 'Toca per a donar permís.';
 
   @override
@@ -766,6 +804,12 @@ class SCa extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Emplena automàticament el títol de la transacció amb el títol de la notificació';
+
+  @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
 
   @override
   String get settingsNLServiceChecking => 'Comprovant l\'estat…';
@@ -787,6 +831,12 @@ class SCa extends S {
   @override
   String get settingsNotificationListener =>
       'Servei d\'escolta de notificacions';
+
+  @override
+  String get settingsServerConnection => 'Server Connection';
+
+  @override
+  String get settingsServerConnectionUpdated => 'Connection settings updated.';
 
   @override
   String get settingsTheme => 'Tema de l\'aplicació';

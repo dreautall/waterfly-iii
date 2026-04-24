@@ -97,11 +97,11 @@ class _PiggyChartState extends State<PiggyChart> {
           text: S.of(context).generalTarget,
           textAngle: 0,
           textStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-            fontWeight: FontWeight.normal,
+            fontWeight: .normal,
             color: Colors.deepOrange,
           ),
-          verticalTextAlignment: TextAnchor.start,
-          horizontalTextAlignment: TextAnchor.start,
+          verticalTextAlignment: .start,
+          horizontalTextAlignment: .start,
           verticalTextPadding: '-1%',
           horizontalTextPadding: '1%',
         ),
@@ -112,7 +112,7 @@ class _PiggyChartState extends State<PiggyChart> {
       primaryXAxis: DateTimeAxis(
         labelStyle: Theme.of(
           context,
-        ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+        ).textTheme.labelMedium?.copyWith(fontWeight: .normal),
         dateFormat: DateFormat(DateFormat.ABBR_MONTH_DAY),
         axisLine: AxisLine(
           color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -122,7 +122,7 @@ class _PiggyChartState extends State<PiggyChart> {
       primaryYAxis: NumericAxis(
         labelStyle: Theme.of(
           context,
-        ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+        ).textTheme.labelMedium?.copyWith(fontWeight: .normal),
         axisLine: AxisLine(
           color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
@@ -138,17 +138,17 @@ class _PiggyChartState extends State<PiggyChart> {
       enableAxisAnimation: true,
       trackballBehavior: TrackballBehavior(
         enable: true,
-        activationMode: ActivationMode.longPress,
-        lineType: TrackballLineType.vertical,
+        activationMode: .longPress,
+        lineType: .vertical,
         tooltipSettings: InteractiveTooltip(
           decimalPlaces: currency.attributes.decimalPlaces ?? 2,
           format:
               "point.x ${currency.fmt(123, decimalDigits: 0).replaceAll("123", "point.y")}",
           canShowMarker: false,
         ),
-        tooltipDisplayMode: TrackballDisplayMode.nearestPoint,
+        tooltipDisplayMode: .nearestPoint,
         markerSettings: const TrackballMarkerSettings(
-          markerVisibility: TrackballVisibilityMode.visible,
+          markerVisibility: .visible,
         ),
         shouldAlwaysShow: true,
       ),

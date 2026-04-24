@@ -3,11 +3,9 @@ import 'dart:io';
 
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show SystemChannels;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_sharing_intent/flutter_sharing_intent.dart';
 import 'package:flutter_sharing_intent/model/sharing_file.dart';
-import 'package:local_auth/local_auth.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -16,12 +14,12 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/layout.dart';
 import 'package:waterflyiii/notificationlistener.dart';
+import 'package:waterflyiii/pages/lock.dart';
 import 'package:waterflyiii/pages/login.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/splash.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/settings.dart';
-import 'package:waterflyiii/widgets/logo.dart';
 
 final Logger log = Logger("App");
 
@@ -38,45 +36,61 @@ class WaterflyApp extends StatefulWidget {
 
 class _WaterflyAppState extends State<WaterflyApp> {
   bool _startup = true;
-  bool _authed = false;
   String? _quickAction;
   NotificationTransaction? _notificationPayload;
   // Not needed right now, as sharing while the app is open does not work
   //late StreamSubscription<List<SharedFile>> _intentDataStreamSubscription;
   List<SharedFile>? _filesSharedToApp;
-  bool _requiresAuth = false;
   DateTime? _lcLastOpen;
 
+  final FireflyService _fireflyService = FireflyService();
+  final SettingsProvider _settingsProvider = SettingsProvider();
   final LayoutProvider _layoutProvider = LayoutProvider();
 
   @override
   void initState() {
     super.initState();
 
+    _initializePlatformServices();
+    _handleStartup();
+  }
+
+  void _initializePlatformServices() {
     // Notifications (Android only)
     if (Platform.isAndroid) {
-      FlutterLocalNotificationsPlugin().initialize(
-        settings: const InitializationSettings(
-          android: AndroidInitializationSettings('ic_stat_notification'),
-        ),
-        onDidReceiveNotificationResponse: nlNotificationTap,
-      );
-
-      FlutterLocalNotificationsPlugin().getNotificationAppLaunchDetails().then((
-        NotificationAppLaunchDetails? details,
-      ) {
-        log.config("checking NotificationAppLaunchDetails");
-        if ((details?.didNotificationLaunchApp ?? false) &&
-            (details?.notificationResponse?.payload?.isNotEmpty ?? false)) {
-          log.info("Was launched from notification!");
-          _notificationPayload = NotificationTransaction.fromJson(
-            jsonDecode(details!.notificationResponse!.payload!),
-          );
-        }
-      });
+      _initNotifications();
     }
-
     // Quick Actions (Android + iOS)
+    _initQuickActions();
+    // Share to Waterfly III
+    _initSharingIntent();
+    // App Lifecycle State
+    _initLifecycleListener();
+  }
+
+  void _initNotifications() {
+    FlutterLocalNotificationsPlugin().initialize(
+      settings: const InitializationSettings(
+        android: AndroidInitializationSettings('ic_stat_notification'),
+      ),
+      onDidReceiveNotificationResponse: nlNotificationTap,
+    );
+
+    FlutterLocalNotificationsPlugin().getNotificationAppLaunchDetails().then((
+      NotificationAppLaunchDetails? details,
+    ) {
+      log.config("checking NotificationAppLaunchDetails");
+      if ((details?.didNotificationLaunchApp ?? false) &&
+          (details?.notificationResponse?.payload?.isNotEmpty ?? false)) {
+        log.info("Was launched from notification!");
+        _notificationPayload = .fromJson(
+          jsonDecode(details!.notificationResponse!.payload!),
+        );
+      }
+    });
+  }
+
+  void _initQuickActions() {
     const QuickActions quickActions = QuickActions();
     quickActions.initialize((String shortcutType) {
       log.info("Was launched from QuickAction $shortcutType");
@@ -91,64 +105,14 @@ class _WaterflyAppState extends State<WaterflyApp> {
       }
     });
     quickActions.clearShortcutItems();
+  }
 
-    // App Lifecycle State
-    AppLifecycleListener(
-      onResume: () {
-        if (_requiresAuth &&
-            (_lcLastOpen?.isBefore(
-                  DateTime.now().subtract(const Duration(minutes: 10)),
-                ) ??
-                false)) {
-          log.finest(() => "App resuming, last opened: $_lcLastOpen");
-          _lcLastOpen = null;
-          _authed = false;
-
-          final bool canPush = navigatorKey.currentState != null;
-          if (canPush) {
-            navigatorKey.currentState?.push(
-              MaterialPageRoute<Widget>(
-                builder: (BuildContext context) => const AppLogo(),
-              ),
-            );
-          }
-
-          auth().then((bool authed) {
-            log.finest(() => "done authing, $authed");
-            if (authed) {
-              log.finest(() => "authentication succeeded");
-              _authed = true;
-              if (canPush) {
-                navigatorKey.currentState?.pop();
-              }
-            } else {
-              log.shout(() => "authentication failed");
-              _lcLastOpen = DateTime.now().subtract(
-                const Duration(minutes: 10),
-              );
-              // close app
-              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-              if (canPush) {
-                navigatorKey.currentState?.pop();
-              }
-            }
-          });
-        }
-      },
-      onPause: () {
-        if (_requiresAuth) {
-          _lcLastOpen ??= DateTime.now();
-          log.finest(() => "App pausing now");
-        }
-      },
-    );
-
-    // Share to Waterfly III
+  void _initSharingIntent() {
     // While the app is open...
     /* Sharing while app is open is currently not supported :(
        The fix from https://github.com/bhagat-techind/flutter_sharing_intent/issues/33
        does not seem to work, unfortunately.
-       
+
     _intentDataStreamSubscription = FlutterSharingIntent.instance
         .getMediaStream()
         .listen((List<SharedFile> value) {
@@ -173,31 +137,105 @@ class _WaterflyAppState extends State<WaterflyApp> {
     });
   }
 
-  /* Not needed right now, as sharing while the app is open does not work
+  void _initLifecycleListener() {
+    AppLifecycleListener(
+      onResume: () {
+        log.finest(() => "Lifecycle: Resume");
+        // If lock is enabled, check if we need to re-authenticate based on timeout (10 mins)
+        if (_settingsProvider.lock &&
+            (_lcLastOpen?.isBefore(
+                  DateTime.now().subtract(const Duration(minutes: 10)),
+                ) ??
+                false)) {
+          log.finest(() => "App resuming, timeout reached. Requiring re-auth.");
+          _settingsProvider.sessionLock();
+          if (mounted) {
+            setState(() => _lcLastOpen = null);
+          }
+        }
+      },
+      onPause: () {
+        log.finest(() => "Lifecycle: Pause");
+        if (_settingsProvider.lock) {
+          _lcLastOpen ??= DateTime.now();
+        }
+      },
+    );
+  }
+
+  Future<void> _handleStartup() async {
+    log.finer(() => "Load Step 1: Loading Settings");
+    await _settingsProvider.loadSettings();
+
+    log.finer(() => "Load Step 2: Sign in");
+    await _fireflyService.signInFromStorage();
+
+    log.finer(() => "Loading done.");
+    if (mounted) {
+      setState(() => _startup = false);
+    }
+  }
+
   @override
   void dispose() {
-    _intentDataStreamSubscription.cancel();
-
+    _fireflyService.dispose();
+    _settingsProvider.dispose();
+    _layoutProvider.dispose();
     super.dispose();
-  }*/
+  }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
-    // Always called after initState() --> can be used to init _layoutProvider.
-    // No separate init needed inside initState()
     if (mounted) {
       _layoutProvider.updateSize(context);
     }
   }
 
-  Future<bool> auth() {
-    final LocalAuthentication auth = LocalAuthentication();
-    return auth.authenticate(
-      localizedReason: "Waterfly III",
-      persistAcrossBackgrounding: true,
-    );
+  Widget _getHome(SettingsProvider settings, FireflyService firefly) {
+    // 1. Show Splash during initial startup or until settings are loaded
+    if (_startup || !settings.loaded) {
+      log.finest(
+        () =>
+            "_getHome: showing splash (startup: $_startup, settings: ${settings.loaded})",
+      );
+      return const SplashPage();
+    }
+
+    // 2. Show LockPage if security is enabled and user isn't authenticated
+    if (settings.lock && !settings.isSessionAuthed) {
+      log.finest(
+        () =>
+            "_getHome: showing lockpage (authed: ${settings.isSessionAuthed})",
+      );
+      return LockPage(onSuccess: settings.sessionAuthed);
+    }
+
+    // 3. Handle Login/Errors
+    if (firefly.storageSignInException != null) {
+      log.finest(() => "_getHome: showing splash (storageSignInException)");
+      return const SplashPage();
+    }
+
+    if (!firefly.signedIn) {
+      log.finest(() => "_getHome: showing login");
+      return const LoginPage();
+    }
+
+    // 4. Handle Deep Links
+    if (_notificationPayload != null ||
+        _quickAction == "action_transaction_add" ||
+        (_filesSharedToApp?.isNotEmpty ?? false)) {
+      log.finest(() => "_getHome: showing transaction");
+      return TransactionPage(
+        notification: _notificationPayload,
+        files: _filesSharedToApp,
+      );
+    }
+
+    // 5. Default to Home
+    log.finest(() => "_getHome: showing navpage");
+    return const NavPage();
   }
 
   @override
@@ -206,11 +244,9 @@ class _WaterflyAppState extends State<WaterflyApp> {
 
     return DynamicColorBuilder(
       builder: (ColorScheme? cSchemeDynamicLight, ColorScheme? cSchemeDynamicDark) {
-        final ColorScheme cSchemeLight = ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-        );
+        final ColorScheme cSchemeLight = .fromSeed(seedColor: Colors.blue);
         final ColorScheme cSchemeDark =
-            ColorScheme.fromSeed(
+            .fromSeed(
               seedColor: Colors.blue,
               brightness: Brightness.dark,
             ).copyWith(
@@ -225,75 +261,25 @@ class _WaterflyAppState extends State<WaterflyApp> {
 
         return MultiProvider(
           providers: <SingleChildWidget>[
-            ChangeNotifierProvider<FireflyService>(
-              create: (_) => FireflyService(),
+            ChangeNotifierProvider<FireflyService>.value(
+              value: _fireflyService,
             ),
-            ChangeNotifierProvider<SettingsProvider>(
-              create: (_) => SettingsProvider(),
+            ChangeNotifierProvider<SettingsProvider>.value(
+              value: _settingsProvider,
             ),
             ChangeNotifierProvider<LayoutProvider>.value(
               value: _layoutProvider,
             ),
           ],
           builder: (BuildContext context, _) {
-            late bool signedIn;
-            log.finest(() => "_startup = $_startup");
-            _requiresAuth = context.watch<SettingsProvider>().lock;
-            log.finest(() => "_requiresAuth = $_requiresAuth");
-            if (_startup) {
-              signedIn = false;
-
-              if (!context.select((SettingsProvider s) => s.loaded)) {
-                log.finer(() => "Load Step 1: Loading Settings");
-                context.read<SettingsProvider>().loadSettings();
-              } else {
-                log.finer(() => "Load Step 2: Signin In");
-
-                if (context.read<SettingsProvider>().lock && !_authed) {
-                  // Authentication required
-                  log.fine("awaiting authentication");
-                  auth().then((bool authed) {
-                    log.finest(() => "done authing, $authed");
-                    if (authed) {
-                      log.finest(() => "authentication succeeded");
-                      setState(() {
-                        _authed = true;
-                      });
-                    } else {
-                      log.shout(() => "authentication failed");
-                      // close app
-                      SystemChannels.platform.invokeMethod(
-                        'SystemNavigator.pop',
-                      );
-                    }
-                  });
-                } else {
-                  log.finest(() => "signing in");
-                  context.read<FireflyService>().signInFromStorage().then(
-                    (bool _) => setState(() {
-                      log.finest(() => "set _startup = false");
-                      _authed = true;
-                      _startup = false;
-                    }),
-                  );
-                }
-              }
-            } else {
-              signedIn = context.select((FireflyService f) => f.signedIn);
-              if (signedIn) {
-                context.read<FireflyService>().tzHandler.setUseServerTime(
-                  context.read<SettingsProvider>().useServerTime,
-                );
-              }
-              log.config("signedIn: $signedIn");
-            }
+            final SettingsProvider settings = context.watch<SettingsProvider>();
+            final FireflyService firefly = context.watch<FireflyService>();
 
             return MaterialApp(
               title: 'Waterfly III',
               theme: ThemeData(
-                brightness: Brightness.light,
-                colorScheme:
-                    context.select((SettingsProvider s) => s.dynamicColors)
+                brightness: .light,
+                colorScheme: settings.dynamicColors
                     ? cSchemeDynamicLight?.harmonized() ?? cSchemeLight
                     : cSchemeLight,
                 useMaterial3: true,
@@ -307,35 +293,18 @@ class _WaterflyAppState extends State<WaterflyApp> {
                 ),
               ),
               darkTheme: ThemeData(
-                brightness: Brightness.dark,
-                colorScheme:
-                    context.select((SettingsProvider s) => s.dynamicColors)
+                brightness: .dark,
+                colorScheme: settings.dynamicColors
                     ? cSchemeDynamicDark?.harmonized() ?? cSchemeDark
                     : cSchemeDark,
                 useMaterial3: true,
               ),
-              themeMode: context.select((SettingsProvider s) => s.theme),
+              themeMode: settings.theme,
               localizationsDelegates: S.localizationsDelegates,
               supportedLocales: S.supportedLocales,
-              locale: context.select((SettingsProvider s) => s.locale),
+              locale: settings.locale,
               navigatorKey: navigatorKey,
-              home:
-                  ((_startup || !_authed) ||
-                      context.select(
-                        (FireflyService f) => f.storageSignInException != null,
-                      ))
-                  ? const SplashPage()
-                  : signedIn
-                  ? (_notificationPayload != null ||
-                            _quickAction == "action_transaction_add" ||
-                            (_filesSharedToApp != null &&
-                                _filesSharedToApp!.isNotEmpty))
-                        ? TransactionPage(
-                            notification: _notificationPayload,
-                            files: _filesSharedToApp,
-                          )
-                        : const NavPage()
-                  : const LoginPage(),
+              home: _getHome(settings, firefly),
             );
           },
         );

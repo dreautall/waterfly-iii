@@ -33,15 +33,15 @@ extension CurrencyFormat on CurrencyRead {
 extension AccountRole on AccountRoleProperty {
   String friendlyName(BuildContext context) {
     switch (this) {
-      case AccountRoleProperty.cashwalletasset:
+      case .cashwalletasset:
         return S.of(context).accountRoleAssetCashWallet;
-      case AccountRoleProperty.ccasset:
+      case .ccasset:
         return S.of(context).accountRoleAssetCC;
-      case AccountRoleProperty.defaultasset:
+      case .defaultasset:
         return S.of(context).accountRoleAssetDefault;
-      case AccountRoleProperty.savingasset:
+      case .savingasset:
         return S.of(context).accountRoleAssetSavings;
-      case AccountRoleProperty.sharedasset:
+      case .sharedasset:
         return S.of(context).accountRoleAssetShared;
       default:
         return S.of(context).generalUnknown;
@@ -52,11 +52,11 @@ extension AccountRole on AccountRoleProperty {
 extension TransactionType on TransactionTypeProperty {
   Color get color {
     switch (this) {
-      case TransactionTypeProperty.deposit:
+      case .deposit:
         return Colors.green;
-      case TransactionTypeProperty.withdrawal:
+      case .withdrawal:
         return Colors.red;
-      case TransactionTypeProperty.transfer:
+      case .transfer:
         return Colors.blue;
       // reconciliation
       // openingBalance
@@ -67,15 +67,15 @@ extension TransactionType on TransactionTypeProperty {
 
   IconData get icon {
     switch (this) {
-      case TransactionTypeProperty.deposit:
+      case .deposit:
         return Icons.arrow_forward;
-      case TransactionTypeProperty.withdrawal:
+      case .withdrawal:
         return Icons.arrow_back;
-      case TransactionTypeProperty.transfer:
+      case .transfer:
         return Icons.swap_horiz;
-      case TransactionTypeProperty.reconciliation:
+      case .reconciliation:
         return Icons.calculate_outlined;
-      case TransactionTypeProperty.openingBalance:
+      case .openingBalance:
         return Icons.star_outline;
       default:
         return Icons.question_mark;
@@ -84,11 +84,11 @@ extension TransactionType on TransactionTypeProperty {
 
   IconData get verticalIcon {
     switch (this) {
-      case TransactionTypeProperty.deposit:
+      case .deposit:
         return Icons.arrow_downward;
-      case TransactionTypeProperty.withdrawal:
+      case .withdrawal:
         return Icons.arrow_downward;
-      case TransactionTypeProperty.transfer:
+      case .transfer:
         return Icons.swap_vert;
       // reconciliation
       // openingBalance
@@ -99,11 +99,11 @@ extension TransactionType on TransactionTypeProperty {
 
   String friendlyName(BuildContext context) {
     switch (this) {
-      case TransactionTypeProperty.deposit:
+      case .deposit:
         return S.of(context).transactionTypeDeposit;
-      case TransactionTypeProperty.withdrawal:
+      case .withdrawal:
         return S.of(context).transactionTypeWithdrawal;
-      case TransactionTypeProperty.transfer:
+      case .transfer:
         return S.of(context).transactionTypeTransfer;
       // reconciliation
       // openingBalance
@@ -116,112 +116,86 @@ extension TransactionType on TransactionTypeProperty {
   List<AccountTypeFilter> expectedSourceTypes(bool isSource) {
     if (isSource) {
       switch (this) {
-        case TransactionTypeProperty.withdrawal:
+        case .withdrawal:
+          return <AccountTypeFilter>[.assetAccount, .loan, .debt, .mortgage];
+        case .deposit:
           return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.mortgage,
+            .loan,
+            .debt,
+            .mortgage,
+            .revenueAccount,
+            .cashAccount,
           ];
-        case TransactionTypeProperty.deposit:
+        case .transfer:
+          return <AccountTypeFilter>[.assetAccount, .loan, .debt, .mortgage];
+        case .openingBalance:
           return <AccountTypeFilter>[
-            AccountTypeFilter.loan,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.mortgage,
-            AccountTypeFilter.revenueAccount,
-            AccountTypeFilter.cashAccount,
+            .initialBalanceAccount,
+            .assetAccount,
+            .loan,
+            .debt,
+            .mortgage,
           ];
-        case TransactionTypeProperty.transfer:
-          return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.mortgage,
-          ];
-        case TransactionTypeProperty.openingBalance:
-          return <AccountTypeFilter>[
-            AccountTypeFilter.initialBalanceAccount,
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.mortgage,
-          ];
-        case TransactionTypeProperty.reconciliation:
-          return <AccountTypeFilter>[
-            AccountTypeFilter.reconciliationAccount,
-            AccountTypeFilter.assetAccount,
-          ];
-        /*case TransactionTypeProperty.liabilityCredit:
+        case .reconciliation:
+          return <AccountTypeFilter>[.reconciliationAccount, .assetAccount];
+        /*case .liabilityCredit:
         return <AccountTypeFilter>[
-          AccountTypeFilter.liabilityCreditAccount,
-          AccountTypeFilter.loan,
-          AccountTypeFilter.debt,
-          AccountTypeFilter.mortgage,
+          .liabilityCreditAccount,
+          .loan,
+          .debt,
+          .mortgage,
         ];*/
 
         default:
           return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.expenseAccount,
-            AccountTypeFilter.revenueAccount,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.mortgage,
+            .assetAccount,
+            .expenseAccount,
+            .revenueAccount,
+            .loan,
+            .debt,
+            .mortgage,
           ];
       }
     } else {
       switch (this) {
-        case TransactionTypeProperty.withdrawal:
+        case .withdrawal:
           return <AccountTypeFilter>[
-            AccountTypeFilter.loan,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.mortgage,
-            AccountTypeFilter.expenseAccount,
-            AccountTypeFilter.cashAccount,
+            .loan,
+            .debt,
+            .mortgage,
+            .expenseAccount,
+            .cashAccount,
           ];
-        case TransactionTypeProperty.deposit:
+        case .deposit:
+          return <AccountTypeFilter>[.assetAccount, .loan, .debt, .mortgage];
+        case .transfer:
+          return <AccountTypeFilter>[.assetAccount, .loan, .debt, .mortgage];
+        case .openingBalance:
           return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.mortgage,
+            .initialBalanceAccount,
+            .assetAccount,
+            .loan,
+            .debt,
+            .mortgage,
           ];
-        case TransactionTypeProperty.transfer:
-          return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.mortgage,
-          ];
-        case TransactionTypeProperty.openingBalance:
-          return <AccountTypeFilter>[
-            AccountTypeFilter.initialBalanceAccount,
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.mortgage,
-          ];
-        case TransactionTypeProperty.reconciliation:
-          return <AccountTypeFilter>[
-            AccountTypeFilter.reconciliationAccount,
-            AccountTypeFilter.assetAccount,
-          ];
-        /*case TransactionTypeProperty.liabilityCredit:
+        case .reconciliation:
+          return <AccountTypeFilter>[.reconciliationAccount, .assetAccount];
+        /*case .liabilityCredit:
         return <AccountTypeFilter>[
-          AccountTypeFilter.liabilityCreditAccount,
-          AccountTypeFilter.loan,
-          AccountTypeFilter.debt,
-          AccountTypeFilter.mortgage,
+          .liabilityCreditAccount,
+          .loan,
+          .debt,
+          .mortgage,
         ];*/
 
         default:
           return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.expenseAccount,
-            AccountTypeFilter.revenueAccount,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.mortgage,
+            .assetAccount,
+            .expenseAccount,
+            .revenueAccount,
+            .loan,
+            .debt,
+            .mortgage,
           ];
       }
     }
@@ -229,105 +203,88 @@ extension TransactionType on TransactionTypeProperty {
 
   List<AccountTypeFilter> allowedSourceDests(AccountTypeFilter sourceAccount) {
     switch (this) {
-      case TransactionTypeProperty.withdrawal:
+      case .withdrawal:
         switch (sourceAccount) {
-          case AccountTypeFilter.assetAccount:
+          case .assetAccount:
             return <AccountTypeFilter>[
-              AccountTypeFilter.expenseAccount,
-              AccountTypeFilter.loan,
-              AccountTypeFilter.debt,
-              AccountTypeFilter.mortgage,
-              AccountTypeFilter.cashAccount,
+              .expenseAccount,
+              .loan,
+              .debt,
+              .mortgage,
+              .cashAccount,
             ];
-          case AccountTypeFilter.loan:
-          case AccountTypeFilter.debt:
-          case AccountTypeFilter.mortgage:
-            return <AccountTypeFilter>[
-              AccountTypeFilter.expenseAccount,
-              AccountTypeFilter.cashAccount,
-            ];
+          case .loan:
+          case .debt:
+          case .mortgage:
+            return <AccountTypeFilter>[.expenseAccount, .cashAccount];
           default:
             return <AccountTypeFilter>[];
         }
-      case TransactionTypeProperty.deposit:
+      case .deposit:
         switch (sourceAccount) {
-          case AccountTypeFilter.revenueAccount:
-          case AccountTypeFilter.cashAccount:
-            return <AccountTypeFilter>[
-              AccountTypeFilter.assetAccount,
-              AccountTypeFilter.loan,
-              AccountTypeFilter.debt,
-              AccountTypeFilter.mortgage,
-            ];
-          case AccountTypeFilter.loan:
-          case AccountTypeFilter.debt:
-          case AccountTypeFilter.mortgage:
-            return <AccountTypeFilter>[AccountTypeFilter.assetAccount];
+          case .revenueAccount:
+          case .cashAccount:
+            return <AccountTypeFilter>[.assetAccount, .loan, .debt, .mortgage];
+          case .loan:
+          case .debt:
+          case .mortgage:
+            return <AccountTypeFilter>[.assetAccount];
           default:
             return <AccountTypeFilter>[];
         }
       case TransactionTypeProperty.transfer:
         switch (sourceAccount) {
-          case AccountTypeFilter.assetAccount:
-            return <AccountTypeFilter>[AccountTypeFilter.assetAccount];
-          case AccountTypeFilter.loan:
-          case AccountTypeFilter.debt:
-          case AccountTypeFilter.mortgage:
-            return <AccountTypeFilter>[
-              AccountTypeFilter.loan,
-              AccountTypeFilter.debt,
-              AccountTypeFilter.mortgage,
-            ];
+          case .assetAccount:
+            return <AccountTypeFilter>[.assetAccount];
+          case .loan:
+          case .debt:
+          case .mortgage:
+            return <AccountTypeFilter>[.loan, .debt, .mortgage];
           default:
             return <AccountTypeFilter>[];
         }
-      case TransactionTypeProperty.openingBalance:
+      case .openingBalance:
         switch (sourceAccount) {
-          case AccountTypeFilter.assetAccount:
-          case AccountTypeFilter.loan:
-          case AccountTypeFilter.debt:
-          case AccountTypeFilter.mortgage:
-            return <AccountTypeFilter>[AccountTypeFilter.initialBalanceAccount];
-          case AccountTypeFilter.initialBalanceAccount:
-            return <AccountTypeFilter>[
-              AccountTypeFilter.assetAccount,
-              AccountTypeFilter.loan,
-              AccountTypeFilter.debt,
-              AccountTypeFilter.mortgage,
-            ];
+          case .assetAccount:
+          case .loan:
+          case .debt:
+          case .mortgage:
+            return <AccountTypeFilter>[.initialBalanceAccount];
+          case .initialBalanceAccount:
+            return <AccountTypeFilter>[.assetAccount, .loan, .debt, .mortgage];
           default:
             return <AccountTypeFilter>[];
         }
-      case TransactionTypeProperty.reconciliation:
+      case .reconciliation:
         switch (sourceAccount) {
-          case AccountTypeFilter.reconciliationAccount:
-            return <AccountTypeFilter>[AccountTypeFilter.assetAccount];
-          case AccountTypeFilter.assetAccount:
-            return <AccountTypeFilter>[AccountTypeFilter.reconciliationAccount];
+          case .reconciliationAccount:
+            return <AccountTypeFilter>[.assetAccount];
+          case .assetAccount:
+            return <AccountTypeFilter>[.reconciliationAccount];
           default:
             return <AccountTypeFilter>[];
         }
-      /*case TransactionTypeProperty.liabilityCredit:
+      /*case .liabilityCredit:
         switch (sourceAccount) {
-          case AccountTypeFilter.assetAccount:
-          case AccountTypeFilter.loan:
-          case AccountTypeFilter.debt:
-          case AccountTypeFilter.mortgage:
+          case .assetAccount:
+          case .loan:
+          case .debt:
+          case .mortgage:
             return <AccountTypeFilter>[
-              AccountTypeFilter.liabilityCreditAccount,
+              .liabilityCreditAccount,
             ];
-          case AccountTypeFilter.liabilityCreditAccount:
+          case .liabilityCreditAccount:
             return <AccountTypeFilter>[
-              AccountTypeFilter.loan,
-              AccountTypeFilter.debt,
-              AccountTypeFilter.mortgage,
+              .loan,
+              .debt,
+              .mortgage,
             ];
           default:
             return <AccountTypeFilter>[];
         }*/
 
       default:
-        return <AccountTypeFilter>[AccountTypeFilter.all];
+        return <AccountTypeFilter>[.all];
     }
   }
 }
@@ -403,13 +360,13 @@ extension StringIgnoreCase on String {
 extension AccountTypeIcon on AccountTypeFilter {
   IconData icon() {
     switch (this) {
-      case AccountTypeFilter.asset:
+      case .asset:
         return Icons.money_outlined;
-      case AccountTypeFilter.expense:
+      case .expense:
         return Icons.shopping_cart;
-      case AccountTypeFilter.revenue:
+      case .revenue:
         return Icons.download;
-      case AccountTypeFilter.liabilities:
+      case .liabilities:
         return Icons.payment_outlined;
       default:
         return Icons.question_mark;
@@ -418,13 +375,13 @@ extension AccountTypeIcon on AccountTypeFilter {
 
   String friendlyName(BuildContext context) {
     switch (this) {
-      case AccountTypeFilter.asset:
+      case .asset:
         return S.of(context).accountsLabelAsset;
-      case AccountTypeFilter.expense:
+      case .expense:
         return S.of(context).accountsLabelExpense;
-      case AccountTypeFilter.revenue:
+      case .revenue:
         return S.of(context).accountsLabelRevenue;
-      case AccountTypeFilter.liabilities:
+      case .liabilities:
         return S.of(context).accountsLabelLiabilities;
       default:
         return S.of(context).generalAccount;
@@ -437,127 +394,112 @@ extension AccountType on AccountTypeProperty {
   List<AccountTypeFilter> allowedOpposingTypes(bool isSource) {
     if (isSource) {
       switch (this) {
-        case AccountTypeProperty.assetAccount:
+        case .assetAccount:
           return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.cashAccount,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.expenseAccount,
-            AccountTypeFilter.initialBalanceAccount,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.reconciliationAccount,
-            AccountTypeFilter.mortgage,
+            .assetAccount,
+            .cashAccount,
+            .debt,
+            .expenseAccount,
+            .initialBalanceAccount,
+            .loan,
+            .reconciliationAccount,
+            .mortgage,
           ];
-        case AccountTypeProperty.cashAccount:
-          return <AccountTypeFilter>[AccountTypeFilter.assetAccount];
-        case AccountTypeProperty.debt:
+        case .cashAccount:
+          return <AccountTypeFilter>[.assetAccount];
+        case .debt:
           return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.expenseAccount,
-            AccountTypeFilter.initialBalanceAccount,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.mortgage,
-            AccountTypeFilter.liability,
+            .assetAccount,
+            .debt,
+            .expenseAccount,
+            .initialBalanceAccount,
+            .loan,
+            .mortgage,
+            .liability,
           ];
-        case AccountTypeProperty.expenseAccount:
+        case .expenseAccount:
           return <AccountTypeFilter>[];
-        case AccountTypeProperty.initialBalanceAccount:
+        case .initialBalanceAccount:
+          return <AccountTypeFilter>[.assetAccount, .debt, .loan, .mortgage];
+        case .loan:
+        case .mortgage:
           return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.mortgage,
+            .assetAccount,
+            .debt,
+            .expenseAccount,
+            .initialBalanceAccount,
+            .loan,
+            .mortgage,
+            .liability,
           ];
-        case AccountTypeProperty.loan:
-        case AccountTypeProperty.mortgage:
+        case .reconciliationAccount:
+          return <AccountTypeFilter>[.assetAccount];
+        case .revenueAccount:
+          return <AccountTypeFilter>[.assetAccount, .debt, .loan, .mortgage];
+        /*case .liability:
           return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.expenseAccount,
-            AccountTypeFilter.initialBalanceAccount,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.mortgage,
-            AccountTypeFilter.liability,
-          ];
-        case AccountTypeProperty.reconciliationAccount:
-          return <AccountTypeFilter>[AccountTypeFilter.assetAccount];
-        case AccountTypeProperty.revenueAccount:
-          return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.mortgage,
-          ];
-        /*case AccountTypeProperty.liability:
-          return <AccountTypeFilter>[
-            AccountTypeFilter.debt,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.mortgage,
+            .debt,
+            .loan,
+            .mortgage,
           ];*/
         default:
           return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.expenseAccount,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.mortgage,
+            .assetAccount,
+            .expenseAccount,
+            .debt,
+            .loan,
+            .mortgage,
           ];
       }
     } else {
       switch (this) {
-        case AccountTypeProperty.assetAccount:
+        case .assetAccount:
           return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.cashAccount,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.initialBalanceAccount,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.mortgage,
-            AccountTypeFilter.reconciliationAccount,
-            AccountTypeFilter.revenueAccount,
+            .assetAccount,
+            .cashAccount,
+            .debt,
+            .initialBalanceAccount,
+            .loan,
+            .mortgage,
+            .reconciliationAccount,
+            .revenueAccount,
           ];
-        case AccountTypeProperty.cashAccount:
-          return <AccountTypeFilter>[AccountTypeFilter.assetAccount];
-        case AccountTypeProperty.debt:
+        case .cashAccount:
+          return <AccountTypeFilter>[.assetAccount];
+        case .debt:
           return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.initialBalanceAccount,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.mortgage,
-            AccountTypeFilter.revenueAccount,
+            .assetAccount,
+            .debt,
+            .initialBalanceAccount,
+            .loan,
+            .mortgage,
+            .revenueAccount,
           ];
-        case AccountTypeProperty.expenseAccount:
-        case AccountTypeProperty.initialBalanceAccount:
+        case .expenseAccount:
+        case .initialBalanceAccount:
+          return <AccountTypeFilter>[.assetAccount, .debt, .loan, .mortgage];
+        case .loan:
+        case .mortgage:
           return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.mortgage,
+            .assetAccount,
+            .debt,
+            .initialBalanceAccount,
+            .loan,
+            .mortgage,
+            .revenueAccount,
           ];
-        case AccountTypeProperty.loan:
-        case AccountTypeProperty.mortgage:
-          return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.initialBalanceAccount,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.mortgage,
-            AccountTypeFilter.revenueAccount,
-          ];
-        case AccountTypeProperty.reconciliationAccount:
-          return <AccountTypeFilter>[AccountTypeFilter.assetAccount];
-        case AccountTypeProperty.revenueAccount:
-        /*case AccountTypeProperty.liability:
+        case .reconciliationAccount:
+          return <AccountTypeFilter>[.assetAccount];
+        case .revenueAccount:
+        /*case .liability:
           return <AccountTypeFilter>[];*/
         default:
           return <AccountTypeFilter>[
-            AccountTypeFilter.assetAccount,
-            AccountTypeFilter.revenueAccount,
-            AccountTypeFilter.debt,
-            AccountTypeFilter.loan,
-            AccountTypeFilter.mortgage,
+            .assetAccount,
+            .revenueAccount,
+            .debt,
+            .loan,
+            .mortgage,
           ];
       }
     }
@@ -566,73 +508,65 @@ extension AccountType on AccountTypeProperty {
   List<TransactionTypeProperty> allowedTransactionTypes(bool isSource) {
     if (isSource) {
       switch (this) {
-        case AccountTypeProperty.assetAccount:
+        case .assetAccount:
           return <TransactionTypeProperty>[
-            TransactionTypeProperty.withdrawal,
-            TransactionTypeProperty.transfer,
-            TransactionTypeProperty.openingBalance,
-            TransactionTypeProperty.reconciliation,
+            .withdrawal,
+            .transfer,
+            .openingBalance,
+            .reconciliation,
           ];
-        case AccountTypeProperty.expenseAccount:
+        case .expenseAccount:
           return <TransactionTypeProperty>[];
-        case AccountTypeProperty.revenueAccount:
-          return <TransactionTypeProperty>[TransactionTypeProperty.deposit];
-        case AccountTypeProperty.loan:
-        case AccountTypeProperty.debt:
-        case AccountTypeProperty.mortgage:
+        case .revenueAccount:
+          return <TransactionTypeProperty>[.deposit];
+        case .loan:
+        case .debt:
+        case .mortgage:
           return <TransactionTypeProperty>[
-            TransactionTypeProperty.withdrawal,
-            TransactionTypeProperty.deposit,
-            TransactionTypeProperty.transfer,
-            TransactionTypeProperty.openingBalance,
-            //TransactionTypeProperty.liabilityCredit,
+            .withdrawal,
+            .deposit,
+            .transfer,
+            .openingBalance,
+            //.liabilityCredit,
           ];
-        case AccountTypeProperty.initialBalanceAccount:
+        case .initialBalanceAccount:
+          return <TransactionTypeProperty>[.openingBalance];
+        case .reconciliationAccount:
+          return <TransactionTypeProperty>[.reconciliation];
+        /*case .liability:
           return <TransactionTypeProperty>[
-            TransactionTypeProperty.openingBalance,
-          ];
-        case AccountTypeProperty.reconciliationAccount:
-          return <TransactionTypeProperty>[
-            TransactionTypeProperty.reconciliation,
-          ];
-        /*case AccountTypeProperty.liability:
-          return <TransactionTypeProperty>[
-            TransactionTypeFilter.liabilityCredit,
+            .liabilityCredit,
           ];*/
         default:
           return <TransactionTypeProperty>[];
       }
     } else {
       switch (this) {
-        case AccountTypeProperty.assetAccount:
+        case .assetAccount:
           return <TransactionTypeProperty>[
-            TransactionTypeProperty.deposit,
-            TransactionTypeProperty.transfer,
-            TransactionTypeProperty.openingBalance,
-            TransactionTypeProperty.reconciliation,
+            .deposit,
+            .transfer,
+            .openingBalance,
+            .reconciliation,
           ];
-        case AccountTypeProperty.expenseAccount:
-          return <TransactionTypeProperty>[TransactionTypeProperty.withdrawal];
-        case AccountTypeProperty.revenueAccount:
+        case .expenseAccount:
+          return <TransactionTypeProperty>[.withdrawal];
+        case .revenueAccount:
           return <TransactionTypeProperty>[];
-        case AccountTypeProperty.loan:
-        case AccountTypeProperty.debt:
-        case AccountTypeProperty.mortgage:
+        case .loan:
+        case .debt:
+        case .mortgage:
           return <TransactionTypeProperty>[
-            TransactionTypeProperty.withdrawal,
-            TransactionTypeProperty.deposit,
-            TransactionTypeProperty.transfer,
-            TransactionTypeProperty.openingBalance,
+            .withdrawal,
+            .deposit,
+            .transfer,
+            .openingBalance,
           ];
-        case AccountTypeProperty.initialBalanceAccount:
-          return <TransactionTypeProperty>[
-            TransactionTypeProperty.openingBalance,
-          ];
-        case AccountTypeProperty.reconciliationAccount:
-          return <TransactionTypeProperty>[
-            TransactionTypeProperty.reconciliation,
-          ];
-        //case AccountTypeProperty.liability:
+        case .initialBalanceAccount:
+          return <TransactionTypeProperty>[.openingBalance];
+        case .reconciliationAccount:
+          return <TransactionTypeProperty>[.reconciliation];
+        //case .liability:
         default:
           return <TransactionTypeProperty>[];
       }
@@ -650,85 +584,65 @@ TransactionTypeProperty accountsToTransaction(
   >
   map =
       <AccountTypeProperty, Map<AccountTypeProperty, TransactionTypeProperty>>{
-        AccountTypeProperty
-            .assetAccount: <AccountTypeProperty, TransactionTypeProperty>{
-          AccountTypeProperty.assetAccount: TransactionTypeProperty.transfer,
-          AccountTypeProperty.cashAccount: TransactionTypeProperty.withdrawal,
-          AccountTypeProperty.debt: TransactionTypeProperty.withdrawal,
-          AccountTypeProperty.expenseAccount:
-              TransactionTypeProperty.withdrawal,
-          AccountTypeProperty.initialBalanceAccount:
-              TransactionTypeProperty.openingBalance,
-          AccountTypeProperty.loan: TransactionTypeProperty.withdrawal,
-          AccountTypeProperty.mortgage: TransactionTypeProperty.withdrawal,
-          AccountTypeProperty.reconciliationAccount:
-              TransactionTypeProperty.reconciliation,
+        .assetAccount: <AccountTypeProperty, TransactionTypeProperty>{
+          .assetAccount: .transfer,
+          .cashAccount: .withdrawal,
+          .debt: .withdrawal,
+          .expenseAccount: .withdrawal,
+          .initialBalanceAccount: .openingBalance,
+          .loan: .withdrawal,
+          .mortgage: .withdrawal,
+          .reconciliationAccount: .reconciliation,
         },
-        AccountTypeProperty.cashAccount:
-            <AccountTypeProperty, TransactionTypeProperty>{
-              AccountTypeProperty.assetAccount: TransactionTypeProperty.deposit,
-              AccountTypeProperty.loan: TransactionTypeProperty.deposit,
-              AccountTypeProperty.debt: TransactionTypeProperty.deposit,
-              AccountTypeProperty.mortgage: TransactionTypeProperty.deposit,
-            },
-        AccountTypeProperty.debt:
-            <AccountTypeProperty, TransactionTypeProperty>{
-              AccountTypeProperty.assetAccount: TransactionTypeProperty.deposit,
-              AccountTypeProperty.debt: TransactionTypeProperty.transfer,
-              AccountTypeProperty.expenseAccount:
-                  TransactionTypeProperty.withdrawal,
-              AccountTypeProperty.initialBalanceAccount:
-                  TransactionTypeProperty.openingBalance,
-              AccountTypeProperty.loan: TransactionTypeProperty.transfer,
-              AccountTypeProperty.mortgage: TransactionTypeProperty.transfer,
-            },
-        AccountTypeProperty.initialBalanceAccount:
-            <AccountTypeProperty, TransactionTypeProperty>{
-              AccountTypeProperty.assetAccount:
-                  TransactionTypeProperty.openingBalance,
-              AccountTypeProperty.debt: TransactionTypeProperty.openingBalance,
-              AccountTypeProperty.loan: TransactionTypeProperty.openingBalance,
-              AccountTypeProperty.mortgage:
-                  TransactionTypeProperty.openingBalance,
-            },
-        AccountTypeProperty.loan:
-            <AccountTypeProperty, TransactionTypeProperty>{
-              AccountTypeProperty.assetAccount: TransactionTypeProperty.deposit,
-              AccountTypeProperty.debt: TransactionTypeProperty.transfer,
-              AccountTypeProperty.expenseAccount:
-                  TransactionTypeProperty.withdrawal,
-              AccountTypeProperty.initialBalanceAccount:
-                  TransactionTypeProperty.openingBalance,
-              AccountTypeProperty.loan: TransactionTypeProperty.transfer,
-              AccountTypeProperty.mortgage: TransactionTypeProperty.transfer,
-            },
-        AccountTypeProperty.mortgage:
-            <AccountTypeProperty, TransactionTypeProperty>{
-              AccountTypeProperty.assetAccount: TransactionTypeProperty.deposit,
-              AccountTypeProperty.debt: TransactionTypeProperty.transfer,
-              AccountTypeProperty.expenseAccount:
-                  TransactionTypeProperty.withdrawal,
-              AccountTypeProperty.initialBalanceAccount:
-                  TransactionTypeProperty.openingBalance,
-              AccountTypeProperty.loan: TransactionTypeProperty.transfer,
-              AccountTypeProperty.mortgage: TransactionTypeProperty.transfer,
-            },
-        AccountTypeProperty.reconciliationAccount:
-            <AccountTypeProperty, TransactionTypeProperty>{
-              AccountTypeProperty.assetAccount:
-                  TransactionTypeProperty.reconciliation,
-            },
-        AccountTypeProperty.revenueAccount:
-            <AccountTypeProperty, TransactionTypeProperty>{
-              AccountTypeProperty.assetAccount: TransactionTypeProperty.deposit,
-              AccountTypeProperty.debt: TransactionTypeProperty.deposit,
-              AccountTypeProperty.loan: TransactionTypeProperty.deposit,
-              AccountTypeProperty.mortgage: TransactionTypeProperty.deposit,
-            },
-        /*AccountTypeProperty.liabilityCredit: {
-      AccountTypeProperty.debt: TransactionTypeProperty.liabilityCredit,
-      AccountTypeProperty.loan: TransactionTypeProperty.liabilityCredit,
-      AccountTypeProperty.mortgage: TransactionTypeProperty.liabilityCredit,
+        .cashAccount: <AccountTypeProperty, TransactionTypeProperty>{
+          .assetAccount: .deposit,
+          .loan: .deposit,
+          .debt: .deposit,
+          .mortgage: .deposit,
+        },
+        .debt: <AccountTypeProperty, TransactionTypeProperty>{
+          .assetAccount: .deposit,
+          .debt: .transfer,
+          .expenseAccount: .withdrawal,
+          .initialBalanceAccount: .openingBalance,
+          .loan: .transfer,
+          .mortgage: .transfer,
+        },
+        .initialBalanceAccount: <AccountTypeProperty, TransactionTypeProperty>{
+          .assetAccount: .openingBalance,
+          .debt: .openingBalance,
+          .loan: .openingBalance,
+          .mortgage: .openingBalance,
+        },
+        .loan: <AccountTypeProperty, TransactionTypeProperty>{
+          .assetAccount: .deposit,
+          .debt: .transfer,
+          .expenseAccount: .withdrawal,
+          .initialBalanceAccount: .openingBalance,
+          .loan: .transfer,
+          .mortgage: .transfer,
+        },
+        .mortgage: <AccountTypeProperty, TransactionTypeProperty>{
+          .assetAccount: .deposit,
+          .debt: .transfer,
+          .expenseAccount: .withdrawal,
+          .initialBalanceAccount: .openingBalance,
+          .loan: .transfer,
+          .mortgage: .transfer,
+        },
+        .reconciliationAccount: <AccountTypeProperty, TransactionTypeProperty>{
+          .assetAccount: .reconciliation,
+        },
+        .revenueAccount: <AccountTypeProperty, TransactionTypeProperty>{
+          .assetAccount: .deposit,
+          .debt: .deposit,
+          .loan: .deposit,
+          .mortgage: .deposit,
+        },
+        /*.liabilityCredit: {
+      .debt: .liabilityCredit,
+      .loan: .liabilityCredit,
+      .mortgage: .liabilityCredit,
     },*/
       };
 

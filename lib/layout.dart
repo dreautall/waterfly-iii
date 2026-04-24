@@ -28,18 +28,20 @@ class LayoutProvider with ChangeNotifier {
   ScreenSize? _currentSize;
   ScreenSize get currentSize => _currentSize!;
 
-  ScreenSize getSize(double width) {
-    if (width < 600) {
-      return ScreenSize.compact;
+  ScreenSize getSize(double width, double height) {
+    if (width < 600 || height < 600) {
+      return .compact;
     } else if (width < 840) {
-      return ScreenSize.medium;
+      return .medium;
     } else {
-      return ScreenSize.expanded;
+      return .expanded;
     }
   }
 
-  ScreenSize fromContext(BuildContext context) =>
-      getSize(MediaQuery.sizeOf(context).width);
+  ScreenSize fromContext(BuildContext context) => getSize(
+    MediaQuery.sizeOf(context).width,
+    MediaQuery.sizeOf(context).height,
+  );
 
   void updateSize(BuildContext context) {
     if (_currentSize == null) {

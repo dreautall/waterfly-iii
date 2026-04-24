@@ -33,15 +33,15 @@ class BillChartState extends State<BillChart> {
     // Loaded and more than two entries.
     if (loaded && _values.length > 2) {
       return Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const .all(8),
         child: SizedBox(
           height: 125,
           child: SfCartesianChart(
             primaryXAxis: DateTimeCategoryAxis(
-              dateFormat: DateFormat.yMMM(),
+              dateFormat: .yMMM(),
               labelStyle: Theme.of(
                 context,
-              ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+              ).textTheme.labelMedium?.copyWith(fontWeight: .normal),
               axisLine: AxisLine(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
@@ -49,7 +49,7 @@ class BillChartState extends State<BillChart> {
             primaryYAxis: NumericAxis(
               labelStyle: Theme.of(
                 context,
-              ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+              ).textTheme.labelMedium?.copyWith(fontWeight: .normal),
               axisLine: AxisLine(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),

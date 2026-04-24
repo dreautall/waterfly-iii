@@ -620,20 +620,20 @@ class SIt extends S {
       'Per utilizzare Waterfly III produttivamente è necessario il proprio server con un\'istanza di Firefly III o l\'add-on di Firefly III per Home Assistant.\n\nInserisci l\'URL completo e un token di accesso personale (Opzioni -> Profilo -> OAuth -> Token di accesso personale) qui sotto.';
 
   @override
-  String get loginFormButtonHideHeaders => 'Hide Headers';
+  String get loginFormButtonHideHeaders => 'Nascondi intestazioni';
 
   @override
-  String get loginFormButtonShowHeaders => 'Custom Headers';
+  String get loginFormButtonShowHeaders => 'Intestazioni personalizzate';
 
   @override
   String get loginFormLabelAPIKey => 'Chiave API valida';
 
   @override
-  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+  String get loginFormLabelHeaders => 'Intestazioni personalizzate (opzionale)';
 
   @override
   String get loginFormLabelHeadersHelp =>
-      'One per line, format: HeaderName: value';
+      'Una per riga, formato: NomeIntestazione: valore';
 
   @override
   String get loginFormLabelHost => 'URL del server';
@@ -757,29 +757,38 @@ class SIt extends S {
   String get settingsNLEmptyNote => 'Lascia vuota l\'annotazione';
 
   @override
-  String get settingsNLHistory => 'Notification History';
+  String get settingsNLHistory => 'Cronologia notifiche';
 
   @override
-  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+  String get settingsNLHistoryEmpty => 'Nessuna notifica registrata finora.';
 
   @override
   String settingsNLHistoryLongDescription(int notificationHistorySize) {
-    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other:
+          'Questa è la cronologia delle ultime $notificationHistorySize notifiche ricevute dall\'app. Inoltre, puoi creare transazioni da notifiche (valide) o vedere il motivo per cui una notifica non è stata elaborata.',
+      one:
+          'Questa è la cronologia dell\'ultima notifica ricevuta dall\'app. Inoltre, puoi creare transazioni da notifiche (valide) o vedere il motivo per cui una notifica non è stata elaborata.',
+    );
+    return '$_temp0';
   }
 
   @override
   String settingsNLHistoryRejectedReason(String reason) {
     String _temp0 = intl.Intl.selectLogic(reason, {
-      'noMoney': 'No monetary value found',
-      'noCurrency': 'No currency found',
-      'appNotUsed': 'App not listened to',
-      'other': 'Unknown reason',
+      'noMoney': 'Nessun valore monetario trovato',
+      'noCurrency': 'Nessuna valuta trovata',
+      'appNotUsed': 'App non monitorata',
+      'other': 'Motivo sconosciuto',
     });
-    return 'Notification skipped: $_temp0.';
+    return 'Notifica ignorata: $_temp0.';
   }
 
   @override
-  String get settingsNLHistoryShortDescription => 'List previous notifications';
+  String get settingsNLHistoryShortDescription =>
+      'Elenca le notifiche precedenti';
 
   @override
   String get settingsNLPermissionGrant => 'Tocca per concedere i permessi.';
@@ -799,10 +808,11 @@ class SIt extends S {
       'Compila il titolo della transazione con il titolo della notifica';
 
   @override
-  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+  String get settingsNLRegularExpression => 'Espressione regolare (opzionale)';
 
   @override
-  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+  String get settingsNLRegularExpressionInvalid =>
+      'Espressione regolare non valida';
 
   @override
   String get settingsNLServiceChecking => 'Controllo dello stato…';
@@ -825,10 +835,11 @@ class SIt extends S {
   String get settingsNotificationListener => 'Servizio di Lettura Notifiche';
 
   @override
-  String get settingsServerConnection => 'Server Connection';
+  String get settingsServerConnection => 'Connessione server';
 
   @override
-  String get settingsServerConnectionUpdated => 'Connection settings updated.';
+  String get settingsServerConnectionUpdated =>
+      'Impostazioni di connessione aggiornate.';
 
   @override
   String get settingsTheme => 'Tema App';

@@ -621,20 +621,20 @@ class SCs extends S {
       'Pro používání Waterfly III potřebujete vlastní server s instancí Firefly III nebo doplněk Firefly III v rámci služby Home Assistant.\n\nZadejte celou adresu URL spolu s vaším osobním přístupovým tokenem (Možnosti -> Profil -> OAuth -> Osobní přístupový token) níže.';
 
   @override
-  String get loginFormButtonHideHeaders => 'Hide Headers';
+  String get loginFormButtonHideHeaders => 'Skrýt hlavičky';
 
   @override
-  String get loginFormButtonShowHeaders => 'Custom Headers';
+  String get loginFormButtonShowHeaders => 'Vlastní hlavičky';
 
   @override
   String get loginFormLabelAPIKey => 'Platný klíč API';
 
   @override
-  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+  String get loginFormLabelHeaders => 'Vlastní hlavičky (volitelné)';
 
   @override
   String get loginFormLabelHeadersHelp =>
-      'One per line, format: HeaderName: value';
+      'Jedna na řádek, formát: NázevHlavičky: hodnota';
 
   @override
   String get loginFormLabelHost => 'URL serveru';
@@ -655,7 +655,7 @@ class SCs extends S {
   String get navigationCategories => 'Kategorie';
 
   @override
-  String get navigationMain => 'Dashboard';
+  String get navigationMain => 'Nástěnka';
 
   @override
   String get generalSettings => 'Nastavení';
@@ -759,29 +759,37 @@ class SCs extends S {
   String get settingsNLEmptyNote => 'Ponechat pole poznámky prázdné';
 
   @override
-  String get settingsNLHistory => 'Notification History';
+  String get settingsNLHistory => 'Historie oznámení';
 
   @override
-  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+  String get settingsNLHistoryEmpty =>
+      'Zatím nebyla zaznamenána žádná oznámení.';
 
   @override
   String settingsNLHistoryLongDescription(int notificationHistorySize) {
-    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other: '# oznámení',
+      few: '# oznámení',
+      one: '# oznámení',
+    );
+    return 'Toto je historie posledních $_temp0 přijatých aplikací. Dále můžete vytvářet transakce z (platných) oznámení nebo zjistit důvod, proč nebylo oznámení zpracováno.';
   }
 
   @override
   String settingsNLHistoryRejectedReason(String reason) {
     String _temp0 = intl.Intl.selectLogic(reason, {
-      'noMoney': 'No monetary value found',
-      'noCurrency': 'No currency found',
-      'appNotUsed': 'App not listened to',
-      'other': 'Unknown reason',
+      'noMoney': 'Nebyla nalezena peněžní hodnota',
+      'noCurrency': 'Nebyla nalezena měna',
+      'appNotUsed': 'Aplikace není sledována',
+      'other': 'Neznámý důvod',
     });
-    return 'Notification skipped: $_temp0.';
+    return 'Oznámení přeskočeno: $_temp0.';
   }
 
   @override
-  String get settingsNLHistoryShortDescription => 'List previous notifications';
+  String get settingsNLHistoryShortDescription => 'Seznam předchozích oznámení';
 
   @override
   String get settingsNLPermissionGrant => 'Klepnutím udělte oprávnění.';
@@ -801,10 +809,10 @@ class SCs extends S {
       'Doplnit název transakce pomocí nadpisu nofikace';
 
   @override
-  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+  String get settingsNLRegularExpression => 'Regulární výraz (volitelné)';
 
   @override
-  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+  String get settingsNLRegularExpressionInvalid => 'Neplatný regulární výraz';
 
   @override
   String get settingsNLServiceChecking => 'Kontroluji stav…';
@@ -827,10 +835,11 @@ class SCs extends S {
   String get settingsNotificationListener => 'Služba pro čtení oznámení';
 
   @override
-  String get settingsServerConnection => 'Server Connection';
+  String get settingsServerConnection => 'Připojení k serveru';
 
   @override
-  String get settingsServerConnectionUpdated => 'Connection settings updated.';
+  String get settingsServerConnectionUpdated =>
+      'Nastavení připojení byla aktualizována.';
 
   @override
   String get settingsTheme => 'Motiv aplikace';
@@ -902,10 +911,10 @@ class SCs extends S {
   String get transactionDialogCurrencyTitle => 'Vybrat měnu';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => 'Žádné prasátko';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => 'Propojit s prasátkem';
 
   @override
   String get transactionDialogTagsAdd => 'Přidat štítek';

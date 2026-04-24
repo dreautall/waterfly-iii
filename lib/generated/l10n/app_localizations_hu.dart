@@ -625,20 +625,20 @@ class SHu extends S {
       'A Waterfly III hatékony használatához saját szerveren futtatott Firefly III-ra vagy Firefly III kiegészítővel ellátott Home Assistant-re van szükség.\n\nKérjük, adja meg alább a teljes URL-t, valamint egy személyes hozzáférési tokent (Beállítások -> Profil -> OAuth -> Személyes hozzáférési tokenek).';
 
   @override
-  String get loginFormButtonHideHeaders => 'Hide Headers';
+  String get loginFormButtonHideHeaders => 'Fejlécek elrejtése';
 
   @override
-  String get loginFormButtonShowHeaders => 'Custom Headers';
+  String get loginFormButtonShowHeaders => 'Egyéni fejlécek';
 
   @override
   String get loginFormLabelAPIKey => 'Érvényes API kulcs';
 
   @override
-  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+  String get loginFormLabelHeaders => 'Egyéni fejlécek (opcionális)';
 
   @override
   String get loginFormLabelHeadersHelp =>
-      'One per line, format: HeaderName: value';
+      'Soronként egy, formátum: FejlécNév: érték';
 
   @override
   String get loginFormLabelHost => 'Szerver URL';
@@ -659,7 +659,7 @@ class SHu extends S {
   String get navigationCategories => 'Kategóriák';
 
   @override
-  String get navigationMain => 'Dashboard';
+  String get navigationMain => 'Irányítópult';
 
   @override
   String get generalSettings => 'Beállítások';
@@ -764,29 +764,38 @@ class SHu extends S {
   String get settingsNLEmptyNote => 'A \"Jegyzetek\" mező maradjon üres';
 
   @override
-  String get settingsNLHistory => 'Notification History';
+  String get settingsNLHistory => 'Értesítési előzmények';
 
   @override
-  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+  String get settingsNLHistoryEmpty => 'Még nincs rögzített értesítés.';
 
   @override
   String settingsNLHistoryLongDescription(int notificationHistorySize) {
-    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other:
+          'Ez az alkalmazás által fogadott legutóbbi $notificationHistorySize értesítés előzménye. Emellett létrehozhat tranzakciókat (érvényes) értesítésekből, vagy megtekintheti, miért nem sikerült feldolgozni egy értesítést.',
+      one:
+          'Ez az alkalmazás által fogadott legutóbbi 1 értesítés előzménye. Emellett létrehozhat tranzakciókat (érvényes) értesítésekből, vagy megtekintheti, miért nem sikerült feldolgozni egy értesítést.',
+    );
+    return '$_temp0';
   }
 
   @override
   String settingsNLHistoryRejectedReason(String reason) {
     String _temp0 = intl.Intl.selectLogic(reason, {
-      'noMoney': 'No monetary value found',
-      'noCurrency': 'No currency found',
-      'appNotUsed': 'App not listened to',
-      'other': 'Unknown reason',
+      'noMoney': 'Nem található pénzösszeg',
+      'noCurrency': 'Nem található pénznem',
+      'appNotUsed': 'Az alkalmazás nincs a figyeltek között',
+      'other': 'Ismeretlen ok',
     });
-    return 'Notification skipped: $_temp0.';
+    return 'Értesítés kihagyva: $_temp0.';
   }
 
   @override
-  String get settingsNLHistoryShortDescription => 'List previous notifications';
+  String get settingsNLHistoryShortDescription =>
+      'Korábbi értesítések listázása';
 
   @override
   String get settingsNLPermissionGrant => 'Koppintson az engedélyezéshez.';
@@ -806,10 +815,11 @@ class SHu extends S {
       'A tranzakció leírásának előzetes kitöltése az értesítés címével';
 
   @override
-  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+  String get settingsNLRegularExpression => 'Reguláris kifejezés (opcionális)';
 
   @override
-  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+  String get settingsNLRegularExpressionInvalid =>
+      'Érvénytelen reguláris kifejezés';
 
   @override
   String get settingsNLServiceChecking => 'Állapot ellenőrzése…';
@@ -832,10 +842,11 @@ class SHu extends S {
   String get settingsNotificationListener => 'Értesítés Figyelő Szolgáltatás';
 
   @override
-  String get settingsServerConnection => 'Server Connection';
+  String get settingsServerConnection => 'Kiszolgáló kapcsolat';
 
   @override
-  String get settingsServerConnectionUpdated => 'Connection settings updated.';
+  String get settingsServerConnectionUpdated =>
+      'Kapcsolati beállítások frissítve.';
 
   @override
   String get settingsTheme => 'Alkalmazás Téma';

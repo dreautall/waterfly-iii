@@ -444,8 +444,8 @@ class SRu extends S {
   @override
   String homeMainBudgetSum(String current, String status, String available) {
     String _temp0 = intl.Intl.selectLogic(status, {
-      'over': 'over',
-      'other': 'left from',
+      'over': 'превышен на',
+      'other': 'осталось от',
     });
     return '$current $_temp0 $available';
   }
@@ -558,7 +558,7 @@ class SRu extends S {
   String get homeTransactionsActionFilter => 'Фильтровать список';
 
   @override
-  String get homeTransactionsDialogFilterAccountsAll => '<All Accounts>';
+  String get homeTransactionsDialogFilterAccountsAll => '<Все счета>';
 
   @override
   String get homeTransactionsDialogFilterBillsAll => '<All Bills>';
@@ -567,19 +567,19 @@ class SRu extends S {
   String get homeTransactionsDialogFilterBillUnset => '<No Bill set>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetsAll => '<All Budgets>';
+  String get homeTransactionsDialogFilterBudgetsAll => '<Все бюджеты>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetUnset => '<No Budget set>';
+  String get homeTransactionsDialogFilterBudgetUnset => '<Без бюджета>';
 
   @override
-  String get homeTransactionsDialogFilterCategoriesAll => '<All Categories>';
+  String get homeTransactionsDialogFilterCategoriesAll => '<Все категории>';
 
   @override
-  String get homeTransactionsDialogFilterCategoryUnset => '<No Category set>';
+  String get homeTransactionsDialogFilterCategoryUnset => '<Без категории>';
 
   @override
-  String get homeTransactionsDialogFilterCurrenciesAll => '<All Currencies>';
+  String get homeTransactionsDialogFilterCurrenciesAll => '<Все валюты>';
 
   @override
   String get homeTransactionsDialogFilterDateRange => 'Диапазон дат';
@@ -626,20 +626,21 @@ class SRu extends S {
       'Для эффективного использования Waterfly III Вам необходим собственный сервер с установленным Firefly III или аддоном Firefly III для Home Assistant.\n\nПожалуйста, введите полный URL-адрес и персональный ключ доступа (Настройки -> Профиль -> OAuth -> Персональный ключ доступа).';
 
   @override
-  String get loginFormButtonHideHeaders => 'Hide Headers';
+  String get loginFormButtonHideHeaders => 'Скрыть заголовки';
 
   @override
-  String get loginFormButtonShowHeaders => 'Custom Headers';
+  String get loginFormButtonShowHeaders => 'Пользовательские заголовки';
 
   @override
   String get loginFormLabelAPIKey => 'Действительный ключ API';
 
   @override
-  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+  String get loginFormLabelHeaders =>
+      'Пользовательские заголовки (необязательно)';
 
   @override
   String get loginFormLabelHeadersHelp =>
-      'One per line, format: HeaderName: value';
+      'По одному в строке, формат: HeaderName: значение';
 
   @override
   String get loginFormLabelHost => 'URL-адрес хоста';
@@ -660,7 +661,7 @@ class SRu extends S {
   String get navigationCategories => 'Категории';
 
   @override
-  String get navigationMain => 'Dashboard';
+  String get navigationMain => 'Панель управления';
 
   @override
   String get generalSettings => 'Настройки';
@@ -740,7 +741,7 @@ class SRu extends S {
   String get settingsNLAppAccount => 'Аккаунт по умолчанию';
 
   @override
-  String get settingsNLAppAccountDynamic => '<Dynamic>';
+  String get settingsNLAppAccountDynamic => '<Динамически>';
 
   @override
   String get settingsNLAppAdd => 'Добавить приложение';
@@ -764,29 +765,38 @@ class SRu extends S {
   String get settingsNLEmptyNote => 'Оставлять поле заметки пустым';
 
   @override
-  String get settingsNLHistory => 'Notification History';
+  String get settingsNLHistory => 'История уведомлений';
 
   @override
-  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+  String get settingsNLHistoryEmpty => 'Уведомлений пока нет.';
 
   @override
   String settingsNLHistoryLongDescription(int notificationHistorySize) {
-    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other: '# уведомлений',
+      many: '# уведомлений',
+      few: '# уведомлений',
+      one: '# уведомления',
+    );
+    return 'Это история последних $_temp0, полученных приложением. Вы можете создавать транзакции из корректных уведомлений или узнать причину, по которой уведомление не удалось обработать.';
   }
 
   @override
   String settingsNLHistoryRejectedReason(String reason) {
     String _temp0 = intl.Intl.selectLogic(reason, {
-      'noMoney': 'No monetary value found',
-      'noCurrency': 'No currency found',
-      'appNotUsed': 'App not listened to',
-      'other': 'Unknown reason',
+      'noMoney': 'Не найдена сумма',
+      'noCurrency': 'Не найдена валюта',
+      'appNotUsed': 'Приложение не отслеживается',
+      'other': 'Неизвестная причина',
     });
-    return 'Notification skipped: $_temp0.';
+    return 'Уведомление пропущено: $_temp0.';
   }
 
   @override
-  String get settingsNLHistoryShortDescription => 'List previous notifications';
+  String get settingsNLHistoryShortDescription =>
+      'Список предыдущих уведомлений';
 
   @override
   String get settingsNLPermissionGrant => 'Нажмите для подтверждения.';
@@ -806,10 +816,12 @@ class SRu extends S {
       'Заполнить заголовок транзакции, используя заголовок уведомления';
 
   @override
-  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+  String get settingsNLRegularExpression =>
+      'Регулярное выражение (необязательно)';
 
   @override
-  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+  String get settingsNLRegularExpressionInvalid =>
+      'Неверное регулярное выражение';
 
   @override
   String get settingsNLServiceChecking => 'Проверка статуса…';
@@ -832,10 +844,11 @@ class SRu extends S {
   String get settingsNotificationListener => 'Сервис прослушивания уведомлений';
 
   @override
-  String get settingsServerConnection => 'Server Connection';
+  String get settingsServerConnection => 'Подключение к серверу';
 
   @override
-  String get settingsServerConnectionUpdated => 'Connection settings updated.';
+  String get settingsServerConnectionUpdated =>
+      'Настройки подключения обновлены.';
 
   @override
   String get settingsTheme => 'Тема приложения';

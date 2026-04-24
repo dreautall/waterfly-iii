@@ -619,20 +619,20 @@ class SNl extends S {
       'Om Waterfly III productief te gebruiken, heb je je eigen server nodig met een Firefly III-installatie of de Firefly III-add-on voor Home Assistant.\n\nVoer de volledige URL en ook een persoonlijke toegangstoken in (Instellingen -> Profiel -> OAuth -> Persoonlijke Toegang) hieronder in.';
 
   @override
-  String get loginFormButtonHideHeaders => 'Hide Headers';
+  String get loginFormButtonHideHeaders => 'Headers verbergen';
 
   @override
-  String get loginFormButtonShowHeaders => 'Custom Headers';
+  String get loginFormButtonShowHeaders => 'Aangepaste headers';
 
   @override
   String get loginFormLabelAPIKey => 'Geldige API-sleutel';
 
   @override
-  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+  String get loginFormLabelHeaders => 'Aangepaste headers (optioneel)';
 
   @override
   String get loginFormLabelHeadersHelp =>
-      'One per line, format: HeaderName: value';
+      'Eén per regel, formaat: HeaderNaam: waarde';
 
   @override
   String get loginFormLabelHost => 'Host-URL';
@@ -757,29 +757,37 @@ class SNl extends S {
   String get settingsNLEmptyNote => 'Houd notitie veld leeg';
 
   @override
-  String get settingsNLHistory => 'Notification History';
+  String get settingsNLHistory => 'Notificatiegeschiedenis';
 
   @override
-  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+  String get settingsNLHistoryEmpty => 'Nog geen notificaties opgeslagen.';
 
   @override
   String settingsNLHistoryLongDescription(int notificationHistorySize) {
-    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other:
+          'Dit is de geschiedenis van de laatste $notificationHistorySize notificaties ontvangen door de app. Daarnaast kun je transacties maken van (geldige) notificaties of zien waarom een notificatie niet kon worden verwerkt.',
+      one:
+          'Dit is de geschiedenis van de laatste notificatie ontvangen door de app. Daarnaast kun je transacties maken van (geldige) notificaties of zien waarom een notificatie niet kon worden verwerkt.',
+    );
+    return '$_temp0';
   }
 
   @override
   String settingsNLHistoryRejectedReason(String reason) {
     String _temp0 = intl.Intl.selectLogic(reason, {
-      'noMoney': 'No monetary value found',
-      'noCurrency': 'No currency found',
-      'appNotUsed': 'App not listened to',
-      'other': 'Unknown reason',
+      'noMoney': 'Geen geldwaarde gevonden',
+      'noCurrency': 'Geen valuta gevonden',
+      'appNotUsed': 'App niet in lijst',
+      'other': 'Onbekende reden',
     });
-    return 'Notification skipped: $_temp0.';
+    return 'Notificatie overgeslagen: $_temp0.';
   }
 
   @override
-  String get settingsNLHistoryShortDescription => 'List previous notifications';
+  String get settingsNLHistoryShortDescription => 'Toon eerdere notificaties';
 
   @override
   String get settingsNLPermissionGrant => 'Klik hier om toestemming te geven.';
@@ -799,10 +807,11 @@ class SNl extends S {
       'Transactietitel vooraf invullen met meldingstitel';
 
   @override
-  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+  String get settingsNLRegularExpression => 'Reguliere expressie (optioneel)';
 
   @override
-  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+  String get settingsNLRegularExpressionInvalid =>
+      'Ongeldige reguliere expressie';
 
   @override
   String get settingsNLServiceChecking => 'Status controleren…';
@@ -825,10 +834,11 @@ class SNl extends S {
   String get settingsNotificationListener => 'Notificatie Luister Service';
 
   @override
-  String get settingsServerConnection => 'Server Connection';
+  String get settingsServerConnection => 'Serververbinding';
 
   @override
-  String get settingsServerConnectionUpdated => 'Connection settings updated.';
+  String get settingsServerConnectionUpdated =>
+      'Verbindingsinstellingen bijgewerkt.';
 
   @override
   String get settingsTheme => 'Applicatie thema';

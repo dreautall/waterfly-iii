@@ -625,20 +625,20 @@ class SFr extends S {
       'Pour utiliser Waterfly III, vous avez besoin de votre propre serveur avec une instance Firefly III ou le module complémentaire Firefly III pour Home Assistant.\n\nVeuillez renseigner l\'URL complète ainsi qu\'un jeton d\'accès personnel (Options -> Profil -> OAuth -> Jetons d\'accès personnel) ci-dessous.';
 
   @override
-  String get loginFormButtonHideHeaders => 'Hide Headers';
+  String get loginFormButtonHideHeaders => 'Masquer les en-têtes';
 
   @override
-  String get loginFormButtonShowHeaders => 'Custom Headers';
+  String get loginFormButtonShowHeaders => 'En-têtes personnalisés';
 
   @override
   String get loginFormLabelAPIKey => 'Clé API valide';
 
   @override
-  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+  String get loginFormLabelHeaders => 'En-têtes personnalisés (optionnel)';
 
   @override
   String get loginFormLabelHeadersHelp =>
-      'One per line, format: HeaderName: value';
+      'Un par ligne, format : NomEnTête : valeur';
 
   @override
   String get loginFormLabelHost => 'URL du serveur';
@@ -660,7 +660,7 @@ class SFr extends S {
   String get navigationCategories => 'Catégories';
 
   @override
-  String get navigationMain => 'Dashboard';
+  String get navigationMain => 'Tableau de bord';
 
   @override
   String get generalSettings => 'Paramètres';
@@ -764,29 +764,37 @@ class SFr extends S {
   String get settingsNLEmptyNote => 'Conserver le champ de note vide';
 
   @override
-  String get settingsNLHistory => 'Notification History';
+  String get settingsNLHistory => 'Historique des notifications';
 
   @override
-  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+  String get settingsNLHistoryEmpty =>
+      'Aucune notification enregistrée pour le moment.';
 
   @override
   String settingsNLHistoryLongDescription(int notificationHistorySize) {
-    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other: 'dernières $notificationHistorySize notifications reçues',
+      one: 'dernière notification reçue',
+    );
+    return 'Ceci est un historique des $_temp0 par l\'application. De plus, vous pouvez créer des transactions à partir de notifications (valides) ou voir la raison pour laquelle une notification n\'a pas pu être traitée.';
   }
 
   @override
   String settingsNLHistoryRejectedReason(String reason) {
     String _temp0 = intl.Intl.selectLogic(reason, {
-      'noMoney': 'No monetary value found',
-      'noCurrency': 'No currency found',
-      'appNotUsed': 'App not listened to',
-      'other': 'Unknown reason',
+      'noMoney': 'Aucune valeur monétaire trouvée',
+      'noCurrency': 'Aucune devise trouvée',
+      'appNotUsed': 'Application non écoutée',
+      'other': 'Raison inconnue',
     });
-    return 'Notification skipped: $_temp0.';
+    return 'Notification ignorée : $_temp0.';
   }
 
   @override
-  String get settingsNLHistoryShortDescription => 'List previous notifications';
+  String get settingsNLHistoryShortDescription =>
+      'Lister les notifications précédentes';
 
   @override
   String get settingsNLPermissionGrant =>
@@ -807,10 +815,11 @@ class SFr extends S {
       'Pré-remplir le titre de la transaction avec le titre de la notification';
 
   @override
-  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+  String get settingsNLRegularExpression => 'Expression régulière (optionnel)';
 
   @override
-  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+  String get settingsNLRegularExpressionInvalid =>
+      'Expression régulière invalide';
 
   @override
   String get settingsNLServiceChecking => 'Vérification de l\'état…';
@@ -834,10 +843,11 @@ class SFr extends S {
       'Service d\'écoute des notifications';
 
   @override
-  String get settingsServerConnection => 'Server Connection';
+  String get settingsServerConnection => 'Connexion au serveur';
 
   @override
-  String get settingsServerConnectionUpdated => 'Connection settings updated.';
+  String get settingsServerConnectionUpdated =>
+      'Paramètres de connexion mis à jour.';
 
   @override
   String get settingsTheme => 'Thème de l\'appli';

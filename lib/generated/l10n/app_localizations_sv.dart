@@ -617,20 +617,20 @@ class SSv extends S {
       'För att använda Waterfly III på ett produktivt sätt behöver du din egen server med en Firefly III instans eller Firefly III-tillägget för Home Assistant.\n\nAnge hela URL: en samt en personlig åtkomst-token (inställningar -> Profil -> OAuth -> Personlig åtkomst-token) nedan.';
 
   @override
-  String get loginFormButtonHideHeaders => 'Hide Headers';
+  String get loginFormButtonHideHeaders => 'Dölj rubriker';
 
   @override
-  String get loginFormButtonShowHeaders => 'Custom Headers';
+  String get loginFormButtonShowHeaders => 'Anpassade rubriker';
 
   @override
   String get loginFormLabelAPIKey => 'Giltig API-nyckel';
 
   @override
-  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+  String get loginFormLabelHeaders => 'Anpassade rubriker (valfritt)';
 
   @override
   String get loginFormLabelHeadersHelp =>
-      'One per line, format: HeaderName: value';
+      'En per rad, format: Rubriknamn: värde';
 
   @override
   String get loginFormLabelHost => 'Värd URL';
@@ -754,29 +754,37 @@ class SSv extends S {
   String get settingsNLEmptyNote => 'Håll anteckningsfältet tomt';
 
   @override
-  String get settingsNLHistory => 'Notification History';
+  String get settingsNLHistory => 'Aviseringshistorik';
 
   @override
-  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+  String get settingsNLHistoryEmpty => 'Inga aviseringar har registrerats än.';
 
   @override
   String settingsNLHistoryLongDescription(int notificationHistorySize) {
-    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other:
+          'Detta är historiken för de senaste $notificationHistorySize aviseringarna som tagits emot av appen. Dessutom kan du skapa transaktioner från (giltiga) aviseringar eller se anledningen till varför en avisering inte kunde bearbetas.',
+      one:
+          'Detta är historiken för den senaste av Aviseringen som tagits emot av appen. Dessutom kan du skapa transaktioner från (giltiga) aviseringar eller se anledningen till varför en avisering inte kunde bearbetas.',
+    );
+    return '$_temp0';
   }
 
   @override
   String settingsNLHistoryRejectedReason(String reason) {
     String _temp0 = intl.Intl.selectLogic(reason, {
-      'noMoney': 'No monetary value found',
-      'noCurrency': 'No currency found',
-      'appNotUsed': 'App not listened to',
-      'other': 'Unknown reason',
+      'noMoney': 'Inget monetärt värde hittades',
+      'noCurrency': 'Ingen valuta hittades',
+      'appNotUsed': 'Appen är inte aktiverad för avlyssning',
+      'other': 'Okänd anledning',
     });
-    return 'Notification skipped: $_temp0.';
+    return 'Avisering hoppades över: $_temp0.';
   }
 
   @override
-  String get settingsNLHistoryShortDescription => 'List previous notifications';
+  String get settingsNLHistoryShortDescription => 'Lista tidigare aviseringar';
 
   @override
   String get settingsNLPermissionGrant => 'Tryck för att bevilja tillstånd.';
@@ -796,10 +804,10 @@ class SSv extends S {
       'Fyll i transaktionstiteln med nofikationstiteln i förväg';
 
   @override
-  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+  String get settingsNLRegularExpression => 'Reguljärt uttryck (valfritt)';
 
   @override
-  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+  String get settingsNLRegularExpressionInvalid => 'Ogiltigt reguljärt uttryck';
 
   @override
   String get settingsNLServiceChecking => 'Kontrollerar status…';
@@ -822,10 +830,11 @@ class SSv extends S {
   String get settingsNotificationListener => 'Notifikationslyssningstjänst';
 
   @override
-  String get settingsServerConnection => 'Server Connection';
+  String get settingsServerConnection => 'Serveranslutning';
 
   @override
-  String get settingsServerConnectionUpdated => 'Connection settings updated.';
+  String get settingsServerConnectionUpdated =>
+      'Anslutningsinställningar uppdaterade.';
 
   @override
   String get settingsTheme => 'Apptema';

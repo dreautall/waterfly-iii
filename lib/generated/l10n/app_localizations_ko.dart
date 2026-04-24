@@ -115,12 +115,12 @@ class SKo extends S {
   @override
   String billsFrequency(String frequency) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': '매주',
+      'monthly': '매월',
+      'quarterly': '매분기',
+      'halfyear': '반기별',
+      'yearly': '매년',
+      'other': '알 수 없음',
     });
     return '$_temp0';
   }
@@ -166,23 +166,23 @@ class SKo extends S {
   String get billsListEmpty => '현재 목록이 비어 있습니다.';
 
   @override
-  String get billsNextExpectedMatch => 'Next expected match';
+  String get billsNextExpectedMatch => '다음 예상 결제일';
 
   @override
   String get billsNotActive => '구독이 비활성화되어 있습니다';
 
   @override
-  String get billsNotExpected => 'Not expected this period';
+  String get billsNotExpected => '이번 기간에는 예상되지 않음';
 
   @override
-  String get billsNoTransactions => 'No transactions found.';
+  String get billsNoTransactions => '거래 내역이 없습니다.';
 
   @override
   String billsPaidOn(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Paid $dateString';
+    return '$dateString에 결제됨';
   }
 
   @override
@@ -201,22 +201,21 @@ class SKo extends S {
   String get billsUngrouped => '그룹 지정 안 됨';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => '활성 항목만 표시';
 
   @override
-  String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+  String get billsSettingsShowOnlyActiveDesc => '활성 상태인 구독 항목만 표시합니다.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => '예상 항목만 표시';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      '이번 달에 예상되거나(결제된) 구독 항목만 표시합니다.';
 
   @override
   String get categoryDeleteConfirm =>
-      'Are you sure you want to delete this category? The transactions will not be deleted, but will not have a category anymore.';
+      '이 카테고리를 삭제하시겠습니까? 거래 내역은 삭제되지 않지만, 더 이상 카테고리가 지정되지 않습니다.';
 
   @override
   String get categoryErrorLoading => '분류를 읽어들이는 중 오류가 발생했습니다.';
@@ -246,10 +245,10 @@ class SKo extends S {
   String get categoryTitleEdit => '카테고리 수정';
 
   @override
-  String get catNone => '<no category>';
+  String get catNone => '<카테고리 없음>';
 
   @override
-  String get catOther => 'Other';
+  String get catOther => '기타';
 
   @override
   String errorAPIInvalidResponse(String message) {
@@ -329,22 +328,22 @@ class SKo extends S {
   String get generalCurrency => '화폐';
 
   @override
-  String get generalDateRangeCurrentMonth => 'Current Month';
+  String get generalDateRangeCurrentMonth => '이번 달';
 
   @override
-  String get generalDateRangeLast30Days => 'Last 30 days';
+  String get generalDateRangeLast30Days => '최근 30일';
 
   @override
-  String get generalDateRangeCurrentYear => 'Current Year';
+  String get generalDateRangeCurrentYear => '올해';
 
   @override
-  String get generalDateRangeLastYear => 'Last year';
+  String get generalDateRangeLastYear => '작년';
 
   @override
-  String get generalDateRangeAll => 'All';
+  String get generalDateRangeAll => '전체';
 
   @override
-  String get generalDefault => 'default';
+  String get generalDefault => '기본값';
 
   @override
   String get generalDestinationAccount => '대상 계정';
@@ -368,10 +367,10 @@ class SKo extends S {
   String get generalLiabilities => '부채';
 
   @override
-  String get generalMultiple => 'multiple';
+  String get generalMultiple => '다중';
 
   @override
-  String get generalNever => 'never';
+  String get generalNever => '없음';
 
   @override
   String get generalReconcile => '조정됨';
@@ -397,12 +396,12 @@ class SKo extends S {
   @override
   String homeMainBillsInterval(String period) {
     String _temp0 = intl.Intl.selectLogic(period, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-year',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': '매주',
+      'monthly': '매월',
+      'quarterly': '매분기',
+      'halfyear': '반기별',
+      'yearly': '매년',
+      'other': '알 수 없음',
     });
     return ' ($_temp0)';
   }
@@ -433,10 +432,10 @@ class SKo extends S {
   @override
   String homeMainBudgetSum(String current, String status, String available) {
     String _temp0 = intl.Intl.selectLogic(status, {
-      'over': 'over',
-      'other': 'left from',
+      'over': '초과',
+      'other': '남음',
     });
-    return '$current $_temp0 $available';
+    return '$available 중 $_temp0: $current';
   }
 
   @override
@@ -461,7 +460,7 @@ class SKo extends S {
   String get homeMainChartNetWorthTitle => '순자산';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle => '이번 달 태그 요약';
 
   @override
   String get homePiggyAdjustDialogTitle => '지출/저장';
@@ -487,7 +486,7 @@ class SKo extends S {
 
   @override
   String homePiggyLinked(String account) {
-    return 'Linked to $account';
+    return '$account에 연결됨';
   }
 
   @override
@@ -498,40 +497,40 @@ class SKo extends S {
 
   @override
   String homePiggyRemaining(String amount) {
-    return 'Left to save: $amount';
+    return '저축할 금액: $amount';
   }
 
   @override
   String homePiggySaved(String amount) {
-    return 'Saved so far: $amount';
+    return '현재까지 저축액: $amount';
   }
 
   @override
-  String get homePiggySavedMultiple => 'Saved so far:';
+  String get homePiggySavedMultiple => '현재까지 저축액:';
 
   @override
   String homePiggyTarget(String amount) {
-    return 'Target amount: $amount';
+    return '목표 금액: $amount';
   }
 
   @override
-  String get homePiggyAccountStatus => 'Account Status';
+  String get homePiggyAccountStatus => '계좌 상태';
 
   @override
-  String get homePiggyAvailableAmounts => 'Available Amounts';
+  String get homePiggyAvailableAmounts => '가용 금액';
 
   @override
   String homePiggyAvailable(String amount) {
-    return 'Available: $amount';
+    return '가용 금액: $amount';
   }
 
   @override
   String homePiggyInPiggyBanks(String amount) {
-    return 'In piggy banks: $amount';
+    return '저금통에 포함됨: $amount';
   }
 
   @override
-  String get homeTabLabelBalance => 'Balance Sheet';
+  String get homeTabLabelBalance => '재무 상태표';
 
   @override
   String get homeTabLabelMain => '메인';
@@ -549,32 +548,31 @@ class SKo extends S {
   String get homeTransactionsDialogFilterAccountsAll => '<모든 계정>';
 
   @override
-  String get homeTransactionsDialogFilterBillsAll => '<All Subscriptions>';
+  String get homeTransactionsDialogFilterBillsAll => '<모든 구독>';
 
   @override
-  String get homeTransactionsDialogFilterBillUnset => '<No Subscription set>';
+  String get homeTransactionsDialogFilterBillUnset => '<설정된 구독 없음>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetsAll => '<All Budgets>';
+  String get homeTransactionsDialogFilterBudgetsAll => '<모든 예산>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetUnset => '<No Budget set>';
+  String get homeTransactionsDialogFilterBudgetUnset => '<설정된 예산 없음>';
 
   @override
-  String get homeTransactionsDialogFilterCategoriesAll => '<All Categories>';
+  String get homeTransactionsDialogFilterCategoriesAll => '<모든 분류>';
 
   @override
-  String get homeTransactionsDialogFilterCategoryUnset => '<No Category set>';
+  String get homeTransactionsDialogFilterCategoryUnset => '<설정된 분류 없음>';
 
   @override
-  String get homeTransactionsDialogFilterCurrenciesAll => '<All Currencies>';
+  String get homeTransactionsDialogFilterCurrenciesAll => '<모든 통화>';
 
   @override
-  String get homeTransactionsDialogFilterDateRange => 'Date Range';
+  String get homeTransactionsDialogFilterDateRange => '날짜 범위';
 
   @override
-  String get homeTransactionsDialogFilterFutureTransactions =>
-      'Show future transactions';
+  String get homeTransactionsDialogFilterFutureTransactions => '미래 거래 표시';
 
   @override
   String get homeTransactionsDialogFilterSearch => '검색어';
@@ -583,7 +581,7 @@ class SKo extends S {
   String get homeTransactionsDialogFilterTitle => '필터 선택';
 
   @override
-  String get homeTransactionsEmpty => 'No transactions found.';
+  String get homeTransactionsEmpty => '거래 내역이 없습니다.';
 
   @override
   String homeTransactionsMultipleCategories(int num) {
@@ -594,13 +592,13 @@ class SKo extends S {
   String get homeTransactionsSettingsShowTags => '거래 목록에 태그 표시';
 
   @override
-  String get liabilityDirectionCredit => 'I am owed this debt';
+  String get liabilityDirectionCredit => '받을 채권';
 
   @override
-  String get liabilityDirectionDebit => 'I owe this debt';
+  String get liabilityDirectionDebit => '갚을 채무';
 
   @override
-  String get liabilityTypeDebt => 'Debt';
+  String get liabilityTypeDebt => '부채';
 
   @override
   String get liabilityTypeLoan => '대출';
@@ -613,20 +611,19 @@ class SKo extends S {
       'Waterfly III를 사용하려면 Firefly III 인스턴스가 있는 서버나 Home Assistant용 Firefly III 애드온이 필요합니다.\n\n아래에 전체 URL과 개인 액세스 토큰(설정 -> 프로필 -> OAuth -> 개인 액세스 토큰)을 입력하세요.';
 
   @override
-  String get loginFormButtonHideHeaders => 'Hide Headers';
+  String get loginFormButtonHideHeaders => '헤더 숨기기';
 
   @override
-  String get loginFormButtonShowHeaders => 'Custom Headers';
+  String get loginFormButtonShowHeaders => '사용자 지정 헤더';
 
   @override
   String get loginFormLabelAPIKey => '유효한 API 키';
 
   @override
-  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+  String get loginFormLabelHeaders => '사용자 지정 헤더 (선택 사항)';
 
   @override
-  String get loginFormLabelHeadersHelp =>
-      'One per line, format: HeaderName: value';
+  String get loginFormLabelHeadersHelp => '줄당 하나씩, 형식: HeaderName: value';
 
   @override
   String get loginFormLabelHost => '호스트 URL';
@@ -647,13 +644,13 @@ class SKo extends S {
   String get navigationCategories => '분류';
 
   @override
-  String get navigationMain => 'Dashboard';
+  String get navigationMain => '대시보드';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => '설정';
 
   @override
-  String get no => 'No';
+  String get no => '아니요';
 
   @override
   String numPercent(double num) {
@@ -676,7 +673,7 @@ class SKo extends S {
         );
     final String percString = percNumberFormat.format(perc);
 
-    return '$percString of $of';
+    return '$of 중 $percString';
   }
 
   @override
@@ -715,7 +712,7 @@ class SKo extends S {
   String get settingsLockscreen => '잠금 화면';
 
   @override
-  String get settingsLockscreenHelp => 'Require authenticiation on app startup';
+  String get settingsLockscreenHelp => '앱 실행 시 인증 요구';
 
   @override
   String get settingsLockscreenInitial => '잠금 화면을 활성화하려면 인증을 해주세요.';
@@ -724,7 +721,7 @@ class SKo extends S {
   String get settingsNLAppAccount => '기본 계정';
 
   @override
-  String get settingsNLAppAccountDynamic => '<Dynamic>';
+  String get settingsNLAppAccountDynamic => '<동적>';
 
   @override
   String get settingsNLAppAdd => 'App 추가';
@@ -744,32 +741,32 @@ class SKo extends S {
       '이 서비스를 사용하면 수신 푸시 알림에서 거래 세부 정보를 가져올 수 있습니다. 또한 거래를 할당할 기본 계정을 선택할 수 있습니다. 값이 설정되지 않은 경우 알림에서 계정을 추출하려고 시도합니다.';
 
   @override
-  String get settingsNLEmptyNote => 'Keep note field empty';
+  String get settingsNLEmptyNote => '메모 필드를 비워두기';
 
   @override
-  String get settingsNLHistory => 'Notification History';
+  String get settingsNLHistory => '알림 기록';
 
   @override
-  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+  String get settingsNLHistoryEmpty => '기록된 알림이 없습니다.';
 
   @override
   String settingsNLHistoryLongDescription(int notificationHistorySize) {
-    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+    return '이 앱이 수신한 최근 $notificationHistorySize개의 알림 기록입니다. (유효한) 알림으로부터 거래를 생성하거나, 알림이 처리되지 못한 이유를 확인할 수 있습니다.';
   }
 
   @override
   String settingsNLHistoryRejectedReason(String reason) {
     String _temp0 = intl.Intl.selectLogic(reason, {
-      'noMoney': 'No monetary value found',
-      'noCurrency': 'No currency found',
-      'appNotUsed': 'App not listened to',
-      'other': 'Unknown reason',
+      'noMoney': '금액 정보를 찾을 수 없음',
+      'noCurrency': '통화 정보를 찾을 수 없음',
+      'appNotUsed': '수신 대상 앱이 아님',
+      'other': '알 수 없는 이유',
     });
-    return 'Notification skipped: $_temp0.';
+    return '알림 건너뜀: $_temp0.';
   }
 
   @override
-  String get settingsNLHistoryShortDescription => 'List previous notifications';
+  String get settingsNLHistoryShortDescription => '이전 알림 목록';
 
   @override
   String get settingsNLPermissionGrant => '권한을 부여하려면 탭하세요.';
@@ -788,10 +785,10 @@ class SKo extends S {
   String get settingsNLPrefillTXTitle => '알림 제목으로 거래 제목을 미리 채워주세요';
 
   @override
-  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+  String get settingsNLRegularExpression => '정규 표현식 (선택 사항)';
 
   @override
-  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+  String get settingsNLRegularExpressionInvalid => '유효하지 않은 정규 표현식';
 
   @override
   String get settingsNLServiceChecking => '상태 확인 중…';
@@ -814,10 +811,10 @@ class SKo extends S {
   String get settingsNotificationListener => '알림 리스너 서비스';
 
   @override
-  String get settingsServerConnection => 'Server Connection';
+  String get settingsServerConnection => '서버 연결';
 
   @override
-  String get settingsServerConnectionUpdated => 'Connection settings updated.';
+  String get settingsServerConnectionUpdated => '연결 설정이 업데이트되었습니다.';
 
   @override
   String get settingsTheme => '테마변경';
@@ -828,9 +825,9 @@ class SKo extends S {
   @override
   String settingsThemeValue(String theme) {
     String _temp0 = intl.Intl.selectLogic(theme, {
-      'dark': 'Dark Mode',
-      'light': 'Light Mode',
-      'other': 'System Default',
+      'dark': '다크 모드',
+      'light': '라이트 모드',
+      'other': '시스템 기본값',
     });
     return '$_temp0';
   }
@@ -886,16 +883,16 @@ class SKo extends S {
   String get transactionDialogCurrencyTitle => '통화 선택';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => '저금통 없음';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => '저금통에 연결';
 
   @override
   String get transactionDialogTagsAdd => '태그 추가';
 
   @override
-  String get transactionDialogTagsHint => 'Search/Add Tag';
+  String get transactionDialogTagsHint => '태그 검색/추가';
 
   @override
   String get transactionDialogTagsTitle => '태그 선택';
@@ -922,10 +919,10 @@ class SKo extends S {
   String get transactionFormLabelAccountDestination => '대상 계정';
 
   @override
-  String get transactionFormLabelAccountForeign => 'Foreign account';
+  String get transactionFormLabelAccountForeign => '외부 계좌';
 
   @override
-  String get transactionFormLabelAccountOwn => 'Own account';
+  String get transactionFormLabelAccountOwn => '내 계좌';
 
   @override
   String get transactionFormLabelAccountSource => '소스 계정';
@@ -940,21 +937,19 @@ class SKo extends S {
   String get transactionFormLabelTitle => '적요';
 
   @override
-  String get transactionSplitAdd => 'Add split transaction';
+  String get transactionSplitAdd => '분할 거래 추가';
 
   @override
-  String get transactionSplitChangeCurrency => 'Change Split Currency';
+  String get transactionSplitChangeCurrency => '분할 통화 변경';
 
   @override
-  String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+  String get transactionSplitChangeDestinationAccount => '분할 대상 계좌 변경';
 
   @override
-  String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+  String get transactionSplitChangeSourceAccount => '분할 원본 계좌 변경';
 
   @override
-  String get transactionSplitChangeTarget => 'Change Split Target Account';
+  String get transactionSplitChangeTarget => '분할 목표 계좌 변경';
 
   @override
   String get transactionSplitDelete => '분할 삭제';
@@ -969,7 +964,7 @@ class SKo extends S {
   String get transactionTitleEdit => '거래내역 편집';
 
   @override
-  String get transactionTypeDeposit => 'Deposit';
+  String get transactionTypeDeposit => '입금';
 
   @override
   String get transactionTypeTransfer => '이체';

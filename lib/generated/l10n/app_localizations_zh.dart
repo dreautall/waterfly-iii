@@ -609,20 +609,19 @@ class SZh extends S {
       '要生产性地使用 WaterFly III，您需要您自己的服务器与 Fifly III 实例或家庭助手的 Firefly III附加组件。\n\n请输入完整的URL以及个人访问令牌(设置 -> 个人资料-> OAuth -> 个人访问令牌)。';
 
   @override
-  String get loginFormButtonHideHeaders => 'Hide Headers';
+  String get loginFormButtonHideHeaders => '隐藏请求头';
 
   @override
-  String get loginFormButtonShowHeaders => 'Custom Headers';
+  String get loginFormButtonShowHeaders => '自定义请求头';
 
   @override
   String get loginFormLabelAPIKey => '无效的 API 密钥';
 
   @override
-  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+  String get loginFormLabelHeaders => '自定义请求头 (可选)';
 
   @override
-  String get loginFormLabelHeadersHelp =>
-      'One per line, format: HeaderName: value';
+  String get loginFormLabelHeadersHelp => '每行一个，格式：HeaderName: value';
 
   @override
   String get loginFormLabelHost => '主机URL';
@@ -643,7 +642,7 @@ class SZh extends S {
   String get navigationCategories => '分类';
 
   @override
-  String get navigationMain => 'Dashboard';
+  String get navigationMain => '仪表盘';
 
   @override
   String get generalSettings => '设置';
@@ -743,29 +742,35 @@ class SZh extends S {
   String get settingsNLEmptyNote => '不填写备注';
 
   @override
-  String get settingsNLHistory => 'Notification History';
+  String get settingsNLHistory => '通知记录';
 
   @override
-  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+  String get settingsNLHistoryEmpty => '暂无通知记录。';
 
   @override
   String settingsNLHistoryLongDescription(int notificationHistorySize) {
-    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other:
+          '这是该应用收到的最近 $notificationHistorySize 条通知的历史记录。此外，您可以从（有效的）通知中创建交易，或查看通知无法处理的原因。',
+    );
+    return '$_temp0';
   }
 
   @override
   String settingsNLHistoryRejectedReason(String reason) {
     String _temp0 = intl.Intl.selectLogic(reason, {
-      'noMoney': 'No monetary value found',
-      'noCurrency': 'No currency found',
-      'appNotUsed': 'App not listened to',
-      'other': 'Unknown reason',
+      'noMoney': '未找到货币金额',
+      'noCurrency': '未找到货币单位',
+      'appNotUsed': '未监听该应用',
+      'other': '未知原因',
     });
-    return 'Notification skipped: $_temp0.';
+    return '通知已跳过：$_temp0。';
   }
 
   @override
-  String get settingsNLHistoryShortDescription => 'List previous notifications';
+  String get settingsNLHistoryShortDescription => '查看过往通知列表';
 
   @override
   String get settingsNLPermissionGrant => '轻触来授予权限。';
@@ -783,10 +788,10 @@ class SZh extends S {
   String get settingsNLPrefillTXTitle => '使用通知标题预填交易标题';
 
   @override
-  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+  String get settingsNLRegularExpression => '正则表达式 (可选)';
 
   @override
-  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+  String get settingsNLRegularExpressionInvalid => '无效的正则表达式';
 
   @override
   String get settingsNLServiceChecking => '正在检查状态...';
@@ -809,10 +814,10 @@ class SZh extends S {
   String get settingsNotificationListener => '提示监听服务';
 
   @override
-  String get settingsServerConnection => 'Server Connection';
+  String get settingsServerConnection => '服务器连接';
 
   @override
-  String get settingsServerConnectionUpdated => 'Connection settings updated.';
+  String get settingsServerConnectionUpdated => '连接设置已更新。';
 
   @override
   String get settingsTheme => '应用主题';
@@ -1575,7 +1580,19 @@ class SZhTw extends SZh {
       '想要使用 Waterfly III 的完整功能，您必須架設您的 Firefly III 伺服器，或是安裝智慧家居的擴充功能 (您可以在 Firefly III 官網找到相關的指引)。\n\n請在以下欄位輸入您的伺服器的完整網址，以及您的個人存取權杖 (設定 -> 個人檔案 -> OAuth -> 個人存取權杖)。';
 
   @override
+  String get loginFormButtonHideHeaders => '隱藏標頭';
+
+  @override
+  String get loginFormButtonShowHeaders => '自訂標頭';
+
+  @override
   String get loginFormLabelAPIKey => '有效的 API 密鑰';
+
+  @override
+  String get loginFormLabelHeaders => '自訂標頭 (選填)';
+
+  @override
+  String get loginFormLabelHeadersHelp => '每行一個，格式：HeaderName: value';
 
   @override
   String get loginFormLabelHost => '伺服器的網址';
@@ -1594,6 +1611,9 @@ class SZhTw extends SZh {
 
   @override
   String get navigationCategories => '分類';
+
+  @override
+  String get navigationMain => '儀表板';
 
   @override
   String get generalSettings => '設定';
@@ -1693,6 +1713,37 @@ class SZhTw extends SZh {
   String get settingsNLEmptyNote => '不要填備註';
 
   @override
+  String get settingsNLHistory => '通知歷史記錄';
+
+  @override
+  String get settingsNLHistoryEmpty => '目前沒有記錄任何通知。';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other:
+          '這是應用程式收到的最後 $notificationHistorySize 則通知的歷史記錄。此外，您可以從（有效的）通知中建立交易，或查看通知無法處理的原因。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': '找不到金額',
+      'noCurrency': '找不到貨幣',
+      'appNotUsed': '應用程式未被監聽',
+      'other': '未知原因',
+    });
+    return '通知已略過：$_temp0。';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription => '列出先前的通知';
+
+  @override
   String get settingsNLPermissionGrant => '點選來授予權限。';
 
   @override
@@ -1707,6 +1758,12 @@ class SZhTw extends SZh {
 
   @override
   String get settingsNLPrefillTXTitle => '用通知標題作為交易標題';
+
+  @override
+  String get settingsNLRegularExpression => '正規表達式 (選填)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => '無效的正規表達式';
 
   @override
   String get settingsNLServiceChecking => '正在檢查狀態…';
@@ -1727,6 +1784,12 @@ class SZhTw extends SZh {
 
   @override
   String get settingsNotificationListener => '通知監聽服務';
+
+  @override
+  String get settingsServerConnection => '伺服器連線';
+
+  @override
+  String get settingsServerConnectionUpdated => '連線設定已更新。';
 
   @override
   String get settingsTheme => 'App 樣式';

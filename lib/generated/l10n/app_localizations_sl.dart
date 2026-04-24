@@ -620,20 +620,20 @@ class SSl extends S {
       'Za funkcijsko uporabo Waterfly III potrebujete lasten strežnik z namestitvijo Firefly III ali dodatek Firefly III za Home Assistant.\n\nSpodaj vnesite poln URL in osebni žeton dostopa (Možnosti-> Profil -> OAuth -> Osebni dostopni žetoni).';
 
   @override
-  String get loginFormButtonHideHeaders => 'Hide Headers';
+  String get loginFormButtonHideHeaders => 'Skrij glave';
 
   @override
-  String get loginFormButtonShowHeaders => 'Custom Headers';
+  String get loginFormButtonShowHeaders => 'Glave po meri';
 
   @override
   String get loginFormLabelAPIKey => 'Veljaven API ključ';
 
   @override
-  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+  String get loginFormLabelHeaders => 'Glave po meri (izbirno)';
 
   @override
   String get loginFormLabelHeadersHelp =>
-      'One per line, format: HeaderName: value';
+      'Ena na vrstico, format: ImeGlave: vrednost';
 
   @override
   String get loginFormLabelHost => 'URL gostitelja';
@@ -654,7 +654,7 @@ class SSl extends S {
   String get navigationCategories => 'Kategorije';
 
   @override
-  String get navigationMain => 'Dashboard';
+  String get navigationMain => 'Nadzorna plošča';
 
   @override
   String get generalSettings => 'Nastavitve';
@@ -758,29 +758,36 @@ class SSl extends S {
   String get settingsNLEmptyNote => 'Polje za opombo naj bo prazno';
 
   @override
-  String get settingsNLHistory => 'Notification History';
+  String get settingsNLHistory => 'Zgodovina obvestil';
 
   @override
-  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+  String get settingsNLHistoryEmpty => 'Do sedaj ni zabeleženih obvestil.';
 
   @override
   String settingsNLHistoryLongDescription(int notificationHistorySize) {
-    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other: 'obvestil, ki jih je',
+      few: 'obvestil, ki jih je',
+      one: 'obvestila, ki ga je',
+    );
+    return 'To je zgodovina zadnjih $_temp0 prejela aplikacija. Poleg tega lahko ustvarite transakcije iz (veljavnih) obvestil ali si ogledate razlog, zakaj obvestilo ni bilo obdelano.';
   }
 
   @override
   String settingsNLHistoryRejectedReason(String reason) {
     String _temp0 = intl.Intl.selectLogic(reason, {
-      'noMoney': 'No monetary value found',
-      'noCurrency': 'No currency found',
-      'appNotUsed': 'App not listened to',
-      'other': 'Unknown reason',
+      'noMoney': 'Ni najdene nobene denarne vrednosti',
+      'noCurrency': 'Ni najdene nobene valute',
+      'appNotUsed': 'Aplikacija ni na seznamu',
+      'other': 'Neznan razlog',
     });
-    return 'Notification skipped: $_temp0.';
+    return 'Obvestilo preskočeno: $_temp0.';
   }
 
   @override
-  String get settingsNLHistoryShortDescription => 'List previous notifications';
+  String get settingsNLHistoryShortDescription => 'Seznam prejšnjih obvestil';
 
   @override
   String get settingsNLPermissionGrant => 'Pritisnite za odobritev dovoljenja.';
@@ -800,10 +807,10 @@ class SSl extends S {
       'Vnaprej izpolnite naslov transakcije z naslovom obvestila';
 
   @override
-  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+  String get settingsNLRegularExpression => 'Logični izraz (izbirno)';
 
   @override
-  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+  String get settingsNLRegularExpressionInvalid => 'Neveljaven logični izraz';
 
   @override
   String get settingsNLServiceChecking => 'Preverjanje stanja…';
@@ -826,10 +833,11 @@ class SSl extends S {
   String get settingsNotificationListener => 'Storitev poslušanja obvestil';
 
   @override
-  String get settingsServerConnection => 'Server Connection';
+  String get settingsServerConnection => 'Povezava s strežnikom';
 
   @override
-  String get settingsServerConnectionUpdated => 'Connection settings updated.';
+  String get settingsServerConnectionUpdated =>
+      'Nastavitve povezave posodobljene.';
 
   @override
   String get settingsTheme => 'Tema aplikacije';

@@ -622,20 +622,20 @@ class SPl extends S {
       'Aby wydajnie korzystać z Waterfly III, potrzebujesz własnego serwera z instancją Firefly III lub dodatkiem Firefly III dla asystenta domowego.\n\nWprowadź pełny adres URL oraz osobisty token dostępu (Ustawienia -> Profil -> OAuth -> Osobisty token dostępu) poniżej.';
 
   @override
-  String get loginFormButtonHideHeaders => 'Hide Headers';
+  String get loginFormButtonHideHeaders => 'Ukryj nagłówki';
 
   @override
-  String get loginFormButtonShowHeaders => 'Custom Headers';
+  String get loginFormButtonShowHeaders => 'Własne nagłówki';
 
   @override
   String get loginFormLabelAPIKey => 'Prawidłowy klucz API';
 
   @override
-  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+  String get loginFormLabelHeaders => 'Własne nagłówki (opcjonalnie)';
 
   @override
   String get loginFormLabelHeadersHelp =>
-      'One per line, format: HeaderName: value';
+      'Jeden na linię, format: NazwaNagłówka: wartość';
 
   @override
   String get loginFormLabelHost => 'Adres URL hosta';
@@ -657,7 +657,7 @@ class SPl extends S {
   String get navigationCategories => 'Kategorie';
 
   @override
-  String get navigationMain => 'Dashboard';
+  String get navigationMain => 'Pulpit';
 
   @override
   String get generalSettings => 'Ustawienia';
@@ -761,29 +761,40 @@ class SPl extends S {
   String get settingsNLEmptyNote => 'Pozostaw pole notatki puste';
 
   @override
-  String get settingsNLHistory => 'Notification History';
+  String get settingsNLHistory => 'Historia powiadomień';
 
   @override
-  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+  String get settingsNLHistoryEmpty => 'Brak zarejestrowanych powiadomień.';
 
   @override
   String settingsNLHistoryLongDescription(int notificationHistorySize) {
-    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other:
+          'To jest historia $notificationHistorySize ostatnich powiadomień odebranych przez aplikację. Dodatkowo możesz tworzyć transakcje z (prawidłowych) powiadomień lub sprawdzić powód, dla którego powiadomienie nie mogło zostać przetworzone.',
+      few:
+          'To jest historia $notificationHistorySize ostatnich powiadomień odebranych przez aplikację. Dodatkowo możesz tworzyć transakcje z (prawidłowych) powiadomień lub sprawdzić powód, dla którego powiadomienie nie mogło zostać przetworzone.',
+      one:
+          'To jest historia 1 ostatniego powiadomienia odebranego przez aplikację. Dodatkowo możesz tworzyć transakcje z (prawidłowych) powiadomień lub sprawdzić powód, dla którego powiadomienie nie mogło zostać przetworzone.',
+    );
+    return '$_temp0';
   }
 
   @override
   String settingsNLHistoryRejectedReason(String reason) {
     String _temp0 = intl.Intl.selectLogic(reason, {
-      'noMoney': 'No monetary value found',
-      'noCurrency': 'No currency found',
-      'appNotUsed': 'App not listened to',
-      'other': 'Unknown reason',
+      'noMoney': 'Nie znaleziono wartości pieniężnej',
+      'noCurrency': 'Nie znaleziono waluty',
+      'appNotUsed': 'Aplikacja nie jest monitorowana',
+      'other': 'Nieznany powód',
     });
-    return 'Notification skipped: $_temp0.';
+    return 'Powiadomienie pominięte: $_temp0.';
   }
 
   @override
-  String get settingsNLHistoryShortDescription => 'List previous notifications';
+  String get settingsNLHistoryShortDescription =>
+      'Lista poprzednich powiadomień';
 
   @override
   String get settingsNLPermissionGrant => 'Dotknij, aby udzielić uprawnień.';
@@ -803,10 +814,11 @@ class SPl extends S {
       'Uzupełnij tytuł transakcji tytułem powiadomienia';
 
   @override
-  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+  String get settingsNLRegularExpression => 'Wyrażenie regularne (opcjonalnie)';
 
   @override
-  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+  String get settingsNLRegularExpressionInvalid =>
+      'Nieprawidłowe wyrażenie regularne';
 
   @override
   String get settingsNLServiceChecking => 'Sprawdzam stan…';
@@ -829,10 +841,11 @@ class SPl extends S {
   String get settingsNotificationListener => 'Usługa nasłuchiwania powiadomień';
 
   @override
-  String get settingsServerConnection => 'Server Connection';
+  String get settingsServerConnection => 'Połączenie z serwerem';
 
   @override
-  String get settingsServerConnectionUpdated => 'Connection settings updated.';
+  String get settingsServerConnectionUpdated =>
+      'Ustawienia połączenia zostały zaktualizowane.';
 
   @override
   String get settingsTheme => 'Motyw aplikacji';

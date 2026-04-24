@@ -618,20 +618,20 @@ class SDa extends S {
       'For at bruge Waterfly III produktivt har du brug for din egen server med en Firefly III-instans eller Firefly II-add-on til Home Assistant.\n\nIndtast venligst det fulde URL samt en personlig adgangstoken (Indstillinger -> Profil -> OAuth -> Personlig adgangstoken) nedenfor.';
 
   @override
-  String get loginFormButtonHideHeaders => 'Hide Headers';
+  String get loginFormButtonHideHeaders => 'Skjul headere';
 
   @override
-  String get loginFormButtonShowHeaders => 'Custom Headers';
+  String get loginFormButtonShowHeaders => 'Brugerdefinerede headere';
 
   @override
   String get loginFormLabelAPIKey => 'Gyldig API-nøgle';
 
   @override
-  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+  String get loginFormLabelHeaders => 'Brugerdefinerede headere (valgfri)';
 
   @override
   String get loginFormLabelHeadersHelp =>
-      'One per line, format: HeaderName: value';
+      'Én pr. linje, format: HeaderNavn: værdi';
 
   @override
   String get loginFormLabelHost => 'Værts-URL';
@@ -652,7 +652,7 @@ class SDa extends S {
   String get navigationCategories => 'Kategorier';
 
   @override
-  String get navigationMain => 'Dashboard';
+  String get navigationMain => 'Oversigt';
 
   @override
   String get generalSettings => 'Indstillinger';
@@ -755,29 +755,37 @@ class SDa extends S {
   String get settingsNLEmptyNote => 'Lad notatfeltet være tomt';
 
   @override
-  String get settingsNLHistory => 'Notification History';
+  String get settingsNLHistory => 'Notifikationshistorik';
 
   @override
-  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+  String get settingsNLHistoryEmpty =>
+      'Ingen notifikationer registreret endnu.';
 
   @override
   String settingsNLHistoryLongDescription(int notificationHistorySize) {
-    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other: '$notificationHistorySize notifikationer',
+      one: '1 notifikation',
+    );
+    return 'Dette er en historik over de seneste $_temp0 modtaget af appen. Derudover kan du oprette transaktioner fra (gyldige) notifikationer eller se årsagen til, at en notifikation ikke kunne behandles.';
   }
 
   @override
   String settingsNLHistoryRejectedReason(String reason) {
     String _temp0 = intl.Intl.selectLogic(reason, {
-      'noMoney': 'No monetary value found',
-      'noCurrency': 'No currency found',
-      'appNotUsed': 'App not listened to',
-      'other': 'Unknown reason',
+      'noMoney': 'Ingen pengebeløb fundet',
+      'noCurrency': 'Ingen valuta fundet',
+      'appNotUsed': 'App ikke lyttet til',
+      'other': 'Ukendt årsag',
     });
-    return 'Notification skipped: $_temp0.';
+    return 'Notifikation sprunget over: $_temp0.';
   }
 
   @override
-  String get settingsNLHistoryShortDescription => 'List previous notifications';
+  String get settingsNLHistoryShortDescription =>
+      'Vis tidligere notifikationer';
 
   @override
   String get settingsNLPermissionGrant => 'Tryk for at give tilladelse.';
@@ -797,10 +805,10 @@ class SDa extends S {
       'Forudfyld transaktionstitel med nofikationstitel';
 
   @override
-  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+  String get settingsNLRegularExpression => 'Regulært udtryk (valgfri)';
 
   @override
-  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+  String get settingsNLRegularExpressionInvalid => 'Ugyldigt regulært udtryk';
 
   @override
   String get settingsNLServiceChecking => 'Tjekker status…';
@@ -823,10 +831,11 @@ class SDa extends S {
   String get settingsNotificationListener => 'Notifikationslytter-service';
 
   @override
-  String get settingsServerConnection => 'Server Connection';
+  String get settingsServerConnection => 'Serverforbindelse';
 
   @override
-  String get settingsServerConnectionUpdated => 'Connection settings updated.';
+  String get settingsServerConnectionUpdated =>
+      'Forbindelsesindstillinger opdateret.';
 
   @override
   String get settingsTheme => 'App tema';

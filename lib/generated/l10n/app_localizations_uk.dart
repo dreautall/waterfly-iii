@@ -38,14 +38,14 @@ class SUk extends S {
   @override
   String accountsLiabilitiesInterest(double interest, String period) {
     String _temp0 = intl.Intl.selectLogic(period, {
-      'weekly': 'week',
-      'monthly': 'month',
-      'quarterly': 'quarter',
-      'halfyear': 'half-year',
-      'yearly': 'year',
-      'other': 'unknown',
+      'weekly': 'тиждень',
+      'monthly': 'місяць',
+      'quarterly': 'квартал',
+      'halfyear': 'півріччя',
+      'yearly': 'рік',
+      'other': 'невідомий',
     });
-    return '$interest% interest per $_temp0';
+    return '$interest% відсотків на $_temp0';
   }
 
   @override
@@ -56,20 +56,23 @@ class SUk extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'щотижня',
+      'monthly': 'щомісяця',
+      'quarterly': 'щокварталу',
+      'halfyear': 'щопівроку',
+      'yearly': 'щороку',
+      'other': 'невідомо',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', пропускає $skip разів',
+      many: ', пропускає $skip разів',
+      few: ', пропускає $skip рази',
+      one: ', пропускає $skip раз',
       zero: '',
     );
-    return 'Subscription matches transactions between $minValue and $maxvalue. Repeats $_temp0$_temp1.';
+    return 'Підписка відповідає транзакціям від $minValue до $maxvalue. Періодичність: $_temp0$_temp1.';
   }
 
   @override
@@ -79,7 +82,7 @@ class SUk extends S {
   String get billsChangeSortOrderTooltip => 'Змінити порядок сортування';
 
   @override
-  String get billsErrorLoading => 'Error loading subscriptions.';
+  String get billsErrorLoading => 'Помилка завантаження підписок.';
 
   @override
   String billsExactAmountAndFrequency(
@@ -88,20 +91,23 @@ class SUk extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'щотижня',
+      'monthly': 'щомісяця',
+      'quarterly': 'щокварталу',
+      'halfyear': 'щопівроку',
+      'yearly': 'щороку',
+      'other': 'невідомо',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', пропускає $skip разів',
+      many: ', пропускає $skip разів',
+      few: ', пропускає $skip рази',
+      one: ', пропускає $skip раз',
       zero: '',
     );
-    return 'Subscription matches transactions of $value. Repeats $_temp0$_temp1.';
+    return 'Підписка відповідає транзакціям на суму $value. Періодичність: $_temp0$_temp1.';
   }
 
   @override
@@ -115,12 +121,12 @@ class SUk extends S {
   @override
   String billsFrequency(String frequency) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Щотижня',
+      'monthly': 'Щомісяця',
+      'quarterly': 'Щокварталу',
+      'halfyear': 'Щопівроку',
+      'yearly': 'Щороку',
+      'other': 'Невідомо',
     });
     return '$_temp0';
   }
@@ -151,18 +157,18 @@ class SUk extends S {
   String get billsInactive => 'Неактивний';
 
   @override
-  String get billsIsActive => 'Subscription is active';
+  String get billsIsActive => 'Підписка активна';
 
   @override
   String get billsLayoutGroupSubtitle =>
-      'Subscriptions displayed in their assigned groups.';
+      'Підписки відображаються у призначених їм групах.';
 
   @override
   String get billsLayoutGroupTitle => 'Група';
 
   @override
   String get billsLayoutListSubtitle =>
-      'Subscriptions displayed in a list sorted by certain criteria.';
+      'Підписки відображаються списком, відсортованим за певними критеріями.';
 
   @override
   String get billsLayoutListTitle => 'Список';
@@ -174,10 +180,10 @@ class SUk extends S {
   String get billsNextExpectedMatch => 'Наступний очікуваний збіг';
 
   @override
-  String get billsNotActive => 'Subscription is inactive';
+  String get billsNotActive => 'Підписка неактивна';
 
   @override
-  String get billsNotExpected => 'Not expected this period';
+  String get billsNotExpected => 'Не очікується в цьому періоді';
 
   @override
   String get billsNoTransactions => 'Трансакцій не знайдено.';
@@ -206,18 +212,18 @@ class SUk extends S {
   String get billsUngrouped => 'Без групи';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'Показувати тільки активні';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'Показує лише активні підписки.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'Показувати тільки очікувані';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'Показує лише ті підписки, які очікуються (або сплачені) цього місяця.';
 
   @override
   String get categoryDeleteConfirm =>
@@ -277,7 +283,7 @@ class SUk extends S {
 
   @override
   String errorStatusCode(int code) {
-    return 'Status Code: $code';
+    return 'Код статусу: $code';
   }
 
   @override
@@ -296,7 +302,7 @@ class SUk extends S {
   String get formButtonRemove => 'Видалити';
 
   @override
-  String get formButtonResetLogin => 'Reset login';
+  String get formButtonResetLogin => 'Скинути вхід';
 
   @override
   String get formButtonTransactionAdd => 'Додати транзакцію';
@@ -305,115 +311,115 @@ class SUk extends S {
   String get formButtonTryAgain => 'Спробувати ще раз';
 
   @override
-  String get generalAccount => 'Account';
+  String get generalAccount => 'Рахунок';
 
   @override
-  String get generalAssets => 'Assets';
+  String get generalAssets => 'Активи';
 
   @override
-  String get generalBalance => 'Balance';
+  String get generalBalance => 'Баланс';
 
   @override
   String generalBalanceOn(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Balance on $dateString';
+    return 'Баланс на $dateString';
   }
 
   @override
-  String get generalBill => 'Subscription';
+  String get generalBill => 'Підписка';
 
   @override
-  String get generalBudget => 'Budget';
+  String get generalBudget => 'Бюджет';
 
   @override
-  String get generalCategory => 'Category';
+  String get generalCategory => 'Категорія';
 
   @override
-  String get generalCurrency => 'Currency';
+  String get generalCurrency => 'Валюта';
 
   @override
-  String get generalDateRangeCurrentMonth => 'Current Month';
+  String get generalDateRangeCurrentMonth => 'Поточний місяць';
 
   @override
-  String get generalDateRangeLast30Days => 'Last 30 days';
+  String get generalDateRangeLast30Days => 'Останні 30 днів';
 
   @override
-  String get generalDateRangeCurrentYear => 'Current Year';
+  String get generalDateRangeCurrentYear => 'Поточний рік';
 
   @override
-  String get generalDateRangeLastYear => 'Last year';
+  String get generalDateRangeLastYear => 'Минулий рік';
 
   @override
-  String get generalDateRangeAll => 'All';
+  String get generalDateRangeAll => 'Всі';
 
   @override
-  String get generalDefault => 'default';
+  String get generalDefault => 'за замовчуванням';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'Цільовий рахунок';
 
   @override
-  String get generalDismiss => 'Dismiss';
+  String get generalDismiss => 'Скасувати';
 
   @override
-  String get generalEarned => 'Earned';
+  String get generalEarned => 'Зароблено';
 
   @override
-  String get generalError => 'Error';
+  String get generalError => 'Помилка';
 
   @override
-  String get generalExpenses => 'Expenses';
+  String get generalExpenses => 'Витрати';
 
   @override
-  String get generalIncome => 'Income';
+  String get generalIncome => 'Дохід';
 
   @override
   String get generalLiabilities => 'Зобов’язання';
 
   @override
-  String get generalMultiple => 'multiple';
+  String get generalMultiple => 'декілька';
 
   @override
-  String get generalNever => 'never';
+  String get generalNever => 'ніколи';
 
   @override
-  String get generalReconcile => 'Reconciled';
+  String get generalReconcile => 'Звірено';
 
   @override
-  String get generalReset => 'Reset';
+  String get generalReset => 'Скинути';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'Вихідний рахунок';
 
   @override
-  String get generalSpent => 'Spent';
+  String get generalSpent => 'Витрачено';
 
   @override
-  String get generalSum => 'Sum';
+  String get generalSum => 'Сума';
 
   @override
-  String get generalTarget => 'Target';
+  String get generalTarget => 'Ціль';
 
   @override
-  String get generalUnknown => 'Unknown';
+  String get generalUnknown => 'Невідомо';
 
   @override
   String homeMainBillsInterval(String period) {
     String _temp0 = intl.Intl.selectLogic(period, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-year',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'щотижня',
+      'monthly': 'щомісяця',
+      'quarterly': 'щоквартально',
+      'halfyear': 'раз на пів року',
+      'yearly': 'щороку',
+      'other': 'невідомо',
     });
     return ' ($_temp0)';
   }
 
   @override
-  String get homeMainBillsTitle => 'Subscriptions for the next week';
+  String get homeMainBillsTitle => 'Підписки на наступний тиждень';
 
   @override
   String homeMainBudgetInterval(DateTime from, DateTime to, String period) {
@@ -422,7 +428,7 @@ class SUk extends S {
     final intl.DateFormat toDateFormat = intl.DateFormat.MMMd(localeName);
     final String toString = toDateFormat.format(to);
 
-    return ' ($fromString to $toString, $period)';
+    return ' (з $fromString по $toString, $period)';
   }
 
   @override
@@ -432,52 +438,52 @@ class SUk extends S {
     final intl.DateFormat toDateFormat = intl.DateFormat.MMMd(localeName);
     final String toString = toDateFormat.format(to);
 
-    return ' ($fromString to $toString)';
+    return ' (з $fromString по $toString)';
   }
 
   @override
   String homeMainBudgetSum(String current, String status, String available) {
     String _temp0 = intl.Intl.selectLogic(status, {
-      'over': 'over',
-      'other': 'left from',
+      'over': 'перевищено на',
+      'other': 'залишилось від',
     });
     return '$current $_temp0 $available';
   }
 
   @override
-  String get homeMainBudgetTitle => 'Budgets for current month';
+  String get homeMainBudgetTitle => 'Бюджети на поточний місяць';
 
   @override
-  String get homeMainChartAccountsTitle => 'Account Summary';
+  String get homeMainChartAccountsTitle => 'Підсумок за рахунками';
 
   @override
   String get homeMainChartCategoriesTitle =>
-      'Category Summary for current month';
+      'Підсумок за категоріями на поточний місяць';
 
   @override
-  String get homeMainChartDailyAvg => '7 days average';
+  String get homeMainChartDailyAvg => 'Середнє за 7 днів';
 
   @override
-  String get homeMainChartDailyTitle => 'Daily Summary';
+  String get homeMainChartDailyTitle => 'Щоденний підсумок';
 
   @override
-  String get homeMainChartNetEarningsTitle => 'Net Earnings';
+  String get homeMainChartNetEarningsTitle => 'Чистий дохід';
 
   @override
-  String get homeMainChartNetWorthTitle => 'Net Worth';
+  String get homeMainChartNetWorthTitle => 'Чистий капітал';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle => 'Підсумок за тегами на поточний місяць';
 
   @override
-  String get homePiggyAdjustDialogTitle => 'Save/Spend Money';
+  String get homePiggyAdjustDialogTitle => 'Відкласти/Витратити гроші';
 
   @override
   String homePiggyDateStart(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Start date: $dateString';
+    return 'Дата початку: $dateString';
   }
 
   @override
@@ -485,182 +491,194 @@ class SUk extends S {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Target date: $dateString';
+    return 'Цільова дата: $dateString';
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'Налаштування панелі керування';
 
   @override
   String homePiggyLinked(String account) {
-    return 'Linked to $account';
+    return 'Прив\'язано до $account';
   }
 
   @override
-  String get homePiggyNoAccounts => 'No piggy banks set up.';
+  String get homePiggyNoAccounts => 'Скарбнички не налаштовані.';
 
   @override
-  String get homePiggyNoAccountsSubtitle => 'Create some in the webinterface!';
+  String get homePiggyNoAccountsSubtitle => 'Створіть їх у веб-інтерфейсі!';
 
   @override
   String homePiggyRemaining(String amount) {
-    return 'Left to save: $amount';
+    return 'Залишилося накопичити: $amount';
   }
 
   @override
   String homePiggySaved(String amount) {
-    return 'Saved so far: $amount';
+    return 'Накопичено: $amount';
   }
 
   @override
-  String get homePiggySavedMultiple => 'Saved so far:';
+  String get homePiggySavedMultiple => 'Накопичено:';
 
   @override
   String homePiggyTarget(String amount) {
-    return 'Target amount: $amount';
+    return 'Цільова сума: $amount';
   }
 
   @override
-  String get homePiggyAccountStatus => 'Account Status';
+  String get homePiggyAccountStatus => 'Стан рахунку';
 
   @override
-  String get homePiggyAvailableAmounts => 'Available Amounts';
+  String get homePiggyAvailableAmounts => 'Доступні суми';
 
   @override
   String homePiggyAvailable(String amount) {
-    return 'Available: $amount';
+    return 'Доступно: $amount';
   }
 
   @override
   String homePiggyInPiggyBanks(String amount) {
-    return 'In piggy banks: $amount';
+    return 'У скарбничках: $amount';
   }
 
   @override
-  String get homeTabLabelBalance => 'Balance Sheet';
+  String get homeTabLabelBalance => 'Баланс';
 
   @override
-  String get homeTabLabelMain => 'Main';
+  String get homeTabLabelMain => 'Головна';
 
   @override
-  String get homeTabLabelPiggybanks => 'Piggy Banks';
+  String get homeTabLabelPiggybanks => 'Скарбнички';
 
   @override
-  String get homeTabLabelTransactions => 'Transactions';
+  String get homeTabLabelTransactions => 'Транзакції';
 
   @override
-  String get homeTransactionsActionFilter => 'Filter List';
+  String get homeTransactionsActionFilter => 'Фільтр списку';
 
   @override
-  String get homeTransactionsDialogFilterAccountsAll => '<All Accounts>';
+  String get homeTransactionsDialogFilterAccountsAll => '<Усі рахунки>';
 
   @override
-  String get homeTransactionsDialogFilterBillsAll => '<All Subscriptions>';
+  String get homeTransactionsDialogFilterBillsAll => '<Усі рахунки до оплати>';
 
   @override
-  String get homeTransactionsDialogFilterBillUnset => '<No Subscription set>';
+  String get homeTransactionsDialogFilterBillUnset =>
+      '<Рахунок до оплати не встановлено>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetsAll => '<All Budgets>';
+  String get homeTransactionsDialogFilterBudgetsAll => '<Усі бюджети>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetUnset => '<No Budget set>';
+  String get homeTransactionsDialogFilterBudgetUnset =>
+      '<Бюджет не встановлено>';
 
   @override
-  String get homeTransactionsDialogFilterCategoriesAll => '<All Categories>';
+  String get homeTransactionsDialogFilterCategoriesAll => '<Усі категорії>';
 
   @override
-  String get homeTransactionsDialogFilterCategoryUnset => '<No Category set>';
+  String get homeTransactionsDialogFilterCategoryUnset =>
+      '<Категорію не встановлено>';
 
   @override
-  String get homeTransactionsDialogFilterCurrenciesAll => '<All Currencies>';
+  String get homeTransactionsDialogFilterCurrenciesAll => '<Усі валюти>';
 
   @override
-  String get homeTransactionsDialogFilterDateRange => 'Date Range';
+  String get homeTransactionsDialogFilterDateRange => 'Діапазон дат';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
-      'Show future transactions';
+      'Показувати майбутні транзакції';
 
   @override
-  String get homeTransactionsDialogFilterSearch => 'Search Term';
+  String get homeTransactionsDialogFilterSearch => 'Пошуковий запит';
 
   @override
-  String get homeTransactionsDialogFilterTitle => 'Select filters';
+  String get homeTransactionsDialogFilterTitle => 'Виберіть фільтри';
 
   @override
   String get homeTransactionsEmpty => 'Трансакцій не знайдено.';
 
   @override
   String homeTransactionsMultipleCategories(int num) {
-    return '$num categories';
+    String _temp0 = intl.Intl.pluralLogic(
+      num,
+      locale: localeName,
+      other: '$num категорії',
+      many: '$num категорій',
+      few: '$num категорії',
+      one: '$num категорія',
+    );
+    return '$_temp0';
   }
 
   @override
   String get homeTransactionsSettingsShowTags =>
-      'Show tags in transaction list';
+      'Показувати теги у списку транзакцій';
 
   @override
-  String get liabilityDirectionCredit => 'I am owed this debt';
+  String get liabilityDirectionCredit => 'Мені винні ці кошти';
 
   @override
-  String get liabilityDirectionDebit => 'I owe this debt';
+  String get liabilityDirectionDebit => 'Я винен ці кошти';
 
   @override
-  String get liabilityTypeDebt => 'Debt';
+  String get liabilityTypeDebt => 'Борг';
 
   @override
-  String get liabilityTypeLoan => 'Loan';
+  String get liabilityTypeLoan => 'Позика';
 
   @override
-  String get liabilityTypeMortgage => 'Mortgage';
+  String get liabilityTypeMortgage => 'Іпотека';
 
   @override
   String get loginAbout =>
-      'To use Waterfly III productively you need your own server with a Firefly III instance or the Firefly III add-on for Home Assistant.\n\nPlease enter the full URL as well as a personal access token (Settings -> Profile -> OAuth -> Personal Access Token) below.';
+      'Щоб ефективно використовувати Waterfly III, вам потрібен власний сервер із встановленим екземпляром Firefly III або доповненням Firefly III для Home Assistant.\n\nБудь ласка, введіть повну URL-адресу та персональний токен доступу (Settings -> Profile -> OAuth -> Personal Access Token) нижче.';
 
   @override
-  String get loginFormButtonHideHeaders => 'Hide Headers';
+  String get loginFormButtonHideHeaders => 'Приховати заголовки';
 
   @override
-  String get loginFormButtonShowHeaders => 'Custom Headers';
+  String get loginFormButtonShowHeaders => 'Власні заголовки';
 
   @override
-  String get loginFormLabelAPIKey => 'Valid API Key';
+  String get loginFormLabelAPIKey => 'Дійсний API-ключ';
 
   @override
-  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+  String get loginFormLabelHeaders =>
+      'Користувацькі заголовки (необов\'язково)';
 
   @override
   String get loginFormLabelHeadersHelp =>
-      'One per line, format: HeaderName: value';
+      'Один на рядок, формат: HeaderName: значення';
 
   @override
-  String get loginFormLabelHost => 'Host URL';
+  String get loginFormLabelHost => 'URL хоста';
 
   @override
-  String get loginWelcome => 'Welcome to Waterfly III';
+  String get loginWelcome => 'Ласкаво просимо до Waterfly III';
 
   @override
-  String get logoutConfirmation => 'Are you sure you want to log out?';
+  String get logoutConfirmation => 'Ви впевнені, що хочете вийти?';
 
   @override
-  String get navigationAccounts => 'Accounts';
+  String get navigationAccounts => 'Рахунки';
 
   @override
-  String get navigationBills => 'Subscriptions';
+  String get navigationBills => 'Підписки';
 
   @override
-  String get navigationCategories => 'Categories';
+  String get navigationCategories => 'Категорії';
 
   @override
-  String get navigationMain => 'Dashboard';
+  String get navigationMain => 'Панель керування';
 
   @override
-  String get generalSettings => 'Settings';
+  String get generalSettings => 'Налаштування';
 
   @override
-  String get no => 'No';
+  String get no => 'Ні';
 
   @override
   String numPercent(double num) {
@@ -683,311 +701,330 @@ class SUk extends S {
         );
     final String percString = percNumberFormat.format(perc);
 
-    return '$percString of $of';
+    return '$percString з $of';
   }
 
   @override
   String get settingsDialogDebugInfo =>
-      'You can enable & send debug logs here. These have a bad impact on performance, so please don\'t enable them unless you\'re advised to do so. Disabling logging will delete the stored log.';
+      'Ви можете ввімкнути та надіслати журнали налагодження тут. Це негативно впливає на продуктивність, тому не вмикайте їх, якщо вас не попросили це зробити. Вимкнення журналювання видалить збережений журнал.';
 
   @override
-  String get settingsDialogDebugMailCreate => 'Create Mail';
+  String get settingsDialogDebugMailCreate => 'Створити лист';
 
   @override
   String get settingsDialogDebugMailDisclaimer =>
-      'WARNING: A mail draft will open with the log file attached (in text format). The logs might contain sensitive information, such as the host name of your Firefly instance (though I try to avoid logging of any secrets, such as the api key). Please read through the log carefully and censor out any information you don\'t want to share and/or is not relevant to the problem you want to report.\n\nPlease do not send in logs without prior agreement via mail/GitHub to do so. I will delete any logs sent without context for privacy reasons. Never upload the log uncensored to GitHub or elsewhere.';
+      'ПОПЕРЕДЖЕННЯ: Буде створено чернетку листа з прикріпленим файлом журналу (у текстовому форматі). Журнали можуть містити конфіденційну інформацію, таку як ім\'я хоста вашого екземпляра Firefly (хоча я намагаюся уникати запису будь-яких секретів, наприклад, API-ключа). Будь ласка, уважно прочитайте журнал і видаліть будь-яку інформацію, якою ви не хочете ділитися та/або яка не стосується проблеми, про яку ви хочете повідомити.\n\nБудь ласка, не надсилайте журнали без попередньої домовленості електронною поштою/GitHub. З міркувань конфіденційності я видалятиму будь-які журнали, надіслані без контексту. Ніколи не завантажуйте незацензурований журнал на GitHub або будь-де інше.';
 
   @override
-  String get settingsDialogDebugSendButton => 'Send Logs via Mail';
+  String get settingsDialogDebugSendButton =>
+      'Надіслати журнали електронною поштою';
 
   @override
-  String get settingsDialogDebugTitle => 'Debug Logs';
+  String get settingsDialogDebugTitle => 'Журнали налагодження';
 
   @override
-  String get settingsDialogLanguageTitle => 'Select Language';
+  String get settingsDialogLanguageTitle => 'Вибрати мову';
 
   @override
-  String get settingsDialogThemeTitle => 'Select Theme';
+  String get settingsDialogThemeTitle => 'Вибрати тему';
 
   @override
   String get settingsFAQ => 'FAQ';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'Відкривається у браузері. Доступно лише англійською мовою.';
 
   @override
-  String get settingsLanguage => 'Language';
+  String get settingsLanguage => 'Мова';
 
   @override
-  String get settingsLockscreen => 'Lockscreen';
+  String get settingsLockscreen => 'Екран блокування';
 
   @override
-  String get settingsLockscreenHelp => 'Require authenticiation on app startup';
+  String get settingsLockscreenHelp =>
+      'Вимагати автентифікацію при запуску програми';
 
   @override
   String get settingsLockscreenInitial =>
-      'Please authenticate to enable the lock screen.';
+      'Будь ласка, пройдіть автентифікацію, щоб увімкнути екран блокування.';
 
   @override
-  String get settingsNLAppAccount => 'Default Account';
+  String get settingsNLAppAccount => 'Типовий рахунок';
 
   @override
-  String get settingsNLAppAccountDynamic => '<Dynamic>';
+  String get settingsNLAppAccountDynamic => '<Динамічно>';
 
   @override
-  String get settingsNLAppAdd => 'Add App';
+  String get settingsNLAppAdd => 'Додати програму';
 
   @override
   String get settingsNLAppAddHelp =>
-      'Click to add an app to listen to. Only eligible apps will show up in the list.';
+      'Натисніть, щоб додати програму для відстеження. У списку відображатимуться лише відповідні програми.';
 
   @override
   String get settingsNLAppAddInfo =>
-      'Make some transactions where you receive phone notifications to add apps to this list. If the app still doesn\'t show up, please report it to app@vogt.pw.';
+      'Здійсніть кілька транзакцій, після яких ви отримуєте сповіщення на телефон, щоб додати програми до цього списку. Якщо програма все одно не з\'являється, будь ласка, повідомте про це на app@vogt.pw.';
 
   @override
-  String get settingsNLAutoAdd => 'Create transaction without interaction';
+  String get settingsNLAutoAdd => 'Створювати транзакцію без взаємодії';
 
   @override
   String get settingsNLDescription =>
-      'This service allows you to fetch transaction details from incoming push notifications. Additionally, you can select a default account which the transaction should be assigned to - if no value is set, it tries to extract an account from the notification.';
+      'Ця служба дозволяє отримувати деталі транзакцій з вхідних push-сповіщень. Крім того, ви можете вибрати типовий рахунок, до якого має бути прив\'язана транзакція — якщо значення не встановлено, програма спробує витягти рахунок зі сповіщення.';
 
   @override
-  String get settingsNLEmptyNote => 'Keep note field empty';
+  String get settingsNLEmptyNote => 'Залишати поле примітки порожнім';
 
   @override
-  String get settingsNLHistory => 'Notification History';
+  String get settingsNLHistory => 'Історія сповіщень';
 
   @override
-  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+  String get settingsNLHistoryEmpty => 'Сповіщень поки не записано.';
 
   @override
   String settingsNLHistoryLongDescription(int notificationHistorySize) {
-    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other:
+          'Це історія останніх $notificationHistorySize сповіщень, отриманих програмою. Крім того, ви можете створювати транзакції з (дійсних) сповіщень або дізнатися причину, чому сповіщення не вдалося опрацювати.',
+      many:
+          'Це історія останніх $notificationHistorySize сповіщень, отриманих програмою. Крім того, ви можете створювати транзакції з (дійсних) сповіщень або дізнатися причину, чому сповіщення не вдалося опрацювати.',
+      few:
+          'Це історія останніх $notificationHistorySize сповіщень, отриманих програмою. Крім того, ви можете створювати транзакції з (дійсних) сповіщень або дізнатися причину, чому сповіщення не вдалося опрацювати.',
+      one:
+          'Це історія останнього сповіщення, отриманого програмою. Крім того, ви можете створювати транзакції з (дійсних) сповіщень або дізнатися причину, чому сповіщення не вдалося опрацювати.',
+    );
+    return '$_temp0';
   }
 
   @override
   String settingsNLHistoryRejectedReason(String reason) {
     String _temp0 = intl.Intl.selectLogic(reason, {
-      'noMoney': 'No monetary value found',
-      'noCurrency': 'No currency found',
-      'appNotUsed': 'App not listened to',
-      'other': 'Unknown reason',
+      'noMoney': 'Грошову суму не знайдено',
+      'noCurrency': 'Валюту не знайдено',
+      'appNotUsed': 'Програму не відстежуємо',
+      'other': 'Невідома причина',
     });
-    return 'Notification skipped: $_temp0.';
+    return 'Сповіщення пропущено: $_temp0.';
   }
 
   @override
-  String get settingsNLHistoryShortDescription => 'List previous notifications';
+  String get settingsNLHistoryShortDescription =>
+      'Переглянути попередні сповіщення';
 
   @override
-  String get settingsNLPermissionGrant => 'Tap to grant permission.';
+  String get settingsNLPermissionGrant => 'Торкніться, щоб надати дозвіл.';
 
   @override
-  String get settingsNLPermissionNotGranted => 'Permission not granted.';
+  String get settingsNLPermissionNotGranted => 'Дозвіл не надано.';
 
   @override
-  String get settingsNLPermissionRemove => 'Remove permission?';
+  String get settingsNLPermissionRemove => 'Скасувати дозвіл?';
 
   @override
   String get settingsNLPermissionRemoveHelp =>
-      'To disable this service, click on the app and remove the permissions in the next screen.';
+      'Щоб вимкнути цю службу, натисніть на додаток і видаліть дозволи на наступному екрані.';
 
   @override
   String get settingsNLPrefillTXTitle =>
-      'Prefill transaction title with notification title';
+      'Попередньо заповнювати назву транзакції заголовком сповіщення';
 
   @override
-  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+  String get settingsNLRegularExpression => 'Регулярний вираз (необов\'язково)';
 
   @override
-  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+  String get settingsNLRegularExpressionInvalid => 'Недійсний регулярний вираз';
 
   @override
-  String get settingsNLServiceChecking => 'Checking status…';
+  String get settingsNLServiceChecking => 'Перевірка стану…';
 
   @override
   String settingsNLServiceCheckingError(String error) {
-    return 'Error checking status: $error';
+    return 'Помилка перевірки стану: $error';
   }
 
   @override
-  String get settingsNLServiceRunning => 'Service is running.';
+  String get settingsNLServiceRunning => 'Служба запущена.';
 
   @override
-  String get settingsNLServiceStatus => 'Service Status';
+  String get settingsNLServiceStatus => 'Стан служби';
 
   @override
-  String get settingsNLServiceStopped => 'Service is stopped.';
+  String get settingsNLServiceStopped => 'Служба зупинена.';
 
   @override
-  String get settingsNotificationListener => 'Notification Listener Service';
+  String get settingsNotificationListener => 'Служба прослуховування сповіщень';
 
   @override
-  String get settingsServerConnection => 'Server Connection';
+  String get settingsServerConnection => 'Підключення до сервера';
 
   @override
-  String get settingsServerConnectionUpdated => 'Connection settings updated.';
+  String get settingsServerConnectionUpdated =>
+      'Налаштування підключення оновлено.';
 
   @override
-  String get settingsTheme => 'App Theme';
+  String get settingsTheme => 'Тема додатку';
 
   @override
-  String get settingsThemeDynamicColors => 'Dynamic Colors';
+  String get settingsThemeDynamicColors => 'Динамічні кольори';
 
   @override
   String settingsThemeValue(String theme) {
     String _temp0 = intl.Intl.selectLogic(theme, {
-      'dark': 'Dark Mode',
-      'light': 'Light Mode',
-      'other': 'System Default',
+      'dark': 'Темна тема',
+      'light': 'Світла тема',
+      'other': 'Як у системі',
     });
     return '$_temp0';
   }
 
   @override
-  String get settingsUseServerTimezone => 'Use server timezone';
+  String get settingsUseServerTimezone =>
+      'Використовувати часовий пояс сервера';
 
   @override
   String get settingsUseServerTimezoneHelp =>
-      'Show all times in the server timezone. This mimics the behavior of the webinterface.';
+      'Відображати час у часовому поясі сервера. Це повторює поведінку веб-інтерфейсу.';
 
   @override
-  String get settingsVersion => 'App Version';
+  String get settingsVersion => 'Версія додатку';
 
   @override
-  String get settingsVersionChecking => 'checking…';
+  String get settingsVersionChecking => 'перевірка…';
 
   @override
-  String get transactionAttachments => 'Attachments';
+  String get transactionAttachments => 'Вкладення';
 
   @override
   String get transactionDeleteConfirm =>
-      'Are you sure you want to delete this transaction?';
+      'Ви впевнені, що хочете видалити цю транзакцію?';
 
   @override
-  String get transactionDialogAttachmentsDelete => 'Delete Attachment';
+  String get transactionDialogAttachmentsDelete => 'Видалити вкладення';
 
   @override
   String get transactionDialogAttachmentsDeleteConfirm =>
-      'Are you sure you want to delete this attachment?';
+      'Ви впевнені, що хочете видалити це вкладення?';
 
   @override
   String get transactionDialogAttachmentsErrorDownload =>
-      'Could not download file.';
+      'Не вдалося завантажити файл.';
 
   @override
   String transactionDialogAttachmentsErrorOpen(String error) {
-    return 'Could not open file: $error';
+    return 'Не вдалося відкрити файл: $error';
   }
 
   @override
   String transactionDialogAttachmentsErrorUpload(String error) {
-    return 'Could not upload file: $error';
+    return 'Не вдалося завантажити файл: $error';
   }
 
   @override
-  String get transactionDialogAttachmentsTitle => 'Attachments';
+  String get transactionDialogAttachmentsTitle => 'Вкладення';
 
   @override
-  String get transactionDialogBillNoBill => 'No subscription';
+  String get transactionDialogBillNoBill => 'Без підписки';
 
   @override
-  String get transactionDialogBillTitle => 'Link to Subscription';
+  String get transactionDialogBillTitle => 'Прив\'язати до підписки';
 
   @override
-  String get transactionDialogCurrencyTitle => 'Select currency';
+  String get transactionDialogCurrencyTitle => 'Виберіть валюту';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => 'Без скарбнички';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => 'Прив\'язати до скарбнички';
 
   @override
-  String get transactionDialogTagsAdd => 'Add Tag';
+  String get transactionDialogTagsAdd => 'Додати тег';
 
   @override
-  String get transactionDialogTagsHint => 'Search/Add Tag';
+  String get transactionDialogTagsHint => 'Пошук/додавання тегу';
 
   @override
-  String get transactionDialogTagsTitle => 'Select tags';
+  String get transactionDialogTagsTitle => 'Виберіть теги';
 
   @override
-  String get transactionDuplicate => 'Duplicate';
+  String get transactionDuplicate => 'Дублювати';
 
   @override
-  String get transactionErrorInvalidAccount => 'Invalid Account';
+  String get transactionErrorInvalidAccount => 'Недійсний рахунок';
 
   @override
-  String get transactionErrorInvalidBudget => 'Invalid Budget';
+  String get transactionErrorInvalidBudget => 'Недійсний бюджет';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts =>
+      'Будь ласка, спочатку заповніть рахунки.';
 
   @override
   String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+      'Будь ласка, виберіть активний рахунок.';
 
   @override
-  String get transactionErrorTitle => 'Please provide a title.';
+  String get transactionErrorTitle => 'Будь ласка, вкажіть назву.';
 
   @override
-  String get transactionFormLabelAccountDestination => 'Destination account';
+  String get transactionFormLabelAccountDestination => 'Рахунок призначення';
 
   @override
-  String get transactionFormLabelAccountForeign => 'Foreign account';
+  String get transactionFormLabelAccountForeign => 'Зовнішній рахунок';
 
   @override
-  String get transactionFormLabelAccountOwn => 'Own account';
+  String get transactionFormLabelAccountOwn => 'Власний рахунок';
 
   @override
-  String get transactionFormLabelAccountSource => 'Source account';
+  String get transactionFormLabelAccountSource => 'Рахунок-джерело';
 
   @override
-  String get transactionFormLabelNotes => 'Notes';
+  String get transactionFormLabelNotes => 'Нотатки';
 
   @override
-  String get transactionFormLabelTags => 'Tags';
+  String get transactionFormLabelTags => 'Теги';
 
   @override
-  String get transactionFormLabelTitle => 'Transaction Title';
+  String get transactionFormLabelTitle => 'Назва транзакції';
 
   @override
-  String get transactionSplitAdd => 'Add split transaction';
+  String get transactionSplitAdd => 'Додати розділену транзакцію';
 
   @override
-  String get transactionSplitChangeCurrency => 'Change Split Currency';
+  String get transactionSplitChangeCurrency => 'Змінити валюту розділення';
 
   @override
   String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+      'Змінити рахунок призначення розділення';
 
   @override
   String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+      'Змінити вихідний рахунок поділу';
 
   @override
-  String get transactionSplitChangeTarget => 'Change Split Target Account';
+  String get transactionSplitChangeTarget => 'Змінити цільовий рахунок поділу';
 
   @override
-  String get transactionSplitDelete => 'Delete split';
+  String get transactionSplitDelete => 'Видалити поділ';
 
   @override
   String get transactionTitleAdd => 'Додати транзакцію';
 
   @override
-  String get transactionTitleDelete => 'Delete Transaction';
+  String get transactionTitleDelete => 'Видалити транзакцію';
 
   @override
-  String get transactionTitleEdit => 'Edit Transaction';
+  String get transactionTitleEdit => 'Редагувати транзакцію';
 
   @override
-  String get transactionTypeDeposit => 'Deposit';
+  String get transactionTypeDeposit => 'Депозит';
 
   @override
-  String get transactionTypeTransfer => 'Transfer';
+  String get transactionTypeTransfer => 'Переказ';
 
   @override
-  String get transactionTypeWithdrawal => 'Withdrawal';
+  String get transactionTypeWithdrawal => 'Зняття коштів';
 }

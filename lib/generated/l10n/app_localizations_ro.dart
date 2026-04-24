@@ -619,20 +619,20 @@ class SRo extends S {
       'Pentru a folosi Waterfly III în mod productiv ai nevoie de propriul server cu o instanță Firefly III sau cu suplimentul Firefly III pentru asistentul la domiciliu.\n\nVă rugăm să introduceți adresa URL completă, precum și un token personal de acces (Setări -> Profile -> OAuth -> Personal Access Token) de mai jos.';
 
   @override
-  String get loginFormButtonHideHeaders => 'Hide Headers';
+  String get loginFormButtonHideHeaders => 'Ascunde antetele';
 
   @override
-  String get loginFormButtonShowHeaders => 'Custom Headers';
+  String get loginFormButtonShowHeaders => 'Antete personalizate';
 
   @override
   String get loginFormLabelAPIKey => 'Cheie API validă';
 
   @override
-  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+  String get loginFormLabelHeaders => 'Antete personalizate (opțional)';
 
   @override
   String get loginFormLabelHeadersHelp =>
-      'One per line, format: HeaderName: value';
+      'Unul pe linie, format: NumeAntet: valoare';
 
   @override
   String get loginFormLabelHost => 'URL Host';
@@ -653,7 +653,7 @@ class SRo extends S {
   String get navigationCategories => 'Categorii';
 
   @override
-  String get navigationMain => 'Dashboard';
+  String get navigationMain => 'Tablou de bord';
 
   @override
   String get generalSettings => 'Setări';
@@ -757,29 +757,38 @@ class SRo extends S {
   String get settingsNLEmptyNote => 'Păstrează câmpul notei gol';
 
   @override
-  String get settingsNLHistory => 'Notification History';
+  String get settingsNLHistory => 'Istoric notificări';
 
   @override
-  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+  String get settingsNLHistoryEmpty =>
+      'Nicio notificare înregistrată până acum.';
 
   @override
   String settingsNLHistoryLongDescription(int notificationHistorySize) {
-    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other: 'de notificări primite',
+      few: 'notificări primite',
+      one: 'notificare primită',
+    );
+    return 'Acesta este un istoric al ultimelor $_temp0 de către aplicație. În plus, poți crea tranzacții din notificările valide sau poți vedea motivul pentru care o notificare nu a putut fi procesată.';
   }
 
   @override
   String settingsNLHistoryRejectedReason(String reason) {
     String _temp0 = intl.Intl.selectLogic(reason, {
-      'noMoney': 'No monetary value found',
-      'noCurrency': 'No currency found',
-      'appNotUsed': 'App not listened to',
-      'other': 'Unknown reason',
+      'noMoney': 'Nu a fost găsită nicio valoare monetară',
+      'noCurrency': 'Nu a fost găsită nicio monedă validă',
+      'appNotUsed': 'Aplicația nu este monitorizată',
+      'other': 'Motiv necunoscut',
     });
-    return 'Notification skipped: $_temp0.';
+    return 'Notificare ignorată: $_temp0.';
   }
 
   @override
-  String get settingsNLHistoryShortDescription => 'List previous notifications';
+  String get settingsNLHistoryShortDescription =>
+      'Listează notificările anterioare';
 
   @override
   String get settingsNLPermissionGrant =>
@@ -801,10 +810,10 @@ class SRo extends S {
       'Completează automat titlul tranzacției cu titlul notificării';
 
   @override
-  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+  String get settingsNLRegularExpression => 'Expresie regulată (opțional)';
 
   @override
-  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+  String get settingsNLRegularExpressionInvalid => 'Expresie regulată invalidă';
 
   @override
   String get settingsNLServiceChecking => 'Verificare stare…';
@@ -828,10 +837,11 @@ class SRo extends S {
       'Serviciul de clasificare a notificărilor';
 
   @override
-  String get settingsServerConnection => 'Server Connection';
+  String get settingsServerConnection => 'Conexiune server';
 
   @override
-  String get settingsServerConnectionUpdated => 'Connection settings updated.';
+  String get settingsServerConnectionUpdated =>
+      'Setările conexiunii au fost actualizate.';
 
   @override
   String get settingsTheme => 'Tema aplicației';

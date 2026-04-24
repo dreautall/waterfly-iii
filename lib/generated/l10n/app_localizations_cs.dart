@@ -801,6 +801,12 @@ class SCs extends S {
       'Doplnit název transakce pomocí nadpisu nofikace';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => 'Kontroluji stav…';
 
   @override

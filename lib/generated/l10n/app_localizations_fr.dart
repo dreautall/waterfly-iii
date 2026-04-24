@@ -807,6 +807,12 @@ class SFr extends S {
       'Pré-remplir le titre de la transaction avec le titre de la notification';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => 'Vérification de l\'état…';
 
   @override

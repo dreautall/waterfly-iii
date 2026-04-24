@@ -802,6 +802,12 @@ class SEs extends S {
       'Rellenar el título de la transacción con el título de la notificación';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => 'Comprobando estado…';
 
   @override

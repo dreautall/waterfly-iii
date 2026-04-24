@@ -1018,6 +1018,14 @@
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
     },
+    "settingsNLRegularExpression": "Regular Expression (optional)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "Invalid Regular Expression",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
+    },
     "settingsNLServiceChecking": "Checking status…",
     "@settingsNLServiceChecking": {
         "description": "Checking the status of the background service"

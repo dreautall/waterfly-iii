@@ -366,20 +366,22 @@ class _TransactionPageState extends State<TransactionPage>
 
           log.info("Got notification ${widget.notification?.title}");
           _transactionType = .withdrawal;
+
+          // Amount & Currency
           final CurrencyRead defaultCurrency = context
               .read<FireflyService>()
               .defaultCurrency;
+          final NotificationAppSettings appSettings = await settings
+              .notificationGetAppSettings(widget.notification!.appName);
           late CurrencyRead? currency;
           late double amount;
-
           (currency, amount) = await parseNotificationText(
             api,
             widget.notification!.body,
             _localCurrency!,
+            userRegex: appSettings.regex,
           );
-
-          // Fallback solution
-          currency ??= defaultCurrency;
+          currency ??= defaultCurrency; // Fallback solution
 
           // Set date
           _date = _tzHandler
@@ -389,8 +391,6 @@ class _TransactionPageState extends State<TransactionPage>
           _timeTextController.text = DateFormat.Hm().format(_date);
 
           // Title & Note
-          final NotificationAppSettings appSettings = await settings
-              .notificationGetAppSettings(widget.notification!.appName);
           if (appSettings.includeTitle) {
             _titleTextController.text = widget.notification!.title;
           } else {

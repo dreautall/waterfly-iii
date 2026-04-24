@@ -806,6 +806,12 @@ class SRu extends S {
       'Заполнить заголовок транзакции, используя заголовок уведомления';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => 'Проверка статуса…';
 
   @override

@@ -797,6 +797,12 @@ class SDa extends S {
       'Forudfyld transaktionstitel med nofikationstitel';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => 'Tjekker status…';
 
   @override

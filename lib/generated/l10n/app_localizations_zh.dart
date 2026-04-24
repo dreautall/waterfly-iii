@@ -783,6 +783,12 @@ class SZh extends S {
   String get settingsNLPrefillTXTitle => '使用通知标题预填交易标题';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => '正在检查状态...';
 
   @override

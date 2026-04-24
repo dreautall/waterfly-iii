@@ -806,6 +806,12 @@ class SHu extends S {
       'A tranzakció leírásának előzetes kitöltése az értesítés címével';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => 'Állapot ellenőrzése…';
 
   @override

@@ -800,6 +800,12 @@ class SSl extends S {
       'Vnaprej izpolnite naslov transakcije z naslovom obvestila';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => 'Preverjanje stanja…';
 
   @override

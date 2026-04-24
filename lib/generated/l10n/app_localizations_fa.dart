@@ -794,6 +794,12 @@ class SFa extends S {
       'عنوان تراکنش را با عنوان اعلان از قبل پر کنید\n';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => 'در حال بررسی وضعیت...';
 
   @override

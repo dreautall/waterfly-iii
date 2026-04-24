@@ -795,6 +795,12 @@ class SEn extends S {
       'Prefill transaction title with notification title';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => 'Checking status…';
 
   @override

@@ -799,6 +799,12 @@ class SNl extends S {
       'Transactietitel vooraf invullen met meldingstitel';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => 'Status controleren…';
 
   @override

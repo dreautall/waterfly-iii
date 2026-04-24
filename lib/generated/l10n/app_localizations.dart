@@ -1320,6 +1320,18 @@ abstract class S {
   /// **'Prefill transaction title with notification title'**
   String get settingsNLPrefillTXTitle;
 
+  /// Setting to use a custom regular expression (regex).
+  ///
+  /// In en, this message translates to:
+  /// **'Regular Expression (optional)'**
+  String get settingsNLRegularExpression;
+
+  /// Custom provided regular expression is invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Regular Expression'**
+  String get settingsNLRegularExpressionInvalid;
+
   /// Checking the status of the background service
   ///
   /// In en, this message translates to:

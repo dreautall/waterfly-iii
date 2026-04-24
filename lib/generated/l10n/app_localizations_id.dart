@@ -800,6 +800,12 @@ class SId extends S {
       'Isi otomatis judul transaksi dengan judul notifikasi';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => 'Memeriksa status…';
 
   @override

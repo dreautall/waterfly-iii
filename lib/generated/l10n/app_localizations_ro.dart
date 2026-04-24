@@ -801,6 +801,12 @@ class SRo extends S {
       'Completează automat titlul tranzacției cu titlul notificării';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => 'Verificare stare…';
 
   @override

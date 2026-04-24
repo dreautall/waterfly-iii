@@ -806,6 +806,12 @@ class SCa extends S {
       'Emplena automàticament el títol de la transacció amb el títol de la notificació';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => 'Comprovant l\'estat…';
 
   @override

@@ -796,6 +796,12 @@ class SSv extends S {
       'Fyll i transaktionstiteln med nofikationstiteln i förväg';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => 'Kontrollerar status…';
 
   @override

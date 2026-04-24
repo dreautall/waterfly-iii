@@ -799,6 +799,12 @@ class SIt extends S {
       'Compila il titolo della transazione con il titolo della notifica';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => 'Controllo dello stato…';
 
   @override

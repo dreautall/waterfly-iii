@@ -788,6 +788,12 @@ class SKo extends S {
   String get settingsNLPrefillTXTitle => '알림 제목으로 거래 제목을 미리 채워주세요';
 
   @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
+
+  @override
   String get settingsNLServiceChecking => '상태 확인 중…';
 
   @override

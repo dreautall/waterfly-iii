@@ -797,25 +797,9 @@
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
-    "loginFormButtonHideHeaders": "Hide Headers",
-    "@loginFormButtonHideHeaders": {
-        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
-    },
-    "loginFormButtonShowHeaders": "Custom Headers",
-    "@loginFormButtonShowHeaders": {
-        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
-    },
     "loginFormLabelAPIKey": "Valid API Key",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
-    },
-    "loginFormLabelHeaders": "Custom Headers (optional)",
-    "@loginFormLabelHeaders": {
-        "description": "Login Form: Label for Custom Headers field"
-    },
-    "loginFormLabelHeadersHelp": "One per line, format: HeaderName: value",
-    "@loginFormLabelHeadersHelp": {
-        "description": "Login Form: Helper text for Custom Headers field"
     },
     "loginFormLabelHost": "Host URL",
     "@loginFormLabelHost": {
@@ -1018,14 +1002,6 @@
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
     },
-    "settingsNLRegularExpression": "Regular Expression (optional)",
-    "@settingsNLRegularExpression": {
-        "description": "Setting to use a custom regular expression (regex)."
-    },
-    "settingsNLRegularExpressionInvalid": "Invalid Regular Expression",
-    "@settingsNLRegularExpressionInvalid": {
-        "description": "Custom provided regular expression is invalid."
-    },
     "settingsNLServiceChecking": "Checking status…",
     "@settingsNLServiceChecking": {
         "description": "Checking the status of the background service"
@@ -1056,14 +1032,6 @@
     "settingsNotificationListener": "Notification Listener Service",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
-    },
-    "settingsServerConnection": "Server Connection",
-    "@settingsServerConnection": {
-        "description": "Settings for the server connection"
-    },
-    "settingsServerConnectionUpdated": "Connection settings updated.",
-    "@settingsServerConnectionUpdated": {
-        "description": "Server connection settings have been updated"
     },
     "settingsTheme": "App Theme",
     "@settingsTheme": {

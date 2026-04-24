@@ -1,6 +1,6 @@
 Waterfly III 是為您的 Firefly III (一個自由、開源的財務管理程式) 打造的非官方 App。
 
-您必須自行頢設 Firefly III 伺服器，才能使用本 App。您可以前往 https://www.firefly-iii.org/ 找到架設伺服器的指引以及更多資訊。 這個 App 無法獨立執行，它需要與您的 Firefly III 伺服器協作。
+您必須自行頢設 Firefly III 伺服器，才能使用本 App。您可以前往 https://www.firefly-iii.org/ 找到架設伺服器的指引以及更多資訊。 這個 App 無法獨立執行，它需要與您的 Firefly III 伺服器協作。 這個 App 無法獨立執行，它需要與您的 Firefly III 伺服器協作。
 
 功能：
 

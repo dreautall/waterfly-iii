@@ -2,247 +2,257 @@
     "@@locale": "uk",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "Гаманець",
-    "@accountRoleAssetCashWallet": {
-        "description": "Firefly Translation String: account_role_cashWalletAsset"
-    },
     "accountRoleAssetCC": "Кредитна карта",
-    "@accountRoleAssetCC": {
-        "description": "Firefly Translation String: account_role_ccAsset"
-    },
     "accountRoleAssetDefault": "Основний рахунок за замовчуванням",
-    "@accountRoleAssetDefault": {
-        "description": "Firefly Translation String: account_role_defaultAsset"
-    },
     "accountRoleAssetSavings": "Накопичувальний рахунок",
-    "@accountRoleAssetSavings": {
-        "description": "Firefly Translation String: account_role_savingAsset"
-    },
     "accountRoleAssetShared": "Спільний рахунок",
-    "@accountRoleAssetShared": {
-        "description": "Firefly Translation String: account_role_sharedAsset"
-    },
     "accountsLabelAsset": "Активні рахунки",
-    "@accountsLabelAsset": {
-        "description": "Firefly Translation String: asset_accounts"
-    },
     "accountsLabelExpense": "Рахунки витрат",
-    "@accountsLabelExpense": {
-        "description": "Firefly Translation String: expense_accounts"
-    },
     "accountsLabelLiabilities": "Зобов’язання",
-    "@accountsLabelLiabilities": {
-        "description": "Firefly Translation String: liabilities_accounts"
-    },
     "accountsLabelRevenue": "Джерела доходів",
-    "@accountsLabelRevenue": {
-        "description": "Firefly Translation String: revenue_accounts"
-    },
+    "accountsLiabilitiesInterest": "{interest}% відсотків на {period, select, weekly{тиждень} monthly{місяць} quarterly{квартал} halfyear{півріччя} yearly{рік} other{невідомий}}",
+    "billsAmountAndFrequency": "Підписка відповідає транзакціям від {minValue} до {maxvalue}. Періодичність: {frequency, select, weekly{щотижня} monthly{щомісяця} quarterly{щокварталу} halfyear{щопівроку} yearly{щороку} other{невідомо}}{skip, plural, =0{} one{, пропускає {skip} раз} few{, пропускає {skip} рази} many{, пропускає {skip} разів} other{, пропускає {skip} разів}}.",
     "billsChangeLayoutTooltip": "Змінити вигляд",
-    "@billsChangeLayoutTooltip": {
-        "description": "Text for layout change button tooltip"
-    },
     "billsChangeSortOrderTooltip": "Змінити порядок сортування",
-    "@billsChangeSortOrderTooltip": {
-        "description": "Text for sort order change button tooltip"
-    },
+    "billsErrorLoading": "Помилка завантаження підписок.",
+    "billsExactAmountAndFrequency": "Підписка відповідає транзакціям на суму {value}. Періодичність: {frequency, select, weekly{щотижня} monthly{щомісяця} quarterly{щокварталу} halfyear{щопівроку} yearly{щороку} other{невідомо}}{skip, plural, =0{} one{, пропускає {skip} раз} few{, пропускає {skip} рази} many{, пропускає {skip} разів} other{, пропускає {skip} разів}}.",
     "billsExpectedOn": "Очікується {date}",
-    "@billsExpectedOn": {
-        "description": "Describes what date the subscription is expected",
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMMMMd",
-                "example": "January 5, 2024"
-            }
-        }
-    },
+    "billsFrequency": "{frequency, select, weekly{Щотижня} monthly{Щомісяця} quarterly{Щокварталу} halfyear{Щопівроку} yearly{Щороку} other{Невідомо}}",
     "billsFrequencySkip": "{frequency, select, weekly{Щотижнєво} monthly{Щомісячно} quarterly{Щоквартально} halfyear{Щопівроку} yearly{Щорічно} other{Невідомо}}{skip, plural, =0{} one{, пропускає {skip} раз} few{, пропускає {skip} рази} many{, пропускає {skip} разів} other{, пропускає {skip} раз}}",
-    "@billsFrequencySkip": {
-        "description": "Subscription frequency",
-        "placeholders": {
-            "frequency": {
-                "type": "String",
-                "example": "yearly"
-            },
-            "skip": {
-                "type": "num",
-                "example": "1"
-            }
-        }
-    },
     "billsInactive": "Неактивний",
-    "@billsInactive": {
-        "description": "Text: when the subscription is inactive"
-    },
+    "billsIsActive": "Підписка активна",
+    "billsLayoutGroupSubtitle": "Підписки відображаються у призначених їм групах.",
     "billsLayoutGroupTitle": "Група",
-    "@billsLayoutGroupTitle": {
-        "description": "Title text for group layout option"
-    },
+    "billsLayoutListSubtitle": "Підписки відображаються списком, відсортованим за певними критеріями.",
     "billsLayoutListTitle": "Список",
-    "@billsLayoutListTitle": {
-        "description": "Title text for list layout option"
-    },
     "billsListEmpty": "Список наразі порожній.",
-    "@billsListEmpty": {
-        "description": "Describes that the list is empty"
-    },
     "billsNextExpectedMatch": "Наступний очікуваний збіг",
-    "@billsNextExpectedMatch": {
-        "description": "Text: next expected match for subscription"
-    },
+    "billsNotActive": "Підписка неактивна",
+    "billsNotExpected": "Не очікується в цьому періоді",
     "billsNoTransactions": "Трансакцій не знайдено.",
-    "@billsNoTransactions": {
-        "description": "Describes that there are no transactions connected to the subscription"
-    },
     "billsPaidOn": "Сплачено {date}",
-    "@billsPaidOn": {
-        "description": "Describes what date the subscription was paid",
-        "placeholders": {
-            "date": {
-                "type": "DateTime",
-                "format": "yMMMMd",
-                "example": "January 5, 2024"
-            }
-        }
-    },
     "billsSortAlphabetical": "За алфавітом",
-    "@billsSortAlphabetical": {
-        "description": "Text for alphabetical sort types"
-    },
     "billsSortByTimePeriod": "За період часу",
-    "@billsSortByTimePeriod": {
-        "description": "Text for frequency sort type"
-    },
     "billsSortFrequency": "Періодичність",
-    "@billsSortFrequency": {
-        "description": "Text for sort by frequency"
-    },
     "billsSortName": "Назва",
-    "@billsSortName": {
-        "description": "Text for sort by name"
-    },
     "billsUngrouped": "Без групи",
-    "@billsUngrouped": {
-        "description": "Title for ungrouped subscriptions"
-    },
+    "billsSettingsShowOnlyActive": "Показувати тільки активні",
+    "billsSettingsShowOnlyActiveDesc": "Показує лише активні підписки.",
+    "billsSettingsShowOnlyExpected": "Показувати тільки очікувані",
+    "billsSettingsShowOnlyExpectedDesc": "Показує лише ті підписки, які очікуються (або сплачені) цього місяця.",
     "categoryDeleteConfirm": "Ви впевнені, що хочете видалити цю категорію? Операції не будуть видалені, але більше не будуть мати категорій.",
-    "@categoryDeleteConfirm": {
-        "description": "Confirmation text to delete category"
-    },
     "categoryErrorLoading": "Помилка при завантаженні категорій.",
-    "@categoryErrorLoading": {
-        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
-    },
     "categoryFormLabelIncludeInSum": "Включати в щомісячну суму",
-    "@categoryFormLabelIncludeInSum": {
-        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
-    },
     "categoryFormLabelName": "Назва категорії",
-    "@categoryFormLabelName": {
-        "description": "Category Add/Edit Form: Label for name field"
-    },
     "categoryMonthNext": "Наступний місяць",
-    "@categoryMonthNext": {
-        "description": "Button title to view overview for next month"
-    },
     "categoryMonthPrev": "Попередній місяць",
-    "@categoryMonthPrev": {
-        "description": "Button title to view overview for previous month"
-    },
     "categorySumExcluded": "виключена",
-    "@categorySumExcluded": {
-        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
-    },
     "categoryTitleAdd": "Додати категорію",
-    "@categoryTitleAdd": {
-        "description": "Title for Dialog: Add Category"
-    },
     "categoryTitleDelete": "Видалити категорію",
-    "@categoryTitleDelete": {
-        "description": "Title for Dialog: Delete Category"
-    },
     "categoryTitleEdit": "Редагувати категорію",
-    "@categoryTitleEdit": {
-        "description": "Title for Dialog: Edit Category"
-    },
     "catNone": "<немає категорії>",
-    "@catNone": {
-        "description": "Placeholder when no category has been set."
-    },
     "catOther": "Інше",
-    "@catOther": {
-        "description": "Category description for summary category 'Other'"
-    },
     "errorAPIInvalidResponse": "Невірна відповідь від API: {message}",
-    "@errorAPIInvalidResponse": {
-        "description": "Invalid API response error",
-        "placeholders": {
-            "message": {
-                "type": "String",
-                "example": "API could not be reached."
-            }
-        }
-    },
     "errorAPIUnavailable": "API недоступне",
-    "@errorAPIUnavailable": {
-        "description": "Error thrown when API is unavailable."
-    },
     "errorFieldRequired": "Це поле є обов'язковим.",
-    "@errorFieldRequired": {
-        "description": "Error: Required field was left empty."
-    },
     "errorInvalidURL": "Некоректна адреса URL",
-    "@errorInvalidURL": {
-        "description": "Error: URL is invalid"
-    },
     "errorMinAPIVersion": "Необхідна мінімальна версія API Firefly v{requiredVersion}. Будь ласка, оновіть програму.",
-    "@errorMinAPIVersion": {
-        "description": "Error: Required API version not met.",
-        "placeholders": {
-            "requiredVersion": {
-                "type": "String",
-                "example": "2.0.0"
-            }
-        }
-    },
+    "errorStatusCode": "Код статусу: {code}",
     "errorUnknown": "Невідома помилка.",
-    "@errorUnknown": {
-        "description": "Error without further information occurred."
-    },
     "formButtonHelp": "Допомога",
-    "@formButtonHelp": {
-        "description": "Button Label: Help"
-    },
     "formButtonLogin": "Вхід",
-    "@formButtonLogin": {
-        "description": "Button Label: Login"
-    },
     "formButtonLogout": "Вихід",
-    "@formButtonLogout": {
-        "description": "Button Label: Logout"
-    },
     "formButtonRemove": "Видалити",
-    "@formButtonRemove": {
-        "description": "Button Label: Remove"
-    },
+    "formButtonResetLogin": "Скинути вхід",
     "formButtonTransactionAdd": "Додати транзакцію",
-    "@formButtonTransactionAdd": {
-        "description": "Button Label: Add Transaction"
-    },
     "formButtonTryAgain": "Спробувати ще раз",
-    "@formButtonTryAgain": {
-        "description": "Button Label: Try that thing again (login etc)"
-    },
+    "generalAccount": "Рахунок",
+    "generalAssets": "Активи",
+    "generalBalance": "Баланс",
+    "generalBalanceOn": "Баланс на {date}",
+    "generalBill": "Підписка",
+    "generalBudget": "Бюджет",
+    "generalCategory": "Категорія",
+    "generalCurrency": "Валюта",
+    "generalDateRangeCurrentMonth": "Поточний місяць",
+    "generalDateRangeLast30Days": "Останні 30 днів",
+    "generalDateRangeCurrentYear": "Поточний рік",
+    "generalDateRangeLastYear": "Минулий рік",
+    "generalDateRangeAll": "Всі",
+    "generalDefault": "за замовчуванням",
+    "generalDestinationAccount": "Цільовий рахунок",
+    "generalDismiss": "Скасувати",
+    "generalEarned": "Зароблено",
+    "generalError": "Помилка",
+    "generalExpenses": "Витрати",
+    "generalIncome": "Дохід",
     "generalLiabilities": "Зобов’язання",
-    "@generalLiabilities": {
-        "description": "Firefly Translation String: liabilities"
-    },
+    "generalMultiple": "декілька",
+    "generalNever": "ніколи",
+    "generalReconcile": "Звірено",
+    "generalReset": "Скинути",
+    "generalSourceAccount": "Вихідний рахунок",
+    "generalSpent": "Витрачено",
+    "generalSum": "Сума",
+    "generalTarget": "Ціль",
+    "generalUnknown": "Невідомо",
+    "homeMainBillsInterval": " ({period, select, weekly{щотижня} monthly{щомісяця} quarterly{щоквартально} halfyear{раз на пів року} yearly{щороку} other{невідомо}})",
+    "homeMainBillsTitle": "Підписки на наступний тиждень",
+    "homeMainBudgetInterval": " (з {from} по {to}, {period})",
+    "homeMainBudgetIntervalSingle": " (з {from} по {to})",
+    "homeMainBudgetSum": "{current} {status, select, over{перевищено на} other{залишилось від}} {available}",
+    "homeMainBudgetTitle": "Бюджети на поточний місяць",
+    "homeMainChartAccountsTitle": "Підсумок за рахунками",
+    "homeMainChartCategoriesTitle": "Підсумок за категоріями на поточний місяць",
+    "homeMainChartDailyAvg": "Середнє за 7 днів",
+    "homeMainChartDailyTitle": "Щоденний підсумок",
+    "homeMainChartNetEarningsTitle": "Чистий дохід",
+    "homeMainChartNetWorthTitle": "Чистий капітал",
+    "homeMainChartTagsTitle": "Підсумок за тегами на поточний місяць",
+    "homePiggyAdjustDialogTitle": "Відкласти/Витратити гроші",
+    "homePiggyDateStart": "Дата початку: {date}",
+    "homePiggyDateTarget": "Цільова дата: {date}",
+    "homeMainDialogSettingsTitle": "Налаштування панелі керування",
+    "homePiggyLinked": "Прив'язано до {account}",
+    "homePiggyNoAccounts": "Скарбнички не налаштовані.",
+    "homePiggyNoAccountsSubtitle": "Створіть їх у веб-інтерфейсі!",
+    "homePiggyRemaining": "Залишилося накопичити: {amount}",
+    "homePiggySaved": "Накопичено: {amount}",
+    "homePiggySavedMultiple": "Накопичено:",
+    "homePiggyTarget": "Цільова сума: {amount}",
+    "homePiggyAccountStatus": "Стан рахунку",
+    "homePiggyAvailableAmounts": "Доступні суми",
+    "homePiggyAvailable": "Доступно: {amount}",
+    "homePiggyInPiggyBanks": "У скарбничках: {amount}",
+    "homeTabLabelBalance": "Баланс",
+    "homeTabLabelMain": "Головна",
+    "homeTabLabelPiggybanks": "Скарбнички",
+    "homeTabLabelTransactions": "Транзакції",
+    "homeTransactionsActionFilter": "Фільтр списку",
+    "homeTransactionsDialogFilterAccountsAll": "<Усі рахунки>",
+    "homeTransactionsDialogFilterBillsAll": "<Усі рахунки до оплати>",
+    "homeTransactionsDialogFilterBillUnset": "<Рахунок до оплати не встановлено>",
+    "homeTransactionsDialogFilterBudgetsAll": "<Усі бюджети>",
+    "homeTransactionsDialogFilterBudgetUnset": "<Бюджет не встановлено>",
+    "homeTransactionsDialogFilterCategoriesAll": "<Усі категорії>",
+    "homeTransactionsDialogFilterCategoryUnset": "<Категорію не встановлено>",
+    "homeTransactionsDialogFilterCurrenciesAll": "<Усі валюти>",
+    "homeTransactionsDialogFilterDateRange": "Діапазон дат",
+    "homeTransactionsDialogFilterFutureTransactions": "Показувати майбутні транзакції",
+    "homeTransactionsDialogFilterSearch": "Пошуковий запит",
+    "homeTransactionsDialogFilterTitle": "Виберіть фільтри",
     "homeTransactionsEmpty": "Трансакцій не знайдено.",
-    "@homeTransactionsEmpty": {
-        "description": "Message when no transactions are found."
-    },
+    "homeTransactionsMultipleCategories": "{num, plural, one {{num} категорія} few {{num} категорії} many {{num} категорій} other {{num} категорії}}",
+    "homeTransactionsSettingsShowTags": "Показувати теги у списку транзакцій",
+    "liabilityDirectionCredit": "Мені винні ці кошти",
+    "liabilityDirectionDebit": "Я винен ці кошти",
+    "liabilityTypeDebt": "Борг",
+    "liabilityTypeLoan": "Позика",
+    "liabilityTypeMortgage": "Іпотека",
+    "loginAbout": "Щоб ефективно використовувати Waterfly III, вам потрібен власний сервер із встановленим екземпляром Firefly III або доповненням Firefly III для Home Assistant.\n\nБудь ласка, введіть повну URL-адресу та персональний токен доступу (Settings -> Profile -> OAuth -> Personal Access Token) нижче.",
+    "loginFormButtonHideHeaders": "Приховати заголовки",
+    "loginFormButtonShowHeaders": "Власні заголовки",
+    "loginFormLabelAPIKey": "Дійсний API-ключ",
+    "loginFormLabelHeaders": "Користувацькі заголовки (необов'язково)",
+    "loginFormLabelHeadersHelp": "Один на рядок, формат: HeaderName: значення",
+    "loginFormLabelHost": "URL хоста",
+    "loginWelcome": "Ласкаво просимо до Waterfly III",
+    "logoutConfirmation": "Ви впевнені, що хочете вийти?",
+    "navigationAccounts": "Рахунки",
+    "navigationBills": "Підписки",
+    "navigationCategories": "Категорії",
+    "navigationMain": "Панель керування",
+    "generalSettings": "Налаштування",
+    "no": "Ні",
+    "numPercent": "{num}",
+    "numPercentOf": "{perc} з {of}",
+    "settingsDialogDebugInfo": "Ви можете ввімкнути та надіслати журнали налагодження тут. Це негативно впливає на продуктивність, тому не вмикайте їх, якщо вас не попросили це зробити. Вимкнення журналювання видалить збережений журнал.",
+    "settingsDialogDebugMailCreate": "Створити лист",
+    "settingsDialogDebugMailDisclaimer": "ПОПЕРЕДЖЕННЯ: Буде створено чернетку листа з прикріпленим файлом журналу (у текстовому форматі). Журнали можуть містити конфіденційну інформацію, таку як ім'я хоста вашого екземпляра Firefly (хоча я намагаюся уникати запису будь-яких секретів, наприклад, API-ключа). Будь ласка, уважно прочитайте журнал і видаліть будь-яку інформацію, якою ви не хочете ділитися та/або яка не стосується проблеми, про яку ви хочете повідомити.\n\nБудь ласка, не надсилайте журнали без попередньої домовленості електронною поштою/GitHub. З міркувань конфіденційності я видалятиму будь-які журнали, надіслані без контексту. Ніколи не завантажуйте незацензурований журнал на GitHub або будь-де інше.",
+    "settingsDialogDebugSendButton": "Надіслати журнали електронною поштою",
+    "settingsDialogDebugTitle": "Журнали налагодження",
+    "settingsDialogLanguageTitle": "Вибрати мову",
+    "settingsDialogThemeTitle": "Вибрати тему",
+    "settingsFAQ": "FAQ",
+    "settingsFAQHelp": "Відкривається у браузері. Доступно лише англійською мовою.",
+    "settingsLanguage": "Мова",
+    "settingsLockscreen": "Екран блокування",
+    "settingsLockscreenHelp": "Вимагати автентифікацію при запуску програми",
+    "settingsLockscreenInitial": "Будь ласка, пройдіть автентифікацію, щоб увімкнути екран блокування.",
+    "settingsNLAppAccount": "Типовий рахунок",
+    "settingsNLAppAccountDynamic": "<Динамічно>",
+    "settingsNLAppAdd": "Додати програму",
+    "settingsNLAppAddHelp": "Натисніть, щоб додати програму для відстеження. У списку відображатимуться лише відповідні програми.",
+    "settingsNLAppAddInfo": "Здійсніть кілька транзакцій, після яких ви отримуєте сповіщення на телефон, щоб додати програми до цього списку. Якщо програма все одно не з'являється, будь ласка, повідомте про це на app@vogt.pw.",
+    "settingsNLAutoAdd": "Створювати транзакцію без взаємодії",
+    "settingsNLDescription": "Ця служба дозволяє отримувати деталі транзакцій з вхідних push-сповіщень. Крім того, ви можете вибрати типовий рахунок, до якого має бути прив'язана транзакція — якщо значення не встановлено, програма спробує витягти рахунок зі сповіщення.",
+    "settingsNLEmptyNote": "Залишати поле примітки порожнім",
+    "settingsNLHistory": "Історія сповіщень",
+    "settingsNLHistoryEmpty": "Сповіщень поки не записано.",
+    "settingsNLHistoryLongDescription": "{notificationHistorySize, plural, one {Це історія останнього сповіщення, отриманого програмою. Крім того, ви можете створювати транзакції з (дійсних) сповіщень або дізнатися причину, чому сповіщення не вдалося опрацювати.} few {Це історія останніх {notificationHistorySize} сповіщень, отриманих програмою. Крім того, ви можете створювати транзакції з (дійсних) сповіщень або дізнатися причину, чому сповіщення не вдалося опрацювати.} many {Це історія останніх {notificationHistorySize} сповіщень, отриманих програмою. Крім того, ви можете створювати транзакції з (дійсних) сповіщень або дізнатися причину, чому сповіщення не вдалося опрацювати.} other {Це історія останніх {notificationHistorySize} сповіщень, отриманих програмою. Крім того, ви можете створювати транзакції з (дійсних) сповіщень або дізнатися причину, чому сповіщення не вдалося опрацювати.}}",
+    "settingsNLHistoryRejectedReason": "Сповіщення пропущено: {reason, select, noMoney{Грошову суму не знайдено} noCurrency{Валюту не знайдено} appNotUsed{Програму не відстежуємо} other{Невідома причина}}.",
+    "settingsNLHistoryShortDescription": "Переглянути попередні сповіщення",
+    "settingsNLPermissionGrant": "Торкніться, щоб надати дозвіл.",
+    "settingsNLPermissionNotGranted": "Дозвіл не надано.",
+    "settingsNLPermissionRemove": "Скасувати дозвіл?",
+    "settingsNLPermissionRemoveHelp": "Щоб вимкнути цю службу, натисніть на додаток і видаліть дозволи на наступному екрані.",
+    "settingsNLPrefillTXTitle": "Попередньо заповнювати назву транзакції заголовком сповіщення",
+    "settingsNLRegularExpression": "Регулярний вираз (необов'язково)",
+    "settingsNLRegularExpressionInvalid": "Недійсний регулярний вираз",
+    "settingsNLServiceChecking": "Перевірка стану…",
+    "settingsNLServiceCheckingError": "Помилка перевірки стану: {error}",
+    "settingsNLServiceRunning": "Служба запущена.",
+    "settingsNLServiceStatus": "Стан служби",
+    "settingsNLServiceStopped": "Служба зупинена.",
+    "settingsNotificationListener": "Служба прослуховування сповіщень",
+    "settingsServerConnection": "Підключення до сервера",
+    "settingsServerConnectionUpdated": "Налаштування підключення оновлено.",
+    "settingsTheme": "Тема додатку",
+    "settingsThemeDynamicColors": "Динамічні кольори",
+    "settingsThemeValue": "{theme, select, dark{Темна тема} light{Світла тема} other{Як у системі}}",
+    "settingsUseServerTimezone": "Використовувати часовий пояс сервера",
+    "settingsUseServerTimezoneHelp": "Відображати час у часовому поясі сервера. Це повторює поведінку веб-інтерфейсу.",
+    "settingsVersion": "Версія додатку",
+    "settingsVersionChecking": "перевірка…",
+    "transactionAttachments": "Вкладення",
+    "transactionDeleteConfirm": "Ви впевнені, що хочете видалити цю транзакцію?",
+    "transactionDialogAttachmentsDelete": "Видалити вкладення",
+    "transactionDialogAttachmentsDeleteConfirm": "Ви впевнені, що хочете видалити це вкладення?",
+    "transactionDialogAttachmentsErrorDownload": "Не вдалося завантажити файл.",
+    "transactionDialogAttachmentsErrorOpen": "Не вдалося відкрити файл: {error}",
+    "transactionDialogAttachmentsErrorUpload": "Не вдалося завантажити файл: {error}",
+    "transactionDialogAttachmentsTitle": "Вкладення",
+    "transactionDialogBillNoBill": "Без підписки",
+    "transactionDialogBillTitle": "Прив'язати до підписки",
+    "transactionDialogCurrencyTitle": "Виберіть валюту",
+    "transactionDialogPiggyNoPiggy": "Без скарбнички",
+    "transactionDialogPiggyTitle": "Прив'язати до скарбнички",
+    "transactionDialogTagsAdd": "Додати тег",
+    "transactionDialogTagsHint": "Пошук/додавання тегу",
+    "transactionDialogTagsTitle": "Виберіть теги",
+    "transactionDuplicate": "Дублювати",
+    "transactionErrorInvalidAccount": "Недійсний рахунок",
+    "transactionErrorInvalidBudget": "Недійсний бюджет",
+    "transactionErrorNoAccounts": "Будь ласка, спочатку заповніть рахунки.",
+    "transactionErrorNoAssetAccount": "Будь ласка, виберіть активний рахунок.",
+    "transactionErrorTitle": "Будь ласка, вкажіть назву.",
+    "transactionFormLabelAccountDestination": "Рахунок призначення",
+    "transactionFormLabelAccountForeign": "Зовнішній рахунок",
+    "transactionFormLabelAccountOwn": "Власний рахунок",
+    "transactionFormLabelAccountSource": "Рахунок-джерело",
+    "transactionFormLabelNotes": "Нотатки",
+    "transactionFormLabelTags": "Теги",
+    "transactionFormLabelTitle": "Назва транзакції",
+    "transactionSplitAdd": "Додати розділену транзакцію",
+    "transactionSplitChangeCurrency": "Змінити валюту розділення",
+    "transactionSplitChangeDestinationAccount": "Змінити рахунок призначення розділення",
+    "transactionSplitChangeSourceAccount": "Змінити вихідний рахунок поділу",
+    "transactionSplitChangeTarget": "Змінити цільовий рахунок поділу",
+    "transactionSplitDelete": "Видалити поділ",
     "transactionTitleAdd": "Додати транзакцію",
-    "@transactionTitleAdd": {
-        "description": "Title: Add a new transaction"
-    }
+    "transactionTitleDelete": "Видалити транзакцію",
+    "transactionTitleEdit": "Редагувати транзакцію",
+    "transactionTypeDeposit": "Депозит",
+    "transactionTypeTransfer": "Переказ",
+    "transactionTypeWithdrawal": "Зняття коштів"
 }

@@ -39,16 +39,24 @@ class LabelAmountChart {
 
 final List<charts.Color> possibleChartColors = <charts.Color>[
   // https://sronpersonalpages.nl/~pault/#fig:scheme_muted (fig.4)
-  const charts.Color(r: 204, g: 102, b: 119), // rose
-  const charts.Color(r: 0, g: 119, b: 187), // indigo - actually blue from fig.3
+  // rose
+  const charts.Color(r: 204, g: 102, b: 119),
+  // indigo - actually blue from fig.3
+  const charts.Color(r: 0, g: 119, b: 187),
+  // sand - actually yellow from fig.5
   const charts.Color(r: 238, g: 204, b: 102),
-  // sand - actually yellow from f.5
-  const charts.Color(r: 17, g: 119, b: 51), // green
-  const charts.Color(r: 51, g: 187, b: 238), // cyan - actually from fig.3
-  //const charts.Color(r: 136, g: 34, b: 85), // wine - disabled as black reads poorly
-  const charts.Color(r: 68, g: 170, b: 153), // teal
-  const charts.Color(r: 153, g: 153, b: 51), // olive
-  const charts.Color(r: 170, g: 68, b: 153), // purple
+  // green
+  const charts.Color(r: 17, g: 119, b: 51),
+  // cyan - actually from fig.3
+  const charts.Color(r: 51, g: 187, b: 238),
+  // wine - disabled as black reads poorly
+  //const charts.Color(r: 136, g: 34, b: 85),
+  // teal
+  const charts.Color(r: 68, g: 170, b: 153),
+  // olive
+  const charts.Color(r: 153, g: 153, b: 51),
+  // purple
+  const charts.Color(r: 170, g: 68, b: 153),
 ];
 
 final List<Color> possibleChartColorsDart = <Color>[

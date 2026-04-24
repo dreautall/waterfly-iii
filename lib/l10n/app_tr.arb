@@ -1,258 +1,1259 @@
 {
-  "@@locale": "tr",
-  "@@x-reference": true,
-  "accountRoleAssetCashWallet": "Nakit Cüzdan",
-  "accountRoleAssetCC": "Kredi Kartı",
-  "accountRoleAssetDefault": "Varsayılan Varlık Hesabı",
-  "accountRoleAssetSavings": "Birikim Hesabı",
-  "accountRoleAssetShared": "Paylaşılan varlık hesabı",
-  "accountsLabelAsset": "Varlık Hesapları",
-  "accountsLabelExpense": "Harcama Hesabı",
-  "accountsLabelLiabilities": "Yükümlülükler",
-  "accountsLabelRevenue": "Gelir Hesabı",
-  "accountsLiabilitiesInterest": "{interest}% faiz (her {period, select, weekly{haftada} monthly{ayda} quarterly{çeyrekte} halfyear{yarım yılda} yearly{yılda} other{bilinmeyen periyotta}})",
-  "billsAmountAndFrequency": "Abonelik, {minValue} ve {maxvalue} arasındaki işlemleri eşleştirir. {frequency, select, weekly{Haftalık} monthly{Aylık} quarterly{Üç aylık} halfyear{Altı aylık} yearly{Yıllık} other{Bilinmeyen}} tekrarlanır{skip, plural, =0{} other{, {skip} defa atlar}}.",
-  "billsChangeLayoutTooltip": "Düzeni değiştir",
-  "billsChangeSortOrderTooltip": "Sıralama düzenini değiştir",
-  "billsErrorLoading": "Abonelikler yüklenirken hata oluştu.",
-  "billsExactAmountAndFrequency": "Abonelik, {value} tutarındaki işlemleri eşleştirir. {frequency, select, weekly{Haftalık} monthly{Aylık} quarterly{Üç aylık} halfyear{Altı aylık} yearly{Yıllık} other{Bilinmeyen}} tekrarlanır{skip, plural, =0{} other{, {skip} defa atlar}}.",
-  "billsExpectedOn": "{date} tarihinde bekleniyor",
-  "billsFrequency": "{frequency, select, weekly{Haftalık} monthly{Aylık} quarterly{Üç aylık} halfyear{Altı aylık} yearly{Yıllık} other{Bilinmeyen}}",
-  "billsFrequencySkip": "{frequency, select, weekly{Haftalık} monthly{Aylık} quarterly{Üç aylık} halfyear{Altı aylık} yearly{Yıllık} other{Bilinmeyen}}{skip, plural, =0{} other{, {skip} defa atlar}}",
-  "billsInactive": "Pasif",
-  "billsIsActive": "Abonelik aktif",
-  "billsLayoutGroupSubtitle": "Abonelikler atanan gruplarına göre görüntülenir.",
-  "billsLayoutGroupTitle": "Grup",
-  "billsLayoutListSubtitle": "Abonelikler belirli kriterlere göre sıralanmış bir liste halinde görüntülenir.",
-  "billsLayoutListTitle": "Liste",
-  "billsListEmpty": "Liste şu anda boş.",
-  "billsNextExpectedMatch": "Bir sonraki beklenen eşleşme",
-  "billsNotActive": "Abonelik etkin değil",
-  "billsNotExpected": "Bu dönem için beklenmiyor",
-  "billsNoTransactions": "İşlem bulunamadı.",
-  "billsPaidOn": "Ödenme tarihi: {date}",
-  "billsSortAlphabetical": "Alfabetik",
-  "billsSortByTimePeriod": "Zaman dönemine göre",
-  "billsSortFrequency": "Sıklık",
-  "billsSortName": "İsim",
-  "billsUngrouped": "Gruplandırılmamış",
-  "billsSettingsShowOnlyActive": "Sadece aktif olanları göster",
-  "billsSettingsShowOnlyActiveDesc": "Sadece aktif abonelikleri gösterir.",
-  "billsSettingsShowOnlyExpected": "Sadece beklenenleri göster",
-  "billsSettingsShowOnlyExpectedDesc": "Sadece bu ay beklenen (veya ödenmiş) abonelikleri gösterir.",
-  "categoryDeleteConfirm": "Bu kategoriyi silmek istediğinize emin misiniz? İşlemler silinmeyecek, ancak artık bir kategorileri olmayacak.",
-  "categoryErrorLoading": "Kategoriler yüklenirken hata oluştu.",
-  "categoryFormLabelIncludeInSum": "Aylık toplama dahil et",
-  "categoryFormLabelName": "Kategori Adı",
-  "categoryMonthNext": "Gelecek Ay",
-  "categoryMonthPrev": "Önceki Ay",
-  "categorySumExcluded": "hariç",
-  "categoryTitleAdd": "Kategori Ekle",
-  "categoryTitleDelete": "Kategoriyi Sil",
-  "categoryTitleEdit": "Kategoriyi Düzenle",
-  "catNone": "<kategori yok>",
-  "catOther": "Diğer",
-  "errorAPIInvalidResponse": "API'den geçersiz yanıt: {message}",
-  "errorAPIUnavailable": "API kullanılamıyor",
-  "errorFieldRequired": "Bu alan zorunludur.",
-  "errorInvalidURL": "Geçersiz URL",
-  "errorMinAPIVersion": "Minimum Firefly API Sürümü v{requiredVersion} gereklidir. Lütfen güncelleyin.",
-  "errorStatusCode": "Durum Kodu: {code}",
-  "errorUnknown": "Bilinmeyen hata.",
-  "formButtonHelp": "Yardım",
-  "formButtonLogin": "Giriş yap",
-  "formButtonLogout": "Çıkış yap",
-  "formButtonRemove": "Kaldır",
-  "formButtonResetLogin": "Girişi sıfırla",
-  "formButtonTransactionAdd": "İşlem Ekle",
-  "formButtonTryAgain": "Tekrar dene",
-  "generalAccount": "Hesap",
-  "generalAssets": "Varlıklar",
-  "generalBalance": "Bakiye",
-  "generalBalanceOn": "{date} tarihindeki bakiye",
-  "generalBill": "Abonelik",
-  "generalBudget": "Bütçe",
-  "generalCategory": "Kategori",
-  "generalCurrency": "Para Birimi",
-  "generalDateRangeCurrentMonth": "Bu Ay",
-  "generalDateRangeLast30Days": "Son 30 gün",
-  "generalDateRangeCurrentYear": "Bu Yıl",
-  "generalDateRangeLastYear": "Geçen Yıl",
-  "generalDateRangeAll": "Tümü",
-  "generalDefault": "varsayılan",
-  "generalDestinationAccount": "Hedef Hesap",
-  "generalDismiss": "Kapat",
-  "generalEarned": "Kazanılan",
-  "generalError": "Hata",
-  "generalExpenses": "Giderler",
-  "generalIncome": "Gelir",
-  "generalLiabilities": "Yükümlülükler",
-  "generalMultiple": "birden fazla",
-  "generalNever": "asla",
-  "generalReconcile": "Mutabık kalındı",
-  "generalReset": "Sıfırla",
-  "generalSourceAccount": "Kaynak Hesap",
-  "generalSpent": "Harcanan",
-  "generalSum": "Toplam",
-  "generalTarget": "Hedef",
-  "generalUnknown": "Bilinmiyor",
-  "homeMainBillsInterval": " ({period, select, weekly{haftalık} monthly{aylık} quarterly{üç aylık} halfyear{altı aylık} yearly{yıllık} other{bilinmiyor}})",
-  "homeMainBillsTitle": "Önümüzdeki hafta için abonelikler",
-  "homeMainBudgetInterval": " ({from} - {to}, {period})",
-  "homeMainBudgetIntervalSingle": " ({from} - {to})",
-  "homeMainBudgetSum": "{current} {status, select, over{aşıldı, toplam bütçe:} other{kalan bütçe:}} {available}",
-  "homeMainBudgetTitle": "Cari ay için bütçeler",
-  "homeMainChartAccountsTitle": "Hesap Özeti",
-  "homeMainChartCategoriesTitle": "Cari ay için kategori özeti",
-  "homeMainChartDailyAvg": "7 günlük ortalama",
-  "homeMainChartDailyTitle": "Günlük Özet",
-  "homeMainChartNetEarningsTitle": "Net Kazanç",
-  "homeMainChartNetWorthTitle": "Net Değer",
-  "homeMainChartTagsTitle": "Cari ay için etiket özeti",
-  "homePiggyAdjustDialogTitle": "Para Ekle/Çıkar",
-  "homePiggyDateStart": "Başlangıç tarihi: {date}",
-  "homePiggyDateTarget": "Hedef tarih: {date}",
-  "homeMainDialogSettingsTitle": "Paneli Özelleştir",
-  "homePiggyLinked": "{account} hesabına bağlı",
-  "homePiggyNoAccounts": "Hiç kumbara oluşturulmamış.",
-  "homePiggyNoAccountsSubtitle": "Web arayüzünden birkaç tane oluşturun!",
-  "homePiggyRemaining": "Biriktirilmesi gereken: {amount}",
-  "homePiggySaved": "Şu ana kadar biriken: {amount}",
-  "homePiggySavedMultiple": "Şu ana kadar biriken:",
-  "homePiggyTarget": "Hedef tutar: {amount}",
-  "homePiggyAccountStatus": "Hesap Durumu",
-  "homePiggyAvailableAmounts": "Kullanılabilir Miktarlar",
-  "homePiggyAvailable": "Kullanılabilir: {amount}",
-  "homePiggyInPiggyBanks": "Kumbaralarda: {amount}",
-  "homeTabLabelBalance": "Bilanço",
-  "homeTabLabelMain": "Ana Sayfa",
-  "homeTabLabelPiggybanks": "Kumbaralar",
-  "homeTabLabelTransactions": "İşlemler",
-  "homeTransactionsActionFilter": "Listeyi Filtrele",
-  "homeTransactionsDialogFilterAccountsAll": "<Tüm Hesaplar>",
-  "homeTransactionsDialogFilterBillsAll": "<Tüm Abonelikler>",
-  "homeTransactionsDialogFilterBillUnset": "<Abonelik atanmamış>",
-  "homeTransactionsDialogFilterBudgetsAll": "<Tüm Bütçeler>",
-  "homeTransactionsDialogFilterBudgetUnset": "<Bütçe atanmamış>",
-  "homeTransactionsDialogFilterCategoriesAll": "<Tüm Kategoriler>",
-  "homeTransactionsDialogFilterCategoryUnset": "<Kategori atanmamış>",
-  "homeTransactionsDialogFilterCurrenciesAll": "<Tüm Para Birimleri>",
-  "homeTransactionsDialogFilterDateRange": "Tarih Aralığı",
-  "homeTransactionsDialogFilterFutureTransactions": "Gelecek işlemleri göster",
-  "homeTransactionsDialogFilterSearch": "Arama Terimi",
-  "homeTransactionsDialogFilterTitle": "Filtreleri seç",
-  "homeTransactionsEmpty": "Hiçbir işlem bulunamadı.",
-  "homeTransactionsMultipleCategories": "{num, plural, one {{num} kategori} other {{num} kategori}}",
-  "homeTransactionsSettingsShowTags": "İşlem listesinde etiketleri göster",
-  "liabilityDirectionCredit": "Bu borç bana ödenmeli",
-  "liabilityDirectionDebit": "Bu borcu ben ödemeliyim",
-  "liabilityTypeDebt": "Borç",
-  "liabilityTypeLoan": "Kredi",
-  "liabilityTypeMortgage": "İpotek",
-  "loginAbout": "Waterfly III'ü verimli kullanabilmek için kendi Firefly III sunucunuza veya Home Assistant için Firefly III eklentisine ihtiyacınız var.\n\nLütfen aşağıya tam URL adresini ve kişisel erişim jetonunu (Ayarlar -> Profil -> OAuth -> Personal Access Token) girin.",
-  "loginFormButtonHideHeaders": "Başlıkları Gizle",
-  "loginFormButtonShowHeaders": "Özel Başlıklar",
-  "loginFormLabelAPIKey": "Geçerli API Anahtarı",
-  "loginFormLabelHeaders": "Özel Başlıklar (isteğe bağlı)",
-  "loginFormLabelHeadersHelp": "Her satıra bir tane, biçim: HeaderName: değer",
-  "loginFormLabelHost": "Sunucu URL'si",
-  "loginWelcome": "Waterfly III'e Hoş Geldiniz",
-  "logoutConfirmation": "Çıkış yapmak istediğinizden emin misiniz?",
-  "navigationAccounts": "Hesaplar",
-  "navigationBills": "Abonelikler",
-  "navigationCategories": "Kategoriler",
-  "navigationMain": "Kontrol Paneli",
-  "generalSettings": "Ayarlar",
-  "no": "Hayır",
-  "numPercent": "{num}",
-  "numPercentOf": "{perc} / {of}",
-  "settingsDialogDebugInfo": "Hata ayıklama günlüklerini buradan etkinleştirebilir ve gönderebilirsiniz. Bunların performans üzerinde olumsuz bir etkisi vardır, bu nedenle tavsiye edilmedikçe etkinleştirmeyin. Günlüğe kaydı devre dışı bırakmak, kayıtlı günlükleri silecektir.",
-  "settingsDialogDebugMailCreate": "E-posta Oluştur",
-  "settingsDialogDebugMailDisclaimer": "UYARI: Günlük dosyası eklenmiş (metin formatında) bir e-posta taslağı açılacaktır. Günlükler, Firefly örneğinizin ana bilgisayar adı gibi hassas bilgiler içerebilir (api anahtarı gibi sırların kaydedilmemesine özen gösterilse de). Lütfen günlüğü dikkatlice okuyun ve paylaşmak istemediğiniz ve/veya bildirmek istediğiniz sorunla ilgili olmayan bilgileri karartın.\n\nLütfen önceden e-posta/GitHub yoluyla mutabakat sağlamadan günlük göndermeyin. Bağlamı olmayan günlükleri gizlilik nedenleriyle sileceğim. Günlüğü asla sansürsüz olarak GitHub'a veya başka bir yere yüklemeyin.",
-  "settingsDialogDebugSendButton": "Günlükleri E-posta ile Gönder",
-  "settingsDialogDebugTitle": "Hata Ayıklama Günlükleri",
-  "settingsDialogLanguageTitle": "Dil Seçin",
-  "settingsDialogThemeTitle": "Tema Seçin",
-  "settingsFAQ": "SSS",
-  "settingsFAQHelp": "Tarayıcıda açılır. Sadece İngilizce mevcuttur.",
-  "settingsLanguage": "Dil",
-  "settingsLockscreen": "Kilit Ekranı",
-  "settingsLockscreenHelp": "Uygulama başlatılırken kimlik doğrulaması iste",
-  "settingsLockscreenInitial": "Kilit ekranını etkinleştirmek için lütfen kimlik doğrulaması yapın.",
-  "settingsNLAppAccount": "Varsayılan Hesap",
-  "settingsNLAppAccountDynamic": "<Dinamik>",
-  "settingsNLAppAdd": "Uygulama Ekle",
-  "settingsNLAppAddHelp": "Dinlenecek bir uygulama eklemek için tıklayın. Sadece uygun uygulamalar listede görünecektir.",
-  "settingsNLAppAddInfo": "Listeye uygulama eklemek için telefonunuza bildirim gelen bazı işlemler yapın. Uygulama hala görünmüyorsa, lütfen app@vogt.pw adresine bildirin.",
-  "settingsNLAutoAdd": "İşlemi etkileşim olmadan oluştur",
-  "settingsNLDescription": "Bu servis, gelen bildirimlerden işlem detaylarını almanızı sağlar. Ek olarak, işleme atanacak varsayılan bir hesap seçebilirsiniz - eğer hiçbir değer ayarlanmazsa, bildirimden bir hesap çıkarmaya çalışır.",
-  "settingsNLEmptyNote": "Not alanını boş bırak",
-  "settingsNLHistory": "Bildirim Geçmişi",
-  "settingsNLHistoryEmpty": "Henüz hiçbir bildirim kaydedilmedi.",
-  "settingsNLHistoryLongDescription": "Bu, uygulama tarafından alınan son {notificationHistorySize} bildirimin geçmişidir. Ayrıca (geçerli) bildirimlerden işlemler oluşturabilir veya bir bildirimin neden işlenemediğini görebilirsiniz.",
-  "settingsNLHistoryRejectedReason": "Bildirim atlandı: {reason, select, noMoney{Parasal değer bulunamadı} noCurrency{Para birimi bulunamadı} appNotUsed{Uygulama dinlenmiyor} other{Bilinmeyen neden}}.",
-  "settingsNLHistoryShortDescription": "Önceki bildirimleri listele",
-  "settingsNLPermissionGrant": "İzin vermek için dokunun.",
-  "settingsNLPermissionNotGranted": "İzin verilmedi.",
-  "settingsNLPermissionRemove": "İzin kaldırılsın mı?",
-  "settingsNLPermissionRemoveHelp": "Bu hizmeti devre dışı bırakmak için uygulamaya tıklayın ve bir sonraki ekranda izinleri kaldırın.",
-  "settingsNLPrefillTXTitle": "İşlem başlığını bildirim başlığı ile önceden doldur",
-  "settingsNLRegularExpression": "Düzenli İfade (isteğe bağlı)",
-  "settingsNLRegularExpressionInvalid": "Geçersiz Düzenli İfade",
-  "settingsNLServiceChecking": "Durum kontrol ediliyor…",
-  "settingsNLServiceCheckingError": "Durum kontrol edilirken hata oluştu: {error}",
-  "settingsNLServiceRunning": "Hizmet çalışıyor.",
-  "settingsNLServiceStatus": "Hizmet Durumu",
-  "settingsNLServiceStopped": "Hizmet durduruldu.",
-  "settingsNotificationListener": "Bildirim Dinleyici Hizmeti",
-  "settingsServerConnection": "Sunucu Bağlantısı",
-  "settingsServerConnectionUpdated": "Bağlantı ayarları güncellendi.",
-  "settingsTheme": "Uygulama Teması",
-  "settingsThemeDynamicColors": "Dinamik Renkler",
-  "settingsThemeValue": "{theme, select, dark{Koyu Mod} light{Açık Mod} other{Sistem Varsayılanı}}",
-  "settingsUseServerTimezone": "Sunucu saat dilimini kullan",
-  "settingsUseServerTimezoneHelp": "Tüm zamanları sunucu saat diliminde göster. Bu, web arayüzünün davranışını taklit eder.",
-  "settingsVersion": "Uygulama Sürümü",
-  "settingsVersionChecking": "kontrol ediliyor…",
-  "transactionAttachments": "Ekler",
-  "transactionDeleteConfirm": "Bu işlemi silmek istediğinizden emin misiniz?",
-  "transactionDialogAttachmentsDelete": "Eki Sil",
-  "transactionDialogAttachmentsDeleteConfirm": "Bu eki silmek istediğinizden emin misiniz?",
-  "transactionDialogAttachmentsErrorDownload": "Dosya indirilemedi.",
-  "transactionDialogAttachmentsErrorOpen": "Dosya açılamadı: {error}",
-  "transactionDialogAttachmentsErrorUpload": "Dosya yüklenemedi: {error}",
-  "transactionDialogAttachmentsTitle": "Ekler",
-  "transactionDialogBillNoBill": "Abonelik yok",
-  "transactionDialogBillTitle": "Aboneliğe Bağla",
-  "transactionDialogCurrencyTitle": "Para birimi seç",
-  "transactionDialogPiggyNoPiggy": "Kumbarası yok",
-  "transactionDialogPiggyTitle": "Kumbaraya Bağla",
-  "transactionDialogTagsAdd": "Etiket Ekle",
-  "transactionDialogTagsHint": "Etiket Ara/Ekle",
-  "transactionDialogTagsTitle": "Etiketleri seç",
-  "transactionDuplicate": "Çoğalt",
-  "transactionErrorInvalidAccount": "Geçersiz Hesap",
-  "transactionErrorInvalidBudget": "Geçersiz Bütçe",
-  "transactionErrorNoAccounts": "Lütfen önce hesapları doldurun.",
-  "transactionErrorNoAssetAccount": "Lütfen bir varlık hesabı seçin.",
-  "transactionErrorTitle": "Lütfen bir başlık girin.",
-  "transactionFormLabelAccountDestination": "Hedef hesap",
-  "transactionFormLabelAccountForeign": "Yabancı hesap",
-  "transactionFormLabelAccountOwn": "Kendi hesabım",
-  "transactionFormLabelAccountSource": "Kaynak hesap",
-  "transactionFormLabelNotes": "Notlar",
-  "transactionFormLabelTags": "Etiketler",
-  "transactionFormLabelTitle": "İşlem Başlığı",
-  "transactionSplitAdd": "Bölünmüş işlem ekle",
-  "transactionSplitChangeCurrency": "Bölünmüş İşlem Para Birimini Değiştir",
-  "transactionSplitChangeDestinationAccount": "Bölünmüş İşlem Hedef Hesabını Değiştir",
-  "transactionSplitChangeSourceAccount": "Bölünmüş İşlem Kaynak Hesabını Değiştir",
-  "transactionSplitChangeTarget": "Bölünmüş İşlem Hedef Hesabını Değiştir",
-  "transactionSplitDelete": "Bölünmüş işlemi sil",
-  "transactionTitleAdd": "İşlem Ekle",
-  "transactionTitleDelete": "İşlemi Sil",
-  "transactionTitleEdit": "İşlemi Düzenle",
-  "transactionTypeDeposit": "Para Yatırma",
-  "transactionTypeTransfer": "Transfer",
-  "transactionTypeWithdrawal": "Para Çekme"
+    "@@locale": "tr",
+    "@@x-reference": true,
+    "accountRoleAssetCashWallet": "Nakit Cüzdan",
+    "@accountRoleAssetCashWallet": {
+        "description": "Firefly Translation String: account_role_cashWalletAsset"
+    },
+    "accountRoleAssetCC": "Kredi Kartı",
+    "@accountRoleAssetCC": {
+        "description": "Firefly Translation String: account_role_ccAsset"
+    },
+    "accountRoleAssetDefault": "Varsayılan Varlık Hesabı",
+    "@accountRoleAssetDefault": {
+        "description": "Firefly Translation String: account_role_defaultAsset"
+    },
+    "accountRoleAssetSavings": "Birikim Hesabı",
+    "@accountRoleAssetSavings": {
+        "description": "Firefly Translation String: account_role_savingAsset"
+    },
+    "accountRoleAssetShared": "Paylaşılan varlık hesabı",
+    "@accountRoleAssetShared": {
+        "description": "Firefly Translation String: account_role_sharedAsset"
+    },
+    "accountsLabelAsset": "Varlık Hesapları",
+    "@accountsLabelAsset": {
+        "description": "Firefly Translation String: asset_accounts"
+    },
+    "accountsLabelExpense": "Harcama Hesabı",
+    "@accountsLabelExpense": {
+        "description": "Firefly Translation String: expense_accounts"
+    },
+    "accountsLabelLiabilities": "Yükümlülükler",
+    "@accountsLabelLiabilities": {
+        "description": "Firefly Translation String: liabilities_accounts"
+    },
+    "accountsLabelRevenue": "Gelir Hesabı",
+    "@accountsLabelRevenue": {
+        "description": "Firefly Translation String: revenue_accounts"
+    },
+    "accountsLiabilitiesInterest": "{interest}% faiz (her {period, select, weekly{haftada} monthly{ayda} quarterly{çeyrekte} halfyear{yarım yılda} yearly{yılda} other{bilinmeyen periyotta}})",
+    "@accountsLiabilitiesInterest": {
+        "description": "Interest in a certain period",
+        "placeholders": {
+            "interest": {
+                "type": "double",
+                "example": "1.2"
+            },
+            "period": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsAmountAndFrequency": "Abonelik, {minValue} ve {maxvalue} arasındaki işlemleri eşleştirir. {frequency, select, weekly{Haftalık} monthly{Aylık} quarterly{Üç aylık} halfyear{Altı aylık} yearly{Yıllık} other{Bilinmeyen}} tekrarlanır{skip, plural, =0{} other{, {skip} defa atlar}}.",
+    "@billsAmountAndFrequency": {
+        "description": "Subscription match for min and max amounts, and frequency",
+        "placeholders": {
+            "minValue": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "maxvalue": {
+                "type": "String",
+                "example": "$60.50"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsChangeLayoutTooltip": "Düzeni değiştir",
+    "@billsChangeLayoutTooltip": {
+        "description": "Text for layout change button tooltip"
+    },
+    "billsChangeSortOrderTooltip": "Sıralama düzenini değiştir",
+    "@billsChangeSortOrderTooltip": {
+        "description": "Text for sort order change button tooltip"
+    },
+    "billsErrorLoading": "Abonelikler yüklenirken hata oluştu.",
+    "@billsErrorLoading": {
+        "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
+    },
+    "billsExactAmountAndFrequency": "Abonelik, {value} tutarındaki işlemleri eşleştirir. {frequency, select, weekly{Haftalık} monthly{Aylık} quarterly{Üç aylık} halfyear{Altı aylık} yearly{Yıllık} other{Bilinmeyen}} tekrarlanır{skip, plural, =0{} other{, {skip} defa atlar}}.",
+    "@billsExactAmountAndFrequency": {
+        "description": "Subscription match for exact amount and frequency",
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsExpectedOn": "{date} tarihinde bekleniyor",
+    "@billsExpectedOn": {
+        "description": "Describes what date the subscription is expected",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsFrequency": "{frequency, select, weekly{Haftalık} monthly{Aylık} quarterly{Üç aylık} halfyear{Altı aylık} yearly{Yıllık} other{Bilinmeyen}}",
+    "@billsFrequency": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
+    "billsFrequencySkip": "{frequency, select, weekly{Haftalık} monthly{Aylık} quarterly{Üç aylık} halfyear{Altı aylık} yearly{Yıllık} other{Bilinmeyen}}{skip, plural, =0{} other{, {skip} defa atlar}}",
+    "@billsFrequencySkip": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
+    "billsInactive": "Pasif",
+    "@billsInactive": {
+        "description": "Text: when the subscription is inactive"
+    },
+    "billsIsActive": "Abonelik aktif",
+    "@billsIsActive": {
+        "description": "Text: the subscription is active"
+    },
+    "billsLayoutGroupSubtitle": "Abonelikler atanan gruplarına göre görüntülenir.",
+    "@billsLayoutGroupSubtitle": {
+        "description": "Subtitle text for group layout option"
+    },
+    "billsLayoutGroupTitle": "Grup",
+    "@billsLayoutGroupTitle": {
+        "description": "Title text for group layout option"
+    },
+    "billsLayoutListSubtitle": "Abonelikler belirli kriterlere göre sıralanmış bir liste halinde görüntülenir.",
+    "@billsLayoutListSubtitle": {
+        "description": "Subtitle text for list layout option"
+    },
+    "billsLayoutListTitle": "Liste",
+    "@billsLayoutListTitle": {
+        "description": "Title text for list layout option"
+    },
+    "billsListEmpty": "Liste şu anda boş.",
+    "@billsListEmpty": {
+        "description": "Describes that the list is empty"
+    },
+    "billsNextExpectedMatch": "Bir sonraki beklenen eşleşme",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for subscription"
+    },
+    "billsNotActive": "Abonelik etkin değil",
+    "@billsNotActive": {
+        "description": "Text: the subscription is inactive"
+    },
+    "billsNotExpected": "Bu dönem için beklenmiyor",
+    "@billsNotExpected": {
+        "description": "Describes that the subscription is not expected this period"
+    },
+    "billsNoTransactions": "İşlem bulunamadı.",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the subscription"
+    },
+    "billsPaidOn": "Ödenme tarihi: {date}",
+    "@billsPaidOn": {
+        "description": "Describes what date the subscription was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
+    },
+    "billsSortAlphabetical": "Alfabetik",
+    "@billsSortAlphabetical": {
+        "description": "Text for alphabetical sort types"
+    },
+    "billsSortByTimePeriod": "Zaman dönemine göre",
+    "@billsSortByTimePeriod": {
+        "description": "Text for frequency sort type"
+    },
+    "billsSortFrequency": "Sıklık",
+    "@billsSortFrequency": {
+        "description": "Text for sort by frequency"
+    },
+    "billsSortName": "İsim",
+    "@billsSortName": {
+        "description": "Text for sort by name"
+    },
+    "billsUngrouped": "Gruplandırılmamış",
+    "@billsUngrouped": {
+        "description": "Title for ungrouped subscriptions"
+    },
+    "billsSettingsShowOnlyActive": "Sadece aktif olanları göster",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "Sadece aktif abonelikleri gösterir.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "Sadece beklenenleri göster",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "Sadece bu ay beklenen (veya ödenmiş) abonelikleri gösterir.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
+    "categoryDeleteConfirm": "Bu kategoriyi silmek istediğinize emin misiniz? İşlemler silinmeyecek, ancak artık bir kategorileri olmayacak.",
+    "@categoryDeleteConfirm": {
+        "description": "Confirmation text to delete category"
+    },
+    "categoryErrorLoading": "Kategoriler yüklenirken hata oluştu.",
+    "@categoryErrorLoading": {
+        "description": "Generic error message when categories can't be loaded (shouldn't occur)"
+    },
+    "categoryFormLabelIncludeInSum": "Aylık toplama dahil et",
+    "@categoryFormLabelIncludeInSum": {
+        "description": "Category Add/Edit Form: Label for toggle field to include value in monthly sum"
+    },
+    "categoryFormLabelName": "Kategori Adı",
+    "@categoryFormLabelName": {
+        "description": "Category Add/Edit Form: Label for name field"
+    },
+    "categoryMonthNext": "Gelecek Ay",
+    "@categoryMonthNext": {
+        "description": "Button title to view overview for next month"
+    },
+    "categoryMonthPrev": "Önceki Ay",
+    "@categoryMonthPrev": {
+        "description": "Button title to view overview for previous month"
+    },
+    "categorySumExcluded": "hariç",
+    "@categorySumExcluded": {
+        "description": "Label that the category is excluded from the monthly sum. The label will be shown in the place where usually the monthly percentage share is shown. Should be a single word if possible."
+    },
+    "categoryTitleAdd": "Kategori Ekle",
+    "@categoryTitleAdd": {
+        "description": "Title for Dialog: Add Category"
+    },
+    "categoryTitleDelete": "Kategoriyi Sil",
+    "@categoryTitleDelete": {
+        "description": "Title for Dialog: Delete Category"
+    },
+    "categoryTitleEdit": "Kategoriyi Düzenle",
+    "@categoryTitleEdit": {
+        "description": "Title for Dialog: Edit Category"
+    },
+    "catNone": "<kategori yok>",
+    "@catNone": {
+        "description": "Placeholder when no category has been set."
+    },
+    "catOther": "Diğer",
+    "@catOther": {
+        "description": "Category description for summary category 'Other'"
+    },
+    "errorAPIInvalidResponse": "API'den geçersiz yanıt: {message}",
+    "@errorAPIInvalidResponse": {
+        "description": "Invalid API response error",
+        "placeholders": {
+            "message": {
+                "type": "String",
+                "example": "API could not be reached."
+            }
+        }
+    },
+    "errorAPIUnavailable": "API kullanılamıyor",
+    "@errorAPIUnavailable": {
+        "description": "Error thrown when API is unavailable."
+    },
+    "errorFieldRequired": "Bu alan zorunludur.",
+    "@errorFieldRequired": {
+        "description": "Error: Required field was left empty."
+    },
+    "errorInvalidURL": "Geçersiz URL",
+    "@errorInvalidURL": {
+        "description": "Error: URL is invalid"
+    },
+    "errorMinAPIVersion": "Minimum Firefly API Sürümü v{requiredVersion} gereklidir. Lütfen güncelleyin.",
+    "@errorMinAPIVersion": {
+        "description": "Error: Required API version not met.",
+        "placeholders": {
+            "requiredVersion": {
+                "type": "String",
+                "example": "2.0.0"
+            }
+        }
+    },
+    "errorStatusCode": "Durum Kodu: {code}",
+    "@errorStatusCode": {
+        "description": "HTTP status code information on error",
+        "placeholders": {
+            "code": {
+                "type": "int",
+                "example": "500"
+            }
+        }
+    },
+    "errorUnknown": "Bilinmeyen hata.",
+    "@errorUnknown": {
+        "description": "Error without further information occurred."
+    },
+    "formButtonHelp": "Yardım",
+    "@formButtonHelp": {
+        "description": "Button Label: Help"
+    },
+    "formButtonLogin": "Giriş yap",
+    "@formButtonLogin": {
+        "description": "Button Label: Login"
+    },
+    "formButtonLogout": "Çıkış yap",
+    "@formButtonLogout": {
+        "description": "Button Label: Logout"
+    },
+    "formButtonRemove": "Kaldır",
+    "@formButtonRemove": {
+        "description": "Button Label: Remove"
+    },
+    "formButtonResetLogin": "Girişi sıfırla",
+    "@formButtonResetLogin": {
+        "description": "Button Label: Reset login form (when error is shown)"
+    },
+    "formButtonTransactionAdd": "İşlem Ekle",
+    "@formButtonTransactionAdd": {
+        "description": "Button Label: Add Transaction"
+    },
+    "formButtonTryAgain": "Tekrar dene",
+    "@formButtonTryAgain": {
+        "description": "Button Label: Try that thing again (login etc)"
+    },
+    "generalAccount": "Hesap",
+    "@generalAccount": {
+        "description": "Asset/Debt (Bank) Account"
+    },
+    "generalAssets": "Varlıklar",
+    "@generalAssets": {
+        "description": "(Monetary) Assets"
+    },
+    "generalBalance": "Bakiye",
+    "@generalBalance": {
+        "description": "(Account) Balance"
+    },
+    "generalBalanceOn": "{date} tarihindeki bakiye",
+    "@generalBalanceOn": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMd",
+                "example": "2023-05-13"
+            }
+        }
+    },
+    "generalBill": "Abonelik",
+    "@generalBill": {
+        "description": "Subscription (caution: was named Bill until Firefly version 6.2.0)"
+    },
+    "generalBudget": "Bütçe",
+    "@generalBudget": {
+        "description": "(Monetary) Budget"
+    },
+    "generalCategory": "Kategori",
+    "@generalCategory": {
+        "description": "Category (of transaction etc.)."
+    },
+    "generalCurrency": "Para Birimi",
+    "@generalCurrency": {
+        "description": "(Money) Currency"
+    },
+    "generalDateRangeCurrentMonth": "Bu Ay",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "Son 30 gün",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "Bu Yıl",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "Geçen Yıl",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "Tümü",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
+    "generalDefault": "varsayılan",
+    "@generalDefault": {
+        "description": "Indicates that something is the default choice"
+    },
+    "generalDestinationAccount": "Hedef Hesap",
+    "@generalDestinationAccount": {
+        "description": "Destination Account (for transaction)"
+    },
+    "generalDismiss": "Kapat",
+    "@generalDismiss": {
+        "description": "Dismiss window/dialog without action"
+    },
+    "generalEarned": "Kazanılan",
+    "@generalEarned": {
+        "description": "(Amount) Earned"
+    },
+    "generalError": "Hata",
+    "@generalError": {
+        "description": "Error (title in dialogs etc.)"
+    },
+    "generalExpenses": "Giderler",
+    "@generalExpenses": {
+        "description": "(Account) Expenses"
+    },
+    "generalIncome": "Gelir",
+    "@generalIncome": {
+        "description": "(Account) Info"
+    },
+    "generalLiabilities": "Yükümlülükler",
+    "@generalLiabilities": {
+        "description": "Firefly Translation String: liabilities"
+    },
+    "generalMultiple": "birden fazla",
+    "@generalMultiple": {
+        "description": "Multiples of a single thing (e.g. source accounts) are existing"
+    },
+    "generalNever": "asla",
+    "@generalNever": {
+        "description": "Has never happened, no update etc."
+    },
+    "generalReconcile": "Mutabık kalındı",
+    "@generalReconcile": {
+        "description": "Booking has been confirmed/reconciled"
+    },
+    "generalReset": "Sıfırla",
+    "@generalReset": {
+        "description": "Reset something (i.e. set filters)"
+    },
+    "generalSourceAccount": "Kaynak Hesap",
+    "@generalSourceAccount": {
+        "description": "Source Account (of transaction)"
+    },
+    "generalSpent": "Harcanan",
+    "@generalSpent": {
+        "description": "(Amount) Spent"
+    },
+    "generalSum": "Toplam",
+    "@generalSum": {
+        "description": "(Mathematical) Sum"
+    },
+    "generalTarget": "Hedef",
+    "@generalTarget": {
+        "description": "Target value (i.e. a sum to save)"
+    },
+    "generalUnknown": "Bilinmiyor",
+    "@generalUnknown": {
+        "description": "Something is unknown."
+    },
+    "homeMainBillsInterval": " ({period, select, weekly{haftalık} monthly{aylık} quarterly{üç aylık} halfyear{altı aylık} yearly{yıllık} other{bilinmiyor}})",
+    "@homeMainBillsInterval": {
+        "description": "subscription interval type",
+        "placeholders": {
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBillsTitle": "Önümüzdeki hafta için abonelikler",
+    "@homeMainBillsTitle": {
+        "description": "Title: Subscriptions for the next week"
+    },
+    "homeMainBudgetInterval": " ({from} - {to}, {period})",
+    "@homeMainBudgetInterval": {
+        "description": "Budget interval ranging from 'from' to 'to', over an interval of 'period'. 'period' is localized by Firefly.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
+            },
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
+    },
+    "homeMainBudgetIntervalSingle": " ({from} - {to})",
+    "@homeMainBudgetIntervalSingle": {
+        "description": "Budget interval ranging from 'from' to 'to', without a specified period.",
+        "placeholders": {
+            "from": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 13"
+            },
+            "to": {
+                "type": "DateTime",
+                "format": "MMMd",
+                "example": "May 17"
+            }
+        }
+    },
+    "homeMainBudgetSum": "{current} {status, select, over{aşıldı, toplam bütçe:} other{kalan bütçe:}} {available}",
+    "@homeMainBudgetSum": {
+        "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
+        "placeholders": {
+            "current": {
+                "type": "String",
+                "example": "12.34€"
+            },
+            "status": {
+                "type": "String",
+                "example": "left from"
+            },
+            "available": {
+                "type": "String",
+                "example": "12.34€"
+            }
+        }
+    },
+    "homeMainBudgetTitle": "Cari ay için bütçeler",
+    "@homeMainBudgetTitle": {
+        "description": "Title: Budgets for current month"
+    },
+    "homeMainChartAccountsTitle": "Hesap Özeti",
+    "@homeMainChartAccountsTitle": {
+        "description": "Chart Label: Account Summary"
+    },
+    "homeMainChartCategoriesTitle": "Cari ay için kategori özeti",
+    "@homeMainChartCategoriesTitle": {
+        "description": "Chart Label: Category Summary"
+    },
+    "homeMainChartDailyAvg": "7 günlük ortalama",
+    "@homeMainChartDailyAvg": {
+        "description": "Text for last week average spent"
+    },
+    "homeMainChartDailyTitle": "Günlük Özet",
+    "@homeMainChartDailyTitle": {
+        "description": "Chart Label: Daily Summary"
+    },
+    "homeMainChartNetEarningsTitle": "Net Kazanç",
+    "@homeMainChartNetEarningsTitle": {
+        "description": "Chart Label: Net Earnings"
+    },
+    "homeMainChartNetWorthTitle": "Net Değer",
+    "@homeMainChartNetWorthTitle": {
+        "description": "Chart Label: Net Worth"
+    },
+    "homeMainChartTagsTitle": "Cari ay için etiket özeti",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
+    },
+    "homePiggyAdjustDialogTitle": "Para Ekle/Çıkar",
+    "@homePiggyAdjustDialogTitle": {
+        "description": "Title of the dialog where money can be added/removed to a piggy bank."
+    },
+    "homePiggyDateStart": "Başlangıç tarihi: {date}",
+    "@homePiggyDateStart": {
+        "description": "Start of the piggy bank",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "March 12, 2023"
+            }
+        }
+    },
+    "homePiggyDateTarget": "Hedef tarih: {date}",
+    "@homePiggyDateTarget": {
+        "description": "Set target date of the piggy bank (when saving should be finished)",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "March 12, 2023"
+            }
+        }
+    },
+    "homeMainDialogSettingsTitle": "Paneli Özelleştir",
+    "@homeMainDialogSettingsTitle": {
+        "description": "Dialog title for dashboard settings (card order & visibility)"
+    },
+    "homePiggyLinked": "{account} hesabına bağlı",
+    "@homePiggyLinked": {
+        "description": "Piggy bank is linked to asset account {account}.",
+        "placeholders": {
+            "account": {
+                "type": "String",
+                "example": "Awesome Bank Account"
+            }
+        }
+    },
+    "homePiggyNoAccounts": "Hiç kumbara oluşturulmamış.",
+    "@homePiggyNoAccounts": {
+        "description": "Information that no piggy banks are existing"
+    },
+    "homePiggyNoAccountsSubtitle": "Web arayüzünden birkaç tane oluşturun!",
+    "@homePiggyNoAccountsSubtitle": {
+        "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
+    },
+    "homePiggyRemaining": "Biriktirilmesi gereken: {amount}",
+    "@homePiggyRemaining": {
+        "description": "How much money is left to save",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggySaved": "Şu ana kadar biriken: {amount}",
+    "@homePiggySaved": {
+        "description": "How much money already was saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggySavedMultiple": "Şu ana kadar biriken:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
+    "homePiggyTarget": "Hedef tutar: {amount}",
+    "@homePiggyTarget": {
+        "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "Hesap Durumu",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "Kullanılabilir Miktarlar",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "Kullanılabilir: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "Kumbaralarda: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homeTabLabelBalance": "Bilanço",
+    "@homeTabLabelBalance": {
+        "description": "Tab Label: Balance Sheet page"
+    },
+    "homeTabLabelMain": "Ana Sayfa",
+    "@homeTabLabelMain": {
+        "description": "Tab Label: Start page (\"main\")"
+    },
+    "homeTabLabelPiggybanks": "Kumbaralar",
+    "@homeTabLabelPiggybanks": {
+        "description": "Tab Label: Piggy Banks page"
+    },
+    "homeTabLabelTransactions": "İşlemler",
+    "@homeTabLabelTransactions": {
+        "description": "Tab Label: Transactions page"
+    },
+    "homeTransactionsActionFilter": "Listeyi Filtrele",
+    "@homeTransactionsActionFilter": {
+        "description": "Action Button Label: Filter list."
+    },
+    "homeTransactionsDialogFilterAccountsAll": "<Tüm Hesaplar>",
+    "@homeTransactionsDialogFilterAccountsAll": {
+        "description": "Don't filter for a specific account (default entry)"
+    },
+    "homeTransactionsDialogFilterBillsAll": "<Tüm Abonelikler>",
+    "@homeTransactionsDialogFilterBillsAll": {
+        "description": "Don't filter for a specific subscription (default entry)"
+    },
+    "homeTransactionsDialogFilterBillUnset": "<Abonelik atanmamış>",
+    "@homeTransactionsDialogFilterBillUnset": {
+        "description": "Filter for unset subscription"
+    },
+    "homeTransactionsDialogFilterBudgetsAll": "<Tüm Bütçeler>",
+    "@homeTransactionsDialogFilterBudgetsAll": {
+        "description": "Don't filter for a specific budget (default entry)"
+    },
+    "homeTransactionsDialogFilterBudgetUnset": "<Bütçe atanmamış>",
+    "@homeTransactionsDialogFilterBudgetUnset": {
+        "description": "Filter for unset budgets"
+    },
+    "homeTransactionsDialogFilterCategoriesAll": "<Tüm Kategoriler>",
+    "@homeTransactionsDialogFilterCategoriesAll": {
+        "description": "Don't filter for a specific category (default entry)"
+    },
+    "homeTransactionsDialogFilterCategoryUnset": "<Kategori atanmamış>",
+    "@homeTransactionsDialogFilterCategoryUnset": {
+        "description": "Filter for unset categories"
+    },
+    "homeTransactionsDialogFilterCurrenciesAll": "<Tüm Para Birimleri>",
+    "@homeTransactionsDialogFilterCurrenciesAll": {
+        "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "Tarih Aralığı",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
+    },
+    "homeTransactionsDialogFilterFutureTransactions": "Gelecek işlemleri göster",
+    "@homeTransactionsDialogFilterFutureTransactions": {
+        "description": "Setting to show future transactions"
+    },
+    "homeTransactionsDialogFilterSearch": "Arama Terimi",
+    "@homeTransactionsDialogFilterSearch": {
+        "description": "Search term for filter"
+    },
+    "homeTransactionsDialogFilterTitle": "Filtreleri seç",
+    "@homeTransactionsDialogFilterTitle": {
+        "description": "Title of Filter Dialog"
+    },
+    "homeTransactionsEmpty": "İşlem bulunamadı.",
+    "@homeTransactionsEmpty": {
+        "description": "Message when no transactions are found."
+    },
+    "homeTransactionsMultipleCategories": "{num, plural, one {{num} kategori} other {{num} kategori}}",
+    "@homeTransactionsMultipleCategories": {
+        "description": "$num categories for the transaction.",
+        "placeholders": {
+            "num": {
+                "type": "int",
+                "example": "2"
+            }
+        }
+    },
+    "homeTransactionsSettingsShowTags": "İşlem listesinde etiketleri göster",
+    "@homeTransactionsSettingsShowTags": {
+        "description": "Setting label to show tags in transactioon list."
+    },
+    "liabilityDirectionCredit": "Bu borç bana ödenmeli",
+    "@liabilityDirectionCredit": {
+        "description": "Firefly Translation String: liability_direction_credit"
+    },
+    "liabilityDirectionDebit": "Bu borcu ben ödemeliyim",
+    "@liabilityDirectionDebit": {
+        "description": "Firefly Translation String: liability_direction_debit"
+    },
+    "liabilityTypeDebt": "Borç",
+    "@liabilityTypeDebt": {
+        "description": "Firefly Translation String: account_type_debt"
+    },
+    "liabilityTypeLoan": "Kredi",
+    "@liabilityTypeLoan": {
+        "description": "Firefly Translation String: account_type_loan"
+    },
+    "liabilityTypeMortgage": "İpotek",
+    "@liabilityTypeMortgage": {
+        "description": "Firefly Translation String: account_type_mortgage"
+    },
+    "loginAbout": "Waterfly III'ü verimli kullanabilmek için kendi Firefly III sunucunuza veya Home Assistant için Firefly III eklentisine ihtiyacınız var.\n\nLütfen aşağıya tam URL adresini ve kişisel erişim jetonunu (Ayarlar -> Profil -> OAuth -> Personal Access Token) girin.",
+    "@loginAbout": {
+        "description": "Login screen welcome description"
+    },
+    "loginFormButtonHideHeaders": "Başlıkları Gizle",
+    "@loginFormButtonHideHeaders": {
+        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
+    },
+    "loginFormButtonShowHeaders": "Özel Başlıklar",
+    "@loginFormButtonShowHeaders": {
+        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
+    },
+    "loginFormLabelAPIKey": "Geçerli API Anahtarı",
+    "@loginFormLabelAPIKey": {
+        "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHeaders": "Özel Başlıklar (isteğe bağlı)",
+    "@loginFormLabelHeaders": {
+        "description": "Login Form: Label for Custom Headers field"
+    },
+    "loginFormLabelHeadersHelp": "Her satıra bir tane, biçim: HeaderName: değer",
+    "@loginFormLabelHeadersHelp": {
+        "description": "Login Form: Helper text for Custom Headers field"
+    },
+    "loginFormLabelHost": "Sunucu URL'si",
+    "@loginFormLabelHost": {
+        "description": "Login Form: Label for Host field"
+    },
+    "loginWelcome": "Waterfly III'e Hoş Geldiniz",
+    "@loginWelcome": {
+        "description": "Login screen welcome banner"
+    },
+    "logoutConfirmation": "Çıkış yapmak istediğinizden emin misiniz?",
+    "@logoutConfirmation": {
+        "description": "Get user confirmation if he really wants to log out"
+    },
+    "navigationAccounts": "Hesaplar",
+    "@navigationAccounts": {
+        "description": "Navigation Label: Accounts Page"
+    },
+    "navigationBills": "Abonelikler",
+    "@navigationBills": {
+        "description": "Navigation Label: Subscriptions"
+    },
+    "navigationCategories": "Kategoriler",
+    "@navigationCategories": {
+        "description": "Navigation Label: Categories"
+    },
+    "navigationMain": "Kontrol Paneli",
+    "@navigationMain": {
+        "description": "Navigation Label: Dashboard"
+    },
+    "generalSettings": "Ayarlar",
+    "@generalSettings": {
+        "description": "Label: Settings"
+    },
+    "no": "Hayır",
+    "@no": {
+        "description": "The word no"
+    },
+    "numPercentOf": "{perc} / {of}",
+    "@numPercentOf": {
+        "description": "Number formatted as percentage, with total amount provided",
+        "placeholders": {
+            "perc": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            },
+            "of": {
+                "type": "String"
+            }
+        }
+    },
+    "settingsDialogDebugInfo": "Hata ayıklama günlüklerini buradan etkinleştirebilir ve gönderebilirsiniz. Bunların performans üzerinde olumsuz bir etkisi vardır, bu nedenle tavsiye edilmedikçe etkinleştirmeyin. Günlüğe kaydı devre dışı bırakmak, kayıtlı günlükleri silecektir.",
+    "@settingsDialogDebugInfo": {
+        "description": "Information about debug logs and their impact."
+    },
+    "settingsDialogDebugMailCreate": "E-posta Oluştur",
+    "@settingsDialogDebugMailCreate": {
+        "description": "Button to confirm mail creation after privacy disclaimer is shown."
+    },
+    "settingsDialogDebugMailDisclaimer": "UYARI: Günlük dosyası eklenmiş (metin formatında) bir e-posta taslağı açılacaktır. Günlükler, Firefly örneğinizin ana bilgisayar adı gibi hassas bilgiler içerebilir (api anahtarı gibi sırların kaydedilmemesine özen gösterilse de). Lütfen günlüğü dikkatlice okuyun ve paylaşmak istemediğiniz ve/veya bildirmek istediğiniz sorunla ilgili olmayan bilgileri karartın.\n\nLütfen önceden e-posta/GitHub yoluyla mutabakat sağlamadan günlük göndermeyin. Bağlamı olmayan günlükleri gizlilik nedenleriyle sileceğim. Günlüğü asla sansürsüz olarak GitHub'a veya başka bir yere yüklemeyin.",
+    "@settingsDialogDebugMailDisclaimer": {
+        "description": "Privacy disclaimer shown before sending logs"
+    },
+    "settingsDialogDebugSendButton": "Günlükleri E-posta ile Gönder",
+    "@settingsDialogDebugSendButton": {
+        "description": "Button to send logs via E-Mail"
+    },
+    "settingsDialogDebugTitle": "Hata Ayıklama Günlükleri",
+    "@settingsDialogDebugTitle": {
+        "description": "Dialog title: Debug Logs"
+    },
+    "settingsDialogLanguageTitle": "Dil Seçin",
+    "@settingsDialogLanguageTitle": {
+        "description": "Dialog title: Select Language"
+    },
+    "settingsDialogThemeTitle": "Tema Seçin",
+    "@settingsDialogThemeTitle": {
+        "description": "Dialog title: Select theme"
+    },
+    "settingsFAQ": "SSS",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
+    "settingsFAQHelp": "Tarayıcıda açılır. Sadece İngilizce mevcuttur.",
+    "@settingsFAQHelp": {
+        "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
+    },
+    "settingsLanguage": "Dil",
+    "@settingsLanguage": {
+        "description": "Currently selected language"
+    },
+    "settingsLockscreen": "Kilit Ekranı",
+    "@settingsLockscreen": {
+        "description": "Setting if a lockscreen is shown (authentication is required on startup)"
+    },
+    "settingsLockscreenHelp": "Uygulama başlatılırken kimlik doğrulaması iste",
+    "@settingsLockscreenHelp": {
+        "description": "Description for lockscreen setting"
+    },
+    "settingsLockscreenInitial": "Kilit ekranını etkinleştirmek için lütfen kimlik doğrulaması yapın.",
+    "@settingsLockscreenInitial": {
+        "description": "Prompt to authenticate once to set up the lockscreen"
+    },
+    "settingsNLAppAccount": "Varsayılan Hesap",
+    "@settingsNLAppAccount": {
+        "description": "Default account which will be used for the transaction."
+    },
+    "settingsNLAppAccountDynamic": "<Dinamik>",
+    "@settingsNLAppAccountDynamic": {
+        "description": "Account will be selected dynamically by the content of the notification."
+    },
+    "settingsNLAppAdd": "Uygulama Ekle",
+    "@settingsNLAppAdd": {
+        "description": "Button title to add a new app."
+    },
+    "settingsNLAppAddHelp": "Dinlenecek bir uygulama eklemek için tıklayın. Sadece uygun uygulamalar listede görünecektir.",
+    "@settingsNLAppAddHelp": {
+        "description": "Help text below adding the new app button."
+    },
+    "settingsNLAppAddInfo": "Listeye uygulama eklemek için telefonunuza bildirim gelen bazı işlemler yapın. Uygulama hala görünmüyorsa, lütfen app@vogt.pw adresine bildirin.",
+    "@settingsNLAppAddInfo": {
+        "description": "Help text when no more app is available to add."
+    },
+    "settingsNLAutoAdd": "İşlemi etkileşim olmadan oluştur",
+    "@settingsNLAutoAdd": {
+        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
+    },
+    "settingsNLDescription": "Bu servis, gelen bildirimlerden işlem detaylarını almanızı sağlar. Ek olarak, işleme atanacak varsayılan bir hesap seçebilirsiniz - eğer hiçbir değer ayarlanmazsa, bildirimden bir hesap çıkarmaya çalışır.",
+    "@settingsNLDescription": {
+        "description": "Description text for the notification listener service."
+    },
+    "settingsNLEmptyNote": "Not alanını boş bırak",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
+    },
+    "settingsNLHistory": "Bildirim Geçmişi",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "Henüz hiçbir bildirim kaydedilmedi.",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "Bu, uygulama tarafından alınan son {notificationHistorySize} bildirimin geçmişidir. Ayrıca (geçerli) bildirimlerden işlemler oluşturabilir veya bir bildirimin neden işlenemediğini görebilirsiniz.",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "Bildirim atlandı: {reason, select, noMoney{Parasal değer bulunamadı} noCurrency{Para birimi bulunamadı} appNotUsed{Uygulama dinlenmiyor} other{Bilinmeyen neden}}.",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "Önceki bildirimleri listele",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
+    },
+    "settingsNLPermissionGrant": "İzin vermek için dokunun.",
+    "@settingsNLPermissionGrant": {
+        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
+    },
+    "settingsNLPermissionNotGranted": "İzin verilmedi.",
+    "@settingsNLPermissionNotGranted": {
+        "description": "A requested permission was not granted."
+    },
+    "settingsNLPermissionRemove": "İzin kaldırılsın mı?",
+    "@settingsNLPermissionRemove": {
+        "description": "Dialog title asking if permission should be removed."
+    },
+    "settingsNLPermissionRemoveHelp": "Bu hizmeti devre dışı bırakmak için uygulamaya tıklayın ve bir sonraki ekranda izinleri kaldırın.",
+    "@settingsNLPermissionRemoveHelp": {
+        "description": "Dialog text giving hint how to remove the permission."
+    },
+    "settingsNLPrefillTXTitle": "İşlem başlığını bildirim başlığı ile önceden doldur",
+    "@settingsNLPrefillTXTitle": {
+        "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLRegularExpression": "Düzenli İfade (isteğe bağlı)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "Geçersiz Düzenli İfade",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
+    },
+    "settingsNLServiceChecking": "Durum kontrol ediliyor…",
+    "@settingsNLServiceChecking": {
+        "description": "Checking the status of the background service"
+    },
+    "settingsNLServiceCheckingError": "Durum kontrol edilirken hata oluştu: {error}",
+    "@settingsNLServiceCheckingError": {
+        "description": "An error occurred while checking the service status",
+        "placeholders": {
+            "error": {
+                "type": "String",
+                "description": "Error details",
+                "example": "Timeout"
+            }
+        }
+    },
+    "settingsNLServiceRunning": "Hizmet çalışıyor.",
+    "@settingsNLServiceRunning": {
+        "description": "A background service is running normally."
+    },
+    "settingsNLServiceStatus": "Hizmet Durumu",
+    "@settingsNLServiceStatus": {
+        "description": "Status of a background service."
+    },
+    "settingsNLServiceStopped": "Hizmet durduruldu.",
+    "@settingsNLServiceStopped": {
+        "description": "A background service is stopped."
+    },
+    "settingsNotificationListener": "Bildirim Dinleyici Hizmeti",
+    "@settingsNotificationListener": {
+        "description": "Setting for the notification listener service."
+    },
+    "settingsServerConnection": "Sunucu Bağlantısı",
+    "@settingsServerConnection": {
+        "description": "Settings for the server connection"
+    },
+    "settingsServerConnectionUpdated": "Bağlantı ayarları güncellendi.",
+    "@settingsServerConnectionUpdated": {
+        "description": "Server connection settings have been updated"
+    },
+    "settingsTheme": "Uygulama Teması",
+    "@settingsTheme": {
+        "description": "App theme (dark or light)"
+    },
+    "settingsThemeDynamicColors": "Dinamik Renkler",
+    "@settingsThemeDynamicColors": {
+        "description": "Material You Dynamic Colors feature"
+    },
+    "settingsThemeValue": "{theme, select, dark{Koyu Mod} light{Açık Mod} other{Sistem Varsayılanı}}",
+    "@settingsThemeValue": {
+        "description": "Currently selected theme (either dark, light or system)",
+        "placeholders": {
+            "theme": {
+                "type": "String",
+                "example": "ThemeMode.dark"
+            }
+        }
+    },
+    "settingsUseServerTimezone": "Sunucu saat dilimini kullan",
+    "@settingsUseServerTimezone": {
+        "description": "Setting label to use server timezone."
+    },
+    "settingsUseServerTimezoneHelp": "Tüm zamanları sunucu saat diliminde göster. Bu, web arayüzünün davranışını taklit eder.",
+    "@settingsUseServerTimezoneHelp": {
+        "description": "Help text for the server timezone setting. Basically, if enabled, all times shown in the app match the time shown in the webinterface (which is always in the 'home' timezone). Please try to keep the translation short (max 3 lines)."
+    },
+    "settingsVersion": "Uygulama Sürümü",
+    "@settingsVersion": {
+        "description": "Current App Version"
+    },
+    "settingsVersionChecking": "kontrol ediliyor…",
+    "@settingsVersionChecking": {
+        "description": "Shown while checking for app version"
+    },
+    "transactionAttachments": "Ekler",
+    "@transactionAttachments": {
+        "description": "Button Label: Attachments"
+    },
+    "transactionDeleteConfirm": "Bu işlemi silmek istediğinizden emin misiniz?",
+    "@transactionDeleteConfirm": {
+        "description": "Confirmation text to delete transaction"
+    },
+    "transactionDialogAttachmentsDelete": "Eki Sil",
+    "@transactionDialogAttachmentsDelete": {
+        "description": "Button Label: Delete Attachment"
+    },
+    "transactionDialogAttachmentsDeleteConfirm": "Bu eki silmek istediğinizden emin misiniz?",
+    "@transactionDialogAttachmentsDeleteConfirm": {
+        "description": "Confirmation text to delete attachment"
+    },
+    "transactionDialogAttachmentsErrorDownload": "Dosya indirilemedi.",
+    "@transactionDialogAttachmentsErrorDownload": {
+        "description": "Snackbar Text: File download failed."
+    },
+    "transactionDialogAttachmentsErrorOpen": "Dosya açılamadı: {error}",
+    "@transactionDialogAttachmentsErrorOpen": {
+        "description": "Snackbar Text: File could not be opened, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsErrorUpload": "Dosya yüklenemedi: {error}",
+    "@transactionDialogAttachmentsErrorUpload": {
+        "description": "Snackbar Text: File could not be uploaded, with reason.",
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionDialogAttachmentsTitle": "Ekler",
+    "@transactionDialogAttachmentsTitle": {
+        "description": "Dialog Title: Attachments Dialog"
+    },
+    "transactionDialogBillNoBill": "Abonelik yok",
+    "@transactionDialogBillNoBill": {
+        "description": "Button Label: no subscription to be used"
+    },
+    "transactionDialogBillTitle": "Aboneliğe Bağla",
+    "@transactionDialogBillTitle": {
+        "description": "Dialog Title: Link Subscription to transaction"
+    },
+    "transactionDialogCurrencyTitle": "Para birimi seç",
+    "@transactionDialogCurrencyTitle": {
+        "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "Kumbarası yok",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Kumbaraya Bağla",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
+    },
+    "transactionDialogTagsAdd": "Etiket Ekle",
+    "@transactionDialogTagsAdd": {
+        "description": "Button Label: Add Tag"
+    },
+    "transactionDialogTagsHint": "Etiket Ara/Ekle",
+    "@transactionDialogTagsHint": {
+        "description": "Hint Text for search tag field"
+    },
+    "transactionDialogTagsTitle": "Etiketleri seç",
+    "@transactionDialogTagsTitle": {
+        "description": "Dialog Title: Select Tags"
+    },
+    "transactionDuplicate": "Çoğalt",
+    "@transactionDuplicate": {
+        "description": "Menu Label: Duplicate item"
+    },
+    "transactionErrorInvalidAccount": "Geçersiz Hesap",
+    "@transactionErrorInvalidAccount": {
+        "description": "Transaction Save Error: Invalid account"
+    },
+    "transactionErrorInvalidBudget": "Geçersiz Bütçe",
+    "@transactionErrorInvalidBudget": {
+        "description": "Transaction Save Error: Invalid budget"
+    },
+    "transactionErrorNoAccounts": "Lütfen önce hesapları doldurun.",
+    "@transactionErrorNoAccounts": {
+        "description": "Transaction Save Error: No accounts have been entered"
+    },
+    "transactionErrorNoAssetAccount": "Lütfen bir varlık hesabı seçin.",
+    "@transactionErrorNoAssetAccount": {
+        "description": "Transaction Save Error: No account is an asset (own) account"
+    },
+    "transactionErrorTitle": "Lütfen bir başlık girin.",
+    "@transactionErrorTitle": {
+        "description": "Transaction Save Error: No title provided"
+    },
+    "transactionFormLabelAccountDestination": "Hedef hesap",
+    "@transactionFormLabelAccountDestination": {
+        "description": "Transaction Form: Label for destination account for transfer transaction"
+    },
+    "transactionFormLabelAccountForeign": "Yabancı hesap",
+    "@transactionFormLabelAccountForeign": {
+        "description": "Transaction Form: Label for foreign (other) account"
+    },
+    "transactionFormLabelAccountOwn": "Kendi hesabım",
+    "@transactionFormLabelAccountOwn": {
+        "description": "Transaction Form: Label for own account"
+    },
+    "transactionFormLabelAccountSource": "Kaynak hesap",
+    "@transactionFormLabelAccountSource": {
+        "description": "Transaction Form: Label for source account for transfer transaction"
+    },
+    "transactionFormLabelNotes": "Notlar",
+    "@transactionFormLabelNotes": {
+        "description": "Transaction Form: Label for notes field"
+    },
+    "transactionFormLabelTags": "Etiketler",
+    "@transactionFormLabelTags": {
+        "description": "Transaction Form: Label for tags field"
+    },
+    "transactionFormLabelTitle": "İşlem Başlığı",
+    "@transactionFormLabelTitle": {
+        "description": "Transaction Form: Label for title field"
+    },
+    "transactionSplitAdd": "Bölünmüş işlem ekle",
+    "@transactionSplitAdd": {
+        "description": "Button Label: Add a split"
+    },
+    "transactionSplitChangeCurrency": "Bölünmüş İşlem Para Birimini Değiştir",
+    "@transactionSplitChangeCurrency": {
+        "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "Bölünmüş İşlem Hedef Hesabını Değiştir",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "Bölünmüş İşlem Kaynak Hesabını Değiştir",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
+    },
+    "transactionSplitChangeTarget": "Bölünmüş İşlem Hedef Hesabını Değiştir",
+    "@transactionSplitChangeTarget": {
+        "description": "Hint Text: Change target account for single split"
+    },
+    "transactionSplitDelete": "Bölünmüş işlemi sil",
+    "@transactionSplitDelete": {
+        "description": "Hint Text: Delete single split"
+    },
+    "transactionTitleAdd": "İşlem Ekle",
+    "@transactionTitleAdd": {
+        "description": "Title: Add a new transaction"
+    },
+    "transactionTitleDelete": "İşlemi Sil",
+    "@transactionTitleDelete": {
+        "description": "Title: Delete existing transaction"
+    },
+    "transactionTitleEdit": "İşlemi Düzenle",
+    "@transactionTitleEdit": {
+        "description": "Title: Edit existing transaction"
+    },
+    "transactionTypeDeposit": "Para Yatırma",
+    "@transactionTypeDeposit": {
+        "description": "Deposit transaction type"
+    },
+    "transactionTypeWithdrawal": "Para Çekme",
+    "@transactionTypeWithdrawal": {
+        "description": "Withdrawal transaction type"
+    }
 }

@@ -588,7 +588,7 @@ class STr extends S {
   String get homeTransactionsDialogFilterTitle => 'Filtreleri seç';
 
   @override
-  String get homeTransactionsEmpty => 'Hiçbir işlem bulunamadı.';
+  String get homeTransactionsEmpty => 'İşlem bulunamadı.';
 
   @override
   String homeTransactionsMultipleCategories(int num) {

@@ -106,9 +106,6 @@ class SFa extends S {
 
   @override
   String billsExpectedOn(DateTime date) {
-    final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
-    final String dateString = dateDateFormat.format(date);
-
     return 'تاریخ مورد انتظار: :date\n\n\n\n\n\n';
   }
 

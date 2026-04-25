@@ -56,21 +56,20 @@ class SPt extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'semanalmente',
-      'monthly': 'mensalmente',
-      'quarterly': 'trimestralmente',
-      'halfyear': 'semestralmente',
-      'yearly': 'anualmente',
-      'other': 'desconhecido',
+      'weekly': 'weekly',
+      'monthly': 'monthly',
+      'quarterly': 'quarterly',
+      'halfyear': 'half-yearly',
+      'yearly': 'yearly',
+      'other': 'unknown',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', pulando $skip',
-      one: ', pulando 1',
+      other: ', skips over $skip',
       zero: '',
     );
-    return 'A assinatura corresponde a transações entre $minValue e $maxvalue. Repete-se $_temp0$_temp1.';
+    return 'Subscription matches transactions between $minValue and $maxvalue. Repeats $_temp0$_temp1.';
   }
 
   @override
@@ -89,21 +88,20 @@ class SPt extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'semanalmente',
-      'monthly': 'mensalmente',
-      'quarterly': 'trimestralmente',
-      'halfyear': 'semestralmente',
-      'yearly': 'anualmente',
-      'other': 'desconhecido',
+      'weekly': 'weekly',
+      'monthly': 'monthly',
+      'quarterly': 'quarterly',
+      'halfyear': 'half-yearly',
+      'yearly': 'yearly',
+      'other': 'unknown',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', pulando $skip',
-      one: ', pulando 1',
+      other: ', skips over $skip',
       zero: '',
     );
-    return 'A assinatura corresponde a transações de $value. Repete-se $_temp0$_temp1.';
+    return 'Subscription matches transactions of $value. Repeats $_temp0$_temp1.';
   }
 
   @override
@@ -130,18 +128,17 @@ class SPt extends S {
   @override
   String billsFrequencySkip(String frequency, num skip) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Semanal',
-      'monthly': 'Mensal',
-      'quarterly': 'Trimestral',
-      'halfyear': 'Semestral',
-      'yearly': 'Anual',
-      'other': 'Desconhecido',
+      'weekly': 'Weekly',
+      'monthly': 'Monthly',
+      'quarterly': 'Quarterly',
+      'halfyear': 'Half-yearly',
+      'yearly': 'Yearly',
+      'other': 'Unknown',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', pulando $skip',
-      one: ', pulando 1',
+      other: ', skips over $skip',
       zero: '',
     );
     return '$_temp0$_temp1';
@@ -1000,7 +997,7 @@ class SPt extends S {
   String get transactionSplitDelete => 'Excluir divisão';
 
   @override
-  String get transactionTitleAdd => 'Adicionar Transação';
+  String get transactionTitleAdd => 'Adicionar transação';
 
   @override
   String get transactionTitleDelete => 'Excluir Transação';

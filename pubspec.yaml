@@ -36,7 +36,7 @@ dependencies:
   # other
   flutter_secure_storage: ^10.0.0
   provider: ^6.1.2
-  chopper: ^8.4.0
+  chopper: ^8.5.2
   infinite_scroll_pagination: ^5.1.1
   badges: ^3.1.2
   filesize: ^2.0.1

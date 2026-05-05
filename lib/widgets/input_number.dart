@@ -6,7 +6,7 @@ class NumberInput extends StatelessWidget {
   const NumberInput({
     super.key,
     this.label,
-    this.controller,
+    required this.controller,
     this.value,
     this.onChanged,
     this.error,
@@ -18,7 +18,7 @@ class NumberInput extends StatelessWidget {
     this.style,
   });
 
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final String? value;
   final String? label;
   final ValueChanged<String>? onChanged;
@@ -34,13 +34,13 @@ class NumberInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Focus(
       onFocusChange: (bool hasFocus) {
-        if (hasFocus || controller == null) {
+        if (hasFocus) {
           return;
         }
-        final double result = _evaluateExpression(controller!.text);
+        final double result = _evaluateExpression(controller.text);
         final String formattedResult = result.toStringAsFixed(decimals);
-        if (controller!.text != formattedResult) {
-          controller!.text = formattedResult;
+        if (controller.text != formattedResult) {
+          controller.text = formattedResult;
           onChanged?.call(formattedResult);
         }
       },

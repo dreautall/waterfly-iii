@@ -178,7 +178,7 @@ jobs:
           releaseFiles: ./artifacts/app-release.aab
           debugSymbols: ./artifacts/aab-debug-symbols.zip
           mappingFile: ./artifacts/mapping.txt
-          track: internal
+          tracks: internal
           status: completed
       # prerelease --> push to beta
       - name: Deploy to Beta track
@@ -190,7 +190,7 @@ jobs:
           releaseFiles: ./artifacts/app-release.aab
           debugSymbols: ./artifacts/aab-debug-symbols.zip
           mappingFile: ./artifacts/mapping.txt
-          track: beta
+          tracks: beta
           status: completed
       # release --> push to production
       - name: Deploy to Production track
@@ -202,5 +202,5 @@ jobs:
           releaseFiles: ./artifacts/app-release.aab
           debugSymbols: ./artifacts/aab-debug-symbols.zip
           mappingFile: ./artifacts/mapping.txt
-          track: production
+          tracks: production
           status: completed

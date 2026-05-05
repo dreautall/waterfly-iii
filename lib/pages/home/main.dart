@@ -372,7 +372,8 @@ class _HomeMainState extends State<HomeMain>
     return respBills.body!.data
         .where(
           (BillRead e) =>
-              (e.attributes.nextExpectedMatch != null
+              ((e.attributes.active ?? false) &&
+                          e.attributes.nextExpectedMatch != null
                       ? tzHandler.sTime(e.attributes.nextExpectedMatch!)
                       : end.copyWith(day: end.day + 2))
                   .toLocal()
@@ -1311,10 +1312,6 @@ class BillList extends StatelessWidget {
                         tzHandler.sNow())
                     .subtract(const Duration(days: 1));
             for (BillRead bill in snapshot.data!) {
-              if (!(bill.attributes.active ?? false)) {
-                continue;
-              }
-
               final DateTime nextMatch =
                   bill.attributes.nextExpectedMatch != null
                   ? tzHandler

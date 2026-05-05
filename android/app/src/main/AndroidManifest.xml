@@ -90,6 +90,7 @@
         <package android:name="capitec.acuity.mobile.prod"/>
         <package android:name="ch.bekb.twint"/>
         <package android:name="ch.cembra.cmf"/>
+        <package android:name="ch.zkb.slv.mobile.client.android"/>
         <package android:name="cl.android"/>
         <package android:name="cl.bancochile.mi_banco"/>
         <package android:name="cl.scotiabank.go"/>

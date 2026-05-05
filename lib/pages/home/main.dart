@@ -308,16 +308,23 @@ class _HomeMainState extends State<HomeMain>
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
     final DateTime now = tzHandler.sNow().clearTime();
+    final String start = DateFormat(
+      'yyyy-MM-dd',
+      'en_US',
+    ).format(now.copyWith(day: 1));
+    late final String end;
+    if (now.day == 1) {
+      end = DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 2));
+    } else {
+      end = DateFormat('yyyy-MM-dd', 'en_US').format(now);
+    }
 
     final (
       Response<BudgetArray> respBudgetInfos,
       Response<BudgetLimitArray> respBudgets,
     ) = await (
       api.v1BudgetsGet(),
-      api.v1BudgetLimitsGet(
-        start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
-        end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-      ),
+      api.v1BudgetLimitsGet(start: start, end: end),
     ).wait;
     apiThrowErrorIfEmpty(respBudgetInfos, mounted ? context : null);
     apiThrowErrorIfEmpty(respBudgets, mounted ? context : null);

@@ -29,7 +29,7 @@ dependencies:
   animations: ^2.1.2
   local_auth: ^3.0.0
   quick_actions: ^1.0.7
-  image_picker: ^1.0.7
+  image_picker: ^1.2.2
   # material.io
   dynamic_color: ^1.7.0
   material_color_utilities: ^0.13.0

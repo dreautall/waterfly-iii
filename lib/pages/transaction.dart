@@ -1434,8 +1434,7 @@ class _TransactionPageState extends State<TransactionPage>
                     }
 
                     // Reset own account & account type when changed
-                    if (_sourceAccountType ==
-                        AccountTypeProperty.assetAccount) {
+                    if (_sourceAccountType.isAsset) {
                       _ownAccountId = null;
                     }
                     _sourceAccountType = .swaggerGeneratedUnknown;
@@ -1454,7 +1453,7 @@ class _TransactionPageState extends State<TransactionPage>
                       () =>
                           "selected source account ${option.name}, type ${_sourceAccountType.toString()} (${option.type})",
                     );
-                    if (_sourceAccountType == .assetAccount) {
+                    if (_sourceAccountType.isAsset) {
                       _ownAccountId = option.id;
                     }
                     checkTXType();
@@ -1527,8 +1526,7 @@ class _TransactionPageState extends State<TransactionPage>
                       }
 
                       // Reset own account & account type when changed
-                      if (_destinationAccountType ==
-                          AccountTypeProperty.assetAccount) {
+                      if (_destinationAccountType.isAsset) {
                         _ownAccountId = null;
                       }
                       _destinationAccountType = .swaggerGeneratedUnknown;
@@ -1547,7 +1545,7 @@ class _TransactionPageState extends State<TransactionPage>
                             (AccountTypeProperty e) => e.value == option.type,
                             orElse: () => .swaggerGeneratedUnknown,
                           );
-                      if (_destinationAccountType == .assetAccount) {
+                      if (_destinationAccountType.isAsset) {
                         _ownAccountId = option.id;
                       }
                       log.finer(

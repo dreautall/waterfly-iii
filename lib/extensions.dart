@@ -390,6 +390,13 @@ extension AccountTypeIcon on AccountTypeFilter {
 }
 
 extension AccountType on AccountTypeProperty {
+  bool get isAsset {
+    return this == AccountTypeProperty.assetAccount ||
+        this == AccountTypeProperty.loan ||
+        this == AccountTypeProperty.debt ||
+        this == AccountTypeProperty.mortgage;
+  }
+
   // Taken from config/firefly.php
   List<AccountTypeFilter> allowedOpposingTypes(bool isSource) {
     if (isSource) {

@@ -1,5 +1,6 @@
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:logging/logging.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 class TimeZoneHandler {
@@ -13,9 +14,11 @@ class TimeZoneHandler {
   bool get useServerTime => _useServerTime;
 
   TimeZoneHandler(String serverTZ) {
+    tz.initializeTimeZones();
     try {
       _serverLoc = tz.getLocation(serverTZ);
     } on tz.LocationNotFoundException {
+      log.fine(() => "Server Timezone: falling back to defaultTZ");
       _serverLoc = tz.getLocation(defaultTZ);
     }
     log.info(() => "Server Timezone: $serverTZ ($sLocation)");
@@ -42,6 +45,7 @@ class TimeZoneHandler {
     try {
       _deviceLoc = tz.getLocation(deviceTZ);
     } on tz.LocationNotFoundException {
+      log.fine(() => "Device Timezone: falling back to defaultTZ");
       _deviceLoc = tz.getLocation(defaultTZ);
     }
     log.info(() => "Device Timezone: $deviceTZ ($dLocation)");

@@ -21,7 +21,7 @@ class NumberInput extends StatelessWidget {
   final TextEditingController? controller;
   final String? value;
   final String? label;
-  final Function? onChanged;
+  final ValueChanged<String>? onChanged;
   final String? error;
   final Widget? icon;
   final String? hintText;
@@ -38,12 +38,16 @@ class NumberInput extends StatelessWidget {
           return;
         }
         final double result = _evaluateExpression(controller!.text);
-        controller!.text = result.toStringAsFixed(decimals);
+        final String formattedResult = result.toStringAsFixed(decimals);
+        if (controller!.text != formattedResult) {
+          controller!.text = formattedResult;
+          onChanged?.call(formattedResult);
+        }
       },
       child: TextFormField(
         controller: controller,
         initialValue: value,
-        onChanged: onChanged as void Function(String)?,
+        onChanged: onChanged,
         readOnly: disabled,
         enabled: !disabled,
         keyboardType: .numberWithOptions(

@@ -913,6 +913,8 @@ class _TransactionPageState extends State<TransactionPage>
                 setState(() {
                   _savingInProgress = true;
                 });
+                // Fires calculation of text fields
+                FocusScope.of(context).unfocus();
                 late Response<TransactionSingle> resp;
 
                 // Update existing transaction

@@ -34,10 +34,11 @@ class NumberInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Focus(
       onFocusChange: (bool hasFocus) {
+        debugPrint("focuschange: $hasFocus");
         if (hasFocus) {
           return;
         }
-        final double result = _evaluateExpression(controller.text);
+        final double result = evaluateExpression(controller.text);
         final String formattedResult = result.toStringAsFixed(decimals);
         if (controller.text != formattedResult) {
           controller.text = formattedResult;
@@ -82,7 +83,7 @@ class NumberInput extends StatelessWidget {
             if (opCount > 1) {
               // Only when last operator was inserted at end
               if (newValue.text.startsWith(oldValue.text)) {
-                final double result = _evaluateExpression(oldValue.text);
+                final double result = evaluateExpression(oldValue.text);
 
                 final String newText =
                     result.toStringAsFixed(decimals) +
@@ -130,7 +131,7 @@ class NumberInput extends StatelessWidget {
       ? RegExp(r'^[0-9]+[,.]{0,1}[0-9]{0,' + decimals.toString() + r'}$')
       : RegExp(r'^[0-9]+$');
 
-  double _evaluateExpression(String expression) {
+  static double evaluateExpression(String expression) {
     final Expression? exp = Expression.tryParse(expression);
     if (exp == null) {
       return 0;
@@ -141,5 +142,14 @@ class NumberInput extends StatelessWidget {
     );
     final double resultDouble = result?.toDouble() ?? 0;
     return resultDouble < 0 ? 0 : resultDouble;
+  }
+
+  static double evaluateAndUpdate(
+    TextEditingController controller, {
+    int decimals = 0,
+  }) {
+    final double result = evaluateExpression(controller.text);
+    controller.text = result.toStringAsFixed(decimals);
+    return result;
   }
 }

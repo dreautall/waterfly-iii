@@ -775,19 +775,18 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                 final FireflyIii api = context.read<FireflyService>().api;
                 final NavigatorState nav = Navigator.of(context);
 
+                FocusScope.of(context).unfocus();
                 // Amount handling
-                double amount =
-                    double.tryParse(_amountTextController.text) ?? 0;
+                double amount = NumberInput.evaluateAndUpdate(
+                  _amountTextController,
+                  decimals: currency.attributes.decimalPlaces ?? 2,
+                );
                 if (amount == 0) {
                   nav.pop();
+                  return;
                 }
                 if (_transactionType == .withdrawal) {
                   amount *= -1;
-                }
-
-                // Account handling
-                if (selectedAccount == null) {
-                  nav.pop();
                 }
                 final List<PiggyBankAccountUpdate> accounts =
                     <PiggyBankAccountUpdate>[];

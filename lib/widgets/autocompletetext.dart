@@ -47,6 +47,8 @@ class AutoCompleteText<T extends Object> extends StatefulWidget {
 
 class _AutoCompleteTextState<T extends Object>
     extends State<AutoCompleteText<T>> {
+  bool _justSelected = false;
+
   @override
   void initState() {
     super.initState();
@@ -55,6 +57,7 @@ class _AutoCompleteTextState<T extends Object>
   }
 
   void _handleTextChanges() {
+    log.finest(() => "_handleTextChanges: ${widget.textController.text}");
     setState(() {
       if (widget.textController.text.isEmpty && widget.onChanged != null) {
         widget.onChanged!("");
@@ -64,13 +67,17 @@ class _AutoCompleteTextState<T extends Object>
 
   @override
   Widget build(BuildContext context) {
-    log.finest(() => "build(labelText: $widget.labelText)");
+    log.finest(() => "build(labelText: ${widget.labelText})");
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) =>
           RawAutocomplete<T>(
             textEditingController: widget.textController,
             focusNode: widget.focusNode,
-            onSelected: widget.onSelected,
+            onSelected: (T option) {
+              log.finest(() => "onSelected: $option");
+              _justSelected = true;
+              widget.onSelected?.call(option);
+            },
             displayStringForOption: widget.displayStringForOption,
             fieldViewBuilder:
                 (
@@ -81,7 +88,10 @@ class _AutoCompleteTextState<T extends Object>
                 ) => TextFormField(
                   controller: textEditingController,
                   focusNode: focusNode,
-                  onChanged: widget.onChanged,
+                  onChanged: (String value) {
+                    log.finest(() => "onChanged: $value");
+                    widget.onChanged?.call(value);
+                  },
                   readOnly: widget.disabled,
                   enabled: !widget.disabled,
                   decoration: InputDecoration(
@@ -183,7 +193,17 @@ class _AutoCompleteTextState<T extends Object>
                     ),
                   ),
                 ),
-            optionsBuilder: widget.optionsBuilder,
+            optionsBuilder: (TextEditingValue textEditingValue) async {
+              log.finest(() => "optionsBuilder: ${textEditingValue.text}");
+              if (_justSelected) {
+                log.finest(
+                  () => "optionsBuilder suppressed because justSelected",
+                );
+                _justSelected = false;
+                return <T>[];
+              }
+              return await widget.optionsBuilder(textEditingValue);
+            },
           ),
     );
   }

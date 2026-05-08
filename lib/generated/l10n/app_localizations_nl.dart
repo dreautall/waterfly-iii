@@ -510,6 +510,11 @@ class SNl extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Tot nu toe gespaard:';
 
   @override
@@ -531,6 +536,11 @@ class SNl extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'In spaarpotjes: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override

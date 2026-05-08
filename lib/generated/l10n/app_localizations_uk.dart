@@ -519,6 +519,11 @@ class SUk extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Накопичено:';
 
   @override
@@ -540,6 +545,11 @@ class SUk extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'У скарбничках: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override

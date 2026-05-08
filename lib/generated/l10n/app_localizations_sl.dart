@@ -511,6 +511,11 @@ class SSl extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Privarčevano do sedaj:';
 
   @override
@@ -532,6 +537,11 @@ class SSl extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'V hranilnikih: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override

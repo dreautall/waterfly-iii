@@ -513,6 +513,11 @@ class SCa extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Estalviat fins ara:';
 
   @override
@@ -534,6 +539,11 @@ class SCa extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'En guardioles: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override

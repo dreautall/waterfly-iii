@@ -645,6 +645,16 @@
             }
         }
     },
+    "homePiggySavePerMonth": "Save per month: {amount}",
+    "@homePiggySavePerMonth": {
+        "description": "How much should be saved per month to reach the target",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
     "homePiggySavedMultiple": "Saved so far:",
     "@homePiggySavedMultiple": {
         "description": "Title for a list of multiple accounts with the amount of money saved so far"
@@ -680,6 +690,16 @@
     "homePiggyInPiggyBanks": "In piggy banks: {amount}",
     "@homePiggyInPiggyBanks": {
         "description": "Amount currently in piggy banks for this account",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyTotal": "Total: {amount}",
+    "@homePiggyTotal": {
+        "description": "Total balance of an account in the Piggy bank",
         "placeholders": {
             "amount": {
                 "type": "String",

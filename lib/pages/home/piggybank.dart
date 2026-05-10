@@ -136,14 +136,17 @@ class _HomePiggybankState extends State<HomePiggybank>
       for (final MapEntry<String, double> entry
           in accountIdToPiggyTotal.entries) {
         final String accountId = entry.key;
-        final Response<AccountSingle> respAcc = await api.v1AccountsIdGet(
-          id: accountId,
-        );
+        final (
+          Response<AccountSingle> respAcc,
+          Response<PiggyBankArray> respPiggies,
+        ) = await (
+          api.v1AccountsIdGet(id: accountId),
+          api.v1AccountsIdPiggyBanksGet(id: accountId),
+        ).wait;
         apiThrowErrorIfEmpty(respAcc, mounted ? context : null);
-        final AccountRead account = respAcc.body!.data;
-
-        final Response<PiggyBankArray> respPiggies = await api.v1AccountsIdPiggyBanksGet(id: accountId);
         apiThrowErrorIfEmpty(respPiggies, mounted ? context : null);
+
+        final AccountRead account = respAcc.body!.data;
         final List<PiggyBankRead> piggies = respPiggies.body!.data;
 
         final double accountBalance =
@@ -151,9 +154,11 @@ class _HomePiggybankState extends State<HomePiggybank>
         final double totalInPiggyBanks = entry.value;
         final double availableBalance = accountBalance - totalInPiggyBanks;
         final double savePerMonth = piggies
-            .map((PiggyBankRead element) =>
-                double.tryParse(element.attributes.savePerMonth ?? "") ?? 0
-            ).sum;
+            .map(
+              (PiggyBankRead element) =>
+                  double.tryParse(element.attributes.savePerMonth ?? "") ?? 0,
+            )
+            .sum;
 
         CurrencyRead currency = CurrencyRead(
           id: account.attributes.currencyId ?? "0",
@@ -453,9 +458,11 @@ class _HomePiggybankState extends State<HomePiggybank>
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
-                  S.of(context)
-                    .homePiggySavePerMonth(statusData.currency.fmt(statusData.savePerMonth)),
-                  textAlign: .end,
+                  S
+                      .of(context)
+                      .homePiggyTotal(
+                        statusData.currency.fmt(statusData.accountBalance),
+                      ),
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
@@ -479,18 +486,24 @@ class _HomePiggybankState extends State<HomePiggybank>
                   ),
                 ),
                 Text(
-                  S.of(context)
-                    .homePiggyInPiggyBanks(
-                    statusData.currency.fmt(statusData.totalInPiggyBanks)
-                    ),
+                  S
+                      .of(context)
+                      .homePiggyInPiggyBanks(
+                        statusData.currency.fmt(statusData.totalInPiggyBanks),
+                      ),
                   textAlign: .end,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
-                Text(
-                  S.of(context)
-                    .homePiggyTotal(statusData.currency.fmt(statusData.accountBalance)),
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
+                if (statusData.savePerMonth != 0)
+                  Text(
+                    S
+                        .of(context)
+                        .homePiggySavePerMonth(
+                          statusData.currency.fmt(statusData.savePerMonth),
+                        ),
+                    textAlign: .end,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
               ],
             ),
           ),
@@ -593,7 +606,9 @@ class _PiggyDetailsState extends State<PiggyDetails> {
       infoText += "\n";
     }
     if (savePerMonth != 0) {
-      infoText += S.of(context).homePiggySavePerMonth(currency.fmt(savePerMonth));
+      infoText += S
+          .of(context)
+          .homePiggySavePerMonth(currency.fmt(savePerMonth));
       infoText += "\n";
     }
 

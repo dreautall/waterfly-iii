@@ -200,7 +200,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
     });
 
     try {
-      late List<TransactionRead> transactionList;
+      late TransStockRead stockResponse;
 
       final int pageKey = (_pagingState.keys?.last ?? 0) + 1;
       log.finest(
@@ -246,7 +246,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
       // Faster than searching for an account, and also has cache (stock) behind
       // This search should never have additional filters!
       if (widget.filters?.account != null) {
-        transactionList = await stock.getAccount(
+        stockResponse = await stock.getAccount(
           id: _filters.account!.id,
           page: pageKey,
           limit: _numberOfPostsPerRequest,
@@ -292,13 +292,13 @@ class _HomeTransactionsState extends State<HomeTransactions>
           query = "date_before:today $query";
         }
         log.fine(() => "Search query: $query");
-        transactionList = await stock.getSearch(
+        stockResponse = await stock.getSearch(
           query: query,
           page: pageKey,
           limit: _numberOfPostsPerRequest,
         );
       } else {
-        transactionList = await stock.get(
+        stockResponse = await stock.get(
           page: pageKey,
           limit: _numberOfPostsPerRequest,
           type: .all,
@@ -308,6 +308,8 @@ class _HomeTransactionsState extends State<HomeTransactions>
           start: DateFormat('yyyy-MM-dd', 'en_US').format(startDate),
         );
       }
+
+      final List<TransactionRead> transactionList = stockResponse.data;
 
       if (_filters.account != null) {
         final AccountRead account = _filters.account!;
@@ -370,7 +372,14 @@ class _HomeTransactionsState extends State<HomeTransactions>
         }
       }
 
-      final bool isLastPage = transactionList.length < _numberOfPostsPerRequest;
+      final bool isLastPage;
+      if (stockResponse.pagination != null) {
+        isLastPage =
+            stockResponse.pagination!.currentPage ==
+            stockResponse.pagination!.totalPages;
+      } else {
+        isLastPage = transactionList.length < _numberOfPostsPerRequest;
+      }
 
       if (mounted) {
         setState(() {

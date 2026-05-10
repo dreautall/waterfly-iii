@@ -24,6 +24,7 @@ class AccountStatusData {
     required this.accountBalance,
     required this.totalInPiggyBanks,
     required this.availableBalance,
+    required this.savePerMonth,
   });
 
   final AccountRead account;
@@ -31,6 +32,7 @@ class AccountStatusData {
   final double accountBalance;
   final double totalInPiggyBanks;
   final double availableBalance;
+  final double savePerMonth;
 }
 
 class HomePiggybank extends StatefulWidget {
@@ -134,16 +136,29 @@ class _HomePiggybankState extends State<HomePiggybank>
       for (final MapEntry<String, double> entry
           in accountIdToPiggyTotal.entries) {
         final String accountId = entry.key;
-        final Response<AccountSingle> respAcc = await api.v1AccountsIdGet(
-          id: accountId,
-        );
+        final (
+          Response<AccountSingle> respAcc,
+          Response<PiggyBankArray> respPiggies,
+        ) = await (
+          api.v1AccountsIdGet(id: accountId),
+          api.v1AccountsIdPiggyBanksGet(id: accountId),
+        ).wait;
         apiThrowErrorIfEmpty(respAcc, mounted ? context : null);
+        apiThrowErrorIfEmpty(respPiggies, mounted ? context : null);
+
         final AccountRead account = respAcc.body!.data;
+        final List<PiggyBankRead> piggies = respPiggies.body!.data;
 
         final double accountBalance =
             double.tryParse(account.attributes.currentBalance ?? "") ?? 0;
         final double totalInPiggyBanks = entry.value;
         final double availableBalance = accountBalance - totalInPiggyBanks;
+        final double savePerMonth = piggies
+            .map(
+              (PiggyBankRead element) =>
+                  double.tryParse(element.attributes.savePerMonth ?? "") ?? 0,
+            )
+            .sum;
 
         CurrencyRead currency = CurrencyRead(
           id: account.attributes.currencyId ?? "0",
@@ -166,6 +181,7 @@ class _HomePiggybankState extends State<HomePiggybank>
             accountBalance: accountBalance,
             totalInPiggyBanks: totalInPiggyBanks,
             availableBalance: availableBalance,
+            savePerMonth: savePerMonth,
           ),
         );
       }
@@ -425,38 +441,73 @@ class _HomePiggybankState extends State<HomePiggybank>
   }
 
   Widget _accountStatusRow(BuildContext context, AccountStatusData statusData) {
-    return ListTile(
-      title: Text(statusData.account.attributes.name),
-      subtitle: Text(
-        "Total: ${statusData.currency.fmt(statusData.accountBalance)}",
-      ),
-      isThreeLine: false,
-      trailing: RichText(
-        textAlign: .end,
-        maxLines: 2,
-        text: TextSpan(
-          style: Theme.of(context).textTheme.bodyMedium,
-          children: <InlineSpan>[
-            TextSpan(
-              text: statusData.currency.fmt(statusData.availableBalance),
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: (statusData.availableBalance < 0)
-                    ? Colors.red
-                    : Colors.green,
-                fontWeight: .bold,
-                fontFeatures: const <FontFeature>[.tabularFigures()],
-              ),
+    return Padding(
+      padding: const .symmetric(horizontal: 16, vertical: 12),
+      child: Row(
+        crossAxisAlignment: .start,
+        children: <Widget>[
+          Expanded(
+            flex: 3,
+            child: Column(
+              crossAxisAlignment: .start,
+              children: <Widget>[
+                Text(
+                  statusData.account.attributes.name,
+                  maxLines: 1,
+                  overflow: .ellipsis,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text(
+                  S
+                      .of(context)
+                      .homePiggyTotal(
+                        statusData.currency.fmt(statusData.accountBalance),
+                      ),
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ],
             ),
-            const TextSpan(text: "\n"),
-            TextSpan(
-              text: S
-                  .of(context)
-                  .homePiggyInPiggyBanks(
-                    statusData.currency.fmt(statusData.totalInPiggyBanks),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            flex: 4,
+            child: Column(
+              crossAxisAlignment: .end,
+              children: <Widget>[
+                Text(
+                  statusData.currency.fmt(statusData.availableBalance),
+                  textAlign: .end,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: (statusData.availableBalance < 0)
+                        ? Colors.red
+                        : Colors.green,
+                    fontWeight: .bold,
+                    fontFeatures: const <FontFeature>[.tabularFigures()],
                   ),
+                ),
+                Text(
+                  S
+                      .of(context)
+                      .homePiggyInPiggyBanks(
+                        statusData.currency.fmt(statusData.totalInPiggyBanks),
+                      ),
+                  textAlign: .end,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                if (statusData.savePerMonth != 0)
+                  Text(
+                    S
+                        .of(context)
+                        .homePiggySavePerMonth(
+                          statusData.currency.fmt(statusData.savePerMonth),
+                        ),
+                    textAlign: .end,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -510,6 +561,8 @@ class _PiggyDetailsState extends State<PiggyDetails> {
         double.tryParse(currentPiggy.attributes.leftToSave ?? "") ?? 0;
     final DateTime? startDate = currentPiggy.attributes.startDate?.toLocal();
     final DateTime? targetDate = currentPiggy.attributes.targetDate?.toLocal();
+    final double savePerMonth =
+        double.tryParse(currentPiggy.attributes.savePerMonth ?? "") ?? 0;
     final CurrencyRead currency = CurrencyRead(
       id: currentPiggy.attributes.currencyId ?? "0",
       type: "currencies",
@@ -550,6 +603,12 @@ class _PiggyDetailsState extends State<PiggyDetails> {
     }
     if (targetDate != null) {
       infoText += S.of(context).homePiggyDateTarget(targetDate);
+      infoText += "\n";
+    }
+    if (savePerMonth != 0) {
+      infoText += S
+          .of(context)
+          .homePiggySavePerMonth(currency.fmt(savePerMonth));
       infoText += "\n";
     }
 

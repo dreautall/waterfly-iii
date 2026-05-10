@@ -510,6 +510,11 @@ class SPt extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Guardado até agora:';
 
   @override
@@ -531,6 +536,11 @@ class SPt extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'Em mealheiros: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override

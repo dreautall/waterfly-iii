@@ -509,6 +509,11 @@ class SDa extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Opsparet indtil videre:';
 
   @override
@@ -530,6 +535,11 @@ class SDa extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'I sparegrise: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override

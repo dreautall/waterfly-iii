@@ -510,6 +510,11 @@ class SEn extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Saved so far:';
 
   @override
@@ -531,6 +536,11 @@ class SEn extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'In piggy banks: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override

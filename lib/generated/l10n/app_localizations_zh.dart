@@ -504,6 +504,11 @@ class SZh extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => '已储蓄金额：';
 
   @override
@@ -525,6 +530,11 @@ class SZh extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return '在储蓄罐中：$amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override

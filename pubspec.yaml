@@ -34,7 +34,7 @@ dependencies:
   dynamic_color: ^1.7.0
   material_color_utilities: ^0.13.0
   # other
-  flutter_secure_storage: ^10.0.0
+  flutter_secure_storage: ^10.2.0
   provider: ^6.1.2
   chopper: ^8.5.2
   infinite_scroll_pagination: ^5.1.1

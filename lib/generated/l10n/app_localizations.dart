@@ -846,6 +846,12 @@ abstract class S {
   /// **'Saved so far: {amount}'**
   String homePiggySaved(String amount);
 
+  /// How much should be saved per month to reach the target
+  ///
+  /// In en, this message translates to:
+  /// **'Save per month: {amount}'**
+  String homePiggySavePerMonth(String amount);
+
   /// Title for a list of multiple accounts with the amount of money saved so far
   ///
   /// In en, this message translates to:
@@ -881,6 +887,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'In piggy banks: {amount}'**
   String homePiggyInPiggyBanks(String amount);
+
+  /// Total balance of an account in the Piggy bank
+  ///
+  /// In en, this message translates to:
+  /// **'Total: {amount}'**
+  String homePiggyTotal(String amount);
 
   /// Tab Label: Balance Sheet page
   ///

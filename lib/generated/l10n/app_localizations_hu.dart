@@ -15,13 +15,13 @@ class SHu extends S {
   String get accountRoleAssetCC => 'Hitelkártya';
 
   @override
-  String get accountRoleAssetDefault => 'Alapértelmezett vagyon számla';
+  String get accountRoleAssetDefault => 'Alapértelmezett eszközszámla';
 
   @override
   String get accountRoleAssetSavings => 'Megtakarítási számla';
 
   @override
-  String get accountRoleAssetShared => 'Megosztott vagyon számla';
+  String get accountRoleAssetShared => 'Megosztott eszközszámla';
 
   @override
   String get accountsLabelAsset => 'Eszközszámlák';
@@ -515,6 +515,11 @@ class SHu extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Spórolás havonta: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Eddig megtakarítva:';
 
   @override
@@ -539,7 +544,12 @@ class SHu extends S {
   }
 
   @override
-  String get homeTabLabelBalance => 'Mérleg';
+  String homePiggyTotal(String amount) {
+    return 'Egyenleg: $amount';
+  }
+
+  @override
+  String get homeTabLabelBalance => 'Egyenleg';
 
   @override
   String get homeTabLabelMain => 'Kezdőlap';

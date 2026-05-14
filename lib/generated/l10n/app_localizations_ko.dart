@@ -506,6 +506,11 @@ class SKo extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => '현재까지 저축액:';
 
   @override
@@ -527,6 +532,11 @@ class SKo extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return '저금통에 포함됨: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override

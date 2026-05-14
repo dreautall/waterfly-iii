@@ -510,6 +510,11 @@ class STr extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Şu ana kadar biriken:';
 
   @override
@@ -531,6 +536,11 @@ class STr extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'Kumbaralarda: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override

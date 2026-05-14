@@ -515,6 +515,11 @@ class SFr extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Économisé jusqu\'à présent :';
 
   @override
@@ -536,6 +541,11 @@ class SFr extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'Dans les tirelires : $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override

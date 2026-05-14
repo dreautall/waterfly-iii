@@ -63,14 +63,38 @@ class TransactionState extends ChangeNotifier {
   }
 
   List<AttachmentRead>? get attachments => _attachments;
-
   bool get hasAttachments => attachments?.isNotEmpty ?? false;
-
   set attachments(List<AttachmentRead>? attachments) {
     log.finest(() => "[TS] set attachments");
     _attachments = attachments;
     notifyListeners();
   }
+
+  bool get hasCommonSourceAccount {
+    if (!split) {
+      return true;
+    }
+    return splits.every(
+      (TransactionSplitState s) =>
+          s.sourceAccountTC.text == splits.first.sourceAccountTC.text,
+    );
+  }
+
+  bool get showSplitSourceAccounts =>
+      type == .deposit && !hasCommonSourceAccount;
+
+  bool get hasCommonDestinationAccount {
+    if (!split) {
+      return true;
+    }
+    return splits.every(
+      (TransactionSplitState s) =>
+          s.destinationAccountTC.text == splits.first.destinationAccountTC.text,
+    );
+  }
+
+  bool get showSplitDestinationAccount =>
+      type == .withdrawal && !hasCommonDestinationAccount;
 
   TransactionState(this.localCurrency);
 
@@ -90,6 +114,122 @@ class TransactionState extends ChangeNotifier {
     splits.removeAt(i);
     notifyListeners();
     return true;
+  }
+
+  void setSourceAccount(String s) {
+    log.finest(() => "[TS] setSourceAccount($s)");
+
+    for (final TransactionSplitState split in splits) {
+      split.sourceAccountTC.text = s;
+    }
+    if (sourceAccountType.isAsset) {
+      ownAccountID = null;
+    }
+    sourceAccountType = .swaggerGeneratedUnknown;
+
+    _checkTXType();
+  }
+
+  void selectSourceAccount(AutocompleteAccount option) {
+    log.finest(() => "[TS] selectSourceAccount(${option.name})");
+
+    for (final TransactionSplitState split in splits) {
+      split.sourceAccountTC.text = option.name;
+    }
+    sourceAccountType = AccountTypeProperty.values.firstWhere(
+      (AccountTypeProperty e) => e.value == option.type,
+      orElse: () => .swaggerGeneratedUnknown,
+    );
+    log.finer(
+      () =>
+          "selected source account ${option.name}, type ${sourceAccountType.toString()} (${option.type})",
+    );
+    if (sourceAccountType.isAsset) {
+      ownAccountID = option.id;
+    }
+
+    _checkTXType();
+  }
+
+  void setDestinationAccount(String s) {
+    log.finest(() => "[TS] setDestinationAccount($s)");
+
+    for (final TransactionSplitState split in splits) {
+      split.destinationAccountTC.text = s;
+    }
+    if (destinationAccountType.isAsset) {
+      ownAccountID = null;
+    }
+    destinationAccountType = .swaggerGeneratedUnknown;
+
+    _checkTXType();
+  }
+
+  void selectDestinationAccount(AutocompleteAccount option) {
+    log.finest(() => "[TS] selectDestinationAccount(${option.name})");
+
+    for (final TransactionSplitState split in splits) {
+      split.destinationAccountTC.text = option.name;
+    }
+    destinationAccountType = AccountTypeProperty.values.firstWhere(
+      (AccountTypeProperty e) => e.value == option.type,
+      orElse: () => .swaggerGeneratedUnknown,
+    );
+    log.finer(
+      () =>
+          "selected destination account ${option.name}, type ${destinationAccountType.toString()} (${option.type})",
+    );
+    if (destinationAccountType.isAsset) {
+      ownAccountID = option.id;
+    }
+
+    _checkTXType();
+  }
+
+  TransactionTypeProperty computeTransactionType() {
+    log.finest(() => "[TS] computeTransactionType()");
+
+    TransactionTypeProperty txType = accountsToTransaction(
+      sourceAccountType,
+      destinationAccountType,
+    );
+
+    /* WATERFLY CUSTOM - NOT FIREFLY BEHAVIOR!
+     * To ease UX, two assumptions:
+     * 1. If only source is entered & it's an asset account, it'll be a
+     *    withdrawal
+     * 2. If only destination is entered & it's an asset account, it'll be a
+     *    deposit
+     *
+     * As _ownAccountId will be set for both of these scenarios, the other one
+     * would potentially be created by FF3 when saving. The actual webinterface
+     * only does this when saving (but also throws an error when no ownAccount
+     * is explicitly selected from the dropdown! Just typing the name [just as
+     * in this app] will throw an error!).
+     */
+    if (txType == .swaggerGeneratedUnknown &&
+        sourceAccountType == .assetAccount &&
+        destinationAccountType == .swaggerGeneratedUnknown) {
+      txType = .withdrawal;
+    } else if (txType == .swaggerGeneratedUnknown &&
+        sourceAccountType == .swaggerGeneratedUnknown &&
+        destinationAccountType == .assetAccount) {
+      txType = .deposit;
+    }
+
+    return txType;
+  }
+
+  void _checkTXType() {
+    log.finest(() => "[TS] checkTXType()");
+
+    final TransactionTypeProperty newType = computeTransactionType();
+
+    if (type != newType) {
+      type = newType;
+      log.finest(() => "[TS] checkTXType(): notify due to new $type");
+      notifyListeners();
+    }
   }
 
   @override
@@ -357,8 +497,7 @@ class _TransactionPageState extends State<TransactionPage>
   final List<String> _deletedSplitIDs = <String>[];
 
   bool _txTypeChipExtended = false;
-  bool _showSourceAccountSelection = false;
-  bool _showDestinationAccountSelection = false;
+  late TransactionTypeProperty _lastTXType;
   late bool _newTX;
   late TimeZoneHandler _tzHandler;
 
@@ -414,12 +553,11 @@ class _TransactionPageState extends State<TransactionPage>
           updateAttachmentCount();
         }
         updateTransactionAmounts();
-        splitTransactionCheckAccounts();
       });
     } else {
       // New transaction
       _tx = TransactionState(context.read<FireflyService>().defaultCurrency);
-      _tx.splitAdd();
+      splitTransactionAdd();
       _tx.groupTitleFN.requestFocus();
 
       if (widget.notification != null) {
@@ -518,10 +656,6 @@ class _TransactionPageState extends State<TransactionPage>
             _tx.splits.first.foreignAmount = amount;
             _tx.splits.first.foreignAmountUpdateText();
           }
-
-          setState(() {
-            checkTXType();
-          });
         }
         // Created from account screen, set account already
         if (widget.accountId != null && mounted) {
@@ -539,7 +673,6 @@ class _TransactionPageState extends State<TransactionPage>
               _tx.splits.first.sourceAccountTC.text = acc.attributes.name;
               _tx.sourceAccountType = .assetAccount;
               _tx.ownAccountID = acc.id;
-              checkTXType();
               break;
             }
           }
@@ -581,9 +714,8 @@ class _TransactionPageState extends State<TransactionPage>
       _tx.attachments = <AttachmentRead>[];
     }
 
-    _tx.addListener(() {
-      updateTransactionAmounts();
-    });
+    _lastTXType = _tx.type;
+    _tx.addListener(onTXChanged);
   }
 
   @override
@@ -638,21 +770,6 @@ class _TransactionPageState extends State<TransactionPage>
         _tx.groupTitleTC.text = _tx.splits.first.titleTC.text;
       }
     }
-    // Check if Source/Destination account selection should still be shown
-    if (_tx.splits.every(
-      (TransactionSplitState s) =>
-          s.sourceAccountTC.text == _tx.splits.first.sourceAccountTC.text,
-    )) {
-      _showSourceAccountSelection = false;
-    }
-    if (_tx.splits.every(
-      (TransactionSplitState s) =>
-          s.destinationAccountTC.text ==
-          _tx.splits.first.destinationAccountTC.text,
-    )) {
-      _showDestinationAccountSelection = false;
-    }
-    splitTransactionCheckAccounts();
 
     // Redo animationcallbacks due to new "i"s
     for (int i = 0; i < _cardsAnimationController.length; i++) {
@@ -708,69 +825,6 @@ class _TransactionPageState extends State<TransactionPage>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _cardsAnimationController.last.forward();
     });
-  }
-
-  void splitTransactionCheckAccounts() {
-    bool update = false;
-
-    if (_tx.splits.every(
-      (TransactionSplitState s) =>
-          s.sourceAccountTC.text == _tx.splits.first.sourceAccountTC.text,
-    )) {
-      if (_commonSourceTC.text != _tx.splits.first.sourceAccountTC.text &&
-          _tx.splits.first.sourceAccountTC.text.isNotEmpty) {
-        _commonSourceTC.text = _tx.splits.first.sourceAccountTC.text;
-        update = true;
-      }
-    } else {
-      if (_commonSourceTC.text != "<${S.of(context).generalMultiple}>") {
-        _commonSourceTC.text = "<${S.of(context).generalMultiple}>";
-        update = true;
-      }
-    }
-    if (_tx.splits.every(
-      (TransactionSplitState s) =>
-          s.destinationAccountTC.text ==
-          _tx.splits.first.destinationAccountTC.text,
-    )) {
-      if (_commonDestinationTC.text !=
-              _tx.splits.first.destinationAccountTC.text &&
-          _tx.splits.first.destinationAccountTC.text.isNotEmpty) {
-        _commonDestinationTC.text = _tx.splits.first.destinationAccountTC.text;
-        update = true;
-      }
-    } else {
-      if (_commonDestinationTC.text != "<${S.of(context).generalMultiple}>") {
-        _commonDestinationTC.text = "<${S.of(context).generalMultiple}>";
-        update = true;
-      }
-    }
-
-    // Withdrawal: splits have common source account --> show only target
-    // Deposit: splits have common destination account --> show only source
-    // Transfer: splits have common accounts for both --> show nothing
-    final bool prevShowSource = _showSourceAccountSelection;
-    final bool prevShowDest = _showDestinationAccountSelection;
-    _showSourceAccountSelection =
-        _tx.type == .deposit &&
-        _tx.splits.every(
-          (TransactionSplitState s) =>
-              s.sourceAccountTC.text != _commonSourceTC.text,
-        );
-    _showDestinationAccountSelection =
-        _tx.type == .withdrawal &&
-        _tx.splits.every(
-          (TransactionSplitState s) =>
-              s.destinationAccountTC.text != _commonDestinationTC.text,
-        );
-    if (prevShowSource != _showSourceAccountSelection ||
-        prevShowDest != _showDestinationAccountSelection) {
-      update = true;
-    }
-
-    if (update) {
-      setState(() {});
-    }
   }
 
   Future<void> updateAttachmentCount() async {
@@ -1344,8 +1398,7 @@ class _TransactionPageState extends State<TransactionPage>
     */
     childs.add(hDivider);
 
-    // Source Account, floating type element
-    /*
+    // Source Account, Destination Account & floating type element
     childs.add(
       Stack(
         children: <Widget>[
@@ -1357,45 +1410,14 @@ class _TransactionPageState extends State<TransactionPage>
               Expanded(
                 child: AutoCompleteText<AutocompleteAccount>(
                   labelText: S.of(context).generalSourceAccount,
-                  //labelIcon: Icons.account_balance,
-                  textController: _sourceAccountTextController,
-                  focusNode: _sourceAccountFocusNode,
-                  /*errorText:
-                  _transactionType == TransactionTypeProperty.withdrawal &&
-                          _sourceAccountId == null
-                      ? S.of(context).transactionErrorInvalidAccount
-                      : null,*/
+                  textController: _commonSourceTC,
+                  focusNode: _commonSourceFN,
                   errorIconOnly: true,
                   onChanged: (String val) {
-                    for (TextEditingController e
-                        in _sourceAccountTextControllers) {
-                      e.text = val;
-                    }
-
-                    // Reset own account & account type when changed
-                    if (_sourceAccountType.isAsset) {
-                      _ownAccountId = null;
-                    }
-                    _sourceAccountType = .swaggerGeneratedUnknown;
-                    checkTXType();
+                    _tx.setSourceAccount(val);
                   },
                   onSelected: (AutocompleteAccount option) {
-                    for (TextEditingController e
-                        in _sourceAccountTextControllers) {
-                      e.text = option.name;
-                    }
-                    _sourceAccountType = AccountTypeProperty.values.firstWhere(
-                      (AccountTypeProperty e) => e.value == option.type,
-                      orElse: () => .swaggerGeneratedUnknown,
-                    );
-                    log.finer(
-                      () =>
-                          "selected source account ${option.name}, type ${_sourceAccountType.toString()} (${option.type})",
-                    );
-                    if (_sourceAccountType.isAsset) {
-                      _ownAccountId = option.id;
-                    }
-                    checkTXType();
+                    _tx.selectSourceAccount(option);
                     checkAccountCurrency(option, true);
                   },
                   displayStringForOption: (AutocompleteAccount option) =>
@@ -1411,7 +1433,7 @@ class _TransactionPageState extends State<TransactionPage>
                           >.fromFuture(
                             api.v1AutocompleteAccountsGet(
                               query: textEditingValue.text,
-                              types: _destinationAccountType
+                              types: _tx.destinationAccountType
                                   .allowedOpposingTypes(false),
                             ),
                           );
@@ -1435,8 +1457,8 @@ class _TransactionPageState extends State<TransactionPage>
                   },
                   disabled:
                       _savingInProgress ||
-                      (_reconciled && _initiallyReconciled) ||
-                      _sourceAccountTextController.text ==
+                      (_tx.reconciled && _tx.initiallyReconciled) ||
+                      _commonSourceTC.text ==
                           "<${S.of(context).generalMultiple}>",
                 ),
               ),
@@ -1452,46 +1474,16 @@ class _TransactionPageState extends State<TransactionPage>
                 Expanded(
                   child: AutoCompleteText<AutocompleteAccount>(
                     labelText: S.of(context).generalDestinationAccount,
-                    textController: _destinationAccountTextController,
-                    focusNode: _destinationAccountFocusNode,
-                    /*errorText: _transactionType == TransactionTypeProperty.deposit &&
-                      _destinationAccountId == null
-                  ? S.of(context).transactionErrorInvalidAccount
-                  : null,*/
+                    textController: _commonDestinationTC,
+                    focusNode: _commonDestinationFN,
                     onChanged: (String val) {
-                      for (TextEditingController e
-                          in _destinationAccountTextControllers) {
-                        e.text = val;
-                      }
-
-                      // Reset own account & account type when changed
-                      if (_destinationAccountType.isAsset) {
-                        _ownAccountId = null;
-                      }
-                      _destinationAccountType = .swaggerGeneratedUnknown;
-                      checkTXType();
+                      _tx.setDestinationAccount(val);
                     },
                     errorIconOnly: true,
                     displayStringForOption: (AutocompleteAccount option) =>
                         option.name,
                     onSelected: (AutocompleteAccount option) {
-                      for (TextEditingController e
-                          in _destinationAccountTextControllers) {
-                        e.text = option.name;
-                      }
-                      _destinationAccountType = AccountTypeProperty.values
-                          .firstWhere(
-                            (AccountTypeProperty e) => e.value == option.type,
-                            orElse: () => .swaggerGeneratedUnknown,
-                          );
-                      if (_destinationAccountType.isAsset) {
-                        _ownAccountId = option.id;
-                      }
-                      log.finer(
-                        () =>
-                            "selected destination account ${option.name}, type ${_destinationAccountType.toString()} (${option.type})",
-                      );
-                      checkTXType();
+                      _tx.selectDestinationAccount(option);
                       checkAccountCurrency(option, false);
                     },
                     optionsBuilder: (TextEditingValue textEditingValue) async {
@@ -1507,9 +1499,8 @@ class _TransactionPageState extends State<TransactionPage>
                             >.fromFuture(
                               api.v1AutocompleteAccountsGet(
                                 query: textEditingValue.text,
-                                types: _sourceAccountType.allowedOpposingTypes(
-                                  true,
-                                ),
+                                types: _tx.sourceAccountType
+                                    .allowedOpposingTypes(true),
                               ),
                             );
                         final Response<AutocompleteAccountArray>? response =
@@ -1535,8 +1526,8 @@ class _TransactionPageState extends State<TransactionPage>
                     },
                     disabled:
                         _savingInProgress ||
-                        (_reconciled && _initiallyReconciled) ||
-                        _destinationAccountTextController.text ==
+                        (_tx.reconciled && _tx.initiallyReconciled) ||
+                        _commonDestinationTC.text ==
                             "<${S.of(context).generalMultiple}>",
                   ),
                 ),
@@ -1554,13 +1545,13 @@ class _TransactionPageState extends State<TransactionPage>
                 duration: animDurationEmphasized,
                 curve: animCurveEmphasized,
                 child: _txTypeChipExtended
-                    ? Text(_transactionType.friendlyName(context))
+                    ? Text(_tx.type.friendlyName(context))
                     : const SizedBox(),
               ),
-              icon: Icon(_transactionType.verticalIcon),
+              icon: Icon(_tx.type.verticalIcon),
               backgroundColor: _savingInProgress
                   ? Theme.of(context).colorScheme.surfaceContainerHighest
-                  : _transactionType.color,
+                  : _tx.type.color,
             ),
           ),
         ],
@@ -1568,7 +1559,7 @@ class _TransactionPageState extends State<TransactionPage>
     );
     childs.add(hDivider);
     // Cards with (Split Title), Category, (Split Amount), Tags, Notes
-    for (int i = 0; i < _localAmounts.length; i++) {
+    for (int i = 0; i < _tx.splits.length; i++) {
       childs.add(
         SizeTransition(
           sizeFactor: _cardsAnimation[i],
@@ -1582,13 +1573,13 @@ class _TransactionPageState extends State<TransactionPage>
       FilledButton.icon(
         onPressed: _savingInProgress
             ? null
-            : () => _reconciled && _initiallyReconciled
+            : () => _tx.reconciled && _tx.initiallyReconciled
                   ? null
                   : splitTransactionAdd(),
         label: Text(S.of(context).transactionSplitAdd),
         icon: const Icon(Icons.call_split),
       ),
-    );*/
+    );
 
     return childs;
   }
@@ -1650,63 +1641,44 @@ class _TransactionPageState extends State<TransactionPage>
     }
   }
 
-  void checkTXType() {
-    log.finest(() => "checkTXType()");
+  Future<void> onTXChanged() async {
+    log.finest(() => "onTXChanged()");
 
-    TransactionTypeProperty txType = accountsToTransaction(
-      _tx.sourceAccountType,
-      _tx.destinationAccountType,
-    );
-    /* WATERFLY CUSTOM - NOT FIREFLY BEHAVIOR!
-     * To ease UX, two assumptions:
-     * 1. If only source is entered & it's an asset account, it'll be a
-     *    withdrawal
-     * 2. If only destination is entered & it's an asset account, it'll be a
-     *    deposit
-     *
-     * As _ownAccountId will be set for both of these scenarios, the other one
-     * would potentially be created by FF3 when saving. The actual webinterface
-     * only does this when saving (but also throws an error when no ownAccount
-     * is explicitly selected from the dropdown! Just typing the name [just as
-     * in this app] will throw an error!).
-     */
+    if (_tx.type != _lastTXType) {
+      await handleTXTypeChange();
+      _lastTXType = _tx.type;
 
-    if (txType == .swaggerGeneratedUnknown &&
-        _tx.sourceAccountType == .assetAccount &&
-        _tx.destinationAccountType == .swaggerGeneratedUnknown) {
-      txType = .withdrawal;
-    } else if (txType == .swaggerGeneratedUnknown &&
-        _tx.sourceAccountType == .swaggerGeneratedUnknown &&
-        _tx.destinationAccountType == .assetAccount) {
-      txType = .deposit;
-    }
-
-    // Withdrawal: splits have common source account
-    // Deposit: splits have common destination account
-    // Transfer: splits have common accounts for both
-    if (txType == .withdrawal || txType == .transfer) {
-      for (TransactionSplitState s in _tx.splits) {
-        s.sourceAccountTC.text = _commonSourceTC.text;
-      }
-    }
-    if (txType == .deposit || txType == .transfer) {
-      for (TransactionSplitState s in _tx.splits) {
-        s.destinationAccountTC.text = _commonDestinationTC.text;
-      }
-    }
-
-    if (_tx.type != txType) {
-      setState(() {
-        if (txType != .swaggerGeneratedUnknown) {
-          _txTypeChipExtended = true;
-          Future<void>.delayed(animDurationEmphasized * 3, () {
-            setState(() {
-              _txTypeChipExtended = false;
-            });
-          });
+      // Withdrawal: splits have common source account
+      // Deposit: splits have common destination account
+      // Transfer: splits have common accounts for both
+      if (_tx.type == .withdrawal || _tx.type == .transfer) {
+        for (TransactionSplitState s in _tx.splits) {
+          s.sourceAccountTC.text = _commonSourceTC.text;
         }
-        _tx.type = txType;
+      }
+      if (_tx.type == .deposit || _tx.type == .transfer) {
+        for (TransactionSplitState s in _tx.splits) {
+          s.destinationAccountTC.text = _commonDestinationTC.text;
+        }
+      }
+    }
+
+    updateTransactionAmounts();
+    setState(() {});
+  }
+
+  Future<void> handleTXTypeChange() async {
+    if (_tx.type != .swaggerGeneratedUnknown) {
+      setState(() {
+        _txTypeChipExtended = true;
       });
+      unawaited(
+        Future<void>.delayed(animDurationEmphasized * 3, () {
+          setState(() {
+            _txTypeChipExtended = false;
+          });
+        }),
+      );
     }
   }
 

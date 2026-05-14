@@ -101,6 +101,11 @@ class TransactionState extends ChangeNotifier {
   void splitAdd() {
     log.fine(() => "[TS] splitAdd()");
     splits.add(TransactionSplitState(this));
+
+    // As firefly doesn't allow editing accounts or sums when reconciled,
+    // deactivate reconciled.
+    reconciled = false;
+
     notifyListeners();
   }
 
@@ -112,6 +117,11 @@ class TransactionState extends ChangeNotifier {
     }
     splits[i].dispose();
     splits.removeAt(i);
+
+    // As firefly doesn't allow editing accounts or sums when reconciled,
+    // deactivate reconciled.
+    reconciled = false;
+
     notifyListeners();
     return true;
   }
@@ -781,12 +791,6 @@ class _TransactionPageState extends State<TransactionPage>
     }
 
     log.finer(() => "remaining split #: ${_tx.splits.length}");
-
-    setState(() {
-      // As firefly doesn't allow editing accounts or sums when reconciled,
-      // deactivate reconciled.
-      _tx.reconciled = false;
-    });
   }
 
   void splitTransactionAdd() {
@@ -815,12 +819,6 @@ class _TransactionPageState extends State<TransactionPage>
     );
 
     log.finer(() => "new split #: ${_tx.splits.length}");
-
-    setState(() {
-      // As firefly doesn't allow editing accounts or sums when reconciled,
-      // deactivate reconciled.
-      _tx.reconciled = false;
-    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _cardsAnimationController.last.forward();

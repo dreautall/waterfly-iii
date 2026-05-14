@@ -43,7 +43,7 @@ class TransactionState extends ChangeNotifier {
   bool reconciled = false;
   bool initiallyReconciled = false;
   final List<TransactionSplitState> splits = <TransactionSplitState>[];
-  List<AttachmentRead> _attachments = <AttachmentRead>[];
+  List<AttachmentRead>? _attachments = <AttachmentRead>[];
   AccountTypeProperty sourceAccountType = .swaggerGeneratedUnknown;
   AccountTypeProperty destinationAccountType = .swaggerGeneratedUnknown;
 
@@ -55,16 +55,19 @@ class TransactionState extends ChangeNotifier {
 
   tz.TZDateTime get date => _date;
   set date(tz.TZDateTime date) {
-    log.finest(() => "[TS] set date()");
+    log.finest(() => "[TS] set date");
     _date = date;
     dateTC.text = DateFormat.yMMMd().format(_date);
     timeTC.text = DateFormat.Hm().format(_date);
-    notifyListeners();
+    //notifyListeners();
   }
 
-  List<AttachmentRead> get attachments => _attachments;
-  bool get hasAttachments => attachments.isNotEmpty;
-  set attachments(List<AttachmentRead> attachments) {
+  List<AttachmentRead>? get attachments => _attachments;
+
+  bool get hasAttachments => attachments?.isNotEmpty ?? false;
+
+  set attachments(List<AttachmentRead>? attachments) {
+    log.finest(() => "[TS] set attachments");
     _attachments = attachments;
     notifyListeners();
   }
@@ -154,6 +157,8 @@ class TransactionState extends ChangeNotifier {
       tx.initiallyReconciled = true;
     }
 
+    bool hasAttachments = false;
+
     for (TransactionSplit trans in transactions) {
       final TransactionSplitState newSplit = TransactionSplitState(tx);
 
@@ -191,6 +196,7 @@ class TransactionState extends ChangeNotifier {
 
       /// local amount
       newSplit.localAmount = double.tryParse(trans.amount) ?? 0.0;
+      newSplit.localAmountUpdateText();
 
       /// source account
       newSplit.sourceAccountTC.text = trans.sourceName ?? "";
@@ -216,11 +222,23 @@ class TransactionState extends ChangeNotifier {
       }
       //// foreign amount
       newSplit.foreignAmount = double.tryParse(trans.foreignAmount ?? '') ?? 0;
+      if (newSplit.foreignAmount != 0) {
+        newSplit.foreignAmountUpdateText();
+      }
 
       /// Journal ID
       newSplit.journalID = trans.transactionJournalId;
 
+      /// attachments
+      hasAttachments = hasAttachments || (trans.hasAttachments ?? false);
+
       tx.splits.add(newSplit);
+    }
+
+    if (hasAttachments) {
+      // If any split had an attachment, there are some. Set to "null" to
+      // trigger a separate API call to fetch the list!
+      tx.attachments = null;
     }
 
     return tx;
@@ -264,25 +282,29 @@ class TransactionSplitState {
   set localAmount(double amount) {
     log.fine(() => "[TSS] set localAmount($amount)");
     _localAmount = amount;
-    localAmountTC.text = amount.toStringAsFixed(
-      localCurrency.attributes.decimalPlaces ?? 2,
-    );
+    // To update the global amount for splits
     parent.notifyListeners();
   }
 
   double get foreignAmount => _foreignAmount;
-
   set foreignAmount(double amount) {
     log.fine(() => "[TSS] set foreignAmount($amount)");
     _foreignAmount = amount;
-    if (foreignCurrency != null) {
-      foreignAmountTC.text = amount.toStringAsFixed(
-        foreignCurrency!.attributes.decimalPlaces ?? 2,
-      );
-    }
   }
 
   TransactionSplitState(this.parent);
+
+  void localAmountUpdateText() {
+    localAmountTC.text = _localAmount.toStringAsFixed(
+      localCurrency.attributes.decimalPlaces ?? 2,
+    );
+  }
+
+  void foreignAmountUpdateText() {
+    foreignAmountTC.text = _foreignAmount.toStringAsFixed(
+      foreignCurrency?.attributes.decimalPlaces ?? 2,
+    );
+  }
 
   void dispose() {
     log.fine(() => "[TSS] dispose()");
@@ -388,12 +410,16 @@ class _TransactionPageState extends State<TransactionPage>
         );
       }
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_tx.attachments == null) {
+          updateAttachmentCount();
+        }
         updateTransactionAmounts();
         splitTransactionCheckAccounts();
       });
     } else {
       // New transaction
       _tx = TransactionState(context.read<FireflyService>().defaultCurrency);
+      _tx.splitAdd();
       _tx.groupTitleFN.requestFocus();
 
       if (widget.notification != null) {
@@ -405,8 +431,6 @@ class _TransactionPageState extends State<TransactionPage>
       }
 
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        _tx.splitAdd();
-
         // Extract notification
         if (widget.notification != null) {
           final FireflyIii api = context.read<FireflyService>().api;
@@ -488,9 +512,11 @@ class _TransactionPageState extends State<TransactionPage>
           // Check currency
           if (currency.id == _tx.localCurrency.id) {
             _tx.splits.first.localAmount = amount;
+            _tx.splits.first.localAmountUpdateText();
           } else {
             _tx.splits.first.foreignCurrency = currency;
             _tx.splits.first.foreignAmount = amount;
+            _tx.splits.first.foreignAmountUpdateText();
           }
 
           setState(() {
@@ -525,10 +551,10 @@ class _TransactionPageState extends State<TransactionPage>
               continue;
             }
             final XFile xfile = XFile(file.value!);
-            _tx.attachments.add(
+            _tx.attachments!.add(
               AttachmentRead(
                 type: "attachments",
-                id: _tx.attachments.length.toString(),
+                id: _tx.attachments!.length.toString(),
                 attributes: AttachmentProperties(
                   attachableType: .transactionjournal,
                   attachableId: "FAKE",
@@ -552,7 +578,7 @@ class _TransactionPageState extends State<TransactionPage>
       _tx.splits.forEachIndexed(
         (_, TransactionSplitState s) => s.journalID = null,
       );
-      _tx.attachments.clear();
+      _tx.attachments = <AttachmentRead>[];
     }
 
     _tx.addListener(() {
@@ -748,6 +774,8 @@ class _TransactionPageState extends State<TransactionPage>
   }
 
   Future<void> updateAttachmentCount() async {
+    log.finest(() => "updateAttachmentCount()");
+
     try {
       final FireflyIii api = context.read<FireflyService>().api;
       final Response<AttachmentArray> response = await api
@@ -755,7 +783,6 @@ class _TransactionPageState extends State<TransactionPage>
       apiThrowErrorIfEmpty(response, mounted ? context : null);
 
       _tx.attachments = response.body!.data;
-      setState(() {});
     } catch (e, stackTrace) {
       log.severe("Error while fetching attachments from API", e, stackTrace);
     }
@@ -2588,10 +2615,13 @@ class AttachmentButton extends StatefulWidget {
 class _AttachmentButtonState extends State<AttachmentButton> {
   late bool _hasAttachments;
 
+  final Logger log = Logger("Pages.Transaction.AttachmentButton");
+
   @override
   void initState() {
     super.initState();
 
+    log.finest(() => "initState()");
     _hasAttachments = widget.attachments?.isNotEmpty ?? false;
   }
 
@@ -2599,11 +2629,15 @@ class _AttachmentButtonState extends State<AttachmentButton> {
   void didUpdateWidget(covariant AttachmentButton oldWidget) {
     super.didUpdateWidget(oldWidget);
 
+    log.finest(() => "didUpdateWidget()");
     _hasAttachments = widget.attachments?.isNotEmpty ?? false;
+    log.finest(() => "_hasAttachments: $_hasAttachments");
   }
 
   @override
   Widget build(BuildContext context) {
+    log.finest(() => "build(${widget.attachments?.length ?? "null"})");
+
     return badges.Badge(
       badgeContent: Text(
         widget.attachments?.length.toString() ?? "..",
@@ -2647,9 +2681,13 @@ class _DateTimePickerState extends State<DateTimePicker> {
   late TextEditingController _dateTextController;
   late TextEditingController _timeTextController;
 
+  final Logger log = Logger("Pages.Transaction.DateTimePicker");
+
   @override
   void initState() {
     super.initState();
+
+    log.finest(() => "initState()");
     _selectedDateTime = widget.initialDateTime;
     _dateTextController = TextEditingController(
       text: DateFormat.yMMMd().format(_selectedDateTime),
@@ -2716,6 +2754,8 @@ class _DateTimePickerState extends State<DateTimePicker> {
 
   @override
   Widget build(BuildContext context) {
+    log.finest("build()");
+
     return Row(
       children: <Widget>[
         IntrinsicWidth(
@@ -2767,6 +2807,9 @@ class TransactionHeaderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Logger log = Logger("Pages.Transaction.TransactionHeaderSection");
+
+    log.finest("build()");
     final bool isSplit = tx.split;
 
     return Column(
@@ -2814,7 +2857,7 @@ class TransactionHeaderSection extends StatelessWidget {
   Widget _buildAttachmentButton(BuildContext context) {
     return badges.Badge(
       badgeContent: Text(
-        tx.attachments.length.toString(),
+        tx.attachments == null ? ".." : tx.attachments!.length.toString(),
         style: Theme.of(context).textTheme.labelMedium!.copyWith(
           color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
@@ -2831,7 +2874,8 @@ class TransactionHeaderSection extends StatelessWidget {
         icon: Icons.attach_file,
         tooltip: S.of(context).transactionAttachments,
         onPressed: () async {
-          final List<AttachmentRead> dialogAttachments = tx.attachments;
+          final List<AttachmentRead> dialogAttachments =
+              tx.attachments ?? <AttachmentRead>[];
           await showDialog<List<AttachmentRead>>(
             context: context,
             builder: (BuildContext context) => AttachmentDialog(
@@ -2860,6 +2904,7 @@ class TransactionHeaderSection extends StatelessWidget {
         controller: split.localAmountTC,
         enabled: !saving && !readOnly,
         onChanged: (String val) {
+          log.finest(() => "_buildAmount: onChanged($val)");
           split.localAmount = double.tryParse(val) ?? 0;
         },
         currency: tx.localCurrency,
@@ -2872,7 +2917,7 @@ class TransactionHeaderSection extends StatelessWidget {
         currency: tx.localCurrency,
       );
     }
-    return SizedBox(width: 130, child: Center(child: input));
+    return SizedBox(width: 135, child: input);
   }
 
   Widget _buildNumberInput({

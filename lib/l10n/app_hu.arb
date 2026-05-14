@@ -9,7 +9,7 @@
     "@accountRoleAssetCC": {
         "description": "Firefly Translation String: account_role_ccAsset"
     },
-    "accountRoleAssetDefault": "Alapértelmezett vagyon számla",
+  "accountRoleAssetDefault": "Alapértelmezett eszközszámla",
     "@accountRoleAssetDefault": {
         "description": "Firefly Translation String: account_role_defaultAsset"
     },
@@ -17,7 +17,7 @@
     "@accountRoleAssetSavings": {
         "description": "Firefly Translation String: account_role_savingAsset"
     },
-    "accountRoleAssetShared": "Megosztott vagyon számla",
+  "accountRoleAssetShared": "Megosztott eszközszámla",
     "@accountRoleAssetShared": {
         "description": "Firefly Translation String: account_role_sharedAsset"
     },
@@ -645,6 +645,16 @@
             }
         }
     },
+  "homePiggySavePerMonth": "Spórolás havonta: {amount}",
+  "@homePiggySavePerMonth": {
+    "description": "How much should be saved per month to reach the target",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€12.34"
+            }
+        }
+    },
     "homePiggySavedMultiple": "Eddig megtakarítva:",
     "@homePiggySavedMultiple": {
         "description": "Title for a list of multiple accounts with the amount of money saved so far"
@@ -687,7 +697,17 @@
             }
         }
     },
-    "homeTabLabelBalance": "Mérleg",
+  "homePiggyTotal": "Egyenleg: {amount}",
+  "@homePiggyTotal": {
+    "description": "Total balance of an account in the Piggy bank",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€12.34"
+      }
+    }
+  },
+  "homeTabLabelBalance": "Egyenleg",
     "@homeTabLabelBalance": {
         "description": "Tab Label: Balance Sheet page"
     },

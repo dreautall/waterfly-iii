@@ -511,7 +511,7 @@ class SEs extends S {
 
   @override
   String homePiggySavePerMonth(String amount) {
-    return 'Save per month: $amount';
+    return 'Ahorro mensual: $amount';
   }
 
   @override

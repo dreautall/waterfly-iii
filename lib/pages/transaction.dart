@@ -40,6 +40,80 @@ final Logger log = Logger("Pages.Transaction");
 
 bool _savingInProgress = false;
 
+class TransactionState {
+  final TransactionTypeProperty type;
+  final TextEditingController titleTC = TextEditingController();
+  final FocusNode titleFN = FocusNode();
+  String? ownAccountID;
+  late tz.TZDateTime date;
+  final TextEditingController dateTC = TextEditingController();
+  final TextEditingController timeTC = TextEditingController();
+  CurrencyRead? localCurrency;
+  late bool reconciled;
+  late final bool initiallyReconciled;
+  final List<TransactionSplitState> splits = <TransactionSplitState>[];
+
+  TransactionState(this.type);
+
+  void dispose() {
+    for (final TransactionSplitState s in splits) {
+      s.dispose();
+    }
+    titleTC.dispose();
+    titleFN.dispose();
+    dateTC.dispose();
+    timeTC.dispose();
+  }
+}
+
+class TransactionSplitState {
+  // Always in card view
+  final TextEditingController categoryTC = TextEditingController();
+  final FocusNode categoryFN = FocusNode();
+  final TextEditingController budgetTC = TextEditingController();
+  final FocusNode budgetFN = FocusNode();
+  Tags tags = Tags();
+  final TextEditingController tagsTC = TextEditingController();
+  final TextEditingController noteTC = TextEditingController();
+  BillRead? bill;
+  PiggyBankRead? piggy;
+
+  // Individual for split transactions
+  final TextEditingController titleTC = TextEditingController();
+  final FocusNode titleFN = FocusNode();
+  final TextEditingController sourceAccountTC = TextEditingController();
+  final FocusNode sourceAccountFN = FocusNode();
+  final TextEditingController destinationAccountTC = TextEditingController();
+  final FocusNode destinationAccountFN = FocusNode();
+  double localAmount = 0.0;
+  final TextEditingController localAmountTC = TextEditingController();
+  final FocusNode localAmountFN = FocusNode();
+  double foreignAmount = 0.0;
+  final TextEditingController foreignAmountTC = TextEditingController();
+  final FocusNode foreignAmountFN = FocusNode();
+  CurrencyRead? foreignCurrency;
+  String? journalID;
+
+  void dispose() {
+    categoryTC.dispose();
+    categoryFN.dispose();
+    budgetTC.dispose();
+    budgetFN.dispose();
+    tagsTC.dispose();
+    noteTC.dispose();
+    titleTC.dispose();
+    titleFN.dispose();
+    sourceAccountTC.dispose();
+    sourceAccountFN.dispose();
+    destinationAccountTC.dispose();
+    destinationAccountFN.dispose();
+    localAmountTC.dispose();
+    localAmountFN.dispose();
+    foreignAmountTC.dispose();
+    foreignAmountFN.dispose();
+  }
+}
+
 class TransactionPage extends StatefulWidget {
   const TransactionPage({
     super.key,
@@ -65,18 +139,7 @@ class _TransactionPageState extends State<TransactionPage>
   final Logger log = Logger("Pages.Transaction.Page");
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  // Common values
-  late TransactionTypeProperty _transactionType;
-  final TextEditingController _titleTextController = TextEditingController();
-  final FocusNode _titleFocusNode = FocusNode();
-  String? _ownAccountId;
-  late tz.TZDateTime _date;
-  final TextEditingController _dateTextController = TextEditingController();
-  final TextEditingController _timeTextController = TextEditingController();
-  CurrencyRead? _localCurrency;
-  bool _reconciled = false;
-  bool _initiallyReconciled = false;
+  late final TransactionState _tx;
 
   // Individual for split transactions, show common for single transaction
   final TextEditingController _sourceAccountTextController =
@@ -90,39 +153,7 @@ class _TransactionPageState extends State<TransactionPage>
   final TextEditingController _localAmountTextController =
       TextEditingController();
 
-  // Always in card view
-  final List<TextEditingController> _categoryTextControllers =
-      <TextEditingController>[];
-  final List<FocusNode> _categoryFocusNodes = <FocusNode>[];
-  final List<TextEditingController> _budgetTextControllers =
-      <TextEditingController>[];
-  final List<FocusNode> _budgetFocusNodes = <FocusNode>[];
-  final List<Tags> _tags = <Tags>[];
-  final List<TextEditingController> _tagsTextControllers =
-      <TextEditingController>[];
-  final List<TextEditingController> _noteTextControllers =
-      <TextEditingController>[];
-  final List<BillRead?> _bills = <BillRead?>[];
-  final List<PiggyBankRead?> _piggy = <PiggyBankRead?>[];
-
-  // Individual for split transactions
-  final List<TextEditingController> _titleTextControllers =
-      <TextEditingController>[];
-  final List<FocusNode> _titleFocusNodes = <FocusNode>[];
-  final List<TextEditingController> _sourceAccountTextControllers =
-      <TextEditingController>[];
-  final List<FocusNode> _sourceAccountFocusNodes = <FocusNode>[];
-  final List<TextEditingController> _destinationAccountTextControllers =
-      <TextEditingController>[];
-  final List<FocusNode> _destinationAccountFocusNodes = <FocusNode>[];
-  final List<double> _localAmounts = <double>[];
-  final List<TextEditingController> _localAmountTextControllers =
-      <TextEditingController>[];
-  final List<double> _foreignAmounts = <double>[];
-  final List<TextEditingController> _foreignAmountTextControllers =
-      <TextEditingController>[];
-  final List<CurrencyRead?> _foreignCurrencies = <CurrencyRead?>[];
-  final List<String?> _transactionJournalIDs = <String?>[];
+  // Split transactions
   final List<String> _deletedSplitIDs = <String>[];
 
   bool _split = false;
@@ -147,7 +178,6 @@ class _TransactionPageState extends State<TransactionPage>
     super.initState();
 
     _newTX = widget.transaction == null || widget.clone;
-
     _tzHandler = context.read<FireflyService>().tzHandler;
 
     // opening an existing transaction, extract information
@@ -157,35 +187,34 @@ class _TransactionPageState extends State<TransactionPage>
           transaction.attributes.transactions;
 
       // Common values
-      /// type
-      _transactionType = transactions.first.type;
+      _tx = TransactionState(transactions.first.type);
 
       /// title
       if (transaction.attributes.groupTitle?.isNotEmpty ?? false) {
-        _titleTextController.text = transaction.attributes.groupTitle!;
+        _tx.titleTC.text = transaction.attributes.groupTitle!;
       } else {
-        _titleTextController.text = transactions.first.description;
+        _tx.titleTC.text = transactions.first.description;
       }
 
       /// own account
-      switch (_transactionType) {
+      switch (_tx.type) {
         case .withdrawal:
         case .transfer:
-          _ownAccountId = transactions.first.sourceId;
+          _tx.ownAccountID = transactions.first.sourceId;
           break;
         case .deposit:
         case .openingBalance:
         case .reconciliation:
-          _ownAccountId = transactions.first.destinationId;
+          _tx.ownAccountID = transactions.first.destinationId;
           break;
         default:
       }
 
       /// date
-      _date = _tzHandler.sTime(transactions.first.date).toLocal();
+      _tx.date = _tzHandler.sTime(transactions.first.date).toLocal();
 
       /// account currency
-      _localCurrency = CurrencyRead(
+      _tx.localCurrency = CurrencyRead(
         type: "currencies",
         id: transactions.first.currencyId!,
         attributes: CurrencyProperties(
@@ -197,117 +226,84 @@ class _TransactionPageState extends State<TransactionPage>
       );
 
       // Reconciled
-      _reconciled = transactions.first.reconciled ?? false;
+      _tx.reconciled = transactions.first.reconciled ?? false;
 
       for (TransactionSplit trans in transactions) {
+        final TransactionSplitState newSplit = TransactionSplitState();
+
         // Always in card view
         /// Category
-        _categoryTextControllers.add(
-          TextEditingController(text: trans.categoryName),
-        );
-        _categoryFocusNodes.add(FocusNode());
+        newSplit.categoryTC.text = trans.categoryName ?? "";
 
         //// Budget
-        _budgetTextControllers.add(
-          TextEditingController(text: trans.budgetName),
-        );
-        _budgetFocusNodes.add(FocusNode());
+        newSplit.budgetTC.text = trans.budgetName ?? "";
 
         /// Tags
-        _tags.add(Tags(trans.tags ?? <String>[]));
-        _tagsTextControllers.add(
-          TextEditingController(text: (_tags.last.tags.isNotEmpty) ? " " : ""),
-        );
+        newSplit.tags = Tags(trans.tags ?? <String>[]);
 
         /// Notes
-        _noteTextControllers.add(TextEditingController(text: trans.notes));
+        newSplit.noteTC.text = trans.notes ?? "";
 
         /// Bill
         if ((trans.billId?.isNotEmpty ?? false) && trans.billId != "0") {
-          _bills.add(
-            BillRead(
-              type: "bill",
-              id: trans.billId ?? "",
-              attributes: BillProperties(
-                name: trans.billName ?? "",
-                amountMin: "",
-                amountMax: "",
-                date: DateTime.now(),
-                repeatFreq: .swaggerGeneratedUnknown,
-              ),
+          newSplit.bill = BillRead(
+            type: "bill",
+            id: trans.billId ?? "",
+            attributes: BillProperties(
+              name: trans.billName ?? "",
+              amountMin: "",
+              amountMax: "",
+              date: DateTime.now(),
+              repeatFreq: .swaggerGeneratedUnknown,
             ),
           );
-        } else {
-          _bills.add(null);
         }
 
         // Individual for split transactions
         /// Title
-        _titleTextControllers.add(
-          TextEditingController(text: trans.description),
-        );
-        _titleFocusNodes.add(FocusNode());
+        newSplit.titleTC.text = trans.description;
 
         /// local amount
-        _localAmounts.add(double.tryParse(trans.amount) ?? 0);
-        _localAmountTextControllers.add(
-          TextEditingController(
-            text: _localAmounts.last.toStringAsFixed(
-              trans.currencyDecimalPlaces ?? 2,
-            ),
-          ),
+        newSplit.localAmount = double.tryParse(trans.amount) ?? 0.0;
+        newSplit.localAmountTC.text = newSplit.localAmount.toStringAsFixed(
+          trans.currencyDecimalPlaces ?? 2,
         );
 
         /// source account
-        _sourceAccountTextControllers.add(
-          TextEditingController(text: trans.sourceName),
-        );
-        _sourceAccountFocusNodes.add(FocusNode());
+        newSplit.sourceAccountTC.text = trans.sourceName ?? "";
         _sourceAccountType = trans.sourceType!;
 
         /// target account
-        _destinationAccountTextControllers.add(
-          TextEditingController(text: trans.destinationName),
-        );
-        _destinationAccountFocusNodes.add(FocusNode());
+        newSplit.destinationAccountTC.text = trans.destinationName ?? "";
         _destinationAccountType = trans.destinationType!;
 
         /// foreign currency
         //// foreign amount
-        _foreignAmounts.add(double.tryParse(trans.foreignAmount ?? '') ?? 0);
-        _foreignAmountTextControllers.add(
-          TextEditingController(
-            text: _foreignAmounts.last.toStringAsFixed(
-              trans.foreignCurrencyDecimalPlaces ?? 2,
-            ),
-          ),
+        newSplit.foreignAmount =
+            double.tryParse(trans.foreignAmount ?? '') ?? 0;
+        newSplit.foreignAmountTC.text = newSplit.foreignAmount.toStringAsFixed(
+          trans.foreignCurrencyDecimalPlaces ?? 2,
         );
+
         //// foreign currency
         if (trans.foreignCurrencyCode?.isNotEmpty ?? false) {
-          _foreignCurrencies.add(
-            CurrencyRead(
-              type: "currencies",
-              id: trans.foreignCurrencyId!,
-              attributes: CurrencyProperties(
-                code: trans.foreignCurrencyCode!,
-                name: "", // empty
-                symbol: trans.foreignCurrencySymbol!,
-                decimalPlaces: trans.foreignCurrencyDecimalPlaces,
-              ),
+          newSplit.foreignCurrency = CurrencyRead(
+            type: "currencies",
+            id: trans.foreignCurrencyId!,
+            attributes: CurrencyProperties(
+              code: trans.foreignCurrencyCode!,
+              name: "", // empty
+              symbol: trans.foreignCurrencySymbol!,
+              decimalPlaces: trans.foreignCurrencyDecimalPlaces,
             ),
           );
-        } else {
-          _foreignCurrencies.add(null);
         }
 
         //// Journal ID
-        _transactionJournalIDs.add(trans.transactionJournalId);
+        newSplit.journalID = trans.transactionJournalId;
 
         //// Attachments
         _hasAttachments = _hasAttachments || (trans.hasAttachments ?? false);
-
-        //// Piggy (always zeroed out, only relevant for cloning)
-        _piggy.add(null);
 
         // Card Animations
         _cardsAnimationController.add(
@@ -338,11 +334,11 @@ class _TransactionPageState extends State<TransactionPage>
         splitTransactionCheckAccounts();
       });
 
-      if (_reconciled) {
-        _initiallyReconciled = true;
+      if (_tx.reconciled) {
+        _tx.initiallyReconciled = true;
       }
 
-      _split = (_localAmounts.length > 1);
+      _split = (_tx.splits.length > 1);
     } else {
       // New transaction
       _titleFocusNode.requestFocus();

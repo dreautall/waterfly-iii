@@ -236,6 +236,21 @@ class TransactionState extends ChangeNotifier {
 
     if (type != newType) {
       type = newType;
+
+      // Withdrawal: splits have common source account
+      // Deposit: splits have common destination account
+      // Transfer: splits have common accounts for both
+      if (type == .withdrawal || type == .transfer) {
+        for (final TransactionSplitState s in splits) {
+          s.sourceAccountTC.text = splits.first.sourceAccountTC.text;
+        }
+      }
+      if (type == .deposit || type == .transfer) {
+        for (final TransactionSplitState s in splits) {
+          s.destinationAccountTC.text = splits.first.destinationAccountTC.text;
+        }
+      }
+
       log.finest(() => "[TS] checkTXType(): notify due to new $type");
       notifyListeners();
     }
@@ -1485,23 +1500,17 @@ class _TransactionPageState extends State<TransactionPage>
   Future<void> onTXChanged() async {
     log.finest(() => "onTXChanged()");
 
+    _commonSourceTC.text = _tx.hasCommonSourceAccount
+        ? _tx.splits.first.sourceAccountTC.text
+        : "<${S.of(context).generalMultiple}>";
+
+    _commonDestinationTC.text = _tx.hasCommonDestinationAccount
+        ? _tx.splits.first.destinationAccountTC.text
+        : "<${S.of(context).generalMultiple}>";
+
     if (_tx.type != _lastTXType) {
       await handleTXTypeChange();
       _lastTXType = _tx.type;
-
-      // Withdrawal: splits have common source account
-      // Deposit: splits have common destination account
-      // Transfer: splits have common accounts for both
-      if (_tx.type == .withdrawal || _tx.type == .transfer) {
-        for (TransactionSplitState s in _tx.splits) {
-          s.sourceAccountTC.text = _commonSourceTC.text;
-        }
-      }
-      if (_tx.type == .deposit || _tx.type == .transfer) {
-        for (TransactionSplitState s in _tx.splits) {
-          s.destinationAccountTC.text = _commonDestinationTC.text;
-        }
-      }
     }
 
     updateTransactionAmounts();

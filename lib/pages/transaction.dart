@@ -1,15 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:chopper/chopper.dart' show HttpMethod, Response;
+import 'package:chopper/chopper.dart' show Response;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_sharing_intent/model/sharing_file.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
@@ -22,15 +18,10 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/layout.dart';
 import 'package:waterflyiii/notificationlistener.dart';
-import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/transaction/attachments.dart';
-import 'package:waterflyiii/pages/transaction/bill.dart';
-import 'package:waterflyiii/pages/transaction/currencies.dart';
 import 'package:waterflyiii/pages/transaction/delete.dart';
-import 'package:waterflyiii/pages/transaction/piggy.dart';
 import 'package:waterflyiii/pages/transaction/tags.dart';
 import 'package:waterflyiii/settings.dart';
-import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
@@ -49,8 +40,8 @@ class TransactionState extends ChangeNotifier {
   final TextEditingController dateTC = TextEditingController();
   final TextEditingController timeTC = TextEditingController();
   CurrencyRead localCurrency;
-  late bool reconciled;
-  late final bool initiallyReconciled;
+  bool reconciled = false;
+  bool initiallyReconciled = false;
   final List<TransactionSplitState> splits = <TransactionSplitState>[];
   List<AttachmentRead> _attachments = <AttachmentRead>[];
   AccountTypeProperty sourceAccountType = .swaggerGeneratedUnknown;
@@ -72,9 +63,7 @@ class TransactionState extends ChangeNotifier {
   }
 
   List<AttachmentRead> get attachments => _attachments;
-
   bool get hasAttachments => attachments.isNotEmpty;
-
   set attachments(List<AttachmentRead> attachments) {
     _attachments = attachments;
     notifyListeners();
@@ -94,6 +83,7 @@ class TransactionState extends ChangeNotifier {
       log.severe(("trying to remove last split!"));
       return false;
     }
+    splits[i].dispose();
     splits.removeAt(i);
     notifyListeners();
     return true;
@@ -567,7 +557,6 @@ class _TransactionPageState extends State<TransactionPage>
 
     _tx.addListener(() {
       updateTransactionAmounts();
-      setState(() {});
     });
   }
 
@@ -785,6 +774,7 @@ class _TransactionPageState extends State<TransactionPage>
         onPressed: _savingInProgress
             ? null
             : () async {
+                /* :TODO: refactor
                 final ScaffoldMessengerState msg = ScaffoldMessenger.of(
                   context,
                 );
@@ -1104,7 +1094,7 @@ class _TransactionPageState extends State<TransactionPage>
                       builder: (BuildContext context) => const NavPage(),
                     ),
                   );
-                }
+                }*/
               },
         child: _savingInProgress
             ? const SizedBox(
@@ -1150,7 +1140,7 @@ class _TransactionPageState extends State<TransactionPage>
 
   List<Widget> _transactionDetailBuilder(BuildContext context) {
     log.fine(() => "transactionDetailBuilder()");
-    log.finer(() => "splits: ${_localAmounts.length}, split? $_split");
+    log.finer(() => "splits: ${_tx.splits.length}, split? ${_tx.split}");
 
     final List<Widget> childs = <Widget>[];
     const Widget hDivider = SizedBox(height: 16);
@@ -1328,6 +1318,7 @@ class _TransactionPageState extends State<TransactionPage>
     childs.add(hDivider);
 
     // Source Account, floating type element
+    /*
     childs.add(
       Stack(
         children: <Widget>[
@@ -1570,7 +1561,7 @@ class _TransactionPageState extends State<TransactionPage>
         label: Text(S.of(context).transactionSplitAdd),
         icon: const Icon(Icons.call_split),
       ),
-    );
+    );*/
 
     return childs;
   }
@@ -1583,15 +1574,15 @@ class _TransactionPageState extends State<TransactionPage>
     // 2. set account is destination & assetAccount & source account is NOT an
     //    asset account
     // 3. either source or destination account are still unset, so first to set
-    if ((isSource && _sourceAccountType == .assetAccount) ||
+    if ((isSource && _tx.sourceAccountType == .assetAccount) ||
         (!isSource &&
-            _destinationAccountType == .assetAccount &&
-            _sourceAccountType != .assetAccount) ||
-        (_sourceAccountType == .swaggerGeneratedUnknown ||
-            _destinationAccountType == .swaggerGeneratedUnknown)) {
-      if (_localCurrency?.id != option.currencyId.toString()) {
+            _tx.destinationAccountType == .assetAccount &&
+            _tx.sourceAccountType != .assetAccount) ||
+        (_tx.sourceAccountType == .swaggerGeneratedUnknown ||
+            _tx.destinationAccountType == .swaggerGeneratedUnknown)) {
+      if (_tx.localCurrency.id != option.currencyId.toString()) {
         setState(() {
-          _localCurrency = CurrencyRead(
+          _tx.localCurrency = CurrencyRead(
             type: "currencies",
             id: option.currencyId.toString(),
             attributes: CurrencyProperties(
@@ -1607,18 +1598,16 @@ class _TransactionPageState extends State<TransactionPage>
     // set foreign currency if account is destination & asset account and source
     // account is also asset account (transfer from one currency to other)
     if ((!isSource &&
-            _destinationAccountType == .assetAccount &&
-            _sourceAccountType == .assetAccount) &&
-        _localCurrency?.id != option.currencyId) {
+            _tx.destinationAccountType == .assetAccount &&
+            _tx.sourceAccountType == .assetAccount) &&
+        _tx.localCurrency.id != option.currencyId) {
       // Only when destination & source account have different currency
-      if (!_foreignCurrencies.every(
-        (CurrencyRead? e) => e?.id == option.currencyId,
+      if (!_tx.splits.every(
+        (TransactionSplitState s) => s.foreignCurrency?.id == option.currencyId,
       )) {
         setState(() {
-          _foreignCurrencies.fillRange(
-            0,
-            _foreignCurrencies.length,
-            CurrencyRead(
+          for (TransactionSplitState s in _tx.splits) {
+            s.foreignCurrency = CurrencyRead(
               type: "currencies",
               id: option.currencyId,
               attributes: CurrencyProperties(
@@ -1627,8 +1616,8 @@ class _TransactionPageState extends State<TransactionPage>
                 symbol: option.currencySymbol,
                 decimalPlaces: option.currencyDecimalPlaces,
               ),
-            ),
-          );
+            );
+          }
         });
       }
     }
@@ -1638,8 +1627,8 @@ class _TransactionPageState extends State<TransactionPage>
     log.finest(() => "checkTXType()");
 
     TransactionTypeProperty txType = accountsToTransaction(
-      _sourceAccountType,
-      _destinationAccountType,
+      _tx.sourceAccountType,
+      _tx.destinationAccountType,
     );
     /* WATERFLY CUSTOM - NOT FIREFLY BEHAVIOR!
      * To ease UX, two assumptions:
@@ -1656,12 +1645,12 @@ class _TransactionPageState extends State<TransactionPage>
      */
 
     if (txType == .swaggerGeneratedUnknown &&
-        _sourceAccountType == .assetAccount &&
-        _destinationAccountType == .swaggerGeneratedUnknown) {
+        _tx.sourceAccountType == .assetAccount &&
+        _tx.destinationAccountType == .swaggerGeneratedUnknown) {
       txType = .withdrawal;
     } else if (txType == .swaggerGeneratedUnknown &&
-        _sourceAccountType == .swaggerGeneratedUnknown &&
-        _destinationAccountType == .assetAccount) {
+        _tx.sourceAccountType == .swaggerGeneratedUnknown &&
+        _tx.destinationAccountType == .assetAccount) {
       txType = .deposit;
     }
 
@@ -1669,17 +1658,17 @@ class _TransactionPageState extends State<TransactionPage>
     // Deposit: splits have common destination account
     // Transfer: splits have common accounts for both
     if (txType == .withdrawal || txType == .transfer) {
-      for (TextEditingController e in _sourceAccountTextControllers) {
-        e.text = _sourceAccountTextController.text;
+      for (TransactionSplitState s in _tx.splits) {
+        s.sourceAccountTC.text = _commonSourceTC.text;
       }
     }
     if (txType == .deposit || txType == .transfer) {
-      for (TextEditingController e in _destinationAccountTextControllers) {
-        e.text = _destinationAccountTextController.text;
+      for (TransactionSplitState s in _tx.splits) {
+        s.destinationAccountTC.text = _commonDestinationTC.text;
       }
     }
 
-    if (_transactionType != txType) {
+    if (_tx.type != txType) {
       setState(() {
         if (txType != .swaggerGeneratedUnknown) {
           _txTypeChipExtended = true;
@@ -1689,7 +1678,7 @@ class _TransactionPageState extends State<TransactionPage>
             });
           });
         }
-        _transactionType = txType;
+        _tx.type = txType;
       });
     }
   }
@@ -1699,6 +1688,10 @@ class _TransactionPageState extends State<TransactionPage>
 
     CancelableOperation<Response<AutocompleteAccountArray>>? fetchOp;
 
+    return const Card(child: SizedBox.shrink());
+
+    /*
+    :TODO: refactor
     return Card(
       key: ValueKey<int>(i),
       child: Padding(
@@ -2240,7 +2233,7 @@ class _TransactionPageState extends State<TransactionPage>
           ],
         ),
       ),
-    );
+    );*/
   }
 }
 

@@ -42,8 +42,8 @@ bool _savingInProgress = false;
 
 class TransactionState extends ChangeNotifier {
   TransactionTypeProperty type = .swaggerGeneratedUnknown;
-  final TextEditingController titleTC = TextEditingController();
-  final FocusNode titleFN = FocusNode();
+  final TextEditingController groupTitleTC = TextEditingController();
+  final FocusNode groupTitleFN = FocusNode();
   String? ownAccountID;
   late tz.TZDateTime _date;
   final TextEditingController dateTC = TextEditingController();
@@ -52,10 +52,9 @@ class TransactionState extends ChangeNotifier {
   late bool reconciled;
   late final bool initiallyReconciled;
   final List<TransactionSplitState> splits = <TransactionSplitState>[];
-  final List<AttachmentRead> attachments = <AttachmentRead>[];
-  late AccountTypeProperty sourceAccountType;
-  late AccountTypeProperty destinationAccountType;
-  double localAmount = 0.0;
+  List<AttachmentRead> attachments = <AttachmentRead>[];
+  AccountTypeProperty sourceAccountType = .swaggerGeneratedUnknown;
+  AccountTypeProperty destinationAccountType = .swaggerGeneratedUnknown;
 
   bool get split => splits.length > 1;
 
@@ -89,6 +88,7 @@ class TransactionState extends ChangeNotifier {
       return false;
     }
     splits.removeAt(i);
+    notifyListeners();
     return true;
   }
 
@@ -99,8 +99,8 @@ class TransactionState extends ChangeNotifier {
     for (final TransactionSplitState s in splits) {
       s.dispose();
     }
-    titleTC.dispose();
-    titleFN.dispose();
+    groupTitleTC.dispose();
+    groupTitleFN.dispose();
     dateTC.dispose();
     timeTC.dispose();
 
@@ -131,9 +131,7 @@ class TransactionState extends ChangeNotifier {
 
     /// title
     if (transaction.attributes.groupTitle?.isNotEmpty ?? false) {
-      tx.titleTC.text = transaction.attributes.groupTitle!;
-    } else {
-      tx.titleTC.text = transactions.first.description;
+      tx.groupTitleTC.text = transaction.attributes.groupTitle!;
     }
 
     /// own account
@@ -398,7 +396,8 @@ class _TransactionPageState extends State<TransactionPage>
       });
     } else {
       // New transaction
-      _tx.titleFN.requestFocus();
+      _tx = TransactionState(context.read<FireflyService>().defaultCurrency);
+      _tx.groupTitleFN.requestFocus();
 
       if (widget.notification != null) {
         _tx.date = _tzHandler
@@ -430,7 +429,7 @@ class _TransactionPageState extends State<TransactionPage>
           (currency, amount) = await parseNotificationText(
             api,
             widget.notification!.body,
-            _tx.localCurrency!,
+            _tx.localCurrency,
             userRegex: appSettings.regex,
           );
           currency ??= defaultCurrency; // Fallback solution
@@ -446,9 +445,9 @@ class _TransactionPageState extends State<TransactionPage>
           }
 
           if (appSettings.includeTitle) {
-            _tx.titleTC.text = widget.notification!.title;
+            _tx.splits.first.titleTC.text = widget.notification!.title;
           } else {
-            _tx.titleTC.text = "";
+            _tx.splits.first.titleTC.text = "";
             _tx.splits.first.noteTC.text =
                 "${widget.notification!.title} - ${_tx.splits.first.noteTC.text}";
           }
@@ -490,7 +489,7 @@ class _TransactionPageState extends State<TransactionPage>
           }
 
           // Check currency
-          if (currency.id == _tx.localCurrency!.id) {
+          if (currency.id == _tx.localCurrency.id) {
             _tx.splits.first.localAmount = amount;
           } else {
             _tx.splits.first.foreignCurrency = currency;
@@ -609,19 +608,20 @@ class _TransactionPageState extends State<TransactionPage>
     if (!_tx.split) {
       // This is similar to the web interface --> summary text gets deleted when split is removed.
       if (_tx.splits.first.titleTC.text.isNotEmpty) {
-        _tx.titleTC.text = _tx.splits.first.titleTC.text;
+        _tx.groupTitleTC.text = _tx.splits.first.titleTC.text;
       }
     }
     // Check if Source/Destination account selection should still be shown
     if (_tx.splits.every(
       (TransactionSplitState s) =>
-          s.sourceAccountTC.text == _commonSourceTC.text,
+          s.sourceAccountTC.text == _tx.splits.first.sourceAccountTC.text,
     )) {
       _showSourceAccountSelection = false;
     }
     if (_tx.splits.every(
       (TransactionSplitState s) =>
-          s.destinationAccountTC.text == _commonDestinationTC.text,
+          s.destinationAccountTC.text ==
+          _tx.splits.first.destinationAccountTC.text,
     )) {
       _showDestinationAccountSelection = false;
     }
@@ -686,41 +686,35 @@ class _TransactionPageState extends State<TransactionPage>
   void splitTransactionCheckAccounts() {
     bool update = false;
 
-    if (_sourceAccountTextControllers.every(
-      (TextEditingController e) =>
-          e.text == _sourceAccountTextControllers.first.text,
+    if (_tx.splits.every(
+      (TransactionSplitState s) =>
+          s.sourceAccountTC.text == _tx.splits.first.sourceAccountTC.text,
     )) {
-      if (_sourceAccountTextController.text !=
-              _sourceAccountTextControllers.first.text &&
-          _sourceAccountTextControllers.first.text.isNotEmpty) {
-        _sourceAccountTextController.text =
-            _sourceAccountTextControllers.first.text;
+      if (_commonSourceTC.text != _tx.splits.first.sourceAccountTC.text &&
+          _tx.splits.first.sourceAccountTC.text.isNotEmpty) {
+        _commonSourceTC.text = _tx.splits.first.sourceAccountTC.text;
         update = true;
       }
     } else {
-      if (_sourceAccountTextController.text !=
-          "<${S.of(context).generalMultiple}>") {
-        _sourceAccountTextController.text =
-            "<${S.of(context).generalMultiple}>";
+      if (_commonSourceTC.text != "<${S.of(context).generalMultiple}>") {
+        _commonSourceTC.text = "<${S.of(context).generalMultiple}>";
         update = true;
       }
     }
-    if (_destinationAccountTextControllers.every(
-      (TextEditingController e) =>
-          e.text == _destinationAccountTextControllers.first.text,
+    if (_tx.splits.every(
+      (s) =>
+          s.destinationAccountTC.text ==
+          _tx.splits.first.destinationAccountTC.text,
     )) {
-      if (_destinationAccountTextController.text !=
-              _destinationAccountTextControllers.first.text &&
-          _destinationAccountTextControllers.first.text.isNotEmpty) {
-        _destinationAccountTextController.text =
-            _destinationAccountTextControllers.first.text;
+      if (_commonDestinationTC.text !=
+              _tx.splits.first.destinationAccountTC.text &&
+          _tx.splits.first.destinationAccountTC.text.isNotEmpty) {
+        _commonDestinationTC.text = _tx.splits.first.destinationAccountTC.text;
         update = true;
       }
     } else {
-      if (_destinationAccountTextController.text !=
-          "<${S.of(context).generalMultiple}>") {
-        _destinationAccountTextController.text =
-            "<${S.of(context).generalMultiple}>";
+      if (_commonDestinationTC.text != "<${S.of(context).generalMultiple}>") {
+        _commonDestinationTC.text = "<${S.of(context).generalMultiple}>";
         update = true;
       }
     }
@@ -731,16 +725,12 @@ class _TransactionPageState extends State<TransactionPage>
     final bool prevShowSource = _showSourceAccountSelection;
     final bool prevShowDest = _showDestinationAccountSelection;
     _showSourceAccountSelection =
-        _transactionType == .deposit &&
-        _sourceAccountTextControllers.every(
-          (TextEditingController e) =>
-              e.text != _sourceAccountTextController.text,
-        );
+        _tx.type == .deposit &&
+        _tx.splits.every((s) => s.sourceAccountTC.text != _commonSourceTC.text);
     _showDestinationAccountSelection =
-        _transactionType == .withdrawal &&
-        _destinationAccountTextControllers.every(
-          (TextEditingController e) =>
-              e.text != _destinationAccountTextController.text,
+        _tx.type == .withdrawal &&
+        _tx.splits.every(
+          (s) => s.destinationAccountTC.text != _commonDestinationTC.text,
         );
     if (prevShowSource != _showSourceAccountSelection ||
         prevShowDest != _showDestinationAccountSelection) {
@@ -759,19 +749,17 @@ class _TransactionPageState extends State<TransactionPage>
           .v1TransactionsIdAttachmentsGet(id: widget.transaction?.id);
       apiThrowErrorIfEmpty(response, mounted ? context : null);
 
-      _attachments = response.body!.data;
-      setState(() {
-        _hasAttachments = _attachments?.isNotEmpty ?? false;
-      });
+      _tx.attachments = response.body!.data;
+      setState(() {});
     } catch (e, stackTrace) {
-      log.severe("Error while fetching autocomplete from API", e, stackTrace);
+      log.severe("Error while fetching attachments from API", e, stackTrace);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     log.finest(() => "build()");
-    _localCurrency ??= context.read<FireflyService>().defaultCurrency;
+    _tx.localCurrency ??= context.read<FireflyService>().defaultCurrency;
 
     if (_hasAttachments && _attachments == null) {
       updateAttachmentCount();

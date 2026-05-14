@@ -52,24 +52,31 @@ class TransactionState extends ChangeNotifier {
   late bool reconciled;
   late final bool initiallyReconciled;
   final List<TransactionSplitState> splits = <TransactionSplitState>[];
-  List<AttachmentRead> attachments = <AttachmentRead>[];
+  List<AttachmentRead> _attachments = <AttachmentRead>[];
   AccountTypeProperty sourceAccountType = .swaggerGeneratedUnknown;
   AccountTypeProperty destinationAccountType = .swaggerGeneratedUnknown;
 
   bool get split => splits.length > 1;
-
-  bool get hasAttachments => attachments.isNotEmpty;
-
   double get totalAmount => splits.fold(
     0,
     (double sum, TransactionSplitState s) => sum + s.localAmount,
   );
 
+  tz.TZDateTime get date => _date;
   set date(tz.TZDateTime date) {
     log.finest(() => "[TS] set date()");
     _date = date;
     dateTC.text = DateFormat.yMMMd().format(_date);
     timeTC.text = DateFormat.Hm().format(_date);
+    notifyListeners();
+  }
+
+  List<AttachmentRead> get attachments => _attachments;
+
+  bool get hasAttachments => attachments.isNotEmpty;
+
+  set attachments(List<AttachmentRead> attachments) {
+    _attachments = attachments;
     notifyListeners();
   }
 
@@ -557,6 +564,11 @@ class _TransactionPageState extends State<TransactionPage>
       );
       _tx.attachments.clear();
     }
+
+    _tx.addListener(() {
+      updateTransactionAmounts();
+      setState(() {});
+    });
   }
 
   @override
@@ -702,7 +714,7 @@ class _TransactionPageState extends State<TransactionPage>
       }
     }
     if (_tx.splits.every(
-      (s) =>
+      (TransactionSplitState s) =>
           s.destinationAccountTC.text ==
           _tx.splits.first.destinationAccountTC.text,
     )) {
@@ -726,11 +738,15 @@ class _TransactionPageState extends State<TransactionPage>
     final bool prevShowDest = _showDestinationAccountSelection;
     _showSourceAccountSelection =
         _tx.type == .deposit &&
-        _tx.splits.every((s) => s.sourceAccountTC.text != _commonSourceTC.text);
+        _tx.splits.every(
+          (TransactionSplitState s) =>
+              s.sourceAccountTC.text != _commonSourceTC.text,
+        );
     _showDestinationAccountSelection =
         _tx.type == .withdrawal &&
         _tx.splits.every(
-          (s) => s.destinationAccountTC.text != _commonDestinationTC.text,
+          (TransactionSplitState s) =>
+              s.destinationAccountTC.text != _commonDestinationTC.text,
         );
     if (prevShowSource != _showSourceAccountSelection ||
         prevShowDest != _showDestinationAccountSelection) {
@@ -759,11 +775,6 @@ class _TransactionPageState extends State<TransactionPage>
   @override
   Widget build(BuildContext context) {
     log.finest(() => "build()");
-    _tx.localCurrency ??= context.read<FireflyService>().defaultCurrency;
-
-    if (_hasAttachments && _attachments == null) {
-      updateAttachmentCount();
-    }
 
     final List<Widget> actions = <Widget>[
       if (!_newTX) ...<Widget>[
@@ -1148,6 +1159,17 @@ class _TransactionPageState extends State<TransactionPage>
     CancelableOperation<Response<AutocompleteAccountArray>>? fetchOpSource;
     CancelableOperation<Response<AutocompleteAccountArray>>? fetchOpDestination;
 
+    // Title + Amount
+    childs.add(
+      TransactionHeaderSection(
+        tx: _tx,
+        totalAmountTC: _totalAmountTC,
+        totalAmountFN: _totalAmountFN,
+        saving: _savingInProgress,
+        readOnly: _tx.reconciled && _tx.initiallyReconciled,
+      ),
+    );
+    /*
     // Title
     childs.add(
       Row(
@@ -1302,6 +1324,7 @@ class _TransactionPageState extends State<TransactionPage>
         ),
       ),
     );
+    */
     childs.add(hDivider);
 
     // Source Account, floating type element
@@ -2731,4 +2754,206 @@ class _DateTimePickerState extends State<DateTimePicker> {
       ],
     );
   }
+}
+
+class TransactionHeaderSection extends StatelessWidget {
+  final TransactionState tx;
+  final TextEditingController totalAmountTC;
+  final FocusNode totalAmountFN;
+  final bool saving;
+  final bool readOnly;
+
+  const TransactionHeaderSection({
+    super.key,
+    required this.tx,
+    required this.totalAmountTC,
+    required this.totalAmountFN,
+    required this.saving,
+    required this.readOnly,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isSplit = tx.split;
+
+    return Column(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            _buildTitle(context, isSplit),
+            const SizedBox(width: 12),
+            _buildAttachmentButton(context),
+          ],
+        ),
+        const SizedBox(height: 16),
+        SingleChildScrollView(
+          scrollDirection: .horizontal,
+          child: Row(
+            children: <Widget>[
+              _buildAmount(context, isSplit),
+              const SizedBox(width: 16),
+              _buildDate(context),
+              const SizedBox(width: 16),
+              _buildTime(context),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTitle(BuildContext context, bool isSplit) {
+    if (isSplit) {
+      return TransactionTitle(
+        textController: tx.groupTitleTC,
+        focusNode: tx.groupTitleFN,
+      );
+    } else {
+      final TransactionSplitState split = tx.splits.first;
+
+      return TransactionTitle(
+        textController: split.titleTC,
+        focusNode: split.titleFN,
+      );
+    }
+  }
+
+  Widget _buildAttachmentButton(BuildContext context) {
+    return badges.Badge(
+      badgeContent: Text(
+        tx.attachments.length.toString(),
+        style: Theme.of(context).textTheme.labelMedium!.copyWith(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
+      ),
+      showBadge: tx.hasAttachments,
+      badgeStyle: badges.BadgeStyle(
+        badgeColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+      ),
+      badgeAnimation: const badges.BadgeAnimation.scale(
+        animationDuration: animDurationEmphasized,
+        curve: animCurveEmphasized,
+      ),
+      child: MaterialIconButton(
+        icon: Icons.attach_file,
+        tooltip: S.of(context).transactionAttachments,
+        onPressed: () async {
+          final List<AttachmentRead> dialogAttachments = tx.attachments;
+          await showDialog<List<AttachmentRead>>(
+            context: context,
+            builder: (BuildContext context) => AttachmentDialog(
+              attachments: dialogAttachments,
+              transactionId: tx.splits.first.journalID,
+            ),
+          );
+          tx.attachments = dialogAttachments;
+        },
+      ),
+    );
+  }
+
+  Widget _buildAmount(BuildContext context, bool isSplit) {
+    if (tx.splits.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    late final Widget input;
+
+    if (!isSplit) {
+      // SINGLE TX --> editable
+      final TransactionSplitState split = tx.splits.first;
+
+      input = _buildNumberInput(
+        controller: split.localAmountTC,
+        enabled: !saving && !readOnly,
+        onChanged: (String val) {
+          split.localAmount = double.tryParse(val) ?? 0;
+        },
+        currency: tx.localCurrency,
+      );
+    } else {
+      // SPLIT TX --> derived total (readonly)
+      input = _buildNumberInput(
+        controller: totalAmountTC,
+        enabled: false,
+        currency: tx.localCurrency,
+      );
+    }
+    return SizedBox(width: 130, child: Center(child: input));
+  }
+
+  Widget _buildNumberInput({
+    required TextEditingController controller,
+    required bool enabled,
+    void Function(String)? onChanged,
+    required CurrencyRead currency,
+  }) {
+    return NumberInput(
+      icon: SizedBox(
+        width: 24,
+        height: 32,
+        child: FittedBox(child: Text(currency.attributes.symbol)),
+      ),
+      hintText: currency.zero(),
+      decimals: currency.attributes.decimalPlaces ?? 2,
+      controller: controller,
+      disabled: !enabled,
+      onChanged: onChanged,
+    );
+  }
+
+  Widget _buildDate(BuildContext context) => IntrinsicWidth(
+    child: TextFormField(
+      controller: tx.dateTC,
+      decoration: const InputDecoration(border: OutlineInputBorder()),
+      readOnly: true,
+      enabled: !saving,
+      onTap: () async {
+        final DateTime? pickedDate = await showDatePicker(
+          context: context,
+          initialDate: tx.date,
+          locale: Locale(
+            Intl.defaultLocale!.split("_").first,
+            Intl.defaultLocale!.split("_").last,
+          ),
+          firstDate: DateTime(2000),
+          lastDate: DateTime(2101),
+        );
+
+        if (pickedDate == null) {
+          return;
+        }
+
+        tx.date = tz.TZDateTime.from(
+          tx.date.copyWith(
+            year: pickedDate.year,
+            month: pickedDate.month,
+            day: pickedDate.day,
+          ),
+          tx.date.location,
+        );
+      },
+    ),
+  );
+
+  Widget _buildTime(BuildContext context) => IntrinsicWidth(
+    child: TextFormField(
+      controller: tx.timeTC,
+      decoration: const InputDecoration(border: OutlineInputBorder()),
+      readOnly: true,
+      enabled: !saving,
+      onTap: () async {
+        final TimeOfDay? pickedTime = await showTimePicker(
+          context: context,
+          initialTime: tx.date.getTimeOfDay(),
+        );
+
+        if (pickedTime == null) {
+          return;
+        }
+
+        tx.date = tx.date.setTimeOfDay(pickedTime);
+      },
+    ),
+  );
 }

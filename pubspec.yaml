@@ -41,14 +41,14 @@ dependencies:
   badges: ^3.1.2
   filesize: ^2.0.1
   community_charts_flutter: ^1.0.2
-  file_picker: ^11.0.2
+  file_picker: ^12.0.0-beta.2
   flutter_local_notifications: ^21.0.0
   notifications_listener_service:
     git:
       url: https://github.com/dreautall/notification_listener_service.git
       ref: main
   appcheck: ^1.7.0
-  package_info_plus: ^9.0.1
+  package_info_plus: ^10.1.0
   flutter_email_sender: ^8.0.0
   version: ^3.0.2
   stock: ^1.1.0

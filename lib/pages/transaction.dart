@@ -106,6 +106,130 @@ class TransactionState extends ChangeNotifier {
 
     super.dispose();
   }
+
+  static TransactionState fromExisting(
+    TransactionRead transaction,
+    TimeZoneHandler tzHandler,
+  ) {
+    final List<TransactionSplit> transactions =
+        transaction.attributes.transactions;
+
+    // Common values
+    final TransactionState tx = TransactionState(
+      CurrencyRead(
+        type: "currencies",
+        id: transactions.first.currencyId!,
+        attributes: CurrencyProperties(
+          code: transactions.first.currencyCode!,
+          name: transactions.first.currencyName!,
+          symbol: transactions.first.currencySymbol!,
+          decimalPlaces: transactions.first.currencyDecimalPlaces,
+        ),
+      ),
+    );
+    tx.type = transactions.first.type;
+
+    /// title
+    if (transaction.attributes.groupTitle?.isNotEmpty ?? false) {
+      tx.titleTC.text = transaction.attributes.groupTitle!;
+    } else {
+      tx.titleTC.text = transactions.first.description;
+    }
+
+    /// own account
+    switch (tx.type) {
+      case .withdrawal:
+      case .transfer:
+        tx.ownAccountID = transactions.first.sourceId;
+        break;
+      case .deposit:
+      case .openingBalance:
+      case .reconciliation:
+        tx.ownAccountID = transactions.first.destinationId;
+        break;
+      default:
+    }
+
+    /// date
+    tx.date = tzHandler.sTime(transactions.first.date).toLocal();
+
+    // Reconciled
+    tx.reconciled = transactions.first.reconciled ?? false;
+    if (tx.reconciled) {
+      tx.initiallyReconciled = true;
+    }
+
+    for (TransactionSplit trans in transactions) {
+      final TransactionSplitState newSplit = TransactionSplitState(tx);
+
+      // Always in card view
+      /// Category
+      newSplit.categoryTC.text = trans.categoryName ?? "";
+
+      //// Budget
+      newSplit.budgetTC.text = trans.budgetName ?? "";
+
+      /// Tags
+      newSplit.tags = Tags(trans.tags ?? <String>[]);
+
+      /// Notes
+      newSplit.noteTC.text = trans.notes ?? "";
+
+      /// Bill
+      if ((trans.billId?.isNotEmpty ?? false) && trans.billId != "0") {
+        newSplit.bill = BillRead(
+          type: "bill",
+          id: trans.billId ?? "",
+          attributes: BillProperties(
+            name: trans.billName ?? "",
+            amountMin: "",
+            amountMax: "",
+            date: DateTime.now(),
+            repeatFreq: .swaggerGeneratedUnknown,
+          ),
+        );
+      }
+
+      // Individual for split transactions
+      /// Title
+      newSplit.titleTC.text = trans.description;
+
+      /// local amount
+      newSplit.localAmount = double.tryParse(trans.amount) ?? 0.0;
+
+      /// source account
+      newSplit.sourceAccountTC.text = trans.sourceName ?? "";
+      tx.sourceAccountType = trans.sourceType!;
+
+      /// target account
+      newSplit.destinationAccountTC.text = trans.destinationName ?? "";
+      tx.destinationAccountType = trans.destinationType!;
+
+      /// foreign currency
+      //// foreign currency
+      if (trans.foreignCurrencyCode?.isNotEmpty ?? false) {
+        newSplit.foreignCurrency = CurrencyRead(
+          type: "currencies",
+          id: trans.foreignCurrencyId!,
+          attributes: CurrencyProperties(
+            code: trans.foreignCurrencyCode!,
+            name: "", // empty
+            symbol: trans.foreignCurrencySymbol!,
+            decimalPlaces: trans.foreignCurrencyDecimalPlaces,
+          ),
+        );
+      }
+      //// foreign amount
+      newSplit.foreignAmount = double.tryParse(trans.foreignAmount ?? '') ?? 0;
+
+      /// Journal ID
+      newSplit.journalID = trans.transactionJournalId;
+
+      tx.splits.add(newSplit);
+    }
+
+    return tx;
+  }
 }
 
 class TransactionSplitState {
@@ -244,125 +368,9 @@ class _TransactionPageState extends State<TransactionPage>
 
     // opening an existing transaction, extract information
     if (widget.transaction != null) {
-      final TransactionRead transaction = widget.transaction!;
-      final List<TransactionSplit> transactions =
-          transaction.attributes.transactions;
-
-      // Common values
-      _tx = TransactionState(
-        CurrencyRead(
-          type: "currencies",
-          id: transactions.first.currencyId!,
-          attributes: CurrencyProperties(
-            code: transactions.first.currencyCode!,
-            name: transactions.first.currencyName!,
-            symbol: transactions.first.currencySymbol!,
-            decimalPlaces: transactions.first.currencyDecimalPlaces,
-          ),
-        ),
-      );
-      _tx.type = transactions.first.type;
-
-      /// title
-      if (transaction.attributes.groupTitle?.isNotEmpty ?? false) {
-        _tx.titleTC.text = transaction.attributes.groupTitle!;
-      } else {
-        _tx.titleTC.text = transactions.first.description;
-      }
-
-      /// own account
-      switch (_tx.type) {
-        case .withdrawal:
-        case .transfer:
-          _tx.ownAccountID = transactions.first.sourceId;
-          break;
-        case .deposit:
-        case .openingBalance:
-        case .reconciliation:
-          _tx.ownAccountID = transactions.first.destinationId;
-          break;
-        default:
-      }
-
-      /// date
-      _tx.date = _tzHandler.sTime(transactions.first.date).toLocal();
-
-      // Reconciled
-      _tx.reconciled = transactions.first.reconciled ?? false;
-      if (_tx.reconciled) {
-        _tx.initiallyReconciled = true;
-      }
-
-      for (TransactionSplit trans in transactions) {
-        final TransactionSplitState newSplit = TransactionSplitState(_tx);
-
-        // Always in card view
-        /// Category
-        newSplit.categoryTC.text = trans.categoryName ?? "";
-
-        //// Budget
-        newSplit.budgetTC.text = trans.budgetName ?? "";
-
-        /// Tags
-        newSplit.tags = Tags(trans.tags ?? <String>[]);
-
-        /// Notes
-        newSplit.noteTC.text = trans.notes ?? "";
-
-        /// Bill
-        if ((trans.billId?.isNotEmpty ?? false) && trans.billId != "0") {
-          newSplit.bill = BillRead(
-            type: "bill",
-            id: trans.billId ?? "",
-            attributes: BillProperties(
-              name: trans.billName ?? "",
-              amountMin: "",
-              amountMax: "",
-              date: DateTime.now(),
-              repeatFreq: .swaggerGeneratedUnknown,
-            ),
-          );
-        }
-
-        // Individual for split transactions
-        /// Title
-        newSplit.titleTC.text = trans.description;
-
-        /// local amount
-        newSplit.localAmount = double.tryParse(trans.amount) ?? 0.0;
-
-        /// source account
-        newSplit.sourceAccountTC.text = trans.sourceName ?? "";
-        _tx.sourceAccountType = trans.sourceType!;
-
-        /// target account
-        newSplit.destinationAccountTC.text = trans.destinationName ?? "";
-        _tx.destinationAccountType = trans.destinationType!;
-
-        /// foreign currency
-        //// foreign currency
-        if (trans.foreignCurrencyCode?.isNotEmpty ?? false) {
-          newSplit.foreignCurrency = CurrencyRead(
-            type: "currencies",
-            id: trans.foreignCurrencyId!,
-            attributes: CurrencyProperties(
-              code: trans.foreignCurrencyCode!,
-              name: "", // empty
-              symbol: trans.foreignCurrencySymbol!,
-              decimalPlaces: trans.foreignCurrencyDecimalPlaces,
-            ),
-          );
-        }
-        //// foreign amount
-        newSplit.foreignAmount =
-            double.tryParse(trans.foreignAmount ?? '') ?? 0;
-
-        /// Journal ID
-        newSplit.journalID = trans.transactionJournalId;
-
-        _tx.splits.add(newSplit);
-
-        // Card Animations
+      _tx = .fromExisting(widget.transaction!, _tzHandler);
+      // Card Animations
+      for (int i = 0; i < _tx.splits.length; i++) {
         _cardsAnimationController.add(
           AnimationController(
             // height 1 = visible - enter = fwd (0->1), exit = reverse (1->0)
@@ -384,8 +392,6 @@ class _TransactionPageState extends State<TransactionPage>
           ),
         );
       }
-
-      // Individual for split transactions, show common for single transaction
       WidgetsBinding.instance.addPostFrameCallback((_) {
         updateTransactionAmounts();
         splitTransactionCheckAccounts();

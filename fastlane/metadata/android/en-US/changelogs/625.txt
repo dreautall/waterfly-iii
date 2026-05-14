@@ -1,0 +1,9 @@
+- Feature: Notification History
+- Feature: Custom RegEx for Notifications
+- Feature: Responsive Design for Tablets (both Landscape & Portrait)
+- Feature: iOS version support (currently no build is distributed, and I currently do not have a Apple Developer account)
+- Feature: Number fields now support calculation
+- Feature: Ability to add custom headers for login
+- Feature: New chart colors
+- Feature: Save per Month for Piggy Banks
+- Bugfixes, version updates & new banking apps
